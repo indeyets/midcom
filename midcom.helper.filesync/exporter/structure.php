@@ -33,7 +33,7 @@ class midcom_helper_filesync_exporter_structure extends midcom_helper_filesync_e
         $node_array['style'] = $node->style;
         $node_array['style_inherit'] = $node->styleInherit;
         
-        // Per-component specialities
+        // Per-component specialties
         switch ($node->component)
         {
             case 'net.nehmer.static':

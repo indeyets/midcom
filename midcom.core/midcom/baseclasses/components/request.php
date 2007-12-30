@@ -22,7 +22,7 @@
  * request handle decision ("Can Handle Phase"), one for the
  * request handling ("Handle Phase") and one for output ("Output Phase"). These handlers can
  * either be contained in this class or refer to another class which gets instantiated, if
- * neccesary.
+ * necessary.
  *
  * All request handlers are contained in a single array, whose keys identify the various switch
  * configurations. These identifiers are only for informational purposes (they appear in the
@@ -32,13 +32,13 @@
  * Each request handler definition in the switch must contain these key/value pairs:
  *
  * - <b>mixed fixed_args:</b> This is either a string or an array and defines the fixed
- *   arguments that have to be present at the beginning of the URL to be handeld. A
+ *   arguments that have to be present at the beginning of the URL to be handled. A
  *   string denotes a single argument, an array is used if more then one fixed argument
  *   is needed. If you do not have any fixed arguments, set this parameter to null, which
  *   is the default.
  * - <b>int variable_args:</b> Usually, there are a number of variables in the URL, like
  *   article IDs, or article names. This can be 0, indicating that no variable arguments are
- *   required, which is the default. For an unlimmited number of variable_args set it to -1.
+ *   required, which is the default. For an unlimited number of variable_args set it to -1.
  *
  * - <b>bool no_cache:</b> For those cases where you want to prevent a certain "type" of request
  *   being cached. Set to false by default.
@@ -58,7 +58,6 @@
  * Example:
  *
  * <code>
- * <?php
  * $this->_request_switch[] = Array
  * (
  *     'fixed_args' => Array ('registratons', 'view'),
@@ -73,7 +72,6 @@
  *     // Alternative, use existing class (first parameter must be a reference):
  *     // 'handler' => Array(&$regadmin, 'view')
  * );
- * ?>
  * </code>
  *
  * This definition is usually located in either in the _on_initialize event handler (preferred)
@@ -105,7 +103,6 @@
  * <b>Callback method signatures</b>
  *
  * <code>
- * <?php
  * /**
  *  * can_handle example, with Docblock:
  *  * @param mixed $handler_id The ID of the handler.
@@ -131,7 +128,6 @@
  *  * @return bool Indicating success.
  *  {@*}
  * function _show_xxx ($handler_id, &$data) {}
- * ?>
  * </code>
  *
  * The three callbacks match the regular processing sequence of MidCOM.
@@ -153,10 +149,8 @@
  * way of passing information to the style elements:
  *
  * <code>
- * <?php
  * // Bind the view data, remember the reference assignment:
  * $data =& $_MIDCOM->get_custom_context_data('request_data');
- * ?>
  * </code>
  *
  * The data array can also be accessed by using the $_request_data member of this class,
@@ -165,25 +159,24 @@
  * Note, that the request data, for ease of use, already contains references to the L10n
  * Databases of the Component and MidCOM itself located in this class. They are stored
  * as 'l10n' and 'l10n_midcom'. Also available as 'config' is the current component
- * configuratio and 'topic' will hold the current conten topic.
+ * configuration and 'topic' will hold the current content topic.
  *
  * For those asking about "avoiding the problems of the view_* globals", this basically breaks
  * down to the fact that multiple components use these variables simultaneously. If you
- * invoke a dynamic_load within a style elemnt, you have good chances, that after it your
+ * invoke a dynamic_load within a style element, you have good chances, that after it your
  * original global $view variables have been overwritten by the style code of the
  * dynamically loaded component.
  *
  *
  * <b>Automatic handler class instantiation</b>
  *
- * If you specify a class name instead of a class isntance as an exec handler, MidCOM will
+ * If you specify a class name instead of a class instance as an exec handler, MidCOM will
  * automatically create an instance of that class type and initialize it. These
  * so-called handler classes must be a subclass of midcom_baseclasses_components_handler.
  *
  * The subclasses you create should look about this:
  *
  * <code>
- * <?php
  * class my_handler extends midcom_baseclasses_components_handler
  * {
  *     function my_handler()
@@ -200,7 +193,6 @@
  *         // you can safely work with references to $this here.
  *     }
  * }
- * ?>
  * </code>
  *
  * The two methods for each handler have the same signature as if they were in the
@@ -290,7 +282,7 @@
  *   is not yet available.
  * - name: This is the clear-text name of the plugin.
  * - config: This is an optional configuration argument, allows for customization.
- *   May be omitted, in which case it defaulst to null.
+ *   May be omitted, in which case it defaults to null.
  *
  * Once a plugin has been successfully initialized, its configuration is put
  * into the request data:
@@ -314,7 +306,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      */
 
     /**
-     * The topic for which we are handling a requiest.
+     * The topic for which we are handling a request.
      *
      * @var midcom_db_topic
      */
@@ -442,7 +434,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
     /**#@-*/
 
     /**
-     * Initializes the class, only basic variable assignement. Your own constructor
+     * Initializes the class, only basic variable assignment. Your own constructor
      * should call this function first.
      *
      * Note, that it is recommended to put all further initialization work into

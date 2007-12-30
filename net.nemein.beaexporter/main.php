@@ -1,6 +1,13 @@
 <?php
 /**
  * @package net.nemein.beaexporter
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
+ * @package net.nemein.beaexporter
  */
 class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
 {
@@ -29,17 +36,17 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
             $this->mgd_api = '1.8';
         }
         parent::midcom_baseclasses_components_purecode();
-        
+
         $this->_dump_dir = $this->_config->get('dump_directory');
         $this->_metadata_suffix = $this->_config->get('metadata_suffix');
         $this->_metadata_domain = $this->_config->get('metadata_domain');
         $this->_time_format = $this->_config->get('time_format');
         $this->_check_approves = $this->_config->get('check_approves');
-        
+
         $this->_lock_path = $this->_dump_dir . '/net_nemein_beaexporter.lock';
 
         setlocale(LC_TIME, 'en_US');
-        
+
         return true;
     }
 
@@ -50,7 +57,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
     {
         touch($this->_lock_path);
     }
-    
+
     /**
      * Removes the lockfile
      */
@@ -64,7 +71,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
         }
         unlink($this->_lock_path);
     }
-    
+
     /**
      * Set objects status to not-live and dump a dummy version it
      */
@@ -98,7 +105,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
         }
         return $ret;
     }
-    
+
     /**
      * Object has been created, dump it.
      */
@@ -268,11 +275,11 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
             debug_pop();
             return false;
         }
-        
+
         debug_pop();
         return true;
     }
-    
+
     /**
      * Cleans the files we have created from the dump directory
      *
@@ -300,7 +307,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
         debug_pop();
         return;
     }
-    
+
     /**
      * Writes the HTML dump file
      */
@@ -319,7 +326,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
                 $this->_object_dumpname .= '.html';
             }
         }
-        
+
         // TODO: Escape special characters in HTML ??
 
         $path = $this->_dump_dir . '/' . $this->_object_dumpname;
@@ -350,7 +357,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
             return false;
         }
         fclose($fp);
-        
+
         debug_pop();
         return true;
     }
@@ -451,7 +458,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
         $metadata_merged['contributor'] = $author_string;
         $metadata_merged['email'] = $author_email;
 
-        // Map MidCOM extended metadata (if we can) 
+        // Map MidCOM extended metadata (if we can)
         if (!is_a($this->_object, 'net_nemein_beaexporter_dummyobject'))
         {
             // If not initialized yet do it now
@@ -488,7 +495,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
                 }
             }
         }
-        
+
         // Handle overwrites
         foreach ($this->overwrite_properties as $key => $value)
         {
@@ -536,7 +543,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
         debug_pop();
         return true;
     }
-    
+
     /**
      * Finds attachment links/embeds and dumps them (while rewriting the links), returns false in case of error, true otherwise
      */
@@ -551,9 +558,9 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
             debug_pop();
             return true;
         }
-        
+
         $attachment_rewrite = $this->_config->get('attachment_rewrite');
-        
+
         debug_add("attachment_rewrite={$attachment_rewrite}");
         debug_add("matches\n===\n" . sprint_r($matches) . "===\n");
 
@@ -577,7 +584,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
             debug_add("Replacing '{$url}' with '{$rewritten}'");
             $this->_object_html = str_replace($url, $rewritten, $this->_object_html);
         }
-        
+
         debug_pop();
         return true;
     }
@@ -609,7 +616,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
                 return false;
             }
         }
-        
+
         $fp_att = $att->open('r');
         if (!$fp_att)
         {
@@ -648,7 +655,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
         $att->close();
         */
         fclose($fp_att);
-        
+
         debug_pop();
         return true;
     }
@@ -691,7 +698,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
         $this->_object_url = $this->clean_url($fullurl);
         return true;
     }
-    
+
     function check_url($url)
     {
         $fp = @fopen($url, 'r');

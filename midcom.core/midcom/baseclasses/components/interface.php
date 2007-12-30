@@ -45,7 +45,6 @@
  *
  * <b>Class parameters</b>
  *
- * @todo Document
  *
  * The following options can be used to parametrize the components startup and operation.
  * See the individual member documentation for now.
@@ -190,6 +189,7 @@
  * @see $GLOBALS['midcom_component_data']
  * @see midcom_helper__componentloader
  * @see midcom_core_manifest
+ * @todo Document class parameters
  */
 
 class midcom_baseclasses_components_interface
@@ -302,8 +302,8 @@ class midcom_baseclasses_components_interface
      * The component-specific data storage, hold in the global Array
      * $midcom_component_data, which is indexed by the component name.
      *
-     * It is created during initialization, and a referenc to the actual
-     * storagte is put into $_data.
+     * It is created during initialization, and a reference to the actual
+     * storage is put into $_data.
      *
      * @var Array
      * @see $GLOBALS['midcom_component_data']
@@ -403,7 +403,7 @@ class midcom_baseclasses_components_interface
      * Three files will be loaded in order:
      *
      * 1. The components default configuration, placed in $prefix/config/$name.inc
-     * 2. Any systemwide default configuration, currently palced in /etc/midgard/midcom/$component/$name.inc.
+     * 2. Any systemwide default configuration, currently placed in /etc/midgard/midcom/$component/$name.inc.
      * 3. Any site configuration in the snippet $GLOBALS['midcom_config']['midcom_sgconfig_basedir']/$component/$name.
      *
      * If $_config_snippet_name is set to null, no configuration will be done.
@@ -562,8 +562,8 @@ class midcom_baseclasses_components_interface
     }
 
     /**
-     * Relays the can_handle call to the component, instantinating a new AIS or Site
-     * class respectively. It will execute can_handle of that class, retruning its result
+     * Relays the can_handle call to the component, instantiating a new AIS or Site
+     * class respectively. It will execute can_handle of that class, returning its result
      * to MidCOM.
      *
      * @param MidgardTopic $current_object The topic in question.
@@ -655,7 +655,7 @@ class midcom_baseclasses_components_interface
     }
 
     /**
-     * Releays the set_object call to the nap instance. Checks if the NAP instance has already
+     * Relays the set_object call to the nap instance. Checks if the NAP instance has already
      * been created beforehand.
      *
      * @param MidgardTopic $object The MidgardTopic that should be processed.
@@ -720,7 +720,7 @@ class midcom_baseclasses_components_interface
     }
 
     /**
-     * Verif an indexer document's permissions.
+     * Verify an indexer document's permissions.
      *
      * It will call the corresponding event handler reading the topic configuration beforehand.
      *

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package net.nemein.payment
  * @author The Midgard Project, http://www.midgard-project.org
@@ -41,7 +40,7 @@
  * in the style of "&param=value" without further thought.
  *
  * All GET/POST parameters returned from the external site added by a handler should
- * be in the net_nemeina_payment namespace. You don't need further namesapcing, as you can
+ * be in the net_nemeina_payment namespace. You don't need further namespacing, as you can
  * safely assume only one handler is running at a given time. The parameter
  * "net_nemein_payment_id" is reserved for ID usage to identify the correct handler in
  * the factory class..

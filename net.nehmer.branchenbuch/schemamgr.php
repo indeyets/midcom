@@ -75,7 +75,7 @@ class net_nehmer_branchenbuch_schemamgr extends midcom_baseclasses_components_pu
     }
 
     /**
-     * Little helper function, gets the configuratio of a given type regarding
+     * Little helper function, gets the configuration of a given type regarding
      * alterations to the schema and display defaults.
      *
      * Valid type configuration keys:

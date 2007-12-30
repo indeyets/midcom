@@ -1,7 +1,6 @@
 <?php
 /**
  * Core configuration defaults.
- * @package midcom
  *
  * The global variable <i>midcom_config</i> will hold the current values of all these
  * options.
@@ -19,10 +18,8 @@
  * Example:
  *
  * <code>
- * <?php
  * $GLOBALS['midcom_config_site']['cache_module_content_backend'] =
  *     Array ('directory' => 'content/', 'driver' => 'dba');
- * ?>
  * </code>
  *
  * <b>Instance-specifc configuration:</b>
@@ -36,9 +33,7 @@
  * You will usually include these lines somewhere before actually including MidCOM.
  *
  * <code>
- * <?php
  * $GLOBALS['midcom_config_local']['midcom_root_topic_guid'] = '123456789...';
- * ?>
  * </code>
  *
  * <b>Configuration setting overview:</b>
@@ -204,7 +199,7 @@
  *   This must be set on a per-site basis, otherwise MidCOM won't start up.
  * - <b>string midcom_sgconfig_basedir:</b> The base snippetdir where the current
  *   sites' configuration is stored. This defaults to "/sitegroup-config" which will
- *   result in the original default shared sitegroupwide configuration.
+ *   result in the original default shared sitegroup-wide configuration.
  * - <b>string midcom_site_url:</b> The fully qualified URL to the Website, used in AIS to
  *   build on-site links. A trailing slash is required. It defaults to '/'.
  *   If an absolute local URL is given to this
@@ -278,7 +273,7 @@
  * - <b>string utility_pdftotext:</b> Transforms PDF Documents into text for indexing.
  * - <b>string utility_unrtf:</b> Transforms RTF Documents into text files for indexing.
  * - <b>string utility_diff:</b> The diff utility. Used to create diffs.
- * - <b>string utility_rcs:</b> The rcs revision controlsystem is needed for versioning.
+ * - <b>string utility_rcs:</b> The rcs revision control system is needed for versioning.
  *
  * <b>Multilingual content settings (NAP & DBA)</b>
  *

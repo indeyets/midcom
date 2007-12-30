@@ -16,7 +16,6 @@
 	*
 	* Gets called, when an undefined class is being instanciated
 	*
-	* @package midcom
 	* @param string string class name
 	*/
 	function __autoload($class_name) {

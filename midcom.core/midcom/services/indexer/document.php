@@ -13,7 +13,7 @@
  * and retrieval.
  *
  * A document consists of a number of fields, each field has different properties
- * when handled by the indexer (exact bahvoir depends, as always, on the indexer
+ * when handled by the indexer (exact behavoir depends, as always, on the indexer
  * backend in use). On retrieval, this field information is lost, all fields being
  * of the same type (naturally). The core indexer backend supports these field
  * types:
@@ -77,7 +77,7 @@ class midcom_services_indexer_document
     /* ------ START OF DOCUMENT FIELDS --------- */
 
     /**
-     * The Resource Identifier of this document. Must be UTF-8 on assignement
+     * The Resource Identifier of this document. Must be UTF-8 on assignment
      * already.
      *
      * This field is mandatory.
@@ -815,7 +815,7 @@ class midcom_services_indexer_document
             $this->editor = $this->_read_metadata_from_object_get_person_cached($object->revisor);
             debug_add("Set \$this->editor from \$object->revisor ({$object->revisor})");
         }
-        
+
         debug_pop();
     }
 

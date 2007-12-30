@@ -246,10 +246,10 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
     /**
      * Makes sure the user is in the correct sitegroup.
      *
+     * Note: I have not managed to get this to work in 1.7.4.
+     *
      * @param int sitegroup id
      * @access private
-     *
-     * Note: I have not managed to get this to work in 1.7.4.
      */
     function _authenticate($sitegroup_id)
     {

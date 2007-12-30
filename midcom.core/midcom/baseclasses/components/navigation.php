@@ -45,7 +45,7 @@ class midcom_baseclasses_components_navigation
     var $_component_data = null;
 
     /**
-     * The topic for which we are handling a requiest.
+     * The topic for which we are handling a request.
      *
      * @var MidgardTopic
      */

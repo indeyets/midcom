@@ -238,7 +238,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
 
     /**
      * This is a helper function which determines the parent GUID for an existing
-     * GUID according to the MidCOM conten tree rules.
+     * GUID according to the MidCOM content tree rules.
      *
      * It tries to look up the GUID in the memory cache, only if this fails, the regular
      * content getters are invoked.

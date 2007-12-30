@@ -18,7 +18,7 @@
  * and gives you better maintainability due to smaller code files.
  *
  * Under normal operation within the same component you don't need to think about any
- * specialities, the member variables are just references to the main request class
+ * specialties, the member variables are just references to the main request class
  * (also known as "viewer class").
  *
  * Noteworthy is the ability to export handlers for usage in other components in
@@ -45,7 +45,7 @@ class midcom_baseclasses_components_handler
      */
 
     /**
-     * The topic for which we are handling a requiest.
+     * The topic for which we are handling a request.
      *
      * @var MidgardTopic
      */

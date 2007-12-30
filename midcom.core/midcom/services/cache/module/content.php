@@ -14,7 +14,7 @@
  *
  * <b>Important note for application developers</b>
  *
- * Please read the documentation of the following functions throughoutly:
+ * Please read the documentation of the following functions thoroughly:
  *
  * - midcom_services_cache_module_content::no_cache();
  * - midcom_services_cache_module_content::uncached();
@@ -31,7 +31,7 @@
  * The cache takes three parameters into account when storing in or retrieving from
  * the cache: The current User ID, the current language and the request's URL.
  *
- * Only on a complete mach a cached page is displayed, which should take care of any
+ * Only on a complete match a cached page is displayed, which should take care of any
  * permission check done on the page. When you change the permissions of users, you
  * need to manually invalidate the cache though, as MidCOM currently cannot detect
  * changes like this (of course, this is true if and only if you are not using a
@@ -154,7 +154,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
     /**
      * controls cache headers strategy
-     * 'no-cache' activates no-cache mode that actively tries to circumvent all caching 
+     * 'no-cache' activates no-cache mode that actively tries to circumvent all caching
      * 'revalidate' is the default which sets must-revalidate and expiry to current time
      * 'public' and 'private' enable caching with the cache-control header of the same name, default expiry timestamps are generated using the default_lifetime
      *
@@ -172,7 +172,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
     /**#@-*/
 
-    /**#@+
+    /**
      * Cache backend instance.
      *
      * @var midcom_services_cache_backend
@@ -185,13 +185,11 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      * @var midcom_services_cache_backend
      */
     var $_data_cache = null;
-    
+
     /**
      * GUIDs loaded per context in this request
      */
     var $context_guids = array();
-
-    /**#@-*/
 
 
     /**
@@ -201,14 +199,14 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     {
         parent::midcom_services_cache_module();
     }
-    
+
     /**
      * Generate a valid cache identifier for a context of the current request
      */
     function generate_request_identifier($context, $customdata = null)
     {
         $identifier_source = '';
-        
+
         if ($this->_multilang)
         {
             if (   !isset($_MIDCOM)
@@ -228,9 +226,9 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         {
             $identifier_source .= 'LANG=ALL';
         }
-        
+
         $identifier_source .= ';USER=' . $_MIDGARD['user'];
-        
+
         if (isset($_MIDCOM))
         {
             $identifier_source .= ';URL=' . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_URI);
@@ -244,12 +242,12 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         {
             $identifier_source .= serialize($customdata);
         }
-        
+
         // TODO: Add browser capability data (mobile, desktop browser etc) from WURFL here
-        
+
         return 'R-' . md5($identifier_source);
     }
-    
+
     /**
      * Generate a valid cache identifier for a context of the current content (all loaded objects).
      */
@@ -350,11 +348,11 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
     <body>
         <h1><?echo $title; ?></h1>
-        
+
         <p>
         <?echo $message; ?>
         </p>
-        
+
         <h2>Error <?echo $code; ?></h2>
         <address>
           <a href="/"><?php echo $_SERVER["SERVER_NAME"]; ?></a><br />
@@ -433,7 +431,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
         // Check that we have cache for the identifier
         $this->_meta_cache->open();
-        
+
         $request_id = $this->generate_request_identifier(0);
         if (!$this->_meta_cache->exists($request_id))
         {
@@ -441,31 +439,31 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $this->_meta_cache->close();
             return;
         }
-        
+
         // Load metadata for the content identifier connected to current request
         $content_id = $this->_meta_cache->get($request_id);
-        
+
         if (!$this->_meta_cache->exists($content_id))
         {
             // Content cache data is missing
             $this->_meta_cache->close();
             return;
         }
-        
+
         $data = $this->_meta_cache->get($content_id);
-        
+
         if (!is_null($data['expires']))
         {
             if ($data['expires'] < time())
             {
-                $this->_meta_cache->close();            
+                $this->_meta_cache->close();
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Current page is in cache, but has expired.", MIDCOM_LOG_INFO);
                 debug_pop();
                 return;
             }
         }
-        $this->_meta_cache->close();        
+        $this->_meta_cache->close();
 
         // Check If-Modified-Since and If-None-Match, do content output only if
         // we have a not modified match.
@@ -475,7 +473,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             if (! $this->_data_cache->exists($content_id))
             {
                 $this->_data_cache->close();
-                debug_push_class(__CLASS__, __FUNCTION__);                    
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Current page is in not in the data cache, (possible ghost read).", MIDCOM_LOG_WARN);
                 debug_pop();
                 return;
@@ -536,7 +534,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         if (headers_sent())
         {
             // Whatever is wrong here, we return.
-            debug_push_class(__CLASS__, __FUNCTION__);            
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Warning, we should move to no_cache but headers have already been sent, skipping header transmission.', MIDCOM_LOG_ERROR);
             debug_pop();
             return;
@@ -549,7 +547,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         {
             //Suppress "Pragma: no-cache" header, because otherwise file downloads don't work in IE with https.
         }
-        else 
+        else
         {
             header('Pragma: no-cache');
         }
@@ -650,7 +648,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     {
         if ($this->_live_mode)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);        
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Cannot enter live mode twice, ignoring request.', MIDCOM_LOG_WARN);
             debug_pop();
             return;
@@ -706,7 +704,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         {
             return;
         }
-        
+
         $guidmap = $this->_meta_cache->get($guid);
         $this->_data_cache->open();
         foreach ($guidmap as $content_id)
@@ -722,7 +720,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             }
         }
     }
-    
+
     /**
      * All objects loaded within a request are stored into a list for cache invalidation purposes
      */
@@ -738,7 +736,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             }
             $this->context_guids[$context][] = $guid;
         }
-        
+
         // Register all GUIDs also to the root context
         if (!isset($this->context_guids[0]))
         {
@@ -814,7 +812,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
         if (! $if_modified_since && ! $if_none_match)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);        
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('No If-Header was detected, we cannot 304 therefore.');
             debug_pop();
             return false;
@@ -880,7 +878,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
         if ($this->_uncached)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);        
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Not writing cache file, we are in uncached operation mode.');
             debug_pop();
         }
@@ -906,10 +904,10 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $this->_data_cache->put($content_id, $cache_data);
             $this->_meta_cache->put($request_id, $content_id);
             $this->_meta_cache->close();
-            
+
             // Cache where the object have been
             $this->store_context_guid_map($context, $content_id);
-            
+
         }
 
         // Finish caching.
@@ -939,7 +937,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             {
                 $guidmap = array();
             }
-            
+
             if (!in_array($content_id, $guidmap))
             {
                 $guidmap[] = $content_id;
@@ -1078,7 +1076,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         {
             /* TODO: Doublecheck the way this is handled, it seems it's one byte too short
                which causes issues with Squid for example (could be that we output extra
-               whitespace somewhere or something), now we just don't send it if headers_strategy 
+               whitespace somewhere or something), now we just don't send it if headers_strategy
                implies caching */
             switch($this->_headers_strategy)
             {
@@ -1111,11 +1109,11 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             {
                 $time = time();
             }
-            
+
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Setting last modified to the timestamp {$time} which is: " . gmdate("D, d M Y H:i:s", $time) . ' GMT');
             debug_pop();
-            
+
             $header = "Last-Modified: " . gmdate("D, d M Y H:i:s", $time) . ' GMT';
             header ($header);
             $this->_sent_headers[] = $header;

@@ -9,7 +9,7 @@
 
 /**
  * PEAR server viewer class
- * 
+ *
  * @package cc.kaktus.pearserver
  */
 class cc_kaktus_pearserver_viewer extends midcom_baseclasses_components_request

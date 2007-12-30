@@ -6,6 +6,8 @@
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
+
+/** @ignore */
 require_once(MIDCOM_ROOT . "/net/nemein/attention/importer/apml.php");
 
 /**
@@ -14,7 +16,7 @@ require_once(MIDCOM_ROOT . "/net/nemein/attention/importer/apml.php");
  * @package net.nemein.attention
  */
 class net_nemein_attention_importer_lastfm extends net_nemein_attention_importer_apml
-{   
+{
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
@@ -22,7 +24,7 @@ class net_nemein_attention_importer_lastfm extends net_nemein_attention_importer
     {
          parent::net_nemein_attention_importer_apml();
     }
-    
+
     function seek_lastfm_users()
     {
         // TODO: With 1.8 we can query parameters more efficiently

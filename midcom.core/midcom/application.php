@@ -38,7 +38,7 @@
  * style selected by the component at the moment the component style is loaded.
  * The methods substyle_(append|prepend)'s work on the basis of this value then.
  *
- * Note, that this first assignement is done between can_handle and handle, so
+ * Note, that this first assignment is done between can_handle and handle, so
  * it will serve as a basis for all component-side style switching operations.
  *
  * The substyle URL switch is most useful in conjunction with

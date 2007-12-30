@@ -5,9 +5,11 @@
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
-    // hreview profile for hkit
-    // tom morris - 23 oct 2006
 
+/**
+ * hreview profile for hkit
+ *  tom morris - 23 oct 2006
+ */
 	$this->root_class = 'hreview';
 
 	$this->classes = array(

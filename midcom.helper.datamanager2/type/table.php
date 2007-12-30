@@ -21,11 +21,11 @@
  * array get_rows() ; //Returns an array containing the values for each row.
  * boolean set_rows($values);
  * void set_type(&$midcom_helper_datamanager2_type_table ) ;
+ * </code>
  *
- * Array with headernames in the same order as the row columns.
+ * Array with header names in the same order as the row columns.
  *
  * @package midcom.helper.datamanager2
- *
  */
 class midcom_helper_datamanager2_type_table extends midcom_helper_datamanager2_type
 {

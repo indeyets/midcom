@@ -9,7 +9,7 @@
 
 /**
  * Viewer class for cc.kaktus.todo.
- * 
+ *
  * @package cc.kaktus.todo
  */
 class cc_kaktus_todo_viewer extends midcom_baseclasses_components_request

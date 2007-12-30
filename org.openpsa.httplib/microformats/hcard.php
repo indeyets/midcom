@@ -5,8 +5,10 @@
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
-	// hcard profile for hkit
 
+/**
+ * hcard profile for hkit
+ */
 	$this->root_class = 'vcard';
 
 	$this->classes = array(
