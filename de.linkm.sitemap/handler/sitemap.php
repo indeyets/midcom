@@ -113,7 +113,7 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
      * @access private
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_xml($handler_id, $args, &$data)
@@ -231,7 +231,7 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
      * @access private
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_sitemap($handler_id, $args, &$data)

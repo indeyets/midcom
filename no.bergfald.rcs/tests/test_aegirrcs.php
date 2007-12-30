@@ -67,7 +67,7 @@ class no_bergfald_rcs_aegirrcs_test extends UnitTestCase {
                     $i++;
                 }
             }
-            $this->assertTrue($i > 0 , "A revision should contain at least one atribute...");
+            $this->assertTrue($i > 0 , "A revision should contain at least one attribute...");
         }
 
     }

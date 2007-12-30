@@ -12,7 +12,7 @@
  *
  * The interface presented here supersedes all original component interface
  * classes (COMPONENT, CONTENTADMIN, MIDCOM and NAP). The class uses an event
- * based approache for subclasses to influence the default behavior.
+ * based approach for subclasses to influence the default behavior.
  *
  * The actual implementation should be enough for most smaller components, as
  * the classes behavior is widely configurable. You should not override any of

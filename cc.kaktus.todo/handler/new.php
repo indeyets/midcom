@@ -138,7 +138,7 @@ class cc_kaktus_todo_handler_new extends midcom_baseclasses_components_handler
      * @access private
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_new($handler_id, $args, &$data)

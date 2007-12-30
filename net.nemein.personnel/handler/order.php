@@ -203,7 +203,7 @@ class net_nemein_personnel_handler_order extends midcom_baseclasses_components_h
      * @access private
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return boolean Indicating success
      */
     function _handler_order($handler_id, $args, &$data)
@@ -560,7 +560,7 @@ class net_nemein_personnel_handler_order extends midcom_baseclasses_components_h
      * @access private
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return boolean Indicating success
      */
     function _handler_grouped($handler_id, $args, &$data)

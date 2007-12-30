@@ -121,7 +121,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     var $_obrunning = false;
 
     /**
-     * This flag is true if the live mode has been activiated. This prevents the
+     * This flag is true if the live mode has been activated. This prevents the
      * cache processing at the end of the request.
      *
      * @var bool
@@ -382,7 +382,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     }
 
     /**
-     * This function holds the cache hit check meachnism. It seraches the requested
+     * This function holds the cache hit check mechanism. It searches the requested
      * URL in the cache database. If found, it checks, whether the cache page has
      * expired. If not, the cached page is delivered to the client and processing
      * ends. In all other cases this method simply returns.
@@ -615,7 +615,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
     /**
      * Sets the content type for the current page. The required HTTP Headers for
-     * are automatically generated, so, to the contratry of expires, you just have
+     * are automatically generated, so, to the contrary of expires, you just have
      * to set this header accordingly.
      *
      * This is usually set automatically by MidCOM for all regular HTML output and

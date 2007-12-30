@@ -559,7 +559,7 @@ class midcom_baseclasses_core_dbobject
      * Copies values from oldobject to newobject in case the types are compatible
      *
      * @param MidgardObject $newobject A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @param MidgardObject $oldobject a parent objcet (usually a midgard_* base class) which to copy.
+     * @param MidgardObject $oldobject a parent object (usually a midgard_* base class) which to copy.
      * @return bool Indicating success.
      */
     function cast_object(&$newobject, &$oldobject)
@@ -605,7 +605,7 @@ class midcom_baseclasses_core_dbobject
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @param mixed $id The object to load from the database. This can be either null (the default), indicating an empty object,
      *     a Midgard database row-ID or a Midgard GUID, the latter is detected using mgd_is_guid(). In addition, you can
-     *     specify a parent objcet (usually a midgard_* base class) which will then use a copy constructor semantics instead.
+     *     specify a parent object (usually a midgard_* base class) which will then use a copy constructor semantics instead.
      * @return bool Indicating success.
      * @see midcom_baseclasses_core_dbobject::post_db_load_checks
      * @see midcom_baseclasses_core_dbobject::cast_object
@@ -1181,7 +1181,7 @@ class midcom_baseclasses_core_dbobject
             && ! $object->id)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Cannot retrieve information on a non-persistant object.', MIDCOM_LOG_WARN);
+            debug_add('Cannot retrieve information on a non-persistent object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
@@ -1205,7 +1205,7 @@ class midcom_baseclasses_core_dbobject
             && ! $object->id)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Cannot retrieve information on a non-persistant object.', MIDCOM_LOG_WARN);
+            debug_add('Cannot retrieve information on a non-persistent object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
@@ -1327,7 +1327,7 @@ class midcom_baseclasses_core_dbobject
         if (! $object->id)
         {
             debug_push_class($object, __FUNCTION__);
-            debug_add('Cannot retrieve information on a non-persistant object.', MIDCOM_LOG_WARN);
+            debug_add('Cannot retrieve information on a non-persistent object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
@@ -1425,7 +1425,7 @@ class midcom_baseclasses_core_dbobject
 
         if (! $object->guid)
         {
-            debug_add('Cannot set parameters on a non-persistant object.', MIDCOM_LOG_WARN);
+            debug_add('Cannot set parameters on a non-persistent object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
@@ -1493,7 +1493,7 @@ class midcom_baseclasses_core_dbobject
 
         if (! $object->guid)
         {
-            debug_add('Cannot set parameters on a non-persistant object.', MIDCOM_LOG_WARN);
+            debug_add('Cannot set parameters on a non-persistent object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
@@ -1747,7 +1747,7 @@ class midcom_baseclasses_core_dbobject
 
         if (! $object->id)
         {
-            debug_add('Cannot retrieve attachments on a non-persistant object.', MIDCOM_LOG_WARN);
+            debug_add('Cannot retrieve attachments on a non-persistent object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
@@ -1817,7 +1817,7 @@ class midcom_baseclasses_core_dbobject
 
         if (! $object->id)
         {
-            debug_add('Cannot retrieve attachments on a non-persistant object.', MIDCOM_LOG_WARN);
+            debug_add('Cannot retrieve attachments on a non-persistent object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
@@ -1914,7 +1914,7 @@ class midcom_baseclasses_core_dbobject
 
         if (! $object->id)
         {
-            debug_add('Cannot retrieve attachments on a non-persistant object.', MIDCOM_LOG_WARN);
+            debug_add('Cannot retrieve attachments on a non-persistent object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
@@ -1940,7 +1940,7 @@ class midcom_baseclasses_core_dbobject
 
         if (! $object->id)
         {
-            debug_add('Cannot retrieve attachments on a non-persistant object.', MIDCOM_LOG_WARN);
+            debug_add('Cannot retrieve attachments on a non-persistent object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
@@ -1967,7 +1967,7 @@ class midcom_baseclasses_core_dbobject
 
         if (! $object->id)
         {
-            debug_add('Cannot retrieve attachments on a non-persistant object.', MIDCOM_LOG_WARN);
+            debug_add('Cannot retrieve attachments on a non-persistent object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }

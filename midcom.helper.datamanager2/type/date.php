@@ -35,7 +35,7 @@ class midcom_helper_datamanager2_type_date extends midcom_helper_datamanager2_ty
      * The current date encapsulated by this type.
      *
      * @var Date
-     * @see http://pear.php.net/package/Date/docs/latest/
+     * @link http://pear.php.net/package/Date/docs/latest/
      */
     var $value = null;
 
@@ -124,7 +124,7 @@ class midcom_helper_datamanager2_type_date extends midcom_helper_datamanager2_ty
                     return 0;
                 }
                 else
-                {            
+                {
                     return $this->value->getTime();
                 }
 

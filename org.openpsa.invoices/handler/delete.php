@@ -61,7 +61,7 @@ class org_openpsa_invoices_handler_delete extends midcom_baseclasses_components_
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_delete($handler_id, $args, &$data)

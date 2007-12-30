@@ -17,7 +17,6 @@
  *
  * @package org.openpsa.products
  */
-
 class org_openpsa_products_navigation extends midcom_baseclasses_components_navigation
 {
     /**

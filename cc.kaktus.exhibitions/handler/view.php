@@ -239,7 +239,7 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
      * @access public
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return boolean Indicating success
      */
     public function _handler_view($handler_id, $args, &$data)
@@ -468,7 +468,7 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
      * @access public
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return boolean Indicating success
      */
     public function _handler_current($handler_id, $args, &$data)

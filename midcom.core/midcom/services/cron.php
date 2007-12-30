@@ -131,7 +131,7 @@ class midcom_services_cron extends midcom_baseclasses_core_object
     );
 
     /**
-     * Empty constuctor yet.
+     * Empty constructor yet.
      */
     function midcom_services_cron($recurrence = MIDCOM_CRON_MINUTE)
     {

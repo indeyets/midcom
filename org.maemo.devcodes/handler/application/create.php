@@ -155,7 +155,7 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
@@ -209,7 +209,7 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_apply($handler_id, $args, &$data)

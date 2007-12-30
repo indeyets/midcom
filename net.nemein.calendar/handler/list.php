@@ -75,7 +75,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_open($handler_id, $args, &$data)
@@ -148,7 +148,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_upcoming($handler_id, $args, &$data)
@@ -183,7 +183,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_past($handler_id, $args, &$data)
@@ -219,7 +219,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_week($handler_id, $args, &$data)
@@ -268,7 +268,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_between($handler_id, $args, &$data)
@@ -674,7 +674,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
      * @access private
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_calendar($handler_id, $args, &$data)

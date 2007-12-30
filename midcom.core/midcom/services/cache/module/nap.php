@@ -9,7 +9,7 @@
 
 /**
  * This is the NAP/Metadata caching module. It provides the basic management functionality
- * for the various backend databasese which will be created based on the root topic of the
+ * for the various backend databases which will be created based on the root topic of the
  * NAP trees (thus the cache can be shared between AIS and on-site pages).
  *
  * The actual handling of the various db's is done with _basicnav.php and metadata.php, this
@@ -175,7 +175,7 @@ class midcom_services_cache_module_nap extends midcom_services_cache_module
      * It should be safe to just skip this case, because if the object to be invalidated
      * cannot be found, it is not cached anyway (deleted items could be resolved using
      * the resolve_guid code which uses the cache, so they would still be found).
-     * Special cases, where objects not avaialbe through NAP are updated have to be hanlded
+     * Special cases, where objects not available through NAP are updated have to be hanlded
      * by the component anyway.
      *
      * This way, leaf deletions should be safe in all cases (if they are cached, they can

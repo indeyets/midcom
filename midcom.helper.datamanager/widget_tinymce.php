@@ -18,13 +18,13 @@
  * <b>widget_tinymcearea_customconfig:</b> This widget has smart defaults that are
  * inspired by popular text processors. You can adjust its look and functionality here
  * (e.g. to enhance or strip down functions).
- * See http://tinymce.moxiecode.com/docs/using.htm how to do this.
+ * See {@link http://tinymce.moxiecode.com/docs/using.htm} how to do this.
  * <b>Important:</b> leave the "mode" setting ("specific_textareas") alone or this thing
  * will begin to do very strange things
  *
  * <b>Sample configuration</b>
  *
- * <pre>
+ * <code>
  * "html" => array (
  *     "description" => "WYSIWYG HTML",
  *     "datatype" => "text",
@@ -36,13 +36,13 @@
  * theme_advanced_toolbar_location: 'top',
  * theme_advanced_toolbar_align: 'left',
  * theme_advanced_path_location: 'bottom',
- * theme_advanced_buttons1: 'cut,copy,paste,spearator,undo,redo,separator,  link,unlink,image,table,charmap,separator, forecolor,backcolor,separator,  removeformat,code,cleanup,separator,  help',
+ * theme_advanced_buttons1: 'cut,copy,paste,separator,undo,redo,separator,  link,unlink,image,table,charmap,separator, forecolor,backcolor,separator,  removeformat,code,cleanup,separator,  help',
  * theme_advanced_buttons2: 'formatselect,styleselect,separator,  bold,italic,underline,strikethrough,separator,  justifyleft,justifycenter,justifyright,justifyfull,separator,  bullist,numlist,outdent,indent',
  * theme_advanced_buttons3: '',
  *
  * EOF
  * ),
- * </pre>
+ * </code>
  *
  * <b>Note</b>
  *

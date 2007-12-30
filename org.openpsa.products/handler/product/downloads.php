@@ -8,12 +8,14 @@
  *
  */
 
+/**
+ * The midcom_baseclasses_components_handler class defines a bunch of helper vars
+ *
+ * @see midcom_baseclasses_components_handler
+ * @package org.openpsa.products
+ */
 class org_openpsa_products_handler_product_downloads extends midcom_baseclasses_components_handler
 {
-    /*
-     * The midcom_baseclasses_components_handler class defines a bunch of helper vars
-     * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
-     */
 
     /**
      * Simple default constructor.
@@ -88,7 +90,7 @@ class org_openpsa_products_handler_product_downloads extends midcom_baseclasses_
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_downloads($handler_id, $args, &$data)
@@ -170,7 +172,7 @@ class org_openpsa_products_handler_product_downloads extends midcom_baseclasses_
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_feed($handler_id, $args, &$data)

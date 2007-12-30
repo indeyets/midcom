@@ -457,7 +457,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_edit_query($handler_id, $args, &$data)
@@ -624,7 +624,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_edit_query_advanced($handler_id, $args, &$data)
@@ -732,7 +732,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
@@ -790,7 +790,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)

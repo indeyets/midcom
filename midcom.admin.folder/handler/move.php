@@ -72,7 +72,7 @@ class midcom_admin_folder_handler_move extends midcom_baseclasses_components_han
      * @access private
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return boolean Indicating success
      */
     function _handler_move($handler_id, $args, &$data)

@@ -8,12 +8,14 @@
  *
  */
 
+/**
+ * The midcom_baseclasses_components_handler class defines a bunch of helper vars
+ *
+ * @see midcom_baseclasses_components_handler
+ * @package org.openpsa.products
+ */
 class org_openpsa_products_handler_businessarea_list  extends midcom_baseclasses_components_handler
 {
-    /*
-     * The midcom_baseclasses_components_handler class defines a bunch of helper vars
-     * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
-     */
 
     /**
      * Simple default constructor.
@@ -30,7 +32,7 @@ class org_openpsa_products_handler_businessarea_list  extends midcom_baseclasses
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool True if the request can be handled, false otherwise.
      */
     function _can_handle_list($handler_id, $args, &$data)
@@ -83,7 +85,7 @@ class org_openpsa_products_handler_businessarea_list  extends midcom_baseclasses
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)

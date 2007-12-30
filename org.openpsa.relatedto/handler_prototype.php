@@ -36,7 +36,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_render($handler_id, $args, &$data)
@@ -91,7 +91,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
      * Renders the selected view
      *
      * Due to this being a purecode component we can't use the MidCOM style engine
-     * but opearations are divided into overrideable methods as much as possible so
+     * but operations are divided into overrideable methods as much as possible so
      * components then can override them and then use the style engine within their
      * own context.
      */
@@ -984,7 +984,7 @@ EOF;
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_ajax($handler_id, $args, &$data)

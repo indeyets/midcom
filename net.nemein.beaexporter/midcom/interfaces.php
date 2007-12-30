@@ -49,7 +49,7 @@ class net_nemein_beaexporter_interface extends midcom_baseclasses_components_int
     }
     
     /**
-     * Passes the object to the main class opearation specific handler.
+     * Passes the object to the main class operation specific handler.
      */
     function _on_watched_operation($operation, $object)
     {

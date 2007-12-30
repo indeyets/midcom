@@ -11,8 +11,8 @@
  * Memcached decorator around the querybuilder object
  *
  * Use this class to connect to Memcached for selects
- * @todo go through a defined api on the memcached module instead of the private object
  *
+ * @todo go through a defined api on the memcached module instead of the private object
  * @package midcom
  */
 class midcom_core_querybuilder_cached
@@ -38,7 +38,7 @@ class midcom_core_querybuilder_cached
     }
 
     /**
-     * Recursive walk to build a key nomatter the inputs.
+     * Recursive walk to build a key no matter the inputs.
      * Note: With large lists of inputs, the key becomes very loong...
      */
     function rec_implode($key, $val)
@@ -314,7 +314,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             }
             $this->_seen_guids[$value->guid] = true;
 
-            // Create a new object instance (checks read privilege implicitly) using the copy-constuctor.
+            // Create a new object instance (checks read privilege implicitly) using the copy-constructor.
             $object = new $classname($value);
 
             if (mgd_errno() == MGD_ERR_ACCESS_DENIED)

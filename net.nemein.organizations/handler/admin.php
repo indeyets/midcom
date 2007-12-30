@@ -154,7 +154,7 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
@@ -238,7 +238,7 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
@@ -360,7 +360,7 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)

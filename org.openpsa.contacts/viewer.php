@@ -290,7 +290,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_notinitialized($handler_id, $args, &$data)
@@ -323,7 +323,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_search_type($handler_id, $args, &$data)
@@ -360,7 +360,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_search($handler_id, $args, &$data)
@@ -428,7 +428,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_debug($handler_id, $args, &$data)

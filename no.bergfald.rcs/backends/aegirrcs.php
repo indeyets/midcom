@@ -46,7 +46,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
     * Get the object of a revision
     * @param string object guid (or other identifier)
     * @param string revision identifier of revision wanted
-    * @return array arrray representation of the object
+    * @return array array representation of the object
     */
     function get_revision( $revision)
     {
@@ -174,7 +174,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
 
     /**
      * Get the previous versionID
-     * @param string verison
+     * @param string version
      * @return string versionid before this one or empty string.
      */
     function get_prev_version($version)
@@ -337,7 +337,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
      *
      */
     /**
-     * Get a list of the obejcts history
+     * Get a list of the objects history
      * @param string objectid (usually the guid)
      * @return array list of revisions and revision comment.
      */
@@ -519,7 +519,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
      * extra DB query.
      * @param string root of rcs directory.
      * @param object object to be updated.
-     * @param boolean links2guids - wther to turn links into guids. NOT IN USE
+     * @param boolean links2guids - whether to turn links into guids. NOT IN USE
      * @return int :
      *      0 on success
      *      3 on missing object->guid

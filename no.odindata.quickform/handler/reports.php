@@ -124,7 +124,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
 	function _handler_report_index()
@@ -169,7 +169,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_report_list_all()
@@ -220,7 +220,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_report_list_by_key()
@@ -296,7 +296,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_report_list_by_key_distinct()

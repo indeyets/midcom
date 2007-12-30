@@ -22,7 +22,7 @@
  * - prepare_query(): This is called whenever the class is in "query" mode,
  *   e.g. after the form has been evaluated and the component redirected to the
  *   result listing.
- * - get_total(): Returns the total number of hits matchiing the current query.
+ * - get_total(): Returns the total number of hits matching the current query.
  *   Will not be called before prepare_query().
  *
  *
@@ -104,7 +104,7 @@ class net_nehmer_branchenbuch_callbacks_searchbase extends midcom_baseclasses_co
     function _on_initialize() {}
 
     /**
-     * Called by the component to indicate that the componentent is in result mode.
+     * Called by the component to indicate that the component is in result mode.
      *
      * This call should prepare to run the query specified earlier, but not actually
      * execute it, as the page number is not yet known.
@@ -155,29 +155,29 @@ class net_nehmer_branchenbuch_callbacks_searchbase extends midcom_baseclasses_co
     }
 
     /**
-     * Displays the serach form. Called only after process_form if and only if it returned
+     * Displays the search form. Called only after process_form if and only if it returned
      * false.
      *
-     * @param Array $data The request data.
+     * @param Array &$data The request data.
      */
     function show(&$data)
     {
         die ('The method net_nehmer_branchenbuch_callbacks_searchbase::show() must be overridden.');
     }
-    
+
     /**
      * Returns the next entry after the given one. Used for view-mode paging.
-     * 
+     *
      * @return net_nehmer_branchenbuch_entry The next entry.
      */
     function get_next($guid)
     {
         die ('The method net_nehmer_branchenbuch_callbacks_searchbase::get_next() must be overridden.');
     }
-    
+
     /**
      * Returns the previous entry after the given one. Used for view-mode paging.
-     * 
+     *
      * @return net_nehmer_branchenbuch_entry The previous entry.
      */
     function get_previous($guid)

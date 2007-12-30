@@ -123,7 +123,7 @@ class org_openpsa_products_handler_group_edit extends midcom_baseclasses_compone
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)

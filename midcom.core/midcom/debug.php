@@ -32,7 +32,7 @@
  *
  * @package midcom
  */
-class midcom_debug 
+class midcom_debug
 {
 
     /**
@@ -273,7 +273,7 @@ class midcom_debug
      *
      * @param string $message	The message to be logged
      * @param int $loglevel		The log level
-     * @see http://www.xdebug.org/
+     * @link http://www.xdebug.org/ xdebug.org
      */
     function print_function_stack($message, $loglevel = MIDCOM_LOG_DEBUG)
     {
@@ -355,7 +355,7 @@ class midcom_debug
         {
             return;
         }
-        
+
         if (!function_exists('memory_get_usage'))
         {
             return false;

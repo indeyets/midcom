@@ -166,7 +166,7 @@ class no_bergfald_rcs {
     /**
      * Get the object of a revision
      * @param string revision identifier of revision wanted
-     * @return array arrray representation of the object
+     * @return array array representation of the object
      */
      function get_revision( $revision)
      {
@@ -211,7 +211,7 @@ class no_bergfald_rcs {
 
     /**
      * Get the previous versionID
-     * @param string verison
+     * @param string version
      * @return string versionid before this one or empty string.
      */
     function get_prev_version($version)

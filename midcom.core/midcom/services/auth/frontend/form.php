@@ -62,12 +62,11 @@ class midcom_services_auth_frontend_form extends midcom_services_auth_frontend
      * included in this function. In that case you should look into the source
      * of it to see exactly what is required.
      *
-     * See https://www.midgard-project.org/midcom-permalink-c5e99db3cfbb779f1108eff19d262a7c
-     * for further information about how to style these elements.
+     * @link http://www.midgard-project.org/midcom-permalink-c5e99db3cfbb779f1108eff19d262a7c further information about how to style these elements.
      */
     function show_authentication_form()
     {
-        if (   function_exists('mgd_is_element_loaded')    
+        if (   function_exists('mgd_is_element_loaded')
             && mgd_is_element_loaded('midcom_services_auth_frontend_form'))
         {
             mgd_show_element('midcom_services_auth_frontend_form');
@@ -97,7 +96,7 @@ class midcom_services_auth_frontend_form extends midcom_services_auth_frontend
             $url = $_MIDCOM->get_host_prefix() . 'midcom-exec-net.nemein.openid/initiate.php';
             ?>
             <!--<h3><?php echo $_MIDCOM->i18n->get_string('login using openid', 'net.nemein.openid'); ?></h3>-->
-            
+
             <div id="open_id_form">
                 <form action="<?php echo $url; ?>" method="post">
                     <label for="openid_url">
@@ -112,7 +111,7 @@ class midcom_services_auth_frontend_form extends midcom_services_auth_frontend
                     <input type="submit" name="midcom_services_auth_frontend_form_submit" id="openid_submit" value="<?php
                         echo $_MIDCOM->i18n->get_string('login', 'midcom'); ?>" />
                 </form>
-            </div>	
+            </div>
             <?php
         }
     }

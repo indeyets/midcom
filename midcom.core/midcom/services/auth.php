@@ -52,16 +52,16 @@
  *
  * - The magic string 'SELF', which denotes that the privilege is set for the user in general for
  *   every content object. SELF privileges may be restricted to a class by using the classname
- *   property available at bothe midcom_core_privilege and various DBA interface functions.
+ *   property available at both midcom_core_privilege and various DBA interface functions.
  *
- * The value is one of MIDCOM_PRIVILEGE_ALLOW or MIDCOM_PRIVLEGE_DENY, which either grants or
- * revokes a privlege. Be aware, that unsetting a privilege does not set it to MIDCOM_PRIVLEGE_DENY,
+ * The value is one of MIDCOM_PRIVILEGE_ALLOW or MIDCOM_PRIVILEGE_DENY, which either grants or
+ * revokes a privilege. Be aware, that unsetting a privilege does not set it to MIDCOM_PRIVILEGE_DENY,
  * but clears the entry completely, which means that the privilege value inherited from the parents
  * is now in effect.
  *
  * <b>How are privileges read and merged</b>
  *
- * First, you have to understand, that there are actually three disctinct sources where a privilege
+ * First, you have to understand, that there are actually three distinct sources where a privilege
  * comes from: The systemwide defaults, the currently authenticated user and the content object
  * which is being operated on. We'll look into this distinction first, before we get on to the order
  * in which they are merged.
@@ -85,7 +85,7 @@
  * users/groups you can easily assign them to the corresponding users/groups, there is one special
  * case which cannot be covered there at this time: You cannot set defaults applicable for the magic
  * assignees EVERYONE, USERS and ANONYMOUS. This is normally only of interest for component authors,
- * which want to have some special privileges assigned for their obejcts, where the global defaults
+ * which want to have some special privileges assigned for their objects, where the global defaults
  * do no longer suffice.
  *
  * These privileges are queried using a static callback of the DBA classes in question, see the following
@@ -234,7 +234,7 @@
  *
  * <b>Assigning Privileges</b>
  *
- * You assign priviliges by using the DBA set_privilege method, whose static implementation can
+ * You assign privileges by using the DBA set_privilege method, whose static implementation can
  * be found in midcom_baseclasses_core_dbobject::set_privilege(). Here is a quick overview over
  * that API, which naturally only works on MidCOM DBA level objects:
  *
@@ -270,8 +270,6 @@
  *
  * <b>Authentication</b>
  *
- * @todo Fully document authentication.
- *
  * Whenever the system successfully creates a new login session (during auth service startup),
  * it checks whether the key <i>midcom_services_auth_login_success_url</i> is present in the HTTP
  * Request data. If this is the case, it relocates to the URL given in it. This member isn't set
@@ -279,6 +277,7 @@
  * relocate function is used to for relocation, thus you can take full advantage of the
  * convenience functions in there. See midcom_application::relocate() for details.
  *
+ * @todo Fully document authentication.
  * @package midcom.services
  */
 class midcom_services_auth extends midcom_baseclasses_core_object
@@ -642,7 +641,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     }
 
     /**
-     * This internal helper will initialize the default priviliges array with all core
+     * This internal helper will initialize the default privileges array with all core
      * privileges currently defined.
      *
      * @see $_default_privileges
@@ -1802,7 +1801,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * has been registered in the system.
      *
      * @todo This call should load the component associated to the privilege on demand.
-     *
      * @param string $name The name of the privilege to check.
      * @return bool Indicating whether the privilege does exist.
      */
@@ -2031,9 +2029,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * $login_warning will notify the user of a failed login. The latter will either be empty
      * or enclosed in a paragraph with the CSS ID 'login_warning'.
      *
-     * See https://www.midgard-project.org/midcom-permalink-c5e99db3cfbb779f1108eff19d262a7c
-     * for further information about how to style these elements.
-     *
+     * @link http://www.midgard-project.org/midcom-permalink-c5e99db3cfbb779f1108eff19d262a7c further information about how to style these elements.
      * @param string $message The message to show to the user.
      */
     function access_denied($message)
@@ -2159,8 +2155,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * of form. The output from the frontend is surrounded by a div tag whose CSS ID is set to
      * 'midcom_login_form'.
      *
-     * See https://www.midgard-project.org/midcom-permalink-c5e99db3cfbb779f1108eff19d262a7c
-     * for further information about how to style these elements.
+     * @link http://www.midgard-project.org/midcom-permalink-c5e99db3cfbb779f1108eff19d262a7c further information about how to style these elements.
      */
     function show_login_form()
     {
@@ -2178,8 +2173,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * attempt, in which case it will have a localized warning message enclosed in a
      * paragraph with the ID 'login_warning'.
      *
-     * See https://www.midgard-project.org/midcom-permalink-c5e99db3cfbb779f1108eff19d262a7c
-     * for further information about how to style these elements.
+     * @link http://www.midgard-project.org/midcom-permalink-c5e99db3cfbb779f1108eff19d262a7c further information about how to style these elements.
      */
     function show_login_page()
     {

@@ -73,7 +73,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      * The errors are indexed by field name.
      *
      * @var Array
-     * @see midcom_helper_datamanager2_type::validation_error
+     * @see midcom_helper_datamanager2_type::$validation_error
      */
     var $validation_errors = Array();
 
@@ -234,8 +234,8 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      * The schema name is looked up in the parameter 'midcom.helper.datamanager2/schema_name',
      * if it is not found, the first schema from the schema database is used implicitly.
      *
-     * See the set_schema() and set_storage() functions for details.
-     *
+     * @see set_schema()
+     * @see set_storage()
      * @param mixed $object A reference to either a MidCOM DBA class or a subclass of
      *     midcom_helper_datamanager2_storage.
      * @param bool $strict Whether we should strictly use only the schema given by object params

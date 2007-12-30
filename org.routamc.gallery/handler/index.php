@@ -10,6 +10,9 @@
 /**
  * Gallery photo display
  *
+ * The midcom_baseclasses_components_handler class defines a bunch of helper vars
+ *
+ * @see midcom_baseclasses_components_handler
  * @package org.routamc.gallery
  */
 class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_handler
@@ -20,11 +23,6 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
      * @var midcom_helper_nav $_nap
      */
     var $_nap;
-
-    /*
-     * The midcom_baseclasses_components_handler class defines a bunch of helper vars
-     * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
-     */
 
     /**
      * Simple default constructor.
@@ -52,7 +50,7 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_index($handler_id, $args, &$data)

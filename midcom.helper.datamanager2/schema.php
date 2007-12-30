@@ -17,7 +17,7 @@
  *
  * <b>Schema Definition</b>
  *
- * See http://www.midgard-project.org/documentation/midcom-2-5-datamanager-rewrite-schema-definition/
+ * See {@link http://www.midgard-project.org/documentation/midcom-2-5-datamanager-rewrite-schema-definition/}
  * for now.
  *
  * <b>Storage</b>
@@ -31,7 +31,7 @@
  *      // params:
  *      // name: the name of the field
  *      // data: the data that comes from the type defined.
- *      // storage: a reference to the datamanagers storageclass.
+ *      // storage: a reference to the datamanager's storageclass.
  *      function on_load_data($name,&$storage);
  *      function on_store_data($name, $data,&$storage);
  * }
@@ -61,7 +61,6 @@
  * encapsulate this in your class.
  *
  * @todo Complete documentation
- *
  * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_purecode

@@ -523,7 +523,7 @@ EOF;
      * The generic by-GUID loader and the class conversion tools in the dbfactory
      * require this information to be able to load the required components on-demand.
      *
-     * @param Array $data The list of classes which have been loaded along with the metainformation.
+     * @param Array &$data The list of classes which have been loaded along with the metainformation.
      */
     function _register_loaded_classes($data)
     {

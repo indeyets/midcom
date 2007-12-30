@@ -67,7 +67,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
      */
     function update(&$object, $updatemessage = null)
     {
-        // Store user idenfitier and IP address to the update string
+        // Store user identifier and IP address to the update string
         if ($_MIDCOM->auth->user)
         {
             $update_string = "{$_MIDCOM->auth->user->id}|{$_SERVER['REMOTE_ADDR']}";
@@ -108,7 +108,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
      * extra DB query.
      * @param string root of rcs directory.
      * @param object object to be updated.
-     * @param boolean links2guids - wther to turn links into guids. NOT IN USE
+     * @param boolean links2guids - whether to turn links into guids. NOT IN USE
      * @return int :
      *      0 on success
      *      3 on missing object->guid
@@ -160,7 +160,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
     * Get the object of a revision
     * @param string object guid (or other identifier)
     * @param string revision identifier of revision wanted
-    * @return array arrray representation of the object
+    * @return array array representation of the object
     */
     function get_revision( $revision)
     {
@@ -212,7 +212,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
 
     /**
      * Get the previous versionID
-     * @param string verison
+     * @param string version
      * @return string versionid before this one or empty string.
      */
     function get_prev_version($version)
@@ -255,7 +255,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
 
     /**
      * Get the previous versionID
-     * @param string verison
+     * @param string version
      * @return string versionid before this one or empty string.
      */
     function get_next_version($version)
@@ -381,7 +381,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
      *
      */
     /**
-     * Get a list of the obejcts history
+     * Get a list of the objects history
      * @param string objectid (usually the guid)
      * @return array list of revisions and revision comment.
      */

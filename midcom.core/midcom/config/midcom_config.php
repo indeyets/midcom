@@ -251,7 +251,7 @@
  * mandatory and optional applications are listed here. To indicate that a certain
  * application is unavailable, set it to null. It is recommended to set this in the
  * /etc/midgard/midcom.conf file. The defaults assume that the files are within the
- * $PATH of the Apache user and should be sufficient in most cases. Package mainatainers
+ * $PATH of the Apache user and should be sufficient in most cases. Package maintainers
  * are encouraged to make the paths explicit.
  *
  * - <b>string utility_imagemagick_base:</b> The base path of the ImageMagick executables,

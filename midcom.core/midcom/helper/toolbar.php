@@ -84,7 +84,7 @@
  * hide items without access. The difference from just not adding the
  * corresponding variable is that you can have a consistent set of
  * toolbar options in a "template" which you just need to tweak by
- * setting ths flag. (Note, that there is no explicit access
+ * setting this flag. (Note, that there is no explicit access
  * control checks in the toolbar helper itself, as this would mean that
  * the corresponding content objects need to be passed into the toolbar,
  * which is not feasible with the large number of toolbars in use in NAP

@@ -29,7 +29,7 @@
  * - The class will automatically add the name of the cache instance to the cache keys.
  *
  * @package midcom.services
- * @see http://www.php.net/manual/en/ref.memcache.php
+ * @link http://www.php.net/manual/en/ref.memcache.php Memcache Documentation
  */
 
 class midcom_services_cache_backend_memcached extends midcom_services_cache_backend
@@ -84,7 +84,7 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
         // Force-disable the php serializer calls, let memcached worry about it.
         $this->_auto_serialize = false;
 
-        // Open the persistant connection.
+        // Open the persistent connection.
         $this->_cache = new Memcache();
         if (! @$this->_cache->pconnect($this->_host, $this->_port))
         {
@@ -100,12 +100,12 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
     }
 
     /**
-     * This method is unused as we use persistant connections, letting memcached take care about synchronization.
+     * This method is unused as we use persistent connections, letting memcached take care about synchronization.
      */
     function _open($write = false) {}
 
     /**
-     * This method is unused as we use persistant connections, letting memcached take care about synchronization.
+     * This method is unused as we use persistent connections, letting memcached take care about synchronization.
      */
     function _close() {}
 

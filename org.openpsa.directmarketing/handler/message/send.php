@@ -49,7 +49,7 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_send_bg($handler_id, $args, &$data)
@@ -214,7 +214,7 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_send($handler_id, $args, &$data)

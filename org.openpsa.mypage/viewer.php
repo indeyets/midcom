@@ -110,7 +110,7 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
 	 */
     function _handler_savefilter($handler_id, $args, &$data)
     {
@@ -133,7 +133,7 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_userinfo($handler_id, $args, &$data)
@@ -159,7 +159,7 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_updates($handler_id, $args, &$data)
@@ -188,7 +188,7 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_frontpage($handler_id, $args, &$data)

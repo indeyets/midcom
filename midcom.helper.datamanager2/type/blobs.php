@@ -66,7 +66,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
      * - filename: The name of the file (useful to produce nice links).
      * - mimetype: The MIME Type.
      * - url: A complete URL valid for the current site, which delivers the attachment.
-     * - filesize and formattedsize: The size of the file, as integer, and as formtted number
+     * - filesize and formattedsize: The size of the file, as integer, and as formatted number
      *   with thousand-separator.
      * - lastmod and isoformattedlastmod: The UNIX- and ISO-formatted timestamp of the
      *   last modification to the attachment file.
@@ -89,7 +89,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
 
     /**
      * Maximum amount of blobs allowed to be stored in the same field
-     * 
+     *
      * @access public
      * @var integer
      */
@@ -265,13 +265,13 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
                 }
             }
         }
-        
+
         if (!isset($info['url']))
         {
             // Use regular MidCOM attachment server
             $info['url'] = "{$this->attachment_server_url}{$att->guid}/{$name}";
         }
-        
+
         $info['id'] = $att->id;
         $info['guid'] = $att->guid;
 
@@ -312,7 +312,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
             {
                 continue;
             }
-            
+
             $data[] = "{$identifier}:{$attachment->guid}";
         }
 
@@ -412,7 +412,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
 
     /**
      * This is a simple helper which evaluates the imagesize information of a given
-     * file and adds that information as parameters to the attachmend identified by
+     * file and adds that information as parameters to the attachment identified by
      * its identifier.
      *
      * @param string $identifier
@@ -800,7 +800,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
                 $results[] = $info['url'];
             }
         }
-        
+
         if (empty($results))
         {
             return '';

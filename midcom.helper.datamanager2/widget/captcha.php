@@ -24,7 +24,7 @@ require_once('Text/Password.php');
  *
  * The captcha passphrases are made unique for each invocation of this type. This is
  * accomplished by creating a random session key during initialize where the passphrase
- * is stored. This session key is made persistant using a hidden request variable. Every
+ * is stored. This session key is made persistent using a hidden request variable. Every
  * passphrase is only valid for a single submission call. Every successful submit will
  * invalidate the passphrase in the users' session thus triggering a new captcha being
  * generated.

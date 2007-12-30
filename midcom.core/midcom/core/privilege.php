@@ -591,7 +591,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * be called statically.
      *
      * This function tries to operate on GUIDs whenever possible, to keep runtime up,
-     * only in the case of nonpersistant objects (no valid GUID yet), it will revert to
+     * only in the case of nonpersistent objects (no valid GUID yet), it will revert to
      * regular object usage.
      *
      * @access private
@@ -649,7 +649,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
         $_MIDCOM->auth->_internal_sudo = true;
 
         $parent_guid = null;
-		// We need to be careful here in case we have non-persistant objects.
+		// We need to be careful here in case we have non-persistent objects.
         if ($guid === null)
         {
             $tmp = $object->get_parent();
@@ -694,8 +694,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
             $base_privileges = Array();
         }
 
-        // We need to be careful here again in case we have non-persistant objects.
-        // This case is a bit different then the above one, though. Non-Persistant
+        // We need to be careful here again in case we have non-persistent objects.
+        // This case is a bit different then the above one, though. Non-persistent
         // objects can't have any privileges assigned whatsoever, so we skip the call
         // entirely.
         if ($guid === null)
@@ -845,7 +845,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * @param Array $privilege A valid privilege record as returned by parameter_to_privilege().
      * @param object $object The content object we're checking right now.
      * @param midcom_core_user The user in question or null for anonymous access.
-     * @return bool Indicating whether the privilige record applies for the user, or not.
+     * @return bool Indicating whether the privilege record applies for the user, or not.
      */
     function _is_privilege_valid($privilege, $user)
     {
@@ -936,7 +936,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
         {
             if ($this->guid)
             {
-                // Already a persistant record, drop it.
+                // Already a persistent record, drop it.
                 if (! $this->drop())
                 {
                     return false;

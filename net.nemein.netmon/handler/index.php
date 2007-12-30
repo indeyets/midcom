@@ -10,8 +10,8 @@
  * This is a URL handler class for net.nemein.netmon
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
- * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
  *
+ * @see midcom_baseclasses_components_handler
  * @package net.nemein.netmon
  */
 class net_nemein_netmon_handler_index  extends midcom_baseclasses_components_handler
@@ -37,7 +37,7 @@ class net_nemein_netmon_handler_index  extends midcom_baseclasses_components_han
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)

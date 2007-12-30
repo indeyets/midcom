@@ -19,7 +19,7 @@
  *
  * <b>Sample configuration</b>
  *
- * <pre>
+ * <code>
  * "radiobox" => array (
  *     "description" => "Radiobox Widget",
  *     "datatype" => "text",
@@ -30,7 +30,7 @@
  *         "opt2" => "Option 2"
  *     ),
  * ),
- * </pre>
+ * </code>
  *
  * <b>CSS Styles in use by the Widget</b>
  *

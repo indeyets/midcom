@@ -10,8 +10,8 @@
  * This is a URL handler class for net.nemein.teams
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
- * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
  *
+ * @see midcom_baseclasses_components_handler
  * @package net.nemein.teams
  */
 class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_handler
@@ -40,7 +40,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_admin ($handler_id, $args, &$data)
@@ -54,7 +54,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_log ($handler_id, $args, &$data)
@@ -79,7 +79,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_manage ($handler_id, $args, &$data)
@@ -105,7 +105,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_manage_delete($handler_id, $args, &$data)
@@ -165,7 +165,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_manage_team($handler_id, $args, &$data)

@@ -169,7 +169,7 @@ foreach ($topics as $topic)
     $acl->value = 1; //MIDCOM_PRIVILEGE_ALLOW
     if (!$acl->create())
     {
-        echo "ERROR: could not create '{$acl->name} / {$acl->value}' privilige for '{$acl->assignee}' (concerning object {$acl->objectguid})\n";
+        echo "ERROR: could not create '{$acl->name} / {$acl->value}' privilege for '{$acl->assignee}' (concerning object {$acl->objectguid})\n";
     }
     echo "INFO: Converted topic #{$topic->id} owner (#{$topic->id}) to ACL\n";
 }
@@ -210,7 +210,7 @@ foreach ($vg_map as $topic_id => $grp_guids)
         $acl->value = 2; //MIDCOM_PRIVILEGE_DENY
         if (!$acl->create())
         {
-            echo "ERROR: could not create '{$acl->name} / {$acl->value}' privilige for '{$acl->assignee}' (concerning object {$acl->objectguid})\n";
+            echo "ERROR: could not create '{$acl->name} / {$acl->value}' privilege for '{$acl->assignee}' (concerning object {$acl->objectguid})\n";
             continue;
         }
     }
@@ -230,7 +230,7 @@ foreach ($vg_map as $topic_id => $grp_guids)
         $acl->value = 1; //MIDCOM_PRIVILEGE_ALLOW
         if (!$acl->create())
         {
-            echo "ERROR: could not create '{$acl->name} / {$acl->value}' privilige for '{$acl->assignee}' (concerning object {$acl->objectguid})\n";
+            echo "ERROR: could not create '{$acl->name} / {$acl->value}' privilege for '{$acl->assignee}' (concerning object {$acl->objectguid})\n";
             continue;
         }
         echo "INFO: Converted ViewerGroup {$grp_guid} to ACL (on topic #{$topic->id})\n";

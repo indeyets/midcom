@@ -22,7 +22,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
 	 */
     function _handler_redirect($handler_id, $args, &$data)
     {
@@ -214,7 +214,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_review($handler_id, $args, &$data)

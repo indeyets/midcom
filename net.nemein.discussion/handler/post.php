@@ -220,7 +220,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
@@ -305,7 +305,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_reply($handler_id, $args, &$data)

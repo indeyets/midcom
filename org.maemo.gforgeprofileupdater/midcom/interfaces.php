@@ -60,7 +60,7 @@ class org_maemo_gforgeprofileupdater_interface extends midcom_baseclasses_compon
     }
 
     /**
-     * Passes the object to the main class opearation specific handler.
+     * Passes the object to the main class operation specific handler.
      */
     function _on_watched_operation($operation, &$object)
     {

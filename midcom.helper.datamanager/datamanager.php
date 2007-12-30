@@ -1474,7 +1474,7 @@ class midcom_helper_datamanager {
         }
         else
         {
-            debug_add("Ommiting buttons as this obejct is locked. Lock info:");
+            debug_add("Ommiting buttons as this object is locked. Lock info:");
             debug_add("Lock timeout: " . $this->_layout["locktimeout"]
                 . ", storage is " . (is_null($this->_storage) ? "null" : "not null"));
             debug_print_r("Lock record is:", $this->_lock);

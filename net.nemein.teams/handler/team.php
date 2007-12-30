@@ -10,8 +10,8 @@
  * This is a URL handler class for net.nemein.teams
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
- * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
  *
+ * @see midcom_baseclasses_components_handler
  * @package net.nemein.teams
  */
 class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handler
@@ -358,7 +358,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      */
     function _handler_rootgroup($handler_id, $args, &$data)
     {
@@ -391,7 +391,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_create ($handler_id, $args, &$data)
@@ -456,7 +456,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_edit($handler_id, $args, &$data)
@@ -502,7 +502,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_application ($handler_id, $args, &$data)
@@ -595,7 +595,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_index ($handler_id, $args, &$data)
@@ -615,7 +615,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_create_profile($handler_id, $args, &$data)
@@ -699,7 +699,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
@@ -835,7 +835,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_pending($handler_id, $args, &$data)
@@ -964,7 +964,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_team_members($handler_id, $args, &$data)
@@ -1023,7 +1023,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_quit($handler_id, $args, &$data)
@@ -1050,7 +1050,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_quit_confirm($handler_id, $args, &$data)
@@ -1101,7 +1101,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_lockdown($handler_id, $args, &$data)
@@ -1187,7 +1187,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_view($handler_id, $args, &$data)
@@ -1284,7 +1284,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_action($handler_id, $args, &$data)

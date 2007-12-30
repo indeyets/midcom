@@ -29,7 +29,7 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_select($handler_id, $args, &$data)

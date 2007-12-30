@@ -91,7 +91,7 @@ class net_nehmer_marketplace_handler_welcome extends midcom_baseclasses_componen
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
@@ -157,7 +157,7 @@ class net_nehmer_marketplace_handler_welcome extends midcom_baseclasses_componen
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool True if the request can be handled, false otherwise.
      */
     function _can_handle_self($handler_id, $args, &$data)
@@ -179,7 +179,7 @@ class net_nehmer_marketplace_handler_welcome extends midcom_baseclasses_componen
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_self($handler_id, $args, &$data)
@@ -233,7 +233,7 @@ class net_nehmer_marketplace_handler_welcome extends midcom_baseclasses_componen
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_welcome_mode($handler_id, $args, &$data)

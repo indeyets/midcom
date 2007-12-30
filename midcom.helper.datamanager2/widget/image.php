@@ -368,7 +368,7 @@ class midcom_helper_datamanager2_widget_image extends midcom_helper_datamanager2
 
     /**
      * The on_submit event handles all file uploads immediately. They are passed through
-     * the type at that point. This is required, since we do not have persistant upload
+     * the type at that point. This is required, since we do not have persistent upload
      * file management on the QF side. Deletions take precedence over uploads.
      */
     function on_submit($results)

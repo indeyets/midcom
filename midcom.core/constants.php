@@ -234,7 +234,7 @@ define ('MIDCOM_TOOLBAR_HOST', 104);
 define ('MIDCOM_TOOLBAR_HELP', 105);
 
 /**
- * Identifier for a custom objcet toolbar.
+ * Identifier for a custom object toolbar.
  *
  * @see midcom_services_toolbars
  */

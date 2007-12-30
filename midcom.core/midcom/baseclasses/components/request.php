@@ -60,7 +60,7 @@
  * <code>
  * $this->_request_switch[] = Array
  * (
- *     'fixed_args' => Array ('registratons', 'view'),
+ *     'fixed_args' => Array ('registrations', 'view'),
  *     'variable_args' => 1,
  *     'no_cache' => false,
  *     'expires' => -1,
@@ -107,7 +107,7 @@
  *  * can_handle example, with Docblock:
  *  * @param mixed $handler_id The ID of the handler.
  *  * @param Array $args The argument list.
- *  * @param Array $data The local request data.
+ *  * @param Array &$data The local request data.
  *  * @return bool True if the request can be handled, false otherwise.
  *  {@*}
  * function _can_handle_xxx ($handler_id, $args, &$data) {}
@@ -116,7 +116,7 @@
  *  * Exec handler example, with Docblock:
  *  * @param mixed $handler_id The ID of the handler.
  *  * @param Array $args The argument list.
- *  * @param Array $data The local request data.
+ *  * @param Array &$data The local request data.
  *  * @return bool Indicating success.
  *  {@*}
  * function _handler_xxx ($handler_id, $args, &$data) {}
@@ -124,7 +124,7 @@
  * /**
  *  * Show handler example, with Docblock:
  *  * @param mixed $handler_id The ID of the handler.
- *  * @param Array $data The local request data.
+ *  * @param Array &$data The local request data.
  *  * @return bool Indicating success.
  *  {@*}
  * function _show_xxx ($handler_id, &$data) {}
@@ -653,7 +653,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         }
 
         // Get the toolbars for both the main request object and the handler
-        // objcet. Note, if both are equal, we will have two assignments at this
+        // object. Note, if both are equal, we will have two assignments at this
         // point; it shouldn't bother us, it isn't a regular use-case anymore (besides
         // the fact that this is only a very very very minor performance issue).
         $this->_node_toolbar =& $_MIDCOM->toolbars->get_node_toolbar();

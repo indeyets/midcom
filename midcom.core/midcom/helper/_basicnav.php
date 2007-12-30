@@ -932,7 +932,7 @@ class midcom_helper__basicnav
 
         if (in_array($node[MIDCOM_NAV_ID], $this->_loaded_leaves))
         {
-            debug_add("Warning, tried to load the leaves of noe {$node[MIDCOM_NAV_ID]} more then once.", MIDCOM_LOG_INFO);
+            debug_add("Warning, tried to load the leaves of node {$node[MIDCOM_NAV_ID]} more then once.", MIDCOM_LOG_INFO);
             debug_pop();
             return;
         }

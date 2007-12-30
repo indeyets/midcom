@@ -31,7 +31,7 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
     /**
      * The format to use for display.
      *
-     * @see http://pear.php.net/manual/en/package.html.html-quickform.html-quickform-date.html-quickform-date.php
+     * @link http://pear.php.net/manual/en/package.html.html-quickform.html-quickform-date.html-quickform-date.php
      * @var string
      */
     var $format = 'dmY';
@@ -49,16 +49,16 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
      * @var int
      */
     var $maxyear = 2010;
-    
+
     /**
      * First items for selections.
      *
      * @var array
      */
     var $first_items = array('d' => 'DD', 'm' => 'MM', 'Y' => 'YYYY');
-    
+
     var $_items = array();
-    var $_elements = array();    
+    var $_elements = array();
 
     /**
      * Validates the base type
@@ -73,9 +73,9 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
             debug_pop();
             return false;
         }
-        
+
         $this->_generate_items();
-        
+
         return true;
     }
 
@@ -83,11 +83,11 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
      * Adds a PEAR Date widget to the form
      */
     function add_elements_to_form()
-    {        
+    {
         for($i = 0; $i < strlen($this->format); $i++)
         {
             $key = $this->format{$i};
-            
+
             $this->_elements[] =& HTML_QuickForm::createElement
             (
                 'select',
@@ -101,10 +101,10 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
                 )
             );
         }
-        
+
         $this->_form->addGroup($this->_elements, $this->name, $this->_translate($this->_field['title']), '');
     }
-    
+
     function _generate_items()
     {
         for($i = 0; $i < strlen($this->format); $i++)
@@ -114,7 +114,7 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
                 case 'd':
                     $this->_items[$this->format{$i}] = array();
                     $this->_populate_first_item($this->format{$i});
-                    
+
                     for ($d=1; $d<=31; $d++)
                     {
                         $value = $d<10?"0{$d}":$d;
@@ -126,7 +126,7 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
                 case 'F':
                     $this->_items[$this->format{$i}] = array();
                     $this->_populate_first_item($this->format{$i});
-                
+
                     for ($m=1; $m<=12; $m++)
                     {
                         $value = $m<10?"0{$m}":$m;
@@ -136,7 +136,7 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
                 case 'Y':
                     $this->_items[$this->format{$i}] = array();
                     $this->_populate_first_item($this->format{$i});
-                
+
                     for ($y=$this->minyear; $y<=$this->maxyear; $y++)
                     {
                         $value = $y;
@@ -146,7 +146,7 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
                 case 'y':
                     $this->_items[$this->format{$i}] = array();
                     $this->_populate_first_item($this->format{$i});
-                
+
                     for ($y=$this->minyear; $y<=$this->maxyear; $y++)
                     {
                         $value = substr($y, -2);
@@ -156,7 +156,7 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
                 case 'H':
                     $this->_items[$this->format{$i}] = array();
                     $this->_populate_first_item($this->format{$i});
-            
+
                     for ($h=0; $h<=12; $h++)
                     {
                         $value = $h<10?"0{$h}":$h;
@@ -166,7 +166,7 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
                 case 'i':
                     $this->_items[$this->format{$i}] = array();
                     $this->_populate_first_item($this->format{$i});
-            
+
                     for ($m=0; $m<=59; $m++)
                     {
                         $value = $m<10?"0{$m}":$m;
@@ -176,7 +176,7 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
                 case 's':
                     $this->_items[$this->format{$i}] = array();
                     $this->_populate_first_item($this->format{$i});
-        
+
                     for ($s=0; $s<=59; $s++)
                     {
                         $value = $s<10?"0{$s}":$s;
@@ -186,7 +186,7 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
             }
         }
     }
-    
+
     function _populate_first_item($key)
     {
         if (isset($this->first_items[$key]))
@@ -270,7 +270,7 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
     }
 
     function sync_type_with_widget($results)
-    {        
+    {
         if (! $results[$this->name])
         {
             return;

@@ -13,8 +13,8 @@ require('index.php');
  * This is an AJAX handler class for org.maemo.calendar
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
- * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
  *
+ * @see midcom_baseclasses_components_handler
  * @package org.maemo.calendar
  */
 class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
@@ -51,7 +51,7 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_ajax_change_date($handler_id, $args, &$data)
@@ -108,7 +108,7 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_ajax_change_view($handler_id, $args, &$data)
@@ -161,7 +161,7 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_ajax_change_timezone($handler_id, $args, &$data)

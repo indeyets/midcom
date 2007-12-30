@@ -70,7 +70,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_feed ($handler_id, $args, &$data)
@@ -270,7 +270,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)

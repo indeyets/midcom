@@ -193,7 +193,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     /**
      * This option taken from data schema controls the way data is output.
      * Either (default) preformatted <img> tag or plain array() type containing
-     * obejct data
+     * object data
      *
      * @var string
      */

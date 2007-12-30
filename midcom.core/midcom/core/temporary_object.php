@@ -67,21 +67,21 @@ class midcom_core_temporary_object extends __midcom_core_temporary_object
     }
 
     /**
-     * Transfers all parametersm attachments and privileges on the current object to another
+     * Transfers all parameters attachments and privileges on the current object to another
      * existing Midgard object. You need to have midgard:update, midgard:parameter,
      * midgard:privileges and midgard:attachments privileges on the target object,
-     * which must be a persitant MidCOM DBA class instance. (For ease of use, it is recommended
+     * which must be a persistent MidCOM DBA class instance. (For ease of use, it is recommended
      * to have midgard:owner rights for the target object, which includes the above
      * privileges).
      *
      * <b>Important notes:</b>
      *
-     * All records in questionwill just be moved, not copied!
+     * All records in question will just be moved, not copied!
      * Also, there will be <i>no</i> integrity checking in terms of already existing
      * parameters etc. This feature is mainly geared towards preparing a freshly
      * created final object with the data associated with this temporary object.
      *
-     * Any invalid object / missing privlege will trigger a generate_error.
+     * Any invalid object / missing privilege will trigger a generate_error.
      *
      * @param midcom_dba_object $object The object to transfer the extensions to.
      */

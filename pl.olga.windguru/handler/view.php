@@ -83,7 +83,7 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_index($handler_id, $args, &$data)
@@ -164,7 +164,7 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool True if the request can be handled, false otherwise.
 	 */
     function _can_handle_view ($handler_id, $args, &$data)
@@ -187,7 +187,7 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
  	/**
  	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
  	 */
     function _handler_view ($handler_id, $args, &$data)

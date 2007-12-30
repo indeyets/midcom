@@ -60,7 +60,7 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
      * @access private
      * @param string $handler_id     Request switch identificator
      * @param array $args            Variable URI arguments passed to the handler
-     * @param array $data            Data passed to UI
+     * @param Array &$data            Data passed to UI
      * @return boolean               Indicating success
      */
     function _handler_repeat($handler_id, $args, &$data)

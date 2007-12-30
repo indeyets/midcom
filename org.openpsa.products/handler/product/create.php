@@ -142,7 +142,7 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)

@@ -62,7 +62,7 @@ class midcom_db_topic extends midcom_baseclasses_database_topic
         if ($this->id == 0)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Cannot query the articles of a non-persistant topic (id==0).', MIDCOM_LOG_ERROR);
+            debug_add('Cannot query the articles of a non-persistent topic (id==0).', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }

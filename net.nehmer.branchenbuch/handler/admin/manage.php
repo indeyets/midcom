@@ -43,7 +43,7 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
@@ -128,7 +128,7 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
@@ -174,7 +174,7 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
@@ -247,7 +247,7 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)

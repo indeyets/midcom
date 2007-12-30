@@ -10,8 +10,8 @@
  * This is a URL handler class for no.odindata.quickform2
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
- * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
  *
+ * @see midcom_baseclasses_components_handler
  * @package no.odindata.quickform2
  */
 class no_odindata_quickform2_handler_index  extends midcom_baseclasses_components_handler
@@ -48,7 +48,7 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
@@ -83,7 +83,7 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_submitok()
@@ -100,7 +100,7 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_submitnotok()

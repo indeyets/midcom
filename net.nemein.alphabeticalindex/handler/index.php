@@ -64,7 +64,7 @@ class net_nemein_alphabeticalindex_handler_index extends midcom_baseclasses_comp
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)

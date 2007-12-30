@@ -10,8 +10,8 @@
  * This is a Mail view handler class for net.nehmer.mail
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
- * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
  *
+ * @see midcom_baseclasses_components_handler
  * @package net.nehmer.mail
  */
 
@@ -101,7 +101,7 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
 	 */
     function _handler_view($handler_id, $args, &$data)
@@ -164,7 +164,7 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
 	/**
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
 	 */
     function _handler_live_preview($handler_id, $args, &$data)
     {

@@ -10,8 +10,8 @@
  * This is a URL handler class for net.nemein.shoppingcart
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
- * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
  *
+ * @see midcom_baseclasses_components_handler
  * @package net.nemein.shoppingcart
  */
 class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses_components_handler
@@ -108,7 +108,7 @@ class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param array $data reference to request_data
+     * @param Array &$data reference to request_data
      * @return bool Indicating success.
      */
     function _handler_phase1($handler_id, $args, &$data)
@@ -187,7 +187,7 @@ class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param array $data reference to request_data
+     * @param Array &$data reference to request_data
      * @return bool Indicating success.
      */
     function _handler_phase2($handler_id, $args, &$data)

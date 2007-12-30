@@ -19,16 +19,16 @@
  * $navigation = new fi_protie_navigation();
  *
  * // Display only nodes (folders)
- * $navigation-&gt;list_leaves = false;
+ * $navigation->list_leaves = false;
  *
  * // Expand the whole site tree instead of the active path
- * $navigation-&gt;follow_all = true;
+ * $navigation->follow_all = true;
  *
  * // Skip 1 level from the beginning of the active path
- * $navigation-&gt;skip_levels = 1;
+ * $navigation->skip_levels = 1;
  *
  * // Finally draw the navigation
- * $navigation-&gt;draw();
+ * $navigation->draw();
  * </code>
  *
  * See the attributes of this class for additional customizing options.
@@ -475,7 +475,7 @@ class fi_protie_navigation
 
             $selected = '';
             $active = '';
-            
+
             $first_last = '';
             $has_children = '';
 
@@ -518,7 +518,7 @@ class fi_protie_navigation
             {
                 $component = str_replace('.', '_', $item[MIDCOM_NAV_COMPONENT]);
             }
-            
+
             $this->_display_element($item, $indent, $active, $selected, $component, $first_last, $has_children);
         }
         echo "{$indent}</ul>\n";

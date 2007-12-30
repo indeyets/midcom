@@ -51,7 +51,7 @@ class org_routamc_photostream_handler_feed extends org_routamc_photostream_handl
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_dispatcher($handler_id, $args, &$data)

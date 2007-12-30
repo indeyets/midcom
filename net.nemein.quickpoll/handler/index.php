@@ -10,8 +10,8 @@
  * This is a URL handler class for net.nemein.quickpoll
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
- * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
  *
+ * @see midcom_baseclasses_components_handler
  * @package net.nemein.quickpoll
  */
 class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_handler
@@ -113,7 +113,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
@@ -227,7 +227,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool True if the request can be handled, false otherwise.
      */
     function _can_handle_view ($handler_id, $args, &$data)
@@ -259,7 +259,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
      *
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * @param Array $data The local request data.
+     * @param Array &$data The local request data.
      * @return bool Indicating success.
      */
     function _handler_view ($handler_id, $args, &$data)

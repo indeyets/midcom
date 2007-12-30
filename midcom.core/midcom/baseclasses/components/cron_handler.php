@@ -71,7 +71,7 @@ class midcom_baseclasses_components_cron_handler
     var $_component_interface = null;
 
     /**
-     * Empty constuctor yet, just calls the base class.
+     * Empty constructor yet, just calls the base class.
      */
     public function midcom_baseclasses_components_cron_handler()
     {
