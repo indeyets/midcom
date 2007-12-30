@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package no.odindata.quickform2
  */
-class no_odindata_quickform2_handler_index  extends midcom_baseclasses_components_handler 
+class no_odindata_quickform2_handler_index  extends midcom_baseclasses_components_handler
 {
 
     /**
@@ -29,9 +29,9 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
-     * _on_initialize is called by midcom on creation of the handler. 
+     * _on_initialize is called by midcom on creation of the handler.
      */
     function _on_initialize()
     {
@@ -39,23 +39,24 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
         $this->_request_data['name']  = "no.odindata.quickform2";
         $this->_schemadb =
             midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
-        
+
 
     }
 
-    
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
     {
         $title = $this->_l10n_midcom->get( $this->_config->get( 'breadcrumb' ) );
         $_MIDCOM->set_pagetitle("{$title}");
 
-        if ( $this->_config->get( 'breadcrumb' ) != '' ) 
+        if ( $this->_config->get( 'breadcrumb' ) != '' )
         {
             $this->_update_breadcrumb_line( $this->_config->get( 'breadcrumb' ) );
         }
@@ -65,20 +66,25 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
 
        return true;
     }
-    
-    
+
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_index($handler_id, &$data)
     {
-         
+
         // hint: look in the style/index.php file to see what happens here.
         midcom_show_style('show-form');
     }
     /**
-     * Form submitt worked ok.
+     * Form submit worked ok.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_submitok()
     {
@@ -91,19 +97,25 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
         midcom_show_style('show-form-finished');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_submitnotok()
     {
         $this->_request_data['end_message'] = $this->_l10n->get('error sending the message');
         return true;
     }
-    
+
     function _show_submitnotok()
     {
         midcom_show_style('show-form-failed');
     }
 
 
-    
+
     /**
      * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.

@@ -151,7 +151,12 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
@@ -201,6 +206,12 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
         midcom_show_style('admin-create-application');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_apply($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -237,7 +248,7 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
             }
             // see the relocate in process_form as well
             $_MIDCOM->relocate("application/{$applications[0]->guid}.html");
-        }    
+        }
 
         if (!$this->_device->can_apply($_MIDGARD['user']))
         {

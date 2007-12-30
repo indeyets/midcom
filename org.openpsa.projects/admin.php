@@ -44,6 +44,9 @@ class org_openpsa_projects_admin extends midcom_baseclasses_components_request_a
         );
     }
 
+	/**
+     * @return bool Indicating success.
+	 */
     function _handler_welcome()
     {
         return true;

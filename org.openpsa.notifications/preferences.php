@@ -140,6 +140,9 @@ class org_openpsa_notifications_preferences extends midcom_baseclasses_component
      * Handles the notification preferences edit form
      *
      * @access private
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
      * @return boolean Indicating success
      */
     function _handler_edit($handler_id, $args, &$data)

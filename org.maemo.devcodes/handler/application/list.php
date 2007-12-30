@@ -65,6 +65,11 @@ class org_maemo_devcodes_handler_application_list extends midcom_baseclasses_com
 
     /**
      * Render a view of the users applications
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_my($handler_id, $args, &$data)
     {
@@ -105,6 +110,11 @@ class org_maemo_devcodes_handler_application_list extends midcom_baseclasses_com
 
     /**
      * Handle actual application display
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {

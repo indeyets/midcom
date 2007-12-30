@@ -142,14 +142,19 @@ class org_openpsa_directmarketing_handler_campaign_create extends midcom_basecla
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation campaign,
+     * If create privileges apply, we relocate to the index creation campaign
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_directmarketing_campaign');
 
         $this->_schema = $args[0];
-        
+
         if (!array_key_exists($this->_schema, $this->_request_data['schemadb_campaign']))
         {
             // This campaign type isn't available for our schema, return error
@@ -158,7 +163,7 @@ class org_openpsa_directmarketing_handler_campaign_create extends midcom_basecla
 
         $this->_load_controller();
         $this->_prepare_request_data();
-        
+
         switch ($this->_controller->process_form())
         {
             case 'save':
@@ -173,7 +178,7 @@ class org_openpsa_directmarketing_handler_campaign_create extends midcom_basecla
                 // This will exit.
         }
 
-        if ($this->_campaign != null) 
+        if ($this->_campaign != null)
         {
             $_MIDCOM->set_26_request_metadata($this->_campaign->revised, $this->_campaign->guid);
         }

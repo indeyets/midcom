@@ -1,7 +1,7 @@
 <?php
 /**
  * @package net.nemein.wiki
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 
 /**
  * Wikipage edit handler
- * 
+ *
  * @package net.nemein.wiki
  */
 class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
@@ -21,7 +21,7 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
      * @access private
      */
     var $_page = null;
-    
+
     /**
      * The Datamanager of the article to display
      *
@@ -45,14 +45,14 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
      * @access private
      */
     var $_schemadb = null;
-    
+
     var $_preview = false;
-    
-    function net_nemein_wiki_handler_edit() 
+
+    function net_nemein_wiki_handler_edit()
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Loads and prepares the schema database.
      *
@@ -65,7 +65,7 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
     function _load_schemadb()
     {
         $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
-        
+
         $operations = Array();
         $operations['save'] = '';
         $operations['preview'] = $this->_l10n->get('preview');
@@ -75,7 +75,7 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
             $this->_schemadb[$name]->operations = $operations;
         }
     }
-    
+
    /**
      * Internal helper, loads the datamanager for the current article. Any error triggers a 500.
      *
@@ -111,14 +111,14 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
             // This will exit.
         }
     }
-    
+
     function _load_page($wikiword)
     {
         $qb = net_nemein_wiki_wikipage::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_topic->id);
         $qb->add_constraint('name', '=', $wikiword);
         $result = $qb->execute();
-        
+
         if (count($result) > 0)
         {
             $this->_page = $result[0];
@@ -129,11 +129,15 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
             return false;
         }
     }
-    
+
     /**
      * Check the edit request
-     * 
+     *
      * @access public
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -142,9 +146,9 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
             return false;
         }
         $this->_page->require_do('midgard:update');
-        
+
         $this->_load_controller();
-        
+
         switch ($this->_controller->process_form())
         {
             case 'preview':
@@ -160,15 +164,15 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
             case 'cancel':
                 if ($this->_page->name == 'index')
                 {
-                    $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));  
+                    $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
                 }
                 else
-                {                
-                    $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$this->_page->name}/");            
+                {
+                    $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$this->_page->name}/");
                 }
                 // This will exit.
-        }  
-        
+        }
+
         $this->_view_toolbar->add_item(
             array
             (
@@ -178,7 +182,7 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
-        );    
+        );
         $this->_view_toolbar->add_item(
             array
             (
@@ -189,7 +193,7 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_ENABLED => $this->_page->can_do('midgard:delete'),
             )
         );
-        
+
         foreach (array_keys($this->_request_data['schemadb']) as $name)
         {
             if ($name == $this->_controller->datamanager->schema->name)
@@ -197,7 +201,7 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
                 // The page is already of this type, skip
                 continue;
             }
-            
+
             $this->_view_toolbar->add_item(
                 array
                 (
@@ -218,9 +222,9 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
                 )
             );
         }
-        
+
         $_MIDCOM->bind_view_to_object($this->_page, $this->_controller->datamanager->schema->name);
-        
+
         $data['view_title'] = sprintf($this->_request_data['l10n']->get('edit %s'), $this->_page->title);
         $_MIDCOM->set_pagetitle($data['view_title']);
 
@@ -237,13 +241,13 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
             MIDCOM_NAV_NAME => $this->_request_data['l10n_midcom']->get('edit'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-        
+
         // Set the help object in the toolbar
         $this->_view_toolbar->add_help_item('markdown', 'net.nemein.wiki');
-        
+
         return true;
     }
-    
+
     function _show_edit($handler_id, &$data)
     {
         $data['controller'] =& $this->_controller;
@@ -270,42 +274,47 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
                     default:
                         $location = $type_definition['storage']['location'];
                 }
-                $data['preview_page']->$location = $this->_controller->datamanager->types[$name]->convert_to_storage();                
+                $data['preview_page']->$location = $this->_controller->datamanager->types[$name]->convert_to_storage();
             }
 
             // Load DM for rendering the page
             $datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
             $datamanager->autoset_storage($data['preview_page']);
-            
+
             $data['wikipage_view'] = $datamanager->get_content_html();
             $data['wikipage'] =& $data['preview_page'];
             $data['autogenerate_toc'] = false;
             $data['display_related_to'] = false;
-            
+
             // Replace wikiwords
             // TODO: We should somehow make DM2 do this so it would also work in AJAX previews
             $data['wikipage_view']['content'] = preg_replace_callback($this->_config->get('wikilink_regexp'), array($data['preview_page'], 'replace_wikiwords'), $data['wikipage_view']['content']);
         }
-        
+
         midcom_show_style('view-wikipage-edit');
     }
-    
+
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+	 */
     function _handler_change($handler_id, $args, &$data)
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST')
         {
             $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, 'Only POST requests are allowed here.');
         }
-        
+
         if (!$this->_load_page($args[0]))
         {
             return false;
         }
         $this->_page->require_do('midgard:update');
-        
+
         // Change schema to redirect
         $this->_page->parameter('midcom.helper.datamanager2', 'schema_name', $_POST['change_to']);
-        
+
         // Redirect to editing
         $_MIDCOM->relocate("edit/{$this->_page->name}/");
         // This will exit

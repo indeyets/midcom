@@ -66,14 +66,19 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
      * and similar stuff.
      *
      * The handler computes all necessary data and populates the request array accordingly.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_welcome ($handler_id, $args, &$data)
     {
         $this->_compute_welcome_data();
         $this->_prepare_request_data();
-        
+
         $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
-        
+
         return true;
     }
 
@@ -281,6 +286,11 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
     /**
      * Shows the archive. Depending on the selected handler various constraints are added to
      * the QB. See the add_*_constraint methods for details.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list ($handler_id, $args, &$data)
     {
@@ -332,7 +342,7 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
 
         $this->_prepare_request_data();
-        
+
         return true;
     }
 

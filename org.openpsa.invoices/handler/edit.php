@@ -175,6 +175,12 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         return null;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_mark_sent($handler_id, $args, &$data)
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST')
@@ -225,6 +231,11 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         // This will exit
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+	 */
     function _handler_mark_paid($handler_id, $args, &$data)
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST')
@@ -255,6 +266,12 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         // This will exit
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_view($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -410,6 +427,12 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         midcom_show_style('show-invoice');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_edit($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -451,6 +474,12 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         midcom_show_style('show-invoice-edit');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -553,7 +582,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         $this->_request_data['invoice_dm']  = $this->_datamanager;
         midcom_show_style('show-invoice-new');
     }
-    
+
     /**
      * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.

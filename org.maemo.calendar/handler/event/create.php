@@ -7,7 +7,7 @@
  */
 
 /**
- * 
+ *
  * @package org.maemo.calendar
  */
 class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_components_handler
@@ -60,7 +60,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
     {
         $this->_request_data['event'] =& $this->_event;
         $this->_request_data['controller'] =& $this->_controller;
-        
+
         $this->_request_data['full_schema_in_use'] = true;
         if (! isset($_REQUEST['full_schema'])
             || !$_REQUEST['full_schema'])
@@ -97,7 +97,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         {
             $this->_calendar_type = $this->_config->get('default_view');
         }
-        unset($session);        
+        unset($session);
     }
 
     /**
@@ -112,19 +112,19 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
     function _load_schemadb()
     {
         $this->_schemadb =& $this->_request_data['schemadb'];
-        
+
         $this->_defaults['start'] = $this->_request_data['selected_day'];
 //mktime(date('H', $this->_request_data['selected_day']), date('i', $this->_request_data['selected_day']), 0, date('m', $this->_request_data['selected_day']), date('d', $this->_request_data['selected_day']), date('Y', $this->_request_data['selected_day']));
-        
+
         $this->_defaults['end'] = $this->_defaults['start'] + 3600;
-        
+
         //$user_tags = org_maemo_calendar_common::fetch_available_user_tags();
-        
+
         // Insert users default tag
         //$_MIDCOM->componentloader->load_graceful('net.nemein.tag');
         //$this->_defaults['tags'] = net_nemein_tag_handler::string2tag_array($user_tags[0]['id']);
         //$this->_defaults['tags'] = $user_tags[0]['id'];
-        
+
         // Populate the participants
         if ($_MIDCOM->auth->user)
         {
@@ -142,7 +142,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
             //     $_MIDGARD['user'] = true,
             // );
         }
-        
+
         $session =& new midcom_service_session();
         if ($session->exists('failed_POST_data'))
         {
@@ -164,13 +164,13 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
     {
         $this->_load_schemadb();
         $this->_controller =& midcom_helper_datamanager2_controller::create('create');
-        $this->_controller->schemadb =& $this->_schemadb;        
+        $this->_controller->schemadb =& $this->_schemadb;
 
         $this->_controller->schemaname = 'default';
         if (   $handler_id == 'ajax-event-create'
             && !$this->use_full_schema)
         {
-            $this->_controller->schemaname = 'ajax';         
+            $this->_controller->schemaname = 'ajax';
         }
 
         $this->_controller->defaults = $this->_defaults;
@@ -202,11 +202,11 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         {
             $participants[] = $participant_id;
         }
-        
+
         $this->_event->participants = serialize($participants);
-        
+
         debug_print_r('this->_event->participants before create: ',$this->_event->participants);
-        
+
         if (array_key_exists('start', $_POST))
         {
             $this->_event->start = strtotime($_POST['start']);
@@ -226,7 +226,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         $this->_event->busy = false;
 
         if (! $this->_event->create())
-        {            
+        {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_print_r('We operated on this object:', $this->_event);
             debug_pop();
@@ -264,15 +264,15 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
 
         return $this->_event;
     }
-    
+
     function _timezone_hack()
-    {   
+    {
         $active_timezone = org_maemo_calendar_common::active_timezone();
         $utc_timezone = timezone_open("UTC");
 
         if (   isset($_POST['start'])
             && isset($_POST['end']))
-        {           
+        {
             debug_add("Make sure the start/end times are saved with UTC timezone");
 
             $event_start = strtotime($_POST['start']);
@@ -293,12 +293,12 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
             if ($start_offset > 0)
             {
                 $event_start = $event_start - $start_offset;
-                $event_end = $event_end - $end_offset;                
+                $event_end = $event_end - $end_offset;
             }
             else
             {
                 $event_start = $event_start + $start_offset;
-                $event_end = $event_end + $end_offset;                
+                $event_end = $event_end + $end_offset;
             }
 
             debug_add("event_start after timezone change: " . $event_start . " (" . date("H:i:s",$event_start) . ")");
@@ -313,39 +313,45 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
             debug_add("new end time: ".date("Y-m-d H:i:s", $this->_event->end));
         }
     }
-    
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+     */
     function _handler_create($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $_MIDCOM->auth->require_do('midgard:create', $this->_request_data['root_event']);
-        
+
         $this->use_full_schema = true;
         if ($handler_id == 'ajax-event-create')
         {
             $_MIDCOM->skip_page_style = true;
-            
+
             if (! isset($_REQUEST['full_schema'])
                 || !$_REQUEST['full_schema'])
             {
                 $this->use_full_schema = false;
             }
         }
-        
+
         $this->_request_data['selected_day'] = time();
         $requested_time = $args[0];//@strtotime($args[0]);
         if ($requested_time)
         {
             $this->_request_data['selected_day'] = $requested_time;
         }
-        
+
         debug_add("requested time: {$this->_request_data['selected_day']}");
-        
+
         $this->_timezone_hack();
-        
+
         $this->_load_controller($handler_id);
         $this->_prepare_request_data();
-                
+
         switch ($this->_controller->process_form())
         {
             case 'save':
@@ -360,12 +366,12 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
             case 'cancel':
                 $_MIDCOM->relocate("view/{$_POST['start_ts']}/{$this->_calendar_type}");
                 // This will exit.
-        }       
-        
+        }
+
         debug_pop();
         return true;
     }
-    
+
     function _show_create($handler_id, &$data)
     {
         if ($handler_id == 'ajax-event-create')
@@ -377,7 +383,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
             midcom_show_style('event-create');
         }
     }
-    
+
 }
 
 ?>

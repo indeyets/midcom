@@ -203,14 +203,18 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 
-
     /**
      * Displays a task edit view.
      *
      * Note, that the task for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation task,
+     * If create privileges apply, we relocate to the index creation task
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -261,7 +265,12 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
      * Note, that the task for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation task,
+     * If create privileges apply, we relocate to the index creation task
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {

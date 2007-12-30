@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package net.nemein.shoppingcart
  */
-class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_components_handler 
+class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_components_handler
 {
 
     /**
@@ -24,9 +24,9 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
-     * _on_initialize is called by midcom on creation of the handler. 
+     * _on_initialize is called by midcom on creation of the handler.
      */
     function _on_initialize()
     {
@@ -40,9 +40,10 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
     /**
      * Handler to add an item to the cart
      *
-     * @param mixed $handler_id the array key from the requestarray
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param array $data reference to request_data
+     * @return bool Indicating success.
      */
     function _handler_additem($handler_id, $args, &$data)
     {
@@ -86,7 +87,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
 
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_additem($handler_id, &$data)
     {
@@ -97,9 +98,10 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
     /**
      * Handler for displaying the cart (i)frame contents
      *
-     * @param mixed $handler_id the array key from the requestarray
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param array $data reference to request_data
+     * @return bool Indicating success.
      */
     function _handler_shortlist($handler_id, $args, &$data)
     {
@@ -111,7 +113,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
 
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_shortlist($handler_id, &$data)
     {
@@ -126,9 +128,10 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
     /**
      * Handler for displaying the cart contents view
      *
-     * @param mixed $handler_id the array key from the requestarray
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param array $data reference to request_data
+     * @return bool Indicating success.
      */
     function _handler_contents($handler_id, $args, &$data)
     {
@@ -144,7 +147,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
 
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_contents($handler_id, &$data)
     {
@@ -159,9 +162,10 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
     /**
      * Handler for displaying the cart management view
      *
-     * @param mixed $handler_id the array key from the requestarray
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param array $data reference to request_data
+     * @return bool Indicating success.
      */
     function _handler_manage($handler_id, $args, &$data)
     {
@@ -176,6 +180,9 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
         return true;
     }
 
+	/**
+     * @param Array $data The local request data.
+	 */
     function _handler_manage_handle_post(&$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -217,7 +224,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
 
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_manage($handler_id, &$data)
     {

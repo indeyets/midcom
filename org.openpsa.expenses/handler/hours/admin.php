@@ -134,7 +134,12 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
@@ -190,7 +195,7 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
         {
             $_MIDCOM->set_26_request_metadata($this->_hour_report->revised, $this->_hour_report->guid);
         }
-        
+
         $data['view_title'] = sprintf($this->_l10n_midcom->get('create %s'), $this->_schemadb[$this->_schema]->description);
 
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
@@ -205,9 +210,14 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
     {
         midcom_show_style('hours_create');
     }
-    
+
     /**
      * Looks up an hour_report to display.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {

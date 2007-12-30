@@ -174,7 +174,12 @@ class org_maemo_devcodes_handler_code_admin extends midcom_baseclasses_component
      * Note, that the code for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation code,
+     * If create privileges apply, we relocate to the index creation code
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -199,7 +204,7 @@ class org_maemo_devcodes_handler_code_admin extends midcom_baseclasses_component
 
                 // *** FALL-THROUGH ***
 
-            case 'cancel':       
+            case 'cancel':
                 $_MIDCOM->relocate("code/{$this->_code->guid}.html");
                 // This will exit.
         }
@@ -229,7 +234,12 @@ class org_maemo_devcodes_handler_code_admin extends midcom_baseclasses_component
      * Note, that the code for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation code,
+     * If create privileges apply, we relocate to the index creation code
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {

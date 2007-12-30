@@ -29,7 +29,7 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current campaign. Any error triggers a 500.
      *
@@ -48,6 +48,11 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
 
     /**
      * Looks up a campaign to display.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_view ($handler_id, $args, &$data)
     {
@@ -60,7 +65,7 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
 
         $this->_load_datamanager();
         $this->_datamanager->autoset_storage($this->_campaign);
-        
+
         $this->_component_data['active_leaf'] = "campaign_{$this->_campaign->id}";
 
         $this->_request_data['campaign'] =& $this->_campaign;
@@ -68,7 +73,7 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
 
         // Populate the toolbar
         // TODO: Copy message-related items
-        
+
         if ($this->_campaign->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_CAMPAIGN_SMART)
         {
             //Edit query parameters button in case 1) not in edit mode 2) is smart campaign 3) can edit
@@ -109,8 +114,8 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_data-edit-table.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
-        );        
-        
+        );
+
         $this->_view_toolbar->add_item
         (
             array
@@ -146,7 +151,7 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
                 )
             );
         }
-        
+
         // Populate calendar events for the campaign
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
@@ -163,7 +168,7 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
     function _show_view ($handler_id, &$data)
     {
         $data['view_campaign'] = $this->_datamanager->get_content_html();
-        
+
         // List members of this campaign
         $qb = new org_openpsa_qbpager_direct('org_openpsa_campaign_member', 'campaign_members');
         $qb->add_constraint('campaign', '=', $data['campaign']->id);

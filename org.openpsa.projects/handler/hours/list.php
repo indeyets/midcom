@@ -65,6 +65,12 @@ class org_openpsa_projects_handler_hours_list extends midcom_baseclasses_compone
         debug_pop();
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_list($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

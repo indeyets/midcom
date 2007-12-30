@@ -105,6 +105,11 @@ class org_maemo_devcodes_handler_device_view extends midcom_baseclasses_componen
 
     /**
      * Handle actual device display
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_view ($handler_id, $args, &$data)
     {

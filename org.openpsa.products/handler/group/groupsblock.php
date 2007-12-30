@@ -92,15 +92,17 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
             $data['view_title'] = "{$data['group']->code} {$data['group']->title}";
             $data['acl_object'] = $data['group'];
         }
-        
+
         return true;
     }
 
     /**
      * The handler for the group_groupsblock article.
-     * @param mixed $handler_id the array key from the requestarray
-     * @param array $args the arguments given to the handler
      *
+     * @param mixed $handler_id the array key from the request array
+     * @param array $args the arguments given to the handler
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_groupsblock($handler_id, $args, &$data)
     {
@@ -130,13 +132,13 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
 		$data['parent_category'] = $groups[0]->code;
             }
 
-	} 
+	}
 	else if ($handler_id == 'groupsblock')
 	{
 	    $guidgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
             $guidgroup_qb->add_constraint('guid', '=', $args[0]);
             $groups = $guidgroup_qb->execute();
-	    
+
 	    if (count($groups) > 0)
 	    {
 		$categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
@@ -182,7 +184,7 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
                 {
                     $reversed = false;
                 }
-                
+
                 if ($ordering === 'metadata.score')
                 {
                     if (version_compare(mgd_version(), '1.8.2', '<'))
@@ -191,7 +193,7 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
                         $reversed = false;
                     }
                 }
-                
+
                 if (   strpos($ordering, '.')
                     && !class_exists('midgard_query_builder'))
                 {
@@ -304,13 +306,13 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
          * Set the breadcrumb text
          */
         $this->_update_breadcrumb_line();
-        
+
         // Set the active leaf
         if (   $this->_config->get('display_navigation')
             && $this->_request_data['group'])
         {
             $group =& $this->_request_data['group'];
-            
+
             // Loop as long as it is possible to get the parent group
             while ($group->guid)
             {
@@ -323,7 +325,7 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
                 $temp = $group->id;
                 $group = new org_openpsa_products_product_group_dba($group->up);
             }
-            
+
             if (isset($temp))
             {
                 // Active leaf of the topic
@@ -417,11 +419,11 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
         }
 
         $parent = $group;
-        
+
         while ($parent)
         {
             $group = $parent;
-            
+
             if ($group->guid === $root_group)
             {
                 break;
@@ -435,7 +437,7 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
             {
                 $url = "{$group->guid}/";
             }
-            
+
 
             $tmp[] = Array
             (
@@ -444,7 +446,7 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
             );
             $parent = $group->get_parent();
         }
-        
+
         // If navigation is configured to display product groups, remove the lowest level
         // parent to prevent duplicate entries in breadcrumb display
         if (   $this->_config->get('display_navigation')
@@ -452,7 +454,7 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
         {
             unset($tmp[count($tmp) - 1]);
         }
-        
+
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', array_reverse($tmp));
     }
 }

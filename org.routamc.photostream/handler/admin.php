@@ -178,7 +178,12 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
      * Note, that the photo for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation photo,
+     * If create privileges apply, we relocate to the index creation photo
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -230,7 +235,12 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
      * Note, that the photo for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation photo,
+     * If create privileges apply, we relocate to the index creation photo
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {
@@ -301,6 +311,12 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         midcom_show_style('admin_delete');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_recreate($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -314,8 +330,8 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
             //Disable limits
             // TODO: Could this be done more safely somehow
             @ini_set('memory_limit', -1);
-            @ini_set('max_execution_time', 0);        
-        
+            @ini_set('max_execution_time', 0);
+
             $data['process_photos'] = array();
             $qb = org_routamc_photostream_photo_dba::new_query_builder();
             $qb->add_constraint('node', '=', $this->_topic->id);
@@ -342,7 +358,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
             $_MIDCOM->skip_page_style = true;
         }
         $_MIDCOM->cache->content->enable_live_mode();
-        
+
         $tmp = Array();
         $tmp[] = Array
         (
@@ -350,7 +366,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
             MIDCOM_NAV_NAME => $this->_l10n->get('recreate derived images'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-        
+
         return true;
     }
 

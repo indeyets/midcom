@@ -19,6 +19,12 @@ class org_openpsa_projects_handler_frontpage extends midcom_baseclasses_componen
         parent::midcom_baseclasses_components_handler();
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_frontpage($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -57,7 +63,7 @@ class org_openpsa_projects_handler_frontpage extends midcom_baseclasses_componen
                 MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_projects_task'),
             )
         );
-        
+
         // List current projects, sort by customer
         $data['customers'] = array();
         $project_qb = org_openpsa_projects_project::new_query_builder();
@@ -72,10 +78,10 @@ class org_openpsa_projects_handler_frontpage extends midcom_baseclasses_componen
             {
                 $data['customers'][$project->customer] = array();
             }
-            
+
             $data['customers'][$project->customer][] = $project;
         }
-        
+
         $closed_qb = org_openpsa_projects_project::new_query_builder();
         $closed_qb->add_constraint('status', '=', ORG_OPENPSA_TASKSTATUS_CLOSED);
         $closed_qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECT);

@@ -24,6 +24,11 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
 
     /**
      * Lists salesprojects for either current user or all
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_report($handler_id, $args, &$data)
     {

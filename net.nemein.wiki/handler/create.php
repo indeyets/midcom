@@ -1,7 +1,7 @@
 <?php
 /**
  * @package net.nemein.wiki
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 
 /**
  * Wikipage creation handler
- * 
+ *
  * @package net.nemein.wiki
  */
 class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handler
@@ -19,7 +19,7 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
      * @var string
      */
     var $_wikiword = '';
-    
+
     /**
      * The wikipage we're creating
      *
@@ -27,7 +27,7 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
      * @access private
      */
     var $_page = null;
-    
+
     /**
      * The Controller of the article used for editing
      *
@@ -60,7 +60,7 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
      */
     var $_defaults = Array();
 
-    function net_nemein_wiki_handler_create() 
+    function net_nemein_wiki_handler_create()
     {
         parent::midcom_baseclasses_components_handler();
         $_MIDCOM->load_library('org.openpsa.relatedto');
@@ -94,7 +94,7 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
         $this->_page->topic = $this->_topic->id;
         $this->_page->title = $this->_wikiword;
         $this->_page->author = $_MIDGARD['user'];
-        
+
         // We can clear the session now
         $this->_request_data['session']->remove('wikiword');
 
@@ -114,7 +114,7 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
         }
 
         $this->_page = new net_nemein_wiki_wikipage($this->_page->id);
-        
+
         // Store old format "related to" information (TO BE DEPRECATED!)
         if (array_key_exists('related_to', $this->_request_data))
         {
@@ -187,7 +187,7 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
                     */
                         $topic->set_parameter('midcom', 'component', 'net.nemein.wiki');
                     //}
-                    
+
                     // See if we have article with same title in immediate parent
                     $qb = net_nemein_wiki_wikipage::new_query_builder();
                     $qb->add_constraint('title', '=', $folder_title);
@@ -245,11 +245,17 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
         return true;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_create($handler_id, $args, &$data)
     {
         // Initialize sessioning first
         $data['session'] = new midcom_service_session();
-        
+
         if (!array_key_exists('wikiword', $_GET))
         {
             if (!$data['session']->exists('wikiword'))
@@ -267,9 +273,9 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
             $this->_wikiword = $_GET['wikiword'];
             $data['session']->set('wikiword', $this->_wikiword);
         }
-    
+
         $this->_topic->require_do('midgard:create');
-        
+
         if ($handler_id == 'create_by_word_schema')
         {
             $this->_schema = $args[0];
@@ -283,13 +289,13 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
         {
             return false;
         }
-        
+
         $this->_check_unique_wikiword($this->_wikiword);
-                
+
         $this->_defaults['title'] = $this->_wikiword;
-        
+
         $this->_load_controller();
-        
+
         if ($handler_id == 'create_by_word_relation')
         {
             if (   mgd_is_guid($args[0])
@@ -319,7 +325,7 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
 
         switch ($this->_controller->process_form())
         {
-            case 'save':                
+            case 'save':
                 // Reindex the article
                 $indexer =& $_MIDCOM->get_service('indexer');
                 net_nemein_wiki_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
@@ -342,13 +348,13 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
         $data['view_title'] = sprintf($this->_request_data['l10n']->get('create wikipage %s'), $this->_wikiword);
         $_MIDCOM->set_pagetitle($data['view_title']);
         $data['preview_mode'] = false;
-        
+
         // DM2 form action does not include our GET parameters, store them in session for a moment
         if (class_exists('org_openpsa_relatedto_handler'))
         {
             org_openpsa_relatedto_handler::get2session();
         }
-        
+
         $tmp = Array();
         $tmp[] = Array
         (
@@ -356,17 +362,17 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
             MIDCOM_NAV_NAME => sprintf($this->_l10n->get('create wikipage %s'), $this->_wikiword),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-      
+
         // Set the help object in the toolbar
         $this->_view_toolbar->add_help_item('markdown', 'net.nemein.wiki');
-        
+
         return true;
     }
-    
+
     function _show_create($handler_id, &$data)
     {
-        $this->_request_data['controller'] =& $this->_controller;    
+        $this->_request_data['controller'] =& $this->_controller;
         midcom_show_style('view-wikipage-edit');
-    }    
+    }
 }
 ?>

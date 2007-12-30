@@ -24,6 +24,10 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
 
     /**
      * Redirector moving user to the search form of first schema
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
      */
     function _handler_search_redirect($handler_id, $args, &$data)
     {
@@ -94,7 +98,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
                 // No field defined for this parameter, skip
                 continue;
             }
-            
+
             if (strstr(',', $constraint['property']))
             {
                 $properties = explode(',', $constraint['property']);
@@ -137,7 +141,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             {
                 continue;
             }
-            
+
             $constraint['constraint'] = $this->_normalize_operator($constraint['constraint']);
 
             if (   !array_key_exists('value', $constraint)
@@ -203,7 +207,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             {
                 $reversed = false;
             }
-            
+
             if ($ordering === 'metadata.score')
             {
                 if (version_compare(mgd_version(), '1.8.2', '<'))
@@ -212,14 +216,14 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
                     $reversed = false;
                 }
             }
-            
+
             if (   strpos($ordering, '.')
                 && !class_exists('midgard_query_builder'))
             {
                 debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
                 continue;
             }
-            
+
             if ($reversed)
             {
                 $qb->add_order($ordering, 'DESC');
@@ -318,7 +322,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             {
                 $reversed = false;
             }
-            
+
             if ($ordering === 'metadata.score')
             {
                 if (version_compare(mgd_version(), '1.8.2', '<'))
@@ -327,14 +331,14 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
                     $reversed = false;
                 }
             }
-            
+
             if (   strpos($ordering, '.')
                 && !class_exists('midgard_query_builder'))
             {
                 debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
                 continue;
             }
-            
+
             if ($reversed)
             {
                 $qb->add_order($ordering, 'DESC');
@@ -343,7 +347,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             {
                 $qb->add_order($ordering);
             }
-        }    
+        }
 
         $ret = $qb->execute();
         /* FIXME: It this the right way to do this? */
@@ -489,7 +493,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             {
                 $reversed = false;
             }
-            
+
             if ($ordering === 'metadata.score')
             {
                 if (version_compare(mgd_version(), '1.8.2', '<'))
@@ -498,14 +502,14 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
                     $reversed = false;
                 }
             }
-            
+
             if (   strpos($ordering, '.')
                 && !class_exists('midgard_query_builder'))
             {
                 debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
                 continue;
             }
-            
+
             if ($reversed)
             {
                 $qb->add_order($ordering, 'DESC');
@@ -514,7 +518,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             {
                 $qb->add_order($ordering);
             }
-        }    
+        }
 
         $initial_products = $qb->execute();
 
@@ -584,7 +588,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
                         // TODO: When 1.8.4 becomes more common we can reflect this instead
                         $constraint['value'] = (int) $constraint['value'];
                     }
-                    
+
                     $qb->add_constraint($storage['location'], $constraint['constraint'], $constraint['value']);
                     if ($this->_request_data['search_type'] == 'OR')
                     {
@@ -600,7 +604,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
         {
             $qb->end_group();
         }
-        
+
         foreach ($this->_config->get('search_index_order') as $ordering)
         {
             if (preg_match('/\s*reversed?\s*/', $ordering))
@@ -612,7 +616,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             {
                 $reversed = false;
             }
-            
+
             if ($ordering === 'metadata.score')
             {
                 if (version_compare(mgd_version(), '1.8.2', '<'))
@@ -621,14 +625,14 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
                     $reversed = false;
                 }
             }
-            
+
             if (   strpos($ordering, '.')
                 && !class_exists('midgard_query_builder'))
             {
                 debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
                 continue;
             }
-            
+
             if ($reversed)
             {
                 $qb->add_order($ordering, 'DESC');
@@ -637,7 +641,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             {
                 $qb->add_order($ordering);
             }
-        }    
+        }
 
         $initial_products = $qb->execute();
 
@@ -716,6 +720,11 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
 
     /**
      * Looks up a product to display.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_search($handler_id, $args, &$data)
     {
@@ -725,7 +734,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             // Invalid schema to search for
             return false;
         }
-        
+
         if ($handler_id == 'view_search_raw')
         {
             $_MIDCOM->skip_page_style = true;
@@ -881,7 +890,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
         {
             $data['results_count'] = count($data['results']);
             $results_counter = 0;
-            
+
             midcom_show_style('product_search_result_header');
             foreach ($data['results'] as $result)
             {

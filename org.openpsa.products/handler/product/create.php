@@ -112,13 +112,13 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
     function & dm2_create_callback (&$controller)
     {
         $this->_product = new org_openpsa_products_product_dba();
-        
+
         if (isset($_POST['productGroup']))
         {
             $this->_request_data['up'] = (int) $_POST['productGroup'];
         }
         $this->_product->productGroup = $this->_request_data['up'];
-        
+
         if (! $this->_product->create())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -138,12 +138,17 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
         //Check if args[0] is a product group code.
-        if ((int)$args[0] == 0 
+        if ((int)$args[0] == 0
             && strlen($args[0]) > 1)
         {
             $qb2 = org_openpsa_products_product_group_dba::new_query_builder();
@@ -178,7 +183,7 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
         {
             $this->_request_data['up'] = (int) $args[0];
         }
-        
+
         if ($this->_request_data['up'] == 0)
         {
             $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_products_product_dba');
@@ -206,7 +211,7 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
         {
             case 'save':
                 $_MIDCOM->cache->invalidate($this->_product->guid);
-		
+
                 $_MIDCOM->relocate("product/{$this->_product->guid}/");
                 // This will exit.
 

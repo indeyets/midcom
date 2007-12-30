@@ -88,6 +88,12 @@ class org_openpsa_contacts_person_handler
         return null;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_person_new($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -201,6 +207,12 @@ class org_openpsa_contacts_person_handler
         midcom_show_style("show-person-new");
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_person($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -369,7 +381,12 @@ class org_openpsa_contacts_person_handler
         }
     }
 
-
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_person_action($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);

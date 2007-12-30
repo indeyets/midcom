@@ -103,6 +103,12 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
         return null;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -206,6 +212,12 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
         midcom_show_style("show-group-new");
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_view($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -336,6 +348,12 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
         midcom_show_style("show-group");
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_action($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

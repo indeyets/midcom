@@ -32,7 +32,7 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
         $this->_request_data['next_day'] = $this->_request_data['this_day']->nextDay('object');
         $this->_request_data['day_end'] = $this->_request_data['next_day']->getTimestamp() - 1;
     }
-    
+
     function _calculate_week()
     {
         require_once 'Calendar/Week.php';
@@ -90,6 +90,12 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
         );
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_today($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -116,7 +122,7 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
 
         $this->_calculate_day();
         $this->_calculate_week();
-        
+
         // List work hours this week
         $hours_qb = org_openpsa_projects_hour_report::new_query_builder();
         $hours_qb->add_constraint('person', '=', $_MIDGARD['user']);

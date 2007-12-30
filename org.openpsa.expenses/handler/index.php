@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package org.openpsa.expenses
  */
-class org_openpsa_expenses_handler_index  extends midcom_baseclasses_components_handler 
+class org_openpsa_expenses_handler_index  extends midcom_baseclasses_components_handler
 {
 
     /**
@@ -24,14 +24,14 @@ class org_openpsa_expenses_handler_index  extends midcom_baseclasses_components_
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
-     * _on_initialize is called by midcom on creation of the handler. 
+     * _on_initialize is called by midcom on creation of the handler.
      */
     function _on_initialize()
     {
     }
-    
+
     function _calculate_week()
     {
         require_once 'Calendar/Week.php';
@@ -48,21 +48,23 @@ class org_openpsa_expenses_handler_index  extends midcom_baseclasses_components_
         $this->_request_data['this_week']->build();
         $this->_request_data['week_days'] = $this->_request_data['this_week']->fetchAll();
     }
-    
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
-        
+
         $data['requested_time'] = time();
-        
+
         $this->_calculate_week();
-        
+
         $hours_qb = org_openpsa_projects_hour_report::new_query_builder();
         $hours_qb->add_constraint('person', '=', $_MIDGARD['user']);
         $hours_qb->add_constraint('date', '>=', $data['week_start']);
@@ -70,13 +72,13 @@ class org_openpsa_expenses_handler_index  extends midcom_baseclasses_components_
         $hours_qb->add_order('task');
         $hours_qb->add_order('date');
         $data['hours'] = $hours_qb->execute();
-        
+
         return true;
     }
-    
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_index($handler_id, &$data)
     {

@@ -47,6 +47,12 @@ class org_openpsa_projects_handler_project_new extends midcom_baseclasses_compon
         return null;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_projects_project');

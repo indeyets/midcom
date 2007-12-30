@@ -24,6 +24,11 @@ class net_nemein_simpledb_handler_view extends midcom_baseclasses_components_han
 
     /**
      * Displays an entry
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_view($handler_id, $args, &$data)
     {
@@ -31,12 +36,12 @@ class net_nemein_simpledb_handler_view extends midcom_baseclasses_components_han
         $qb->add_constraint('topic', '=', $this->_topic->id);
         $qb->add_constraint('name', '=', $args[0]);
         $entries = $qb->execute();
-        
+
         if (count($entries) == 0)
         {
             // Try getting with GUID
             $data['entry'] = new midcom_db_article($args[0]);
-            
+
             if (!$data['entry'])
             {
                 return false;
@@ -44,16 +49,16 @@ class net_nemein_simpledb_handler_view extends midcom_baseclasses_components_han
             }
         }
         else
-        {    
+        {
             $data['entry'] = $entries[0];
         }
-        
+
         $data['datamanager']->init($data['entry']);
         $data['view'] = $data['datamanager']->get_array();
-        
+
         $data['view_title'] = $data['entry']->title;
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
-        
+
         $this->_view_toolbar->add_item
         (
             array
@@ -78,7 +83,7 @@ class net_nemein_simpledb_handler_view extends midcom_baseclasses_components_han
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
             )
         );
-        
+
         $_MIDCOM->bind_view_to_object($data['entry'], $data['schema_name']);
 
         $tmp[] = Array

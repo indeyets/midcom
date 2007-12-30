@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package org.maemo.socialnews
  */
-class org_maemo_socialnews_handler_latest  extends midcom_baseclasses_components_handler 
+class org_maemo_socialnews_handler_latest  extends midcom_baseclasses_components_handler
 {
     private $nodes = array();
 
@@ -25,7 +25,7 @@ class org_maemo_socialnews_handler_latest  extends midcom_baseclasses_components
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     private function get_node($node_id)
     {
         static $nap = null;
@@ -33,23 +33,25 @@ class org_maemo_socialnews_handler_latest  extends midcom_baseclasses_components
         {
             $nap = new midcom_helper_nav();
         }
-        
+
         if (!isset($this->nodes[$node_id]))
         {
             $this->nodes[$node_id] = $nap->get_node($node_id);
         }
-        
+
         return $this->nodes[$node_id];
     }
-    
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_latest($handler_id, $args, &$data)
-    {   
+    {
         $_MIDCOM->add_link_head(
             array
             (
@@ -58,15 +60,15 @@ class org_maemo_socialnews_handler_latest  extends midcom_baseclasses_components
                 'href' => MIDCOM_STATIC_URL . "/org.maemo.socialnews/social.css",
             )
         );
-        
+
         $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
-    
+
         return true;
     }
-    
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_latest($handler_id, &$data)
     {
@@ -74,7 +76,7 @@ class org_maemo_socialnews_handler_latest  extends midcom_baseclasses_components
         if (empty($data['node_title']))
         {
             $data['node_title'] = $this->_topic->extra;
-        }    
+        }
         midcom_show_style('index_latest_header');
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic.component', '=', 'net.nehmer.blog');
@@ -91,13 +93,13 @@ class org_maemo_socialnews_handler_latest  extends midcom_baseclasses_components
                 midcom_show_style('index_latest_date');
             }
             $date = $date_id;
-            
+
             if (empty($article->url))
             {
                 // Local item
                 $article->url = $_MIDCOM->permalinks->create_permalink($article->guid);
             }
-            
+
             // TODO: Datamanager
             $data['article'] = $article;
             $data['node'] = $this->get_node($article->topic);

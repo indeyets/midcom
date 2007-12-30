@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package org.maemo.socialnews
  */
-class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_handler 
+class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_handler
 {
     private $articles = array();
     private $articles_scores = array();
@@ -27,7 +27,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     private function get_node($node_id)
     {
         static $nap = null;
@@ -35,15 +35,15 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         {
             $nap = new midcom_helper_nav();
         }
-        
+
         if (!isset($this->nodes[$node_id]))
         {
             $this->nodes[$node_id] = $nap->get_node($node_id);
         }
-        
+
         return $this->nodes[$node_id];
     }
-    
+
     private function get_initial_score($id)
     {
         $score = 0;
@@ -57,13 +57,13 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         }
         return $score;
     }
-    
+
     private function count_age($score, $timestamp)
-    {        
+    {
         $article_age = round((time() - $timestamp) / 3600);
         return $score - ($article_age * $this->_config->get('frontpage_score_hour_penalty'));
     }
-    
+
     private function seek_articles($limit)
     {
         // Get list of all articles inside the hard time limit
@@ -83,25 +83,25 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             {
                 continue;
             }
-            
+
             // Ensure all items have links
             if (empty($article->url))
             {
                 // Local item
                 $article->url = $_MIDCOM->permalinks->create_permalink($article->guid);
             }
-            
+
             if (isset($articles_by_url[$article->url]))
             {
                 // We already have item with this URL, skip
                 continue;
             }
-            
+
             $articles_by_url[$article->url] = $article->guid;
-            $articles_by_guid[$article->guid] = $article;            
+            $articles_by_guid[$article->guid] = $article;
             $this->articles_scores[$article->guid] = $this->count_age($initial_score, $article->metadata->published);
         }
-        
+
         arsort($this->articles_scores);
 
         $found = 0;
@@ -111,18 +111,18 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             {
                 break;
             }
-            
-            
+
+
             $this->articles[$guid] = $articles_by_guid[$guid];
             $found++;
         }
-        
+
     }
-    
+
     private function generate_caption($data, $getCnt)
     {
         if (strlen($data) == 0)
-        { 
+        {
             return false;
         }
 
@@ -145,47 +145,49 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             {
                 $inTag = false;
             }
-            if (   $char == '>' 
+            if (   $char == '>'
                 && $inTag)
             {
                 $inTag = false;
             }
-            
+
             if (!$inTag)
             {
                 $cnt++;
             }
-            
-            if (   !$inTag 
+
+            if (   !$inTag
                 && ($cnt >= $getCnt)
                 && preg_match('/\s/', $char))
             {
                 $ret .= '...';
                 break;
-            } 
-            else 
+            }
+            else
             {
                 $ret .= $char;
             }
         }
         return $ret;
     }
-    
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index($handler_id, $args, &$data)
     {
         // Find items matching our criteria
         $limit = (int) $this->_config->get('frontpage_show_main_items') + $this->_config->get('frontpage_show_secondary_items');
-        
+
         $this->seek_articles($limit);
-        
+
         $revised = $this->_topic->metadata->revised;
-        
+
         // Normalize articles
         foreach ($this->articles as $guid => $article)
         {
@@ -197,17 +199,17 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             {
                 $article->abstract = $this->generate_caption($article->abstract, $this->_config->get('frontpage_show_abstract_length'));
             }
-            
+
             $this->articles[$guid] = $article;
-            
+
             if ($article->metadata->revised > $revised)
             {
                 $revised = $article->metadata->revised;
             }
         }
-        
+
         $_MIDCOM->set_26_request_metadata($revised, $this->_topic->guid);
-        
+
         $_MIDCOM->add_link_head(
             array
             (
@@ -216,7 +218,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
                 'href' => MIDCOM_STATIC_URL . "/org.maemo.socialnews/social.css",
             )
         );
-        
+
         $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
 
         $data['node_title'] = $this->_config->get('socialnews_title');
@@ -224,7 +226,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         {
             $data['node_title'] = $this->_topic->extra;
         }
-        
+
         if ($handler_id == 'rss20_items')
         {
             $_MIDCOM->load_library('de.bitfolge.feedcreator');
@@ -240,10 +242,10 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
 
         return true;
     }
-    
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_index($handler_id, &$data)
     {
@@ -253,10 +255,10 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             return;
         }
         midcom_show_style('index_header');
-        
+
         $main_items = array_slice($this->articles, 0, (int) $this->_config->get('frontpage_show_main_items'));
         $secondary_items = array_slice($this->articles, (int) $this->_config->get('frontpage_show_main_items'));
-        
+
         midcom_show_style('index_main_header');
         foreach ($main_items as $article)
         {
@@ -266,7 +268,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             midcom_show_style('index_main_item');
         }
         midcom_show_style('index_main_footer');
-        
+
         if ($handler_id != 'main')
         {
             midcom_show_style('index_secondary_header');
@@ -286,7 +288,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
      * Displays the feed
      */
     function _show_rss_items($handler_id, &$data)
-    {   
+    {
         // Add each article now.
         if ($this->articles)
         {
@@ -297,6 +299,6 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             }
         }
         echo $data['feedcreator']->createFeed('RSS2.0');
-    }   
+    }
 }
 ?>

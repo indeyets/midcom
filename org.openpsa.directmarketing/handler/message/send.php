@@ -29,7 +29,7 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current message. Any error triggers a 500.
      *
@@ -46,6 +46,12 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
         }
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_send_bg($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -205,6 +211,12 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
         return $composed;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_send($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -213,7 +225,7 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
         $data['message'] = new org_openpsa_directmarketing_campaign_message($args[0]);
         $data['campaign'] = new org_openpsa_directmarketing_campaign($data['message']->campaign);
         $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";
-        
+
         $tmp = Array();
         $tmp[] = Array
         (
@@ -225,8 +237,8 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
             MIDCOM_NAV_URL => "send_test/{$data['message']->guid}/",
             MIDCOM_NAV_NAME => $this->_l10n->get('send'),
         );
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);        
-          
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+
         $this->_load_datamanager();
         $this->_datamanager->autoset_storage($data['message']);
         $data['message_obj'] =& $data['message'];

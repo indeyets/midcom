@@ -179,7 +179,7 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
         // This component uses Ajax, include the handler javascripts
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajaxutils.js");
         $this->_request_data['view'] = 'default';
-        
+
         $_MIDCOM->add_link_head
         (
             array
@@ -192,6 +192,12 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
 
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_notinitialized($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -534,6 +540,12 @@ function openPsaShowMonthSelector()
         return $event;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_month($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -626,6 +638,12 @@ function openPsaShowMonthSelector()
         midcom_show_style("show-month");
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_week($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -719,6 +737,12 @@ function openPsaShowMonthSelector()
         midcom_show_style("show-week");
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_day($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -815,7 +839,14 @@ function openPsaShowMonthSelector()
         midcom_show_style("show-day");
     }
 
-    //For playing with stuff
+    /**
+     * For playing with stuff
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+     */
     function _handler_debug($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -832,6 +863,12 @@ function openPsaShowMonthSelector()
         org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_event_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -1068,6 +1105,12 @@ function openPsaShowMonthSelector()
         }
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_event_action($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -1218,7 +1261,12 @@ function openPsaShowMonthSelector()
         }
     }
 
-
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_event($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -1329,6 +1377,11 @@ function openPsaShowMonthSelector()
         }
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+	 */
     function _handler_frontpage($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

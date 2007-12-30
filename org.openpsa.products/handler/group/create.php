@@ -139,7 +139,12 @@ class org_openpsa_products_handler_group_create extends midcom_baseclasses_compo
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
@@ -158,14 +163,14 @@ class org_openpsa_products_handler_group_create extends midcom_baseclasses_compo
             }
             $parent->require_do('midgard:create');
         }
-        
+
         $data['selected_schema'] = $args[1];
         if (!array_key_exists($data['selected_schema'], $data['schemadb_group']))
         {
             return false;
         }
         $this->_schema =& $data['selected_schema'];
-        
+
         $this->_load_controller();
 
         switch ($this->_controller->process_form())

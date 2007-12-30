@@ -85,6 +85,11 @@ class org_routamc_gallery_handler_configuration extends midcom_baseclasses_compo
 
     /**
      * Displays a config edit view.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_config($handler_id, $args, &$data)
     {

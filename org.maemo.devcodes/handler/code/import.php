@@ -56,6 +56,12 @@ class org_maemo_devcodes_handler_code_import extends midcom_baseclasses_componen
     {
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_process($handler_id, $args, &$data)
     {
         if (   !isset($_FILES['org_maemo_devcodes_import_file'])
@@ -90,7 +96,7 @@ class org_maemo_devcodes_handler_code_import extends midcom_baseclasses_componen
         }
         $this->_device->require_do('midgard:create');
         $data['device'] =& $this->_device;
-        
+
 
         $data['import_stats'] = array
         (
@@ -218,7 +224,7 @@ class org_maemo_devcodes_handler_code_import extends midcom_baseclasses_componen
             return false;
         }
         $code->set_parameter('midcom.helper.datamanager2', 'schema_name', 'code');
-        
+
 
         ++$data['import_stats']['ok'];
         return true;
@@ -231,6 +237,11 @@ class org_maemo_devcodes_handler_code_import extends midcom_baseclasses_componen
 
     /**
      * Handle actual code display
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_import($handler_id, $args, &$data)
     {

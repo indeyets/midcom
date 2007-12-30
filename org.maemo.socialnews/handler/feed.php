@@ -44,6 +44,11 @@ class org_maemo_socialnews_handler_feed extends midcom_baseclasses_components_ha
     /**
      * Shows the autoindex list. Nothing to do in the handle phase except setting last modified
      * dates.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_feed ($handler_id, $args, &$data)
     {
@@ -60,7 +65,7 @@ class org_maemo_socialnews_handler_feed extends midcom_baseclasses_components_ha
         $qb->add_order('metadata.published', 'DESC');
         $qb->set_limit($this->_config->get('rss_count'));
         $this->_issues = $qb->execute();
-        
+
         $data['node_title'] = $this->_config->get('socialnews_title');
         if (empty($data['node_title']))
         {
@@ -69,7 +74,7 @@ class org_maemo_socialnews_handler_feed extends midcom_baseclasses_components_ha
 
         // Prepare the feed (this will also validate the handler_id)
         $this->_create_feed($handler_id);
-        
+
         $_MIDCOM->set_26_request_metadata($this->_topic->metadata->revised, $this->_topic->guid);
         return true;
     }
@@ -78,8 +83,8 @@ class org_maemo_socialnews_handler_feed extends midcom_baseclasses_components_ha
      * Creates the Feedcreator instance.
      */
     function _create_feed($handler_id)
-    {    
-    
+    {
+
         $this->_feed = new UniversalFeedCreator();
         $this->_feed->title = $this->_request_data['node_title'];
         $this->_feed->link = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
@@ -93,7 +98,7 @@ class org_maemo_socialnews_handler_feed extends midcom_baseclasses_components_ha
     function _show_feed($handler_id, &$data)
     {
         $data['feedcreator'] =& $this->_feed;
-        
+
         // Add each article now.
         if ($this->_issues)
         {

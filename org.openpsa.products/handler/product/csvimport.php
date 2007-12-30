@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.products
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: groups.php 3991 2006-09-07 11:28:16Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -34,7 +34,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
             'failed_create' => 0,
             'failed_update' => 0,
         );
-        
+
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb_product']);
 
         //Disable limits
@@ -42,7 +42,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
         @ini_set('memory_limit', -1);
         @ini_set('max_execution_time', 0);
     }
-    
+
     function _datamanager_process($productdata, $object)
     {
         // Load datamanager2 for the object
@@ -69,7 +69,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
         return true;
     }
 
-    
+
     function _import_product($productdata)
     {
         // Convert fields from latin-1 to MidCOM charset (usually utf-8)
@@ -102,7 +102,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
         {
             // We didn't have group matching the code in DB. Create a new one.
             $product = new org_openpsa_products_product_dba();
-            
+
             if (!$product->create())
             {
                 debug_add("Failed to create group, reason " . mgd_errstr());
@@ -112,7 +112,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
             }
             $new = true;
         }
-        
+
         if (isset($productdata['org_openpsa_products_import_parent_group']))
         {
             // Validate and set parent group
@@ -133,12 +133,12 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
                 }
                 return false;
             }
-            
+
             $product->productGroup = $parents[0]->id;
             $groupdata['productGroup'] = $parents[0]->id;
             $product->update();
         }
-        
+
         if (!$this->_datamanager_process($productdata, $product))
         {
             if ($new)
@@ -152,9 +152,9 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
             }
             return false;
         }
-        
+
         $this->_products_processed[$product->code] = $product;
-        
+
         if ($new)
         {
             $this->_request_data['import_status']['created']++;
@@ -167,6 +167,12 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
         return $product;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_csv_select($handler_id, $args, &$data)
     {
         $this->_prepare_handler($args);
@@ -255,6 +261,12 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
         }
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_csv($handler_id, $args, &$data)
     {
         $this->_prepare_handler($args);
@@ -324,7 +336,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
                 // Some basic CSV format cleanup
                 $value = str_replace('\\n', "\n", $value);
                 $value = str_replace("\\\n", "\n", $value);
-            
+
                 // Process the row accordingly
                 $field_matching = $_POST['org_openpsa_products_import_csv_field'][$field];
                 if ($field_matching)
@@ -377,7 +389,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
                 $this->_import_product($product);
             }
         }
-        
+
         if (count($secondary_products) > 0)
         {
             foreach ($secondary_products as $product)

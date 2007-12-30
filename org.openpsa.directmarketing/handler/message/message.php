@@ -29,7 +29,7 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current message. Any error triggers a 500.
      *
@@ -48,6 +48,11 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
 
     /**
      * Looks up a message to display.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_view ($handler_id, $args, &$data)
     {
@@ -58,8 +63,8 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
             // This will 404
         }
         $this->_campaign = new org_openpsa_directmarketing_campaign($this->_message->campaign);
-        
-        $this->_component_data['active_leaf'] = "campaign_{$this->_campaign->id}";  
+
+        $this->_component_data['active_leaf'] = "campaign_{$this->_campaign->id}";
 
         $this->_load_datamanager();
         $this->_datamanager->autoset_storage($this->_message);
@@ -157,7 +162,7 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
         );
 
 
-        
+
         // Populate calendar events for the message
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 

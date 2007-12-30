@@ -75,9 +75,11 @@ class org_openpsa_products_handler_businessarea_list  extends midcom_baseclasses
 
     /**
      * The handler for the businessarea_list article.
-     * @param mixed $handler_id the array key from the requestarray
-     * @param array $args the arguments given to the handler
      *
+     * @param mixed $handler_id the array key from the request array
+     * @param array $args the arguments given to the handler
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -97,7 +99,7 @@ class org_openpsa_products_handler_businessarea_list  extends midcom_baseclasses
             $group_qb->add_order('grp.code');
             $group_qb->add_order('grp.title');
         }
-        
+
         $groups = $group_qb->execute();
         foreach ($groups as $member)
         {
@@ -254,9 +256,9 @@ class org_openpsa_products_handler_businessarea_list  extends midcom_baseclasses
                 MIDCOM_NAV_URL => "businessarea/",
                 MIDCOM_NAV_NAME => $this->_l10n->get('business areas'),
             );
-            
+
             $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-        
+
             return false;
         }
 
@@ -292,7 +294,7 @@ class org_openpsa_products_handler_businessarea_list  extends midcom_baseclasses
             MIDCOM_NAV_URL => "businessarea/",
             MIDCOM_NAV_NAME => $this->_l10n->get('business areas'),
         );
-        
+
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', array_reverse($tmp));
     }
 }

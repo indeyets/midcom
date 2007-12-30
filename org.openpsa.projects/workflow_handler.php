@@ -40,6 +40,12 @@ class org_openpsa_projects_workflow_handler
         return $task;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_action($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -331,6 +337,12 @@ class org_openpsa_projects_workflow_handler
         return;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_post($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

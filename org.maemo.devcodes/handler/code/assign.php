@@ -23,7 +23,7 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
     var $_device = null;
 
     var $_area = false;
-    
+
     var $_code_pool = array();
 
     /**
@@ -188,6 +188,11 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
 
     /**
      * Handle actual code display
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_process($handler_id, $args, &$data)
     {
@@ -264,7 +269,7 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
             MIDCOM_NAV_URL => "device/{$this->_device->guid}",
             MIDCOM_NAV_NAME => $this->_device->title,
         );
-        
+
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => "code/assign/{$this->_device->guid}",
@@ -291,6 +296,11 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
 
     /**
      * Handle actual code display
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -347,7 +357,7 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
             MIDCOM_NAV_URL => "device/{$this->_device->guid}",
             MIDCOM_NAV_NAME => $this->_device->title,
         );
-        
+
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => "code/assign/{$this->_device->guid}",
@@ -372,9 +382,9 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
         return true;
     }
 
-    /** 
+    /**
      * Used to sort the $data['applications'] array by applicants karma
-     * 
+     *
      * Done this way since we can't sort by linked metadata in 1.8.4
      */
     function sort_by_applicant_karma($a, $b)
@@ -433,6 +443,11 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
 
     /**
      * Handle actual code display
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_select_area($handler_id, $args, &$data)
     {
@@ -454,7 +469,7 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
         (
             '__ANY__' => 0,
         );
-        
+
         // Use raw collector to be able to set key property
         $mc = new midgard_collector('org_maemo_devcodes_code', 'device', $this->_device->id);
         $mc->set_key_property('area');
@@ -508,7 +523,7 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
 
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['title']}");
 
-        
+
         return true;
     }
 

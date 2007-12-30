@@ -31,7 +31,7 @@ class org_openpsa_directmarketing_handler_message_compose extends midcom_basecla
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current message. Any error triggers a 500.
      *
@@ -48,16 +48,22 @@ class org_openpsa_directmarketing_handler_message_compose extends midcom_basecla
         }
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_compose($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $_MIDCOM->auth->request_sudo();
         //Load message
         $data['message'] = new org_openpsa_directmarketing_campaign_message($args[0]);
-        
+
         $data['campaign'] = new org_openpsa_directmarketing_campaign($data['message']->campaign);
-        $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";       
-        
+        $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";
+
         $this->_load_datamanager();
         $this->_datamanager->autoset_storage($data['message']);
         $data['message_obj'] =& $data['message'];

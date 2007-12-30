@@ -1,7 +1,7 @@
 <?php
 /**
  * @package net.nemein.wiki
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 
 /**
  * Wikipage view handler
- * 
+ *
  * @package net.nemein.wiki
  */
 class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
@@ -21,7 +21,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
      * @access private
      */
     var $_page = null;
-    
+
     /**
      * The Datamanager 2 controllerof the article to display
      *
@@ -29,14 +29,14 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
      * @access private
      */
     var $_controller = null;
-    
-    function net_nemein_wiki_handler_view() 
+
+    function net_nemein_wiki_handler_view()
     {
         parent::midcom_baseclasses_components_handler();
-        
+
         $this->_request_data['page'] =& $this->_page;
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current wikipage. Any error triggers a 500.
      *
@@ -49,7 +49,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         $this->_controller->set_storage($this->_page);
         $this->_controller->process_ajax();
     }
-    
+
     function _populate_toolbar()
     {
 
@@ -62,7 +62,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
-        );     
+        );
         $this->_view_toolbar->add_item(
             array
             (
@@ -72,7 +72,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_page->can_do('midgard:update'),
             )
-        );    
+        );
         $this->_view_toolbar->add_item(
             array
             (
@@ -83,7 +83,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_ENABLED => $this->_page->can_do('midgard:delete'),
             )
         );
-        
+
         foreach (array_keys($this->_request_data['schemadb']) as $name)
         {
             if ($name == $this->_controller->datamanager->schema->name)
@@ -91,7 +91,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
                 // The page is already of this type, skip
                 continue;
             }
-            
+
             $this->_view_toolbar->add_item(
                 array
                 (
@@ -122,10 +122,10 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
                 MIDCOM_TOOLBAR_ENABLED => true,
             )
         );
-        
+
         if ($_MIDCOM->auth->user)
         {
-            $user = $_MIDCOM->auth->user->get_storage();    
+            $user = $_MIDCOM->auth->user->get_storage();
             if ($this->_page->parameter('net.nemein.wiki:watch', $user->guid))
             {
                 $this->_view_toolbar->add_item
@@ -163,17 +163,17 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
                 );
             }
         }
-        
+
         $_MIDCOM->bind_view_to_object($this->_page, $this->_controller->datamanager->schema->name);
     }
-    
+
     function _load_page($wikiword)
     {
         $qb = net_nemein_wiki_wikipage::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_topic->id);
         $qb->add_constraint('name', '=', $wikiword);
         $result = $qb->execute();
-        
+
         if (count($result) > 0)
         {
             $this->_page = $result[0];
@@ -190,7 +190,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
                 return true;
             }
         }
-        
+
         $topic_qb = midcom_db_topic::new_query_builder();
         $topic_qb->add_constraint('up', '=', $this->_topic->id);
         $topic_qb->add_constraint('name', '=', $wikiword);
@@ -200,11 +200,11 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
             // There is a topic by this URL name underneath, go there
             return false;
         }
-        
+
         // We need to get the node from NAP for safe redirect
         $nap = new midcom_helper_nav();
         $node = $nap->get_node($this->_topic->id);
-        
+
         $urlized_wikiword = midcom_generate_urlname_from_string($wikiword);
         if ($urlized_wikiword != $wikiword)
         {
@@ -212,7 +212,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
             $qb = net_nemein_wiki_wikipage::new_query_builder();
             $qb->add_constraint('topic', '=', $this->_topic->id);
             $qb->add_constraint('title', '=', $wikiword);
-            $result = $qb->execute();  
+            $result = $qb->execute();
             if (count($result) > 0)
             {
                 // This wiki page actually exists, so go there as "Permanent Redirect"
@@ -239,18 +239,24 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
             return $this->_load_page($args[0]);
         }
     }
-    
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+     */
     function _handler_view($handler_id, $args, &$data, $view_mode = true)
     {
-    
+
         if (!$this->_page)
         {
             return false;
         }
 
-        
+
         $this->_load_datamanager();
-        
+
         if ($this->_controller->datamanager->schema->name == 'redirect')
         {
             $qb = net_nemein_wiki_wikipage::new_query_builder();
@@ -264,7 +270,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
                 $_MIDCOM->relocate("edit/{$this->_page->name}/");
                 // This will exit
             }
-            
+
             if ($result[0]->topic == $this->_topic->id)
             {
                 $_MIDCOM->relocate("{$result[0]->name}/");
@@ -285,27 +291,33 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
             MIDCOM_NAV_NAME => $this->_page->title,
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-        
-        $_MIDCOM->set_pagetitle($this->_page->title); 
-        
-        $_MIDCOM->set_26_request_metadata($this->_page->metadata->revised, $this->_page->guid);       
+
+        $_MIDCOM->set_pagetitle($this->_page->title);
+
+        $_MIDCOM->set_26_request_metadata($this->_page->metadata->revised, $this->_page->guid);
         return true;
     }
-    
+
     function _show_view($handler_id, &$data)
     {
         $data['wikipage_view'] = $this->_controller->get_content_html();
         $data['wikipage'] =& $this->_page;
         $data['autogenerate_toc'] = $this->_config->get('autogenerate_toc');
         $data['display_related_to'] = $this->_config->get('display_related_to');
-        
+
         // Replace wikiwords
         // TODO: We should somehow make DM2 do this so it would also work in AJAX previews
         $data['wikipage_view']['content'] = preg_replace_callback($this->_config->get('wikilink_regexp'), array($this->_page, 'replace_wikiwords'), $data['wikipage_view']['content']);
-        
+
         midcom_show_style('view-wikipage');
     }
-    
+
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_raw($handler_id, $args, &$data, $view_mode = true)
     {
         $this->_load_page($args[0]);
@@ -315,40 +327,45 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         }
         $_MIDCOM->skip_page_style = true;
         $this->_load_datamanager();
-         
+
         return true;
     }
-    
+
     function _show_raw($handler_id, &$data)
     {
         $data['wikipage_view'] = $this->_controller->get_content_html();
         $data['autogenerate_toc'] = $this->_config->get('autogenerate_toc');
         $data['display_related_to'] = $this->_config->get('display_related_to');
-                        
+
         // Replace wikiwords
         $data['wikipage_view']['content'] = preg_replace_callback($this->_config->get('wikilink_regexp'), array($this->_page, 'replace_wikiwords'), $data['wikipage_view']['content']);
-                
+
         midcom_show_style('view-wikipage-raw');
     }
-    
+
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+	 */
     function _handler_subscribe($handler_id, $args, &$data)
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST')
         {
             $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, 'Only POST requests are allowed here.');
         }
-        
+
         $_MIDCOM->auth->require_valid_user();
-        
+
         if (!$this->_load_page($args[0]))
         {
             return false;
         }
-        
+
         $_MIDCOM->auth->request_sudo('net.nemein.wiki');
-        
+
         $user = $_MIDCOM->auth->user->get_storage();
-        
+
         if (   array_key_exists('target', $_POST)
             && $_POST['target'] == 'folder')
         {
@@ -361,7 +378,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
             $object = $this->_page;
             $target = sprintf($this->_request_data['l10n']->get('page %s'), $this->_page->title);
         }
-        
+
         if (array_key_exists('subscribe', $_POST))
         {
             // Subscribe to page
@@ -374,19 +391,24 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
             $object->parameter('net.nemein.wiki:watch', $user->guid, '');
             $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('net.nemein.wiki'), sprintf($this->_request_data['l10n']->get('unsubscribed from changes in %s'), $target), 'ok');
         }
-        
+
         $_MIDCOM->auth->drop_sudo();
-        
+
         // Redirect to editing
         if ($this->_page->name == 'index')
         {
             $_MIDCOM->relocate("");
         }
-            $_MIDCOM->relocate("{$this->_page->name}/");        
+            $_MIDCOM->relocate("{$this->_page->name}/");
         // This will exit
     }
-    
-    
+
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_whatlinks($handler_id, $args, &$data, $view_mode = true)
     {
         $this->_load_page($args[0]);
@@ -394,26 +416,26 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         {
             return false;
         }
-        
+
         $this->_load_datamanager();
-        
+
         $this->_populate_toolbar();
         $this->_view_toolbar->hide_item("whatlinks/{$this->_page->name}/");
-        
+
         $qb = net_nemein_wiki_link_dba::new_query_builder();
         $qb->add_constraint('topage', '=', $this->_page->title);
         $data['wikilinks'] = $qb->execute();
-         
+
         return true;
     }
-    
+
     function _show_whatlinks($handler_id, &$data)
     {
         $data['wikipage_view'] = $this->_controller->get_content_html();
-        
+
         // Replace wikiwords
         $data['wikipage_view']['content'] = preg_replace_callback($this->_config->get('wikilink_regexp'), array($this->_page, 'replace_wikiwords'), $data['wikipage_view']['content']);
-                
+
         midcom_show_style('view-wikipage-whatlinks');
     }
 }

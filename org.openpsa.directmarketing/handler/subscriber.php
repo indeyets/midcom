@@ -17,7 +17,13 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+     */
     function _handler_list($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -74,7 +80,7 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
 
         return true;
     }
-    
+
     function _show_list($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -157,6 +163,12 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
         debug_pop();
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_unsubscribe($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -200,7 +212,13 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
         }
         debug_pop();
     }
-    
+
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_unsubscribe_ajax($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -232,12 +250,18 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
         $message = new org_openpsa_helpers_ajax();
         $message->simpleReply($this->_request_data['unsubscribe_status'], "Unsubscribe failed");
         // This will exit
-        
+
         return true;
     }
 
     function _show_unsubscribe_ajax($handler_id, &$data)  { }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_unsubscribe_all($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);

@@ -704,6 +704,12 @@ class org_routamc_photostream_handler_api_metaweblog extends midcom_baseclasses_
         return new XML_RPC_Response(new XML_RPC_Value($response, 'array'));
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_rsd($handler_id, $args, &$data)
     {
         //Content-Type
@@ -719,6 +725,12 @@ class org_routamc_photostream_handler_api_metaweblog extends midcom_baseclasses_
         midcom_show_style('rsd');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_server($handler_id, $args, &$data)
     {
         if (!$this->_config->get('api_metaweblog_enable'))

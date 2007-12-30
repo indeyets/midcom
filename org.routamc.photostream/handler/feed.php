@@ -48,6 +48,11 @@ class org_routamc_photostream_handler_feed extends org_routamc_photostream_handl
      * This rather sneaky dispatcher is able to create a feed from any
      * request_switch supported by org_routamc_photostream_handler_list
      * that populates $data['photos'] (with a little help from org_routamc_photostream_viewer)
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_dispatcher($handler_id, $args, &$data)
     {
@@ -63,7 +68,7 @@ class org_routamc_photostream_handler_feed extends org_routamc_photostream_handl
         $data['parent_handler_id'] = preg_replace('/^feed[0-9]*:/', '', $handler_id);
         if (!isset($data['request_switch'][$data['parent_handler_id']]))
         {
-            // Fatal, cannot solve haandler to use to get the actual data
+            // Fatal, cannot solve handler to use to get the actual data
             debug_add("Cannot find handler_id '{$data['parent_handler_id']}'", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;

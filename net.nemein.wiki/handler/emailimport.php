@@ -1,7 +1,7 @@
 <?php
 /**
  * @package net.nemein.wiki
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 
 /**
  * E-Mail import handler
- * 
+ *
  * @package net.nemein.wiki
  */
 class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_handler
@@ -19,16 +19,22 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+     */
     function _handler_emailimport($handler_id, $args, &$data)
     {
         //Content-Type
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->cache->content->content_type('text/plain');
-        
+
         //Load o.o.mail && relatedto
         $_MIDCOM->load_library('org.openpsa.mail');
-        
+
         //Make sure we have the components we use and the Mail_mimeDecode package
         if (!class_exists('org_openpsa_mail'))
         {
@@ -42,15 +48,15 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'library org.openpsa.relatedto could not be loaded.');
             // This will exit.
         }
-        
+
         $decoder = new org_openpsa_mail();
-        
+
         if (!class_exists('Mail_mimeDecode'))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Cannot decode attachments, aborting.');
             // This will exit.
         }
-        
+
         //Make sure the message_source is POSTed
         if (   !array_key_exists('message_source', $_POST)
             || empty($_POST['message_source']))
@@ -59,17 +65,17 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
             // This will exit.
         }
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $decoder = new org_openpsa_mail();
         $decoder->body = $_POST['message_source'];
         $decoder->mime_decode();
 
-        /*        
+        /*
         echo "DEBUG: decoder->body: \n===\n" . sprint_r($decoder->body) . "===\n";
         echo "DEBUG: decoder->html_body: \n===\n" . sprint_r($decoder->html_body) . "===\n";
         echo "DEBUG: decoder->headers: \n===\n" . sprint_r($decoder->headers) . "===\n";
         */
-        
+
         //Parse email addresses
         $regex = '/<?([a-zA-Z0-9_.-]+?@[a-zA-Z0-9_.-]+)>?[ ,]?/';
         $emails = array();
@@ -100,7 +106,7 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
                 $from = $email;
             }
         }
-        
+
         //echo "DEBUG: emails: \n===\n" . sprint_r($emails) . "===\n";
 
         $_MIDCOM->auth->request_sudo();
@@ -223,7 +229,7 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
         {
             $wikipage->update();
         }
-        
+
         //Create related_to links to persons based on the email addresses
         reset ($emails);
         foreach ($emails as $email)
@@ -293,23 +299,23 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
                 }
             }
         }
-        
+
         //echo "DEBUG: wikipage (title format '{$title_format}'): \n===\n" . sprint_r($wikipage) . "===\n";
 
         //Give us output from MDA
         //echo "ERROR: just debugging\n";
-        
+
         $_MIDCOM->auth->drop_sudo();
         debug_pop();
         return true;
     }
-    
+
     function _show_emailimport($handler_id, &$data)
     {
         //All done
         echo "OK\n";
     }
-    
+
     function emailimport_find_person($email, $prefer_user = true)
     {
         $qb = midcom_db_person::new_query_builder();
@@ -332,7 +338,7 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
         }
         return $person;
     }
-    
+
     function emailimport_find_group($email)
     {
         //TODO: find possible groups based on the persons email
@@ -360,7 +366,7 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
             debug_add("Found group #{$group->id} ({$group->official})");
         }
         */
-        
+
         return false;
     }
 

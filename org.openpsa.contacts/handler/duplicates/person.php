@@ -19,6 +19,12 @@ class org_openpsa_contacts_handler_duplicates_person extends midcom_baseclasses_
         parent::midcom_baseclasses_components_handler();
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_sidebyside($handler_id, $args, &$data)
     {
         $this->_component_data['active_leaf'] = 'persons_merge';

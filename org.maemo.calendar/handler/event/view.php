@@ -7,7 +7,7 @@
  */
 
 /**
- * 
+ *
  * @package org.maemo.calendar
  */
 class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_components_handler
@@ -35,7 +35,7 @@ class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_componen
      * @access private
      */
     var $_controller = null;
-    
+
     /**
      * Simple default constructor.
      */
@@ -57,12 +57,12 @@ class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_componen
         {
             return false;
         }
-        
+
         if ($hacked)
         {
             return $event->return_as_dm2_hacked();
         }
-        
+
         return $event;
     }
 
@@ -112,10 +112,16 @@ class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_componen
         $this->_controller->set_storage($this->_event);
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_show($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
-        
+
         if ($handler_id == 'ajax-event-show')
         {
             $_MIDCOM->skip_page_style = true;
@@ -128,7 +134,7 @@ class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_componen
         }
 
         $this->_load_controller();
-        
+
         // Muck schema on private events
         if (!$this->_event->can_do('org.openpsa.calendar:read'))
         {
@@ -145,9 +151,9 @@ class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_componen
                 }
             }
         }
-        
+
         $this->_prepare_request_data();
-        
+
         // Load the document to datamanager
         //$this->_controller->set_storage($this->_event);
         // if (! $this->_controller->initialize($this->_event))
@@ -155,15 +161,15 @@ class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_componen
         //     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
         //     // This will exit.
         // }
-        
+
         return true;
     }
-    
+
     function _show_show($handler_id, &$data)
     {
         if ($handler_id == 'ajax-event-show')
         {
-            midcom_show_style('event-show-ajax');            
+            midcom_show_style('event-show-ajax');
         }
         else
         {

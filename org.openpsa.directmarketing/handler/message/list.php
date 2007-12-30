@@ -24,7 +24,7 @@ class org_openpsa_directmarketing_handler_message_list extends midcom_baseclasse
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current message. Any error triggers a 500.
      *
@@ -43,6 +43,11 @@ class org_openpsa_directmarketing_handler_message_list extends midcom_baseclasse
 
     /**
      * Looks up a message to display.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list ($handler_id, $args, &$data)
     {
@@ -50,7 +55,7 @@ class org_openpsa_directmarketing_handler_message_list extends midcom_baseclasse
         $this->_list_type = $args[0];
         $this->_campaign = new org_openpsa_directmarketing_campaign($args[1]);
         $this->_component_data['active_leaf'] = "campaign_{$this->_campaign->id}";
-        
+
         if (   !is_object($this->_campaign)
             || !$this->_campaign->id)
         {

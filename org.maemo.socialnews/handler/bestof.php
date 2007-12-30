@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package org.maemo.socialnews
  */
-class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_handler 
+class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_handler
 {
     private $articles = array();
     private $articles_scores = array();
@@ -27,15 +27,15 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Load the paged query builder
      */
     function _on_initialize()
-    {   
+    {
         $_MIDCOM->load_library('org.openpsa.qbpager');
     }
-    
+
     private function get_node($node_id)
     {
         static $nap = null;
@@ -43,19 +43,19 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
         {
             $nap = new midcom_helper_nav();
         }
-        
+
         if (!isset($this->nodes[$node_id]))
         {
             $this->nodes[$node_id] = $nap->get_node($node_id);
         }
-        
+
         return $this->nodes[$node_id];
     }
-    
+
     private function generate_caption($data, $getCnt)
     {
         if (strlen($data) == 0)
-        { 
+        {
             return false;
         }
 
@@ -78,37 +78,39 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
             {
                 $inTag = false;
             }
-            if (   $char == '>' 
+            if (   $char == '>'
                 && $inTag)
             {
                 $inTag = false;
             }
-            
+
             if (!$inTag)
             {
                 $cnt++;
             }
-            
-            if (   !$inTag 
+
+            if (   !$inTag
                 && ($cnt >= $getCnt)
                 && preg_match('/\s/', $char))
             {
                 $ret .= '...';
                 break;
-            } 
-            else 
+            }
+            else
             {
                 $ret .= $char;
             }
         }
         return $ret;
     }
-    
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index($handler_id, $args, &$data)
     {
@@ -121,18 +123,18 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
         foreach ($scores as $score)
         {
             $article = new midcom_db_article($score->article);
-            
+
             if (   empty($article)
                 || empty($article->metadata->published))
             {
                 // Skip this one
                 continue;
             }
-            
+
             $this->articles[$article->guid] = $article;
             $this->articles_scores[$article->guid] = $score->score;
         }
-        
+
         // Normalize articles
         foreach ($this->articles as $guid => $article)
         {
@@ -144,16 +146,16 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
             {
                 $article->abstract = $this->generate_caption($article->abstract, $this->_config->get('frontpage_show_abstract_length'));
             }
-            
+
             if (empty($article->url))
             {
                 // Local item
                 $article->url = $_MIDCOM->permalinks->create_permalink($article->guid);
             }
-            
+
             $this->articles[$guid] = $article;
         }
-        
+
         $_MIDCOM->add_link_head(
             array
             (
@@ -162,26 +164,26 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
                 'href' => MIDCOM_STATIC_URL . "/org.maemo.socialnews/social.css",
             )
         );
-                
+
         $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
-        
+
         $title = $this->_config->get('socialnews_title');
         if (empty($title))
         {
             $title = $this->_topic->extra;
         }
-        
+
         $data['view_title'] = sprintf($this->_l10n->get('best of %s'), $title);
         $_MIDCOM->set_pagetitle($data['view_title']);
 
         $this->_component_data['active_leaf'] = "{$this->_topic->id}_BEST";
-    
+
         return true;
     }
-    
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_index($handler_id, &$data)
     {

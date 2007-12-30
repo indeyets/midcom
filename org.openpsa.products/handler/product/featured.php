@@ -22,16 +22,16 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function _list_products($show_products = 1,$product_group = '')
     {
         $product_qb = org_openpsa_products_product_dba::new_query_builder();
         $product_qb->set_limit($show_products);
-	
+
         $product_qb->add_constraint('parameter.name', '=', 'featured_application_date');
         $product_qb->add_constraint('parameter.value', '<', time());
         $product_qb->add_constraint('parameter.value', '>', 0);
-        $product_qb->add_order('parameter.value', 'DESC');	 
+        $product_qb->add_order('parameter.value', 'DESC');
 
         if ($product_group != '')
         {
@@ -69,7 +69,7 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
 	        }
 
         }
-    
+
         $product_qb->add_constraint('start', '<=', time());
         $product_qb->begin_group('OR');
             /*
@@ -82,22 +82,24 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
 
         $this->_request_data['products'] = $product_qb->execute();
         $this->_request_data['product_group'] = $product_group;
-	
+
         if ($show_products > 1)
         {
 	    /***
 	     * Set the breadcrumb text
 	     */
 	    $this->_update_breadcrumb_line();
-					      
+
         }
     }
-    
+
     /**
      * The handler for the group_list article.
-     * @param mixed $handler_id the array key from the requestarray
-     * @param array $args the arguments given to the handler
      *
+     * @param mixed $handler_id the array key from the request array
+     * @param array $args the arguments given to the handler
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_featured($handler_id, $args, &$data)
     {
@@ -116,7 +118,7 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
 
         // Prepare datamanager
         $data['datamanager_product'] = new midcom_helper_datamanager2_datamanager($data['schemadb_product']);
-        
+
         /**
          * change the pagetitle. (must be supported in the style)
          */
@@ -172,17 +174,19 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
         }
 
     }
-    
+
     /**
      * The handler for the group_list article.
-     * @param mixed $handler_id the array key from the requestarray
-     * @param array $args the arguments given to the handler
      *
+     * @param mixed $handler_id the array key from the request array
+     * @param array $args the arguments given to the handler
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_feed($handler_id, $args, &$data)
-    {   
+    {
         $_MIDCOM->cache->content->content_type("text/xml");
-        $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");        
+        $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");
         $_MIDCOM->skip_page_style = true;
 
         if ($handler_id == 'featured_products_intree')
@@ -195,12 +199,12 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
             $show_products = (int) $args[0];
             $product_group = '';
         }
-    
+
         $this->_list_products($this->_config->get('show_items_in_feed'),$product_group);
 
         // Prepare datamanager
         $data['datamanager_product'] = new midcom_helper_datamanager2_datamanager($data['schemadb_product']);
-        
+
         /**
          * change the pagetitle. (must be supported in the style)
          */
@@ -249,7 +253,7 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
                 midcom_show_style('feed_products_item');
             }
         }
-        
+
         $data['rss'] = $data['rss_creator']->createFeed('RSS2.0');
         echo $data['rss'];
 

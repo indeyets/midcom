@@ -1,7 +1,7 @@
 <?php
 /**
  * @package org.openpsa.products
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: groups.php 3991 2006-09-07 11:28:16Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -33,7 +33,7 @@ class org_openpsa_products_handler_group_csvimport extends midcom_baseclasses_co
             'created_new' => 0,
             'failed_create' => 0,
         );
-        
+
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb_group']);
 
         //Disable limits
@@ -41,7 +41,7 @@ class org_openpsa_products_handler_group_csvimport extends midcom_baseclasses_co
         @ini_set('memory_limit', -1);
         @ini_set('max_execution_time', 0);
     }
-    
+
     function _datamanager_process($groupdata, $object)
     {
         // Load datamanager2 for the object
@@ -68,7 +68,7 @@ class org_openpsa_products_handler_group_csvimport extends midcom_baseclasses_co
         return true;
     }
 
-    
+
     function _import_group($groupdata)
     {
         // Convert fields from latin-1 to MidCOM charset (usually utf-8)
@@ -76,7 +76,7 @@ class org_openpsa_products_handler_group_csvimport extends midcom_baseclasses_co
         {
             $groupdata[$key] = iconv('ISO-8859-1', $_MIDCOM->i18n->get_current_charset(), $value);
         }
-    
+
         $group = null;
         $new = false;
         if (isset($groupdata['code']))
@@ -96,7 +96,7 @@ class org_openpsa_products_handler_group_csvimport extends midcom_baseclasses_co
         {
             // We didn't have group matching the code in DB. Create a new one.
             $group = new org_openpsa_products_product_group_dba();
-            
+
             if (!$group->create())
             {
                 debug_add("Failed to create group, reason " . mgd_errstr());
@@ -107,7 +107,7 @@ class org_openpsa_products_handler_group_csvimport extends midcom_baseclasses_co
             $new = true;
             $this->_request_data['import_status']['created_new']++;
         }
-        
+
         if (isset($groupdata['org_openpsa_products_import_parent_group']))
         {
             // Validate and set parent group
@@ -121,12 +121,12 @@ class org_openpsa_products_handler_group_csvimport extends midcom_baseclasses_co
                 $this->_request_data['import_status']['failed_create']++;
                 return false;
             }
-            
+
             $group->up = $parents[0]->id;
             $groupdata['up'] = $parents[0]->id;
             $group->update();
         }
-        
+
         if (!$this->_datamanager_process($groupdata, $group))
         {
             if ($new)
@@ -136,12 +136,18 @@ class org_openpsa_products_handler_group_csvimport extends midcom_baseclasses_co
             }
             return false;
         }
-        
+
         $this->_groups_processed[$group->code] = $group;
 
         return $group;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_csv_select($handler_id, $args, &$data)
     {
         $this->_prepare_handler($args);
@@ -230,6 +236,12 @@ class org_openpsa_products_handler_group_csvimport extends midcom_baseclasses_co
         }
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_csv($handler_id, $args, &$data)
     {
         $this->_prepare_handler($args);
@@ -347,7 +359,7 @@ class org_openpsa_products_handler_group_csvimport extends midcom_baseclasses_co
                 $this->_import_group($group);
             }
         }
-        
+
         if (count($secondary_groups) > 0)
         {
             foreach ($secondary_groups as $group)

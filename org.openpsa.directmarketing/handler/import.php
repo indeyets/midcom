@@ -504,6 +504,12 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
         }
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_index($handler_id, $args, &$data)
     {
         $this->_prepare_handler($args);
@@ -520,6 +526,12 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
         midcom_show_style('show-import-index');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_simpleemails($handler_id, $args, &$data)
     {
         $this->_prepare_handler($args);
@@ -593,6 +605,12 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
         }
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_vcards($handler_id, $args, &$data)
     {
         $this->_prepare_handler($args);
@@ -735,7 +753,12 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
         }
     }
 
-
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_csv_select($handler_id, $args, &$data)
     {
         $this->_prepare_handler($args);
@@ -828,6 +851,12 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
         }
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_csv($handler_id, $args, &$data)
     {
         $this->_prepare_handler($args);

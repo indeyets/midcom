@@ -72,6 +72,11 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
      * iCal feed of uses events
      *
      * HTTP-Basic authenticated, requires valid user, normal ACL restrictions apply
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_user_events($handler_id, $args, &$data)
     {
@@ -142,6 +147,11 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
      * Publicly available iCal feed indicating user when is busy
      *
      * Most values are stripped before display
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_user_busy($handler_id, $args, &$data)
     {

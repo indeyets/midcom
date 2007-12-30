@@ -15,7 +15,7 @@
 class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_components_handler
 {
     var $_calendar_type;
-    
+
     /**
      * The resource which we're reserving
      *
@@ -55,7 +55,7 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
      * @access private
      */
     var $_schemadb = null;
-    
+
     /**
      * Schema to use for event display
      *
@@ -63,7 +63,7 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
      * @access private
      */
     var $_schema = null;
-    
+
     /**
      * Simple default constructor.
      */
@@ -88,7 +88,7 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
     function _on_initialize()
     {
         $_MIDCOM->auth->require_valid_user();
-        
+
         $session =& new midcom_service_session('org.maemo.calendar');
         if ($session->exists('active_type'))
         {
@@ -134,7 +134,7 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
     {
         $active_timezone = org_maemo_calendar_common::active_timezone();
         $utc_timezone = timezone_open("UTC");
-        
+
         if (   empty($_POST)
             && is_object($this->_event)
             && !$override_start)
@@ -155,26 +155,26 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
             debug_add("this->_event->start after timezone change: " . $this->_event->start);
         }
         else
-        {            
+        {
             debug_add("Make sure the start/end times are saved with UTC timezone");
-            
+
             $start = null;
             $end = null;
-            
+
             if (   isset($_POST['start'])
                 && isset($_POST['end']))
             {
                 $start = $_POST['start'];
                 $end = $_POST['end'];
             }
-            
+
             if (   $override_start
                 && $override_end)
             {
                 $start = $override_start;
                 $end = $override_end;
             }
-                        
+
             $event_start = strtotime($start);
             debug_add("event_start before timezone change: " . $event_start . " (" . date("H:i:s",$event_start) . ")");
             $event_end = strtotime($end);
@@ -189,36 +189,36 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
             $start_offset = $event_start_dt->format('Z');//$active_timezone->getOffset($event_start);
             debug_add("offset {$start_offset} (in hours): " . ($start_offset/(60*60)));
             $end_offset = $event_end_dt->format('Z');//$active_timezone->getOffset($event_end);
-            
+
             if ($start_offset > 0)
             {
                 $event_start = $event_start - $start_offset;
-                $event_end = $event_end - $end_offset;                
+                $event_end = $event_end - $end_offset;
             }
             else
             {
                 $event_start = $event_start + $start_offset;
-                $event_end = $event_end + $end_offset;                
+                $event_end = $event_end + $end_offset;
             }
-            
+
             debug_add("event_start after timezone change: " . $event_start . " (" . date("H:i:s",$event_start) . ")");
-            
+
             $_POST['start_ts'] = $event_start;
-            
+
             $_POST['start'] = date("Y-m-d H:i:s", $event_start);
             $_POST['end'] = date("Y-m-d H:i:s", $event_end);
-        }        
+        }
     }
-    
+
     function _participant_hack()
     {
         if (! is_object($this->_event))
         {
             return false;
         }
-        
+
         debug_print_r('Event participants', $this->_event->participants);
-        
+
         // if (isset($_POST['participants']))
         // {
             $participants = array();
@@ -228,7 +228,7 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
             }
             $this->_event->participants = serialize($participants);
 
-            debug_print_r('Event participants after serialize', $this->_event->participants);            
+            debug_print_r('Event participants after serialize', $this->_event->participants);
         // }
     }
 
@@ -238,33 +238,38 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
      * Note, that the event for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation event,
+     * If create privileges apply, we relocate to the index creation event
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         if ($handler_id == 'ajax-event-edit')
         {
             $_MIDCOM->skip_page_style = true;
         }
-        
+
         $this->_event = new org_maemo_calendar_event($args[0]);
         if (! $this->_event)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The event {$args[0]} was not found.");
             // This will exit.
         }
-        
+
         $this->_event->require_do('midgard:update');
-        
+
         /*
          * TODO: Get rid of this ugly hack, by changing few things on event schema, etc
         */
         $this->_participant_hack();
-        
+
         $this->_timezone_hack();
-        
+
         $this->_load_controller();
 
         // TODO: Check for resourcing conflict
@@ -288,16 +293,22 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
 
         $this->_prepare_request_data($handler_id);
         $_MIDCOM->bind_view_to_object($this->_event, $this->_request_data['controller']->datamanager->schema->name);
-        
+
         debug_pop();
-        
+
         return true;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_move($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         if ($handler_id == 'ajax-event-move')
         {
             $_MIDCOM->skip_page_style = true;
@@ -309,20 +320,20 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The event {$args[0]} was not found.");
             // This will exit.
         }
-        
+
         $this->_event->require_do('midgard:update');
-        
+
         /*
          * TODO: Get rid of this ugly hack, by changing few things on event schema, etc
         */
         $this->_participant_hack();
-        
+
         $this->_timezone_hack();
 
         $event_length = $this->_event->end - $this->_event->start;
-        $this->_event->start = $args[1] + 1;        
+        $this->_event->start = $args[1] + 1;
         $this->_event->end = $event_length + $this->_event->start;
-        
+
         $this->_load_controller();
 
         // TODO: Check for resourcing conflict
@@ -355,12 +366,12 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
 
         $this->_prepare_request_data($handler_id);
         $_MIDCOM->bind_view_to_object($this->_event, $this->_request_data['controller']->datamanager->schema->name);
-        
+
         debug_pop();
-        
-        return true;        
+
+        return true;
     }
-    
+
     /**
      * Shows the loaded event.
      */
@@ -372,10 +383,10 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
         }
         else
         {
-            midcom_show_style('event-edit');            
+            midcom_show_style('event-edit');
         }
     }
-    
+
     function _show_move($handler_id, &$data)
     {
         if ($handler_id == 'ajax-event-move')
@@ -384,8 +395,8 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
         }
         else
         {
-            midcom_show_style('event-edit');            
-        }        
+            midcom_show_style('event-edit');
+        }
     }
 
     /**
@@ -394,32 +405,37 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
      * Note, that the event for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation event,
+     * If create privileges apply, we relocate to the index creation event
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         if ($handler_id == 'ajax-event-delete')
         {
             $_MIDCOM->skip_page_style = true;
         }
-        
+
         $this->_event = new org_maemo_calendar_event($args[0]);
         if (! $this->_event)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The event {$args[0]} was not found.");
             // This will exit.
         }
-        
+
         $this->_event->require_do('midgard:delete');
-        
+
         $this->_load_controller();
 
         if (array_key_exists('org_maemo_calendar_event_deleteok', $_REQUEST))
         {
             $data['deleted'] = $this->_event->guid;
-            
+
             // Deletion confirmed.
             if (! $this->_event->delete())
             {
@@ -445,9 +461,9 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
             $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_event->title}");
             $this->_update_breadcrumb_line($handler_id);
         }
-        
+
         debug_pop();
-        
+
         return true;
     }
 

@@ -453,7 +453,12 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation campaign,
+     * If create privileges apply, we relocate to the index creation campaign
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit_query($handler_id, $args, &$data)
     {
@@ -615,7 +620,12 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation campaign,
+     * If create privileges apply, we relocate to the index creation campaign
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit_query_advanced($handler_id, $args, &$data)
     {
@@ -718,7 +728,12 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation campaign,
+     * If create privileges apply, we relocate to the index creation campaign
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -771,7 +786,12 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation campaign,
+     * If create privileges apply, we relocate to the index creation campaign
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {

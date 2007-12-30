@@ -7,10 +7,10 @@
  */
 
 /**
- * 
+ *
  * @package net.nemein.updatenotification
  */
-class net_nemein_updatenotification_handler_index  extends midcom_baseclasses_components_handler 
+class net_nemein_updatenotification_handler_index  extends midcom_baseclasses_components_handler
 {
 
     /**
@@ -20,19 +20,21 @@ class net_nemein_updatenotification_handler_index  extends midcom_baseclasses_co
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
-     * _on_initialize is called by midcom on creation of the handler. 
+     * _on_initialize is called by midcom on creation of the handler.
      */
     function _on_initialize()
     {
     }
-    
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
     {
@@ -47,12 +49,12 @@ class net_nemein_updatenotification_handler_index  extends midcom_baseclasses_co
         $this->_request_data['preferred_notification_methods'] = $this->_config->get('preferred_notification_methods');
 
         $this->_update_breadcrumb_line($handler_id);
-        
+
         $title = $this->_l10n_midcom->get('index');
 
         $_MIDCOM->set_pagetitle(":: {$title}");
-        
-        
+
+
         $root_topic_to_display = new midcom_db_topic($this->_request_data['display_root_topic']);
         if($root_topic_to_display->id != 0)
         {
@@ -71,7 +73,7 @@ class net_nemein_updatenotification_handler_index  extends midcom_baseclasses_co
 
         return true;
     }
-    
+
 
     function _show_index($handler_id, &$data)
     {
@@ -91,7 +93,7 @@ class net_nemein_updatenotification_handler_index  extends midcom_baseclasses_co
         midcom_show_style('index-item-level-end');
         midcom_show_style('index-footer');
     }
-    
+
     function _show_node_childs($parent)
     {
         $this->_request_data['levels_shown']++;
@@ -100,7 +102,7 @@ class net_nemein_updatenotification_handler_index  extends midcom_baseclasses_co
         $qb->add_order('score');
         $qb->add_order('name');
         $this->_request_data['root_nodes'] = $qb->execute();
-        
+
         foreach($this->_request_data['root_nodes'] as $node)
         {
             $this->_request_data['node'] = $node;
@@ -114,7 +116,7 @@ class net_nemein_updatenotification_handler_index  extends midcom_baseclasses_co
         }
         $this->_request_data['levels_shown']--;
     }
-    
+
     /**
      * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.

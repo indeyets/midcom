@@ -19,6 +19,12 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
         parent::midcom_baseclasses_components_handler();
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_add($handler_id, $args, &$data)
     {
         $user =& $_MIDCOM->auth->user->get_storage();
@@ -55,6 +61,12 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
         $_MIDCOM->relocate("{$prefix}person/{$target->guid}/");
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_remove($handler_id, $args, &$data)
     {
         $user =& $_MIDCOM->auth->user->get_storage();
@@ -89,11 +101,17 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
         $_MIDCOM->relocate("{$prefix}person/{$target->guid}/");
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_list($handler_id, $args, &$data)
-    {        
+    {
         if ($handler_id == 'buddylist_xml')
         {
-            $_MIDCOM->auth->require_valid_user('basic');        
+            $_MIDCOM->auth->require_valid_user('basic');
             $_MIDCOM->skip_page_style = true;
             $_MIDCOM->cache->content->content_type("text/xml");
             $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");
@@ -102,7 +120,7 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
         {
             $_MIDCOM->auth->require_valid_user();
         }
-        
+
         $user = $_MIDCOM->auth->user->get_storage();
 
         $this->_request_data['buddylist'] = array();
@@ -133,19 +151,19 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
                 $datamanager = new midcom_helper_datamanager2_datamanager($data['schemadb_person']);
                 $xml = '<buddies></buddies>';
                 $simplexml = simplexml_load_string($xml);
-                
+
                 foreach ($data['buddylist'] as $person)
                 {
                     $buddy = $simplexml->addChild('buddy');
                     $buddy->addAttribute('guid', $person->guid);
                     $datamanager->autoset_storage($person);
                     $person_data = $datamanager->get_content_xml();
-                    
+
                     foreach ($person_data as $key => $value)
                     {
                         $buddy->addChild($key, $value);
                     }
-                    
+
                     $qb = midcom_db_member::new_query_builder();
                     $qb->add_constraint('uid', '=', $person->id);
                     $memberships = $qb->execute();
@@ -157,7 +175,7 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
                         break;
                     }
                 }
-                
+
                 echo $simplexml->asXml();
             }
             else

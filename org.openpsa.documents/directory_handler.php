@@ -55,6 +55,12 @@ class org_openpsa_documents_directory_handler
         return null;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_directory_edit($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['directory']);
@@ -105,6 +111,12 @@ class org_openpsa_documents_directory_handler
         midcom_show_style("show-directory-edit");
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_directory_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_do('midgard:create', $this->_request_data['directory']);
@@ -179,7 +191,12 @@ class org_openpsa_documents_directory_handler
         midcom_show_style("show-directory-new");
     }
 
-
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_directory($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

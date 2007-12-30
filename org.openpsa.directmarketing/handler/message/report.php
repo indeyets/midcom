@@ -31,7 +31,7 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current message. Any error triggers a 500.
      *
@@ -334,6 +334,12 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
         // This will exit()
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_report($handler_id, $args, &$data)
     {
         $this->_message = new org_openpsa_directmarketing_campaign_message($args[0]);
@@ -420,6 +426,12 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
         midcom_show_style('show-message-report');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_status($handler_id, $args, &$data)
     {
         $this->_request_data['message_obj'] = new org_openpsa_directmarketing_campaign_message($args[0]);

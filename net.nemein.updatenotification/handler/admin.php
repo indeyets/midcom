@@ -7,10 +7,10 @@
  */
 
 /**
- * 
+ *
  * @package net.nemein.updatenotification
  */
-class net_nemein_updatenotification_handler_admin  extends midcom_baseclasses_components_handler 
+class net_nemein_updatenotification_handler_admin  extends midcom_baseclasses_components_handler
 {
 
     /**
@@ -20,19 +20,21 @@ class net_nemein_updatenotification_handler_admin  extends midcom_baseclasses_co
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
-     * _on_initialize is called by midcom on creation of the handler. 
+     * _on_initialize is called by midcom on creation of the handler.
      */
     function _on_initialize()
     {
     }
-    
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_save ($handler_id, $args, &$data)
     {
@@ -45,11 +47,11 @@ class net_nemein_updatenotification_handler_admin  extends midcom_baseclasses_co
         $this->_request_data['levels_shown'] = 0;
 
         $this->_update_breadcrumb_line($handler_id);
-        
+
         $title = $this->_l10n_midcom->get('index');
 
         $_MIDCOM->set_pagetitle(":: {$title}");
-        
+
         if(isset($_POST) && array_key_exists('net_nemein_updatenotification_submit', $_POST))
         {
             $person = new midcom_db_person($_MIDGARD['user']);
@@ -75,17 +77,17 @@ class net_nemein_updatenotification_handler_admin  extends midcom_baseclasses_co
                 }
             }
         }
-        
+
         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
         return true;
     }
-    
+
 
     function _show_save($handler_id, &$data)
     {
 
     }
-        
+
     /**
      * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.

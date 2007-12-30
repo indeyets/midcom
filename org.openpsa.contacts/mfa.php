@@ -437,6 +437,9 @@ class org_openpsa_contacts_mfa extends midcom_baseclasses_components_handler
      * Loads requested object tree
      *
      * @access private
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
      * @return boolean Indicating success
      */
     function _handler_tree($handler_id, $args, &$data)

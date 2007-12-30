@@ -129,6 +129,11 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
 
     /**
      * Looks up a product to display.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_view($handler_id, $args, &$data)
     {
@@ -136,7 +141,7 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
         {
             $_MIDCOM->skip_page_style = true;
         }
-    
+
         $qb = org_openpsa_products_product_dba::new_query_builder();
         if (($handler_id == 'view_product_intree')
             ||( $handler_id == 'view_product_raw'))
@@ -171,7 +176,7 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
                     }
                     $qb->add_constraint('productGroup', 'IN', $categories_in);
                 }
-                
+
                 $qb->add_constraint('code', '=', $args[1]);
             }
         }

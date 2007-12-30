@@ -220,6 +220,12 @@ class org_openpsa_directmarketing_handler_export extends midcom_baseclasses_comp
         @ini_set('max_execution_time', 0);
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_csv($handler_id, $args, &$data)
     {
         $this->_prepare_handler($args);

@@ -355,6 +355,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
     /**
      * Creates a root group if necessary.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
      */
     function _handler_rootgroup($handler_id, $args, &$data)
     {
@@ -384,6 +388,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         }
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_create ($handler_id, $args, &$data)
     {
         if ($this->_config->get('system_lockdown') == 1)
@@ -443,6 +453,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	    return true;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_edit($handler_id, $args, &$data)
     {
         if ($this->_config->get('system_lockdown') == 1)
@@ -483,6 +499,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	    return true;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_application ($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -570,6 +592,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     //     return true;
     // }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_index ($handler_id, $args, &$data)
     {
         $title = $this->_l10n_midcom->get('index');
@@ -584,6 +612,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         return true;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_create_profile($handler_id, $args, &$data)
     {
         $title = $this->_l10n_midcom->get('create team home');
@@ -661,7 +695,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     }
 
     /**
-     * Populates a lis of all registered teams
+     * Populates a list of all registered teams
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -793,6 +832,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	    midcom_show_style('teams_list_end');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_pending($handler_id, $args, &$data)
     {
         if ($this->_config->get('system_lockdown') == 1)
@@ -916,6 +961,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         return true;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_team_members($handler_id, $args, &$data)
     {
 
@@ -969,6 +1020,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         midcom_show_style('team-members-list-end');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_quit($handler_id, $args, &$data)
     {
         $_MIDCOM->set_pagetitle("Quit");
@@ -990,6 +1047,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         return true;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_quit_confirm($handler_id, $args, &$data)
     {
         $_MIDCOM->set_pagetitle("Confirm");
@@ -1035,6 +1098,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         midcom_show_style('team_quit_confirm');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_lockdown($handler_id, $args, &$data)
     {
         $_MIDCOM->set_pagetitle(":: Lockdown");
@@ -1115,6 +1184,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
          midcom_show_style('index');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_view($handler_id, $args, &$data)
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
@@ -1206,6 +1281,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         midcom_show_style('show-team');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_action($handler_id, $args, &$data)
     {
         if (count($args) < 2)

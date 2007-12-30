@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package org.openpsa.expenses
  */
-class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_components_handler 
+class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_components_handler
 {
 
     /**
@@ -32,7 +32,7 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current article. Any error triggers a 500.
      *
@@ -48,7 +48,7 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
             // This will exit.
         }
     }
-    
+
     /**
      * Prepare a paged query builder for listing photos
      */
@@ -59,12 +59,14 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
         $this->_request_data['qb'] =& $qb;
         return $qb;
     }
-    
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -72,7 +74,7 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
 
         // List photos
         $qb =& $this->_prepare_qb();
-        
+
         $show_all = false;
         switch ($handler_id)
         {
@@ -90,7 +92,7 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
                 $qb->add_constraint('date', '>=', $start_time);
                 $qb->add_constraint('date', '<=', $end_time);
                 break;
-                
+
             case 'list_hours_task':
                 $qb->add_constraint('person', '=', $_MIDGARD['user']);
                 // Fallthrough
@@ -110,23 +112,23 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
         $data['hours'] = $qb->execute();
 
         $data['view_title'] = $data['l10n']->get($handler_id);
-        
+
         $this->_load_datamanager();
-        
+
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
         //$this->_update_breadcrumb_line($handler_id);
-                
+
         return true;
     }
-    
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_list($handler_id, &$data)
     {
         midcom_show_style('hours_list_header');
-        
+
         $total_hours = 0;
         foreach ($data['hours'] as $hour_report)
         {
@@ -134,10 +136,10 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
             $data['hour_report'] = $hour_report;
             $data['view_hour_report'] = $this->_datamanager->get_content_html();
             $total_hours += $hour_report->hours;
-            
+
             midcom_show_style('hours_list_item');
         }
-        
+
         $data['total_hours'] = $total_hours;
         midcom_show_style('hours_list_footer');
     }
