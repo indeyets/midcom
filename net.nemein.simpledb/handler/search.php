@@ -456,6 +456,9 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
     /**
      * Check if the component should handle quick searches
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
      * @return boolean Indicating success
      */
     function _can_handle_quick ($handler_id, $args, &$data)

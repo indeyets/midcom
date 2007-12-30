@@ -154,6 +154,11 @@ class net_nehmer_marketplace_handler_welcome extends midcom_baseclasses_componen
 
     /**
      * Validates the self arguments.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool True if the request can be handled, false otherwise.
      */
     function _can_handle_self($handler_id, $args, &$data)
     {

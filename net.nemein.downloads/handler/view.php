@@ -82,6 +82,11 @@ class net_nemein_downloads_handler_view extends midcom_baseclasses_components_ha
      * accepts all argument count matches unconditionally.
      *
      * Not applicable for the "index" handler, where the downloadpage name is fixed (see handle).
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool True if the request can be handled, false otherwise.
      */
     function _can_handle_view($handler_id, $args, &$data)
     {

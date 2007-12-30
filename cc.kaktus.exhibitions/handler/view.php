@@ -125,6 +125,7 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
      * Check the request for showing an exhibition page. Prevent URL hijacking
      *
      * @access public
+     * @param Array $args The argument list.
      * @return boolean Indicating success
      */
     public function _can_handle_view($handler_id, $args)

@@ -234,6 +234,11 @@ class net_nehmer_jobmarket_handler_submit extends midcom_baseclasses_components_
 
     /**
      * Validates the step1 handle arguments.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool True if the request can be handled, false otherwise.
      */
     function _can_handle_welcome($handler_id, $args, &$data)
     {
@@ -256,6 +261,11 @@ class net_nehmer_jobmarket_handler_submit extends midcom_baseclasses_components_
 
     /**
      * Validates the step1 handle arguments.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool True if the request can be handled, false otherwise.
      */
     function _can_handle_step1($handler_id, $args, &$data)
     {

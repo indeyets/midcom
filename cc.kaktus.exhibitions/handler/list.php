@@ -134,6 +134,8 @@ class cc_kaktus_exhibitions_handler_list extends midcom_baseclasses_components_h
      * Check the request for listing. Prevent URL hijacking
      *
      * @access public
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
      * @return boolean Indicating success
      */
     public function _can_handle_list($handler_id, $args)

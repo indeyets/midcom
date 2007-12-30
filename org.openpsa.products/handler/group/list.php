@@ -27,6 +27,11 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
      * Can-Handle check against the current group GUID. We have to do this explicitly
      * in can_handle already, otherwise we would hide all subtopics as the request switch
      * accepts all argument count matches unconditionally.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool True if the request can be handled, false otherwise.
      */
     function _can_handle_list($handler_id, $args, &$data)
     {

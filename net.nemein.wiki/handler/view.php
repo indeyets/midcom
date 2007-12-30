@@ -227,6 +227,10 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
      * Can-Handle check against the current wikipage name. We have to do this explicitly
      * in can_handle already, otherwise we would hide all subtopics as the request switch
      * accepts all argument count matches unconditionally.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
      */
     function _can_handle_view($handler_id, $args, &$data)
     {
