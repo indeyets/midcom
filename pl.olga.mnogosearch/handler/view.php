@@ -88,7 +88,7 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
 	    {
 	        Udm_Set_Agent_Param($this->udm_agent,UDM_PARAM_TRACK_MODE,UDM_ENABLED);
 	    }
-	    else 
+	    else
 	    {
     		Udm_Set_Agent_Param($this->udm_agent,UDM_PARAM_TRACK_MODE,UDM_DISABLED);
 	    }
@@ -102,9 +102,9 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
     		Udm_Set_Agent_Param($this->udm_agent,UDM_PARAM_CACHE_MODE,UDM_DISABLED);
 	    }
 
-	    if (Udm_Api_Version() >=  30111) 
+	    if (Udm_Api_Version() >=  30111)
 	    {
-        	if ($this->_config->get('crosswords')) 
+        	if ($this->_config->get('crosswords'))
 		{
             	    Udm_Set_Agent_Param($this->udm_agent,UDM_PARAM_CROSS_WORDS,UDM_ENABLED);
 	        }
@@ -139,7 +139,12 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
 
     }
 
-
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_view ($handler_id, $args, &$data)
     {
 
@@ -179,8 +184,8 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
 	    $stats['pageresults'] = $this->pageresults;
 	    $stats['pagenumber'] = $this->pagenumber;
 
-    	    $from = IntVal($this->pagenumber)*IntVal($this->pagenumber); 
-	    $to = IntVal($this->pagenumber+1)*IntVal($this->pageresults); 
+    	    $from = IntVal($this->pagenumber)*IntVal($this->pagenumber);
+	    $to = IntVal($this->pagenumber+1)*IntVal($this->pageresults);
 
 	    if ($to>$stats['found'])
 	    {
@@ -198,10 +203,10 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
         	$docs[$i]['clonestr'] = '';
 
         	$rec_id = Udm_Get_Res_Field($res,$i,UDM_FIELD_URLID);
-		
+
 		$global_res_position = $i;
 
-        	if (Udm_Api_Version() >=  30207) 
+        	if (Udm_Api_Version() >=  30207)
 		{
 		    $origin_id = Udm_Get_Res_Field($res,$i,UDM_FIELD_ORIGINID);
 		    if ($origin_id)
@@ -215,7 +220,7 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
 			    $cl_origin_id = Udm_Get_Res_Field($res,$j,UDM_FIELD_ORIGINID);
 
 			    if (($cl_origin_id) &&
-				    ($cl_origin_id == $rec_id)) 
+				    ($cl_origin_id == $rec_id))
 			    {
 				$url = Udm_Get_Res_Field($res,$j,UDM_FIELD_URL);
                 		$contype = Udm_Get_Res_Field($res,$j,UDM_FIELD_CONTENT);
@@ -223,11 +228,11 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
   				$lastmod = Udm_Get_Res_Field($res,$j,UDM_FIELD_MODIFIED);
   				$docs[$i]['clonestr'] .=  "<li><A HREF = '{$url}'>{$url}</A></li>";
 			    }
-				
+
 			}
 		    }
-		} 
-		
+		}
+
         	if (Udm_Api_Version() >=  30204)
 		{
        		    $docs[$i]['excerpt_flag'] = Udm_Make_Excerpt($this->udm_agent, $res, $i);
@@ -240,16 +245,16 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
   		$docs[$i]['docsize'] = Udm_Get_Res_Field($res,$i,UDM_FIELD_SIZE);
   		$docs[$i]['lastmod'] = Udm_Get_Res_Field($res,$i,UDM_FIELD_MODIFIED);
 
-        	$title = Udm_Get_Res_Field($res,$i,UDM_FIELD_TITLE);   
+        	$title = Udm_Get_Res_Field($res,$i,UDM_FIELD_TITLE);
   		$title = ($title) ? htmlspecialChars($title):basename($docs[$i]['url']);
 
   		$docs[$i]['title'] = $this->ParseDocText($title);
   		$docs[$i]['text'] = $this->ParseDocText(Udm_Get_Res_Field($res,$i,UDM_FIELD_TEXT));
                 $docs[$i]['keyw'] = $this->ParseDocText(Udm_Get_Res_Field($res,$i,UDM_FIELD_KEYWORDS));
   		$docs[$i]['desc'] = $this->ParseDocText(Udm_Get_Res_Field($res,$i,UDM_FIELD_DESC));
-  		
-  		$docs[$i]['crc'] = Udm_Get_Res_Field($res,$i,UDM_FIELD_CRC);  		
-		
+
+  		$docs[$i]['crc'] = Udm_Get_Res_Field($res,$i,UDM_FIELD_CRC);
+
 		if (Udm_Api_Version() >=  30203) {
 		    $docs[$i]['doclang'] = Udm_Get_Res_Field($res,$i,UDM_FIELD_LANG);
 		    $docs[$i]['doccharset'] = Udm_Get_Res_Field($res,$i,UDM_FIELD_CHARSET);
@@ -257,7 +262,7 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
 
   		$docs[$i]['category'] = Udm_Get_Res_Field($res,$i,UDM_FIELD_CATEGORY);
 
-		if (Udm_Api_Version() >=  30207) 
+		if (Udm_Api_Version() >=  30207)
 		{
 		    $docs[$i]['pop_rank'] = Udm_Get_Res_Field($res,$i,UDM_FIELD_POP_RANK);
 		}
@@ -266,8 +271,8 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
 		    $docs[$i]['pop_rank'] = '';
 		}
 
-		
-	    }	
+
+	    }
 
             // Free result
 	    Udm_Free_Res($res);

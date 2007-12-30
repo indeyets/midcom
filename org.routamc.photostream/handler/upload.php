@@ -80,7 +80,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
             $user = $_MIDCOM->auth->user->get_storage();
             $this->_defaults['photographer'] = $user->id;
         }
-        
+
         if (isset($_REQUEST['to_gallery']))
         {
             $this->_defaults['to_gallery'] = $_REQUEST['to_gallery'];
@@ -404,7 +404,12 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If upload privileges apply, we relocate to the index creation article,
+     * If upload privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_upload($handler_id, $args, &$data)
     {
@@ -451,12 +456,12 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
         }
 
         $this->_prepare_request_data();
-        
+
         if ($this->_photo)
         {
             $_MIDCOM->set_26_request_metadata($this->_photo->revised, $this->_photo->guid);
         }
-        
+
         $data['view_title'] = sprintf($this->_l10n->get('upload photos'));
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
 

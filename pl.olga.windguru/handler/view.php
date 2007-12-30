@@ -80,8 +80,11 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
 
     /**
      * The handler for displaying a messagegrapher's statusmessage
-     * @param mixed $handler_id the array key from the requestarray
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index($handler_id, $args, &$data)
     {
@@ -176,7 +179,12 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
 
         return false;
     }
-
+ 	/**
+ 	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+ 	 */
     function _handler_view ($handler_id, $args, &$data)
     {
 
