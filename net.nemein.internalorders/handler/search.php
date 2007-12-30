@@ -2,7 +2,7 @@
 
 /**
  * @package net.nemein.internalorders
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: viewer.php,v 1.3.2.7 2005/11/07 18:57:45 bergius Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -10,7 +10,7 @@
 
 /**
  * Calendar Viewer interface class.
- * 
+ *
  * @package net.nemein.internalorders
  */
 class net_nemein_internalorders_handler_search extends midcom_baseclasses_components_handler
@@ -18,7 +18,7 @@ class net_nemein_internalorders_handler_search extends midcom_baseclasses_compon
 
 	/**
 	 * The root event to use with this topic.
-	 * 
+	 *
 	 * @var midcom_baseclasses_database_event
 	 * @access private
 	 */
@@ -35,14 +35,20 @@ class net_nemein_internalorders_handler_search extends midcom_baseclasses_compon
 		{
 			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Component is not properly initialized, root event missing");
 		}
-	
+
 		$this->_root_event = mgd_get_object_by_guid($this->_config->get('root_event'));
 		if (!$this->_root_event)
 		{
 			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
 		}
-	}	
-	
+	}
+
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
 	function _handler_search_products($handler_id, $args, &$data)
 	{
 		$_MIDCOM->componentloader->load_graceful('org.openpsa.products');
@@ -61,7 +67,7 @@ class net_nemein_internalorders_handler_search extends midcom_baseclasses_compon
 		$this->_request_data['products2'] = array();
 		$this->_request_data['tr'] = array();
 		$this->_request_data['ar'] = array();
-		
+
 		$QB = org_openpsa_products_product_dba::new_query_builder();
 		$QB->begin_group('OR');
 		$QB->add_constraint('code', 'LIKE', '%'.trim($this->_request_data['searchinput']).'%');
@@ -125,7 +131,7 @@ class net_nemein_internalorders_handler_search extends midcom_baseclasses_compon
 			}
 		}
 
-		
+
 		return true;
 	}
 
@@ -133,6 +139,6 @@ class net_nemein_internalorders_handler_search extends midcom_baseclasses_compon
 	{
 		midcom_show_style('search_products');
 	}
-	
+
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package midgard.admin.asgard
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: viewer.php 3975 2006-09-06 17:36:03Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 
 /**
  * Attachment editing interface
- * 
+ *
  * @package midgard.admin.asgard
  */
 class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses_components_handler
@@ -40,7 +40,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
 
     /**
      * Simple constructor
-     * 
+     *
      * @access public
      */
     function midgard_admin_asgard_handler_object_attachments()
@@ -57,16 +57,16 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
                 'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/style-editor.css',
             )
         );
-        
+
     }
-    
+
     function _on_initialize()
     {
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->skip_page_style = true;
     }
-    
+
     /**
      * Rewrite a filename to URL safe form
      *
@@ -91,13 +91,13 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
         }
         return midcom_generate_urlname_from_string($name) . $ext;
     }
-    
+
     /*function _load_config()
     {
         $_MIDCOM->load_library('midgard.admin.asgard');
         $this->_config = $GLOBALS['midcom_component_data']['midgard.admin.asgard']['config'];
     }*/
-     
+
     function _process_file_upload($uploaded_file)
     {
         if (is_null($this->_file))
@@ -111,11 +111,11 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
                 $local_file->name = $local_filename;
                 $local_file->parentguid = $this->_object->guid;
                 $local_file->mimetype = $uploaded_file['type'];
-                
+
                 // Legacy data, TODO: Remove
                 //$local_file->ptable = 'style';
                 //$local_file->pid = $this->_object->id;
-                
+
                 if (!$local_file->create())
                 {
                     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create attachment, reason: ' . mgd_errstr());
@@ -127,35 +127,35 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
         {
             $local_file = $this->_file;
         }
-        
+
 
         if ($local_file->mimetype != $uploaded_file['type'])
         {
             $local_file->mimetype = $uploaded_file['type'];
             $local_file->update();
         }
-        
+
         if (!$local_file->copy_from_file($uploaded_file['tmp_name']))
         {
             return false;
         }
         return $local_file->name;
     }
-    
+
     function _process_form()
     {
         if (!isset($_POST['midgard_admin_asgard_save']))
         {
             return false;
         }
-        
+
         // Check if we have an uploaded file
         if (   isset($_FILES['midgard_admin_asgard_file'])
             && is_uploaded_file($_FILES['midgard_admin_asgard_file']['tmp_name']))
         {
             return $this->_process_file_upload($_FILES['midgard_admin_asgard_file']);
         }
-        
+
         if (is_null($this->_file))
         {
             if (   !isset($_POST['midgard_admin_asgard_filename'])
@@ -163,7 +163,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
             {
                 return false;
             }
-        
+
             // We're creating a new file
             $local_filename = $this->safe_filename($_POST['midgard_admin_asgard_filename']);
             $local_file = $this->_get_file($local_filename);
@@ -173,11 +173,11 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
                 $local_file = new midcom_baseclasses_database_attachment();
                 $local_file->name = $local_filename;
                 $local_file->parentguid = $this->_object->guid;
-                
+
                 // Legacy data, TODO: Remove
                 //$local_file->ptable = 'style';
                 //$local_file->pid = $this->_object->id;
-                
+
                 if (!$local_file->create())
                 {
                     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create attachment, reason: ' . mgd_errstr());
@@ -189,7 +189,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
         {
             $local_file = $this->_file;
         }
-        
+
         $success = true;
 
         if (   isset($_POST['midgard_admin_asgard_filename'])
@@ -197,7 +197,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
             && $local_file->name != $_POST['midgard_admin_asgard_filename'])
         {
             $local_file->name = $_POST['midgard_admin_asgard_filename'];
-            
+
             if (!$local_file->update())
             {
                 $success = false;
@@ -209,7 +209,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
             && $local_file->mimetype != $_POST['midgard_admin_asgard_mimetype'])
         {
             $local_file->mimetype = $_POST['midgard_admin_asgard_mimetype'];
-            
+
             if (!$local_file->update())
             {
                 $success = false;
@@ -223,25 +223,25 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
         {
             $contents = $_POST['midgard_admin_asgard_contents'];
         }
-        
+
         if (!$local_file->copy_from_memory($contents))
         {
             $success = false;
         }
-        
+
         if (!$success)
         {
             return false;
         }
         return $local_file->name;
     }
-    
+
     function _get_file($filename)
     {
         $qb = midcom_baseclasses_database_attachment::new_query_builder();
         $qb->add_constraint('parentguid', '=', $this->_object->guid);
         $qb->add_constraint('name', '=', $filename);
-        
+
         $files = $qb->execute();
         if (empty($files))
         {
@@ -249,7 +249,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
         }
         return $files[0];
     }
-    
+
     function _list_files()
     {
         $qb = midcom_baseclasses_database_attachment::new_query_builder();
@@ -261,7 +261,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
     }
 
     /**
-     * Handler method for creating new attach,ents
+     * Handler method for creating new attachments
      *
      * @access private
      * @param string $handler_id Name of the used handler
@@ -271,16 +271,16 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
      */
     function _handler_create($handler_id, $args, &$data)
     {
-        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);    
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (! $this->_object)
-        {  
+        {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The GUID '{$args[0]}' was not found.");
             // This will exit.
         }
         $this->_object->require_do('midgard:update');
         $this->_object->require_do('midgard:attachments');
-        
+
         $filename = $this->_process_form();
         if (!$filename)
         {
@@ -290,18 +290,18 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
         {
             $_MIDCOM->relocate("__mfa/asgard/object/attachments/{$this->_object->guid}/{$filename}/");
         }
-        
+
         $this->_list_files();
-        
+
         midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
         midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
-        
+
         return true;
     }
-    
+
     /**
      * Show the editing view for the requested style
-     * 
+     *
      * @access private
      * @param string $handler_id Name of the used handler
      * @param mixed $data Data passed to the show method
@@ -309,7 +309,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
     function _show_create($handler_id, &$data)
     {
         midgard_admin_asgard_plugin::asgard_header();
-        
+
         $data['files'] =& $this->_files;
         $data['object'] =& $this->_object;
         midcom_show_style('midgard_admin_asgard_object_attachments_header');
@@ -332,16 +332,16 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
      */
     function _handler_edit($handler_id, $args, &$data)
     {
-        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);    
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (! $this->_object)
-        {  
+        {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The GUID '{$args[0]}' was not found.");
             // This will exit.
         }
         $this->_object->require_do('midgard:update');
         $this->_object->require_do('midgard:attachments');
-        
+
         $data['filename'] = $args[1];
         $this->_file = $this->_get_file($data['filename']);
         if (!$this->_file)
@@ -350,7 +350,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
         }
         $this->_file->require_do('midgard:update');
         $_MIDCOM->bind_view_to_object($this->_file);
-        
+
         $filename = $this->_process_form();
         if (!$filename)
         {
@@ -363,21 +363,21 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
                 $_MIDCOM->relocate("__mfa/asgard/object/attachments/{$this->_object->guid}/{$filename}/");
             }
         }
-        
+
         $this->_list_files();
-        
+
         // Add the codepress syntax highlight
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/codepress/codepress.js');
 
         midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
         midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
-        
+
         return true;
     }
-    
+
     /**
      * Show the editing view for the requested style
-     * 
+     *
      * @access private
      * @param string $handler_id Name of the used handler
      * @param mixed $data Data passed to the show method
@@ -385,19 +385,19 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
     function _show_edit($handler_id, &$data)
     {
         midgard_admin_asgard_plugin::asgard_header();
-                
+
         $data['files'] =& $this->_files;
         $data['file'] =& $this->_file;
         $data['object'] =& $this->_object;
         midcom_show_style('midgard_admin_asgard_object_attachments_header');
-        
+
         $data['attachment_text_types'] = $this->_config->get('attachment_text_types');
         midcom_show_style('midgard_admin_asgard_object_attachments_file');
         midcom_show_style('midgard_admin_asgard_object_attachments_footer');
-        
+
         midgard_admin_asgard_plugin::asgard_footer();
     }
-    
+
     /**
      * Handler method for confirming file deleting for the requested file
      *
@@ -409,33 +409,33 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
      */
     function _handler_delete($handler_id, $args, &$data)
     {
-        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);    
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (! $this->_object)
-        {  
+        {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The GUID '{$args[0]}' was not found.");
             // This will exit.
         }
         $this->_object->require_do('midgard:update');
         $this->_object->require_do('midgard:attachments');
 
-        $data['filename'] = $args[1];        
+        $data['filename'] = $args[1];
         $this->_file = $this->_get_file($data['filename']);
         if (!$this->_file)
         {
             return false;
         }
-        
+
         // Require delete privilege
         $this->_file->require_do('midgard:delete');
-        
+
         if (isset($_POST['f_cancel']))
         {
             $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'), $_MIDCOM->i18n->get_string('delete cancelled', 'midgard.admin.asgard'));
             $_MIDCOM->relocate("__mfa/asgard/object/attachments/{$this->_object->guid}/{$data['filename']}/");
             // This will exit
         }
-        
+
         if (isset($_POST['f_confirm']))
         {
             if ($this->_file->delete())
@@ -444,19 +444,19 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
                 $_MIDCOM->relocate("__mfa/asgard/object/attachments/{$this->_object->guid}/");
                 // This will exit
             }
-            
-            
+
+
         }
-        
+
         midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
         midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
-        
+
         return true;
     }
-    
+
     /**
      * Show the delete request
-     * 
+     *
      * @access private
      * @param string $handler_id Name of the used handler
      * @param mixed $data Data passed to the show method
@@ -464,13 +464,13 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
     function _show_delete($handler_id, &$data)
     {
         midgard_admin_asgard_plugin::asgard_header();
-        
+
         $data['file'] =& $this->_file;
         $data['attachment_text_types'] = $this->_config->get('attachment_text_types');
         midcom_show_style('midgard_admin_asgard_object_attachments_delete');
-        
+
         midgard_admin_asgard_plugin::asgard_footer();
     }
-    
+
 }
 ?>

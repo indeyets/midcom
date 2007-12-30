@@ -67,6 +67,11 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
     /**
      * Shows the autoindex list. Nothing to do in the handle phase except setting last modified
      * dates.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_feed ($handler_id, $args, &$data)
     {
@@ -81,7 +86,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
 
         // Get the articles,
         $qb = midcom_db_article::new_query_builder();
-        
+
         // Hide the articles that have the publish time in the future and if
         // the user is not administrator
         if (   $this->_config->get('enable_scheduled_publishing')
@@ -91,7 +96,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
             // is the author
             $qb->begin_group('OR');
                 $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
-                
+
                 if (   $_MIDCOM->auth->user
                     && isset($_MIDCOM->auth->user->guid))
                 {
@@ -99,7 +104,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
                 }
             $qb->end_group();
         }
-        
+
         // Include the article links to the indexes if enabled
         if ($this->_config->get('enable_article_links'))
         {
@@ -108,9 +113,9 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
             $mc->add_constraint('topic', '=', $this->_content_topic->id);
             $mc->add_order('metadata.published', 'DESC');
             $mc->set_limit((int) $this->_config->get('rss_count'));
-            
+
             $links = $mc->list_keys();
-            
+
             // Add single items to the query
             $qb->begin_group('OR');
                 foreach ($links as $guid => $link)
@@ -226,7 +231,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
     function _show_feed($handler_id, &$data)
     {
         $data['feedcreator'] =& $this->_feed;
-        
+
         // Add each article now.
         if ($this->_articles)
         {
@@ -238,7 +243,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
                 midcom_show_style('feeds-item');
             }
         }
-        
+
         switch($handler_id)
         {
             case 'feed-rss2':
@@ -262,6 +267,11 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
 
     /**
      * Shows a simple available-feeds page.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
     {

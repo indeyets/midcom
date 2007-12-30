@@ -59,6 +59,11 @@ class net_nehmer_account_handler_socialweb extends midcom_baseclasses_components
      * by the handler id (admin_edit vs. edit). In admin mode, admin privileges are
      * required unconditionally, the id/guid of the record to-be-edited is expected
      * in $args[0].
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -66,7 +71,7 @@ class net_nehmer_account_handler_socialweb extends midcom_baseclasses_components
         {
             return false;
         }
-    
+
         if ($handler_id == 'admin_edit')
         {
             $_MIDCOM->auth->require_admin_user();
@@ -118,7 +123,7 @@ class net_nehmer_account_handler_socialweb extends midcom_baseclasses_components
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         $this->_view_toolbar->hide_item('socialweb/');
-                
+
         $_MIDCOM->bind_view_to_object($this->_account, $this->_controller->datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
         $_MIDCOM->set_pagetitle($this->_l10n->get('social web settings'));
@@ -149,7 +154,7 @@ class net_nehmer_account_handler_socialweb extends midcom_baseclasses_components
     {
 
         $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_socialweb'));
-        
+
         $customdata = $_MIDCOM->componentloader->get_all_manifest_customdata('net.nehmer.account.socialweb');
 
         foreach ($customdata as $component => $settings)
@@ -166,12 +171,12 @@ class net_nehmer_account_handler_socialweb extends midcom_baseclasses_components
                 {
                     $field_config['type'] = 'text';
                 }
-                
+
                 if (!isset($field_config['widget']))
                 {
                     $field_config['widget'] = 'text';
                 }
-                
+
                 if (!isset($field_config['title']))
                 {
                     $field_config['title'] = $_MIDCOM->i18n->get_string($label, $component);;

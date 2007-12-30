@@ -142,6 +142,11 @@ class net_nehmer_marketplace_handler_submit extends midcom_baseclasses_component
     /**
      * Simple submission welcome page handler, computes the type list to
      * display a welcome page.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {
@@ -223,6 +228,11 @@ class net_nehmer_marketplace_handler_submit extends midcom_baseclasses_component
     /**
      * The step 1 handler displays and processes the new entry form. It will use a nullstorage
      * controller until the form has been validated and the new object has been created.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_step1($handler_id, $args, &$data)
     {
@@ -402,6 +412,11 @@ class net_nehmer_marketplace_handler_submit extends midcom_baseclasses_component
 
     /**
      * Displays the everything's happy message.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_thankyou($handler_id, $args, &$data)
     {

@@ -55,7 +55,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
      * @access private
      */
     var $_schemadb = null;
-    
+
     /**
      * Schema to use for event display
      *
@@ -63,7 +63,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
      * @access private
      */
     var $_schema = null;
-    
+
     /**
      * Simple default constructor.
      */
@@ -81,7 +81,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
         $this->_request_data['event'] =& $this->_event;
         $this->_request_data['datamanager'] =& $this->_datamanager;
         $this->_request_data['controller'] =& $this->_controller;
-        
+
         $this->_view_toolbar->add_item
         (
             array
@@ -106,7 +106,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
             )
         );
-    
+
         switch ($handler_id)
         {
             case 'edit_reservation':
@@ -190,7 +190,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
             MIDCOM_NAV_URL => "reservation/{$this->_event->guid}/",
             MIDCOM_NAV_NAME => "{$this->_event->title} " . strftime('%x', $this->_event->start),
         );
-        
+
         switch ($handler_id)
         {
             case 'edit_reservation':
@@ -219,7 +219,12 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
      * Note, that the event for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation event,
+     * If create privileges apply, we relocate to the index creation event
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -229,9 +234,9 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The event {$args[0]} was not found.");
             // This will exit.
         }
-        
+
         $this->_event->require_do('midgard:update');
-        
+
         foreach ($this->_event->resources as $resource => $included)
         {
             $this->_resource = new org_openpsa_calendar_resource_dba($resource);
@@ -279,7 +284,12 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
      * Note, that the event for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation event,
+     * If create privileges apply, we relocate to the index creation event
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {
@@ -289,11 +299,11 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The event {$args[0]} was not found.");
             // This will exit.
         }
-        
+
         $this->_event->require_do('midgard:delete');
-        
+
         $data['dependencies'] = false;
-        
+
         // If repeats are set with net.nemein.repeathandler, events should
         if (   $this->_event->get_parameter('net.nemein.repeathandler', 'master_guid')
             && $this->_event->guid == $this->_event->get_parameter('net.nemein.repeathandler', 'master_guid'))
@@ -304,7 +314,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
                 $qb->add_constraint('parameter.domain', '=', 'net.nemein.repeathandler');
                 $qb->add_constraint('parameter.name', '=', 'master_guid');
                 $qb->add_constraint('parameter.value', '=', $guid);
-                
+
                 $results = $qb->execute_unchecked();
                 $data['dependant_events'] = $results;
             }
@@ -315,16 +325,16 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
                 $qb->add_constraint('name', '=', 'master_guid');
                 $qb->add_constraint('value', '=', $guid);
                 $qb->add_constraint('tablename', '=', 'event');
-                
+
                 $results = array ();
-                
+
                 foreach (@$qb->execute() as $parameter)
                 {
                     $results[] = new org_openpsa_calendar_event($parameter->oid);
                 }
                 $data['dependant_events'] = $results;
             }
-            
+
             // Dependencies found, block deleting
             if ($qb->count() > 1)
             {
@@ -337,7 +347,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
             $this->_resource = new org_openpsa_calendar_resource_dba($resource);
             break;
         }
-        
+
         $this->_load_datamanager();
 
         if (array_key_exists('net_nemein_reservations_deleteok', $_REQUEST))

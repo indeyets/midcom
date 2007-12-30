@@ -86,8 +86,13 @@ class net_nehmer_marketplace_handler_welcome extends midcom_baseclasses_componen
     }
 
     /**
-     * The welcome handler loades the newest asks / bids according to the configuration
+     * The welcome handler loads the newest asks / bids according to the configuration
      * settings and prepares the type listings.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {
@@ -165,7 +170,12 @@ class net_nehmer_marketplace_handler_welcome extends midcom_baseclasses_componen
     }
 
     /**
-     * Queries the own entries, distinguished by offers and applications ian args[0].
+     * Queries the own entries, distinguished by offers and applications in args[0].
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_self($handler_id, $args, &$data)
     {
@@ -213,8 +223,13 @@ class net_nehmer_marketplace_handler_welcome extends midcom_baseclasses_componen
 
 
     /**
-     * The welcome handler loades the newest asks / bids according to the configuration
+     * The welcome handler loads the newest asks / bids according to the configuration
      * settings and prepares the type listings.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_welcome_mode($handler_id, $args, &$data)
     {

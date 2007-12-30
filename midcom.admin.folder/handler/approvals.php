@@ -16,7 +16,7 @@ class midcom_admin_folder_handler_approvals extends midcom_baseclasses_component
 {
     /**
      * Constructor metdot
-     * 
+     *
      * @access public
      */
     function midcom_admin_folder_handler_approvals ()
@@ -27,8 +27,11 @@ class midcom_admin_folder_handler_approvals extends midcom_baseclasses_component
     /**
      * Checks the integrity of the content topic and gets the stored approvals of
      * the content folder.
-     * 
+     *
      * @access private
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
      * @return boolean Indicating success
      */
     function _handler_approval($handler_id, $args, &$data)
@@ -40,7 +43,7 @@ class midcom_admin_folder_handler_approvals extends midcom_baseclasses_component
                 'Cannot process approval request, request is incomplete.');
             // This will exit.
         }
-        
+
         $object = $_MIDCOM->dbfactory->get_object_by_guid($_REQUEST['guid']);
         if (! $object)
         {
@@ -50,7 +53,7 @@ class midcom_admin_folder_handler_approvals extends midcom_baseclasses_component
         $object->require_do('midcom:approve');
 
         $metadata =& midcom_helper_metadata::retrieve($object);
-        
+
         if (! $metadata)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
@@ -63,13 +66,13 @@ class midcom_admin_folder_handler_approvals extends midcom_baseclasses_component
             $metadata->approve();
         }
         else
-        {        
+        {
             $metadata->unapprove();
         }
 
         $_MIDCOM->relocate($_REQUEST['return_to']);
         // This will exit.
     }
-    
+
 }
 ?>

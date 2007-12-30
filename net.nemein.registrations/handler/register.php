@@ -115,12 +115,17 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
     /**
      * Registration uses a, lets say, creative way of using the DM2 architecture: If the current
      * user can register to an event, a new schema is constructed out of the registrar and
-     * registeration schemas. They need to have unique fieldnames for exactly this operation.
+     * registration schemas. They need to have unique fieldnames for exactly this operation.
      * Upon successful save, two individual DM2 instances are used to actually process the
      * data.
      *
      * If an event is not open for registration, a 404 is triggered. The same will be done
      * if a user is already registered to the event.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_register($handler_id, $args, &$data)
     {
@@ -322,7 +327,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
         {
             $registration_schema = $event_dm->types['additional_questions']->selection[0];
         }
-        
+
         $this->_registration->set_parameter('midcom.helper.datamanager2', 'schema_name', $registration_schema);
 
         // Update the account with the selected information
@@ -543,7 +548,7 @@ EOF;
         // bottom of the field list.
         $registrar_schema = $this->_schemadb[$this->_config->get('registrar_schema')];
         $event_dm =& $this->_event->get_datamanager();
-        
+
         if (count($event_dm->types['additional_questions']->selection) > 0)
         {
             $registration_schema = $this->_schemadb[$event_dm->types['additional_questions']->selection[0]];
@@ -612,10 +617,15 @@ EOF;
 
     /**
      * This page shows a success page. It uses sessioning to receive its argument from the registration
-     * sequece for security reasons.
+     * sequence for security reasons.
      *
      * The record is loaded in sudo mode if no user is authenticated, since anonymous users don't
      * have access to any registration in the system.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_success($handler_id, $args, &$data)
     {

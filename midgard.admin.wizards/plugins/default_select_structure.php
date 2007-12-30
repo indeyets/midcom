@@ -100,6 +100,9 @@ class default_select_structure extends midcom_baseclasses_components_handler
  	    return $structures_array;
     }
 
+	/**
+     * @return bool Indicating success.
+	 */
     function _handler_select_structure()
     {
         $title = $this->_l10n->get('structure selection');

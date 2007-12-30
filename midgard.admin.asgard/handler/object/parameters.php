@@ -54,13 +54,13 @@ class midgard_admin_asgard_handler_object_parameters extends midcom_baseclasses_
         $this->_component = 'midgard.admin.asgard';
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function _on_initialize()
     {
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->skip_page_style = true;
-                
+
         $_MIDCOM->load_library('midcom.helper.datamanager2');
     }
 
@@ -82,11 +82,16 @@ class midgard_admin_asgard_handler_object_parameters extends midcom_baseclasses_
      */
     function _load_schemadb()
     {
-        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_parameters'));    
+        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_parameters'));
     }
-    
+
     /**
      * Object editing view
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {

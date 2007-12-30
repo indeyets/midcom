@@ -168,6 +168,11 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
 
     /**
      * Displays the detail view of a given groowner.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_group($handler_id, $args, &$data)
     {
@@ -237,10 +242,10 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
     function _load_index_groups()
     {
         $qb = org_openpsa_contacts_group::new_query_builder();
-        
+
         $parent = new org_openpsa_contacts_group($this->_config->get('group'));
         $qb->add_constraint('owner', '=', $parent->id);
-        
+
         if ($this->_alpha_filter)
         {
             $qb->add_constraint('official', 'LIKE', "{$this->_alpha_filter}%");
@@ -294,6 +299,11 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
      * Renders the Group Index. If alphabetic indexing is enabled, the filter char
      * is extracted and set so that the index is limited accordingly. (Defaults to 'A'
      * in case no filter is specified.)
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
     {
@@ -301,7 +311,7 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
         {
             $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "config.html");
         }
-    
+
         if ($this->_config->get('enable_alphabetical'))
         {
             if ($handler_id == 'view-index-alpha')

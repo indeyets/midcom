@@ -6,7 +6,7 @@
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
- 
+
 /**
  * This handler shows the attachments attached to object $object.
  * @package midcom.helper.imagepopup
@@ -18,7 +18,7 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
      * @var midcom_helper_datamanager2_controller_simple
      */
     var $_controller = null;
-    
+
 	/**
 	 * Listing type
 	 */
@@ -28,15 +28,15 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
 	 * Search results
 	 */
 	var $_search_results = array();
-	
-    function midcom_helper_imagepopup_handler_list()  
+
+    function midcom_helper_imagepopup_handler_list()
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Load the schemadb and other midcom.admin.folder specific stuff
-     * 
+     *
      * @access public
      */
     function _on_initialize()
@@ -48,7 +48,13 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
     {
         $this->_request_data['datamanager'] =& $this->_datamanager;
     }
-    
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+     */
     function _handler_list($handler_id, $args, &$data)
     {
         $_MIDCOM->cache->content->no_cache();
@@ -70,11 +76,11 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
                 $_MIDCOM->relocate('__ais/imagepopup/unified/default/');
             }
         }
-        
+
         $_MIDCOM->add_link_head
         (
-            array 
-            ( 
+            array
+            (
                 'rel'   => 'stylesheet',
                 'type'  => 'text/css',
                 'media' => 'screen',
@@ -85,18 +91,18 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
         $data['schema_name'] = $args[0];
         $data['object'] = null;
         $data['folder'] = $this->_topic;
-        
+
         if (   $handler_id != '____ais-imagepopup-list_folder_noobject'
             && isset($args[1]))
         {
             $data['object'] = $_MIDCOM->dbfactory->get_object_by_guid($args[1]);
-            
-            if (!$data['object']) 
+
+            if (!$data['object'])
             {
                 return false;
             }
         }
-        
+
         switch ($handler_id)
         {
             case '____ais-imagepopup-list_folder_noobject':
@@ -104,7 +110,7 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
                 $data['list_type'] = 'folder';
                 $data['list_title'] = $_MIDCOM->i18n->get_string('folder attachments', 'midcom.helper.imagepopup');
                 break;
-                
+
             case '____ais-imagepopup-list_object':
                 $data['list_type'] = 'page';
                 $data['list_title'] = $_MIDCOM->i18n->get_string('page attachments', 'midcom.helper.imagepopup');
@@ -132,13 +138,13 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
 				$this->_run_search($data);
 			}
 		}
-        
+
         $_MIDCOM->enable_jquery();
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/midcom.helper.imagepopup/functions.js");
-        
+
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midcom.helper.imagepopup');
-        
+
         return true;
     }
 
@@ -166,7 +172,7 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
                 $_MIDCOM->add_jsonload("window.close();");
                 break;
         }
-        
+
         $_MIDCOM->add_jsonload("jQuery('.midcom_helper_datamanager2_widget_images_image').dm2ImagePopupConvert();");
         $_MIDCOM->add_jsonload("jQuery('.midcom_helper_datamanager2_widget_downloads_download').dm2ImagePopupConvert();");
     }
@@ -182,12 +188,12 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
 		$qb->end_group();
 
 		$this->_search_results = $qb->execute();
-		
+
 		$_MIDCOM->add_jsonload("jQuery('.midcom_helper_imagepopup_search_result_item').dm2ImagePopupConvert();");
 	}
-    
-    function _show_list() 
-    {    
+
+    function _show_list()
+    {
         midcom_show_style('midcom_helper_imagepopup_init');
 		if ($this->_list_type == 'unified')
 		{
@@ -201,26 +207,26 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
         midcom_show_style('midcom_helper_imagepopup_finish');
     }
 
-    function _show_search_results() 
-    {    
+    function _show_search_results()
+    {
 		midcom_show_style('midcom_helper_imagepopup_search_result_start');
-		
+
 		if (count($this->_search_results) > 0)
         {
 			foreach ($this->_search_results as $key => $result)
 			{
 				$this->_request_data['result'] = $result;
-				midcom_show_style('midcom_helper_imagepopup_search_result_item');	
+				midcom_show_style('midcom_helper_imagepopup_search_result_item');
 			}
         }
-		
+
 		midcom_show_style('midcom_helper_imagepopup_search_result_end');
     }
-    
+
     /**
      * Loads and filters the schema from the session.
      */
-    function _load_schema() 
+    function _load_schema()
     {
         if ($this->_request_data['object'])
         {
@@ -230,9 +236,9 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
         {
             $key = "{$this->_request_data['schema_name']}{$this->_request_data['folder']->guid}";
         }
-        
+
         $session =& $_MIDCOM->get_service('session');
-        
+
         if ($session->exists('midcom.helper.datamanager2', $key))
         {
             $schema = $session->get('midcom.helper.datamanager2', $key);
@@ -251,12 +257,12 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
             'images'=> true,
             'image' => false,
         );
-        
+
         foreach ($schema['fields'] as  $key => $field)
         {
-            
+
             if (   array_key_exists($field['type'], $imagetypes)
-                && $imagetypes[$field['type']] == true) 
+                && $imagetypes[$field['type']] == true)
             {
                 // TODO: What should we do with the image fields in schema
             }
@@ -265,9 +271,9 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
                 // This schema field isn't an image field, remove from schema
                 unset ($schema['fields'][$key]);
             }
-            
+
         }
-        if (count($schema['fields']) == 0 ) 
+        if (count($schema['fields']) == 0 )
         {
             // No image fields natively in the schema, add one
             $schema['fields']['midcom_helper_imagepopup_images'] = Array
@@ -287,22 +293,22 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
                 'storage' => null,
                 'type' => 'blobs',
                 'widget' => 'downloads',
-            );        
+            );
         }
-        
+
         $schema_object = new midcom_helper_datamanager2_schema
         (
-            array 
+            array
             (
                 $this->_request_data['schema_name'] => $schema
             )
         );
-        
+
         $schemadb = Array
-        ( 
+        (
             $this->_request_data['schema_name'] => $schema_object
         );
-        
-        return $schemadb;        
-    }    
+
+        return $schemadb;
+    }
 }

@@ -57,9 +57,9 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
     function _can_handle_edit($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $this->_request_data['event'] = new net_nemein_calendar_event_dba($args[0]);
-        
+
         if ($this->_request_data['event'])
         {
             if (   !$this->_config->get('show_events_locally')
@@ -81,10 +81,15 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
         }
     }
 
-
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_edit($handler_id, $args, &$data)
     {
-        
+
         $this->_load_controller();
 
         switch ($this->_controller->process_form())
@@ -116,9 +121,9 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
             MIDCOM_NAV_URL => "edit/{$this->_request_data['event']->guid}/",
             MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('edit')),
         );
-        
+
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
-        
+
         return true;
     }
 

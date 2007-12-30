@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package midgard.webdav.styles
  */
-class midgard_webdav_styles_handler_midcoms  extends midgard_webdav_styles_handler 
+class midgard_webdav_styles_handler_midcoms  extends midgard_webdav_styles_handler
 {
 
     /**
@@ -23,14 +23,15 @@ class midgard_webdav_styles_handler_midcoms  extends midgard_webdav_styles_handl
     function midgard_webdav_styles_handler_midcoms()
     {
         parent::midcom_baseclasses_components_handler();
-    }    
-       
+    }
+
 
     /**
-     * The handler for the midcoms article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the midcoms article.
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_midcoms ($handler_id, $args, &$data)
     {
@@ -39,7 +40,7 @@ class midgard_webdav_styles_handler_midcoms  extends midgard_webdav_styles_handl
         $server->ServeRequest();
         return true;
     }
-    
+
     /**
      * Showfunctions are not in use
      */
@@ -48,9 +49,14 @@ class midgard_webdav_styles_handler_midcoms  extends midgard_webdav_styles_handl
     }
 
     /**
-     * A listing of styleelements-
+     * A listing of styleelements
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
-    function _handler_styleelements ( $handler_id, $args, &$data ) 
+    function _handler_styleelements ( $handler_id, $args, &$data )
     {
         $midcom = $args[0];
  		$this->log(__CLASS__ . "styleelements_handler");
@@ -63,6 +69,11 @@ class midgard_webdav_styles_handler_midcoms  extends midgard_webdav_styles_handl
     }
     /**
      * one element.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_element ( $handler_id, $args, &$data ) {
         $midcom= $args[0];
@@ -73,7 +84,7 @@ class midgard_webdav_styles_handler_midcoms  extends midgard_webdav_styles_handl
         $server->ServeRequest( ) ;
         return true;
     }
-    
+
     function get_root_style(  ) {
  		$this->log(__CLASS__ . ": get_root_style");
         $style = new midcom_db_style($_MIDGARD['style']);

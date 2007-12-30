@@ -22,7 +22,7 @@ class fi_mik_lentopaikkakisa_handler_manage extends midcom_baseclasses_component
      * @access private
      */
     var $_controllers = array();
-    
+
     /**
      * The schema database in use, available only while a datamanager is loaded.
      *
@@ -31,11 +31,17 @@ class fi_mik_lentopaikkakisa_handler_manage extends midcom_baseclasses_component
      */
     var $_schemadb = null;
 
-    function fi_mik_lentopaikkakisa_handler_manage() 
+    function fi_mik_lentopaikkakisa_handler_manage()
     {
-        parent::midcom_baseclasses_components_handler();       
+        parent::midcom_baseclasses_components_handler();
     }
-    
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+     */
     function _handler_delete($handler_id, $args, &$data)
     {
         $report = new fi_mik_lentopaikkakisa_report_dba($args[0]);
@@ -43,22 +49,28 @@ class fi_mik_lentopaikkakisa_handler_manage extends midcom_baseclasses_component
         {
             return false;
         }
-        
+
         $report->require_do('midgard:delete');
-        
+
         $report->delete();
-        
+
         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "manage/");
-        
+
         return true;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_list($handler_id, $args, &$data)
     {
         $this->_topic->require_do('midgard:delete');
 
         $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
-    
+
         $qb = new org_openpsa_qbpager('fi_mik_lentopaikkakisa_report_dba', 'fi_mik_lentopaikkakisa_reports');
         $qb->add_order('created', 'DESC');
         $this->_request_data['report_qb'] =& $qb;
@@ -74,10 +86,10 @@ class fi_mik_lentopaikkakisa_handler_manage extends midcom_baseclasses_component
         }
         return true;
     }
-    
+
     function _show_list($handler_id, &$data)
     {
         midcom_show_style('view-reports');
-    }    
+    }
 }
 ?>

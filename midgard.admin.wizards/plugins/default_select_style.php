@@ -52,6 +52,9 @@ class default_select_style extends midcom_baseclasses_components_handler
 	    );
     }
 
+	/**
+     * @return bool Indicating success.
+	 */
     function _handler_select_style()
     {
         $title = $this->_l10n->get('style selection');

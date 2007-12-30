@@ -18,7 +18,7 @@ class net_nehmer_account_handler_list extends midcom_baseclasses_components_hand
     function net_nehmer_account_handler_list()
     {
         parent::midcom_baseclasses_components_handler();
-        
+
         $_MIDCOM->load_library('org.openpsa.qbpager');
     }
 
@@ -30,6 +30,11 @@ class net_nehmer_account_handler_list extends midcom_baseclasses_components_hand
      * by the handler id (admin_edit vs. edit). In admin mode, admin privileges are
      * required unconditionally, the id/guid of the record to-be-edited is expected
      * in $args[0].
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -37,7 +42,7 @@ class net_nehmer_account_handler_list extends midcom_baseclasses_components_hand
         {
             return false;
         }
-    
+
         $qb = new org_openpsa_qbpager('midcom_db_person', 'net_nehmer_account_list');
         $data['qb'] =& $qb;
         $qb->add_order('metadata.score', 'DESC');
@@ -50,7 +55,7 @@ class net_nehmer_account_handler_list extends midcom_baseclasses_components_hand
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         $this->_view_toolbar->hide_item('list/');
-                
+
         $_MIDCOM->set_pagetitle($this->_l10n->get('user list'));
 
         return true;
@@ -62,13 +67,13 @@ class net_nehmer_account_handler_list extends midcom_baseclasses_components_hand
     function _show_list($handler_id, &$data)
     {
         midcom_show_style('show-list-header');
-        
+
         foreach ($data['users'] as $user)
         {
             $data['user'] =& $user;
             midcom_show_style('show-list-item');
         }
-        
+
         midcom_show_style('show-list-footer');
     }
 }

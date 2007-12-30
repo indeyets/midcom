@@ -1,7 +1,7 @@
 <?php
 /**
  * @package midcom.admin.help
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,16 +9,16 @@
 
 /**
  * Online help display
- * 
+ *
  * @package midcom.admin.help
  */
-class midcom_admin_help_help extends midcom_baseclasses_components_handler 
-{    
-    function midcom_admin_help_help() 
+class midcom_admin_help_help extends midcom_baseclasses_components_handler
+{
+    function midcom_admin_help_help()
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function get_plugin_handlers()
     {
         return Array
@@ -37,63 +37,63 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
             ),
         );
     }
-    
-    function _on_initialize() 
+
+    function _on_initialize()
     {
         // Populate the request data with references to the class members we might need
-        if (array_key_exists('aegir_interface',$this->_request_data)) 
+        if (array_key_exists('aegir_interface',$this->_request_data))
         {
            $this->_config =& $this->_request_data['aegir_interface']->get_handler_config('midcom.admin.help');
         }
-        
+
         // doing this here as this component most probably will not be called by itself.
         $_MIDCOM->style->prepend_component_styledir('midcom.admin.help');
-        
+
         $_MIDCOM->load_library('net.nehmer.markdown');
     }
-    
+
     function _generate_file_path($help_id, $component, $language)
     {
         $component_dir = str_replace('.', '/', $component);
         $file = MIDCOM_ROOT . "/{$component_dir}/documentation/{$help_id}.{$language}.txt";
         return $file;
     }
-    
+
     /**
      * Load the file from the component's documentation directory.
      */
-    function _load_file($help_id, $component) 
+    function _load_file($help_id, $component)
     {
         // Check that this is a real component
         if (!array_key_exists($component, $_MIDCOM->componentloader->manifests))
         {
             // Component is not loaded
             return false;
-        }    
-    
+        }
+
         // First try loading the file in current language
         $file = $this->_generate_file_path($help_id, $component, $_MIDCOM->i18n->get_current_language());
-        
+
         if (!file_exists($file))
         {
             // If that fails, use MidCOM's default fallback language
             $file = $this->_generate_file_path($help_id, $component, $GLOBALS['midcom_config']['i18n_fallback_language']);
         }
-        
+
         if (!file_exists($file))
         {
             return false;
         }
-        
+
         // Load the contents
         $help_contents = file_get_contents($file);
-        
+
         // Replace static URLs (URLs for screenshots etc)
         $help_contents = str_replace('MIDCOM_STATIC_URL', MIDCOM_STATIC_URL, $help_contents);
-        
+
         return $help_contents;
     }
-    
+
     /**
      * Load a help file and markdownize it
      */
@@ -101,12 +101,12 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
     {
         $marker = new net_nehmer_markdown_markdown;
         $text = $this->_load_file($help_id, $component);
-        
+
         if (!$text)
         {
             return false;
         }
-        
+
         // Finding [callback:some_method_of_viewer]
         if (preg_match_all('/(\[callback:(.+?)\])/', $text, $regs))
         {
@@ -126,10 +126,16 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
                 }
             }
         }
-        
+
         return $marker->render($text);
     }
-    
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+     */
     function _handler_display($handler_id, $args, &$data)
     {
         if ($handler_id == '____ais-help-display_component')
@@ -140,59 +146,65 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
         else
         {
             $help_id = $args[0];
-            if (array_key_exists('aegir_interface',$this->_request_data)) 
+            if (array_key_exists('aegir_interface',$this->_request_data))
             {
                 $component = & $this->_request_data['aegir_interface']->_module;
-            } 
-            else 
+            }
+            else
             {
                 $component = $this->_master->_component;
             }
         }
-        
+
         // Check that this is a real component
         if (!array_key_exists($component, $_MIDCOM->componentloader->manifests))
         {
             // Component is not loaded
             return false;
         }
-        
+
         $_MIDCOM->skip_page_style = true;
-        
+
         $_MIDCOM->set_pagetitle(sprintf($_MIDCOM->i18n->get_string('help for %s in %s', 'midcom.admin.help'), $help_id, $_MIDCOM->i18n->get_string($component, $component)));
-        
+
         $data['html'] = $this->get_help_contents($help_id, $component);
-        
+
         if (!$data['html'])
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Cannot generate help \"{$help_id}\" for in {$component}");
             // this will exit with 404
         }
-        
+
         return true;
     }
-    
-    function _show_display() 
+
+    function _show_display()
     {
-        midcom_show_style('midcom_admin_help_header'); 
-        midcom_show_style('midcom_admin_help_show'); 
-        midcom_show_style('midcom_admin_help_footer'); 
+        midcom_show_style('midcom_admin_help_header');
+        midcom_show_style('midcom_admin_help_show');
+        midcom_show_style('midcom_admin_help_footer');
     }
-    
+
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_edit ($handler_id, $args, &$data)
     {
         // not yet implemented
         return false;
     }
-    
-    function _show_edit() 
+
+    function _show_edit()
     {
         //$this->_controller->display_form();
     }
-    
-    function _prepare_main_toolbar() 
+
+    function _prepare_main_toolbar()
     {
-        if (array_key_exists('aegir_interface', $this->_request_data)) 
+        if (array_key_exists('aegir_interface', $this->_request_data))
         {
             $this->_request_data['aegir_interface']->prepare_toolbar();
             $this->_request_data['aegir_interface']->set_current_node($this->_object->guid);
@@ -200,6 +212,6 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
         }
         return;
     }
-    
+
 }
 ?>

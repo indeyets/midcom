@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package net.nemein.lastupdates
  */
-class net_nemein_lastupdates_handler_index  extends midcom_baseclasses_components_handler 
+class net_nemein_lastupdates_handler_index  extends midcom_baseclasses_components_handler
 {
 
     /**
@@ -24,21 +24,23 @@ class net_nemein_lastupdates_handler_index  extends midcom_baseclasses_component
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
-     * _on_initialize is called by midcom on creation of the handler. 
+     * _on_initialize is called by midcom on creation of the handler.
      */
     function _on_initialize()
     {
         $data =& $this->_request_data;
         // Default to one week ago
     }
-    
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
     {
@@ -54,10 +56,12 @@ class net_nemein_lastupdates_handler_index  extends midcom_baseclasses_component
     }
 
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_since($handler_id, $args, &$data)
     {
@@ -159,7 +163,7 @@ class net_nemein_lastupdates_handler_index  extends midcom_baseclasses_component
         midcom_show_style('footer');
     }
 
-    
+
     /**
      * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.

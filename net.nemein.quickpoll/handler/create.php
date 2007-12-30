@@ -146,7 +146,7 @@ class net_nemein_quickpoll_handler_create extends midcom_baseclasses_components_
 
         // Hotfix for #133
         $this->_article->name = time();
-        
+
         if (! $this->_article->create())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -166,7 +166,12 @@ class net_nemein_quickpoll_handler_create extends midcom_baseclasses_components_
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
@@ -207,14 +212,14 @@ class net_nemein_quickpoll_handler_create extends midcom_baseclasses_components_
                     }
                 }
                 $_MIDCOM->relocate("manage/{$this->_article->guid}/");
-                
+
             case 'cancel':
                 $_MIDCOM->relocate('');
                 // This will exit.
         }
 
         $this->_prepare_request_data();
-        if ( $this->_article != null ) 
+        if ( $this->_article != null )
         {
             $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
         }

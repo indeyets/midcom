@@ -115,7 +115,12 @@ class net_nemein_downloads_handler_view extends midcom_baseclasses_components_ha
      * Note, that the downloadpage for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation downloadpage,
+     * If create privileges apply, we relocate to the index creation downloadpage
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_view ($handler_id, $args, &$data)
     {
@@ -177,7 +182,13 @@ class net_nemein_downloads_handler_view extends midcom_baseclasses_components_ha
 
         midcom_show_style('view-release');
     }
-    
+
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_index($handler_id, $args, &$data)
     {
         // List releases
@@ -188,17 +199,17 @@ class net_nemein_downloads_handler_view extends midcom_baseclasses_components_ha
 
         $this->_load_datamanager();
         $this->_request_data['datamanager'] =& $this->_datamanager;
-        
+
         return true;
     }
-    
+
     /**
      * Shows the loaded downloadpage.
      */
     function _show_index($handler_id, &$data)
     {
         midcom_show_style('view-index-header');
-        
+
         foreach ($data['releases'] as $release)
         {
             $data['datamanager']->autoset_storage($release);

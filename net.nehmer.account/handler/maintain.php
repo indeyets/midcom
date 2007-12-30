@@ -58,7 +58,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
     var $_controller = null;
 
     /**
-     * Helper variable, containg a localized message to be shown to the user indicating the form's
+     * Helper variable, containing a localized message to be shown to the user indicating the form's
      * processing state.
      *
      * @var string
@@ -88,6 +88,11 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
      * The handler provides publishing support. After creating and preparing all members,
      * it will first process the form. Afterwards, it provides the means to display the
      * publishing form.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_password($handler_id, $args, &$data)
     {
@@ -108,7 +113,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         $this->_prepare_request_data();
 
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
-        
+
         $tmp[] = array
         (
             MIDCOM_NAV_URL => 'password/',
@@ -116,9 +121,9 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         $this->_view_toolbar->hide_item('password/');
-                
-        $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);        
-        
+
+        $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
+
         $_MIDCOM->set_pagetitle($this->_l10n->get('change password'));
 
         return true;
@@ -260,6 +265,11 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
     /**
      * This function prepares everything to update the username, it basically follows the
      * same procedure as handle_password.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_username($handler_id, $args, &$data)
     {
@@ -283,8 +293,8 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         $this->_view_toolbar->hide_item('username/');
-                
-        $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name); 
+
+        $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
 
         $_MIDCOM->set_pagetitle($this->_l10n->get('change username'));
 
@@ -299,7 +309,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         $this->_controller =& midcom_helper_datamanager2_controller::create('nullstorage');
         $schemadb = midcom_helper_datamanager2_schema::load_database('file:/net/nehmer/account/config/schemadb_internal.inc');
         $this->_controller->schemadb = $schemadb;
-        $this->_controller->schemaname = $this->_config->get('username_is_email') ? 
+        $this->_controller->schemaname = $this->_config->get('username_is_email') ?
             'emailusernamechange' : 'usernamechange';
         $this->_controller->defaults = Array('username' => $this->_account->username);
         $this->_controller->initialize();
@@ -401,6 +411,11 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
      *
      * It uses only a nullstorage formmanager and a processing message in the Request
      * Data storage.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_lostpassword($handler_id, $args, &$data)
     {
@@ -418,9 +433,14 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
 
         return true;
     }
-    
-     /**
+
+    /**
      * Password reset activation hash handler
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_lostpassword_reset($handler_id, $args, &$data)
     {
@@ -468,7 +488,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
             $this->_processing_msg = $this->_l10n->get('password reset, mail sent.');
             $this->_processing_msg_raw = 'password reset, mail sent.';
         }
-        
+
         $_MIDCOM->auth->drop_sudo();
 
         $this->_prepare_request_data();
@@ -488,16 +508,16 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to request sudo privileges for account password reset.');
             // This will exit.
         }
-        
+
         if ($username)
         {
             $user =& $_MIDCOM->auth->get_user_by_name($username);
         }
         else
         {
-            $user =& $_MIDCOM->auth->get_user_by_email($email);            
+            $user =& $_MIDCOM->auth->get_user_by_email($email);
         }
-        
+
         if (! $user)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -513,7 +533,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
             debug_add("Found multiple users with given email {$email}.");
             debug_pop();
             $this->_processing_msg = $this->_l10n->get('multiple users found with given email');
-            $this->_processing_msg_raw = 'multiple users found with given email';            
+            $this->_processing_msg_raw = 'multiple users found with given email';
             return false;
         }
 
@@ -539,9 +559,9 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         $person->set_parameter('net.nehmer.account', 'lostpassword_reset_link', $reset_link);
 
         $_MIDCOM->auth->drop_sudo();
-        
+
         net_nehmer_account_viewer::send_password_reset_mail($person, $reset_link, $this->_config);
-        
+
         return true;
     }
 
@@ -550,9 +570,9 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
      * This function prepares the form manager used to change the password.
      */
     function _prepare_lostpassword_formmanager()
-    {   
+    {
         $include_username = false;
-        
+
         if (   isset($_POST['email'])
             && $this->_config->get('lostpassword_email_reset'))
         {
@@ -568,7 +588,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
                 $include_username = true;
             }
         }
-        
+
         $this->_controller =& midcom_helper_datamanager2_controller::create('nullstorage');
         $schemadb = midcom_helper_datamanager2_schema::load_database('file:/net/nehmer/account/config/schemadb_internal.inc');
         $this->_controller->schemadb = $schemadb;
@@ -588,7 +608,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         // file manually, as we don't add it to the standard loader code.
         // This will prohibit duplicate user names.
         require_once(MIDCOM_ROOT . '/net/nehmer/account/callbacks/validation.php');
-        
+
         if($this->_config->get('lostpassword_email_reset'))
         {
             $this->_controller->formmanager->form->registerRule
@@ -598,7 +618,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
                 'verify_existing_user_email',
                 'net_nehmer_account_callbacks_validation'
             );
-            
+
             if ($include_username)
             {
                 $this->_controller->formmanager->form->registerRule
@@ -609,7 +629,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
                     'net_nehmer_account_callbacks_validation'
                 );
             }
-            
+
             if ($this->_account)
             {
                 $this->_controller->formmanager->form->addRule
@@ -640,7 +660,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
                     'verify_existing_user_name',
                     $this->_account->username
                 );
-            }            
+            }
         }
     }
 
@@ -661,7 +681,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
                     if (isset($this->_controller->datamanager->types['username']))
                     {
                         $username = $this->_controller->datamanager->types['username']->value;
-                        $user =& $_MIDCOM->auth->get_user_by_name($username);                        
+                        $user =& $_MIDCOM->auth->get_user_by_name($username);
                         if ($user)
                         {
                             $person =& $user->get_storage();
@@ -669,19 +689,19 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
                             {
                                 $this->_processing_msg = $this->_l10n->get("username and email doesn't match");
                                 $this->_processing_msg_raw = "username and email doesn't match";
-                                $send_email = false;                                
+                                $send_email = false;
                             }
                         }
                     }
-                    
+
                     if ($send_email)
                     {
                         if ($this->_send_lostpassword_reset_link($email, $username))
                         {
                             $this->_processing_msg = $this->_l10n->get('password reset request sent, check your email.');
                             $this->_processing_msg_raw = 'password reset request sent, check your email.';
-                            $this->_success = true;                            
-                        }                        
+                            $this->_success = true;
+                        }
                     }
                 }
                 else
@@ -805,6 +825,11 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
     /**
      * This function prepares everything to cancel the membership, it basically follows the
      * same procedure as handle_password.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_cancel_membership($handler_id, $args, &$data)
     {
@@ -834,7 +859,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         $this->_view_toolbar->hide_item('cancel_membership/');
-                
+
         $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
 
         $_MIDCOM->set_pagetitle($this->_l10n->get('cancel membership'));

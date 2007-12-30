@@ -163,6 +163,11 @@ class net_nehmer_jobmarket_handler_ticker extends midcom_baseclasses_components_
      * of the resultset is limited according to the components' configuration. Full result listings
      * are not directly supported, the component will always page the job ticker, to avoid huge
      * listings.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_ticker($handler_id, $args, &$data)
     {

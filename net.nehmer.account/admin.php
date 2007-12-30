@@ -49,6 +49,11 @@ class net_nehmer_account_admin extends midcom_baseclasses_components_request_adm
 
     /**
      * Simple welcome page, lists available plugins. All work done in the show call.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {

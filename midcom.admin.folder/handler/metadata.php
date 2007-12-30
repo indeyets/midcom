@@ -18,41 +18,41 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
 {
     /**
      * Object requested for metadata editing
-     * 
+     *
      * @access private
      * @var $_object mixed Object for metadata editing
      */
     var $_object = null;
-    
+
     /**
      * Edit controller instance for Datamanager 2
-     * 
+     *
      * @access private
      * @var $_controller midcom_helper_datamanager2_controller
      */
     var $_controller = null;
-    
+
     /**
      * Datamanager 2 schema instance
-     * 
+     *
      * @access private
      * @var $_schemadb midcom_helper_datamanager2_schema
      */
     var $_schemadb = null;
-    
+
     /**
      * Constructor, call for the class parent constructor method.
-     * 
+     *
      * @access public
      */
     function midcom_admin_folder_handler_metadata()
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Get the object title of the content topic.
-     * 
+     *
      * @return string containing the content topic title
      */
     function _get_object_title(&$object)
@@ -75,25 +75,25 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
         }
         else
         {
-            $title = get_class($object) . " GUID {$object->guid}"; 
+            $title = get_class($object) . " GUID {$object->guid}";
         }
-        
+
         return $title;
     }
-    
+
     /**
      * Load the DM2 edit controller instance
-     * 
+     *
      * @access private
      * @return bool Indicating success of DM2 edit controller instance
      */
     function _load_datamanager()
     {
         $this->_schemadb = midcom_helper_datamanager2_schema::load_database($GLOBALS['midcom_config']['metadata_schema']);
-        
+
         $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
         $this->_controller->schemadb =& $this->_schemadb;
-        
+
         // Check if we have metadata schema defined in the schemadb specific for the object's schema or component
         $object_schema = $this->_object->get_parameter('midcom.helper.datamanager2', 'schema_name');
         $component_schema = str_replace('.', '_', $_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT));
@@ -111,41 +111,44 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
                 $object_schema = 'metadata';
             }
         }
-        
+
         $this->_controller->set_storage($this->_object, $object_schema);
-        
-        
+
+
         if (! $this->_controller->initialize())
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for article {$this->_article->id}.");
             // This will exit.
         }
     }
-    
+
     /**
      * Handler for folder metadata. Checks for updating permissions, initializes
      * the metadata and the content topic itself. Handles also the sent form.
-     * 
+     *
      * @access private
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
      * @return boolean Indicating success
      */
     function _handler_metadata($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (! $this->_object)
         {
             debug_add("Object with GUID '{$args[0]}' was not found!", MIDCOM_LOG_ERROR);
             debug_pop();
-            
+
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The GUID '{$args[0]}' was not found.");
             // This will exit.
         }
-        
+
         // FIXME: We should modify the schema according to whether or not scheduling is used
         $this->_object->require_do('midgard:update');
-        
+
         if (is_a($this->_object, 'midcom_baseclasses_database_topic'))
         {
             // This is a topic
@@ -158,17 +161,17 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
         }
 
         $this->_metadata =& midcom_helper_metadata::retrieve($this->_object);
-        
+
         if (! $this->_metadata)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Failed to retrieve Metadata for '{$this->_object->__table__}' ID {$this->_object->id}.");
             // This will exit.
         }
-        
+
         // Load the DM2 controller instance
         $this->_load_datamanager();
-        
+
         switch ($this->_controller->process_form())
         {
             case 'save':
@@ -176,12 +179,12 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
                 $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_object->guid));
                 // This will exit
         }
-        
+
         $tmp = array ();
-        
+
         if (is_a($this->_object, 'midcom_baseclasses_database_topic'))
-        {       
-            $this->_node_toolbar->hide_item("__ais/folder/metadata/{$this->_object->guid}.html"); 
+        {
+            $this->_node_toolbar->hide_item("__ais/folder/metadata/{$this->_object->guid}.html");
         }
         else
         {
@@ -192,7 +195,7 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
             );
             $this->_view_toolbar->hide_item("__ais/folder/metadata/{$this->_object->guid}.html");
         }
-        
+
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => "__ais/folder/metadata/{$this->_object->guid}.html",
@@ -202,19 +205,19 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
 
         $data['title'] = sprintf($_MIDCOM->i18n->get_string('edit metadata of %s', 'midcom.admin.folder'), $this->_get_object_title($this->_object));
         $_MIDCOM->set_pagetitle($data['title']);
-        
+
         // Set the help object in the toolbar
         $this->_view_toolbar->add_help_item('edit_metadata', 'midcom.admin.folder');
-        
+
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midcom.admin.folder');
-        
+
         return true;
     }
-    
+
     /**
      * Output the style element for metadata editing
-     * 
+     *
      * @access private
      */
     function _show_metadata($handler_id, &$data)
@@ -222,9 +225,9 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
         // Bind object details to the request data
         $data['controller'] =& $this->_controller;
         $data['object'] =& $this->_object;
-        
+
         midcom_show_style('midcom-admin-show-folder-metadata');
     }
-    
+
 }
 ?>

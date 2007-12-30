@@ -21,10 +21,16 @@ class net_nemein_favourites_handler_view extends midcom_baseclasses_components_h
      * Load the paged query builder
      */
     function _on_initialize()
-    {   
+    {
         $_MIDCOM->load_library('org.openpsa.qbpager');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_view($handler_id, $args, &$data)
     {
         // Getting favourite objects for the current user
@@ -45,11 +51,11 @@ class net_nemein_favourites_handler_view extends midcom_baseclasses_components_h
             }
             $this->_favourite_objects[$fav->objectType][] = $fav;
         }
-  
+
         return true;
     }
 
-    function _show_view($handler_id, &$data) 
+    function _show_view($handler_id, &$data)
     {
         midcom_show_style('show_index_header');
 
@@ -57,19 +63,19 @@ class net_nemein_favourites_handler_view extends midcom_baseclasses_components_h
         {
             $data['type'] = $type;
             midcom_show_style('show_type_header');
-            
+
             foreach ($favs as $favourite_object)
             {
         	    $data['favourite_object'] = $favourite_object;
                 midcom_show_style('show_index_item');
             }
-            
+
             midcom_show_style('show_type_footer');
         }
 
     	midcom_show_style('show_index_footer');
     }
-    
+
 }
 
 ?>

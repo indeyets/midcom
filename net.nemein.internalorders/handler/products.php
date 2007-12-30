@@ -2,7 +2,7 @@
 
 /**
  * @package net.nemein.internalorders
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: viewer.php,v 1.3.2.7 2005/11/07 18:57:45 bergius Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -10,7 +10,7 @@
 
 /**
  * Calendar Viewer interface class.
- * 
+ *
  * @package net.nemein.internalorders
  */
 class net_nemein_internalorders_handler_products extends midcom_baseclasses_components_handler
@@ -18,7 +18,7 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 
 	/**
 	 * The root event to use with this topic.
-	 * 
+	 *
 	 * @var midcom_baseclasses_database_event
 	 * @access private
 	 */
@@ -35,16 +35,20 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 		{
 			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Component is not properly initialized, root event missing");
 		}
-	
+
 		$this->_root_event = mgd_get_object_by_guid($this->_config->get('root_event'));
 		if (!$this->_root_event)
 		{
 			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
 		}
-	}	
-	
-	
+	}
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
 	function _handler_products_get_from_csv($handler_id, $args, &$data)
 	{
 
@@ -77,7 +81,7 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 				$QB_root->add_order('code', 'ASC');
 				$root_group = $QB_root->execute();
 				$root_group_count = $QB_root->count();
-				
+
 				if($root_group_count > 0)
 				{
 					$QB_child = org_openpsa_products_product_group_dba::new_query_builder();
@@ -100,7 +104,7 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 				$tmp_product->title = $csvline[7];
 				$tmp_product->price = $csvline[10];
 				$tmp_product->productGroup = $child_group[0]->id;
-			
+
 				if($csvline[12] == '0')
 				{
 					$tmp_product->unit = N_N_INTERNALORDERS_PRODUCT_ACTIVE;
@@ -115,8 +119,8 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 				}
 				echo "UPDATING PRODUCT<br />";
 				$stat = $tmp_product->update();
-			
-			
+
+
 				if (!$stat)
 				{
 					$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to update order: ".mgd_errstr());
@@ -125,14 +129,14 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 			//it's a new product
 			else
 			{
-			
+
 				$QB_root = org_openpsa_products_product_group_dba::new_query_builder();
 				$QB_root->add_constraint('up', '=', '0');
 				$QB_root->add_constraint('code', '=', $csvline[1]);
 				$QB_root->add_order('code', 'ASC');
 				$root_group = $QB_root->execute();
 				$root_group_count = $QB_root->count();
-				
+
 				if($root_group_count > 0)
 				{
 					$QB_child = org_openpsa_products_product_group_dba::new_query_builder();
@@ -146,19 +150,19 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 				{
 					continue;
 				}
-				
+
 				if($child_group_count == 0)
 				{
 					continue;
 				}
-			
+
 				$product = new org_openpsa_products_product_dba();
 
 				$product->title = $csvline[7];
 				$product->code = $csvline[6];
 				$product->price = $csvline[10];
 				$product->productGroup = $child_group[0]->id;
-			
+
 				if($csvline[12] == '0')
 				{
 					$tmp_product->unit = N_N_INTERNALORDERS_PRODUCT_ACTIVE;
@@ -174,16 +178,16 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 
 				echo "CREATING PRODUCT<br />";
 				$stat = $product->create();
-			
+
 				if (!$stat)
 				{
 					$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create order: ".mgd_errstr());
 				}
 			}
-			
+
 		}
-			
-				
+
+
 		return true;
 	}
 
@@ -192,7 +196,12 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 			midcom_show_style('show_products');
 	}
 
-
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
 	function _handler_groups_get_from_csv($handler_id, $args, &$data)
 	{
 
@@ -220,12 +229,12 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 /*						echo "<pre>";
 						print_r($group_tmp);
 						echo "</pre>";*/
-						
+
 						if ($group_tmp[0] == '0')
 						{
 							$group_tmp[0] = '00';
 						}
-						
+
 						$QB_root = org_openpsa_products_product_group_dba::new_query_builder();
 						$QB_root->add_constraint('up', '=', '0');
 						$QB_root->add_constraint('code', '=', $group_tmp[0]);
@@ -238,11 +247,11 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 						print_r($root_group_count);
 						echo "</pre>";
 */
-						
+
 						if($root_group_count == 0)
 						{
 							echo "CREATING ROOTGROUP<br />";
-							//We create a new top-level product-group							
+							//We create a new top-level product-group
 							$group_create = new org_openpsa_products_product_group_dba();
 							$group_create->up = 0;
 							$group_create->code = $group_tmp[0];
@@ -284,7 +293,7 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 							if($child_group_count == 0)
 							{
 								echo "CREATING SUBGROUP<br />";
-								//We create a new top-level product-group							
+								//We create a new top-level product-group
 								$sub_group_create = new org_openpsa_products_product_group_dba();
 								$sub_group_create->up = $root_group[0]->id;
 								$sub_group_create->code = $group_tmp[2];
@@ -323,6 +332,6 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 		midcom_show_style('show_groups_tmp');
 	}
 
-	
+
 }
 ?>

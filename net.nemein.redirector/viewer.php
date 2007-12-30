@@ -9,7 +9,7 @@
 
 /**
  * Redirector interface class.
- * 
+ *
  * @package net.nemein.redirector
  */
 class net_nemein_redirector_viewer extends midcom_baseclasses_components_request
@@ -33,6 +33,12 @@ class net_nemein_redirector_viewer extends midcom_baseclasses_components_request
         );
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_redirect($handler_id, $args, &$data)
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);

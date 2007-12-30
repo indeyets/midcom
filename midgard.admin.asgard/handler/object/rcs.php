@@ -464,6 +464,11 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
     }
     /**
      * Show the changes done to the object
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_history($handler_id, $args, &$data)
     {
@@ -565,6 +570,11 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
 
     /**
      * Show a diff between two versions
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_diff($handler_id, $args, &$data)
     {
@@ -645,6 +655,11 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
 
     /**
      * View previews
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_preview($handler_id, $args, &$data)
     {
@@ -685,6 +700,11 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
 
     /**
      * Restore to diff
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_restore($handler_id, $args, &$data)
     {

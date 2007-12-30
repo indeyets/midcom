@@ -40,9 +40,9 @@ class net_nemein_personnel_handler_search extends midcom_baseclasses_components_
         $this->_request_data['persons'] =& $this->_persons;
 
         $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
-        
+
         $this->_request_data['schema'] = $this->_config->get('schema');
-        
+
         $this->_request_data['datamanager'] =& $this->_datamanager;
     }
 
@@ -93,7 +93,7 @@ class net_nemein_personnel_handler_search extends midcom_baseclasses_components_
             // This will exit.
         }
     }
-    
+
     function _validate_operator($operator)
     {
         switch ($operator)
@@ -169,7 +169,7 @@ class net_nemein_personnel_handler_search extends midcom_baseclasses_components_
 
         return $normalized_parameters;
     }
-    
+
     function _check_parameter($object, $domain, $name, $constraint)
     {
         $value = $object->parameter($domain, $name);
@@ -239,13 +239,13 @@ class net_nemein_personnel_handler_search extends midcom_baseclasses_components_
     function _search_persons($constraints)
     {
         $filtered_persons = array();
-        
+
         $qb = midcom_db_member::new_query_builder();
-        
+
         if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
         {
             $qb->add_constraint('gid.guid', '=', $this->_config->get('group'));
-    
+
             foreach ($this->_config->get('index_order') as $ordering)
             {
                 $qb->add_order($ordering);
@@ -256,7 +256,7 @@ class net_nemein_personnel_handler_search extends midcom_baseclasses_components_
             $group = new midcom_db_group($this->_config->get('group'));
             $qb->add_constraint('gid.id', '=', $group->id);
         }
-        
+
         foreach ($constraints as $constraint)
         {
             $storage = $this->_request_data['schemadb'][$this->_request_data['schema']]->fields[$constraint['property']]['storage'];
@@ -278,7 +278,7 @@ class net_nemein_personnel_handler_search extends midcom_baseclasses_components_
         }
 
         $initial_persons = $this->_get_persons_for_memberships($qb->execute());
-        
+
         foreach ($initial_persons as $person)
         {
             $display = true;
@@ -315,7 +315,7 @@ class net_nemein_personnel_handler_search extends midcom_baseclasses_components_
                 $filtered_persons[] = $person;
             }
         }
-        
+
         return $filtered_persons;
     }
 
@@ -323,20 +323,25 @@ class net_nemein_personnel_handler_search extends midcom_baseclasses_components_
      * Renders the Person Index. If alphabetic indexing is enabled, the filter char
      * is extracted and set so that the index is limited accordingly. (Defaults to 'A'
      * in case no filter is specified.)
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_search($handler_id, $args, &$data)
     {
         $this->_prepare_request_data();
-            
+
         if (   array_key_exists('net_nemein_personnel_search', $_REQUEST)
             && is_array($_REQUEST['net_nemein_personnel_search']))
         {
             // Normalize the constraints
             $data['search_constraints'] = $this->_normalize_search($_REQUEST['net_nemein_personnel_search']);
-    
+
             $this->_persons = $this->_search_persons($data['search_constraints']);
         }
-        
+
         $this->_load_datamanager();
 
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
@@ -353,7 +358,7 @@ class net_nemein_personnel_handler_search extends midcom_baseclasses_components_
         if ($this->_persons)
         {
             midcom_show_style('show-index-header');
-            
+
             midcom_show_style('show-search-form');
 
             $current_col = 0;

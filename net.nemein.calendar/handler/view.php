@@ -21,10 +21,10 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
      * @access private
      */
     var $_datamanager = null;
-    
+
     /**
      * Navigation helper class
-     * 
+     *
      * @access private
      * @var midcom_helper_nav
      */
@@ -60,7 +60,7 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
      * Can-Handle check against the current event GUID. We have to do this explicitly
      * in can_handle already, otherwise we would hide all subtopics as the request switch
      * accepts all argument count matches unconditionally.
-     * 
+     *
      * @access private
      * @return boolean
      */
@@ -70,17 +70,17 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         $qb = midcom_db_topic::new_query_builder();
         $qb->add_constraint('name', '=', (string) $args[0]);
         $qb->add_constraint('up', '=', $this->_topic->id);
-        
+
         if ($qb->count() !== 0)
         {
             return false;
         }
-        
+
         $qb = net_nemein_calendar_event_dba::new_query_builder();
-        
+
         $qb->begin_group();
         $qb->add_constraint('node', '=', $this->_request_data['content_topic']->id);
-        
+
         // Add all the folders that are configured
         if ($this->_config->get('list_from_folders'))
         {
@@ -93,26 +93,31 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
                 {
                     continue;
                 }
-                
+
                 $qb->add_constraint('node.guid', '=', $guid);
             }
         }
         $qb->end_group();
-        
+
         $qb->add_constraint('name', '=', $args[0]);
-        
+
         if ($qb->count() === 0)
         {
             return false;
         }
-        
+
         $events = $qb->execute();
         $this->_request_data['event'] = $events[0];
 
-        return true;        
+        return true;
     }
 
-
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_view($handler_id, $args, &$data)
     {
         if ($handler_id == 'archive-view')
@@ -120,7 +125,7 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
             if (!$this->_config->get('archive_enable'))
             {
                 return false;
-            }        
+            }
             $data['archive_mode'] = true;
             $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
         }
@@ -128,28 +133,28 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         {
             $data['archive_mode'] = false;
         }
-        
+
         if (   isset($data['original_language'])
             && $data['event']->lang == $data['original_language'])
         {
             // Re-fetch the article into the new language context
             $data['event'] = new net_nemein_calendar_event_dba($data['event']->guid);
         }
-        
+
         $node_url = '';
-        
+
         if ($data['event']->node !== $data['content_topic']->id)
         {
             if (!$this->_nap)
             {
                 $this->_nap = new midcom_helper_nav();
             }
-            
+
             $node = $this->_nap->get_node($data['event']->node);
-            
+
             $node_url = $node[MIDCOM_NAV_FULLURL];
         }
-        
+
         $this->_view_toolbar->add_item
         (
             array
@@ -172,7 +177,7 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
             )
         );
-        
+
         $this->_load_datamanager();
 
         if ($this->_config->get('enable_ajax_editing'))
@@ -184,7 +189,7 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         }
 
         $_MIDCOM->set_pagetitle(strftime('%x', strtotime($data['event']->start)) . ": " . $data['event']->title);
-        
+
         $_MIDCOM->bind_view_to_object($data['event'], $this->_datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata($data['event']->metadata->revised, $data['event']->guid);
 
@@ -194,9 +199,9 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
             MIDCOM_NAV_URL => "{$data['event']->extra}/",
             MIDCOM_NAV_NAME => $data['event']->title,
         );
-        
+
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
-        
+
         return true;
     }
 
@@ -210,7 +215,7 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         else
         {
             $this->_request_data['view_event'] = $data['datamanager']->get_content_html();
-        }    
+        }
         midcom_show_style('show_event');
     }
 }

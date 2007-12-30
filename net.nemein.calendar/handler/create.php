@@ -38,7 +38,7 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
     {
         $this->_request_data['event'] = new net_nemein_calendar_event_dba();
         $this->_request_data['event']->node = $this->_request_data['content_topic']->id;
-        
+
         if ($this->_request_data['master_event'])
         {
             $this->_request_data['event']->up = $this->_request_data['master_event'];
@@ -82,6 +82,11 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
      * The form can be manipulated using query strings like the following:
      *
      * ?defaults[title]=Kaljakellunta&defaults[start]=20070911T123001&defaults[categories]=|foo|
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
@@ -95,8 +100,8 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
         }
 
         $data['defaults'] = Array();
-        
-        // Allow setting defaults from query string, useful for things like "create event for today" and chooser        
+
+        // Allow setting defaults from query string, useful for things like "create event for today" and chooser
         if (isset($_GET['defaults'])
             && is_array($_GET['defaults']))
         {
@@ -107,11 +112,11 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
                     // No such field in schema
                     continue;
                 }
-                
+
                 $data['defaults'][$key] = $value;
             }
         }
-        
+
         $this->_load_controller();
 
         switch ($this->_controller->process_form())
@@ -120,7 +125,7 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
                 // Index the article
                 $indexer =& $_MIDCOM->get_service('indexer');
                 net_nemein_calendar_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
-                
+
                 // Generate URL name
                 if ($data['event']->name == '')
                 {
@@ -159,7 +164,7 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
 
         $title = sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($this->_request_data['schemadb'][$this->_request_data['schema']]->description));
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
-        
+
         if ($handler_id == 'create_chooser')
         {
             $_MIDCOM->skip_page_style = true;
@@ -172,7 +177,7 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
             MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($data['schemadb'][$data['schema']]->description)),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
-        
+
         return true;
     }
 
@@ -182,12 +187,12 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
      */
     function _show_create ($handler_id, &$data)
     {
-        $data['controller'] =& $this->_controller;  
-          
+        $data['controller'] =& $this->_controller;
+
         if ($handler_id == 'create_chooser')
         {
             midcom_show_style('popup_header');
-            
+
             if (   $data['event']
                 || isset($data['cancelled']))
             {
@@ -199,24 +204,24 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
                 midcom_show_style('admin_create');
             }
             midcom_show_style('popup_footer');
-            
+
             return;
-        }    
-        
+        }
+
         midcom_show_style('admin_create');
     }
-    
+
     function _object_to_jsdata(&$object)
-    {        
+    {
         $id = @$object->id;
         $guid = @$object->guid;
-        
+
         $jsdata = "{";
-        
+
         $jsdata .= "id: '{$id}',";
         $jsdata .= "guid: '{$guid}',";
         $jsdata .= "pre_selected: true,";
-                        
+
         $hi_count = count($this->_request_data['schemadb'][$this->_request_data['schema']]->fields);
         $i = 1;
         foreach ($this->_request_data['schemadb'][$this->_request_data['schema']]->fields as $field => $field_data)
@@ -224,17 +229,17 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
             $value = @$object->$field;
             $value = rawurlencode($value);
             $jsdata .= "{$field}: '{$value}'";
-            
+
             if ($i < $hi_count)
             {
                 $jsdata .= ", ";
             }
-            
+
             $i++;
-        }   
+        }
 
         $jsdata .= "}";
-        
+
         return $jsdata;
     }
 }

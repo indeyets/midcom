@@ -73,6 +73,12 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
         $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Method "_load_data" must be overridden in implementation');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_csv($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

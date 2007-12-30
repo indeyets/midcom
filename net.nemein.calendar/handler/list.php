@@ -21,21 +21,21 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
      * @access private
      */
     var $_filters = Array();
-    
+
     /**
      * Viewed year for calendar view
-     * 
+     *
      * @access private
      */
     var $_year;
 
     /**
      * Viewed month for calendar view
-     * 
+     *
      * @access private
      */
     var $_month;
-    
+
     /**
      * Calendar display widget
      *
@@ -43,15 +43,15 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
      * @access private
      */
     var $_calendar;
-    
+
     /**
      * Switch to determine if past elements should be shown
-     * 
+     *
      * @var boolean
      * @access private
      */
     var $_past = false;
-    
+
     /**
      * Simple default constructor.
      */
@@ -59,7 +59,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function _load_filters()
     {
         if ($this->_config->get('enable_filters'))
@@ -72,20 +72,26 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         }
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_open($handler_id, $args, &$data)
     {
         $this->_load_datamanager();
         $this->_request_data['archive_mode'] = false;
-        
-        $this->_request_data['index_count'] = $args[0];     
-        
+
+        $this->_request_data['index_count'] = $args[0];
+
         $this->_request_data['events'] = array();
 
         $this->_load_filters();
 
         // Filter the upcoming list by a type if required
         $type_filter = $this->_config->get('type_filter_upcoming');
-        
+
         $qb = net_nemein_calendar_event_dba::new_query_builder();
 
         // Add root event constraints
@@ -97,7 +103,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         {
             $qb->add_constraint('node', '=', $data['content_topic']->id);
         }
-        
+
         // Add filtering constraints
         if (!is_null($type_filter))
         {
@@ -105,7 +111,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         }
         foreach ($this->_filters as $field => $filter)
         {
-            $qb->add_constraint($field, '=', $filter);            
+            $qb->add_constraint($field, '=', $filter);
         }
         // QnD category filter (only in 1.8)
         if (   isset($_REQUEST['net_nemein_calendar_category'])
@@ -120,15 +126,15 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
 
         // Show only events that haven't started
         $qb->add_constraint('start', '>', gmdate('Y-m-d H:i:s', time()));
-        
+
         // Show only open events
         $qb->add_constraint('closeregistration', '>', gmdate('Y-m-d H:i:s', time()));
         $qb->add_constraint('openregistration', '<=', gmdate('Y-m-d H:i:s', time()));
 
         $qb->set_limit($this->_request_data['index_count']);
-        
+
         $qb->add_order('closeregistration');
-        
+
         $this->_request_data['events'] = $qb->execute();
 
         return true;
@@ -139,11 +145,17 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $this->_show_event_listing($handler_id);
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_upcoming($handler_id, $args, &$data)
     {
         $this->_load_datamanager();
         $this->_request_data['archive_mode'] = false;
-        
+
         if (count($args) > 0)
         {
             $this->_request_data['index_count'] = $args[0];
@@ -151,8 +163,8 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         else
         {
             $this->_request_data['index_count'] = $this->_config->get('index_count');
-        }     
-        
+        }
+
         $this->_request_data['events'] = array();
 
         $this->_load_filters();
@@ -168,11 +180,17 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $this->_show_event_listing($handler_id);
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_past($handler_id, $args, &$data)
     {
         $this->_load_datamanager();
         $this->_request_data['archive_mode'] = false;
-        
+
         if (count($args) > 0)
         {
             $this->_request_data['index_count'] = $args[0];
@@ -180,10 +198,10 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         else
         {
             $this->_request_data['index_count'] = $this->_config->get('index_count');
-        }     
-        
+        }
+
         $this->_request_data['events'] = array();
-        
+
         $this->_past = true;
         $this->_load_filters();
 
@@ -198,11 +216,17 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $this->_show_event_listing($handler_id);
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_week($handler_id, $args, &$data)
     {
         $this->_load_datamanager();
         $this->_request_data['archive_mode'] = false;
-        
+
         // Go to the chosen week instead of current one
         // TODO: Check format as YYYY-MM-DD via regexp
         $requested_time = @strtotime($args[0]);
@@ -230,9 +254,9 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             MIDCOM_NAV_URL => "week/{$args[0]}/",
             MIDCOM_NAV_NAME => sprintf($this->_l10n->get('week %1$s of year %2$s'), strftime('%W', $requested_time), (string) strftime('%Y', $requested_time)),
         );
-        
+
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
-        
+
         return true;
     }
 
@@ -241,6 +265,12 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $this->_show_event_listing($handler_id);
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_between($handler_id, $args, &$data)
     {
         $this->_load_datamanager();
@@ -255,15 +285,15 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             // We couldn't generate the dates
             return false;
         }
-        
+
         if ($handler_id == 'archive-between')
         {
             if (!$this->_config->get('archive_enable'))
             {
                 return false;
-            }        
+            }
             $this->_request_data['archive_mode'] = true;
-            
+
             if ($this->_config->get('archive_in_navigation'))
             {
                 $this->_component_data['active_leaf'] = "{$data['content_topic']->id}_ARCHIVE";
@@ -275,9 +305,9 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         }
         else
         {
-            $this->_request_data['archive_mode'] = false;            
+            $this->_request_data['archive_mode'] = false;
         }
-        
+
 
 
         $this->_request_data['start'] = $start;
@@ -292,7 +322,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $this->_get_event_listing($start, $end, true);
 
         if ($this->_request_data['archive_mode'])
-        {            
+        {
             if ($start)
             {
                 $breadcrumb[] = array
@@ -312,11 +342,11 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                     MIDCOM_NAV_URL => "/between/{$args[0]}/{$args[1]}/",
                     MIDCOM_NAV_NAME => strftime('%x', $start) . ' - ' . strftime('%x', $end),
                 );
-                
+
                 $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
             }
         }
-        
+
         return true;
     }
 
@@ -357,9 +387,9 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     {
         // Filter the upcoming list by a type if required
         $type_filter = $this->_config->get('type_filter_upcoming');
-        
+
         $qb = net_nemein_calendar_event_dba::new_query_builder();
-        
+
         $qb->begin_group('OR');
 
         // Add root event constraints
@@ -371,7 +401,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         {
             $qb->add_constraint('node', '=', $this->_request_data['content_topic']->id);
         }
-        
+
         // Add all the folders that are configured
         if ($this->_config->get('list_from_folders'))
         {
@@ -384,13 +414,13 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 {
                     continue;
                 }
-                
+
                 $qb->add_constraint('node.guid', '=', $guid);
             }
         }
-        
+
         $qb->end_group();
-        
+
          // Add filtering constraints
         if (!is_null($type_filter))
         {
@@ -398,7 +428,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         }
         foreach ($this->_filters as $field => $filter)
         {
-            $qb->add_constraint($field, '=', $filter);            
+            $qb->add_constraint($field, '=', $filter);
         }
         // QnD category filter (only in 1.8)
         if (   isset($_REQUEST['net_nemein_calendar_category'])
@@ -410,7 +440,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 $qb->add_constraint('parameter.name', '=', 'categories');
                 $qb->add_constraint('parameter.value', 'LIKE', "%|{$this->_request_data['category']}|%");
             $qb->end_group();
-            
+
             if (!$this->_request_data['archive_mode'])
             {
                 $this->_component_data['active_leaf'] = "{$this->_request_data['content_topic']->id}_CAT_{$this->_request_data['category']}";
@@ -466,7 +496,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         {
             $qb->set_limit($this->_request_data['index_count']);
         }
-        
+
         $this->_request_data['events'] = $qb->execute();
     }
 
@@ -569,14 +599,14 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             $this->_request_data['event_day'] = $day_shown;
 
             midcom_show_style('show_listing_year_header');
-            
+
             if (   count($this->_request_data['events']) > 0
                 && array_key_exists(0, $this->_request_data['events'])
                 && $month_shown == gmdate('m', strtotime($this->_request_data['events'][0]->start)))
             {
                 midcom_show_style('show_listing_month_header');
             }
-            
+
             midcom_show_style('show_listing_day_header');
         }
         else
@@ -637,11 +667,15 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         midcom_show_style('show_listing_end');
         midcom_show_style('show_listing_finished');
     }
-    
+
     /**
      * Initializes calendar view
-     * 
+     *
      * @access private
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_calendar($handler_id, $args, &$data)
     {
@@ -654,15 +688,15 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 'href' => MIDCOM_STATIC_URL . '/org.openpsa.calendarwidget/monthview.css',
             )
         );
-        
+
         if ($this->_config->get('javascript_hover'))
         {
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.openpsa.calendarwidget/hover.js');
         }
-        
+
         // Initialize org.openpsa.calendarwidget.month to show the calendar
         $this->_calendar = new org_openpsa_calendarwidget_styled_month();
-        
+
         if (!array_key_exists(0, $args))
         {
             $this->_year = (int) gmdate('Y');
@@ -675,7 +709,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             $this->_calendar->set_year($this->_year, false);
             $this->_calendar->set_month($this->_month);
         }
-        
+
         // Prevent the robots from ending in an "endless" parsing cycle
         $_MIDCOM->add_meta_head
         (
@@ -685,50 +719,50 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 'content' => 'none',
             )
         );
-        
+
         // Point to the request data
         $this->_calendar->_request_data =& $data;
-        
+
         // Schemadb for the events
         $this->_calendar->schemadb =& $this->_request_data['schemadb'];
-        
+
         if (!$this->_calendar)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'This feature requires the component org.openpsa.calendarwidget to be installed');
             // This will exit
         }
-        
+
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        
-        
+
+
         // Write month navigation with path instead of GET parameters
         $this->_calendar->path_mode = true;
         $this->_calendar->path = $prefix . 'calendar/';
-        
+
         // Should we use JavaScript to emulate hovering effect?
         $this->_calendar->use_javascript = $this->_config->get('javascript_hover');
-        
+
         // Get the events
         $this->_add_calendar_events();
-        
+
         return true;
     }
-    
+
     /**
      * Get the events from the component
-     * 
+     *
      * @access private
      */
     function _add_calendar_events()
     {
         $this->_get_event_listing($this->_calendar->get_start(), $this->_calendar->get_end(), true);
-        
+
         if (   !is_array($this->_request_data['events'])
             || count($this->_request_data['events']) === 0)
         {
             return;
         }
-        
+
         foreach ($this->_request_data['events'] as $event)
         {
             $event->start = strtotime($event->start);
@@ -738,10 +772,10 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             $this->_calendar->add_event($event);
         }
     }
-    
+
     /**
      * Shows the calendar styles
-     * 
+     *
      * @access private
      */
     function _show_calendar($handler_id, &$data)

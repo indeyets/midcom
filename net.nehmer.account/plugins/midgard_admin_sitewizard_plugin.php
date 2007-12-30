@@ -88,6 +88,9 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
 	);
     }
 
+	/**
+     * @return bool Indicating success.
+	 */
     function _handler_create_user_home()
     {
         $user = $_MIDCOM->auth->user;

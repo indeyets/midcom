@@ -21,7 +21,7 @@ class net_nemein_reservations_handler_reservation_list extends midcom_baseclasse
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current event. Any error triggers a 500.
      *
@@ -37,9 +37,14 @@ class net_nemein_reservations_handler_reservation_list extends midcom_baseclasse
             // This will exit.
         }
     }
-    
+
     /**
      * Looks up list of events to display
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -116,7 +121,7 @@ class net_nemein_reservations_handler_reservation_list extends midcom_baseclasse
             $data['events'][$eid] = $event;
         }
         unset($eventresources, $qb);
-        
+
         if (!class_exists('midgard_query_builder'))
         {
             // Can't use QB to sort by linked values, sort events by hand...

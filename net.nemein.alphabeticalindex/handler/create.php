@@ -26,11 +26,11 @@
     'required' => false,
     'type' => 'boolean',
     'widget' => 'checkbox',
-), 
+),
  *
  * @package net.nemein.alphabeticalindex
  */
-class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_components_handler 
+class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_components_handler
 {
     /**
      * The alphabet item
@@ -39,14 +39,14 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
      * @access private
      */
     var $_item = null;
-    
+
     /**
      * The alphabet item type (internal/external)
      *
      * @var string
      * @access private
      */
-    var $_type = null;    
+    var $_type = null;
 
     /**
      * Current topic
@@ -79,7 +79,7 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
      * @access private
      */
     var $_defaults = Array();
-    
+
     /**
      * Simple default constructor.
      */
@@ -87,15 +87,15 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
-     * _on_initialize is called by midcom on creation of the handler. 
+     * _on_initialize is called by midcom on creation of the handler.
      */
     function _on_initialize()
     {
         $this->_topic =& $this->_request_data['topic'];
     }
-    
+
     /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
@@ -122,7 +122,7 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                 "Failed to load the schema db from '{$src}'!");
             // This will exit.
         }
-    
+
         $this->_schemadb =& $schemadb;
     }
 
@@ -136,7 +136,7 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
         $this->_load_schemadb();
 
         $this->_controller =& midcom_helper_datamanager2_controller::create('create');
-        $this->_controller->schemadb =& $this->_schemadb;        
+        $this->_controller->schemadb =& $this->_schemadb;
 
         $this->_controller->schemaname = $this->_type;
 
@@ -146,9 +146,9 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
             // This will exit.
-        }     
+        }
     }
-    
+
     /**
      * DM2 creation callback
      */
@@ -158,11 +158,11 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
         {
             $this->_item = new net_nemein_alphabeticalindex_item();
             $this->_item->title = $_POST['title'];
-            $this->_item->url = $_POST['url'];            
+            $this->_item->url = $_POST['url'];
             $this->_item->node = $this->_topic->id;
-            
+
             if (! $this->_item->create())
-            {            
+            {
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_print_r('Item creation failed! We operated on this object:', $this->_item);
                 debug_pop();
@@ -193,18 +193,18 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                         $results = $qb->execute();
                         if (count($results) <= 0)
                         {
-                            $item = new net_nemein_alphabeticalindex_item();            
+                            $item = new net_nemein_alphabeticalindex_item();
                             $item->title = $object->title;
                             $item->url = "{$GLOBALS['midcom_config']['midcom_site_url']}midcom-permalink-{$object->guid}";
-                            $item->objectGuid = $object->guid;            
+                            $item->objectGuid = $object->guid;
                             $item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($object->guid);
                             $item->node = $this->_topic->id;
-                            
+
                             if ($item->create())
-                            {                                
+                            {
                                 $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('item %s has been added to alphabetical index', 'net.nemein.alphabeticalindex'), $item->title), 'ok');
                             }
-                            
+
                             $this->_item =& $item;
                         }
                         else
@@ -226,22 +226,22 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                         $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                         $qb->add_constraint('objectGuid', '=', $object->guid);
                         $qb->add_constraint('node.id', '=', $this->_topic->id);
-                        
+
                         $results = $qb->execute();
                         if (count($results) <= 0)
                         {
-                            $item = new net_nemein_alphabeticalindex_item();            
+                            $item = new net_nemein_alphabeticalindex_item();
                             $item->title = $object->extra;
                             $item->url = "{$GLOBALS['midcom_config']['midcom_site_url']}midcom-permalink-{$object->guid}";
-                            $item->objectGuid = $object->guid;            
+                            $item->objectGuid = $object->guid;
                             $item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($object->guid);
                             $item->node = $this->_topic->id;
-                            
+
                             if ($item->create())
-                            {                                
+                            {
                                 $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('item %s has been added to alphabetical index', 'net.nemein.alphabeticalindex'), $item->title), 'ok');
                             }
-                            
+
                             $this->_item =& $item;
                         }
                         else
@@ -252,26 +252,32 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                 }
             }
         }
-        
-        return $this->_item;
-    }    
 
+        return $this->_item;
+    }
+
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_create($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $this->_topic->require_do('midgard:create');
-        
+
         $this->_type = $args[0];
         if (empty($this->_type))
         {
             $this->_type = 'internal';
         }
-        
+
         $this->_load_controller($handler_id);
         $this->_prepare_request_data($handler_id);
         $this->_update_breadcrumb_line();
-        
+
         switch ($this->_controller->process_form())
         {
             case 'save':
@@ -283,11 +289,11 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                 $_MIDCOM->relocate("");
                 // This will exit.
         }
-        
+
         debug_pop();
         return true;
     }
-    
+
     function _show_create($handler_id, &$data)
     {
         midcom_show_style('item-create');

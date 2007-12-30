@@ -81,9 +81,14 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
      *
      * 1. If the configuration key 'default_root_category' is set, that category is displayed
      *    as default root category.
-     * 2. If 1 doesn't apply, the system tries to display the root category matchint the account
+     * 2. If 1 doesn't apply, the system tries to display the root category matching the account
      *    type of the currently authenticated user.
      * 3. If neither 1 or 2 applies, the first known category is displayed.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {
@@ -131,8 +136,13 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
     /**
      * This is the basic list handler which provides you with a flat, full listing of all
      * categories. As outlined in the components' main interface class, this code is optimized
-     * for a two level hierachy below the root category both to ease implementation and to keep
+     * for a two level hierarchy below the root category both to ease implementation and to keep
      * up the performance.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -234,6 +244,11 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
      * As outlined in the components' main interface class, this code is optimized
      * for a two level hierarchy below the root category both to ease implementation and to keep
      * up the performance.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list_alpha($handler_id, $args, &$data)
     {
@@ -301,6 +316,11 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
     /**
      * Loads the custom search plugin for the selected type. It either displays the
      * search form or processes the search form (which relocates to the entries list).
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_customsearch($handler_id, $args, &$data)
     {

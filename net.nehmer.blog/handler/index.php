@@ -54,7 +54,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
     function _on_initialize()
     {
         $this->_content_topic =& $this->_request_data['content_topic'];
-        
+
         $_MIDCOM->load_library('org.openpsa.qbpager');
     }
 
@@ -71,13 +71,18 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
     /**
      * Shows the autoindex list. Nothing to do in the handle phase except setting last modified
      * dates.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
     {
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($data['schemadb']);
         $qb = new org_openpsa_qbpager('midcom_db_article', 'net_nehmer_blog_index');
         $data['qb'] =& $qb;
-        
+
         // Hide the articles that have the publish time in the future and if
         // the user is not administrator
         if (   $this->_config->get('enable_scheduled_publishing')
@@ -87,7 +92,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
             // is the author
             $qb->begin_group('OR');
                 $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
-                
+
                 if (   $_MIDCOM->auth->user
                     && isset($_MIDCOM->auth->user->guid))
                 {
@@ -95,7 +100,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
                 }
             $qb->end_group();
         }
-        
+
         // Include the article links to the indexes if enabled
         if ($this->_config->get('enable_article_links'))
         {
@@ -103,7 +108,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
             $mc->add_value_property('article');
             $mc->add_constraint('topic', '=', $this->_content_topic->id);
             $mc->add_order('metadata.published', 'DESC');
-            
+
             // Use sophisticated guess to limit the amount: there shouldn't be more than
             // the required amount of links that is needed. Even if some links would fall
             // off due to a broken link (i.e. removed article), there should be enough
@@ -114,23 +119,23 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
                 case 'index-category':
                     $mc->set_limit((int) $this->_config->get('index_entries'));
                     break;
-                
+
                 case 'latest':
                     $mc->set_limit((int) $args[0]);
                     break;
-                
+
                 case 'latest-category':
                     $mc->set_limit((int) $args[1]);
                     break;
-                    
+
                 default:
                     $mc->set_limit((int) $this->_config->get('index_entries'));
                     break;
             }
-            
+
             // Get the results
             $mc->execute();
-            
+
             $links = $mc->list_keys();
             $qb->begin_group('OR');
                 foreach ($links as $guid => $link)
@@ -188,7 +193,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
 
             // Add category to title
             $data['page_title'] = sprintf($this->_l10n->get('%s category %s'), $this->_topic->extra, $data['category']);
-            
+
             // Activate correct leaf
             if (   $this->_config->get('show_navigation_pseudo_leaves')
                 && in_array($data['category'], $data['categories']))
@@ -199,32 +204,32 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
 
         $qb->add_order('metadata.published', 'DESC');
         //$qb->add_order('lang', 'DESC');
-        
+
         switch ($handler_id)
         {
             case 'index':
             case 'index-category':
                 $qb->results_per_page = $this->_config->get('index_entries');
                 break;
-            
+
             case 'latest':
                 $qb->results_per_page = $args[0];
                 break;
-            
+
             case 'latest-category':
                 $qb->results_per_page = $args[1];
                 break;
-                
+
             default:
                 $qb->results_per_page = $this->_config->get('index_entries');
                 break;
         }
-        
+
         $this->_articles = $qb->execute_unchecked();
 
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata(net_nehmer_blog_viewer::get_last_modified($this->_topic, $this->_content_topic), $this->_topic->guid);
-        
+
         if ($qb->get_current_page() > 1)
         {
             $tmp[] = Array
@@ -234,7 +239,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
             );
             $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         }
-        
+
         return true;
     }
 
@@ -242,9 +247,9 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
      * Displays the index page
      */
     function _show_index($handler_id, &$data)
-    {    
+    {
         $data['index_fulltext'] = $this->_config->get('index_fulltext');
-    
+
         midcom_show_style('index-start');
 
         if ($this->_config->get('comments_enable'))
@@ -272,7 +277,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
                 $data['article_counter'] = $article_counter;
                 $data['article_count'] = $total_count;
                 $arg = $article->name ? $article->name : $article->guid;
-                
+
                 if (   $this->_config->get('link_to_external_url')
                     && !empty($article->url))
                 {
@@ -297,11 +302,11 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
                 else
                 {
                     $data['linked'] = true;
-                    
+
                     $nap = new midcom_helper_nav();
                     $data['node'] = $nap->get_node($article->topic);
                 }
-                
+
                 midcom_show_style('index-item', array($article->guid));
             }
         }

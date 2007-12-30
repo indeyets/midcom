@@ -22,7 +22,7 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function _seek_aerodrome($icao)
     {
         // Look for the airports in database
@@ -45,7 +45,7 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
                     // TODO: Report error
                     debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Failed to create missing aerodrome {$airport->icao}: " . mgd_errstr(), MIDCOM_LOG_WARN);
-                    debug_pop();                    
+                    debug_pop();
                     return false;
                 }
                 $this->_request_data['new_aerodromes'][] = $airport;
@@ -57,46 +57,51 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
             debug_pop();
             return false;
         }
-        
-        return $results[0]->icao;    
+
+        return $results[0]->icao;
     }
-    
+
     function _create_flight($origin, $destination, $score_origin, $score_destination)
     {
         $flight = new fi_mik_flight_dba();
-        
+
         // Common properties
         $flight->pilot = $_MIDGARD['user'];
         $flight->operator = $_POST['operator'];
         $flight->aircraft = $_POST['aircraft'];
         $flight->scoreorigin = $score_origin;
         $flight->scoredestination = $score_destination;
-        
+
         // Given end date
         $flight->end = @strtotime($_POST['date']);
         if ($flight->end == -1)
         {
             $flight->end = time();
         }
-        
+
         $flight->origin = $this->_seek_aerodrome($origin);
         $flight->destination = $this->_seek_aerodrome($destination);
-        
+
         if (!$flight->create())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Failed to create flight report to {$destination}, " . mgd_errstr(), MIDCOM_LOG_WARN);
-            debug_pop();        
+            debug_pop();
             return false;
         }
-        
-        $this->_request_data['new_flights'][] = $flight;        
-        
+
+        $this->_request_data['new_flights'][] = $flight;
+
         return $flight;
     }
 
     /**
      * Displays a report edit view.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_new($handler_id, $args, &$data)
     {
@@ -114,7 +119,7 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
                 {
                     continue;
                 }
-                
+
                 if (!isset($_POST['origin'][$identifier]))
                 {
                     $origin = 'EFHF';
@@ -122,8 +127,8 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
                 else
                 {
                     $origin = $_POST['origin'][$identifier];
-                }                
-                
+                }
+
                 if (!isset($_POST['score_origin'][$identifier]))
                 {
                     $score_origin = 0;
@@ -132,7 +137,7 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
                 {
                     $score_origin = $_POST['score_origin'][$identifier];
                 }
-                
+
                 if (!isset($_POST['score_destination'][$identifier]))
                 {
                     $score_destination = 0;
@@ -141,10 +146,10 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
                 {
                     $score_destination = $_POST['score_destination'][$identifier];
                 }
-                
+
                 $stat = $this->_create_flight($origin, $destination, $score_origin, $score_destination);
             }
-            
+
             // Cache scores
             $_MIDCOM->auth->request_sudo('fi.mik.lentopaikkakisa');
             $person_scores = 0;
@@ -160,7 +165,7 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
                     $person_scores += $flight->scoreorigin;
                     $person_aerodromes[$flight->origin] = $flight->scoreorigin;
                 }
-                
+
                 if (!array_key_exists($flight->destination, $person_aerodromes))
                 {
                     // Only one score per aerodrome for the person
@@ -170,7 +175,7 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
             }
             $person = $_MIDCOM->auth->user->get_storage();
             $person->parameter('fi.mik.lentopaikkakisa', 'person_scores', $person_scores);
-            
+
             $organization_scores = 0;
             $organization_aerodromes = array();
             $organization_flight_qb = fi_mik_flight_dba::new_query_builder();
@@ -182,14 +187,14 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
                 {
                     $organization_aerodromes[$flight->pilot] = array();
                 }
-            
+
                 if (!array_key_exists($flight->origin, $organization_aerodromes[$flight->pilot]))
                 {
                     // Only one score per aerodrome per person
                     $organization_scores += $flight->scoreorigin;
                     $organization_aerodromes[$flight->pilot][$flight->origin] = $flight->scoreorigin;
                 }
-                
+
                 if (!array_key_exists($flight->destination, $organization_aerodromes[$flight->pilot]))
                 {
                     // Only one score per aerodrome per person
@@ -202,7 +207,7 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
             $_MIDCOM->auth->drop_sudo();
             // Redirect to front page
             $_MIDCOM->relocate('');
-        
+
         }
 
         $tmp = array();

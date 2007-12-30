@@ -26,18 +26,23 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
 
     /**
      * Displays a comment edit view.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_select($handler_id, $args, &$data)
     {
-        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);    
-        
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+
         if ($_MIDGARD['sitegroup'] != 0)
         {
             // We're not in SG0, redirect to correct SG
             $_MIDCOM->relocate("{$prefix}host/{$_MIDGARD['sitegroup']}/");
             // This will exit
         }
-        
+
         // FIXME: For some reason not all 1.7 installs have midgard_quota defined
         if (   $_MIDGARD['config']['quota']
             && class_exists('midgard_quota'))
@@ -48,9 +53,9 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
         {
             $this->_request_data['enable_quota'] = false;
         }
-        
+
         if (array_key_exists('midgard_admin_sitewizard_process', $_POST))
-        {        
+        {
             if (   array_key_exists('midgard_admin_sitewizard_sitegroup_id', $_POST)
                 && $_POST['midgard_admin_sitewizard_sitegroup_id'])
             {
@@ -60,12 +65,12 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
                     $session = new midcom_service_session();
                     $session->set("midgard_admin_sitewizard_17compat_{$_POST['midgard_admin_sitewizard_sitegroup_id']}", Array($_POST['midgard_admin_sitewizard_sg0_admin'], $_POST['midgard_admin_sitewizard_sg0_password']));
                 }
-            
+
                 // Existing sitegroup selected, relocate
                 $_MIDCOM->relocate("{$prefix}host/{$_POST['midgard_admin_sitewizard_sitegroup_id']}/");
                 // This will exit
             }
-            
+
             // Set up the config
             $config = new midgard_admin_sitegroup_creation_config_sitegroup();
             $config->_username = '';
@@ -74,15 +79,15 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
             $config->admin_name = $_POST['midgard_admin_sitewizard_sitegroup_admin'];
             $config->admin_password = $_POST['midgard_admin_sitewizard_sitegroup_password'];
             $config->verbose = true;
-            
-            // Create the sitegroup    
+
+            // Create the sitegroup
             ob_start();
             $runner = new midgard_admin_sitegroup_creation_sitegroup($config);
             $runner->validate();
             $stat = $runner->run();
             $sg_errors = ob_get_contents();
             ob_end_clean();
-            
+
             if ($stat)
             {
                 if ($this->_request_data['17_compatibility'])
@@ -91,17 +96,17 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
                     $session = new midcom_service_session();
                     $session->set("midgard_admin_sitewizard_17compat_" . $runner->get_id(), Array($_POST['midgard_admin_sitewizard_sg0_admin'], $_POST['midgard_admin_sitewizard_sg0_password']));
                 }
-                
+
                 if (   $this->_request_data['enable_quota']
                     && array_key_exists('midgard_admin_sitewizard_sitegroup_quota', $_POST))
                 {
                     $q = new midgard_quota();
-                    
+
                     // Quota settings for MgdSchema
                     $q->typename = '';
                     $q->sgsizelimit = $_POST['midgard_admin_sitewizard_sitegroup_quota'] * 1048576;
                     $q->sitegroup = $runner->get_id();
-                    
+
                     // Quota settings for Classic Midgard API
                     $q->sg = $runner->get_id();
                     $q->tablename = 'wholesg';
@@ -111,7 +116,7 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
 
                     $q->create();
                 }
-                            
+
                 $_MIDCOM->relocate("{$prefix}host/" . $runner->get_id() . "/");
                 // This will exit
             }
@@ -122,14 +127,14 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
             }
 
         }
-        
+
         $_MIDCOM->set_pagetitle($this->_l10n->get('select organization'));
-        
-        /* 
-        TODO: Move to new SG API when one exists       
+
+        /*
+        TODO: Move to new SG API when one exists
         $qb = new MidgardQueryBuilder('midgard_sitegroup');
         $this->_request_data['sitegroups'] = $qb->execute();
-        */        
+        */
         $this->_request_data['sitegroups'] = Array();
         $sitegroups = mgd_list_sitegroups();
         if ($sitegroups)
@@ -139,7 +144,7 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
                 $this->_request_data['sitegroups'][] = mgd_get_sitegroup($sitegroups->id);
             }
         }
-        
+
         return true;
     }
 

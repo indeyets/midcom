@@ -30,17 +30,17 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
     function _can_handle_thread($handler_id, $args, &$data)
     {
         $can_handle = false;
-        
+
         $qb = net_nemein_discussion_thread_dba::new_query_builder();
         $qb->add_constraint('node', '=', $this->_topic->id);
         $qb->add_constraint('posts', '>', 0);
         $qb->add_constraint('name', '=', $args[0]);
         $result = $qb->execute();
-        
+
         if (count($result) == 1)
         {
             $this->_request_data['thread'] =& $result[0];
-            
+
             // Set metadata
             $_MIDCOM->set_pagetitle($this->_request_data['thread']->title);
             $breadcrumb = Array();
@@ -50,13 +50,19 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                 MIDCOM_NAV_NAME => $this->_request_data['thread']->title,
             );
             $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
-            
+
             $can_handle = true;
-        } 
-        
+        }
+
         return $can_handle;
     }
-    
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+     */
     function _handler_thread($handler_id, $args, &$data)
     {
         $this->_view_toolbar->add_item(
@@ -69,19 +75,19 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                 MIDCOM_TOOLBAR_ENABLED =>  true,
             )
         );
-        
+
         // Prepare datamanager
-        $data['datamanager'] = new midcom_helper_datamanager2_datamanager($data['schemadb']);  
-        
+        $data['datamanager'] = new midcom_helper_datamanager2_datamanager($data['schemadb']);
+
         $_MIDCOM->bind_view_to_object($this->_request_data['thread']);
-        
+
         return true;
     }
-    
+
     function _populate_post_toolbar($post)
     {
         $toolbar = new midcom_helper_toolbar();
-    
+
         $toolbar->add_item
         (
             array
@@ -93,7 +99,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                 MIDCOM_TOOLBAR_ENABLED => $this->_request_data['thread']->can_do('midgard:create'),
             )
         );
-        
+
         if (   $post->can_do('midgard:update')
             && $_MIDCOM->auth->user
             && $post->metadata->creator != $_MIDCOM->auth->user->guid
@@ -116,7 +122,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                             'mark' => 'abuse',
                         )
                     )
-                ); 
+                );
             }
             else
             {
@@ -168,9 +174,9 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                         )
                     )
                 );
-            }      
+            }
         }
-        return $toolbar;  
+        return $toolbar;
     }
 
     function _show_thread($handler_id, &$data)
@@ -181,14 +187,14 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                 return $this->_show_thread_threaded($handler_id, $data);
                 break;
             case 'flat':
-            default:            
+            default:
                 return $this->_show_thread_flat($handler_id, $data);
                 break;
         }
     }
 
     function _show_thread_threaded($handler_id, &$data)
-    {   
+    {
         $qb = new org_openpsa_qbpager('net_nemein_discussion_post_dba', 'net_nemein_discussion_posts');
         $qb->results_per_page = $this->_config->get('display_posts');
         $qb->display_pages = $this->_config->get('display_pages');
@@ -272,12 +278,12 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("key #{$post_id} has invalid data on 'post' subkey", MIDCOM_LOG_WARN);
                 debug_print_r('subkey value', $post);
-                debug_pop();                
+                debug_pop();
                 continue;
             }
             $data['post'] =& $post;
             $data['thread_level'] = $level;
-            
+
             if (! $data['datamanager']->autoset_storage($post))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
@@ -288,7 +294,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
             }
             $data['view_post'] = $data['datamanager']->get_content_html();
             $data['post_toolbar'] = $this->_populate_post_toolbar($post);
-            
+
             midcom_show_style('view-thread-item');
 
             if (   isset($data_array['replies'])
@@ -298,13 +304,13 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                 $this->_show_thread_threaded_tree_recursive($data_array['replies'], $level+1, $data);
                 midcom_show_style('view-thread-sublevel-footer');
             }
-    
+
             unset($data['thread_level']);
         }
     }
 
     function _show_thread_flat($handler_id, &$data)
-    {   
+    {
         $qb = new org_openpsa_qbpager('net_nemein_discussion_post_dba', 'net_nemein_discussion_posts');
         $qb->results_per_page = $this->_config->get('display_posts');
         $qb->display_pages = $this->_config->get('display_pages');
@@ -314,16 +320,16 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
 
         $data['post_qb'] =& $qb;
         $posts = $qb->execute();
-        
+
         $data['first_post'] =& $posts[0];
-        
+
         midcom_show_style('view-thread-header');
-        
+
         foreach ($posts as $i => $post)
         {
             $data['index_count'] = $i;
             $data['post'] =& $post;
-            
+
             if (! $data['datamanager']->autoset_storage($post))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
@@ -333,28 +339,33 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                 continue;
             }
             $data['view_post'] = $data['datamanager']->get_content_html();
-            
+
             $data['post_toolbar'] = $this->_populate_post_toolbar($post);
-            
+
             midcom_show_style('view-thread-item');
         }
-        
+
         midcom_show_style('view-thread-footer');
     }
-    
+
 
     /**
      * Jump to a specific post in a thread
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_post($handler_id, $args, &$data)
     {
-    
+
         $requested_post = new net_nemein_discussion_post_dba($args[0]);
         if (!$requested_post)
         {
             return false;
         }
-        
+
         $thread = $requested_post->get_parent();
         if (is_a($thread, 'net_nemein_discussion_post'))
         {
@@ -368,18 +379,18 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
         {
             return false;
         }
-        
+
         if ($handler_id == 'read_redirect')
         {
             $qb = net_nemein_discussion_post_dba::new_query_builder();
             $qb->add_constraint('thread', '=', $thread->id);
             $qb->add_constraint('status', '>=', NET_NEMEIN_DISCUSSION_REPORTED_ABUSE);
-            $qb->add_order('metadata.published', 'ASC'); 
-            
-            $posts = $qb->execute();        
+            $qb->add_order('metadata.published', 'ASC');
+
+            $posts = $qb->execute();
             $processed = 0;
             $page = 1;
-            
+
             foreach ($posts as $post)
             {
                 $processed++;
@@ -388,7 +399,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                     $page++;
                     $processed = 1;
                 }
-             
+
                 if ($post->guid == $requested_post->guid)
                 {
                     $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$thread->name}/?org_openpsa_qbpager_net_nemein_discussion_posts_page={$page}#{$requested_post->guid}");
@@ -397,20 +408,20 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
             }
             return false;
         }
-        
+
         $data['post'] = $requested_post;
-        
+
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->cache->content->content_type("text/xml");
         $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");
-        
+
         return true;
     }
-    
+
     function _show_post($handler_id, &$data)
-    {   
+    {
         // Prepare datamanager
-        $data['datamanager'] = new midcom_helper_datamanager2_datamanager($data['schemadb']);  
+        $data['datamanager'] = new midcom_helper_datamanager2_datamanager($data['schemadb']);
 
         if (! $data['datamanager']->autoset_storage($data['post']))
         {

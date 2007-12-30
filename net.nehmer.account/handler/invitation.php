@@ -29,7 +29,7 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
     }
 
     /**
-     * _on_initialize is called by midcom on creation of the handler. 
+     * _on_initialize is called by midcom on creation of the handler.
      */
     function _on_initialize()
     {
@@ -48,9 +48,9 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         $qb = midcom_db_person::new_query_builder();
        	$qb->add_constraint('sitegroup', '=', $this->_topic->sitegroup);
        	$qb->add_constraint('email', '=', $email);
-   
+
        	$persons = $qb->execute();
-   
+
        	if (count($persons) > 0)
        	{
        	    return $persons;
@@ -71,7 +71,7 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
              if ($_MIDCOM->componentloader->load_graceful('net.nehmer.buddylist'))
              {
                  $_MIDCOM->auth->require_valid_user();
-    
+
                  // Setup.
                  $buddy_user =& $_MIDCOM->auth->get_user($buddy_user_guid);
                  if (!$buddy_user)
@@ -79,7 +79,7 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
                      //$_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The user guid {$buddy_user} is unknown.");
                      debug_add("The user guid {$buddy_user} is unknown.");
                  }
-    
+
                  if (net_nehmer_buddylist_entry::is_on_buddy_list($buddy_user))
                  {
                      $this->_processing_msg_raw = 'user already on your buddylist.';
@@ -105,8 +105,8 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         {
             $_MIDCOM->auth->user->_storage->email = "webmaster@{$_SERVER['HTTP_HOST']}";
         }
-         
-        debug_push_class(__CLASS__, __FUNCTION__);         
+
+        debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Sending email to {$email}, {$name}");
         $this->_mail = new org_openpsa_mail();
         $this->_mail->to = $email;
@@ -121,7 +121,7 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         $this->_mail->body = ob_get_contents();
         ob_end_clean();
         $_MIDCOM->style->leave_context();
-                
+
         if (!$this->_mail->send())
         {
             debug_add("Sending invitation email failed: " . $this->_mail->_backend->error->getMessage(), MIDCOM_LOG_ERROR);
@@ -129,18 +129,24 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         debug_pop();
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_remind_invite($handler_id, $args, &$data)
     {
         if (!$this->_config->get('allow_invite'))
         {
             return false;
         }
-        
+
         $this->_request_data['hash'] = $args[0];
-        
+
         $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
         $qb->add_constraint('hash', '=', $args[0]);
-    
+
         $invites = $qb->execute();
         foreach ($invites as $invite)
         {
@@ -152,28 +158,34 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         return true;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_delete_invite($handler_id, $args, &$data)
     {
         if (!$this->_config->get('allow_invite'))
         {
             return false;
         }
-        
+
         $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
         $qb->add_constraint('hash', '=', $args[0]);
-    
+
         $invites = $qb->execute();
-    
+
         foreach($invites as $invite)
         {
             $invite->delete();
         }
-    
+
         $_MIDCOM->relocate('sent_invites');
 
         return true;
     }
-    
+
     /**
      * This method is never called, as the handler method will always relocate
      */
@@ -182,17 +194,23 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
 
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_invite($handler_id, $args, &$data)
     {
         if (!$this->_config->get('allow_invite'))
         {
             return false;
         }
-    
+
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $_MIDCOM->auth->require_valid_user();
-        
+
         if (isset($_POST['net_nehmer_accounts_invitation_submit']))
         {
             for ($i = 0; $i < $_POST['net_nehmer_accounts_invitation_total_contacts']; $i++)
@@ -209,7 +227,7 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
                     && !empty($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"])
                     )
                 {
-                    if (   isset($_POST['net_nehmer_accounts_invitation_email_message']) 
+                    if (   isset($_POST['net_nehmer_accounts_invitation_email_message'])
                         && !empty($_POST['net_nehmer_accounts_invitation_email_message']))
                     {
                         $this->_user_defined_message = $_POST['net_nehmer_accounts_invitation_email_message'];
@@ -222,13 +240,13 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
                     $this->_invite->hash = md5($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"] . "_{$_MIDCOM->auth->user->guid}");
                     $this->_invite->email = $_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"];
                     $this->_invite->buddy = $_MIDCOM->auth->user->guid;
-                    
+
                     debug_print_r("Creating invite: ",$this->_invite);
-                    
+
                     $already_registered = $this->_is_person_registered($_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"]);
-                    
+
                     debug_print_r("persons with email ".$_POST["net_nehmer_accounts_invitation_invitee_email_{$i}"].":",$already_registered);
-                    
+
                     if ($already_registered)
                     {
                         foreach ($already_registered as $person)
@@ -255,19 +273,19 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
                         $_POST["net_nehmer_accounts_invitation_invitee_name_{$i}"]
                     );
                 }
-       
+
             }
             debug_pop();
             $_MIDCOM->relocate('sent_invites');
         }
-        
+
         $step_overrides = $this->_config->get('override_registration_steps');
         if (array_key_exists('invite', $step_overrides))
         {
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             $this->_request_data['skip_url'] = "{$prefix}{$step_overrides['invite']}";
         }
-        
+
         $_MIDCOM->set_pagetitle($this->_l10n->get('import contacts'));
         $tmp = Array();
         $tmp[] = Array
@@ -277,7 +295,7 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         );
 
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-                
+
         return true;
     }
 
@@ -286,15 +304,21 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         midcom_show_style('show-invite-emails');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_sent_invites($handler_id, $args, &$data)
     {
         if (!$this->_config->get('allow_invite'))
         {
             return false;
         }
-        
+
         $_MIDCOM->auth->require_valid_user();
-        
+
         $qb = net_nehmer_accounts_invites_invite_dba::new_query_builder();
         $qb->add_constraint('metadata.creator', '=', $_MIDCOM->auth->user->guid);
 

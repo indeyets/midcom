@@ -1,7 +1,7 @@
 <?php
 /**
  * @package midcom.admin.libconfig
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: viewer.php 3975 2006-09-06 17:36:03Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 
 /**
  * Listing libraries handler class
- * 
+ *
  * @package midcom.admin.libconfig
  */
 class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_handler
@@ -18,7 +18,7 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
 
     /**
      * Simple constructor
-     * 
+     *
      * @access public
      */
     function midcom_admin_libconfig_handler_edit()
@@ -46,7 +46,7 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
 
     }
 
-    
+
     function _update_breadcrumb($name)
     {
         // Populate breadcrumb
@@ -75,9 +75,15 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
     {
         midgard_admin_asgard_plugin::get_common_toolbar($data);
     }
-    
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+     */
     function _handler_edit($handler_id, $args, &$data)
-    {   
+    {
 
         if (array_key_exists($args[0],$_MIDCOM->componentloader->manifests))
         {
@@ -259,15 +265,15 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
 
         $this->_update_breadcrumb($args[0]);
         $this->_prepare_toolbar($data);
-        $_MIDCOM->set_pagetitle($data['view_title']);        
+        $_MIDCOM->set_pagetitle($data['view_title']);
 
         return true;
     }
 
- 
+
     /**
      * Show list of the style elements for the currently edited topic component
-     * 
+     *
      * @access private
      * @param string $handler_id Name of the used handler
      * @param mixed $data Data passed to the show method
@@ -275,10 +281,10 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
     function _show_edit($handler_id, &$data)
     {
         midgard_admin_asgard_plugin::asgard_header();
-        
+
         midcom_show_style('midcom-admin-libs-edit');
         midgard_admin_asgard_plugin::asgard_footer();
-        
+
     }
 
     function _get_config()

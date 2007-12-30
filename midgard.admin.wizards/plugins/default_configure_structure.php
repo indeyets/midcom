@@ -102,6 +102,9 @@ class default_configure_structure extends midcom_baseclasses_components_handler
         }
     }
 
+	/**
+     * @return bool Indicating success.
+	 */
     function _handler_configure_structure()
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);

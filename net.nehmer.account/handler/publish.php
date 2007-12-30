@@ -89,7 +89,7 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
     var $_visible_fields_user_selection = Array();
 
     /**
-     * Helper variable, containg a localized message to be shown to the user indicating the form's
+     * Helper variable, containing a localized message to be shown to the user indicating the form's
      * processing state.
      *
      * @var string
@@ -110,6 +110,11 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
      * The handler provides publishing support. After creating and preparing all members,
      * it will first process the form. Afterwards, it provides the means to display the
      * publishing form.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_publish($handler_id, $args, &$data)
     {
@@ -552,6 +557,11 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
      * This handler is shown upon successful processing. While it is always valid, no actual
      * operation is done at this point, the publish handler does this and relocates here on
      * success.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_publish_ok($handler_id, $args, &$data)
     {

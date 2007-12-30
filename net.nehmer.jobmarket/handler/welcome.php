@@ -102,8 +102,13 @@ class net_nehmer_jobmarket_handler_welcome extends midcom_baseclasses_components
     }
 
     /**
-     * The welcome handler loades the newest offers / applications according to the configuration
+     * The welcome handler loads the newest offers / applications according to the configuration
      * settings and prepares the type listings.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {
@@ -222,7 +227,12 @@ class net_nehmer_jobmarket_handler_welcome extends midcom_baseclasses_components
     }
 
     /**
-     * Queries the own entries, distinguished by offers and applications ian args[0].
+     * Queries the own entries, distinguished by offers and applications in args[0].
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_self($handler_id, $args, &$data)
     {

@@ -91,6 +91,11 @@ class net_fernmark_pedigree_handler_dog_view extends midcom_baseclasses_componen
 
     /**
      * Handle actual dog display
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_view ($handler_id, $args, &$data)
     {

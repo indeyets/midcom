@@ -46,9 +46,9 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
     function _load_controller()
     {
         $this->_load_schemadb();
-        
+
         $this->_request_data['defaults'] = Array();
-        // Allow setting defaults from query string, useful for things like "create event for today" and chooser        
+        // Allow setting defaults from query string, useful for things like "create event for today" and chooser
         if (   isset($_GET['defaults'])
             && is_array($_GET['defaults']))
         {
@@ -59,17 +59,17 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
                     // No such field in schema
                     continue;
                 }
-                
+
                 if ($key == 'object_location')
                 {
                     $value = str_replace($_MIDCOM->get_host_prefix(), '', $value);
                 }
-                
+
                 $this->_request_data['defaults'][$key] = $value;
             }
         }
 
-        
+
         $this->_controller =& midcom_helper_datamanager2_controller::create('create');
         $this->_controller->schemadb =& $this->_schemadb;
         $this->_controller->defaults = $this->_request_data['defaults'];
@@ -120,10 +120,16 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         $this->_featured_objects = $qb->execute();
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_manage($handler_id, $args, &$data)
     {
         $this->_content_topic->require_do('midgard:create');
-        
+
         $this->_load_controller();
 
         switch ($this->_controller->process_form())
@@ -168,7 +174,12 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         midcom_show_style('admin_create');
     }
 
-
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_delete($handler_id, $args, &$data)
     {
         $this->_featured = new net_nemein_featured_item_dba();
@@ -184,6 +195,12 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         $_MIDCOM->relocate('manage');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_edit($handler_id, $args, &$data)
     {
         $this->_content_topic->require_do('midgard:edit');
@@ -217,8 +234,14 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         midcom_show_style('admin_edit');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_move_up($handler_id, $args, &$data)
-    { 
+    {
         $this->_featured = new net_nemein_featured_item_dba();
         $this->_featured->get_by_guid($args[0]);
         $this->_featured->metadata->score++;
@@ -236,6 +259,12 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         $_MIDCOM->relocate('manage');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_move_down($handler_id, $args, &$data)
     {
         $this->_featured = new net_nemein_featured_item_dba();

@@ -169,21 +169,26 @@ class net_nemein_quickpoll_handler_archive extends midcom_baseclasses_components
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_archive($handler_id, $args, &$data)
     {
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_content_topic->id);
         $qb->add_constraint('up', '=', 0);
-        
+
         $this->_articles = $qb->execute_unchecked();
-        
-        
+
+
         $this->_prepare_request_data();
 
         $this->_component_data['active_leaf'] = NET_NEMEIN_QUICKPOLL_LEAFID_ARCHIVE;
-        
+
         return true;
 
     }

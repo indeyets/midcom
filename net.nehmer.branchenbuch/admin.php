@@ -71,6 +71,11 @@ class net_nehmer_branchenbuch_admin extends midcom_baseclasses_components_reques
      * The welcome handler sets various configuration options if required, so that the
      * component startup is valid from that time on. It will bail with an Error if
      * no admin level user is logged in if anything needs to be done.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {

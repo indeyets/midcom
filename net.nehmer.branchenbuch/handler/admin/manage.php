@@ -38,8 +38,13 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
 
     /**
      * The listing handler provides you with a full list of all categories currently in the system
-     * for maintainance. The preparation phase is minimal, as most code lies in the recursive
+     * for maintenance. The preparation phase is minimal, as most code lies in the recursive
      * loading code in the style.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -120,6 +125,11 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
 
     /**
      * Handles category editing. Prepares a controller for usage.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -161,6 +171,11 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
 
     /**
      * Handles category creation. Prepares a controller for usage and creates the actual object.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
@@ -229,6 +244,11 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
 
     /**
      * Handles category deletion, no safety interlocks at this point.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {

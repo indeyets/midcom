@@ -182,6 +182,11 @@ class net_nehmer_publications_handler_welcome extends midcom_baseclasses_compone
      * with two arguments (Category number and key).
      *
      * The sorting order is taken from the config key index_order.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index($handler_id, $args, &$data)
     {
@@ -313,13 +318,18 @@ class net_nehmer_publications_handler_welcome extends midcom_baseclasses_compone
     /**
      * Shows the latest-publications welcome page, it knows three modes:
      *
-     * - By default, the newst entries are showed, using the count from the config option
+     * - By default, the newest entries are showed, using the count from the config option
      *   'index_entries'.
      * - When the handler_id is set to 'welcome-latest', the entry count is taken from
      *   $args[0].
      * - Finally, the handler_id 'welcome-latest-category' takes a category from
      *   $args[0], filters down to that category and displays
      *   the newest $args[1] entries.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_latest($handler_id, $args, &$data)
     {
@@ -374,7 +384,7 @@ class net_nehmer_publications_handler_welcome extends midcom_baseclasses_compone
         }
 
         $this->_publications = $qb->execute_unchecked();
-        
+
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
 
         $this->_prepare_request_data();
@@ -437,6 +447,11 @@ class net_nehmer_publications_handler_welcome extends midcom_baseclasses_compone
 
     /**
      * Shows the complete category index.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_categories($handler_id, $args, &$data)
     {

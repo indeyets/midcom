@@ -15,25 +15,31 @@
 
 class fi_mik_lentopaikkakisa_handler_download extends midcom_baseclasses_components_handler
 {
-    function fi_mik_lentopaikkakisa_handler_download() 
+    function fi_mik_lentopaikkakisa_handler_download()
     {
-        parent::midcom_baseclasses_components_handler();       
+        parent::midcom_baseclasses_components_handler();
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_xml($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->cache->content->content_type("text/xml");
         $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");
-        
+
         $qb = fi_mik_flight_dba::new_query_builder();
         $qb->add_order('created', 'DESC');
         $this->_request_data['all'] = $qb->execute();
-        
+
         return true;
     }
-    
+
     function _show_xml($handler_id, &$data)
     {
         $_MIDCOM->load_library('midcom.helper.xml');
@@ -44,22 +50,28 @@ class fi_mik_lentopaikkakisa_handler_download extends midcom_baseclasses_compone
             echo $mapper->object2data($report);
         }
         echo "</reports>\n";
-    }    
+    }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_csv($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->cache->content->content_type('application/csv');
         $_MIDCOM->header('Content-Type: application/csv;charset=UTF-8');
-        
+
         $qb = fi_mik_flight_dba::new_query_builder();
         $qb->add_order('created', 'DESC');
         $this->_request_data['all'] = $qb->execute();
-        
+
         return true;
     }
-    
+
     function _show_csv($handler_id, &$data)
     {
         $pilots = array();
@@ -83,6 +95,6 @@ class fi_mik_lentopaikkakisa_handler_download extends midcom_baseclasses_compone
             }
             echo date('Y-m-d', $report->end).",{$pilots[$report->pilot]->firstname},{$pilots[$report->pilot]->lastname},{$pilots[$report->pilot]->username},{$organizations[$report->operator]->official},{$aircraft[$report->aircraft]->title},{$report->origin},{$report->destination},".str_replace(',','.',$report->scoreorigin).",".str_replace(',','.',$report->scoredestination)."\n";
         }
-    }  
+    }
 }
 ?>

@@ -141,7 +141,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         $this->_root_event =& $this->_request_data['root_event'];
         $this->_schemadb =& $this->_request_data['schemadb'];
     }
-    
+
     function _populate_toolbar(&$data)
     {
         if ($data['list_registrations_url'])
@@ -174,7 +174,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
                 MIDCOM_TOOLBAR_ENABLED => true,
             ));
         }
-        
+
         if ($data['open_url'])
         {
             $this->_view_toolbar->add_item(Array(
@@ -195,7 +195,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
                 MIDCOM_TOOLBAR_ENABLED => true,
             ));
         }
-        
+
         if ($data['delete_url'])
         {
             $this->_view_toolbar->add_item(Array(
@@ -255,6 +255,11 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Shows an event, no permissions required.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_view($handler_id, $args, &$data)
     {
@@ -272,7 +277,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         $title = $this->_event->title;
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
         $this->_update_breadcrumb_line($handler_id);
-        
+
         $this->_populate_toolbar($data);
 
         return true;
@@ -288,6 +293,11 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Shows an event, no permissions required.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -337,6 +347,11 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Lists the registrations of a particular event.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list_registrations($handler_id, $args, &$data)
     {
@@ -386,6 +401,11 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Shows an event, no permissions required.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {
@@ -445,6 +465,10 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
     /**
      * CSV export handler, no permissions required, does not invoke show method,
      * will exit immediately.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
      */
     function _handler_export_csv($handler_id, $args, &$data)
     {
@@ -527,6 +551,9 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
      * touched, of course.
      *
      * @see net_nemein_registrations_event::open_registration()
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
      */
     function _handler_open($handler_id, $args, &$data)
     {
@@ -551,6 +578,10 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
     /**
      * Closes an event for registration and relocates to view mode. Already closed events
      * are ignored silently.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
      */
     function _handler_close($handler_id, $args, &$data)
     {

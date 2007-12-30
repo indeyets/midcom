@@ -142,6 +142,11 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
     /**
      * Shows a welcome page before the actual account setup. Useful to display help messages
      * and the like.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {
@@ -207,6 +212,11 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
     /**
      * Shows a welcome page before the actual account setup. Useful to display help messages
      * and the like.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_categoryselect($handler_id, $args, &$data)
     {
@@ -318,6 +328,11 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
      * This is step three of the adding procedure. It will generate a form based on the schema
      * associated with the user account linked to the category set. The data entered will be
      * put into the session storage area, so that no temporary object is needed at this point.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_details($handler_id, $args, &$data)
     {
@@ -521,6 +536,11 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
     /**
      * This is the confirm step. It will show the entire entry again, and the user has to
      * acknowledge it.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_confirm($handler_id, $args, &$data)
     {
@@ -707,6 +727,11 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
 
     /**
      * Shows an all-ok page.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_thanks($handler_id, $args, &$data)
     {

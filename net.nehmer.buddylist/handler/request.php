@@ -61,8 +61,13 @@ class net_nehmer_buddylist_handler_request extends midcom_baseclasses_components
     }
 
     /**
-     * The welcome handler loades the newest asks / bids according to the configuration
+     * The welcome handler loads the newest asks / bids according to the configuration
      * settings and prepares the type listings.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_request($handler_id, $args, &$data)
     {

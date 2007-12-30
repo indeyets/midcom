@@ -164,8 +164,13 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
     /**
      * This is the basic list handler which provides you with a flat, full listing of all
      * categories. As outlined in the components' main interface class, this code is optimized
-     * for a two level hierachy below the root category both to ease implementation and to keep
+     * for a two level hierarchy below the root category both to ease implementation and to keep
      * up the performance.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -228,7 +233,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
     }
 
     /**
-     * Checks the selected page number against the boundaries of the total resulste.
+     * Checks the selected page number against the boundaries of the total resultset.
      *
      * It will relocate to the "nearest" valid page.
      *
@@ -266,6 +271,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
      * Initializes the list handler from a category. Calls generate_error an any problem.
      *
      * @param mixed $id The ID or GUID of the category to load.
+     * @param mixed $handler_id The ID of the handler.
      * @access private
      */
     function _handler_list_init_from_branche($handler_id, $id)
@@ -487,6 +493,11 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
 
     /**
      * Shows an entry.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_entry($handler_id, $args, &$data)
     {
@@ -587,6 +598,11 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
     /**
      * This call allows you to edit an entry. Only applicable for entries you've
      * write privileges on.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -661,6 +677,11 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
 
     /**
      * This list handler shows all entries currently associated to the active user.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list_self($handler_id, $args, &$data)
     {
@@ -729,6 +750,11 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
 
     /**
      * Deletes an entry.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {

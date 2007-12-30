@@ -59,6 +59,11 @@ class net_nehmer_publications_handler_feed extends midcom_baseclasses_components
     /**
      * Shows the autoindex list. Nothing to do in the handle phase except setting last modified
      * dates.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_feed ($handler_id, $args, &$data)
     {
@@ -186,6 +191,11 @@ class net_nehmer_publications_handler_feed extends midcom_baseclasses_components
 
     /**
      * Shows a simple available-feeds page.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
     {

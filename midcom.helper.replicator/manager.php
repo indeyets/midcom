@@ -1,7 +1,7 @@
 <?php
 /**
  * @package midcom.helper.replicator
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: acl_editor.php 4207 2006-09-26 08:41:44Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -27,7 +27,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
      * @access private
      */
     var $_subscription = null;
-    
+
     /**
      * The Datamanager of the member to display
      *
@@ -51,7 +51,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
      * @access private
      */
     var $_schemadb = null;
-    
+
     /**
      * The schema to use for the new subscription.
      *
@@ -59,7 +59,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
      * @access private
      */
     var $_schema = 'default';
-    
+
     /**
      * The defaults to use for the new subscription.
      *
@@ -72,10 +72,10 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function get_plugin_handlers()
     {
-        $_MIDCOM->load_library('midgard.admin.asgard');    
+        $_MIDCOM->load_library('midgard.admin.asgard');
         return array
         (
             'list' => array
@@ -102,21 +102,21 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
             ),
         );
     }
-    
+
     function _on_initialize()
     {
         $_MIDCOM->load_library('midcom.helper.replicator');
         $_MIDCOM->load_library('midcom.helper.datamanager2');
-        
+
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midcom.helper.replicator');
 
         $component_data =& $GLOBALS['midcom_component_data']['midcom.helper.replicator'];
         $this->_local_config = $component_data['config'];
-        
+
         $this->_load_schemadb();
 
-        midgard_admin_asgard_plugin::prepare_plugin('', &$this->_request_data);        
+        midgard_admin_asgard_plugin::prepare_plugin('', &$this->_request_data);
         foreach (array_keys($this->_schemadb) as $name)
         {
             if (preg_match('/midcom.helper.replicator\/create\//', $_MIDGARD['uri']))
@@ -127,7 +127,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
             {
                 $prefix = 'create/';
             }
-            
+
             $this->_request_data['asgard_toolbar']->add_item
             (
                 array
@@ -143,7 +143,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
             );
         }
     }
-    
+
     function _update_breadcrumb($handler_id)
     {
         $tmp = Array();
@@ -173,7 +173,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
 
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
-    
+
     /**
      * Loads and prepares the schema database.
      *
@@ -184,10 +184,16 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
      * The operations are done on all available schemas within the DB.
      */
     function _load_schemadb()
-    {  
+    {
         $this->_schemadb = midcom_helper_datamanager2_schema::load_database('file:/midcom/helper/replicator/config/schemadb_default.inc');
     }
-    
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+     */
     function _handler_list($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
@@ -199,20 +205,20 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
         $this->_update_breadcrumb($handler_id);
 
         $data['view_title'] = $_MIDCOM->i18n->get_string('replication subscriptions', 'midcom.helper.replicator');
-        $_MIDCOM->set_pagetitle($data['view_title']); 
+        $_MIDCOM->set_pagetitle($data['view_title']);
 
         return true;
     }
-    
+
     function _show_list($handler_id, &$data)
     {
         midcom_show_style('midgard_admin_asgard_header');
         midcom_show_style('midgard_admin_asgard_middle');
-    
+
         $data['schemadb'] =& $this->_schemadb;
         $data['local_config'] =& $this->_local_config;
         midcom_show_style('midcom-helper-replicator-list');
-        
+
         midcom_show_style('midgard_admin_asgard_footer');
 
     }
@@ -233,7 +239,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
             // This will exit.
         }
     }
-    
+
     /**
      * Internal helper, fires up the creation mode controller. Any error triggers a 500.
      *
@@ -252,13 +258,19 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
             // This will exit.
         }
     }
-    
+
     function _modify_schema_for_object($subscription)
     {
         $transporter = midcom_helper_replicator_transporter::create($subscription);
         $transporter->add_ui_options($this->_schemadb[$subscription->exporter]);
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_edit($handler_id, $args, &$data)
     {
         $this->_subscription = new midcom_helper_replicator_subscription_dba($args[0]);
@@ -267,14 +279,14 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
             return false;
         }
         $this->_subscription->require_do('midgard:update');
-        
+
         $_MIDCOM->bind_view_to_object($this->_subscription, $this->_subscription->exporter);
-        
+
         $this->_modify_schema_for_object($this->_subscription);
-        
+
         // Load the datamanager controller
         $this->_load_controller();
-        
+
         switch ($this->_controller->process_form())
         {
             case 'save':
@@ -284,7 +296,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
             case 'cancel':
                 $_MIDCOM->relocate('__mfa/asgard_midcom.helper.replicator/');
                 // This will exit.
-        }  
+        }
 
         $data['view_type'] = $_MIDCOM->i18n->get_string($this->_schemadb[$this->_subscription->exporter]->description, 'midcom.helper.replicator');
 
@@ -292,21 +304,21 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
 
         $data['view_title'] = $this->_subscription->title;
         $_MIDCOM->set_pagetitle($data['view_title']);
-        
+
         return true;
     }
-    
+
     function _show_edit($handler_id, &$data)
     {
         midcom_show_style('midgard_admin_asgard_header');
         midcom_show_style('midgard_admin_asgard_middle');
-    
+
         $data['controller'] =& $this->_controller;
         midcom_show_style('midcom-helper-replicator-edit');
-        
+
         midcom_show_style('midgard_admin_asgard_footer');
     }
-    
+
     /**
      * DM2 creation callback, binds to the current content topic.
      */
@@ -334,7 +346,12 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
@@ -367,7 +384,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
 
         return true;
     }
-    
+
     function _show_create($handler_id, &$data)
     {
         midcom_show_style('midgard_admin_asgard_header');
@@ -375,20 +392,20 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
 
         $data['controller'] =& $this->_controller;
         midcom_show_style('midcom-helper-replicator-create');
-        
+
         midcom_show_style('midgard_admin_asgard_footer');
     }
 
     function _resolve_object_title($object)
     {
         $vars = get_object_vars($object);
-        
+
         if (   array_key_exists('title', $vars)
-            && $object->title) 
+            && $object->title)
         {
             return $object->title;
-        } 
-        elseif (array_key_exists('name', $vars)) 
+        }
+        elseif (array_key_exists('name', $vars))
         {
             return $object->name;
         }
@@ -397,9 +414,14 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
             return "#{$object->id}";
         }
     }
-    
+
     /**
      * Displays replication information for an object
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_object($handler_id, $args, &$data)
     {
@@ -433,7 +455,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
         {
             return false;
         }
-        
+
 
         if ($bind_toolbar)
         {
@@ -444,7 +466,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
 
         $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('replication information for %s', 'midcom.helper.replicator'), $this->_resolve_object_title($data['object']));
         $_MIDCOM->set_pagetitle($data['view_title']);
-        
+
         $_MIDCOM->add_link_head
         (
             array
@@ -457,14 +479,14 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
 
         return true;
     }
-    
+
     function _show_object($handler_id, &$data)
     {
         midcom_show_style('midgard_admin_asgard_header');
         midcom_show_style('midgard_admin_asgard_middle');
 
         midcom_show_style('midcom-helper-replicator-object');
-        
+
         midcom_show_style('midgard_admin_asgard_footer');
 
     }

@@ -21,9 +21,14 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
     {
         parent::midcom_baseclasses_components_handler();
     }
-   
+
     /**
      * Creates a host
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_settings($handler_id, $args, &$data)
     {
@@ -32,10 +37,10 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
         {
             return false;
         }
-    
+
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $this->_request_data['current_host'] = new midcom_db_host($_MIDGARD['host']);
-        
+
         if (array_key_exists('midgard_admin_sitewizard_process', $_POST))
         {
             // Set up defaults
@@ -46,11 +51,11 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
                 'component' => $this->_config->get('default_component'),
             );
 
-            // Read form contents           
+            // Read form contents
             if (array_key_exists('midgard_admin_sitewizard_site_name', $_POST))
             {
                 $host_settings['sitename'] = $_POST['midgard_admin_sitewizard_site_name'];
-            } 
+            }
             if (array_key_exists('midgard_admin_sitewizard_host_name', $_POST))
             {
                 $host_settings['hostname'] = $_POST['midgard_admin_sitewizard_host_name'];
@@ -67,18 +72,18 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
             {
                 $host_settings['component'] = $_POST['midgard_admin_sitewizard_host_component'];
             }
-            
-            // Save information into session        
+
+            // Save information into session
             $session = new midcom_service_session();
             $session->set("midgard_admin_sitewizard_{$this->_request_data['sitegroup']->id}", $host_settings);
-            
+
             // Relocate user to template selection
             $_MIDCOM->relocate("{$prefix}template/{$this->_request_data['sitegroup']->id}/");
             // This will exit
         }
-        
+
         $_MIDCOM->set_pagetitle($this->_l10n->get('create website'));
-        
+
         // Get available components
         $this->_request_data['components'] = Array();
         foreach ($_MIDCOM->componentloader->manifests as $manifest)
@@ -91,8 +96,8 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
             $manifest->get_name_translated();
             $this->_request_data['components'][$manifest->name] = "{$manifest->name_translated} ($manifest->name)";
         }
-        asort($this->_request_data['components']);        
-        
+        asort($this->_request_data['components']);
+
         return true;
     }
 
@@ -108,6 +113,11 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
 
     /**
      * Selects a template
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_template($handler_id, $args, &$data)
     {
@@ -117,7 +127,7 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
             return false;
         }
 
-        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);    
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $session = new midcom_service_session();
         if (!$session->exists("midgard_admin_sitewizard_{$this->_request_data['sitegroup']->id}"))
         {
@@ -125,7 +135,7 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
             $_MIDCOM->relocate("{$prefix}host/{$this->_request_data['sitegroup']->id}/");
             // This will exit
         }
-        
+
         if (array_key_exists('midgard_admin_sitewizard_process', $_POST))
         {
             $host_settings = $session->get("midgard_admin_sitewizard_{$this->_request_data['sitegroup']->id}");
@@ -133,10 +143,10 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
             {
                 // Corrupt data, relocate back to host settings
                 $_MIDCOM->relocate("{$prefix}host/{$this->_request_data['sitegroup']->id}/");
-                // This will exit        
+                // This will exit
             }
 
-            // Read form contents            
+            // Read form contents
             if (array_key_exists('midgard_admin_sitewizard_select_template', $_POST))
             {
                 if ($_POST['midgard_admin_sitewizard_select_template'] == 'custom')
@@ -151,23 +161,23 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
                     $host_settings['template'] = $_POST['midgard_admin_sitewizard_select_template'];
                 }
             }
-            
+
             // Save information into session
             $session->set("midgard_admin_sitewizard_{$this->_request_data['sitegroup']->id}", $host_settings);
-            
+
             // Relocate user to host creation
             $_MIDCOM->relocate("{$prefix}create/{$this->_request_data['sitegroup']->id}/");
             // This will exit
         }
-        
+
         $_MIDCOM->set_pagetitle($this->_l10n->get('change style'));
-        
+
         $qb = midcom_db_style::new_query_builder();
         $qb->add_constraint('name', 'LIKE', 'template_%');
         $qb->add_constraint('up', '=', 0);
         // TODO: Check for sitegroups?
         $this->_request_data['templates'] = $qb->execute();
-        
+
         return true;
     }
 
@@ -183,6 +193,11 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
 
     /**
      * Selects a template
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
@@ -192,7 +207,7 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
             return false;
         }
 
-        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);    
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $session = new midcom_service_session();
         if (!$session->exists("midgard_admin_sitewizard_{$this->_request_data['sitegroup']->id}"))
         {
@@ -200,7 +215,7 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
             $_MIDCOM->relocate("{$prefix}host/{$this->_request_data['sitegroup']->id}/");
             // This will exit
         }
-        
+
         $host_settings = $session->get("midgard_admin_sitewizard_{$this->_request_data['sitegroup']->id}");
 
         // Set up the config
@@ -212,7 +227,7 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
         $config->topic_midcom = $host_settings['component'];
         $config->topic_name = $host_settings['sitename'];
         $config->verbose = true;
-        
+
         if ($this->_request_data['17_compatibility'])
         {
             if ($session->exists("midgard_admin_sitewizard_17compat_{$this->_request_data['sitegroup']->id}"))
@@ -225,13 +240,13 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
             }
             else
             {
-                $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midgard.admin.sitewizard', 'midgard.admin.sitewizard'), 
+                $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midgard.admin.sitewizard', 'midgard.admin.sitewizard'),
                             $_MIDCOM->i18n->get_string('you need to authenticate', 'midgard.admin.sitewizard'),
                             'error');
                 $_MIDCOM->relocate('');
             }
         }
-        
+
         if (array_key_exists('template', $host_settings))
         {
             $config->extend_style = $host_settings['template'];
@@ -239,13 +254,13 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
 
         ob_start();
         $runner = midgard_admin_sitegroup_creation_host::factory($config);
-        if ($runner->validate()) 
+        if ($runner->validate())
         {
             $runner->run();
         }
         $host_errors = ob_get_contents();
         ob_end_clean();
-        
+
         if ($runner->host->id)
         {
             $_MIDCOM->relocate("{$prefix}finish/{$runner->host->id}/");
@@ -260,6 +275,11 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
 
     /**
      * Creates a host
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_finish($handler_id, $args, &$data)
     {
@@ -268,11 +288,11 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
         {
             return false;
         }
-    
+
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        
+
         $_MIDCOM->set_pagetitle($this->_l10n->get('finish'));
-          
+
         return true;
     }
 
@@ -284,7 +304,7 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
         midcom_show_style('show-wizard-header');
         midcom_show_style('wizard-finish');
         midcom_show_style('show-wizard-footer');
-    }    
+    }
 }
 
 ?>

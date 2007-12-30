@@ -61,7 +61,7 @@ class net_nemein_downloads_handler_create extends midcom_baseclasses_components_
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
@@ -131,12 +131,17 @@ class net_nemein_downloads_handler_create extends midcom_baseclasses_components_
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
         $this->_topic->require_do('midgard:create');
-        
+
         $this->_schema = $args[0];
 
         $this->_load_controller();
@@ -149,17 +154,17 @@ class net_nemein_downloads_handler_create extends midcom_baseclasses_components_
                     $this->_downloadpage->name = midcom_generate_urlname_from_string($this->_downloadpage->title);
                     $this->_downloadpage->update();
                 }
-            
+
                 $_MIDCOM->relocate("{$this->_downloadpage->name}/");
                 // This will exit.
-                
+
             case 'cancel':
                 $_MIDCOM->relocate('');
                 // This will exit.
         }
 
         $this->_prepare_request_data();
-        
+
         if ($this->_downloadpage)
         {
             $_MIDCOM->set_26_request_metadata($this->_downloadpage->revised, $this->_downloadpage->guid);

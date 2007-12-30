@@ -289,6 +289,9 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
         }
     }
 
+	/**
+     * @return bool Indicating success.
+	 */
    	function _handler_index() {
 
    		return true;

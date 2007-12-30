@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package net.nemein.quickpoll
  */
-class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_handler 
+class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_handler
 {
     /**
      * The content topic to use
@@ -90,8 +90,8 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             ));
         }
     }
-    
-    
+
+
     /**
      * Simple default constructor.
      */
@@ -99,20 +99,22 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
-     * _on_initialize is called by midcom on creation of the handler. 
+     * _on_initialize is called by midcom on creation of the handler.
      */
     function _on_initialize()
     {
          $this->_content_topic =& $this->_request_data['content_topic'];
     }
-    
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
     {
@@ -133,30 +135,30 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             $_MIDCOM->relocate($prefix.'create/'.$this->_config->get('schema'));
         }
-    
+
         $this->_load_datamanager();
-        
+
         $this->_request_data['name']  = "net.nemein.quickpoll";
-        
+
         $qb_vote_count_total = net_nemein_quickpoll_vote_dba::new_query_builder();
         $qb_vote_count_total->add_constraint('article', '=', $this->_article->id);
         $this->_vote_count = $qb_vote_count_total->count();
 
         $qb_vote = net_nemein_quickpoll_vote_dba::new_query_builder();
         $qb_vote->add_constraint('article', '=', $this->_article->id);
-        
+
         if ($this->_config->get('lock_ip_address'))
         {
             $qb_vote->begin_group('OR');
                 $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
                 $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
-            $qb_vote->end_group();            
+            $qb_vote->end_group();
         }
         else if ($_MIDGARD['user'])
         {
             $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
         }
-        
+
         $vote_count = $qb_vote->count();
 
         if ($vote_count > 0)
@@ -167,19 +169,19 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         {
             $this->_request_data['voted'] =  false;
         }
-        
+
         if (   !$this->_config->get('enable_anonymous')
             && (   !$_MIDCOM->auth->user
                 && !$_MIDCOM->auth->admin))
         {
             $this->_request_data['voted'] =  true;
         }
-        
+
         $this->_prepare_request_data();
-        
+
         return true;
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current article. Any error triggers a 500.
      *
@@ -207,10 +209,10 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             }
         }
     }
-    
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_index($handler_id, &$data)
     {
@@ -237,21 +239,23 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         {
             $this->_article = $articles[0];
         }
-        
+
         if (!$this->_article)
         {
             return false;
             // This will 404
         }
-        
+
         return true;
-    }    
-    
+    }
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_view ($handler_id, $args, &$data)
     {
@@ -259,14 +263,14 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         {
             $_MIDCOM->skip_page_style = true;
         }
-        
+
         $this->_manage = false;
 
         if ($handler_id == 'manage')
         {
             $this->_manage = true;
 
-            // Enable creation of new options in the management mode            
+            // Enable creation of new options in the management mode
             foreach ($this->_request_data['schemadb'] as $schemaname => $schema)
             {
                 $this->_request_data['schemadb'][$schemaname]->fields['options']['type_config']['enable_creation'] = true;
@@ -274,7 +278,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         }
 
         $this->_load_datamanager();
-        
+
         $this->_request_data['name']  = "net.nemein.quickpoll";
 
         $tmp = Array();
@@ -291,16 +295,16 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
                 MIDCOM_NAV_NAME => $this->_l10n->get('manage'),
             );
         }
-        
+
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         $_MIDCOM->set_pagetitle($this->_article->title);
-        
+
         $qb_vote_count_total = net_nemein_quickpoll_vote_dba::new_query_builder();
         $qb_vote_count_total->add_constraint('article', '=', $this->_article->id);
         $this->_vote_count = $qb_vote_count_total->count();
-        
+
         $this->_prepare_request_data();
-        
+
         $qb_vote = net_nemein_quickpoll_vote_dba::new_query_builder();
         $qb_vote->add_constraint('article', '=', $this->_article->id);
         $qb_vote->begin_group('OR');
@@ -317,20 +321,20 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         {
             $this->_request_data['voted'] =  false;
         }
-        
+
         if (   !$this->_config->get('enable_anonymous')
             && (   !$_MIDCOM->auth->user
                 && !$_MIDCOM->auth->admin))
         {
             $this->_request_data['voted'] =  true;
         }
-        
+
         return true;
     }
-    
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_view($handler_id, &$data)
     {

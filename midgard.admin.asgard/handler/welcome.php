@@ -16,7 +16,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
 {
     /**
      * Reflectors
-     * 
+     *
      * @access private
      * @var Array
      */
@@ -30,10 +30,10 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
         $this->_component = 'midgard.admin.asgard';
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Startup routines
-     * 
+     *
      * @access public
      */
     function _on_initialize()
@@ -41,7 +41,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->skip_page_style = true;
-        
+
         $_MIDCOM->load_library('midcom.helper.datamanager2');
     }
 
@@ -52,13 +52,13 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
     function _prepare_request_data()
     {
     }
-    
+
     function _list_revised($since)
     {
         $classes = array();
         $revised = array();
         $skip = $this->_config->get('skip_in_filter');
-        
+
         // List installed MgdSchema types and convert to DBA classes
         foreach ($_MIDGARD['schema']['types'] as $schema_type => $dummy)
         {
@@ -67,7 +67,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
                 // Skip
                 continue;
             }
-            
+
             $mgdschema_class = midgard_admin_asgard_reflector::class_rewrite($schema_type);
             $dummy_object = new $mgdschema_class();
             $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($dummy_object);
@@ -75,10 +75,10 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
             {
                 continue;
             }
-            
+
             $classes[] = $midcom_dba_classname;
         }
-        
+
         // List all revised objects
         foreach ($classes as $class)
         {
@@ -96,7 +96,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
             $qb->add_constraint('metadata.revised', '>=', $since);
             $qb->add_order('metadata.revision', 'DESC');
             $objects = $qb->execute();
-            
+
             if (count($objects) > 0)
             {
                 if (!isset($this->_reflectors[$class]))
@@ -104,28 +104,33 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
                     $this->_reflectors[$class] = new midgard_admin_asgard_reflector($objects[0]);
                 }
             }
-            
+
             foreach ($objects as $object)
             {
                 $revised["{$object->metadata->revised}_{$object->guid}_{$object->metadata->revision}"] = $object;
             }
         }
-        
+
         krsort($revised);
-        
+
         return $revised;
     }
-    
+
     /**
      * Object editing view
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {
         $this->_prepare_request_data();
-        
+
         $data['view_title'] = $this->_l10n->get('asgard');
         $_MIDCOM->set_pagetitle($data['view_title']);
-        
+
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
         if (isset($_POST['execute_mass_action']))
         {
@@ -137,7 +142,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
                 $this->$method_name($_POST['selections']);
             }
         }
-        
+
         $data['revised'] = array();
         if (isset($_REQUEST['revised_after']))
         {
@@ -148,7 +153,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
         // {
         //     $data['revised_after'] = date('Y-m-d H:i:s\Z', mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')));
         // }
-        
+
         midgard_admin_asgard_plugin::get_common_toolbar($data);
         $data['asgard_toolbar']->add_item
         (
@@ -159,7 +164,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/configuration.png',
             )
         );
-        
+
         $data['asgard_toolbar']->add_item
         (
             array
@@ -169,7 +174,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash-full.png',
             )
         );
-        
+
         $data['asgard_toolbar']->add_item
         (
             array
@@ -203,7 +208,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
 
         return true;
     }
-    
+
     function _mass_delete($guids)
     {
         foreach ($guids as $guid)
@@ -221,7 +226,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
             }
         }
     }
-    
+
     function _mass_approve($guids)
     {
         foreach ($guids as $guid)
@@ -247,7 +252,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
     {
         $data['reflectors'] = $this->_reflectors;
         midcom_show_style('midgard_admin_asgard_header');
-        midcom_show_style('midgard_admin_asgard_middle');    
+        midcom_show_style('midgard_admin_asgard_middle');
         midcom_show_style('midgard_admin_asgard_welcome');
         midcom_show_style('midgard_admin_asgard_footer');
     }

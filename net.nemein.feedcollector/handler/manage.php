@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package net.nemein.feedcollector
  */
-class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_components_handler 
+class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_components_handler
 {
 
     /**
@@ -48,15 +48,15 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
-     * _on_initialize is called by midcom on creation of the handler. 
+     * _on_initialize is called by midcom on creation of the handler.
      */
     function _on_initialize()
     {
          $this->_content_topic =& $this->_request_data['content_topic'];
     }
-    
+
     /**
      * Loads and prepares the schema database.
      *
@@ -78,7 +78,7 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
             }
         }
     }
-    
+
     /**
      * Internal helper, loads the controller for the current article. Any error triggers a 500.
      *
@@ -96,7 +96,7 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
             // This will exit.
         }
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current article. Any error triggers a 500.
      *
@@ -114,8 +114,8 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
             // This will exit.
         }
     }
-    
-    
+
+
     /**
      * DM2 creation callback, binds to the current content topic.
      */
@@ -141,26 +141,28 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
             {
                 // mgd_include_snippet($this->_config->get('callback_snippet'));
                 $eval = midcom_get_snippet_content($this->_config->get('callback_snippet'));
-                
+
                 if ($eval)
                 {
                     eval($eval);
                 }
             }
-            
+
             $callback = $this->_config->get('callback_function');
             $callback($this->_feedtopic, $this->_content_topic);
         }
-        
+
         return $this->_feedtopic;
     }
 
-    
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_manage ($handler_id, $args, &$data)
     {
@@ -170,9 +172,9 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
         $this->_update_breadcrumb_line($handler_id);
         $title = $this->_l10n_midcom->get('index');
         $_MIDCOM->set_pagetitle(":: {$title}");
-        
+
         $topics = array();
-        
+
         $qb_feedtopics = net_nemein_feedcollector_topic_dba::new_query_builder();
         $qb_feedtopics->add_constraint('node', '=', (int)$this->_content_topic->id);
         $qb_feedtopics->add_order($this->_config->get('sort_order'));
@@ -181,10 +183,10 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
 
         return true;
     }
-    
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_manage($handler_id, &$data)
     {
@@ -196,12 +198,14 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
         }
         midcom_show_style('manage-footer');
     }
-    
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete ($handler_id, $args, &$data)
     {
@@ -210,7 +214,7 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
         $this->_update_breadcrumb_line($handler_id);
         $title = $this->_l10n_midcom->get('index');
         $_MIDCOM->set_pagetitle(":: {$title}");
-        
+
         $this->_feedtopic = new net_nemein_feedcollector_topic_dba($args[0]);
         if (! $this->_feedtopic)
         {
@@ -245,15 +249,15 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
             $_MIDCOM->relocate("");
             // This will exit()
         }
-        
+
         $this->_request_data['datamanager'] =& $this->_datamanager;
 
         return true;
     }
-    
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_delete($handler_id, &$data)
     {
@@ -262,10 +266,12 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
         midcom_show_style('manage-topic-delete');
     }
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit ($handler_id, $args, &$data)
     {
@@ -281,8 +287,8 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The feedtopic {$args[0]} was not found.");
             // This will exit.
         }
-        
-        
+
+
         $this->_feedtopic->require_do('midgard:update');
 
         $this->_load_controller();
@@ -298,14 +304,14 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
         }
 
         $this->_request_data['controller'] =& $this->_controller;
-        
+
 
         return true;
     }
-    
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_edit($handler_id, &$data)
     {
@@ -313,7 +319,7 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
         $this->_request_data['topic'] = $this->_feedtopic;
         midcom_show_style('manage-topic-edit');
     }
-    
+
 
     function _update_breadcrumb_line()
     {

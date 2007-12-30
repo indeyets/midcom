@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package midgard.webdav.styles
  */
-class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_handler 
+class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_handler
 {
 
     /**
@@ -23,12 +23,17 @@ class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_han
     function midgard_webdav_styles_handler_allstyles()
     {
         parent::midcom_baseclasses_components_handler();
-    }    
- 
+    }
+
     /**
      * Handles files
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
-    function _handler_styles ( $handler_id, $args, &$data ) 
+    function _handler_styles ( $handler_id, $args, &$data )
     {
 		$this->log(__CLASS__ . ": styles handler");
        	$server = new midgard_webdav_styles_dav_style();
@@ -48,16 +53,16 @@ class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_han
         	$server->ServeRequest();
 		return true;
     }
-    
+
     /**
-     * The handler for the allstyles article. 
+     * The handler for the allstyles article.
      * @param mixed $handler_id the array key from the requestarray
      * @param array $args the arguments given to the handler
-     * 
+     *
      */
     function _handler_allstyles_index ($handler_id, $args, &$data)
     {
-        //$_MICOM->auth->require_admin_user(); 
+        //$_MICOM->auth->require_admin_user();
        	$server = new midgard_webdav_styles_dav_style();
         $style = new midcom_db_style;
         $style->id = 0;
@@ -72,7 +77,7 @@ class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_han
 
     function _show_allstyles_index(  ) {
     }
-    
+
     /**
      * Showfunctions are not in use
      */
@@ -88,7 +93,7 @@ class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_han
     /**
      * Handles substyles
      */
-    function _handler_allstyles ( $handler_id, $args, &$data ) 
+    function _handler_allstyles ( $handler_id, $args, &$data )
     {
         $server = new midgard_webdav_styles_dav_style( );
         $filename = $args[0];
@@ -97,7 +102,7 @@ class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_han
         return true;
 
     }
- 
+
 	function walk_style_tree( $args , &$server)
 	{
 		$this->log(__CLASS__ . "::walk_style_tree, current style: " . $server->style->id);
@@ -111,25 +116,25 @@ class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_han
 			{
 				$style = $server->style;
        			$server = new midgard_webdav_styles_dav_element( );
-	       		$server->set_element_name( $filename );	
-	       		$server->set_style($style);			
+	       		$server->set_element_name( $filename );
+	       		$server->set_style($style);
 			}
 			else
 			{
         		$server->set_style($this->get_style( $filename , $server->style->id));
 			}
-        }	
-	} 
- 
-    
-    function get_style( $filename , $parent_style = 0) {     
+        }
+	}
+
+
+    function get_style( $filename , $parent_style = 0) {
 		$filename = str_replace("+"," ",$filename);
         $this->log(__CLASS__ . ": get_style: " . $filename . " parent style: " . $parent_style);
         $qb = midcom_db_style::new_query_builder(  );
         $qb->add_constraint( 'name' , "=", $filename );
         $qb->add_constraint( 'up', '=' , $parent_style );
         $style = array_shift( $qb->execute() );
-        if ( !$style ) 
+        if ( !$style )
         {
         	return false;
         }
@@ -137,7 +142,7 @@ class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_han
         return $style;
 /*
         foreach ( $args as $arg ) {
-            
+
         }
         $style = new midcom_db_style(  );
         $style = get_by_path( $path );

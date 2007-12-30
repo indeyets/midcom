@@ -23,8 +23,13 @@ class net_nehmer_buddylist_handler_delete extends midcom_baseclasses_components_
     }
 
     /**
-     * The welcome handler loades the newest asks / bids according to the configuration
+     * The welcome handler loads the newest asks / bids according to the configuration
      * settings and prepares the type listings.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {
@@ -36,7 +41,7 @@ class net_nehmer_buddylist_handler_delete extends midcom_baseclasses_components_
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Incomplete request.');
             // This will exit.
         }
-        
+
         $relocate_to = '';
         if (array_key_exists('relocate_to', $_REQUEST))
         {
@@ -50,7 +55,7 @@ class net_nehmer_buddylist_handler_delete extends midcom_baseclasses_components_
         {
             if (substr($key, 0, 8) == 'account_')
             {
-            
+
                 $to_delete[] = substr($key, 8);
             }
         }
@@ -78,16 +83,16 @@ class net_nehmer_buddylist_handler_delete extends midcom_baseclasses_components_
                 debug_pop();
                 continue;
             }
-            
+
             $result[0]->delete();
         }
-        
+
         if ($relocate_to != '')
         {
             $_MIDCOM->uimessages->add($this->_l10n->get('net.nehmer.buddylist'), $this->_l10n->get('the buddies have been deleted.'), 'ok');
             $_MIDCOM->relocate($relocate_to);
         }
-        
+
         $_MIDCOM->set_26_request_metadata(time(), null);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: " . $this->_l10n->get('buddies deleted'));
         $tmp = Array

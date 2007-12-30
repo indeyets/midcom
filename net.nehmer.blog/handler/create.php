@@ -162,17 +162,17 @@ class net_nehmer_blog_handler_create extends midcom_baseclasses_components_handl
             {
                 // mgd_include_snippet($this->_config->get('callback_snippet'));
                 $eval = midcom_get_snippet_content($this->_config->get('callback_snippet'));
-                
+
                 if ($eval)
                 {
                     eval($eval);
                 }
             }
-            
+
             $callback = $this->_config->get('callback_function');
             $callback($this->_article, $this->_content_topic);
         }
-        
+
         return $this->_article;
     }
 
@@ -182,7 +182,12 @@ class net_nehmer_blog_handler_create extends midcom_baseclasses_components_handl
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
@@ -211,7 +216,7 @@ class net_nehmer_blog_handler_create extends midcom_baseclasses_components_handl
         }
 
         $this->_prepare_request_data();
-        if ( $this->_article != null ) 
+        if ( $this->_article != null )
         {
             $_MIDCOM->set_26_request_metadata($this->_article->revised, $this->_article->guid);
         }

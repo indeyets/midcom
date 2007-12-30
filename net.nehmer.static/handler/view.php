@@ -104,17 +104,17 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
         $qb->add_constraint('name', '=', $args[0]);
         $qb->add_constraint('up', '=', 0);
         $qb->set_limit(1);
-        
+
         // Include the article links to the indexes if enabled
         if ($this->_config->get('enable_article_links'))
         {
             $mc = net_nehmer_static_link_dba::new_collector('topic', $this->_content_topic->id);
             $mc->add_value_property('article');
             $mc->add_constraint('topic', '=', $this->_content_topic->id);
-            
+
             // Get the results
             $mc->execute();
-            
+
             $links = $mc->list_keys();
             $qb->begin_group('OR');
                 foreach ($links as $guid => $link)
@@ -129,7 +129,7 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
         {
             $qb->add_constraint('topic', '=', $this->_content_topic->id);
         }
-        
+
         $result = $qb->execute();
 
         if ($result)
@@ -151,7 +151,12 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_view ($handler_id, $args, &$data)
     {
@@ -160,17 +165,17 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
             $qb = midcom_db_article::new_query_builder();
             $qb->add_constraint('name', '=', 'index');
             $qb->set_limit(1);
-            
+
             // Include the article links to the indexes if enabled
             if ($this->_config->get('enable_article_links'))
             {
                 $mc = net_nehmer_static_link_dba::new_collector('topic', $this->_content_topic->id);
                 $mc->add_value_property('article');
                 $mc->add_constraint('topic', '=', $this->_content_topic->id);
-                
+
                 // Get the results
                 $mc->execute();
-                
+
                 $links = $mc->list_keys();
                 $qb->begin_group('OR');
                     foreach ($links as $guid => $link)
@@ -185,7 +190,7 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
             {
                 $qb->add_constraint('topic', '=', $this->_content_topic->id);
             }
-            
+
             $result = $qb->execute();
 
             if (empty($result))
@@ -205,14 +210,14 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
 
             $this->_article = $result[0];
         }
-        
+
         if ($handler_id == 'view_raw')
         {
             $_MIDCOM->skip_page_style = true;
         }
 
         $this->_load_datamanager();
-        
+
         if ($this->_config->get('enable_ajax_editing'))
         {
             $this->_request_data['controller'] =& midcom_helper_datamanager2_controller::create('ajax');

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package midgard.admin.asgard
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: viewer.php 3975 2006-09-06 17:36:03Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 
 /**
  * Component configuration handler
- * 
+ *
  * @package midgard.admin.asgard
  */
 class midgard_admin_asgard_handler_component_configuration extends midcom_baseclasses_components_handler
@@ -18,7 +18,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
 
     /**
      * Simple constructor
-     * 
+     *
      * @access public
      */
     function midgard_admin_asgard_handler_component_configuration()
@@ -65,7 +65,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
             )
         );
-        
+
         switch ($handler_id)
         {
             case '____mfa-asgard-components_configuration_edit':
@@ -78,7 +78,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
 
         midgard_admin_asgard_plugin::get_common_toolbar($this->_request_data);
     }
-    
+
     function _load_configs($component, $object = null)
     {
         $lib = $_MIDCOM->componentloader->manifests[$component];
@@ -91,8 +91,8 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             // hmmm... that should never happen
             $cfg = array();
         }
-        
-        $config = new midcom_helper_configuration($cfg);        
+
+        $config = new midcom_helper_configuration($cfg);
 
         if ($object)
         {
@@ -116,7 +116,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
 
         return $config;
     }
-    
+
     function _load_schemadb($component)
     {
         // Load SchemaDb
@@ -133,16 +133,16 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             {
                 $schema = 'config';
             }
-            
+
             if (!isset($schema_array[$schema]['name']))
             {
                 // This looks like DM2 schema
                 $schemadb = midcom_helper_datamanager2_schema::load_database("file:/{$schemadb_config_path}");
             }
-            
+
             // TODO: Log error on deprecated config schema?
         }
-        
+
         if (!$schemadb)
         {
             // Create dummy schema. Naughty component would not provide config schema.
@@ -179,7 +179,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                 // Skip
                 continue;
             }
-            
+
             if (is_array($value))
             {
                 $schemadb[$schema]->fields[$key]['default'] = "array(\n" . $this->_draw_array($value, '    ') . ")";
@@ -189,32 +189,38 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                 $schemadb[$schema]->fields[$key]['default'] = $value;
             }
         }
-        
+
         return $schemadb;
     }
-    
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+     */
     function _handler_view($handler_id, $args, &$data)
-    {   
+    {
         $data['name'] = $args[0];
         if (!array_key_exists($data['name'], $_MIDCOM->componentloader->manifests))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Component '{$data['name']}' was not found.");
             // This will exit
         }
-        
+
         $data['config'] = $this->_load_configs($data['name']);
 
         $data['view_title'] = sprintf($this->_l10n->get('configuration for %s'), $data['name']);
         $this->_prepare_toolbar($handler_id);
-        $_MIDCOM->set_pagetitle($data['view_title']);        
+        $_MIDCOM->set_pagetitle($data['view_title']);
 
         return true;
     }
 
- 
+
     /**
      * Show list of the style elements for the currently edited topic component
-     * 
+     *
      * @access private
      * @param string $handler_id Name of the used handler
      * @param mixed $data Data passed to the show method
@@ -222,14 +228,14 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
     function _show_view($handler_id, &$data)
     {
         midgard_admin_asgard_plugin::asgard_header();
-        
+
         midcom_show_style('midgard_admin_asgard_component_configuration_header');
 
         foreach($data['config']->_global as $key => $value)
         {
             $data['key'] = $_MIDCOM->i18n->get_string($key, $data['name']);
             $data['global'] = $this->_detect($data['config']->_global[$key]);
-            
+
             if (isset($data['config']->_local[$key]))
             {
                 $data['local'] = $this->_detect($data['config']->_local[$key]);
@@ -238,7 +244,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             {
                 $data['local'] = $this->_detect(null);
             }
-            
+
             if (   !isset($data['even'])
                 || $data['even'])
             {
@@ -253,7 +259,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         }
         midcom_show_style('midgard_admin_asgard_component_configuration_footer');
         midgard_admin_asgard_plugin::asgard_footer();
-        
+
     }
 
     function _detect($value)
@@ -341,7 +347,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         $snippet->code = $config;
         return $snippet->update();
     }
-    
+
     function _save_topic($topic, $config)
     {
         foreach ($this->_request_data['config']->_global as $global_key => $global_val)
@@ -351,7 +357,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                 continue;
                 // Skip the ones we will set next
             }
-            
+
             // Clear unset params
             if ($topic->get_parameter($this->_request_data['name'], $global_key))
             {
@@ -371,7 +377,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             }
         }
     }
-    
+
     function _get_config_from_controller()
     {
         $post = $this->_controller->formmanager->form->_submitValues;
@@ -383,7 +389,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                 continue;
             }
             $newval = $post[$key];
-            
+
             if ($newval != $val)
             {
                 $config_array[$key] = $newval;
@@ -392,9 +398,15 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
 
         return $config_array;
     }
-   
+
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_edit($handler_id, $args, &$data)
-    {   
+    {
         $data['name'] = $args[0];
         if (!array_key_exists($data['name'], $_MIDCOM->componentloader->manifests))
         {
@@ -413,7 +425,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                 $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Folder {$args[1]} not found for configuration.");
                 // This will exit
             }
-            
+
             $data['config'] = $this->_load_configs($data['name'], $data['folder']);
         }
         else
@@ -435,21 +447,21 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         {
             case 'save':
                 $config_array = $this->_get_config_from_controller($this->_controller);
-                
+
                 if ($handler_id == '____mfa-asgard-components_configuration_edit_folder')
                 {
                     $this->_save_topic($data['folder'], $config_array);
-                    
+
                     $_MIDCOM->uimessages->add
                     (
                         $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
                         $_MIDCOM->i18n->get_string('configuration saved successfully', 'midgard.admin.asgard'),
                         'ok'
                     );
-                    
+
                     $_MIDCOM->relocate("__mfa/asgard/components/configuration/edit/{$data['name']}/{$data['folder']->guid}/");
                 }
-                    
+
                 $config = $this->_draw_array($config_array, '', $data['config']->_global);
                 if ($this->_save_snippet($config))
                 {
@@ -497,16 +509,16 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             $this->_prepare_toolbar($handler_id);
             $data['view_title'] = sprintf($this->_l10n->get('edit configuration for %s'), $data['name']);
         }
-        
+
         $_MIDCOM->set_pagetitle($data['view_title']);
 
         return true;
     }
 
- 
+
     /**
      * Show list of the style elements for the currently edited topic component
-     * 
+     *
      * @access private
      * @param string $handler_id Name of the used handler
      * @param mixed $data Data passed to the show method
@@ -543,7 +555,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                     $result['widget'] = 'textarea';
                 }
         }
-        
+
         return $result;
 
     }
@@ -559,13 +571,13 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                 $data .= "'{$key}' => ";
             }
 
-            $type = gettype($val);            
+            $type = gettype($val);
             if (   $type_array
                 && isset($type_array[$key]))
             {
                 $type = gettype($type_array[$key]);
             }
-            
+
             switch($type)
             {
                 case 'boolean':
@@ -601,7 +613,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                         $data .= "'{$val}'";
                     }
             }
-            
+
             $data .= ",\n";
 
         }

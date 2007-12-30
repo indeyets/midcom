@@ -59,6 +59,11 @@ class net_nehmer_account_handler_edit extends midcom_baseclasses_components_hand
      * by the handler id (admin_edit vs. edit). In admin mode, admin privileges are
      * required unconditionally, the id/guid of the record to-be-edited is expected
      * in $args[0].
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -123,7 +128,7 @@ class net_nehmer_account_handler_edit extends midcom_baseclasses_components_hand
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         $this->_view_toolbar->hide_item('edit/');
-                
+
         $_MIDCOM->bind_view_to_object($this->_account, $this->_controller->datamanager->schema->name);
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
         $_MIDCOM->set_pagetitle($this->_l10n->get('edit account'));

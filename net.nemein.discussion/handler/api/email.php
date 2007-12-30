@@ -1,16 +1,16 @@
 <?php
 /**
  * @package net.nemein.discussion
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: email.php 5434 2007-03-02 16:32:35Z rambo $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
 /**
- * E-Mail import handler. 
+ * E-Mail import handler.
  *
- * 
+ *
  * @package net.nemein.discussion
  * @todo Rewrite for discussion (copied from blog)
  */
@@ -93,6 +93,12 @@ class net_nemein_discussion_handler_api_email extends midcom_baseclasses_compone
         return false;
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_import($handler_id, $args, &$data)
     {
         $this->_load_controller();
@@ -141,7 +147,7 @@ class net_nemein_discussion_handler_api_email extends midcom_baseclasses_compone
         debug_pop();
         return true;
     }
-    
+
     function _show_import($handler_id, &$data)
     {
         //All done

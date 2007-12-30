@@ -40,9 +40,9 @@ class net_nemein_organizations_handler_search extends midcom_baseclasses_compone
         $this->_request_data['groups'] =& $this->_groups;
 
         $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
-        
+
         $this->_request_data['schema'] = $this->_config->get('schema');
-        
+
         $this->_request_data['datamanager'] =& $this->_datamanager;
     }
 
@@ -70,7 +70,7 @@ class net_nemein_organizations_handler_search extends midcom_baseclasses_compone
             // This will exit.
         }
     }
-    
+
     function _validate_operator($operator)
     {
         switch ($operator)
@@ -146,7 +146,7 @@ class net_nemein_organizations_handler_search extends midcom_baseclasses_compone
 
         return $normalized_parameters;
     }
-    
+
     function _check_parameter($object, $domain, $name, $constraint)
     {
         $value = $object->parameter($domain, $name);
@@ -217,16 +217,16 @@ class net_nemein_organizations_handler_search extends midcom_baseclasses_compone
     {
         $filtered_groups = array();
         $php_constraints = array();
-        
+
         $qb = org_openpsa_contacts_group::new_query_builder();
-    
+
         $group = new org_openpsa_contacts_group($this->_config->get('group'));
         $qb->add_constraint('owner', '=', $group->id);
         foreach ($this->_config->get('index_order') as $ordering)
         {
             $qb->add_order($ordering);
         }
-        
+
         foreach ($constraints as $constraint)
         {
             $storage = $this->_request_data['schemadb'][$this->_request_data['schema']]->fields[$constraint['property']]['storage'];
@@ -248,7 +248,7 @@ class net_nemein_organizations_handler_search extends midcom_baseclasses_compone
         }
 
         $initial_groups = $qb->execute();
-        
+
         foreach ($initial_groups as $group)
         {
             $display = true;
@@ -285,7 +285,7 @@ class net_nemein_organizations_handler_search extends midcom_baseclasses_compone
                 $filtered_groups[] = $group;
             }
         }
-        
+
         return $filtered_groups;
     }
 
@@ -293,20 +293,25 @@ class net_nemein_organizations_handler_search extends midcom_baseclasses_compone
      * Renders the Group Index. If alphabetic indexing is enabled, the filter char
      * is extracted and set so that the index is limited accordingly. (Defaults to 'A'
      * in case no filter is specified.)
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_search($handler_id, $args, &$data)
     {
         $this->_prepare_request_data();
-            
+
         if (   array_key_exists('net_nemein_organizations_search', $_REQUEST)
             && is_array($_REQUEST['net_nemein_organizations_search']))
         {
             // Normalize the constraints
             $data['search_constraints'] = $this->_normalize_search($_REQUEST['net_nemein_organizations_search']);
-    
+
             $this->_groups = $this->_search_groups($data['search_constraints']);
         }
-        
+
         $this->_load_datamanager();
 
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
@@ -323,7 +328,7 @@ class net_nemein_organizations_handler_search extends midcom_baseclasses_compone
         if ($this->_groups)
         {
             midcom_show_style('show-index-header');
-            
+
             midcom_show_style('show-search-form');
 
             $current_col = 0;

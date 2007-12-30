@@ -42,22 +42,27 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
     /**
      * Shows the autoindex list. Nothing to do in the handle phase except setting last modified
      * dates.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_autoindex ($handler_id, $args, &$data)
     {
         // Get last modified timestamp
         $qb = midcom_db_article::new_query_builder();
-        
+
         // Include the article links to the indexes if enabled
         if ($this->_config->get('enable_article_links'))
         {
             $mc = net_nehmer_static_link_dba::new_collector('topic', $this->_content_topic->id);
             $mc->add_value_property('article');
             $mc->add_constraint('topic', '=', $this->_content_topic->id);
-            
+
             // Get the results
             $mc->execute();
-            
+
             $links = $mc->list_keys();
             $qb->begin_group('OR');
                 foreach ($links as $guid => $link)
@@ -72,7 +77,7 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
         {
             $qb->add_constraint('topic', '=', $this->_content_topic->id);
         }
-        
+
         $qb->add_order('metadata.revised', 'DESC');
         $qb->set_limit(1);
         $result = $qb->execute();
@@ -152,17 +157,17 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
         $datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
 
         $qb = midcom_db_article::new_query_builder();
-        
+
         // Include the article links to the indexes if enabled
         if ($this->_config->get('enable_article_links'))
         {
             $mc = net_nehmer_static_link_dba::new_collector('topic', $this->_content_topic->id);
             $mc->add_value_property('article');
             $mc->add_constraint('topic', '=', $this->_content_topic->id);
-            
+
             // Get the results
             $mc->execute();
-            
+
             $links = $mc->list_keys();
             $qb->begin_group('OR');
                 foreach ($links as $guid => $link)
@@ -177,7 +182,7 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
         {
             $qb->add_constraint('topic', '=', $this->_content_topic->id);
         }
-        
+
         $result = $qb->execute();
 
         foreach ($result as $article)
@@ -213,13 +218,13 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
         $view[$filename]['type'] = 'text/html';
         $view[$filename]['lastmod'] = strftime('%x %X', $article->metadata->revised);
         $view[$filename]['view_article'] = $datamanager->get_content_html();
-        
+
         // Stop the press, if blobs should not be visible
         if (!$this->_config->get('show_blobs_in_autoindex'))
         {
             return;
         }
-        
+
         foreach ($datamanager->schema->field_order as $name)
         {
             if (is_a($datamanager->types[$name], 'midcom_helper_datamanager2_type_image'))

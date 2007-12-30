@@ -9,7 +9,7 @@
 
 /**
  * PEAR server handler class for setting the configuration options
- * 
+ *
  * @package cc.kaktus.pearserver
  */
 class cc_kaktus_pearserver_handler_config extends midcom_baseclasses_components_handler
@@ -51,6 +51,10 @@ class cc_kaktus_pearserver_handler_config extends midcom_baseclasses_components_
      * Require the correct ACL's for configuring
      *
      * @access public
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_config($handler_id, $args, &$data)
     {

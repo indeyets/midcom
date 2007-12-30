@@ -63,7 +63,7 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
     {
         $this->_content_topic =& $this->_request_data['content_topic'];
     }
-    
+
     /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
@@ -185,7 +185,12 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
      * Note, that the downloadpage for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation downloadpage,
+     * If create privileges apply, we relocate to the index creation downloadpage
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -230,7 +235,7 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
     function _show_edit ($handler_id, &$data)
     {
         $data['view_downloadpage'] = $this->_controller->datamanager->get_content_html();
-    
+
         midcom_show_style('admin-edit');
     }
 
@@ -240,7 +245,12 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
      * Note, that the downloadpage for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation downloadpage,
+     * If create privileges apply, we relocate to the index creation downloadpage
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {
@@ -257,12 +267,12 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
         if (array_key_exists('net_nemein_downloads_deleteok', $_REQUEST))
         {
             // Deletion confirmed.
-            
+
             if ($this->_config->get('current_release') == $this->_downloadpage->guid)
             {
                 $this->_topic->parameter('net.nemein.downloads', 'current_release', '');
             }
-            
+
             if (! midcom_helper_purge_object($this->_downloadpage))
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete downloadpage {$args[0]}, last Midgard error was: " . mgd_errstr());
@@ -301,7 +311,7 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
     function _show_delete ($handler_id, &$data)
     {
         $data['view_downloadpage'] = $this->_datamanager->get_content_html();
-        
+
         midcom_show_style('admin-delete');
     }
 }

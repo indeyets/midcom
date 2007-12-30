@@ -24,13 +24,13 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
         $this->_component = 'midgard.admin.asgard';
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function _on_initialize()
     {
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->skip_page_style = true;
-                
+
         $_MIDCOM->load_library('midcom.helper.datamanager2');
     }
 
@@ -41,9 +41,14 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
     function _prepare_request_data()
     {
     }
-    
+
     /**
      * Object editing view
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_type($handler_id, $args, &$data)
     {
@@ -53,14 +58,14 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
         {
             return false;
         }*/
-    
+
         $this->_prepare_request_data();
 
         $data['view_title'] = midgard_admin_asgard_plugin::get_type_label($this->type);
         $_MIDCOM->set_pagetitle($data['view_title']);
-        
+
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
-        
+
         if ($_MIDCOM->auth->can_user_do('midgard:create', null, $this->type))
         {
             $data['asgard_toolbar']->add_item
@@ -73,7 +78,7 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
                 )
             );
         }
-        
+
         if ($_MIDCOM->auth->admin)
         {
             $qb = new midgard_query_builder($this->type);
@@ -105,10 +110,10 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
                 );
             }
         }
-        
+
         midgard_admin_asgard_plugin::get_common_toolbar($data);
 
-        
+
         return true;
     }
 

@@ -79,7 +79,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
      * for usage within the style listing.
      */
     function _prepare_request_data()
-    {    
+    {
         $this->_request_data['datamanager'] =& $this->_datamanager;
         $this->_request_data['start'] =& $this->_start;
         $this->_request_data['end'] =& $this->_end;
@@ -90,14 +90,19 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
      * and similar stuff.
      *
      * The handler computes all necessary data and populates the request array accordingly.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_welcome ($handler_id, $args, &$data)
     {
         $this->_compute_welcome_data();
         $this->_prepare_request_data();
-        
+
         if ($this->_config->get('archive_in_navigation'))
-        {        
+        {
             $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
         }
         $_MIDCOM->set_26_request_metadata(net_nehmer_blog_viewer::get_last_modified($this->_topic, $this->_content_topic), $this->_topic->guid);
@@ -157,7 +162,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
 
         $qb->add_constraint('metadata.published', '>=', $start->getDate());
         $qb->add_constraint('metadata.published', '<', $end->getDate());
-        
+
         // Hide the articles that have the publish time in the future and if
         // the user is not administrator
         if (   $this->_config->get('enable_scheduled_publishing')
@@ -167,7 +172,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
             // is the author
             $qb->begin_group('OR');
                 $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
-                
+
                 if (   $_MIDCOM->auth->user
                     && isset($_MIDCOM->auth->user->guid))
                 {
@@ -175,7 +180,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
                 }
             $qb->end_group();
         }
-        
+
         return $qb->count_unchecked();
     }
 
@@ -329,9 +334,14 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
     /**
      * Shows the archive. Depending on the selected handler various constraints are added to
      * the QB. See the add_*_constraint methods for details.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list ($handler_id, $args, &$data)
-    {    
+    {
         // Get Articles, distinguish by handler.
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_content_topic->id);
@@ -345,7 +355,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
             // is the author
             $qb->begin_group('OR');
                 $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
-                
+
                 if (   $_MIDCOM->auth->user
                     && isset($_MIDCOM->auth->user->guid))
                 {
@@ -353,7 +363,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
                 }
             $qb->end_group();
         }
-        
+
         // Use helper functions to determine start/end
         switch ($handler_id)
         {
@@ -418,7 +428,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
         $this->_prepare_request_data();
 
         if ($this->_config->get('archive_in_navigation'))
-        {   
+        {
             $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
         }
         else
@@ -522,8 +532,8 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
     function _show_list($handler_id, &$data)
     {
         // FIXME: For some reason the config topic is lost between _handle and _show phases
-        $this->_config->store_from_object($this->_topic, $this->_component);    
-        
+        $this->_config->store_from_object($this->_topic, $this->_component);
+
         midcom_show_style('archive-list-start');
         if ($this->_articles)
         {
@@ -533,7 +543,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
                 $_MIDCOM->componentloader->load_graceful('net.nehmer.comments');
                 $data['comments_enable'] = true;
             }
-        
+
             $total_count = count($this->_articles);
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
@@ -569,7 +579,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
                         $data['view_url'] = "{$prefix}{$arg}.html";
                     }
                 }
-                
+
                 if ($article->topic === $this->_content_topic->id)
                 {
                     $data['linked'] = false;
@@ -577,7 +587,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
                 else
                 {
                     $data['linked'] = true;
-                    
+
                     $nap = new midcom_helper_nav();
                     $data['node'] = $nap->get_node($article->topic);
                 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package net.nehmer.blog
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -10,7 +10,7 @@
 /**
  * E-Mail import handler. This uses the OpenPsa 2 email importer MDA system. Emails are imported into blog,
  * with a possible attached image getting stored using 'image' type in schema if available.
- * 
+ *
  * @package net.nehmer.blog
  */
 class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_handler
@@ -22,36 +22,36 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
      * @access private
      */
     var $_article;
-    
+
     /**
      * The content topic to use
      *
      * @var midcom_db_topic
      * @access private
      */
-    var $_content_topic = null;    
-    
+    var $_content_topic = null;
+
     /**
      * Email importer
      *
      * @var org_openpsa_mail
      * @access private
      */
-    var $_decoder;    
+    var $_decoder;
 
     function net_nehmer_blog_handler_api_email()
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Maps the content topic from the request data to local member variables.
      */
     function _on_initialize()
     {
         $this->_content_topic =& $this->_request_data['content_topic'];
-    }    
-    
+    }
+
     /**
      * DM2 creation callback, binds to the current content topic.
      */
@@ -62,17 +62,17 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Author not found');
         }
-        
+
         $author_user = $_MIDCOM->auth->get_user($author->guid);
         if (!$this->_content_topic->can_do('midgard:create', $author_user))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'User doesn\'t have posting privileges');
         }
-    
+
         $this->_article = new midcom_db_article();
         $this->_article->topic = $this->_content_topic->id;
         $this->_article->title = $title;
-        
+
         //Figure out author
         $this->_article->author = $author->id;
         if (!$this->_article->author)
@@ -90,7 +90,7 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
                 // This will exit.
             }
             $this->_article->author = $results[0]->id;
-        }        
+        }
 
         if (! $this->_article->create())
         {
@@ -120,12 +120,12 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
                 $tries++;
             }
         }
-        
+
         $this->_article->parameter('midcom.helper.datamanager2', 'schema_name', $this->_config->get('api_email_schema'));
 
         return true;
-    }    
-    
+    }
+
     /**
      * Internal helper, loads the datamanager for the current article. Any error triggers a 500.
      *
@@ -141,15 +141,21 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance for article {$this->_article->id}.");
             // This will exit.
         }
-    }    
-    
+    }
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+     */
     function _handler_import($handler_id, $args, &$data)
     {
         if (!$this->_config->get('api_email_enable'))
         {
             return false;
         }
-        
+
         //Content-Type
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->cache->content->content_type('text/plain');
@@ -172,13 +178,13 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
         }
 
         $_MIDCOM->auth->request_sudo('net.nehmer.blog');
-                
+
         // Create article
         $this->_create_article($this->_decoder->subject);
-        
+
         // Load the article to DM2
         $this->_load_datamanager();
-    
+
         // Try to find tags in email content
         $content = $this->_decoder->body;
         $content_tags = '';
@@ -198,7 +204,7 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
             debug_pop();
         }
 
-        // Populate rest of the data        
+        // Populate rest of the data
         $this->_datamanager->types['content']->value = $content;
         if (!empty($data['tags_field']))
         {
@@ -206,11 +212,11 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
             $this->_datamanager->types[$data['tags_field']]->value = $content_tags;
         }
         $body_switched = false;
-        
+
         foreach ($this->_decoder->attachments as $att)
         {
             debug_add("processing attachment {$att['name']}");
-            
+
             switch (true)
             {
                 case (strpos($att['mimetype'], 'image/') !== false):
@@ -229,18 +235,18 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
                     $this->_add_attachment($att);
             }
         }
-        
+
         if (!$this->_datamanager->save())
         {
             // Purge the article
             $this->_article->delete();
-            
+
             // Give error the the MDA so it doesn't delete the message
             echo "ERROR: Datamanager failed to save the object. Midgard error was: " . mgd_errstr() . "\n";
             $_MIDCOM->finish();
             exit();
         }
-        
+
         // Index the article
         $indexer =& $_MIDCOM->get_service('indexer');
         net_nehmer_blog_viewer::index($this->_datamanager, $indexer, $this->_content_topic);
@@ -250,38 +256,38 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
             $metadata = $this->_article->get_metadata();
             $metadata->approve();
         }
-        
+
         $_MIDCOM->auth->drop_sudo();
         debug_pop();
         return true;
     }
-    
+
     function _show_import($handler_id, &$data)
     {
         //All done
         echo "OK\n";
     }
-    
+
     function _decode_email()
     {
         //Load o.o.mail
         $_MIDCOM->load_library('org.openpsa.mail');
-        
+
         //Make sure we have the components we use and the Mail_mimeDecode package
         if (!class_exists('org_openpsa_mail'))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'library org.openpsa.mail could not be loaded.');
             // This will exit.
         }
-        
+
         $this->_decoder = new org_openpsa_mail();
-        
+
         if (!class_exists('Mail_mimeDecode'))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Cannot decode attachments, aborting.');
             // This will exit.
         }
-        
+
         //Make sure the message_source is POSTed
         if (   !array_key_exists('message_source', $_POST)
             || empty($_POST['message_source']))
@@ -290,12 +296,12 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
             // This will exit.
         }
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $this->_decoder = new org_openpsa_mail();
         $this->_decoder->body = $_POST['message_source'];
         $this->_decoder->mime_decode();
     }
-    
+
     function _parse_email_persons()
     {
         //Parse email addresses
@@ -327,9 +333,9 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
                 //It's unlikely that we'd get multiple matches in From, but we use the latest
                 $this->_request_data['from'] = $email;
             }
-        }    
+        }
     }
-    
+
     function _add_image($att)
     {
         if (!array_key_exists('image_field', $this->_request_data))
@@ -337,7 +343,7 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
             // No image fields in schema, revert to regular attachment handling
             return $this->_add_attachment($att);
         }
-        
+
         // Save image to a temp file
         $tmp_name = tempnam('/tmp', 'net_nehmer_blog_handler_api_email_');
         $fp = fopen($tmp_name, 'w');
@@ -349,14 +355,14 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
             fclose($fp);
             return false;
         }
-        
+
         return $this->_datamanager->types[$this->_request_data['image_field']]->set_image($att['name'], $tmp_name, $att['name']);
     }
-    
+
     function _add_attachment($att)
     {
         return false;
-        
+
         // TODO: Implement
         $attobj = $this->_article->create_attachment($att['name'], $att['name'], $att['mimetype']);
         if (!$attobj)
@@ -407,7 +413,7 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
             $this->_article->content .= "[{$attobj->title}]({$_MIDGARD['self']}midcom-serveattachmentguid-{$attobj->guid}/{$attobj->name}), ";
         }
     }
-    
+
     function _find_email_person($email, $prefer_user = true)
     {
         $qb = midcom_db_person::new_query_builder();

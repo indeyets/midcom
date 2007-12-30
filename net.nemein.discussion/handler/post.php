@@ -79,7 +79,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
     {
         $this->_request_data['controller'] =& $this->_controller;
         $this->_request_data['thread'] =& $this->_thread;
-        $this->_request_data['parent_post'] =& $this->_parent_post;        
+        $this->_request_data['parent_post'] =& $this->_parent_post;
         $this->_request_data['schema'] =& $this->_schema;
         $this->_request_data['schemadb'] =& $this->_schemadb;
     }
@@ -116,7 +116,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 $this->_defaults['senderemail'] = $user->email;
             }
         }
-        
+
         if ($this->_parent_post)
         {
             if (strstr($this->_parent_post->subject, $this->_l10n->get('re:')))
@@ -156,7 +156,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
     function & dm2_create_callback (&$controller)
     {
         $this->_post = new net_nemein_discussion_post_dba();
-        
+
         // Set status according to configuration
         if ($_MIDCOM->auth->user)
         {
@@ -166,7 +166,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         {
             $this->_post->status = $this->_config->get('new_message_status_anon');
         }
-        
+
         if ($this->_thread)
         {
             $this->_post->thread = $this->_thread->id;
@@ -175,7 +175,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         {
             $thread = new net_nemein_discussion_thread_dba();
             $thread->node = $this->_topic->id;
-            
+
             if (!$thread->create())
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
@@ -185,16 +185,16 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                     'Failed to create a new thread, cannot continue. Last Midgard error was: '. mgd_errstr());
                 // This will exit.
             }
-            
+
             $this->_thread = new net_nemein_discussion_thread_dba($thread->id);
             $this->_post->thread = $this->_thread->id;
         }
-        
+
         if ($this->_parent_post)
         {
             $this->_post->replyto = $this->_parent_post->id;
         }
-        
+
         if ($_MIDCOM->auth->user)
         {
             $user =& $_MIDCOM->auth->user->get_storage();
@@ -214,12 +214,17 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
 
         return $this->_post;
     }
-    
+
     /**
      * Handle thread creation
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
-    {   
+    {
         $this->_topic->require_do('midgard:create');
 
         $this->_load_controller();
@@ -241,23 +246,23 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                     $this->_thread->name = midcom_generate_urlname_from_string($this->_post->subject).sprintf("-%03d",$i);
                     $i++;
                 }
-                
+
                 // Index the post
                 $indexer =& $_MIDCOM->get_service('indexer');
                 net_nemein_discussion_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
 
                 $this->_email_post();
-                
+
                 if ($this->_config->get('autoapprove'))
                 {
                     $_MIDCOM->auth->request_sudo('net.nemein.discussion');
-                    
+
                     $meta = $this->_post->get_metadata();
                     $meta->approve();
-                    
+
                     $meta = $this->_thread->get_metadata();
                     $meta->approve();
-                    
+
                     $_MIDCOM->auth->drop_sudo();
                 }
 
@@ -267,7 +272,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
             case 'cancel':
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
                 // This will exit.
-        }        
+        }
 
         $this->_prepare_request_data();
         $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('post to %s'), $this->_topic->extra));
@@ -297,16 +302,21 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
 
     /**
      * Handle replies to threads
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_reply($handler_id, $args, &$data)
     {
-    
+
         $this->_parent_post = new net_nemein_discussion_post_dba($args[0]);
         if (!$this->_parent_post)
         {
             return false;
         }
-        
+
         $this->_thread = $this->_parent_post->get_parent();
         if (is_a($this->_thread, 'net_nemein_discussion_post'))
         {
@@ -316,16 +326,16 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 $this->_thread = $this->_thread->get_parent();
             }
         }
-        
+
         $this->_thread->require_do('midgard:create');
-        
+
         if ($this->_config->get('auto_quote_on_reply'))
         {
-            $mode = $this->_request_data['schemadb']['default']->fields['content']['type_config']['output_mode'];            
+            $mode = $this->_request_data['schemadb']['default']->fields['content']['type_config']['output_mode'];
             $parent_content = $this->_parent_post->content;
             $line_break = "\n";
             $quote = "";
-            
+
             if ($mode == 'html')
             {
                 $quote .= "<div class=\"net_nemein_discussion_post_quote\">";
@@ -335,22 +345,22 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
             }
 
             $rows = preg_split("/[\n]/", preg_replace('/\x0a\x0d|\x0d\x0a|\x0d/', "\n", $parent_content));
-            
+
             $quote .= "> {$line_break}";
             foreach ($rows as $row)
             {
                 $quote .= "> {$row}{$line_break}";
             }
             $quote .= "> {$line_break}{$line_break}";
-            
+
             if ($mode == 'html')
             {
                 $quote .= "</div><br />";
             }
-            
+
             $this->_defaults['content'] = $quote;
         }
-        
+
         $this->_load_controller();
 
         switch ($this->_controller->process_form())
@@ -361,17 +371,17 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 net_nemein_discussion_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
 
                 $this->_email_post();
-                
+
                 if ($this->_config->get('autoapprove'))
                 {
                     $_MIDCOM->auth->request_sudo('net.nemein.discussion');
-                    
+
                     $meta = $this->_post->get_metadata();
                     $meta->approve();
-                    
+
                     $meta = $this->_thread->get_metadata();
                     $meta->approve();
-                    
+
                     $_MIDCOM->auth->drop_sudo();
                 }
 
@@ -394,7 +404,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
     function _show_reply($handler_id, &$data)
     {
         // Prepare datamanager for displaying parent
-        $data['datamanager'] = new midcom_helper_datamanager2_datamanager($data['schemadb']);  
+        $data['datamanager'] = new midcom_helper_datamanager2_datamanager($data['schemadb']);
         if (! $data['datamanager']->autoset_storage($data['parent_post']))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -404,7 +414,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
             continue;
         }
         $data['view_parent_post'] = $data['datamanager']->get_content_html();
-    
+
         midcom_show_style('reply-widget');
     }
 
@@ -513,7 +523,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         }
         debug_pop();
         return true;
-    }        
+    }
 }
 
 ?>

@@ -189,6 +189,11 @@ class net_nehmer_jobmarket_handler_search extends midcom_baseclasses_components_
      *
      * You can override this behavior by setting the HTTP GET parameter reset_search_session,
      * which forces the component to display a clean search form again.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_search($handler_id, $args, &$data)
     {
@@ -309,6 +314,11 @@ class net_nehmer_jobmarket_handler_search extends midcom_baseclasses_components_
      * Prepares the search result for displaying. Submitted form data takes priority over
      * HTTP session information. Search results are available as long as the session lasts
      * therefore.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_result($handler_id, $args, &$data)
     {

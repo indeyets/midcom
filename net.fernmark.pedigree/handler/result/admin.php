@@ -186,7 +186,12 @@ class net_fernmark_pedigree_handler_result_admin extends midcom_baseclasses_comp
      * Note, that the result for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation result,
+     * If create privileges apply, we relocate to the index creation result
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -212,7 +217,7 @@ class net_fernmark_pedigree_handler_result_admin extends midcom_baseclasses_comp
 
                 // *** FALL-THROUGH ***
 
-            case 'cancel':       
+            case 'cancel':
                 $_MIDCOM->relocate("result/{$this->_result->guid}.html");
                 // This will exit.
         }
@@ -242,7 +247,12 @@ class net_fernmark_pedigree_handler_result_admin extends midcom_baseclasses_comp
      * Note, that the result for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation result,
+     * If create privileges apply, we relocate to the index creation result
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {

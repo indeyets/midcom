@@ -2,7 +2,7 @@
 
 /**
  * @package net.nemein.internalorders
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: viewer.php,v 1.3.2.7 2005/11/07 18:57:45 bergius Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -10,7 +10,7 @@
 
 /**
  * Calendar Viewer interface class.
- * 
+ *
  * @package net.nemein.internalorders
  */
 class net_nemein_internalorders_handler_edit extends midcom_baseclasses_components_handler
@@ -18,7 +18,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 
 	/**
 	 * The root event to use with this topic.
-	 * 
+	 *
 	 * @var midcom_baseclasses_database_event
 	 * @access private
 	 */
@@ -35,23 +35,23 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 		{
 			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Component is not properly initialized, root event missing");
 		}
-	
+
 		$this->_root_event = mgd_get_object_by_guid($this->_config->get('root_event'));
 		if (!$this->_root_event)
 		{
 			$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Root event not found: ".mgd_errstr());
 		}
 	}
-	
+
 	function _send_mail_about_new_order($guid_for_order, $to_id, $from_id)
 	{
 		$_MIDCOM->componentloader->load_graceful('org.openpsa.mail');
 //		ini_set('error_reporting', E_ALL & ~E_NOTICE);
 		$email_to_person = new midcom_db_person($to_id);
 		$email_from_person = new midcom_db_person($from_id);
-		
+
 		$email_to = $email_to_person->email;
-		
+
 		$mail_to = $email_to;
 		$mail_from = 'sisainen.siirto@anttila.fi';
 		$subject = "Teille on uusi sisäisen siirron lomake";
@@ -63,7 +63,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 
 //		mgd_include_snippet('/NemeinNet_Core/Mail');
 
-		
+
 		$mail =  new org_openpsa_mail();
 
 		$mail->headers["content-type"] = "text/plain; charset=UTF-8; format=flowed;";
@@ -73,11 +73,17 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 		$mail->subject = $subject;
 		$mail->headers["subject"] = $subject;
 		$mail->body = $body;
-		
+
 		$mail->send();
 //		ini_set('error_reporting', E_ALL);
 	}
-	
+
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
 	function _handler_edit($handler_id, $args, &$data)
 	{
 
@@ -85,12 +91,12 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 		$nap2 =& new midcom_helper_nav();
 		$node = $nap2->get_node($nap2->get_current_node());
 //		$this->_request_data['products_topic'] = $node[MIDCOM_NAV_OBJECT];
-		
+
 		$known_products = true;
 		$hasSamplesInText = false;
 
 		$event = mgd_get_object_by_guid($args[0]);
-		
+
 
 		global $statuserrors;
 		$statuserrors = "";
@@ -104,7 +110,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 			// Wrong kind of event
 			return false;
 		}
-		
+
 		if($event->type == NET_NEMEIN_INTERNALORDERS_SENT)
 		{
 			if ($event->extra == $_MIDGARD['user'])
@@ -116,21 +122,21 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 		 		$_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX).'view/'.$event->guid().'.html');
 		 	}
 		}
-		
+
 
 		$tmp[] = Array
 		(
 			MIDCOM_NAV_URL => 'edit/'.$args[0].'/',
 			MIDCOM_NAV_NAME => 'Muokkaa lähetettä nro '.$event->title,
 		);
-	
+
 		$_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', array_reverse($tmp));
 
-		
+
 		$this->_request_data['event'] = $event;
-		
-		
-		
+
+
+
 		if (array_key_exists('net_nemein_internalorders_pricelist_update', $_POST) || (array_key_exists('net_nemein_internalorders_pricelist_refresh', $_POST) && $_POST['net_nemein_internalorders_pricelist_refresh'] == '1'))
 		{
 			 // TODO: Submit pressed, handle saving of the form and possible subevent/eventmember creation
@@ -169,9 +175,9 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 					$this->_request_data['event']->parameter('net.nemein.internalorders', 'reason_1', $_POST['net_nemein_internalorders_reason_1']);
 				}
 			}
-			
+
 			$this->_request_data['event']->parameter('net.nemein.internalorders', 'packing', $_POST['net_nemein_internalorders_packing']);
-			 
+
 			$this->_request_data['event']->parameter('net.nemein.internalorders', 'packer', $_POST['net_nemein_internalorders_packer']);
 			if($_POST['net_nemein_internalorders_colls'])
 			{
@@ -183,15 +189,15 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 			}
 			$this->_request_data['event']->parameter('net.nemein.internalorders', 'm3', $_POST['net_nemein_internalorders_m3']);
 			$this->_request_data['event']->parameter('net.nemein.internalorders', 'sendentry', $_POST['net_nemein_internalorders_sendentry']);
-			 
-			
-			 
+
+
+
 			$stat = $this->_request_data['event']->update();
 			if (!$stat)
 			{
 				$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to update order: ".mgd_errstr());
 			}
-			 
+
 			 // Handle the multiple products inside the order
 			foreach ($_POST['net_nemein_internalorders_product'] as $guid => $product)
 			{
@@ -294,10 +300,10 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 								continue;
 							}
 						}
-					
+
 						if(!is_numeric($product['value']))
 						{ $hasSamplesInText = true; }
-						
+
 						$event->title = $product['title'];
 						$event->extra = $product['value'];
 						$stat = $event->update();
@@ -328,7 +334,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 						$tmpSum = 0;
 						$tmpSum = floatval($product['salesprice']) * floatval($product['quantity']);
 						$event->parameter('net.nemein.internalorders', 'sum', $tmpSum);
-						
+
 
 					}
 				}
@@ -391,8 +397,8 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 					{
 					    if(!is_numeric($product['value']))
 						{ $hasSamplesInText = true; }
-						
-						
+
+
 						$known_products = false;
 						$event = mgd_get_event();
 						$event->up = $this->_request_data['event']->id;
@@ -447,7 +453,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 					}
 				}
 			}
-			
+
 			if (array_key_exists('net_nemein_internalorders_pricelist_approve', $_POST) && $_POST['net_nemein_internalorders_pricelist_approve'] == 1 && $known_products)
 			{
 				if(!$_POST['net_nemein_internalorders_colls'])
@@ -479,7 +485,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 						$statuserrors_focus = "reason_1";
 					}
 				}
-				
+
 				if ($_POST['net_nemein_internalorders_receiver'] == "XX")
 				{
 					$statuserrors .= "Virheellinen vastaanottaja<br />\n";
@@ -506,7 +512,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 			{
 				$_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to update order: ".mgd_errstr());
 			}
-			
+
 			if ($statuserrors == "" && $known_products && (array_key_exists('net_nemein_internalorders_pricelist_refresh', $_POST) && $_POST['net_nemein_internalorders_pricelist_refresh'] != '1'))
 			{
 				if (array_key_exists('net_nemein_internalorders_pricelist_approve', $_POST) && $_POST['net_nemein_internalorders_pricelist_approve'] == 1 && $known_products)
@@ -519,7 +525,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 				}
 		 	}
 		}
-		
+
 		// Load products under the order
 		$this->_request_data['products'] = array();
 		$products = mgd_list_events($this->_request_data['event']->id, 'created');
@@ -537,7 +543,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 				);
 			}
 		}
-		
+
 		$_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit %s'), $this->_request_data['event']->title));
 		return true;
 	}
@@ -549,4 +555,4 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 	}
 }
 ?>
-	
+

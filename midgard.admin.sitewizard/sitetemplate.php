@@ -37,12 +37,12 @@ class midgard_admin_sitewizard_sitetemplate extends midcom_baseclasses_component
             ),
         );
     }
-    
+
     function _on_initialize()
     {
         $_MIDCOM->load_library('midcom.helper.xml');
     }
-    
+
     function _load_nodes(&$parent_node)
     {
         $node = array();
@@ -51,10 +51,10 @@ class midgard_admin_sitewizard_sitetemplate extends midcom_baseclasses_component
         $node['component']     = $parent_node->component;
         $node['style']         = $parent_node->style;
         $node['style_inherit'] = $parent_node->styleInherit;
-        
+
         // Load all parameters in the component namespace to get local settings
         $node['settings']      = $parent_node->list_parameters($node['component']);
-        
+
         $node['children'] = array();
         $children_qb = midcom_db_topic::new_query_builder();
         $children_qb->add_constraint('up', '=', $parent_node->id);
@@ -66,17 +66,17 @@ class midgard_admin_sitewizard_sitetemplate extends midcom_baseclasses_component
             $i++;
             $node['children']["node_{$i}"] = $this->_load_nodes($child_node);
         }
-        
+
         return $node;
     }
-    
+
     function _load_snippets(&$snippetdir)
     {
         $snippets = array
         (
             'name'          => $snippetdir->name,
         );
-        
+
         $snippets['snippets'] = array();
         $snippets_qb = midcom_baseclasses_database_snippet::new_query_builder();
         $snippets_qb->add_constraint('up', '=', $snippetdir->id);
@@ -94,7 +94,7 @@ class midgard_admin_sitewizard_sitetemplate extends midcom_baseclasses_component
                 'author' => $snippet->author,
             );
         }
-        
+
         $snippets['snippetdirs'] = array();
         $snippetdirs_qb = midcom_baseclasses_database_snippetdir::new_query_builder();
         $snippetdirs_qb->add_constraint('up', '=', $snippetdir->id);
@@ -106,10 +106,10 @@ class midgard_admin_sitewizard_sitetemplate extends midcom_baseclasses_component
             $i++;
             $snippets['snippetdirs']["snippetdir_{$i}"] = $this->_load_snippets($child_snippetdir);
         }
-        
+
         return $snippets;
     }
-    
+
     function _generate_opml($nodes_array)
     {
         $opml  = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -120,15 +120,15 @@ class midgard_admin_sitewizard_sitetemplate extends midcom_baseclasses_component
         $opml .= "        <title>Midgard site template</title>\n";
         $opml .= "    </head>\n";
         $opml .= "    <body>\n";
-        
+
         $opml .= $this->_node2opml($nodes_array, '        ');
-        
+
         $opml .= "    </body>\n";
         $opml .= "</opml>\n";
-        
+
         return $opml;
     }
-    
+
     function _node2opml($node, $prefix)
     {
         $opml  = "{$prefix}<outline";
@@ -137,16 +137,16 @@ class midgard_admin_sitewizard_sitetemplate extends midcom_baseclasses_component
         $opml .= " mgd:name=\"{$node['name']}\"";
         $opml .= " mgd:component=\"{$node['component']}\"";
         $opml .= " mgd:style=\"{$node['style']}\"";
-        
+
         $inherit = 'false';
         if ($node['style_inherit'])
         {
         $inherit = 'true';
         }
-        
+
         $opml .= " mgd:styleInherit=\"{$inherit}\"";
         $opml .= ">\n";
-        
+
         if (count($node['children']) > 0)
         {
             foreach ($node['children'] as $child_node)
@@ -154,22 +154,25 @@ class midgard_admin_sitewizard_sitetemplate extends midcom_baseclasses_component
                 $opml .= $this->_node2opml($child_node, "{$prefix}    ");
             }
         }
-        
+
         $opml .= "{$prefix}</outline>\n";
-        
+
         return $opml;
     }
-    
+
     /**
      * Loads requested object export
      *
      * @access private
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
      * @return boolean Indicating success
      */
     function _handler_export($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
-        
+
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->cache->content->content_type("text/xml");
         $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");

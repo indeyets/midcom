@@ -204,7 +204,7 @@ class net_nehmer_jobmarket_handler_entry extends midcom_baseclasses_components_h
     function _prepare_result_qb()
     {
         // WARNING: Keep this function in-sync with its pendant in search.php
-        
+
         $qb = net_nehmer_jobmarket_entry::new_query_builder();
         $qb->add_constraint('offer', '=', ($this->_mode == 'offer'));
 
@@ -218,7 +218,7 @@ class net_nehmer_jobmarket_handler_entry extends midcom_baseclasses_components_h
             }
             $qb->end_group('OR');
         }
-        
+
         if (count($this->_search_data['sectors'] > 0))
         {
             $qb->begin_group('OR');
@@ -272,6 +272,11 @@ class net_nehmer_jobmarket_handler_entry extends midcom_baseclasses_components_h
 
     /**
      * Loads everything needed to display an entry, no dark magic here.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_view($handler_id, $args, &$data)
     {
@@ -336,6 +341,11 @@ class net_nehmer_jobmarket_handler_entry extends midcom_baseclasses_components_h
 
     /**
      * Loads everything needed to display an entry, no dark magic here.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -407,6 +417,11 @@ class net_nehmer_jobmarket_handler_entry extends midcom_baseclasses_components_h
 
     /**
      * Loads everything needed to display an entry, no dark magic here.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {

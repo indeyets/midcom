@@ -150,7 +150,12 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -184,7 +189,7 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
         {
             $_MIDCOM->set_26_request_metadata($this->_group->metadata->revised, $this->_group->guid);
         }
-        
+
         $this->_view_toolbar->bind_to($this->_group);
         $this->_component_data['active_leaf'] = $this->_group->id;
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_group->official}");
@@ -229,7 +234,12 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {
@@ -270,10 +280,10 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
         $this->_prepare_request_data();
 
         if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
-        {        
+        {
             $_MIDCOM->set_26_request_metadata($this->_group->metadata->revised, $this->_group->guid);
         }
-        
+
         $this->_view_toolbar->bind_to($this->_group);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_group->official}");
         $this->_component_data['active_leaf'] = $this->_group->id;
@@ -347,6 +357,11 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
      * Displays the create view and processes the controller events.
      *
      * Requires Admin Privileges.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {

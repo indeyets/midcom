@@ -23,18 +23,24 @@ class fi_mik_lentopaikkakisa_handler_index extends midcom_baseclasses_components
         parent::midcom_baseclasses_components_handler();
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_index($handler_id, $args, &$data)
     {
         $this->_request_data['node'] =& $this->_topic;
-        
+
         $qb = fi_mik_flight_dba::new_query_builder();
         $qb->add_order('created', 'DESC');
         $qb->set_limit($this->_config->get('show_latest'));
         $this->_request_data['latest'] = $qb->execute();
-         
+
         return true;
     }
-    
+
     function _show_index($handler_id, &$data)
     {
         midcom_show_style('view-index');

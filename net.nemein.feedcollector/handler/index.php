@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package net.nemein.feedcollector
  */
-class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_components_handler 
+class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_components_handler
 {
 
     /**
@@ -24,20 +24,22 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
-     * _on_initialize is called by midcom on creation of the handler. 
+     * _on_initialize is called by midcom on creation of the handler.
      */
     function _on_initialize()
     {
          $this->_content_topic =& $this->_request_data['content_topic'];
     }
-    
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
     {
@@ -47,9 +49,9 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
         $this->_request_data['topic_introduction'] = $this->_config->get('topic_introduction');
         $this->_update_breadcrumb_line($handler_id);
         $_MIDCOM->set_pagetitle($this->_content_topic->extra);
-        
+
         $topics = array();
-        
+
         $qb_feedtopics = net_nemein_feedcollector_topic_dba::new_query_builder();
         $qb_feedtopics->add_constraint('node', '=', (int)$this->_content_topic->id);
         $qb_feedtopics->add_order($this->_config->get('sort_order'));
@@ -75,14 +77,14 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
                 $this->topics[$feedtopic->guid]['items'] = $items;
             }
         }
-        
-        
+
+
         return true;
     }
-    
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_index($handler_id, &$data)
     {
@@ -139,7 +141,7 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
             midcom_show_style('index-no-topics');
         }
     }
-    
+
 
     function _update_breadcrumb_line()
     {

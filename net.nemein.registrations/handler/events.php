@@ -114,6 +114,11 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
 
     /**
      * Lists all events, regardless of dates.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list_all($handler_id, $args, &$data)
     {
@@ -158,6 +163,11 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
 
     /**
      * Creates a new event
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
@@ -169,7 +179,7 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
 
 
         $this->_prepare_request_data();
-        
+
         if ($this->_event)
         {
             $_MIDCOM->set_26_request_metadata(time(), $this->_event->guid);

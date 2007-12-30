@@ -179,7 +179,12 @@ class net_nehmer_publications_handler_admin extends midcom_baseclasses_component
      * Note, that the publication for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation publication,
+     * If create privileges apply, we relocate to the index creation publication
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -231,7 +236,12 @@ class net_nehmer_publications_handler_admin extends midcom_baseclasses_component
      * Note, that the publication for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation publication,
+     * If create privileges apply, we relocate to the index creation publication
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {

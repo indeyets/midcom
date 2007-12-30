@@ -104,9 +104,9 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
     function _load_schemadb()
     {
         $this->_schemadb =& $this->_request_data['schemadb_reservation'];
-        
+
         $this->_defaults['start'] = mktime(date('H'), 0, 0, date('m', $this->_request_data['selected_day']), date('d', $this->_request_data['selected_day']), date('Y', $this->_request_data['selected_day']));
-        
+
         switch ($this->_resource->period)
         {
             case 'h':
@@ -174,7 +174,7 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
                 );
             }
         }
-       
+
         // Populate the resource
         $this->_event->resources = array
         (
@@ -204,7 +204,7 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
 
         // TODO: Add support for tentatives?
         $this->_event->busy = true;
-                
+
         if (! $this->_event->create())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -249,13 +249,18 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
      * Note, that the reservation for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation reservation,
+     * If create privileges apply, we relocate to the index creation reservation
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
         // Must be able to create events under the root event
         $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->require_do('midgard:create');
-        
+
         $this->_resource = net_nemein_reservations_viewer::load_resource($args[0]);
         // TODO: Check from resource privilege for reserving said resource.
         if (!$this->_resource)
@@ -265,7 +270,7 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
         }
         // Must be able to reserve the resource
         $this->_resource->require_do('org.openpsa.calendar:reserve');
-        
+
         if ($handler_id == 'create_reservation_date')
         {
             // Go to the chosen week instead of current one
@@ -288,7 +293,7 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
 
         $this->_load_controller();
         $this->_prepare_request_data();
-        
+
         if (!$_MIDCOM->auth->user)
         {
             // We don't have user but since we got so far anonymous reservations are allowed, use sudo...
@@ -312,12 +317,12 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
                 {
                     $_MIDCOM->auth->drop_sudo();
                 }
-                
+
                 if ($email = $this->_event->get_parameter('midcom.helper.datamanager2', 'email'))
                 {
                     $this->_send_notification($email);
                 }
-                
+
                 $_MIDCOM->relocate("reservation/{$this->_event->guid}/");
                 // this will exit.
 
@@ -340,7 +345,7 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
 
         return true;
     }
-    
+
     function _send_notification($email)
     {
         if ($this->_config->get('new_reservation_email'))
@@ -353,11 +358,11 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
             $mail->bcc = $this->_config->get('new_reservation_email_bcc');
             $mail->subject = $this->_replace($this->_config->get('new_reservation_email_title'));
             $mail->body = $this->_replace($this->_config->get('new_reservation_email_body'));
-            
+
             return $mail->send();
         }
     }
-    
+
     function _replace($string)
     {
         $result = str_replace('__RESERVATION_name__', $this->_event->title, $string);
@@ -365,7 +370,7 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
         $result = str_replace('__ISOSTART__', date("d.m.y", $this->_event->start), $result);
         $result = str_replace('__ISOEND__', date("d.m.y", $this->_event->end), $result);
         $result = str_replace('__RESERVATION__', $this->_event->description, $result);
-    
+
         return $result;
     }
 

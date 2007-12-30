@@ -47,7 +47,7 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
      * @access private
      */
     var $_schemadb = null;
-    
+
     /**
      * Schema to use for resource display
      *
@@ -55,7 +55,7 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
      * @access private
      */
     var $_schema = null;
-    
+
     /**
      * Simple default constructor.
      */
@@ -73,7 +73,7 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
         $this->_request_data['resource'] =& $this->_resource;
         $this->_request_data['datamanager'] =& $this->_datamanager;
         $this->_request_data['controller'] =& $this->_controller;
-        
+
         $this->_view_toolbar->add_item
         (
             array
@@ -98,7 +98,7 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
             )
         );
-    
+
         switch ($handler_id)
         {
             case 'edit_resource':
@@ -177,7 +177,7 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
             MIDCOM_NAV_URL => "view/{$this->_resource->name}/",
             MIDCOM_NAV_NAME => $this->_resource->title,
         );
-        
+
         switch ($handler_id)
         {
             case 'edit_resource':
@@ -206,7 +206,12 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
      * Note, that the resource for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation resource,
+     * If create privileges apply, we relocate to the index creation resource
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -216,13 +221,13 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The resource {$args[0]} was not found.");
             // This will exit.
         }
-        
+
         if (!array_key_exists($this->_resource->type, $this->_request_data['schemadb_resource']))
         {
             // This resource type isn't available for our schema, return error
             return false;
         }
-        
+
         $this->_resource->require_do('midgard:update');
 
         $this->_load_controller();
@@ -264,7 +269,12 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
      * Note, that the resource for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation resource,
+     * If create privileges apply, we relocate to the index creation resource
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {
@@ -274,13 +284,13 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The resource {$args[0]} was not found.");
             // This will exit.
         }
-        
+
         if (!array_key_exists($this->_resource->type, $this->_request_data['schemadb_resource']))
         {
             // This resource type isn't available for our schema, return error
             return false;
         }
-        
+
         $this->_resource->require_do('midgard:delete');
 
         $this->_load_datamanager();
@@ -325,7 +335,7 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
     function _show_delete ($handler_id, &$data)
     {
         $data['view_resource'] = $this->_datamanager->get_content_html();
-        
+
         midcom_show_style('view-resource-delete');
     }
 }

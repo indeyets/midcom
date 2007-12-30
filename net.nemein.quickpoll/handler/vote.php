@@ -53,7 +53,12 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_vote($handler_id, $args, &$data)
     {
@@ -64,7 +69,7 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The article {$args[0]} was not found.");
             // This will exit.
         }
-        
+
         if ($this->_config->get('enable_anonymous'))
         {
             $sudo_mode = true;
@@ -76,7 +81,7 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
             $sudo_mode = false;
             $this->_article->require_do('midgard:create');
         }
-        
+
         if (array_key_exists('net_nemein_quickpoll_option',$_POST))
         {
             $vote = new net_nemein_quickpoll_vote_dba();
@@ -90,18 +95,18 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Nothing to vote");
         }
-        
+
         if ($sudo_mode)
         {
             $_MIDCOM->auth->drop_sudo();
         }
-        
+
         if (   array_key_exists('net_nemein_quickpoll_vote_return_prefix', $_REQUEST)
             && !empty($_REQUEST['net_nemein_quickpoll_vote_return_prefix']))
         {
             $prefix = $_REQUEST['net_nemein_quickpoll_vote_return_prefix'];
         }
-        
+
         if ($handler_id == 'vote-ajax')
         {
             $_MIDCOM->relocate("{$prefix}ajax/{$args[0]}/");

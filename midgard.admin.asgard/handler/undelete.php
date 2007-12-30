@@ -15,7 +15,7 @@
 class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_components_handler
 {
     var $type = '';
-    
+
     var $_undeleted_size = 0;
 
     /**
@@ -26,23 +26,23 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         $this->_component = 'midgard.admin.asgard';
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     function _on_initialize()
     {
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->skip_page_style = true;
-                
+
         $_MIDCOM->load_library('midcom.helper.datamanager2');
     }
-    
+
     /**
      * Get an object, deleted or not
      */
     function _get_object($guid, $type)
     {
         static $objects = array();
-        
+
         if (!isset($objects[$guid]))
         {
             $qb = new midgard_query_builder($type);
@@ -58,13 +58,13 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
                 $objects[$guid] = $results[0];
             }
         }
-        
+
         return $objects[$guid];
     }
-    
+
     /**
      * Recover the parameters related to a deleted object
-     * 
+     *
      * @access private
      */
     function _undelete_parameters($guid)
@@ -97,10 +97,10 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
             }
         }
     }
-    
+
     /**
      * Recover the attachments related to a deleted object
-     * 
+     *
      * @access private
      */
     function _undelete_attachments($guid)
@@ -142,7 +142,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
 
     /**
      * Purge the parameters related to a deleted object
-     * 
+     *
      * @access private
      */
     function _purge_parameters($guid)
@@ -157,7 +157,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
             {
                 $param->delete();
             }
-            
+
             if ($param->purge())
             {
                 $this->_purged_size += $param->metadata->size;
@@ -168,10 +168,10 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
             }
         }
     }
-    
+
     /**
      * Purge the attachments related to a deleted object
-     * 
+     *
      * @access private
      */
     function _purge_attachments($guid)
@@ -198,10 +198,10 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
             }
         }
     }
-    
+
     /**
      * Helper method for undeleting objects
-     * 
+     *
      * @access private
      * @param Array $guids
      * @param string $type
@@ -218,7 +218,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
                 continue;
             }
             $label = $ref->get_label_property();
-            
+
             $undeleted = false;
             if (version_compare(phpversion(), '5.0.0', '<'))
             {
@@ -234,7 +234,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
                     $undeleted = true;
                 }
             }
-                        
+
             if (!$undeleted)
             {
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('failed undeleting %s, reason %s'), "{$type} {$object->$label}", mgd_errstr()), 'error');
@@ -250,7 +250,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
 
             // List all deleted children
             $children_types = $ref->get_child_objects($object, true);
-            
+
             foreach ($children_types as $type => $children)
             {
                 $child_guids = array();
@@ -268,7 +268,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
 
     /**
      * Helper method for purging objects
-     * 
+     *
      * @access private
      * @param Array $guids
      * @param string $type
@@ -287,7 +287,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
 
             // first kill your children
             $children_types = $ref->get_child_objects($object, true);
-            
+
             foreach ($children_types as $type => $children)
             {
                 $child_guids = array();
@@ -309,7 +309,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
             $label = $ref->get_label_property();
 
             // now shoot yourself
-            
+
             if (!$object->purge())
             {
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('failed purging %s, reason %s'), "{$type} {$object->$label}", mgd_errstr()), 'error');
@@ -325,15 +325,20 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
 
     /**
      * Trash view
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_trash($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
         $_MIDCOM->cache->content->no_cache();
-    
+
         $data['view_title'] = $this->_l10n->get('trash');
         $_MIDCOM->set_pagetitle($data['view_title']);
-        
+
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
         midgard_admin_asgard_plugin::get_common_toolbar($data);
 
@@ -373,23 +378,28 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         midcom_show_style('midgard_admin_asgard_trash');
         midcom_show_style('midgard_admin_asgard_footer');
     }
-  
+
     /**
      * Trash view
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_trash_type($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
         $_MIDCOM->cache->content->no_cache();
-    
+
         $this->type = $args[0];
         $root_types = midgard_admin_asgard_reflector_tree::get_root_classes();
 
         $data['view_title'] = midgard_admin_asgard_plugin::get_type_label($this->type);
         $_MIDCOM->set_pagetitle($data['view_title']);
-        
+
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
-        
+
         midgard_admin_asgard_plugin::get_common_toolbar($data);
 
         $dummy = new $this->type;
@@ -401,13 +411,13 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         $data['type'] = $this->type;
         $data['reflector'] = midgard_admin_asgard_reflector::get($data['type']);
         $data['label_property'] = $data['reflector']->get_label_property();
-        
+
         if (   isset($_POST['undelete']) && !isset($_POST['purge'])
             && is_array($_POST['undelete']))
         {
 
             $this->_undelete($_POST['undelete'], $this->type);
-            
+
             if ($this->_undeleted_size > 0)
             {
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('in total %s undeleted'), midcom_helper_filesize_to_string($this->_undeleted_size)), 'info');
@@ -419,7 +429,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
             && is_array($_POST['undelete']))
         {
             $this->_purge($_POST['undelete'], $this->type);
-            
+
             if ($this->_purged_size > 0)
             {
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('in total %s purged'), midcom_helper_filesize_to_string($this->_purged_size)), 'info');

@@ -168,7 +168,12 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -190,7 +195,7 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
 
                 // Show confirmation for the user
                 $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('net.nemein.personnel'), sprintf($this->_l10n->get('person %s saved'), $this->_person->name));
-                
+
                 // *** FALL-THROUGH ***
 
             case 'cancel':
@@ -205,7 +210,7 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
         {
             $_MIDCOM->set_26_request_metadata($this->_person->metadata->revised, $this->_person->guid);
         }
-        
+
         $this->_view_toolbar->bind_to($this->_person);
         $this->_component_data['active_leaf'] = $this->_person->id;
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_person->name}");
@@ -250,7 +255,12 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {
@@ -291,10 +301,10 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
         $this->_prepare_request_data();
 
         if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
-        {        
+        {
             $_MIDCOM->set_26_request_metadata($this->_person->metadata->revised, $this->_person->guid);
         }
-        
+
         $this->_view_toolbar->bind_to($this->_person);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_person->name}");
         $this->_component_data['active_leaf'] = $this->_person->id;
@@ -348,7 +358,7 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
                 "Failed to load the configured group '{$group}', cannot continue. Last Midgard error was: ". mgd_errstr());
             // This will exit.
         }
-        
+
         // Create a new person
         $this->_person = new midcom_db_person();
         if (! $this->_person->create())
@@ -360,7 +370,7 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
                 'Failed to create a new person, cannot continue. Last Midgard error was: '. mgd_errstr());
             // This will exit.
         }
-        
+
         // Create a new membership
         $member = new midcom_db_member();
         $member->uid = $this->_person->id;
@@ -383,6 +393,11 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
      * Displays the create view and processes the controller events.
      *
      * Requires Admin Privileges.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
@@ -430,32 +445,33 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
     {
         midcom_show_style('admin-create');
     }
-    
+
     /**
      * Handler for editing group details
-     * 
+     *
      * @access public
      * @param String $handler_id    ID of the request handler that requests the handler
      * @param Array $args           Variable arguments passed for the method
      * @param Array $data           Miscellaneous request data
+     * @return bool Indicating success.
      */
     function _handler_editgroup($handler_id, $args, &$data)
     {
         $this->_group = new midcom_db_group($args[0]);
         $data['group'] =& $this->_group;
-        
+
         if (   !$this->_group
             || !$this->_group->id)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Group with GUID '{$args[0]} not found!");
             // This will exit
         }
-        
+
         $this->_group->require_do('midgard:update');
-        
+
         $this->_load_group_controller();
         $data['controller'] =& $this->_controller;
-        
+
         // Handle the form data
         switch ($this->_controller->process_form())
         {
@@ -474,10 +490,10 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
                 $_MIDCOM->relocate("group/{$args[0]}/");
                 // This will exit.
         }
-        
+
         // Set the active leaf
         $this->_component_data['active_leaf'] = $this->_group->guid;
-        
+
         if ($this->_group->official)
         {
             $data['name'] = $this->_group->official;
@@ -486,11 +502,11 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
         {
             $data['name'] = $this->_group->name;
         }
-        
+
         // Bind to context
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: " . $this->_l10n->get('edit group'));
         $this->_view_toolbar->bind_to($data['group']);
-        
+
         // Set the breadcrumb
         $tmp = Array();
         if (   $this->_config->get('display_in_navigation') !== 'groups'
@@ -502,20 +518,20 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
                 MIDCOM_NAV_NAME => $data['name'],
             );
         }
-        
+
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => "admin/edit/group/{$this->_group->guid}/",
             MIDCOM_NAV_NAME => $this->_l10n->get('edit group'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-            
+
         return true;
     }
-    
+
     /**
      * Shows the loaded article.
-     * 
+     *
      * @param String $handler_id    ID of the request handler that requests the handler
      * @param Array $data           Miscellaneous request data
      */

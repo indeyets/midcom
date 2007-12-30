@@ -117,7 +117,12 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         }
     }
 
-
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_select($handler_id, $args, &$data)
     {
         $this->_update_breadcrumb_line($handler_id);
@@ -133,6 +138,12 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         midgard_admin_asgard_plugin::asgard_footer();
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_save($handler_id, $args, &$data)
     {
         $this->_component_path = $args[0];
@@ -260,6 +271,12 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         }
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_status($handler_id, $args, &$data)
     {
         $this->_lang = $args[0];
@@ -311,6 +328,12 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         midgard_admin_asgard_plugin::asgard_footer();
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_edit($handler_id, $args, &$data)
     {
         $this->_component_path = $args[0];

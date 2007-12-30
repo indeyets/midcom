@@ -54,6 +54,9 @@ class default_create_sitegroup extends midcom_baseclasses_components_handler
 	    );
     }
 
+	/**
+     * @return bool Indicating success.
+	 */
     function _handler_create_sitegroup()
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);

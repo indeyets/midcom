@@ -103,7 +103,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
             $mc->add_order('metadata.published', 'DESC');
             // Get the results
             $mc->execute();
-            
+
             $links = $mc->list_keys();
             $qb->begin_group('OR');
                 foreach ($links as $guid => $link)
@@ -118,7 +118,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
         {
             $qb->add_constraint('topic', '=', $this->_content_topic->id);
         }
-        
+
         // Hide the articles that have the publish time in the future and if
         // the user is not administrator
         if (   $this->_config->get('enable_scheduled_publishing')
@@ -128,7 +128,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
             // is the author
             $qb->begin_group('OR');
                 $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
-                
+
                 if (   $_MIDCOM->auth->user
                     && isset($_MIDCOM->auth->user->guid))
                 {
@@ -136,7 +136,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
                 }
             $qb->end_group();
         }
-        
+
         $qb->add_constraint('up', '=', 0);
         $qb->begin_group('OR');
             $qb->add_constraint('name', '=', $args[0]);
@@ -147,18 +147,23 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
         {
             $this->_article = $articles[0];
         }
-        
+
         if (!$this->_article)
         {
             return false;
             // This will 404
         }
-        
+
         return true;
     }
 
     /**
      * Handle actual article display
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_view ($handler_id, $args, &$data)
     {
@@ -167,7 +172,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
             return false;
             // This will 404
         }
-        
+
         if (   isset($data['original_language'])
             && $this->_article->lang == $data['original_language'])
         {
@@ -194,8 +199,8 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
         else
         {
             $view_url = "{$arg}.html";
-        }        
-        
+        }
+
         $tmp[] = Array
         (
             MIDCOM_NAV_URL => $view_url,
@@ -231,7 +236,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
 
     /**
      * Try to find a comments node (cache results)
-     * 
+     *
      * @access private
      */
     function _seek_comments()
@@ -250,10 +255,10 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
             // We got a topic. Make it a NAP node
             $nap = new midcom_helper_nav();
             $comments_node = $nap->get_node($comments_topic->id);
-            
+
             return $comments_node;
         }
-        
+
         // No comments topic specified, autoprobe
         $comments_node = midcom_helper_find_node_by_component('net.nehmer.comments');
 

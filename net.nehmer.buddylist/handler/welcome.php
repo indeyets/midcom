@@ -58,11 +58,16 @@ class net_nehmer_buddylist_handler_welcome extends midcom_baseclasses_components
     }
 
     /**
-     * The welcome handler loades the newest asks / bids according to the configuration
+     * The welcome handler loads the newest asks / bids according to the configuration
      * settings and prepares the type listings.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
-    {   
+    {
         $_MIDCOM->load_library('org.openpsa.qbpager');
         $qb = new org_openpsa_qbpager('net_nehmer_buddylist_entry', 'net_nehmer_buddylist');
         $data['qb'] =& $qb;
@@ -71,13 +76,13 @@ class net_nehmer_buddylist_handler_welcome extends midcom_baseclasses_components
         $qb->add_constraint('isapproved', '=', true);
         $qb->add_constraint('blacklisted', '=', false);
         $buddies = $qb->execute();
-        
+
         foreach ($buddies as $buddy)
         {
             $user =& $buddy->get_buddy_user();
             $this->_buddies[$user->username] =& $user;
         }
-        
+
         $this->_prepare_buddies_meta();
 
         $this->_prepare_request_data();
@@ -110,7 +115,7 @@ class net_nehmer_buddylist_handler_welcome extends midcom_baseclasses_components
         }
 
         $this->_buddies_meta = Array();
-        
+
         if ($_MIDCOM->auth->user)
         {
             $online_buddies = net_nehmer_buddylist_entry::list_online_buddies();

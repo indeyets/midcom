@@ -199,6 +199,10 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
      * List items
      *
      * @access private
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -229,6 +233,10 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
      * List items that should have already been ready
      *
      * @access private
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_overtime($handler_id, $args, &$data)
     {
@@ -252,6 +260,10 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
      * List items that should have already been ready
      *
      * @access private
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_finished($handler_id, $args, &$data)
     {

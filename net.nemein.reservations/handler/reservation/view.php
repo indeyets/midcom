@@ -21,7 +21,7 @@ class net_nemein_reservations_handler_reservation_view extends midcom_baseclasse
      * @access private
      */
     var $_resource = null;
-    
+
     /**
      * The event which has been created
      *
@@ -29,7 +29,7 @@ class net_nemein_reservations_handler_reservation_view extends midcom_baseclasse
      * @access private
      */
     var $_event = null;
-    
+
     /**
      * Simple default constructor.
      */
@@ -37,7 +37,7 @@ class net_nemein_reservations_handler_reservation_view extends midcom_baseclasse
     {
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
      * Internal helper, loads the datamanager for the current event. Any error triggers a 500.
      *
@@ -53,9 +53,14 @@ class net_nemein_reservations_handler_reservation_view extends midcom_baseclasse
             // This will exit.
         }
     }
-    
+
     /**
      * Looks up an event to display.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_view($handler_id, $args, &$data)
     {
@@ -66,7 +71,7 @@ class net_nemein_reservations_handler_reservation_view extends midcom_baseclasse
             return false;
             // This will 404
         }
-        
+
         foreach ($this->_event->resources as $resource => $included)
         {
             $this->_resource = new org_openpsa_calendar_resource_dba($resource);
@@ -115,7 +120,7 @@ class net_nemein_reservations_handler_reservation_view extends midcom_baseclasse
                 MIDCOM_TOOLBAR_ENABLED => $this->_event->can_do('midgard:delete')
             )
         );
-        
+
         $this->_view_toolbar->add_item
         (
             array

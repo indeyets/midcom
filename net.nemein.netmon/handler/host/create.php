@@ -140,7 +140,12 @@ class net_nemein_netmon_handler_host_create extends midcom_baseclasses_component
      * Note, that the article for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation article,
+     * If create privileges apply, we relocate to the index creation article
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
@@ -185,7 +190,7 @@ class net_nemein_netmon_handler_host_create extends midcom_baseclasses_component
         }
 
         $this->_prepare_request_data();
-        if ( $this->_host != null ) 
+        if ( $this->_host != null )
         {
             $_MIDCOM->set_26_request_metadata($this->_host->revised, $this->_host->guid);
         }

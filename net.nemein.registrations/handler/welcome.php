@@ -66,7 +66,12 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
     }
 
     /**
-     * The welcome handler loades the currently visible events and displays them.
+     * The welcome handler loads the currently visible events and displays them.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {
@@ -82,7 +87,7 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata(time(), null);
         $_MIDCOM->set_pagetitle($this->_topic->extra);
-        
+
         $_MIDCOM->bind_view_to_object($this->_root_event);
 
         if ($this->_root_event->can_do('midgard:create'))
@@ -114,7 +119,7 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
                 )
             );
         }
-        
+
         return true;
     }
 

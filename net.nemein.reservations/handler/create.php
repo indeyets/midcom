@@ -150,14 +150,19 @@ class net_nemein_reservations_handler_create extends midcom_baseclasses_componen
      * Note, that the resource for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation resource,
+     * If create privileges apply, we relocate to the index creation resource
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {
         $this->_topic->require_do('midgard:create');
 
         $this->_schema = $args[0];
-        
+
         if (!array_key_exists($this->_schema, $this->_request_data['schemadb_resource']))
         {
             // This resource type isn't available for our schema, return error
@@ -166,7 +171,7 @@ class net_nemein_reservations_handler_create extends midcom_baseclasses_componen
 
         $this->_load_controller();
         $this->_prepare_request_data();
-        
+
         switch ($this->_controller->process_form())
         {
             case 'save':
@@ -199,7 +204,7 @@ class net_nemein_reservations_handler_create extends midcom_baseclasses_componen
                 // This will exit.
         }
 
-        if ($this->_resource != null) 
+        if ($this->_resource != null)
         {
             $_MIDCOM->set_26_request_metadata($this->_resource->revised, $this->_resource->guid);
         }

@@ -75,9 +75,9 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
      * @access private
      */
     var $_display_datamanager = null;
-    
+
     var $custom_view = null;
-    
+
     /**
      * Prepares the request data
      */
@@ -89,7 +89,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
         $this->_request_data['display_datamanager'] =& $this->_display_datamanager;
         $this->_request_data['custom_view'] =& $this->custom_view;
     }
-    
+
     /**
      * Update possible ratings cache as requested in configuration
      */
@@ -112,7 +112,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
                     $ratings_total += $comment->rating;
                 }
             }
-            
+
             // Get parent object
             $parent_property = $this->_config->get('ratings_cache_to_object_property');
             $_MIDCOM->auth->request_sudo('net.nehmer.comments');
@@ -122,9 +122,9 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             }
             else
             {
-                $value = $ratings_total / $rating_comments;                
+                $value = $ratings_total / $rating_comments;
             }
-            
+
             if ($this->_config->get('ratings_cache_to_object_property_metadata'))
             {
                 $metadata = midcom_helper_metadata::retrieve($this->_objectguid);
@@ -158,12 +158,12 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
     function _resolve_object_title($object)
     {
         $vars = get_object_vars($object);
-        
-        if (array_key_exists('title', $vars)) 
+
+        if (array_key_exists('title', $vars))
         {
             return $object->title;
-        } 
-        elseif (array_key_exists('name', $vars)) 
+        }
+        elseif (array_key_exists('name', $vars))
         {
             return $object->name;
         }
@@ -172,20 +172,20 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             return "#{$object->id}";
         }
     }
-    
+
     function _notify_authors()
-    {   
+    {
         $parent_metadata = midcom_helper_metadata::retrieve($this->_objectguid);
         if (!$parent_metadata)
         {
             return false;
         }
-        
+
         if (! $this->_config->get('enable_notify'))
         {
             return false;
         }
-        
+
         $authors_string = $parent_metadata->get('authors');
         $authors = explode('|', substr($authors_string, 1, -1));
         if (empty($authors))
@@ -194,15 +194,15 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             $authors = array();
             $authors[] = $parent_metadata->get('creator');
         }
-            
+
         if (empty($authors))
         {
             return false;
         }
-        
+
         // Construct the message
         $message = array();
-        
+
         // Resolve parent title
         $parent_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_objectguid);
         $parent_title = $this->_resolve_object_title($parent_object);
@@ -217,16 +217,16 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
         {
             $user_string = "{$this->_new_comment->author} (" . $data['l10n_midcom']->get('anonymous') . ")";
         }
-        
+
         $message['title'] = sprintf($this->_l10n->get('page %s has been commented by %s'), $parent_title, $user_string);
 
         $message['content']  = "{$this->_new_comment->title}\n";
         $message['content'] .= "{$this->_new_comment->content}\n\n";
         $message['content'] .= $_MIDCOM->i18n->get_string('link to page', 'net.nemein.wiki') . ":\n";
         $message['content'] .= $_MIDCOM->permalinks->create_permalink($this->_objectguid);
-                
+
         $message['abstract'] = $message['title'];
-        
+
         foreach ($authors as $author)
         {
             // Send the notification to each author of the original document
@@ -260,9 +260,9 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
         {
             $this->_schemadb = midcom_helper_datamanager2_schema::load_database(
                 $this->_config->get('schemadb'));
-            
+
             if (   $this->_config->get('use_captcha')
-                || (   ! $_MIDCOM->auth->user 
+                || (   ! $_MIDCOM->auth->user
                     && $this->_config->get('use_captcha_if_anonymous')))
             {
                 $this->_schemadb['comment']->append_field
@@ -278,7 +278,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
                     )
                 );
             }
-            
+
             if (   $this->_config->get('ratings_enable')
                 && array_key_exists('rating', $this->_schemadb['comment']->fields))
             {
@@ -348,6 +348,11 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
     /**
      * Loads the comments, does any processing according to the state of the GET list.
      * On successful processing we relocate once to ourself.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_comments($handler_id, $args, &$data)
     {
@@ -360,7 +365,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
 
         $this->_objectguid = $args[0];
         $_MIDCOM->cache->content->register($this->_objectguid);
-        
+
         if ($handler_id == 'view-comments-nonempty')
         {
             $this->_comments = net_nehmer_comments_comment::list_by_objectguid_filter_anonymous(
@@ -379,7 +384,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             $this->_config->get('paging')
             );
         }
-        
+
         if ($this->_config->get('paging') !== false)
         {
             $data['qb_pager'] = $this->_comments;
@@ -443,7 +448,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
                     "Failed to delete comment GUID '{$_REQUEST['guid']}': " . mgderrstr());
                 // This will exit;
             }
-            
+
             $this->_cache_ratings();
             $_MIDCOM->cache->invalidate($comment->objectguid);
             $this->_relocate_to_self();
@@ -462,7 +467,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
                 'We were anonymous but could not acquire SUDO privileges, aborting');
             // This will exit.
         }
-        
+
         switch ($this->_post_controller->process_form())
         {
             case 'save':
@@ -470,7 +475,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
                 $this->_notify_authors();
                 $_MIDCOM->cache->invalidate($this->_objectguid);
                 // Fall-through intentional
-                
+
             case 'cancel':
                 if (! $_MIDCOM->auth->user)
                 {
@@ -493,7 +498,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
         {
             return 0;
         }
-        
+
         if (version_compare(mgd_version(), '1.8', '>='))
         {
             $lastmod = $this->_comments[0]->metadata->revised;
@@ -502,7 +507,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
         {
             $lastmod = $this->_comments[0]->revised;
         }
-        
+
         foreach ($this->_comments as $comment)
         {
             if (version_compare(mgd_version(), '1.8', '>='))

@@ -120,6 +120,12 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
 	);
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_manage($handler_id, $args, &$data)
     {
         $this->_content_topic->require_do('midgard:create');
@@ -182,6 +188,12 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
         midcom_show_style('net_nemein_bannedwords_word_add');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_edit($handler_id, $args, &$data)
     {
         $this->_content_topic->require_do('midgard:edit');
@@ -210,6 +222,12 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
 	midcom_show_style('net_nemein_bannedwords_word_edit');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_delete($handler_id, $args, &$data)
     {
         $this->_content_topic->require_do('midgard:delete');
@@ -234,6 +252,12 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
         $_MIDCOM->relocate('__mfa/net.nemein.bannedwords');
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_confirmdelete($handler_id, $args, &$data)
     {
         $this->_request_data['delete_guid'] = $args[0];

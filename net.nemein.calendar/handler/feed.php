@@ -24,7 +24,7 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
      * @access private
      */
     var $_events = null;
-    
+
     /**
      * GET field filters set for this view
      *
@@ -79,6 +79,11 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
     /**
      * Shows the autoindex list. Nothing to do in the handle phase except setting last modified
      * dates.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_rss($handler_id, $args, &$data)
     {
@@ -95,7 +100,7 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
 
         // Filter the upcoming list by a type if required
         $type_filter = $this->_config->get('type_filter_upcoming');
-        
+
         $qb = net_nemein_calendar_event_dba::new_query_builder();
 
         // Add root event constraints
@@ -107,7 +112,7 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
         {
             $qb->add_constraint('node', '=', $data['content_topic']->id);
         }
-        
+
         // Add filtering constraints
         if (!is_null($type_filter))
         {
@@ -115,7 +120,7 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
         }
         foreach ($this->_filters as $field => $filter)
         {
-            $qb->add_constraint($field, '=', $filter);            
+            $qb->add_constraint($field, '=', $filter);
         }
         // QnD category filter (only in 1.8)
         if (   isset($_REQUEST['net_nemein_calendar_category'])
@@ -132,14 +137,14 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
         $qb->add_constraint('end', '>', time());
 
         $qb->set_limit($this->_config->get('rss_count'));
-        
+
         $qb->add_order('closeregistration');
-        
+
         $this->_events = $qb->execute();
 
         // Prepare the feed (this will also validate the handler_id)
         $this->_create_feed($handler_id);
-        
+
         return true;
     }
 
@@ -177,7 +182,7 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
     function _show_rss($handler_id, &$data)
     {
         $data['feedcreator'] =& $this->_feed;
-        
+
         // Add each event now.
         if ($this->_events)
         {
@@ -189,7 +194,7 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
                 midcom_show_style('feeds-item');
             }
         }
-        
+
         echo $this->_feed->createFeed('RSS2.0');
     }
 }

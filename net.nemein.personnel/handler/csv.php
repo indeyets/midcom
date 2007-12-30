@@ -30,7 +30,7 @@ class net_nemein_personnel_handler_csv extends midcom_baseclasses_components_han
      * @access private
      */
     var $_person = null;
-    
+
     var $_group = null;
 
     /**
@@ -138,7 +138,7 @@ class net_nemein_personnel_handler_csv extends midcom_baseclasses_components_han
         {
             return false;
         }
-        
+
         while (!feof($fp_from))
         {
             $buffer = fread($fp_from, 1048576); // 1M buffer, CAVEAT: we might split data in the middle of a doublebyte char
@@ -150,7 +150,7 @@ class net_nemein_personnel_handler_csv extends midcom_baseclasses_components_han
         unset($buffer);
         fclose($fp_from);
         fclose($fp_to);
-        
+
         return $topath;
     }
 
@@ -177,6 +177,12 @@ class net_nemein_personnel_handler_csv extends midcom_baseclasses_components_han
         }
     }
 
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_import($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
@@ -220,7 +226,7 @@ class net_nemein_personnel_handler_csv extends midcom_baseclasses_components_han
                     return false;
                 }
                 $data['separator'] = $_POST['net_nemein_personnel_import_separator'];
-                
+
                 $this->_get_mapping_info($data);
                 $data['view'] = 'map-columns';
                 break;
@@ -529,7 +535,7 @@ class net_nemein_personnel_handler_csv extends midcom_baseclasses_components_han
             debug_pop();
         }
         /* END: Quick'n'Dirty on-the-fly charset conversion */
-        
+
         // Strings and numbers beginning with zero are quoted
         if (   (   !is_numeric($data)
                 || preg_match('/^[0+]/', $data))
@@ -593,7 +599,12 @@ class net_nemein_personnel_handler_csv extends midcom_baseclasses_components_han
         }
     }
 
-
+	/**
+	 * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
+	 */
     function _handler_export($handler_id, $args, &$data)
     {
         //Disable limits

@@ -11,10 +11,10 @@
  *
  * The midcom_baseclasses_components_handler class defines a bunch of helper vars
  * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_handler.html
- * 
+ *
  * @package midcom.core.nullcomponent
  */
-class midcom_core_nullcomponent_handler_index  extends midcom_baseclasses_components_handler 
+class midcom_core_nullcomponent_handler_index  extends midcom_baseclasses_components_handler
 {
 
     /**
@@ -25,12 +25,14 @@ class midcom_core_nullcomponent_handler_index  extends midcom_baseclasses_compon
         $this->_component = 'midcom.core.nullcomponent';
         parent::midcom_baseclasses_components_handler();
     }
-    
+
     /**
-     * The handler for the index article. 
-     * @param mixed $handler_id the array key from the requestarray
+     * The handler for the index article.
+     *
+     * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
-     * 
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
     {
@@ -38,10 +40,10 @@ class midcom_core_nullcomponent_handler_index  extends midcom_baseclasses_compon
         $_MIDCOM->set_pagetitle($this->_topic->extra);
         return true;
     }
-    
+
     /**
      * This function does the output.
-     *  
+     *
      */
     function _show_index($handler_id, &$data)
     {

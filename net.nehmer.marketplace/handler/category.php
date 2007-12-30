@@ -201,6 +201,11 @@ class net_nehmer_marketplace_handler_category extends midcom_baseclasses_compone
     /**
      * This code loads the currently displayed data set based on the (already validated)
      * argument list.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array $data The local request data.
+     * @return bool Indicating success.
      */
     function _handler_browse($handler_id, $args, &$data)
     {
