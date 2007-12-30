@@ -8,15 +8,15 @@
  */
 
 /**
- * Datamanager 2 Simple php datatype. The php value encaspulated by this type is
- * passed as-is to the storage layers, no specialieties done, just a string.
+ * Datamanager 2 Simple php datatype. The php value encapsulated by this type is
+ * passed as-is to the storage layers, no specialties done, just a string.
  *
  * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_type
 {
     /**
-     * The current string encaspulated by this type.
+     * The current string encapsulated by this type.
      *
      * @var string
      * @access public
@@ -57,7 +57,7 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
     }
 
     /**
-     * The validateion callback ensures that we dont't have an array or an object
+     * The validation callback ensures that we dont't have an array or an object
      * as a value, which would be wrong.
      *
      * @return bool Indicating validity.

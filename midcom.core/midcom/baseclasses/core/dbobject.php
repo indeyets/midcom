@@ -605,7 +605,7 @@ class midcom_baseclasses_core_dbobject
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @param mixed $id The object to load from the database. This can be either null (the default), indicating an empty object,
      *     a Midgard database row-ID or a Midgard GUID, the latter is detected using mgd_is_guid(). In addition, you can
-     *     specifiy a parent objcet (usually a midgard_* base class) which will then use a copy constructor semantics instead.
+     *     specify a parent objcet (usually a midgard_* base class) which will then use a copy constructor semantics instead.
      * @return bool Indicating success.
      * @see midcom_baseclasses_core_dbobject::post_db_load_checks
      * @see midcom_baseclasses_core_dbobject::cast_object

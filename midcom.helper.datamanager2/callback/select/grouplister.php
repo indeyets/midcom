@@ -10,11 +10,7 @@
 /**
  * DM2 Select Type Callback Toolkit: Midgard Group Lister
  *
- * The type lists all midgard groups in the system using a hierachical display.
- *
- * @todo Child groups are listed in the form "$group, $childgroup". (The traditional
- * indented way isn't used, as this would hamper rendering in view mode; you couldn't
- * see the path there.)
+ * The type lists all midgard groups in the system using a hierarchical display.
  *
  * This is mainly intended for displaying / managing the group memberships of
  * Midgard users through the mnrelation type.
@@ -31,7 +27,7 @@
  *
  * Use the following DM2 configuration within the person schema:
  *
- * <example>
+ * <code>
  * 'groups' => array
  * (
  *     'title'       => 'Gruppen',
@@ -48,8 +44,11 @@
  *     ),
  *     'widget'      => 'select',
  * ),
- * </example>
+ * </code>
  *
+ * @todo Child groups are listed in the form "$group, $childgroup". (The traditional
+ * indented way isn't used, as this would hamper rendering in view mode; you couldn't
+ * see the path there.)
  * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_callback_select_grouplister
@@ -102,7 +101,7 @@ class midcom_helper_datamanager2_callback_select_grouplister
         {
             $this->_process_options($options);
         }
-        
+
         return true;
     }
 
@@ -262,29 +261,28 @@ class midcom_helper_datamanager2_callback_select_grouplister
     /**
      * Chooser related methods
      */
-    
     function get_key_data($key)
     {
         return $this->_load_group($key, true);
     }
-    
+
     function run_search($query, &$request)
     {
         $qb = midcom_db_group::new_query_builder();
-        
+
         $qb->begin_group('OR');
         $qb->add_constraint('name', 'LIKE', $query);
         $qb->add_constraint('official', 'LIKE', $query);
         $qb->end_group();
-        
+
         $results = $qb->execute();
-        
+
         if (count($results) <= 0)
         {
             return false;
         }
-        
-        return $results;        
+
+        return $results;
     }
 
 }

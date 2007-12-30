@@ -1,11 +1,14 @@
 <?php
 /**
- * @package net.nehmer.account
+ * @package midcom.helper.datamanager2
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: validation.php 3210 2006-04-06 17:28:02Z torben $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
+
+/** @ignore */
+$_MIDCOM->load_library('org.routamc.positioning');
 
 /**
  * Form Validation helper methods.
@@ -15,11 +18,8 @@
  *
  * All functions are statically callable. (Have to be for QuickForm to work.)
  *
- * @package net.nehmer.account
+ * @package midcom.helper.datamanager2
  */
-
-$_MIDCOM->load_library('org.routamc.positioning');
-
 class midcom_helper_datamanager2_callback_select_countries extends midcom_baseclasses_components_purecode
 {
     /**
@@ -29,7 +29,7 @@ class midcom_helper_datamanager2_callback_select_countries extends midcom_basecl
      * @access private
      */
     var $_data = null;
-    
+
     /**
      * The callback class instance, a callback matching the signature required for the DM2 select
      * type callbacks.
@@ -38,17 +38,17 @@ class midcom_helper_datamanager2_callback_select_countries extends midcom_basecl
      * @access private
      */
     var $_callback = null;
-    
+
     function midcom_helper_datamanager2_callback_select_countries($args)
     {
         $this->_component = 'net.nehmer.account';
         parent::midcom_baseclasses_components_purecode();
-        
+
         $this->_data = array
         (
             '' => $this->_l10n_midcom->get('select your country'),
         );
-        
+
         $qb = org_routamc_positioning_country_dba::new_query_builder();
         $qb->add_constraint('code', '<>', '');
         $qb->add_order('name', 'ASC');
@@ -60,10 +60,10 @@ class midcom_helper_datamanager2_callback_select_countries extends midcom_basecl
             debug_add('No countries found. You have to use org.routamc.positioning to import countries to database.');
             debug_pop();
         }
-        
+
         $this->_populate_data($countries);
     }
-    
+
     function _populate_data(&$countries)
     {
         foreach ($countries as $country)
@@ -71,17 +71,17 @@ class midcom_helper_datamanager2_callback_select_countries extends midcom_basecl
             $this->_data[$country->code] = $country->name;
         }
     }
-    
+
     function get_name_for_key($key)
     {
         return $this->_data[$key];
     }
-    
+
     function key_exists($key)
-    {   
+    {
         return array_key_exists($key, $this->_data);
     }
-    
+
     function list_all()
     {
         return $this->_data;
@@ -89,7 +89,7 @@ class midcom_helper_datamanager2_callback_select_countries extends midcom_basecl
 
     /** Ignored. */
     function set_type(&$type) {}
-    
+
 }
 
 ?>

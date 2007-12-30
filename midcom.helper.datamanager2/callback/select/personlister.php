@@ -10,11 +10,7 @@
 /**
  * DM2 Select Type Callback Toolkit: Midgard person Lister
  *
- * The type lists all midgard persons in the system using a hierachical display.
- *
- * @todo Child persons are listed in the form "$person, $childperson". (The traditional
- * indented way isn't used, as this would hamper rendering in view mode; you couldn't
- * see the path there.)
+ * The type lists all midgard persons in the system using a hierarchical display.
  *
  * This is mainly intended for displaying / managing the person memberships of
  * Midgard users through the mnrelation type.
@@ -31,7 +27,7 @@
  *
  * Use the following DM2 configuration within the person schema:
  *
- * <example>
+ * <code>
  * 'persons' => array
  * (
  *     'title'       => 'Gruppen',
@@ -48,8 +44,11 @@
  *     ),
  *     'widget'      => 'select',
  * ),
- * </example>
+ * </code>
  *
+ * @todo Child persons are listed in the form "$person, $childperson". (The traditional
+ * indented way isn't used, as this would hamper rendering in view mode; you couldn't
+ * see the path there.)
  * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_callback_select_personlister
@@ -102,7 +101,7 @@ class midcom_helper_datamanager2_callback_select_personlister
         {
             $this->_process_options($options);
         }
-        
+
         return true;
     }
 
@@ -256,7 +255,7 @@ class midcom_helper_datamanager2_callback_select_personlister
             $key = $this->_get_key($person);
             $value = $person->{$this->_value_field};
             $this->_loaded_persons[$key] = $value;
-            
+
             if ($return)
             {
                 return $person;
@@ -267,16 +266,16 @@ class midcom_helper_datamanager2_callback_select_personlister
     /**
      * Chooser related methods
      */
-    
+
     function get_key_data($key)
     {
         return $this->_load_person($key, true);
     }
-    
+
     function run_search($query, &$request)
     {
         $qb = midcom_db_person::new_query_builder();
-        
+
         $qb->begin_group('OR');
         $qb->add_constraint('firstname', 'LIKE', $query);
         $qb->add_constraint('lastname', 'LIKE', $query);
@@ -285,15 +284,15 @@ class midcom_helper_datamanager2_callback_select_personlister
         $qb->add_constraint('city', 'LIKE', $query);
         $qb->add_constraint('postcode', 'LIKE', $query);
         $qb->end_group();
-        
+
         $results = $qb->execute();
-        
+
         if (count($results) <= 0)
         {
             return false;
         }
-        
-        return $results;        
+
+        return $results;
     }
 
 }

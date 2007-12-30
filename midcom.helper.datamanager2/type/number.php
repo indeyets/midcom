@@ -28,7 +28,7 @@
 class midcom_helper_datamanager2_type_number extends midcom_helper_datamanager2_type
 {
     /**
-     * The current string encaspulated by this type. This may be null
+     * The current string encapsulated by this type. This may be null
      * for undefined values.
      *
      * @var float

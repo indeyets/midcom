@@ -9,7 +9,7 @@
  */
 
 /**
- * Base class to encaspulate a request to the component, instantiated by the MidCOM
+ * Base class to encapsulate a request to the component, instantiated by the MidCOM
  * component interface.
  *
  * It provides an automatic mechanism for URL processing and validation, minimizing

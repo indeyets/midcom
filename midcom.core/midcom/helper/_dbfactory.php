@@ -23,7 +23,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
     {
         parent::midcom_baseclasses_core_object();
     }
-    
+
     /**
      * Return DateTime object
      *
@@ -49,7 +49,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
         $midcom_datetime->setTimeZone($local_tz);
         return $midcom_datetime;
     }
-    
+
     /**
      * Return DateTime in format preferred by Midgard Core
      *
@@ -113,7 +113,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
      * @param string $classname The name of the class for which you want to create a collector.
      * @param string $domain The domain property of the collector instance
      * @param mixed $value Value match for the collector instance
-     * @return The initialized instance of the query builder.
+     * @return midcom_core_collector The initialized instance of the collector.
      * @see midcom_core_querybuilder
      */
     function new_collector($classname, $domain, $value)
@@ -131,7 +131,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
      * as argument.
      *
      * @param string $classname The name of the class for which you want to create a query builder.
-     * @return The initialized instance of the query builder.
+     * @return midcom_core_querybuilder The initialized instance of the query builder.
      * @see midcom_core_querybuilder
      */
     function new_query_builder($classname)
@@ -363,7 +363,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
             mgd_set_errno(MGD_ERR_ERROR);
             return false;
         }
-        
+
         // Load the required component for DBA class
         $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($unserialized_object);
         if (! $_MIDCOM->dbclassloader->load_mgdschema_class_handler($midcom_dba_classname))
@@ -476,7 +476,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
             debug_pop();
             return false;
         }
-        
+
         switch ($handle_action)
         {
             case 'deleted':

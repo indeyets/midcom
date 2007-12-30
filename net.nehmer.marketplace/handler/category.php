@@ -56,7 +56,7 @@ class net_nehmer_marketplace_handler_category extends midcom_baseclasses_compone
     var $_entries = null;
 
     /**
-     * The datamanager encaspulating the currently displayed entry.
+     * The datamanager encapsulating the currently displayed entry.
      *
      * @var midcom_helper_datamanager2_datamanager
      * @access private

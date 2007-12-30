@@ -29,7 +29,7 @@ class midcom_baseclasses_database_element extends __midcom_baseclasses_database_
     }
 
     /**
-     * Returns the Parent of the Element. This is the style the element is assinged to.
+     * Returns the Parent of the Element. This is the style the element is assigned to.
      *
      * @return MidgardObject Parent object or NULL if there is none.
      */

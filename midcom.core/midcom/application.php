@@ -630,7 +630,7 @@ class midcom_application
      *   we still are in the code-init phase.
      *
      * Example code, executed on a sites Homepage, it will load the news listing from
-     * the given URL and display it using a substyle of the node style that is assinged
+     * the given URL and display it using a substyle of the node style that is assigned
      * to the loaded one:
      *
      * <code>
@@ -830,7 +830,7 @@ class midcom_application
      *
      * Details: The logic will traverse the node tree and for each node it will load
      * the component that is responsible for it. This component gets the chance to
-     * accept the request (this is encaspulated in the _can_handle call), which is
+     * accept the request (this is encapsulated in the _can_handle call), which is
      * basically a call to can_handle. If the component declares to be able to handle
      * the call, its handle function is executed. Depending if the handle was successful
      * or not, it will either display an HTTP error page or prepares the content handler
@@ -1601,7 +1601,7 @@ class midcom_application
      * cannot override the component association done by the system. Instead you
      * should add your libraries name (like midcom.helper.datamanager) as a prefix,
      * separated by a dot. I know, that this is not really an elegant solution and
-     * that it actually breaks with the encaspulation I want, but I don't have a
+     * that it actually breaks with the encapsulation I want, but I don't have a
      * better solution yet.
      *
      * Be aware, that this function works by-reference instead of by-value.
@@ -1656,7 +1656,7 @@ class midcom_application
      * cannot override the component association done by the system. Instead you
      * should add your libraries name (like midcom.helper.datamanager) as a prefix,
      * separated by a dot. I know, that this is not really an elegant solution and
-     * that it actually breaks with the encaspulation I want, but I don't have a
+     * that it actually breaks with the encapsulation I want, but I don't have a
      * better solution yet.
      *
      * A complete example can be found with set_custom_context_data.

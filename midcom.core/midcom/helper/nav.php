@@ -105,7 +105,7 @@ class midcom_helper_nav
 
     /**
      * Lists all Sub-nodes of $parent_node. If there are no subnodes you will get
-     * an empty array, if there was an error (for instance an unkown parent node
+     * an empty array, if there was an error (for instance an unknown parent node
      * ID) you will get FALSE.
      *
      * @param int $parent_node	The id of the node of which the subnodes are searched.

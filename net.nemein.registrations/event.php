@@ -10,7 +10,7 @@
 /**
  * Event registration system: Event class
  *
- * This class encaspulates an event which can be registered to.
+ * This class encapsulates an event which can be registered to.
  *
  * TODO...
  *
@@ -73,7 +73,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     var $_root_event;
 
     /**
-     * The DM2 datamanager instance encaspulating this object. Initialized on first access
+     * The DM2 datamanager instance encapsulating this object. Initialized on first access
      * via get_datamanager.
      *
      * @var midcom_helper_datamanager2_datamanager
@@ -911,7 +911,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      *
      * This function is usually called statically.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encaspulating the event.
+     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the event.
      * @param midcom_services_indexer $indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.

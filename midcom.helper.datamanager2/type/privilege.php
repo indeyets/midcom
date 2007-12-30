@@ -10,7 +10,7 @@
 /**
  * Datamanager 2 Simple privilege datatype.
  *
- * The class encaspulates a single privilege record with its three states of 
+ * The class encapsulates a single privilege record with its three states of 
  * ALLOWED, DENIED and INHERITED.
  * 
  * It requires the privilege widget for correct display.
@@ -28,7 +28,7 @@
 class midcom_helper_datamanager2_type_privilege extends midcom_helper_datamanager2_type
 {
     /**
-     * The privilege record encaspulated by this type (note that this does not 
+     * The privilege record encapsulated by this type (note that this does not 
      * neccecarily is an already persisted privilege).
      * 
      * This member may be null in case that we do not yet have a storage object.

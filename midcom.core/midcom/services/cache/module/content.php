@@ -751,7 +751,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      * is emitted and true is returned. Otherwise the function will return false
      * without modifications to the current runtime state.
      *
-     * If the headers have already been sent, something is definitly wrong, so we
+     * If the headers have already been sent, something is definitely wrong, so we
      * ignore the request silently returning false.
      *
      * Note, that if both If-Modified-Since and If-None-Match are present, both must

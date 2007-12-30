@@ -31,7 +31,7 @@ class midcom_baseclasses_database_eventmember extends __midcom_baseclasses_datab
     }
 
     /**
-     * Returns the Parent of the Eventmmeber. This is the event it is assinged to.
+     * Returns the Parent of the Eventmmeber. This is the event it is assigned to.
      * 
      * @return MidgardObject Parent object or NULL if there is none.
      */

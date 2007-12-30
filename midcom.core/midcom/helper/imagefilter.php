@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package midcom
  * @author The Midgard Project, http://www.midgard-project.org
@@ -8,18 +7,14 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-
 /**
  * Image Filter Class, used to post process all images, check the documentation
  * of the individual methods.
  *
  * This class always works on existing files at this time. It supports scripting
  * support by using the process_chain / process_command helper functions, which
- * allow the application to let the user specifiy a list of filters that should
+ * allow the application to let the user specify a list of filters that should
  * be applied during upload.
- *
- * @todo Image type automatic best-web-format conversion
- * @todo Add support for working on attachments
  *
  * This class is originally known as net_siriux_photos_filter.
  *
@@ -27,11 +22,11 @@
  * If you want to utilize it, you have to require_once it first:
  *
  * <code>
- * <?php
  * require_once(MIDCOM_ROOT . 'lib/helper/imagefilter.php');
- * ?>
  * </code>
  *
+ * @todo Image type automatic best-web-format conversion
+ * @todo Add support for working on attachments
  * @author Eero af Heurlin, Nemein Oy <eero.afheurlin@nemein.com>
  * @author Nico Kaiser <nico@siriux.net>
  * @author Torben Nehmer <torben@nehmer.net>
@@ -489,7 +484,7 @@ class midcom_helper_imagefilter
             return true;
         }
         if ($exif["Orientation"] == 1)
-        {   
+        {
             debug_add("No rotation necessary.");
             debug_pop();
             return true;

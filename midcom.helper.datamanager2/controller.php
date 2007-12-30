@@ -10,7 +10,7 @@
 /**
  * Datamanager 2 Data Manager controller base class.
  *
- * This class encaspulates a controlling instance of the Datamanager class system. You do not
+ * This class encapsulates a controlling instance of the Datamanager class system. You do not
  * need to use it, it is possible to implement your own, custom form processing solely on the
  * basis of form/datamanager classes. The controllers are intended to ease the integration work
  * and provide more advanced frameworks for example for multi-page forms or AJAX callbacks.
@@ -25,6 +25,7 @@
  * <b>You cannot use this class directly, consider it as an abstract base class!</b>
  *
  * @package midcom.helper.datamanager2
+ * @abstract
  */
 class midcom_helper_datamanager2_controller extends midcom_baseclasses_components_purecode
 {
@@ -39,7 +40,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
 
     /**
      * The datamanager instance which is used for data I/O processing. Set this member using the
-     * set_storage() helper function unless you definitly know what you're doing.
+     * set_storage() helper function unless you definitely know what you're doing.
      *
      * @var midcom_helper_datamanager2
      */
@@ -76,10 +77,10 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
     }
 
     /**
-     * Loads a schema definitino from disk and creates the corresponding schema
+     * Loads a schema definition from disk and creates the corresponding schema
      * class instances.
      *
-     * If you have an array of schema classes alredy, use set_schemadb() instead.
+     * If you have an array of schema classes already, use set_schemadb() instead.
      *
      * @param mixed $schemapath A schema database source suitable for use with
      *     midcom_helper_datamanager2_schema::load_database()
@@ -119,7 +120,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
 
     /**
      * Sets the current datamanager instance to the storage object given, which may either
-     * be a MidCOM DBA object (which is encaspulated by a midgard datamanager storage instance).
+     * be a MidCOM DBA object (which is encapsulated by a midgard datamanager storage instance).
      *
      * You must load a schema database before actually
      *
@@ -188,7 +189,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
             debug_print_r('Storage object passed was:', $storage);
             debug_pop();
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'You must pass either a datamanager subclass, an initialized storage encaspulation or a MidCOM DBA object to datamanager2_controller::set_storage()');
+                'You must pass either a datamanager subclass, an initialized storage encapsulation or a MidCOM DBA object to datamanager2_controller::set_storage()');
             // This will exit.
         }
     }
@@ -222,7 +223,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
      * This function should process the form data sent to the server. Its behavior is dependant
      * on the controller used, see the individual class documentations for details.
      *
-     * @return string The exitcode of the form processing, ususually related to the formmanager
+     * @return string The exitcode of the form processing, usually related to the formmanager
      *     result constants.
      */
     function process_form()

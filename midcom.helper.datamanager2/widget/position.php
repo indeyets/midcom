@@ -13,10 +13,10 @@ require_once MIDCOM_ROOT . '/midcom/helper/datamanager2/widget/simpleposition.ph
 /**
  * Datamanager 2 Positioning widget
  *
- * As with all subclasses, the actual initialization is done in the initialize() funciton,
+ * As with all subclasses, the actual initialization is done in the initialize() function,
  * not in the constructor, to allow for error handling.
  *
- * It can only be bound to a position type (or subclass thereoff), and inherits the configuration
+ * It can only be bound to a position type (or subclass thereof), and inherits the configuration
  * from there as far as possible.
  *
  * Example:
@@ -111,7 +111,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         if (is_a('midcom_helper_datamanager2_type_position', $this->_type))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Warning, the field {$this->name} is not a position type or subclass thereoff, you cannot use the position widget with it.",
+            debug_add("Warning, the field {$this->name} is not a position type or subclass thereof, you cannot use the position widget with it.",
                 MIDCOM_LOG_WARN);
             debug_pop();
             return false;

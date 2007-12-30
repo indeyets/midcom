@@ -431,7 +431,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         $qb->add_constraint('suspended', '<', time());
         if ($this->test_mode)
         {
-            debug_add('TEST mode, adding constaint');
+            debug_add('TEST mode, adding constraints');
             $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_CAMPAIGN_TESTER);
         }
         else
@@ -456,7 +456,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
 
     /**
      * Adds the common constraints and then returns "fast" (not ACL-checked) count of members matching any other
-     * constaints the QB object passed has
+     * constraints the QB object passed has
      */
     function _qb_count_members($qb)
     {

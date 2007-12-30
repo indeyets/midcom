@@ -10,7 +10,7 @@
 /**
  * Datamanager 2 Schema class.
  *
- * This class encaspulates Datamanager Schemas. It contains all information required to construct
+ * This class encapsulates Datamanager Schemas. It contains all information required to construct
  * the types and widgets of a given data schema. The base class constructs out of a Datamanager 2
  * Schema definition, which is not compatible with a legacy Datamanager 1 Schema, you need to
  * use the appropriate subclass to handle them dynamically.
@@ -23,7 +23,7 @@
  * <b>Storage</b>
  * When using the Midgard storage backend, it is possible to define a callback class to be called
  * that will then save the object. The class is defined as follows. Please note that if the classname
- * follows the midcom hierarcy, it may be loaded automaticly.
+ * follows the midcom hierarchy, it may be loaded automatically.
  *
  * The class must satisfy the following interfaces:
  * <code>
@@ -35,7 +35,7 @@
  *      function on_load_data($name,&$storage);
  *      function on_store_data($name, $data,&$storage);
  * }
- * <code>
+ * </code>
  *
  * What the functions should return depends on the datatype they return to.
  *
@@ -197,7 +197,7 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
     }
 
     /**
-     * This functnio loads the schema database into the class, either from a copy
+     * This function loads the schema database into the class, either from a copy
      * already in memory, or from a URL resolvable by midcom_get_snippet_content.
      *
      * @param mixed $schemapath Either the path or the already loaded schema database
@@ -345,7 +345,7 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
      * Internal helper function which completes all missing field declaration members
      * so that all fields can be treated uniformly.
      *
-     * @TODO Refactor in subfunctions for better readability.
+     * @todo Refactor in subfunctions for better readability.
      */
     function _complete_field_defaults(&$config)
     {

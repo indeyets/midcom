@@ -18,7 +18,7 @@ class midcom_request {
     }
     /**
      * Get a certain variable from the request variables
-     * @return the variable requested, or the default value (false if not set)
+     * @return mixed the variable requested, or the default value (false if not set)
      * @param $var the name of the variable requested
      * @param $default the default value if the variable doesn't exist.
      */
@@ -41,7 +41,7 @@ class midcom_request {
     }
     /**
      *  Get a trimmed version of a variable.
-     *  @return the request variable, but trimmed.
+     *  @return mixed the request variable, but trimmed.
      *  @param $name the variable name
      *  @param $deafult what to return if the variable does not exist.
      */
@@ -207,7 +207,7 @@ class midcom_url_paramcollector {
 
 /**
  * A parser for a part of a url
- * THe parser will get in the url where its work starts and will work greedily on that
+ * The parser will get in the url where its work starts and will work greedily on that
  * until it gets nothing and returns.
  */
 abstract class midcom_url_parser {

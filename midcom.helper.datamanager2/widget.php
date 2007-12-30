@@ -47,7 +47,7 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     var $_external_config = Array();
 
     /**
-     * The name field holds the name of the field the widget is encaspulating. This
+     * The name field holds the name of the field the widget is encapsulating. This
      * maps to the schema's field name. You should never have to change them.
      *
      * @var string

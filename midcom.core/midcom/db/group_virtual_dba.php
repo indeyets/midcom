@@ -7,7 +7,11 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-// Dummy DBA object (needed by replicator) (soon maybe less dummy ??)
+/**
+ * Dummy DBA object (needed by replicator) (soon maybe less dummy ??)
+ *
+ * @package midcom
+ */
 class midcom_core_group_virtual_dba extends __midcom_core_group_virtual_dba
 {
     function midcom_core_group_virtual_dba($id=null)

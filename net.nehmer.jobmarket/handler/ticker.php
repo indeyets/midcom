@@ -47,7 +47,7 @@ class net_nehmer_jobmarket_handler_ticker extends midcom_baseclasses_components_
     var $_entries = null;
 
     /**
-     * The datamanager encaspulating the current resultset.
+     * The datamanager encapsulating the current resultset.
      *
      * @var midcom_helper_datamanager2_datamanager
      * @access private

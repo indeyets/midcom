@@ -18,17 +18,17 @@
  *
  * <code>
  * $item = Array (
- *     [MIDCOM_TOOLBAR_URL] =&gt; $url,
- *     [MIDCOM_TOOLBAR_LABEL] =&gt; $label,
- *     [MIDCOM_TOOLBAR_HELPTEXT] =&gt; $helptext,
- *     [MIDCOM_TOOLBAR_ICON] =&gt; $icon,
- *     [MIDCOM_TOOLBAR_ENABLED] =&gt; $enabled,
- *     [MIDCOM_TOOLBAR_HIDDEN] =&gt; $hidden
- *     [MIDCOM_TOOLBAR_OPTIONS] =&gt; array $options,
- *     [MIDCOM_TOOLBAR_SUBMENU] =&gt; midcom_helper_toolbar $submenu,
- *     [MIDCOM_TOOLBAR_ACCESSKEY] =&gt; (char) 'a',
- *     [MIDCOM_TOOLBAR_POST] =&gt; true,
- *     [MIDCOM_TOOLBAR_POST_HIDDENARGS] =&gt; array $args,
+ *     [MIDCOM_TOOLBAR_URL] => $url,
+ *     [MIDCOM_TOOLBAR_LABEL] => $label,
+ *     [MIDCOM_TOOLBAR_HELPTEXT] => $helptext,
+ *     [MIDCOM_TOOLBAR_ICON] => $icon,
+ *     [MIDCOM_TOOLBAR_ENABLED] => $enabled,
+ *     [MIDCOM_TOOLBAR_HIDDEN] => $hidden
+ *     [MIDCOM_TOOLBAR_OPTIONS] => array $options,
+ *     [MIDCOM_TOOLBAR_SUBMENU] => midcom_helper_toolbar $submenu,
+ *     [MIDCOM_TOOLBAR_ACCESSKEY] => (char) 'a',
+ *     [MIDCOM_TOOLBAR_POST] => true,
+ *     [MIDCOM_TOOLBAR_POST_HIDDENARGS] => array $args,
  * );
  * </code>
  *
@@ -126,8 +126,8 @@
  * The options array. You can use the options array to make simple changes to the toolbaritems.
  * Here's a quick example to remove the underlining.
  * <code>
- * foreach ($toolbar-&gt;items as $index =&gt; $item) {
- *     $toolbar-&gt;items[$index][MIDCOM_TOOLBAR_OPTIONS] = array( "style" =&gt; "text-decoration:none;");
+ * foreach ($toolbar->items as $index => $item) {
+ *     $toolbar->items[$index][MIDCOM_TOOLBAR_OPTIONS] = array( "style" => "text-decoration:none;");
  * }
  * </code>
  * This will add style="text-decoration:none;" to all the links in the toolbar.

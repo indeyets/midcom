@@ -45,7 +45,7 @@ class net_nehmer_branchenbuch_entry extends __net_nehmer_branchenbuch_entry
      * Lists all entries belonging to a given user.
      *
      * @param midcom_core_user $user The user of whom the entries should be listed,
-     *    this defaults to the currenlty active user.
+     *    this defaults to the currently active user.
      * @return Array A QB resultset or false on failure.
      */
     function list_by_user($user = null)
@@ -196,7 +196,7 @@ class net_nehmer_branchenbuch_entry extends __net_nehmer_branchenbuch_entry
      *
      * This function is usually called statically.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encaspulating the entry.
+     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the entry.
      * @param midcom_services_indexer $indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.

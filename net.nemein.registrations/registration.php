@@ -10,7 +10,7 @@
 /**
  * Event registration system: Registration class
  *
- * This class encaspulates a registration record.
+ * This class encapsulates a registration record.
  *
  * Approval and rejection of registrations is done through their event, as its information
  * is readily available there.

@@ -60,7 +60,7 @@ class net_nehmer_marketplace_handler_welcome extends midcom_baseclasses_componen
     var $_entries = null;
 
     /**
-     * The datamanager encaspulating the current resultset.
+     * The datamanager encapsulating the current resultset.
      *
      * @var midcom_helper_datamanager2_datamanager
      * @access private

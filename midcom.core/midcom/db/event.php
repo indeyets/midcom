@@ -13,7 +13,7 @@ require(MIDCOM_ROOT . '/midcom/baseclasses/database/event.php');
 /**
  * MidCOM Legacy Database Abstraction Layer
  *
- * This class encaspulates a classic MidgardEvent with its original features.
+ * This class encapsulates a classic MidgardEvent with its original features.
  *
  * <i>Preliminary Implementation:</i>
  *

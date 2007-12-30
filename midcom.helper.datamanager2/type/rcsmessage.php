@@ -8,15 +8,15 @@
  */
 
 /**
- * Datamanager 2 Simple rcsmessage datatype. The rcsmessage value encaspulated by this type is
- * passed as-is to the RCS service, no specialieties done, just a string.
+ * Datamanager 2 Simple rcsmessage datatype. The rcsmessage value encapsulated by this type is
+ * passed as-is to the RCS service, no specialties done, just a string.
  *
  * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_type_rcsmessage extends midcom_helper_datamanager2_type
 {
     /**
-     * The current string encaspulated by this type.
+     * The current string encapsulated by this type.
      *
      * @var string
      * @access public

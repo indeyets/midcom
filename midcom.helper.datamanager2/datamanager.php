@@ -48,7 +48,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
     var $schema_name = '';
 
     /**
-     * This is the storage implementation which is used for operation on the types. It encaspulates
+     * This is the storage implementation which is used for operation on the types. It encapsulates
      * the storage target.
      *
      * @var midcom_helper_datamanager2_storage

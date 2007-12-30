@@ -9,10 +9,10 @@
 
 /**
  * This is the base class of the MidCOM Cache backend infrastructure. It provides a general
- * interface for the caching services by encaspulating the calls specific to the data
+ * interface for the caching services by encapsulating the calls specific to the data
  * storage interface.
  * 
- * Each cache database in use is encaspulated by its own instance of this service, identified
+ * Each cache database in use is encapsulated by its own instance of this service, identified
  * by their name and the handler which controls it. The name must be unique throughout the
  * entire server. See Namespacing below for details.
  * 

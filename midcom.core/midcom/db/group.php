@@ -14,7 +14,7 @@ require(MIDCOM_ROOT . '/midcom/baseclasses/database/group.php');
 /**
  * MidCOM Legacy Database Abstraction Layer
  *
- * This class encaspulates a classic MidgardGroup with its original features.
+ * This class encapsulates a classic MidgardGroup with its original features.
  *
  * <i>Preliminary Implementation:</i>
  *

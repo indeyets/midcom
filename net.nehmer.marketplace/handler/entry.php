@@ -167,7 +167,7 @@ class net_nehmer_marketplace_handler_entry extends midcom_baseclasses_components
         }
         $this->_mode = ($this->_entry->ask ? 'ask' : 'bid');
 
-        // First, update the status information, as DM startups can alredy fire up NAP.
+        // First, update the status information, as DM startups can already fire up NAP.
         $this->_component_data['active_leaf'] = ($this->_mode == 'ask') ?
             NET_NEHMER_MARKETPLACE_LEAFID_ASKS : NET_NEHMER_MARKETPLACE_LEAFID_BIDS;
         $this->_update_breadcrumb_line();
@@ -252,7 +252,7 @@ class net_nehmer_marketplace_handler_entry extends midcom_baseclasses_components
 
         $this->_mode = ($this->_entry->ask ? 'ask' : 'bid');
 
-        // First, update the status information, as DM startups can alredy fire up NAP.
+        // First, update the status information, as DM startups can already fire up NAP.
         $this->_component_data['active_leaf'] = ($this->_mode == 'ask') ?
             NET_NEHMER_MARKETPLACE_LEAFID_ASKS : NET_NEHMER_MARKETPLACE_LEAFID_BIDS;
         $this->_update_breadcrumb_line('edit');
@@ -327,7 +327,7 @@ class net_nehmer_marketplace_handler_entry extends midcom_baseclasses_components
             return false;
         }
 
-        // First, update the status information, as DM startups can alredy fire up NAP.
+        // First, update the status information, as DM startups can already fire up NAP.
         $this->_mode = ($this->_entry->ask ? 'ask' : 'bid');
         $this->_component_data['active_leaf'] = ($this->_mode == 'ask') ?
             NET_NEHMER_MARKETPLACE_LEAFID_ASKS : NET_NEHMER_MARKETPLACE_LEAFID_BIDS;

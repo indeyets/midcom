@@ -87,7 +87,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
      * This function must be called statically.
      *
      * @param midcom_core_user $user The user of whom the entries should be listed,
-     *    this defaults to the currenlty active user.
+     *    this defaults to the currently active user.
      * @return Array A list of username => midcom_core_user pairs.
      */
     function list_buddies($user = null)
@@ -138,7 +138,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
      * This function must be called statically.
      *
      * @param midcom_core_user $user The user of whom the pending approvals should be listed,
-     *    this defaults to the currenlty active user.
+     *    this defaults to the currently active user.
      * @return Array A QB resultset or false on failure.
      */
     function list_unapproved($user = null)

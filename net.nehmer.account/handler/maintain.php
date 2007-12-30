@@ -16,7 +16,7 @@
  * Summary of available request keys, depending on the actual handler not all of them
  * might be in use, see the various _handler_xxx methods for details:
  *
- * - datamanager: A reference to the DM2 Instance encaspulating the account.
+ * - datamanager: A reference to the DM2 Instance encapsulating the account.
  * - formmanager: The form manager used to draw the form (only available in the edit mode).
  * - profile_url: Contains the URL to the full profile record.
  * - processing_msg: This is the processing message originating from the last request. May be

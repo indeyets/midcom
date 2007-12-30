@@ -13,7 +13,7 @@
  * As with all subclasses, the actual initialization is done in the initialize() function,
  * not in the constructor, to allow for error handling.
  *
- * This widget supports the blobs type or any subtype thereoff.
+ * This widget supports the blobs type or any subtype thereof.
  *
  * All processing is done during the on_submit handlers, enforcing immediate update of the
  * associated storage objects. No other solition is possible, since we need to transfer
@@ -96,7 +96,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
         if (! is_a($this->_type, 'midcom_helper_datamanager2_type_blobs'))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Warning, the field {$this->name} is not a blobs type or subclass thereoff, you cannot use the downloads widget with it.",
+            debug_add("Warning, the field {$this->name} is not a blobs type or subclass thereof, you cannot use the downloads widget with it.",
                 MIDCOM_LOG_WARN);
             debug_pop();
             return false;

@@ -13,7 +13,7 @@ require_once('image.php');
 /**
  * Datamanager 2 Images type.
  *
- * This type encaspulates a unlimited list of uploaded images each along with an optional
+ * This type encapsulates a unlimited list of uploaded images each along with an optional
  * number of derived images like thumbnails. Both the main image and the derived thumbnails
  * will be ran through a defined filter chain. The originally uploaded files can be
  * kept optionally.
@@ -39,7 +39,7 @@ require_once('image.php');
  * <b>File type conversion and image filtering</b>
  *
  * The class uses the image filter system for the actual resizing and conversion work,
- * you need to specifiy all operations including resize operations in the filtering
+ * you need to specify all operations including resize operations in the filtering
  * chain declaration for the corresponding derived image.
  *
  * Regarding file type conversions: The original uploaded image will always be run through
@@ -385,7 +385,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      * The HTML-Version of the image type can take two forms, depending on
      * type configuration:
      *
-     * 1. If an 'thumbnail' image is present, it is shown and encaspulated in an
+     * 1. If an 'thumbnail' image is present, it is shown and encapsulated in an
      *    anchor tag leading to the 'main' image.
      * 2. If no 'thumbnail' image is present, the 'main' image is shown
      *    directly, without any anchor.

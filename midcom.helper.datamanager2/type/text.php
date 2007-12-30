@@ -8,8 +8,8 @@
  */
 
 /**
- * Datamanager 2 Simple text datatype. The text value encaspulated by this type is
- * passed as-is to the storage layers, no specialieties done, just a string.
+ * Datamanager 2 Simple text datatype. The text value encapsulated by this type is
+ * passed as-is to the storage layers, no specialties done, just a string.
  *
  * <b>Available configuration options:</b>
  *
@@ -33,7 +33,7 @@
 class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_type
 {
     /**
-     * The current string encaspulated by this type.
+     * The current string encapsulated by this type.
      *
      * @var string
      * @access public
@@ -41,7 +41,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
     var $value = '';
 
     /**
-     * Maximum length of the string encaspulated by this type. 0 means no limit.
+     * Maximum length of the string encapsulated by this type. 0 means no limit.
      * This is checked during validation.
      *
      * @param int
@@ -193,7 +193,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
     }
 
     /**
-     * The validateion callback ensures that we dont't have an array or an object
+     * The validation callback ensures that we dont't have an array or an object
      * as a value, which would be wrong.
      *
      * @return bool Indicating validity.

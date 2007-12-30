@@ -10,10 +10,10 @@
 /**
  * Datamanager 2 Tags widget
  *
- * As with all subclasses, the actual initialization is done in the initialize() funciton,
+ * As with all subclasses, the actual initialization is done in the initialize() function,
  * not in the constructor, to allow for error handling.
  *
- * It can only be bound to a tagselect type (or subclass thereoff), and inherits the configuration
+ * It can only be bound to a tagselect type (or subclass thereof), and inherits the configuration
  * from there as far as possible.
  *
  * <b>Available configuration options:</b>
@@ -30,34 +30,37 @@
  * - <i>integer width:</i> Specify a custom width for the select box. Default: width of the input element
  *
  * Example:
- 'tags' => Array
- (
-     'title' => 'event tags',
-     'storage' => null,
-     'type' => 'tagselect',
-     'type_config' => array
-     (
-         'option_callback' => 'org_maemo_calendar_callbacks_personstags',
-         'enable_saving_to_callback' => false,
-         'force_saving_to_tag_library' => true,
-     ),
-     'widget' => 'tags',
- ),
- *
+ * <code>
+ *  'tags' => Array
+ *  (
+ *      'title' => 'event tags',
+ *      'storage' => null,
+ *      'type' => 'tagselect',
+ *      'type_config' => array
+ *      (
+ *          'option_callback' => 'org_maemo_calendar_callbacks_personstags',
+ *          'enable_saving_to_callback' => false,
+ *          'force_saving_to_tag_library' => true,
+ *      ),
+ *      'widget' => 'tags',
+ *  ),
+ * </code>
  * OR
- 'tags' => Array
- (
-     'title' => 'tags',
-     'storage' => null,
-     'type' => 'tagselect',
-     'widget' => 'tags',
-     'widget_config' => array
-     (
-         'component' => 'net.nemein.wiki',
-         'class' => 'net_nemein_wiki_wikipage',
-         'id_field' => 'guid',
-     ),
- ),
+ * <code>
+ *  'tags' => Array
+ *  (
+ *      'title' => 'tags',
+ *      'storage' => null,
+ *      'type' => 'tagselect',
+ *      'widget' => 'tags',
+ *      'widget_config' => array
+ *      (
+ *          'component' => 'net.nemein.wiki',
+ *          'class' => 'net_nemein_wiki_wikipage',
+ *          'id_field' => 'guid',
+ *      ),
+ *  ),
+ * </code>
  *
  * @package midcom.helper.datamanager2
  */
@@ -68,9 +71,9 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
      *
      * @var String
      * @access private
-     */    
+     */
     var $_input_element_id = "tags-widget";
-    
+
     /**
      * Array of options that are passed to javascript widget
      *
@@ -94,7 +97,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
      * @var string
      */
     var $component = null;
-    
+
     /**
      * Objects id/guid which is to be tagged
      *
@@ -108,35 +111,35 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
      * @var string
      */
     var $id_field = null;
-    
+
     /**
      * The javascript to append to the page
      *
      * @var string
-     */    
+     */
     var $_jscript = '';
 
     /**
      * The group of widgets items as QuickForm elements
      */
     var $widget_elements = array();
-    
+
     /**
      * The initialization event handler post-processes the maxlength setting.
      *
      * @return bool Indicating Success
      */
     function _on_initialize()
-    {        
+    {
         if (is_a('midcom_helper_datamanager2_type_tagselect', $this->_type))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Warning, the field {$this->name} is not a tagselect type or subclass thereoff, you cannot use the tags widget with it.",
+            debug_add("Warning, the field {$this->name} is not a tagselect type or subclass thereof, you cannot use the tags widget with it.",
                 MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
-        
+
         if (   !isset($this->component)
             || empty($this->component))
         {
@@ -147,19 +150,19 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
                 debug_add("You must give either object to be edited or callback for action handling!",
                     MIDCOM_LOG_ERROR);
                 debug_pop();
-                return false;                
+                return false;
             }
         }
-        
+
         if (   isset($this->component)
             || !empty($this->component))
         {
-            $object = $this->_type->storage->object;            
+            $object = $this->_type->storage->object;
             $idfield = $this->id_field;
             $this->object_id = @$object->$idfield;
             if (!isset($this->allow_create))
             {
-                $this->allow_create = true;                
+                $this->allow_create = true;
             }
             if (empty($this->object_id))
             {
@@ -167,10 +170,10 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
                 debug_add("We didn't manage to get object_id from type! Quitting now.",
                     MIDCOM_LOG_ERROR);
                 debug_pop();
-                return false;             
-            }            
+                return false;
+            }
         }
-        
+
         $_MIDCOM->enable_jquery();
 
         $_MIDCOM->add_link_head(
@@ -180,18 +183,18 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
                 'href' => MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/jquery.tags_widget.css'
             )
         );
-        
+
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/jquery.bgiframe.min.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.dimensions.js');        
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.dimensions.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/jquery.tags_widget.js');
-                
+
         $this->_input_element_id = "{$this->_namespace}{$this->name}-tags-widget";
-        
+
         $this->_init_widget_options();
 
         return true;
     }
-    
+
     function _init_widget_options()
     {
         $this->_js_widget_options['widget_type_name'] = "'{$this->name}'";
@@ -203,7 +206,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         $this->_js_widget_options['delay'] = 400;
         $this->_js_widget_options['allow_create'] = "false";
         $this->_js_widget_options['width'] = 0;
-                
+
         if (isset($this->min_chars))
         {
             $this->_js_widget_options['min_chars'] = $this->min_chars;
@@ -233,7 +236,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
             {
                 $this->_js_widget_options['select_first'] = "false";
             }
-        }        
+        }
         if (isset($this->delay))
         {
             $this->_js_widget_options['delay'] = $this->delay;
@@ -253,16 +256,16 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         {
             $this->_js_widget_options['width'] = $this->width;
         }
-                        
-        $this->_generate_extra_params();        
+
+        $this->_generate_extra_params();
     }
-    
+
     function _generate_extra_params()
     {
         $map = array('component', 'class', 'object_id', 'id_field', 'callback', 'callback_args');
-        
+
         $params = "{";
-        
+
         if (   !empty($this->component)
             && !empty($this->class)
             && !empty($this->object_id)
@@ -282,25 +285,25 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
                 $params .= ", callback_args: ".json_encode($this->_type->option_callback_args);
             }
         }
-        
+
         $params .= "}";
-        
+
         $this->_js_widget_options['extra_params'] = $params;
     }
-    
+
     function _get_key_data($key)
-    {   
+    {
         $data = $this->_type->get_data_for_key($key);
-        
+
         $value = "{";
-        
+
         $name = "Test";
         $color = "#628ce4";
-        
+
         $value .= "id: '{$key}',";
         $value .= "name: '{$data['name']}',";
         $value .= "color: '{$data['color']}'";
-                
+
         $value .= "}";
 
         return $value;
@@ -321,9 +324,9 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
 
         // $elements = array();
         // $elements[] = & HTML_QuickForm::createElement('hidden', "default", '1', array());
-        // 
+        //
         // $group =& $this->_form->addGroup($elements, $this->name, $this->_translate($this->_field['title']), "<br />");
-        
+
         //$this->_form->addElement('text', "{$this->name}_input", $this->_translate($this->_field['title']), $attributes);
 
         $this->widget_elements[] =& HTML_QuickForm::createElement
@@ -342,10 +345,10 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         $nav = new midcom_helper_nav();
         $root_node = $nav->get_node($nav->get_root_node());
         $this->_handler_url = $root_node[MIDCOM_NAV_FULLURL] . 'midcom-exec-midcom.helper.datamanager2/tags_handler.php';
-        
+
         $this->_jscript .= '<script type="text/javascript">';
         $this->_jscript .= 'jQuery().ready(function(){';
-        
+
         $script = "jQuery('#{$this->_input_element_id}').midcom_helper_datamanager2_widget_tags_widget('{$this->_handler_url}', {\n";
         foreach ($this->_js_widget_options as $key => $value)
         {
@@ -354,7 +357,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         $script .= "});";
         // jQuery('#{$this->_input_element_id}').midcom_helper_datamanager2_widget_tags_result(function(event, data, formatted) {
         //     tags_widget_add_item('{$this->_input_element_id}', data);
-        // });        
+        // });
         $this->_jscript .= $script;
 
         // Add existing selection
@@ -369,10 +372,10 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
             $ee_script .= "jQuery('#{$this->_input_element_id}').midcom_helper_datamanager2_widget_tags_add_selection_item({$data});\n";
         }
         $this->_jscript .= $ee_script;
-        
+
         $this->_jscript .= '});';
         $this->_jscript .= '</script>';
-        
+
         //$this->_form->addElement('static', "{$this->name}_initscripts", '', $this->_jscript);
 
         $this->widget_elements[] =& HTML_QuickForm::createElement
@@ -384,55 +387,55 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
         );
 
         $group =& $this->_form->addGroup($this->widget_elements, $this->name, $this->_translate($this->_field['title']), '', array('class' => 'midcom_helper_datamanager2_widget_tags'));
-        
+
         //debug_pop();
     }
-    
+
     /**
       * The defaults of the widget are mapped to the current selection.
       */
      function get_default()
      {
          //debug_push_class(__CLASS__, __FUNCTION__);
-         
+
          //debug_print_r('this->_type',$this->_type);
-         
+
          $defaults = Array();
          foreach ($this->_type->selection as $key)
          {
              $defaults[$key] = true;
          }
-         
+
          //debug_print_r('defaults',$defaults);
-         
+
          //debug_pop();
          return Array($this->name => $defaults);
      }
-    
+
     /**
      * Reads the given get/post data and puts to type->selection
      */
     function sync_type_with_widget($results)
     {
-        // debug_push_class(__CLASS__, __FUNCTION__);        
+        // debug_push_class(__CLASS__, __FUNCTION__);
         // debug_print_r('results:',$results);
-        
+
         $this->_type->selection = Array();
         if (!isset($results["{$this->name}_tags"]))
         {
             return;
         }
         $real_results =& $results["{$this->name}_tags"];
-        
+
         foreach ($real_results as $key => $value)
         {
             if ($value > 0)
             {
-                $this->_type->selection[] = $key;                
+                $this->_type->selection[] = $key;
             }
         }
-        
-        // debug_print_r('real_results', $real_results);        
+
+        // debug_print_r('real_results', $real_results);
         // debug_pop();
     }
 
@@ -451,7 +454,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
     {
         return false;
     }
-    
+
     function render_content()
     {
         echo '<ul>';

@@ -9,7 +9,7 @@
  */
 
 /**
- * This is a class geared at indexing attachments. It requires you to "assingn" the 
+ * This is a class geared at indexing attachments. It requires you to "assign" the 
  * attachment to a topic, which is used as TOPIC_URL for permission purposes. In addition
  * you may set another MidgardObject as source object, it's GUID is stored in the 
  * __SOURCE field of the index.

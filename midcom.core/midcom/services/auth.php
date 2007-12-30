@@ -39,8 +39,8 @@
  *
  * On content objects (generally every object in the system used during 'normal operation'):
  *
- * - A Midgard User encaspulated by a midcom_core_user object.
- * - A Midgard Group encaspulated by a midcom_core_group object or subtype thereof.
+ * - A Midgard User encapsulated by a midcom_core_user object.
+ * - A Midgard Group encapsulated by a midcom_core_group object or subtype thereof.
  * - The magic assignee 'EVERYONE', which applies the privilege to every user unconditionally,
  *   even to unauthenticated users.
  * - The magic assignee 'USERS', which applies to all authenticated users.

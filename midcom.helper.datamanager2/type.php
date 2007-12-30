@@ -56,7 +56,7 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     var $_external_config = Array();
 
     /**
-     * The name field holds the name of the field the datatype is encaspulating. This
+     * The name field holds the name of the field the datatype is encapsulating. This
      * maps to the schema's field name. You should never have to change them.
      *
      * @var string

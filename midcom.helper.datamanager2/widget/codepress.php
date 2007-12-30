@@ -28,6 +28,14 @@
  */
 class midcom_helper_datamanager2_widget_codepress extends midcom_helper_datamanager2_widget
 {
+    /**
+     * Programming language being edited by CodePress
+     *
+     * for example php or javascript
+     *
+     * @var string
+     * @access public
+     */
     var $language = 'php';
 
     /**
@@ -45,7 +53,7 @@ class midcom_helper_datamanager2_widget_codepress extends midcom_helper_datamana
      * @access public
      */
     var $height = 6;
-    
+
     /**
      * The initialization event handler post-processes the maxlength setting.
      *
@@ -63,9 +71,9 @@ class midcom_helper_datamanager2_widget_codepress extends midcom_helper_datamana
             debug_pop();
             return false;
         }
-        
+
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/codepress/codepress.js');
-        
+
         return true;
     }
 
@@ -84,7 +92,7 @@ class midcom_helper_datamanager2_widget_codepress extends midcom_helper_datamana
 
         $this->_form->addElement('textarea', $this->name, $this->_translate($this->_field['title']), $attributes);
         $this->_form->applyFilter($this->name, 'trim');
-        
+
         $this->_form->setAttribute('onsubmit', $this->_form->getAttribute('onsubmit') . "{$this->_namespace}{$this->name}.toggleEditor()");
     }
 

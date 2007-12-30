@@ -12,6 +12,10 @@ if (!class_exists('HTML_QuickForm_Rule'))
 {
     require_once('HTML/QuickForm/Rule.php');
 }
+
+/**
+ * @package midcom.helper.datamanager2
+ */
 class midcom_helper_datamanager2_qfrule_select_manager
 {
     var $rules = array
@@ -45,6 +49,9 @@ class midcom_helper_datamanager2_qfrule_select_manager
     }
 }
 
+/**
+ * @package midcom.helper.datamanager2
+ */
 class midcom_helper_datamanager2_qfrule_select_requiremultiselect extends HTML_QuickForm_Rule
 {
     function validate($value, $options = null)

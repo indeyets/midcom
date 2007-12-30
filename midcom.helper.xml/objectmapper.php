@@ -51,7 +51,7 @@ class midcom_helper_xml_objectmapper
      * Take xml and move it into an object
      * @param string xmldata
      * @param the object in question.
-     * @return the updated object (not saved)
+     * @return object the updated object (not saved)
      */
     function data2object($data, $object)
     {
@@ -159,7 +159,7 @@ class midcom_helper_xml_objectmapper
                 continue;
                 // We're not interested in attribs
             }
-            
+
             $value['_content'] = trim($value['_content']);
 
             if (   is_array($value)
@@ -174,15 +174,15 @@ class midcom_helper_xml_objectmapper
                     {
                         continue;
                     }
-                    
+
                     $array[$this->classname][$fieldname][$subfield] = $subvalue['_content'];
                 }
-            }  
+            }
             elseif (is_array($value)
                 && array_key_exists('_content', $value))
             {
                 $array[$this->classname][$fieldname] = $value['_content'];
-            } 
+            }
             else
             {
                 unset($array[$this->classname][$fieldname]);
@@ -191,7 +191,7 @@ class midcom_helper_xml_objectmapper
 
         return $array[$this->classname];
     }
-    
+
     /**
      * Make XML out of an object loaded into datamanager
      * @param midcom_helper_datamanager2_datamanager
@@ -213,10 +213,10 @@ class midcom_helper_xml_objectmapper
      * Make XML out of an array.
      * @param array
      * @return xmldata
-     */    
+     */
     function array2data($array, $root_node = 'array', $prefix = '')
     {
-        if (!is_array($array)) 
+        if (!is_array($array))
         {
             debug_push(__CLASS__, __FUNCTION__);
             debug_add("This function must get an arrat as it's parameter not: " . gettype($array));
@@ -226,27 +226,27 @@ class midcom_helper_xml_objectmapper
         }
 
         $data  = "{$prefix}<{$root_node}>\n";
-        
+
         foreach ($array as $key => $field)
         {
             if (is_numeric($key))
             {
                 $key = 'value';
             }
-            
+
             if (empty($field))
             {
                $data .= "{$prefix}    <{$key}/>\n";
             }
-            
+
             elseif (is_array($field))
             {
                 $data .= $this->array2data($field, $key, "{$prefix}    ");
             }
-            elseif (   is_numeric($field) 
-                    || is_null($field) 
-                    || is_bool($field)) 
-            { 
+            elseif (   is_numeric($field)
+                    || is_null($field)
+                    || is_bool($field))
+            {
                 $data .= "{$prefix}    <{$key}>{$field}</{$key}>\n";
             }
             else
@@ -255,12 +255,12 @@ class midcom_helper_xml_objectmapper
                 $data .= "{$prefix}    <{$key}><![CDATA[{$field}]]></{$key}>\n";
             }
         }
-        
+
         $data .= "{$prefix}</{$root_node}>\n";
-        
+
         return $data;
     }
-    
+
     /**
      * Make xml out of an object.
      * @param object
@@ -269,7 +269,7 @@ class midcom_helper_xml_objectmapper
     function object2data($object, $classname = null)
     {
 
-        if (!is_object($object)) 
+        if (!is_object($object))
         {
             debug_push(__CLASS__, __FUNCTION__);
             debug_add("This function must get an object as it's parameter not: " . gettype($object));
@@ -309,11 +309,11 @@ class midcom_helper_xml_objectmapper
             {
                 $data .= $this->object2data($field, $key);
             }
-            
-            elseif (   is_numeric($field) 
-                    || is_null($field) 
-                    || is_bool($field)) 
-            { 
+
+            elseif (   is_numeric($field)
+                    || is_null($field)
+                    || is_bool($field))
+            {
                 $data .= "<{$key}>{$field}</{$key}>\n";
             }
             else

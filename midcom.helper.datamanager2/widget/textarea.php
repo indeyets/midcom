@@ -40,7 +40,7 @@
 class midcom_helper_datamanager2_widget_textarea extends midcom_helper_datamanager2_widget
 {
     /**
-     * Maximum length of the string encaspulated by this type. 0 means no limit.
+     * Maximum length of the string encapsulated by this type. 0 means no limit.
      * -1 tries to bind to the types maxlength member, if available.
      *
      * @var int

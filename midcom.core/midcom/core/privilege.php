@@ -8,7 +8,7 @@
  */
 
 /**
- * Privilege class, used to interact with the privilege system. It encaspulates the actual
+ * Privilege class, used to interact with the privilege system. It encapsulates the actual
  * Database Level Object. As usual with MidCOM DBA, you <i>must never access the DB layer
  * object.</i>
  *
@@ -48,7 +48,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
 {
     var $guid = '';
     var $id = 0;
-    
+
     /**
      * The GUID of the content object this privilege is valid for.
      *
@@ -152,12 +152,12 @@ class midcom_core_privilege extends midcom_core_privilege_db
 
     /**
      * If the assignee has an object representation (at this time, only users and groups have), this call
-     * will return a reference to the assignee object held by the authentication service. See
-     * midcom_services_auth::get_assignee() for details.
+     * will return a reference to the assignee object held by the authentication service.
      *
      * Use is_magic_assignee to determine if you have an assignee object.
      *
-     * @return object A midcom_core_user or midcom_core_group object reference as returned by the auth service,
+     * @see midcom_services_auth::get_assignee()
+     * @return mixed A midcom_core_user or midcom_core_group object reference as returned by the auth service,
      *     returns false on failure.
      */
     function & get_assignee()
@@ -172,7 +172,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
     /**
      * Checks whether the current assignee is a magic assignee or an object identifier.
      *
-     * @return bool True, if it is a magic assingee, false otherwise.
+     * @return bool True, if it is a magic assignee, false otherwise.
      */
     function is_magic_assignee()
     {
@@ -180,10 +180,10 @@ class midcom_core_privilege extends midcom_core_privilege_db
     }
 
     /**
-     * Internal helper, encaspulating the check whether an assignee string is a known
+     * Internal helper, encapsulating the check whether an assignee string is a known
      * magic assignee.
      *
-     * @return bool True, if it is a magic assingee, false otherwise.
+     * @return bool True, if it is a magic assignee, false otherwise.
      */
     function _is_magic_assignee($assignee)
     {
@@ -204,7 +204,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
     /**
      * This call sets the assignee member string to the correct value to represent the
      * object passed, in general, this resolves users and groups to their strings and
-     * leaves magic assingees intact.
+     * leaves magic assignees intact.
      *
      * Possible argument types:
      *
@@ -257,10 +257,10 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * This call validates the privilege for correctness of all set options. This includes:
      *
      * - A check against the list of registered privileges to ensure the existence of the
-     *   privilege itselef.
+     *   privilege itself.
      * - A check for a valid and existing assignee, this includes a class existence check for classname restrictions
      *   for SELF privileges.
-     * - A check for an existing content object GUID (this implicitly cheks for midgard:read as well).
+     * - A check for an existing content object GUID (this implicitly checks for midgard:read as well).
      * - Enough privileges of the current user to update the objects privileges (the user
      *   must have midgard:update and midgard:privileges for this to succeed).
      * - A valid privilege value.
@@ -454,10 +454,10 @@ class midcom_core_privilege extends midcom_core_privilege_db
     function _query_all_privileges($guid)
     {
         $result = array();
-        
+
         $mc = new midgard_collector('midcom_core_privilege_db', 'objectguid', $guid);
         $mc->add_constraint('value', '<>', MIDCOM_PRIVILEGE_INHERIT);
-        //FIXME: 
+        //FIXME:
         $mc->set_key_property('guid');
         $mc->add_value_property('id');
         $mc->add_value_property('name');
@@ -466,7 +466,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
         $mc->add_value_property('value');
         $mc->execute();
         $privileges = $mc->list_keys();
-        
+
         if (!$privileges)
         {
             if (mgd_errstr() != 'MGD_ERR_OK')
@@ -486,7 +486,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
 
             return $result;
         }
-        
+
         foreach($privileges as $privilege_guid => $value)
         {
             $privilege = $mc->get($privilege_guid);
@@ -494,7 +494,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
             $privilege['guid'] = $privilege_guid;
             $return[] = new midcom_core_privilege($privilege);
         }
-        
+
         //$mc->destroy();
 
         return $return;
@@ -502,7 +502,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
 
     /**
      * This is a static helper function which retrieves a single given privilege
-     * at a content object, identified by the combination of assingee and privilege
+     * at a content object, identified by the combination of assignee and privilege
      * name.
      *
      * This call will return an object even if the privilege is set to INHERITED at
@@ -560,7 +560,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
             $privilege->value = MIDCOM_PRIVILEGE_INHERIT;
             return $privilege;
         }
-        
+
         $priv = array
         (
             'guid' => $result[0]->guid,
@@ -602,12 +602,12 @@ class midcom_core_privilege extends midcom_core_privilege_db
     function collect_content_privileges(&$arg, $user = null)
     {
         static $cached_collected_privileges = array();
-    
+
         if (is_null($user))
         {
             $user = $_MIDCOM->auth->user;
         }
-        
+
         /*if ($user == 'EVERYONE')
         {
             $user = null;
@@ -617,7 +617,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
         {
             $object = null;
             $guid = $arg;
-            
+
             if (array_key_exists($guid, $cached_collected_privileges))
             {
                 return $cached_collected_privileges[$guid];
@@ -635,7 +635,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
                 $guid = null;
             }
         }
-        
+
         if (is_null($guid))
         {
             return array();
@@ -690,13 +690,13 @@ class midcom_core_privilege extends midcom_core_privilege_db
             }
         }
         else
-        {        
+        {
             $base_privileges = Array();
         }
-        
+
         // We need to be careful here again in case we have non-persistant objects.
         // This case is a bit different then the above one, though. Non-Persistant
-        // objects can't have any privileges assinged whatsoever, so we skip the call
+        // objects can't have any privileges assigned whatsoever, so we skip the call
         // entirely.
         if ($guid === null)
         {
@@ -816,7 +816,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
             $base_privileges,
             $collected_privileges
         );
-        
+
         $cached_collected_privileges[$guid] = $final_privileges;
 
         return $final_privileges;
@@ -1053,7 +1053,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
             debug_pop();
             return false;
         }
-        
+
         $privilege = new midcom_core_privilege_db($this->guid);
         if (!$privilege->delete())
         {

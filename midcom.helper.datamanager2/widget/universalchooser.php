@@ -20,10 +20,11 @@ require_once('radiocheckselect.php');
  *
  * Note for this widget to work correctly you probably need these two set in type_config
  * (not strictly required, if your options list/callback always contains everything needed, which is unlikely)
+ * <code>
  *     'require_corresponding_option' => false,
  *     'allow_other'    => true,
- *
- * Extra configurations:
+ * <code>
+ * <b>Extra configurations:</b>
  *     'static_options' is an array of key => value pairs, shown always (use it to add for example "none" to a radio selection)
  *
  * @package midcom.helper.datamanager2
@@ -36,7 +37,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
      * @var string
      */
     var $class = false;
-    
+
     /**
      * The group of selected items as QuickForm elements
      */
@@ -85,7 +86,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
     var $constraints = array();
 
     /**
-     * Fields/properties to search the keyword for, always OR and specified after the constaints above
+     * Fields/properties to search the keyword for, always OR and specified after the constraints above
      *
      * Example:
      *      'searchfields' => array('firstname', 'lastname', 'email', 'username'),
@@ -97,7 +98,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
     /**
      * associative array of ordering info, always added last
      *
-     * Example: 
+     * Example:
      *     'orders' => array(array('lastname' => 'ASC'), array('firstname' => 'ASC')),
      *
      * @var array
@@ -109,26 +110,28 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
      * @var boolean
      */
     var $allow_create = false;
-    
+
     /**
      * Used as part of data for a hash the handler checks
      *
      * @var string (binary)
      */
     var $_shared_secret = null;
-    
+
     /**
      * These options are always visible
      */
     var $static_options = array();
-    
+
     /**
      * Whether to automatically append/prepend wildcards to the query
-     * 
+     *
      * Valid values: 'both', 'start', 'end' and <empty> (0, '', false & null)
      *
-     * Example: 
+     * Example:
+     * <code>
      *     'auto_wildcards' => 'both',
+     * </code>
      *
      * $var string
      */
@@ -173,7 +176,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             debug_pop();
             return false;
         }
-        
+
         if (!$this->_check_class())
         {
             debug_add("Warning, cannot get class {$this->class} loaded.",
@@ -221,13 +224,13 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         debug_pop();
         return true;
     }
-    
+
     function _check_create()
     {
         $component_path = MIDCOM_ROOT . '/' . str_replace('.', '/', $this->component);
         return file_exists($component_path . '/exec/universalchooser_createhandler.php');
     }
-    
+
     function _check_class()
     {
         if (class_exists($this->class))
@@ -237,7 +240,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         $_MIDCOM->componentloader->load($this->component);
         return class_exists($this->class);
     }
-    
+
     function _get_single_key($key)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -260,14 +263,14 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
                     return $object;
                 }
             }
-        
+
             debug_pop();
             return false;
         }
         debug_pop();
         return $results[0];
     }
-    
+
     function _get_key_value($key)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -410,7 +413,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         $nav = new midcom_helper_nav();
         $root_node = $nav->get_node($nav->get_root_node());
         $url = $root_node[MIDCOM_NAV_FULLURL] . 'midcom-exec-midcom.helper.datamanager2/universalchooser_handler.php';
-        
+
         $this->elements2[] =& HTML_QuickForm::createElement
             (
                 'hidden',
@@ -583,7 +586,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             return;
         }
         $real_results =& $results[$this->name];
-        
+
         // PONDER: Check type->require_corresponding_option setting and do checks against available options if set (very unlikely though...)
         if ($this->_type->allow_multiple)
         {
@@ -619,7 +622,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         else
         {
             if (count($this->_type->selection) == 0)
-            {            
+            {
                 echo $this->_translate('type select: no selection');
             }
             else
@@ -639,7 +642,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         }
         */
     }
-    
+
     function freeze()
     {
         foreach ($this->elements as $element)
@@ -681,7 +684,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
                 $element->unfreeze();
             }
         }
-    }    
+    }
 
 }
 

@@ -757,7 +757,7 @@ class midcom_services_i18n
      * charset to UTF8.
      *
      * @param string $string The string to convert
-     * @return The string converted to UTF-8
+     * @return string The string converted to UTF-8
      */
     function convert_to_utf8 ($string)
     {
@@ -773,7 +773,7 @@ class midcom_services_i18n
      * active charset.
      *
      * @param string $string The string to convert
-     * @return The string converted to the current charset
+     * @return string The string converted to the current charset
      */
     function convert_from_utf8 ($string)
     {

@@ -16,7 +16,7 @@
 class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_components_handler
 {
     /**
-     * The category record encaspulating the root (type) category.
+     * The category record encapsulating the root (type) category.
      *
      * @var net_nehmer_branchenbuch_branche
      * @access private
@@ -97,7 +97,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
     var $_list_url_base = null;
 
     /**
-     * The schema manager class encaspulating all schema operations referencing
+     * The schema manager class encapsulating all schema operations referencing
      * account schemas.
      *
      * @var net_nehmer_branchenbuch_schemamgr
@@ -127,7 +127,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
     }
 
     /**
-     * Internal Helper encaspulating the index call.
+     * Internal Helper encapsulating the index call.
      *
      * @param midcom_helper_datamanager2_datamanager $datamanager The DM2 instance to index.
      */

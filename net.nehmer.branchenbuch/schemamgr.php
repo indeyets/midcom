@@ -10,7 +10,7 @@
 /**
  * Branchenbuch Schema helper class.
  *
- * This class encaspulates a few function used to manage schemas within the
+ * This class encapsulates a few function used to manage schemas within the
  * branchenbuch, which are all tied to the account component.
  *
  * @package net.nehmer.branchenbuch

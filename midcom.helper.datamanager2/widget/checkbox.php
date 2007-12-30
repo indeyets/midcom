@@ -22,9 +22,9 @@
  *   by default.
  * - <i>array jsevents:</i> Array of event=>action pairs to control client side behavior.
  *   Ex.:
- *   
+ *   <code>
  *   'onclick' => 'do_something(param1)',
- * 
+ *   </code>
  *   will add "onclick='do_something(param1)'" attribute to <input> tag.
  * - <i>string description</i> Extra description of a QF element placed next to element.
  *

@@ -8,7 +8,7 @@
  */
 
 /**
- * System user, basically encaspulates a MidgardPerson. It does not provide a way to
+ * System user, basically encapsulates a MidgardPerson. It does not provide a way to
  * manipulate accounts, instead, this is an abstraction used in the ACL system.
  *
  * You must not create these objects directly. Instead, use the factory method

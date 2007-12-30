@@ -8,7 +8,7 @@
  */
 
 /**
- * This class encaspulates a the information contained in a component manifest.
+ * This class encapsulates a the information contained in a component manifest.
  * Naturally, its information is read-only.
  *
  * <b>The Component Manifest</b>

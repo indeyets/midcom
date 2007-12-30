@@ -9,7 +9,7 @@
  */
 
 /**
- * This class encaspulates a single indexer document. It is used for both indexing
+ * This class encapsulates a single indexer document. It is used for both indexing
  * and retrieval.
  *
  * A document consists of a number of fields, each field has different properties

@@ -32,7 +32,7 @@ require_once('Date.php');
 class midcom_helper_datamanager2_type_date extends midcom_helper_datamanager2_type
 {
     /**
-     * The current date encaspulated by this type.
+     * The current date encapsulated by this type.
      *
      * @var Date
      * @see http://pear.php.net/package/Date/docs/latest/

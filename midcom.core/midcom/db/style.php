@@ -14,7 +14,7 @@ require(MIDCOM_ROOT . '/midcom/baseclasses/database/style.php');
 /**
  * MidCOM Legacy Database Abstraction Layer
  *
- * This class encaspulates a classic MidgardStyle with its original features.
+ * This class encapsulates a classic MidgardStyle with its original features.
  *
  * <i>Preliminary Implementation:</i>
  *

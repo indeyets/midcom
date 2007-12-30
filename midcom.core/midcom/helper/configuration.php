@@ -212,7 +212,7 @@ class midcom_helper_configuration
      * If $reset is set, the local configuration will be cleared before
      * the new set is imported, if not, the new data is merged with the old local
      * configuration, overwriting duplicates. During import each configuration key will
-     * be checked against the global configuration values. If an unkown value is found,
+     * be checked against the global configuration values. If an unknown value is found,
      * import will be aborted and no changes to the configuration is done.
      *
      * After import the cache array will be updated, reset is done by reset_local.
@@ -241,7 +241,7 @@ class midcom_helper_configuration
      * Import data from a Midgard object.
      *
      * To import configuration data from a Midgard Object, use this method. As in the
-     * respecitve constructor it will retrieve the configuration data in the parameter
+     * respective constructor it will retrieve the configuration data in the parameter
      * domain $path of $object. Unlike the constructor this function will store the
      * data in the local configuration.
      *
