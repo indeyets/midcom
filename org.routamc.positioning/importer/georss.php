@@ -97,11 +97,16 @@ class org_routamc_positioning_importer_georss extends org_routamc_positioning_im
                         continue;
                     }
 
+                    if (!isset($item['date_timestamp']))
+                    {
+                        $item['date_timestamp'] = time();
+                    }
+                    
                     $position = array
                     (
                         'latitude'    => $latitude,
-                        'longitude'    => $longitude,
-                        'time'      => strtotime($item)
+                        'longitude'   => $longitude,
+                        'time'        => $item['date_timestamp'],
                     );
 
                     // We're happy with the first proper match
