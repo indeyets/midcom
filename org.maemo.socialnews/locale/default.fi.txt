@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING %s to %s with score %d
+%s kansioon %s %d pisteellä.
+---STRINGEND
+
 ---STRING archive
 Arkisto
 ---STRINGEND
@@ -11,11 +15,19 @@ Arkisto
 %s:n parhaat
 ---STRINGEND
 
+---STRING item %s has been registered for score recalculation
+Dokumentti %s on rekisteröity pisteiden uudelleenlaskentaan.
+---STRINGEND
+
 ---STRING org.maemo.socialnews
 Sosiaalinen uutispalvelu
 ---STRINGEND
 
----STRING item %s has been registered for score recalculation
-Dokumentti %s on rekisteröity pisteiden uudelleenlaskentaan.
+---STRING your attention: %s%%
+Sinun huomiosi: %s%%.
+---STRINGEND
+
+---STRING %s to %s by %s with score %d
+%s kansioon %s, kirjoittanut %s %d pisteellä.
 ---STRINGEND
 

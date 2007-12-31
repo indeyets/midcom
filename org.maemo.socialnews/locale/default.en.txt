@@ -3,6 +3,14 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING %s to %s by %s with score %d
+%s to %s by %s with score %d.
+---STRINGEND
+
+---STRING %s to %s with score %d
+%s to %s with score %d.
+---STRINGEND
+
 ---STRING archive
 Archive
 ---STRINGEND
@@ -11,11 +19,15 @@ Archive
 Best of %s
 ---STRINGEND
 
+---STRING item %s has been registered for score recalculation
+Item %s has been registered for score recalculation.
+---STRINGEND
+
 ---STRING org.maemo.socialnews
 Social news aggregator
 ---STRINGEND
 
----STRING item %s has been registered for score recalculation
-Item %s has been registered for score recalculation.
+---STRING your attention: %s%%
+Your attention: %s%%.
 ---STRINGEND
 

@@ -18,6 +18,7 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
 {
     private $articles = array();
     private $articles_scores = array();
+    private $articles_attention = array();
     private $nodes = array();
 
     /**
@@ -133,6 +134,13 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
 
             $this->articles[$article->guid] = $article;
             $this->articles_scores[$article->guid] = $score->score;
+            
+            if ($this->_config->get('attention_enable'))
+            {
+                $_MIDCOM->load_library('net.nemein.attention');
+                $calculator = new net_nemein_attention_calculator();
+                $this->articles_attention[$article->guid] = $calculator->rate_object($article);
+            }
         }
 
         // Normalize articles
@@ -194,6 +202,11 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
             $data['article'] = $article;
             $data['node'] = $this->get_node($article->topic);
             $data['score'] = $this->articles_scores[$article->guid];
+            
+            if (isset($this->articles_attention[$article->guid]))
+            {
+                $data['attention'] = $this->articles_attention[$article->guid];
+            }
             midcom_show_style('bestof_item');
         }
         midcom_show_style('bestof_footer');

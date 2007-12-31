@@ -77,7 +77,7 @@ class net_nemein_attention_calculator extends midcom_baseclasses_components_pure
         }
         
         $qb = net_nemein_attention_concept_dba::new_query_builder();
-        $qb->add_constraint('person', '=', $user->id);
+        $qb->add_constraint('person', '=', $this->user->id);
         
         if ($this->profile)
         {
@@ -87,7 +87,7 @@ class net_nemein_attention_calculator extends midcom_baseclasses_components_pure
         $concepts = $qb->execute();
         foreach ($concepts as $concept)
         {
-            $this->user_nodes['concepts'][$key] = $concept->value;
+            $this->user_nodes['concepts'][$concept->concept] = $concept->value;
         }
     }
     
@@ -156,8 +156,9 @@ class net_nemein_attention_calculator extends midcom_baseclasses_components_pure
         $score = 0;
         
         // Read object tags as concepts
+        $_MIDCOM->load_library('net.nemein.tag');
         $concepts = array();
-        $tags = net_nemein_tag_handler::get_tags_by_guid($object_guid);
+        $tags = net_nemein_tag_handler::get_tags_by_guid($object->guid);
         foreach ($tags as $tag => $url)
         {
             $concepts[] = $tag;
