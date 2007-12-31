@@ -101,7 +101,7 @@ class org_routamc_positioning_importer_georss extends org_routamc_positioning_im
                     (
                         'latitude'    => $latitude,
                         'longitude'    => $longitude,
-                        'time'      => net_nemein_rss_fetch::parse_item_date($item)
+                        'time'      => strtotime($item)
                     );
 
                     // We're happy with the first proper match
