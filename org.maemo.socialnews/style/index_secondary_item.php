@@ -38,15 +38,15 @@ $date_string = "<abbr class=\"published\" title=\"" . strftime('%Y-%m-%dT%H:%M:%
 
     <div class="post-info">
         <?php
+        net_nemein_favourites_admin::render_add_link($data['article']->__new_class_name__, $data['article']->guid);
         if (empty($author_string))
         {
-            echo sprintf($data['l10n']->get('%s to %s'), $date_string, $node_string);
+            echo sprintf($data['l10n']->get('%s to %s with score %d'), $date_string, $node_string, $data['score']);
         }
         else
         {
-            echo sprintf($data['l10n']->get('%s to %s by %s'), $date_string, $node_string, $author_string);
+            echo sprintf($data['l10n']->get('%s to %s by %s with score %d'), $date_string, $node_string, $author_string, $data['score']);
         }
-        net_nemein_favourites_admin::render_add_link($data['article']->__new_class_name__, $data['article']->guid);
         ?>
     </div>
 </div>

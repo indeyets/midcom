@@ -18,6 +18,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
 {
     private $articles = array();
     private $articles_scores = array();
+    private $articles_scores_initial = array();
     private $nodes = array();
 
     /**
@@ -78,8 +79,8 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         $articles = $qb->execute();
         foreach ($articles as $article)
         {
-            $initial_score = $this->get_initial_score($article->id);
-            if ($initial_score < $this->_config->get('frontpage_score_start'))
+            $this->articles_scores_initial[$article->guid] = $this->get_initial_score($article->id);
+            if ($this->articles_scores_initial[$article->guid] < $this->_config->get('frontpage_score_start'))
             {
                 continue;
             }
@@ -99,7 +100,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
 
             $articles_by_url[$article->url] = $article->guid;
             $articles_by_guid[$article->guid] = $article;
-            $this->articles_scores[$article->guid] = $this->count_age($initial_score, $article->metadata->published);
+            $this->articles_scores[$article->guid] = $this->count_age($this->articles_scores_initial[$article->guid], $article->metadata->published);
         }
 
         arsort($this->articles_scores);
@@ -265,6 +266,8 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             // TODO: Datamanager
             $data['article'] = $article;
             $data['node'] = $this->get_node($article->topic);
+            $data['score'] = $this->articles_scores[$article->guid];
+            $data['score_initial'] = $this->articles_scores_initial[$article->guid];
             midcom_show_style('index_main_item');
         }
         midcom_show_style('index_main_footer');
@@ -277,6 +280,8 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
                 // TODO: Datamanager
                 $data['article'] = $article;
                 $data['node'] = $this->get_node($article->topic);
+                $data['score'] = $this->articles_scores[$article->guid];
+                $data['score_initial'] = $this->articles_scores_initial[$article->guid];
                 midcom_show_style('index_secondary_item');
             }
             midcom_show_style('index_secondary_footer');
