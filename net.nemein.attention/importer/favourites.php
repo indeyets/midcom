@@ -72,7 +72,8 @@ class net_nemein_attention_importer_favourites extends net_nemein_attention_impo
             $nodes['concepts'][$tag] += $value;
         }
     }
-    
+
+    // TODO: Move to a more generic place, useful also for calculators
     function read_authors($author_string, $nodes, $value = 1)
     {
         $object_authors = explode('|', substr($author_string, 1, -1));
@@ -92,7 +93,8 @@ class net_nemein_attention_importer_favourites extends net_nemein_attention_impo
             $nodes['authors'][$author_user->name] += $value;
         }
     }
-    
+
+    // TODO: Move to a more generic place, useful also for calculators    
     function read_categories($category_string, $nodes, $item_concepts, $value = 1)
     {
         $categories = explode('|', substr($category_string, 1, -1));
