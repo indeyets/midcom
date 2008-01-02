@@ -195,9 +195,13 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                         {
                             $item = new net_nemein_alphabeticalindex_item();
                             $item->title = $object->title;
-                            $item->url = "{$GLOBALS['midcom_config']['midcom_site_url']}midcom-permalink-{$object->guid}";
+                            $item->url = $object->guid;
                             $item->objectGuid = $object->guid;
-                            $item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($object->guid);
+                            if ($this->_config['cache_resolved_permalink'])
+                            {
+                                $item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($object->guid);
+                            }
+
                             $item->node = $this->_topic->id;
 
                             if ($item->create())
@@ -232,9 +236,12 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                         {
                             $item = new net_nemein_alphabeticalindex_item();
                             $item->title = $object->extra;
-                            $item->url = "{$GLOBALS['midcom_config']['midcom_site_url']}midcom-permalink-{$object->guid}";
+                            $item->url = $object->guid;
                             $item->objectGuid = $object->guid;
-                            $item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($object->guid);
+                            if ($this->_config['cache_resolved_permalink'])
+                            {
+                                $item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($object->guid);
+                            }
                             $item->node = $this->_topic->id;
 
                             if ($item->create())

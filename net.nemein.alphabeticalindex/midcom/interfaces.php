@@ -104,7 +104,7 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
        	       	
                 $item = new net_nemein_alphabeticalindex_item();            
                 $item->title = $title;
-                $item->url = "{$GLOBALS['midcom_config']['midcom_site_url']}midcom-permalink-{$object->guid}";
+                $item->url = $object->guid;
                 $item->objectGuid = $object->guid;
                 $item->node = $list_id;
                 if ($item->create())

@@ -42,6 +42,29 @@ class net_nemein_alphabeticalindex_item extends __net_nemein_alphabeticalindex_i
 
         return true;
     }
+    
+    function resolve_url($echo=false)
+    {
+        $url = $this->url;
+        
+        if (mgd_is_guid($this->url)) {
+            $url = $_MIDCOM->permalinks->create_permalink($this->objectGuid);
+        }
+        
+        if (! empty($this->cachedUrl))
+        {
+            $url = $this->cachedUrl;
+        }
+        
+        if ($echo)
+        {
+            echo $url;
+        }
+        else
+        {
+            return $url;
+        }
+    }
 
 }
 
