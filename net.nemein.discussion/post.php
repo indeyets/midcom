@@ -19,6 +19,110 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         return parent::__net_nemein_discussion_post_dba($id);
     }
 
+    /**
+     * Statically callable method to get parent guid when object guid is given
+     * 
+     * Uses midgard_collector to avoid unneccessary full object loads
+     *
+     * @param guid $guid guid of thread to get the parent for
+     */
+    function get_parent_guid_uncached_static($guid)
+    {
+        if (empty($guid))
+        {
+            return null;
+        }
+        $mc_post = net_nemein_discussion_post_dba::new_collector('guid', $guid);
+        $mc_post->add_value_property('replyto');
+        $mc_post->add_value_property('thread');
+        if (!$mc_post->execute())
+        {
+            // Error
+            return null;
+        }
+        $mc_post_keys = $mc_post->list_keys();
+        list ($key, $copy) = each ($mc_post_keys);
+        $up = $mc_post->get_subkey($key, 'replyto');
+        if ($up === false)
+        {
+            // error
+            return null;
+        }
+        if (!empty($up))
+        {
+            return net_nemein_discussion_post_dba::_get_parent_guid_uncached_static_post($up);
+        }
+        $thread = $mc_post->get_subkey($key, 'thread');
+        if ($thread === false)
+        {
+            // error
+            return null;
+        }
+        return net_nemein_discussion_post_dba::_get_parent_guid_uncached_static_thread($thread);
+    }
+    
+    /**
+     * Get thread guid statically
+     *
+     * used by get_parent_guid_uncached_static
+     *
+     * @param id $parent_id id of thread to get the guid for
+     */
+    function _get_parent_guid_uncached_static_thread($parent_id)
+    {
+        if (empty($parent_id))
+        {
+            return null;
+        }
+        $mc_parent = net_nemein_discussion_thread_dba::new_collector('id', $parent_id);
+        $mc_parent->add_value_property('guid');
+        if (!$mc_parent->execute())
+        {
+            // Error
+            return null;
+        }
+        $mc_parent_keys = $mc_parent->list_keys();
+        list ($key, $copy) = each ($mc_parent_keys);
+        $parent_guid = $mc_parent->get_subkey($key, 'guid');
+        if ($parent_guid === false)
+        {
+            // Error
+            return null;
+        }
+        return $parent_guid;
+    }
+
+    /**
+     * Get post guid statically
+     *
+     * used by get_parent_guid_uncached_static
+     *
+     * @param id $parent_id id of thread to get the guid for
+     */
+    function _get_parent_guid_uncached_static_post($parent_id)
+    {
+        if (empty($parent_id))
+        {
+            return null;
+        }
+        $mc_parent = net_nemein_discussion_post_dba::new_collector('id', $parent_id);
+        $mc_parent->add_value_property('guid');
+        if (!$mc_parent->execute())
+        {
+            // Error
+            return null;
+        }
+        $mc_parent_keys = $mc_parent->list_keys();
+        list ($key, $copy) = each ($mc_parent_keys);
+        $parent_guid = $mc_parent->get_subkey($key, 'guid');
+        if ($parent_guid === false)
+        {
+            // Error
+            return null;
+        }
+        return $parent_guid;
+    }
+
     function get_label()
     {
         return $this->subject;
@@ -190,6 +294,15 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         return true;
     }
 
+    function _on_updating()
+    {
+        if ($this->subject == '')
+        {
+            $this->subject = substr($this->content, 0, 20) . '...';
+        }
+        return parent::_on_updating();
+    }
+
     function _on_updated()
     {
         return $this->_update_thread_cache();
@@ -222,6 +335,12 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
             {
                 $thread = $thread->get_parent();
             }
+        }
+        
+        if (   !$thread
+            || !$thread->guid)
+        {
+            return false;
         }
 
         $latest_post = new net_nemein_discussion_post_dba($thread->latestpost);
