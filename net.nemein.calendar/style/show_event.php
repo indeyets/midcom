@@ -27,6 +27,22 @@ $data['event']->end = strtotime($data['event']->end);
     <div class="description">
         &(view['description']:h);
     </div>
+    
+    <?php
+    if (class_exists('org_routamc_positioning_object'))
+    {
+        $object_position = new org_routamc_positioning_object($data['event']);
+        $coordinates = $object_position->get_coordinates();
+        if (   $coordinates['latitude']
+            && $coordinates['longitude'])
+        {
+            $map = new org_routamc_positioning_map('net_nemein_calendar_event_map');
+            $map->add_object($data['event']);
+            $map->show(); 
+        }
+    }
+    ?>
+    
     <abbr class="dtstamp" style="display: none;" title="<?php echo gmdate('Y-m-d\TH:i:s\Z', $data['event']->metadata->published); ?>"><?php echo gmdate('Y-m-d\TH:i:s\Z', $data['event']->metadata->published); ?></abbr>
     <span class="uid" style="display: none;"><?php echo $data['event']->guid; ?></span>    
 </div>
