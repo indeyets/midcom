@@ -20,7 +20,7 @@ class net_nemein_alphabeticalindex_item extends __net_nemein_alphabeticalindex_i
     {
         parent::__net_nemein_alphabeticalindex_item($id);
     }
-    
+
     /**
      * Human-readable label for cases like Asgard navigation
      */
@@ -32,7 +32,7 @@ class net_nemein_alphabeticalindex_item extends __net_nemein_alphabeticalindex_i
         }
         return "item #{$this->id}";
     }
-    
+
     function _on_loaded()
     {
         if (!empty($this->objectGuid))
@@ -53,7 +53,7 @@ class net_nemein_alphabeticalindex_item extends __net_nemein_alphabeticalindex_i
 
         return true;
     }
-    
+
     function resolve_url($echo=false)
     {
         $url = $this->url;
@@ -62,8 +62,7 @@ class net_nemein_alphabeticalindex_item extends __net_nemein_alphabeticalindex_i
         {
             $url = $_MIDCOM->permalinks->create_permalink($this->objectGuid);
         }
-        
-        if (! empty($this->cachedUrl))
+        else if (!empty($this->cachedUrl))
         {
             $url = $this->cachedUrl;
         }

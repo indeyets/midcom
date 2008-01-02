@@ -197,6 +197,7 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                             $item->title = $object->title;
                             $item->url = $object->guid;
                             $item->objectGuid = $object->guid;
+                            // TODO: Move handling of this to the object itself
                             if ($this->_config->get('cache_resolved_permalink'))
                             {
                                 $item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($object->guid);
