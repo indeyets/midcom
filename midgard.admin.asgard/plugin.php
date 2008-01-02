@@ -24,6 +24,8 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     {
         $_MIDCOM->load_library('midgard.admin.asgard');
         $_MIDCOM->auth->require_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin');
+        // Disable content caching
+        $_MIDCOM->cache->content->no_cache();
 
         // Preferred language
         if (($language = midgard_admin_asgard_plugin::get_preference('interface_language')))
@@ -366,6 +368,8 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     function prepare_plugin($title, &$data)
     {
         $_MIDCOM->auth->require_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin');
+        // Disable content caching
+        $_MIDCOM->cache->content->no_cache();
         $data['view_title'] = $title;
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
 
