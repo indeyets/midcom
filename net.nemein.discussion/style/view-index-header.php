@@ -4,4 +4,3 @@
 <div class="net_nemein_discussion_index">
     <h1><?php echo $data['forum']->extra; ?></h1>
     
-    <ul>

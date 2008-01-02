@@ -49,19 +49,42 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
         $qb->add_order($this->_config->get('order_threads_by'), 'DESC');
         $threads = $qb->execute_unchecked();
         $this->_request_data['thread_qb'] =& $qb;
-
+        $date = null;
         midcom_show_style('view-index-header');
 
         if ($threads)
         {
             foreach ($threads as $i => $thread)
             {
+                if ($this->_config->get('order_threads_by') == 'latestposttime')
+                {
+                    $thread_date = date('Y-m-d', $thread->latestposttime);
+                    $thread_time = $thread->latestposttime;
+                }
+                else
+                {
+                    $thread_date = date('Y-m-d', $thread->metadata->published);
+                    $thread_time = $thread->metadata->published;
+                }
+                
+                if ($date != $thread_date)
+                {
+                    $data['date'] = $thread_time;
+                    if (!is_null($date))
+                    {
+                        midcom_show_style('view-index-date-footer');
+                    }
+                    midcom_show_style('view-index-date-header');
+                    $date = $thread_date;
+                }
+
                 $this->_request_data['index_count'] =& $i;
                 $this->_request_data['thread'] =& $thread;
                 $this->_request_data['latest_post'] = new net_nemein_discussion_post_dba($thread->latestpost);
                 midcom_show_style('view-index-item');
             }
         }
+        midcom_show_style('view-index-date-footer');
         midcom_show_style('view-index-footer');
 
         // Find out subforums (only one level)
