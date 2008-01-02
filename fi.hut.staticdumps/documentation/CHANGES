@@ -1,0 +1,28 @@
+fi.hut.staticdumps ChangeLog
+---------------------------------
+
+Legend:
+- All items marked with "!" represent a major API-Change that is
+  not guaranteed to be backwards compatible to previous versions
+  which might even break existing functionality.
+- All items marked with "+" represent completely new features.
+
+2008-01-02 rambo
+  - increased HTTP GET timeout
+  - Minor changes to USAGE
+
+2007-12-31 rambo
+  + retry counter for fetching protected/redirect folders
+
+2007-12-20 rambo
+  + Added instructions and code for handling GET parameters in the dump
+  - Allow listing of protected and redirect folders with less than admin privileges (they only show what the user sees in any case)  
+
+2007-12-14 rambo
+  ! Changed htaccess file name keys
+
+2007-12-xx rambo
+  - improvements
+
+2007-12-03 rambo
+  - initial version

@@ -1,0 +1,39 @@
+# Basic usage
+
+Use the bin/dump_sites.php to dump a number of sites, it requires a config file as argument which contains site specific configurations in the following format:
+
+array
+(
+  'url' => 'http://yoursite.com/prefix', // mandatory
+  'documentroot' => '/path/to/documentroot', // optional
+  'dump_path' => '/tmp/mysite', // mandatory
+  'wget_extra_options' => '-k -K -E', // optional
+  'rsync_extra_options' => '-L', // optional
+  'protected_htaccess_file' => '/etc/midgard/default.htaccess', // optional
+  'protected_htaccess_suffix' => '_midgard', // optional
+  'redirect_htaccess_suffix' => '', // optional, remove key alltogether to disable generation of redirection .htaccess files
+  'username' => 'someuser', // optional
+  'password' => 'userpass', // optional
+),
+
+In the VirtualHost directive of your static apache set the following to handle URLs with GET parameters in them nicely:
+
+RewriteEngine on
+RewriteCond %{QUERY_STRING} ^.+$
+RewriteRule ^(.*)/(.*?)$ $1/%{QUERY_STRING}_$2? [L]
+
+This will internally convert `file.html?foo` into `foo_file.html` (the dump_sites.php script does the file renames for you in the dump phase)
+
+# Dumping as admin ?
+
+Hint: set the following in your `/etc/midgard/midcom.conf` to make life simpler. 
+
+<?php
+if (   isset($_SERVER['HTTP_USER_AGENT'])
+    && strpos('HTTP_USER_AGENT', 'Wget') !== false)
+{
+    $GLOBALS['midcom_config_site']['toolbars_enable_centralized'] = false;
+}
+?>
+
+Surer way to keep your output clean if you need to dump with authenticated user (redirects and protected folders require this), is to make an user that can see what needs to be seen but cannot edit anything.
