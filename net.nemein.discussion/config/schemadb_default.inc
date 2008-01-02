@@ -40,7 +40,8 @@
             'type' => 'text',
             'type_config' => array
             ( 
-                'output_mode' => 'markdown' 
+                'output_mode' => 'markdown',
+                //'maxlength' => 160,
             ),
             'widget' => 'markdown',
             'widget_config' => Array

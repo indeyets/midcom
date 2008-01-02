@@ -199,6 +199,11 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
     {
         return $this->_update_thread_cache();
     }
+    
+    function _on_deleted()
+    {
+        return $this->_update_thread_cache();
+    }
 
     /**
      * Update the cached 'posts' and 'latestpost' attributes of the thread
@@ -224,7 +229,15 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
         $qb = net_nemein_discussion_post_dba::new_query_builder();
         $qb->add_constraint('thread', '=', $thread->id);
         $qb->add_constraint('status', '>=', NET_NEMEIN_DISCUSSION_REPORTED_ABUSE);
+        $qb->add_order('metadata.created', 'DESC');
         $posts = $qb->execute();
+
+        if (   !$latest_post->guid
+            && count($posts) > 0)
+        {
+            $latest_post = $posts[0];
+        }
+        
         foreach ($posts as $post)
         {
             if ($post->metadata->published > $latest_post->metadata->published)

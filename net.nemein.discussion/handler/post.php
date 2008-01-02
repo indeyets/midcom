@@ -272,10 +272,18 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
             case 'cancel':
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
                 // This will exit.
+                
+            case 'edit':
+                if (   $this->_thread
+                    && $this->_thread->guid)
+                {
+                    $this->_thread->delete();
+                }
+                break;
         }
 
         $this->_prepare_request_data();
-        $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('post to %s'), $this->_topic->extra));
+        $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('post to') . " {$this->_topic->extra}");
 
         $this->_view_toolbar->add_item(
             array
@@ -393,7 +401,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         }
 
         $this->_prepare_request_data();
-        $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('reply to %s'), $this->_parent_post->subject));
+        $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('reply to') . " {$this->_parent_post->subject}");
 
         return true;
     }

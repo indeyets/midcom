@@ -316,6 +316,13 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
             if (! $this->datamanager->validate())
             {
                 // In case that the type validation fails, we bail with generate_error, until
+                // In case that the type validation fails, we bail with generate_error, until
+                foreach ($this->datamanager->validation_errors as $field => $error)
+                {
+                    $this->formmanager->form->setElementError($field, $error);
+                }
+                $this->datamanager->storage->object->delete();
+                return 'edit';
                 // we have a better defined way-of-life here.
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Failed to save object, type validation failed:\n" . implode("\n", $this->datamanager->validation_errors));
