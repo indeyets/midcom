@@ -197,7 +197,7 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                             $item->title = $object->title;
                             $item->url = $object->guid;
                             $item->objectGuid = $object->guid;
-                            if ($this->_config['cache_resolved_permalink'])
+                            if ($this->_config->get('cache_resolved_permalink'))
                             {
                                 $item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($object->guid);
                             }
@@ -238,7 +238,7 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
                             $item->title = $object->extra;
                             $item->url = $object->guid;
                             $item->objectGuid = $object->guid;
-                            if ($this->_config['cache_resolved_permalink'])
+                            if ($this->_config->get('cache_resolved_permalink'))
                             {
                                 $item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($object->guid);
                             }

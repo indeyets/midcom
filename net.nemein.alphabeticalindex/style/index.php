@@ -38,7 +38,7 @@ echo $data['alphabets_nav'];
                     $class = 'internal';
                     $target = "_self";
                 }
-                echo "    <li class=\"{$class}\"><a href=\"{$item->resolve_url()}\" target=\"{$target}\" rel=\"Bookmark\" title=\"{$item->title}\">{$item->title}</a>";
+                echo "    <li class=\"{$class}\"><a href=\"" . $item->resolve_url() . "\" target=\"{$target}\" rel=\"Bookmark\" title=\"{$item->title}\">{$item->title}</a>";
                 
                 if (   $enable_update
                     || $enable_delete)

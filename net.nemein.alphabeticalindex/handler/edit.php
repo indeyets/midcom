@@ -11,7 +11,7 @@
  *
  * @package net.nemein.alphabeticalindex
  */
-class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_components_handler
+class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_components_handler 
 {
     /**
      * The alphabet item
@@ -52,7 +52,7 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
      * @access private
      */
     var $_controller = null;
-
+    
     /**
      * Current topic
      *
@@ -60,19 +60,19 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
      * @access private
      */
     var $_topic = null;
-
+    
     var $_defaults = array();
-
+    
     function net_nemein_alphabeticalindex_handler_edit()
     {
         parent::midcom_baseclasses_components_handler();
     }
-
+    
     function _on_initialize()
     {
         $this->_topic =& $this->_request_data['topic'];
     }
-
+    
     /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
@@ -99,9 +99,9 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
                 "Failed to load the schema db from '{$src}'!");
             // This will exit.
         }
-
+    
         $this->_schemadb =& $schemadb;
-
+        
         if ($this->_type == 'internal')
         {
             $this->_schemadb['edit']->append_field('cachedUrl', Array
@@ -122,9 +122,9 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
                     'storage' => 'node',
                     'type' => 'text',
                     'widget' => 'text',
-                    'hidden' => true,
+                    'hidden' => true,                    
                 )
-            );
+            );            
         }
     }
 
@@ -136,49 +136,43 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
     function _load_controller($handler_id)
     {
         $this->_load_schemadb();
-
+        
         $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
         $this->_controller->schemadb = array( 'edit' => $this->_schemadb['edit'] );
         $this->_controller->set_storage($this->_item);
         if (! $this->_controller->initialize())
-        {
+        {   
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
             // This will exit.
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return bool Indicating success.
-	 */
     function _handler_edit($handler_id, $args, &$data)
     {
         $this->_topic->require_do('midgard:update');
-
+        
         $qb = net_nemein_alphabeticalindex_item::new_query_builder();
         $qb->add_constraint('guid', '=', $args[0]);
         $results = $qb->execute();
-
+        
         if (count($results) == 0)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The item {$args[0]} was not found.");
         }
-
+        
         $this->_item =& $results[0];
-
-
+        
+        
         $this->_type = 'external';
         if ($this->_item->internal)
         {
             $this->_type = 'internal';
         }
-
+        
         if ($this->_type == 'internal')
         {
             $this->_item->modified = true;
-            if ($this->_config['cache_resolved_permalink'])
+            if ($this->_config->get('cache_resolved_permalink'))
             {
                 $this->_item->cachedUrl = $_MIDCOM->permalinks->resolve_permalink($this->_item->objectGuid);
             }
@@ -188,13 +182,13 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
             if (empty($this->_item->node))
             {
                 $this->_item->node = $this->_topic->id;
-            }
+            }            
         }
-
+        
         $this->_load_controller($handler_id);
         $this->_prepare_request_data($handler_id);
         $this->_update_breadcrumb_line();
-
+        
         switch ($this->_controller->process_form())
         {
 	        case 'save':
@@ -206,15 +200,15 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
                 $_MIDCOM->relocate('');
 	             // This will exit.
         }
-
+        
         return true;
     }
-
+    
     function _show_edit($handler_id, &$data)
     {
         midcom_show_style('item-edit');
     }
-
+    
     /**
      * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.

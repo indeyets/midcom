@@ -35,9 +35,20 @@ class net_nemein_alphabeticalindex_item extends __net_nemein_alphabeticalindex_i
     
     function _on_loaded()
     {
-        if ($this->objectGuid != '')
+        if (!empty($this->objectGuid))
         {
             $this->internal = true;
+            // Make sure we can actually see the internal object
+            $object = $_MIDCOM->dbfactory->get_object_by_guid($this->objectGuid);
+            if (   !$object
+                || !isset($object->guid)
+                || empty($object->guid))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Could not get object {$this->objectGuid}, errstr: " . mgd_errstr(), MIDCOM_LOG_WARN);
+                debug_pop();
+                return false;
+            }
         }
 
         return true;
@@ -47,7 +58,8 @@ class net_nemein_alphabeticalindex_item extends __net_nemein_alphabeticalindex_i
     {
         $url = $this->url;
         
-        if (mgd_is_guid($this->url)) {
+        if (mgd_is_guid($this->url))
+        {
             $url = $_MIDCOM->permalinks->create_permalink($this->objectGuid);
         }
         
@@ -56,14 +68,11 @@ class net_nemein_alphabeticalindex_item extends __net_nemein_alphabeticalindex_i
             $url = $this->cachedUrl;
         }
         
-        if ($echo)
-        {
-            echo $url;
-        }
-        else
+        if (!$echo)
         {
             return $url;
         }
+        echo $url;
     }
 
 }
