@@ -2926,6 +2926,7 @@ Marker.prototype.toOpenLayers = function() {
   }
 
   var marker = new OpenLayers.Marker(this.location.toOpenLayers(), icon);
+      
   return marker;
 }
 
