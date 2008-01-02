@@ -989,7 +989,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      */
     function get_privileges(&$content_object, $user = null)
     {
-        return $this->get_privileges_byguid($privilege, $content_object->guid, get_class($content_object), $user);
+        return $this->get_privileges_byguid($content_object->guid, get_class($content_object), $user);
     }
 
     /**
