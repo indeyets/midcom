@@ -515,7 +515,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
 
         if (!$this->_prepare_save($ignorebusy_em, $rob_tentantive, $repeat_handler))
         {
-            //Some requirement for an update failed, seee $this->__errstr;
+            //Some requirement for an update failed, see $this->__errstr;
             debug_add('prepare_save failed, aborting', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -1521,7 +1521,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         $encoder = new org_openpsa_helpers_vxparser();
         $encoder->merge_compatibility($compatibility);
 
-        // Simple key/value pairs, for multiple occurances of same key use array as value
+        // Simple key/value pairs, for multiple occurrences of same key use array as value
         $vcal_keys = array();
         // For extended key data, like charset
         $vcal_key_parameters = array();
@@ -1631,7 +1631,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
 }
 
 /**
- * Anothet wrap level
+ * Another wrap level
  * @package org.openpsa.calendar
  */
 class org_openpsa_calendar_event extends midcom_org_openpsa_event

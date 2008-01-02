@@ -230,7 +230,7 @@ class FeedItem extends HtmlDescribable {
 	var $enclosure;
 
 	/**
-	 * Any additional elements to include as an assiciated array. All $key => $value pairs
+	 * Any additional elements to include as an associated array. All $key => $value pairs
 	 * will be included unencoded in the feed item in the form
 	 *     <$key>$value</$key>
 	 * Again: No encoding will be used! This means you can invalidate or enhance the feed
@@ -561,7 +561,7 @@ class FeedCreator extends HtmlDescribable {
 
 
 	/**
-	 * Any additional elements to include as an assiciated array. All $key => $value pairs
+	 * Any additional elements to include as an associated array. All $key => $value pairs
 	 * will be included unencoded in the feed in the form
 	 *     <$key>$value</$key>
 	 * Again: No encoding will be used! This means you can invalidate or enhance the feed
@@ -1905,7 +1905,7 @@ class HTMLCreator extends FeedCreator {
 	}
 
 	/**
-	 * Overrrides parent to produce .html extensions
+	 * Overrides parent to produce .html extensions
 	 *
 	 * @return string the feed cache filename
 	 * @since 1.4
@@ -1945,7 +1945,7 @@ class JSCreator extends HTMLCreator {
 	}
 
 	/**
-	 * Overrrides parent to produce .js extensions
+	 * Overrides parent to produce .js extensions
 	 *
 	 * @return string the feed cache filename
 	 * @since 1.4

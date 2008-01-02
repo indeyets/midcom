@@ -302,7 +302,7 @@ function mgd_sort_id_array(&$array, $sortkey, $object_type, $sorting = SORT_REGU
             $reverse = true;
             break;
         default:
-            die("mgd_sort_id_array: Parameter count in \$sortkeyey ($sortkey) wrong, aborting.");
+            die("mgd_sort_id_array: Parameter count in \$sortkey ($sortkey) wrong, aborting.");
             break;
     }
 
@@ -361,7 +361,7 @@ function mgd_sort_object_array (&$array, $sortkey, $sorting=SORT_REGULAR)
             break;
 
         default:
-            die("mgd_sort_id_array: Parameter count in \$sortkeyey ($sortkey) wrong, aborting.");
+            die("mgd_sort_id_array: Parameter count in \$sortkey ($sortkey) wrong, aborting.");
             break;
     }
     $sortarray = array();

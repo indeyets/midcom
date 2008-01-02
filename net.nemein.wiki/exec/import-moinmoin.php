@@ -369,7 +369,7 @@ class net_nemein_wiki_moinmoin_importer
             closedir($dp2);
             if ($this->import_file($title, "{$page_path}/revisions/{$current_revision}"))
             {
-                // successful  import of last revision, remove file to avoid double imports
+                // successful import of last revision, remove file to avoid double imports
                 unlink("{$page_path}/revisions/{$current_revision}");
             }
             flush();

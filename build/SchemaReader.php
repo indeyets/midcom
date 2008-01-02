@@ -1,7 +1,7 @@
 <?php
 
 class SchemaReader {
-    // the midcomschma file
+    // the midcomschema file
     protected $dom;
     // the objectype
     protected $type;

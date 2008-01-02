@@ -345,7 +345,7 @@ class fi_hut_loginbroker_handler_index  extends midcom_baseclasses_components_ha
                 debug_pop();
                 continue;
             }
-            // Do we want to do something after successful  store ??
+            // Do we want to do something after successful store ??
         }
     }
 

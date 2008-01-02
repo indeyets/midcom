@@ -9,15 +9,15 @@
 
 /**
  * This is a widget to handle the selection schemas out of an existing
- * schma database.
+ * schema database.
  *
  * This widget can only be used with text widgets. It requires to be linked to
  * a second field, the "link field", which contains the path to the schema
  * database entered by the user. If this field is blank, the default schema
  * database from the configuration will be used.
  *
- * Ultimately, this widget is usful almost only within Datamanager driven component
- * configuration screeens.
+ * Ultimately, this widget is useful almost only within Datamanager driven component
+ * configuration screens.
  *
  * This widget inherits from the regular select widget, so the documentation of
  * this class is also valid here, unless noted otherwise.
@@ -40,7 +40,7 @@
  *
  * <b>Sample configuration</b>
  *
- * <pre>
+ * <code>
  * "schema_picture" => Array (
  * 	   "description" => "Schema to use for picture records",
  *     "datatype" => "text",
@@ -51,7 +51,7 @@
  *     "widget_schemaselect_linkto" => "schemadb",
  *     "widget_schemaselect_default_schemapath" => "file:/net/siriux/photos/config/schemadb_default.dat",
  * ),
- * </pre>
+ * </code>
  *
  * <b>CSS Styles in use by the Widget</b>
  *
@@ -134,7 +134,7 @@ class midcom_helper_datamanager_widget_schemaselect extends midcom_helper_datama
     }
 
     /**
-     * Updates the list of choices and calles the parent.
+     * Updates the list of choices and calls the parent.
      *
      * @see midcom_helper_datamanager_widget_schemaselect::_get_schema()
      */
@@ -145,7 +145,7 @@ class midcom_helper_datamanager_widget_schemaselect extends midcom_helper_datama
     }
 
     /**
-     * Updates the list of choices and calles the parent.
+     * Updates the list of choices and calls the parent.
      *
      * @see midcom_helper_datamanager_widget_schemaselect::_get_schema()
      */

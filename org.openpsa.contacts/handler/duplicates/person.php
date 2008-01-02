@@ -153,7 +153,7 @@ class org_openpsa_contacts_handler_duplicates_person extends midcom_baseclasses_
                 $i++;
                 continue;
             }
-            // Extra sanity check (in case of semi-successful  not-duplicate mark)
+            // Extra sanity check (in case of semi-successful not-duplicate mark)
             if (   $person1->parameter('org.openpsa.contacts.duplicates:not_duplicate', $person2->guid)
                 || $person2->parameter('org.openpsa.contacts.duplicates:not_duplicate', $person1->guid)
                 )

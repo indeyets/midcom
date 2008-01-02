@@ -48,7 +48,7 @@ class net_fernmark_pedigree_dog_dba extends __net_fernmark_pedigree_dog_dba
         switch (true)
         {
             case (   $kennel
-                  && $breeeder
+                  && $breeder
                   && strpos($this->name, $kennel->official) === false):
                 $ret = "{$kennel->official}: {$this->name} ({$breeder->name})";
                 break;
@@ -64,7 +64,7 @@ class net_fernmark_pedigree_dog_dba extends __net_fernmark_pedigree_dog_dba
     }
 
     /** 
-     * Prepares a QB for offsping queries
+     * Prepares a QB for offspring queries
      *
      * @return midgard_query_builder ready for other constraints
      */
