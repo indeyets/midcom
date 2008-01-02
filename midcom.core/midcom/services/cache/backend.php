@@ -137,7 +137,7 @@ class midcom_services_cache_backend
      * After base class initialization, the event handler _on_initialize is called,
      * in which all backend specific stuff should be done.
      * 
-     * @param string $name The name ("identifier") of the handler instanace.
+     * @param string $name The name ("identifier") of the handler instance.
      * @param Array $config The configuration to use.
      */
     function initialize($name, $config)
@@ -214,7 +214,7 @@ class midcom_services_cache_backend
     /**
      * Backend initialization
      * 
-     * Add any custom startup code here. The configuraiton variables are 
+     * Add any custom startup code here. The configuration variables are 
      * all initialized when this handler is called.
      */
     function _on_initialize() {}
@@ -248,7 +248,7 @@ class midcom_services_cache_backend
 	function _open($write) { die ("The method " . __CLASS__ . "::" . __FUNCTION__ . " must be implemented."); }
     
     /**
-     * Close the database that has been opened previosly with _open().
+     * Close the database that has been opened previously with _open().
      */
     function _close() { die ("The method " . __CLASS__ . "::" . __FUNCTION__ . " must be implemented."); } 
     
@@ -302,7 +302,7 @@ class midcom_services_cache_backend
     function _remove($key) { die ("The method " . __CLASS__ . "::" . __FUNCTION__ . " must be implemented."); }
 
     /**
-     * Drops the entire database, preferrably with some kind of truncate operation.
+     * Drops the entire database, preferably with some kind of truncate operation.
      * 
      * The data store will not be opened in either read-only or read-write mode when
      * this function executes, to allow for open/truncate operations.
@@ -349,7 +349,7 @@ class midcom_services_cache_backend
     }
     
     /**
-     * Close the database that has been opened previosly with open(). If the database
+     * Close the database that has been opened previously with open(). If the database
      * is already closed, the request is ignored silently.
      */
     function close()

@@ -927,7 +927,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * Any problem to load a plugin will be logged accordingly and false will be returned.
      * Critical errors will trigger generate_error.
      *
-     * @todo Allow for lazy plugin namespace configuraiton loading (using a callback)!
+     * @todo Allow for lazy plugin namespace configuration loading (using a callback)!
      *     This will make things more performant and integration with other components
      *     much easier.
      *
@@ -1047,7 +1047,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
 
         foreach ($handlers as $identifier => $handler_config)
         {
-            // First, update the fixed args list (be tolarent here)
+            // First, update the fixed args list (be tolerant here)
             if (! array_key_exists('fixed_args', $handler_config))
             {
                 $handler_config['fixed_args'] = Array($namespace, $plugin);

@@ -562,7 +562,7 @@ class midcom_services_i18n
     }
 
     /**
-     * This method tries to pull the users prefered lanugauce and
+     * This method tries to pull the users preferred language and
      * character set out of a cookie named "midcom_services_i18n".
      */
     function _read_cookie ()
@@ -597,7 +597,7 @@ class midcom_services_i18n
      * This method pulls available language and content type data out of
      * the HTTP Headers delivered by the browser and populates the member
      * variables $_http_lang and $_http_content_type. q-parameters for
-     * priorization are supported.
+     * prioritization are supported.
      */
     function _read_http_negotiation ()
     {
@@ -728,7 +728,7 @@ class midcom_services_i18n
 
     /**
      * This is a calling wrapper to the iconv library. See the PHP iconv() function
-     * for the exact parameter definitons.
+     * for the exact parameter definitions.
      *
      * @param string $source_charset The charset to convert from.
      * @param string $destination_charset The charset to convert to.

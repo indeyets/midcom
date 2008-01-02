@@ -92,7 +92,7 @@
  * One thing, which I have seen quite often in components, is the initialize method loading
  * the default schema. While I actually do not endorse this behavior, schemas should only
  * be loaded on demand during runtime (especially since they are configurable), you should
- * now add code like that to the _on_initialize() event handler, which will be exectued
+ * now add code like that to the _on_initialize() event handler, which will be executed
  * at about the same time as the original implementation would have been.
  *
  * <b>Advanced notes for Core Developers</b>

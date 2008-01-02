@@ -173,7 +173,7 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
             || ! $this->member_fieldname)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                'The configuraiton options mapping_class_name, master_filename and member_fieldname ' .
+                'The configuration options mapping_class_name, master_filename and member_fieldname ' .
                 'must be defined for  any mnselect type.');
             // This will exit.
         }

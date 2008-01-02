@@ -229,7 +229,7 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
     var $_mgdschema_class_handler = Array();
 
     /**
-     * Initializies the class for usage.
+     * Initializes the class for usage.
      */
     function midcom_services_dbclassloader ()
     {
@@ -569,7 +569,7 @@ EOF;
         // This includes the meta __blah__ properties related to this class builder.
         $this->_write_meta_members();
 
-        // Write the class' constrcutor
+        // Write the class' constructor
         $this->_write_constructor();
 
         // We now add all event handlers first.

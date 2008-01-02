@@ -649,7 +649,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
 
         $_MIDCOM->auth->sessionmgr->_update_user_username($this, $new);
 
-        // Update the history, ignore failed unserailization, this means that no
+        // Update the history, ignore failed unserialization, this means that no
         // history is present yet. Thus we should be fine as we handle that case
         // with a fresh history.
         $history = @unserialize($person->get_parameter('midcom', 'username_history'));

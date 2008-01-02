@@ -80,7 +80,7 @@ class midcom_helper_datamanager2_type_privilegeset extends midcom_helper_dataman
      */
     function convert_from_storage ($source)
     {
-        // Initializie
+        // Initialize
         $this->_value = false;
 
         if (   $this->storage->object

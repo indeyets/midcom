@@ -411,7 +411,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         if (! $dest)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Could not open attachment for wrtiting, last Midgard error was: ' . mgd_errstr(), MIDCOM_LOG_WARN);
+            debug_add('Could not open attachment for writing, last Midgard error was: ' . mgd_errstr(), MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }

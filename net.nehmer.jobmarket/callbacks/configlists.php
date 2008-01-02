@@ -33,7 +33,7 @@ class net_nehmer_jobmarket_callbacks_configlists extends midcom_baseclasses_comp
     var $_data = null;
 
     /**
-     * Initializes the class to a certain _list element from the current context configuraiton,
+     * Initializes the class to a certain _list element from the current context configuration,
      * not much magic.
      *
      * @param string $mode The config key to bind to, without the _list suffix.

@@ -130,7 +130,7 @@ class midcom_services_cache_module
     
     /**
      * Startup handler, called during service start up at the start of the request.
-     * You may, as it is required for the content chache, intercept requests. Terminate
+     * You may, as it is required for the content cache, intercept requests. Terminate
      * the requests with exit() if you produce a complete output based on a previous request
      * (page cache) of midcom_application::finish() if you produce regular output that
      * might go into the content cache.
@@ -138,7 +138,7 @@ class midcom_services_cache_module
     function _on_initialize() {}
     
     /**
-     * Shutdown hanlder, called during midcom_application::finish(). Note, that for example
+     * Shutdown handler, called during midcom_application::finish(). Note, that for example
      * the page cache will not use this cleanup handler, as it produces a complete html page
      * based on a previous request.
      */

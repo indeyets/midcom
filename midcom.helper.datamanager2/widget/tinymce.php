@@ -263,7 +263,7 @@ EOT;
     }
 
     /**
-     * Returns the default/simple configuraiton:
+     * Returns the default/simple configuration:
      *
      * <pre>
      * theme : "advanced",

@@ -12,7 +12,7 @@
  * Database Level Object. As usual with MidCOM DBA, you <i>must never access the DB layer
  * object.</i>
  *
- * The main area of expertise of this class is privilage IO (loading and storing), their
+ * The main area of expertise of this class is privilege IO (loading and storing), their
  * validation and privilege merging.
  *
  * It is important to understand that you must never load privilege records directly, or
@@ -55,7 +55,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * Note, that you should operate on this using get_object() and set_object(), they
      * operate cached and are more efficient.
      *
-     * Direct changes to this variable will obviouosly not invalidate the object chached.
+     * Direct changes to this variable will obviously not invalidate the object cached.
      *
      * @var string
      */
@@ -1030,7 +1030,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
     }
 
     /**
-     * Drop the privilge. If we are a known DB record, we delete us, otherwise
+     * Drop the privilege. If we are a known DB record, we delete us, otherwise
      * we return silently.
      *
      * @return bool Indicating success.

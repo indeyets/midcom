@@ -697,7 +697,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         }
         if (! $this->_qb->add_constraint($field, $operator, $value))
         {
-            debug_add("Failed to exectue add_constraint.", MIDCOM_LOG_ERROR);
+            debug_add("Failed to execute add_constraint.", MIDCOM_LOG_ERROR);
             debug_add("Class = '{$this->_real_class}, Field = '{$field}', Operator = '{$operator}'");
             debug_print_r('Value:', $value);
             debug_pop();
@@ -760,7 +760,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         if (! $result)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to exectue add_order for column '{$field}', midgard error: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+            debug_add("Failed to execute add_order for column '{$field}', midgard error: " . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_pop();
         }
 

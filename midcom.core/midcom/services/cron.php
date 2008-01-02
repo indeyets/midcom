@@ -140,7 +140,7 @@ class midcom_services_cron extends midcom_baseclasses_core_object
     }
 
     /**
-     * This helepr function loads and validates all registered jobs. After
+     * This helper function loads and validates all registered jobs. After
      * this call, all required handler classes will be available.
      */
     function _load_jobs()

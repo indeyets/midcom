@@ -360,7 +360,7 @@ class net_nemein_wiki_moinmoin_importer
                     }
                     if ($this->import_file($title, $revision_path))
                     {
-                        // Successfull import of revision, remove the file to avoid double imports
+                        // Successful import of revision, remove the file to avoid double imports
                         unlink($revision_path);
                     }
                     flush();

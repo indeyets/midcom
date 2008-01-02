@@ -232,7 +232,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
                 }
                 // Restore backup
                 $this->_event = $this_event_backup;
-                // List the successfull registrations
+                // List the successful registrations
                 $session = new midcom_service_session();
                 $session->set('registration_ids', $registration_ids);
                 // just to keep defaults from barfing

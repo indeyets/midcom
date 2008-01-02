@@ -96,7 +96,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
     /**
      * Returns true/false depending on whether we can send HTML mails
      *
-     * In fact by manually setting the headers oone can always send
+     * In fact by manually setting the headers one can always send
      * single part HTML emails but the purpose of this class was to make things simpler
      */
     function can_html()
@@ -337,7 +337,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             return;
         }
 
-        // PONDER: How to handle multiple text bodies better (like in bounce messges)
+        // PONDER: How to handle multiple text bodies better (like in bounce messages)
 
         //Check attachment vs body
         if (   !isset($part->disposition)
@@ -541,7 +541,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             if (   strpos($boundary, '"')
                 || strpos($boundary, "'"))
             {
-                // Any quote inside the boudary value will choke mail_mimedecode
+                // Any quote inside the boundary value will choke mail_mimedecode
                 debug_add('"corrupt" (as in will choke mail_mimedecode) boundary detected, trying to fix', MIDCOM_LOG_WARN);
                 // Se we replace them with dashes
                 $new_boundary = str_replace(array('"', "'"), array('-', '-'), $boundary);
@@ -644,7 +644,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
         $this->body = ltrim(rtrim($this->body));
         $this->html_body = ltrim(rtrim($this->html_body));
 
-        //TODO Figure if decode was successfull or not and return true/false in stead
+        //TODO Figure if decode was successful or not and return true/false in stead
         debug_pop();
         return $mime;
     }

@@ -584,7 +584,7 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
 
     /**
      * This handler shows the successful-publishing message, it has the same information
-     * available, as the actual publishing hanlder, but it consists of only one style
+     * available, as the actual publishing handler, but it consists of only one style
      * element, containing a simple "your details have been submitted message".
      */
     function _show_publish_ok($handler_id, &$data)

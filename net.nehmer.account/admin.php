@@ -168,7 +168,7 @@ class net_nehmer_account_admin extends midcom_baseclasses_components_request_adm
     {
         foreach ($handlers as $identifier => $handler_config)
         {
-            // First, update the fixed args list (be tolarent here)
+            // First, update the fixed args list (be tolerant here)
             if (! array_key_exists('fixed_args', $handler_config))
             {
                 $handler_config['fixed_args'] = Array('plugin', $name);

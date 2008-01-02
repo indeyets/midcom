@@ -40,7 +40,7 @@
  * The entries you return here follow the same rules you already know from the request
  * wide configuration.
  *
- * To actually activate a plugin, a site mainatainer must register it in the components
+ * To actually activate a plugin, a site maintainer must register it in the components
  * plugin listing. There he must add two pieces of information: The main plugin class (which
  * is used to read the handler list) and a URL to the snippet/file that contains that class.
  * For example, written in the snippet /sitegroup-config/net.nehmer.account/config:
@@ -72,9 +72,9 @@
  * Each plugin should implement that root page always, as at a later time the plugin system
  * will add the plugins to the NAP leaf information.
  *
- * Additional handlers can be implemented at will, by adding their correpsonding declarations
+ * Additional handlers can be implemented at will, by adding their corresponding declarations
  * to the request switch. You can even add additional classes, in different files, if you ensure
- * their availablility to the request handler without problems (this currently mostly precludes
+ * their availability to the request handler without problems (this currently mostly precludes
  * the use of the autoloading feature, as handlers can only be autoloaded from the midcom
  * installation directory, not from arbitrary locations or snippets. (This might also change in
  * the future.)
@@ -287,7 +287,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
 
 	// VIEW LINK: Same as /view/, but this one leaves out /view/.
 	// This provides clean urls like /profile/myname
-	// Account names like 'edit', 'admin' etc. won't work ofcourse.
+	// Account names like 'edit', 'admin' etc. won't work of course.
         if ($this->_config->get('allow_by_username_only'))
         {
     	    $this->_request_switch['other_direct'] = Array
@@ -323,7 +323,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         {
             /**
              * We do not need to check result of this operation, it populates request switch
-             * if successfull and does nothing if not, this means normal request handling is enough
+             * if successful and does nothing if not, this means normal request handling is enough
              */
             $this->_load_nna_plugin($argv[1]);
         }
@@ -418,7 +418,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
     {
         foreach ($handlers as $identifier => $handler_config)
         {
-            // First, update the fixed args list (be tolarent here)
+            // First, update the fixed args list (be tolerant here)
             if (! array_key_exists('fixed_args', $handler_config))
             {
                 $handler_config['fixed_args'] = Array('plugin', $name);

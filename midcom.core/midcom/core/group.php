@@ -102,7 +102,7 @@ class midcom_core_group extends midcom_baseclasses_core_object
      * member.
      *
      * Must be overridden: The code should populate $storage with the actually retrieved
-     * sotrage object, $name with the name of the group and $id with the group identifier
+     * storage object, $name with the name of the group and $id with the group identifier
      * that will also be used within the privilege_io reader.
      *
      * @param mixed $id This is a valid identifier for the group to be loaded. Usually this is either
@@ -167,7 +167,7 @@ class midcom_core_group extends midcom_baseclasses_core_object
      * Return a list of privileges assigned directly to the group. The default implementation
      * queries the storage object directly using the get_privileges method of the
      * midcom_core_baseclasses_core_dbobject class, which should work fine on all MgdSchema
-     * objects. If the storage object is null, an emptry array is returned.
+     * objects. If the storage object is null, an empty array is returned.
      *
      * @return Array A list of midcom_core_privilege objects.
      */

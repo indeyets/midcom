@@ -64,7 +64,7 @@ class midcom_baseclasses_core_dbobject
      *
      * 1. Validate privileges using can_do. The user needs midgard:update privilege on the content object.
      * 2. bool $object->_on_updating() is executed. If it returns false, update is aborted.
-     * 3. bool $object->__exec_update() is executed to do the actual DB update. This has to exectue parent::update()
+     * 3. bool $object->__exec_update() is executed to do the actual DB update. This has to execute parent::update()
      *    and return its value, nothing else.
      * 4. void $object->_on_updated() is executed to notify the class from a successful DB update.
      *
@@ -234,7 +234,7 @@ class midcom_baseclasses_core_dbobject
 
     /**
      * This is an internal helper adds full privileges to the owner of the object.
-     * This is essentially sets teh midgard:owner privilege for the current user.
+     * This is essentially sets the midgard:owner privilege for the current user.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @access private
@@ -250,7 +250,7 @@ class midcom_baseclasses_core_dbobject
             return;
         }
 
-        // Circumvent the main privilege class as we need full access here regardeless of
+        // Circumvent the main privilege class as we need full access here regardless of
         // the actual circumstances.
         $privilege = new midcom_core_privilege_db();
         $privilege->assignee = $_MIDCOM->auth->user->id;
@@ -316,7 +316,7 @@ class midcom_baseclasses_core_dbobject
      *
      * 1. Validate privileges using can_do. The user needs midgard:create privilege to the parent object or in general, if there is no parent.
      * 2. bool $object->_on_creating() is executed. If it returns false, create is aborted.
-     * 3. bool $object->__exec_create() is executed to do the actual DB create. This has to exectue parent::create()
+     * 3. bool $object->__exec_create() is executed to do the actual DB create. This has to execute parent::create()
      *    and return its value, nothing else.
      * 4. void $object->_on_created() is executed to notify the class from a successful DB creation.
      *
@@ -457,8 +457,8 @@ class midcom_baseclasses_core_dbobject
      *
      * 1. Validate privileges using can_do. The user needs midgard:delete privilege on the content object.
      * 2. bool $object->_on_deleting() is executed. If it returns false, delete is aborted.
-     * 3. mgd_delete_extensions is called now, dropping all remainint attachments and parameters.
-     * 4. bool $object->__exec_delete() is executed to do the actual DB delete. This has to exectue parent::delete()
+     * 3. mgd_delete_extensions is called now, dropping all remaining attachments and parameters.
+     * 4. bool $object->__exec_delete() is executed to do the actual DB delete. This has to execute parent::delete()
      *    and return its value, nothing else.
      * 5. void $object->_on_deleted() is executed to notify the class from a successful DB deletion.
      *
@@ -1213,7 +1213,7 @@ class midcom_baseclasses_core_dbobject
         $query = new midgard_query_builder('midgard_parameter');
         if (!$object->guid)
         {
-            // FIXME: This way of fetching parameter objects is going to be deprected
+            // FIXME: This way of fetching parameter objects is going to be deprecated
             $query->add_constraint('tablename', '=', $object->__table__);
             $query->add_constraint('oid', '=', $object->id);
         }
@@ -1411,7 +1411,7 @@ class midcom_baseclasses_core_dbobject
      * This is either a create or an update operation depending on whether there was
      * already a parameter of that domain/name present, or not.
      *
-     * The user needs both update and parameter manipulationpermission on the parent object for updates.
+     * The user needs both update and parameter manipulation permission on the parent object for updates.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @param string $domain The Parameter Domain.
@@ -1480,7 +1480,7 @@ class midcom_baseclasses_core_dbobject
      * Note, that empty string parameters are filtered in the getter methods until
      * this matter is resolved.
      *
-     * The user needs both update and parameter manipulationpermission on the parent object for updates.
+     * The user needs both update and parameter manipulation permission on the parent object for updates.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @param string $domain The Parameter Domain.
@@ -1733,7 +1733,7 @@ class midcom_baseclasses_core_dbobject
     }
 
     /**
-     * Retrieves an attac   hment on an arbitrary object by its name.
+     * Retrieves an attachment on an arbitrary object by its name.
      * If multiple attachments match the name (should not happen in reality), the
      * first match will be returned.
      *

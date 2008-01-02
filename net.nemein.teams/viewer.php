@@ -258,7 +258,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
     {
         foreach ($handlers as $identifier => $handler_config)
         {
-            // First, update the fixed args list (be tolarent here)
+            // First, update the fixed args list (be tolerant here)
             if (! array_key_exists('fixed_args', $handler_config))
             {
                 $handler_config['fixed_args'] = Array('plugin', $name);
@@ -359,7 +359,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
     }
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */
@@ -463,7 +463,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         {
             /**
              * We do not need to check result of this operation, it populates request switch
-             * if successfull and does nothing if not, this means normal request handling is enough
+             * if successful and does nothing if not, this means normal request handling is enough
              */
             $this->_load_nna_plugin($argv[1]);
         }

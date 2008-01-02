@@ -71,7 +71,7 @@ class midcom_services_indexer
      *
      * The constructor will initialize the indexer backend using the MidCOM
      * configuration by default. If you need a different indexer backend, you
-     * can always explicitly instantiate a backend and pass it ot the
+     * can always explicitly instantiate a backend and pass it to the
      * constructor. In that case you have to load the corresponding PHP file
      * manually.
      *

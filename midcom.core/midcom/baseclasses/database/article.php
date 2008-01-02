@@ -18,7 +18,7 @@
  *
  * This class uses an auto-generated base class provided by midcom_services_dbclassloader.
  *
- * <i>Automatic updaets:</i>
+ * <i>Automatic updates:</i>
  *
  * - The system automatically resets invalid $author members, as they would break
  *   mgd_list_*article* style queries. The member is set to the ID of the current
