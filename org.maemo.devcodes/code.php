@@ -115,7 +115,7 @@ class org_maemo_devcodes_code_dba extends __org_maemo_devcodes_code_dba
     /**
      * Check if this code is assigned to someone
      *
-     * @return boolean indicating precense of dependencies
+     * @return boolean indicating presence of dependencies
      */
     function has_dependencies()
     {

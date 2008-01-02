@@ -18,7 +18,7 @@ TODO
 ## Error Codes
 
 200: OK
-:    The requested was succesfull
+:    The requested was successful 
 
 404: Not found
 :    The requested product group could not be found

@@ -145,7 +145,7 @@ function project_prospects_slot_changed(id)
 function project_prospects_choose_slot(id)
 {
     /* alert('project_prospects_choose_slot called:' + id); */
-    /* todo: do something more usefull */
+    /* todo: do something more useful */
     slot_container = $(id);
     Element.addClassName(slot_container, 'selected');
 }
@@ -153,7 +153,7 @@ function project_prospects_choose_slot(id)
 function project_prospects_unchoose_slot(id)
 {
     /* alert('project_prospects_unchoose_slot called:' + id); */
-    /* todo: do something more usefull */
+    /* todo: do something more useful */
     slot_container = $(id);
     Element.removeClassName(slot_container, 'selected');
 }

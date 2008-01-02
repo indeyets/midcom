@@ -21,7 +21,7 @@ class net_nemein_wiki_handler_relatedto extends org_openpsa_relatedto_handler_re
     }
 
     /* The normally used methods are handled in the relatedto components class
-       if for some reason you need more functionality that is only usefull for
+       if for some reason you need more functionality that is only useful for
        this specific component, then add handler here, otherwise add handlers to
        the "prototype" */
 }

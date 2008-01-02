@@ -288,7 +288,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
             return false;
         }
 
-        //Create some usefull maps
+        //Create some useful maps
         $wanted_persons = array();
         $rule_persons_id_map = array();
         foreach ($rule_persons as $person)
@@ -412,7 +412,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
      *  - Running (started on yyyy-mm-dd H:i)
      *  - Last run on yyyy-mm-dd H:i
      *  - Last run on --, next scheduled run on --
-     *  - Last run failed on --, last succesfull run on --
+     *  - Last run failed on --, last successful  run on --
      */
     function members_update_status()
     {

@@ -12,7 +12,7 @@ org.routamc.photostream TODO
 ## EXIF handling
 
 * Figure out what to do with timezones
-* Try to recognize invidual cameras (and use that info to recognize photographer)
+* Try to recognize individual cameras (and use that info to recognize photographer)
 
 ## Flickr synchronization
 

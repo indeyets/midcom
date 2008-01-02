@@ -807,7 +807,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
     /**
      * Default line rendering, used if a specific renderer cannot be found
      *
-     * Tries to find certain properties likely to hold semi-usefull information about
+     * Tries to find certain properties likely to hold semi-useful information about
      * the object, failing that outputs class and guid.
      */
     function _show_render_line_default()

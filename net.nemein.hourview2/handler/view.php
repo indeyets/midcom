@@ -185,7 +185,7 @@ class net_nemein_hourview2_handler_view extends midcom_baseclasses_components_ha
                 {
                     if ($hour_report->approve())
                     {
-                        //Approved succesfully
+                        //Approved successfully
                         $hour_reports_approved[] = $hour_report;
                     } 
                     else

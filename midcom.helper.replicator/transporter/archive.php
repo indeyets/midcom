@@ -35,7 +35,7 @@ class midcom_helper_replicator_transporter_archive extends midcom_helper_replica
     }
 
     /**
-     * Reads transport configuration fomr subscriptions parameters
+     * Reads transport configuration from subscriptions parameters
      *
      * Also does some sanity checking
      **/

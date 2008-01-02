@@ -28,7 +28,7 @@ class midcom_helper_replicator_transporter_email extends midcom_helper_replicato
     }
 
     /**
-     * Reads transport configuration fomr subscriptions parameters
+     * Reads transport configuration from subscriptions parameters
      *
      * Also does some sanity checking
      **/

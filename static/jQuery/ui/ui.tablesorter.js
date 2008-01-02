@@ -64,7 +64,7 @@
  *  
  * 
  * @option Boolean widthFixed (optional) 		Boolean flag indicating if tablesorter should apply fixed widths to the table columns.
- * 												This is usefull when using the pager companion plugin.
+ * 												This is useful when using the pager companion plugin.
  * 												This options requires the dimension jquery plugin.
  * 												Default value: false
  *

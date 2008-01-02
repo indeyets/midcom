@@ -67,3 +67,10 @@ Title
 Substyle to use
 ---STRINGEND
 
+---STRING item deleted successfully
+item deleted successfully
+---STRINGEND
+
+---STRING item updated successfully
+item updated successfully
+---STRINGEND

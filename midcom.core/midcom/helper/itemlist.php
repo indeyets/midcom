@@ -102,7 +102,7 @@ class midcom_helper_itemlist
      *                    MIDCOM_NAV_STYLE => false 
      *                    )
      *                    );
-     *     Note that most searchstyles do not bother with styles. But it is usefull for custom classes.
+     *     Note that most searchstyles do not bother with styles. But it is useful for custom classes.
      *
      *
      * @param string sorting sorttype (eks topicsfirst)
@@ -133,10 +133,10 @@ class midcom_helper_itemlist
         return $sortclass;
     } 
 
-   /* get_config_parameters - get a list of which configurationparameters 
+   /* get_config_parameters - get a list of which configuration parameters 
     * may be set for this object.
     * @param none
-    * @return array to be added to the configurationobject.
+    * @return array to be added to the configuration object.
     * */
     /** @ignore */
     function get_config_parameters () 

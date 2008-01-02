@@ -79,7 +79,7 @@ Legend:
 2006-09-14 rambo
   + started work on message report (statistics on send and link logger data)
   + message sendStarted and sendCompleted get some values again (how accurate or
-    usefull they actually are is a different matter)
+    useful they actually are is a different matter)
   + new classes supported in smart-campaign rules
 
 2006-08-29 rambo

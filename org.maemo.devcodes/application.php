@@ -343,7 +343,7 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
     /**
      * Check for existence of dependencies
      *
-     * @return boolean indicating precense of dependencies
+     * @return boolean indicating presence of dependencies
      */
     function has_dependencies()
     {

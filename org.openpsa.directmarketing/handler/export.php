@@ -420,7 +420,7 @@ class org_openpsa_directmarketing_handler_export extends midcom_baseclasses_comp
         $i = 0;
         if ($this->membership_mode == 'all')
         {
-            // If membership mode is 'all' we add person guid as a way to reliably recognize inviduals from among the memberships
+            // If membership mode is 'all' we add person guid as a way to reliably recognize individuals from among the memberships
             echo $this->_encode_csv('person: GUID', true, false);
         }
         foreach ($object_types as $type)

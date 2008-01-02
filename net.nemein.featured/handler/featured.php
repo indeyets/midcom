@@ -191,7 +191,7 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
 
     function _show_delete($handler_id, &$data)
     {
-        $_MIDCOM->uimessages->add($data['l10n']->get('net.nemein.featured'), $data['l10n']->get('item deleted succesfully'), 'ok');
+        $_MIDCOM->uimessages->add($data['l10n']->get('net.nemein.featured'), $data['l10n']->get('item deleted successfully'), 'ok');
         $_MIDCOM->relocate('manage');
     }
 
@@ -213,7 +213,7 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         switch ($this->_controller->process_form())
         {
             case 'save':
-                $_MIDCOM->uimessages->add($data['l10n']->get('net.nemein.featured'), $data['l10n']->get('item update succesfully'), 'ok');
+                $_MIDCOM->uimessages->add($data['l10n']->get('net.nemein.featured'), $data['l10n']->get('item updated successfully'), 'ok');
                 $_MIDCOM->relocate('manage');
             break;
             case 'cancel':

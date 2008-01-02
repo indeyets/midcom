@@ -99,7 +99,7 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
      *
      * The method must return false on critical error preventing the processing of the items
      *
-     * When the transport has succesfully processed an item it must unset it from the list it receives,
+     * When the transport has successfully processed an item it must unset it from the list it receives,
      * this way the queue manager knows to remove said item from the queue, any items left in the list
      * will be retried on next run.
      *

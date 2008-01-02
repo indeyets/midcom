@@ -1085,7 +1085,7 @@ function show_processing(formData, jqForm, options)
 }
 function processing_successfull(responseText, statusText)
 {
-    //console.log('processing_successfull responseText:'+responseText);
+    //console.log('processing_successful responseText:'+responseText);
     close_modal_window();
     
     if (responseText > 0)

@@ -64,14 +64,14 @@
  *  
  * 
  * @option Boolean widthFixed (optional) 		Boolean flag indicating if tablesorter should apply fixed widths to the table columns.
- * 												This is usefull when using the pager companion plugin.
+ * 												This is useful when using the pager companion plugin.
  * 												This options requires the dimension jquery plugin.
  * 												Default value: false
  *
  * @option Boolean cancelSelection (optional) 	Boolean flag indicating if tablesorter should cancel selection of the table headers text.
  * 												Default value: true
  *
- * @option Boolean debug (optional) 			Boolean flag indicating if tablesorter should display debuging information usefull for development.
+ * @option Boolean debug (optional) 			Boolean flag indicating if tablesorter should display debuging information useful for development.
  *
  * @type jQuery
  *

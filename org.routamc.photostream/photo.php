@@ -136,7 +136,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         {
             return;
         }
-        // Detect 1.8 vs 1.7 by precense of this writing of QB
+        // Detect 1.8 vs 1.7 by presence of this writing of QB
         if (class_exists('midgard_query_builder'))
         {
             $att = new midgard_attachment($this->thumb);
@@ -183,7 +183,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             'main' => $this->main,
             'thumb' => $this->thumb
         );
-        // Detect 1.8 vs 1.7 by precense of this writing of QB
+        // Detect 1.8 vs 1.7 by presence of this writing of QB
         if (class_exists('midgard_query_builder'))
         {
             $qb = new midgard_query_builder('midgard_attachment');
@@ -227,7 +227,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         foreach ($atts as $k => $att)
         {
             // Reload attachment to get parameters working properly
-            // Detect 1.8 vs 1.7 by precense of this writing of QB
+            // Detect 1.8 vs 1.7 by presence of this writing of QB
             if (class_exists('midgard_query_builder'))
             {
                 $atts[$k] = new midgard_attachment($att->id);
@@ -302,7 +302,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
     }
 
     /**
-     * Create a working copy of the attachemnet, optionally only first X kB of it
+     * Create a working copy of the attachment, optionally only first X kB of it
      *
      * The option to copy only part of file is mainly for reading EXIF data which is in the headers
      * of the file, and thus only a few first kB are needed for it.
@@ -482,8 +482,8 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             $cameraid_components['owner'] = $data['MAKERNOTE']['OwnerName'];
         }
         /*
-           TODO: Figure out a sensible way (esp if owner is not set...) to identify the invidual camera
-           OTOH: if we have owner and firmare along with make/model we can quite reliably use this to identify the
+           TODO: Figure out a sensible way (esp if owner is not set...) to identify the individual camera
+           OTOH: if we have owner and firmware along with make/model we can quite reliably use this to identify the
            photographer.
         */
     }

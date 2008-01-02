@@ -17,7 +17,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
     var $contacts = array(); //Shorthand access for contact members
     var $old_contacts = array(); //For diffing the ones above
 
-    /* These two are filled correctly as arraus with the get_actions method */
+    /* These two are filled correctly as arrays with the get_actions method */
     var $prev_action = false;
     var $next_action = false;
 
@@ -89,7 +89,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
     {
         //TODO: Implement $limit_to_person support
         debug_push_class(__CLASS__, __FUNCTION__);
-        //PONDER: gracefull loads and then later check for class_exists ??
+        //PONDER: graceful loads and then later check for class_exists ??
         $_MIDCOM->componentloader->load('org.openpsa.projects');
         $_MIDCOM->componentloader->load('org.openpsa.calendar');
         $default = array(

@@ -79,7 +79,7 @@ TODO :
 17:36 < tarjei> I guess guid+schemaname could work as a key
 17:37 < tarjei> wrt to images I'm thinking I'll keep the current way the popup works as an "advanced option" for use when dm2 is not used directly.
 17:37 < torben> ah
-17:37 < tarjei> That could be usefull the day when spider doesn't work anymore fx.
+17:37 < tarjei> That could be useful the day when spider doesn't work anymore fx.
 17:37 < torben> sort of a fallback?#
 17:38 < torben> as advanced (as in "no-default") option lilke "show all attachments: true|false" it'd be good, i agree there.
 17:38 < tarjei> yes that was the idea

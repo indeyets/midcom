@@ -18,7 +18,7 @@ This method requires HTTP Basic authentication
 ## Error Codes
 
 200: OK
-:    Product was succesfully updated
+:    Product was successfullly updated
 
 401: Authorization required
 :    HTTP Basic authentication needed

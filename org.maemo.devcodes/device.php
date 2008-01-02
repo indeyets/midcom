@@ -170,7 +170,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
      * Check if we have any "automatically" create smart campaigns for this device
      *
      * @see create_smart_campaigns
-     * @return boolean indicating precense of campaigns
+     * @return boolean indicating presence of campaigns
      */
     function _has_dependencies_check_campaigns()
     {
@@ -185,7 +185,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     /**
      * Check if device has applications for it
      *
-     * @return boolean indicating precense of applications
+     * @return boolean indicating presence of applications
      */
     function _has_dependencies_check_applications()
     {
@@ -208,7 +208,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     /**
      * Check if device has codes for it
      *
-     * @return boolean indicating precense of codes
+     * @return boolean indicating presence of codes
      */
     function _has_dependencies_check_codes()
     {
@@ -231,7 +231,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     /**
      * Check if there are developer codes or applications for code for this device
      *
-     * @return boolean indicating precense of dependencies
+     * @return boolean indicating presence of dependencies
      */
     function has_dependencies()
     {
@@ -473,7 +473,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     }
 
     /**
-     * Creates various usefull smart campaigns related to this device
+     * Creates various useful smart campaigns related to this device
      *
      * @return bool indicating success/failure
      */

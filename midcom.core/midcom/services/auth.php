@@ -1008,7 +1008,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      */
     function get_privileges_byguid($object_guid, $object_class, $user = null)
     {
-        // TODO: Clean if/else shorthands, make sure this works corretcly for magick assignees as well
+        // TODO: Clean if/else shorthands, make sure this works correctly for magic assignees as well
         if (is_null($user))
         {
             $user =& $this->user;
@@ -1688,7 +1688,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     }
 
     /**
-     * Returns a midcom_core_group instance. Valid arguments are either a valid group identiefier
+     * Returns a midcom_core_group instance. Valid arguments are either a valid group identifier
      * (group:... or vgroup:...), any valid identifier for the midcom_core_group
      * constructor or a valid object of that type.
      *
@@ -2078,7 +2078,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         if (   function_exists('mgd_is_element_loaded')
             && mgd_is_element_loaded('midcom_services_auth_access_denied'))
         {
-            // Pass our local but very usefull variables on to the style element
+            // Pass our local but very useful variables on to the style element
             $GLOBALS['midcom_services_auth_access_denied_message'] = $message;
             $GLOBALS['midcom_services_auth_access_denied_title'] = $title;
             $GLOBALS['midcom_services_auth_access_denied_login_warning'] = $login_warning;
@@ -2203,7 +2203,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         if (   function_exists('mgd_is_element_loaded')
             && mgd_is_element_loaded('midcom_services_auth_login_page'))
         {
-            // Pass our local but very usefull variables on to the style element
+            // Pass our local but very useful variables on to the style element
             $GLOBALS['midcom_services_auth_show_login_page_title'] = $title;
             $GLOBALS['midcom_services_auth_show_login_page_login_warning'] = $login_warning;
             mgd_show_element('midcom_services_auth_login_page');

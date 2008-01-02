@@ -811,7 +811,7 @@ MidCOM Version 1.3.0, 2004-05-13:
   + Implemented a serve-snippet(guid) URL method with a similar
     functionality as serve-attachment(guid). It will load the snippet
     identified by the given id/GUID and prints the code field to
-    standard output. This is especially usefull for JavaScript
+    standard output. This is especially useful for JavaScript
     snippets and CSS snippets. See the documentation of the method
     midcom::serve_snippet(...) for further details how to utilize
     this feature.

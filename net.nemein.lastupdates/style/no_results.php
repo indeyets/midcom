@@ -6,7 +6,7 @@ if ($data['query_failure'])
 }
 else
 {
-    // succefull query but no results
+    // successful query but no results
     $localized = sprintf($data['l10n']->get('could not find any documents modified since %s'), strftime('%x', $data['edited_since']));
 }
 ?>

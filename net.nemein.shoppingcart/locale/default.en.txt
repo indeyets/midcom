@@ -12,7 +12,7 @@ Back to cart
 ---STRINGEND
 
 ---STRING backend-email: send ok
-The order was succesfully sent, you should receive a copy of it to your email address.
+The order was successfully sent, you should receive a copy of it to your email address.
 ---STRINGEND
 
 ---STRING check out

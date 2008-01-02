@@ -8,7 +8,7 @@
 
 /**
  * MidCOM wrapper for org_openpsa_event with various helper functions
- * refactored from OpenPSA 1.x calander
+ * refactored from OpenPSA 1.x calendar
  * @todo Figure out a good way to always use UTC for internal time storage
  * @package org.openpsa.calendar
  */
@@ -934,7 +934,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         debug_pop();
     }
     /**
-     * Check for potential busy conflicts to allow more gracefull handling of those conditions
+     * Check for potential busy conflicts to allow more graceful handling of those conditions
      *
      * Also allows normal events to "rob" resources from tentative ones.
      * NOTE: return false for *no* (or resolved automatically) conflicts and true for unresolvable conflicts
@@ -1182,7 +1182,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
                 &&  count($event->resources)==0)
             {
                 /* If modified event has no-one or only creator as participant and no resources
-                   then delete it (as it's unlikely the stub event is usefull anymore) */
+                   then delete it (as it's unlikely the stub event is useful anymore) */
                 debug_add("event {$event->title} (#{$event->id}) has been robbed of all of it's resources, calling delete");
                 //TODO: take notifications and repeats into account
                 $event->delete();
@@ -1585,7 +1585,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
             $vcal_keys['ATTENDEE'][] = "mailto:{$person->email}";
             $vcal_key_parameters['ATTENDEE'][] = array(
                     'ROLE' => 'REQ-PARTICIPANT',
-                    'CUTYPE' => 'INVIDUAL',
+                    'CUTYPE' => 'INDIVIDUAL',
                     'STATUS' => 'ACCEPTED',
                     'CN' => $encoder->escape_separators($person->rname, true),
                 );

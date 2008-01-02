@@ -131,7 +131,7 @@ Legend:
   + added email notifications to event participants
   - recoded busy handling to take advantage of joined queries and support
     MidCOM DBA.
-  + more gracefull handling of resource conflicts
+  + more graceful handling of resource conflicts
 
 2005-08-17 bergie
   + Added indexing support
