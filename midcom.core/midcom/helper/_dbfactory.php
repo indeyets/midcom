@@ -495,6 +495,24 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
                 // Actual import
                 if (!midcom_helper_replicator_import_object($unserialized_object, $use_force))
                 {
+                    /** 
+                     * BEGIN workaround
+                     * For http://trac.midgard-project.org/ticket/200
+                     */
+                    if (mgd_errno() === MGD_ERR_OBJECT_IMPORTED)
+                    {
+                        debug_add('Trying to workaround problem importing deleted action, calling $acl_object->delete()', MIDCOM_LOG_WARN);
+                        if ($acl_object->delete())
+                        {
+                            debug_add('$acl_object->delete() succeeded, returning true early', MIDCOM_LOG_INFO);
+                            debug_pop();
+                            return true;
+                        }
+                        debug_add("\$acl_object->delete() failed for {$acl_object->guid}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                        // reset errno()
+                        mgd_set_errno(MGD_ERR_OBJECT_IMPORTED);
+                    }
+                    /** END workaround */
                     debug_add('midcom_helper_replicator_import_object returned false, errstr: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
                     debug_pop();
                     return false;
