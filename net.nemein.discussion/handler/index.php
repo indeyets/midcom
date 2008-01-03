@@ -33,6 +33,9 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
     function _handler_index($handler_id, $args, &$data)
     {
         $data['forum'] =& $this->_topic;
+        
+        // Prepare datamanager
+        $data['datamanager'] = new midcom_helper_datamanager2_datamanager($data['schemadb']);
 
         return true;
     }
@@ -80,13 +83,26 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
 
                 $data['index_count'] =& $i;
                 $data['thread'] =& $thread;
+                
                 $data['latest_post'] = new net_nemein_discussion_post_dba($thread->latestpost);
+                $data['view_latest_post'] = array();                
+                if ($data['datamanager']->autoset_storage($data['latest_post']))
+                {
+                    $data['view_latest_post'] = $data['datamanager']->get_content_html();
+                }
                 
                 $data['first_post'] = null;
+                $data['view_first_post'] = array();  
                 if ($thread->firstpost)
                 {
                     $data['first_post'] = new net_nemein_discussion_post_dba($thread->firstpost);
+              
+                    if ($data['datamanager']->autoset_storage($data['first_post']))
+                    {
+                        $data['view_first_post'] = $data['datamanager']->get_content_html();
+                    }
                 }
+                
                 midcom_show_style('view-index-item');
             }
         }
@@ -94,7 +110,6 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
         midcom_show_style('view-index-footer');
 
         // Find out subforums (only one level)
-        $forums = array();
         $forum_qb = midcom_db_topic::new_query_builder();
         $forum_qb->add_constraint('up', '=', $this->_topic->id);
         $forum_qb->add_constraint('component', '=', 'net.nemein.discussion');
