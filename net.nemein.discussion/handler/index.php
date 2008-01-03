@@ -32,7 +32,7 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
 	 */
     function _handler_index($handler_id, $args, &$data)
     {
-        $this->_request_data['forum'] =& $this->_topic;
+        $data['forum'] =& $this->_topic;
 
         return true;
     }
@@ -48,7 +48,7 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
         $qb->add_order('sticky', 'DESC');
         $qb->add_order($this->_config->get('order_threads_by'), 'DESC');
         $threads = $qb->execute_unchecked();
-        $this->_request_data['thread_qb'] =& $qb;
+        $data['thread_qb'] =& $qb;
         $date = null;
         midcom_show_style('view-index-header');
 
@@ -78,9 +78,15 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
                     $date = $thread_date;
                 }
 
-                $this->_request_data['index_count'] =& $i;
-                $this->_request_data['thread'] =& $thread;
-                $this->_request_data['latest_post'] = new net_nemein_discussion_post_dba($thread->latestpost);
+                $data['index_count'] =& $i;
+                $data['thread'] =& $thread;
+                $data['latest_post'] = new net_nemein_discussion_post_dba($thread->latestpost);
+                
+                $data['first_post'] = null;
+                if ($thread->firstpost)
+                {
+                    $data['first_post'] = new net_nemein_discussion_post_dba($thread->firstpost);
+                }
                 midcom_show_style('view-index-item');
             }
         }
@@ -91,25 +97,20 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
         $forums = array();
         $forum_qb = midcom_db_topic::new_query_builder();
         $forum_qb->add_constraint('up', '=', $this->_topic->id);
+        $forum_qb->add_constraint('component', '=', 'net.nemein.discussion');
         $forum_qb->add_order('score');
         $forum_qb->add_order('extra');
-        $nodes = $forum_qb->execute();
-        foreach ($nodes as $node)
-        {
-            if ($node->parameter('midcom', 'component') == 'net.nemein.discussion')
-            {
-                $forums[] = $node;
-            }
-        }
+        $forums = $forum_qb->execute();
 
         if (count($forums) > 0)
         {
             midcom_show_style('view-forum-index-header');
             foreach ($forums as $forum)
             {
-                $this->_request_data['latest_thread'] = null;
-                $this->_request_data['latest_post'] = null;
-                $this->_request_data['forum'] = $forum;
+                $data['latest_thread'] = null;
+                $data['latest_post'] = null;
+                $data['first_post'] = null;
+                $data['forum'] = $forum;
                 $thread_qb = net_nemein_discussion_thread_dba::new_query_builder();
                 $thread_qb->add_constraint('posts', '>', 0);
                 $thread_qb->add_constraint('node', '=', $forum->id);
@@ -118,8 +119,13 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
                 $latest_thread = $thread_qb->execute_unchecked();
                 foreach ($latest_thread as $thread)
                 {
-                    $this->_request_data['latest_thread'] =& $thread;
-                    $this->_request_data['latest_post'] = new net_nemein_discussion_post_dba($thread->latestpost);
+                    $data['latest_thread'] =& $thread;
+                    $data['latest_post'] = new net_nemein_discussion_post_dba($thread->latestpost);
+                    
+                    if ($thread->firstpost)
+                    {
+                        $data['first_post'] = new net_nemein_discussion_post_dba($thread->firstpost);
+                    }
                 }
                 midcom_show_style('view-forum-index-item');
             }

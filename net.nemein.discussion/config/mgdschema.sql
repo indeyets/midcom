@@ -37,6 +37,9 @@ CREATE TABLE net_nemein_discussion_thread (
   KEY net_nemein_discussion_thread_posts_idx (posts),
   KEY net_nemein_discussion_thread_latestpost_idx (latestpost)
 );
+ALTER TABLE net_nemein_discussion_thread ADD COLUMN firstpost int(11) default '0';
+CREATE INDEX net_nemein_discussion_thread_firstpost_idx on net_nemein_discussion_thread (firstpost);
+
 CREATE TABLE net_nemein_discussion_post (
   id int(11) NOT NULL auto_increment,
   status int(11) NOT NULL default '0',

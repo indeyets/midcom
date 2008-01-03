@@ -403,6 +403,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         $thread->name = midcom_generate_urlname_from_string($post->subject);
         // In fact these get updated when the post is created soon after
         $thread->posts = 1;
+        $thread->firstpost = $post->id;
         $thread->latestpost = $post->id;
         // Try to figure out the correct latestposttime to use
         if (is_numeric($post->metadata->published))

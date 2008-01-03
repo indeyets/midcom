@@ -236,6 +236,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 $this->_thread->title = $this->_post->subject;
                 $this->_thread->name = midcom_generate_urlname_from_string($this->_post->subject);
                 $this->_thread->posts = 1;
+                $this->_thread->firstpost = $this->_post->id;
                 $this->_thread->latestpost = $this->_post->id;
                 $this->_thread->latestposttime = $this->_post->metadata->published;
                 $i = 0;

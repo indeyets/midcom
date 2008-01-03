@@ -10,6 +10,7 @@
         <!-- cached data -->
         <property name="posts" type="integer"/>
         <property name="latestpost" link="net_nemein_discussion_post:id" reverse="no" type="integer"/>
+        <property name="firstpost" link="net_nemein_discussion_post:id" reverse="no" type="integer"/>
         <property name="latestposttime" type="integer"/>
         <!-- /cached data -->
         
