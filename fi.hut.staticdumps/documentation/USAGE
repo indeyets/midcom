@@ -8,7 +8,7 @@ array
   'documentroot' => '/path/to/documentroot', // optional
   'dump_path' => '/tmp/mysite', // mandatory
   'wget_extra_options' => '-k -K -E', // optional
-  'rsync_extra_options' => '-L', // optional
+  'rsync_extra_options' => '--exclude=/midcom-static/', // optional
   'protected_htaccess_file' => '/etc/midgard/default.htaccess', // optional
   'protected_htaccess_suffix' => '_midgard', // optional
   'redirect_htaccess_suffix' => '', // optional, remove key alltogether to disable generation of redirection .htaccess files

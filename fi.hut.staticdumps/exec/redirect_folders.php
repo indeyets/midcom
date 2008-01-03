@@ -3,6 +3,12 @@ $_MIDCOM->auth->require_valid_user('basic');
 //$_MIDCOM->auth->require_admin_user();
 $_MIDCOM->cache->content->content_type('text/plain');
 $_MIDCOM->cache->content->no_cache();
+// Disable limits and buffering
+ini_set('memory_limit', -1);
+ini_set('max_execution_time', 0);
+while(@ob_end_flush());
+// Give some output right at the start
+echo "\n"; flush();
 
 $nap = new midcom_helper_nav();
 
@@ -15,11 +21,12 @@ unset($qb);
 array_unshift($site_topics, $site_root);
 foreach ($site_topics as $topic)
 {
-
+    flush();
     $node = $nap->get_node($topic->id);
     echo "{$node[MIDCOM_NAV_RELATIVEURL]}\n";
 
 }
 
-
+// restart buffering to keep midcom happier
+ob_start();
 ?>

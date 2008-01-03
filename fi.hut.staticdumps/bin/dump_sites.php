@@ -57,6 +57,7 @@ if (!is_readable($conffile))
     better_die("File {$conffile} not readable\n");
 }
 
+$all_ok = true;
 eval('$sites_config = array(' . file_get_contents($conffile) . ');');
 foreach ($sites_config as $k => $site_config)
 {
@@ -88,10 +89,14 @@ foreach ($sites_config as $k => $site_config)
         $wget_cmd = "{$wget_cmd} --post-data 'username=" . rawurlencode($site_config['username']) . "&password=" . rawurlencode($site_config['password']) . "&midcom_services_auth_frontend_form_submit=true'";
     }
     $wget_cmd = "{$wget_cmd} " . escapeshellarg($site_config['url']);
-    
-    echo "executing: {$wget_cmd}\n";
-    system($wget_cmd);
-    // TODO: check exit status ?
+    $wget_ret = 0;
+    //echo "executing: {$wget_cmd}\n";
+    system($wget_cmd, $wget_ret);
+    if ($wget_ret !== 0)
+    {
+        echo "command: {$wget_cmd} exited with status {$wget_ret}\n";
+        $all_ok = false;
+    }
 
     /**
      * Rename files with GET parameters in the name
@@ -111,8 +116,14 @@ foreach ($sites_config as $k => $site_config)
             list($filepart, $querypart) = explode('?', $filepath);
             $newpath = dirname($filepart) . "/{$querypart}_" . basename($filepart);
             $mv_cmd = "mv -f '{$filepath}' '{$newpath}'";
-            echo "executing: {$mv_cmd}\n";
-            system($mv_cmd);
+            $mv_ret = 0;
+            //echo "executing: {$mv_cmd}\n";
+            system($mv_cmd, $mv_ret);
+            if ($mv_ret !== 0)
+            {
+                echo "command: {$mv_cmd} exited with status {$mv_ret}\n";
+                $all_ok = false;
+            }
         }
     }
 
@@ -150,9 +161,20 @@ foreach ($sites_config as $k => $site_config)
                 {
                     continue;
                 }
+                if (!is_dir("{$site_config['dump_path']}/{$path}"))
+                {
+                    // Silently ignore, this path may have been --excluded by wget_extra_options
+                    continue;
+                }
                 $ln_cmd = "ln -f -s {$site_config['protected_htaccess_file']} {$site_config['dump_path']}/{$path}.htaccess{$suffix}";
-                echo "executing: {$ln_cmd}\n";
-                system($ln_cmd);
+                $ln_ret = 0;
+                //echo "executing: {$ln_cmd}\n";
+                system($ln_cmd, $ln_ret);
+                if ($ln_ret !== 0)
+                {
+                    echo "command: {$ln_cmd} exited with status {$ln_ret}\n";
+                    $all_ok = false;
+                }
             }
         }
     }
@@ -226,11 +248,21 @@ EOD;
                 if (!file_exists(dirname($file_path)))
                 {
                     $mkdir_cmd = 'mkdir -p ' . dirname($file_path);
-                    echo "executing: {$mkdir_cmd}\n";
-                    system($mkdir_cmd);
+                    $mkdir_ret = 0;
+                    //echo "executing: {$mkdir_cmd}\n";
+                    system($mkdir_cmd, $mkdir_ret);
+                    if ($mkdir_ret !== 0)
+                    {
+                        echo "command: {$mkdir_cmd} exited with status {$mkdir_ret}\n";
+                        $all_ok = false;
+                    }
                 }
-                echo "Writing {$file_path}\n";
-                file_put_contents($file_path, $file_content);
+                //echo "Writing {$file_path}\n";
+                if (!file_put_contents($file_path, $file_content))
+                {
+                    echo "Failed to write file {$file_path}\n";
+                    $all_ok = false;
+                }
                 unset($file_path, $file_content);
             }
         }
@@ -249,11 +281,20 @@ EOD;
         {
             $rsync_cmd = "rsync {$rsync_options} {$site_config['documentroot']}/* {$site_config['dump_path']}/";
         }
-        echo "executing: {$rsync_cmd}\n";
-        system($rsync_cmd);
-        // TODO: check exit status
-
+        $rsync_ret = 0;
+        //echo "executing: {$rsync_cmd}\n";
+        system($rsync_cmd, $rsync_ret);
+        if ($rsync_ret !== 0)
+        {
+            echo "command: {$rsync_cmd} exited with status {$rsync_ret}\n";
+            $all_ok = false;
+        }
     }
+}
+
+if (!$all_ok)
+{
+    better_die('Some operation failed, see above');
 }
 
 ?>
