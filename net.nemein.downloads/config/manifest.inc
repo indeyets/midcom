@@ -1,5 +1,6 @@
 
   'name' => 'net.nemein.downloads',
+  'icon' => 'net.nemein.downloads/downloads-16.png',
   'purecode' => false,
   'version' => '1.0.2beta1',
   'state' => 'beta',
