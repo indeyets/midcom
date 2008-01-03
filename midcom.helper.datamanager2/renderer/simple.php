@@ -104,7 +104,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     * @access   private
     */
     var $_requiredNoteTemplate =
-        "\n\t<div>\n\t\t\n\t{requiredNote}</div>\n\t";
+        "\n\t<div class=\"required_note\">\n\t\t\n\t{requiredNote}</div>\n\t";
 
    /**
     * Array containing the templates for customised elements
