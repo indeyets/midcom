@@ -81,7 +81,55 @@ class midcom_helper_replicator_interface extends midcom_baseclasses_components_i
         // Deletes require love
         if ($operation === MIDCOM_OPERATION_DBA_DELETE)
         {
-            $qmanager->add_to_queue($object, true);
+            /**
+             * We will muck about with this working around some core issues
+             * that cannot be fixed because that might break things that unwittingly
+             * depend on the wrong behaviour
+             */
+            $copy = $object;
+            $fresh_object = false;
+            if (   class_exists('midgard_query_builder')
+                && ($dummy_qb = new midgard_query_builder('midgard_topic'))
+                && method_exists($dummy_qb, 'include_deleted'))
+            {
+                // refresh a bunch of stuff from the deleted object if possible
+                $qb = new midgard_query_builder(get_class($object));
+                $qb->add_constraint('guid', '=', $object->guid);
+                $qb->include_deleted();
+                $results = $qb->execute();
+                if (!empty($results))
+                {
+                    $fresh_object = $results[0];
+                }
+                unset($qb, $results);
+            }
+
+            if ($fresh_object)
+            {
+                // got fresh object, copy values for our perusal...
+                while (list($k, $v) = each ($fresh_object->metadata))
+                {
+                    $copy->metadata->$k = $v;
+                }
+                while (list($k, $v) = each ($fresh_object))
+                {
+                    if ($k === 'metadata')
+                    {
+                        continue;
+                    }
+                    $copy->$k = $v;
+                }
+                // we should not even need the rewrite_to_delete
+                $qmanager->add_to_queue($copy);
+                return;
+            }
+
+            /**
+             * Could not refresh, live with what we have...
+             * ... but do the timestamp mucking that core does for other operations
+             */
+            midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_isodate($copy);
+            $qmanager->add_to_queue($copy, true);
             return;
         }
         $qmanager->add_to_queue($object);
