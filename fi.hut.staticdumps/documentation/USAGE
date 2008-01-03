@@ -7,7 +7,7 @@ array
   'url' => 'http://yoursite.com/prefix', // mandatory
   'documentroot' => '/path/to/documentroot', // optional
   'dump_path' => '/tmp/mysite', // mandatory
-  'wget_extra_options' => '-k -K -E', // optional
+  'wget_extra_options' => '-k -K', // optional
   'rsync_extra_options' => '--exclude=/midcom-static/', // optional
   'protected_htaccess_file' => '/etc/midgard/default.htaccess', // optional
   'protected_htaccess_suffix' => '_midgard', // optional
@@ -23,6 +23,8 @@ RewriteCond %{QUERY_STRING} ^.+$
 RewriteRule ^(.*)/(.*?)$ $1/%{QUERY_STRING}_$2? [L]
 
 This will internally convert `file.html?foo` into `foo_file.html` (the dump_sites.php script does the file renames for you in the dump phase)
+
+Alternatively (if you want an offline copy that won't be served by apache, or for whatever other reason) you can add -E (shorthand for `--html-extension`) to `wget_extra_options`
 
 # Dumping as admin ?
 
