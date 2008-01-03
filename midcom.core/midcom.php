@@ -21,6 +21,21 @@ if (   array_key_exists('HTTP_X_MOZ', $_SERVER)
     exit;
 }
 
+/**
+ * Second, make sure the URLs not having query string (or midcom-xxx- -method signature)
+ * have trailing slash or some extension in the "filename".
+ *
+ * This makes life much, much better when making static copies for whatever reason
+ */
+if (!preg_match('%\?|/$|midcom-.+-|/.+\..+$%', $_SERVER['REQUEST_URI']))
+{
+    header('HTTP/1.0 301 Moved Permanently');
+    header("Location: {$_SERVER['REQUEST_URI']}/");
+    echo "301: new location <a href='{$_SERVER['REQUEST_URI']}/'>{$_SERVER['REQUEST_URI']}/</a>";
+    exit();
+}
+/** */
+
 ///////////////////////////////////////////////////////////
 // Ease debugging and make sure the code actually works(tm)
 error_reporting(E_ALL);
