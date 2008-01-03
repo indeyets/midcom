@@ -20,10 +20,10 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     }
 
     /**
-     * Retvieve a reference to a device object, uses in-request caching
+     * Retrieve a reference to a device object, uses in-request caching
      *
      * @param $src string GUID of device (ids work but are discouraged)
-     * @return org_maemo_devcodes_device_dba refence to device object or false
+     * @return org_maemo_devcodes_device_dba reference to device object or false
      */
     function &get_cached($src)
     {
@@ -516,7 +516,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
      * Fetch/create campaign object for given type of autocreated campaign
      *
      * @param string type to fetch/create for
-     * @return refrence to org_openpsa_directmarketing_campaign object
+     * @return reference to org_openpsa_directmarketing_campaign object
      */
     function &_create_smart_campaign_prepare_campaign_object($type)
     {
@@ -532,7 +532,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
             else
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Got bad result when instatiating campaign {$existing_guid} (type: {$type}), creating new one", MIDCOM_LOG_ERROR);
+                debug_add("Got bad result when instantiating campaign {$existing_guid} (type: {$type}), creating new one", MIDCOM_LOG_ERROR);
                 debug_print_r('got result: ', $campaign);
                 debug_pop();
                 unset($campaign);

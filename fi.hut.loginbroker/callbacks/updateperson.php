@@ -1,6 +1,6 @@
 <?php
 /**
- * @package ${module}
+ * @package fi.hut.loginbroker
  * @author The Midgard Project, http://www.midgard-project.org
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -83,7 +83,7 @@ class fi_hut_loginbroker_callbacks_updateperson extends fi_hut_loginbroker_callb
 
         if (!$call_update)
         {
-            // Others may find this usefull...
+            // Others may find this useful...
             $this->data['person'] = $person;
             return true;
         }
@@ -100,7 +100,7 @@ class fi_hut_loginbroker_callbacks_updateperson extends fi_hut_loginbroker_callb
             debug_pop();
             return false;
         }
-        // Others may find this usefull...
+        // Others may find this useful...
         $this->data['person'] = $person;
 
         return true;

@@ -40,7 +40,7 @@ $data =& $_MIDCOM->get_custom_context_data('request_data');
                         $i++;
                         ?>
                         <tr>
-                            <td><input name="origin[&(i);]" size="4" maxlenght="4" /></td>
+                            <td><input name="origin[&(i);]" size="4" maxlength="4" /></td>
                             <td>
                                 <select name="score_origin[&(i);]">
                                     <optgroup label="Valitse pistemäärä">
@@ -51,7 +51,7 @@ $data =& $_MIDCOM->get_custom_context_data('request_data');
                                     </optgroup>
                                 </select>
                             </td>
-                            <td><input name="destination[&(i);]" size="4" maxlenght="4" /></td>
+                            <td><input name="destination[&(i);]" size="4" maxlength="4" /></td>
                             <td>
                                 <select name="score_destination[&(i);]">
                                     <optgroup label="Valitse pistemäärä">

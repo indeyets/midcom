@@ -1892,7 +1892,7 @@ class midcom_application
      * the client accessing us.Currently incorporated is a recognition of client OS
      * and client browser.
      *
-     * <b>NOTE:</b> Be carful if you rely on this information, the system does not check
+     * <b>NOTE:</b> Be careful if you rely on this information, the system does not check
      * for invervening Proxies yet.
      *
      * <b>WARNING:</b> If the caching engine is running, you must not rely on this
@@ -2324,7 +2324,7 @@ class midcom_application
      * - Cache-Control: public max-age=$expires
      * - Expires: GMT Date $now+$expires
      * - Last-Modified: GMT Date of the last modified timestamp of the Attachment
-     * - Content-Lenght: The Length of the Attachment in Bytes
+     * - Content-Length: The Length of the Attachment in Bytes
      * - Accept-Ranges: none
      *
      * This should enable caching of browsers for Navigation images and so on. You can

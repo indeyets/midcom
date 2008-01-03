@@ -6,7 +6,10 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 
-//TODO: This is a hotfix.
+/**
+ * @package org.openpsa.documents
+ * @todo: This is a hotfix.
+ */
 class midcom_org_openpsa_document extends __midcom_org_openpsa_document
 {
     function midcom_org_openpsa_document($id = null)
@@ -18,7 +21,7 @@ class midcom_org_openpsa_document extends __midcom_org_openpsa_document
 /**
  * Wrapper for org_openpsa_document
  *
- * Implements parameter and attchment methods for DM compatibility
+ * Implements parameter and attachment methods for DM compatibility
  *
  * @package org.openpsa.documents
  *

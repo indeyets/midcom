@@ -284,7 +284,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
 
         if (!$parent_guid)
         {
-            // No cache hit, retvieve guid and update the cache
+            // No cache hit, retrieve guid and update the cache
             if ($class)
             {
                 // Class defined, we can use the static method for fetching parent and avoiding full object instantiate

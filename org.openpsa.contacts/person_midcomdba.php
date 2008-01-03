@@ -18,10 +18,10 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
     }
 
     /**
-     * Retvieve a reference to a person object, uses in-request caching
+     * Retrieve a reference to a person object, uses in-request caching
      *
      * @param $src string GUID of device (ids work but are discouraged)
-     * @return org_maemo_devcodes_device_dba refence to device object or false
+     * @return org_maemo_devcodes_device_dba reference to device object or false
      */
     function &get_cached($src)
     {
@@ -179,7 +179,7 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
             }
             $_MIDCOM->auth->drop_sudo();
         }
-        //Could be usefull, I'm not certain if absolutely needed.
+        //Could be useful, I'm not certain if absolutely needed.
         debug_add("Checking privilege midgard:parameters for person #{$this->id}");
         if (!$_MIDCOM->auth->can_do('midgard:parameters', $this, $this_user))
         {
@@ -195,7 +195,7 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
             }
             $_MIDCOM->auth->drop_sudo();
         }
-        //Adding attachments requires both midgard:create and midgard:attchments
+        //Adding attachments requires both midgard:create and midgard:attachments
         debug_add("Checking privilege midgard:create for person #{$this->id}");
         if (!$_MIDCOM->auth->can_do('midgard:create', $this, $this_user))
         {

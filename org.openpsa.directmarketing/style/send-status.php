@@ -22,7 +22,7 @@ function org_openpsa_directmarketing_set_send_status(resultList, element)
 
     results = resultList.getElementsByTagName('result');
     if (   !results
-        || results.lenght == 0)
+        || results.length == 0)
     {
         //No results, do something
         return false;
@@ -35,14 +35,14 @@ function org_openpsa_directmarketing_set_send_status(resultList, element)
     }
     sent_results = resultList.getElementsByTagName('receipts');
     if (   !sent_results
-        || sent_results.lenght == 0)
+        || sent_results.length == 0)
     {
         //No results, do something
         return false;
     }
     total_results = resultList.getElementsByTagName('members');
     if (   !total_results
-        || total_results.lenght == 0)
+        || total_results.length == 0)
     {
         //No results, do something
         return false;

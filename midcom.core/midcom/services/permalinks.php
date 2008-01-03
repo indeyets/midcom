@@ -143,7 +143,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
         }
         
         // Bad, this means a full scan,
-        // NAP needs to be tranversed for the guid.
+        // NAP needs to be traversed for the guid.
         
         $unprocessed_node_ids = Array ($nav->get_root_node());
 

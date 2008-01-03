@@ -1,6 +1,6 @@
 <?php
 /**
- * @package ${module}
+ * @package fi.hut.loginbroker
  * @author The Midgard Project, http://www.midgard-project.org
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -47,9 +47,9 @@ class fi_hut_loginbroker_callbacks_prototype_base extends midcom_baseclasses_com
     }
 
     /**
-     * Helper to generate random string of printable characters of given lenght
+     * Helper to generate random string of printable characters of given length
      *
-     * @param int $lenght how many characters?
+     * @param int $length how many characters?
      * @return string of random garbage
      */
     function generate_password($length=10)

@@ -28,7 +28,7 @@ $GLOBALS["midcom_services_i18n__l10n_localedb"] = Array();
  * <b>L10n language database file format specification:</b>
  * 
  * Lines starting with --- are considered command lines and treated specially,
- * unless they occure within string data. All commands are separated with at 
+ * unless they occur within string data. All commands are separated with at 
  * least a single space from their content, unless they don't have an argument.
  * 
  * Empty lines are ignored, unless within string data.
@@ -145,7 +145,7 @@ class midcom_services__i18n_l10n {
     /**
      * The constructor loads the translation library indicated by the snippetdir
      * path $library and initializes the system completely. The output character 
-     * set will be initizialized to the language's default.
+     * set will be initialized to the language's default.
      * 
      * @param string $library	Name of the locale library to use.
      * @param string $database	Name of the database in the library to load.
@@ -575,7 +575,7 @@ class midcom_services__i18n_l10n {
      * subdir if necessary. Returns true on success, false on failure.
      *
      * @param string $string		The string-ID to edit.
-     * @param string $laguage		The language to edit.
+     * @param string $language		The language to edit.
      * @param string $translation	The UTF-8 encoded string to add to the translation table.
      * @deprecated This method is deprecated and will be dismissed in 2.2.0, the update method replaces this one completely.
      */
@@ -589,7 +589,7 @@ class midcom_services__i18n_l10n {
      * automatically. 
      * 
      * @param string $string		The string-ID to edit.
-     * @param string $laguage		The language to edit.
+     * @param string $language		The language to edit.
      * @param string $translation	The UTF-8 encoded string to add/update.
      */
     function update ($string, $language, $translation) {
@@ -602,7 +602,7 @@ class midcom_services__i18n_l10n {
      * will fail silently.
      * 
      * @param string $string		The string-ID to edit.
-     * @param string $laguage		The language to edit.
+     * @param string $language		The language to edit.
      */
     function delete ($string, $language) {
         // This is error-resilent, deleting a non-existent string will

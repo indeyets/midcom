@@ -86,7 +86,7 @@ class org_openpsa_smslib_tambur extends org_openpsa_smslib
         }
         if ($sender)
         {
-            //Check sender lenght
+            //Check sender length
             //is_numeric doesn't catch the + of international number properly
             if (preg_match('/[^0-9+]/', $sender))
             {

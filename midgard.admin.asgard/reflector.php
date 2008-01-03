@@ -68,7 +68,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             return $x;
         }
 
-        // Instatiate dummy object
+        // Instantiate dummy object
         $this->_dummy_object = new $this->_mgdschema_class();
         if (!$this->_dummy_object)
         {

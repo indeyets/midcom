@@ -1,6 +1,6 @@
 <?php
 /**
- * @package ${module}
+ * @package fi.hut.loginbroker
  * @author The Midgard Project, http://www.midgard-project.org
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 /**
  * This is the class that defines which URLs should be handled by this module. 
  * 
- * @package ${module}
+ * @package fi.hut.loginbroker
  */
 class fi_hut_loginbroker_viewer extends midcom_baseclasses_components_request
 {
