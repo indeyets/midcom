@@ -103,26 +103,33 @@ foreach ($sites_config as $k => $site_config)
      *
      * So we can actually serve them, see documentation/USAGE 
      * on how to configure mod_rewrite
+     *
+     * alternatively try if -E helps you
      */
-    $cmd = "find {$site_config['dump_path']} -name '*\?*'";
-    $output = array();
-    $ret = 0;
-    exec($cmd, $output, $ret);
-    if (   $ret === 0
-        && !empty($output))
+    if (   strpos($wget_cmd, '-E') === false
+        && strpos($wget_cmd, '--html-extension') === false)
     {
-        foreach($output as $filepath)
+        $cmd = "find {$site_config['dump_path']} -name '*\?*'";
+        $output = array();
+        $ret = 0;
+        exec($cmd, $output, $ret);
+        // TODO: check return status
+        if (   $ret === 0
+            && !empty($output))
         {
-            list($filepart, $querypart) = explode('?', $filepath);
-            $newpath = dirname($filepart) . "/{$querypart}_" . basename($filepart);
-            $mv_cmd = "mv -f '{$filepath}' '{$newpath}'";
-            $mv_ret = 0;
-            //echo "executing: {$mv_cmd}\n";
-            system($mv_cmd, $mv_ret);
-            if ($mv_ret !== 0)
+            foreach($output as $filepath)
             {
-                echo "command: {$mv_cmd} exited with status {$mv_ret}\n";
-                $all_ok = false;
+                list($filepart, $querypart) = explode('?', $filepath);
+                $newpath = dirname($filepart) . "/{$querypart}_" . basename($filepart);
+                $mv_cmd = "mv -f '{$filepath}' '{$newpath}'";
+                $mv_ret = 0;
+                //echo "executing: {$mv_cmd}\n";
+                system($mv_cmd, $mv_ret);
+                if ($mv_ret !== 0)
+                {
+                    echo "command: {$mv_cmd} exited with status {$mv_ret}\n";
+                    $all_ok = false;
+                }
             }
         }
     }
