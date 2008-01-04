@@ -120,11 +120,12 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
     {
         $this->_manage = false;
 
-        $qb = midcom_db_article::new_query_builder();
+        $qb = new org_openpsa_qbpager('midcom_db_article', 'net_nemein_quickpoll');
         $qb->add_constraint('topic', '=', $this->_content_topic->id);
         $qb->add_constraint('up', '=', 0);
         $qb->add_order('metadata.created', 'DESC');
-        $qb->set_limit(1);
+        $qb->results_per_page = 1;
+        $data['qb'] =& $qb;
         $index_poll = $qb->execute();
         if(array_key_exists(0, $index_poll))
         {

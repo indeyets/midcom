@@ -38,7 +38,8 @@ class net_nemein_quickpoll_interface extends midcom_baseclasses_components_inter
         // Load all libraries used by component here
         $this->_autoload_libraries = array
         (
-            'midcom.helper.datamanager2'
+            'midcom.helper.datamanager2',
+            'org.openpsa.qbpager',
         );
     }
 

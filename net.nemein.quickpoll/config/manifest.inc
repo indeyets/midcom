@@ -34,6 +34,9 @@
       'midcom.helper.datamanager2' => 
       array (
       ),
+      'org.openpsa.qbpager' => 
+      array (
+      ),
       'midcom' => 
       array (
       ),

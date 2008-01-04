@@ -46,3 +46,7 @@ $vote_count_string = $data['l10n']->get('vote count');
         ?>
     </div>
 </div>
+
+<?php
+$data['qb']->show_pages();
+?>
