@@ -124,6 +124,12 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         $qb->add_constraint('topic', '=', $this->_content_topic->id);
         $qb->add_constraint('up', '=', 0);
         $qb->add_order('metadata.created', 'DESC');
+        
+        $qb->begin_group('OR');
+            $qb->add_constraint('metadata.scheduleend', '=', '0000-00-00 00:00:00');
+            $qb->add_constraint('metadata.scheduleend', '>', gmdate('Y-m-d h:i:s'));
+        $qb->end_group();
+        
         $qb->results_per_page = 1;
         $data['qb'] =& $qb;
         $index_poll = $qb->execute();
