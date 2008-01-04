@@ -772,6 +772,14 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         {
             $article->parameter('net.nemein.rss:enclosure', 'mimetype', $item['enclosure@type']);
         }
+        
+        // FeedBurner Awareness API data
+        // http://code.google.com/apis/feedburner/awareness_api.html
+        if (   isset($item['feedburner'])
+            && isset($item['feedburner']['awareness']))
+        {
+            $article->parameter('com.feedburner', 'awareness', $item['feedburner']['awareness']);
+        }
 
         return true;
     }

@@ -98,6 +98,7 @@ function fetch_rss ($url) {
     if ( !MAGPIE_CACHE_ON ) {
         // fetch file, and parse it
         $resp = _fetch_remote_file( $url );
+
         if ( is_success( $resp->status ) ) {
             return _response_to_rss( $resp );
         }
