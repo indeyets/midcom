@@ -338,6 +338,94 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
     }
 
     /**
+     * Can-Handle check against the article name. We have to do this explicitly
+     * in can_handle already, otherwise we would hide all subtopics as the request switch
+     * accepts all argument count matches unconditionally.
+     */
+    function _can_handle_polldata($handler_id, $args, &$data)
+    {
+        return $this->_can_handle_view($handler_id, $args, &$data);
+    }
+
+    /**
+     * The handler to return polls data. 
+     * @param mixed $handler_id the array key from the requestarray
+     * @param array $args the arguments given to the handler
+     * 
+     */
+    function _handler_polldata($handler_id, $args, &$data)
+    {
+        $_MIDCOM->skip_page_style = true;
+        
+        $data['return_type'] = 'XML';
+        if (isset($args[1]))
+        {
+            $data['return_type'] = strtoupper($args[1]);            
+        }
+        
+        $this->_manage = false;
+        $this->_load_datamanager();
+        
+        $options_data = array();
+        $total_count = 0;
+        
+        $poll_data = array(
+            'id' => $this->_article->id,
+            'guid' => $this->_article->guid,
+            'title' => $this->_article->title,
+            'abstract' => mgd_format($this->_article->abstract, 'h'),
+        );
+                
+        $qb_options = net_nemein_quickpoll_option_dba::new_query_builder();
+        $qb_options->add_constraint('article', '=', $this->_article->id);
+        $options = $qb_options->execute();
+
+        foreach ($options as $option)
+        {
+            if (! isset($options_data[$option->id]))
+            {
+                $options_data[$option->id] = array(
+                    'title' => $option->title,
+                    'votes' => 0,
+                );
+            }
+        }
+
+        $qb_votes = net_nemein_quickpoll_vote_dba::new_query_builder();
+        $qb_votes->add_constraint('article', '=', $this->_article->id);
+        $votes = $qb_votes->execute();
+        
+        foreach ($votes as $vote)
+        {
+            if (! isset($options_data[$vote->selectedoption]))
+            {
+                continue;
+            }
+            
+            if (! isset($options_data[$vote->selectedoption]['votes']))
+            {
+                $options_data[$vote->selectedoption]['votes'] = 1;
+            }
+            else
+            {
+                $options_data[$vote->selectedoption]['votes'] += 1;                
+            }
+            
+            $total_count++;
+        }
+        
+        $poll_results = array(
+            'poll' => $poll_data,
+            'options' => $options_data,
+            'total' => $total_count,
+        );
+        
+        $data['poll_results'] =& $poll_results;
+        
+        return true;
+    }
+    
+    /**
      * This function does the output.
      *
      */
@@ -345,6 +433,32 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
     {
         $this->_request_data['view_article'] = $this->_datamanager->get_content_html();
         midcom_show_style('index');
+    }
+    
+    function _show_polldata($handler_id, &$data)
+    {
+        if ($data['return_type'] == 'XML')
+        {
+            $encoding = 'UTF-8';
+            
+            $_MIDCOM->cache->content->content_type('text/xml');
+            $_MIDCOM->header('Content-type: text/xml; charset=' . $encoding);
+
+            echo '<?xml version="1.0" encoding="' . $encoding . '" standalone="yes"?>' . "\n";
+            echo "<data id='{$data['poll_results']['poll']['id']}' guid='{$data['poll_results']['poll']['guid']}'>\n";
+            echo "    <title><![CDATA[{$data['poll_results']['poll']['title']}]]></title>\n";
+            echo "    <abstract><![CDATA[{$data['poll_results']['poll']['abstract']}]]></abstract>\n";
+            echo "    <total_votes><![CDATA[{$data['poll_results']['total']}]]></total_votes>\n";
+            echo "    <options>\n";
+
+            foreach ($data['poll_results']['options'] as $id => $option)
+            {
+                echo "       <option id='{$id}' votes='{$option['votes']}'><![CDATA[{$option['title']}]]></option>\n";                
+            }
+
+            echo "    </options>\n";
+            echo "</data>\n";
+        }
     }
 }
 ?>

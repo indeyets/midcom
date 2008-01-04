@@ -68,6 +68,22 @@
             ),
             'end_fieldgroup' => '',
         ),
+        
+        'lock_ip_address' => array
+        (
+            'description' => 'lock_ip_address',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nemein.quickpoll',
+            'config_key' => 'lock_ip_address',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => Array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+        ),
        
     ),
 ),

@@ -109,6 +109,22 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
         
+        // Handle /polldata/<article_id>
+        $this->_request_switch['polldata'] = array
+        (
+            'handler' => Array('net_nemein_quickpoll_handler_index', 'polldata'),
+            'fixed_args' => Array('polldata'),
+            'variable_args' => 1,
+        );
+        // Handle /polldata/<article_id>/<result_type>
+        // Available types: XML
+        $this->_request_switch['polldata-with-type'] = array
+        (
+            'handler' => Array('net_nemein_quickpoll_handler_index', 'polldata'),
+            'fixed_args' => Array('polldata'),
+            'variable_args' => 2,
+        );
+        
          // Handle /vote/<article_id>
         $this->_request_switch['vote'] = Array
         (
@@ -217,6 +233,33 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
         $this->_populate_node_toolbar();
 
         return true;
+    }
+    
+    /**
+     * Returns vote status by IP address to specific poll article
+     * @param String $guid Poll article guid
+     * @param String $ip IP to check for
+     * @return Boolean
+     */
+    function has_ip_voted($guid, $ip)
+    {
+        $article = new midcom_db_article($guid);
+        if (! $article)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The article {$guid} was not found.");
+            // This will exit.
+        }
+        
+        $qb_vote = net_nemein_quickpoll_vote_dba::new_query_builder();
+        $qb_vote->add_constraint('article', '=', $article->guid);
+        $qb_vote->add_constraint('ip', '=', $ip);
+        
+        if ($qb_vote->count() > 0)
+        {
+            return true;
+        }
+        
+        return false;
     }
 
 }
