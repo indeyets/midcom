@@ -1,7 +1,7 @@
 
   'name' => 'net.nemein.quickpoll',
   'purecode' => false,
-  'version' => '1.0.2beta2',
+  'version' => '1.0.2beta3',
   'state' => 'beta',
   'privileges' => 
   array (

@@ -63,7 +63,17 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
     function _handler_vote($handler_id, $args, &$data)
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        $this->_article = new midcom_db_article($args[0]);
+        
+        $article_id = $args[0];
+        $type = 'XML';
+        
+        if ($handler_id == 'vote-with-type')
+        {
+            $article_id = $args[1];
+            $type = strtoupper($args[0]);
+        }
+
+        $this->_article = new midcom_db_article($article_id);
         if (! $this->_article)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The article {$args[0]} was not found.");
@@ -81,7 +91,7 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
             $sudo_mode = false;
             $this->_article->require_do('midgard:create');
         }
-
+        
         if (array_key_exists('net_nemein_quickpoll_option',$_POST))
         {
             $vote = new net_nemein_quickpoll_vote_dba();
@@ -107,11 +117,17 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
             $prefix = $_REQUEST['net_nemein_quickpoll_vote_return_prefix'];
         }
 
-        if ($handler_id == 'vote-ajax')
-        {
-            $_MIDCOM->relocate("{$prefix}ajax/{$args[0]}/");
+        if ($handler_id == 'vote-with-type')
+        {            
+            if ($type == 'XML')
+            {
+                $_MIDCOM->relocate("{$prefix}polldata/{$type}/{$article_id}");
+            }
+            
+            $_MIDCOM->relocate("{$prefix}{$type}/{$article_id}/");
         }
-        $_MIDCOM->relocate("{$prefix}{$args[0]}/");
+        
+        $_MIDCOM->relocate("{$prefix}{$article_id}/");
     }
 }
 

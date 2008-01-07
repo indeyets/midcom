@@ -118,6 +118,15 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
      */
     function _handler_index ($handler_id, $args, &$data)
     {
+        if ($handler_id == 'index-with-type')
+        {
+            $_MIDCOM->skip_page_style = true;
+            $data['return_type'] = strtoupper($args[0]);
+        }
+        
+        $options_data = array();
+        $total_count = 0;
+
         $this->_manage = false;
 
         $qb = new org_openpsa_qbpager('midcom_db_article', 'net_nemein_quickpoll');
@@ -145,6 +154,13 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
 
         $this->_load_datamanager();
 
+        $poll_data = array(
+            'id' => $this->_article->id,
+            'guid' => $this->_article->guid,
+            'title' => $this->_article->title,
+            'abstract' => mgd_format($this->_article->abstract, 'h'),
+        );
+
         $this->_request_data['name']  = "net.nemein.quickpoll";
 
         $qb_vote_count_total = net_nemein_quickpoll_vote_dba::new_query_builder();
@@ -160,13 +176,17 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
                 $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
                 $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
             $qb_vote->end_group();
+            $vote_count = $qb_vote->count();
         }
         else if ($_MIDGARD['user'])
         {
             $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
+            $vote_count = $qb_vote->count();
         }
-
-        $vote_count = $qb_vote->count();
+        else
+        {
+            $vote_count = 0;
+        }
 
         if ($vote_count > 0)
         {
@@ -183,6 +203,52 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         {
             $this->_request_data['voted'] =  true;
         }
+
+        $qb_options = net_nemein_quickpoll_option_dba::new_query_builder();
+        $qb_options->add_constraint('article', '=', $this->_article->id);
+        $options = $qb_options->execute();
+
+        foreach ($options as $option)
+        {
+            if (! isset($options_data[$option->id]))
+            {
+                $options_data[$option->id] = array(
+                    'title' => $option->title,
+                    'votes' => 0,
+                );
+            }
+        }
+
+        $qb_votes = net_nemein_quickpoll_vote_dba::new_query_builder();
+        $qb_votes->add_constraint('article', '=', $this->_article->id);
+        $votes = $qb_votes->execute();
+        
+        foreach ($votes as $vote)
+        {
+            if (! isset($options_data[$vote->selectedoption]))
+            {
+                continue;
+            }
+            
+            if (! isset($options_data[$vote->selectedoption]['votes']))
+            {
+                $options_data[$vote->selectedoption]['votes'] = 1;
+            }
+            else
+            {
+                $options_data[$vote->selectedoption]['votes'] += 1;                
+            }
+            
+            $total_count++;
+        }
+        
+        $poll_results = array(
+            'poll' => $poll_data,
+            'options' => $options_data,
+            'total' => $total_count,
+        );
+        
+        $data['poll_results'] =& $poll_results;
 
         $this->_prepare_request_data();
 
@@ -223,8 +289,45 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
      */
     function _show_index($handler_id, &$data)
     {
-        $this->_request_data['view_article'] = $this->_datamanager->get_content_html();
-        midcom_show_style('index');
+        if ($handler_id == 'index-with-type')
+        {
+            if ($data['return_type'] == 'XML')
+            {
+                $encoding = 'UTF-8';
+
+                $_MIDCOM->cache->content->content_type('text/xml');
+                $_MIDCOM->header('Content-type: text/xml; charset=' . $encoding);
+
+                echo '<?xml version="1.0" encoding="' . $encoding . '" standalone="yes"?>' . "\n";
+                echo "<quickpoll>\n";
+                echo "<questions>\n";
+                echo "  <question id='{$data['poll_results']['poll']['id']}' guid='{$data['poll_results']['poll']['guid']}' voted='{$data['voted']}'>\n";
+                echo "    <title><![CDATA[{$data['poll_results']['poll']['title']}]]></title>\n";
+                echo "    <abstract><![CDATA[{$data['poll_results']['poll']['abstract']}]]></abstract>\n";
+                echo "    <total_votes><![CDATA[{$data['poll_results']['total']}]]></total_votes>\n";
+                echo "    <options>\n";
+
+                foreach ($data['poll_results']['options'] as $id => $option)
+                {
+                    echo "       <option id='{$id}' votes='{$option['votes']}'><![CDATA[{$option['title']}]]></option>\n";
+                }
+
+                echo "    </options>\n";
+                echo "  </question>\n";
+                echo "</questions>\n";
+                
+                $data['qb']->show_pages_as_xml();
+                
+                echo "</quickpoll>\n";
+                
+                //$data['qb']
+            }
+        }
+        else
+        {
+            $this->_request_data['view_article'] = $this->_datamanager->get_content_html();
+            midcom_show_style('index');            
+        }
     }
 
     /**
@@ -271,11 +374,6 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
      */
     function _handler_view ($handler_id, $args, &$data)
     {
-        if ($handler_id == 'view-ajax')
-        {
-            $_MIDCOM->skip_page_style = true;
-        }
-
         $this->_manage = false;
 
         if ($handler_id == 'manage')
@@ -351,7 +449,26 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
      */
     function _can_handle_polldata($handler_id, $args, &$data)
     {
-        return $this->_can_handle_view($handler_id, $args, &$data);
+        $qb = midcom_db_article::new_query_builder();
+        $qb->add_constraint('topic', '=', $this->_content_topic->id);
+        $qb->add_constraint('up', '=', 0);
+        $qb->begin_group('OR');
+            $qb->add_constraint('name', '=', $args[1]);
+            $qb->add_constraint('guid', '=', $args[1]);
+        $qb->end_group();
+        $articles = $qb->execute();
+        if (count($articles) > 0)
+        {
+            $this->_article = $articles[0];
+        }
+
+        if (!$this->_article)
+        {
+            return false;
+            // This will 404
+        }
+
+        return true;
     }
 
     /**
@@ -365,9 +482,9 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         $_MIDCOM->skip_page_style = true;
         
         $data['return_type'] = 'XML';
-        if (isset($args[1]))
+        if (isset($args[0]))
         {
-            $data['return_type'] = strtoupper($args[1]);            
+            $data['return_type'] = strtoupper($args[0]);
         }
         
         $this->_manage = false;
@@ -429,6 +546,11 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         
         $data['poll_results'] =& $poll_results;
         
+        if ($data['return_type'] == 'AJAX')
+        {
+            $this->_prepare_request_data();
+        }
+        
         return true;
     }
     
@@ -465,6 +587,11 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
 
             echo "    </options>\n";
             echo "</data>\n";
+        }
+        else
+        {
+            $this->_request_data['view_article'] = $this->_datamanager->get_content_html();
+            midcom_show_style('index');
         }
     }
 }
