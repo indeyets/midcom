@@ -200,6 +200,21 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
             {
                 $this->_component_data['active_leaf'] = "{$this->_topic->id}_CAT_{$data['category']}";
             }
+            
+            // Add RSS feed to headers
+            if ($this->_config->get('rss_enable'))
+            {
+                $_MIDCOM->add_link_head
+                (
+                    array
+                    (
+                        'rel'   => 'alternate',
+                        'type'  => 'application/rss+xml',
+                        'title' => $this->_l10n->get('rss 2.0 feed') . ": {$data['category']}",
+                        'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "feeds/category/{$data['category']}/",
+                    )
+                );
+            }
         }
 
         $qb->add_order('metadata.published', 'DESC');
