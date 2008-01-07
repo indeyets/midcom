@@ -755,3 +755,14 @@ Kirjoita sähköposti
 Kyllä
 ---STRINGEND
 
+---STRING parameters
+Parametrit
+---STRINGEND
+
+---STRING country
+Maa
+---STRINGEND
+
+---STRING url
+URL-Osoite
+---STRINGEND

@@ -751,3 +751,10 @@ Write mail
 Yes
 ---STRINGEND
 
+---STRING country
+Country
+---STRINGEND
+
+---STRING url
+Url
+---STRINGEND
