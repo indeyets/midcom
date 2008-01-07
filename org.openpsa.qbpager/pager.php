@@ -340,6 +340,105 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
     }
 
     /**
+     * Displays page selector as XML
+     */
+    function show_pages_as_xml($acl_checks=false, $echo=true)
+    {
+        $pages_xml_str = "<pages ";
+        
+        $this->_request_data['prefix'] = $this->_prefix;
+        $this->_request_data['current_page'] = $this->_current_page;
+        $this->_request_data['page_count'] = $this->count_pages($acl_checks);
+        $this->_request_data['results_per_page'] = $this->_limit;
+        $this->_request_data['offset'] = $this->_offset;
+        $this->_request_data['display_pages'] = $this->display_pages;
+        $data =& $this->_request_data;
+        
+        $pages_xml_str .= "total=\"{$data['page_count']}\">\n";
+        
+        //Skip the header in case we only have one page
+        if ($data['page_count'] <= 1)
+        {
+            $pages_xml_str .= "</pages>\n";
+            if ($echo)
+            {
+                echo $pages_xml_str;
+                return;
+            }
+            else
+            {
+                return $pages_xml_str;
+            }
+        }
+
+        //TODO: "showing results (offset)-(offset+limit)
+
+        $page_var = $data['prefix'] . 'page';
+        $results_var =  $data['prefix'] . 'results';
+        $page = 0;
+        $display_start = $data['current_page'] - ceil($data['display_pages']/2);
+        if ($display_start < 0)
+        {
+            $display_start = 0;
+        }
+        $display_end = $data['current_page'] + ceil($data['display_pages']/2);
+        if ($display_end > $data['page_count'])
+        {
+            $display_end = $data['page_count'];
+        }
+
+        if ($data['current_page'] > 1)
+        {
+            $previous = $data['current_page'] - 1;
+            if ($previous != 1)
+            {
+                $pages_xml_str .= "<page class=\"first_page\" number=\"1\" url=\"?{$page_var}=1" . $this->_get_query_string() . "\"><![CDATA[" . $this->_l10n->get('first') . "]]></page>\n";
+            }
+                $pages_xml_str .= "<page class=\"previous_page\" number=\"{$previous}\" url=\"?{$page_var}={$previous}" . $this->_get_query_string() . "\"><![CDATA[" . $this->_l10n->get('previous') . "]]></page>\n";
+        }
+
+
+        while ($page++ < $display_end)
+        {
+            if ($page < $display_start)
+            {
+                continue;
+            }
+            
+            if ($page == $data['current_page'])
+            {
+                $pages_xml_str .= "<page class=\"current_page\" number=\"{$page}\" url=\"\">{$page}</page>\n";
+                continue;
+            }
+            
+            $pages_xml_str .= "<page class=\"select_page\" number=\"{$page}\" url=\"?{$page_var}={$page}" . $this->_get_query_string() . "\">{$page}</page>\n";
+        }
+
+        if ($data['current_page'] < $data['page_count'])
+        {
+            $next = $data['current_page'] + 1;
+            $pages_xml_str .= "<page class=\"next_page\" number=\"{$next}\" url=\"?{$page_var}={$next}" . $this->_get_query_string() . "\"><![CDATA[" . $this->_l10n->get('next') . "]]></page>\n";
+
+            if ($next != $data['page_count'])
+            {
+                $pages_xml_str .= "<page class=\"last_page\" number=\"{$data['page_count']}\" url=\"?{$page_var}={$data['page_count']}" . $this->_get_query_string() . "\"><![CDATA[" . $this->_l10n->get('last') . "]]></page>\n";
+            }
+        }
+        
+        $pages_xml_str .= "</pages>\n";
+        
+        if ($echo)
+        {
+            echo $pages_xml_str;
+            return;
+        }
+        else
+        {
+            return $pages_xml_str;
+        }
+    }
+    
+    /**
      * Displays page selector as list
      */
     function show_pages_as_list($acl_checks=false)

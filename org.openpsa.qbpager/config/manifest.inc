@@ -7,7 +7,7 @@
   'class_definitions' => 
   array (
   ),
-  'version' => '1.0.9beta1',
+  'version' => '1.0.9beta3',
   'state' => 'beta',
   'package.xml' => 
   array (
