@@ -35,6 +35,20 @@ class net_nemein_favourites_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('bury'),
     	    'variable_args' => 2,
     	);
+    	
+        $this->_request_switch['json_fav'] = Array
+    	(
+    	    'handler' => Array('net_nemein_favourites_handler_create', 'json'),
+            'fixed_args' => Array('json', 'fav'),
+    	    'variable_args' => 2,
+    	);
+
+        $this->_request_switch['json_bury'] = Array
+    	(
+    	    'handler' => Array('net_nemein_favourites_handler_create', 'json'),
+            'fixed_args' => Array('json', 'bury'),
+    	    'variable_args' => 2,
+    	);
 
     	$this->_request_switch['delete'] = Array
         (
