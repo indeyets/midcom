@@ -27,13 +27,48 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         parent::midcom_baseclasses_components_request($topic, $config);
         
         // Default search form, no args, Basic search from
-        $this->_request_switch['basic'] = Array ( 'handler' => 'searchform' );
+        $this->_request_switch['basic'] = array
+        (
+            'handler' => 'searchform'
+        );
         
         // Resultlists, controlled using HTTP GET/POST
-        $this->_request_switch[] = Array ( 'fixed_args' => 'result', 'no_cache' => true, 'handler' => 'result' );
+        $this->_request_switch[] = array
+        (
+            'fixed_args' => 'result', 
+            'no_cache' => true, 
+            'handler' => 'result'
+        );
         
         // Advanced search form, no args
-        $this->_request_switch['advanced'] = Array ( 'fixed_args' => 'advanced', 'handler' => 'searchform' );
+        $this->_request_switch['advanced'] = array
+        (
+            'fixed_args' => 'advanced',
+            'handler' => 'searchform'
+        );
+        
+        // OpenSearch description file
+        $this->_request_switch['opensearch_description'] = array
+        ( 
+            'fixed_args' => 'opensearch.xml', 
+            'handler' => 'opensearchdescription' 
+        );
+    }
+    
+    function _on_handle($handler_id, $args)
+    {
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel'   => 'search',
+                'type'  => 'application/opensearchdescription+xml',
+                'title' => $this->_topic->extra,
+                'href'  => $_MIDCOM->get_host_name() . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'opensearch.xml',
+            )
+        );
+        
+        return true;
     }
 
     /**
@@ -297,6 +332,34 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         {
             midcom_show_style('no_match');
         }
+    }
+    
+    /**
+     * Prepare OpenSearch data file for browser search bar integration.
+     * 
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param mixed $data The local request data. 
+     * @return bool Indicating success.
+     */
+    function _handler_opensearchdescription($handler_id, $args, &$data)
+    {
+        $_MIDCOM->cache->content->content_type("application/opensearchdescription+xml");
+        $_MIDCOM->header("Content-type: application/opensearchdescription+xml; charset=UTF-8");
+        $_MIDCOM->skip_page_style = true;
+        return true;
+    }
+    
+    /**
+     * Display OpenSearch data file for browser search bar integration.
+     * 
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed $data The local request data.
+     */
+    function _show_opensearchdescription($handler_id, &$data)
+    {
+        $data['node'] = $this->_topic;
+        midcom_show_style('opensearch_description');
     }
 }
 
