@@ -17,7 +17,7 @@ if ($author_user)
 
 $item->title = sprintf('%s: %s', strftime('%x', strtotime($data['event']->start)), $data['event']->title);
 $arg = $data['event']->name ? $data['event']->name : $data['event']->guid;
-$item->link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}.html";
+$item->link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}/";
 
 // Add xCal data to item
 $item->additionalElements['xcal:dtstart'] = $data['event']->start . 'Z';
