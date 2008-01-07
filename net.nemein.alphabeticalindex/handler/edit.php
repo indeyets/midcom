@@ -103,7 +103,7 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
         $this->_schemadb =& $schemadb;
         
         if ($this->_type == 'internal')
-        {
+        {   
             $this->_schemadb['edit']->append_field('cachedUrl', Array
                 (
                     'title' => 'Cached URL',
@@ -116,6 +116,16 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
         }
         else
         {
+            $this->_schemadb['edit']->append_field('url', Array
+                (
+                    'title' => $this->_i18n->get_string('url', 'midcom'),
+                    'type'    => 'text',
+                    'storage'    => 'url', 
+                    'required' => true,
+                    'widget' => 'text',
+                )
+            );
+            
             $this->_schemadb['edit']->append_field('node', Array
                 (
                     'title' => 'Current Node',
@@ -172,6 +182,7 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
         if ($this->_type == 'internal')
         {
             $this->_item->modified = true;
+
             // TODO: Move this to the object itself
             if ($this->_config->get('cache_resolved_permalink'))
             {
