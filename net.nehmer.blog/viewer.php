@@ -225,23 +225,6 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
                     'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rss.xml',
                 )
             );
-            $_MIDCOM->add_link_head(
-                array(
-                    'rel'   => 'alternate',
-                    'type'  => 'application/rss+xml',
-                    'title' => $this->_l10n->get('rss 1.0 feed'),
-                    'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rss1.xml',
-                )
-            );
-            $_MIDCOM->add_link_head
-            (
-                array(
-                    'rel'   => 'alternate',
-                    'type'  => 'application/rss+xml',
-                    'title' => $this->_l10n->get('rss 0.91 feed'),
-                    'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rss091.xml',
-                )
-            );
             $_MIDCOM->add_link_head
             (
                 array(
