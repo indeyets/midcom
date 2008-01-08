@@ -78,7 +78,8 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
             case 'abuse':
                 // Report the abuse
                 $this->_post->report_abuse();
-                // This will exit
+
+                break;
 
             case 'confirm_abuse':
                 $this->_post->require_do('net.nemein.discussion:moderation');
@@ -127,6 +128,144 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
         }
         $_MIDCOM->relocate('');
         // This will exit.
+    }
+
+    /**
+     * List posts marked as reported abuse for moderation purposes
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array &$data The local request data.
+     * @return bool Indicating success.
+     */
+    function _handler_moderate($handler_id, $args, &$data)
+    {
+        $_MIDCOM->auth->require_valid_user();
+        $_MIDCOM->cache->content->enable_live_mode();
+        
+        $qb = new org_openpsa_qbpager('net_nemein_discussion_post_dba', 'net_nemein_discussion_posts');
+        $qb->results_per_page = $this->_config->get('display_posts');
+        $qb->display_pages = $this->_config->get('display_pages');
+        $qb->add_constraint('status', '=', NET_NEMEIN_DISCUSSION_REPORTED_ABUSE);
+        //$qb->add_constraint('thread.node', '=', $this->_topic->id);
+        $qb->add_order('metadata.published', 'DESC');
+        
+        $data['posts'] = array();
+        $data['post_qb'] =& $qb;
+        
+        $posts = $qb->execute();
+        foreach ($posts as $post)
+        {
+            if (   !$post->can_do('net.nemein.discussion:moderation')
+                || !$post->can_do('midgard:update'))
+            {
+                // Skip, this user can't mod
+                continue;
+            }
+            
+            $data['posts'][] = $post;
+        }
+        
+        // Prepare datamanager
+        $data['datamanager'] = new midcom_helper_datamanager2_datamanager($data['schemadb']);
+        
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "moderation/",
+            MIDCOM_NAV_NAME => sprintf($this->_l10n->get('%s moderation'), $this->_topic->extra),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        
+        return true;
+    }
+
+    function _show_moderate($handler_id, &$data)
+    {
+        $data['node'] = $this->_topic;
+        if (count($data['posts']) == 0)
+        {
+            midcom_show_style('view-moderate-empty');
+            return;
+        }
+        
+        midcom_show_style('view-moderate-header');
+        
+        foreach ($data['posts'] as $post)
+        {
+            $data['post'] =& $post;
+            $data['post_toolbar'] = $this->_populate_post_toolbar($post);
+            
+            if (! $data['datamanager']->autoset_storage($post))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("The datamanager for post {$post->id} could not be initialized, skipping it.", MIDCOM_LOG_ERROR);
+                debug_print_r('Object was:', $post);
+                debug_pop();
+                continue;
+            }
+            $data['view_post'] = $data['datamanager']->get_content_html();
+            
+            midcom_show_style('view-moderate-item');
+        }
+        
+        midcom_show_style('view-moderate-footer');
+    }
+    
+    function _populate_post_toolbar($post)
+    {
+        $toolbar = new midcom_helper_toolbar();
+
+        $toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm abuse'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                MIDCOM_TOOLBAR_ENABLED => $post->can_do('net.nemein.discussion:moderation'),
+                MIDCOM_TOOLBAR_POST => true,
+                MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                (
+                    'mark' => 'confirm_abuse',
+                )
+            )
+        );
+        $toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm junk'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                MIDCOM_TOOLBAR_ENABLED => $post->can_do('net.nemein.discussion:moderation'),
+                MIDCOM_TOOLBAR_POST => true,
+                MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                (
+                    'mark' => 'confirm_junk',
+                )
+            )
+        );
+        $toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('not abuse'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
+                MIDCOM_TOOLBAR_ENABLED => $post->can_do('net.nemein.discussion:moderation'),
+                MIDCOM_TOOLBAR_POST => true,
+                MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                (
+                    'mark' => 'not_abuse',
+                )
+            )
+        );
+
+        return $toolbar;
     }
 }
 

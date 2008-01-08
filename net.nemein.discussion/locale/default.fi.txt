@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING %s moderation
+Keskustelufoorumin %s moderointi
+---STRINGEND
+
 ---STRING %s replies, latest post by %s on %s
 %s vastausta, viimeisimmän kirjoittanut %s %s
 ---STRINGEND
@@ -59,6 +63,10 @@ Kirjoita alueelle:
 Moderointi
 ---STRINGEND
 
+---STRING re:
+Vs:
+---STRINGEND
+
 ---STRING reply
 Vastaa
 ---STRINGEND
@@ -87,7 +95,7 @@ Lähettäjä
 Aihe
 ---STRINGEND
 
----STRING re:
-Vs:
+---STRING no items to moderate
+Ei moderoitavia viestejä.
 ---STRINGEND
 

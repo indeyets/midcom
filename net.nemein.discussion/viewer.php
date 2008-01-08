@@ -32,6 +32,13 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_discussion_handler_post', 'create'),
             'fixed_args' => Array('post')
         );
+        
+        // Match /moderate/
+        $this->_request_switch['moderate'] = Array
+        (
+            'handler' => Array('net_nemein_discussion_handler_moderate', 'moderate'),
+            'fixed_args' => Array('moderate')
+        );
 
         // Match /read/<post guid>
         $this->_request_switch['read_redirect'] = Array

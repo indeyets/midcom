@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING %s moderation
+Forum %s moderation
+---STRINGEND
+
 ---STRING %s replies, latest post by %s on %s
 %s replies, latest post by %s on %s
 ---STRINGEND
@@ -59,6 +63,10 @@ Post to
 Moderate
 ---STRINGEND
 
+---STRING re:
+Re:
+---STRINGEND
+
 ---STRING reply
 Reply
 ---STRINGEND
@@ -87,7 +95,7 @@ Sender
 Subject
 ---STRINGEND
 
----STRING re:
-Re:
+---STRING no items to moderate
+No posts to moderate.
 ---STRINGEND
 

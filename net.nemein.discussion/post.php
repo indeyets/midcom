@@ -133,7 +133,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
      */
     function report_abuse()
     {
-        if ($this->status == NET_NEMEIN_DISCUSSION_REPORTED_MODERATED)
+        if ($this->status == NET_NEMEIN_DISCUSSION_MODERATED)
         {
             return false;
         }
@@ -235,12 +235,13 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
     function get_logs()
     {
         $log_entries = array();
-        $logs = $this->list_parameters('net.nemein.discussion.log');
+        $logs = $this->list_parameters('net.nemein.discussion:moderation_log');
         foreach ($logs as $action => $details)
         {
             // TODO: Show everything only to moderators
             $log_action  = explode(':', $action);
             $log_details = explode(':', $details);
+
             if (count($log_action) == 2)
             {
                 if ($log_details[0] == 'anonymous')
@@ -269,15 +270,29 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
     {
         if ($_MIDCOM->auth->user)
         {
-            $user =& $_MIDCOM->auth->user->get_storage();
-            $reporter = $user->guid;
+            $reporter = $_MIDCOM->auth->user->guid;
         }
         else
         {
             $reporter = 'anonymous';
         }
         $browser = str_replace(':', '_', $_SERVER['HTTP_USER_AGENT']);
-        $this->parameter('net.nemein.discussion.log', "$action:".time(), "{$reporter}:{$_SERVER['REMOTE_ADDR']}:{$browser}");
+        $date_string = gmdate('Ymd\This');
+        
+        $log_action = array
+        (
+            0 => $action,
+            1 => $date_string
+        );
+        
+        $log_details = array
+        (
+            0 => $reporter,
+            1 => str_replace(':', '_', $_SERVER['REMOTE_ADDR']),
+            2 => $browser
+        );
+        
+        $this->set_parameter('net.nemein.discussion:moderation_log', implode(':', $log_action), implode(':', $log_details));
     }
 
     function _on_loaded()
