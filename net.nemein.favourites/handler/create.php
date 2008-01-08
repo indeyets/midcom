@@ -208,6 +208,7 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
     function _handler_json($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
+        $_MIDCOM->skip_page_style = true;
         
         $guid = $args[1];
         $objectType = $args[0];
@@ -267,14 +268,20 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
             $_MIDCOM->cache->content->content_type("application/json");
             $_MIDCOM->header("Content-type: application/json; charset=UTF-8");
             echo net_nemein_favourites_admin::get_json_data($objectType, $guid);
-            $_MIDCOM->finish();
+            //$_MIDCOM->finish();
             // This will exit.
+            
+            return true;
         }
         else
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create fav: ' . mgd_errstr());
             // This will exit.
         }
+    }
+    
+    function _show_json($handler_id, &$data)
+    {
     }
 }
 
