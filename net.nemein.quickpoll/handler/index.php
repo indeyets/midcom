@@ -172,27 +172,27 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
 
         if ($this->_config->get('lock_ip_address'))
         {
-            $qb_vote->begin_group('OR');
-                $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
-                $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
-            $qb_vote->end_group();
-            $vote_count = $qb_vote->count();
+            $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
         }
         else if ($_MIDGARD['user'])
         {
             $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
-            $vote_count = $qb_vote->count();
-        }
-        else
-        {
-            $vote_count = 0;
         }
 
+        $vote_count = $qb_vote->count();
+        
         if ($vote_count > 0)
         {
             $this->_request_data['voted'] =  true;
         }
         else
+        {
+            $this->_request_data['voted'] =  false;
+        }
+
+        if (   $this->_config->get('enable_anonymous')
+            && !$this->_config->get('lock_ip_address')
+            && !$_MIDGARD['user'])
         {
             $this->_request_data['voted'] =  false;
         }
@@ -297,11 +297,13 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
 
                 $_MIDCOM->cache->content->content_type('text/xml');
                 $_MIDCOM->header('Content-type: text/xml; charset=' . $encoding);
-
+                
+                $voted = $data['voted'] ? 1 : 0;
+                
                 echo '<?xml version="1.0" encoding="' . $encoding . '" standalone="yes"?>' . "\n";
                 echo "<quickpoll>\n";
                 echo "<questions>\n";
-                echo "  <question id='{$data['poll_results']['poll']['id']}' guid='{$data['poll_results']['poll']['guid']}' voted='{$data['voted']}'>\n";
+                echo "  <question id='{$data['poll_results']['poll']['id']}' guid='{$data['poll_results']['poll']['guid']}' voted='{$voted}'>\n";
                 echo "    <title><![CDATA[{$data['poll_results']['poll']['title']}]]></title>\n";
                 echo "    <abstract><![CDATA[{$data['poll_results']['poll']['abstract']}]]></abstract>\n";
                 echo "    <total_votes><![CDATA[{$data['poll_results']['total']}]]></total_votes>\n";
@@ -537,7 +539,44 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             
             $total_count++;
         }
+
+        $qb_vote = net_nemein_quickpoll_vote_dba::new_query_builder();
+        $qb_vote->add_constraint('article', '=', $this->_article->id);
+
+        if ($this->_config->get('lock_ip_address'))
+        {
+            $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
+        }
+        else if ($_MIDGARD['user'])
+        {
+            $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
+        }
+
+        $vote_count = $qb_vote->count();
         
+        if ($vote_count > 0)
+        {
+            $this->_request_data['voted'] =  true;
+        }
+        else
+        {
+            $this->_request_data['voted'] =  false;
+        }
+
+        if (   $this->_config->get('enable_anonymous')
+            && !$this->_config->get('lock_ip_address')
+            && !$_MIDGARD['user'])
+        {
+            $this->_request_data['voted'] =  false;
+        }
+
+        if (   !$this->_config->get('enable_anonymous')
+            && (   !$_MIDCOM->auth->user
+                && !$_MIDCOM->auth->admin))
+        {
+            $this->_request_data['voted'] =  true;
+        }
+
         $poll_results = array(
             'poll' => $poll_data,
             'options' => $options_data,
@@ -572,9 +611,11 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             
             $_MIDCOM->cache->content->content_type('text/xml');
             $_MIDCOM->header('Content-type: text/xml; charset=' . $encoding);
+            
+            $voted = $data['voted'] ? 1 : 0;
 
             echo '<?xml version="1.0" encoding="' . $encoding . '" standalone="yes"?>' . "\n";
-            echo "<data id='{$data['poll_results']['poll']['id']}' guid='{$data['poll_results']['poll']['guid']}'>\n";
+            echo "<data id='{$data['poll_results']['poll']['id']}' guid='{$data['poll_results']['poll']['guid']}' voted='{$voted}'>\n";
             echo "    <title><![CDATA[{$data['poll_results']['poll']['title']}]]></title>\n";
             echo "    <abstract><![CDATA[{$data['poll_results']['poll']['abstract']}]]></abstract>\n";
             echo "    <total_votes><![CDATA[{$data['poll_results']['total']}]]></total_votes>\n";
