@@ -140,6 +140,13 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
                 $this->_post->require_do('net.nemein.discussion:moderation');
                 // Confirm the message is abuse
                 $this->_post->report_not_abuse();
+                
+                if (isset($_POST['return_url']))
+                {
+                    $_MIDCOM->relocate($_POST['return_url']);
+                    // This will exit.
+                }
+                
                 $_MIDCOM->relocate("read/{$this->_post->guid}.html");
                 // This will exit
         }
@@ -154,6 +161,12 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
             }
         }
 
+        if (isset($_POST['return_url']))
+        {
+            $_MIDCOM->relocate($_POST['return_url']);
+            // This will exit.
+        }
+        
         if ($this->_thread->posts > 0)
         {
             $_MIDCOM->relocate("{$this->_thread->name}/");
@@ -264,6 +277,7 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
                 MIDCOM_TOOLBAR_POST_HIDDENARGS => array
                 (
                     'mark' => 'confirm_abuse',
+                    'return_url' => 'moderate/',
                 )
             )
         );
@@ -280,6 +294,7 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
                 MIDCOM_TOOLBAR_POST_HIDDENARGS => array
                 (
                     'mark' => 'confirm_junk',
+                    'return_url' => 'moderate/',
                 )
             )
         );
@@ -296,6 +311,7 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
                 MIDCOM_TOOLBAR_POST_HIDDENARGS => array
                 (
                     'mark' => 'not_abuse',
+                    'return_url' => 'moderate/',
                 )
             )
         );
