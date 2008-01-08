@@ -34,7 +34,6 @@
         var bury_cnt = $('.'+options.classes.bury_count, holder);
 
         $.meta.setType("class");
-
         var data = $(holder).data();
 
         update_view(data);
@@ -73,21 +72,25 @@
             if (   data.can_fav
                 && options.favs_enabled)
             {
+                fav_btn.removeClass('net_nemein_favourites_action_disabled');
                 fav_btn.bind("click", function(){        
                     execute('fav', data.fav_url);
-                });        
+                });
             } else {
                 fav_btn.unbind("click");
+                fav_btn.addClass('net_nemein_favourites_action_disabled');
             }
 
             if (   data.can_bury
                 && options.bury_enabled)
             {
+                bury_btn.removeClass('net_nemein_favourites_action_disabled');
                 bury_btn.bind("click", function(){
                     execute('bury', data.bury_url);
                 });
             } else {
                 bury_btn.unbind("click");
+                bury_btn.addClass('net_nemein_favourites_action_disabled');
             }
         }
 
