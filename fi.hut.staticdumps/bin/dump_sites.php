@@ -282,7 +282,7 @@ EOD;
     {
         if (isset($site_config['rsync_extra_options']))
         {
-            $rsync_cmd = "rsync {$rsync_options} " . trim($site_config['rsync_extra_options']) . " {$site_config['documentroot']}/* {$site_config['dump_path']}/";
+            $rsync_cmd = "rsync {$rsync_options} " . trim($site_config['rsync_extra_options']) . " {$site_config['documentroot']}/ {$site_config['dump_path']}/";
         }
         else
         {
