@@ -83,7 +83,7 @@ if (!$_MIDGARD['user'])
                 setcookie('fi_hut_loginbroker_token', '', time() - 3600);
             }
         }
-        elseif (   $_POST
+        elseif (   $_SERVER['REQUEST_METHOD'] == 'POST'
                 && !isset($_POST['midcom_services_auth_frontend_form_submit']))
         {
             // We have POST data, create user and token
