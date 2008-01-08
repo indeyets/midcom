@@ -226,7 +226,7 @@ class midcom_baseclasses_components_navigation
      * everything in case you need to do some custom initializations as well.
      *
      * @param MidgardTopic $topic The topic to process.
-     * @param boolean Indicating success.
+     * @return boolean Indicating success.
      */
     public function set_object($topic)
     {

@@ -681,7 +681,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      *     wildcard character.
      * @param mixed $value The value to compare against. It should be of the same type then the
      *     queried property.
-     * @param boolean Indicating success.
+     * @return boolean Indicating success.
      */
     function add_constraint($field, $operator, $value)
     {
@@ -721,7 +721,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * @param string $field The name of the MgdSchema property to query against.
      * @param string $ordering One of 'ASC' or 'DESC' indicating ascending or descending
      *     ordering. The default is 'ASC'.
-     * @param boolean Indicating success.
+     * @return boolean Indicating success.
      */
     function add_order($field, $ordering = null)
     {

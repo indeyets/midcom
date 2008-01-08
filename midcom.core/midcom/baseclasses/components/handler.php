@@ -149,7 +149,7 @@ class midcom_baseclasses_components_handler
      * during runtime based on the system defaults and all parameters attached to the
      * topic <i>we're currently operating on.</i>
      *
-     * @param midcom_baseclasses_components_request $master A reference to the request class
+     * @param midcom_baseclasses_components_request &$master A reference to the request class
      *     handling the request.
      */
     function initialize(&$master)

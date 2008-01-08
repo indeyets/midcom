@@ -139,7 +139,7 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
      * @param string $identifier The script cache identifier to load (without the trailing .php).
      * @param string $code The code to add to the cache, it must <i>not</i> include the php 
      *     opening/closing tags, they will be added automatically during cache file creation.
-     * @param boolean Indicating success.
+     * @return boolean Indicating success.
      */
     function add($identifier, $code)
     {
