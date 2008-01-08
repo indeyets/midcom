@@ -34,15 +34,15 @@
                     array( 'name' => 'component', 'title' => 'Component'),
                 ),
                 'id_field' => 'id',
-/*                'constraints' => array
+                'constraints' => array
                 (
                     array
                     (
                         'field' => 'component',
                         'op' => '=',
-                        'value' => 'net.nehmet.blog',
+                        'value' => 'net.nehmer.blog',
                     ),
-                ),*/
+                ),
             ),
         ),
         'categories' => Array
