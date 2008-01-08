@@ -77,8 +77,41 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
         {
             case 'abuse':
                 // Report the abuse
-                $this->_post->report_abuse();
-
+                $moderators = $this->_config->get('moderators');
+                if (   $this->_post->report_abuse()
+                    && $moderators)
+                {
+                    // Prepare notification message   
+                    $_MIDCOM->load_library('org.openpsa.notifications');
+                    $message = array();
+                    $message['title'] = sprintf($data['l10n']->get('post %s reported as abuse'), $this->_post->subject);
+                    $message['content'] = '';         
+                    $logs = $post->get_logs();
+                    if (count($logs) > 0)
+                    {
+                        $message['content'] .= $data['l10n']->get('moderation history').":\n\n";
+                        foreach ($logs as $time => $log)
+                        {
+                            $reported = strftime('%x %X', strtotime("{$time}Z"));
+                            $message['content'] .= $data['l10n']->get(sprintf('%s: %s by %s (from %s)', "$reported:\n", $data['l10n']->get($log['action']), $log['reporter'], $log['ip'])) . "\n\n";
+                        }
+                    }
+                    $message['content'] = "\n\n" . $_MIDCOM->permalinks->create_permalink($this->_post->guid);  
+                                      
+                    $message['abstract'] = sprintf($data['l10n']->get('post %s reported as abuse'), $this->_post->subject);
+                    $message['abstract'] = " " . $_MIDCOM->permalinks->create_permalink($this->_post->guid);
+ 
+                    // Notify moderators
+                    $moderator_guids = explode('|', $moderators);
+                    foreach ($moderator_guids as $moderator_guid)
+                    {
+                        if (empty($moderator_guid))
+                        {
+                            continue;
+                        }
+                        org_openpsa_notifications::notify('net.nemein.discussion:reported_abuse', $moderator_guid, $message);
+                    }
+                }
                 break;
 
             case 'confirm_abuse':
@@ -176,6 +209,8 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
             MIDCOM_NAV_NAME => sprintf($this->_l10n->get('%s moderation'), $this->_topic->extra),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        
+        $_MIDCOM->set_pagetitle(sprintf($this->_l10n->get('%s moderation'), $this->_topic->extra));
         
         return true;
     }
