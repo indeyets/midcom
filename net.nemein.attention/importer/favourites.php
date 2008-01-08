@@ -251,13 +251,19 @@ class net_nemein_attention_importer_favourites extends net_nemein_attention_impo
                         $object = net_nemein_attention_concept_dba::get_concept($key, $user->id, 'web');
                         $object->source = $_SERVER['SERVER_NAME'];
                         $object->value = $value;
-                        $object->update();
+                        if ($object->guid)
+                        {
+                            $object->update();
+                        }
                         break;
                     case 'sources':
                         $object = net_nemein_attention_source_dba::get_source($key, $user->id, 'web');
                         $object->source = $_SERVER['SERVER_NAME'];
                         $object->value = $value;
-                        $object->update();
+                        if ($object->guid)
+                        {
+                            $object->update();
+                        }
                         break;
                 }
             }
