@@ -3,6 +3,14 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING add a news folder
+Add a news folder
+---STRINGEND
+
+---STRING add news folders
+Add news folders
+---STRINGEND
+
 ---STRING articles count index
 Articles count in index page per topic
 ---STRINGEND
@@ -55,6 +63,10 @@ From here you can manage all the feeds you like to list in this folder
 Feedcollector
 ---STRINGEND
 
+---STRING news folders
+News folders
+---STRINGEND
+
 ---STRING no items
 No items
 ---STRINGEND
@@ -73,5 +85,9 @@ Text to place over the content
 
 ---STRING this text comes to the top of your content
 This text comes to the top of your content
+---STRINGEND
+
+---STRING edit feed folder
+Edit feed folder
 ---STRINGEND
 

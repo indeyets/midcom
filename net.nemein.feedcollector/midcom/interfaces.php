@@ -28,13 +28,14 @@ class net_nemein_feedcollector_interface extends midcom_baseclasses_components_i
         (
             'viewer.php', 
             'navigation.php',
-            'topic.php'
+            'topic.php',
         );
         
         // Load all libraries used by component here
         $this->_autoload_libraries = array
         (
-            'midcom.helper.datamanager2'
+            'midcom.helper.datamanager2',
+            'midcom.helper.dm2config',
         );
     }
     

@@ -14,7 +14,7 @@
         ),
         'feedtopic' => array
         (
-            'title' => 'feedtopic',
+            'title' => 'news folders',
             'storage' => 'feedtopic',
             'type' => 'select',
             'type_config' => array
@@ -30,8 +30,16 @@
                 'clever_class' => 'topic',
                 'result_headers' => array
                 (
-                    array( 'name' => 'extra', 'title' => 'Title'),
-                    array( 'name' => 'component', 'title' => 'Component'),
+                    array
+                    (
+                        'name' => 'extra',
+                        'title' => 'title'
+                    ),
+                    array
+                    (
+                        'name' => 'component',
+                        'title' => 'component'
+                    ),
                 ),
                 'id_field' => 'id',
                 'constraints' => array

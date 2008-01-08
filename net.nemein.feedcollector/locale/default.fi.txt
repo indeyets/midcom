@@ -3,6 +3,14 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING add a news folder
+Lisää uutiskansio
+---STRINGEND
+
+---STRING add news folders
+Lisää uutiskansioita
+---STRINGEND
+
 ---STRING articles count index
 Haettavien artikkelien määrä per uutiskansio
 ---STRINGEND
@@ -55,8 +63,16 @@ Täältä voit hallinnoida tämän kansion uutislistoja
 Uutislistauskokoelma
 ---STRINGEND
 
+---STRING news folders
+Uutiskansiot
+---STRINGEND
+
 ---STRING no items
 Ei näytettäviä kansioita
+---STRINGEND
+
+---STRING no topics
+Ei kansioita
 ---STRINGEND
 
 ---STRING remove
@@ -71,7 +87,7 @@ Teksti ennen uutislistoja
 Tämä teksti tulee sivun yläosaan ennen uutislistoja
 ---STRINGEND
 
----STRING no topics
-Ei kansioita
+---STRING edit feed folder
+Muokkaa syötekansiota
 ---STRINGEND
 
