@@ -155,7 +155,7 @@ class net_nemein_reservations_handler_create extends midcom_baseclasses_componen
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_create($handler_id, $args, &$data)
     {

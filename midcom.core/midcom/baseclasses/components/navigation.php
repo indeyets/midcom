@@ -226,7 +226,7 @@ class midcom_baseclasses_components_navigation
      * everything in case you need to do some custom initializations as well.
      *
      * @param MidgardTopic $topic The topic to process.
-     * @param bool Indicating success.
+     * @param boolean Indicating success.
      */
     public function set_object($topic)
     {
@@ -241,7 +241,7 @@ class midcom_baseclasses_components_navigation
      * already loaded at this point.
      *
      * @access protected
-     * @return bool Set this to false to indicate that you could not set this instance
+     * @return boolean Set this to false to indicate that you could not set this instance
      *   to the topic. NAP will abort loading this node and log the error accordingly.
      *   Return true if everything is fine.
      */

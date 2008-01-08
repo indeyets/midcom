@@ -59,7 +59,7 @@ class midcom_core_group_virtual extends midcom_core_group
      * Callback to load the virtual group. Checks whether the component in question is already
      * loaded. It then queries its vgroup listing for the name of this group.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _load($id)
     {

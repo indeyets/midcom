@@ -62,7 +62,7 @@ require_once('select.php');
  *   the (GU)ID of the master object in the mapping table.
  * - <i>string member_fieldname:</i> Mandatory option. Holds the fieldname containing
  *   the membership keys in the mapping table.
- * - <i>bool master_is_id:</i> Set this to true if you want the ID instead of the GUID
+ * - <i>boolean master_is_id:</i> Set this to true if you want the ID instead of the GUID
  *   to be used for mapping purposes. Defaults to false.
  * - <i>string member_limit_like:</i> This SQL LIKE compatible constraint limits the
  *   number of valid member keys if set (see above). It defaults to null meaning no limit.
@@ -76,7 +76,7 @@ require_once('select.php');
  *   define both options.
  * - <i>mixed option_callback_arg:</i> An additional argument passed to the constructor
  *   of the option callback, defaulting to null.
- * - <i>bool csv_export_key:</i> If this flag is set, the CVS export will store the
+ * - <i>boolean csv_export_key:</i> If this flag is set, the CVS export will store the
  *   field key instead of its value. This is only useful if the foreign tables referenced
  *   are available at the site of import. This flag is not set by default. Note, that
  *   this does not affect import, which is only available with keys, not values.
@@ -128,7 +128,7 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
      * Set this to true if you want the ID instead of the GUID
      * to be used for mapping purposes.
      *
-     * @var bool
+     * @var boolean
      */
     var $master_is_id = false;
 

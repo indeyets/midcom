@@ -105,7 +105,7 @@ class midcom_helper_datamanager_widget {
      * method.
      *
      * @see midcom_helper_datamanager_widget::draw_widget_start()
-     * @var bool
+     * @var boolean
      */
     var $required;
 
@@ -115,7 +115,7 @@ class midcom_helper_datamanager_widget {
      * accordingly. This is used by the draw_widget_start method.
      *
      * @see midcom_helper_datamanager_widget::draw_widget_start()
-     * @var bool
+     * @var boolean
      */
     var $missingrequired;
 

@@ -40,7 +40,7 @@ class midcom_helper_datamanager_widget_mailtemplate extends midcom_helper_datama
      * Poweruser flag
      *
      * @access private
-     * @var bool
+     * @var boolean 
      */
     var $_poweruser;
 
@@ -78,7 +78,7 @@ class midcom_helper_datamanager_widget_mailtemplate extends midcom_helper_datama
      * Small helper that determines if a given field is available only
      * for Power Users.
      *
-     * @return bool Indicating Power-User-only availability
+     * @return boolean Indicating Power-User-only availability
      */
     function _is_poweruser_field($key)
     {

@@ -63,7 +63,7 @@ class midcom_services_indexer_XMLComm_RequestWriter
      * Surrounds the request data with an xml header and the request tags
      * and returns the result.
      * 
-     * @param bool $mask_request Set this to true to mask all occurences of </request> in the content with
+     * @param boolean $mask_request Set this to true to mask all occurences of </request> in the content with
      *     </request_>, which is required for the TCP backends. (PHP cannot close a TCP socket in one direction
      *     only, so EOF checks won't work.
      * @return string XML request including all headers and the DOCTYPE declaration.

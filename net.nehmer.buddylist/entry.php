@@ -374,7 +374,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
      * even unapproved requests count here.
      *
      * @param midcom_core_user $user The user to check for.
-     * @return bool True, if the user already is on your buddy list.
+     * @return boolean True, if the user already is on your buddy list.
      */
     function is_on_buddy_list(&$buddy, $user = null)
     {

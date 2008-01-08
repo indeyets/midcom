@@ -184,7 +184,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_index($handler_id, $args, &$data)
     {
@@ -310,7 +310,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
      * it sets errstr and errcode accordingly.
      *
      * @param string $schema The name of the schema to initialize for
-     * @return bool Indicating success
+     * @return boolean Indicating success
      * @access private
      */
     function _prepare_creation_datamanager($schema)

@@ -35,7 +35,7 @@ class midcom_helper_datamanager2_formmanager_paged extends midcom_helper_dataman
     /**
      * ...
      *
-     * @return bool Indicating success
+     * @return boolean Indicating success
      * @access private
      */
     function _load_widgets()
@@ -66,7 +66,7 @@ class midcom_helper_datamanager2_formmanager_paged extends midcom_helper_dataman
      *
      * @param name The name of the form. This defaults to the name of the currently active component, which should
      *     suffice in most cases.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function initialize($name = null)
     {

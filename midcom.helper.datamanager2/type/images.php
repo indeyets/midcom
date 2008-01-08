@@ -68,7 +68,7 @@ require_once('image.php');
  *
  * <b>Available configuration options:</b>
  *
- * - bool keep_original controls whether you want to keep the originally uploaded
+ * - boolean keep_original controls whether you want to keep the originally uploaded
  *   file available. This option is disabled by default.
  * - string filter_chain The filter chain used to render the main image. This chain
  *   empty (null) by default.
@@ -180,7 +180,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      * @param string $filename The name of the image attachment to be created.
      * @param string $tmpname The file to load.
      * @param string $title The title of the image.
-     * @param bool $autodelete If this is true, the temporary file will be deleted
+     * @param boolean $autodelete If this is true, the temporary file will be deleted
      *     after postprocessing and attachment-creation.
      * @param string $identifier The identifier to use for the attaachment. This is usually
      *     auto-created, so you don't have to bother about this.
@@ -208,9 +208,9 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      * @param string $filename The name of the image attachment to be created.
      * @param string $tmpname The file to load.
      * @param string $title The title of the image.
-     * @param bool $autodelete If this is true, the temporary file will be deleted
+     * @param boolean $autodelete If this is true, the temporary file will be deleted
      *     after postprocessing and attachment-creation.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function update_image($identifier, $filename, $tmpname, $title, $autodelete = true)
     {
@@ -230,9 +230,9 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      * @param string $filename The name of the image attachment to be created.
      * @param string $tmpname The file to load.
      * @param string $title The title of the image.
-     * @param bool $autodelete If this is true, the temporary file will be deleted
+     * @param boolean $autodelete If this is true, the temporary file will be deleted
      *     after postprocessing and attachment-creation.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      * @access protected
      */
     function set_image($identifier, $filename, $tmpname, $title, $autodelete)

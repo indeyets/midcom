@@ -392,7 +392,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_create ($handler_id, $args, &$data)
     {
@@ -457,7 +457,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -503,7 +503,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_application ($handler_id, $args, &$data)
     {
@@ -596,7 +596,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_index ($handler_id, $args, &$data)
     {
@@ -616,7 +616,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_create_profile($handler_id, $args, &$data)
     {
@@ -700,7 +700,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -836,7 +836,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_pending($handler_id, $args, &$data)
     {
@@ -965,7 +965,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_team_members($handler_id, $args, &$data)
     {
@@ -1024,7 +1024,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_quit($handler_id, $args, &$data)
     {
@@ -1051,7 +1051,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_quit_confirm($handler_id, $args, &$data)
     {
@@ -1102,7 +1102,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_lockdown($handler_id, $args, &$data)
     {
@@ -1188,7 +1188,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_view($handler_id, $args, &$data)
     {
@@ -1285,7 +1285,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_action($handler_id, $args, &$data)
     {

@@ -119,7 +119,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report($handler_id, $args, &$data)
 	{
@@ -143,7 +143,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_places($handler_id, $args, &$data)
 	{
@@ -246,7 +246,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_places_sent($handler_id, $args, &$data)
 	{
@@ -306,7 +306,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_places_sent_export($handler_id, $args, &$data)
 	{
@@ -362,7 +362,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_places_receive($handler_id, $args, &$data)
 	{
@@ -423,7 +423,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_places_receive_export($handler_id, $args, &$data)
 	{
@@ -479,7 +479,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_places_sent_2($handler_id, $args, &$data)
 	{
@@ -541,7 +541,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_places_sent_2_export($handler_id, $args, &$data)
 	{
@@ -596,7 +596,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_places_receive_2($handler_id, $args, &$data)
 	{
@@ -659,7 +659,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_places_receive_2_export($handler_id, $args, &$data)
 	{
@@ -717,7 +717,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_products($handler_id, $args, &$data)
 	{
@@ -770,7 +770,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_products_group($handler_id, $args, &$data)
 	{
@@ -922,7 +922,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_products_detail($handler_id, $args, &$data)
 	{
@@ -1001,7 +1001,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_products_detail_export($handler_id, $args, &$data)
 	{
@@ -1076,7 +1076,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_places_sent_3($handler_id, $args, &$data)
 	{
@@ -1134,7 +1134,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_places_sent_3_export($handler_id, $args, &$data)
 	{
@@ -1185,7 +1185,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_places_receive_3($handler_id, $args, &$data)
 	{
@@ -1245,7 +1245,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_by_places_receive_3_export($handler_id, $args, &$data)
 	{
@@ -1300,7 +1300,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_unclear($handler_id, $args, &$data)
 	{
@@ -1359,7 +1359,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_unclear_detail($handler_id, $args, &$data)
 	{
@@ -1419,7 +1419,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_unclear_detail_export($handler_id, $args, &$data)
 	{
@@ -1491,7 +1491,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_unclear_detail_2($handler_id, $args, &$data)
 	{
@@ -1551,7 +1551,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_unclear_detail_2_export($handler_id, $args, &$data)
 	{

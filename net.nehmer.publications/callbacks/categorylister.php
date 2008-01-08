@@ -76,7 +76,7 @@ class net_nehmer_publications_callbacks_categorylister extends midcom_baseclasse
      * option names to allow you to have limited category listings on-site.
      *
      * @param int $group The category group to list.
-     * @param bool $sitelisting The callback is used to display the onsite listing instead of
+     * @param boolean $sitelisting The callback is used to display the onsite listing instead of
      *     the standard DM2 interface
      */
     function net_nehmer_publications_callbacks_categorylister($group, $sitelisting = false)

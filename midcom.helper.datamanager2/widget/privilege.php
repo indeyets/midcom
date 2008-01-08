@@ -34,7 +34,7 @@ class midcom_helper_datamanager2_widget_privilege extends midcom_helper_datamana
     /**
      * The initialization event handler validates the base type.
      *
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _on_initialize()
     {

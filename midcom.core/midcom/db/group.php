@@ -56,7 +56,7 @@ class midcom_db_group extends midcom_baseclasses_database_group
      * already a member of this group, nothing is done.
      *
      * @param midcom_baseclasses_database_person The person to add.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function add_member($person)
     {
@@ -86,7 +86,7 @@ class midcom_db_group extends midcom_baseclasses_database_group
      * Checks whether the given user is a member of this group.
      *
      * @param midcom_baseclasses_database_person The person to check.
-     * @return bool Indicating membership.
+     * @return boolean Indicating membership.
      */
     function is_member($person)
     {

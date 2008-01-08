@@ -60,7 +60,7 @@ class org_maemo_devcodes_handler_code_import extends midcom_baseclasses_componen
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_process($handler_id, $args, &$data)
     {
@@ -241,7 +241,7 @@ class org_maemo_devcodes_handler_code_import extends midcom_baseclasses_componen
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_import($handler_id, $args, &$data)
     {

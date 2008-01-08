@@ -271,7 +271,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     /**
      * Executes the internal QB and filters objects based on ACLs and metadata
      *
-     * @param bool $false_on_empty_mgd_resultset used in the moving window loop to get false in stead of empty array back from this method in case the **core** QB returns empty resultset
+     * @param boolean $false_on_empty_mgd_resultset used in the moving window loop to get false in stead of empty array back from this method in case the **core** QB returns empty resultset
      * @return array of objects filtered by ACL and metadata visibility (or false in case of failure)
      */
     function _execute_and_check_privileges($false_on_empty_mgd_resultset = false)
@@ -375,7 +375,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      *
      * The calling sequence of all event handlers of the associated class is like this:
      *
-     * 1. bool _on_prepare_exec_query_builder(&$this) is called before the actual query execution. Return false to
+     * 1. boolean _on_prepare_exec_query_builder(&$this) is called before the actual query execution. Return false to
      *    abort the operation.
      * 2. The query is executed.
      * 3. void _on_process_query_result(&$result) is called after the successful execution of the query. You
@@ -545,7 +545,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      *
      * The calling sequence of all event handlers of the associated class is like this:
      *
-     * 1. bool _on_prepare_exec_query_builder(&$this) is called before the actual query execution. Return false to
+     * 1. boolean _on_prepare_exec_query_builder(&$this) is called before the actual query execution. Return false to
      *    abort the operation.
      * 2. The query is executed.
      * 3. void _on_process_query_result(&$result) is called after the successful execution of the query. You
@@ -681,7 +681,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      *     wildcard character.
      * @param mixed $value The value to compare against. It should be of the same type then the
      *     queried property.
-     * @param bool Indicating success.
+     * @param boolean Indicating success.
      */
     function add_constraint($field, $operator, $value)
     {
@@ -721,7 +721,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * @param string $field The name of the MgdSchema property to query against.
      * @param string $ordering One of 'ASC' or 'DESC' indicating ascending or descending
      *     ordering. The default is 'ASC'.
-     * @param bool Indicating success.
+     * @param boolean Indicating success.
      */
     function add_order($field, $ordering = null)
     {

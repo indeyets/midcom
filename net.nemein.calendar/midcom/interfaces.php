@@ -47,7 +47,7 @@ class net_nemein_calendar_interface extends midcom_baseclasses_components_interf
     /**
      * Initialize n.n.calendar library.
      *
-     * @return bool inidicating success.
+     * @return boolean inidicating success.
      */
     function _on_initialize()
     {

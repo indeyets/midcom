@@ -140,7 +140,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
    /**
      * The initialization event handler verifies the correct type.
      *
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _on_initialize()
     {

@@ -26,7 +26,7 @@ class midcom_helper_datamanager_datatype_unixdate extends midcom_helper_datamana
      * The default for this value is false unless the storage location is one of
      * 'created', 'locked', 'revised' and 'approved', for which it is true.
      *
-     * @var bool
+     * @var boolean
      * @access private
      */
     var $_store_as_iso_timestamp;

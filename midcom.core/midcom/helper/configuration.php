@@ -121,7 +121,7 @@ class midcom_helper_configuration
      *
      * @param MidgardObject $object        The object from which to retrieve the configuration.
      * @param string        $path        The Parameter domain to query.
-     * @param bool            $global        Set to true to replace the global configuration.
+     * @param boolean            $global        Set to true to replace the global configuration.
      * @access private
      */
     function _store_from_object($object, $path, $global = false)
@@ -218,8 +218,8 @@ class midcom_helper_configuration
      * After import the cache array will be updated, reset is done by reset_local.
      *
      * @param Array    $params        The new local parameters
-     * @param bool    $reset        If set to true, the current local configuration will be discarded first.
-     * @return bool                Indicating success.
+     * @param boolean    $reset        If set to true, the current local configuration will be discarded first.
+     * @return boolean                Indicating success.
      * @see midcom_helper_configuration::reset_local()
      */
     function store($params, $reset = true)
@@ -247,7 +247,7 @@ class midcom_helper_configuration
      *
      * @param MidgardObject    $object    The object from which to import data.
      * @param string        $path    The parameter domain to query.
-     * @return bool            Indicating success
+     * @return boolean            Indicating success
      */
     function store_from_object($object, $path)
     {
@@ -304,7 +304,7 @@ class midcom_helper_configuration
      * Checks for the existence of a configuration key.
      *
      * @param string    $key    The configuration key to check for.
-     * @return bool                True, if the key is available, false otherwise.
+     * @return boolean                True, if the key is available, false otherwise.
      */
     function exists($key)
     {

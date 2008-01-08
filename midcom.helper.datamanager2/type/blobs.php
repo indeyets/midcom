@@ -348,9 +348,9 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
      * @param string $title The title of the attachment to use.
      * @param string $mimetype The MIME Type of the file.
      * @param string $tmpname The name of the source file.
-     * @param bool $autodelete Set this to true (the default) to automatically delete the
+     * @param boolean $autodelete Set this to true (the default) to automatically delete the
      *     file after successful processing.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function add_attachment($identifier, $filename, $title, $mimetype, $tmpname, $autodelete = true)
     {
@@ -472,12 +472,12 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
      * @param string $title The title of the attachment to use.
      * @param string $mimetype The MIME Type of the file.
      * @param resource $source A file handle prepared to read of the the source file.
-     * @param bool $autoclose Set this to true if the file handle should automatically be closed
+     * @param boolean $autoclose Set this to true if the file handle should automatically be closed
      *     after successful processing.
      * @param string $tmpfile In case you have a filename to the source handle, you should specify
      *     it here. It will be used to load getimagesize information directly (rather then doing a
      *     temporary copy). The default null indicates that the source file location is unknown.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function add_attachment_by_handle($identifier, $filename, $title, $mimetype, $source, $autoclose = true, $tmpfile = null)
     {
@@ -556,7 +556,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
      * @param string $identifier The identifier of the new attachment.
      * @param string $title The new title of the attachment, set this to null to
      *     keep the original title unchanged.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function update_attachment_title($identifier, $title)
     {
@@ -593,9 +593,9 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
      * @param string $mimetype The new MIME Type of the file, set this to null to
      *     keep the original title unchanged. If you are unsure of the mime type,
      *     set this to '' not null, this will enforce a redetection.
-     * @param bool $autodelete Set this to true (the default) to automatically delete the
+     * @param boolean $autodelete Set this to true (the default) to automatically delete the
      *     file after successful processing.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function update_attachment($identifier, $filename, $title, $mimetype, $tmpname, $autodelete = true)
     {
@@ -662,12 +662,12 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
      * @param string $mimetype The new MIME Type of the file, set this to null to
      *     keep the original title unchanged. If you are unsure of the mime type,
      *     set this to '' not null, this will enforce a redetection.
-     * @param bool $autoclose Set this to true if the file handle should automatically be closed
+     * @param boolean $autoclose Set this to true if the file handle should automatically be closed
      *     after successful processing.
      * @param string $tmpfile In case you have a filename to the source handle, you should specify
      *     it here. It will be used to load getimagesize information directly (rather then doing a
      *     temporary copy). The default null indicates that the source file location is unknown.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function update_attachment_by_handle($identifier, $filename, $title, $mimetype, $source, $autoclose = true, $tmpfile = null)
     {
@@ -738,7 +738,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
      * Deletes an existing attachment.
      *
      * @param string $identifier The identifier of the attachment that should be deleted.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete_attachment($identifier)
     {
@@ -770,7 +770,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     /**
      * This call will unconditionally delete all attachments currently contained by the type.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete_all_attachments()
     {

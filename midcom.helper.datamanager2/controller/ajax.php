@@ -29,7 +29,7 @@ class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanag
     /**
      * AJAX controller initialization. Loads required Javascript libraries
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function initialize()
     {

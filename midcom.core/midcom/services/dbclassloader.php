@@ -249,7 +249,7 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
      *
      * If this function completes successfully, all __xxx classes are loaded and present.
      *
-     * @return bool Indicating success
+     * @return boolean Indicating success
      */
     function load_classes($component, $filename)
     {
@@ -317,7 +317,7 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
      * Where possible, missing elements are completed with sensible defaults.
      *
      * @param Array $definition_list A reference to the definition list to verify.
-     * @return bool Indicating success
+     * @return boolean Indicating success
      */
     function _validate_class_definition_list(&$definition_list)
     {
@@ -1089,7 +1089,7 @@ EOF;
      * or a subclass thereof.
      *
      * @param object $object The object to check
-     * @return bool true if this is a Legacy Midgard object, false otherwise.
+     * @return boolean true if this is a Legacy Midgard object, false otherwise.
      */
     function is_legacy_midgard_object(&$object)
     {
@@ -1146,7 +1146,7 @@ EOF;
      * or a subclass thereof.
      *
      * @param object $object The object to check
-     * @return bool true if this is a MgdSchema object, false otherwise.
+     * @return boolean true if this is a MgdSchema object, false otherwise.
      */
     function is_mgdschema_object(&$object)
     {
@@ -1193,7 +1193,7 @@ EOF;
      * retrieved by the GUID object getter.
      *
      * @param string $classname The name of the MidCOM DBA class that must be available.
-     * @return bool Indicating success. False is returned only if you are requesting unknown
+     * @return boolean Indicating success. False is returned only if you are requesting unknown
      * 	   classes and the like. Component loading failure will result in an HTTP 500, as
      *     always.
      */
@@ -1231,7 +1231,7 @@ EOF;
      * or a subclass thereof.
      *
      * @param object $object The object to check
-     * @return bool true if this is a MidCOM Database object, false otherwise.
+     * @return boolean true if this is a MidCOM Database object, false otherwise.
      */
     function is_midcom_db_object(&$object)
     {

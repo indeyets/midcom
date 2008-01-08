@@ -358,7 +358,7 @@ class midcom_helper_datamanager {
     /**
      * Creation mode flag
      *
-     * @var bool
+     * @var boolean
      * @access private
      */
     var $_creation;
@@ -403,7 +403,7 @@ class midcom_helper_datamanager {
      * $_ourlock will be true if and only if we are the
      * owner of the current lock; this variable is only valid if $_lock is an array.
      *
-     * @var bool
+     * @var boolean
      * @access private
      */
     var $_ourlock;
@@ -586,7 +586,7 @@ class midcom_helper_datamanager {
      * @param string $schema	The schema name which should be used for creation of the new object.
      * @param object $object	The callback object containing the creation code.
      * @param string $callback	The method name that should be used to create the new object.
-     * @return bool Indicating success
+     * @return boolean Indicating success
      */
     function init_creation_mode ($schema, &$object, $callback = "_dm_create_callback") {
         $this->_creation_code_objref =& $object;
@@ -619,7 +619,7 @@ class midcom_helper_datamanager {
      * @param string $schema	Do not autodetect the schema but use the one given here.
      * 	      This is useful if you want to edit the same object with more then one schema.
      *        Can be omitted.
-     * @return bool	True on success, false on failure, errors go to the debug log.
+     * @return boolean	True on success, false on failure, errors go to the debug log.
      */
     function init (&$storage, $schema = null)
     {
@@ -644,7 +644,7 @@ class midcom_helper_datamanager {
      *
      * @param string $schema	Do not autodetect the schema but use the one given here.
      * 	      This is useful if you want to edit the same object with more then one schema.
-     * @return bool	Indicating success
+     * @return boolean	Indicating success
      * @access private
      */
     function _true_init ($schema) {
@@ -1871,7 +1871,7 @@ class midcom_helper_datamanager {
     /**
      * Calls midcom_update_nemein_rcs to update the Nemein RCS store if configured.
      *
-     * @return bool	Indicating success.
+     * @return boolean	Indicating success.
      * @see midcom_update_nemein_rcs()
      * @access private
      */
@@ -1893,7 +1893,7 @@ class midcom_helper_datamanager {
      * Encodes the given string into CSV according to these rules: Any appearance
      * of the separator or one of the two newline characters \n and \r will trigger
      * quoting. In quoting mode, the entire string will be enclosed in double-quotes.
-     * Any occurence of a double quote in the original string wille be transformed
+     * Any occurence of a double quote in the original string will be transformed
      * into two double quotes. Any leading or trailing whitespace around the data
      * will be eliminated.
      *
@@ -1926,7 +1926,7 @@ class midcom_helper_datamanager {
      * us from editing. It returns true, if the storage object is locked for us, false
      * otherwise.
      *
-     * @return bool	Indicating locking state.
+     * @return boolean	Indicating locking state.
      * @access private
      */
     function _check_lock() {
@@ -2003,7 +2003,7 @@ class midcom_helper_datamanager {
      * This tries to set a lock at the current storage object. If it returns false,
      * this failed due to an existing lock.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      * @access private
      */
     function _set_lock()
@@ -2082,7 +2082,7 @@ class midcom_helper_datamanager {
      * check the permissions of the user and the lock. Returns true if the lock was
      * successfully cleared.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      * @access private
      */
     function _clear_lock() {

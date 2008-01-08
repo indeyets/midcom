@@ -91,7 +91,7 @@ class midcom_helper_datamanager2_storage extends midcom_baseclasses_components_p
      * generate_error is called.
      *
      * @param Array $types A reference to an array of types matching the schema definition.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function store(&$types)
     {
@@ -224,7 +224,7 @@ class midcom_helper_datamanager2_storage extends midcom_baseclasses_components_p
      * This callback is invoked once the storage object has been completely updated with
      * the information from all types. You need to store it to the database at this point.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _on_update_object()
     {
@@ -237,7 +237,7 @@ class midcom_helper_datamanager2_storage extends midcom_baseclasses_components_p
      * may overwrite this method to incorporate for creation mode stuff.
      *
      * @param string $privilege The privilege to check against.
-     * @return bool true if the user has the permission, false otherwise.
+     * @return boolean true if the user has the permission, false otherwise.
      */
     function can_do($privilege)
     {

@@ -52,7 +52,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     /**
      * Basic sanity checking for the code object
      *
-     * @return bool indicating sanity (true=sane)
+     * @return boolean indicating sanity (true=sane)
      */
     function sanity_check()
     {
@@ -392,7 +392,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     /**
      * Similar to is_open but does not check for close date
      *
-     * @return bool indicating if we're past start datetime
+     * @return boolean indicating if we're past start datetime
      * @see is_open()
      */
     function has_opened()
@@ -416,7 +416,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     /** 
      * Is this device program open for applications
      * 
-     * @return bool indicating state
+     * @return boolean indicating state
      */
     function is_open()
     {
@@ -475,7 +475,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     /**
      * Creates various useful smart campaigns related to this device
      *
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function create_smart_campaigns()
     {
@@ -560,7 +560,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
      * Helper to create a smart campaign for recipients of codes assigned for this device
      *
      * @see create_smart_campaigns
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function _create_smart_campaign_assigned()
     {
@@ -619,7 +619,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
      * Helper to create a smart campaign for applicants of accepted applications
      *
      * @see create_smart_campaigns
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function _create_smart_campaign_accepted()
     {
@@ -677,7 +677,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
      * Helper to create a smart campaign for applicants of rejected applications
      *
      * @see create_smart_campaigns
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function _create_smart_campaign_rejected()
     {
@@ -736,7 +736,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
      * Removes the "automatically" created smart-campaigns created with create_smart_campaigns
      *
      * @see create_smart_campaigns()
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function remove_smart_campaigns()
     {
@@ -790,7 +790,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
      *
      * @param int $user id of local user (defaults to $_MIDGARD['user'])
      * @param int $check_has_applied whether to check if user has already applied or not
-     * @return bool indicating state or -1 on failure
+     * @return boolean indicating state or -1 on failure
      */
     function can_apply($user = -1, $check_has_applied = true)
     {

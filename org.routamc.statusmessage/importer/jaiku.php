@@ -194,7 +194,7 @@ class org_routamc_statusmessage_importer_jaiku extends org_routamc_statusmessage
      *
      * @param Array $status Log entry in Array format specific to importer
      * @param integer $person_id ID of the person to import statuss for
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function import($status)
     {

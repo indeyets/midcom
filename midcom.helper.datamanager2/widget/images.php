@@ -93,7 +93,7 @@ class midcom_helper_datamanager2_widget_images extends midcom_helper_datamanager
     /**
      * The initialization event handler post-processes the maxlength setting.
      *
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _on_initialize()
     {
@@ -141,7 +141,7 @@ END;
     /**
      * Adds the table header to the widget.
      *
-     * @param bool $frozen Set this to true, if you want to skip all elements which cannot be frozen.
+     * @param boolean $frozen Set this to true, if you want to skip all elements which cannot be frozen.
      * @access private
      */
     function _add_table_header($frozen)
@@ -169,7 +169,7 @@ END;
     /**
      * Adds the new upload row to the bottom of the table.
      *
-     * @param bool $frozen Set this to true, if you want to skip all elements which cannot be frozen.
+     * @param boolean $frozen Set this to true, if you want to skip all elements which cannot be frozen.
      * @access private
      */
     function _add_new_upload_row_old($frozen)
@@ -231,7 +231,7 @@ END;
     /**
      * Adds the new upload row to the bottom of the table.
      *
-     * @param bool $frozen Set this to true, if you want to skip all elements which cannot be frozen.
+     * @param boolean $frozen Set this to true, if you want to skip all elements which cannot be frozen.
      * @access private
      */
     function _add_new_upload_row($frozen)
@@ -278,7 +278,7 @@ END;
      * Adds a row for an existing image
      *
      * @param string $identifier The identifier of the image to add.
-     * @param bool $frozen Set this to true, if you want to skip all elements which cannot be frozen.
+     * @param boolean $frozen Set this to true, if you want to skip all elements which cannot be frozen.
      * @access private
      */
     function _add_image_row($identifier, $frozen)
@@ -406,7 +406,7 @@ END;
     /**
      * Adds the table footer.
      *
-     * @param bool $frozen Set this to true, if you want to skip all elements which cannot be frozen.
+     * @param boolean $frozen Set this to true, if you want to skip all elements which cannot be frozen.
      * @access private
      */
     function _add_table_footer($frozen)
@@ -428,7 +428,7 @@ END;
      * Computes the element list to form the widget. It populates the _elements memeber, which is
      * initialized with a new, empty array during startup.
      *
-     * @param bool $frozen Set this to true, if you want to skip all elements which cannot be frozen.
+     * @param boolean $frozen Set this to true, if you want to skip all elements which cannot be frozen.
      * @access private
      */
     function _compute_elements($frozen = false)

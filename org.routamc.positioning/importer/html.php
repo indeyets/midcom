@@ -127,7 +127,7 @@ class org_routamc_positioning_importer_html extends org_routamc_positioning_impo
      *
      * @param Array $log Log entry in Array format specific to importer
      * @param integer $person_id ID of the person to import logs for
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function import($position, $person_id)
     {

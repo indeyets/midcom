@@ -17,7 +17,7 @@
  *
  * <b>Available configuration options:</b>
  *
- * - <i>bool show_time:</i> Boolean that controls, if the stored value is to be shown with or without
+ * - <i>boolean show_time:</i> Boolean that controls, if the stored value is to be shown with or without
  *   the time-of-day. If omitted, 00:00:00 is assumed. Defaults to true.
  * - <i>int minyear:</i> Minimum Year available for selection, default see below.
  * - <i>int maxyear:</i> Maximum Year available for selection, default see below.
@@ -41,7 +41,7 @@ class midcom_helper_datamanager2_widget_jsdate extends midcom_helper_datamanager
     /**
      * Indicates whether the timestamp should be shown or not.
      *
-     * @var bool
+     * @var boolean
      */
     var $show_time = true;
 

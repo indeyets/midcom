@@ -89,7 +89,7 @@ class midcom_service__sessioning
      *
      * @param string $domain	The domain in which to search for the key.
      * @param mixed $key		The key to query.
-     * @return bool				Indicating availability.
+     * @return boolean				Indicating availability.
      */
     function exists ($domain, $key)
     {

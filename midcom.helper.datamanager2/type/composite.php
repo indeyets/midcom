@@ -206,7 +206,7 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
      * Deletes an existing child object.
      *
      * @param string $identifier The identifier of the object that should be deleted.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete_object($identifier)
     {
@@ -237,7 +237,7 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
     /**
      * This call will unconditionally delete all objects currently contained by the type.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete_all_objects()
     {

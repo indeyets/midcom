@@ -110,7 +110,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      *
      * @param string $name The name of the schema to use, omit this to use the default
      *     schema.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function set_schema($name = null)
     {
@@ -157,7 +157,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      *
      * @param mixed $object A reference to either a MidCOM DBA class or a subclass of
      *     midcom_helper_datamanager2_storage.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function set_storage(&$object)
     {
@@ -196,7 +196,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      * files where necessary (using require_once), and then create a set of instances
      * based on the schema.
      *
-     * @return bool Indicating success
+     * @return boolean Indicating success
      * @access private
      */
     function _load_types()
@@ -238,8 +238,8 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      * @see set_storage()
      * @param mixed $object A reference to either a MidCOM DBA class or a subclass of
      *     midcom_helper_datamanager2_storage.
-     * @param bool $strict Whether we should strictly use only the schema given by object params
-     * @return bool Indicating success.
+     * @param boolean $strict Whether we should strictly use only the schema given by object params
+     * @return boolean Indicating success.
      */
     function autoset_storage(&$object, $strict = false)
     {
@@ -285,7 +285,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      * validation cycle is done beforehand, if any validation fails, the function
      * aborts and sets the $validation_errors member variable accordingly.
      *
-     * @return bool Indicating success
+     * @return boolean Indicating success
      */
     function save()
     {
@@ -306,7 +306,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      * Validate the current object state. It will populate $validation_errors
      * accordingly.
      *
-     * @return bool Indicating validation success.
+     * @return boolean Indicating validation success.
      */
     function validate()
     {

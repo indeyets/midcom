@@ -49,7 +49,7 @@ class midcom_core_group_midgard extends midcom_core_group
      * @param mixed $id This is a valid identifier for the group to be loaded. Usually this is either
      *     a database ID or GUID for Midgard Groups or a valid complete MidCOM group identifier, which
      *     will work for all subclasses.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _load($id)
     {

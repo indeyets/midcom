@@ -21,7 +21,7 @@
  *
  * <b>Available configuration options:</b>
  *
- * - <i>bool show_title:</i> This flag controls whether the title field is shown or not.
+ * - <i>boolean show_title:</i> This flag controls whether the title field is shown or not.
  *   If this is flag, the whole title processing will be disabled. This flag is true
  *   by default.
  *
@@ -42,14 +42,14 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
     /**
      * Controls title processing.
      *
-     * @var bool
+     * @var boolean
      */
     var $show_title = true;
 
     /**
      * The initialization event handler post-processes the maxlength setting.
      *
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _on_initialize()
     {

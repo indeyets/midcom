@@ -242,7 +242,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
     /**
      * Creates/Removes members for this smart campaign based on the rules array
      * NOTE: This is highly resource intensive for large campaigns
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function update_smart_campaign_members()
     {

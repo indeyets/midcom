@@ -54,7 +54,7 @@ require_once('blobs.php');
  *
  * <b>Available configuration options:</b>
  *
- * - bool keep_original controls whether you want to keep the orginally uploaded
+ * - boolean keep_original controls whether you want to keep the orginally uploaded
  *   file available. This option is disabled by default.
  * - string filter_chain The filter chain used to render the main image. This chain
  *   empty (null) by default.
@@ -90,7 +90,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     /**
      * Set this to true to keep the original file available as "original".
      *
-     * @var bool
+     * @var boolean 
      */
     var $keep_original = false;
 
@@ -557,9 +557,9 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
      * @param string $filename The name of the image attachment to be created.
      * @param string $tmpname The file to load.
      * @param string $title The title of the image.
-     * @param bool $autodelete If this is true (the default), the temporary file will
+     * @param boolean $autodelete If this is true (the default), the temporary file will
      *     be deleted after postprocessing and attachment-creation.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function set_image($filename, $tmpname, $title, $autodelete = true)
     {
@@ -572,10 +572,10 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
      * @param string $filename The name of the image attachment to be created.
      * @param string $tmpname The file to load.
      * @param string $title The title of the image.
-     * @param bool $autodelete If this is true (the default), the temporary file will
+     * @param boolean $autodelete If this is true (the default), the temporary file will
      *     be deleted after postprocessing and attachment-creation.
      * @param array $force_pending_attachments use this to override pending_attachments (when run from images type)
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _set_image($filename, $tmpname, $title, $autodelete = true, $force_pending_attachments = false)
     {
@@ -671,7 +671,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
      * used if and only if the auto_thumbnail option is set. Any existing thumbnail
      * declaration will be silently overwritten!
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _add_thumbnail_to_derived_images()
     {
@@ -691,7 +691,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
      * This loops over the defined derived images (if any) and constructs
      * each of them in turn.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _save_derived_images()
     {
@@ -720,7 +720,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
      * This is the actual code which filters and saves a derived image.
      *
      * @param string $identifier The derived image to construct.
-     * @return bool Indicating success
+     * @return boolean Indicating success
      */
     function _save_derived_image($identifier)
     {
@@ -766,7 +766,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     /**
      * Saves the main image to the type, doing transformation work if configured to do so.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _save_main_image()
     {
@@ -834,7 +834,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
      * be set to the new file.
      *
      * @access private
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _create_working_copy()
     {
@@ -855,7 +855,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     /**
      * If we are configured to do so, we save the original image.
      *
-     * @return bool Indicating success
+     * @return boolean Indicating success
      */
     function _save_original()
     {
@@ -908,7 +908,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
      * In case of any conversions being done, the new extension will be appended
      * to the uploaded file.
      *
-     * @return bool Indicating success
+     * @return boolean Indicating success
      */
     function _auto_convert_to_web_type()
     {

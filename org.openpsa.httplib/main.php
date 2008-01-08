@@ -36,7 +36,7 @@ class org_openpsa_httplib extends midcom_baseclasses_components_purecode
      * Check whether a HTTP response code is a "successfull" one
      *
      * @param int $response_code HTTP response code to check
-     * @return bool Whether HTTP response code is successfull
+     * @return boolean Whether HTTP response code is successfull
      * @access private
      */
     function _is_success($response_code)

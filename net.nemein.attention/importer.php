@@ -27,7 +27,7 @@ class net_nemein_attention_importer extends midcom_baseclasses_components_pureco
      * Empty default implementation, this calls won't do much.
      *
      * @param Array $logs Log entries in Array format specific to importer
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function import($logs)
     {

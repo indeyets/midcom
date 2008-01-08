@@ -156,7 +156,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
 
    /**
     * True if we are inside a group
-    * @var      bool
+    * @var      boolean
     * @access   private
     */
     var $_inGroup = false;
@@ -302,7 +302,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     *
     * @param    string      Element name
     * @param    mixed       Element label (if using an array of labels, you should set the appropriate template)
-    * @param    bool        Whether an element is required
+    * @param    boolean        Whether an element is required
     * @param    string      Error message associated with the element
     * @param    string      Element type (optional)
     * @access   private
@@ -374,7 +374,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     * Called when visiting an element
     *
     * @param object     An HTML_QuickForm_element object being visited
-    * @param bool       Whether an element is required
+    * @param boolean       Whether an element is required
     * @param string     An error message associated with an element
     * @access public
     * @return void
@@ -431,7 +431,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     * Called when visiting a group, before processing any group elements
     *
     * @param object     An HTML_QuickForm_group object being visited
-    * @param bool       Whether a group is required
+    * @param boolean       Whether a group is required
     * @param string     An error message associated with a group
     * @access public
     * @return void

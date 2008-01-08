@@ -23,7 +23,7 @@ class midcom_helper_datamanager2_type_tags extends midcom_helper_datamanager2_ty
      * This event handler is called after construction, so passing references to $this to the
      * outside is safe at this point.
      *
-     * @return bool Indicating success, false will abort the type construction sequence.
+     * @return boolean Indicating success, false will abort the type construction sequence.
      * @access protected
      */
     function _on_initialize()

@@ -130,7 +130,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_welcome_deprecated($handler_id, $args, &$data)
     {
@@ -207,7 +207,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param mixed $data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      * @access protected
      */
     function _handler_config_dm($handler_id, $args, &$data)

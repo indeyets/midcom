@@ -71,7 +71,7 @@ class midcom_helper_datamanager_widget_radiobox extends midcom_helper_datamanage
      *
      * @param mixed $key1 The first key.
      * @param mixed $key2 The second key.
-     * @return bool True, if equal, false otherwise.
+     * @return boolean True, if equal, false otherwise.
      * @access private
      */
     function _key_comparer ($key1, $key2)

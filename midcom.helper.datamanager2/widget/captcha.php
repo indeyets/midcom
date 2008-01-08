@@ -102,7 +102,7 @@ class midcom_helper_datamanager2_widget_captcha extends midcom_helper_datamanage
     /**
      * The initialization event handler creates the captcha passphrase (if necessary).
      *
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _on_initialize()
     {

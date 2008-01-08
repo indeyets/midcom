@@ -172,7 +172,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
     /**
      * Checks whether the current assignee is a magic assignee or an object identifier.
      *
-     * @return bool True, if it is a magic assignee, false otherwise.
+     * @return boolean True, if it is a magic assignee, false otherwise.
      */
     function is_magic_assignee()
     {
@@ -183,7 +183,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * Internal helper, encapsulating the check whether an assignee string is a known
      * magic assignee.
      *
-     * @return bool True, if it is a magic assignee, false otherwise.
+     * @return boolean True, if it is a magic assignee, false otherwise.
      */
     function _is_magic_assignee($assignee)
     {
@@ -213,7 +213,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * - Any string identifier which can be resolved using midcom_services_auth::get_assignee().
      *
      * @param mixed $assignee An assignee representation as outlined above.
-     * @return bool indicating success.
+     * @return boolean indicating success.
      */
     function set_assignee(&$assignee)
     {
@@ -851,7 +851,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * @param Array $privilege A valid privilege record as returned by parameter_to_privilege().
      * @param object $object The content object we're checking right now.
      * @param midcom_core_user The user in question or null for anonymous access.
-     * @return bool Indicating whether the privilege record applies for the user, or not.
+     * @return boolean Indicating whether the privilege record applies for the user, or not.
      */
     function _is_privilege_valid($privilege, $user)
     {
@@ -923,7 +923,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * update an existing privilege record, or create a new one, depending on the
      * DB state.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function store()
     {
@@ -1039,7 +1039,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * Drop the privilege. If we are a known DB record, we delete us, otherwise
      * we return silently.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function drop()
     {

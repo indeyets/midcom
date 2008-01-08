@@ -29,7 +29,7 @@ class midcom_helper_datamanager2_widget_composite extends midcom_helper_datamana
     /**
      * The initialization event handler, check type.
      *
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _on_initialize()
     {

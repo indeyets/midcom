@@ -34,7 +34,7 @@ class net_nemein_updatenotification_handler_admin  extends midcom_baseclasses_co
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_save ($handler_id, $args, &$data)
     {

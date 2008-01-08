@@ -329,7 +329,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_trash($handler_id, $args, &$data)
     {
@@ -385,7 +385,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_trash_type($handler_id, $args, &$data)
     {

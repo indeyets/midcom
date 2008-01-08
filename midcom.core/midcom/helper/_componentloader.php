@@ -242,7 +242,7 @@ class midcom_helper__componentloader
     * is unsuccessful, false is returned.
     *
     * @param string $path	The component to load explicitly.
-    * @return bool Indicating success.
+    * @return boolean Indicating success.
     */
     function load_graceful($path)
     {
@@ -256,7 +256,7 @@ class midcom_helper__componentloader
      * return false and populate $GLOBALS['midcom_errstr'] accordingly.
      *
      * @param string $path	The component to load.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      * @access private
      */
     function _load($path)
@@ -432,7 +432,7 @@ class midcom_helper__componentloader
      * is already loaded and available for usage.
      *
      * @param string $path	The component to be queried.
-     * @return bool			true if it is loaded, false otherwise.
+     * @return boolean			true if it is loaded, false otherwise.
      */
     function is_loaded($path)
     {
@@ -579,7 +579,7 @@ class midcom_helper__componentloader
      *
      * @todo Currently partly disabled due to the FS-Transition.
      * @param string $snippetpath	The path to be checked.
-     * @return bool 				True if valid, false otherwise.
+     * @return boolean 				True if valid, false otherwise.
      */
     function validate_path($snippetpath)
     {
@@ -605,7 +605,7 @@ class midcom_helper__componentloader
      * whether it is structurally valid.
      *
      * @param string $path	The path to be checked.
-     * @return bool 		True if valid, false otherwise.
+     * @return boolean 		True if valid, false otherwise.
      */
     function validate_url($path)
     {
@@ -834,7 +834,7 @@ class midcom_helper__componentloader
      * A watchable object must therefore have the following properties:
      *
      * - <i>string $guid</i> The guid identifying the object.
-     * - <i>bool refresh()</i> A method used to refresh the object against its datasource.
+     * - <i>boolean refresh()</i> A method used to refresh the object against its datasource.
      *
      * So, two instances are equal <i>if and only if</i> they are of the same class and
      * have the same $guid property value.
@@ -950,7 +950,7 @@ class midcom_helper__componentloader
      * is set to true, an empty array is added implicitly.
      *
      * @param string $component The custom data component index to look for.
-     * @param bool $showempty Set this flag to true to get an (empty) entry for all components which
+     * @param boolean $showempty Set this flag to true to get an (empty) entry for all components which
      *     don't have customdata applicable to the component index given. This is disabled by default.
      * @return Array All found component data indexed by known components.
      */

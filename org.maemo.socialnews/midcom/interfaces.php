@@ -68,7 +68,7 @@ class org_maemo_socialnews_interface extends midcom_baseclasses_components_inter
      * AT handler for handling recalculations
      * @param array $args handler arguments
      * @param object $handler reference to the cron_handler object calling this method.
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function recalculate($args, &$handler)
     {

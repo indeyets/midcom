@@ -69,7 +69,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
     /**
      * Empty default implementation, this calls won't do much.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function initialize()
     {

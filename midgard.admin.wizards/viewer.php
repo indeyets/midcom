@@ -118,7 +118,7 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
      * @param Array $plugin_config The configuration associated with the plugin.
      * @param Array $handlers The plugin specific handlers without the appropriate prefixes.
      * @access private
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _prepare_nna_plugin ($name, $plugin_config, $handlers)
     {
@@ -158,7 +158,7 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
      *     option.
      * @param Array $plugin_config The configuration associated with the plugin.
      * @access private
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _load_nna_plugin_class($name, $plugin_config)
     {

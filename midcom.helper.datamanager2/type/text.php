@@ -196,7 +196,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
      * The validation callback ensures that we dont't have an array or an object
      * as a value, which would be wrong.
      *
-     * @return bool Indicating validity.
+     * @return boolean Indicating validity.
      */
     function _on_validate()
     {

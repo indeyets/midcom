@@ -87,7 +87,7 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
      * @param int $lastmodified The last modification date of the source on which the cached file
      *     is based upon. If you pass more then one timestamp, the newest timestamp is used for
      *     the comparison.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function load($identifier, $lastmodified)
     {
@@ -139,7 +139,7 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
      * @param string $identifier The script cache identifier to load (without the trailing .php).
      * @param string $code The code to add to the cache, it must <i>not</i> include the php 
      *     opening/closing tags, they will be added automatically during cache file creation.
-     * @param bool Indicating success.
+     * @param boolean Indicating success.
      */
     function add($identifier, $code)
     {

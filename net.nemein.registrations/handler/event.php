@@ -259,7 +259,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_view($handler_id, $args, &$data)
     {
@@ -297,7 +297,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -351,7 +351,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_list_registrations($handler_id, $args, &$data)
     {
@@ -405,7 +405,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {

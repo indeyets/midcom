@@ -130,7 +130,7 @@ class midcom_services_cache_backend_dba extends midcom_services_cache_backend
      * 
      * The handle is stored in $_handle
      * 
-     * @param bool $write Set to true to enable read/write access with the corresponding exclusive lock. Otherwise
+     * @param boolean $write Set to true to enable read/write access with the corresponding exclusive lock. Otherwise
      * 	   shared read-only mode is used.
      */
     function _open($write = false)

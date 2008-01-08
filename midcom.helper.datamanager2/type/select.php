@@ -24,16 +24,16 @@
  *   define both options.
  * - <i>mixed option_callback_arg:</i> An additional argument passed to the constructor
  *   of the option callback, defaulting to null.
- * - <i>bool allow_other:</i> If this flag is set, the system allows the addition of
+ * - <i>boolean allow_other:</i> If this flag is set, the system allows the addition of
  *   values not in the option list. All unknown values will be merged into a single
  *   comma separated listing of unknown options during loading, which will be kept in
  *   that simple string representation. Otherwise, unknown keys will be forbidden, on
  *   validations they cause a validation error, on loading they are dropped silently.
  *   This option is set to false by default.
- * - <i>bool allow_multiple:</i> If this flag is set, you may select more then one
+ * - <i>boolean allow_multiple:</i> If this flag is set, you may select more then one
  *   option. This is disabled by default. If this feature is disabled, the loader
  *   code will drop all matches beyond the first match.
- * - <i>bool csv_export_key:</i> If this flag is set, the CVS export will store the
+ * - <i>boolean csv_export_key:</i> If this flag is set, the CVS export will store the
  *   field key instead of its value. This is only useful if the foreign tables referenced
  *   are available at the site of import. This flag is not set by default. Note, that
  *   this does not affect import, which is only available with keys, not values.
@@ -146,7 +146,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      * selection list. In this case you'll find the other options collected in the $others
      * member.
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
     var $allow_other = false;
@@ -154,7 +154,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
     /**
      * This flag controls whether multiple selections are allowed, or not.
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
     var $allow_multiple = false;
@@ -163,7 +163,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      * Set this to false to use with universalchooser, this skips making sure the key exists in option list
      * Mainly used to avoid unnecessary seeks to load all a ton of objects to the options list.
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
      var $require_corresponding_option = true;
@@ -173,7 +173,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      * values. Note, that this does not affect import, which is only available with keys, not
      * values.
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
     var $csv_export_key = false;
@@ -330,7 +330,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      * Checks, whether the given key is known.
      *
      * @param string $key The key index to look up.
-     * @return bool True if the key is known, false otherwise.
+     * @return boolean True if the key is known, false otherwise.
      */
     function key_exists($key)
     {
@@ -641,7 +641,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      * The validation callback ensures that we dont't have an array or an object
      * as a value, which would be wrong.
      *
-     * @return bool Indicating validity.
+     * @return boolean Indicating validity.
      */
     function _on_validate()
     {

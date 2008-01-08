@@ -75,7 +75,7 @@ class midgard_admin_asgard_handler_object_metadata extends midcom_baseclasses_co
      * Load the DM2 edit controller instance
      *
      * @access private
-     * @return bool Indicating success of DM2 edit controller instance
+     * @return boolean Indicating success of DM2 edit controller instance
      */
     function _load_controller()
     {

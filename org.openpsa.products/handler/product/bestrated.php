@@ -95,7 +95,7 @@ class org_openpsa_products_handler_product_bestrated extends midcom_baseclasses_
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_bestrated($handler_id, $args, &$data)
     {
@@ -177,7 +177,7 @@ class org_openpsa_products_handler_product_bestrated extends midcom_baseclasses_
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_feed($handler_id, $args, &$data)
     {

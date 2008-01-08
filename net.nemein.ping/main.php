@@ -209,7 +209,7 @@ class net_nemein_ping_pinger extends midcom_baseclasses_components_purecode
     /**
      * Send a weblog ping about the object
      *
-     * @return bool Whether pinging was successfull
+     * @return boolean Whether pinging was successfull
      */
     function ping_object()
     {

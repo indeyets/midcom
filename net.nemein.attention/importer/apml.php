@@ -96,7 +96,7 @@ class net_nemein_attention_importer_apml extends net_nemein_attention_importer
      *
      * @param Array $apml APML file URL or path
      * @param int $person_id ID of person owning the attention profile
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function import($apml, $person_id)
     {

@@ -73,7 +73,7 @@ class midcom_helper_datamanager_widget_tinymce extends midcom_helper_datamanager
     /**
      * Whether to allow loading of the widget_html outside AIS
      *
-     * @var bool
+     * @var boolean
      * @access private
      */
     var $_enable_outside_ais;

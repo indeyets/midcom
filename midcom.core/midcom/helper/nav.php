@@ -109,7 +109,7 @@ class midcom_helper_nav
      * ID) you will get FALSE.
      *
      * @param int $parent_node	The id of the node of which the subnodes are searched.
-     * @param bool $show_noentry Show all objects on-site which have the noentry flag set.
+     * @param boolean $show_noentry Show all objects on-site which have the noentry flag set.
      *     This parameter has no effect in AIS. This defaults to false.
      * @return Array			An Array of Node IDs or false on failure.
      * @see midcom_helper__basicnav::list_nodes()
@@ -125,7 +125,7 @@ class midcom_helper_nav
      * you will get FALSE.
      *
      * @param int $parent_node	The ID of the node of which the leaves are searched.
-     * @param bool $show_noentry Show all objects on-site which have the noentry flag set.
+     * @param boolean $show_noentry Show all objects on-site which have the noentry flag set.
      *     This parameter has no effect in AIS. This defaults to false.
      * @return Array 			A list of leaves found, or false on failure.
      * @see midcom_helper__basicnav::list_leaves()
@@ -194,7 +194,7 @@ class midcom_helper_nav
      *
      * @param int	$node_id	The node in question.
      * @param int	$root_node	The root node to use.
-     * @return bool				True, if the node is a subnode of the root node, false otherwise.
+     * @return boolean				True, if the node is a subnode of the root node, false otherwise.
      */
     function is_node_in_tree ($node_id, $root_id)
     {

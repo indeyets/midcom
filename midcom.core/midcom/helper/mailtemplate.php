@@ -160,7 +160,7 @@ class midcom_helper_mailtemplate {
     /**
      * Flag indicating if the template has already been parsed
      *
-     * @var bool
+     * @var boolean 
      * @access private
      */
     var $_parsed;
@@ -370,7 +370,7 @@ class midcom_helper_mailtemplate {
      * If the template has not yet been explicitly parsed, this is done silently.
      *
      * @param mixed $to		Recipients, either a single string (one recipient), or an Array of strings (multiple recipients).
-     * @return bool			Indicating success.
+     * @return boolean			Indicating success.
      */
     function send ($to) {
         if (! $this->_parsed) {

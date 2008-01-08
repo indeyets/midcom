@@ -802,7 +802,7 @@ class midcom_helper__basicnav
      * - Approval (only on-site)
      *
      * @param Array $napdata The NAP data structure for the object to check (supports NULL values).
-     * @return bool Indicating visibility.
+     * @return boolean Indicating visibility.
      * @access private
      * @todo Integrate with midcom_helper_metadata::is_object_visible_onsite()
      */
@@ -1101,7 +1101,7 @@ class midcom_helper__basicnav
      * ID) you will get FALSE.
      *
      * @param int $parent_node	The id of the node of which the subnodes are searched.
-     * @param bool $show_noentry Show all objects on-site which have the noentry flag set. This parameter has no effect in AIS.
+     * @param boolean $show_noentry Show all objects on-site which have the noentry flag set. This parameter has no effect in AIS.
      * @return Array			An Array of Node IDs or false on failure.
      */
     // Keep this doc in sync with midcom_helper_nav
@@ -1172,7 +1172,7 @@ class midcom_helper__basicnav
      * you will get FALSE.
      *
      * @param int $parent_node	The ID of the node of which the leaves are searched.
-     * @param bool $show_noentry Show all objects on-site which have the noentry flag set. This parameter has no effect in AIS.
+     * @param boolean $show_noentry Show all objects on-site which have the noentry flag set. This parameter has no effect in AIS.
      * @return Array 			A list of leaves found, or false on failure.
      */
     // Keep this doc in sync with midcom_helper_nav
@@ -1247,7 +1247,7 @@ class midcom_helper__basicnav
      * $_leaves cache. It will load all necessary nodes/leaves as necessary.
      *
      * @param string $leaf_id A valid NAP leaf id ($nodeid-$leafid pattern).
-     * @return bool true if the leaf exists, false otherwise.
+     * @return boolean true if the leaf exists, false otherwise.
      */
     function _check_leaf_id($leaf_id)
     {

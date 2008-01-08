@@ -110,7 +110,7 @@ class midcom_helper_datamanager_widget_image extends midcom_helper_datamanager_w
     /**
      * Set to true if the simple upload widget should be shown.
      *
-     * @var bool
+     * @var boolean
      * @access private
      */
     var $_simple;

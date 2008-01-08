@@ -55,7 +55,7 @@ class midcom_db_person extends midcom_baseclasses_database_person
      * are right.
      *
      * @param string $name The name of the group we should be added to.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      *
      * @todo Check if user is already assigned to the group.
      */

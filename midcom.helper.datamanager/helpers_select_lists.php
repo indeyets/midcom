@@ -10,7 +10,7 @@
  * Helper function for generating uniform URL name field definitions in schemas
  *
  * @param string $location	Location of the field.
- * @param bool $required	Required field.
+ * @param boolean $required	Required field.
  * @return Array			URLName Schema definition.
  */
 function midcom_helper_datamanager_urlname_field($location="name", $required=false) {

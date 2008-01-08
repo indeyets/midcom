@@ -30,7 +30,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool True if the request can be handled, false otherwise.
+     * @return boolean True if the request can be handled, false otherwise.
      */
     function _can_handle_thread($handler_id, $args, &$data)
     {
@@ -66,7 +66,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_thread($handler_id, $args, &$data)
     {
@@ -360,7 +360,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_post($handler_id, $args, &$data)
     {

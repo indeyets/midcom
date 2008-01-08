@@ -97,7 +97,7 @@ class midcom_db_topic extends midcom_baseclasses_database_topic
      * This wraps http://www.midgard-project.org/documentation/mgdschema-method-is_in_tree/
      * 
      * @param mixed $topic Either the ID, GUID or object instance of the base topic.
-     * @return bool True if Member.
+     * @return boolean True if Member.
      */
     function is_in_tree($topic)
     {

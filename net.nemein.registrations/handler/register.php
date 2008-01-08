@@ -125,7 +125,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_register($handler_id, $args, &$data)
     {
@@ -270,7 +270,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
      * This function will run under sudo privileges if no user is authenticated, otherwise
      * we would be unable to correctly create the new record (we don't have an owner).
      *
-     * @param bool $drop_registrar Set this to true if you want to delete the registrar record
+     * @param boolean $drop_registrar Set this to true if you want to delete the registrar record
      *     on any error.
      * @access private
      */
@@ -625,7 +625,7 @@ EOF;
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_success($handler_id, $args, &$data)
     {

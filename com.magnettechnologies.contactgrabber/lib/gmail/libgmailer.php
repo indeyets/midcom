@@ -38,7 +38,7 @@ ob_start();
  * a module of an online office app or other situation where PHP Session should NOT
  * by destroyed after signing out from Gmail.
  *
- * @var bool
+ * @var boolean 
  */
 define("GM_USE_LIB_AS_MODULE",      true); // Normal operation
 
@@ -250,7 +250,7 @@ class GMailer {
     
     /**
      * @access public
-     * @var bool
+     * @var boolean 
     */
    var $created;
    /**
@@ -595,7 +595,7 @@ class GMailer {
     /**
     * Connect to Gmail without setting any session/cookie
     *
-    * @return bool Connect to Gmail successfully or not
+    * @return boolean Connect to Gmail successfully or not
     */
     function connectNoCookie() {
         $postdata  = "";
@@ -1001,7 +1001,7 @@ class GMailer {
     /**
     * Connect to GMail with default session management settings.
     *
-    * @return bool Connect to Gmail successfully or not
+    * @return boolean Connect to Gmail successfully or not
     */
     function connect() {
         if ($this->use_session === 2)
@@ -1036,7 +1036,7 @@ class GMailer {
     /**
     * See if it is connected to GMail.
     *
-    * @return bool
+    * @return boolean
     */
     function isConnected() {
         return (strlen($this->cookie_str) > 0);
@@ -1093,7 +1093,7 @@ class GMailer {
     * This is a "low-level" method. Please use {@link GMailer::fetchBox()} for fetching standard contents.
     *
     * @param string $query URL query string
-    * @return bool Success or not
+    * @return boolean Success or not
     */
     function fetch($query) {
         if ($this->isConnected() == true) {
@@ -1128,7 +1128,7 @@ class GMailer {
     * 5. {@link GM_PREFERENCE}: For Gmail preference. In such case, $box = "".
     * 6. {@link GM_CONTACT}: For contact list. In such case, $box can be either "all", "search", "detail", "group", or "group detail". When $box = "detail", $parameter is the Contact ID. When $box = "search", $parameter is the search query string.
     *
-    * @return bool Success or not
+    * @return boolean Success or not
     * @param constant $type Content category 
     * @param mixed $box Content type
     * @param int $parameter Extra parameter. See above.
@@ -1226,12 +1226,12 @@ class GMailer {
     /**
     * Save attachment with attachment ID $attach_id and message ID $msg_id to file with name $filename.
     *
-    * @return bool Success or not.
+    * @return boolean Success or not.
     * @param string $attach_id Attachment ID.
     * @param string $msg_id Message ID.
     * @param string $filename File name.
-    * @param bool $action {zip = Save all attachments into a zip file; thumb = retrieve picture thumbnail; convert = view html converted form of doc/pdf/xls/rtf/ppt}.
-    * @param bool $thumbnail download the attachment's thumbnail.
+    * @param boolean $action {zip = Save all attachments into a zip file; thumb = retrieve picture thumbnail; convert = view html converted form of doc/pdf/xls/rtf/ppt}.
+    * @param boolean $thumbnail download the attachment's thumbnail.
     */
     function getAttachment($attach_id, $msg_id, $filename, $action = "") {
         if ($this->isConnected() == true) {
@@ -1390,7 +1390,7 @@ class GMailer {
     * </code>
     *
     * @since 9 September 2005
-    * @return bool Success or not. If returned false, please check {@link GMailer::$return_status} or {@link GMailer::lastActionStatus()} for error message.
+    * @return boolean Success or not. If returned false, please check {@link GMailer::$return_status} or {@link GMailer::lastActionStatus()} for error message.
     * @param string $to Recipient's address. Separated by comma for multiple recipients.
     * @param string $subj Subject line of email.
     * @param string $body Message body of email.
@@ -1399,9 +1399,9 @@ class GMailer {
     * @param string $mid Message ID of the replying email. $mid = "" if this is a newly composed email.
     * @param string $tid Conversation (thread) ID of the replying email. $tid = "" if this is a newly composed email.   
     * @param string[] $files File names of files to be attached.
-    * @param bool $draft Indicate this email is saved as draft, or not.
+    * @param boolean $draft Indicate this email is saved as draft, or not.
     * @param string $orig_df If this email is saved as a <i>modified</i> draft, then set $orig_df as the draft ID of the original draft.
-    * @param bool $is_html HTML/RTF-formatted mail, or not.
+    * @param boolean $is_html HTML/RTF-formatted mail, or not.
     * @param array $attachments Attachments (forwards) in the form of 0_messageIDthatContainedTheAttachment_attachmentID (e.g. 0_17ab83d2f68n2b_0.1 , 0_17ab83d2f68n2b_0.2)
     * @param string $from Send mail as this email address (personality). $from = "" to use default address in your settings. Note: the "default" behavior changed on 29 April 2006.  Note: you will NOT send your mail successfully if you do not register this address in your Gmail settings panel.
     */
@@ -1523,7 +1523,7 @@ class GMailer {
     * ? >
     * </code>
     *
-    * @return bool Success or not. If returned false, please check {@link GMailer::$return_status} or {@link GMailer::lastActionStatus()} for error message.
+    * @return boolean Success or not. If returned false, please check {@link GMailer::$return_status} or {@link GMailer::lastActionStatus()} for error message.
       Additional return: Gmail returns a full datapack in response
     * @param constant $act Action to be performed.
     * @param string[] $id Message ID.
@@ -1662,7 +1662,7 @@ class GMailer {
     }           
     
     /**
-    * @return bool Success or not.
+    * @return boolean Success or not.
     * @desc Recover session information.
     */
     function getSessionFromBrowser() {
@@ -1692,7 +1692,7 @@ class GMailer {
     }
     
     /**
-    * @return bool Success or not.
+    * @return boolean Success or not.
     * @desc Get cookies from browser.
     */
     function getCookieFromBrowser() {
@@ -1726,7 +1726,7 @@ class GMailer {
     }        
     
     /**
-    * @return bool Success or not.
+    * @return boolean Success or not.
     * @desc Save session data.
     */
     // Replaced Debugger calls with detailed status info; by Neerav; 2 May 2006
@@ -1755,7 +1755,7 @@ class GMailer {
     }
     
     /**
-    * @return bool Success or not.
+    * @return boolean Success or not.
     * @desc Save (send) cookies to browser.
     */
     // Replaced Debugger calls with detailed status info; by Neerav; 2 May 2006
@@ -1788,7 +1788,7 @@ class GMailer {
     }
     
     /**
-    * @return bool Success or not.
+    * @return boolean Success or not.
     * @desc Remove all session information related to Gmailer.
     */
     // Replaced Debugger calls with detailed status info; by Neerav; 2 May 2006
@@ -1826,7 +1826,7 @@ class GMailer {
     }
     
     /**
-    * @return bool
+    * @return boolean
     * @desc Remove all related cookies stored in browser.
     */
     // Replaced Debugger calls with detailed status info; by Neerav; 2 May 2006
@@ -1937,7 +1937,7 @@ class GMailer {
     /**
     * Send an invite
     *
-    * @return bool Success or not. Note that it will still be true even if $email is an illegal address.
+    * @return boolean Success or not. Note that it will still be true even if $email is an illegal address.
     * @param string $email
     * @desc Send Gmail invite to $email
     */
@@ -2304,7 +2304,7 @@ class GMailer {
     * Note: You must supply the old name even if you are not going to modify it, or it will
     * be changed to empty!
     *
-    * @return bool Success or not.
+    * @return boolean Success or not.
       Extended return: array(bool success/fail, string message, string contact_id)
     * @param string $contact_id  Contact ID for editing an existing one, or -1 for creating a new one
     * @param string $name Name
@@ -2414,7 +2414,7 @@ class GMailer {
     /**
     * Add message's senders to contact list.
     *
-    * @return bool
+    * @return boolean
     * @param string $message_id Message ID
     * @author Neerav
     * @since 14 Aug 2005
@@ -2467,7 +2467,7 @@ class GMailer {
     /**
     * Star/unstar a message quickly.
     *
-    * @return bool Success or not.
+    * @return boolean Success or not.
       Extended return: array(bool success/fail, string message, string contact_id)
     * @param string $message_id
     * @param string $action Either "star" or "unstar".
@@ -2528,7 +2528,7 @@ class GMailer {
     /**
     * Delete contacts.
     *
-    * @return bool Success or not.
+    * @return boolean Success or not.
       Extended return: array(bool success/fail, string message)
     * @param string[] $id Contact ID to be deleted
     * @author Neerav
@@ -2596,7 +2596,7 @@ class GMailer {
     /**
     * Create, edit or remove label.
     * 
-    * @return bool Success or not.
+    * @return boolean Success or not.
       Extended return: array (boolean success/fail, string message)
     * @param string $label
     * @param string $action Either "create", "delete" or "rename"
@@ -2665,7 +2665,7 @@ class GMailer {
     /**
     * Create/edit a filter.
     *
-    * @return bool Success or not.
+    * @return boolean Success or not.
       Extended return: array(bool,string message)
     * @param integer $filter_id Filter ID to be edited, or "0" for creating a new one
     * @param string $from
@@ -2673,14 +2673,14 @@ class GMailer {
     * @param string $subject
     * @param string $has
     * @param string $hasnot
-    * @param bool   $hasAttach
-    * @param bool   $archive
-    * @param bool   $star
-    * @param bool   $label
+    * @param boolean   $hasAttach
+    * @param boolean   $archive
+    * @param boolean   $star
+    * @param boolean   $label
     * @param string $label_name
-    * @param bool   $forward
+    * @param boolean   $forward
     * @param string $forwardto
-    * @param bool   $trash
+    * @param boolean   $trash
     * @author Neerav
     * @since 25 Jun 2005
     */
@@ -2911,7 +2911,7 @@ class GMailer {
     /**
     * Delete a filter.
     *
-    * @return bool Success or not.
+    * @return boolean Success or not.
       Extended return: array(bool success/fail, string message)
     * @param string $id Filter ID to be deleted
     * @author Neerav
@@ -2956,7 +2956,7 @@ class GMailer {
     /**
     * Edit contact groups.
     *
-    * @return bool Success or not.
+    * @return boolean Success or not.
       Extended return: array(bool success/fail, string message)
     * @param string $id Contact group ID to "edit" (-1 if creating a new group)
     * @param string $name Contact group's name
@@ -3058,34 +3058,34 @@ class GMailer {
     /**
     * Set general, forwarding and POP settings of Gmail account.
     *
-    * @return bool Success or not.
+    * @return boolean Success or not.
       Extended return: array(bool status, string message)
-    * @param bool $use_outgoing_name Use outgoing name (instead of the default)?
+    * @param boolean $use_outgoing_name Use outgoing name (instead of the default)?
     * @param string $outgoing_name Outgoing name
-    * @param bool $use_reply_email Use replying email address (instead of the default)?
+    * @param boolean $use_reply_email Use replying email address (instead of the default)?
     * @param string $reply_to Replying email address
     * @param string $language Language
     * @param int $page_length Page length: either 25, 50 or 100
-    * @param bool $shortcut Enable keyboard shortcut?
-    * @param bool $indicator Enable personal level indicator?
-    * @param bool $snippet Enable snippet?
-    * @param bool $custom_signature Enable custom signature?
+    * @param boolean $shortcut Enable keyboard shortcut?
+    * @param boolean $indicator Enable personal level indicator?
+    * @param boolean $snippet Enable snippet?
+    * @param boolean $custom_signature Enable custom signature?
     * @param string $signature Custom signature
-    * @param bool $utf_encode Use utf-8 encoding?
-    * @param bool $use_forwarding Forward all incoming messages?
+    * @param boolean $utf_encode Use utf-8 encoding?
+    * @param boolean $use_forwarding Forward all incoming messages?
     * @param string $forward_to Forward to this email address
     * @param string $forward_action What to do with forwarded message? (selected, archive, trash)
     * @param int $use_pop Enable POP access? {0 = disabled, 1 = enabled, 2 = from now, 3 = all}
     * @param int $pop_action What to do with forwarded message? {0 = keep, 1 = archive, 2 = trash}
-    * @param bool $rich_text Use rich text formatting?
-    * @param bool $expand_label_box Expand label box?
-    * @param bool $expand_invite_box Expand invite box?
-    * @param bool $vacation_on Vacation responder - ON/OFF
+    * @param boolean $rich_text Use rich text formatting?
+    * @param boolean $expand_label_box Expand label box?
+    * @param boolean $expand_invite_box Expand invite box?
+    * @param boolean $vacation_on Vacation responder - ON/OFF
     * @param string $vacation_subject Vacation responder - Subject
     * @param string $vacation_message Vacation responder - Message
-    * @param bool $vacation_contacts_only Vacation responder - Send vacation message only to those in Contacts list?
-    * @param bool $chat_archive Save chat scripts
-    * @param bool $aa_unknown ??
+    * @param boolean $vacation_contacts_only Vacation responder - Send vacation message only to those in Contacts list?
+    * @param boolean $chat_archive Save chat scripts
+    * @param boolean $aa_unknown ??
     * @author Neerav
     * @since 29 Jun 2005
     */
@@ -3341,7 +3341,7 @@ Referer: http://mail.google.com/mail/?&ik=xxxxxxx&view=pr&pnl=g&zx=xorfqampe0ml
     /**
     * Update Gmail cookie
     *
-    * @return bool true
+    * @return boolean true
     * @param string raw HTML header
     * @access private
     * @static
@@ -3372,7 +3372,7 @@ Referer: http://mail.google.com/mail/?&ik=xxxxxxx&view=pr&pnl=g&zx=xorfqampe0ml
     /**
     * Set Mobile settings of Gmail account.
     *
-    * @return bool Success or not.
+    * @return boolean Success or not.
       Extended return: array(bool status, string empty message)
     * @param array $mobile_display Array of standard boxes and labels to "display"
     * @author Neerav
@@ -3431,7 +3431,7 @@ Referer: http://mail.google.com/mail/?&ik=xxxxxxx&view=pr&pnl=g&zx=xorfqampe0ml
     /**
     * Change Gmail Language
     *
-    * @return bool Success or not.
+    * @return boolean Success or not.
     * @param string $old_lang Current language
     * @param string $new_lang New language
     * @author Neerav
@@ -3480,7 +3480,7 @@ Referer: http://mail.google.com/mail/?&ik=xxxxxxx&view=pr&pnl=g&zx=xorfqampe0ml
     /**
     * Personalities / Custom FROM addresses
     *
-    * @return bool Success or not.
+    * @return boolean Success or not.
     * @param string $action An action to perform: [set this address to] default, delete, reply_sent, reply_default, edit, edit_google, send_verify, verify_code
     * @param string $email
     * @param string $name
@@ -3618,7 +3618,7 @@ Referer: http://mail.google.com/mail/?&ik=xxxxxxx&view=pr&pnl=g&zx=xorfqampe0ml
     *
     * @access private
     * @static
-    * @return bool 
+    * @return boolean 
     * @param string $raw_html
     * @author Neerav
     * @since 27 Nov 2005
@@ -3642,7 +3642,7 @@ Referer: http://mail.google.com/mail/?&ik=xxxxxxx&view=pr&pnl=g&zx=xorfqampe0ml
     *
     * @access private
     * @static
-    * @return bool 
+    * @return boolean 
     * @param string $raw_html
     * @since 7 Jun 2005
     */

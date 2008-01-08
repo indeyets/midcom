@@ -413,7 +413,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      * user has the ignore_quota priv, this call will still return true if the
      * user is over quota.
      *
-     * @return bool Indicating Quota state.
+     * @return boolean Indicating Quota state.
      */
     function is_over_quota()
     {

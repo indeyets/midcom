@@ -142,7 +142,7 @@ class midcom_helper_replicator_interface extends midcom_baseclasses_components_i
      *
      * @param array $args handler arguments
      * @param object $handler reference to the cron_handler object calling this method.
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      * @todo figure out how to handle deleted (not purged) object replication
      */
     function at_queue_guid($args, &$handler)

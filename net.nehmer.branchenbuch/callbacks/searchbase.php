@@ -147,7 +147,7 @@ class net_nehmer_branchenbuch_callbacks_searchbase extends midcom_baseclasses_co
      * do so yourself by using member variables. The form rendering is done by the same
      * class instance then this attempt to process any sent form data.
      *
-     * @return bool True if the search form has been successfully processed, false otherwise.
+     * @return boolean True if the search form has been successfully processed, false otherwise.
      */
     function process_form()
     {

@@ -17,7 +17,7 @@
  *
  * <b>Available configuration options:</b>
  *
- * - <i>bool show_title:</i> This flag controls whether the title field is shown or not.
+ * - <i>boolean show_title:</i> This flag controls whether the title field is shown or not.
  *   If this is flag, the whole title processing will be disabled. This flag is true
  *   by default.
  * - <i>array jsevents:</i> Array of event=>action pairs to control client side behavior.
@@ -60,7 +60,7 @@ class midcom_helper_datamanager2_widget_checkbox extends midcom_helper_datamanag
     /**
      * The initialization event handler validates the base type.
      *
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _on_initialize()
     {

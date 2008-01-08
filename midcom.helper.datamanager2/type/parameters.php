@@ -39,7 +39,7 @@ class midcom_helper_datamanager2_type_parameters extends midcom_helper_datamanag
      * <b>NB:</b>
      * This option is not supported at the moment.
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
     var $csv_export_key = false;
@@ -169,7 +169,7 @@ class midcom_helper_datamanager2_type_parameters extends midcom_helper_datamanag
      * The validation callback ensures that we dont't have an array or an object
      * as a value, which would be wrong.
      *
-     * @return bool Indicating validity.
+     * @return boolean Indicating validity.
      */
     function _on_validate()
     {

@@ -41,7 +41,7 @@ class org_routamc_statusmessage_importer extends midcom_baseclasses_components_p
      * Empty default implementation, this calls won't do much.
      *
      * @param Array $messages message entries in Array format specific to importer
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function import($messages)
     {

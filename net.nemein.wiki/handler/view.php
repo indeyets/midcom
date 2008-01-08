@@ -248,7 +248,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_view($handler_id, $args, &$data, $view_mode = true)
     {
@@ -320,7 +320,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_raw($handler_id, $args, &$data, $view_mode = true)
     {
@@ -411,7 +411,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_whatlinks($handler_id, $args, &$data, $view_mode = true)
     {

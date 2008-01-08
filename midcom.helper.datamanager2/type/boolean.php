@@ -28,7 +28,7 @@ class midcom_helper_datamanager2_type_boolean extends midcom_helper_datamanager2
     /**
      * The current string encapsulated by this type.
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
     var $value = false;

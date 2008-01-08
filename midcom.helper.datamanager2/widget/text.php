@@ -26,7 +26,7 @@
  *   A -1 setting is processed during startup and has no effect at a later time.
  * - <i>int size:</i> The size of the input box. Defaulting to 40. Note that this value
  *   might be overridden by CSS.
- * - <i>bool hideinput:</i> Set this to true if you want to hide the input in the widget,
+ * - <i>boolean hideinput:</i> Set this to true if you want to hide the input in the widget,
  *   this usually means that a password HTML element will be used, instead of a regular
  *   text input widget. Defaults to false.
  *
@@ -54,7 +54,7 @@ class midcom_helper_datamanager2_widget_text extends midcom_helper_datamanager2_
     /**
      * whether the input should be shown in the widget, or not.
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
     var $hideinput = false;
@@ -62,7 +62,7 @@ class midcom_helper_datamanager2_widget_text extends midcom_helper_datamanager2_
     /**
      * The initialization event handler post-processes the maxlength setting.
      *
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _on_initialize()
     {

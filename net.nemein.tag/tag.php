@@ -58,7 +58,7 @@ class net_nemein_tag_dba extends __net_nemein_tag_dba
      * Ensure validity of given tag
      *
      * @param string $tag Tag to validate
-     * @return bool Whether tag is valid
+     * @return boolean Whether tag is valid
      */
     function validate_tag($tag)
     {

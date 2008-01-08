@@ -111,7 +111,7 @@ class org_openpsa_reports_viewer extends midcom_baseclasses_components_request
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_csv($handler_id, $args, &$data)
     {
@@ -146,7 +146,7 @@ class org_openpsa_reports_viewer extends midcom_baseclasses_components_request
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_frontpage($handler_id, $args, &$data)
     {

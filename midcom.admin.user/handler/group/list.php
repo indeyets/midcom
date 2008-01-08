@@ -91,7 +91,7 @@ class midcom_admin_user_handler_group_list extends midcom_baseclasses_components
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_move($handler_id, $args, &$data)
     {
@@ -177,7 +177,7 @@ class midcom_admin_user_handler_group_list extends midcom_baseclasses_components
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {

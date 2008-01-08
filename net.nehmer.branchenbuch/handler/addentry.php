@@ -146,7 +146,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {
@@ -216,7 +216,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_categoryselect($handler_id, $args, &$data)
     {
@@ -332,7 +332,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_details($handler_id, $args, &$data)
     {
@@ -540,7 +540,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_confirm($handler_id, $args, &$data)
     {
@@ -731,7 +731,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_thanks($handler_id, $args, &$data)
     {

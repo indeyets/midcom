@@ -47,7 +47,7 @@
  *   a file within the backend directory. Note, that the class must also be named accordingly,
  *   the driver "dba" is searched in the file "backend/dba.php" and must be of the type
  *   "midcom_services_cache_backend_dba".
- * - <i>bool auto_serialize</i>: Set this to true to enable automatic serialization on storage
+ * - <i>boolean auto_serialize</i>: Set this to true to enable automatic serialization on storage
  *   and/or retrieval. Disabled by default.
  * 
  * @package midcom.services
@@ -88,7 +88,7 @@ class midcom_services_cache_backend
      * interface will automatically serialize/unserialize the data you store/retrieve
      * from the database.
      * 
-     * @var bool
+     * @var boolean
      */
     var $_auto_serialize = false;
     
@@ -107,14 +107,14 @@ class midcom_services_cache_backend
      * Therefore, this flag is also used for checking whether the database is open
      * in general.
      * 
-     * @var bool
+     * @var boolean
      */
     var $_open_for_reading = false;
     
     /**
      * True, if the database has been opened for writing previously.
      * 
-     * @var bool
+     * @var boolean
      */
     var $_open_for_writing = false;
     
@@ -243,7 +243,7 @@ class midcom_services_cache_backend
      * 
      * The concrete subclass must track any resource handles internally, of course.
      * 
-     * @param bool $write True, if read/write access is required.
+     * @param boolean $write True, if read/write access is required.
      */
 	function _open($write) { die ("The method " . __CLASS__ . "::" . __FUNCTION__ . " must be implemented."); }
     
@@ -270,7 +270,7 @@ class midcom_services_cache_backend
      * function executes.
      * 
      * @param string $key The key to check for.
-     * @return bool Indicating existence.
+     * @return boolean Indicating existence.
      */
     function _exists($key) { die ("The method " . __CLASS__ . "::" . __FUNCTION__ . " must be implemented."); }
     
@@ -322,7 +322,7 @@ class midcom_services_cache_backend
      * prior to opening it again. If the permissions match the current state, nothing
      * is done.
      * 
-     * @param bool $write True, if read/write access is required.
+     * @param boolean $write True, if read/write access is required.
      */
     function open($write = false)
     {
@@ -373,7 +373,7 @@ class midcom_services_cache_backend
      * and closed automatically again afterwards.
      * 
      * @param string $key The key to check for.
-     * @return bool Indicating existence.
+     * @return boolean Indicating existence.
      */
     function exists($key)
     {

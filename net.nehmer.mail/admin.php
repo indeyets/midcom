@@ -127,7 +127,7 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_welcome ($handler_id, $args, &$data)
     {
@@ -192,7 +192,7 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_mailbox_edit($handler_id, $args, &$data)
     {
@@ -287,7 +287,7 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_mailbox_create($handler_id, $args, &$data)
     {

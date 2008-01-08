@@ -241,7 +241,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     /**
      * Checks if the event is open for registration.
      *
-     * @return bool True if open.
+     * @return boolean True if open.
      */
     function is_open($use_dm = true)
     {
@@ -438,7 +438,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * @param mixed $user This can either be a midcom_core_user, a midcom_baseclasses_database_person,
      *     or any valid person id/guid. If you omit the argument, it defaults to the currently
      *     authenticated user.
-     * @return bool Registration state.
+     * @return boolean Registration state.
      */
     function is_registered($user = null)
     {

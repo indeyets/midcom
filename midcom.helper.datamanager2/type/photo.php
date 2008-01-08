@@ -20,7 +20,7 @@ class midcom_helper_datamanager2_type_photo extends midcom_helper_datamanager2_t
     /**
      * Set to true if for some reason you do not wish to store the archival version
      *
-     * @var bool
+     * @var boolean
      */
     var $do_not_save_archival = false;
 
@@ -126,9 +126,9 @@ class midcom_helper_datamanager2_type_photo extends midcom_helper_datamanager2_t
      * @param string $filename The name of the image attachment to be created.
      * @param string $tmpname The file to load.
      * @param string $title The title of the image.
-     * @param bool $autodelete If this is true (the default), the temporary file will
+     * @param boolean $autodelete If this is true (the default), the temporary file will
      *     be deleted after postprocessing and attachment-creation.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function set_image($filename, $tmpname, $title, $autodelete = true)
     {

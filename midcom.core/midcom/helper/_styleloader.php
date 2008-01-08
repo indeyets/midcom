@@ -459,7 +459,7 @@ class midcom_helper__styleloader {
      *
      * @param string $path	The style element to show.
      * @param array $guids  List of GUIDs included in this element display, if set will enable caching
-     * @return bool			True on success, false otherwise.
+     * @return boolean			True on success, false otherwise.
      */
     function show($path, $guids = null)
     {
@@ -760,7 +760,7 @@ class midcom_helper__styleloader {
      *
      * @todo check documentation
      * @param int $context	The context to enter
-     * @return bool			True on success, false on failure.
+     * @return boolean			True on success, false on failure.
      */
     function enter_context($context)
     {
@@ -787,7 +787,7 @@ class midcom_helper__styleloader {
      * and $_snippetdir are adjusted.
      *
      * @todo check documentation
-     * @return bool			True on success, false on failure.
+     * @return boolean			True on success, false on failure.
      */
     function leave_context()
     {

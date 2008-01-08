@@ -198,7 +198,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * member.
      *
      * @param mixed $id This is either a Midgard Person ID or GUID, a midcom_user ID or an already instantiated midgard_person.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _load($id)
     {
@@ -517,7 +517,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * 3. A valid midcom group name
      *
      * @param mixed $group Group to check against, this can be either a midcom_core_group object or a group string identifier.
-     * @return bool Indicating membership state.
+     * @return boolean Indicating membership state.
      */
     function is_in_group($group)
     {
@@ -571,9 +571,9 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * call, otherwise your subsequent updates will overwrite the password again.
      *
      * @param string $new The new clear text password to set.
-     * @param bool $crypted Set this to true if you want to store a crypted password (the default),
+     * @param boolean $crypted Set this to true if you want to store a crypted password (the default),
      *     false if you want to use a plain text password.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function update_password($new, $crypted = true)
     {
@@ -620,7 +620,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * call, otherwise your subsequent updates will overwrite the password again.
      *
      * @param string $new The new username to set.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function update_username($new)
     {
@@ -723,7 +723,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * This call requires the delete privilege on the storage object, this is enforced using
      * require_do.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete()
     {

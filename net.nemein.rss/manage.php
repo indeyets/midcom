@@ -86,7 +86,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_opml($handler_id, $args, &$data)
     {
@@ -125,7 +125,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -263,7 +263,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_subscribe($handler_id, $args, &$data)
     {
@@ -346,7 +346,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -394,7 +394,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {
@@ -451,7 +451,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_fetch($handler_id, $args, &$data)
     {

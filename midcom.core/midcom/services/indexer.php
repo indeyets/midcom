@@ -62,7 +62,7 @@ class midcom_services_indexer
      * Flag for disabled indexing, set by the constructor.
      *
      * @access private
-     * @var bool
+     * @var boolean
      */
     var $_disabled = false;
 
@@ -100,7 +100,7 @@ class midcom_services_indexer
     /**
      * Simple helper, returns true if the indexer service is online, false if it is disabled.
      *
-     * @return bool Service state.
+     * @return boolean Service state.
      */
     function enabled()
     {
@@ -121,7 +121,7 @@ class midcom_services_indexer
      *
      * @param mixed $documents One or more documents to be indexed, so this is either a
      * 		  midcom_services_indexer_document or an Array of these objects.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function index ($documents)
     {
@@ -176,7 +176,7 @@ class midcom_services_indexer
      *
      * @param object $object A reference to the supported object types which allow for automatic
      *     casting (see above).
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      * @access protected
      */
     function _index_cast_to_document(&$object)
@@ -206,7 +206,7 @@ class midcom_services_indexer
      * Removes the document with the given resource identifier from the index.
      *
      * @param string $RI The resource identifier of the document that should be deleted.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete ($RI)
     {
@@ -223,7 +223,7 @@ class midcom_services_indexer
      *
      * This will drop the current index.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete_all()
     {

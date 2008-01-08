@@ -63,7 +63,7 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
     /**
      * Reject this application for a device 
      *
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function reject()
     {
@@ -104,7 +104,7 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
     /**
      * Accept this application for a device 
      *
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function accept()
     {
@@ -150,7 +150,7 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
     /**
      * Basic sanity checking for the code object
      *
-     * @return bool indicating sanity (true=sane)
+     * @return boolean indicating sanity (true=sane)
      */
     function sanity_check()
     {
@@ -227,7 +227,7 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
      * @param int $device_id id of device to check
      * @param int $user id of local user (defaults to $_MIDGARD['user'])
      * @param int $check_has_applied whether to check if user has already applied or not
-     * @return bool indicating state or -1 on failure
+     * @return boolean indicating state or -1 on failure
      */
     function can_apply($device_id, $user = -1, $check_has_applied = true)
     {
@@ -271,7 +271,7 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
      *
      * @param int $device_id id of device to check
      * @param int $user id of local user (defaults to $_MIDGARD['user'])
-     * @return bool indicating state or -1 on failure
+     * @return boolean indicating state or -1 on failure
      */
     function has_applied($device_id, $user = -1)
     {

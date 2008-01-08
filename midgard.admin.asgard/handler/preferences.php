@@ -137,7 +137,7 @@ class midgard_admin_asgard_handler_preferences extends midcom_baseclasses_compon
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_preferences($handler_id, $args, &$data)
     {
@@ -229,7 +229,7 @@ class midgard_admin_asgard_handler_preferences extends midcom_baseclasses_compon
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_ajax($handler_id, $args, &$data)
     {

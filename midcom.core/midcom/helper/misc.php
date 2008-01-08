@@ -103,7 +103,7 @@ function midcom_probe_nemein_rcs() {
  *
  * @param MidgardObject $object	The object that should be version controlled.
  * @param string $message Change log message
- * @return bool Indicating success.
+ * @return boolean Indicating success.
  */
 function midcom_update_nemein_rcs($object, $message = null) {
 
@@ -122,7 +122,7 @@ function midcom_update_nemein_rcs($object, $message = null) {
  *
  * @param int $id		Group to query.
  * @param int $rootid	Root group.
- * @return bool			True if it is a subgroup, false otherwise.
+ * @return boolean			True if it is a subgroup, false otherwise.
  */
 function mgd_is_group_in_group_tree($id, $rootid) {
     if ($id == $rootid)
@@ -206,14 +206,14 @@ function mgd_memberships_to_gid ($fetchable) {
  *
  * This function will save
  * the Member-Variables specified in $array of the Midgard Object $object in
- * the Parameter Domain $domain. It will checkt whether all Fields are short enough
+ * the Parameter Domain $domain. It will check whether all Fields are short enough
  * (Margin: 255 characters) to fit into a parameter, if not, it will abort.
  * It will return TRUE if successful, FALSE on failure.
  *
  * @param Array $array			The data to store (keys will be preserved).
  * @param MidgardObject $object	The object where to store the information.
  * @param string $domain		The domain where to save the information.
- * @return bool					Indicating success.
+ * @return boolean					Indicating success.
  */
 function mgd_save_custom_fields_param($array, &$object, $domain) {
     foreach ($array as $var) {
@@ -463,7 +463,7 @@ function mgd_sort_group_id_array(&$array, $element_type, $group_type, $elementso
  * @param MidgardObject $object	The object at which to save the data.
  * @param mixed $var			The variable that should be saved.
  * @param string $name			The identifier to use for storage.
- * @return bool	Indicating success.
+ * @return boolean Indicating success.
  */
 function mgd_save_var_as_attachment($object, &$var, $name) {
     $att = $object->getattachment($name);
@@ -562,7 +562,7 @@ function mgd_get_style_by_name2 ($id, $name) {
  * Midgard object
  *
  * @param MidgardObject $object	The object that should be cleared.
- * @return bool Indicating success.
+ * @return boolean Indicating success.
  */
 function mgd_delete_extensions(&$object) {
     // List and remove parameters
@@ -619,7 +619,7 @@ if (!function_exists('mgd_get_snippet_by_path'))
  * slower.
  *
  * @param string $path	The path of the snippet that should be included.
- * @return bool Returns false if the snippet could not be loaded or true, if it was evaluated successfully.
+ * @return boolean Returns false if the snippet could not be loaded or true, if it was evaluated successfully.
  */
 // This function is there as a backup in case you are not running within the
 // Midgard Parser; it will run the snippet code through mgd_preparse manually.
@@ -833,8 +833,8 @@ function midcom_generate_urlname_from_string($string, $replacer = "-")
  * Helper function for really removing an object
  *
  * @param guid $guid	The GUID of the object or the object itself
- * @param bool $removeattachments	Remove attachments too? This parameter is ignored in MidCOM 2.5 upwards
- * @return bool	Indicating success.
+ * @param boolean $removeattachments	Remove attachments too? This parameter is ignored in MidCOM 2.5 upwards
+ * @return boolean Indicating success.
  * @deprecated This function is no longer required, use the DBA delete method instead.
  */
 function midcom_helper_purge_object($guid, $removeattachments=true)
@@ -870,7 +870,7 @@ function midcom_helper_purge_object($guid, $removeattachments=true)
  * @version      1.2.0
  * @author       Aidan Lister <aidan@php.net>
  * @param        string     $file       Name of the file to look for
- * @return       bool       TRUE if the file exists, FALSE if it does not
+ * @return       boolean       TRUE if the file exists, FALSE if it does not
  */
 function midcom_file_exists_incpath ($file)
 {

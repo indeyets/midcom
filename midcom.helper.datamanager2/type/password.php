@@ -24,7 +24,7 @@
  *
  * <b>Available configuration options:</b>
  *
- * - <i>bool crypted:</i> Set this to true if you want to store the password crypted.
+ * - <i>boolean crypted:</i> Set this to true if you want to store the password crypted.
  *   This is enabled by default. Crypt mode is currently enforcing standard crypt
  *   operation, which is used in Midgard Databases.
  *
@@ -54,7 +54,7 @@ class midcom_helper_datamanager2_type_password extends midcom_helper_datamanager
     /**
      * Indicating crypted operation
      *
-     * @param bool
+     * @param boolean
      * @access public
      */
     var $crypted = true;

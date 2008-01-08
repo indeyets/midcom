@@ -43,12 +43,12 @@
  *
  * <b>Authentication configuration</b>
  *
- * - <b>bool allow_sudo:</b> Set this to true (the default) to allow components to
+ * - <b>boolean allow_sudo:</b> Set this to true (the default) to allow components to
  *   request super user privileges for certain operations. This is mainly used to allow
  *   anonymous access to the system without having to store a user account everywhere.
  * - <b>int auth_backend:</b> The authentication backend to use, the "simple"
  *   backend is used as a default.
- * - <b>bool auth_check_client_ip:</b> Control whether to check the client IP address
+ * - <b>boolean auth_check_client_ip:</b> Control whether to check the client IP address
  *   on each subsequent request when authentication a user. This is enabled by default
  *   as it will make session hijacking much harder. You should not turn it off unless
  *   you have very good reasons to do.
@@ -65,7 +65,7 @@
  *   is nonzero) or non-sitegrouped mode if we are in SG0.
  * - <b>int auth_login_form_httpcode</b>: HTTP return code used in MidCOM login screens,
  *   either 403 (403 Forbidden) or 200 (200 OK), defaulting to 403.
- * - <b>bool auth_openid_enable:</b> Whether to enable OpenID authentication handled with
+ * - <b>boolean auth_openid_enable:</b> Whether to enable OpenID authentication handled with
  *   the net.nemein.openid library
  *
  * <b>Authentication Backend configuration: "simple"</b>
@@ -102,11 +102,11 @@
  *   naming the files/directories it creates. This defaults to a string constructed out of the
  *   host's name, prot and prefix. You should only change this if you run multiple MidCOM
  *   sites on the same host.
- * - <b>bool cache_module_content_multilang:</b> Set this to true if you need a cache that honors the current
+ * - <b>boolean cache_module_content_multilang:</b> Set this to true if you need a cache that honors the current
  *   client language. Set this to false, if you don't have a multilingual site and the language
  *   is fixed through a static $i18n->set_language call before code-init. This will improve
  *   the cache's performance.
- * - <b>bool cache_module_content_uncached:</b> Set this to true if you want the site to run in an uncached
+ * - <b>boolean cache_module_content_uncached:</b> Set this to true if you want the site to run in an uncached
  * 	 mode. This is different from cache_disable in that the regular header preprocessing is
  *   done anyway, allowing for browser side caching. Essentially, the computing order is the
  *   same (no_cache for example is considered like usual), but the cache file is not stored.
@@ -179,7 +179,7 @@
  *   MIDCOM_LOG_ERROR by default. You cannot use the MIDCOM* constants when setting
  *   micdom_config_local, as they are not defined at that point. Use 0 for CRITICAL,
  *   1 for ERROR, 2 for WARING, 3 for INFO and 4 for DEBUG level logging.
- * - <b>bool log_tailurl_enable:</b> Set this to true to enable the on-site interface to
+ * - <b>boolean log_tailurl_enable:</b> Set this to true to enable the on-site interface to
  *   the logging system. See the URL method log of midcom_application for details. Turned off
  *   by default for security reasons.
  *
@@ -279,7 +279,7 @@
  *
  * These options manage how multilingual content is displayed in the MidCOM environment.
  *
- * - <b>bool show_untranslated_content:</b> This flag indicates whether content not available
+ * - <b>boolean show_untranslated_content:</b> This flag indicates whether content not available
  * in current content language should be shown on the site. The flag is ignored on sites that
  * are set to use the default language (lang0)
  *
@@ -289,15 +289,15 @@
  * framework is not yet rewritten to a more efficient MidgardSchema driven solution. With
  * larger sites, having Metadata active can lead to serious performance impacts.
  *
- * - <b>bool show_hidden_objects:</b> This flag indicates whether objects that are
+ * - <b>boolean show_hidden_objects:</b> This flag indicates whether objects that are
  *   invisible either by explicit hiding or by their scheduling should be shown anyway.
  *   This defaults to true at this time (due to Metadata performance problems).
- * - <b>bool show_unapproved_objects:</b> This flag indicates whether objects should be
+ * - <b>boolean show_unapproved_objects:</b> This flag indicates whether objects should be
  *   shown even if they are not approved. This defaults to true.
  *
  * <b>Geopositioning settings</b>
  *
- * - <b>bool positioning_enable:</b> This flag indicates whether components should start
+ * - <b>boolean positioning_enable:</b> This flag indicates whether components should start
  * tracking and displaying the geographical position where they were created.
  *
  * @package midcom

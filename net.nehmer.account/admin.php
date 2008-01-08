@@ -53,7 +53,7 @@ class net_nehmer_account_admin extends midcom_baseclasses_components_request_adm
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {
@@ -162,7 +162,7 @@ class net_nehmer_account_admin extends midcom_baseclasses_components_request_adm
      * @param Array $plugin_config The configuration associated with the plugin.
      * @param Array $handlers The plugin specific handlers without the appropriate prefixes.
      * @access private
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _prepare_plugin ($name, $plugin_config, $handlers)
     {
@@ -199,7 +199,7 @@ class net_nehmer_account_admin extends midcom_baseclasses_components_request_adm
      *     option.
      * @param Array $plugin_config The configuration associated with the plugin.
      * @access private
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _load_plugin_class($name, $plugin_config)
     {

@@ -34,7 +34,7 @@ class net_nehmer_account_callbacks_validation extends midcom_baseclasses_compone
      *
      * @param string $username The username to check.
      * @param string $current_name The current name of the user.
-     * @return bool Indicating validity.
+     * @return boolean Indicating validity.
      */
     function check_user_name($username, $current_name)
     {
@@ -58,7 +58,7 @@ class net_nehmer_account_callbacks_validation extends midcom_baseclasses_compone
      * This function checks a username against the database for existence.
      *
      * @param string $username The username to check.
-     * @return bool Indicating existence.
+     * @return boolean Indicating existence.
      */
     function verify_existing_user_name($username)
     {
@@ -77,7 +77,7 @@ class net_nehmer_account_callbacks_validation extends midcom_baseclasses_compone
      * This function checks an email against the database for existence.
      *
      * @param string $email The email to check.
-     * @return bool Indicating existence.
+     * @return boolean Indicating existence.
      */
     function verify_existing_user_email($email)
     {

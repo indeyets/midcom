@@ -64,7 +64,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
      * it sets errstr and errcode accordingly.
      *
      * @param string $schema The name of the schema to initialize for
-     * @return bool Indicating success
+     * @return boolean Indicating success
      * @access private
      */
     function _prepare_creation_datamanager($schema)
@@ -125,7 +125,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
 	function _handler_report_index()
     {
@@ -170,7 +170,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_report_list_all()
     {
@@ -221,7 +221,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_report_list_by_key()
     {
@@ -297,7 +297,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_report_list_by_key_distinct()
     {

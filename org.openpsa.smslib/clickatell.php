@@ -23,11 +23,12 @@ class org_openpsa_smslib_clickatell extends org_openpsa_smslib
     }
 
     /**
-     * Returns  (bool)false on error or whatever the GW returns
      * Non-numeric balance should be supposed infinite.
      *
      * Also Clickatell has variable pricing and we cannot know the true
      * cost of a message before it is sent so the balance checks are rather difficult
+     * 
+     * @return boolean false on error or whatever the GW returns
      */
     function get_balance()
     {

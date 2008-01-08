@@ -724,7 +724,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_search($handler_id, $args, &$data)
     {

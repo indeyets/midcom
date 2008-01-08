@@ -149,7 +149,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      * based on the schema.
      *
      * @param string $name The name of the field for which we should load the widget.
-     * @return bool Indicating success
+     * @return boolean Indicating success
      * @access protected
      */
     function _load_widget($name)
@@ -197,7 +197,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      *
      * @param name The name of the form. This defaults to the name of the currently active component, which should
      *     suffice in most cases.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      * @todo Refactor into subfunctions for better readability.
      */
     function initialize($name = null)
@@ -610,7 +610,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      *
      * @param string $name The name of the widget.
      * @param Array $config Widget configuration.
-     * @return bool Visibility state.
+     * @return boolean Visibility state.
      * @access private
      */
     function _is_widget_visible($name, $config)

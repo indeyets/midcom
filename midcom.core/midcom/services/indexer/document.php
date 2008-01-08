@@ -254,7 +254,7 @@ class midcom_services_indexer_document
      * - 'default': Use only built-in processing (topic and metadata visibility checks), this is, as you might have guessed, the default.
      * - 'component': Invoke the _on_check_document_visible component interface method of the component after doing default checks.
      *   This security class absolutely requires the document to contain a vaild topic GUID, otherwise access control will fail anyway.
-     * - 'function:$function_name': Invoke the globally available function $function_name, its signature is <i>bool $function_name ($document, $topic)</i>,
+     * - 'function:$function_name': Invoke the globally available function $function_name, its signature is <i>boolean $function_name ($document, $topic)</i>,
      *   if you don't change the document during the check, you don't need to pass by-reference, so this is up to you. The topic passed is the
      *   Return true if the document is visible, false otherwise.
      * - 'class:$class_name': Like above, but using a class instead. The class must provide a statically callable <i>get_instance()</i> method, which
@@ -543,7 +543,7 @@ class midcom_services_indexer_document
      * @param string $name The field's name.
      * @param string $type The field's type.
      * @param string $content The field's content.
-     * @param bool $is_utf8 Set this to true explicitly, to override charset conversion and assume $content is UTF-8 already.
+     * @param boolean $is_utf8 Set this to true explicitly, to override charset conversion and assume $content is UTF-8 already.
      * @access protected
      */
     function _add_field($name, $type, $content, $is_utf8 = false)
@@ -704,7 +704,7 @@ class midcom_services_indexer_document
      * @see $type
      * @see _set_type()
      * @param string $document_type The base type to search for.
-     * @return bool Indicationg relationship.
+     * @return boolean Indicationg relationship.
      */
     function is_a($document_type)
     {

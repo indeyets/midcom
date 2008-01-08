@@ -40,7 +40,7 @@
  *   article IDs, or article names. This can be 0, indicating that no variable arguments are
  *   required, which is the default. For an unlimited number of variable_args set it to -1.
  *
- * - <b>bool no_cache:</b> For those cases where you want to prevent a certain "type" of request
+ * - <b>boolean no_cache:</b> For those cases where you want to prevent a certain "type" of request
  *   being cached. Set to false by default.
  * - <b>int expires:</b> Set the default expiration time of a given type of request. The default -1
  *   is used to indicate no expiration setting. Any positive integer will cause its value to
@@ -108,7 +108,7 @@
  *  * @param mixed $handler_id The ID of the handler.
  *  * @param Array $args The argument list.
  *  * @param Array &$data The local request data.
- *  * @return bool True if the request can be handled, false otherwise.
+ *  * @return boolean True if the request can be handled, false otherwise.
  *  {@*}
  * function _can_handle_xxx ($handler_id, $args, &$data) {}
  *
@@ -117,7 +117,7 @@
  *  * @param mixed $handler_id The ID of the handler.
  *  * @param Array $args The argument list.
  *  * @param Array &$data The local request data.
- *  * @return bool Indicating success.
+ *  * @return boolean Indicating success.
  *  {@*}
  * function _handler_xxx ($handler_id, $args, &$data) {}
  *
@@ -125,7 +125,7 @@
  *  * Show handler example, with Docblock:
  *  * @param mixed $handler_id The ID of the handler.
  *  * @param Array &$data The local request data.
- *  * @return bool Indicating success.
+ *  * @return boolean Indicating success.
  *  {@*}
  * function _show_xxx ($handler_id, &$data) {}
  * </code>
@@ -537,7 +537,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @param int $argc The argument count
      * @param Array $argv The argument list
-     * @return bool Indicating whether the request can be handled by the class, or not.
+     * @return boolean Indicating whether the request can be handled by the class, or not.
      */
     public function can_handle($argc, $argv)
     {
@@ -634,7 +634,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @param int $argc The argument count
      * @param Array $argv The argument list
-     * @return bool Indicating whether the request was handled successfully.
+     * @return boolean Indicating whether the request was handled successfully.
      * @see _on_handle();
      */
     public function handle($argc, $argv)
@@ -730,7 +730,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * the handler classes only loaded on demand (see class introduction).
      *
      * @param string $classname The name of the handler to validate.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     public function _verify_handler_class($classname)
     {
@@ -843,7 +843,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @param mixed $handler The ID (Array-Key) of the handler that is responsible to handle
      *   the request.
      * @param Array $args The argument list.
-     * @return bool Return false to abort the handle phase, true to continue normally.
+     * @return boolean Return false to abort the handle phase, true to continue normally.
      */
     public function _on_handle($handler, $args)
     {
@@ -869,7 +869,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @param int $argc The argument count as passed by the Core.
      * @param Array $argv The argument list.
-     * @return bool Return false to abort the handle phase, true to continue normally.
+     * @return boolean Return false to abort the handle phase, true to continue normally.
      */
     public function _on_can_handle($argc, $argv)
     {
@@ -883,7 +883,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @param mixed $handler The ID (Array-Key) of the handler that is responsible to handle
      *   the request.
-     * @return bool Return false to override the regular component output.
+     * @return boolean Return false to override the regular component output.
      */
     public function _on_show($handler)
     {
@@ -933,7 +933,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      *
      * @param string $namespace The plugin namespace to use.
      * @param string $plugin The plugin to load from the namespace.
-     * @return bool Indicating success
+     * @return boolean Indicating success
      */
     public function _load_plugin($namespace, $plugin)
     {
@@ -976,7 +976,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @param string $namespace The plugin namespace to use.
      * @param string $plugin The plugin to load from the namespace.
      * @access public
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     public function _load_plugin_class($namespace, $plugin)
     {
@@ -1039,7 +1039,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @param string $plugin The plugin to load from the namespace.
      * @param Array $handlers The plugin specific handlers without the appropriate prefixes.
      * @access public
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     public function _prepare_plugin ($namespace, $plugin, $handlers)
     {

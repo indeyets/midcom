@@ -103,7 +103,7 @@ class configure_tkk_structure extends midcom_baseclasses_components_handler
     }
 
 	/**
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_configure_structure()
     {

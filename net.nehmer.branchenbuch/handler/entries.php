@@ -170,7 +170,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -433,7 +433,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
      * The DM will not be initialized to any storage object, this has to be done
      * by the viewer code iterating over the entries to show.
      *
-     * @param bool $load_all_schemas Set this to true to load the schemas for all account types,
+     * @param boolean $load_all_schemas Set this to true to load the schemas for all account types,
      *     mainly used for self account listings.
      */
     function _prepare_entry_dm($load_all_schemas = false)
@@ -497,7 +497,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_entry($handler_id, $args, &$data)
     {
@@ -602,7 +602,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -681,7 +681,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_list_self($handler_id, $args, &$data)
     {
@@ -754,7 +754,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {

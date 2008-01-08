@@ -57,9 +57,9 @@
  * - <i>string cache_module_content_name</i>: The name of the cache database to use. This should usually be tied to the actual
  *   MidCOM site to have exactly one cache per site. This is mandatory (and populated by a sensible default
  *   by midcom_config.php, see there for details).
- * - <i>bool cache_module_content_multilang</i>: Set this to true (the default) if you want to have a cache which
+ * - <i>boolean cache_module_content_multilang</i>: Set this to true (the default) if you want to have a cache which
  *   distinguishes between languages on each request.
- * - <i>bool cache_module_content_uncached</i>: Set this to true to prevent the saving of cached pages. This is useful
+ * - <i>boolean cache_module_content_uncached</i>: Set this to true to prevent the saving of cached pages. This is useful
  *   for development work, as all other headers (like E-Tag or Last-Modified) are generated
  *   normally. See the uncached() and _uncached members.
  *
@@ -77,7 +77,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      * Flag, indicating whether the current page may be cached. If
      * false, the usual no-cache headers will be generated.
      *
-     * @var bool
+     * @var boolean
      */
     var $_no_cache = false;
 
@@ -116,7 +116,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     /**
      * Internal flag indicating whether the output buffering is active.
      *
-     * @var bool
+     * @var boolean
      */
     var $_obrunning = false;
 
@@ -124,7 +124,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      * This flag is true if the live mode has been activated. This prevents the
      * cache processing at the end of the request.
      *
-     * @var bool
+     * @var boolean
      */
     var $_live_mode = false;
 
@@ -139,7 +139,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     /**
      * True, if the cache should honor the language settings.
      *
-     * @var bool
+     * @var boolean
      */
     var $_multilang = true;
 
@@ -148,7 +148,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      * the cache database. All other headers will be created as usual though, so
      * 304 processing will kick in for example.
      *
-     * @var bool
+     * @var boolean
      */
     var $_uncached = false;
 
@@ -761,7 +761,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      *     is assumed to be in <i>local time</i>, and will be implicitly converted to a GMT time for
      *     correct HTTP header comparisons.
      * @param string $etag The etag header associated with the current document.
-     * @return bool True, if an 304 match was detected and the appropriate headers were sent.
+     * @return boolean True, if an 304 match was detected and the appropriate headers were sent.
      */
     function _check_not_modified($last_modified, $etag)
     {

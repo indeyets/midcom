@@ -138,7 +138,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
     /**
      * Render only hours that are visible
      *
-     * @var bool
+     * @var boolean
      */
     var $limit_to_visible_hours = false;
 

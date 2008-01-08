@@ -92,7 +92,7 @@ class org_openpsa_contacts_person_handler
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_person_new($handler_id, $args, &$data)
     {
@@ -211,7 +211,7 @@ class org_openpsa_contacts_person_handler
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_person($handler_id, $args, &$data)
     {
@@ -385,7 +385,7 @@ class org_openpsa_contacts_person_handler
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_person_action($handler_id, $args, &$data)
     {

@@ -32,7 +32,7 @@ class midcom_midcom_services_at_entry_db extends __midcom_midcom_services_at_ent
     /**
      * Makes sure $arguments is properly set
      *
-     * @return bool Always true 
+     * @return boolean Always true 
      */
     function _on_loaded()
     {
@@ -43,7 +43,7 @@ class midcom_midcom_services_at_entry_db extends __midcom_midcom_services_at_ent
     /**
      * Makes sure we have status set and arguments serialized
      *
-     * @return bool Always true 
+     * @return boolean Always true 
      */
     function _on_creating()
     {
@@ -62,7 +62,7 @@ class midcom_midcom_services_at_entry_db extends __midcom_midcom_services_at_ent
     /**
      * Makes sure we have arguments serialized
      *
-     * @return bool Always true 
+     * @return boolean Always true 
      */
     function _on_updating()
     {

@@ -89,7 +89,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     /**
      * The initialization event handler post-processes the maxlength setting.
      *
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _on_initialize()
     {
@@ -115,7 +115,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     /**
      * Adds the table header to the widget.
      *
-     * @param bool $frozen Set this to true, if you want to skip all elements which cannot be frozen.
+     * @param boolean $frozen Set this to true, if you want to skip all elements which cannot be frozen.
      * @access private
      */
     function _add_table_header($frozen)
@@ -143,7 +143,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     /**
      * Adds the new upload row to the bottom of the table.
      *
-     * @param bool $frozen Set this to true, if you want to skip all elements which cannot be frozen.
+     * @param boolean $frozen Set this to true, if you want to skip all elements which cannot be frozen.
      * @access private
      */
     function _add_new_upload_row($frozen)
@@ -205,7 +205,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     /**
      * Adds a row for an existing attachment
      *
-     * @param bool $frozen Set this to true, if you want to skip all elements which cannot be frozen.
+     * @param boolean $frozen Set this to true, if you want to skip all elements which cannot be frozen.
      * @access private
      */
     function _add_attachment_row($identifier, $info, $frozen)
@@ -262,7 +262,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     /**
      * Adds the table footer.
      *
-     * @param bool $frozen Set this to true, if you want to skip all elements which cannot be frozen.
+     * @param boolean $frozen Set this to true, if you want to skip all elements which cannot be frozen.
      * @access private
      */
     function _add_table_footer($frozen)
@@ -284,7 +284,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
      * Computes the element list to form the widget. It populates the _elements memeber, which is
      * initialized with a new, empty array during startup.
      *
-     * @param bool $frozen Set this to true, if you want to skip all elements which cannot be frozen.
+     * @param boolean $frozen Set this to true, if you want to skip all elements which cannot be frozen.
      * @access private
      */
     function _compute_elements($frozen = false)

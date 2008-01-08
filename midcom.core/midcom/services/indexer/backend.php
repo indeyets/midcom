@@ -33,7 +33,7 @@ class midcom_services_indexer_backend
      * ...
      * 
      * @param Array $documents A list of midcom_services_indexer_document objects.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */   
     function index ($documents)
     {
@@ -44,7 +44,7 @@ class midcom_services_indexer_backend
      * Removes the document with the given resource identifier from the index.
      * 
      * @param string $RI The resource identifier of the document that should be deleted.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete ($RI)
     {
@@ -56,7 +56,7 @@ class midcom_services_indexer_backend
      * 
      * This will drop the current index.
      * 
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete_all()
     {

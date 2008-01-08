@@ -105,7 +105,7 @@ class net_nehmer_publications_query extends midcom_baseclasses_components_pureco
     /**
      * Creates a new query object.
      *
-     * @param bool $autofilter If this is true, the apply_filter_list is called automatically after
+     * @param boolean $autofilter If this is true, the apply_filter_list is called automatically after
      *     construction. Since this is enabled by default, most standard cases should be already
      *     covered.
      */
@@ -291,7 +291,7 @@ class net_nehmer_publications_query extends midcom_baseclasses_components_pureco
      * If you decide to run the query unchecked, the query result analyser trades speed over
      * accuracy. Currently this setting has no effect.
      *
-     * @param bool $checked This is true, if a fully query should be done, false if
+     * @param boolean $checked This is true, if a fully query should be done, false if
      *     an "unchecked" query should go.
      * @see _categorized_unchecked_compute_result
      */

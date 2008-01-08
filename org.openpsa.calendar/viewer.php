@@ -196,7 +196,7 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_notinitialized($handler_id, $args, &$data)
     {
@@ -544,7 +544,7 @@ function openPsaShowMonthSelector()
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_month($handler_id, $args, &$data)
     {
@@ -642,7 +642,7 @@ function openPsaShowMonthSelector()
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_week($handler_id, $args, &$data)
     {
@@ -741,7 +741,7 @@ function openPsaShowMonthSelector()
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_day($handler_id, $args, &$data)
     {
@@ -845,7 +845,7 @@ function openPsaShowMonthSelector()
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_debug($handler_id, $args, &$data)
     {
@@ -867,7 +867,7 @@ function openPsaShowMonthSelector()
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_event_new($handler_id, $args, &$data)
     {
@@ -1109,7 +1109,7 @@ function openPsaShowMonthSelector()
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_event_action($handler_id, $args, &$data)
     {
@@ -1265,7 +1265,7 @@ function openPsaShowMonthSelector()
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_event($handler_id, $args, &$data)
     {

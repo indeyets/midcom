@@ -24,7 +24,7 @@ class fi_mik_lentopaikkakisa_handler_download extends midcom_baseclasses_compone
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_xml($handler_id, $args, &$data)
     {
@@ -56,7 +56,7 @@ class fi_mik_lentopaikkakisa_handler_download extends midcom_baseclasses_compone
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_csv($handler_id, $args, &$data)
     {

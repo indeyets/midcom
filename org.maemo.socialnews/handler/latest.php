@@ -48,7 +48,7 @@ class org_maemo_socialnews_handler_latest  extends midcom_baseclasses_components
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_latest($handler_id, $args, &$data)
     {

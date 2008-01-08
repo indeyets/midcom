@@ -31,7 +31,7 @@ class net_nehmer_buddylist_handler_welcome extends midcom_baseclasses_components
      * - string view_account_url (might be null, depending on the net_nehmer_account_integration config
      *   option)
      * - string delete_checkbox_name
-     * - bool isonline
+     * - boolean isonline
      *
      * @var Array
      * @access protected
@@ -64,7 +64,7 @@ class net_nehmer_buddylist_handler_welcome extends midcom_baseclasses_components
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {

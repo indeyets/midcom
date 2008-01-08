@@ -96,7 +96,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
     /**
      * The initialization event handler post-processes the maxlength setting.
      *
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _on_initialize()
     {

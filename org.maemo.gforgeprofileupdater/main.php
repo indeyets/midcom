@@ -45,7 +45,7 @@ class org_maemo_gforgeprofileupdater extends midcom_baseclasses_components_purec
     /**
      * Initialized a SOAP session to gForge SOAP service
      *
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function initialize_soap()
     {

@@ -208,7 +208,7 @@ class org_routamc_photostream_importer_flickr extends org_routamc_photostream_im
      *
      * @param Array $photo Photo in Array format specific to importer
      * @param integer $person_id ID of the person to import photos for
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function import($photo)
     {

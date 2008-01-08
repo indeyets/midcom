@@ -139,7 +139,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_select_type($handler_id, $args, &$data)
     {
@@ -202,7 +202,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_register_invitation($handler_id, $args, &$data)
     {
@@ -283,7 +283,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_register($handler_id, $args, &$data)
     {
@@ -929,7 +929,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_activate($handler_id, $args, &$data)
     {
@@ -1002,7 +1002,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_finish($handler_id, $args, &$data)
     {

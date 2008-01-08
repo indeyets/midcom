@@ -70,7 +70,7 @@ class midcom_debug
     /**
      * Flag which is true if the debugger is enabled.
      *
-     * @var bool
+     * @var boolean
      * @access private
      */
     var $_enabled;
@@ -111,7 +111,7 @@ class midcom_debug
     /**
      * Is the debugger enabled?
      *
-     * @return bool	Debugger state
+     * @return boolean	Debugger state
      */
     function is_enabled() {
         return $this->_enabled;

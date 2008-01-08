@@ -19,7 +19,7 @@ class midcom_helper_datamanager2_widget_simpleposition extends midcom_helper_dat
     /**
      * The initialization event handler verifies the used type.
      *
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _on_initialize()
     {

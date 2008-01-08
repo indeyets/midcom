@@ -74,7 +74,7 @@ class midcom_helper_datamanager_widget_select extends midcom_helper_datamanager_
     /**
      * This is true, if we need to display the key to the user.
      *
-     * @var bool
+     * @var boolean 
      * @access protected
      */
     var $_display_key;

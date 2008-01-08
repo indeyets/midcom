@@ -114,7 +114,7 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_publish($handler_id, $args, &$data)
     {
@@ -462,7 +462,7 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
      * visibility state of another field. In the last case you need to set the 'visible_link'
      * customdata to the name of another field to make this work.
      *
-     * @return bool Indicating Visibility
+     * @return boolean Indicating Visibility
      */
     function _is_field_visible($name)
     {
@@ -561,7 +561,7 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_publish_ok($handler_id, $args, &$data)
     {

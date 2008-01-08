@@ -214,7 +214,7 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -270,7 +270,7 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {

@@ -111,7 +111,7 @@ class midcom_baseclasses_components_cron_handler
      *
      * All class members are already initialized when this event handler is called.
      *
-     * @return bool Returns true, if initialization was successful, false if anything went wrong.
+     * @return boolean Returns true, if initialization was successful, false if anything went wrong.
      */
     public function _on_initialize()
     {

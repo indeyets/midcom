@@ -92,7 +92,7 @@ class midcom_helper_datamanager_widget_blob extends midcom_helper_datamanager_wi
     /**
      * Set to true if the simple upload widget should be shown.
      *
-     * @var bool
+     * @var boolean
      * @access private
      */
     var $_simple;

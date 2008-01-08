@@ -55,7 +55,7 @@ class org_routamc_photostream_importer_filesystem extends org_routamc_photostrea
      * Imports a single photo
      * @param photo absolute filesystem path
      * @param file just the filename. 
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
 	function import($photo, $filename)
 	{

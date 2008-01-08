@@ -56,7 +56,7 @@ class net_nemein_internalorders_interface extends midcom_baseclasses_components_
       /**
      * Initialize n.n.internalorders library.
      *
-     * @return bool inidicating success.
+     * @return boolean inidicating success.
      */
 /*
     function _on_initialize()

@@ -184,7 +184,7 @@ class midcom_helper_datamanager2_type_date extends midcom_helper_datamanager2_ty
      * core. For this, all values are compared to zero, if all tests succeed, the date
      * is considered empty.
      *
-     * @return bool Indicating Emptyness state.
+     * @return boolean Indicating Emptyness state.
      */
     function is_empty()
     {

@@ -179,7 +179,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_mark_sent($handler_id, $args, &$data)
     {
@@ -270,7 +270,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_view($handler_id, $args, &$data)
     {
@@ -431,7 +431,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -478,7 +478,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_new($handler_id, $args, &$data)
     {

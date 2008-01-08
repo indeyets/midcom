@@ -52,7 +52,7 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_ajax_change_date($handler_id, $args, &$data)
     {
@@ -109,7 +109,7 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_ajax_change_view($handler_id, $args, &$data)
     {
@@ -162,7 +162,7 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_ajax_change_timezone($handler_id, $args, &$data)
     {

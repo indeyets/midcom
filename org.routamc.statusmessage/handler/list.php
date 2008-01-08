@@ -77,7 +77,7 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_microsummary($handler_id, $args, &$data)
     {
@@ -146,7 +146,7 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
      * @param mixed $handler_id the array key from the requestarray
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -199,7 +199,7 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_latest($handler_id, $args, &$data)
     {
@@ -264,7 +264,7 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      * @todo 1.7 support
      */
     function _handler_between($handler_id, $args, &$data)

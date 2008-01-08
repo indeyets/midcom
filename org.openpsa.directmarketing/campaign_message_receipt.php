@@ -31,7 +31,7 @@ class midcom_org_openpsa_campaign_message_receipt extends __midcom_org_openpsa_c
     /**
      * Check whether given token has already been used in the database
      * @param string $token
-     * @return bool indicating whether token is free or not (true for free == not present)
+     * @return boolean indicating whether token is free or not (true for free == not present)
      */
     function token_is_free($token, $type = ORG_OPENPSA_MESSAGERECEIPT_SENT)
     {

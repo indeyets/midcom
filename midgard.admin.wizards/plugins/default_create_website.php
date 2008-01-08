@@ -55,7 +55,7 @@ class default_create_website extends midcom_baseclasses_components_handler
     }
 
 	/**
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_create_website()
     {

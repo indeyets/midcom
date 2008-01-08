@@ -163,7 +163,7 @@ class net_nemein_feedcollector_handler_create  extends midcom_baseclasses_compon
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_create ($handler_id, $args, &$data)
     {

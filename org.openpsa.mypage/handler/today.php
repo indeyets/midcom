@@ -94,7 +94,7 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_today($handler_id, $args, &$data)
     {

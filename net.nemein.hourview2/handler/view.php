@@ -264,7 +264,7 @@ class net_nemein_hourview2_handler_view extends midcom_baseclasses_components_ha
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param mixed $data The local request data. 
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_index($handler_id, $args, &$data)
     {

@@ -109,7 +109,7 @@ class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data reference to request_data
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_phase1($handler_id, $args, &$data)
     {
@@ -188,7 +188,7 @@ class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data reference to request_data
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_phase2($handler_id, $args, &$data)
     {

@@ -152,7 +152,7 @@ class midcom_helper_datamanager_datatype {
      * @param midcom_helper_datamanager $datamanager The datamanager this type is assigned to.
      * @param MidgardObject $storage The storage object to use.
      * @param Array $field The field definition to construct a datatype from.
-     * @return bool	False on failure, object is set to false then.
+     * @return boolean	False on failure, object is set to false then.
      * @access protected
      */
     function _constructor (&$datamanager, &$storage, $field)
@@ -202,7 +202,7 @@ class midcom_helper_datamanager_datatype {
      *
      * May be overridden in datatypes to implement more advanced storage options.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function load_from_storage ()
     {
@@ -493,7 +493,7 @@ class midcom_helper_datamanager_datatype {
      * You should override this member everywhere you have non-textual datatypes or
      * special data representations.
      *
-     * @return bool Indicating if the value is empty.
+     * @return boolean Indicating if the value is empty.
      */
     function is_empty()
     {

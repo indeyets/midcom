@@ -76,7 +76,7 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_user_events($handler_id, $args, &$data)
     {
@@ -151,7 +151,7 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_user_busy($handler_id, $args, &$data)
     {

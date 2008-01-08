@@ -35,7 +35,7 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
      * - timestamp
      *
      * @param Array $log Log entry in Array format specific to importer
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function import($log)
     {

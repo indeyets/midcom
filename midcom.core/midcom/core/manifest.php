@@ -67,7 +67,7 @@
  *
  * <i>string name</i> should be clear, it is the full name of the component.
  *
- * <i>bool purecode</i> is equally easy, indicating whether this is a library or a full
+ * <i>boolean purecode</i> is equally easy, indicating whether this is a library or a full
  * scale component.
  *
  * <i>int version</i> is the internal version number of the interface. This value is
@@ -227,7 +227,7 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
      * If this is true, it is a pure-code component, otherwise it is a full blown
      * component.
      *
-     * @var bool
+     * @var boolean
      */
     var $purecode = false;
 
@@ -303,7 +303,7 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
      * This internal helper loads and evaluates the given manifest file.
      *
      * @param string $filename The name of the manifest file to load.
-     * @return bool True if the manifest was successfully loaded, false otherwise.
+     * @return boolean True if the manifest was successfully loaded, false otherwise.
      * @access protected
      * @todo move this into the constructor, use isset.
      */

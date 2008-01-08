@@ -126,7 +126,7 @@ class midcom_service_session {
      * This is often used in conjunction with get to verify a keys existence.
      * 
      * @param mixed $key	The key to query.
-     * @return bool			Indicating availability.
+     * @return boolean			Indicating availability.
      */
     function exists ($key) {
         return $this->_sessioning->exists($this->_domain, $key);

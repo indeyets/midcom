@@ -40,7 +40,7 @@ class midcom_baseclasses_core_dbobject
      * Separated so that dbfactory->import() can reuse the code
      * 
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function update_pre_checks(&$object)
     {
@@ -67,13 +67,13 @@ class midcom_baseclasses_core_dbobject
      * event handlers. Calling sequence with method signatures:
      *
      * 1. Validate privileges using can_do. The user needs midgard:update privilege on the content object.
-     * 2. bool $object->_on_updating() is executed. If it returns false, update is aborted.
-     * 3. bool $object->__exec_update() is executed to do the actual DB update. This has to execute parent::update()
+     * 2. boolean $object->_on_updating() is executed. If it returns false, update is aborted.
+     * 3. boolean $object->__exec_update() is executed to do the actual DB update. This has to execute parent::update()
      *    and return its value, nothing else.
      * 4. void $object->_on_updated() is executed to notify the class from a successful DB update.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function update(&$object)
     {
@@ -323,13 +323,13 @@ class midcom_baseclasses_core_dbobject
      * event handlers. Calling sequence with method signatures:
      *
      * 1. Validate privileges using can_do. The user needs midgard:create privilege to the parent object or in general, if there is no parent.
-     * 2. bool $object->_on_creating() is executed. If it returns false, create is aborted.
-     * 3. bool $object->__exec_create() is executed to do the actual DB create. This has to execute parent::create()
+     * 2. boolean $object->_on_creating() is executed. If it returns false, create is aborted.
+     * 3. boolean $object->__exec_create() is executed to do the actual DB create. This has to execute parent::create()
      *    and return its value, nothing else.
      * 4. void $object->_on_created() is executed to notify the class from a successful DB creation.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function create(&$object)
     {
@@ -468,14 +468,14 @@ class midcom_baseclasses_core_dbobject
      * event handlers. Calling sequence with method signatures:
      *
      * 1. Validate privileges using can_do. The user needs midgard:delete privilege on the content object.
-     * 2. bool $object->_on_deleting() is executed. If it returns false, delete is aborted.
+     * 2. boolean $object->_on_deleting() is executed. If it returns false, delete is aborted.
      * 3. mgd_delete_extensions is called now, dropping all remaining attachments and parameters.
-     * 4. bool $object->__exec_delete() is executed to do the actual DB delete. This has to execute parent::delete()
+     * 4. boolean $object->__exec_delete() is executed to do the actual DB delete. This has to execute parent::delete()
      *    and return its value, nothing else.
      * 5. void $object->_on_deleted() is executed to notify the class from a successful DB deletion.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete(&$object)
     {
@@ -574,7 +574,7 @@ class midcom_baseclasses_core_dbobject
      *
      * @param MidgardObject $newobject A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @param MidgardObject $oldobject a parent object (usually a midgard_* base class) which to copy.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function cast_object(&$newobject, &$oldobject)
     {
@@ -611,7 +611,7 @@ class midcom_baseclasses_core_dbobject
      *
      * 1. void $object->get_by_id($id) <i>or</i> $object->get_by_guid($guid) <i>or</i> copy constructor run.
      * 2. Validate privileges using can_do. The user needs midgard:read privilege on the content object.
-     * 3. bool $object->_on_loaded() is executed to notify the class from a successful operation, which might
+     * 3. boolean $object->_on_loaded() is executed to notify the class from a successful operation, which might
      *    abort the class construction again by returning false.
      *
      * This method is usually only called from the constructor of the class.
@@ -620,7 +620,7 @@ class midcom_baseclasses_core_dbobject
      * @param mixed $id The object to load from the database. This can be either null (the default), indicating an empty object,
      *     a Midgard database row-ID or a Midgard GUID, the latter is detected using mgd_is_guid(). In addition, you can
      *     specify a parent object (usually a midgard_* base class) which will then use a copy constructor semantics instead.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      * @see midcom_baseclasses_core_dbobject::post_db_load_checks
      * @see midcom_baseclasses_core_dbobject::cast_object
      */
@@ -689,7 +689,7 @@ class midcom_baseclasses_core_dbobject
      * After we instantiated the midgard object do some post processing and ACL checks
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      * @see midcom_baseclasses_core_dbobject::load
      */
     function post_db_load_checks(&$object)
@@ -973,7 +973,7 @@ class midcom_baseclasses_core_dbobject
      * On any failure, the object is cleared.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function refresh(&$object)
     {
@@ -986,7 +986,7 @@ class midcom_baseclasses_core_dbobject
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @param int $id The id of the object to load from the database.
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function get_by_id(&$object, $id)
     {
@@ -1031,7 +1031,7 @@ class midcom_baseclasses_core_dbobject
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @param string $guid The guid of the object to load from the database.
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function get_by_guid(&$object, $guid)
     {
@@ -1076,7 +1076,7 @@ class midcom_baseclasses_core_dbobject
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @param string $path The path of the object to load from the database.
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function get_by_path(&$object, $path)
     {
@@ -1144,7 +1144,7 @@ class midcom_baseclasses_core_dbobject
      * drop all privileges assigned to the given object.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return bool Indicating Success.
+     * @return boolean Indicating Success.
      * @access private
      */
     function _delete_privileges(&$object)
@@ -1433,7 +1433,7 @@ class midcom_baseclasses_core_dbobject
      * @param string $domain The Parameter Domain.
      * @param string $name The Parameter name.
      * @param string $value The Parameter value. If this is empty, the corresponding parameter is deleted.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function set_parameter(&$object, $domain, $name, $value)
     {
@@ -1471,7 +1471,7 @@ class midcom_baseclasses_core_dbobject
      * @param string $domain The Parameter Domain.
      * @param string $name The Parameter name.
      * @param string $value The Parameter value. If this is empty, the corresponding parameter is deleted.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _create_parameter_object($object, $domain, $name, $value)
     {
@@ -1501,7 +1501,7 @@ class midcom_baseclasses_core_dbobject
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @param string $domain The Parameter Domain.
      * @param string $name The Parameter name.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete_parameter(&$object, $domain, $name)
     {
@@ -1573,7 +1573,7 @@ class midcom_baseclasses_core_dbobject
      *     active user if authenticated or to 'EVERYONE' otherwise (invalid if $privilege is a midcom_core_privilege).
      * @param string $classname An optional class name to which a SELF privilege gets restricted to. Only valid for SELF privileges
      *     (invalid if $privilege is a midcom_core_privilege).
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      * @see midcom_services_auth
      */
     function set_privilege(&$object, $privilege, $assignee = null, $value = MIDCOM_PRIVILEGE_ALLOW, $classname = '')
@@ -1634,7 +1634,7 @@ class midcom_baseclasses_core_dbobject
      *     active user if authenticated or to 'EVERYONE' otherwise (invalid if $privilege is a midcom_core_privilege).
      * @param string $classname An optional class name to which a SELF privilege gets restricted to. Only valid for SELF privileges
      *     (invalid if $privilege is a midcom_core_privilege).
-     * @return bool Indicating Success.
+     * @return boolean Indicating Success.
      */
     function unset_privilege(&$object, $privilege, $assignee = null, $classname = '')
     {
@@ -1723,7 +1723,7 @@ class midcom_baseclasses_core_dbobject
      * Unsets all privilege on an object .
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function unset_all_privileges(&$object)
     {
@@ -1791,7 +1791,7 @@ class midcom_baseclasses_core_dbobject
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @param string $name The name of the attachment to delete.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete_attachment(&$object, $name)
     {
@@ -2003,7 +2003,7 @@ class midcom_baseclasses_core_dbobject
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      * @param mixed $person A midcom_baseclasses_database_person object or an identifier usable to retrieve one. You may set
      *     this to NULL to use the currently authenticated user as a default.
-     * @return bool True if the person is the owner of the selected object, false otherwise. (For all objects
+     * @return boolean True if the person is the owner of the selected object, false otherwise. (For all objects
      *     which are currently not supported, true is always returned as a stub implementation only.)
      */
     function is_owner(&$object, $person)
@@ -2144,7 +2144,7 @@ class midcom_baseclasses_core_dbobject
      * check function, making checks against visibility far easier.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return bool Indicating visibility state.
+     * @return boolean Indicating visibility state.
      */
     function is_object_visible_onsite($object)
     {
@@ -2167,7 +2167,7 @@ class midcom_baseclasses_core_dbobject
      * data, loading the actual information only if it is not cached.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return bool Indicating visibility state.
+     * @return boolean Indicating visibility state.
      * @see get_parent_guid_uncached()
      * @see midcom_services_cache_module_memcache::lookup_parent_guid()
      */
@@ -2181,7 +2181,7 @@ class midcom_baseclasses_core_dbobject
      * data, loading the actual information only if it is not cached.
      *
      * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return bool Indicating visibility state.
+     * @return boolean Indicating visibility state.
      * @see get_parent_guid()
      */
     function get_parent($object)

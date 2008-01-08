@@ -27,7 +27,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
      *
      * @param object $object MidCOM DBA object
      * @param array $tags List of tags and urls, tag is key, url is value
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      * @todo Set the link->navorder property (only in 1.8)
      */
     function tag_object(&$object, $tags, $component = null)

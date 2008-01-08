@@ -70,7 +70,7 @@ class net_nemein_ping_interface extends midcom_baseclasses_components_interface
      * AT handler for handling subscription cycles.
      * @param array $args handler arguments
      * @param object $handler reference to the cron_handler object calling this method.
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function ping($args, &$handler)
     {

@@ -175,7 +175,7 @@ class midcom_helper_datamanager2_type_number extends midcom_helper_datamanager2_
      * The validation callback ensures that we are in the bounds defined by the
      * type configuration. The value is rounded prior to processing.
      *
-     * @return bool Indicating validity.
+     * @return boolean Indicating validity.
      */
     function _on_validate()
     {

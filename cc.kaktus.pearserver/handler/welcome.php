@@ -23,7 +23,7 @@ class cc_kaktus_pearserver_handler_welcome extends midcom_baseclasses_components
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_welcome($handler_id, $args, &$data)
     {

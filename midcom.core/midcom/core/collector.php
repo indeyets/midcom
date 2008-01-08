@@ -189,7 +189,7 @@ class midcom_core_collector
      *
      * The calling sequence of all event handlers of the associated class is like this:
      *
-     * 1. bool _on_prepare_exec_collector(&$this) is called before the actual query execution. Return false to
+     * 1. boolean _on_prepare_exec_collector(&$this) is called before the actual query execution. Return false to
      *    abort the operation.
      *
      * @return boolean indicating success/failure
@@ -405,7 +405,7 @@ class midcom_core_collector
      *     wildcard character.
      * @param mixed $value The value to compare against. It should be of the same type then the
      *     queried property.
-     * @param bool Indicating success.
+     * @param boolean Indicating success.
      */
     function add_constraint($field, $operator, $value)
     {
@@ -440,7 +440,7 @@ class midcom_core_collector
      * @param string $field The name of the MgdSchema property to query against.
      * @param string $ordering One of 'ASC' or 'DESC' indicating ascending or descending
      *     ordering. The default is 'ASC'.
-     * @param bool Indicating success.
+     * @param boolean Indicating success.
      */
     function add_order($field, $ordering = null)
     {

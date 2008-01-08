@@ -27,7 +27,7 @@ class org_openpsa_httplib_helpers extends midcom_baseclasses_components_purecode
      * Validates given URL string format
      *
      * @param string $url Uniform Resource Locator
-     * @return bool Whether URL is valid
+     * @return boolean Whether URL is valid
      */
     function validate_url($url)
     {

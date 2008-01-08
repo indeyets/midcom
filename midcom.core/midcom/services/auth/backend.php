@@ -56,7 +56,7 @@ class midcom_services_auth_backend extends midcom_baseclasses_core_object
      * system To load a login session. At the end of the successful execution of this 
      * function, you have to populate the $session_id and $user members accordingly.
      * 
-     * @return bool Return true if the the login session was successfully loaded, false 
+     * @return boolean Return true if the the login session was successfully loaded, false 
      *     otherwise.
      */    
     function read_login_session()
@@ -73,7 +73,7 @@ class midcom_services_auth_backend extends midcom_baseclasses_core_object
      * 
      * @param string $username The name of the user to authenticate.
      * @param string $password The password of the user to authenticate.
-     * @return bool Indicating successful authentication.
+     * @return boolean Indicating successful authentication.
      */
     function authenticate()
     {
@@ -91,7 +91,7 @@ class midcom_services_auth_backend extends midcom_baseclasses_core_object
      * @param string $password The password of the user to authenticate.
      * @param string $clientip The client IP to which this session is assigned to. This
      *     defaults to the client IP reported by Apache.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function create_login_session($username, $password, $clientip = null)
     {

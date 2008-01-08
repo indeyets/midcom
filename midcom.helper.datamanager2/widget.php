@@ -123,8 +123,8 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
      * @param midcom_helper_datamanager2_schema $schema A reference to the full schema object.
      * @param midcom_helper_datamanager2_type $type A reference to the type to which we are bound.
      * @param string $namespace The namespace to use including the trailing underscore.
-     * @param bool $initialize_dependencies Whether to load JS and other dependencies on initialize
-     * @return bool Indicating success. If this is false, the type will be unusable.
+     * @param boolean $initialize_dependencies Whether to load JS and other dependencies on initialize
+     * @return boolean Indicating success. If this is false, the type will be unusable.
      */
     function initialize($name, $config, &$schema, &$type, $namespace, $initialize_dependencies = false)
     {
@@ -172,7 +172,7 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
      * This event handler is called during construction, so passing references to $this to the
      * outside is unsafe at this point.
      *
-     * @return bool Indicating success, false will abort the type construction sequence.
+     * @return boolean Indicating success, false will abort the type construction sequence.
      * @access protected
      */
     function _on_initialize()
@@ -325,7 +325,7 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
      *
      * This maps to the HTML_QuickForm_element::isFrozen() function.
      *
-     * @return bool True if the element is frozen, false otherwise.
+     * @return boolean True if the element is frozen, false otherwise.
      */
     function is_frozen()
     {

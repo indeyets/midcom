@@ -127,7 +127,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
     /**
      * The initialization event handler post-processes the maxlength setting.
      *
-     * @return bool Indicating Success
+     * @return boolean Indicating Success
      */
     function _on_initialize()
     {

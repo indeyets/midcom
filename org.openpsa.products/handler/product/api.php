@@ -225,7 +225,7 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_product_get($handler_id, $args, &$data)
     {
@@ -259,7 +259,7 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_product_list($handler_id, $args, &$data)
     {
@@ -327,7 +327,7 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_product_create($handler_id, $args, &$data)
     {
@@ -385,7 +385,7 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_product_update($handler_id, $args, &$data)
     {
@@ -426,7 +426,7 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_product_delete($handler_id, $args, &$data)
     {

@@ -118,7 +118,7 @@ class midcom_helper_datamanager2_controller_create extends midcom_helper_dataman
      * You need to set the schema database before calling this function. Optionally
      * you may set defaults and the schemaname to use as well.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function initialize()
     {

@@ -241,7 +241,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
      *
      * @param string $username The name of the user to authenticate.
      * @param string $password The password of the user to authenticate.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _do_midgard_auth($username, $password)
     {
@@ -300,7 +300,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
      * invalidated and deleted immediately.
      *
      * @param string $sessionid The session identifier to authenticate against.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function authenticate_session($sessionid)
     {
@@ -338,7 +338,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
      * Usually, you will use this during logouts.
      *
      * @param string $sessionid The id of the session to invalidate.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete_session($sessionid)
     {

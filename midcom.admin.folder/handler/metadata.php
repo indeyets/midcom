@@ -85,7 +85,7 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
      * Load the DM2 edit controller instance
      *
      * @access private
-     * @return bool Indicating success of DM2 edit controller instance
+     * @return boolean Indicating success of DM2 edit controller instance
      */
     function _load_datamanager()
     {

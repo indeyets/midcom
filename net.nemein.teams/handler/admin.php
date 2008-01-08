@@ -41,7 +41,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_admin ($handler_id, $args, &$data)
     {
@@ -55,7 +55,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_log ($handler_id, $args, &$data)
     {
@@ -80,7 +80,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_manage ($handler_id, $args, &$data)
     {
@@ -106,7 +106,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_manage_delete($handler_id, $args, &$data)
     {
@@ -166,7 +166,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_manage_team($handler_id, $args, &$data)
     {

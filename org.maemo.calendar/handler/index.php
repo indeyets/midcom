@@ -64,7 +64,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
     {
@@ -91,7 +91,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_view($handler_id, $args, &$data)
     {

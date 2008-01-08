@@ -31,7 +31,7 @@ class org_maemo_devcodes_code_dba extends __org_maemo_devcodes_code_dba
     /**
      * Basic sanity checking for the code object
      *
-     * @return bool indicating sanity (true=sane)
+     * @return boolean indicating sanity (true=sane)
      */
     function sanity_check()
     {

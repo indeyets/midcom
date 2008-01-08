@@ -86,7 +86,7 @@ class midcom_helper_datamanager2_callback_select_personlister
      * This flag will be set after list_all has been executed to short-cut
      * various lookups where possible.
      *
-     * @var bool
+     * @var boolean
      * @access private
      */
     var $_list_all_done = false;

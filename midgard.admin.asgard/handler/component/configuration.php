@@ -197,7 +197,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_view($handler_id, $args, &$data)
     {
@@ -403,7 +403,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_edit($handler_id, $args, &$data)
     {

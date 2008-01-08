@@ -154,7 +154,7 @@ class net_nemein_registrations_registration extends midcom_db_eventmember
     /**
      * Checks, if the event is approved.
      *
-     * @return bool Indicating approval state
+     * @return boolean Indicating approval state
      */
     function is_approved()
     {

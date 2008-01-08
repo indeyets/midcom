@@ -31,13 +31,13 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
 
     //Internal, do not touch unless you know what you're doing
     var $_backend;    //The backend object
-    var $__debug;     //bool, output debug information
+    var $__debug;     //boolean, output debug information
     var $__mime;      //object, (Mail_mime / Mail_mimeDecode) holder
     var $__mail;      //object, (Mail) holder
-    var $__mailErr;   //bool/object, send error status
-    var $__iconv;     //bool, when decoding mails, try to convert to desired charset.
+    var $__mailErr;   //boolean/object, send error status
+    var $__iconv;     //boolean, when decoding mails, try to convert to desired charset.
     var $__orig_encoding;  //string, original encoding of the message
-    var $__textBodyFound; //bool, used in part_decode
+    var $__textBodyFound; //boolean, used in part_decode
     var $__htmlBodyFound; // --''--
 
     function org_openpsa_mail()

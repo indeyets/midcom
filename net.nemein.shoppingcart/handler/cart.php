@@ -43,7 +43,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data reference to request_data
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_additem($handler_id, $args, &$data)
     {
@@ -101,7 +101,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data reference to request_data
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_shortlist($handler_id, $args, &$data)
     {
@@ -131,7 +131,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data reference to request_data
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_contents($handler_id, $args, &$data)
     {
@@ -165,7 +165,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data reference to request_data
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_manage($handler_id, $args, &$data)
     {

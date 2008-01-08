@@ -88,7 +88,7 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {
@@ -142,7 +142,7 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -189,7 +189,7 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
      * all members that could be helpful for display.
      *
      * @param net_nehmer_branchenbuch_branche $category The category to add.
-     * @param bool $listalpha Set this to true if you are in alphabetic category listing mode.
+     * @param boolean $listalpha Set this to true if you are in alphabetic category listing mode.
      *     It will define whether the entry listings will set the return_url to the letter
      *     filtered, alphabetic listing code or to the full category listing.
      * @param string $parent_prefix The string to use as prefix in front of the name to generate
@@ -248,7 +248,7 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_list_alpha($handler_id, $args, &$data)
     {
@@ -320,7 +320,7 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_customsearch($handler_id, $args, &$data)
     {

@@ -28,7 +28,7 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
      * Set this to true during one of the startup callbacks if you need to have the
      * datastorage (de)serialized automatically during I/O operations.
      *
-     * @var bool
+     * @var boolean
      */
     var $serialized_storage = false;
 
@@ -90,7 +90,7 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
      * @param string $name The name of the field to which this type is bound.
      * @param Array $config The configuration data which should be used to customize the type.
      * @param midcom_helper_datamanager2_storage $storage A reference to the storage object to use.
-     * @return bool Indicating success. If this is false, the type will be unusable.
+     * @return boolean Indicating success. If this is false, the type will be unusable.
      */
     function initialize($name, $config, &$storage)
     {
@@ -138,7 +138,7 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
      * This event handler is called after construction, so passing references to $this to the
      * outside is safe at this point.
      *
-     * @return bool Indicating success, false will abort the type construction sequence.
+     * @return boolean Indicating success, false will abort the type construction sequence.
      * @access protected
      */
     function _on_initialize()
@@ -216,7 +216,7 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
      * Main validation interface, currently only calls the main type callback, but this
      * can be extended later by a configurable callback into the component.
      *
-     * @return bool Indicating value validity.
+     * @return boolean Indicating value validity.
      */
     function validate()
     {
@@ -232,7 +232,7 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
      * to the validation_error public member.
      *
      * @access protected
-     * @return bool Indicating value validity.
+     * @return boolean Indicating value validity.
      */
     function _on_validate()
     {
@@ -273,7 +273,7 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
      * so this is merely a shortcut.
      *
      * @param string $privilege The privilege to check against.
-     * @return bool true if the user has the permission, false otherwise.
+     * @return boolean true if the user has the permission, false otherwise.
      */
     function can_do($privilege)
     {

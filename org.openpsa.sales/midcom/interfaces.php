@@ -256,7 +256,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
      * AT handler for handling subscription cycles.
      * @param array $args handler arguments
      * @param object $handler reference to the cron_handler object calling this method.
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function new_subscription_cycle($args, &$handler)
     {

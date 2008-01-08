@@ -27,8 +27,8 @@
  *
  * - <b>timestamp schedule_start:</b> The time upon which the object should be made visible. 0 for no restriction.
  * - <b>timestamp schedule_end:</b> The time upon which the object should be made invisible. 0 for no restriction.
- * - <b>bool nav_noentry:</b> Set this to true if you do not want this object to appear in the navigation without it being completely hidden.
- * - <b>bool hide:</b> Set this to true to hide the object on-site, overriding scheduling.
+ * - <b>boolean nav_noentry:</b> Set this to true if you do not want this object to appear in the navigation without it being completely hidden.
+ * - <b>boolean hide:</b> Set this to true to hide the object on-site, overriding scheduling.
  * - <b>string keywords:</b> The keywords for this object, should be used for META HTML headers.
  * - <b>string description:</b> A short description for this object, should be used for META HTML headers.
  * - <b>string robots:</b> Search engine crawler instructions, one of '' (unset), 'noindex', 'index', 'follow' and 'nofollow'.
@@ -456,7 +456,7 @@ class midcom_helper_metadata
     /**
      * Checks whether the article has been approved since its last editing.
      *
-     * @return bool Indicating approval state.
+     * @return boolean Indicating approval state.
      */
     function is_approved()
     {
@@ -474,7 +474,7 @@ class midcom_helper_metadata
      * This does not check approval, use is_approved for that.
      *
      * @see midcom_helper_metadata::is_approved()
-     * @return bool Indicatinv visibility state.
+     * @return boolean Indicatinv visibility state.
      */
     function is_visible()
     {
@@ -503,7 +503,7 @@ class midcom_helper_metadata
      * here is that it also checks the global configuration defaults, so that this is
      * basically the same base on which NAP decides whether to show an item or not.
      *
-     * @return bool Indicating visibility.
+     * @return boolean Indicating visibility.
      */
     function is_object_visible_onsite()
     {

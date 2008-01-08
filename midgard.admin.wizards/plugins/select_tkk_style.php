@@ -53,7 +53,7 @@ class select_tkk_style extends midcom_baseclasses_components_handler
     }
 
 	/**
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
 	 */
     function _handler_select_style()
     {

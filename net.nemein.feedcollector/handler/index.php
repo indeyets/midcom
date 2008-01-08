@@ -39,7 +39,7 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_index ($handler_id, $args, &$data)
     {

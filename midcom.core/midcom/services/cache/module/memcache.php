@@ -140,7 +140,7 @@ class midcom_services_cache_module_memcache extends midcom_services_cache_module
      * 
      * @param string $data_group The Data Group to look in.
      * @param string $key The key to look up.
-     * @return bool Indicating existence
+     * @return boolean Indicating existence
      */
     function exists($data_group, $key)
     {

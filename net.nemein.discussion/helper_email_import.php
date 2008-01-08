@@ -32,7 +32,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
      * Parses given raw email using org.openpsa.mail and applies rewrite rules as per configuration
      *
      * @param text $body raw email source
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function parse($body)
     {
@@ -478,7 +478,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
      * Rewrites org_openpsa_mail object properties according to configuration
      *
      * @param object $mail reference to org_openpsa_mail object
-     * @return bool indicating success/failure
+     * @return boolean indicating success/failure
      */
     function _rewrite(&$mail)
     {

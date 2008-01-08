@@ -477,7 +477,7 @@ class midcom_services__i18n_l10n {
 	 * 
 	 * @param string $string The string-ID to search for.
 	 * @param string $language The language to search in.
-	 * @return bool Indicating availability.
+	 * @return boolean Indicating availability.
      */
     function string_exists($string, $language = null) {
         if (is_null($language)) 
@@ -508,7 +508,7 @@ class midcom_services__i18n_l10n {
      * "catch" cases where a string might translate to itself in some languages.
      * 
      * @param string $string The string-ID to search for
-     * @return bool Indicating availability.
+     * @return boolean Indicating availability.
      */
     function string_available($string)
     {

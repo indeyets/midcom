@@ -33,7 +33,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
     /**
      * This flag controls whether multiple selections are allowed, or not.
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
     var $enable_saving_to_callback = false;
@@ -41,7 +41,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
     /**
      * This flag controls whether we use net_nehmer_tag or not
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
     var $use_tag_library = true;
@@ -50,7 +50,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
      * This flag controls whether we force net_nehmer_tag to be used as the saving location
      * or should we use callback or storage
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
     var $force_saving_to_tag_library = false;
@@ -59,7 +59,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
      * This flag controls whether we force net_nehmer_tag to be used as the location
      * to read tags data on rendering or should we use callback or storage
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
     var $force_rendering_from_tag_library = false;
@@ -68,7 +68,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
      * This flag controls whether we require tags found with net_nehmer_tag
      * to exist in callback also (we check with key_exists with second argument set as true). This is only applied if we have callback defined.
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
     var $must_exist_also_in_callback = false;
@@ -92,7 +92,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
      * This event handler is called after construction, so passing references to $this to the
      * outside is safe at this point.
      *
-     * @return bool Indicating success, false will abort the type construction sequence.
+     * @return boolean Indicating success, false will abort the type construction sequence.
      * @access protected
      */
     function _on_initialize()
@@ -282,7 +282,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
      * Checks, whether the given key is known.
      *
      * @param string $key The key index to look up.
-     * @return bool True if the key is known, false otherwise.
+     * @return boolean True if the key is known, false otherwise.
      */
     function key_exists($key)
     {
@@ -781,7 +781,7 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
      * The validation callback ensures that we dont't have an array or an object
      * as a value, which would be wrong.
      *
-     * @return bool Indicating validity.
+     * @return boolean Indicating validity.
      */
     function _on_validate()
     {

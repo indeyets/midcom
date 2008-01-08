@@ -225,7 +225,7 @@ class midcom_baseclasses_database_article extends __midcom_baseclasses_database_
     /**
      * Pre-Creation hook, which validates the $author field for correctness.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _on_creating()
     {
@@ -236,7 +236,7 @@ class midcom_baseclasses_database_article extends __midcom_baseclasses_database_
     /**
      * Pre-Update hook, which validates the $author field for correctness.
      *
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _on_updating()
     {

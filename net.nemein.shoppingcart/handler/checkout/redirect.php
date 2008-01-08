@@ -38,7 +38,7 @@ class net_nemein_shoppingcart_handler_checkout_redirect  extends midcom_baseclas
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data reference to request_data
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_redirect($handler_id, $args, &$data)
     {

@@ -46,7 +46,7 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_autoindex ($handler_id, $args, &$data)
     {

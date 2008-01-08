@@ -198,7 +198,7 @@ class midcom_services_cron extends midcom_baseclasses_core_object
      *
      * @param string $component The name of the component the job is associated with, used for error-tracking.
      * @param Array $job The job to register.
-     * @return bool Indicating validity.
+     * @return boolean Indicating validity.
      */
     function _validate_job($component, $job)
     {
@@ -270,7 +270,7 @@ class midcom_services_cron extends midcom_baseclasses_core_object
      * the cron classes only loaded on demand (see class introduction).
      *
      * @param string $handler_name The name of the handler to validate
-     * @return bool Indicating success
+     * @return boolean Indicating success
      */
     function _validate_handler($handler_name)
     {

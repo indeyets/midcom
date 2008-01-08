@@ -27,7 +27,7 @@ require_once('Date.php');
  * - visible_data: The rendered data associated with the visible fields.
  * - schema: A reference to the schema in use.
  * - account: A reference to the account in use.
- * - view_self: A bool indicating whether we display our own account, or not.
+ * - view_self: A boolean indicating whether we display our own account, or not.
  * - profile_url: Only applicable in the quick-view mode, it contains the URL
  *   to the full profile record.
  * - edit_url: Only applicable if in view-self mode, it contains the URL to the
@@ -93,7 +93,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
      * This flag is set to true if we are viewing the account of the currently registered
      * user. This influences the access control of the account display.
      *
-     * @var bool
+     * @var boolean
      * @access private
      */
     var $_view_self = false;
@@ -103,7 +103,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
      * assigned fields, along with a link to the full profile view. This makes live a bit
      * easier when including profiles in other components.
      *
-     * @var bool
+     * @var boolean
      * @access private
      */
     var $_view_quick = false;
@@ -144,7 +144,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool True if the request can be handled, false otherwise.
+     * @return boolean True if the request can be handled, false otherwise.
      */
     function _can_handle_view($handler_id, $args, &$data)
     {
@@ -170,7 +170,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_view($handler_id, $args, &$data)
     {
@@ -555,7 +555,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
      * Populates $this->_account by guid or by username
      *
      * @param string $id GUID or username
-     * @return bool false on critical failure, true otherwise.
+     * @return boolean false on critical failure, true otherwise.
      */
     function _get_account($id)
     {
@@ -747,7 +747,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
      * visibility state of another field. In the last case you need to set the 'visible_link'
      * customdata to the name of another field to make this work.
      *
-     * @return bool Indicating Visibility
+     * @return boolean Indicating Visibility
      */
     function _is_field_visible($name)
     {

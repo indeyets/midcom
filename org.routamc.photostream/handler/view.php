@@ -78,7 +78,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_view($handler_id, $args, &$data)
     {

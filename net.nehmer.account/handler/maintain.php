@@ -79,7 +79,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
      * This is true if we did successfully change the password. It will then display a simple
      * password-changed-successfully response.
      *
-     * @var bool
+     * @var boolean
      * @access private
      */
     var $_success = false;
@@ -92,7 +92,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_password($handler_id, $args, &$data)
     {
@@ -269,7 +269,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_username($handler_id, $args, &$data)
     {
@@ -415,7 +415,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_lostpassword($handler_id, $args, &$data)
     {
@@ -440,7 +440,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_lostpassword_reset($handler_id, $args, &$data)
     {
@@ -829,7 +829,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_cancel_membership($handler_id, $args, &$data)
     {

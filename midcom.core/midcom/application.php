@@ -400,7 +400,7 @@ class midcom_application
      * Changing this flag after the handle phase or for dynamically loaded
      * components won't change anything.
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
     var $skip_page_style = false;
@@ -1193,7 +1193,7 @@ class midcom_application
      * accordingly, both on the configure and on the can_handle run.
      *
      * @param MidgardTopic $object    The node that is currently being tested.
-     * @return bool                    Indication, whether a component can handle a request.
+     * @return boolean                    Indication, whether a component can handle a request.
      * @access private
      */
     private function _can_handle($object)
@@ -1285,7 +1285,7 @@ class midcom_application
      * the current request is a content output request, it will automatically flush
      * the buffer to stdout, in all other cases you have to do this by yourself.
      *
-     * @param bool $showcontent    If set and false, the output will not be automatically flushed.
+     * @param boolean $showcontent    If set and false, the output will not be automatically flushed.
      * @access private
      */
     private function _output()
@@ -1804,7 +1804,7 @@ class midcom_application
      * </code>
      *
      * @param string $path    The name of the code library to load.
-     * @return bool            Indicates, whether the library was successfully loaded.
+     * @return boolean            Indicates, whether the library was successfully loaded.
      */
     function load_library($path)
     {
@@ -1968,7 +1968,7 @@ class midcom_application
     /**
      * Sets a new context, doing some minor sanity checking.
      *
-     * @return bool    Indicating if the switch was successful.
+     * @return boolean    Indicating if the switch was successful.
      * @access private
      */
     function _set_current_context($id)

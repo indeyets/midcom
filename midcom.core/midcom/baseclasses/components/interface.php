@@ -345,7 +345,7 @@ class midcom_baseclasses_components_interface
      * This should <i>not</i> be overwritten by the client. Instead, use the on_initialize
      * event handler.
      *
-     * @return bool Indicating successful initialization.
+     * @return boolean Indicating successful initialization.
      * @see _on_initialize()
      */
     public function initialize()
@@ -528,8 +528,8 @@ class midcom_baseclasses_components_interface
      * @param mixed $configuration A configuration data list, suitable for merging with a
      *     midcom_helper_configuration object.
      * @param int $contextid The ID of the context we are associated with.
-     * @param bool $adminmode Flag, indicating whether we are on-site (false) or in AIS (true).
-     * @return bool Indication success.
+     * @param boolean $adminmode Flag, indicating whether we are on-site (false) or in AIS (true).
+     * @return boolean Indication success.
      */
     public function configure($configuration, $contextid)
     {
@@ -570,7 +570,7 @@ class midcom_baseclasses_components_interface
      * @param int $argc The count of the remaining URL arguments.
      * @param Array $argv The argument listing
      * @param int $contextid The id of the context we are operating in.
-     * @return bool True, if the component can handle the request, false otherwise.
+     * @return boolean True, if the component can handle the request, false otherwise.
      */
     public function can_handle($current_object, $argc, $argv, $contextid)
     {
@@ -592,7 +592,7 @@ class midcom_baseclasses_components_interface
      * @param int $argc The count of the remaining URL arguments.
      * @param Array $argv The argument listing
      * @param int $contextid The id of the context we are operating in.
-     * @return bool True, if the component successfully handle the request, false otherwise.
+     * @return boolean True, if the component successfully handle the request, false otherwise.
      */
     public function handle($current_object, $argc, $argv, $contextid)
     {
@@ -646,7 +646,7 @@ class midcom_baseclasses_components_interface
     /**
      * Relays the is_internal check for the current object.
      *
-     * @return bool True, if internal.
+     * @return boolean True, if internal.
      * @deprecated This function has been deprecated with the MidCOM 2.4 NAP rewrite and will be removed in 2.6.
      */
     public function is_internal()
@@ -659,7 +659,7 @@ class midcom_baseclasses_components_interface
      * been created beforehand.
      *
      * @param MidgardTopic $object The MidgardTopic that should be processed.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     public function set_object($object)
     {
@@ -711,7 +711,7 @@ class midcom_baseclasses_components_interface
      * component and topic. See the _on_reindex() event handler for details.
      *
      * @param MidgardTopic $topic The topic that should be reindexed.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      * @see _on_reindex()
      */
     public function reindex ($topic)
@@ -727,7 +727,7 @@ class midcom_baseclasses_components_interface
      * @param midcom_services_indexer_document $document The document to check. This object is passed by
      *     reference and may therefore be modified to match the current security policy.
      * @param MidgardTopic $topic The topic this document is assigned to.
-     * @return bool True if the object may be shown, false otherwise.
+     * @return boolean True if the object may be shown, false otherwise.
      */
     public function check_document_permissions (&$document, $topic)
     {
@@ -934,7 +934,7 @@ class midcom_baseclasses_components_interface
      * Unless you need more functionality then snippet and library loading, configuration merging
      * and basic component data storage initialization, no further modification needs to be done.
      *
-     * @return bool Indicating whether the initialization has been successful.
+     * @return boolean Indicating whether the initialization has been successful.
      */
     function _on_initialize()
     {
@@ -951,7 +951,7 @@ class midcom_baseclasses_components_interface
      * @param MidgardTopic $topic The topic to reindex.
      * @param midgard_helper_config $config The configuration associated with this topic.
      * @param midcom_service_indexer The indexer object to use for indexing. (Passed by reference!)
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _on_reindex($topic, $config, &$indexer)
     {
@@ -975,7 +975,7 @@ class midcom_baseclasses_components_interface
      *     reference and may therefore be modified to match the current security policy.
      * @param midcom_helper_configuration $config The configuration associated with the topic.
      * @param MidgardTopic $topic The topic this document is assigned to.
-     * @return bool True if the object may be shown, false otherwise.
+     * @return boolean True if the object may be shown, false otherwise.
      */
     function _on_check_document_permissions (&$document, $config, $topic)
     {

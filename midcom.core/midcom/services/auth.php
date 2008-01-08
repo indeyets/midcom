@@ -244,9 +244,9 @@
  * <pre>
  * Array get_privileges();
  * midcom_core_privilege create_new_privilege_object($name, $assignee = null, $value = MIDCOM_PRIVILEGE_ALLOW)
- * bool set_privilege(midcom_core_privilege $privilege);
- * bool unset_all_privileges();
- * bool unset_privilege(midcom_core_privilege $privilege);
+ * boolean set_privilege(midcom_core_privilege $privilege);
+ * boolean unset_all_privileges();
+ * boolean unset_privilege(midcom_core_privilege $privilege);
  * </pre>
  *
  * These calls operate only on the privileges of the given object. They do not do any merging
@@ -298,7 +298,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * This effectively maps to $_MIDGARD['admin']; but it is suggested to use the auth class
      * for consistency reasons nevertheless.
      *
-     * @var bool
+     * @var boolean
      * @access public
      */
     var $admin = false;
@@ -412,7 +412,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * All parts of the core may change this variable (as for example midcom_core_group_virtual
      * does during vgroup member loading).
      *
-     * @var bool
+     * @var boolean
      * @access private
      */
     var $_internal_sudo = false;
@@ -423,7 +423,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * release the rights again. This does override the full access control system at this time
      * and essentially give you full admin privileges (though this might change in the future).
      *
-     * Note, that this is no bool but an int, otherwise it would be impossible to trace nested
+     * Note, that this is no boolean but an int, otherwise it would be impossible to trace nested
      * sudo invocations, which are quite possible with multiple components calling each others
      * callback. A value of 0 indicates that sudo is inactive. A value greater then zero indicates
      * sudo mode is active, with the count being equal to the depth of the sudo callers.
@@ -506,7 +506,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * Internal startup helper, checks if the current authentication fronted has new credentials
      * ready. If yes, it processes the login accordingly.
      *
-     * @return bool Returns true, if a new login session was created, false if no credentials were found.
+     * @return boolean Returns true, if a new login session was created, false if no credentials were found.
      * @access private
      */
     function _check_for_new_login_session()
@@ -681,7 +681,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * sudo mode, as outlined in the corresponding variable.
      *
      * @param string $privilege The privilege to check for
-     * @return bool True if the privilege has been granted, false otherwise.
+     * @return boolean True if the privilege has been granted, false otherwise.
      * @access private
      * @see $_internal_sudo
      */
@@ -711,7 +711,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * @param MidgardObject $content_object A Midgard Content Object
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
      *     You may specify "EVERYONE" instead of an object to check what an anonymous user can do.
-     * @return bool True if the privilege has been granted, false otherwise.
+     * @return boolean True if the privilege has been granted, false otherwise.
      */
     function can_do($privilege, &$content_object, $user = null)
     {
@@ -734,7 +734,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * @param string $object_class Class of the object in question
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
      *     You may specify "EVERYONE" instead of an object to check what an anonymous user can do.
-     * @return bool True if the privilege has been granted, false otherwise.
+     * @return boolean True if the privilege has been granted, false otherwise.
      */
     function can_do_byguid($privilege, $object_guid, $object_class, $user = null)
     {
@@ -831,7 +831,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      *     you may specify 'EVERYONE' here to check what an anonymous user can do.
      * @param string $class Optional parameter to set if the check should take type specific permissions into account. The class must be default constructible.
      * @param string $component Component providing the class
-     * @return bool True if the privilege has been granted, false otherwise.
+     * @return boolean True if the privilege has been granted, false otherwise.
      */
     function can_user_do($privilege, $user = null, $class = null, $component = null)
     {
@@ -1137,7 +1137,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * initial credentials.
      *
      * @param string $domain The domain to request sudo for. This is a component name.
-     * @return bool True if admin privileges were granted, false otherwise.
+     * @return boolean True if admin privileges were granted, false otherwise.
      */
     function request_sudo ($domain = null)
     {
@@ -1201,7 +1201,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      *
      * @param mixed $group Group to check against, this can be either a midcom_core_group object or a group string identifier.
      * @param midcom_core_user The user which should be checked, defaults to the current user.
-     * @return bool Indicating membership state.
+     * @return boolean Indicating membership state.
      */
     function is_group_member($group, $user = null)
     {
@@ -1228,7 +1228,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     /**
      * Returns true if there is an authenticated user, false otherwise.
      *
-     * @return bool True if there is a user logged in.
+     * @return boolean True if there is a user logged in.
      */
     function is_valid_user()
     {
@@ -1802,7 +1802,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      *
      * @todo This call should load the component associated to the privilege on demand.
      * @param string $name The name of the privilege to check.
-     * @return bool Indicating whether the privilege does exist.
+     * @return boolean Indicating whether the privilege does exist.
      */
     function privilege_exists($name)
     {
@@ -1814,7 +1814,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * midcom:vgroup_delete assigned to the user (there is no content object checked).
      *
      * @param midcom_core_group_virtual $virtual_group The group to drop, loaded by get_group() previously.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function delete_virtual_group($virtual_group)
     {
@@ -1865,7 +1865,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * @param string $component The name to register a virtual group for.
      * @param string $identifier The component-local identifier of the virtual group.
      * @param string $name The clear-text name of the virtual group.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function register_virtual_group($component, $identifier, $name)
     {

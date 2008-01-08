@@ -40,7 +40,7 @@ class midcom_services_tmp extends midcom_baseclasses_core_object
      * has already been loaded.
      *
      * @access private
-     * @var bool
+     * @var boolean
      */
     var $_tmp_object_class_loaded = false;
 

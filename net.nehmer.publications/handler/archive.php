@@ -87,7 +87,7 @@ class net_nehmer_publications_handler_archive extends midcom_baseclasses_compone
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_welcome ($handler_id, $args, &$data)
     {
@@ -319,7 +319,7 @@ class net_nehmer_publications_handler_archive extends midcom_baseclasses_compone
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_list ($handler_id, $args, &$data)
     {

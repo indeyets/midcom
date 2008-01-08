@@ -162,7 +162,7 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_manage ($handler_id, $args, &$data)
     {
@@ -205,7 +205,7 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_delete ($handler_id, $args, &$data)
     {
@@ -271,7 +271,7 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
      * @param mixed $handler_id the array key from the request array
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
-     * @return bool Indicating success.
+     * @return boolean Indicating success.
      */
     function _handler_edit ($handler_id, $args, &$data)
     {
