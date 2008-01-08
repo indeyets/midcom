@@ -6,7 +6,7 @@ the plugins should be arrays of arguments.
 
 Plugins always operate on the final serialized XML, this gives them full control but also makes it possible for them to make the XML invalid in addition to causing other suprises to the unwary user: "here be dragons".
 
-Currently supported plugins are 'str_replace' and 'str_replace'
+Currently supported plugins are 'str_replace' and 'preg_replace'
 
 ## str_replace
 
@@ -35,7 +35,7 @@ arguments to this plugin is array of argument arrays, of the following style
 
 The for each array 'search' key is used as the 'pattern' and 'replace' key as the 'replacement' for [preg_replace][1]. In reality these are mapped into single preg_replace -call with arrays as arguments to improve performance but the idea is the same.
 
-In this example we first do trivial 'foo' -> 'bar' replace that would be better served with str_replace, the second one is more usefull, we convert URLS that have /PREFIX/ in them to relative ones with /PREFIX stripped. This kind of replacement could be used for example if there is one SSL staging server for multiple sites having running prefixed hosts but the live sites are unprefixed in their respective domains.
+In this example we first do trivial 'foo' -> 'bar' replace that would be better served with str_replace, the second one is more useful, we convert URLS that have /PREFIX/ in them to relative ones with /PREFIX stripped. This kind of replacement could be used for example if there is one SSL staging server for multiple sites having running prefixed hosts but the live sites are unprefixed in their respective domains.
 
 [1]: http://fi.php.net/manual/en/function.preg-replace.php
 
