@@ -36,7 +36,15 @@
                 ),
             ),
             'widget' => 'select',
-        ), 
+        ),
+        'filters' => Array
+        (
+            'title' => 'XML filters (for advanced users only)',
+            'storage' => 'filtersSerialized',
+            'type' => 'text',
+            'widget' => 'textarea',
+            'hidden'  => (!$_MIDCOM->auth->admin),
+        ),
         'transporter' => Array
         (
             // COMPONENT-REQUIRED
@@ -91,6 +99,14 @@
             ),
             'widget' => 'select',
         ),
+        'filters' => Array
+        (
+            'title' => 'XML filters (for advanced users only)',
+            'storage' => 'filtersSerialized',
+            'type' => 'text',
+            'widget' => 'textarea',
+            'hidden'  => (!$_MIDCOM->auth->admin),
+        ),
         'transporter' => Array
         (
             // COMPONENT-REQUIRED
@@ -144,6 +160,14 @@
                 ),
             ),
             'widget' => 'select',
+        ),
+        'filters' => Array
+        (
+            'title' => 'XML filters (for advanced users only)',
+            'storage' => 'filtersSerialized',
+            'type' => 'text',
+            'widget' => 'textarea',
+            'hidden'  => (!$_MIDCOM->auth->admin),
         ),
         'transporter' => Array
         (

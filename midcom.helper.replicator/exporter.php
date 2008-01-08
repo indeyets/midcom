@@ -52,7 +52,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
      * @param midcom_helper_replication_subscription_dba $subscription Subscription
      * @return midcom_helper_replicator_exporter A reference to the newly created exporter instance.
      */
-    function & create($subscription)
+    function &create($subscription)
     {
         $type = $subscription->exporter;
         $filename = MIDCOM_ROOT . "/midcom/helper/replicator/exporter/{$type}.php";
@@ -418,7 +418,8 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
         }
         $serializations = array_merge($serializations, $object_privileges);
         unset($object_privileges);
-        
+
+        $this->process_filters($serializations);
         $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
         debug_pop();
         return $serializations;
@@ -487,6 +488,103 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
         }
 
         return $serializations;
+    }
+
+    function filter_preg_replace(&$serializations, &$pluginargs)
+    {
+        $useargs = $this->_filter_xxx_replace_parseargs($pluginargs);
+        $serializations = preg_replace($useargs['search'], $useargs['replace'], $serializations);
+    }
+
+    function filter_str_replace(&$serializations, &$pluginargs)
+    {
+        $useargs = $this->_filter_xxx_replace_parseargs($pluginargs);
+        $serializations = str_replace($useargs['search'], $useargs['replace'], $serializations);
+    }
+
+    function _filter_xxx_replace_parseargs(&$pluginargs)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $ret['search'] = array();
+        $ret['replace'] = array();
+        if (!is_array($pluginargs))
+        {
+            // In fact this should never happen since the spec so
+            debug_add("Subscription #{$this->subscription->id} ({$this->subscription->title}) xxx_replace callback options is not array", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return $ret;
+        }
+        foreach ($pluginargs as $k => $srarr)
+        {
+            if (!isset($srarr['search']))
+            {
+                debug_add("Subscription #{$this->subscription->id} ({$this->subscription->title}) xxx_replace callback options key {$k} is missing 'search'", MIDCOM_LOG_WARN);
+                $ret['search'][] = '';
+            }
+            else
+            {
+                $ret['search'][] = $srarr['search'];
+            }
+            if (!isset($srarr['replace']))
+            {
+                debug_add("Subscription #{$this->subscription->id} ({$this->subscription->title}) xxx_replace callback options key {$k} is missing 'replace'", MIDCOM_LOG_WARN);
+                $ret['replace'][] = '';
+            }
+            else
+            {
+                $ret['replace'][] = $srarr['replace'];
+            }
+        }
+        //debug_print_r('returning:', $ret);
+        debug_pop();
+        return $ret;
+    }
+
+    /**
+     * This runs the given array of serializations through filters defined for
+     * the subscription
+     */
+    function process_filters(&$serializations)
+    {
+        /*
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Called for subscription #{$this->subscription->id} ({$this->subscription->title})");
+        debug_pop();
+        */
+        if (empty($this->subscription->filters))
+        {
+            /*
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("subscription #{$this->subscription->id} ({$this->subscription->title}) has no filters");
+            debug_pop();
+            */
+            // no filters
+            return true;
+        }
+        foreach ($this->subscription->filters as $filterplugin => $pluginargs)
+        {
+            if (!is_array($pluginargs))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Plugin subscription #{$this->subscription->id} ({$this->subscription->title}) plugin {$filterplugin} arguments are not an array", MIDCOM_LOG_WARN);
+                debug_pop();
+                continue;
+            }
+            $methodname = "filter_{$filterplugin}";
+            if (is_callable(array($this, $methodname)))
+            {
+                // Built-in plugin
+                $this->$methodname($serializations, $pluginargs);
+            }
+            else
+            {
+                // TODO: Plugin loading mechanism
+                // $plugin_class->process($serializations, $pluginargs, $this->subscription);
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Plugin {$filterplugin} is not known (subscription #{$this->subscription->id}:{$this->subscription->title}), skipping", MIDCOM_LOG_WARN);
+                debug_pop();
+            }
+        }
     }
 }
 ?>

@@ -32,7 +32,7 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
     }
 
     /**
-     * Reads transport configuration from subscriptions parameters
+     * Reads transport configuration fomr subscriptions parameters
      *
      * Also does some sanity checking
      **/
@@ -162,7 +162,7 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
                  */
                  continue;
             }
-            $GLOBALS['midcom_helper_replicator_logger']->log("Successfully sent key {$key}", MIDCOM_LOG_INFO);
+            $GLOBALS['midcom_helper_replicator_logger']->log("Succesfully sent key {$key}", MIDCOM_LOG_INFO);
             unset($items[$key]);
         }
         unset($key, $data);
@@ -277,6 +277,7 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
                         1 => $_MIDCOM->i18n->get_string('yes'),
                     ),
                 ),
+                'hidden'  => (!$_MIDCOM->auth->admin),
             )
         );
     }

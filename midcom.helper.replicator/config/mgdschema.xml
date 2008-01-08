@@ -5,6 +5,7 @@
         
         <property name="title" type="string"/>
         <property name="description" type="text"/>
+        <property name="filtersSerialized" type="text"/>
                 
         <property name="exporter" type="string"/>
         <property name="transporter" type="string"/>

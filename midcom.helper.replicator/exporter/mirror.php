@@ -255,6 +255,7 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
             unset($child_serializations);
         }
         
+        $this->process_filters($serializations);
         debug_pop();
         return $serializations;
     }

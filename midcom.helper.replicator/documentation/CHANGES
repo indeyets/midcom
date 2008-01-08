@@ -7,6 +7,13 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-01-08 rambo
+  + Export filters system, first simple filters: preg_replace and str_replace
+  ! filtersSerialized property added: re-run midgard-schema
+
+200x-xx-xx rambo,bergie
+  + TODO: check from SVN logs
+
 2007-04-10 bergie
   + Added "object replication status" view
 
