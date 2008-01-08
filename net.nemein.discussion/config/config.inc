@@ -48,3 +48,6 @@
 'auto_quote_on_reply' => false,
 
 'autoapprove' => false,
+
+// GUIDs of moderators to notify
+'moderators' => '',

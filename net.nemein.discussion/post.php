@@ -214,11 +214,6 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
      */
     function report_not_abuse()
     {
-        if ($this->status > NET_NEMEIN_DISCUSSION_REPORTED_ABUSE)
-        {
-            return false;
-        }
-
         if (!$this->can_do('net.nemein.discussion:moderation'))
         {
             return false;
