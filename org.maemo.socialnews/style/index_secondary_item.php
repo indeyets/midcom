@@ -47,6 +47,11 @@ $date_string = "<abbr class=\"published\" title=\"" . strftime('%Y-%m-%dT%H:%M:%
         {
             echo sprintf($data['l10n']->get('%s to %s by %s with score %d'), $date_string, $node_string, $author_string, $data['score']);
         }
+        
+        if (isset($data['attention']))
+        {
+            echo " " . sprintf($data['l10n']->get('your attention: %s%%'), round($data['attention'] * 100));
+        }
         ?>
     </div>
 </div>

@@ -19,6 +19,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
     private $articles = array();
     private $articles_scores = array();
     private $articles_scores_initial = array();
+    private $articles_attention = array();
     private $nodes = array();
 
     /**
@@ -57,6 +58,19 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             $score = $sc->get_subkey($guid, 'score');
         }
         return $score;
+    }
+    
+    private function get_personal_score($article)
+    {
+        if (!class_exists('net_nemein_attention_calculator'))
+        {
+            $_MIDCOM->load_library('net.nemein.attention');
+        }
+        
+        // Calculate for current user
+        $calculator = new net_nemein_attention_calculator();
+        $attention_score = $calculator->rate_object($article);
+        return $attention_score;
     }
 
     private function count_age($score, $timestamp)
@@ -97,10 +111,21 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
                 // We already have item with this URL, skip
                 continue;
             }
+            
+            if (   $this->_config->get('attention_enable')
+                && $_MIDCOM->auth->user)
+            {
+                $this->articles_attention[$article->guid] = $this->get_personal_score($article);
+                $score_combined = $this->articles_scores_initial[$article->guid] + ($this->_config->get('attention_modifier') * $this->articles_attention[$article->guid]);
+            }
+            else
+            {
+                $score_combined = $this->articles_scores_initial[$article->guid];
+            }
 
             $articles_by_url[$article->url] = $article->guid;
             $articles_by_guid[$article->guid] = $article;
-            $this->articles_scores[$article->guid] = $this->count_age($this->articles_scores_initial[$article->guid], $article->metadata->published);
+            $this->articles_scores[$article->guid] = $this->count_age($score_combined, $article->metadata->published);
         }
 
         arsort($this->articles_scores);
@@ -228,8 +253,15 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             $data['node_title'] = $this->_topic->extra;
         }
 
-        if ($handler_id == 'rss20_items')
+        if (   $handler_id == 'rss20_items'
+            || $handler_id == 'rss20_items_personal')
         {
+            if ($handler_id == 'rss20_items_personal')
+            {
+                // Authenticate via Basic auth which many RSS readers support
+                $_MIDCOM->auth->require_valid_user('basic');
+            }
+        
             $_MIDCOM->load_library('de.bitfolge.feedcreator');
             $_MIDCOM->cache->content->content_type('text/xml');
             $_MIDCOM->header('Content-type: text/xml; charset=UTF-8');
@@ -250,7 +282,8 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
      */
     function _show_index($handler_id, &$data)
     {
-        if ($handler_id == 'rss20_items')
+        if (   $handler_id == 'rss20_items'
+            || $handler_id == 'rss20_items_personal')
         {
             $this->_show_rss_items($handler_id, &$data);
             return;
@@ -268,6 +301,12 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
             $data['node'] = $this->get_node($article->topic);
             $data['score'] = $this->articles_scores[$article->guid];
             $data['score_initial'] = $this->articles_scores_initial[$article->guid];
+            
+            if (isset($this->articles_attention[$article->guid]))
+            {
+                $data['attention'] = $this->articles_attention[$article->guid];
+            }
+            
             midcom_show_style('index_main_item');
         }
         midcom_show_style('index_main_footer');
@@ -282,6 +321,12 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
                 $data['node'] = $this->get_node($article->topic);
                 $data['score'] = $this->articles_scores[$article->guid];
                 $data['score_initial'] = $this->articles_scores_initial[$article->guid];
+                
+                if (isset($this->articles_attention[$article->guid]))
+                {
+                    $data['attention'] = $this->articles_attention[$article->guid];
+                }
+                
                 midcom_show_style('index_secondary_item');
             }
             midcom_show_style('index_secondary_footer');
@@ -293,13 +338,21 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
      * Displays the feed
      */
     function _show_rss_items($handler_id, &$data)
-    {
+    {    
         // Add each article now.
         if ($this->articles)
         {
             foreach ($this->articles as $article)
             {
                 $data['article'] =& $article;
+                $data['score'] = $this->articles_scores[$article->guid];
+                $data['score_initial'] = $this->articles_scores_initial[$article->guid];
+                
+                if (isset($this->articles_attention[$article->guid]))
+                {
+                    $data['attention'] = $this->articles_attention[$article->guid];
+                }
+                
                 midcom_show_style('feed-item');
             }
         }

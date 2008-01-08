@@ -44,6 +44,7 @@
 'technorati_modifier' => 0.8,
 'technorati_apikey' => '', 
 
-'attention_enable' => false,
+'attention_enable' => true,
+'attention_modifier' => 1.8,
 
 'show_navigation_pseudo_leaves' => true,   // Set this to false if you want to hide archive and "best of" navigation items

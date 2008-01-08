@@ -77,7 +77,13 @@ class org_maemo_socialnews_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('org_maemo_socialnews_handler_index', 'index'),
             'fixed_args' => Array('items.xml'),
-        );        
+        );
+        // Handle /my_items.xml
+        $this->_request_switch['rss20_items_personal'] = array
+        (
+            'handler' => Array('org_maemo_socialnews_handler_index', 'index'),
+            'fixed_args' => Array('my_items.xml'),
+        );       
         
         // The Archive
         $this->_request_switch['archive-welcome'] = Array
@@ -151,6 +157,7 @@ class org_maemo_socialnews_viewer extends midcom_baseclasses_components_request
         (
             array
             (
+                'title' => $this->_l10n->get('daily digest of top news items'),
                 'rel'   => 'alternate',
                 'type'  => 'application/rss+xml',
                 'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rss.xml',
@@ -161,11 +168,27 @@ class org_maemo_socialnews_viewer extends midcom_baseclasses_components_request
         (
             array
             (
+                'title' => $this->_l10n->get('top news items'),
                 'rel'   => 'alternate',
                 'type'  => 'application/rss+xml',
                 'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'items.xml',
             )
         );
+        
+        if (   $this->_config->get('attention_enable')
+            && $_MIDCOM->auth->user)
+        {
+            $_MIDCOM->add_link_head
+            (
+                array
+                (
+                    'title' => $this->_l10n->get('personalized top news items'),
+                    'rel'   => 'alternate',
+                    'type'  => 'application/rss+xml',
+                    'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'my_items.xml',
+                )
+            );
+        }
 
         return true;
     }

@@ -137,7 +137,10 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
             
             if ($this->_config->get('attention_enable'))
             {
-                $_MIDCOM->load_library('net.nemein.attention');
+                if (!class_exists('net_nemein_attention_calculator'))
+                {
+                    $_MIDCOM->load_library('net.nemein.attention');
+                }
                 $calculator = new net_nemein_attention_calculator();
                 $this->articles_attention[$article->guid] = $calculator->rate_object($article);
             }
