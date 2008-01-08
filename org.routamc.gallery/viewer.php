@@ -7,7 +7,7 @@
  */
 
 /**
- * This is the class that defines which url's should be handled by this module.
+ * This is the class that defines which URLs should be handled by this module.
  *
  * @package org.routamc.gallery
  */
@@ -101,7 +101,7 @@ class org_routamc_gallery_viewer extends midcom_baseclasses_components_request
     }
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

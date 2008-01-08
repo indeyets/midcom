@@ -562,7 +562,7 @@ class midcom_services_i18n
     }
 
     /**
-     * This method tries to pull the users preferred language and
+     * This method tries to pull the user's preferred language and
      * character set out of a cookie named "midcom_services_i18n".
      */
     function _read_cookie ()

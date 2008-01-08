@@ -157,7 +157,7 @@ class org_openpsa_reports_handler_sales_report extends org_openpsa_reports_handl
         debug_push_class(__CLASS__, __FUNCTION__);
         midcom_show_style('sales_report-deliverable-start');
 
-        // Quick workaround to Bergies lazy determination of whether this is users or everyones report...
+        // Quick workaround to Bergies lazy determination of whether this is user's or everyone's report...
         if ($this->_request_data['query_data']['resource'] == 'user:' . $_MIDCOM->auth->user->guid)
         {
             // My report

@@ -265,7 +265,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
 
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * Currently, creation is only allowed for administrator accounts. In the future,
      * create on both persons in general and group members below the selected group

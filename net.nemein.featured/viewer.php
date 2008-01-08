@@ -7,7 +7,7 @@
  * Featured
  *
  * @package net.nemein.featured
-**/
+ */
 class net_nemein_featured_viewer extends midcom_baseclasses_components_request
 {
     var $_content_topic = null;

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package midgard.admin.sitewizard
  * @author The Midgard Project, http://www.midgard-project.org

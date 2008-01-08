@@ -16,7 +16,6 @@
  *
  * @package net.nehmer.static
  */
-
 class net_nehmer_static_viewer extends midcom_baseclasses_components_request
 {
     /**
@@ -201,7 +200,7 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
     }
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

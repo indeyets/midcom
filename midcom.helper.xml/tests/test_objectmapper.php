@@ -75,7 +75,7 @@ class midcom_helper_xml_objectmapper_test extends UnitTestCase
         $class = $this->objectmapper->_get_classname($object);
         $this->assertTrue(array_key_exists($class, $array), "The array should have the objectclass as it's first key");
         
-        $this->assertTrue(array_key_exists($class, $_MIDGARD['schema']['types']), "The array should have the objectclass as it's first key: $class");
+        $this->assertTrue(array_key_exists($class, $_MIDGARD['schema']['types']), "The array should have the objectclass as its first key: $class");
         
 
     }

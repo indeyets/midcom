@@ -9,7 +9,7 @@
 /**
  * This is a creation handler class for net.nemein.alphabeticalindex
  *
- * This component lists all it's objects in Alphabetical list.
+ * This component lists all its objects in Alphabetical list.
  * Items can be added through itself (internal and external) or
  * use custom schema on articles.
  * Component listens update,create,delete events on articles and folders

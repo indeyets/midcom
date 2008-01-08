@@ -7,11 +7,10 @@
  */
 
 /**
- * This is the class that defines which url's should be handled by this module. 
+ * This is the class that defines which URLs should be handled by this module. 
  * 
  * @package net.nemein.reservations
  */
-
 class net_nemein_reservations_viewer extends midcom_baseclasses_components_request
 {
     function net_nemein_reservations_viewer($topic, $config)
@@ -145,7 +144,7 @@ class net_nemein_reservations_viewer extends midcom_baseclasses_components_reque
     }
     
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

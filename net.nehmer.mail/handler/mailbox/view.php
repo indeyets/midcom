@@ -34,7 +34,7 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
     var $_schemadb = null;
 
     /**
-     * List of users mailboxes
+     * List of user's mailboxes
      *
      * @var Array
      * @access private

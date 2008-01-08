@@ -131,7 +131,7 @@ $this->_request_switch['midcoms_stylelement'] = array(
     }
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

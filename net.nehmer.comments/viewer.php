@@ -14,7 +14,6 @@
  *
  * @package net.nehmer.comments
  */
-
 class net_nehmer_comments_viewer extends midcom_baseclasses_components_request
 {
     function net_nehmer_comments_viewer($topic, $config)
@@ -57,7 +56,7 @@ class net_nehmer_comments_viewer extends midcom_baseclasses_components_request
     }
     
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

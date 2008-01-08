@@ -804,7 +804,7 @@ EOF;
             $value_trimmed = trim($value);
             if ($value_trimmed != $value)
             {
-                debug_add("Header '{$header}' has whitespace around it's value, rewriting from\n===\n{$value}\n===\nto\n===\n{$value_trimmed}\n===\n");
+                debug_add("Header '{$header}' has whitespace around its value, rewriting from\n===\n{$value}\n===\nto\n===\n{$value_trimmed}\n===\n");
                 $this->headers[$header] = $value_trimmed;
             }
         }
@@ -1100,7 +1100,7 @@ EOF;
     }
 
     /**
-     * Find emebeds from source HTML, intentionally does NOT use $this->html_body
+     * Find embeds from source HTML, intentionally does NOT use $this->html_body
      */
     function html_get_embeds($obj = false, $html = null, $embeds = null)
     {

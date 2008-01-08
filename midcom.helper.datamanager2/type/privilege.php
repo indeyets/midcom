@@ -29,7 +29,7 @@ class midcom_helper_datamanager2_type_privilege extends midcom_helper_datamanage
 {
     /**
      * The privilege record encapsulated by this type (note that this does not 
-     * neccecarily is an already persisted privilege).
+     * necessarily is an already persisted privilege).
      * 
      * This member may be null in case that we do not yet have a storage object.
      * Setting/getting the value of this type must thus not be done directly
@@ -122,7 +122,7 @@ class midcom_helper_datamanager2_type_privilege extends midcom_helper_datamanage
     }
 
     /**
-     * Loades the privilege from the DB if and only if a storage object is already present
+     * Loads the privilege from the DB if and only if a storage object is already present
      * and we have sufficient privileges.
      */
     function convert_from_storage($source)

@@ -64,7 +64,7 @@ class org_maemo_devcodes_handler_application_list extends midcom_baseclasses_com
     }
 
     /**
-     * Render a view of the users applications
+     * Render a view of the user's applications
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.

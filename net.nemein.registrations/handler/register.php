@@ -605,7 +605,7 @@ EOF;
 
 
     /**
-     * The register handler loades the currently visible events and displays them.
+     * The register handler loads the currently visible events and displays them.
      *
      * @access private
      */

@@ -22,7 +22,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
     /**
      * Statically callable method to get parent guid when object guid is given
      * 
-     * Uses midgard_collector to avoid unneccessary full object loads
+     * Uses midgard_collector to avoid unnecessary full object loads
      *
      * @param guid $guid guid of thread to get the parent for
      */

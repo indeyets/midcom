@@ -79,7 +79,7 @@ class midcom_helper_xml_objectmapper
             return false;
         }
 
-        // set the objects values to the ones from xml.
+        // set the object's values to the ones from xml.
         foreach (get_object_vars($object) as $field_name => $val)
         {
 
@@ -219,8 +219,8 @@ class midcom_helper_xml_objectmapper
         if (!is_array($array))
         {
             debug_push(__CLASS__, __FUNCTION__);
-            debug_add("This function must get an arrat as it's parameter not: " . gettype($array));
-            $this->errstr = "This function must get an array as it's parameter not: " . gettype($array);
+            debug_add("This function must get an array as its parameter not: " . gettype($array));
+            $this->errstr = "This function must get an array as its parameter not: " . gettype($array);
             debug_pop();
             return false;
         }
@@ -272,8 +272,8 @@ class midcom_helper_xml_objectmapper
         if (!is_object($object))
         {
             debug_push(__CLASS__, __FUNCTION__);
-            debug_add("This function must get an object as it's parameter not: " . gettype($object));
-            $this->errstr = "This function must get an object as it's parameter not: " . gettype($object);
+            debug_add("This function must get an object as its parameter not: " . gettype($object));
+            $this->errstr = "This function must get an object as its parameter not: " . gettype($object);
             debug_pop();
             return false;
         }

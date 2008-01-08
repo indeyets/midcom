@@ -11,7 +11,7 @@
 /**
  * This is a class geared at indexing attachments. It requires you to "assign" the 
  * attachment to a topic, which is used as TOPIC_URL for permission purposes. In addition
- * you may set another MidgardObject as source object, it's GUID is stored in the 
+ * you may set another MidgardObject as source object, its GUID is stored in the 
  * __SOURCE field of the index.
  * 
  * The documents type is "midcom_attachment", though it is *not* derived from midcom
@@ -25,7 +25,7 @@
  * </code>
  * 
  * Where $attachment is the attachment to be indexed and $object is the object the object
- * is associated with. The corresponding topic will be detected using the objects' GUID
+ * is associated with. The corresponding topic will be detected using the object's GUID
  * through NAP. If this fails, you have to set the members $topic_guid, $topic_url and 
  * $component manually. 
  * 

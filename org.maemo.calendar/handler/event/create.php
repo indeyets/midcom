@@ -120,7 +120,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
 
         //$user_tags = org_maemo_calendar_common::fetch_available_user_tags();
 
-        // Insert users default tag
+        // Insert user's default tag
         //$_MIDCOM->componentloader->load_graceful('net.nemein.tag');
         //$this->_defaults['tags'] = net_nemein_tag_handler::string2tag_array($user_tags[0]['id']);
         //$this->_defaults['tags'] = $user_tags[0]['id'];

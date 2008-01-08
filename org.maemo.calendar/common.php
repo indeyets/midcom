@@ -206,7 +206,7 @@ class org_maemo_calendar_common
         
         //debug_print_r("User {$user_guid}: ",$user);
                 
-        /* Read users tags */
+        /* Read user's tags */
         $users_tags = $user->list_parameters('org.maemo.calendar:tag');
         
         // if (empty($users_tags))
@@ -338,7 +338,7 @@ class org_maemo_calendar_common
         $user_timezone_identifier = $user->get_parameter('org.maemo.calendar:preferences','timezone_identifier');
         if (empty($user_timezone_identifier))
         {
-            debug_add("No timezone defined! Adding the default timezone to users parameters.");
+            debug_add("No timezone defined! Adding the default timezone to user's parameters.");
             
             // if (   $logged_in
             //     || (   !$logged_in

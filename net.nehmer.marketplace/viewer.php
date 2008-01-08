@@ -15,7 +15,6 @@
  *
  * @package net.nehmer.marketplace
  */
-
 class net_nehmer_marketplace_viewer extends midcom_baseclasses_components_request
 {
     function net_nehmer_marketplace_viewer($topic, $config)
@@ -25,7 +24,7 @@ class net_nehmer_marketplace_viewer extends midcom_baseclasses_components_reques
 
     function _on_initialize()
     {
-        // Generic and personal welcom pages
+        // Generic and personal welcome pages
         $this->_request_switch['welcome'] = Array
         (
             'handler' => Array('net_nehmer_marketplace_handler_welcome', 'welcome'),

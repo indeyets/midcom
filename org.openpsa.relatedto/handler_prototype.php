@@ -888,7 +888,7 @@ EOF;
     }
 
     /**
-     * Default method for getting objects relatedtos (inbound ie toGuid == $obj->guid)
+     * Default method for getting object's relatedtos (inbound ie toGuid == $obj->guid)
      *
      * Components handlers may need to override this to account
      * for specific object types and possible traversing of their children
@@ -925,7 +925,7 @@ EOF;
     }
 
     /**
-     * Default method for getting objects relatedtos (outbound ie fromGuid == $obj->guid)
+     * Default method for getting object's relatedtos (outbound ie fromGuid == $obj->guid)
      *
      * Components handlers may need to override this to account
      * for specific object types and possible traversing of their children

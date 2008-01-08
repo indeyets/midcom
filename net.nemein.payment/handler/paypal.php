@@ -379,7 +379,7 @@ class net_nemein_payment_handler_paypal extends net_nemein_payment_handler
      * with the additional options field (thus any restricted option will be overwritten
      * later) and is completed with the actual payment information.
      *
-     * If available, the current users data is added to the request so that the paypal
+     * If available, the current user's data is added to the request so that the paypal
      * account signup is as short as possible.
      */
     function _prepare_request_args()

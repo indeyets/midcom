@@ -73,7 +73,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
     }
 
     /**
-     * Set objects status to not-live and dump a dummy version it
+     * Set object's status to not-live and dump a dummy version it
      */
     function deleted($object)
     {

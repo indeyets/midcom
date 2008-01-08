@@ -246,7 +246,7 @@ function rcs_exec($command)
      return $ret;
     }
 /**
- * Get a list of the objects history
+ * Get a list of the object's history
  */
 function rcs_gethistory($what)
 {

@@ -106,7 +106,7 @@ class org_maemo_socialnews_viewer extends midcom_baseclasses_components_request
     }
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

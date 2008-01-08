@@ -168,7 +168,7 @@ class net_nemein_feedcollector_viewer extends midcom_baseclasses_components_requ
     }
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

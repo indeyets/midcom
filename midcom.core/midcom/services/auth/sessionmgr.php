@@ -403,12 +403,12 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
     }
 
     /**
-     * This function is called by the framework whenever a users' password is updated. It will
+     * This function is called by the framework whenever a user's password is updated. It will
      * synchronize all active login sessions of that user to the new password.
      *
      * Access to this function is restricted to midcom_core_user.
      *
-     * @param midcom_core_user $user A reference to the user object which has been udpated.
+     * @param midcom_core_user $user A reference to the user object which has been updated.
      * @param string $new The new password (plain text).
      */
     function _update_user_password(&$user, $new)
@@ -431,12 +431,12 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
     }
 
     /**
-     * This function is called by the framework whenever a users' username is updated. It will
+     * This function is called by the framework whenever a user's username is updated. It will
      * synchronize all active login sessions of that user to the new username.
      *
      * Access to this function is restricted to midcom_core_user.
      *
-     * @param midcom_core_user $user A reference to the user object which has been udpated.
+     * @param midcom_core_user $user A reference to the user object which has been updated.
      * @param string $new The new username.
      */
     function _update_user_username(&$user, $new)
@@ -465,7 +465,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
      *
      * 'unknown' is returned in cases where you have insufficient permissions.
      *
-     * @param midcom_core_user $user A reference to the user object which has been udpated.
+     * @param midcom_core_user $user A reference to the user object which has been updated.
      * @return string One of 'online', 'offline' or 'unknown', indicating the current online
      *     state.
      */

@@ -187,7 +187,7 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     }
 
     /**
-     * Transforms the current objects' state into a CSV string representation. Escaping
+     * Transforms the current object's state into a CSV string representation. Escaping
      * and other encoding is done by the caller, you just return the string.
      *
      * This function must be overwritten.
@@ -200,7 +200,7 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     }
 
     /**
-     * Transforms the current objects' state into HTML representation. This is used for displaying
+     * Transforms the current object's state into HTML representation. This is used for displaying
      * type contents in an automatic fashion.
      *
      * This function must be overwritten.

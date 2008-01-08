@@ -99,7 +99,7 @@ class midcom_helper_datamanager2_widget_tags extends midcom_helper_datamanager2_
     var $component = null;
 
     /**
-     * Objects id/guid which is to be tagged
+     * Object's id/guid which is to be tagged
      *
      * @var string
      */

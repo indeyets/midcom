@@ -274,7 +274,7 @@ class org_openpsa_contacts_duplicates_merge
     /**
      * Checks if there are any objects (for the mode given in constructor) that need to be processed
      *
-     * Note: does not check users privileges or that the objects actually exist (the cleanup cronjob
+     * Note: does not check user's privileges or that the objects actually exist (the cleanup cronjob
      * handles dangling references)
      * @return boolean indicating need for processing (merge/not duplicate)
      */

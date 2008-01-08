@@ -383,7 +383,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
 
         if (!$skip_children)
         {
-            // Then objects parameters
+            // Then object's parameters
             $object_parameters = $this->serialize_parameters($object);
             if ($object_parameters === false)
             {
@@ -395,7 +395,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
             $serializations = array_merge($serializations, $object_parameters);
             unset($object_parameters);
     
-            // And lastly objects attachments
+            // And lastly object's attachments
             $object_attachments = $this->serialize_attachments($object);
             if ($object_attachments === false)
             {
@@ -407,7 +407,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
             $serializations = array_merge($serializations, $object_attachments);
             unset($object_attachments);
         }
-        // Always serialize objects privileges
+        // Always serialize object's privileges
         $object_privileges = $this->serialize_privileges($object);
         if ($object_privileges === false)
         {

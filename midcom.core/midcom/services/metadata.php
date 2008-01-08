@@ -31,7 +31,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
     
     /**
      * Class of the current page per each context. 
-     * Typically these are thesame as the schema name of the current object's Datamanager schema. 
+     * Typically these are the same as the schema name of the current object's Datamanager schema. 
      * This can be used for changing site styling based on body class="" etc.
      *
      * @var Array

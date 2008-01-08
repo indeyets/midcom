@@ -308,7 +308,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             $parent_object = $object->get_parent();
             /**
              * The object might have valid reasons for returning empty value here, but we can't know if it's
-             * beacause it's valid or because the get_parent* methods have not been overridden in the actually
+             * because it's valid or because the get_parent* methods have not been overridden in the actually
              * used class
              */
         }

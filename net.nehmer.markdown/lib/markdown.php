@@ -470,7 +470,7 @@ function _HashHTMLBlocks_InMarkdown($text, $indent = 0,
         #
         # Check for: Opening Block level tag or
         #            Opening Content Block tag (like ins and del)
-        #               used as a block tag (tag is alone on it's line).
+        #               used as a block tag (tag is alone on its line).
         #
         else if (preg_match("{^<(?:$block_tags)\b}", $tag) ||
             (	preg_match("{^<(?:$context_block_tags)\b}", $tag) &&

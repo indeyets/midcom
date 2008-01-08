@@ -200,7 +200,7 @@ class midcom_helper__componentloader
     /**
      * This is an array containing a list of watches that need to be executed at the end
      * of any given request. The array is indexed by artificial keys constructed out of the
-     * watched objects class type and guid values. The array always contain the object
+     * watched object's class type and guid values. The array always contain the object
      * instance in the first element, and all components that need to be notified in the
      * subsequent keys.
      *

@@ -16,7 +16,7 @@
  * This widget supports the image type or any subtype thereof.
  *
  * All processing is done during the on_submit handlers, enforcing immediate update of the
- * associated storage objects. No other solition is possible, since we need to transfer
+ * associated storage objects. No other solution is possible, since we need to transfer
  * uploaded files somehow through multiple requests.
  *
  * <b>Available configuration options:</b>

@@ -26,7 +26,7 @@ require_once('Text/Password.php');
  * accomplished by creating a random session key during initialize where the passphrase
  * is stored. This session key is made persistent using a hidden request variable. Every
  * passphrase is only valid for a single submission call. Every successful submit will
- * invalidate the passphrase in the users' session thus triggering a new captcha being
+ * invalidate the passphrase in the user's session thus triggering a new captcha being
  * generated.
  *
  * <b>Available configuration options:</b>
@@ -37,7 +37,7 @@ require_once('Text/Password.php');
  *
  * Due to the nature of the way how the captcha passphrase is passed to the captcha
  * image server, it is currently not possible to have more then one captcha per
- * unique REQUEST_URI whithin the users PHP Session space.
+ * unique REQUEST_URI within the user's PHP Session space.
  *
  * <b>Integration Guide:</b>
  *

@@ -13,7 +13,6 @@
  *
  * @package net.nemein.calendar
  */
-
 class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
 {
     /**
@@ -347,7 +346,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
     }
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

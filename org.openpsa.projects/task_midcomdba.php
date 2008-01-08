@@ -900,7 +900,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
             default:
             case ORG_OPENPSA_TASKACCEPTANCE_ONEACCEPT:
                 //PONDER: should this be somehow set directly trough mgdschema ??
-                //PONDER: Should this be superseded by generic method for queriying the status objects to set the latest status ??
+                //PONDER: Should this be superseded by generic method for querying the status objects to set the latest status ??
                 debug_add("Required accept received, setting task status to accepted");
                 $this->status = ORG_OPENPSA_TASKSTATUS_ACCEPTED;
                 debug_pop();
@@ -974,7 +974,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
             return false;
         }
         //PONDER: should this be somehow set directly trough mgdschema ??
-        //PONDER: Should this be superseded by generic method for queriying the status objects to set the latest status ??
+        //PONDER: Should this be superseded by generic method for querying the status objects to set the latest status ??
         //PONDER: If we add to closed task shouldn't we reopen or something....
         $this->status = ORG_OPENPSA_TASKSTATUS_STARTED;
         debug_pop();
@@ -1193,7 +1193,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
             return false;
         }
         //PONDER: should this be somehow set directly trough mgdschema ??
-        //PONDER: Should this be superseded by generic method for queriying the status objects to set the latest status ??
+        //PONDER: Should this be superseded by generic method for querying the status objects to set the latest status ??
         $this->status = ORG_OPENPSA_TASKSTATUS_CLOSED;
         debug_pop();
         $this->_skip_acl_refresh = true;

@@ -21,7 +21,7 @@ else
 echo "<h1>Purge deleted objects</h1>\n";
 echo "<p>Current grace period is {$grace_days} days, use ?days=x to set to other value</p>\n";
 
-// 1 second beofre midnight $grace_days ago
+// 1 second before midnight $grace_days ago
 $cut_off = mktime(23, 59, 59, date('n'), date('j')-$grace_days, date('Y'));
 foreach ($_MIDGARD['schema']['types'] as $mgdschema => $dummy)
 {

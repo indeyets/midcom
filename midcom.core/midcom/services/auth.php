@@ -389,7 +389,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
     /**
      * Internal cache of the effective privileges of users on content objects, this is
-     * an associative array using a combination of the user identifier and the objects'
+     * an associative array using a combination of the user identifier and the object's
      * guid as index. The privileges for the anonymous user use the magic
      * EVERYONE as user identifier.
      *

@@ -16,10 +16,10 @@
  * This widget supports the images type or any subtype thereof.
  *
  * All processing is done during the on_submit handlers, enforcing immediate update of the
- * associated storage objects. No other solition is possible, since we need to transfer
+ * associated storage objects. No other solution is possible, since we need to transfer
  * uploaded files somehow through multiple requests.
  *
- * The type will show a tabluar view of all uploaded images. Existing images have
+ * The type will show a tabular view of all uploaded images. Existing images have
  * an editable tile and can be deleted or replaced. A single new upload line is displayed
  * always. There is no preview, but there is a download link.
  *
@@ -31,7 +31,7 @@
  *
  * <b>Implementation notes:</b>
  *
- * The construnciton of the widget is relatively complex, it relies on a combination of
+ * The construction of the widget is relatively complex, it relies on a combination of
  * static and input elements to do its work. It should be fairly customizable using CSS.
  *
  * 1. Quickform Element Naming

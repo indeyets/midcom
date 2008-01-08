@@ -15,7 +15,6 @@
  *
  * @package net.nehmer.jobmarket
  */
-
 class net_nehmer_jobmarket_viewer extends midcom_baseclasses_components_request
 {
     function net_nehmer_jobmarket_viewer($topic, $config)

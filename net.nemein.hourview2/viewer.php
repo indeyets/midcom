@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package net.nemein.hourview2
  * @author The Midgard Project, http://www.midgard-project.org 

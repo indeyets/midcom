@@ -16,7 +16,6 @@
  *
  * @package net.nehmer.publications
  */
-
 class net_nehmer_publications_viewer extends midcom_baseclasses_components_request
 {
     /**
@@ -154,7 +153,7 @@ class net_nehmer_publications_viewer extends midcom_baseclasses_components_reque
     }
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

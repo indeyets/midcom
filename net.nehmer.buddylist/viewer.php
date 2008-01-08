@@ -15,7 +15,6 @@
  *
  * @package net.nehmer.buddylist
  */
-
 class net_nehmer_buddylist_viewer extends midcom_baseclasses_components_request
 {
     function net_nehmer_buddylist_viewer($topic, $config)

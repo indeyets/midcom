@@ -337,7 +337,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
      *
      */
     /**
-     * Get a list of the objects history
+     * Get a list of the object's history
      * @param string objectid (usually the guid)
      * @return array list of revisions and revision comment.
      */

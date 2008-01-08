@@ -14,7 +14,6 @@
  *
  * @package net.nemein.registrations
  */
-
 class net_nemein_registrations_viewer extends midcom_baseclasses_components_request
 {
     function net_nemein_registrations_viewer($topic, $config)

@@ -15,7 +15,7 @@
  * The storage location provided by the schema is unused at this time, as child object
  * operations cannot be undone.
  *
- * The type can manage an arbitrary number of objects. Each objects is identified
+ * The type can manage an arbitrary number of objects. Each object is identified
  * by a GUID. It provides management functions for existing child objects which allow you to 
  * add, delete and update them in all variants. These functions are executed immediately on the 
  * storage object, no undo is possible.

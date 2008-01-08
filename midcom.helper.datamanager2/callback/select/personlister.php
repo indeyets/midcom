@@ -23,7 +23,7 @@
  * - <i>string value_field:</i> The field used as value. Valid is any field available
  *   in the midcom_db_person type, defaults to name.
  *
- * <b>Example usage to manage a users persons:</b>
+ * <b>Example usage to manage a user's persons:</b>
  *
  * Use the following DM2 configuration within the person schema:
  *

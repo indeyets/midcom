@@ -8,7 +8,7 @@
  */
 
 /**
- * This is the class that defines which url's should be handled by this module. 
+ * This is the class that defines which URLs should be handled by this module. 
  * 
  * @package midcom.helper.imagepopup
  */

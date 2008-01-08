@@ -7,11 +7,10 @@
  */
 
 /**
- * This is the class that defines which url's should be handled by this module.
+ * This is the class that defines which URLs should be handled by this module.
  *
  * @package org.openpsa.products
  */
-
 class org_openpsa_products_viewer extends midcom_baseclasses_components_request
 {
     function org_openpsa_products_viewer($topic, $config)
@@ -409,7 +408,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
     }
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

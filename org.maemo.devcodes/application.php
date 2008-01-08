@@ -349,7 +349,7 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
     {
         if ($this->state !== ORG_MAEMO_DEVCODES_APPLICATION_PENDING)
         {
-            // If the application is no longer pending then it should be considered it's own dependency
+            // If the application is no longer pending then it should be considered its own dependency
             return true;
         }
         return false;

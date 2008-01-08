@@ -51,14 +51,14 @@
  *
  * Note, that since the introduction of the create method, all datatypes must be
  * able to be initialized without a storage object, leading in an empty value
- * and (in turn) an empty form element. The viewport must not neccesserily be
+ * and (in turn) an empty form element. The viewport must not necessarily be
  * operational, but the form interface must.
  *
  * <b>Datatype configuration</b>
  *
  * The basic datatype requires at least two configuration options:
  *
- * <i>location</i> referrs to the storage location of the data. This can be either
+ * <i>location</i> refers to the storage location of the data. This can be either
  * a valid member field of the storage object (e.g. "abstract"), "parameter" or
  * "attachment". The latter two will define the name of the parameter or attachment
  * automatically you just tell the Type to store itself in a parameter, that's it.
@@ -71,7 +71,7 @@
  * something like that).
  *
  * Datatypes authors are strongly encouraged to define defaults for both of these
- * configuration parameters, so that trival configurations can be made easily. The
+ * configuration parameters, so that trivial configurations can be made easily. The
  * default storage location should be either a parameter or an attachment, as this
  * is the only way to ensure multiple definitions of the same type will work out
  * of the box.
@@ -529,7 +529,7 @@ class midcom_helper_datamanager_datatype {
 
         //$this->_datamanager->append_error("Validating $field_description<br>\n");
         foreach ($validation_rules as $rule => $params ) {
-            /* is this a selfmade rule? If so, you're responsible for making the class available youreself! */
+            /* is this a selfmade rule? If so, you're responsible for making the class available yourself! */
             $object = null;
             $function = null;
             if (array_key_exists('function',$params)) {

@@ -21,7 +21,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
     var $_calendar_type = null;
 
     /**
-     * Current users object
+     * Current user's object
      */
     var $current_user = null;
 

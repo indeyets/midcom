@@ -261,7 +261,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * - A check for a valid and existing assignee, this includes a class existence check for classname restrictions
      *   for SELF privileges.
      * - A check for an existing content object GUID (this implicitly checks for midgard:read as well).
-     * - Enough privileges of the current user to update the objects privileges (the user
+     * - Enough privileges of the current user to update the object's privileges (the user
      *   must have midgard:update and midgard:privileges for this to succeed).
      * - A valid privilege value.
      */

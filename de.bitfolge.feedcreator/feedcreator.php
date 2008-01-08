@@ -1800,7 +1800,7 @@ class HTMLCreator extends FeedCreator {
 
 	/**
 	 * Used to prefix the stylenames to make sure they are unique
-	 * and do not clash with stylenames on the users' page.
+	 * and do not clash with stylenames on the user's page.
 	 */
 	var $stylePrefix;
 

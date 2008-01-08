@@ -264,13 +264,13 @@ class fi_hut_loginbroker_handler_index  extends midcom_baseclasses_components_ha
         $_MIDCOM->auth->request_sudo('fi.hut.loginbroker');
         if (!$this->_check_user($data))
         {
-            // The method should generate it's own errors but here we trap anyway
+            // The method should generate its own errors but here we trap anyway
             return false;
         }
         $this->_update_user($data);
         if (!$this->_login_user($data))
         {
-            // The method should generate it's own errors but here we trap anyway
+            // The method should generate its own errors but here we trap anyway
             return false;
         }
         $_MIDCOM->auth->drop_sudo();

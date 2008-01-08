@@ -1183,7 +1183,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
             {
                 /* If modified event has no-one or only creator as participant and no resources
                    then delete it (as it's unlikely the stub event is useful anymore) */
-                debug_add("event {$event->title} (#{$event->id}) has been robbed of all of it's resources, calling delete");
+                debug_add("event {$event->title} (#{$event->id}) has been robbed of all of its resources, calling delete");
                 //TODO: take notifications and repeats into account
                 $event->delete();
             }
@@ -1191,7 +1191,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
             {
                 //Otherwise just commit the changes
                 //TODO: take notifications and repeats into account
-                debug_add("event {$event->title} (#{$event->id}) has been robbed of some it's resources, calling update");
+                debug_add("event {$event->title} (#{$event->id}) has been robbed of some its resources, calling update");
                 $event->update();
             }
         }
@@ -1456,7 +1456,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     }
 
     /**
-     * Returns a string describing the event and it's participants
+     * Returns a string describing the event and its participants
      */
     function details_text($display_title = true, $member = false, $nl = "\n")
     {

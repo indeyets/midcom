@@ -8,7 +8,7 @@
  */
 
 /**
- * OpenPSA Supporview Site interface class.
+ * OpenPSA Supportview Site interface class.
  * 
  * @package net.nemein.supportview
  */
@@ -86,7 +86,7 @@ class net_nemein_supportview_viewer {
         // Otherwise we're in the default behaviour, show to user tickets sent from his domain
         if ($this->_user && $this->_user->email)
         {
-            //Get domain part of users email
+            //Get domain part of user's email
             if (preg_match('/@([^> ]+)/', $this->_user->email, $matches))
             {
                 //Check that ticket "from" address ends with said domain

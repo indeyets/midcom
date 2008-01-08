@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package net.nemein.discussion
  * @author The Midgard Project, http://www.midgard-project.org
@@ -13,7 +12,6 @@
  *
  * @package net.nemein.discussion
  */
-
 class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
 {
 

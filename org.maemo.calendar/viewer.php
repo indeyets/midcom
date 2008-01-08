@@ -11,7 +11,6 @@
  * 
  * @package org.maemo.calendar
  */
-
 class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
 {
 
@@ -360,7 +359,7 @@ class org_maemo_calendar_viewer extends midcom_baseclasses_components_request
     }
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

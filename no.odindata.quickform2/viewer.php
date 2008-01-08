@@ -96,7 +96,7 @@ class no_odindata_quickform2_viewer extends midcom_baseclasses_components_reques
     }
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

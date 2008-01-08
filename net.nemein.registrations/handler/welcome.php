@@ -12,7 +12,6 @@
  *
  * @package net.nemein.registrations
  */
-
 class net_nemein_registrations_handler_welcome extends midcom_baseclasses_components_handler
 {
     /**
@@ -124,7 +123,7 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
     }
 
     /**
-     * The welcome handler loades the currently visible events and displays them.
+     * The welcome handler loads the currently visible events and displays them.
      */
     function _show_welcome($handler_id, &$data)
     {

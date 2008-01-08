@@ -187,7 +187,7 @@ function &updateUser($session_ser, $userdata)
 {
 	continue_session($session_ser);
     session_require(array('isloggedin'=>'1'));
-    // get global users vars
+    // get global user's vars
     $logged_user =& user_get_object(user_getid());
     $authorized = false;
 

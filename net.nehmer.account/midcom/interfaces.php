@@ -23,10 +23,10 @@
  * email field or to set it readonly.
  *
  * <b>register_allow_type:</b> Use this to explicitly limit the account types that can
- * be regeisterd to. This must be a subset of the type listing found in the account schema.
+ * be registered to. This must be a subset of the type listing found in the account schema.
  *
  * <b>fallback_type:</b> Set this to avoid having to place each user into the same group.
- * If a users' group cannot be determined and this option is set, it is used as a fallback
+ * If a user's group cannot be determined and this option is set, it is used as a fallback
  * type.
  *
  * @package net.nehmer.account

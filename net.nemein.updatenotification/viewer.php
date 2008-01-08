@@ -90,7 +90,7 @@ class net_nemein_updatenotification_viewer extends midcom_baseclasses_components
     }
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

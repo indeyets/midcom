@@ -652,7 +652,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     /**
      * This function invokes the callback set in the component configuration upon
      * activation of an account. It will be executed at the end of the activation
-     * with current users privileges.
+     * with current user's privileges.
      *
      * Configuration syntax:
      * <pre>

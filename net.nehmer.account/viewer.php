@@ -483,7 +483,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
     }
 
     /**
-     * Populates the toolbars depending on the users rights.
+     * Populates the toolbars depending on the user's rights.
      *
      * @access protected
      */

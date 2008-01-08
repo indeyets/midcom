@@ -131,7 +131,7 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
     }
 
     /**
-     * Populates the node toolbar depending on the users rights.
+     * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
      */

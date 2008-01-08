@@ -7,7 +7,7 @@
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * 
- * Creates the midcom directory and it's subdirectories and 
+ * Creates the midcom directory and its subdirectories and 
  * makes symlinks to the files in question.
  * 
  * The major

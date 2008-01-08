@@ -381,7 +381,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
      *
      */
     /**
-     * Get a list of the objects history
+     * Get a list of the object's history
      * @param string objectid (usually the guid)
      * @return array list of revisions and revision comment.
      */

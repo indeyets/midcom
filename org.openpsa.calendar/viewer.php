@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package org.openpsa.calendar
  * @author Nemein Oy http://www.nemein.com/
@@ -10,6 +9,7 @@
 
 /**
  * org.openpsa.calendar site interface class.
+ * 
  * @package org.openpsa.calendar
  */
 class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request

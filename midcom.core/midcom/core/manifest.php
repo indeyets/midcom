@@ -118,7 +118,7 @@
  * </code>
  *
  * That way, object owners can read the object, even if the read access is
- * prohibited for a users group for example. Without the explicit
+ * prohibited for a user's group for example. Without the explicit
  * user default specification it would get inherited from there.
  *
  * So, if you take the very first example from above again (the one without

@@ -43,7 +43,7 @@ ob_start();
 define("GM_USE_LIB_AS_MODULE",      true); // Normal operation
 
 /**#@+ 
- * URL's of Gmail.
+ * URLs of Gmail.
  * @var string 
  */
 define("GM_LNK_GMAIL",              "https://mail.google.com/mail/");
