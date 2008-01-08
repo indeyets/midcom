@@ -640,6 +640,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 (
                     'extra',
                     'name',
+                    'component',
                 ),
                 'orders' => array
                 (
