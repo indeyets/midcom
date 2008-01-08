@@ -73,7 +73,7 @@
                 && options.favs_enabled)
             {
                 fav_btn.removeClass('net_nemein_favourites_action_disabled');
-                fav_cnt.removeClass('net_nemein_favourites_action_disabled');
+                favs_cnt.removeClass('net_nemein_favourites_action_disabled');
                 fav_btn.bind("click", function(){        
                     execute('fav', data.fav_url);
                 });
