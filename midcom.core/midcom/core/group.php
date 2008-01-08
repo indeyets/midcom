@@ -145,6 +145,7 @@ class midcom_core_group extends midcom_baseclasses_core_object
      *
      * @param midcom_core_user $user The user that should be looked-up.
      * @return Array An array of member groups or false on failure.
+     * @static
      */
     function list_memberships($user)
     {

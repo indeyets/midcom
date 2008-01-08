@@ -12,7 +12,6 @@
  * 
  * @package cc.kaktus.exhibitions
  */
-
 class cc_kaktus_exhibitions_navigation extends midcom_baseclasses_components_navigation
 {
     /**

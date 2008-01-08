@@ -27,7 +27,7 @@ if ($config)
     {
         if (count($unification_errors_bookmarks) == 0 && count($unification_errors_delicious) == 0)
         {
-            echo $GLOBALS["view_l10n"]->get("unification succesful");
+            echo $GLOBALS["view_l10n"]->get("unification successful");
         }
         else
         {

@@ -210,9 +210,10 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
     }
     /**
      * This function returns a list of the revisions as a
-     * key => value par where the key is the index of thhe revision
+     * key => value par where the key is the index of the revision
      * and the value is the revision id.
      * Order: revision 0 is the newest.
+     * 
      * @return array
      * @access public
      */
@@ -230,7 +231,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
     }
     /**
      * Lists the number of changes that has been done to the object
-     * @param none
+     * 
      * @return array list of changeids
      */
     function list_history()

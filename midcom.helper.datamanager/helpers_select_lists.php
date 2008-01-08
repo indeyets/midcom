@@ -80,7 +80,7 @@ function midcom_helper_datamanager__selectlist_allgroups_recursor($up, $spacer, 
 /**
  * Lists all groups recursively, using four spaces to indent subgroups.
  *
- * A no-selection element is added ontop of the list having an empty
+ * A no-selection element is added on top of the list having an empty
  * string as key.
  *
  * @return Array select datatype compatible group listing, indexed by guid.
@@ -153,7 +153,7 @@ function midcom_helper_datamanager_selectlist_allpersons_id()
 }
 
 /* TN: Where does this $id come from? disabling the function it seems broken. Please document
- * throughoutly!
+ * thoroughly!
 function midcom_helper_datamanager_get_next_score ()
 {
     $topics = mgd_list_topics($id, 'score');

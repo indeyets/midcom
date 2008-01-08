@@ -31,7 +31,7 @@
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     *
     * @package com.magnettechnologies.contactgrabber
-    **/
+    */
 class com_magnettechnologies_contactgrabber extends midcom_baseclasses_components_purecode
 {
 

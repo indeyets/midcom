@@ -205,6 +205,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
      *
      * @param string $type The type of the controller (the file name from the controller directory).
      * @return midcom_helper_datamanager2_controller A reference to the newly created controller instance.
+     * @static
      */
     function & create($type)
     {

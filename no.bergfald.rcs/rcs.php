@@ -16,32 +16,37 @@ class no_bergfald_rcs {
 
     /**
      * The guid of the object in question
-     * @var string buid
+     * 
+     * @var string guid
      * @access private
      */
      var $_guid = null;
 
     /**
      * Backend object
+     * 
      * @var object no_nu_versoning_backend
      * @access private
      */
      var $backend = null;
 
     /**
-     * Pointer to thhe diff object
+     * Pointer to the diff object
+     * 
      * @access private
      * @var object text_diff
      */
      var $_diff = null;
+     
     /**
      *
      *
      * @param string guid
      * @param string backend to use
      */
+     
     /**
-     * History arrayy of object
+     * History array of object
      */
     var $_history = null;
 
@@ -75,6 +80,7 @@ class no_bergfald_rcs {
 
         return $object;
     }
+    
     /**
      * Get a html diff between two versions.
      *
@@ -83,7 +89,6 @@ class no_bergfald_rcs {
      * @access public
      * @return array array with the original value, the new value and a diff -u
      */
-
     function get_diff($oldest_revision, $latest_revision)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -122,14 +127,14 @@ class no_bergfald_rcs {
                         // Run the diff
                         $return[$attribute]['diff'] = $renderer->render($diff);
 
-                        // Mofify the output for nicer rendering
+                        // Modify the output for nicer rendering
                         $return[$attribute]['diff'] = str_replace('<del>', "<span class=\"deleted\" title=\"removed in {$latest_revision}\">", $return[$attribute]['diff']);
                         $return[$attribute]['diff'] = str_replace('</del>', '</span>', $return[$attribute]['diff']);
                         $return[$attribute]['diff'] = str_replace('<ins>', "<span class=\"inserted\" title=\"added in {$latest_revision}\">", $return[$attribute]['diff']);
                         $return[$attribute]['diff'] = str_replace('</ins>', '</span>', $return[$attribute]['diff']);
                     }
                 } elseif (!is_null($GLOBALS['midcom_config']['utility_diff'])){
-                    /* this doesnt work */
+                    /* this doesn't work */
                     $command = $GLOBALS['midcom_config']['utility_diff'] . " -u <(echo \"$oldest_value\") <(echo \"{$newest[$attribute]}\") ";
 
                     $output = array();
@@ -201,7 +206,7 @@ class no_bergfald_rcs {
 
     /**
      * Lists the number of changes that has been done to the object
-     * @param none
+     * 
      * @return array list of changeids
      */
     function list_diffs()
@@ -247,9 +252,9 @@ class no_bergfald_rcs {
         return "";
     }
 
-   /**
+    /**
      * Lists the number of changes that has been done to the object
-     * @param none
+     * 
      * @return array list of changeids or empty array if no changes.
      */
     function list_history()

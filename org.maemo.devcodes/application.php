@@ -63,7 +63,7 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
     /**
      * Reject this application for a device 
      *
-     * @return bool indicating succes/failure
+     * @return bool indicating success/failure
      */
     function reject()
     {
@@ -104,7 +104,7 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
     /**
      * Accept this application for a device 
      *
-     * @return bool indicating succes/failure
+     * @return bool indicating success/failure
      */
     function accept()
     {

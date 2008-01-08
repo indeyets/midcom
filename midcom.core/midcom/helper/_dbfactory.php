@@ -114,7 +114,8 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
      * @param string $domain The domain property of the collector instance
      * @param mixed $value Value match for the collector instance
      * @return midcom_core_collector The initialized instance of the collector.
-     * @see midcom_core_querybuilder
+     * @see midcom_core_collector
+     * @static
      */
     function new_collector($classname, $domain, $value)
     {
@@ -133,6 +134,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
      * @param string $classname The name of the class for which you want to create a query builder.
      * @return midcom_core_querybuilder The initialized instance of the query builder.
      * @see midcom_core_querybuilder
+     * @static
      */
     function new_query_builder($classname)
     {

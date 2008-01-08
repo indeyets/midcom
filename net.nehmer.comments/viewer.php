@@ -23,7 +23,7 @@ class net_nehmer_comments_viewer extends midcom_baseclasses_components_request
 
     function _on_initialize()
     {
-        // Generic and personal welcom pages
+        // Generic and personal welcome pages
         $this->_request_switch['admin-welcome'] = Array
         (
             'handler' => Array('net_nehmer_comments_handler_admin', 'welcome'),

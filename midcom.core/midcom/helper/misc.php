@@ -463,7 +463,7 @@ function mgd_sort_group_id_array(&$array, $element_type, $group_type, $elementso
  * @param MidgardObject $object	The object at which to save the data.
  * @param mixed $var			The variable that should be saved.
  * @param string $name			The identifier to use for storage.
- * @return bool	Indicating succes.
+ * @return bool	Indicating success.
  */
 function mgd_save_var_as_attachment($object, &$var, $name) {
     $att = $object->getattachment($name);
@@ -871,7 +871,7 @@ function midcom_helper_purge_object($guid, $removeattachments=true)
  * @author       Aidan Lister <aidan@php.net>
  * @param        string     $file       Name of the file to look for
  * @return       bool       TRUE if the file exists, FALSE if it does not
- **/
+ */
 function midcom_file_exists_incpath ($file)
 {
     $paths = explode(PATH_SEPARATOR, get_include_path());

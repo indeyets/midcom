@@ -956,7 +956,7 @@ class midcom_helper__basicnav
 
     /**
      * This function is the controlling instance of the loading mechanism. It
-     * is able to load the navigation data of any topic within MidCOMs topic
+     * is able to load the navigation data of any topic within MidCOM's topic
      * tree into memory. Any uplink nodes that are not loaded into memory will
      * be loaded until any other known topic is encountered. After the
      * necessary data has been loaded with calls to _loadNodeData.
@@ -966,7 +966,7 @@ class midcom_helper__basicnav
      * in $midcom_errstr.
      *
      * @param int $node_id	The ID of the topic to be loaded
-     * @return int			MIDCOM_ERROK on succes, one of the MIDCOM_ERR... constants upon an error
+     * @return int			MIDCOM_ERROK on success, one of the MIDCOM_ERR... constants upon an error
      * @access private
      */
     function _loadNode($node_id)

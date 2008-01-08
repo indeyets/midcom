@@ -243,7 +243,7 @@ function contentTypeToString( $contentType )
 
 
 
-/*
+/**
  * Part class
  *
  * The Part class is just a container for various attachments of different content types.
@@ -311,7 +311,7 @@ function writeTopage()
 
 
 
-/*
+/**
  * MMSDecoder class
  *
  * The MMSDecoder class decodes binary MMS chunks so that you can extract its parts
@@ -913,7 +913,7 @@ function confirm($TRANSACTIONID,$cislo) {
 
 
 
-/*
+/**
  * MMSEncoder class
  *
  * The class that does the encoding of the mms message and writes it to a file.
@@ -1161,7 +1161,7 @@ class MMSEncoder
 }
 
 
-/*
+/**
  * MMSNotifyer class
  *
  * This class is used to send out the notification that will point the phone to the

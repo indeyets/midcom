@@ -46,6 +46,7 @@ class midcom_helper_replicator_importer extends midcom_baseclasses_components_pu
      *
      * @param string $type Type of the importer
      * @return midcom_helper_replicator_importer A reference to the newly created importer instance.
+     * @static
      */
     function & create($type)
     {
@@ -153,7 +154,7 @@ class midcom_helper_replicator_importer extends midcom_baseclasses_components_pu
      * @param string $object Importable Midgard object
      * @param boolean $use_force Whether to force importing
      * @return boolean Whether importing was successful
-     **/
+     */
     function import_object(&$object, $use_force)
     {
         $GLOBALS['midcom_helper_replicator_logger']->push_prefix(__CLASS__ . '::' . __FUNCTION__);

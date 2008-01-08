@@ -628,7 +628,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
         if (!$fp_file)
         {
             debug_add("Could not open file {$path} for writing, aborting", MIDCOM_LOG_ERROR);
-            /* This triggers unnessary watcher operation (we did not write to the attachment...)
+            /* This triggers unnecessary watcher operation (we did not write to the attachment...)
             $att->close();
             */
             fclose($fp_att);
@@ -643,7 +643,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
                 debug_add("Error while writing to '{$path}', aborting");
                 debug_pop();
                 fclose($fp_file);
-                /* This triggers unnessary watcher operation (we did not write to the attachment...)
+                /* This triggers unnecessary watcher operation (we did not write to the attachment...)
                 $att->close();
                 */
                 fclose($fp_att);
@@ -651,7 +651,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
             }
         }
         fclose($fp_file);
-        /* This triggers unnessary watcher operation (we did not write to the attachment...)
+        /* This triggers unnecessary watcher operation (we did not write to the attachment...)
         $att->close();
         */
         fclose($fp_att);

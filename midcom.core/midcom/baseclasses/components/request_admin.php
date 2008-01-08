@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package midcom.baseclasses
  * @author The Midgard Project, http://www.midgard-project.org
@@ -41,7 +40,6 @@
  * Full configuration example:
  *
  * <code>
- * <?php
  *  $this->_request_switch[] = Array
  *  (
  *  	'handler' => 'config_dm',
@@ -50,7 +48,6 @@
  *      'schema' => 'config',
  *      'disable_return_to_topic' => false
  *  );
- * ?>
  * </code>
  *
  *
@@ -117,7 +114,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
 
         if (! $this->_request_switch)
         {
-            // Generic and personal welcom pages
+            // Generic and personal welcome pages
             $this->_request_switch['welcome'] = Array
             (
                 'handler' => 'welcome_deprecated',

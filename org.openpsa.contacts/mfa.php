@@ -16,11 +16,11 @@ class fi_incognito_protustree_item {
     var $type = "";
    // var $children = array();
 
-    /*
-     * id:String (Objects guid)
-     * name:String
-     * type: String
-     * children:Array or Boolean
+    /**
+     * @param string $id (Object's guid)
+     * @param string $name
+     * @param string $type
+     * @param mixed $children Array or Boolean
      */
     function fi_incognito_protustree_item($id="",$name="",$type="group",$children="load_later",$options=array()) {
         // print("\nfi_incognito_protustree_item:".$name."\n");
@@ -31,7 +31,7 @@ class fi_incognito_protustree_item {
         $this->addChildren($children);
     }
 
-    /*
+    /**
      * Will receive empty array if item has no children,
      * "load_later":String if we are at the maximum depth and item has children
      */

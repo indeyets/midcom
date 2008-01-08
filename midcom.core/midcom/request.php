@@ -9,8 +9,11 @@
 /**
  * This class wraps the _POST and _REQUEST and argv arrays and should be used
  * to fetch variables.
+ * 
+ * @package midcom
  */
-class midcom_request {
+class midcom_request 
+{
     protected $vars = array();
     public function __construct($request_array = array(), $argv = array()) {
         $this->vars = $request_array;
@@ -43,7 +46,7 @@ class midcom_request {
      *  Get a trimmed version of a variable.
      *  @return mixed the request variable, but trimmed.
      *  @param $name the variable name
-     *  @param $deafult what to return if the variable does not exist.
+     *  @param $default what to return if the variable does not exist.
      */
     public function getTrim($name, $default = "")
     {
@@ -57,20 +60,20 @@ class midcom_request {
  */
 class midcom_url_notfound_exception extends Exception {    }
 
-/*
+/**
  * this class is responsible for building the urlparser filters that will handle the
  * different parts of the parsing process.
  *
  *
- * */
+ */
 class midcom_urlparserfactory {
 
-    /*
+    /**
      * Builds the list of filters that should be applied. Note that the filters are
      * applied in sequence and that the next filter will get information from the one
      * before.
      *
-     * */
+     */
     function __construct($config) {
         $this->config = $config;
     }
@@ -81,7 +84,7 @@ class midcom_urlparserfactory {
      * While most frameworks these days link parts of the urls directly to the
      * command name, we let the midcom be linked to the database instead. This makes
      * it easier for others to build the site without worrying about how to configure the command
-     * interprenter.
+     * interpreter.
      * @return midcom_url_paramcollector
      */
     function execute ($argv) {
@@ -130,7 +133,8 @@ class midcom_url_paramcollector {
      * The style to use for this request.
      */
     private $style = null;
-    /*
+    
+    /**
      * If the style may be overridden. gets set to true if
      * we got midcom-substyle...
      * Public as I didn't want to implement getters and setters.
@@ -197,8 +201,8 @@ class midcom_url_paramcollector {
     /**
      * Getter for config options
      * @param $name name of option
-     * @deafult default value of option,
-     **/
+     * @param $default default value of option,
+     */
     public function get_config($name, $default = false)
     {
         return (isset($this->config[$name])) ? $this->config[$name] : $default;

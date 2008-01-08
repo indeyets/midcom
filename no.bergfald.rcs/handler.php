@@ -70,7 +70,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
     }
 
     /**
-     * Deprecated interface, see get_plugin_handlers()
+     * @deprecated Deprecated interface, see get_plugin_handlers()
      */
     function get_request_switch()
     {
@@ -79,8 +79,9 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
 
     /**
      * Static function, returns the request array for the rcs functions.
-     * @param none
-     * @returns array of request params
+     * 
+     * @return array of request params
+     * @static
      */
     function get_plugin_handlers()
     {
@@ -170,7 +171,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
     }
 
     /**
-     * This function setts the correct Aegir navigationclass and
+     * This function sets the correct Aegir navigationclass and
      * /or calls the defined callbacks from the request component.
      * @todo add a way to get a schema out of this.
      */
@@ -181,7 +182,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
 
     /**
      * Load the object and the rcs backend
-     * @param none
+     * 
      */
     function _load_object()
     {

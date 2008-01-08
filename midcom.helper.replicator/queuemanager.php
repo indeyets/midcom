@@ -34,7 +34,9 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
 
     /**
      * The correct way to get a queue manager, call this statically, returns reference
-     **/
+     * 
+     * @static
+     */
     function &get()
     {
         if (!array_key_exists('midcom_helper_replicator_queuemanager_instance', $GLOBALS))
@@ -231,7 +233,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
     /**
      * Gets/creates the path for subscriptions spool dir
      * @todo make a smarter recursive directory creator
-     **/
+     */
     function _get_subscription_basedir(&$subscription)
     {
         $global_base = $this->_config->get('queue_root_dir');

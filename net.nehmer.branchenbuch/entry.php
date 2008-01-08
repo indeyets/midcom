@@ -275,7 +275,7 @@ class net_nehmer_branchenbuch_entry extends __net_nehmer_branchenbuch_entry
      * account creation schema, perhaps with a field declaration like this (assuming an account
      * type 'freelancer'):
      *
-     * <pre>
+     * <code>
      * 'category' => Array
      * (
      *     'title' => 'Beruf',
@@ -291,11 +291,12 @@ class net_nehmer_branchenbuch_entry extends __net_nehmer_branchenbuch_entry
      *     ),
      *     'widget' => 'select',
      * ),
-     * </pre>
+     * </code>
      *
      * @param string $guid The GUID of the category the new record should be created in.
      * @param midcom_db_person $person The record for which the default entry should be created.
      * @param midcom_db_topic $topic The YP topic in which we operate (used for configuration).
+     * @static
      */
     function create_default_entry($category_guid, $person, $topic)
     {

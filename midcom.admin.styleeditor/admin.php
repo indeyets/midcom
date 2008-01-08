@@ -13,12 +13,17 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
 
     var $msg;
 
-	/* the current topic we are in
+	/**
+	 * the current topic we are in
+	 * 
 	 * @var current_topic
 	 * @access public
-	 **/
+	 */
 	var $_current_topic = 0;
-    /* pointer to midcom_session_object */
+	
+    /**
+     * pointer to midcom_session_object 
+     */
     var $_session = null;
 
     /**

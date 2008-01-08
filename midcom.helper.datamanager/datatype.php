@@ -361,7 +361,7 @@ class midcom_helper_datamanager_datatype {
     /**
      * Returns the empty value for the widget.
      *
-     * The calle will automatically revert to this if and only if no default
+     * The call will automatically revert to this if and only if no default
      * value has been specified in the schema.
      *
      * This member should be overwritten in subclasses that do not use a simple
@@ -399,7 +399,7 @@ class midcom_helper_datamanager_datatype {
      * It is up to the
      * datatypes what part of their internal representation they return here. It is
      * safe to return multiline-strings, quoting is handled by the datamanager here,
-     * sou you just return the unencoded data.
+     * so you just return the unencoded data.
      *
      * This member should be overwritten if no simple textual datatypes
      * are in use.

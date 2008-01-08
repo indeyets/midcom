@@ -35,6 +35,7 @@ class midcom_helper_filesync_importer extends midcom_baseclasses_components_pure
      *
      * @param string $type type
      * @return midcom_helper_filesync_importer A reference to the newly created importer instance.
+     * @static
      */
     function & create($type)
     {

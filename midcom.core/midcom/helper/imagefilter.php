@@ -118,7 +118,7 @@ class midcom_helper_imagefilter
      * @todo Use ImageMagick Identify to check for a valid image.
      *
      * @param string filename The file to be edited.
-     * @returns true, if the file is valid, false otherwise.
+     * @return boolean true, if the file is valid, false otherwise.
      */
     function set_file($filename)
     {
@@ -149,7 +149,7 @@ class midcom_helper_imagefilter
      * Processing stops as soon as one filter command fails.
      *
      * @param string chain The filter chain to be processed (filter1();filter2();...)
-     * @returns true, if all filters have been successfully applied, false otherwise.
+     * @return boolean true, if all filters have been successfully applied, false otherwise.
      */
     function process_chain($chain)
     {
@@ -189,7 +189,7 @@ class midcom_helper_imagefilter
      * result in a NULL operation) and will ignore excessive arguments.
      *
      * @param string cmd The command to be executed.
-     * @returns true, if the filter executed successfully, false otherwise.
+     * @return boolean true, if the filter executed successfully, false otherwise.
      */
     function process_command($cmd)
     {
@@ -322,7 +322,7 @@ class midcom_helper_imagefilter
      *
      * @param string $command  The name of the callback to execute
      * @param array $args      The arguments passed to the callback
-     * @returns The return code of the callback.
+     * @return The return code of the callback.
      */
     function execute_user_callback($command, $args) {
         if (! function_exists($command))
@@ -352,7 +352,7 @@ class midcom_helper_imagefilter
      * Where $gamma is a positive floating point number, e.g. 1.2
      *
      * @param $gamma Gamma adjustment value.
-     * @returns true on success.
+     * @return boolean true on success.
      */
     function gamma($gamma)
     {
@@ -458,7 +458,7 @@ class midcom_helper_imagefilter
      *
      * Filter Syntax: exifrotate()
      *
-     * @returns true on success.
+     * @return boolean true on success.
      */
     function exifrotate()
     {
@@ -575,7 +575,7 @@ class midcom_helper_imagefilter
      * and less then 360; if omitted, a NULL operation is done.
      *
      * @param $rotate Degrees of rotation clockwise, negative amounts possible
-     * @returns true on success.
+     * @return boolean true on success.
      */
     function rotate($rotate)
     {
@@ -651,11 +651,11 @@ class midcom_helper_imagefilter
      * value.
      *
      * The resize will be done only if it would not increase the image
-     * as this won't gain you any benifit.
+     * as this won't gain you any benefit.
      *
      * @param int $x Width
      * @param int $y Height
-     * @returns true on success.
+     * @return boolean true on success.
      */
     function rescale($x, $y)
     {

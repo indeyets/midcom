@@ -30,6 +30,7 @@
  * Parameters natively.
  *
  * @package midcom.baseclasses
+ * @static
  */
 class midcom_baseclasses_core_dbobject
 {
@@ -37,7 +38,10 @@ class midcom_baseclasses_core_dbobject
      * "Pre-flight" checks for update method
      *
      * Separated so that dbfactory->import() can reuse the code
-     **/
+     * 
+     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     * @return bool Indicating success.
+     */
     function update_pre_checks(&$object)
     {
         debug_push_class($object, __FUNCTION__);
@@ -102,7 +106,9 @@ class midcom_baseclasses_core_dbobject
      * Post object creation operations for create
      *
      * Separated so that dbfactory->import() can reuse the code
-     **/
+     * 
+     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     */
     function update_post_ops(&$object)
     {
         debug_push_class($object, __FUNCTION__);
@@ -272,7 +278,9 @@ class midcom_baseclasses_core_dbobject
      * "Pre-flight" checks for create method
      *
      * Separated so that dbfactory->import() can reuse the code
-     **/
+     * 
+     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     */
     function create_pre_checks(&$object)
     {
         debug_push_class($object, __FUNCTION__);
@@ -360,7 +368,9 @@ class midcom_baseclasses_core_dbobject
      * Post object creation operations for create
      *
      * Separated so that dbfactory->import() can reuse the code
-     **/
+     * 
+     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     */
     function create_post_ops(&$object)
     {
         debug_push_class($object, __FUNCTION__);
@@ -427,7 +437,9 @@ class midcom_baseclasses_core_dbobject
      * "Pre-flight" checks for delete method
      *
      * Separated so that dbfactory->import() can reuse the code
-     **/
+     * 
+     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     */
     function delete_pre_checks(&$object)
     {
         debug_push_class($object, __FUNCTION__);
@@ -527,7 +539,9 @@ class midcom_baseclasses_core_dbobject
      * Post object creation operations for delete
      *
      * Separated so that dbfactory->import() can reuse the code
-     **/
+     * 
+     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     */
     function delete_post_ops(&$object)
     {
         debug_push_class($object, __FUNCTION__);
@@ -906,6 +920,8 @@ class midcom_baseclasses_core_dbobject
     
     /**
      * Generates URL-safe name for an object and stores it if needed
+     * 
+     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
      */
     function generate_urlname($object, $titlefield = 'title')
     {

@@ -45,6 +45,7 @@ class net_nemein_attention_exporter extends midcom_baseclasses_components_pureco
      *
      * @param string $type The type of the exporter (the file name from the exporter directory).
      * @return net_nemein_attention_exporter A reference to the newly created exporter instance.
+     * @static
      */
     function & create($type)
     {

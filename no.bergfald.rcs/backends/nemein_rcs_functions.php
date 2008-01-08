@@ -417,13 +417,13 @@ function rcs_data2object ($data, $guid){
     $object = mgd_get_object_by_guid($guid);
 
     /**
-     * Much of this is copied from NAdmin RCS parser, comments and some prosessing
+     * Much of this is copied from NAdmin RCS parser, comments and some processing
      * added (plus debug...)
      *
      */
 
     /*
-     * todo: use a propper parser!
+     * todo: use a proper parser!
      * */
      $curname = "";
      unset($dataarray);

@@ -65,7 +65,7 @@
  *
  * The most important change is that all four original component interface concepts
  * have been unified into a single class supporting the full interface. Obviously,
- * MidCOMs component loader had to be adapted to this operation.
+ * MidCOM's component loader had to be adapted to this operation.
  *
  * At this time, the core will not be able to handle the original pre-2.4 interface
  * any longer. Though it would be possible to implement an according proxy class, I
@@ -107,7 +107,7 @@
  * The average component will require something like this, part one is the component
  * Manifest:
  *
- * <pre>
+ * <code>
  * 'name' => 'net.nehmer.static',
  * 'purecode' => false,
  * 'version' => 1,
@@ -117,7 +117,7 @@
  *     'write' => Array (MIDCOM_PRIVILEGE_DENY, MIDCOM_PRIVILEGE_ALLOW)
  * ),
  * 'class_definitions' => Array('my_sepcial_mgd_schema_class.inc'),
- * </pre>
+ * </code>
  *
  * See the class midcom_core_manifest for further details.
  *
@@ -864,7 +864,7 @@ class midcom_baseclasses_components_interface
     // ===================== START OF THE EVENT HANDLERS =====================
 
     /**#@+
-     * This is an event handler which is called during MidCOMs component interaction.
+     * This is an event handler which is called during MidCOM's component interaction.
      * For most basic components, the default implementation should actually be enough.
      *
      * @access protected

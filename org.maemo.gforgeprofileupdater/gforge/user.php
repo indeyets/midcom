@@ -130,9 +130,9 @@ function &userGetGroups($session_ser,$user_id) {
 	return groups_to_soap($user->getGroups());
 }
 
-/*
-	Converts an array of User objects to soap data
-*/
+/**
+ * Converts an array of User objects to soap data
+ */
 function &users_to_soap($usrs) {
 	$return = array();
 	for ($i=0; $i<count($usrs); $i++) {

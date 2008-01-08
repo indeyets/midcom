@@ -59,6 +59,7 @@ class org_routamc_statusmessage_importer extends midcom_baseclasses_components_p
      *
      * @param string $type The type of the importer (the file name from the importer directory).
      * @return org_routamc_statusmessage_importer A reference to the newly created importer instance.
+     * @static
      */
     function & create($type)
     {

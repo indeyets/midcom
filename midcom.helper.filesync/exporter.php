@@ -34,6 +34,7 @@ class midcom_helper_filesync_exporter extends midcom_baseclasses_components_pure
      *
      * @param string $type type
      * @return midcom_helper_filesync_exporter A reference to the newly created exporter instance.
+     * @static
      */
     function & create($type)
     {

@@ -363,6 +363,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * @access protected
      * @param object $the_object A reference to the object or GUID to query.
      * @return Array A list of midcom_core_privilege instances.
+     * @static
      */
     function get_content_privileges($guid)
     {
@@ -390,6 +391,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * @access protected
      * @param object $the_object A reference to the object or GUID to query.
      * @return Array A list of midcom_core_privilege instances.
+     * @static
      */
     function get_self_privileges($guid)
     {
@@ -417,6 +419,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * @access protected
      * @param string GUID the GUID of the object for which we should look up privileges.
      * @return Array A list of midcom_core_privilege instances.
+     * @static
      */
     function get_all_privileges($guid)
     {
@@ -450,6 +453,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * @access protected
      * @param string $guid The GUID of the object for which to query ACL data.
      * @return Array A list of midcom_core_privilege instances.
+     * @static
      */
     function _query_all_privileges($guid)
     {
@@ -518,6 +522,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * @param string $assignee The identifier of the assignee to query.
      * @param string $classname The optional classname required only for class-limited SELF privileges.
      * @return midcom_core_privilege The privilege matching the constraints.
+     * @static
      */
     function get_privilege(&$object, $name, $assignee, $classname = '')
     {
@@ -598,6 +603,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * @param mixed $object A reference to the GUID or the full object instance for which we should load privileges.
      * @param midcom_core_user The MidCOM user for which we should collect the privileges, null uses the currently authenticated user.
      * @return Array An array of privilege_name => privilege_value pairs valid for the given user.
+     * @static
      */
     function collect_content_privileges(&$arg, $user = null)
     {

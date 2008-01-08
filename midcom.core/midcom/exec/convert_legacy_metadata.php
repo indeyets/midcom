@@ -96,9 +96,9 @@ function convert_article_approval($topic_id)
     }
 }
 
-/*
-* @ignore
-*/
+/**
+ * @ignore
+ */
 function hide_unapproved_photos($topic)
 {
     // TODO: this supports only local gallery config, not the one in sitegroup-config
@@ -117,8 +117,8 @@ function hide_unapproved_photos($topic)
 }
 
 /**
-* @ignore
-*/
+ * @ignore
+ */
 function convert_aegir($node_id)
 {
     $nap = new midcom_helper_nav();

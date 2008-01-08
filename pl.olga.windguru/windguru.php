@@ -6,9 +6,9 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-/*
-this is the function clients will use
-*/
+/**
+ * this is the function clients will use
+ */
 function windguru_forecast($id_spot,$code,$lang="") {
 	$wgf = new WindguruFcst($id_spot,$code,$lang);
 	echo $wgf->show();
@@ -39,10 +39,10 @@ class WindguruFcst {
  		$this->version = "1.5 beta";
 	}
 
-	/*
-	prints the forecast if available
-	takes care of updating from windguru.cz, caching the forecast, reading data status from windguru.cz etc...
-	*/
+	/**
+	 * prints the forecast if available
+	 * takes care of updating from windguru.cz, caching the forecast, reading data status from windguru.cz etc...
+	 */
 	function show()
 	{
 		if (!$this->id_spot || !$this->code)
@@ -200,7 +200,7 @@ class WindguruFcst {
 		return true;
 	}
 
-// updates data status from windguru.cz, if reload==1 then it updates immediatelly otherwise it will not
+// updates data status from windguru.cz, if reload==1 then it updates immediately otherwise it will not
 // update if last update was less then 10 minutes ago
 
 	function updateStatus($reload = 0)
@@ -331,7 +331,7 @@ class WindguruFcst {
 		}
 
 		$this->html = implode("",$fcst);
-		if($this->html) return true; // reading was succesful
+		if($this->html) return true; // reading was successful
 	}
 
 	function setLang($lang="") {

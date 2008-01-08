@@ -12,13 +12,13 @@ System Requirements:
 MidCOM 2.6 requires at least Midgard 1.7, as the new MgdSchema core is 
 now integrated into the MidCOM core. There are no known 
 problems with mod_midgard_preparser or the Apache 2 mod_midgard, but it
-has not been throughoutly tested.
+has not been thoroughly tested.
 
 PHP 5.1.x is required at least, 5.2 or newer is strongly recommended. You
 need the following PHP modules available:
 
 * iconv for character translation in the I18n subsystem
-* dba for flat file database support, one of the Berkly DB Handlers
+* dba for flat file database support, one of the Berkeley DB Handlers
   is strongly recommended here, they are the only ones tested (db2, db3 or db4)
 * The Multibyte String extensions are required.
 * The build-in EXIF functions are strongly recommended if you plan to use

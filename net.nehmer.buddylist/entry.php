@@ -89,6 +89,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
      * @param midcom_core_user $user The user of whom the entries should be listed,
      *    this defaults to the currently active user.
      * @return Array A list of username => midcom_core_user pairs.
+     * @static
      */
     function list_buddies($user = null)
     {
@@ -140,6 +141,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
      * @param midcom_core_user $user The user of whom the pending approvals should be listed,
      *    this defaults to the currently active user.
      * @return Array A QB resultset or false on failure.
+     * @static
      */
     function list_unapproved($user = null)
     {
@@ -161,6 +163,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
      * This function must be called statically and requires an authenticated user.
      *
      * @return int The pending approval count.
+     * @static
      */
     function get_unapproved_count()
     {
@@ -195,6 +198,7 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
      *
      * @return Array A list of midcom_core_user instances indexed by their current
      *     user name (use the GUID for all referrals!).
+     * @static
      */
     function list_online_buddies()
     {

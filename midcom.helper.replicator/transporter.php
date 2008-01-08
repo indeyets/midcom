@@ -53,6 +53,7 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
      *
      * @param midcom_helper_replication_subscription_dba $subscription Subscription
      * @return midcom_helper_replicator_transporter A reference to the newly created transporter instance.
+     * @static
      */
     function & create($subscription)
     {
@@ -105,7 +106,7 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
      *
      * @todo How to let transport specify retry interval
      *
-     **/
+     */
     function process(&$items)
     {
         // Subclasses must override this method

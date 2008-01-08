@@ -227,7 +227,7 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
         {
             debug_add('Filename part not specified in URL, generating');
             //We do not have filename in URL, generate one and redirect
-            /* It seesm created is returned as timestamp again
+            /* It seems created is returned as timestamp again
             debug_add("Generating timestamp from {$this->_request_data['query']->created}");
             $timestamp = strtotime($this->_request_data['query']->created);
             */

@@ -4,7 +4,7 @@
  * Featured object handler
  *
  * @package net.nemein.featured
-**/
+ */
 class net_nemein_featured_handler_featured extends midcom_baseclasses_components_handler
 {
     var $_content_topic = null;
@@ -21,7 +21,7 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
 
     /**
      * Simple default constructor.
-    **/
+     */
     function net_nemein_featured_handler_featured()
     {
         parent::midcom_baseclasses_components_handler();

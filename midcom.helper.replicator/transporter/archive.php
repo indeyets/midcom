@@ -38,7 +38,7 @@ class midcom_helper_replicator_transporter_archive extends midcom_helper_replica
      * Reads transport configuration from subscriptions parameters
      *
      * Also does some sanity checking
-     **/
+     */
     function _read_configuration_data()
     {
         if (!method_exists($this->subscription, 'list_parameters'))
@@ -255,7 +255,7 @@ class midcom_helper_replicator_transporter_archive extends midcom_helper_replica
 
     /**
      * Creates a .tar.bz2 archive of dumped files
-     **/
+     */
     function _create_archive_tar_bz2()
     {
         // Doublecheck
@@ -295,7 +295,7 @@ class midcom_helper_replicator_transporter_archive extends midcom_helper_replica
     /**
      * Sanity checks for _create_archive_tar_bz2()
      *
-     **/
+     */
     function _can_create_archive_tar_bz2()
     {
         return true;
@@ -303,7 +303,7 @@ class midcom_helper_replicator_transporter_archive extends midcom_helper_replica
 
     /**
      * Sanity checks for _create_archive_tar()
-     **/
+     */
     function _can_create_archive_tar()
     {
         return true;

@@ -31,7 +31,7 @@ class midcom_helper_replicator_transporter_email extends midcom_helper_replicato
      * Reads transport configuration from subscriptions parameters
      *
      * Also does some sanity checking
-     **/
+     */
     function _read_configuration_data()
     {
         if (!method_exists($this->subscription, 'list_parameters'))

@@ -42,6 +42,8 @@ class midcom_db_person extends midcom_baseclasses_database_person
      * We need a better solution here in DBA core actually, but it will be difficult to
      * do this as we cannot determine the current class in a polymorphic environment without
      * having a this (this call is static).
+     * 
+     * @static
      */
     function new_query_builder()
     {
@@ -49,7 +51,7 @@ class midcom_db_person extends midcom_baseclasses_database_person
     }
 
     /**
-     * Adds a user to a given Midgard Group. Calle must ensure access permissions
+     * Adds a user to a given Midgard Group. Caller must ensure access permissions
      * are right.
      *
      * @param string $name The name of the group we should be added to.

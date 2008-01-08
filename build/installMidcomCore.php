@@ -150,7 +150,7 @@ class installMidcomCore extends Task
         
         /***
          * Symlink core MgdSchema
-         **/
+         */
         $module_name = 'midcom_core';
         $schema = sprintf("%s/config/mgdschema/midcom_dbobjects.xml", $this->from);
         if (!file_exists($schema))

@@ -84,7 +84,7 @@ class midgard_admin_sitegroup_creation_config
 
     /**
      * Do not use the normal get/set_value api for these as they are related to auth.
-     **/
+     */
     function get_password()
     {
         return $this->_password;

@@ -22,7 +22,6 @@
  *
  * @package midcom
  */
-
 class midcom_core_group_virtual extends midcom_core_group
 {
     /**
@@ -160,6 +159,7 @@ class midcom_core_group_virtual extends midcom_core_group
      *
      * @param midcom_core_user $user The user that should be looked-up.
      * @return Array An array of member groups or false on failure, indexed by their id..
+     * @static
      */
     function list_memberships($user)
     {

@@ -355,7 +355,7 @@ if (!function_exists('midcom_helper_formatters_noimages'))
 
 /**
  * Chained
-**/
+*/
 
 function midcom_helper_formatters_links_and_obfmaillinks($content)
 {
@@ -399,7 +399,7 @@ _midcom_helper_formatters_register_filter('af','midcom_helper_formatters_automat
 
 /**
  * Helpers
-**/
+ */
 
 function _midcom_helper_formatters_register_filter($name, $method=null)
 {

@@ -74,7 +74,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
     }
 
     /**
-     * Deprecated interface, see get_plugin_handlers()
+     * @deprecated Deprecated interface, see get_plugin_handlers()
      */
     function get_request_switch()
     {
@@ -83,8 +83,9 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
 
     /**
      * Static function, returns the request array for the rcs functions.
-     * @param none
-     * @returns array of request params
+     * 
+     * @return array of request params
+     * @static
      */
     function get_plugin_handlers()
     {
@@ -186,7 +187,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
     }
 
     /**
-     * This function setts the correct Aegir navigationclass and
+     * This function sets the correct Aegir navigationclass and
      * /or calls the defined callbacks from the request component.
      * @todo add a way to get a schema out of this.
      */
@@ -197,7 +198,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
 
     /**
      * Load the object and the rcs backend
-     * @param none
+     * 
      */
     function _load_object()
     {

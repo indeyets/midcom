@@ -36,6 +36,8 @@ class net_nemein_wiki_wikipage extends midcom_db_article
      * We need a better solution here in DBA core actually, but it will be difficult to
      * do this as we cannot determine the current class in a polymorphic environment without
      * having a this (this call is static).
+     * 
+     * @static
      */
     function new_query_builder()
     {

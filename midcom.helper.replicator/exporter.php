@@ -51,6 +51,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
      *
      * @param midcom_helper_replication_subscription_dba $subscription Subscription
      * @return midcom_helper_replicator_exporter A reference to the newly created exporter instance.
+     * @static
      */
     function &create($subscription)
     {

@@ -327,7 +327,7 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
     /**
      * Creates a basic style
      * @access private
-     **/
+     */
     function _create_style()
     {
         if ($this->config->get_value('extend_style') != 'none')

@@ -113,7 +113,7 @@ class no_bergfald_rcs
                         $return[$attribute]['diff'] = $renderer->render($diff);
                     }
                 } elseif (!is_null($GLOBALS['midcom_config']['utility_diff'])){
-                    /* this doesnt work */
+                    /* this doesn't work */
                     $command = $GLOBALS['midcom_config']['utility_diff'] . " -u <(echo \"$oldest_value\") <(echo \"{$newest[$attribute]}\") ";
 
                     $output = array();
@@ -185,7 +185,7 @@ class no_bergfald_rcs
 
     /**
      * Lists the number of changes that has been done to the object
-     * @param none
+     * 
      * @return array list of changeids
      */
     function list_diffs()
@@ -233,7 +233,7 @@ class no_bergfald_rcs
 
    /**
      * Lists the number of changes that has been done to the object
-     * @param none
+     * 
      * @return array list of changeids or empty array if no changes.
      */
     function list_history()

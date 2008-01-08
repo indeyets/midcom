@@ -180,7 +180,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         $this->bind_metadata_to_object(MIDCOM_METADATA_VIEW, $object);
     }
     
-    /*
+    /**
      * Binds object to given metadata type.
      */
     function bind_metadata_to_object($metadata_type, &$object, $context_id = null)

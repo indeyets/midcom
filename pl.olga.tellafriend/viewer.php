@@ -43,7 +43,7 @@
  * </pre>
  *
  * @package pl.olga.tellafriend
- **/
+ */
 
 class pl_olga_tellafriend  extends midcom_baseclasses_components_purecode
 {

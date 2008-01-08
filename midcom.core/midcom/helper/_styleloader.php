@@ -661,7 +661,7 @@ class midcom_helper__styleloader {
      * component.
      *
      * @param MidgardTopic $topic the current componenttopic.
-     * @returns mixed the path to the components styledirectory.
+     * @return mixed the path to the components styledirectory.
      */
     function _getComponentSnippetdir($topic)
     {

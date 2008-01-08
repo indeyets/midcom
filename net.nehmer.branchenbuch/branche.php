@@ -271,7 +271,7 @@ class net_nehmer_branchenbuch_branche extends __net_nehmer_branchenbuch_branche
     }
 
     /**
-     * DBA magic defaults which assign listing porivileges to all authenticated users.
+     * DBA magic defaults which assign listing privileges to all authenticated users.
      */
     function get_class_magic_default_privileges()
     {
@@ -308,6 +308,7 @@ class net_nehmer_branchenbuch_branche extends __net_nehmer_branchenbuch_branche
      * @param string $type The name of the type for which we should list the categories.
      * @return Array List suitable for usage with select-style operations. In case of errors
      *     which are non-fatal, the error is logged and an empty array is returned.
+     * @static
      */
     function get_select_list_for_type($type)
     {

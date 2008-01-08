@@ -2519,7 +2519,7 @@ class midcom_application
      * Returns basically the object returned by mgd_get_midgard(), but the the variable
      * "self" is fixed by appending the MidCOM site prefix.
      *
-     * @returns MidgardObject    Midgard status information.
+     * @return MidgardObject    Midgard status information.
      */
     function get_midgard()
     {

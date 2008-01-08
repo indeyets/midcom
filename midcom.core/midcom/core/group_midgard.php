@@ -193,6 +193,7 @@ class midcom_core_group_midgard extends midcom_core_group
      *
      * @param midcom_core_user $user The user that should be looked-up.
      * @return Array An array of member groups or false on failure, indexed by their ID.
+     * @static
      */
     function list_memberships($user)
     {

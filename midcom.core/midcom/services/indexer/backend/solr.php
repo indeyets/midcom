@@ -190,9 +190,9 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
 
 class midcom_services_indexer_solrDocumentFactory {
 
-    /*
+    /**
      * The xml document to post.
-     * */
+     */
     var $document = null;
 
     public function __construct()
@@ -230,6 +230,7 @@ class midcom_services_indexer_solrDocumentFactory {
         }
 
     }
+    
     /**
      * Deletes one element
      * @param $id the element id
@@ -284,9 +285,9 @@ class midcom_services_indexer_solrDocumentFactory {
 
 class midcom_services_indexer_solrRequest {
 
-    /*
+    /**
      * the HTTP_Request object
-     * */
+     */
     var $request = null;
 
     /**
@@ -302,9 +303,10 @@ class midcom_services_indexer_solrRequest {
         return $this->do_post($this->factory->to_xml());
 
     }
-    /*
+    
+    /**
      * posts the xml to the suggested url using HTTP_Request.
-     * */
+     */
     function do_post($xml)
     {
         debug_push_class(__CLASS__, __FUNCTION__);

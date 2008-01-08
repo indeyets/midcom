@@ -180,7 +180,7 @@ define("TIME_ZONE","");
 
 /**
  * Version string.
- **/
+ */
 define("FEEDCREATOR_VERSION", "FeedCreator 1.7.6(BH)");
 
 
@@ -527,9 +527,9 @@ class FeedCreator extends HtmlDescribable {
 	var $syndicationURL, $image, $language, $copyright, $pubDate, $lastBuildDate, $editor, $editorEmail, $webmaster, $category, $docs, $ttl, $rating, $skipHours, $skipDays;
 
 	/**
-	* The url of the external xsl stylesheet used to format the naked rss feed.
-	* Ignored in the output when empty.
-	*/
+	 * The url of the external xsl stylesheet used to format the naked rss feed.
+	 * Ignored in the output when empty.
+	 */
 	var $xslStyleSheet = "";
 
 
@@ -538,7 +538,7 @@ class FeedCreator extends HtmlDescribable {
 	 */
 	var $items = Array();
 
-	/*
+	/**
 	 * Generator string
 	 *
 	 */
@@ -556,7 +556,7 @@ class FeedCreator extends HtmlDescribable {
 	/**
 	 * This feed's character encoding.
 	 * @since 1.6.1
-	 **/
+	 */
 	var $encoding = "UTF-8"; //"ISO-8859-1";
 
 
@@ -585,7 +585,7 @@ class FeedCreator extends HtmlDescribable {
 	 *
 	 *
 	 *
-	 **/
+	 */
 	 function version() {
 
 	 	return FEEDCREATOR_VERSION." (".$this->generator.")";

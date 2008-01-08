@@ -12,7 +12,6 @@
  *
  * See the various handler classes for details.
  *
- *
  * @package net.nehmer.jobmarket
  */
 class net_nehmer_jobmarket_viewer extends midcom_baseclasses_components_request
@@ -24,7 +23,7 @@ class net_nehmer_jobmarket_viewer extends midcom_baseclasses_components_request
 
     function _on_initialize()
     {
-        // Generic and personal welcom pages
+        // Generic and personal welcome pages
         $this->_request_switch['welcome'] = Array
         (
             'handler' => Array('net_nehmer_jobmarket_handler_welcome', 'welcome'),

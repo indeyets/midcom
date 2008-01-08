@@ -286,7 +286,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
 
     /**
      * This function returns a list of the revisions as a
-     * key => value par where the key is the index of thhe revision
+     * key => value par where the key is the index of the revision
      * and the value is the revision id.
      * Order: revision 0 is the newest.
      * @return array
@@ -306,7 +306,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
     }
     /**
      * Lists the number of changes that has been done to the object
-     * @param none
+     * 
      * @return array list of changeids
      */
     function list_history()
@@ -673,7 +673,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
 
                         if ($renderer_style == 'inline')
                         {
-                            // Mofify the output for nicer rendering
+                            // Modify the output for nicer rendering
                             $return[$attribute]['diff'] = str_replace('<del>', "<span class=\"deleted\" title=\"removed in {$latest_revision}\">", $return[$attribute]['diff']);
                             $return[$attribute]['diff'] = str_replace('</del>', '</span>', $return[$attribute]['diff']);
                             $return[$attribute]['diff'] = str_replace('<ins>', "<span class=\"inserted\" title=\"added in {$latest_revision}\">", $return[$attribute]['diff']);
@@ -683,7 +683,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
                 }
                 elseif (!is_null($GLOBALS['midcom_config']['utility_diff']))
                 {
-                    /* this doesnt work */
+                    /* this doesn't work */
                     $command = $GLOBALS['midcom_config']['utility_diff'] . " -u <(echo \"{$oldest_value}\") <(echo \"{$newest[$attribute]}\")";
 
                     $output = array();

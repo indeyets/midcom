@@ -45,6 +45,7 @@ class net_nemein_attention_importer extends midcom_baseclasses_components_pureco
      *
      * @param string $type The type of the importer (the file name from the importer directory).
      * @return net_nemein_attention_importer A reference to the newly created importer instance.
+     * @static
      */
     function & create($type)
     {

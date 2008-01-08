@@ -46,9 +46,9 @@ class midcom_core_querybuilder_cached
         $this->new_key .= "{$key}_$val";
     }
 
-    /*
+    /**
      * Makes sure that all calls are catched.
-     * */
+     */
     function __call($name, $args)
     {
         if ($this->qb == NULL)

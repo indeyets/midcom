@@ -95,6 +95,7 @@ class org_routamc_photostream_importer extends midcom_baseclasses_components_pur
      * @param string $type The type of the importer (the file name from the importer directory).
      * @param int $photostream ID of a photostream node
      * @return org_routamc_photostream_importer A reference to the newly created importer instance.
+     * @static
      */
     function & create($type, $photostream)
     {

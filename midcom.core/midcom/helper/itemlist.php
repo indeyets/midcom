@@ -76,12 +76,13 @@ class midcom_helper_itemlist
     }
 
     
-   /* get style. If the elements should use a special style, return that here. 
+   /**
+    * get style. If the elements should use a special style, return that here. 
     * if not. use default.
     * 
     * 
     * @return string Midcom stylename.
-    * */
+    */
     
     /** @ignore */
     function get_style()
@@ -89,7 +90,8 @@ class midcom_helper_itemlist
         return false;
     }
     
-    /* factory generate the object you want to use for getting a list of items for a certain topic.
+    /**
+     * factory generate the object you want to use for getting a list of items for a certain topic.
      * Use this function to create sorted lists. Example:
      *     require_once 'itemlist.php';
      *     $nav_object = midcom_helper_itemlist::factory( $navorder, &$this, $parent_topic);
@@ -133,11 +135,12 @@ class midcom_helper_itemlist
         return $sortclass;
     } 
 
-   /* get_config_parameters - get a list of which configuration parameters 
+   /**
+    * get_config_parameters - get a list of which configuration parameters 
     * may be set for this object.
-    * @param none
+    *
     * @return array to be added to the configuration object.
-    * */
+    */
     /** @ignore */
     function get_config_parameters () 
     {

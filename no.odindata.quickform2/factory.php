@@ -16,7 +16,7 @@ class no_odindata_quickform2_factory
      * The schema to use. Public until the controller is loaded.
      * @var array;
      * @access public
-     **/
+     */
     var $schema = null;
 
     /**
@@ -69,7 +69,7 @@ class no_odindata_quickform2_factory
     }
     /**
      * Returns the values from a submitted form
-     **/
+     */
     function values()
     {
         return $this->_controller->datamanager->types;

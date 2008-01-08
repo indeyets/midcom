@@ -74,9 +74,9 @@ class packageMidCOMcore extends Task
 	{
 		$this->returnProperty = $r;
 	}
-    /*
+    /**
      * the template pacakge.xml file to use. 
-     * */
+     */
     public function setTemplate($t) {
         $this->template = $t;
     }
@@ -90,7 +90,9 @@ class packageMidCOMcore extends Task
 
     // todo: add a setVersion from the commandline
     protected $copyfiles = array ();
-    /* array of files in the static dir. */
+    /**
+     * array of files in the static dir. 
+     */
     protected $staticFiles ;
 
 	/**
@@ -149,9 +151,9 @@ class packageMidCOMcore extends Task
     protected function getNotes($package) {
         // todo add release notes...
     }
-    /*
+    /**
      * This method builds the list of files in the static dir and adds them to the 
-     * */
+     */
     protected function addStatic($package) 
     {
 
@@ -187,10 +189,10 @@ class packageMidCOMcore extends Task
         $list->close();
     }
 
-    /*
+    /**
      * sets up the basic packageobject
-     * @returns the package object
-     * */
+     * @return the package object
+     */
     protected function makeBase($options) {
         PEAR::setErrorHandling(PEAR_ERROR_DIE);
         //$package = new PEAR_PackageFileManager2();

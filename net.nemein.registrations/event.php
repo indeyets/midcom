@@ -550,6 +550,8 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * We need a better solution here in DBA core actually, but it will be difficult to
      * do this as we cannot determine the current class in a polymorphic environment without
      * having a this (this call is static).
+     * 
+     * @static
      */
     function new_query_builder()
     {
@@ -559,7 +561,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     /**
      * Returns a list of all events open for registration.
      *
-     * Implementation note: nfortunately, open registration processing must still be done using
+     * Implementation note: Unfortunately, open registration processing must still be done using
      * the PHP level, as the open/close timestamps are contained in parameters.
      *
      * This is built on the list_all function for now, see there for further comments about
@@ -884,7 +886,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * We don't use the official get_csv_line interface btw., as this would
      * require us to un-csv-quote that string. (END TODO)
      *
-     * @todo Rewrite to a more suitable implementaiton with DM2 side support.
+     * @todo Rewrite to a more suitable implementation with DM2 side support.
      */
     function _dm_array_to_string(&$dm)
     {

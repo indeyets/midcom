@@ -16,14 +16,13 @@ class no_bergfald_rcs_aegir extends midcom_admin_aegir_module {
     /**
      * Static function, returns the request array for the rcs functions.
      * Add this to your _on_initialize function in the calling request:
-     * <pre>
+     * <code>
      * $rcs_array =  no_bergfald_rcs::get_request_array();
      * $this->request_switch = array_merge($this->request_switch, $rcs_array)
-     * </pre>
+     * </code>
      * 
-     * @param none
-     * @returns array of request params 
-     * 
+     * @return array of request params 
+     * @static
      */
     function get_request_switch() 
     {

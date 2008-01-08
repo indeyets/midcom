@@ -40,14 +40,14 @@ class midcom_helper_datamanager_widget_checkbox extends midcom_helper_datamanage
      * check if the text should be shown before or after the checkbox.
      * @access private
      * @var boolean
-     **/
+     */
     var $_textafter = true;
 
     /**
      * check if the HTML should be allowed in a description
      * @access private
      * @var boolean
-     **/
+     */
     var $_allow_html = false;
 
     function _constructor (&$datamanager, $field, $defaultvalue)
