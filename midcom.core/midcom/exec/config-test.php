@@ -146,20 +146,12 @@ function check_rcs()
 }
 
 // Some helpers
-$i18n =& $GLOBALS['midcom']->get_service('i18n');
-
-// Check the PHP Version and PHP_Compat availability
+$i18n =& $_MIDCOM->get_service('i18n');
 
 $version = phpversion();
-if (version_compare($version, '4.1.0', '<'))
+if (version_compare($version, '5.1.0', '<'))
 {
-    println('PHP Version', ERROR, 'PHP 4.1.0 or greater is required for MidCOM, 4.3.0 or greater is recommended.');
-}
-else if (version_compare($version, '4.3.0', '<'))
-{
-    println('PHP Version', WARNING, 'PHP 4.3.0 or greater is recommended for MidCOM.');
-    println_check_for_include_file('PHP/Compat.php', 'PEAR Package: PHP_Compat', 
-        ERROR, 'The PEAR Package PHP_Compat is required for pre-4.3.0 installations.');
+    println('PHP Version', ERROR, 'PHP 5.1.0 or greater is required for MidCOM, 4.3.0 or greater is recommended.');
 }
 else
 {
@@ -308,7 +300,7 @@ else
         $overload = ini_get('mbstring.func_overload');
         if ($overload != '7')
         {
-        	println('Multi-Byte String functions', WARNING, 'The Multi-Byte String functions are available, but this is an UTF-8 site and Function overloading is disabled, this is not recommended since string operations are erronous then.');
+        	println('Multi-Byte String functions', WARNING, 'The Multi-Byte String functions are available, but this is a UTF-8 site and Function overloading is disabled, this is not recommended since string operations are erronous then.');
         }
         else
         {
@@ -394,7 +386,7 @@ $cmd = "{$GLOBALS['midcom_config']['utility_imagemagick_base']}identify -version
 exec ($cmd, $output, $result);
 if ($result != 0)
 {
-    println('External Utility: ImageMagick', ERROR, 'The existance ImageMagick toolkit could not be verified, it is required for all kinds of image processing in MidCOM.'); 
+    println('External Utility: ImageMagick', ERROR, 'The existence ImageMagick toolkit could not be verified, it is required for all kinds of image processing in MidCOM.'); 
 }
 else
 {

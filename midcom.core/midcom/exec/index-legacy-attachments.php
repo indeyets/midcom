@@ -10,7 +10,7 @@
  * - Any for of datamanager controlled attachments used for storage of long
  *   varibales, recognized by their data_ name prefix.
  * - Any blob/image type attachments, recognized by some of their parameters.
- * - Any leaves accociated with net.siriux.photos topics are skipped completly.
+ * - Any leaves associated with net.siriux.photos topics are skipped completely.
  * 
  * NAP will used to traverse the registered topic tree, indexing all attachments
  * of each node and leaf found.
@@ -19,8 +19,8 @@
  * 
  * <i>Handle with care!</i> This handler unconditionally indexes all attachments 
  * found and not filtered along the above conditions. This might lead to attachments
- * beeing indexed accidentially or, which is even worse, already indexed attachments
- * beeing overwritten, loosing additional information that might be present.
+ * being indexed accidentially or, which is even worse, already indexed attachments
+ * being overwritten, loosing additional information that might be present.
  * 
  * @package midcom
  * @author The Midgard Project, http://www.midgard-project.org 
@@ -118,7 +118,7 @@ while (! is_null($nodeid))
 	        $leaf = $nap->get_leaf($leafid);
 	        if (is_null($leaf[MIDCOM_NAV_OBJECT]))
 	        {
-	            debug_add("The leaf {$leafid} does not have an accociated MidgardObject, skipping it.", MIDCOM_LOG_INFO);
+	            debug_add("The leaf {$leafid} does not have an associated MidgardObject, skipping it.", MIDCOM_LOG_INFO);
 	            debug_print_r('Leaf strucuture dump:', $leaf); 
 	            continue;
 	        }
