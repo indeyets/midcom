@@ -309,7 +309,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
             return;
         }
 
-        // Second step of reqeust data: Years and months.
+        // Second step of request data: Years and months.
         $first_year = $first_month->thisYear();
         $last_year = $last_month->thisYear();
 

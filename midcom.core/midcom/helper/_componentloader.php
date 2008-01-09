@@ -821,7 +821,7 @@ class midcom_helper__componentloader
      * Call this only if the operation in question has completed successfully.
      *
      * The component handlers can safely assume that it is only called once per object
-     * and operation at the end of the reqeust.
+     * and operation at the end of the request.
      *
      * This latter fact is important to understand: Watches are not executed immediately,
      * instead, they are collected throughout the request and executed during

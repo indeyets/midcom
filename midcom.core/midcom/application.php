@@ -3106,7 +3106,7 @@ class midcom_application
      *
      * @param int $lastmodified The date of last modification of this request.
      * @param string $permalinkguid The GUID used to create a permalink for this request.
-     * @see get_26_reqeust_metadata
+     * @see get_26_request_metadata()
      */
     function set_26_request_metadata($lastmodified, $permalinkguid)
     {
@@ -3130,7 +3130,7 @@ class midcom_application
      * @return Array An array with the two keys 'lastmodified' and 'permalinkguid' containing the
      *     values set with the setter pendant. For ease of use, there is also a key 'permalink'
      *     which contains a ready-made permalink.
-     * @see set_26_reqeust_metadata
+     * @see set_26_request_metadata()
      */
     function get_26_request_metadata($context = null)
     {

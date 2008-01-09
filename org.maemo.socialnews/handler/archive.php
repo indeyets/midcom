@@ -159,7 +159,7 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
             return;
         }
 
-        // Second step of reqeust data: Years and months.
+        // Second step of request data: Years and months.
         $now = new Date();
         $first_year = $first_post->getYear();
         $last_year = $now->getYear();
