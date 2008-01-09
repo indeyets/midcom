@@ -18,7 +18,7 @@
     'description' => 'Panel for Maemo community calendar',
     'maintainers' => array
     (
-        'username' => array
+        'w_i' => array
         (
             'name' => 'Jerry Jalava',
             'email' => 'jerry.jalava@nemein.net',

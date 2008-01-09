@@ -12,7 +12,7 @@
     'description' => 'Manages publicaitons in several (yet hard-corded and not DB-normalized) categories',
     'maintainers' => 
     array (
-      'midgard' => 
+      'torben' => 
       array (
         'name' => 'Torben Nehmer',
         'email' => 'torben@nehmer.net',

@@ -19,7 +19,7 @@
     	    'email' => 'juhana@nemein.com',  
     	    'role' => 'lead',  
     	 ),
-         'W_I' => Array
+         'w_i' => Array
          (  
             'name' => 'Jerry Jalava',  
      	    'email' => 'jerry.jalava@gmail.com',  

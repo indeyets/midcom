@@ -18,7 +18,7 @@
     'description' => 'Maemo Community Calendar',
     'maintainers' => array
     (
-        'username' => array
+        'w_i' => array
         (
             'name' => 'Jerry Jalava',
             'email' => 'jerry@nemein.com',

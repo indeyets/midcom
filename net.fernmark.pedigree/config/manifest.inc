@@ -18,7 +18,7 @@
     'description' => 'Database of dog pedigrees',
     'maintainers' => array
     (
-        'username' => array
+        'rambo' => array
         (
             'name' => 'Eero af Heurlin',
             'email' => 'rambo@iki.fi',

@@ -18,7 +18,7 @@
     'description' => 'Teams',
     'maintainers' => array
     (
-        'username' => array
+        'juhana' => array
         (
             'name' => 'Juhana Hirvilahti',
             'email' => 'juhana@nemein.com',
