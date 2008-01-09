@@ -86,19 +86,19 @@ class midcom_core_querybuilder_cached
 /**
  * MidCOM DBA level wrapper for the Midgard Query Builder.
  *
- * This class must be used instead anyplace within MidCOM instead of the real
+ * This class must be used anyplace within MidCOM instead of the real
  * midgard_query_builder object within the MidCOM Framework. This wrapper is
  * required for the correct operation of many MidCOM services.
  *
- * It essentially wraps the calls to midcom_helper__dbfactory::new_query_builder()
- * and midcom_helper__dbfactory::exec_query_builder().
+ * It essentially wraps the calls to {@link midcom_helper__dbfactory::new_query_builder()}
+ * and {@link midcom_helper__dbfactory::exec_query_builder()}.
  *
  * Normally you should never have to create an instance of this type directly,
  * instead use the get_new_qb() method available in the MidCOM DBA API or the
  * midcom_helper__dbfactory::new_query_builder() method which is still available.
  *
  * If you have to do create the instance manually however, do not forget to call the
- * initialize() function after construction, or the creation callbacks will fail.
+ * {@link initialize()} function after construction, or the creation callbacks will fail.
  *
  * <i>Developer's Note:</i>
  *

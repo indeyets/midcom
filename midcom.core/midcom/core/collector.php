@@ -10,19 +10,19 @@
 /**
  * MidCOM DBA level wrapper for the Midgard Collector.
  *
- * This class must be used instead anyplace within MidCOM instead of the real
+ * This class must be used anyplace within MidCOM instead of the real
  * midgard_collector object within the MidCOM Framework. This wrapper is
  * required for the correct operation of many MidCOM services.
  *
- * It essentially wraps the calls to midcom_helper__dbfactory::new_collector()
- * and midcom_helper__dbfactory::exec_collector().
+ * It essentially wraps the calls to {@link midcom_helper__dbfactory::new_collector()}
+ * and {@link midcom_helper__dbfactory::exec_collector()}.
  *
  * Normally you should never have to create an instance of this type directly,
  * instead use the get_new_mc() method available in the MidCOM DBA API or the
  * midcom_helper__dbfactory::new_collector() method which is still available.
  *
  * If you have to do create the instance manually however, do not forget to call the
- * initialize() function after construction, or the creation callbacks will fail.
+ * {@link initialize()} function after construction, or the creation callbacks will fail.
  *
  * <i>Developer's Note:</i>
  *
