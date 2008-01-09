@@ -1,7 +1,13 @@
 <?php
 /**
+ * @package org.openpsa.documents
+ * @author Nemein Oy http://www.nemein.com/
+ * @copyright Nemein Oy http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * OpenPSA Documents document management system
- *
  *
  * @package org.openpsa.documents
  */

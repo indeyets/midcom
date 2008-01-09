@@ -2,6 +2,10 @@
 /**
  * @package midcom.admin.settings
  */
+
+/**
+ * @package midcom.admin.settings
+ */
 class midcom_admin_settings_interface extends midcom_baseclasses_components_interface
 {
     function midcom_admin_settings_interface ()

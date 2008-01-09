@@ -6,6 +6,9 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/**
+ * @package org.maemo.socialnews
+ */
 class org_maemo_socialnews_score_article_dba extends __org_maemo_socialnews_score_article_dba
 {
     function org_maemo_socialnews_score_article_dba($id = null)

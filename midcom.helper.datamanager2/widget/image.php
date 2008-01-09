@@ -40,7 +40,7 @@ class midcom_helper_datamanager2_widget_image extends midcom_helper_datamanager2
     /**
      * Controls title processing.
      *
-     * @var1boolean      */
+     * @var boolean      */
     var $show_title = true;
 
     /**

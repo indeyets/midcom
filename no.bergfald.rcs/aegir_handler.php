@@ -1,10 +1,22 @@
 <?php
 /**
- * Aegir handler class.
  * @package no.bergfald.objectbrowser
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+
+/**
+ * @ignore
  */
 $_MIDCOM->componentloader->load('midcom.admin.aegir');
 
+
+/**
+ * Aegir handler class.
+ * @package no.bergfald.objectbrowser
+ */
 class no_bergfald_rcs_aegir extends midcom_admin_aegir_module {
 
 

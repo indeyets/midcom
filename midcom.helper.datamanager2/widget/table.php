@@ -7,6 +7,9 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/**
+ * @ignore
+ */
 die('The class midcom_helper_datamanager2_widget_table has been disabled, it' .
     'violates MidCOM namespacing and is not safe for multiple usage within the' .
     'same form.');

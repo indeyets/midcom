@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.mypage
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * OpenPSA Personal Summary component
  *
  * @package org.openpsa.mypage

@@ -1,5 +1,9 @@
 <?php
 /**
+ * @package org.openpsa.smslib
+ */
+
+/**
  * OpenPSA SMS library, handles sending SMS/MMS
  *
  * @package org.openpsa.smslib

@@ -8,6 +8,10 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @link http://www.microformats.org/wiki/hcalendar hCalendar microformat
  */
+
+/**
+ * @package org.maemo.calendarpanel 
+ */
 class org_maemo_calendarpanel_profile_leaf extends org_maemo_calendarpanel_leaf
 {
     

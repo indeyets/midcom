@@ -1,6 +1,13 @@
 <?php
 /**
- * Class for findinf suspected "related to" links
+ * @package org.openpsa.relatedto
+ * @author Nemein Oy, http://www.nemein.com/
+ * @copyright Nemein Oy, http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
+ * Class for finding suspected "related to" links
  *
  * @package org.openpsa.relatedto
  */

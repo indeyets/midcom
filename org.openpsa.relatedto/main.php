@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.relatedto
+ * @author Nemein Oy, http://www.nemein.com/
+ * @copyright Nemein Oy, http://www.nemein.com/
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * Class for handling "related to" information
  *
  * @package org.openpsa.relatedto

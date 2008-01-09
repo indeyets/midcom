@@ -11,6 +11,10 @@
  * @link http://www.microformats.org/wiki/hcard hCard microformat documentation
  * @link http://www.midgard-project.org/midcom-permalink-922834501b71daad856f35ec593c7a6d Contactwidget usage documentation
  */
+
+/**
+ * @package org.openpsa.contactwidget
+ */
 class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
 {
     /**

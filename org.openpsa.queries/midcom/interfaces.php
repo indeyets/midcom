@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.queries
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * OpenPSA queries library, handles encoding/sending and decoding.
  *
  * Startup loads main class, which is used for all operations.

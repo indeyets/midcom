@@ -5,6 +5,9 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/**
+ *
+ */
 if (!function_exists('midcom_helper_formatters_links'))
 {
     function midcom_helper_formatters_links($content,$echo_results=true)

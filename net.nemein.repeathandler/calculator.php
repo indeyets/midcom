@@ -1,12 +1,14 @@
 <?php
 /**
- * Calendar repeating event handler
- *
  * @package net.nemein.repeathandler
  * @author Henri Bergius, http://bergie.iki.fi
  * @version $Id$
  * @copyright Nemein Oy, http://www.nemein.com
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
+ * Calendar repeating event handler
  */
 class net_nemein_repeathandler_calculator extends midcom_baseclasses_components_purecode
 {

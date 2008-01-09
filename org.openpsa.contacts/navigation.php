@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package org.openpsa.contacts
  * @author Nemein Oy, http://www.nemein.com/

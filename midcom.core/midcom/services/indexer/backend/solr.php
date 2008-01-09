@@ -23,7 +23,6 @@ require_once 'HTTP/Request.php';
  * @see midcom_services_indexer_XMLComm_ResponseParser
  *
  */
-
 class midcom_services_indexer_backend_solr extends midcom_services_indexer_backend
 {
 
@@ -187,7 +186,6 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
  * @package midcom.services
  * @see midcom_services_indexer
  */
-
 class midcom_services_indexer_solrDocumentFactory {
 
     /**
@@ -281,8 +279,9 @@ class midcom_services_indexer_solrDocumentFactory {
 /**
  * This class handles the posting to the server.
  * It's a simple wrapper around the HTTP_request library.
+ *
+ * @package midcom.services
  */
-
 class midcom_services_indexer_solrRequest {
 
     /**

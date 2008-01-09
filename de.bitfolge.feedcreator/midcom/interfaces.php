@@ -1,9 +1,12 @@
 <?php
 /**
  * RSS and Atom feed generator library
- * http://www.bitfolge.de/rsscreator-en.html
- * Available under LGPL license
- * 
+ * @link http://www.bitfolge.de/rsscreator-en.html
+ * @license LGPL license
+ * @package de.bitfolge.feedcreator
+ */
+
+/** 
  * Startup loads main class, which is used for all operations.
  * 
  * @package de.bitfolge.feedcreator

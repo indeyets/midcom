@@ -1,5 +1,12 @@
 <?php
 /**
+ * @package org.openpsa.directmarketing
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
+/**
  * OpenPSA direct marketing and mass mailing component
  *
  * @package org.openpsa.directmarketing

@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package net.nemein.favourites
+ */
 
 /**
  * Favourite object create handler

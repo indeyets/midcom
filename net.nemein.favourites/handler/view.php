@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package net.nemein.favourites
+ */
 
 /**
  * Favourites index page handler
