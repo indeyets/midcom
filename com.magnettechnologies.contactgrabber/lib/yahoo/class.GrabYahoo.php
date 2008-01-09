@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package com.magnettechnologies.contactgrabber
+ */
 
 /**
     * Contact Grabber

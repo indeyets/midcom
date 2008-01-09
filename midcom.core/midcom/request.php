@@ -57,6 +57,8 @@ class midcom_request
 
 /**
  * This one is thrown if the url does not map to anything
+ *
+ * @package midcom
  */
 class midcom_url_notfound_exception extends Exception {    }
 
@@ -65,6 +67,7 @@ class midcom_url_notfound_exception extends Exception {    }
  * different parts of the parsing process.
  *
  *
+ * @package midcom
  */
 class midcom_urlparserfactory {
 
@@ -100,6 +103,8 @@ class midcom_urlparserfactory {
 }
 /**
  * Implements a simple representation of the url as a stack
+ *
+ * @package midcom
  */
 class midcom_url_urlstack
 {
@@ -127,6 +132,8 @@ class midcom_url_urlstack
 /**
  * This class is used to collect information to be used when executing the
  * request
+ *
+ * @package midcom
  */
 class midcom_url_paramcollector {
     /**
@@ -213,6 +220,8 @@ class midcom_url_paramcollector {
  * A parser for a part of a url
  * The parser will get in the url where its work starts and will work greedily on that
  * until it gets nothing and returns.
+ *
+ * @package midcom
  */
 abstract class midcom_url_parser {
     /**
@@ -240,12 +249,16 @@ abstract class midcom_url_parser {
  * This class does not parse anything and used as a placeholder for the last_parser
  * variable above.
  *
+ * @package midcom
  */
 class midcom_url_nullparser  extends midcom_url_parser
 {
     public function __construct() {}
 }
 
+/**
+ * @package midcom
+ */
 class midcom_url_topicgetter {
     public function get_topic($topic_name, $up) {
         // todo!
@@ -254,6 +267,8 @@ class midcom_url_topicgetter {
 }
 /**
  * This class parses any part of the url that is deemed to be related to topics
+ *
+ * @package midcom
  */
 class midcom_url_topic extends midcom_url_parser
 {
@@ -295,6 +310,8 @@ class midcom_url_topic extends midcom_url_parser
  * /serveattachment
  * /midcom-substyle
  * etc
+ *
+ * @package midcom
  */
 class midcom_url_midcom extends midcom_url_parser {
 

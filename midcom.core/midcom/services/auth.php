@@ -433,8 +433,8 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      *
      * @var int
      * @access private
-     * @see request_sudo();
-     * @see drop_sudo();
+     * @see request_sudo()
+     * @see drop_sudo()
      */
     var $_component_sudo = 0;
 
@@ -1400,7 +1400,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             $sitegroup = mgd_get_sitegroup();
             $sitegroup->name = 'SG0';
         }
-        
+
         if (!isset($_SERVER['PHP_AUTH_USER']))
         {
             header("WWW-Authenticate: Basic realm=\"{$sitegroup->name}\"");

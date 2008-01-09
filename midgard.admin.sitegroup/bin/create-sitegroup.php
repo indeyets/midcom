@@ -7,6 +7,10 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * 
  */
+
+/**
+ * @ignore
+ */
 ini_set('include_path','..:'.ini_get('include_path'));
 
 require_once 'Console/Getargs.php';

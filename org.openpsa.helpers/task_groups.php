@@ -9,6 +9,9 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/**
+ * Function for listing groups tasks contacts are members of
+ */
 function org_openpsa_helpers_task_groups(&$task, $mode = 'id')
 {
     //TODO: Localize something for the empty choice ?

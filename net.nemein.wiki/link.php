@@ -8,6 +8,8 @@
 
 /**
  * MidCOM wrapped class for access to stored queries
+ *
+ * @package net.nemein.wiki
  */
 class net_nemein_wiki_link_dba extends __net_nemein_wiki_link_dba
 {

@@ -3,6 +3,7 @@
  * @package org.openpsa.directmarketing
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  *
+ *
  * Copyright (c) 2006 Jukka Zitting <jz@yukatan.fi>
  * This file is part of OpenPSA.
  *
@@ -21,6 +22,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+/**
+ *
+ */
 if (isset($_GET["token"]))
 {
     $token = $_GET["token"];

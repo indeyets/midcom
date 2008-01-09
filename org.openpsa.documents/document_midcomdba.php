@@ -8,7 +8,7 @@
 
 /**
  * @package org.openpsa.documents
- * @todo: This is a hotfix.
+ * @todo This is a hotfix.
  */
 class midcom_org_openpsa_document extends __midcom_org_openpsa_document
 {

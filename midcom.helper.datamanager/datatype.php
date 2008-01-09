@@ -344,7 +344,7 @@ class midcom_helper_datamanager_datatype {
      *
      * @return mixed The default ("empty") value for the widget.
      * @access private
-     * @see midcom_helper_datamanager_datatype::_get_empty_value();
+     * @see midcom_helper_datamanager_datatype::_get_empty_value()
      */
     function _get_default_value()
     {

@@ -369,7 +369,7 @@ function rcs_checkout($what, $version)
              break;
          case 1:
              if (eregi("^[ ]*<([a-z]+)><!\[CDATA\[(.*)$", $tempdata[$i], $args)){
-                 // begining CDATA!
+                 // beginning CDATA!
                 $status["block"] = $args[1];
                  $status["level"] = 2;
                  $dataarray[$status["block"]] = $args[2] . "\n";

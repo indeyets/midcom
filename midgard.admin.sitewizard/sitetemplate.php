@@ -9,6 +9,8 @@
 
 /**
  * midgard.admin.sitewizard site template handling interface class.
+ *
+ * @package midgard.admin.sitewizard
  */
 class midgard_admin_sitewizard_sitetemplate extends midcom_baseclasses_components_handler
 {

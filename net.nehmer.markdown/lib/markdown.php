@@ -156,7 +156,7 @@ if (strcasecmp(substr(__FILE__, -16), "classTextile.php") == 0) {
 #
 
 # Regex to match balanced [brackets].
-# Needed to insert a maximum bracked depth while converting to PHP.
+# Needed to insert a maximum bracket depth while converting to PHP.
 $md_nested_brackets_depth = 6;
 $md_nested_brackets =
     str_repeat('(?>[^\[\]]+|\[', $md_nested_brackets_depth).
@@ -692,7 +692,7 @@ function _HashHTMLBlocks_HashClean($text) {
 function _HashBlock($text) {
 #
 # Called whenever a tag must be hashed. When a function insert a block-level
-# tag in $text, it pass through this function and is automaticaly escaped,
+# tag in $text, it pass through this function and is automatically escaped,
 # which remove the need to call _HashHTMLBlocks at every step.
 #
     # Swap back any tag hash found in $text so we do not have to _UnhashTags
@@ -712,7 +712,7 @@ function _RunBlockGamut($text, $hash_html_blocks = TRUE) {
     if ($hash_html_blocks) {
         # We need to escape raw HTML in Markdown source before doing anything
         # else. This need to be done for each block, and not only at the
-        # begining in the Markdown function since hashed blocks can be part of
+        # beginning in the Markdown function since hashed blocks can be part of
         # a list item and could have been indented. Indented blocks would have
         # been seen as a code block in previous pass of _HashHTMLBlocks.
         $text = _HashHTMLBlocks($text);
@@ -1866,7 +1866,7 @@ function _Detab($text) {
 #
     global $md_tab_width;
 
-    # For each line we separate the line in blocks delemited by
+    # For each line we separate the line in blocks delimited by
     # tab characters. Then we reconstruct every line by adding the
     # appropriate number of space between each blocks.
 
@@ -1892,7 +1892,7 @@ function _Detab($text) {
 
 function _UnslashQuotes($text) {
 #
-#	This function is useful to remove automaticaly slashed double quotes
+#	This function is useful to remove automatically slashed double quotes
 #	when using preg_replace and evaluating an expression.
 #	Parameter:  String.
 #	Returns:    The string with any slash-double-quote (\") sequence replaced

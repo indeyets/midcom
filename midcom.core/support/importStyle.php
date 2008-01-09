@@ -23,8 +23,8 @@ class import_style {
                 'desc'  => 'Name of the midgard configuration file.',
                 'default' => 'midgard',
         );
-        
-        
+
+
 
         $args = Console_Getargs::factory($opts_config);
         $header = "Usage: " .basename($_SERVER['SCRIPT_NAME'])." [options]\n\n" ;
@@ -45,13 +45,13 @@ class import_style {
         echo "using config: " . $args->getValue('configuration') . "\n";
         mgd_config_init($args->getValue('configuration'));
     }
-    
+
     function run () {
         $dir = $this->args->getValue(CONSOLE_GETARGS_PARAMS);
         if (!is_dir($dir)) {
             die("$dir is not a directory.Exiting...\n");
         }
-        
+
         $name = basename($dir);
         $style_name = "template_{$name}";
         $qb = new midgardQueryBuilder('midgard_style');
@@ -81,14 +81,14 @@ class import_style {
         }
 
         echo "Installing template: " . $style->name ;
-        
+
         $files = dir($dir);
         $elements = array();
         while (($file = $files->read()) !== false ) {
             if (substr($file,0, 1) == '.' || !is_file("$dir/$file") ) continue;
             $path = pathinfo($file);
             if ($path['extension'] == 'php') {
-                
+
                 $elements[] = str_replace('.php', '', $path['basename']);
             } else {
                 echo "@todo: install static $file\n";
@@ -100,7 +100,7 @@ class import_style {
         }
 
         echo "Remember that you have to clear the midgard pagecache to see effects!\n";
-        
+
     }
 
     function add_element_to_style ($style, $element_name) {
@@ -108,7 +108,7 @@ class import_style {
 
         $file = $dir . "/" . $element_name . ".php";
         if (!is_file($file) || ! is_readable($file)) {
-            die("$file is not accessable!\n");
+            die("$file is not accessible!\n");
         }
 
         $qb = new MidgardQueryBuilder('midgard_element');
@@ -132,12 +132,12 @@ class import_style {
         }
         else
         {
-            
+
             $element = $elements[0];
             // check if there is a newer version in the db.
             $date = strtotime ( $element->metadata->revised ) ;
-                
-            //YYYY-MM-DDThh:mm:ss 
+
+            //YYYY-MM-DDThh:mm:ss
             $file_date = filemtime($file);
             if ($date > $file_date && !$this->pompt("Do you want to overwrite the current $element_name element?", false ) ) {
                 return;
@@ -162,32 +162,32 @@ class import_style {
                 $defaultStr = 'Yes/No';
             }
             $fp = fopen('php://stdin', 'r');
-            
+
             while (true) {
                 echo $question, " ", $defaultStr, ": ";
                 $response = trim(fgets($fp, 8192));
-                
+
                 if (!is_null($default) AND $response == '') {
                     return $default;
                 }
-    
+
                 switch (strtolower($response)) {
                     case 'y':
                     case '1':
                     case 'yes':
                     case 'true':
                         return true;
-                    
+
                     case 'n':
                     case '0':
                     case 'no':
                     case 'false':
                         return false;
-                    
+
                     default:
                         continue;
                 }
-            }  
+            }
     }
 
 }

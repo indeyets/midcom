@@ -118,7 +118,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      * The options available to the client. You should not access this variable directly,
      * as this information may be loaded on demand, depending on the types configuration.
      *
-     * @see get_all_options();
+     * @see get_all_options()
      * @var Array
      * @access public
      */

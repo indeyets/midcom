@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package com.magnettechnologies.contactgrabber
+ */
 
 /*
 This class connects to the MSNM service and returns

@@ -1,5 +1,10 @@
 <?php
-/* phpFlickr Class 2.0.0
+/**
+ * @package org.routamc.photostream
+ */
+
+/**
+ * phpFlickr Class 2.0.0
  * Written by Dan Coulter (dan@dancoulter.com)
  * Sourceforge Project Page: http://www.sourceforge.net/projects/phpflickr/
  * Released under GNU Lesser General Public License (http://www.gnu.org/copyleft/lgpl.html)

@@ -8,6 +8,9 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/*
+ * Helper function for listing virtual groups of user
+ */
 function org_openpsa_helpers_workgroups($add_me = 'last', $show_members = false)
 {
     //mgd_debug_start();

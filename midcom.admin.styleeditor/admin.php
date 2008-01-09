@@ -15,14 +15,14 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
 
 	/**
 	 * the current topic we are in
-	 * 
+	 *
 	 * @var current_topic
 	 * @access public
 	 */
 	var $_current_topic = 0;
-	
+
     /**
-     * pointer to midcom_session_object 
+     * pointer to midcom_session_object
      */
     var $_session = null;
 
@@ -311,7 +311,7 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
      * Display the content, it uses the handler as determined by can_handle.
      * This overrides the basic show method of the class to include the ais style around the component.
      *
-     * @see _on_show();
+     * @see _on_show()
      */
     function show()
     {

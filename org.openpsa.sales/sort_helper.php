@@ -7,6 +7,9 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/**
+ *
+ */
 function org_openpsa_sales_sort_link($mode, $label, $element = 'th')
 {
     $static_base = MIDCOM_STATIC_URL . '/';

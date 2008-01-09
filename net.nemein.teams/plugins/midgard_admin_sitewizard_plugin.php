@@ -1,8 +1,15 @@
 <?php
-
+/**
+ * @package net.nemein.teams
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
 /**
  * This is a plugin for creating user home topic
+ *
+ * @package net.nemein.teams
  */
 class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_handler
 {

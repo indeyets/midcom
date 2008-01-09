@@ -8,6 +8,8 @@
 
 /**
  * MidCOM wrapped class for access to stored queries
+ *
+ * @package net.nemein.rss
  */
 class net_nemein_rss_feed_dba extends __net_nemein_rss_feed_dba
 {

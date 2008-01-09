@@ -8,6 +8,9 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/**
+ * @return boolean Indicating success.
+ */
 function org_openpsa_helpers_schema_modifier(&$datamanager, $field, $key, $value, $schema = 'default', $create_field = true)
 {
     if (array_key_exists($schema, $datamanager->_layoutdb))

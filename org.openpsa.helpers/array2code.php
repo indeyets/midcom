@@ -1,9 +1,16 @@
 <?php
 /**
  * returns array as code to generate it
+ *
  * @package org.openpsa.helpers
+ * @author Eero af Heurlin, http://www.iki.fi/rambo
+ * @copyright Nemein Oy, http://www.nemein.com
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+/**
+ * returns array as code to generate it
+ */
 if (!function_exists('array2code')) {
     function array2code($arr, $level=0, $code = '')
     {

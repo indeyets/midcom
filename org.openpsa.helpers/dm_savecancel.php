@@ -8,6 +8,10 @@
  * @copyright Nemein Oy, http://www.nemein.com
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
+
+/**
+ * Function for adding JavaScript buttons for saving/cancelling DataManager form via toolbar
+ */
 function org_openpsa_helpers_dm_savecancel(&$toolbar, &$handler)
 {
     if (   !is_object($toolbar)

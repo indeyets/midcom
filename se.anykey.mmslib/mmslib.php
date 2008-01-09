@@ -248,6 +248,8 @@ function contentTypeToString( $contentType )
  *
  * The Part class is just a container for various attachments of different content types.
  * The data itself is not stored though, it merely contains a reference to the file
+ *
+ * @package se.anykey.mmslib
  */
 
 class Part
@@ -318,6 +320,8 @@ function writeTopage()
  *
  * Limitations: The parsing of Content-type for parts is not complete so you won't get
  *              the filename for instance.
+ *
+ * @package se.anykey.mmslib
  */
 
 class MMSDecoder
@@ -925,6 +929,8 @@ function confirm($TRANSACTIONID,$cislo) {
  *              content. The only header currently supported for parts is the simple
  *              Content-type header. So currently this can only be used to deliver
  *              chunks of content collections - no complete presentations
+ *
+ * @package se.anykey.mmslib
  */
 
 class MMSEncoder
@@ -1167,6 +1173,8 @@ class MMSEncoder
  * This class is used to send out the notification that will point the phone to the
  * MMS that is located at a certain URL. The SMS service is your simple web interface
  * using HTTP 1.1 GET. Change this to fit your system and your way of SMS sending
+ *
+ * @package se.anykey.mmslib
  */
 class MMSNotifyer
 {

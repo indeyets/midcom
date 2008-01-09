@@ -14,6 +14,8 @@
  */
 $_MIDCOM->auth->require_admin_user();
 
+@ini_set('max_execution_time', 0);
+
 $qb = midcom_db_topic::new_query_builder();
 $qb->begin_group('AND');
     $qb->add_constraint('parameter.domain', '=', 'midcom');

@@ -6,9 +6,13 @@
  * @version $Id: resources.php,v 1.2 2005/10/14 06:59:52 bergius Exp $
  * @copyright Nemein Oy, http://www.nemein.com
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
- * @return Array List of persons appropriate for the current selection
  */
 
+/**
+ * Helper function for listing virtual groups of user
+ *
+ * @return Array List of persons appropriate for the current selection
+ */
 function org_openpsa_helpers_resources()
 {
     // List members of selected ACL group for usage in DM arrays

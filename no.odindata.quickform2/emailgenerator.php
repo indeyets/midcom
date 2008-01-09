@@ -11,6 +11,8 @@
  * quickform email.
  *
  * You should extend this class and change the execute method only.
+ *
+ * @package no.odindata.quickform2
  */
 class no_odindata_quickform2_emailgenerator
 {

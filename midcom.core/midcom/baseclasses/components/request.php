@@ -635,7 +635,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @param int $argc The argument count
      * @param Array $argv The argument list
      * @return boolean Indicating whether the request was handled successfully.
-     * @see _on_handle();
+     * @see _on_handle()
      */
     public function handle($argc, $argv)
     {
@@ -769,7 +769,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * generic preparation. If this function returns false, the regular output
      * handler will not be called.
      *
-     * @see _on_show();
+     * @see _on_show()
      */
     public function show()
     {

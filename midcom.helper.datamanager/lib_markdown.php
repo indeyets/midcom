@@ -1,20 +1,29 @@
 <?php
+/**
+ * @package midcom.helper.datamanager
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
 
+/**
+ *
+ */
 #
 # Markdown  -  A text-to-HTML conversion tool for web writers
 #
-# Copyright (c) 2004 John Gruber  
+# Copyright (c) 2004 John Gruber
 # <http://daringfireball.net/projects/markdown/>
 #
-# Copyright (c) 2004 Michel Fortin - PHP Port  
+# Copyright (c) 2004 Michel Fortin - PHP Port
 # <http://www.michelf.com/projects/php-markdown/>
 #
 
 
 global	$MarkdownPHPVersion, $MarkdownSyntaxVersion,
 		$md_empty_element_suffix, $md_tab_width,
-		$md_nested_brackets_depth, $md_nested_brackets, 
-		$md_escape_table, $md_backslash_escape_table, 
+		$md_nested_brackets_depth, $md_nested_brackets,
+		$md_escape_table, $md_backslash_escape_table,
 		$md_list_level;
 
 $MarkdownPHPVersion    = '1.0.1'; # Fri 17 Dec 2004
@@ -91,9 +100,9 @@ if (strcasecmp(substr(__FILE__, -16), "classTextile.php") == 0) {
 #
 
 # Regex to match balanced [brackets].
-# Needed to insert a maximum bracked depth while converting to PHP.
+# Needed to insert a maximum bracket depth while converting to PHP.
 $md_nested_brackets_depth = 6;
-$md_nested_brackets = 
+$md_nested_brackets =
 	str_repeat('(?>[^\[\]]+|\[', $md_nested_brackets_depth).
 	str_repeat('\])*', $md_nested_brackets_depth);
 
@@ -278,7 +287,7 @@ function _HashHTMLBlocks($text) {
 					[ ]{0,'.$less_than_tab.'}
 					<(hr)				# start tag = $2
 					\b					# word break
-					([^<>])*?			# 
+					([^<>])*?			#
 					/?>					# the matching end tag
 					[ \t]*
 					(?=\n{2,}|\Z)		# followed by a blank line or end of document
@@ -333,7 +342,7 @@ function _RunBlockGamut($text) {
 		array('{^[ ]{0,2}([ ]?\*[ ]?){3,}[ \t]*$}mx',
 			  '{^[ ]{0,2}([ ]? -[ ]?){3,}[ \t]*$}mx',
 			  '{^[ ]{0,2}([ ]? _[ ]?){3,}[ \t]*$}mx'),
-		"\n<hr$md_empty_element_suffix\n", 
+		"\n<hr$md_empty_element_suffix\n",
 		$text);
 
 	$text = _DoLists($text);
@@ -485,7 +494,7 @@ function _DoAnchors_reference_callback($matches) {
 		if ( isset( $md_titles[$link_id] ) ) {
 			$title = $md_titles[$link_id];
 			$title = str_replace(array('*',     '_'),
-								 array($md_escape_table['*'], 
+								 array($md_escape_table['*'],
 									   $md_escape_table['_']), $title);
 			$result .=  " title=\"$title\"";
 		}
@@ -505,7 +514,7 @@ function _DoAnchors_inline_callback($matches) {
 
 	# We've got to encode these to avoid conflicting with italics/bold.
 	$url = str_replace(array('*', '_'),
-					   array($md_escape_table['*'], $md_escape_table['_']), 
+					   array($md_escape_table['*'], $md_escape_table['_']),
 					   $url);
 	$result = "<a href=\"$url\"";
 	if (isset($title)) {
@@ -515,7 +524,7 @@ function _DoAnchors_inline_callback($matches) {
 							 $title);
 		$result .=  " title=\"$title\"";
 	}
-	
+
 	$result .= ">$link_text</a>";
 
 	return $result;
@@ -543,7 +552,7 @@ function _DoImages($text) {
 		  \]
 
 		)
-		}xs', 
+		}xs',
 		'_DoImages_reference_callback', $text);
 
 	#
@@ -593,7 +602,7 @@ function _DoImages_reference_callback($matches) {
 		if (isset($md_titles[$link_id])) {
 			$title = $md_titles[$link_id];
 			$title = str_replace(array('*', '_'),
-								 array($md_escape_table['*'], 
+								 array($md_escape_table['*'],
 									   $md_escape_table['_']), $title);
 			$result .=  " title=\"$title\"";
 		}
@@ -639,7 +648,7 @@ function _DoHeaders($text) {
 	# Setext-style headers:
 	#	  Header 1
 	#	  ========
-	#  
+	#
 	#	  Header 2
 	#	  --------
 	#
@@ -705,7 +714,7 @@ function _DoLists($text) {
 		  )
 		)
 	'; // mx
-	
+
 	# We use a different prefix before nested lists than top-level lists.
 	# See extended comment in _ProcessListItems().
 
@@ -731,7 +740,7 @@ function _DoLists_callback($matches) {
 	$marker_ul  = '[*+-]';
 	$marker_ol  = '\d+[.]';
 	$marker_any = "(?:$marker_ul|$marker_ol)";
-	
+
 	$list = $matches[1];
 	$list_type = preg_match("/$marker_ul/", $matches[3]) ? "ul" : "ol";
 	# Turn double returns into triple returns, so that we can make a
@@ -749,7 +758,7 @@ function _ProcessListItems($list_str, $marker_any) {
 #	into individual list items.
 #
 	global $md_list_level;
-	
+
 	# The $md_list_level global keeps track of when we're inside a list.
 	# Each time we enter a list, we increment it; when we leave a list,
 	# we decrement. If it's zero, we're not in a list anymore.
@@ -770,7 +779,7 @@ function _ProcessListItems($list_str, $marker_any) {
 	# without resorting to mind-reading. Perhaps the solution is to
 	# change the syntax rules such that sub-lists must start with a
 	# starting cardinal number; e.g. "1." or "a.".
-	
+
 	$md_list_level++;
 
 	# trim trailing blank lines:
@@ -899,11 +908,11 @@ function _EncodeCode($_) {
 	$_ = str_replace('&', '&amp;', $_);
 
 	# Do the angle bracket song and dance:
-	$_ = str_replace(array('<',    '>'), 
+	$_ = str_replace(array('<',    '>'),
 					 array('&lt;', '&gt;'), $_);
 
 	# Now, escape characters that are magic in Markdown:
-	$_ = str_replace(array_keys($md_escape_table), 
+	$_ = str_replace(array_keys($md_escape_table),
 					 array_values($md_escape_table), $_);
 
 	return $_;
@@ -945,7 +954,7 @@ function _DoBlockQuotes_callback($matches) {
 
 	$bq = preg_replace('/^/m', "  ", $bq);
 	# These leading spaces screw with <pre> content, so we need to fix that:
-	$bq = preg_replace_callback('{(\s*<pre>.+?</pre>)}sx', 
+	$bq = preg_replace_callback('{(\s*<pre>.+?</pre>)}sx',
 								'_DoBlockQuotes_callback2', $bq);
 
 	return "<blockquote>\n$bq\n</blockquote>\n\n";
@@ -999,7 +1008,7 @@ function _EncodeAmpsAndAngles($text) {
 
 	# Ampersand-encoding based entirely on Nat Irons's Amputator MT plugin:
 	#   http://bumppo.net/projects/amputator/
-	$text = preg_replace('/&(?!#?[xX]?(?:[0-9a-fA-F]+|\w+);)/', 
+	$text = preg_replace('/&(?!#?[xX]?(?:[0-9a-fA-F]+|\w+);)/',
 						 '&amp;', $text);;
 
 	# Encode naked <'s
@@ -1023,7 +1032,7 @@ function _EncodeBackslashEscapes($text) {
 
 
 function _DoAutoLinks($text) {
-	$text = preg_replace("!<((https?|ftp):[^'\">\\s]+)>!", 
+	$text = preg_replace("!<((https?|ftp):[^'\">\\s]+)>!",
 						 '<a href="\1">\1</a>', $text);
 
 	# Email addresses: <address@domain.foo>
@@ -1063,7 +1072,7 @@ function _EncodeEmailAddress($addr) {
 	$length = strlen($addr);
 
 	# leave ':' alone (to spot mailto: later)
-	$addr = preg_replace_callback('/([^\:])/', 
+	$addr = preg_replace_callback('/([^\:])/',
 								  '_EncodeEmailAddress_callback', $addr);
 
 	$addr = "<a href=\"$addr\">$addr</a>";
@@ -1088,7 +1097,7 @@ function _UnescapeSpecialChars($text) {
 # Swap back in all the special characters we've hidden.
 #
 	global $md_escape_table;
-	return str_replace(array_values($md_escape_table), 
+	return str_replace(array_values($md_escape_table),
 					   array_keys($md_escape_table), $text);
 }
 
@@ -1107,7 +1116,7 @@ function _TokenizeHTML($str) {
 #               the second is the actual value.
 #
 #
-#   Regular expression derived from the _tokenize() subroutine in 
+#   Regular expression derived from the _tokenize() subroutine in
 #   Brad Choate's MTRegex plugin.
 #   <http://www.bradchoate.com/past/mtregex.php>
 #
@@ -1121,7 +1130,7 @@ function _TokenizeHTML($str) {
 	$parts = preg_split("{($match)}", $str, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 	foreach ($parts as $part) {
-		if (++$index % 2 && $part != '') 
+		if (++$index % 2 && $part != '')
 			array_push($tokens, array('text', $part));
 		else
 			array_push($tokens, array('tag', $part));
@@ -1147,13 +1156,13 @@ function _Detab($text) {
 #
 	global $md_tab_width;
 
-	# For each line we separate the line in blocks delemited by
+	# For each line we separate the line in blocks delimited by
 	# tab characters. Then we reconstruct the line adding the appropriate
-	# number of space charcters.
-	
+	# number of space characters.
+
 	$lines = explode("\n", $text);
 	$text = "";
-	
+
 	foreach ($lines as $line) {
 		# Split in blocks.
 		$blocks = explode("\t", $line);
@@ -1173,7 +1182,7 @@ function _Detab($text) {
 
 function _UnslashQuotes($text) {
 #
-#	This function is useful to remove automaticaly slashed double quotes
+#	This function is useful to remove automatically slashed double quotes
 #	when using preg_replace and evaluating an expression.
 #	Parameter:  String.
 #	Returns:    The string with any slash-double-quote (\") sequence replaced
@@ -1221,7 +1230,7 @@ expected; (3) the output Markdown actually produced.
 
 
 Version History
---------------- 
+---------------
 
 See the readme file for detailed release notes for this version.
 
@@ -1233,22 +1242,22 @@ See the readme file for detailed release notes for this version.
 Author & Contributors
 ---------------------
 
-Original Perl version by John Gruber  
+Original Perl version by John Gruber
 <http://daringfireball.net/>
 
-PHP port and other contributions by Michel Fortin  
+PHP port and other contributions by Michel Fortin
 <http://www.michelf.com/>
 
 
 Copyright and License
 ---------------------
 
-Copyright (c) 2004 Michel Fortin  
-<http://www.michelf.com/>  
+Copyright (c) 2004 Michel Fortin
+<http://www.michelf.com/>
 All rights reserved.
 
-Copyright (c) 2003-2004 John Gruber   
-<http://daringfireball.net/>   
+Copyright (c) 2003-2004 John Gruber
+<http://daringfireball.net/>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

@@ -367,7 +367,7 @@ class midcom_application
      *
      * @var string
      * @access private
-     * @see midcom_application::get_host_prefix();
+     * @see get_host_prefix()
      */
     private $_cached_host_prefix = '';
 
@@ -376,7 +376,7 @@ class midcom_application
      *
      * @var string
      * @access private
-     * @see midcom_application::get_page_prefix();
+     * @see get_page_prefix()
      */
     private $_cached_page_prefix = '';
 
@@ -385,7 +385,7 @@ class midcom_application
      *
      * @var string
      * @access private
-     * @see midcom_application::get_host_name();
+     * @see get_host_name()
      */
     private $_cached_host_name = '';
 
@@ -544,7 +544,7 @@ class midcom_application
      *
      * This function must be called before any output starts.
      *
-     * @see midcom_application::_process()
+     * @see _process()
      */
     public function codeinit()
     {
@@ -1010,7 +1010,7 @@ class midcom_application
             $path = $object->component;
             if (!$path)
             {
-                $path = 'midcom.core.nullcomponent';        
+                $path = 'midcom.core.nullcomponent';
                 debug_add("No component defined for this node.", MIDCOM_LOG_ERROR);
                 debug_print_r("Root node:",$object,MIDCOM_LOG_DEBUG);
             }
@@ -1568,7 +1568,7 @@ class midcom_application
      * @param mixed $value    The value to be stored
      * @param int $param1    See get_context_data()
      * @param int $param2    See get_context_data()
-     * @see midcom_application::get_context_data()
+     * @see get_context_data()
      * @access private
      */
     function _set_context_data($value, $param1, $param2 = null)
@@ -1637,7 +1637,7 @@ class midcom_application
      * @param mixed $key        The key associated to the value.
      * @param mixed $value    The value to store. (This is stored by-reference!)
      * @param int $contextid    The context to associated this data with (defaults to the current context)
-     * @see midcom_application::get_custom_context_data()
+     * @see get_custom_context_data()
      */
     function set_custom_context_data ($key, &$value, $contextid = null) {
         if (is_null($contextid))
@@ -1664,8 +1664,8 @@ class midcom_application
      * @param int $param1    See get_context_data()
      * @param int $param2    See get_context_data()
      * @return mixed        The requested value, which is returned by Reference!
-     * @see midcom_application::get_context_data()
-     * @see midcom_application::set_custom_context_data()
+     * @see get_context_data()
+     * @see set_custom_context_data()
      */
     function & get_custom_context_data($param1, $param2 = null)
     {
@@ -1732,7 +1732,7 @@ class midcom_application
      * be available.
      *
      * @param string $newsub The substyle to append.
-     * @see midcom_application::substyle_prepend()
+     * @see substyle_prepend()
      */
     function substyle_append ($newsub)
     {
@@ -1766,7 +1766,7 @@ class midcom_application
      * be available.
      *
      * @param string $newsub The substyle to prepend.
-     * @see midcom_application::substyle_append()
+     * @see substyle_append()
      */
     function substyle_prepend($newsub)
     {
@@ -2550,10 +2550,10 @@ class midcom_application
      *
      * @param string $url    The URL to the file to-be referenced.
      * @param boolean $prepend Whether to add the JS include to beginning of includes
-     * @see midcom_application::add_jscript();
-     * @see midcom_application::add_jsonload();
-     * @see midcom_application::print_jscripts();
-     * @see midcom_application::print_jsonload();
+     * @see add_jscript()
+     * @see add_jsonload()
+     * @see print_jscripts()
+     * @see print_jsonload()
      */
     function add_jsfile($url, $prepend = false)
     {
@@ -2604,10 +2604,10 @@ class midcom_application
      * The sequence of the add_jsfile and add_jscript commands is kept stable.
      *
      * @param string $script    The code to be included directly in the page.
-     * @see midcom_application::add_jsfile();
-     * @see midcom_application::add_jsonload();
-     * @see midcom_application::print_jscripts();
-     * @see midcom_application::print_jsonload();
+     * @see add_jsfile()
+     * @see add_jsonload()
+     * @see print_jscripts()
+     * @see print_jsonload()
      */
     function add_jscript($script, $defer = '', $prepend = false)
     {
@@ -2633,7 +2633,7 @@ class midcom_application
      *
      * @param string $script    The code to be included in the state.
      * @param string $state    The state where to include the code to. Defaults to document.ready
-     * @see midcom_application::print_jquery_statuses();
+     * @see print_jquery_statuses()
      */
     function add_jquery_state_script($script, $state = 'document.ready')
     {
@@ -2657,7 +2657,7 @@ class midcom_application
      *
      * @param  string $script    The input between the <object></object> tags.
      * @param  array  $attributes Array of attribute=> value pairs to be placed in the tag.
-     * @see midcom_application::print_head();
+     * @see print_head()
      *
      */
 
@@ -2676,7 +2676,7 @@ class midcom_application
      *  head section of the page.
      *
      *  @param  array  $attributes Array of attribute=> value pairs to be placed in the tag.
-     *  @see midcom_application::print_head();
+     *  @see print_head()
      */
     function add_meta_head($attributes = null)
     {
@@ -2695,7 +2695,7 @@ class midcom_application
      *
      * @param  string $script    The input between the <style></style> tags.
      * @param  array  $attributes Array of attribute=> value pairs to be placed in the tag.
-     * @see midcom_application::print_head();
+     * @see print_head()
      */
     function add_style_head($script, $attributes = null)
     {
@@ -2719,7 +2719,7 @@ class midcom_application
      * </pre>
      *
      *  @param  array  $attributes Array of attribute=> value pairs to be placed in the tag.
-     *  @see midcom_application::print_head();
+     *  @see print_head()
      */
     function add_link_head( $attributes = null )
     {
@@ -2790,10 +2790,10 @@ class midcom_application
      * backwards-compatibility.
      *
      * @param string $method    The name of the method to be called on page startup, including parameters but excluding the ';'.
-     * @see midcom_application::add_jsfile();
-     * @see midcom_application::add_jscript();
-     * @see midcom_application::print_jscripts();
-     * @see midcom_application::print_jsonload();
+     * @see add_jsfile()
+     * @see add_jscript()
+     * @see print_jscripts()
+     * @see print_jsonload()
      */
     function add_jsonload($method)
     {
@@ -2830,10 +2830,10 @@ class midcom_application
      * </HTML>
      * </code>
      *
-     * @see midcom_application::add_jsfile();
-     * @see midcom_application::add_jscript();
-     * @see midcom_application::add_jsonload();
-     * @see midcom_application::print_jscripts();
+     * @see add_jsfile()
+     * @see add_jscript()
+     * @see add_jsonload()
+     * @see print_jscripts()
      */
     function print_jsonload()
     {
@@ -2858,12 +2858,12 @@ class midcom_application
      * clean site, just omit the print calls and you should be fine in almost all
      * cases.
      *
-     * @see midcom_application::add_link_head
-     * @see midcom_application::add_object_head
-     * @see midcom_application::add_style_head
-     * @see midcom_application::add_meta_head
-     * @see midcom_application::add_jsfile();
-     * @see midcom_application::add_jscript();
+     * @see add_link_head
+     * @see add_object_head
+     * @see add_style_head
+     * @see add_meta_head
+     * @see add_jsfile()
+     * @see add_jscript()
      */
     function print_head_elements()
     {
@@ -2935,8 +2935,8 @@ class midcom_application
      *
      * This method is called from print_head_elements method.
      *
-     * @see midcom_application::add_jquery_state_script
-     * @see midcom_application::print_head_elements
+     * @see add_jquery_state_script
+     * @see print_head_elements
      */
     function print_jquery_statuses()
     {

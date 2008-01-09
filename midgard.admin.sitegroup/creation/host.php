@@ -641,7 +641,9 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
 
 }
 
-
+/**
+ * @package midgard.admin.sitegroup
+ */
 class midgard_admin_sitegroup_creation_host_17 extends midgard_admin_sitegroup_creation_host
 {
     /**
@@ -747,6 +749,9 @@ class midgard_admin_sitegroup_creation_host_17 extends midgard_admin_sitegroup_c
 
 }
 
+/**
+ * @package midgard.admin.sitegroup
+ */
 class midgard_admin_sitegroup_creation_host_18 extends midgard_admin_sitegroup_creation_host {
 
 

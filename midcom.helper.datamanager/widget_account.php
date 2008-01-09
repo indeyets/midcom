@@ -22,12 +22,12 @@
  *
  * <b>Sample configuration</b>
  *
- * <pre>
+ * <code>
  * "account" => array (
  *     "description" => "Account",
  *     "datatype" => "account"
  * ),
- * </pre>
+ * </code>
  *
  * <b>CSS Styles in use by the Widget</b>
  *
