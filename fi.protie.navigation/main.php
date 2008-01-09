@@ -125,6 +125,14 @@ class fi_protie_navigation
      * @var boolean
      */
     var $show_only_current = false;
+    
+    /**
+     * Should the CSS class be in the link as well
+     * 
+     * @access public
+     * @var boolean
+     */
+    var $class_to_link = false;
 
     /**
      * Restrict the amount of levels listed.
@@ -692,9 +700,18 @@ class fi_protie_navigation
         }
 
         $get_params = $this->_get_parameter_string();
+        
+        if ($this->class_to_link)
+        {
+            $link_class = $class;
+        }
+        else
+        {
+            $link_class = '';
+        }
 
         echo "{$indent}    <li{$class}>\n";
-        echo "{$indent}        <a href=\"{$item[MIDCOM_NAV_FULLURL]}{$get_params}\">{$item[MIDCOM_NAV_NAME]}</a>\n";
+        echo "{$indent}        <a href=\"{$item[MIDCOM_NAV_FULLURL]}{$get_params}\"{$link_class}>{$item[MIDCOM_NAV_NAME]}</a>\n";
 
         // If either of the follow nodes switches is on, follow all the nodes
         if (   $item[MIDCOM_NAV_TYPE] === 'node'

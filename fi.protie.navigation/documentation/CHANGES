@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-01-09 adrenalin
+  - Added configurable option for inserting the class name to the link tag as well.
+
 2007-11-23 adrenalin
   ! Corrected mispelled 'childs' to 'children', which might force someone to change the
     CSS class names
