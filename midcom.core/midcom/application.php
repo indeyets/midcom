@@ -2266,7 +2266,7 @@ class midcom_application
      * Remember to also set the parameter "midcom/allow_serve" to "true" to clear the
      * snippet for serving.
      *
-     * @param MidgardSnippet $snippet    The snippet that should be delivered to the client.
+     * @param MidgardSnippet &$snippet    The snippet that should be delivered to the client.
      */
     function serve_snippet (& $snippet)
     {
@@ -2340,7 +2340,7 @@ class midcom_application
      * If expires is set to -1, which is the default as of 2.0.0 (it was 86400 earlier),
      * no expires header gets sent.
      *
-     * @param MidgardAttachment $attachment    A reference to the attachment to be delivered.
+     * @param MidgardAttachment &$attachment    A reference to the attachment to be delivered.
      * @param int $expires HTTP-Expires timeout in seconds, set this to 0 for uncacheable pages, or to -1 for no Expire header.
      */
     function serve_attachment(& $attachment, $expires = -1)
@@ -3075,7 +3075,7 @@ class midcom_application
      * Binds the current page view to a particular object. This will automatically connect such things like
      * metadata and toolbars to the correct object.
      *
-     * @param DBAObject $object The DBA class instance to bind to.
+     * @param DBAObject &$object The DBA class instance to bind to.
      * @param string $page_type String describing page type, will be used for substyling
      */
     function bind_view_to_object(&$object, $page_class = 'default')

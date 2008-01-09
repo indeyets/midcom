@@ -1026,7 +1026,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      * To force browsers to revalidate the page on every request (login changes would
      * go unnoticed otherwise), the Cache-Control header max-age=0 is added automatically.
      *
-     * @param Array& $cache_data The current cache data that will be written to the database.
+     * @param Array &$cache_data The current cache data that will be written to the database.
      * @access private
      */
     function _complete_sent_headers(& $cache_data)

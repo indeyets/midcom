@@ -1463,7 +1463,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     /**
      * Returns a listing of all known(!) virtual groups.
      *
-     * @return An associative vgroup_id (including the vgroup: prefix) => vgroup_name listing.
+     * @return array An associative vgroup_id (including the vgroup: prefix) => vgroup_name listing.
      */
     function get_all_vgroups()
     {
