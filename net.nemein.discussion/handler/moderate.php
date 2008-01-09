@@ -86,7 +86,7 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
                     $message = array();
                     $message['title'] = sprintf($data['l10n']->get('post %s reported as abuse'), $this->_post->subject);
                     $message['content'] = '';         
-                    $logs = $post->get_logs();
+                    $logs = $this->_post->get_logs();
                     if (count($logs) > 0)
                     {
                         $message['content'] .= $data['l10n']->get('moderation history').":\n\n";
