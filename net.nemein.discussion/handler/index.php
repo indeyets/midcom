@@ -28,11 +28,19 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
 	 * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * @return bool Indicating success.
 	 */
     function _handler_index($handler_id, $args, &$data)
     {
         $data['forum'] =& $this->_topic;
+
+        // Set context data
+        /**
+         * TODO: Figure out the latest thread/post metadata_revised to get the correct timestamp
+         * this should give us reasonably working caching but the MIDCOM_CONTEXT_LASTMODIFIED is
+         * naturally wrong
+         */
+        $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
         
         // Prepare datamanager
         $data['datamanager'] = new midcom_helper_datamanager2_datamanager($data['schemadb']);

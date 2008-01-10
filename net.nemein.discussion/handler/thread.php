@@ -30,7 +30,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return boolean True if the request can be handled, false otherwise.
+     * @return bool True if the request can be handled, false otherwise.
      */
     function _can_handle_thread($handler_id, $args, &$data)
     {
@@ -66,7 +66,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * @return bool Indicating success.
      */
     function _handler_thread($handler_id, $args, &$data)
     {
@@ -84,6 +84,13 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
         // Prepare datamanager
         $data['datamanager'] = new midcom_helper_datamanager2_datamanager($data['schemadb']);
 
+        // Set context data
+        /**
+         * TODO: Figure out the latest thread/post metadata_revised to get the correct timestamp
+         * this should give us reasonably working caching but the MIDCOM_CONTEXT_LASTMODIFIED is
+         * naturally wrong
+         */
+        $_MIDCOM->set_26_request_metadata(time(), $this->_request_data['thread']->guid);
         $_MIDCOM->bind_view_to_object($this->_request_data['thread']);
 
         return true;
@@ -360,7 +367,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * @return bool Indicating success.
      */
     function _handler_post($handler_id, $args, &$data)
     {
