@@ -8,7 +8,7 @@ if ($data['outside_month'])
     $class .= ' outside';
 }
 
-if ($data['events'])
+if (count($data['events']) > 0)
 {
     $class .= ' events';
 }

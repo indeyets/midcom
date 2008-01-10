@@ -301,13 +301,13 @@ class org_openpsa_calendarwidget_styled_month extends org_openpsa_calendarwidget
         // Set the daily variables
         $this->_request_data['day'] = $timestamp;
         $this->_request_data['outside_month'] = false;
-        $this->_request_data['events'] = false;
+        $this->_request_data['events'] = array();
         $this->_request_data['today'] = false;
         
         // Show the events of the day
         if (array_key_exists(date('Y-m-d', $timestamp), $this->_events))
         {
-            $this->_request_data['events'] = true;
+            $this->_request_data['events'] = $this->_events[date('Y-m-d', $timestamp)];
         }
         
         // Check if it is today

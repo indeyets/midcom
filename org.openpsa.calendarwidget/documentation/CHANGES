@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-01-10 adrenalin
+  ! Style elements get now the full array of event objects instead of the counted integer
+
 2007-12-03 adrenalin
   + Added an extended class, which uses style elements instead of plain echo based output
 
