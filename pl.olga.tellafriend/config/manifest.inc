@@ -1,7 +1,7 @@
 
   'name' => 'pl.olga.tellafriend',
   'purecode' => true,
-  'version' => '1.0.2beta1',
+  'version' => '1.0.2beta2',
   'privileges' => 
   array (
   ),

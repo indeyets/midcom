@@ -67,24 +67,47 @@ class pl_olga_tellafriend  extends midcom_baseclasses_components_purecode
         $this->result = $this->controller->process_form();
 
         if ($this->result == 'save')
-        {
-            // Most dirty hack ever. If we got 'save' we got form POST'ed. So the referer is
-            // the page (URL) we want to notify about :)
-            $url = $_SERVER['HTTP_REFERER'];
-
+        {      
             // Load form values. Hmm.. Shall I call DM or FM?
             $dm = $this->controller->datamanager->types;
-
-            $mail = new org_openpsa_mail();
-            $mail->subject = $this->_config->get('mail_subject');
-            $mail->body = sprintf($this->_config->get('sysmsg'), $url);
-            $mail->body .= $dm['comment']->value;
-            $mail->from = "\"{$dm['sender_name']->value}\" <{$dm['sender']->value}>";
+            
+            // Most dirty hack ever. If we got 'save' we got form POST'ed. So the referer is
+            // the page (URL) we want to notify about :)
+            $link_url = $_SERVER['HTTP_REFERER'];
+            
+            $conf_url = $this->_config->get('link_url');
+            if ($conf_url)
+            {
+                $link_url = $conf_url;
+            }
+            if (empty($link_url))
+            {
+                $link_url = $_MIDCOM->get_host_prefix() . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+            }
+            
+            $from = "\"{$dm['sender_name']->value}\" <{$dm['sender']->value}>";
+            if (empty($from))
+            {
+                $from = $this->_config->get('mail_sender_email');
+            }
+            
+            $subject = str_replace("__SENDER_NAME__", $dm['sender']->value, $this->_config->get('mail_subject'));
+            $subject = str_replace("__LINK_URL__", $link_url, $subject);
+            
+            $content = str_replace("__SENDER_NAME__", $dm['sender_name']->value, $this->_config->get('sysmsg'));
+            $content = str_replace("__SENDER_EMAIL__", $dm['sender']->value, $content);
+            $content = str_replace("__SUBJECT__", $subject, $content);
+            $content = str_replace("__LINK_URL__", $link_url, $content);
+            $content = str_replace("__DATETIME__", strftime("%x %X", time()), $content);
+            $content = str_replace("__MESSAGE__", $dm['comment']->value, $content);
+            
+            $mail = new org_openpsa_mail();            
             $mail->to = $dm['recipient']->value;
-
+            $mail->from = $from;
+            $mail->subject = $subject;
+            $mail->body = $content;
             $mail->send();
         }
-
     }
 
 }

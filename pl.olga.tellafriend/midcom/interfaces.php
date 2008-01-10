@@ -23,8 +23,15 @@ class pl_olga_tellafriend_interface extends midcom_baseclasses_components_interf
 
 	$this->purecode = true;
         $this->_component = 'pl.olga.tellafriend';
-        $this->_autoload_files = Array('viewer.php');
-        $this->_autoload_libraries = Array('midcom.helper.datamanager2','org.openpsa.mail');
+        
+        $this->_autoload_files = Array(
+            'viewer.php'
+        );
+        
+        $this->_autoload_libraries = Array(
+            'midcom.helper.datamanager2',
+            'org.openpsa.mail'
+        );
     }
 
 }
