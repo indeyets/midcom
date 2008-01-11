@@ -62,6 +62,25 @@ class net_nehmer_account_navigation extends midcom_baseclasses_components_naviga
                 );
             }
         }
+        else
+        {
+            if ($this->_config->get('allow_change_password'))
+            {
+                $leaves[NET_NEHMER_ACCOUNT_LEAFID_PASSWORDCHANGE] = array
+                (
+                    MIDCOM_NAV_SITE => Array
+                    (
+                        MIDCOM_NAV_URL => "password.html",
+                        MIDCOM_NAV_NAME => $this->_l10n->get('change password'),
+                    ),
+                    MIDCOM_NAV_ADMIN => null,
+                    MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+                    MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+                    MIDCOM_META_CREATED => $this->_topic->metadata->created,
+                    MIDCOM_META_EDITED => $this->_topic->metadata->revised
+                );
+            }
+        }
 
         // Pending registrations
         if (   $_MIDCOM->auth->admin

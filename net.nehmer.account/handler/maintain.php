@@ -113,13 +113,8 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         $this->_prepare_request_data();
 
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
-
-        $tmp[] = array
-        (
-            MIDCOM_NAV_URL => 'password/',
-            MIDCOM_NAV_NAME => $this->_l10n->get('change password'),
-        );
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        
+        $this->_component_data['active_leaf'] = NET_NEHMER_ACCOUNT_LEAFID_PASSWORDCHANGE;
         $this->_view_toolbar->hide_item('password/');
 
         $_MIDCOM->bind_view_to_object($this->_account, $this->_datamanager->schema->name);
