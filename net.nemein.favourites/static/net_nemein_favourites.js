@@ -72,29 +72,29 @@
             if (   data.can_fav
                 && options.favs_enabled)
             {
-                fav_btn.removeClass('net_nemein_favourites_action_disabled');
-                favs_cnt.removeClass('net_nemein_favourites_action_disabled');
+                fav_btn.removeClass(options.classes.fav_btn+'_disabled');
+                favs_cnt.removeClass(options.classes.favs_count+'_disabled');
                 fav_btn.bind("click", function(){        
                     execute('fav', data.fav_url);
                 });
             } else {
                 fav_btn.unbind("click");
-                fav_btn.addClass('net_nemein_favourites_action_disabled');
-                favs_cnt.addClass('net_nemein_favourites_action_disabled');
+                fav_btn.addClass(options.classes.fav_btn+'_disabled');
+                favs_cnt.addClass(options.classes.favs_count+'_disabled');
             }
 
             if (   data.can_bury
                 && options.bury_enabled)
             {
-                bury_btn.removeClass('net_nemein_favourites_action_disabled');
-                bury_cnt.removeClass('net_nemein_favourites_action_disabled');
+                bury_btn.removeClass(options.classes.bury_btn+'_disabled');
+                bury_cnt.removeClass(options.classes.bury_count+'_disabled');
                 bury_btn.bind("click", function(){
                     execute('bury', data.bury_url);
                 });
             } else {
                 bury_btn.unbind("click");
-                bury_btn.addClass('net_nemein_favourites_action_disabled');
-                bury_cnt.addClass('net_nemein_favourites_action_disabled');
+                bury_btn.addClass(options.classes.bury_btn+'_disabled');
+                bury_cnt.addClass(options.classes.bury_count+'_disabled');
             }
         }
 
