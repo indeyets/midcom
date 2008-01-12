@@ -222,6 +222,9 @@ class net_nehmer_marketplace_handler_entry extends midcom_baseclasses_components
 
     /**
      * Displays an entry.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view($handler_id, &$data)
     {
@@ -299,6 +302,9 @@ class net_nehmer_marketplace_handler_entry extends midcom_baseclasses_components
 
     /**
      * Displays an entry edit form.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit($handler_id, &$data)
     {
@@ -374,6 +380,9 @@ class net_nehmer_marketplace_handler_entry extends midcom_baseclasses_components
 
     /**
      * Displays an entry.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete($handler_id, &$data)
     {

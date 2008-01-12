@@ -307,6 +307,9 @@ class net_nehmer_marketplace_handler_category extends midcom_baseclasses_compone
 
     /**
      * Displays the loaded results
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_browse($handler_id, &$data)
     {

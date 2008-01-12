@@ -212,6 +212,8 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
     /**
      * Show TODO items
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_list($handler_id, &$data)
@@ -247,6 +249,8 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
     /**
      * Show TODO items
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_overtime($handler_id, &$data)
@@ -274,6 +278,8 @@ class cc_kaktus_todo_handler_list extends midcom_baseclasses_components_handler
     /**
      * Show TODO items
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_finished($handler_id, &$data)

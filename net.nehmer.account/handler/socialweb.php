@@ -194,6 +194,9 @@ class net_nehmer_account_handler_socialweb extends midcom_baseclasses_components
 
     /**
      * The rendering code consists of a standard init/loop/end construct.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit($handler_id, &$data)
     {

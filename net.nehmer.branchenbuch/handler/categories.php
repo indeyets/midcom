@@ -225,6 +225,9 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
      * The request data keys <i>category_list</i> and <i>type</i> are populated all the time,
      * while iterating over the categories to show, a reference to the category_list entry that
      * should be shown is added to the <i>category</i> entry.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_list($handler_id, &$data)
     {
@@ -301,6 +304,9 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
      * The request data keys <i>category_list</i> and <i>type</i> are populated all the time,
      * while iterating over the categories to show, a reference to the category_list entry that
      * should be shown is added to the <i>category</i> entry.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_list_alpha($handler_id, &$data)
     {
@@ -354,6 +360,9 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
 
     /**
      * Displays the custom search form.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_customsearch($handler_id, &$data)
     {

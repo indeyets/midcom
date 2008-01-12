@@ -247,6 +247,9 @@ class net_nehmer_blog_handler_create extends midcom_baseclasses_components_handl
 
     /**
      * Shows the loaded article.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_create ($handler_id, &$data)
     {

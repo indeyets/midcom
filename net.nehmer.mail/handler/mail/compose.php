@@ -392,6 +392,11 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
         return $this->_mail;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_create($handler_id, &$data)
     {
         if ($data['use_live_preview'])

@@ -677,7 +677,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      *
      * @param string $field The name of the MgdSchema property to query against.
      * @param string $operator The operator to use for the constraint, currently supported are
-     *     &lt;, &lt;=, =, &lt;&gt;, &gt;=, &gt;, LIKE. LIKE uses the percent sign ('%') as a
+     *     <, <=, =, <>, >=, >, LIKE. LIKE uses the percent sign ('%') as a
      *     wildcard character.
      * @param mixed $value The value to compare against. It should be of the same type then the
      *     queried property.
@@ -863,10 +863,12 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     }
 
     /**
-     * This is a mapping to the real count function of the Midgard Query Builder. It is mainly
-     * intended when speed is important over accuracy, as it bypasses access control to get a
-     * fast impression of how many objects are available in a given query. It should always
-     * be kept in mind that this is a preliminary number, not a final one.
+     * This is a mapping to the real count function of the Midgard Query Builder. 
+     *
+     * It is mainly intended when speed is important over accuracy, as it bypasses 
+     * access control to get a fast impression of how many objects are available 
+     * in a given query. It should always be kept in mind that this is a 
+     * preliminary number, not a final one.
      *
      * Use this function with care. The information you obtain in general is negligible, but a creative
      * mind might nevertheless be able to take advantage of it.

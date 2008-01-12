@@ -126,6 +126,9 @@ class net_nehmer_publications_handler_view extends midcom_baseclasses_components
 
     /**
      * Shows the loaded publication.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view ($handler_id, &$data)
     {

@@ -461,6 +461,9 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
      *
      * The current entry will be available in the <i>entry</i> key. An initialized datamamanger
      * can be found in <i>entry_dm</i>.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_list($handler_id, &$data)
     {
@@ -589,6 +592,9 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
 
     /**
      * Shows an entry.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_entry($handler_id, &$data)
     {
@@ -669,6 +675,9 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
 
     /**
      * Shows the entry edit form.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit($handler_id, &$data)
     {
@@ -710,6 +719,9 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
      *
      * The current entry will be available in the <i>entry</i> key. An initialized datamamanger
      * can be found in <i>entry_dm</i>.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_list_self($handler_id, &$data)
     {
@@ -805,6 +817,9 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
 
     /**
      * Shows the delete confirmation.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete($handler_id, &$data)
     {

@@ -173,7 +173,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
     /**
      * Binds view metadata to a DBA content object
      *
-     * @param DBAObject $object The DBA class instance to bind to.
+     * @param DBAObject &$object The DBA class instance to bind to.
      */
     function bind_to(&$object)
     {

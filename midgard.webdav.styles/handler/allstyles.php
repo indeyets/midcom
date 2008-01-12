@@ -80,11 +80,19 @@ class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_han
 
     /**
      * Showfunctions are not in use
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_allstyles($handler_id, &$data)
     {
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_styles($handler_id, &$data)
     {
     }

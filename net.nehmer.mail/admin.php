@@ -139,6 +139,8 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
     /**
      * Renders the welcome page.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_welcome ($handler_id, &$data)
@@ -352,6 +354,8 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
     /**
      * Simple Mailbox creation form handler.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_mailbox_create($handler_id, &$data)
@@ -363,6 +367,8 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
     /**
      * Simple Mailbox creation form handler.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_mailbox_edit($handler_id, &$data)
@@ -374,6 +380,8 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
     /**
      * Mailbox deletion stub. Not used yet.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_mailbox_delete($handler_id, &$data)

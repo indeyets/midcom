@@ -601,7 +601,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      *
      * @access private
      * @param mixed $object A reference to the GUID or the full object instance for which we should load privileges.
-     * @param midcom_core_user The MidCOM user for which we should collect the privileges, null uses the currently authenticated user.
+     * @param midcom_core_user $user The MidCOM user for which we should collect the privileges, null uses the currently authenticated user.
      * @return Array An array of privilege_name => privilege_value pairs valid for the given user.
      * @static
      */
@@ -850,7 +850,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      *
      * @param Array $privilege A valid privilege record as returned by parameter_to_privilege().
      * @param object $object The content object we're checking right now.
-     * @param midcom_core_user The user in question or null for anonymous access.
+     * @param midcom_core_user $user The user in question or null for anonymous access.
      * @return boolean Indicating whether the privilege record applies for the user, or not.
      */
     function _is_privilege_valid($privilege, $user)

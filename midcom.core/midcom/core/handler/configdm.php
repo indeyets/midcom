@@ -99,7 +99,7 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
      *
      * @access protected
      * @param mixed $handler_id The ID of the handler.
-     * @param mixed $data The local request data (note the reference when inheriting).
+     * @param mixed &$data The local request data (note the reference when inheriting).
      */
     function _handler_configdm_prepare($handler_id, &$data)
     {
@@ -145,7 +145,7 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param mixed $data The local request data.
+     * @param mixed &$data The local request data.
      * @return boolean Indicating success.
      * @access protected
      */
@@ -258,7 +258,7 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
      * If you need any styling, you should override this.
      *
      * @param mixed $handler_id The ID of the handler.
-     * @param mixed $data The local request data.
+     * @param mixed &$data The local request data.
      * @access protected
      */
     function _show_configdm($handler_id, &$data)

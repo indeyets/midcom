@@ -204,6 +204,11 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
         return true;
     }
     
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_list($handler_id, &$data)
     {
         midcom_show_style('midgard_admin_asgard_header');
@@ -297,6 +302,11 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
         return true;
     }
     
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_edit($handler_id, &$data)
     {
         midcom_show_style('midgard_admin_asgard_header');
@@ -370,6 +380,11 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
         return true;
     }
     
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_create($handler_id, &$data)
     {
         midcom_show_style('midgard_admin_asgard_header');
@@ -460,6 +475,11 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
         return true;
     }
     
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_object($handler_id, &$data)
     {
         midcom_show_style('midgard_admin_asgard_header');

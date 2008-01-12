@@ -131,6 +131,11 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_select($handler_id, &$data)
     {
         midgard_admin_asgard_plugin::asgard_header();
@@ -259,6 +264,11 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         // This will exit
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_save($handler_id, &$data)
     {
         if ($this->_lang && $this->_component_path)
@@ -291,6 +301,11 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_status($handler_id, &$data)
     {
         midgard_admin_asgard_plugin::asgard_header();
@@ -381,6 +396,11 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         return false;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_edit($handler_id, &$data)
     {
 
@@ -421,6 +441,11 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_permission_check($handler_id, &$data)
     {
         if ($this->_component_path == "midcom")

@@ -62,6 +62,8 @@ class net_nehmer_account_admin extends midcom_baseclasses_components_request_adm
 
     /**
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_welcome($handler_id, &$data)
     {

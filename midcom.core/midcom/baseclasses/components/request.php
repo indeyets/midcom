@@ -125,7 +125,6 @@
  *  * Show handler example, with Docblock:
  *  * @param mixed $handler_id The ID of the handler.
  *  * @param Array &$data The local request data.
- *  * @return boolean Indicating success.
  *  {@*}
  * function _show_xxx ($handler_id, &$data) {}
  * </code>

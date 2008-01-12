@@ -120,7 +120,7 @@ class midcom_admin_user_handler_user_create extends midcom_baseclasses_component
      * @access private
      * @param string $handler_id Name of the used handler
      * @param mixed $args Array containing the variable arguments passed to the handler
-     * @param mixed $data Data passed to the show method
+     * @param mixed &$data Data passed to the show method
      * @return boolean Indicating successful request
      */
     function _handler_create($handler_id, $args, &$data)
@@ -151,7 +151,7 @@ class midcom_admin_user_handler_user_create extends midcom_baseclasses_component
      * 
      * @access private
      * @param string $handler_id Name of the used handler
-     * @param mixed $data Data passed to the show method
+     * @param mixed &$data Data passed to the show method
      */
     function _show_create($handler_id, &$data)
     {

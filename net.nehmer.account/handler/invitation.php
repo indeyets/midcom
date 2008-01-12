@@ -188,6 +188,9 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
 
     /**
      * This method is never called, as the handler method will always relocate
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete_invite($handler_id, &$data)
     {
@@ -299,6 +302,11 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_invite($handler_id, &$data)
     {
         midcom_show_style('show-invite-emails');
@@ -359,6 +367,11 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_sent_invites($handler_id, &$data)
     {
         midcom_show_style('invites-list-header');

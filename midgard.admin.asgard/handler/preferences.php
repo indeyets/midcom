@@ -186,6 +186,9 @@ class midgard_admin_asgard_handler_preferences extends midcom_baseclasses_compon
 
     /**
      * Show the preferences page
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_preferences($handler_id, &$data)
     {
@@ -271,6 +274,9 @@ class midgard_admin_asgard_handler_preferences extends midcom_baseclasses_compon
 
     /**
      * Possible user output besides the UI message that was set
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_ajax($handler_id, &$data)
     {

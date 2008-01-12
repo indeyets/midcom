@@ -118,6 +118,9 @@ class midgard_admin_asgard_handler_object_parameters extends midcom_baseclasses_
 
     /**
      * Shows the loaded object in editor.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit($handler_id, &$data)
     {

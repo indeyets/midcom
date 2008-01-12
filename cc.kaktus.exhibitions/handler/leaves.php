@@ -297,6 +297,8 @@ class cc_kaktus_exhibitions_handler_leaves extends midcom_baseclasses_components
     /**
      * Show the page of an artist
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access public
      */
     public function _show_list($handler_id, &$data)

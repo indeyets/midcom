@@ -120,6 +120,9 @@ class net_nehmer_account_handler_configuration extends midcom_baseclasses_compon
 
     /**
      * Shows the loaded photo.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_configuration($handler_id, &$data)
     {

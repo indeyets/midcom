@@ -176,6 +176,9 @@ class net_nehmer_branchenbuch_admin extends midcom_baseclasses_components_reques
 
     /**
      * Simple show welcome handler, shows the current processing message.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_welcome($handler_id, &$data)
     {

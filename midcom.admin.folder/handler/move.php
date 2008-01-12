@@ -173,6 +173,8 @@ class midcom_admin_folder_handler_move extends midcom_baseclasses_components_han
     /**
      * Output the style element for move editing
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_move($handler_id, &$data)

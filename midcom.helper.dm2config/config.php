@@ -190,7 +190,7 @@ class midcom_helper_dm2config_config extends midcom_baseclasses_components_handl
      *
      * @access public
      * @param string $handler_id    Name of the handler
-     * @param Array  $data          Miscellaneous output data
+     * @param Array  &$data          Miscellaneous output data
      */
     function _show_config($handler_id, &$data)
     {

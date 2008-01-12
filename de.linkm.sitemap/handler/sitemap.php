@@ -129,6 +129,8 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
     /**
      * Show the content of xml Sitemap
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_xml($handler_id, &$data)
@@ -256,6 +258,8 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
     /**
      * Shows the sitemap
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_sitemap($handler_id, &$data)

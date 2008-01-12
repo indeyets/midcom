@@ -103,6 +103,9 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
 
     /**
      * Shows host creation form.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_settings($handler_id, &$data)
     {
@@ -183,6 +186,9 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
 
     /**
      * Shows the template selection
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_template($handler_id, &$data)
     {
@@ -298,6 +304,9 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
 
     /**
      * Shows host creation form.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_finish($handler_id, &$data)
     {

@@ -227,6 +227,9 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
 
     /**
      * Displays the feed
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_feed($handler_id, &$data)
     {
@@ -282,6 +285,9 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
 
     /**
      * Displays the feeds page
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_index ($handler_id, &$data)
     {

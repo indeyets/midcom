@@ -222,6 +222,8 @@ class midcom_admin_folder_handler_delete extends midcom_baseclasses_components_h
     /**
      * Shows the _Delete folder_ form.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_delete($handler_id, &$data)

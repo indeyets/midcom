@@ -85,12 +85,20 @@ class midgard_admin_wizards_handler_index  extends midcom_baseclasses_components
 
     /**
      * This function does the output.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_index($handler_id, &$data)
     {
         midcom_show_style('index');
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_group($handler_id, &$data)
     {
         // No need to show a style. The handler relocates to the first plugin

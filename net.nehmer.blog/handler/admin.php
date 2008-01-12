@@ -284,6 +284,9 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
 
     /**
      * Shows the loaded article.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit ($handler_id, &$data)
     {
@@ -379,6 +382,11 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
         }
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_deletelink($handler_id, &$data)
     {
         $data['article'] =& $this->_article;
@@ -489,6 +497,9 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
 
     /**
      * Shows the loaded article.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete ($handler_id, &$data)
     {

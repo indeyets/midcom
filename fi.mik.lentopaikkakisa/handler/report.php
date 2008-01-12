@@ -225,6 +225,9 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
 
     /**
      * Shows the loaded report editor
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_new($handler_id, &$data)
     {

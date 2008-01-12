@@ -393,6 +393,11 @@ class net_nehmer_mail_handler_mail_admin extends midcom_baseclasses_components_h
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_trash($handler_id, &$data)
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
@@ -438,9 +443,20 @@ class net_nehmer_mail_handler_mail_admin extends midcom_baseclasses_components_h
         midcom_show_style('trash-items-end');
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_perform($handler_id, &$data)
     {
     }
+
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_restore($handler_id, &$data)
     {
     }

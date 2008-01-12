@@ -721,6 +721,11 @@ class net_nehmer_blog_handler_api_metaweblog extends midcom_baseclasses_componen
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_rsd($handler_id, &$data)
     {
         $data['content_topic'] = $this->_content_topic;
@@ -789,6 +794,11 @@ class net_nehmer_blog_handler_api_metaweblog extends midcom_baseclasses_componen
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_server($handler_id, &$data)
     {
         // Serve the RPC request

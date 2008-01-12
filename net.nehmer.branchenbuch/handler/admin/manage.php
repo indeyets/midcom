@@ -54,6 +54,9 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
     /**
      * Shows all loaded groups, it uses a set of recursively called functions for this.
      * The code is not styleable.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_list($handler_id, &$data)
     {
@@ -162,6 +165,9 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
 
     /**
      * Shows the category editor.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit($handler_id, &$data)
     {
@@ -235,6 +241,9 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
 
     /**
      * Shows the category editor.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_create($handler_id, &$data)
     {

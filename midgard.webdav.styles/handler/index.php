@@ -45,6 +45,9 @@ class midgard_webdav_styles_handler_index  extends midgard_webdav_styles_handler
 
     /**
      * Showfunctions are not in use
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_index($handler_id, &$data)
     {

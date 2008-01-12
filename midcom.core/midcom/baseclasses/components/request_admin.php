@@ -141,6 +141,9 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
      * Fallback handler, shown in case no handler has been defined anymore by
      * deprecated AIS classes. Displays a simple welcome page noting that everything
      * is done directly on-site now.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_welcome_deprecated($handler_id, &$data)
     {
@@ -160,7 +163,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
      *
      * @access protected
      * @param mixed $handler_id The ID of the handler.
-     * @param mixed $data The local request data (note the reference when inheriting).
+     * @param mixed &$data The local request data (note the reference when inheriting).
      */
     function _handler_config_dm_prepare($handler_id, &$data)
     {
@@ -206,7 +209,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param mixed $data The local request data.
+     * @param mixed &$data The local request data.
      * @return boolean Indicating success.
      * @access protected
      */
@@ -290,7 +293,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
      * If you need any styling, you should override this.
      *
      * @param mixed $handler_id The ID of the handler.
-     * @param mixed $data The local request data.
+     * @param mixed &$data The local request data.
      * @access protected
      */
     function _show_config_dm($handler_id, &$data)

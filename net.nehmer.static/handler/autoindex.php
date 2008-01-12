@@ -103,6 +103,9 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
      * by the corresponding request data key. The global will be dropped after MidCOM 2.6.
      *
      * @deprecated The globals view_title, view_l10n and view_l10n_midcom will be deprecated after MidCOM 2.6.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_autoindex($handler_id, &$data)
     {

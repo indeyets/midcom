@@ -142,7 +142,7 @@ class midcom_admin_libconfig_handler_view extends midcom_baseclasses_components_
      *
      * @access private
      * @param string $handler_id Name of the used handler
-     * @param mixed $data Data passed to the show method
+     * @param mixed &$data Data passed to the show method
      */
     function _show_view($handler_id, &$data)
     {

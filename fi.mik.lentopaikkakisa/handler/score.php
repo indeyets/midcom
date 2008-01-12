@@ -68,6 +68,11 @@ class fi_mik_lentopaikkakisa_handler_score extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_score($handler_id, &$data)
     {
         midcom_show_style('view-scores');

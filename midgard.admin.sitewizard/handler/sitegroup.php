@@ -150,6 +150,9 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
 
     /**
      * Shows the loaded article.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_select($handler_id, &$data)
     {

@@ -266,7 +266,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
      * @access private
      * @param string $handler_id Name of the used handler
      * @param mixed $args Array containing the variable arguments passed to the handler
-     * @param mixed $data Data passed to the show method
+     * @param mixed &$data Data passed to the show method
      * @return boolean Indicating successful request
      */
     function _handler_create($handler_id, $args, &$data)
@@ -304,7 +304,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
      *
      * @access private
      * @param string $handler_id Name of the used handler
-     * @param mixed $data Data passed to the show method
+     * @param mixed &$data Data passed to the show method
      */
     function _show_create($handler_id, &$data)
     {
@@ -327,7 +327,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
      * @access public
      * @param string $handler_id Name of the used handler
      * @param mixed $args Array containing the variable arguments passed to the handler
-     * @param mixed $data Data passed to the show method
+     * @param mixed &$data Data passed to the show method
      * @return boolean Indicating successful request
      */
     function _handler_edit($handler_id, $args, &$data)
@@ -380,7 +380,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
      *
      * @access private
      * @param string $handler_id Name of the used handler
-     * @param mixed $data Data passed to the show method
+     * @param mixed &$data Data passed to the show method
      */
     function _show_edit($handler_id, &$data)
     {
@@ -404,7 +404,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
      * @access public
      * @param string $handler_id Name of the used handler
      * @param mixed $args Array containing the variable arguments passed to the handler
-     * @param mixed $data Data passed to the show method
+     * @param mixed &$data Data passed to the show method
      * @return boolean Indicating successful request
      */
     function _handler_delete($handler_id, $args, &$data)
@@ -459,7 +459,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
      *
      * @access private
      * @param string $handler_id Name of the used handler
-     * @param mixed $data Data passed to the show method
+     * @param mixed &$data Data passed to the show method
      */
     function _show_delete($handler_id, &$data)
     {

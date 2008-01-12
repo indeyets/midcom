@@ -281,6 +281,9 @@ class net_nehmer_jobmarket_handler_search extends midcom_baseclasses_components_
     /**
      * Displays the search form. Accomodates the logic required to dynamically activate parts
      * of the form. The form is constructed manually, without QuickForm.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_search($handler_id, &$data)
     {
@@ -513,6 +516,9 @@ class net_nehmer_jobmarket_handler_search extends midcom_baseclasses_components_
 
     /**
      * Displays search result.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_result($handler_id, &$data)
     {

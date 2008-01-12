@@ -107,9 +107,11 @@
 class midcom_application
 {
     /**
-     * Holds the component context information. This is an array of arrays, the outer
-     * one indexed by context IDs, the inner one indexed by context keys. Only valid
-     * of the system has left the code-init phase.
+     * Holds the component context information.
+     *
+     * This is an array of arrays, the outer one indexed by context IDs, the
+     * inner one indexed by context keys. Only valid of the system has left
+     * the code-init phase.
      *
      * @var Array
      * @access private
@@ -141,8 +143,10 @@ class midcom_application
     private $_client = array();
 
     /**
-     * The prefix, which is appended to get_midgard()->self (i.e. the
-     * Midgard Page URL). This may be needed when MidCOM is run by wrapper.
+     * The prefix which is appended to get_midgard()->self (i.e. the
+     * Midgard Page URL).
+     *
+     * This may be needed when MidCOM is run by wrapper.
      * see constructor and member function get_midgard().
      *
      * @var string
@@ -161,8 +165,10 @@ class midcom_application
     private $_status = null;
 
     /**
-     * This is the interface to MidCOMs Object Services. Each service is indexed
-     * by its string-name (for example "i18n" for all i18n stuff).
+     * This is the interface to MidCOMs Object Services.
+     *
+     * Each service is indexed by its string-name (for example "i18n"
+     * for all i18n stuff).
      *
      * @var Array
      * @access private
@@ -206,10 +212,11 @@ class midcom_application
     public $i18n = null;
 
     /**
-     * Helperclass to handle all style management. See class description for further
-       * information
-       *
-       * @var midcom_helper__styleloader
+     * Helperclass to handle all style management.
+     *
+     * See class description for further information
+     *
+     * @var midcom_helper__styleloader
      */
     public $style = null;
 
@@ -301,7 +308,7 @@ class midcom_application
     /**
      * Boolean showing if jQuery is enabled
      *
-     * @var Boolean
+     * @var boolean
      * @access private
      */
     private $_jquery_enabled = false;
@@ -634,11 +641,9 @@ class midcom_application
      * to the loaded one:
      *
      * <code>
-     * <?php
      * $blog = '/blog/latest/3.html';
      * $substyle = 'homepage';
      * $_MIDCOM->dynamic_load("/midcom-substyle-{$substyle}/{$blog}");
-     * ?>
      * </code>
      *
      * <B>Danger, Will Robinson:</b>
@@ -647,12 +652,10 @@ class midcom_application
      * variables that you are currently using. A common mistake is this:
      *
      * <code>
-     * <?php
      * global $view;
      * $_MIDCOM->dynamic_load($view['url1']);
      * // You will most probably fail, could even loop infinitely!
      * $_MIDCOM->dynamic_load($view['url2']);
-     * ?>
      * </code>
      *
      * The reason why this usually fails is, that the $view you have been using during
@@ -664,11 +667,9 @@ class midcom_application
      * is in function context):
      *
      * <code>
-     * <?php
      * $view = $GLOBALS['view'];
      * $_MIDCOM->dynamic_load($view['url1']);
      * $_MIDCOM->dynamic_load($view['url2']);
-     * ?>
      * </code>
      *
      * @param string $url                The URL, relative to the Midgard Page, that is to be requested.
@@ -1609,7 +1610,6 @@ class midcom_application
      * A complete example could look like this:
      *
      * <code>
-     * <?php
      * class my_component_class_one {
      *     function init () {
      *         $_MIDCOM->set_custom_context_data('classone', $this);
@@ -1622,7 +1622,6 @@ class midcom_application
      *         $this->one =& $_MIDCOM->get_custom_context_data('classone');
      *     }
      * }
-     * ?>
      * </code>
      *
      * A very important caveat of PHP references can be seen here: You must never give
@@ -1798,13 +1797,11 @@ class midcom_application
      * Common example:
      *
      * <code>
-     * <?php
      * $_MIDCOM->load_library('midcom.helper.datamanager');
-     * ?>
      * </code>
      *
      * @param string $path    The name of the code library to load.
-     * @return boolean            Indicates, whether the library was successfully loaded.
+     * @return boolean            Indicates whether the library was successfully loaded.
      */
     function load_library($path)
     {
@@ -1889,8 +1886,9 @@ class midcom_application
 
     /**
      * Returns the Client Status Array which gives you all available information about
-     * the client accessing us.Currently incorporated is a recognition of client OS
-     * and client browser.
+     * the client accessing us.
+     *
+     * Currently incorporated is a recognition of client OS and client browser.
      *
      * <b>NOTE:</b> Be careful if you rely on this information, the system does not check
      * for invervening Proxies yet.
@@ -2067,7 +2065,7 @@ class midcom_application
      * add_object_head    - Add object links to the page's head.
      * add_style_head     - Add style  tags to the page's head.
      * add_meta_head      - Add metatags to the page's head.
-     * print_jscripts     - Print the queued-up JavaScript code (for inclusion in the HEAD section)
+     * print_head_elements     - Print the queued-up JavaScript code (for inclusion in the HEAD section)
      * print jsonload     - Prints the onload command if required (for inclusion as a BODY attribute)
      * check_memberships  - Checks whether the user is in a given group
      * relocate           - executes a HTTP relocation to the given URL
@@ -2226,12 +2224,11 @@ class midcom_application
     }
 
     /**
-     * @deprecated No longer used in 2.0.0 and only there for application conversion.
-     *
      * Loads a code file from disk and require()'s it. This is no longer a valid
      * MidCOM function and it will trigger an E_USER_NOTICE level PHP error.
      *
      * @param An old-style db-snippet path that is translated into the midcom library dir.
+     * @deprecated No longer used in 2.0.0 and only there for application conversion.
      */
     function load_snippet($path)
     {
@@ -2451,7 +2448,7 @@ class midcom_application
      * The remaining arguments will be placed into the globals $argc/argv.
      *
      * @param string $component The component to look in ("midcom" uses core scripts)
-     * @see midcom_helper__cache_dbm::enable_live_mode()
+     * @see midcom_services_cache_module_content::enable_live_mode()
      */
     function _exec_file($component)
     {
@@ -2535,7 +2532,7 @@ class midcom_application
      * This allows MidCOM components to register JavaScript code
      * during page processing. The site style code can then query this queued-up code
      * at anytime it likes. The queue-up SHOULD be done during the code-init phase,
-     * while the print_jscripts output SHOULD be included in the HTML HEAD area and
+     * while the print_head_elements output SHOULD be included in the HTML HEAD area and
      * the HTTP onload attribute returned by print_jsonload SHOULD be included in the
      * BODY-tag. Note, that these suggestions are not enforced, if you want a JScript
      * clean site, just omit the print calls and you should be fine in almost all
@@ -2552,7 +2549,7 @@ class midcom_application
      * @param boolean $prepend Whether to add the JS include to beginning of includes
      * @see add_jscript()
      * @see add_jsonload()
-     * @see print_jscripts()
+     * @see print_head_elements()
      * @see print_jsonload()
      */
     function add_jsfile($url, $prepend = false)
@@ -2590,7 +2587,7 @@ class midcom_application
      * This allows MidCOM components to register JavaScript code
      * during page processing. The site style code can then query this queued-up code
      * at anytime it likes. The queue-up SHOULD be done during the code-init phase,
-     * while the print_jscripts output SHOULD be included in the HTML HEAD area and
+     * while the print_head_elements output SHOULD be included in the HTML HEAD area and
      * the HTTP onload attribute returned by print_jsonload SHOULD be included in the
      * BODY-tag. Note, that these suggestions are not enforced, if you want a JScript
      * clean site, just omit the print calls and you should be fine in almost all
@@ -2606,7 +2603,7 @@ class midcom_application
      * @param string $script    The code to be included directly in the page.
      * @see add_jsfile()
      * @see add_jsonload()
-     * @see print_jscripts()
+     * @see print_head_elements()
      * @see print_jsonload()
      */
     function add_jscript($script, $defer = '', $prepend = false)
@@ -2657,7 +2654,7 @@ class midcom_application
      *
      * @param  string $script    The input between the <object></object> tags.
      * @param  array  $attributes Array of attribute=> value pairs to be placed in the tag.
-     * @see print_head()
+     * @see print_head_elements()
      *
      */
 
@@ -2676,7 +2673,7 @@ class midcom_application
      *  head section of the page.
      *
      *  @param  array  $attributes Array of attribute=> value pairs to be placed in the tag.
-     *  @see print_head()
+     *  @see print_head_elements()
      */
     function add_meta_head($attributes = null)
     {
@@ -2695,7 +2692,7 @@ class midcom_application
      *
      * @param  string $script    The input between the <style></style> tags.
      * @param  array  $attributes Array of attribute=> value pairs to be placed in the tag.
-     * @see print_head()
+     * @see print_head_elements()
      */
     function add_style_head($script, $attributes = null)
     {
@@ -2710,16 +2707,16 @@ class midcom_application
      * Register a linkelement to be placed in the pagehead.
      * This allows MidCom components to register extra css-links in the pagehead.
      * Example to use this to include a css link:
-     * <pre>
+     * <code>
      * $attributes = array ('rel' => 'stylesheet',
      *                      'type' => 'text/css',
      *                      'href' => '/style.css'
      *                      );
      * $midcom->add_link_head($attributes);
-     * </pre>
+     * </code>
      *
      *  @param  array  $attributes Array of attribute=> value pairs to be placed in the tag.
-     *  @see print_head()
+     *  @see print_head_elements()
      */
     function add_link_head( $attributes = null )
     {
@@ -2778,7 +2775,7 @@ class midcom_application
      * This allows MidCOM components to register JavaScript code
      * during page processing. The site style code can then query this queued-up code
      * at anytime it likes. The queue-up SHOULD be done during the code-init phase,
-     * while the print_jscripts output SHOULD be included in the HTML HEAD area and
+     * while the print_head_elements output SHOULD be included in the HTML HEAD area and
      * the HTTP onload attribute returned by print_jsonload SHOULD be included in the
      * BODY-tag. Note, that these suggestions are not enforced, if you want a JScript
      * clean site, just omit the print calls and you should be fine in almost all
@@ -2792,7 +2789,7 @@ class midcom_application
      * @param string $method    The name of the method to be called on page startup, including parameters but excluding the ';'.
      * @see add_jsfile()
      * @see add_jscript()
-     * @see print_jscripts()
+     * @see print_head_elements()
      * @see print_jsonload()
      */
     function add_jsonload($method)
@@ -2807,7 +2804,7 @@ class midcom_application
      * This allows MidCOM components to register JavaScript code
      * during page processing. The site style code can then query this queued-up code
      * at anytime it likes. The queue-up SHOULD be done during the code-init phase,
-     * while the print_jscripts output SHOULD be included in the HTML HEAD area and
+     * while the print_head_elements output SHOULD be included in the HTML HEAD area and
      * the HTTP onload attribute returned by print_jsonload SHOULD be included in the
      * BODY-tag. Note, that these suggestions are not enforced, if you want a JScript
      * clean site, just omit the print calls and you should be fine in almost all
@@ -2833,7 +2830,7 @@ class midcom_application
      * @see add_jsfile()
      * @see add_jscript()
      * @see add_jsonload()
-     * @see print_jscripts()
+     * @see print_head_elements()
      */
     function print_jsonload()
     {
@@ -2852,7 +2849,7 @@ class midcom_application
      * This allows MidCOM components to register HEAD elements
      * during page processing. The site style code can then query this queued-up code
      * at anytime it likes. The queue-up SHOULD be done during the code-init phase,
-     * while the print_jscripts output SHOULD be included in the HTML HEAD area and
+     * while the print_head_elements output SHOULD be included in the HTML HEAD area and
      * the HTTP onload attribute returned by print_jsonload SHOULD be included in the
      * BODY-tag. Note, that these suggestions are not enforced, if you want a JScript
      * clean site, just omit the print calls and you should be fine in almost all
@@ -2930,6 +2927,7 @@ class midcom_application
 
     /**
      * Echo the jquery statuses
+     *
      * This function echos the scripts added by the add_jquery_state_script
      * method.
      *
@@ -3076,7 +3074,7 @@ class midcom_application
      * metadata and toolbars to the correct object.
      *
      * @param DBAObject &$object The DBA class instance to bind to.
-     * @param string $page_type String describing page type, will be used for substyling
+     * @param string $page_class String describing page type, will be used for substyling
      */
     function bind_view_to_object(&$object, $page_class = 'default')
     {

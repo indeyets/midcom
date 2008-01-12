@@ -78,7 +78,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
      * 
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param mixed $data The local request data. 
+     * @param mixed &$data The local request data. 
      * @return boolean Indicating success.
      */
     function _handler_searchform($handler_id, $args, &$data)
@@ -110,7 +110,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
      * some hints about how to write queries. 
      * 
      * @param mixed $handler_id The ID of the handler.
-     * @param mixed $data The local request data. 
+     * @param mixed &$data The local request data. 
      */
     function _show_searchform($handler_id, &$data)
     {
@@ -163,7 +163,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
      * 
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param mixed $data The local request data. 
+     * @param mixed &$data The local request data. 
      * @return boolean Indicating success.
      */
     function _handler_result($handler_id, $args, &$data)
@@ -320,7 +320,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
      * Displays the resultset.
      * 
      * @param mixed $handler_id The ID of the handler.
-     * @param mixed $data The local request data.
+     * @param mixed &$data The local request data.
      */
     function _show_result($handler_id, &$data)
     {
@@ -339,7 +339,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
      * 
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param mixed $data The local request data. 
+     * @param mixed &$data The local request data. 
      * @return boolean Indicating success.
      */
     function _handler_opensearchdescription($handler_id, $args, &$data)
@@ -354,7 +354,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
      * Display OpenSearch data file for browser search bar integration.
      * 
      * @param mixed $handler_id The ID of the handler.
-     * @param mixed $data The local request data.
+     * @param mixed &$data The local request data.
      */
     function _show_opensearchdescription($handler_id, &$data)
     {

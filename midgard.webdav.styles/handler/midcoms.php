@@ -43,6 +43,9 @@ class midgard_webdav_styles_handler_midcoms  extends midgard_webdav_styles_handl
 
     /**
      * Showfunctions are not in use
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_midcoms($handler_id, &$data)
     {

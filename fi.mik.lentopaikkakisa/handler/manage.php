@@ -87,6 +87,11 @@ class fi_mik_lentopaikkakisa_handler_manage extends midcom_baseclasses_component
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_list($handler_id, &$data)
     {
         midcom_show_style('view-reports');

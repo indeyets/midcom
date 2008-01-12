@@ -235,6 +235,9 @@ class net_fernmark_pedigree_handler_result_admin extends midcom_baseclasses_comp
 
     /**
      * Shows the loaded result.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit ($handler_id, &$data)
     {
@@ -313,6 +316,9 @@ class net_fernmark_pedigree_handler_result_admin extends midcom_baseclasses_comp
 
     /**
      * Shows the delete form
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete ($handler_id, &$data)
     {

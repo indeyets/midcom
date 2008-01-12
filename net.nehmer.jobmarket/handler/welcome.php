@@ -202,6 +202,9 @@ class net_nehmer_jobmarket_handler_welcome extends midcom_baseclasses_components
      *
      * Normally, you should completely customize this page anyway, therefore the
      * default styles are rather primitive at this time.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_welcome($handler_id, &$data)
     {
@@ -266,6 +269,9 @@ class net_nehmer_jobmarket_handler_welcome extends midcom_baseclasses_components
 
     /**
      * Displays the own items in a standard display loop.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_self($handler_id, &$data)
     {

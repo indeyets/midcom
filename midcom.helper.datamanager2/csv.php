@@ -146,7 +146,7 @@ class midcom_helper_datamanager2_csv extends midcom_baseclasses_components_purec
      * This may trigger generate_error in case of critical errors (like an undefined
      * DM instance).
      *
-     * @param MidCOMDBAObject $object A reference to the object that should be dumped.
+     * @param MidCOMDBAObject &$object A reference to the object that should be dumped.
      * @return string CSV line.
      */
     function get_line (&$object)

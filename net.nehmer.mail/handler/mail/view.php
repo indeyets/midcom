@@ -187,6 +187,8 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
     /**
      * Mail content view.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_view($handler_id, &$data)
@@ -211,6 +213,11 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
         midcom_show_style('mail-show');
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_live_preview($handler_id, &$data)
     {
         if ($this->_output_mode == 'markdown')

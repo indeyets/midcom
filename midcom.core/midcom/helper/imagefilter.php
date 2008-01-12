@@ -45,8 +45,9 @@ class midcom_helper_imagefilter
 
     /**
      * The quality to use for JPEG manipulation, this is not
-     * yet settable from the outside. Stored as a valid imagemagick
-     * option, defaults to '-quality 90' right now.
+     * yet settable from the outside. 
+     *
+     * Stored as a valid imagemagick option, defaults to '-quality 90' right now.
      *
      * @var string
      * @access private
@@ -108,6 +109,7 @@ class midcom_helper_imagefilter
 
     /**
      * Sets the filename of the image currently being edited.
+     *
      * This must be the full path to the file, the fill will be
      * replaced with the modified image.
      *
@@ -142,8 +144,9 @@ class midcom_helper_imagefilter
     }
 
     /**
-     * This function will process a string-based filter chain. This
-     * is a semicolon-separated list of commands, which will be evaluated
+     * This function will process a string-based filter chain.
+     *
+     * This is a semicolon-separated list of commands, which will be evaluated
      * using process_command each.
      *
      * Processing stops as soon as one filter command fails.
@@ -178,6 +181,7 @@ class midcom_helper_imagefilter
 
     /**
      * This is the main function evaluator of the filter class.
+     *
      * It will take a function style command like
      * resize(90,90), arguments are separated by commas, there is no
      * quoting at the moment. All arguments are parsed as strings,
@@ -309,8 +313,8 @@ class midcom_helper_imagefilter
     /*********** IMAGE MANIPULATION STUFF *****************/
 
     /**
-     * Executes a custom image manipulation callback. The command
-     * name is the function that is searched. The function must
+     * Executes a custom image manipulation callback. 
+     * The command name is the function that is searched. The function must
      * use the following signature:
      *
      * boolean callback (string $infile, $string outfile, array $parameters);
@@ -377,9 +381,10 @@ class midcom_helper_imagefilter
     }
 
     /**
-     * This function converts the image to the specified image format. It must be a suitable
-     * extension to use with the Imagemagick convert utility. The file will not be renamed,
-     * you have to do this yourself.
+     * This function converts the image to the specified image format. 
+     *
+     * It must be a suitable extension to use with the Imagemagick convert 
+     * utility. The file will not be renamed, you have to do this yourself.
      *
      * This call will always convert the first page only of the supplied image, otherwise,
      * Imagemagick would spam the temp directory in case we are working on a PDF file or

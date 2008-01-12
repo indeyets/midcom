@@ -44,6 +44,8 @@ class midcom_core_nullcomponent_handler_index  extends midcom_baseclasses_compon
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_index($handler_id, &$data)
     {

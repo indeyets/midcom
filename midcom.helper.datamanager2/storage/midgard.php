@@ -32,7 +32,7 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
      * destroy the reference.
      *
      * @param midcom_helper_datamanager2_schema &$schema The data schema to use for processing.
-     * @param MidCOMDBAObject $object A reference to the DBA object to user for Data I/O.
+     * @param MidCOMDBAObject &$object A reference to the DBA object to user for Data I/O.
      */
     function midcom_helper_datamanager2_storage_midgard(&$schema, &$object)
     {

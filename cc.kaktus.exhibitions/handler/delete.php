@@ -187,6 +187,8 @@ class cc_kaktus_exhibitions_handler_delete extends midcom_baseclasses_components
     /**
      * Show the editing form
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access public
      */
     public function _show_delete($handler_id, &$data)

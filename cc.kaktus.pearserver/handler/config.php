@@ -90,6 +90,8 @@ class cc_kaktus_pearserver_handler_config extends midcom_baseclasses_components_
     /**
      * Show the configuration screen
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access public
      */
     function _show_config($handler_id, &$data)

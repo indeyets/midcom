@@ -151,6 +151,8 @@ class cc_kaktus_exhibitions_handler_edit extends midcom_baseclasses_components_h
     /**
      * Show the editing form
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access public
      */
     public function _show_edit($handler_id, &$data)

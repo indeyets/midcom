@@ -203,6 +203,9 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
 
     /**
      * Shows the welcome page
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_welcome($handler_id, &$data)
     {
@@ -312,6 +315,9 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
 
     /**
      * Shows the welcome page
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_categoryselect($handler_id, &$data)
     {
@@ -527,6 +533,9 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
 
     /**
      * Renders the details entry form.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_details($handler_id, &$data)
     {
@@ -719,6 +728,9 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
 
     /**
      * Renders the confirm entry page.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_confirm($handler_id, &$data)
     {
@@ -770,6 +782,9 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
 
     /**
      * Shows an all-ok page.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_thanks($handler_id, &$data)
     {

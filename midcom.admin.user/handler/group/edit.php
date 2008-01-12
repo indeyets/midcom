@@ -118,7 +118,7 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
      * @access private
      * @param string $handler_id Name of the used handler
      * @param mixed $args Array containing the variable arguments passed to the handler
-     * @param mixed $data Data passed to the show method
+     * @param mixed &$data Data passed to the show method
      * @return boolean Indicating successful request
      */
     function _handler_edit($handler_id, $args, &$data)
@@ -185,7 +185,7 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
      * 
      * @access private
      * @param string $handler_id Name of the used handler
-     * @param mixed $data Data passed to the show method
+     * @param mixed &$data Data passed to the show method
      */
     function _show_edit($handler_id, &$data)
     {

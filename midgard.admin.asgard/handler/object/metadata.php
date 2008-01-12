@@ -158,6 +158,8 @@ class midgard_admin_asgard_handler_object_metadata extends midcom_baseclasses_co
     /**
      * Output the style element for metadata editing
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_edit($handler_id, &$data)

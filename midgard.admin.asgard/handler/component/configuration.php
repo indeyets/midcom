@@ -223,7 +223,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
      *
      * @access private
      * @param string $handler_id Name of the used handler
-     * @param mixed $data Data passed to the show method
+     * @param mixed &$data Data passed to the show method
      */
     function _show_view($handler_id, &$data)
     {
@@ -521,7 +521,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
      *
      * @access private
      * @param string $handler_id Name of the used handler
-     * @param mixed $data Data passed to the show method
+     * @param mixed &$data Data passed to the show method
      */
     function _show_edit($handler_id, &$data)
     {

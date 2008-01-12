@@ -171,6 +171,8 @@ class cc_kaktus_todo_handler_new extends midcom_baseclasses_components_handler
     /**
      * Show the creation form
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_new($handler_id, &$data)

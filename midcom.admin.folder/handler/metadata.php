@@ -218,6 +218,8 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
     /**
      * Output the style element for metadata editing
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_metadata($handler_id, &$data)

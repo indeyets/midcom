@@ -389,6 +389,8 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
     /**
      * Show the page of an artist
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access public
      */
     public function _show_view($handler_id, &$data)
@@ -549,6 +551,8 @@ class cc_kaktus_exhibitions_handler_view extends midcom_baseclasses_components_h
     /**
      * Show the current exhibition or an error page
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access public
      */
     public function _show_current($handler_id, &$data)

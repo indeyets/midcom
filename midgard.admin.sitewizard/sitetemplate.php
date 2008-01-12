@@ -215,6 +215,8 @@ class midgard_admin_sitewizard_sitetemplate extends midcom_baseclasses_component
     /**
      * Output the object export in desired format
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_export($handler_id, &$data)

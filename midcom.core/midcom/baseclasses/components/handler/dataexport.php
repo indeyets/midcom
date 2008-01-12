@@ -203,7 +203,11 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
         return $data;
     }
 
-
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_csv($handler_id, &$data)
     {
         // Make real sure we're dumping data live

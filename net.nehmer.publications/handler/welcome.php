@@ -309,6 +309,9 @@ class net_nehmer_publications_handler_welcome extends midcom_baseclasses_compone
 
     /**
      * Renders the alphabetic publications index page.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_index($handler_id, &$data)
     {
@@ -395,6 +398,9 @@ class net_nehmer_publications_handler_welcome extends midcom_baseclasses_compone
 
     /**
      * Renders the latest publications page.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_latest($handler_id, &$data)
     {
@@ -478,6 +484,9 @@ class net_nehmer_publications_handler_welcome extends midcom_baseclasses_compone
 
     /**
      * Shows the complete category index.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_categories($handler_id, &$data)
     {

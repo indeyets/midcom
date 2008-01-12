@@ -219,6 +219,9 @@ class net_nehmer_jobmarket_handler_submit extends midcom_baseclasses_components_
     /**
      * Displays a welcome page with all types available for submission linked
      * accordingly.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_welcome($handler_id, &$data)
     {
@@ -516,6 +519,9 @@ class net_nehmer_jobmarket_handler_submit extends midcom_baseclasses_components_
 
     /**
      * Calls a simple style element which shows the form.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_step1($handler_id, &$data)
     {
@@ -562,6 +568,9 @@ class net_nehmer_jobmarket_handler_submit extends midcom_baseclasses_components_
 
     /**
      * Displays the everything's happy message.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_thankyou($handler_id, &$data)
     {

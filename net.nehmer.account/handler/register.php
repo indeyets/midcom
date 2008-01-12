@@ -191,6 +191,9 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
     /**
      * Lists the available account types.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_select_type($handler_id, &$data)
     {
@@ -264,6 +267,8 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
     /**
      * @todo Please comment *at least* on a method scope what these are doing!
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_register_invitation($handler_id, &$data)
     {
@@ -522,6 +527,9 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
     /**
      * Lists the available account types.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_register($handler_id, &$data)
     {
@@ -985,6 +993,9 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
     /**
      * Lists the available account types.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_activate($handler_id, &$data)
     {
@@ -1009,6 +1020,11 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_finish($handler_id, &$data)
     {
         midcom_show_style('registration-finished');

@@ -107,6 +107,8 @@ class cc_kaktus_exhibitions_handler_list extends midcom_baseclasses_components_h
     /**
      * Show a list of years
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access public
      */
     public function _show_years($handler_id, &$data)
@@ -242,6 +244,8 @@ class cc_kaktus_exhibitions_handler_list extends midcom_baseclasses_components_h
     /**
      * Show the list of exhibitions on a certain year
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access public
      */
     public function _show_list($handler_id, &$data)

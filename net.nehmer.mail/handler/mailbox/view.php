@@ -185,6 +185,8 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
     /**
      * Mailbox content view.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_view($handler_id, &$data)
