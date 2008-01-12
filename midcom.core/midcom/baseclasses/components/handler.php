@@ -61,7 +61,7 @@ class midcom_baseclasses_components_handler
     /**
      * A handle to the i18n service.
      *
-     * @var midcom_helper_services_i18n
+     * @var midcom_services_i18n
      */
     var $_i18n = null;
 

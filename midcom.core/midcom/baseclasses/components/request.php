@@ -321,7 +321,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
     /**
      * A handle to the i18n service.
      *
-     * @var midcom_helper_services_i18n
+     * @var midcom_services_i18n
      */
     public $_i18n = null;
 
