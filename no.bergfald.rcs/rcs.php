@@ -25,7 +25,7 @@ class no_bergfald_rcs {
     /**
      * Backend object
      * 
-     * @var object no_nu_versoning_backend
+     * @var no_nu_versoning_backend
      * @access private
      */
      var $backend = null;
@@ -34,7 +34,7 @@ class no_bergfald_rcs {
      * Pointer to the diff object
      * 
      * @access private
-     * @var object text_diff
+     * @var text_diff
      */
      var $_diff = null;
      

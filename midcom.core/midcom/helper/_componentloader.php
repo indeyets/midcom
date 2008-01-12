@@ -41,7 +41,7 @@
  *    MidCOM Specification. This will check the existence of all
  *    required SnippetDirs.
  * 2. Load all Snippets related with the MidCOM Interface Concept
- *    Classes and instantiate the Midcom and Component concept
+ *    Classes and instantiate the MidCOM and Component concept
  *    classes, initialize the Component. Check whether all
  *    required concept classes exist.
  * 3. Return the various interface concepts upon each request

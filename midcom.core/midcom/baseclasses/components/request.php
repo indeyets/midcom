@@ -210,7 +210,7 @@
  * URL. Within a plugin you can register one or more handler classes. Each of this
  * classes can of course define more then one request handler.
  *
- * A plugin class must be a descendant of Midcom_baseclasses_components_handler or at
+ * A plugin class must be a descendant of midcom_baseclasses_components_handler or at
  * least support its full interface.
  *
  * It must define an additional function, called get_plugin_handlers(). It has to return

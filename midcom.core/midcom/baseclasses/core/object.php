@@ -8,11 +8,11 @@
  */
 
 /**
- * This is the base class for all objects within the MidCOM core. Usually you should
- * not need to inherit from this class directly, as all baseclasses made available
- * for usage are somehow derived from this class.
+ * This is the base class for all objects within the MidCOM core. 
+ * Usually you should not need to inherit from this class directly, as all 
+ * baseclasses made available for usage are somehow derived from this class.
  * 
- * A noteable exception are all inherited MgdSchema driven database classes, which
+ * A notable exception are all inherited MgdSchema driven database classes, which
  * are not inherited from this class. 
  * 
  * <b>Transition notes:</b>

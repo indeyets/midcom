@@ -81,7 +81,7 @@ class midcom_helper_itemlist
     * if not. use default.
     * 
     * 
-    * @return string Midcom stylename.
+    * @return string MidCOM stylename.
     */
     
     /** @ignore */

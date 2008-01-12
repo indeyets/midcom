@@ -218,8 +218,9 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
 
     /**
      * This is the translated, full component name obtained by looking up the string
-     * $name in the l10n library $name. This member is only populated on demand by the
-     * get_translated_name() function.
+     * $name in the l10n library $name. 
+
+     * This member is only populated on demand by the get_translated_name() function.
      */
     var $name_translated = null;
 
@@ -246,7 +247,9 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
     var $state = 'devel';
 
     /**
-     * Privileges array definition. Indexes are the full privilege names (including the component
+     * Privileges array definition. 
+     *
+     * Indexes are the full privilege names (including the component
      * prefix), values are arrays holding the global / owner privilege default.
      *
      * @todo Complete documentation
@@ -256,8 +259,9 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
     var $privileges = Array();
 
     /**
-     * A list of class definition filenames (all looked up in the components configuration
-     * directory).
+     * A list of class definition filenames 
+     *
+     * (all looked up in the components configuration directory).
      *
      * @var array
      */
@@ -271,7 +275,9 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
     var $watches = null;
 
     /**
-     * Custom place to extend the schema, the array holds data indexed by the component name
+     * Custom place to extend the schema.
+     *
+     * The array holds data indexed by the component name
      * they are relevant to.
      *
      * @var array
@@ -285,6 +291,7 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
 
     /**
      * The constructor loads the manifest indicated by the filename passed to it.
+     *
      * If it is a relative path, it is evaluated against MIDCOM_ROOT. Otherwise,
      * the file is accessed directly.
      *
@@ -365,9 +372,10 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
 
     /**
      * This is an internal startup helper which extracts and post-processes the privilege
-     * definitions in the loaded manifest information. It will not complete any missing
-     * owner default privileges, this is done by the Authentication service upon privilege
-     * registering.
+     * definitions in the loaded manifest information.
+     *
+     * It will not complete any missing owner default privileges, this is done by the 
+     * Authentication service upon privilege registering.
      *
      * @access protected
      */

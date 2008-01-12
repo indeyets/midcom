@@ -9,8 +9,8 @@
  */
 
 /**
- * This is a basic Midcom Service which provides an interfaces to the
- * various I18n facilities of Midcom.
+ * This is a basic MidCOM Service which provides an interfaces to the
+ * various I18n facilities of MidCOM.
  *
  * The I18n service serves as a central access point for all aspects
  * around internationalization and localization. It provides auto-detection
@@ -47,8 +47,9 @@ class midcom_services_i18n
     var $_language_db;
 
     /**
-     * Preferred languages extracted out of the HTTP content negotiation. Array
-     * keys are the languages, the value is their q-index.
+     * Preferred languages extracted out of the HTTP content negotiation.
+     *
+     * Array keys are the languages, the value is their q-index.
      *
      * @var Array
      * @access private
@@ -56,8 +57,9 @@ class midcom_services_i18n
     var $_http_lang;
 
     /**
-     * Preferred charsets extracted out of the HTTP content negotiation. Array
-     * keys are the charsets, the value is their q-index.
+     * Preferred charsets extracted out of the HTTP content negotiation.
+     *
+     * Array keys are the charsets, the value is their q-index.
      *
      * @var Array
      * @access private
@@ -65,8 +67,9 @@ class midcom_services_i18n
     var $_http_charset;
 
     /**
-     * Stores the associative array stored in the cookie
-     * "midcom_services_i18n" which contains the keys "language" and
+     * Stores the associative array stored in the cookie "midcom_services_i18n"
+     *
+     * Contains the keys "language" and
      * "charset" or null if the cookie was not set.
      *
      * @var Array
@@ -83,8 +86,9 @@ class midcom_services_i18n
     var $_fallback_language;
 
     /**
-     * Cache of all instantiated localization classes. They are delivered
-     * by reference to all clients.
+     * Cache of all instantiated localization classes.
+     *
+     * They are delivered by reference to all clients.
      *
      * @var Array
      * @access private
@@ -100,7 +104,9 @@ class midcom_services_i18n
     var $_current_language;
 
     /**
-     * Current language for content. May be different than the UI language
+     * Current language for content.
+     *
+     * May be different than the UI language
      *
      * @var string
      * @access private
@@ -108,7 +114,9 @@ class midcom_services_i18n
     var $_current_content_language;
 
     /**
-     * Current Midgard language ID for content. May be different than the UI language
+     * Current Midgard language ID for content.
+     *
+     * May be different than the UI language
      *
      * @var string
      * @access private
@@ -124,9 +132,9 @@ class midcom_services_i18n
     var $_current_charset;
 
     /**
-     * List of different language versions of the site in the format
-     * of an array indexed by language ID and containing midgard_host
-     * objects
+     * List of different language versions of the site
+     *
+     * Format: An array indexed by language ID and containing midgard_host objects
      *
      * @var array
      * @access private
@@ -135,11 +143,13 @@ class midcom_services_i18n
 
     /**
      * This method initializes the available i18n framework by determining
-     * the desired language  from these different sources: HTTP Content
-     * Negotiation, Client side language cookie. It uses the MidCOM Language
-     * database now located at  /midcom/services/i18n/_i18n_language-db for
-     * any decisions. Its two parameters set the default language in case
-     * that none is supplied via HTTP Content Negotiation or through Cookies.
+     * the desired language from these different sources: HTTP Content
+     * Negotiation, Client side language cookie.
+     *
+     * It uses the MidCOM Language database now located at
+     * /midcom/services/i18n/_i18n_language-db for any decisions. Its two
+     * parameters set the default language in case that none is supplied
+     * via HTTP Content Negotiation or through Cookies.
      *
      * The default language set on startup is currently hardcoded to en
      * by the MidCOM core, you should override it after Initialization if you
@@ -410,13 +420,14 @@ class midcom_services_i18n
     }
 
     /**
-     * Returns a l10n class instance (see the snippet documentation at
-     * /midcom/services/_i18n_l10n for details) which can be used to
-     * access the localization data of the current component. Using the
-     * special name "midcom" you will get the midcom core l10n library.
+     * Returns a l10n class instance which can be used to
+     * access the localization data of the current component.
+     *
+     * Using the special name "midcom" you will get the midcom core l10n library.
      *
      * Note that you are receiving a reference here.
      *
+     * @see midcom_services__i18n_l10n
      * @param string $component	The component for which to retrieve a string database.
      * @param string $database	The string table to retrieve from the component's locale directory.
      * @return midcom_helper__i18n_l10n	The cached L10n database; honor the reference for memory consumptions sake.
@@ -462,8 +473,10 @@ class midcom_services_i18n
     }
 
     /**
-     * This is a shortcut for echo $this->get_string(...);. To keep the naming stable with the actual
-     * l10n class, this is not called echo_string (Zend won't allow $l10n->echo().)
+     * This is a shortcut for echo $this->get_string(...);.
+     *
+     * To keep the naming stable with the actual l10n class, this is not called
+     * echo_string (Zend won't allow $l10n->echo().)
      *
      * @param string $stringid The string to translate.
      * @param string $component	The component for which to retrieve a string database. If omitted, this defaults to the
@@ -479,8 +492,10 @@ class midcom_services_i18n
     }
 
     /**
-     * Load the specified l10n library. If loading the library failed, generate_error
-     * is called, otherwise the l10n db cache is populated accordingly.
+     * Load the specified l10n library.
+     *
+     * If loading the library failed, generate_error is called, otherwise the l10n
+     * db cache is populated accordingly.
      *
      * @param string $component	The component for which to retrieve a string database.
      * @param string $database	The string table to retrieve from the component's locale directory.
@@ -596,8 +611,9 @@ class midcom_services_i18n
     /**
      * This method pulls available language and content type data out of
      * the HTTP Headers delivered by the browser and populates the member
-     * variables $_http_lang and $_http_content_type. q-parameters for
-     * prioritization are supported.
+     * variables $_http_lang and $_http_content_type.
+     *
+     * q-parameters for prioritization are supported.
      */
     function _read_http_negotiation ()
     {
@@ -727,8 +743,9 @@ class midcom_services_i18n
     }
 
     /**
-     * This is a calling wrapper to the iconv library. See the PHP iconv() function
-     * for the exact parameter definitions.
+     * This is a calling wrapper to the iconv library.
+     *
+     * See the PHP iconv() function for the exact parameter definitions.
      *
      * @param string $source_charset The charset to convert from.
      * @param string $destination_charset The charset to convert to.
@@ -785,9 +802,10 @@ class midcom_services_i18n
     }
 
     /**
-     * Converts the given string to the current site charset. The charset should be
-     * specified explicitly, as autodetection is very very error prone (though sometimes
-     * you don't have a choice).
+     * Converts the given string to the current site charset.
+     *
+     * The charset should be specified explicitly, as autodetection is very
+     * very error prone (though sometimes you don't have a choice).
      *
      * @param string $string The string to convert.
      * @param string $charset The charset in which string currently is, omit this parameter to use mb_detect_encoding (error prone!)
@@ -805,8 +823,9 @@ class midcom_services_i18n
     }
 
     /**
-     * Charset-aware replacement of html_entity_decode. Uses Iconv to modify the
-     * HTML_ENTITIES translation tables.
+     * Charset-aware replacement of html_entity_decode.
+     *
+     * Uses Iconv to modify the HTML_ENTITIES translation tables.
      *
      * In addition, this will drop all numeric HTML entities.
      *

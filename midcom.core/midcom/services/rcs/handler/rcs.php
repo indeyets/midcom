@@ -23,15 +23,17 @@ class no_bergfald_rcs
 
     /**
      * Backend object
-     * @var object midcom_servcies_rcs_backend
+     *
+     * @var midcom_servcies_rcs_backend
      * @access private
      */
      var $backend = null;
 
     /**
      * Pointer to the diff object
+     *
      * @access private
-     * @var object text_diff
+     * @var text_diff
      */
      var $_diff = null;
     /**

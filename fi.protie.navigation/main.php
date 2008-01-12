@@ -41,7 +41,7 @@ class fi_protie_navigation
      * MidCOM helper class for navigation subsystem. Uses class 'midcom.helper.nav'
      *
      * @access private
-     * @var object midcom_helper_nav
+     * @var midcom_helper_nav
      */
     var $_nap = null;
 

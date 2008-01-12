@@ -49,7 +49,7 @@ function midcom_helper_replicator_serialize_blob(&$object)
  * Manifests as "PHP object does not have __res property" when you call
  * it (otherwise properly) inside MidCOM application
  *
- * @param string $xml reference to importable XML
+ * @param string &$xml reference to importable XML
  * @param boolean $use_force whether to use force
  * @return array of objects unserialized from XML (or false for failure)
  * @see midcom_helper_replicator_serialize
@@ -85,7 +85,7 @@ function midcom_helper_replicator_import_object(&$object, $use_force = false)
 /**
  * Workaround for Zend bug regarding object handling inside methods
  *
- * @param string $xml reference to importable XML
+ * @param string &$xml reference to importable XML
  * @param boolean $use_force whether to use force
  * @return boolean indicating success/failure
  * @see midcom_helper_replicator_import_object

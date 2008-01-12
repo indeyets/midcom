@@ -7,7 +7,7 @@
  */
 
 /**
- * Midcom wrapped access to the MgdSchema class, keep logic here
+ * MidCOM wrapped access to the MgdSchema class, keep logic here
  *
  * @package org.openpsa.projects
  */

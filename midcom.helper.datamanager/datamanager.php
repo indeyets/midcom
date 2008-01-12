@@ -78,7 +78,7 @@
  * The object names given for datatype will be prefixed with "midcom_helper_
  * datamanager_datatype_", while the widget object names use "midcom_helper_
  * datamanager_widget_" as prefix. If you want custom datatypes or widgets not
- * given by Midcom, prefix them with "custom_", i.e. "midcom_helper_datamanager_
+ * given by MidCOM, prefix them with "custom_", i.e. "midcom_helper_datamanager_
  * datatype_custom_mydatatype".
  *
  * If the value l10n_db is set, it overrides the default l10n database, possible
@@ -1115,7 +1115,7 @@ class midcom_helper_datamanager {
             {
                 $this->_update_nemein_rcs();
                 $_MIDCOM->cache->invalidate($this->_storage->guid());
-                debug_add("Invalidated Midcom Cache.");
+                debug_add("Invalidated MidCOM Cache.");
             }
 
             // rebuild layout array, this is done even in the case of an error

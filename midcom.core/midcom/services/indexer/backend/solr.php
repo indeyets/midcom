@@ -30,12 +30,12 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
 
     /**
      * The xml factory class
-     * @var object midcom_services_indexer_solrDocumentFactory
+     * @var midcom_services_indexer_solrDocumentFactory
      */
     private $factory = null;
     /**
      * The http_request wrapper
-     * @var object midcom_services_indexer_solrRequest
+     * @var midcom_services_indexer_solrRequest
      */
     private $request = null;
     /**

@@ -8,7 +8,7 @@
  */
 
 /**
- * Midcom wrapped base class, keep logic here
+ * MidCOM wrapped base class, keep logic here
  *
  * @package org.openpsa.sales
  */

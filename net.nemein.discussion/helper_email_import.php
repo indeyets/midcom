@@ -477,7 +477,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
     /**
      * Rewrites org_openpsa_mail object properties according to configuration
      *
-     * @param object $mail reference to org_openpsa_mail object
+     * @param object &$mail reference to org_openpsa_mail object
      * @return boolean indicating success/failure
      */
     function _rewrite(&$mail)

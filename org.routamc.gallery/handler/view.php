@@ -32,7 +32,7 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
     /**
      * Photo shown on the page
      *
-     * @var org_routamc_photostream_photo $_photo
+     * @var org_routamc_photostream_photo_dba $_photo
      */
     var $_photo;
 

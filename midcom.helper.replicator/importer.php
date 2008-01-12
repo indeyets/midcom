@@ -92,7 +92,7 @@ class midcom_helper_replicator_importer extends midcom_baseclasses_components_pu
      * 
      * This should be overridden in subclasses for more contextual handling of dependencies.
      *
-     * @param string $xml XML replication content
+     * @param string &$xml XML replication content
      * @param boolean $use_force Whether to force importing
      * @return boolean Whether importing was successful
      */

@@ -14,13 +14,13 @@ class no_odindata_quickform2_factory
 
     /**
      * The schema to use. Public until the controller is loaded.
-     * @var array;
+     * @var array
      * @access public
      */
     var $schema = null;
 
     /**
-     * @var object midcom_helper_config
+     * @var midcom_helper_configuration
      */
     var $config = null;
 
@@ -32,7 +32,7 @@ class no_odindata_quickform2_factory
 
     /**
      * Datamanager controller
-     * @var object midcom.helper.datamanager2
+     * @var midcom_helper_datamanager2controller
      */
     var $_controller;
 

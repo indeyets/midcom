@@ -7,7 +7,7 @@
  */
 
 /**
- * Midcom wants this class present and QB etc use this, so keep logic here
+ * MidCOM wants this class present and QB etc use this, so keep logic here
  * @package org.openpsa.calendar
  */
 class midcom_org_openpsa_eventmember extends __midcom_org_openpsa_eventmember

@@ -8,7 +8,7 @@
  */
 
 /**
- * Midcom wrapped access to the MgdSchema class, keep logic here
+ * MidCOM wrapped access to the MgdSchema class, keep logic here
  * @package org.openpsa.projects
  */
 class midcom_org_openpsa_task_status extends __midcom_org_openpsa_task_status
