@@ -37,10 +37,6 @@
       'net.nemein.rss' => 
       array (
       ),
-      'XML_RPC' => 
-      array (
-        'channel' => 'pear.php.net',
-      ),
       'midcom' => 
       array (
       ),

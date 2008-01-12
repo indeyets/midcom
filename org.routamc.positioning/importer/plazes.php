@@ -4,20 +4,10 @@
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
- *
- * Based on PlazesWhereAmIPhp by
- * @author Peter Rukavina <peter@rukavina.net>
- * @author Olle Jonsson <olle@olleolleolle.dk>
- * @copyright Reinvented Inc., 2005
- * @license http://creativecommons.org/licenses/by-sa/2.0/ca
  */
 
-/** @ignore */
-// PEAR XML_RPC package
-require_once 'XML/RPC.php';
-
 /**
- * Importer for fetching position data for Plazes users
+ * Importer for fetching position and activity data for Plazes users
  *
  * @package org.routamc.positioning
  */
@@ -39,7 +29,7 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
     function seek_plazes_users()
     {
         // TODO: With 1.8 we can query parameters more efficiently
-        $qb = new MidgardQueryBuilder('midgard_parameter');
+        $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=','org.routamc.positioning:plazes');
         $qb->add_constraint('name', '=','username');
         $accounts = $qb->execute();
@@ -52,148 +42,63 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
             }
         }
     }
-
-    function _prepare_plazes_params($plazes_username, $plazes_password)
+    
+    function _get_plazes_userid($user, $plazes_username, $plazes_password, $cache)
     {
-        $plazes_password_md5 = md5("PLAZES{$plazes_password}");
-
-        // These are the required XML-RPC parameters
-        $params = array
-        (
-            new XML_RPC_Value($this->_config->get('plazes_developer_key'), 'string'),
-            new XML_RPC_Value($plazes_username, 'string'),
-            new XML_RPC_Value($plazes_password_md5, 'string')
-        );
-
-        return $params;
+        $client = new org_openpsa_httplib();
+        $xml = $client->get('http://plazes.com/me.xml', 'User-agent: device: midgard', $plazes_username, $plazes_password);
+        
+        $simplexml = simplexml_load_string($xml);
+        
+        if (!isset($simplexml->id))
+        {
+            return null;
+        }
+        
+        $user_id = (int) $simplexml->id;
+        
+        if ($cache)
+        {
+            $user->set_parameter('org.routamc.positioning:plazes', 'user_id', $user_id);
+        }
+        
+        return $user_id;
     }
 
-    function _parse_w3cdtf($date_str)
-    {
-
-        # regex to match wc3dtf
-        $pat = "/(\d{4})(\d{2})(\d{2})T(\d{2}):(\d{2}):((\d{2}))?(?:([-+])(\d{2}):?(\d{2})|(Z))/";
-
-        if ( preg_match( $pat, $date_str, $match ) )
-        {
-            list( $year, $month, $day, $hours, $minutes, $seconds) =
-                array( $match[1], $match[2], $match[3], $match[4], $match[5], $match[6]);
-
-            # calc epoch for current date assuming GMT
-            $epoch = gmmktime( $hours, $minutes, $seconds, $month, $day, $year);
-
-            $offset = 0;
-            if ( $match[10] == 'Z' )
-            {
-                # zulu time, aka GMT
-            }
-            else
-            {
-                $tz_mod = $match[8];
-                $tz_hour = $match[9];
-                $tz_min = $match[10];
-
-                # zero out the variables
-                if (!$tz_hour)
-                {
-                    $tz_hour = 0;
-                }
-                if (!$tz_min)
-                {
-                    $tz_min = 0;
-                }
-
-                $offset_secs = (($tz_hour * 60) + $tz_min) * 60;
-
-                # is timezone ahead of GMT?  then subtract offset
-                #
-                if ( $tz_mod == '+' )
-                {
-                    $offset_secs = $offset_secs * -1;
-                }
-
-                $offset = $offset_secs;
-            }
-            $epoch = $epoch + $offset;
-            return $epoch;
-        }
-        else
-        {
-            return -1;
-        }
-    }
-
-    function _fetch_plazes_positions($plazes_username, $plazes_password, $days = 0)
+    function _fetch_plazes_positions($plazes_username, $plazes_password)
     {
         $positions = array();
 
-        $params = $this->_prepare_plazes_params($plazes_username, $plazes_password);
-        $params[] = new XML_RPC_Value($days, 'int');
-
-        // Name of the XML-RPC method to be called
-        $msg = new XML_RPC_Message('user.trazes', $params);
-
-        // URI of the XML-RPC stub
-        $cli = new XML_RPC_Client('/api/plazes/xmlrpc', 'http://beta.plazes.com');
-        $resp = @$cli->send($msg);
-
-        if (   !$resp
-            || !is_object($resp)
-            || !method_exists($resp, 'faultCode'))
+        $client = new org_openpsa_httplib();
+        $xml = $client->get("http://plazes.com/users/{$plazes_username}/past_activities.xml", 'User-agent: device: midgard', $plazes_username, $plazes_password);
+        $simplexml = simplexml_load_string($xml);
+        
+        if (!isset($simplexml->activity))
         {
-            $this->error = 'POSITIONING_PLAZES_CONNECTION_FAILED';
             return null;
         }
 
-        if (!$resp->faultCode())
+        foreach ($simplexml->activity as $activity)
         {
-            $results = $resp->value();
-
-            $trazes = @XML_RPC_decode($results);
-
-            // Quick-and-dirty timezone handling since Plazes doesn't return timezone information like they should
-            // http://wwp.greenwichmeantime.com/time-zone/rules/eu.htm
-            $month = (int) date('m');
-            if (   $month < 4
-                || $month > 10)
+            if (   !isset($activity->plaze)
+                || !isset($activity->plaze->latitude))
             {
-                // Plazes is in CET
-                $timezone = '+0100';
-            }
-            else
-            {
-                // Plazes is in CEST
-                $timezone = '+0200';
+                // No location, skip
+                continue;
             }
 
-            if (count($trazes) > 0)
-            {
-                foreach ($trazes as $traze)
-                {
-                    @$positions[] = array
-                    (
-                        'plaze'       => $traze['plaze']['key'],
-                        'latitude'    => $traze['plaze']['latitude'],
-                        'longitude'   => $traze['plaze']['longitude'],
-                        'country'     => $traze['plaze']['country'],
-                        'city'        => $traze['plaze']['city'],
-                        'date'        => $this->_parse_w3cdtf("{$traze['start']}{$timezone}"),
-                    );
-                }
-                return $positions;
-            }
-            else
-            {
-                $this->error = 'POSITIONING_PLAZES_CONNECTION_NORESULTS';
-                return null;
-            }
+            $positions[] = array
+            (
+                'plaze' => (int) $activity->plaze->id,
+                'latitude' => (float) $activity->plaze->latitude,
+                'longitude' => (float) $activity->plaze->longitude,
+                'country' => (string) $activity->plaze->country_code,
+                'city' => (string) $activity->plaze->city,
+                'date' => strtotime((string) $activity->scheduled_at),
+            );
         }
-        else
-        {
-            $this->error = 'POSITIONING_PLAZES_FAULT_' . $resp->faultCode();
-            $this->error_string = $resp->faultString();
-            return null;
-        }
+
+        return $positions;
     }
 
     /**
@@ -205,8 +110,15 @@ class org_routamc_positioning_importer_plazes extends org_routamc_positioning_im
      */
     function get_plazes_location($user, $cache = true)
     {
-        $plazes_username = $user->parameter('org.routamc.positioning:plazes', 'username');
-        $plazes_password = $user->parameter('org.routamc.positioning:plazes', 'password');
+        $plazes_username = $user->get_parameter('org.routamc.positioning:plazes', 'username');
+        $plazes_password = $user->get_parameter('org.routamc.positioning:plazes', 'password');
+        
+        /*
+        $plazes_userid = $user->get_parameter('org.routamc.positioning:plazes', 'user_id');
+        if (!$plazes_userid)
+        {
+            $plazes_userid = $this->_get_plazes_userid($user, $plazes_username, $plazes_password, $cache);
+        }*/
 
         if (   $plazes_username
             && $plazes_password)

@@ -29,7 +29,7 @@ class org_routamc_positioning_importer_georss extends org_routamc_positioning_im
     function seek_georss_users()
     {
         // TODO: With 1.8 we can query parameters more efficiently
-        $qb = new MidgardQueryBuilder('midgard_parameter');
+        $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=','org.routamc.positioning:georss');
         $qb->add_constraint('name', '=','georss_url');
         $accounts = $qb->execute();
