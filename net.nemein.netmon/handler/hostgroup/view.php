@@ -139,6 +139,9 @@ class net_nemein_netmon_handler_hostgroup_view extends midcom_baseclasses_compon
 
     /**
      * Shows the loaded hostgroup.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view ($handler_id, &$data)
     {

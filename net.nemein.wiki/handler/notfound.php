@@ -96,6 +96,11 @@ class net_nemein_wiki_handler_notfound extends midcom_baseclasses_components_han
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_notfound($handler_id, &$data)
     {
         midcom_show_style('view-notfound');

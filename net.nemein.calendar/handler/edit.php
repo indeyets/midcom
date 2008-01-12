@@ -132,6 +132,11 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_edit($handler_id, &$data)
     {
         $this->_request_data['view_event'] = $this->_controller->datamanager->get_content_html();

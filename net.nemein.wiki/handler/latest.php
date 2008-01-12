@@ -130,6 +130,11 @@ class net_nemein_wiki_handler_latest extends midcom_baseclasses_components_handl
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_latest($handler_id, &$data)
     {
         $data['wikiname'] = $this->_topic->extra;

@@ -302,6 +302,11 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_create($handler_id, &$data)
     {
         midcom_show_style('item-create');

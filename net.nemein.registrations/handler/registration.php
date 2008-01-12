@@ -254,6 +254,9 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
     /**
      * This handler shows a registration along with a toolbar containing links to further
      * operations on the registration
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view($handler_id, &$data)
     {
@@ -302,6 +305,9 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
 
     /**
      * This handler shows a registration edit form.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit($handler_id, &$data)
     {
@@ -366,6 +372,9 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
 
     /**
      * This handler shows a registration delete confirmation page
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete($handler_id, &$data)
     {

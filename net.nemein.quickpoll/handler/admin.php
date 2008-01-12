@@ -235,6 +235,9 @@ class net_nemein_quickpoll_handler_admin extends midcom_baseclasses_components_h
 
     /**
      * Shows the loaded article.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit ($handler_id, &$data)
     {
@@ -306,6 +309,9 @@ class net_nemein_quickpoll_handler_admin extends midcom_baseclasses_components_h
 
     /**
      * Shows the loaded article.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete ($handler_id, &$data)
     {

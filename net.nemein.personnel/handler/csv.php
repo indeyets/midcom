@@ -455,6 +455,11 @@ class net_nemein_personnel_handler_csv extends midcom_baseclasses_components_han
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_import($handler_id, &$data)
     {
         switch ($data['view'])
@@ -644,6 +649,11 @@ class net_nemein_personnel_handler_csv extends midcom_baseclasses_components_han
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_export($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);

@@ -226,6 +226,8 @@ class net_nemein_personnel_handler_account extends midcom_baseclasses_components
     /**
      * Show the user account editing form
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access public
      */
     function _show_account($handler_id, &$data)
@@ -265,6 +267,8 @@ class net_nemein_personnel_handler_account extends midcom_baseclasses_components
     /**
      * Show randomly generated passwords
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access public
      */
     function _show_passwords($handler_id, &$data)

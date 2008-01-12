@@ -126,6 +126,9 @@ class net_nemein_lastupdates_handler_index  extends midcom_baseclasses_component
 
     /**
      * This function does the output.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_index($handler_id, &$data)
     {
@@ -134,6 +137,9 @@ class net_nemein_lastupdates_handler_index  extends midcom_baseclasses_component
 
     /**
      * This function does the output.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_since($handler_id, &$data)
     {
@@ -142,6 +148,9 @@ class net_nemein_lastupdates_handler_index  extends midcom_baseclasses_component
 
     /**
      * Output our query results
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_results($handler_id, &$data)
     {

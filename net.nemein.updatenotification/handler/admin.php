@@ -82,7 +82,11 @@ class net_nemein_updatenotification_handler_admin  extends midcom_baseclasses_co
         return true;
     }
 
-
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_save($handler_id, &$data)
     {
 

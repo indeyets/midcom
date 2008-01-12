@@ -196,6 +196,9 @@ class net_nemein_quickpoll_handler_archive extends midcom_baseclasses_components
 
     /**
      * Shows the loaded article.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_archive ($handler_id, &$data)
     {

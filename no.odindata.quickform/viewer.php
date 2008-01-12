@@ -259,6 +259,11 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
 
        }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_index($handler_id, &$data)
     {
        midcom_show_style('show-form');

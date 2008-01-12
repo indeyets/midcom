@@ -257,6 +257,9 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
 
     /**
      * Shows the loaded resource.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit ($handler_id, &$data)
     {
@@ -331,6 +334,9 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
 
     /**
      * Shows the loaded resource.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete ($handler_id, &$data)
     {

@@ -199,16 +199,31 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
     }
     */
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_manage_delete($handler_id, &$data)
     {
         midcom_show_style('manage_team_delete');
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_manage_team($handler_id, &$data)
     {
         midcom_show_style('manage_team');
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_manage($handler_id, &$data)
     {
         midcom_show_style('manage_teams_start');
@@ -225,11 +240,21 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         midcom_show_style('manage_teams_end');
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_admin($handler_id, &$data)
     {
         midcom_show_style('index');
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_log($handler_id, &$data)
     {
         midcom_show_style('log');

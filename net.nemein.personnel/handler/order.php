@@ -240,6 +240,8 @@ class net_nemein_personnel_handler_order extends midcom_baseclasses_components_h
     /**
      * Show sorting form
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_order($handler_id, &$data)
@@ -602,6 +604,8 @@ class net_nemein_personnel_handler_order extends midcom_baseclasses_components_h
     /**
      * Show personnel grouped into sub categories
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_grouped($handler_id, &$data)

@@ -51,6 +51,8 @@ class net_nemein_shoppingcart_handler_checkout_redirect  extends midcom_baseclas
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_redirect($handler_id, &$data)
     {

@@ -146,6 +146,9 @@ class net_nemein_netmon_handler_host_view extends midcom_baseclasses_components_
 
     /**
      * Shows the loaded host.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view ($handler_id, &$data)
     {

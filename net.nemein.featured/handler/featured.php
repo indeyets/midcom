@@ -151,7 +151,11 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         return true;
     }
 
-
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_manage($handler_id, &$data)
     {
 
@@ -192,6 +196,11 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_delete($handler_id, &$data)
     {
         $_MIDCOM->uimessages->add($data['l10n']->get('net.nemein.featured'), $data['l10n']->get('item deleted successfully'), 'ok');
@@ -231,6 +240,11 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_edit($handler_id, &$data)
     {
         $this->_request_data['controller'] = $this->_controller;
@@ -257,6 +271,11 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_move_up($handler_id, &$data)
     {
         $_MIDCOM->relocate('manage');
@@ -282,6 +301,11 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_move_down($handler_id, &$data)
     {
         $_MIDCOM->relocate('manage');

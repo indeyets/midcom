@@ -486,6 +486,11 @@ class net_nemein_internalorders_viewer extends midcom_baseclasses_components_req
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_view($handler_id, &$data)
 	{
 		midcom_show_style('show_order');
@@ -537,6 +542,11 @@ class net_nemein_internalorders_viewer extends midcom_baseclasses_components_req
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_print($handler_id, &$data)
 	{
 		midcom_show_style('show_order_print');

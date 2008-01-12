@@ -187,6 +187,8 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_manage($handler_id, &$data)
     {
@@ -258,6 +260,8 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete($handler_id, &$data)
     {
@@ -310,8 +314,10 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
     }
 
     /**
-     * This function does the output.
+     * This function does the output
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit($handler_id, &$data)
     {

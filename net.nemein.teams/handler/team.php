@@ -753,6 +753,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         return true;
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_list($handler_id, &$data)
     {
         $member_count = 0;
@@ -1001,6 +1005,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         return true;
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_team_members($handler_id, &$data)
     {
         midcom_show_style('team-members-list-start');
@@ -1093,6 +1101,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         return true;
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_quit_confirm($handler_id, &$data)
     {
         midcom_show_style('team_quit_confirm');
@@ -1111,11 +1123,19 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         return true;
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_lockdown($handler_id, &$data)
     {
         midcom_show_style('teams_lockdown');
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_quit($handler_id, &$data)
     {
         if ($this->_is_player())
@@ -1128,6 +1148,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         }
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_pending($handler_id, &$data)
     {
         midcom_show_style('teams_pending_list_start');
@@ -1155,6 +1179,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         midcom_show_style('teams_pending_list_end');
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_create($handler_id, &$data)
     {
         $this->_request_data['controller'] = $this->_controller;
@@ -1162,6 +1190,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         midcom_show_style('team_creation_form');
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_edit($handler_id, &$data)
     {
         $this->_request_data['controller'] = $this->_controller;
@@ -1169,16 +1201,28 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         midcom_show_style('team_edit_form');
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_create_profile($handler_id, &$data)
     {
         $_MIDCOM->relocate('');
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_application($handler_id, &$data)
     {
         midcom_show_style('application');
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_index($handler_id, &$data)
     {
          midcom_show_style('index');
@@ -1276,6 +1320,11 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $_MIDCOM->set_26_request_metadata($this->_current_team->metadata->revised, $this->_current_team->guid);
         return true;
     }
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_view($handler_id, &$data)
     {
         midcom_show_style('show-team');
@@ -1394,6 +1443,10 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         return true;
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_action($handler_id, &$data)
     {
         switch ($this->_current_action)

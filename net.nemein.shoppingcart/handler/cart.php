@@ -88,6 +88,8 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_additem($handler_id, &$data)
     {
@@ -114,6 +116,8 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_shortlist($handler_id, &$data)
     {
@@ -148,6 +152,8 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_contents($handler_id, &$data)
     {
@@ -225,6 +231,8 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_manage($handler_id, &$data)
     {

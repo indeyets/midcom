@@ -286,6 +286,8 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_index($handler_id, &$data)
     {
@@ -596,13 +598,20 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view($handler_id, &$data)
     {
         $this->_request_data['view_article'] = $this->_datamanager->get_content_html();
         midcom_show_style('index');
     }
-    
+
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */    
     function _show_polldata($handler_id, &$data)
     {
         if ($data['return_type'] == 'XML')

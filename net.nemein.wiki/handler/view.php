@@ -302,6 +302,11 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_view($handler_id, &$data)
     {
         $data['wikipage_view'] = $this->_controller->get_content_html();
@@ -335,6 +340,11 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_raw($handler_id, &$data)
     {
         $data['wikipage_view'] = $this->_controller->get_content_html();
@@ -433,6 +443,11 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_whatlinks($handler_id, &$data)
     {
         $data['wikipage_view'] = $this->_controller->get_content_html();

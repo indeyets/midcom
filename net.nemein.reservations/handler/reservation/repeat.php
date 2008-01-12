@@ -177,6 +177,9 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
 
     /**
      * Shows the loaded event.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_repeat($handler_id, &$data)
     {

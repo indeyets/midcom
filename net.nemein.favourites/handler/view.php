@@ -58,6 +58,11 @@ class net_nemein_favourites_handler_view extends midcom_baseclasses_components_h
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_view($handler_id, &$data)
     {
         midcom_show_style('show_index_header');

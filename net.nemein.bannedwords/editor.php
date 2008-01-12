@@ -163,6 +163,10 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
         return true;
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_manage($handler_id, &$data)
     {
         if (!is_array($this->_lang_banned_objects))
@@ -216,6 +220,10 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
         return true;
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_edit($handler_id, &$data)
     {
         $this->_request_data['controller'] = $this->_controller;
@@ -247,6 +255,10 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
         return true;
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_delete($handler_id, &$data)
     {
         $_MIDCOM->relocate('__mfa/net.nemein.bannedwords');
@@ -264,6 +276,10 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
         return true;
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_confirmdelete($handler_id, &$data)
     {
         midcom_show_style('net_nemein_bannedwords_word_confirmdelete');

@@ -193,6 +193,11 @@ class net_nemein_internalorders_handler_receive extends midcom_baseclasses_compo
 		return true;
 	}
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_receive($handler_id, &$data)
 	{
 		midcom_show_style('receive_order');

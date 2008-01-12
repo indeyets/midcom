@@ -74,7 +74,11 @@ class net_nemein_updatenotification_handler_index  extends midcom_baseclasses_co
         return true;
     }
 
-
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_index($handler_id, &$data)
     {
         midcom_show_style('index-header');

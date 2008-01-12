@@ -216,6 +216,11 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
         return true;
     }
     
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_edit($handler_id, &$data)
     {
         midcom_show_style('item-edit');

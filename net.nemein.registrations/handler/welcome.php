@@ -124,6 +124,9 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
 
     /**
      * The welcome handler loads the currently visible events and displays them.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_welcome($handler_id, &$data)
     {

@@ -532,6 +532,8 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
     /**
      * Show the results of the quick search
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_quick($handler_id, &$data)
@@ -581,7 +583,8 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
     /**
      * Show the search form
      *
-     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_search($handler_id, &$data)
     {
@@ -596,6 +599,11 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
         return $this->_show_search_form($handler_id, &$data);
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_search_form($handler_id, &$data)
     {
         midcom_show_style('view-header');
@@ -603,6 +611,11 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
         midcom_show_style('view-footer');
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_search_results($handler_id, &$data)
     {
         midcom_show_style('view-header');

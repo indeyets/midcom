@@ -235,6 +235,9 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
 
     /**
      * Displays the detail view of a given group
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_group($handler_id, &$data)
     {
@@ -360,6 +363,9 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
 
     /**
      * Renders the Group Index.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_index ($handler_id, &$data)
     {

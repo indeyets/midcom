@@ -191,6 +191,11 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 		return true;
 	}
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_products_get_from_csv($handler_id, &$data)
 	{
 			midcom_show_style('show_products');
@@ -325,8 +330,11 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 	}
 
 
-
-
+     /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_groups_get_from_csv($handler_id, &$data)
 	{
 		midcom_show_style('show_groups_tmp');

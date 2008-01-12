@@ -176,6 +176,8 @@ class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_phase1($handler_id, &$data)
     {
@@ -201,6 +203,8 @@ class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_phase2($handler_id, &$data)
     {

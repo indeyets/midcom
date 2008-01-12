@@ -105,6 +105,11 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_opml($handler_id, &$data)
     {
         $opml = new OPMLCreator();
@@ -139,6 +144,11 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_list($handler_id, &$data)
     {
         $data['folder'] = $this->_topic;
@@ -323,6 +333,11 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_subscribe($handler_id, &$data)
     {
         $data['folder'] = $this->_topic;
@@ -378,6 +393,11 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_edit($handler_id, &$data)
     {
         midcom_show_style('net-nemein-rss-feed-edit');
@@ -441,6 +461,9 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
 
     /**
      * Shows the loaded downloadpage.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete ($handler_id, &$data)
     {
@@ -501,6 +524,11 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_fetch($handler_id, &$data)
     {
         midcom_show_style('net-nemein-rss-feed-fetch');

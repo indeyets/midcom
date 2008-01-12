@@ -548,6 +548,11 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_edit($handler_id, &$data)
 	{
 		$this->_request_data['config'] =& $this->_config;

@@ -228,6 +228,11 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_moderate($handler_id, &$data)
     {
         $data['node'] = $this->_topic;

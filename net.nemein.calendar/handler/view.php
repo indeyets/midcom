@@ -208,6 +208,11 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_view($handler_id, &$data)
     {
         if ($this->_config->get('enable_ajax_editing'))

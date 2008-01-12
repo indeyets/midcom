@@ -172,6 +172,9 @@ class net_nemein_registrations_handler_admin extends midcom_baseclasses_componen
 
     /**
      * Lists the registrations of a particular event, manage permissions required.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_rootevent($handler_id, &$data)
     {

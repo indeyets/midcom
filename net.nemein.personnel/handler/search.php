@@ -352,6 +352,9 @@ class net_nemein_personnel_handler_search extends midcom_baseclasses_components_
 
     /**
      * Renders the Person Index.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_search($handler_id, &$data)
     {

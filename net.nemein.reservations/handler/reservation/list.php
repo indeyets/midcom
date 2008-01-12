@@ -168,6 +168,9 @@ class net_nemein_reservations_handler_reservation_list extends midcom_baseclasse
 
     /**
      * Shows the list of events.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_list($handler_id, &$data)
     {

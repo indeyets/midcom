@@ -248,6 +248,11 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_edit($handler_id, &$data)
     {
         $data['controller'] =& $this->_controller;

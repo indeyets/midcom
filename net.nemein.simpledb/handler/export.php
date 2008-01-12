@@ -150,6 +150,8 @@ class net_nemein_simpledb_handler_export extends midcom_baseclasses_components_h
     /**
      * Show the style in accordance to the to the requested type.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_export($handler_id, &$data)
@@ -167,6 +169,8 @@ class net_nemein_simpledb_handler_export extends midcom_baseclasses_components_h
     /**
      * Shows the Microsoft Excel
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_excel(&$data)

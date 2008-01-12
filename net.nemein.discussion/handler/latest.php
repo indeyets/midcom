@@ -79,6 +79,10 @@ class net_nemein_discussion_handler_latest extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_latest($handler_id, &$data)
     {
         if ($handler_id == 'rss')
@@ -161,6 +165,10 @@ class net_nemein_discussion_handler_latest extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_latest_all($handler_id, &$data)
     {
         if ($handler_id == 'rss_all')
@@ -175,6 +183,8 @@ class net_nemein_discussion_handler_latest extends midcom_baseclasses_components
 
     /**
      * Show latest posts in HTML format
+     *
+     * @param mixed &$data The local request data.
      */
     function _show_latest_posts(&$data)
     {
@@ -194,6 +204,9 @@ class net_nemein_discussion_handler_latest extends midcom_baseclasses_components
 
     /**
      * Show latest posts as RSS feed
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_rss(&$data)
     {

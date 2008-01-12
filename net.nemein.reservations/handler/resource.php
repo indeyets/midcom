@@ -139,6 +139,11 @@ class net_nemein_reservations_handler_resource extends midcom_baseclasses_compon
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_list($handler_id, &$data)
     {
         $this->_request_data['description_before_listing'] = $this->_config->get('description_before_listing');
@@ -360,6 +365,9 @@ class net_nemein_reservations_handler_resource extends midcom_baseclasses_compon
 
     /**
      * Shows the loaded resource.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view ($handler_id, &$data)
     {

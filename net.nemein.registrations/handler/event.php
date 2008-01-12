@@ -285,6 +285,9 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Lists the registrations of a particular event, manage permissions required.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view($handler_id, &$data)
     {
@@ -338,6 +341,9 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Lists the registrations of a particular event, manage permissions required.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit($handler_id, &$data)
     {
@@ -374,6 +380,9 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Lists the registrations of a particular event.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_list_registrations($handler_id, &$data)
     {
@@ -456,6 +465,9 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Lists the registrations of a particular event, manage permissions required.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete($handler_id, &$data)
     {

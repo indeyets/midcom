@@ -607,6 +607,8 @@ EOF;
     /**
      * The register handler loads the currently visible events and displays them.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_register($handler_id, &$data)
@@ -670,6 +672,9 @@ EOF;
 
     /**
      * Shows the success page.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_success($handler_id, &$data)
     {

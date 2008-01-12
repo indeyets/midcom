@@ -348,6 +348,9 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
 
     /**
      * Displays the detail view of a given person
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_person($handler_id, &$data)
     {
@@ -528,6 +531,8 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
     /**
      * Show grouped personnel records
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access public
      */
     function _show_grouped($handler_id, &$data)
@@ -613,6 +618,9 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
 
     /**
      * Renders the Person Index.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_index ($handler_id, &$data)
     {
@@ -779,6 +787,8 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
     /**
      * Show a group listing
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access public
      */
     function _show_group($handler_id, &$data)

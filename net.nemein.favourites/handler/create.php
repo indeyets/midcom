@@ -166,6 +166,11 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_create($handler_id, &$data)
     {
 
@@ -197,6 +202,11 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_delete($handler_id, &$data)
     {
         $_MIDCOM->relocate('');
@@ -283,6 +293,11 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
         }
     }
     
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_json($handler_id, &$data)
     {
     }

@@ -140,6 +140,11 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_open($handler_id, &$data)
     {
         $this->_show_event_listing($handler_id);
@@ -175,6 +180,11 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_upcoming($handler_id, &$data)
     {
         $this->_show_event_listing($handler_id);
@@ -211,6 +221,11 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_past($handler_id, &$data)
     {
         $this->_show_event_listing($handler_id);
@@ -260,6 +275,11 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_week($handler_id, &$data)
     {
         $this->_show_event_listing($handler_id);
@@ -350,6 +370,11 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_between($handler_id, &$data)
     {
         $this->_show_event_listing($handler_id);
@@ -558,6 +583,8 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     /**
      * Show an event listing populated in $this->_request_data['events']
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @param string
      */
     function _show_event_listing($handler_id)
@@ -776,6 +803,8 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     /**
      * Shows the calendar styles
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_calendar($handler_id, &$data)

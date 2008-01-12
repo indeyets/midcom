@@ -302,6 +302,9 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
 
     /**
      * Show thread posting form
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_create($handler_id, &$data)
     {
@@ -409,6 +412,9 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
 
     /**
      * Show reply form
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_reply($handler_id, &$data)
     {

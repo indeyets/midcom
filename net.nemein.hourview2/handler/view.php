@@ -263,7 +263,7 @@ class net_nemein_hourview2_handler_view extends midcom_baseclasses_components_ha
      * 
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param mixed $data The local request data. 
+     * @param mixed &$data The local request data. 
      * @return boolean Indicating success.
      */
     function _handler_index($handler_id, $args, &$data)
@@ -285,7 +285,7 @@ class net_nemein_hourview2_handler_view extends midcom_baseclasses_components_ha
      * Display a list of un-approved hours.
      * 
      * @param mixed $handler_id The ID of the handler.
-     * @param mixed $data The local request data. 
+     * @param mixed &$data The local request data. 
      */
     function _show_index($handler_id, &$data)
     {

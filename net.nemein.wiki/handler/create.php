@@ -369,6 +369,11 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_create($handler_id, &$data)
     {
         $this->_request_data['controller'] =& $this->_controller;

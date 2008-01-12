@@ -98,6 +98,9 @@ class net_nemein_simpledb_handler_view extends midcom_baseclasses_components_han
 
     /**
      * Shows the loaded article.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view($handler_id, &$data)
     {

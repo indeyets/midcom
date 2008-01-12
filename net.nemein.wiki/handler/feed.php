@@ -44,6 +44,11 @@ class net_nemein_wiki_handler_feed extends midcom_baseclasses_components_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_rss($handler_id, &$data)
     {
         $qb = net_nemein_wiki_wikipage::new_query_builder();

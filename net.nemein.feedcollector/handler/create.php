@@ -197,6 +197,8 @@ class net_nemein_feedcollector_handler_create  extends midcom_baseclasses_compon
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_create($handler_id, &$data)
     {

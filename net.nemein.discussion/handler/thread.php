@@ -191,6 +191,11 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
         return $toolbar;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_thread($handler_id, &$data)
     {
         switch($this->_config->get('display_thread_mode'))
@@ -205,6 +210,11 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
         }
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_thread_threaded($handler_id, &$data)
     {
         $qb = new org_openpsa_qbpager('net_nemein_discussion_post_dba', 'net_nemein_discussion_posts');
@@ -321,6 +331,11 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
         }
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_thread_flat($handler_id, &$data)
     {
         $qb = new org_openpsa_qbpager('net_nemein_discussion_post_dba', 'net_nemein_discussion_posts');
@@ -430,6 +445,11 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_post($handler_id, &$data)
     {
         // Prepare datamanager

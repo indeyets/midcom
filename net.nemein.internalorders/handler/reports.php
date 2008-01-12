@@ -134,6 +134,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report($handler_id, &$data)
 	{
 		midcom_show_style('show_report');
@@ -237,6 +242,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_places($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_places');
@@ -297,6 +307,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_places_sent($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_places_detail');
@@ -353,6 +368,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_places_sent_export($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_places_detail_export');
@@ -414,6 +434,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_places_receive($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_places_detail');
@@ -470,6 +495,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_places_receive_export($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_places_detail_export');
@@ -532,6 +562,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_places_sent_2($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_places_detail');
@@ -587,6 +622,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_places_sent_2_export($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_places_detail_export');
@@ -650,6 +690,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_places_receive_2($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_places_detail');
@@ -708,6 +753,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_places_receive_2_export($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_places_detail_export');
@@ -761,6 +811,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_products($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_products');
@@ -913,6 +968,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_products_group($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_products_group');
@@ -992,6 +1052,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_products_detail($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_products_detail');
@@ -1067,6 +1132,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_products_detail_export($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_products_detail_export');
@@ -1125,6 +1195,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_places_sent_3($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_places_detail');
@@ -1176,6 +1251,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_places_sent_3_export($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_places_detail_export');
@@ -1236,6 +1316,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_places_receive_3($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_places_detail');
@@ -1291,6 +1376,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_by_places_receive_3_export($handler_id, &$data)
 	{
 		midcom_show_style('show_report_by_places_detail_export');
@@ -1350,6 +1440,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_unclear($handler_id, &$data)
 	{
 		midcom_show_style('show_report_unclear');
@@ -1410,6 +1505,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_unclear_detail($handler_id, &$data)
 	{
 		midcom_show_style('show_report_unclear_detail');
@@ -1482,6 +1582,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_unclear_detail_export($handler_id, &$data)
 	{
 		midcom_show_style('show_report_unclear_detail_export');
@@ -1542,6 +1647,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_unclear_detail_2($handler_id, &$data)
 	{
 		midcom_show_style('show_report_unclear_detail');
@@ -1614,6 +1724,11 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
 		return true;
 	}
 
+	/**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
 	function _show_report_unclear_detail_2_export($handler_id, &$data)
 	{
 		midcom_show_style('show_report_unclear_detail_export');
