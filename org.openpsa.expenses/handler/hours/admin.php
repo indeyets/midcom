@@ -205,6 +205,9 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
 
     /**
      * Shows the loaded article.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_create($handler_id, &$data)
     {
@@ -260,6 +263,9 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
 
     /**
      * Shows the loaded hour_report.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit($handler_id, &$data)
     {

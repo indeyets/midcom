@@ -198,6 +198,11 @@ class org_openpsa_documents_metadata_handler
         }
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_metadata_action($handler_id, &$data)
     {
         switch($this->_view)
@@ -308,6 +313,11 @@ class org_openpsa_documents_metadata_handler
 
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_metadata_new($handler_id, &$data)
     {
         $this->_request_data['metadata_dm'] = $this->_datamanagers['metadata'];
@@ -391,6 +401,11 @@ class org_openpsa_documents_metadata_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_metadata($handler_id, &$data)
     {
         $this->_request_data['metadata_dm'] = $this->_datamanagers['metadata'];

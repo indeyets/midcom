@@ -59,6 +59,11 @@ class org_openpsa_jabber_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_applet($handler_id, &$data)
     {
         midcom_show_style("jabber-applet");
@@ -76,6 +81,11 @@ class org_openpsa_jabber_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_summary($handler_id, &$data)
     {
         midcom_show_style("show-summary");
@@ -93,6 +103,11 @@ class org_openpsa_jabber_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_frontpage($handler_id, &$data)
     {
         midcom_show_style("show-frontpage");

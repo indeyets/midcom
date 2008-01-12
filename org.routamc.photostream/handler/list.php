@@ -148,6 +148,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_photostream_list($handler_id, &$data)
     {
         $this->_show_photostream($handler_id, &$data);
@@ -206,6 +211,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_photostream_latest($handler_id, &$data)
     {
         $this->_show_photostream($handler_id, &$data);
@@ -248,6 +258,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_photostream_between($handler_id, &$data)
     {
         $this->_show_photostream($handler_id, &$data);
@@ -296,6 +311,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_photostream_batch($handler_id, &$data)
     {
         $this->_show_photostream($handler_id, &$data);
@@ -338,6 +358,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_photostream_tags($handler_id, &$data)
     {
         midcom_show_style('show_photostream_tags');
@@ -421,6 +446,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_photostream_tag($handler_id, &$data)
     {
         $this->_show_photostream($handler_id, &$data);
@@ -484,6 +514,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_photostream_rated($handler_id, &$data)
     {
         $this->_show_photostream($handler_id, &$data);
@@ -492,6 +527,9 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
     /**
      * Display a list of photos. This method is used by several of the request
      * switches.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_photostream($handler_id, &$data)
     {

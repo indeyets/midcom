@@ -75,6 +75,11 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_dashboard($handler_id, &$data)
     {
         midcom_show_style('show-dashboard-header');
@@ -87,6 +92,11 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         midcom_show_style('show-dashboard-footer');
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_unsent($handler_id, &$data)
     {
         $qb = org_openpsa_invoices_invoice::new_query_builder();
@@ -103,6 +113,11 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         $this->_show_invoice_list();
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_overdue($handler_id, &$data)
     {
         $qb = org_openpsa_invoices_invoice::new_query_builder();
@@ -121,6 +136,11 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         $this->_show_invoice_list();
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_open($handler_id, &$data)
     {
         $qb = org_openpsa_invoices_invoice::new_query_builder();
@@ -139,6 +159,11 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         $this->_show_invoice_list();
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_recent($handler_id, &$data)
     {
         $qb = org_openpsa_invoices_invoice::new_query_builder();
@@ -236,6 +261,11 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_customer($handler_id, &$data)
     {
         $this->_show_invoice_list();
@@ -294,6 +324,11 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_deliverable($handler_id, &$data)
     {
         $this->_request_data['header-size'] = 4;

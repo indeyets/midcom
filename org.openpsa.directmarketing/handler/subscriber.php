@@ -81,6 +81,11 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_list($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -199,6 +204,11 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_unsubscribe($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -254,6 +264,11 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_unsubscribe_ajax($handler_id, &$data)  { }
 
 	/**
@@ -313,6 +328,11 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_unsubscribe_all($handler_id, &$data)
     {
         if ($data['unsubscribe_status'] == false)

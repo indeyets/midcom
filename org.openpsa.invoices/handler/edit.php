@@ -401,6 +401,11 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         }
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_view($handler_id, &$data)
     {
         $data['invoice_dm']  = $this->_datamanager;
@@ -468,6 +473,11 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_edit($handler_id, &$data)
     {
         $this->_request_data['invoice_dm']  = $this->_datamanager;
@@ -577,6 +587,11 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_new($handler_id, &$data)
     {
         $this->_request_data['invoice_dm']  = $this->_datamanager;

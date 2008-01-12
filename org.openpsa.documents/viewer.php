@@ -164,6 +164,11 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_search($handler_id, &$data)
     {
         $displayed = 0;

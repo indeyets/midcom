@@ -149,6 +149,11 @@ class org_maemo_calendar_handler_profile_view extends net_nehmer_account_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_view($handler_id, &$data)
     {
         if (   $handler_id == 'ajax-profile-view'

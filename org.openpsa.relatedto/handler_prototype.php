@@ -94,6 +94,9 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
      * but operations are divided into overrideable methods as much as possible so
      * components then can override them and then use the style engine within their
      * own context.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_render($handler_id, &$data)
     {
@@ -1028,6 +1031,11 @@ EOF;
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_ajax($handler_id, &$data)
     {
     }

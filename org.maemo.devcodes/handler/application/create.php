@@ -200,6 +200,9 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
 
     /**
      * Shows the loaded article.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_create ($handler_id, &$data)
     {
@@ -296,6 +299,11 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_apply($handler_id, &$data)
     {
         midcom_show_style('view-apply-device');

@@ -181,6 +181,11 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_list($handler_id, &$data)
     {
         if (count($this->_request_data['salesprojects']) > 0)

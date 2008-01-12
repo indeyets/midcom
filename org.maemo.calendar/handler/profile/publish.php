@@ -183,6 +183,11 @@ class org_maemo_calendar_handler_profile_publish extends net_nehmer_account_hand
         $_MIDCOM->relocate('ajax/profile/publish/ok/');
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_publish($handler_id, &$data)
     {
         $style_type = '';
@@ -228,6 +233,11 @@ class org_maemo_calendar_handler_profile_publish extends net_nehmer_account_hand
         midcom_show_style("profile-publish{$style_type}-end");
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_publish_ok($handler_id, &$data)
     {
         if ($handler_id == 'ajax-profile-publish-ok')

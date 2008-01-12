@@ -165,6 +165,11 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_today($handler_id, &$data)
     {
         $data['calendar_node'] = midcom_helper_find_node_by_component('org.openpsa.calendar');

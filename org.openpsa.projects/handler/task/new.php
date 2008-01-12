@@ -195,6 +195,11 @@ class org_openpsa_projects_handler_task_new extends midcom_baseclasses_component
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_new($handler_id, &$data)
     {
         $this->_request_data['task_dm']  = $this->_datamanagers['task'];

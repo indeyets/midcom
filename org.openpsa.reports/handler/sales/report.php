@@ -152,6 +152,11 @@ class org_openpsa_reports_handler_sales_report extends org_openpsa_reports_handl
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_generator($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);

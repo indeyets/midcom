@@ -212,6 +212,11 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_redirect($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -290,6 +295,11 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_settings($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -326,6 +336,11 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_frontpage($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);

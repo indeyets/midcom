@@ -243,6 +243,11 @@ class org_routamc_photostream_handler_api_email extends midcom_baseclasses_compo
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_import($handler_id, &$data)
     {
         //All done

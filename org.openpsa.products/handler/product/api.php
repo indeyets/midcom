@@ -247,6 +247,11 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_product_get($handler_id, &$data)
     {
         $data['datamanager'] =& $this->_datamanager;
@@ -304,6 +309,11 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_product_list($handler_id, &$data)
     {
         midcom_show_style('api_product_list_header');

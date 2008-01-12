@@ -272,6 +272,9 @@ class org_openpsa_contacts_handler_person_admin extends midcom_baseclasses_compo
 
     /**
      * Shows the loaded contact.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit ($handler_id, &$data)
     {
@@ -339,6 +342,9 @@ class org_openpsa_contacts_handler_person_admin extends midcom_baseclasses_compo
 
     /**
      * Shows the loaded contact.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete ($handler_id, &$data)
     {

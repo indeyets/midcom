@@ -165,6 +165,8 @@ class org_openpsa_products_handler_businessarea_list  extends midcom_baseclasses
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_list($handler_id, &$data)
     {

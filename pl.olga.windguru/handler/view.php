@@ -108,6 +108,11 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_index($handler_id, &$data)
     {
 		if (count($this->_list))
@@ -211,6 +216,11 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_view ($handler_id, &$data)
     {
 		$this->_request_data['view_article'] = $this->_request_data['controller']->get_content_html();

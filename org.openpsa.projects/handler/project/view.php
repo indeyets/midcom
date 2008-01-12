@@ -121,6 +121,11 @@ class org_openpsa_projects_handler_project_view extends midcom_baseclasses_compo
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_view($handler_id, &$data)
     {
         $this->_request_data['view_project'] = $this->_datamanager->get_content_html();

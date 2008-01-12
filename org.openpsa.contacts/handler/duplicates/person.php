@@ -172,6 +172,11 @@ class org_openpsa_contacts_handler_duplicates_person extends midcom_baseclasses_
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_sidebyside($handler_id, &$data)
     {
         if (!$this->_request_data['notfound'])

@@ -178,6 +178,9 @@ class org_maemo_devcodes_handler_device_view extends midcom_baseclasses_componen
 
     /**
      * Shows the loaded device.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view ($handler_id, &$data)
     {

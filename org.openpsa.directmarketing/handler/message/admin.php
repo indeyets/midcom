@@ -254,6 +254,9 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
 
     /**
      * Shows the loaded message.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit ($handler_id, &$data)
     {
@@ -325,6 +328,9 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
 
     /**
      * Shows the loaded message.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete ($handler_id, &$data)
     {

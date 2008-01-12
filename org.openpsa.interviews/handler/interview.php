@@ -140,6 +140,11 @@ class org_openpsa_interviews_handler_interview extends midcom_baseclasses_compon
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_interview($handler_id, &$data)
     {
         $this->_request_data['controller'] =& $this->_controller;

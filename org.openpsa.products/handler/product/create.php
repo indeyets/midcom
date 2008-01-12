@@ -241,6 +241,9 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
 
     /**
      * Shows the loaded article.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_create($handler_id, &$data)
     {

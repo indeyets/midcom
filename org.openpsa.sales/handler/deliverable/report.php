@@ -115,6 +115,9 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
 
     /**
      * Shows the report
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_report($handler_id, &$data)
     {

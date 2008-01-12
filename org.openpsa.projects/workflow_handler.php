@@ -331,6 +331,11 @@ class org_openpsa_projects_workflow_handler
         //This will exit
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_action($handler_id, &$data)
     {
         //We actually should not ever get this far
@@ -374,6 +379,11 @@ class org_openpsa_projects_workflow_handler
         return $this->_handler_action($handler_id, $args, $data);
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_post($handler_id, &$data)
     {
         //We actually should not ever get this far

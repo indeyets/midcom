@@ -201,6 +201,11 @@ class org_openpsa_contacts_person_handler
 
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_person_new($handler_id, &$data)
     {
         $GLOBALS["view"] = $this->_datamanagers['person'];
@@ -367,6 +372,11 @@ class org_openpsa_contacts_person_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_person($handler_id, &$data)
     {
         if ($handler_id == 'person_view')
@@ -671,6 +681,11 @@ class org_openpsa_contacts_person_handler
         }
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_person_action($handler_id, &$data)
     {
         if ($this->_view == "area_person_account_create")

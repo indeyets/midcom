@@ -74,6 +74,11 @@ class org_openpsa_calendar_handler_agenda extends midcom_baseclasses_components_
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_day($handler_id, &$data)
     {
         midcom_show_style('show-day-header');

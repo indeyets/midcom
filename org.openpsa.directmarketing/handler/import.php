@@ -521,6 +521,11 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_index($handler_id, &$data)
     {
         midcom_show_style('show-import-index');
@@ -592,6 +597,11 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_simpleemails($handler_id, &$data)
     {
         if (   $this->_request_data['import_status']['subscribed_new'] == 0
@@ -740,6 +750,11 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_vcards($handler_id, &$data)
     {
         if (   $this->_request_data['import_status']['subscribed_new'] == 0
@@ -836,6 +851,11 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_csv_select($handler_id, &$data)
     {
         if (array_key_exists('rows', $data))
@@ -980,6 +1000,11 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_csv($handler_id, &$data)
     {
         midcom_show_style('show-import-status');

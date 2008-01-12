@@ -105,6 +105,11 @@ class org_openpsa_documents_directory_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_directory_edit($handler_id, &$data)
     {
         $this->_request_data['directory_dm'] = $this->_datamanagers['directory'];
@@ -185,6 +190,11 @@ class org_openpsa_documents_directory_handler
 
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_directory_new($handler_id, &$data)
     {
         $this->_request_data['directory_dm'] = $this->_datamanagers['directory'];
@@ -239,6 +249,11 @@ class org_openpsa_documents_directory_handler
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_directory($handler_id, &$data)
     {
         debug_push('_show_directory');

@@ -100,6 +100,11 @@ class org_openpsa_interviews_handler_campaign extends midcom_baseclasses_compone
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_summary($handler_id, &$data)
     {
         midcom_show_style('show-summary');
@@ -149,6 +154,11 @@ class org_openpsa_interviews_handler_campaign extends midcom_baseclasses_compone
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_next($handler_id, &$data)
     {
         midcom_show_style('show-no-next');

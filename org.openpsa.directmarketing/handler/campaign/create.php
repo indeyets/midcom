@@ -209,6 +209,9 @@ class org_openpsa_directmarketing_handler_campaign_create extends midcom_basecla
 
     /**
      * Shows the loaded campaign.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_create ($handler_id, &$data)
     {

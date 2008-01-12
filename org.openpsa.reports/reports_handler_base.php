@@ -52,6 +52,11 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_generator_get($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -192,6 +197,11 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_query_form($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);

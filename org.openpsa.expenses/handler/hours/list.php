@@ -124,6 +124,8 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
     /**
      * This function does the output.
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_list($handler_id, &$data)
     {

@@ -174,6 +174,9 @@ class org_maemo_devcodes_handler_code_view extends midcom_baseclasses_components
 
     /**
      * Shows the loaded code.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view ($handler_id, &$data)
     {

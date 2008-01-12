@@ -102,6 +102,11 @@ class org_openpsa_invoices_handler_delete extends midcom_baseclasses_components_
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_delete($handler_id, &$data)
     {
         $this->_request_data['invoice_dm']  = $this->_datamanager;

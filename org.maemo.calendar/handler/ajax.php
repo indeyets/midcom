@@ -222,18 +222,33 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_ajax_change_date($handler_id, &$data)
     {
         $this->_update_scroll_top();
         $this->_request_data['maemo_calender']->show();
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_ajax_change_timezone($handler_id, &$data)
     {
         $this->_update_scroll_top();
         $this->_request_data['maemo_calender']->show();
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_ajax_change_view($handler_id, &$data)
     {
         $this->_update_scroll_top();

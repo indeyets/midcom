@@ -164,6 +164,9 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
 
     /**
      * Shows the loaded campaign.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view ($handler_id, &$data)
     {

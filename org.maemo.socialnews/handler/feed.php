@@ -94,6 +94,9 @@ class org_maemo_socialnews_handler_feed extends midcom_baseclasses_components_ha
 
     /**
      * Displays the feed
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_feed($handler_id, &$data)
     {

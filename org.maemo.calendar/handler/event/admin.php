@@ -374,6 +374,9 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
 
     /**
      * Shows the loaded event.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit ($handler_id, &$data)
     {
@@ -387,6 +390,11 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
         }
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_move($handler_id, &$data)
     {
         if ($handler_id == 'ajax-event-move')
@@ -470,6 +478,9 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
 
     /**
      * Shows the loaded event.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete ($handler_id, &$data)
     {

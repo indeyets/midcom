@@ -253,6 +253,11 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_action($handler_id, &$data)
     {
         return;

@@ -372,6 +372,11 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_create($handler_id, &$data)
     {
         if ($handler_id == 'ajax-event-create')

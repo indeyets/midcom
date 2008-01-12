@@ -226,11 +226,21 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
         }
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_search($handler_id, &$data)
     {
         midcom_show_style('buddylist-search');
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_add($handler_id, &$data)
     {
         if ($handler_id != 'ajax-buddylist-add')
@@ -243,6 +253,11 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
         }
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_remove($handler_id, &$data)
     {
         if ($handler_id != 'ajax-buddylist-remove')
@@ -255,6 +270,11 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
         }
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_action($handler_id, &$data)
     {
         echo $this->_return_string;

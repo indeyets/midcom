@@ -238,6 +238,11 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
 EOF;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_view($handler_id, &$data)
     {
         if ($handler_id == 'task_view')

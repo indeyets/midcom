@@ -246,6 +246,11 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_csv_select($handler_id, &$data)
     {
         if (array_key_exists('rows', $data))
@@ -414,6 +419,11 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_csv($handler_id, &$data)
     {
         midcom_show_style('show-import-status');

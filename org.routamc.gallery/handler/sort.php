@@ -339,6 +339,8 @@ class org_routamc_gallery_handler_sort extends midcom_baseclasses_components_han
     /**
      * Show the sorting interface
      *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      * @access public
      */
     function _show_sort($handler_id, &$data)

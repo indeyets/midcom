@@ -154,6 +154,11 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_uninvoiced($handler_id, &$data)
     {
 

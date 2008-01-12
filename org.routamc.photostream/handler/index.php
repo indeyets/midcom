@@ -73,6 +73,9 @@ class org_routamc_photostream_handler_index extends midcom_baseclasses_component
     /**
      * Display a list of photos. This method is used by several of the request
      * switches.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_index($handler_id, &$data)
     {

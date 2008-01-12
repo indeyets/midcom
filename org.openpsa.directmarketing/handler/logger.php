@@ -104,6 +104,11 @@ class org_openpsa_directmarketing_handler_logger extends midcom_baseclasses_comp
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_bounce($handler_id, &$data)
     {
         echo "OK\n";
@@ -209,6 +214,11 @@ class org_openpsa_directmarketing_handler_logger extends midcom_baseclasses_comp
         //mgd_debug_stop();
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_link($handler_id, &$data)
     {
         echo "OK\n";
@@ -298,6 +308,11 @@ class org_openpsa_directmarketing_handler_logger extends midcom_baseclasses_comp
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_redirect($handler_id, &$data)
     {
         //TODO: make an element to display in case our relocate fails (with link to the intended target...)

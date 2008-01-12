@@ -327,11 +327,21 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         debug_pop();
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_index($handler_id, &$data)
     {
         midcom_show_style('index');
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_view($handler_id, &$data)
     {
         $this->_show_index($handler_id, &$data);

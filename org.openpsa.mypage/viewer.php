@@ -148,6 +148,11 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_userinfo($handler_id, &$data)
     {
         if ($_MIDCOM->auth->user)
@@ -180,6 +185,11 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_updates($handler_id, &$data)
     {
         midcom_show_style("show-updates");
@@ -378,6 +388,11 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_frontpage($handler_id, &$data)
     {
         midcom_show_style("show-frontpage");

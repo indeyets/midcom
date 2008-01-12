@@ -258,6 +258,11 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_list($handler_id, &$data)
     {
         // Locate Contacts node for linking

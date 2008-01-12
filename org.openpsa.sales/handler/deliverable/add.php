@@ -206,6 +206,11 @@ class org_openpsa_sales_handler_deliverable_add extends midcom_baseclasses_compo
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_add($handler_id, &$data)
     {
         $data['product']  = $this->_product;

@@ -204,6 +204,11 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_notinitialized($handler_id, &$data)
     {
         midcom_show_style('show-not-initialized');
@@ -632,6 +637,11 @@ function openPsaShowMonthSelector()
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_month($handler_id, &$data)
     {
         $this->_request_data['selected_time'] = $this->_selected_time;
@@ -731,6 +741,11 @@ function openPsaShowMonthSelector()
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_week($handler_id, &$data)
     {
         $this->_request_data['selected_time'] = $this->_selected_time;
@@ -833,6 +848,11 @@ function openPsaShowMonthSelector()
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_day($handler_id, &$data)
     {
         $this->_request_data['selected_time'] = $this->_selected_time;
@@ -852,6 +872,12 @@ function openPsaShowMonthSelector()
         $_MIDCOM->auth->require_valid_user();
         return true;
     }
+
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_debug($handler_id, &$data)
     {
         midcom_show_style("show-debug");
@@ -1082,6 +1108,11 @@ function openPsaShowMonthSelector()
         }
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_event_new($handler_id, &$data)
     {
         if (   array_key_exists('view', $this->_request_data)
@@ -1220,6 +1251,11 @@ function openPsaShowMonthSelector()
         debug_pop();
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_event_action($handler_id, &$data)
     {
         switch ($this->_request_data['view'])
@@ -1358,6 +1394,11 @@ function openPsaShowMonthSelector()
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_event($handler_id, &$data)
     {
         if ($handler_id == 'event_view')

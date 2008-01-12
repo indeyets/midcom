@@ -183,6 +183,9 @@ class org_routamc_photostream_handler_feed extends org_routamc_photostream_handl
     /**
      * Add each photo as item to the feed then creates the XML and
      * finally calls an element if one wishes to mangle the raw feed data
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_dispatcher($handler_id, &$data)
     {

@@ -140,6 +140,11 @@ class org_maemo_calendar_handler_profile_admin extends midcom_baseclasses_compon
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_edit($handler_id, &$data)
     {
         if ($handler_id == 'ajax-profile-edit')

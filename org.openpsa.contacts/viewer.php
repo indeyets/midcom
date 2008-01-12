@@ -299,6 +299,11 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_notinitialized($handler_id, &$data)
     {
         midcom_show_style('show-not-initialized');
@@ -339,6 +344,11 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
         return false;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_search_type($handler_id, &$data)
     {
         if ($this->_view == 'foaf')
@@ -401,6 +411,9 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
      *
      * Displays style element 'search-empty' if no results at all
      * can be found
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_search($handler_id, &$data)
     {
@@ -438,6 +451,11 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_debug($handler_id, &$data)
     {
         midcom_show_style("show-debug");

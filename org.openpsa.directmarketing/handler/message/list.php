@@ -70,6 +70,9 @@ class org_openpsa_directmarketing_handler_message_list extends midcom_baseclasse
 
     /**
      * Shows the loaded message.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_list ($handler_id, &$data)
     {

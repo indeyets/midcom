@@ -130,6 +130,9 @@ class org_openpsa_products_handler_product_edit extends midcom_baseclasses_compo
 
     /**
      * Shows the loaded product.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit($handler_id, &$data)
     {

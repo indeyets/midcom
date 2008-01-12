@@ -135,6 +135,11 @@ class org_openpsa_directmarketing_handler_message_compose extends midcom_basecla
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_compose($handler_id, &$data)
     {
         if ($handler_id === 'compose4person')

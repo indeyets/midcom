@@ -206,6 +206,11 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
 
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_new($handler_id, &$data)
     {
         $this->_request_data['group_dm'] = $this->_datamanagers['group'];
@@ -332,6 +337,11 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_view($handler_id, &$data)
     {
         $this->_request_data['group_dm'] = $this->_datamanagers['group'];
@@ -559,7 +569,11 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
         }
     }
 
-
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_action($handler_id, &$data)
     {
         if ($this->_view == "area_group_members")

@@ -118,6 +118,9 @@ class org_maemo_devcodes_handler_code_list extends midcom_baseclasses_components
 
     /**
      * Shows the loaded list.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_list ($handler_id, &$data)
     {

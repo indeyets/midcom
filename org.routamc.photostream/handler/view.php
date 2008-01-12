@@ -209,6 +209,9 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
 
     /**
      * This function does the output.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view($handler_id, &$data)
     {

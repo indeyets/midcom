@@ -136,6 +136,9 @@ class org_openpsa_sales_handler_deliverable_view extends midcom_baseclasses_comp
 
     /**
      * Shows the loaded salesproject.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_view($handler_id, &$data)
     {

@@ -289,6 +289,11 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_process($handler_id, &$data)
     {
         midcom_show_style('assign-codes-statistics');
@@ -421,6 +426,9 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
 
     /**
      * Shows the loaded list.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_list($handler_id, &$data)
     {
@@ -527,6 +535,11 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_select_area($handler_id, &$data)
     {
         midcom_show_style('assign-codes-countryselector');

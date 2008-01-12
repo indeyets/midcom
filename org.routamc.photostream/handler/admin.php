@@ -223,6 +223,9 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
 
     /**
      * Shows the loaded photo.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_edit ($handler_id, &$data)
     {
@@ -292,6 +295,9 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
 
     /**
      * Shows the loaded photo.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_delete ($handler_id, &$data)
     {
@@ -369,7 +375,11 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
 
         return true;
     }
-
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_recreate($handler_id, &$data)
     {
         if (!array_key_exists('org_routamc_photostream_recreateok', $_REQUEST))

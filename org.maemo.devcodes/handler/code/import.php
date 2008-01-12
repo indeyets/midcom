@@ -230,6 +230,11 @@ class org_maemo_devcodes_handler_code_import extends midcom_baseclasses_componen
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_process($handler_id, &$data)
     {
         midcom_show_style('import-codes-statistics');
@@ -282,6 +287,9 @@ class org_maemo_devcodes_handler_code_import extends midcom_baseclasses_componen
 
     /**
      * Shows the loaded list.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_import($handler_id, &$data)
     {

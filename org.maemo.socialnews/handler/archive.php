@@ -266,6 +266,9 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
      * - string 'url' => The URL to the month.
      * - string 'name' => The localized name of the month.
      * - int 'count' => The number of postings in that month.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_welcome($handler_id, &$data)
     {
@@ -433,6 +436,9 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
 
     /**
      * Displays the archive.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_list($handler_id, &$data)
     {

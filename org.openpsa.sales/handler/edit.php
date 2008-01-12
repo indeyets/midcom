@@ -167,6 +167,11 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_view_salesproject($handler_id, &$data)
     {
         $this->_request_data['salesproject_dm']  = $this->_datamanagers['salesproject'];
@@ -211,6 +216,11 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_edit_salesproject($handler_id, &$data)
     {
         $this->_request_data['salesproject_dm']  = $this->_datamanagers['salesproject'];
@@ -303,6 +313,11 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_new_salesproject($handler_id, &$data)
     {
         $this->_request_data['salesproject_dm']  = $this->_datamanagers['salesproject'];

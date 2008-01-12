@@ -133,6 +133,11 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_microsummary($handler_id, &$data)
     {
         $data['message'] = $data['messages'][0];
@@ -188,6 +193,11 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_list($handler_id, &$data)
     {
         $this->_show_statusmessages($handler_id, &$data);
@@ -253,6 +263,11 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_latest($handler_id, &$data)
     {
         $this->_show_statusmessages($handler_id, &$data);
@@ -293,6 +308,11 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_between($handler_id, &$data)
     {
         $this->_show_statusmessages($handler_id, &$data);
@@ -301,6 +321,9 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
     /**
      * Display a list of messages. This method is used by several of the request
      * switches.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
      */
     function _show_statusmessages($handler_id, &$data)
     {

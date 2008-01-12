@@ -108,6 +108,11 @@ class org_openpsa_projects_handler_hours_list extends midcom_baseclasses_compone
 
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_list($handler_id, &$data)
     {
         midcom_show_style("show-hours-list-header");

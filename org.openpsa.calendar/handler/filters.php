@@ -114,6 +114,11 @@ class org_openpsa_calendar_handler_filters extends midcom_baseclasses_components
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_edit($handler_id, &$data)
     {
         if (count($this->_request_data['buddylist']) > 0)

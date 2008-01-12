@@ -106,6 +106,11 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_send_bg($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -285,6 +290,11 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_send($handler_id, &$data)
     {
         $composed = $this->_prepare_send($data);

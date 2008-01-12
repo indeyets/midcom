@@ -71,6 +71,11 @@ class org_openpsa_contacts_handler_frontpage extends midcom_baseclasses_componen
         return true;
     }
 
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
     function _show_frontpage($handler_id, &$data)
     {
         midcom_show_style('show-frontpage');
