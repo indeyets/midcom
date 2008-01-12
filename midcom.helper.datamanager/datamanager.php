@@ -1814,7 +1814,7 @@ class midcom_helper_datamanager {
     /**
      * This method populates the Array $data with the current field information.
      *
-     * @see $midcom_helper_datamanager::data
+     * @see $data
      * @access private
      */
     function _populate_data ()

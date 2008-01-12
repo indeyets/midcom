@@ -185,7 +185,7 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
     }
 
     /**
-     * This is a helper which adds the specfied catgory to the _category_list. It computes
+     * This is a helper which adds the specified category to the _category_list. It computes
      * all members that could be helpful for display.
      *
      * @param net_nehmer_branchenbuch_branche $category The category to add.
@@ -194,7 +194,7 @@ class net_nehmer_branchenbuch_handler_categories extends midcom_baseclasses_comp
      *     filtered, alphabetic listing code or to the full category listing.
      * @param string $parent_prefix The string to use as prefix in front of the name to generate
      *     the full category name. This is faster then using the get_full_name function of the
-     *     branchen class. If you need any separators like ': ', you nedd to add them yourself.
+     *     branchen class. If you need any separators like ': ', you need to add them yourself.
      */
     function _add_category_to_list($category, $listalpha, $parent_prefix = '')
     {

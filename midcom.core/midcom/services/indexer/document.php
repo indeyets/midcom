@@ -61,7 +61,7 @@ class midcom_services_indexer_document
      * A reference to the i18n service, used for charset conversion.
      *
      * @access protected
-     * @var midcom_service_i18n
+     * @var midcom_services_i18n
      */
     var $_i18n = null;
 
@@ -76,8 +76,9 @@ class midcom_services_indexer_document
     /* ------ START OF DOCUMENT FIELDS --------- */
 
     /**
-     * The Resource Identifier of this document. Must be UTF-8 on assignment
-     * already.
+     * The Resource Identifier of this document. 
+     * 
+     * Must be UTF-8 on assignment already.
      *
      * This field is mandatory.
      *
@@ -95,8 +96,9 @@ class midcom_services_indexer_document
     var $lang = '';
 
     /**
-     * The GUID of the topic the document is assigned to. May be empty for
-     * non-midgard resources.
+     * The GUID of the topic the document is assigned to. 
+     * 
+     * May be empty for non-midgard resources.
      *
      * This field is mandatory.
      *
@@ -105,8 +107,9 @@ class midcom_services_indexer_document
     var $topic_guid = '';
 
     /**
-     * The name of the component responsible for the document. May be empty for
-     * non-midgard resources.
+     * The name of the component responsible for the document. 
+     * 
+     * May be empty for non-midgard resources.
      *
      * This field is mandatory.
      *
@@ -208,8 +211,10 @@ class midcom_services_indexer_document
 
     /**
      * An additional tag indicating the source of the document for use by the
-     * component doing the indexing. This value is not indexed and should not be
-     * used by anybody except the component doing the indexing.
+     * component doing the indexing. 
+     * 
+     * This value is not indexed and should not be used by anybody except the 
+     * component doing the indexing.
      *
      * This is optional.
      *
@@ -218,10 +223,11 @@ class midcom_services_indexer_document
     var $source = '';
 
     /**
-     * The full path to the topic that houses the document. For external resources,
-     * this should be either a MidCOM topic, to which this resource is associated or
-     * some "directory" after which you could filter. You may also leave
-     * it empty prohibiting it to appear on any topic-specific search.
+     * The full path to the topic that houses the document. 
+     * 
+     * For external resources, this should be either a MidCOM topic, to which this 
+     * resource is associated or some "directory" after which you could filter. 
+     * You may also leave it empty prohibiting it to appear on any topic-specific search.
      *
      * The value should be fully qualified, as returned by MIDCOM_NAV_FULLURL, including
      * a trailing slash, f.x. https://host/path/to/topic/
@@ -608,7 +614,7 @@ class midcom_services_indexer_document
      * are converted to their native equivalents.
      *
      * Don't replace with an empty string but with a space, so that constructs like
-     * &lt;li&gt;torben&lt;/li&gt;&lt;li&gt;nehmer&lt;/li&gt; are recognized correctly.
+     * <li>torben</li><li>nehmer</li> are recognized correctly.
      * While this might result in double-spaces between words, this is better then
      * loosing the word boundaries entirely.
      *
@@ -683,7 +689,7 @@ class midcom_services_indexer_document
      * Text fields run through the html2text converter of the document
      * base class.
      *
-     * @param midcom_helper_datamanager2_datamanager $datamanager A
+     * @param midcom_helper_datamanager2_datamanager &$datamanager A
      *     reference to the datamanager2 instance.
      * @param string $name The name of the field that should be queried
      * @return string The textual representation of the field.
@@ -697,13 +703,13 @@ class midcom_services_indexer_document
     /**
      * Checks whether the given document is an instance of given document type.
      *
-     * This is equivalent to the is_a object hirarchy check, except that it
+     * This is equivalent to the is_a object hierarchy check, except that it
      * works with MidCOM documents.
      *
      * @see $type
      * @see _set_type()
      * @param string $document_type The base type to search for.
-     * @return boolean Indicationg relationship.
+     * @return boolean Indicating relationship.
      */
     function is_a($document_type)
     {
@@ -821,7 +827,7 @@ class midcom_services_indexer_document
     /**
      * Heuristics to determine how to convert given timestamp to local unixtime
      *
-     * @see $this->read_metadata_from_object
+     * @see read_metadata_from_object()
      * @param string $stamp ISO or unix datetime
      * @return unixtime
      */
@@ -839,7 +845,7 @@ class midcom_services_indexer_document
     /**
      * Get person by given ID, caches results.
      *
-     * @see $this->read_metadata_from_object
+     * @see read_metadata_from_object()
      * @param string $id GUID or ID to get person for
      * @return midcom_db_person object
      */
@@ -865,7 +871,7 @@ class midcom_services_indexer_document
     /**
      * Gets person name for given ID (in case it's imploded_wrapped of multiple GUIDs it will use the first)
      *
-     * @see $this->read_metadata_from_object
+     * @see read_metadata_from_object()
      * @param string $id GUID or ID to get person for
      * @return string $author->name
      */

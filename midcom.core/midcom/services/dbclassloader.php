@@ -210,8 +210,10 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
     var $_class_definition = null;
 
     /**
-     * List of all classes which have been loaded. This list only contains the class
-     * definitions that have been used to construct the actual helper classes.
+     * List of all classes which have been loaded. 
+     * 
+     * This list only contains the class definitions that have been used to 
+     * construct  the actual helper classes.
      *
      * @var Array
      * @access private
@@ -219,9 +221,11 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
     var $_loaded_classes = Array();
 
     /**
-     * A mapping storing which component handles which class. This is used to ensure that
-     * all MidCOM DBA main classes are loaded when casting MgdSchema objects to DBA objects.
-     * Especially important for the generic by-GUID object getter.
+     * A mapping storing which component handles which class. 
+     * 
+     * This is used to ensure that all MidCOM DBA main classes are loaded when 
+     * casting  MgdSchema objects to DBA objects. Especially important for the 
+     * generic by-GUID object getter.
      *
      * @var Array
      * @access private
@@ -237,7 +241,7 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
     }
 
     /**
-     * this is the main class loader function. It takes a component/filename pair as
+     * This is the main class loader function. It takes a component/filename pair as
      * arguments, the first specifying the place to look for the latter.
      *
      * For example, if you call load_classes('net.nehmer.static', 'my_classes.inc'), it will
@@ -311,8 +315,9 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
     }
 
     /**
-     * This helper function validates a class definition list for correctness. Any
-     * error will be logged and false is returned..
+     * This helper function validates a class definition list for correctness. 
+     * 
+     * Any error will be logged and false is returned.
      *
      * Where possible, missing elements are completed with sensible defaults.
      *
@@ -416,8 +421,9 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
 
     /**
      * Little helper which converts a component / filename combination into a fully
-     * qualified path/filename. The filename is assigned to the $_class_definition_filename
-     * member variable of this class.
+     * qualified path/filename. 
+     * 
+     * The filename is assigned to the $_class_definition_filename member variable of this class.
      *
      * @param string $component The name of the component for which the class file has to be loaded. The path must
      *     resolve with the component loader unless you use 'midcom' to load MidCOM core class definition files.
@@ -437,9 +443,11 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
 
     /**
      * This helper function loads a class definition file from the disk and
-     * returns its contents. The source must be stored in the $_class_definition_filename
+     * returns its contents. 
+     * 
+     * The source must be stored in the $_class_definition_filename
      * member.
-     *
+     * 
      * It will translate component and filename into a full path and delivers
      * the contents verbatim.
      *
@@ -516,6 +524,7 @@ EOF;
 
     /**
      * Simple helper that adds a list of classes to the loaded classes listing.
+     * 
      * This function is called from the cached files, which contain a copy of the
      * class definition at their bottom to avoid eval'ing it again at each run.
      *

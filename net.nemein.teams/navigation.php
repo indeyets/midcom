@@ -8,7 +8,7 @@
  */
 
 /**
- * net.nemein.team NAP interface class
+ * net.nemein.teams NAP interface class
  *
  * See the individual member documentations about special NAP options in use.
  *

@@ -116,14 +116,14 @@ class midcom_services_indexer_document_datamanager2 extends midcom_services_inde
     var $_schema = null;
 
     /**
-     * The constructor initializes the memebervariables and invokes
+     * The constructor initializes the member variables and invokes
      * _process_datamanager, which will read and process the information
      * out of that instance.
      *
      * The document is ready for indexing after construction. On any
-     * critical error, generate_error ist triggered.
+     * critical error, generate_error is triggered.
      *
-     * @param midcom_helper_datamanager2_datamanager $datamanager The fully initialized datamanager2 instance to use
+     * @param midcom_helper_datamanager2_datamanager &$datamanager The fully initialized datamanager2 instance to use
      */
     function midcom_services_indexer_document_datamanager2(&$datamanager)
     {

@@ -29,7 +29,7 @@
   * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   */
 
-// Write full path to this istallation directory
+// Write full path to this installation directory
 // example: '/home/user/public_html/contacts' (linux)
 //
 //$DIR_PATH = "/home/uploads/public_html/contacts";

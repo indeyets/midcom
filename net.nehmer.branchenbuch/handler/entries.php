@@ -129,7 +129,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
     /**
      * Internal Helper encapsulating the index call.
      *
-     * @param midcom_helper_datamanager2_datamanager $datamanager The DM2 instance to index.
+     * @param midcom_helper_datamanager2_datamanager &$datamanager The DM2 instance to index.
      */
     function _index(&$datamanager)
     {

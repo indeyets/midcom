@@ -274,7 +274,7 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
     /**
      * Internal Helper encapsulating the index call.
      *
-     * @param midcom_helper_datamanager2_datamanager $datamanager The DM2 instance to index.
+     * @param midcom_helper_datamanager2_datamanager &$datamanager The DM2 instance to index.
      */
     function _index(&$datamanager)
     {
@@ -289,13 +289,13 @@ class net_nehmer_branchenbuch_handler_addentry extends midcom_baseclasses_compon
     }
 
     /**
-     * This is a helper which adds the specfied catgory to the _category_list. It computes
+     * This is a helper which adds the specified category to the _category_list. It computes
      * all members that could be helpful for display.
      *
      * @param net_nehmer_branchenbuch_branche $category The category to add.
      * @param string $parent_prefix The string to use as prefix in front of the name to generate
      *     the full category name. This is faster then using the get_full_name function of the
-     *     branchen class. If you need any separators like ': ', you nedd to add them yourself.
+     *     branchen class. If you need any separators like ': ', you need to add them yourself.
      */
     function _add_category_to_list($category, $parent_prefix = '')
     {

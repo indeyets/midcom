@@ -13,8 +13,10 @@
 require_once 'HTTP/Request.php';
 
 /**
- * Solr implementation of the indexer backend. This works by communicating with solr
- * over http requests. It uses the same tcphost and tcpport settings as the old TCP indexer used.
+ * Solr implementation of the indexer backend. 
+ * 
+ * This works by communicating with solr over http requests. It uses the same tcphost 
+ * and tcpport settings as the old TCP indexer used.
  *
  * @package midcom.services
  * @see midcom_services_indexer

@@ -26,8 +26,8 @@
  *     );
  *    </code>
  * 4. Remember to include midcom.helper.dm2config as a requirement in
- *    _config/manifest.inc_ and to set it in $this->_autoload_libraries in
- *    _midcom/interfaces.php_
+ *    <i>config/manifest.inc</i> and to set it in $this->_autoload_libraries in
+ *    <i>midcom/interfaces.php</i>
  *
  * @package midcom.helper.dm2config
  */
@@ -112,7 +112,7 @@ class midcom_helper_dm2config_config extends midcom_baseclasses_components_handl
      * @access public
      * @param string $handler_id    Name of the handler
      * @param Array  $args          Variable arguments
-     * @param Array  $data          Miscellaneous output data
+     * @param Array  &$data          Miscellaneous output data
      * @return boolean              Indicating success
      */
     function _handler_config($handler_id, $args, &$data)

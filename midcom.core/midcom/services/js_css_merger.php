@@ -628,7 +628,7 @@ class midcom_services_js_css_merger extends midcom_baseclasses_core_object
      *
      * @param string $cache_id key to use in cache, must be generated with generate_cache_id
      * @param string $data data to store in cache
-     * @see $this->generate_cache_id
+     * @see generate_cache_id()
      */
     function store($cache_id, $data)
     {

@@ -417,7 +417,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
     /**
      * Reads machine tag string from content and returns it, the string is removed from content on the fly
      *
-     * @param string $content reference to content
+     * @param string &$content reference to content
      * @return string string of tags, empty for no tags
      */
     function separate_machine_tags_in_content(&$content)
@@ -441,7 +441,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
     /**
      * Gets list of machine tags linked to the object with a context
      *
-     * @return array of maching tags and values, tag is key, value is value
+     * @return array of matching tags and values, tag is key, value is value
      */
     function get_object_machine_tags_in_context(&$object, $context)
     {
@@ -621,8 +621,8 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
      * Parses a string into tag_array usable with tag_object
      *
      * @see net_nemein_tag_handler::tag_object()
-     * @param string $from_string string to parse tags from
-     * @return array of correct format
+     * @param string $from_string String to parse tags from
+     * @return array Array of correct format
      */
     function string2tag_array($from_string)
     {
