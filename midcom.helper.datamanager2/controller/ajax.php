@@ -75,7 +75,9 @@ class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanag
     }
     
     /**
-     * This function wraps AJAX processing completely. If component wishes to do post-processing after an edit, save or preview
+     * This function wraps AJAX processing completely. 
+     * 
+     * If component wishes to do post-processing after an edit, save or preview
      * state in this call it must set the <i>exit</i> parameter to <i>false</i>.
      * <i>view</i> state simply returns processing to component.
      *
@@ -247,7 +249,7 @@ class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanag
     }    
 
     /**
-     * This function wraps the form manager processing. Ifprocessing is successful, (that is,
+     * This function wraps the form manager processing. If processing is successful, (that is,
      * only 'save'). If editing was successful, the form is frozen in case you want
      * to display it again (usually you want to redirect to the view target).
      *

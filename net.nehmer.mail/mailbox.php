@@ -188,7 +188,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
      *
      * This function may be called statically.
      *
-     * @param $user A user reference, either a midcom_core_user, a midcom_person or subclass thereof,
+     * @param mixed $user A user reference, either a midcom_core_user, a midcom_person or subclass thereof,
      *     person ID or GUID.
      * @return midcom_core_querybuilder The prepared Querybuilder or false on failure.
      */

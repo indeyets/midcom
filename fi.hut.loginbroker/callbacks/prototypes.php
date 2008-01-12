@@ -163,9 +163,9 @@ class fi_hut_loginbroker_callbacks_prototype_create extends fi_hut_loginbroker_c
      * Once person has been created you must populate the person object to $request_data['person'] 
      * and password to $request_data['password']
      *
-     * @param $username username to use
-     * @param $request_data request data, see key 'property_map' for more interesting info
-     * @param $iteration this is 1 if this is the first callback to be called, callbacks must check this and not create new person if this is > 1
+     * @param string $username username to use
+     * @param array &$request_data request data, see key 'property_map' for more interesting info
+     * @param int $iteration this is 1 if this is the first callback to be called, callbacks must check this and not create new person if this is > 1
      * @return boolean indicating success (do note that processing of callbacks etc is aborted if someone returns failure)
      */
     function create($username, &$request_data, $iteration)
@@ -194,9 +194,9 @@ class fi_hut_loginbroker_callbacks_prototype_update extends fi_hut_loginbroker_c
      * Operations related to updating an existing user
      *
      * @see fi_hut_loginbroker_callbacks_prototype_create::create()
-     * @param $username username to use
-     * @param $request_data request data, see key 'property_map' for more interesting info
-     * @param $iteration this is 1 if this is the first callback to be called, callbacks must check this and not create new person if this is > 1
+     * @param string $username username to use
+     * @param array &$request_data request data, see key 'property_map' for more interesting info
+     * @param int $iteration this is 1 if this is the first callback to be called, callbacks must check this and not create new person if this is > 1
      */
     function update($username, &$request_data, $iteration)
     {

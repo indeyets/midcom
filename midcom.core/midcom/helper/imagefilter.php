@@ -351,7 +351,7 @@ class midcom_helper_imagefilter
      *
      * Where $gamma is a positive floating point number, e.g. 1.2
      *
-     * @param $gamma Gamma adjustment value.
+     * @param float $gamma Gamma adjustment value.
      * @return boolean true on success.
      */
     function gamma($gamma)
@@ -377,7 +377,7 @@ class midcom_helper_imagefilter
     }
 
     /**
-     * This function converts the image to the specified image format. It must be a suiteable
+     * This function converts the image to the specified image format. It must be a suitable
      * extension to use with the Imagemagick convert utility. The file will not be renamed,
      * you have to do this yourself.
      *
@@ -574,7 +574,7 @@ class midcom_helper_imagefilter
      * Where $rotate is a positive floating point number greater then 0
      * and less then 360; if omitted, a NULL operation is done.
      *
-     * @param $rotate Degrees of rotation clockwise, negative amounts possible
+     * @param float $rotate Degrees of rotation clockwise, negative amounts possible
      * @return boolean true on success.
      */
     function rotate($rotate)

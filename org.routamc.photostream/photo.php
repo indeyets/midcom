@@ -167,7 +167,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
      * Checks the attachments of this object and tries to figure which ones
      * to link to in $this->archival, $this->main, $this->thumb
      *
-     * @param $call_update boolean call $this->update() if we change the links
+     * @param boolean $call_update call $this->update() if we change the links
      */
     function update_attachment_links($call_update = true)
     {
@@ -307,8 +307,8 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
      * The option to copy only part of file is mainly for reading EXIF data which is in the headers
      * of the file, and thus only a few first kB are needed for it.
      *
-     * @param $att ID of attachment object
-     * @param $size kB to copy, if value is less than one then full file is copied
+     * @param int $att ID of attachment object
+     * @param int $size kB to copy, if value is less than one then full file is copied
      * @return string path to the file (or false in case of failure)
      */
     function create_working_copy($att, $size = -1)
@@ -360,7 +360,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
     /**
      * Reads EXIF data from the attached image (archival or main)
      *
-     * @param $overwrite boolean overwrite current values with ones we could parse from file even if they exist (defaults to false)
+     * @param boolean $overwrite overwrite current values with ones we could parse from file even if they exist (defaults to false)
      */
     function read_exif_data($overwrite = false)
     {

@@ -13,7 +13,7 @@
  * and retrieval.
  *
  * A document consists of a number of fields, each field has different properties
- * when handled by the indexer (exact behavoir depends, as always, on the indexer
+ * when handled by the indexer (exact behavior depends, as always, on the indexer
  * backend in use). On retrieval, this field information is lost, all fields being
  * of the same type (naturally). The core indexer backend supports these field
  * types:
@@ -44,7 +44,6 @@
  * @see midcom_services_indexer
  * @todo The Type field is not yet handled properly.
  */
-
 class midcom_services_indexer_document
 {
     /**
@@ -87,7 +86,7 @@ class midcom_services_indexer_document
     var $RI = '';
 
     /**
-     * Two letter language code of the document contnet
+     * Two letter language code of the document content
      *
      * This field is optional.
      *
@@ -229,7 +228,7 @@ class midcom_services_indexer_document
      *
      * This is optional.
      *
-     * @var string.
+     * @var string
      */
     var $topic_url = '';
 
@@ -248,12 +247,12 @@ class midcom_services_indexer_document
     var $type = '';
 
     /**
-     * Security mechainsm used to determine the availability of a search result.
+     * Security mechanism used to determine the availability of a search result.
      * Can be one of:
      *
      * - 'default': Use only built-in processing (topic and metadata visibility checks), this is, as you might have guessed, the default.
      * - 'component': Invoke the _on_check_document_visible component interface method of the component after doing default checks.
-     *   This security class absolutely requires the document to contain a vaild topic GUID, otherwise access control will fail anyway.
+     *   This security class absolutely requires the document to contain a valid topic GUID, otherwise access control will fail anyway.
      * - 'function:$function_name': Invoke the globally available function $function_name, its signature is <i>boolean $function_name ($document, $topic)</i>,
      *   if you don't change the document during the check, you don't need to pass by-reference, so this is up to you. The topic passed is the
      *   Return true if the document is visible, false otherwise.
@@ -341,7 +340,7 @@ class midcom_services_indexer_document
 
     /**
      * Add a date field. A timestamp is expected, which is automatically
-     * converted to a suiteable ISO timestamp before storage.
+     * converted to a suitable ISO timestamp before storage.
      *
      * Direct specification of the ISO timestamp is not yet possible due
      * to lacking validation outside the timestamp range.
@@ -364,7 +363,7 @@ class midcom_services_indexer_document
      *
      * This is useful because the date fields are not in a readable format,
      * it can't even be determined that they were a date in the first place.
-     * so the _TS field is quite useful if you need the orginal value for the
+     * so the _TS field is quite useful if you need the original value for the
      * timestamp.
      *
      * @param string $name The field's name, "_TS" is appended for the plain-timestamp field.

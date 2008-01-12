@@ -22,7 +22,7 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     /**
      * Retrieve a reference to a device object, uses in-request caching
      *
-     * @param $src string GUID of device (ids work but are discouraged)
+     * @param string $src GUID of device (ids work but are discouraged)
      * @return org_maemo_devcodes_device_dba reference to device object or false
      */
     function &get_cached($src)
@@ -256,8 +256,8 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     /**
      * Lists open device programs, uses in-request caching so calling this multiple times is not an issue
      *
-     * @param $keyprop property to use as key
-     * @param $valueprop property to use as value
+     * @param string $keyprop property to use as key
+     * @param string $valueprop property to use as value
      * @return array key/value pairs as set above
      */
     function list_open($keyprop = 'guid', $valueprop = 'title')
@@ -305,8 +305,8 @@ class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
     /**
      * Lists all device programs, uses in-request caching so calling this multiple times is not an issue
      *
-     * @param $keyprop property to use as key
-     * @param $valueprop property to use as value
+     * @param string $keyprop property to use as key
+     * @param string $valueprop property to use as value
      * @return array key/value pairs as set above
      */
     function list_all($keyprop = 'guid', $valueprop = 'title')

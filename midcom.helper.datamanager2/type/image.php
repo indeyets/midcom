@@ -54,12 +54,12 @@ require_once('blobs.php');
  *
  * <b>Available configuration options:</b>
  *
- * - boolean keep_original controls whether you want to keep the orginally uploaded
+ * - boolean keep_original controls whether you want to keep the originally uploaded
  *   file available. This option is disabled by default.
  * - string filter_chain The filter chain used to render the main image. This chain
  *   empty (null) by default.
  * - Array derived_images A list of derived images to construct from the main image.
- *   This option consists of a list of identfier/filter chain declarations. They will
+ *   This option consists of a list of identifier/filter chain declarations. They will
  *   be constructed in order, each using a fresh copy of the (initially type-converted)
  *   original image. This options may be null (the default) indicating no derived
  *   images. Note, that the system will detect any explicit image type conversions
@@ -110,13 +110,13 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     var $derived_images = null;
 
     /**
-     * The maximum witdh/height (in this order) of the thumbnail to be auto-created.
+     * The maximum width/height (in this order) of the thumbnail to be auto-created.
      *
      * The passed values will be given to the rescale function of the imagefilter.
      * This means that if you want to scale an image only by width, you still have
      * to set the height parameter to zero (auto_thumbnail => Array(100,0)).
      *
-     * @var array.
+     * @var array
      */
     var $auto_thumbnail = null;
 
@@ -183,7 +183,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
      * of which attachments have been updated already when replacing an existing
      * image. All attachments still listed here after a set_image call will
      * be deleted. This keeps attachment GUIDs stable during updates but also
-     * adds resilence against against changed type configuration.
+     * adds resilience against against changed type configuration.
      *
      * @access private
      * @var Array
@@ -306,7 +306,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     }
 
     /**
-     * Preparation operations for recrete_xxx()
+     * Preparation operations for recreate_xxx()
      */
     function _prepare_recreate($force = false)
     {
@@ -366,7 +366,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
      * Rotates applies a rotational filter to all images in the type
      *
      * @param string $direction direction to rotate to
-     * @return boolean indicating success/faiilure
+     * @return boolean indicating success/failure
      */
     function rotate($direction)
     {
@@ -437,7 +437,7 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     /**
      * Applies a filter to image identifier
      *
-     * @param string $identifierthe image identifier to apply to
+     * @param string $identifier the image identifier to apply to
      * @param string $filter the midcom_helper_imagefilter filter chain to apply
      * @return boolean indicating success/failure
      */
@@ -508,8 +508,8 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     /**
      * Overwrites image content from file, recalculates size etc
      *
-     * @param $identifier image identifier to update
-     * @param $file file to use
+     * @param string $identifier image identifier to update
+     * @param string $file file to use
      * @return boolean indicating success/failure
      */
     function update_image_from_file($identifier, $file)

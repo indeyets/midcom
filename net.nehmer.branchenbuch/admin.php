@@ -228,7 +228,7 @@ class net_nehmer_branchenbuch_admin extends midcom_baseclasses_components_reques
 
 /**
  * Helper function required for the config schemas. Detects all other BB topics
- * which are suiteable for use with the index_to field.
+ * which are suitable for use with the index_to field.
  */
 function net_nehmer_branchenbuch_index_to_topic_list()
 {

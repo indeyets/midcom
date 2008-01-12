@@ -104,7 +104,9 @@ class midcom_helper_datamanager2_widget_tinymce extends midcom_helper_datamanage
     /**
      * Define some simple configuration themes without having to create a config file.
      *
-     * @var string : valid values: simple, advanced or tiny
+     * valid values: simple, advanced or tiny
+     *
+     * @var string
      */
     var $theme = null;
 

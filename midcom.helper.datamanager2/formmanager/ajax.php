@@ -27,9 +27,9 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
     /**
      * Initializes the Form manager with a list of types for a given schema.
      *
-     * @param midcom_helper_datamanager2_schema $schema The schema to use for processing. This
+     * @param midcom_helper_datamanager2_schema &$schema The schema to use for processing. This
      *     variable is taken by reference.
-     * @param Array $types A list of types matching the passed schema, used as a basis for the
+     * @param Array &$types A list of types matching the passed schema, used as a basis for the
      *     form types. This variable is taken by reference.
      */
     function midcom_helper_datamanager2_formmanager_ajax(&$schema, &$types)

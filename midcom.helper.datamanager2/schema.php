@@ -134,9 +134,10 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
     var $field_order = Array();
 
     /**
-     * The operations to add to the form. This is a simple array of commands, valid entries
-     * are 'save', 'cancel', 'next' and 'previous', 'edit' is forbidden, other values are not
-     * interpreted by the DM infrastructure.
+     * The operations to add to the form. 
+     * 
+     * This is a simple array of commands, valid entries are 'save', 'cancel', 'next' and 
+     * 'previous', 'edit' is forbidden, other values are not interpreted by the DM infrastructure.
      *
      * @var Array
      */
@@ -160,8 +161,10 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
     var $validation = Array();
 
     /**
-     * Custom data filter rules. This is a list of arrays. Each array defines a single callback,
-     * a field list according to HTML_QuickForm::applyFilter along with a snippet or file location
+     * Custom data filter rules. 
+     * 
+     * This is a list of arrays. Each array defines a single callback,
+     * a field list according to HTML_QuickForm::applyFilter() along with a snippet or file location
      * that should be auto-loaded in case the function is missing.
      *
      * @var Array
@@ -169,10 +172,10 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
     var $filters = Array();
 
     /**
-     * Construct a schema, takes a schema snippet URI resolveable through the
+     * Construct a schema, takes a schema snippet URI resolvable through the
      * midcom_get_snippet_content() helper function.
      *
-     * @param mixed $schemapath Either the path or the already loaded schema database
+     * @param mixed $schemadb Either the path or the already loaded schema database
      *     to use.
      * @param string $name The name of the Schema to use. It must be a member in the
      *     specified schema database. If unspecified, the default schema is used.
@@ -199,7 +202,7 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
      * This function loads the schema database into the class, either from a copy
      * already in memory, or from a URL resolvable by midcom_get_snippet_content.
      *
-     * @param mixed $schemapath Either the path or the already loaded schema database
+     * @param mixed $schemadb Either the path or the already loaded schema database
      *     to use.
      * @see midcom_get_snippet_content()
      */
@@ -315,8 +318,10 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
 
     /**
      * This function adds a new field to the schema, appending it at the end of the
-     * current field listing. This is callable after the construction of the object,
-     * to allow you to add additional fields like component required fields to the list.
+     * current field listing. 
+     * 
+     * This is callable after the construction of the object, to allow you to add 
+     * additional fields like component required fields to the list.
      *
      * This can also be used to merge schemas together.
      *

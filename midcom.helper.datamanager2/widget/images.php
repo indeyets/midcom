@@ -325,7 +325,7 @@ END;
             $x = $info['size_x'];
             $y = $info['size_y'];
 
-            // Downscale Preview image to max 75px, rotect against broken images:
+            // Downscale Preview image to max 75px, protect against broken images:
             if (   $x != 0
                 && $y != 0)
             {

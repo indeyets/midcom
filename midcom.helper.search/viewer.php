@@ -120,7 +120,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
     /**
      * Appends language to search terms
      *
-     * @param $final_query reference to the query string to be passed on to the indexer.
+     * @param string &$final_query reference to the query string to be passed on to the indexer.
      */
     function add_multilang_terms(&$final_query)
     {
@@ -133,8 +133,8 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
     /**
      * Expand arrays of custom rules to end of query
      *
-     * @param $final_query reference to the query string to be passed on to the indexer.
-     * @param $terms array or string to append
+     * @param string &$final_query reference to the query string to be passed on to the indexer.
+     * @param mixed $terms array or string to append
      */
     function append_terms_recursive(&$final_query, $terms)
     {

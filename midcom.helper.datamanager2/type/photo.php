@@ -33,7 +33,7 @@ class midcom_helper_datamanager2_type_photo extends midcom_helper_datamanager2_t
     }
 
     /**
-     * Preparation operations for recrete_xxx()
+     * Preparation operations for recreate_xxx()
      */
     function _prepare_recreate($force = true)
     {

@@ -231,7 +231,7 @@ class midcom_services_indexer_solrDocumentFactory {
     
     /**
      * Deletes one element
-     * @param $id the element id
+     * @param string $id the element id
      */
     public function delete($id)
     {

@@ -163,7 +163,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
     /**
      * Creates the upload elements for empty types.
      *
-     * @param Array $elements The array where the references to the created elements should
+     * @param Array &$elements The array where the references to the created elements should
      *     be added.
      */
     function _create_upload_elements(&$elements)
@@ -180,7 +180,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
             $y = 75;
         }
 
-        // Treate auto-scales sanely
+        // Treat auto-scales sanely
         if ($x == 0)
         {
             $x = $y;
@@ -190,7 +190,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
             $y = $x;
         }
 
-        // Start widget table, add upload image Frame, the statistcs frame will just keep a no file notice.
+        // Start widget table, add upload image Frame, the statistics frame will just keep a no file notice.
         $static_html = "<table border='0' class='midcom_helper_datamanager2_widget_image_table' id='{$this->_namespace}{$this->name}_table'>\n<tr>\n" .
             "<td align='center' valign='top' class='midcom_helper_datamanager2_widget_image_thumbnail'>" .
             "<div class='midcom_helper_datamanager2_widget_image_thumbnail' style='width:{$x}px; height:{$y}px; border: 1px solid black; margin-bottom: 0.5ex;'>" .
@@ -236,7 +236,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
      * Creates the elements to manage an existing upload, offering "delete" and "upload new file"
      * operations.
      *
-     * @param Array $elements The array where the references to the created elements should
+     * @param Array &$elements The array where the references to the created elements should
      *     be added.
      */
     function _create_replace_elements(&$elements)
@@ -261,7 +261,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
             $y = $this->_type->attachments_info['main']['size_y'];
             $is_thumbnail = false;
 
-            // Downscale Preview image to max 75px, rotect against broken images:
+            // Downscale Preview image to max 75px, protect against broken images:
             if (   $x != 0
                 && $y != 0)
             {
@@ -295,7 +295,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
             $static_html .= "<br />\n(" . $this->_l10n->get('type image: thumbnail') . ')';
         }
 
-        // Statistcs & Available sizes
+        // Statistics & Available sizes
         $static_html .= "</td>\n<td valign='top' class='midcom_helper_datamanager2_widget_image_stats'>
 	" . $this->_l10n->get('type blobs: file size') . ": {$main_info['formattedsize']} Byte <br/>\n";
         $static_html .= $this->_l10n->get('type image: available sizes') . ":\n" .
@@ -467,7 +467,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
      * Constructs the widget for frozen operation: Only a single static element is added
      * indicating the current type state.
      *
-     * @param Array $elements The array where the references to the created elements should
+     * @param Array &$elements The array where the references to the created elements should
      *     be added.
      */
     function _create_frozen_elements(&$elements)
@@ -521,9 +521,10 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
     }
 
     /**
-     * The on_submit event handles all file uploads immediately. They are passed through
-     * the type at that point. This is required, since we do not have persistent upload
-     * file management on the QF side. Deletions take precedence over uploads.
+     * The on_submit event handles all file uploads immediately. 
+     * 
+     * They are passed through the type at that point. This is required, since we do not have 
+     * persistent upload file management on the QF side. Deletions take precedence over uploads.
      */
     function on_submit($results)
     {
@@ -694,7 +695,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
     /**
      * Adds common image operations to the QF.
      *
-     * @param array $elements reference to the elements array to add the actions to
+     * @param array &$elements reference to the elements array to add the actions to
      */
     function add_action_elements(&$elements)
     {

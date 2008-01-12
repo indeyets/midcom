@@ -119,9 +119,9 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
     /**
      * Initializes the Form manager with a list of types for a given schema.
      *
-     * @param midcom_helper_datamanager2_schema $schema The schema to use for processing. This
+     * @param midcom_helper_datamanager2_schema &$schema The schema to use for processing. This
      *     variable is taken by reference.
-     * @param Array $types A list of types matching the passed schema, used as a basis for the
+     * @param Array &$types A list of types matching the passed schema, used as a basis for the
      *     form types. This variable is taken by reference.
      */
     function midcom_helper_datamanager2_formmanager(&$schema, &$types)
@@ -568,7 +568,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
     /**
      * Sets the form's renderer based on an existing renderer instance.
      *
-     * @param mixed $renderer A prepared HTML_QuickForm_Renderer (or subclass thereof) instance.
+     * @param mixed &$renderer A prepared HTML_QuickForm_Renderer (or subclass thereof) instance.
      * @return void
      */
     function set_renderer (&$renderer)
@@ -665,7 +665,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
 
     /**
      * This helper function adds all rules and filters which are deducable from the schema
-     * to the form. It recognizes the follwing schema options:
+     * to the form. It recognizes the following schema options:
      *
      * - required: Adds a required rule to the form, bound to the given element.
      * @param string $name The name of the widget.
@@ -765,8 +765,8 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
 
     /**
      * Set the value of a formelement.
-     * @param $key the form field name
-     * @param $value the new value to set
+     * @param string $key the form field name
+     * @param string $value the new value to set
      */
     function set_value( $key, $value )
     {

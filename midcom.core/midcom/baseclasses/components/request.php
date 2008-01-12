@@ -486,8 +486,8 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
 
     /**
      * This public helper post-processes the initial information as set by the constructor.
-     * It fills all missing fields with sensible defaults, see the class introdction for
-     * deatils.
+     * It fills all missing fields with sensible defaults, see the class introduction for
+     * details.
      */
     public function _prepare_request_switch()
     {
@@ -528,7 +528,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
 
 
     /**
-     * CAN_HANDLE Phase interface, checks against all registered handlers if a vaild
+     * CAN_HANDLE Phase interface, checks against all registered handlers if a valid
      * one can be found. You should not need to override this, instead, use the
      * HANDLE Phase for further checks.
      *

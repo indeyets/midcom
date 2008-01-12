@@ -761,7 +761,7 @@ class midcom_helper__componentloader
      * - All defined DBA class sets are loaded. If an error occurs here,
      *   the manifest will be ignored and an error is logged.
      *
-     *  @param $manifest object the manifest object to load.
+     *  @param object $manifest the manifest object to load.
      */
     function load_manifest($manifest)
     {

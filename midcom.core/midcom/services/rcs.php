@@ -45,8 +45,8 @@ class midcom_services_rcs extends midcom_baseclasses_core_object
 
     /**
      * Constructor
-     * @param $config the midcom_config array
-     * @param $midcom midcom_application reference.
+     * @param array $config the midcom_config
+     * @param midcom_application $midcom midcom_application reference.
      */
     function midcom_services_rcs($config)
     {
@@ -74,8 +74,8 @@ class midcom_services_rcs extends midcom_baseclasses_core_object
 
     /**
      * Create or update the RCS file for the object.
-     * @param $object the midgard object to be saved
-     * @param $message the update message to save (optional)
+     * @param object &$object the midgard object to be saved
+     * @param string $message the update message to save (optional)
      */
     function update(&$object, $message = null)
     {

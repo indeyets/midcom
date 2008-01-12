@@ -23,7 +23,7 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
     /**
      * Retrieve a reference to a person object, uses in-request caching
      *
-     * @param $src string GUID of device (ids work but are discouraged)
+     * @param string $src GUID of device (ids work but are discouraged)
      * @return org_maemo_devcodes_device_dba reference to device object or false
      */
     function &get_cached($src)

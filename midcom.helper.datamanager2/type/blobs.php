@@ -837,8 +837,8 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     /**
      * Rewrite a filename to URL safe form
      *
-     * @param $filename string file name to rewrite
-     * @param $force_single_extension boolean force file to single extension (defaults to true)
+     * @param string $filename file name to rewrite
+     * @param boolean $force_single_extension force file to single extension (defaults to true)
      * @return string rewritten filename
      */
     function safe_filename($filename, $force_single_extension = true)
@@ -868,7 +868,7 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     /**
      * Creates a working copy to filesystem from given attachment object
      *
-     * @param $att the attachment object to copy
+     * @param object $att the attachment object to copy
      * @return string tmp file name (or false on failure)
      */
     function create_tmp_copy($att)

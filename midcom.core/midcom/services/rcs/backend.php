@@ -30,7 +30,7 @@ class midcom_services_rcs_backend
      *
      * @return boolean true if save succeeded.
      * @throws MIDCOM_ERRCRIT on serious errors.
-     * @param $comment the message to be saved with the object.
+     * @param string $comment the message to be saved with the object.
      */
     function update(&$object, $comment)
     {

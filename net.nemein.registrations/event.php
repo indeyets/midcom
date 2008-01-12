@@ -599,8 +599,8 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * NOTE: this is most often called before we can properly initialize DM2, thus 
      * the is_open check is made bypass DM2 and use the default storage for checking
      *
-     * @param $key string property to use as key
-     * @param $title string property to use as value
+     * @param string $key property to use as key
+     * @param string $title property to use as value
      * @return Array DM2 select type options array
      */
     function list_open_optionsarray($key = 'guid', $title = 'title')

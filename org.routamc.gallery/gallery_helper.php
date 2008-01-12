@@ -50,7 +50,7 @@ class org_routamc_gallery_helper
     /**
      * Loads links from database
      *
-     * @param $prefix property prefix to use (default: '')
+     * @param string $prefix property prefix to use (default: '')
      */
     function _get_photos($prefix = '')
     {
@@ -211,7 +211,7 @@ class org_routamc_gallery_helper
 
     /**
      * Get the link object by photo id
-     * @param $photo ID of photo object
+     * @param int $photo ID of photo object
      * @return object photolink or false on failure
      */
     function get_link_by_photo($photo)

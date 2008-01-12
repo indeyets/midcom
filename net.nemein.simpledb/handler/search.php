@@ -192,9 +192,9 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
      * Helper method, which generates the query builder constraint depending on the storage location
      *
      * @access private
-     * @param $value String defining the query words
-     * @param $domain Defines which field in the schema should contain the query words
-     * @param $constraint Defines the searching method.
+     * @param string $value defining the query words
+     * @param string $domain Defines which field in the schema should contain the query words
+     * @param string $constraint Defines the searching method.
      */
     function _add_qb_constraint($value, $domain, $type = 'LIKE')
     {

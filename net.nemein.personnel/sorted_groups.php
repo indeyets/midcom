@@ -51,8 +51,8 @@ class net_nemein_personnel_sorted_groups
     /**
      * Simple constructor
      *
-     * @param $guid GUID of the master group
-     * @param $multilevel boolean switch to determine if descending groups are included
+     * @param string $guid GUID of the master group
+     * @param boolean $multilevel switch to determine if descending groups are included
      */
     function net_nemein_personnel_sorted_groups($guid, $multilevel = false)
     {

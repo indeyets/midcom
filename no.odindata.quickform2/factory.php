@@ -59,8 +59,8 @@ class no_odindata_quickform2_factory
     }
     /**
      * Set the value of a formelement.
-     * @param $key the form field name
-     * @param $value the new value to set
+     * @param string $key the form field name
+     * @param string $value the new value to set
      */
     function set_value( $key, $value )
     {

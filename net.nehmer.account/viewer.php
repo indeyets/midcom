@@ -631,7 +631,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      * This is a simple function which generates and sends a link for resetting a password
      *
      * @param midcom_db_person $person Person account.
-     * @param $link for resetting password
+     * @param string $link for resetting password
      * @access public
      * @static
      */

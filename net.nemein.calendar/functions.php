@@ -9,10 +9,10 @@
 
 /**
  * Calendar DayLabel function
- * @param $label string 'start' if it's the startdate or 'end' if it's the end date.
- * @param $start unixtimestamp
- * @param $end unix timestamp
- * @param $add_time boolean true if you want to add hour:minute to the date
+ * @param string $label 'start' if it's the startdate or 'end' if it's the end date.
+ * @param timestamp $start unixtimestamp
+ * @param timestamp $end unix timestamp
+ * @param boolean $add_time true if you want to add hour:minute to the date
  */
 function net_nemein_calendar_functions_daylabel($label='start', $start, $end , $add_time = true, $add_year = false)
 {

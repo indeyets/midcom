@@ -40,8 +40,8 @@ class midcom_helper_datamanager2_storage_null extends midcom_helper_datamanager2
     /**
      * TODO
      *
-     * @param midcom_helper_datamanager2_schema $schema The data schema to use for processing.
-     * @param Array $defaults The defaults to use as "artificial" storage. This can be ommitted
+     * @param midcom_helper_datamanager2_schema &$schema The data schema to use for processing.
+     * @param Array $defaults The defaults to use as "artificial" storage. This can be omitted
      *     safely.
      */
     function midcom_helper_datamanager2_storage_null(&$schema, $defaults = Array())

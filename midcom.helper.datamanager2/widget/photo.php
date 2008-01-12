@@ -67,7 +67,7 @@ class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2
     /**
      * Creates the upload elements for empty types.
      *
-     * @param Array $elements The array where the references to the created elements should
+     * @param Array &$elements The array where the references to the created elements should
      *     be added.
      */
     function _create_upload_elements(&$elements)
@@ -87,7 +87,7 @@ class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2
      * operations.
      *
      * @todo adjust to be more suited for the photostream use case
-     * @param Array $elements The array where the references to the created elements should
+     * @param Array &$elements The array where the references to the created elements should
      *     be added.
      */
     function _create_replace_elements(&$elements)
@@ -109,7 +109,7 @@ class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2
             $y = $this->_type->attachments_info['main']['size_y'];
             $is_thumbnail = false;
 
-            // Downscale Preview image to max 75px, rotect against broken images:
+            // Downscale Preview image to max 75px, protect against broken images:
             if (   $x != 0
                 && $y != 0)
             {
@@ -145,7 +145,7 @@ class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2
             $static_html .= "<br />\n(" . $this->_l10n->get('type image: thumbnail') . ')';
         }
 
-        // Statistcs & Available sizes
+        // Statistics & Available sizes
         $static_html .= "</td>\n<td valign='top' class='midcom_helper_datamanager2_widget_image_stats'>" . $this->_l10n->get('type blobs: file size') . ": {$main_info['formattedsize']} Byte <br/>\n";
         $static_html .= $this->_l10n->get('type image: available sizes') . ":\n" .
                 "<ul class='midcom_helper_datamanager2_widget_image_sizelist'>";

@@ -27,9 +27,9 @@ class org_openpsa_projects_projectbroker
     }
 
     /**
-     * Does a local seach for persons that match the task constraints
+     * Does a local search for persons that match the task constraints
      *
-     * @param $task org_openpsa_projects_task object to search prospect resources for
+     * @param org_openpsa_projects_task $task org_openpsa_projects_task object to search prospect resources for
      * @return array of prospect persons (or false on critical failure)
      */
     function find_task_prospects(&$task)
@@ -185,7 +185,7 @@ class org_openpsa_projects_projectbroker
     /**
      * Calls find_task_prospects and saves the results as prospects
      *
-     * @param $task org_openpsa_projects_task object to search prospect resources for
+     * @param org_openpsa_projects_task &$task object to search prospect resources for
      * @return boolean indicating success/failure
      */
     function save_task_prospects(&$task)

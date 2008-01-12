@@ -632,7 +632,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      * Rotates applies a rotational filter to all images under given main identifier
      *
      * @param string $direction direction to rotate to
-     * @return boolean indicating success/faiilure
+     * @return boolean indicating success/failure
      */
     function rotate($images_identifier, $direction)
     {

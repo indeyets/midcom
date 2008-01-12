@@ -404,7 +404,7 @@ class org_openpsa_calendar_eventparticipant extends org_openpsa_calendar_eventme
             return false;
         }
 
-        //In general we should have the event passed to us since we migt be notifying about changes that have not been committed yet
+        //In general we should have the event passed to us since we might be notifying about changes that have not been committed yet
         if (!$event)
         {
             $event = $this->get_event_obj();

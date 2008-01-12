@@ -64,7 +64,7 @@ class midcom_helper_datamanager2_controller_nullstorage extends midcom_helper_da
     }
 
     /**
-     * This function wraps the form manager processing. Ifprocessing is successful, (that is,
+     * This function wraps the form manager processing. If processing is successful, (that is,
      * not 'cancel' or 'edit').
      *
      * There are several possible return values:

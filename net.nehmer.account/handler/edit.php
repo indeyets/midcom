@@ -137,9 +137,9 @@ class net_nehmer_account_handler_edit extends midcom_baseclasses_components_hand
     }
 
     /**
-     * This function prepares the requestdata with all computed values.
+     * This function prepares the request data with all computed values.
      *
-     * @param $return_url The URL to return to the profile page (different for admin-
+     * @param string $return_url The URL to return to the profile page (different for admin-
      *     and no-admin mode).
      * @access private
      */

@@ -166,7 +166,7 @@ class net_nemein_registrations_viewer extends midcom_baseclasses_components_requ
      * If this is called for the admin-rootevent handler, any failure to load the root event
      * is silently ignored.
      *
-     * @param $handler_id The handler ID to load the root event for.
+     * @param string $handler_id The handler ID to load the root event for.
      */
     function _load_root_event($handler_id)
     {

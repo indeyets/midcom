@@ -34,7 +34,7 @@ class net_nemein_netmon_contactgroup_dba extends org_openpsa_contacts_group
     /**
      * static method to get a cached copy of the object
      *
-     * @param $id mixed any valid identifier for instantiating object
+     * @param midxed $id any valid identifier for instantiating object
      */
     function &get_cached($id)
     {

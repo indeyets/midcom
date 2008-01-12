@@ -766,7 +766,7 @@ class fi_protie_navigation
      * Set the root element id
      *
      * @access public
-     * @param $id string   Root ul id.
+     * @param string $id root ul id
      */
     function set_root_element_id($id)
     {

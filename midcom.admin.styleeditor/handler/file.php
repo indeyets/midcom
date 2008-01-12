@@ -111,7 +111,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
     /**
      * Rewrite a filename to URL safe form
      *
-     * @param $filename string file name to rewrite
+     * @param string $filename file name to rewrite
      * @return string rewritten filename
      */
     function safe_filename($filename)

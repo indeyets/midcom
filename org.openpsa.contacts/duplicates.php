@@ -29,7 +29,7 @@ class org_openpsa_contacts_duplicates
 
     /**
      * Find duplicates for given org_openpsa_contacts_person object
-     * @param $person org_openpsa_contacts_person object (does not need id)
+     * @param org_openpsa_contacts_person $person object (does not need id)
      * @return array array of possible duplicates
      */
     function find_duplicates_person($person, $threshold = 1)
@@ -267,7 +267,7 @@ class org_openpsa_contacts_duplicates
 
     /**
      * Find duplicates for given org_openpsa_contacts_group object
-     * @param $group org_openpsa_contacts_group object (does not need id)
+     * @param org_openpsa_contacts_group $group org_openpsa_contacts_group object (does not need id)
      * @return array array of possible duplicates
      */
     function find_duplicates_group($group, $threshold = 1)

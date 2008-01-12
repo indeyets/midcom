@@ -539,8 +539,8 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
      * address points to a script that records the passed link and
      * forwards the client to the real link target.
      *
-     * @param $html the HTML source
-     * @param $address the link detector address
+     * @param string $html the HTML source
+     * @param string $address the link detector address
      * @return HTML source with the link detector
      */
     function _insert_link_detector($html, $address)

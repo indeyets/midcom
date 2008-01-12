@@ -85,15 +85,19 @@ class midcom_helper_datamanager2_widget_fckeditor extends midcom_helper_datamana
 
     /**
      * Which theme will the editor use to render itself
+     * 
+     * valid values: default, office2003 and silver
      *
-     * @var string : valid values: default, office2003 and silver
+     * @var string
      */
     var $theme = null;
     
     /**
      * Define some simple configuration without having to create a configs.
+     * 
+     * valid values: Default or Basic
      *
-     * @var string : valid values: Default or Basic
+     * @var string
      */
     var $toolbar_set = null;
     var $toolbar_set_content = array();

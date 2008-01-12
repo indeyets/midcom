@@ -156,7 +156,7 @@ class no_odindata_quickform2_emailgenerator
 
     /**
      * Add the receipt data
-     * @param $add boolean
+     * @param boolean $add
      */
     function set_add_reciept_data ( $add )
     {
@@ -180,7 +180,7 @@ class no_odindata_quickform2_emailgenerator
     /**
      * Set to true if the submitter should get a receipt of the
      * email
-     * @param $send boolean true if mail should be sent
+     * @param boolean $send true if mail should be sent
      */
     function set_send_reciept( $send)
     {
@@ -189,7 +189,7 @@ class no_odindata_quickform2_emailgenerator
 
     /**
      * Sets the receipt message
-     * @param $msg string
+     * @param string $msg
      */
     function set_reciept_message( $msg )
     {
@@ -223,7 +223,7 @@ class no_odindata_quickform2_emailgenerator
 
     }
     /**
-     * @param $values array the values submitted in the form
+     * @param array $values array the values submitted in the form
      */
     function set_values( $values )
     {
@@ -247,7 +247,7 @@ class no_odindata_quickform2_emailgenerator
         $this->schema = $schema;
     }
     /**
-     * @param string the email subject string
+     * @param string $subject the email subject string
      */
     function set_subject( $subject , $subject_reciept)
     {
@@ -261,7 +261,7 @@ class no_odindata_quickform2_emailgenerator
     /**
      * This function sets the emailaddress that the submitted form will
      * be sent to.
-     * @param $to string the mailaddress set in the configuration
+     * @param string $to the mailaddress set in the configuration
      */
     function set_to ( $to )
     {

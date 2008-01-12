@@ -22,9 +22,9 @@ class midcom_helper_datamanager2_formmanager_paged extends midcom_helper_dataman
     /**
      * Initializes the Form manager with a list of types for a given schema.
      *
-     * @param midcom_helper_datamanager2_schema $schema The schema to use for processing. This
+     * @param midcom_helper_datamanager2_schema &$schema The schema to use for processing. This
      *     variable is taken by reference.
-     * @param Array $types A list of types matching the passed schema, used as a basis for the
+     * @param Array &$types A list of types matching the passed schema, used as a basis for the
      *     form types. This variable is taken by reference.
      */
     function midcom_helper_datamanager2_formmanager_paged(&$schema, &$types)
@@ -72,9 +72,9 @@ class midcom_helper_datamanager2_formmanager_paged extends midcom_helper_dataman
     {
         /* The idea:
          *
-         * First, we construct the regular foorm, to allow for a call to process_form.
+         * First, we construct the regular form, to allow for a call to process_form.
          * In process_form, we then process the page switch. There we will have to
-         * reconstruct the formn with the new page elements, along with all hidden
+         * reconstruct the form with the new page elements, along with all hidden
          * values. The trick here is to rebuild the form with all unseen fields added
          * as hidden elements in a way so that the reconstructed form can create
          * its widgets directly from it.

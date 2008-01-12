@@ -70,7 +70,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
     /**
      * Rewrite a filename to URL safe form
      *
-     * @param $filename string file name to rewrite
+     * @param string $filename file name to rewrite
      * @return string rewritten filename
      */
     function safe_filename($filename)

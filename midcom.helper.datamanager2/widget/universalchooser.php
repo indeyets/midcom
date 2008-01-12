@@ -662,11 +662,12 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
     }
 
     /**
-     * Unfreezes all form elements associated with the widget. The default implementation
-     * works on the default field name, you don't need to override this function unless
-     * you have multiple widgets in the form.
+     * Unfreezes all form elements associated with the widget. 
+     * 
+     * The default implementation works on the default field name, you don't need to 
+     * override this function unless you have multiple widgets in the form.
      *
-     * This maps to the HTML_QuickForm_element::unfreeze()unction.
+     * This maps to the HTML_QuickForm_element::unfreeze() function.
      */
     function unfreeze()
     {
