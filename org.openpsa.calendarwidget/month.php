@@ -19,22 +19,22 @@
  *
  * Example:
  *
- *     <?php
- *     // Initialize the calendar
- *     $calendar = new org_openpsa_calendarwidget_month();
+ * <code>
+ * // Initialize the calendar
+ * $calendar = new org_openpsa_calendarwidget_month();
  *
- *     // Set the date. Skip any of these if you are showing the current year, month or day
- *     $calendar->set_year(2007);
- *     $calendar->set_month(12);
- *     $calendar->set_day(3);
+ * // Set the date. Skip any of these if you are showing the current year, month or day
+ * $calendar->set_year(2007);
+ * $calendar->set_month(12);
+ * $calendar->set_day(3);
  *
- *     // Add the events
- *     $event = new midgard_event(123);
- *     $calendar->add_event($event);
+ * // Add the events
+ * $event = new midgard_event(123);
+ * $calendar->add_event($event);
  *
- *     // Show the calendar
- *     $calendar->draw();
- *     ?>
+ * // Show the calendar
+ * $calendar->draw();
+ * </code>
  *
  *
  * ## Properties

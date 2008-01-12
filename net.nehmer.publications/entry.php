@@ -67,8 +67,8 @@ class net_nehmer_publications_entry extends __net_nehmer_publications_entry
     /**
      * Indexes an entry. This is used from the entry and reindex handlers.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the entry.
-     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the entry.
+     * @param midcom_services_indexer &$indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */

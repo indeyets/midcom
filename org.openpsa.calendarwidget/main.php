@@ -1,5 +1,13 @@
 <?php
 /**
+ * @package org.openpsa.calendarwidget
+ * @author Henri Bergius, http://bergie.iki.fi
+ * @version $Id: main.php,v 1.26 2006/07/21 08:40:58 rambo Exp $
+ * @copyright Nemein Oy, http://www.nemein.com
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
  * Class for rendering calendar widgets
  *
  * Calendarwidget uses the hCalendar microformat to produce output that is easy to style via CSS
@@ -7,12 +15,8 @@
  *
  * Inspiration from http://www.meyerweb.com/eric/css/discuss/examples/notable-calendar.html
  *
- * @package org.openpsa.calendarwidget
- * @author Henri Bergius, http://bergie.iki.fi
- * @version $Id: main.php,v 1.26 2006/07/21 08:40:58 rambo Exp $
- * @copyright Nemein Oy, http://www.nemein.com
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @link http://www.microformats.org/wiki/hcalendar hCalendar microformat
+ * @package org.openpsa.calendarwidget
  */
 class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
 {

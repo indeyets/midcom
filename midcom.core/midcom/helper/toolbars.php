@@ -22,16 +22,16 @@
  * aegir_location - this is used to show parts of the aegir location bar.
  * To add or edit the toolbars, you access them directly like this:
  * (note the &)
- * <pre>
+ * <code>
  * $toolbars = &midcom_helper_toolbars::get_instance();
  * $toolbars->bottom->add_item($menu);
  * $toolbars->top->disable(something);
- * <pre>
+ * </code>
  *
  * And in the rendering code:
- * <pre>
+ * <code>
  *  $toolbars->bottom->render();
- * </pre>
+ * </code>
  *
  * @package midcom.helper
  */
@@ -51,12 +51,14 @@ class midcom_helper_toolbars
      * @access public
      */
      var $bottom = null;
+
      /**
      * The buttons for different form elements toolbar
      * @var midcom_helper_toolbar
      * @access public
      */
      var $form   = null;
+
      /**
       * The Aegir dropdown toolbar
       * @access public
@@ -64,10 +66,11 @@ class midcom_helper_toolbars
       *
       */
      var $aegir_menu = null;
+
      /**
       * The Aegir location array
       * @access public
-      * @var midcom_helper_toolbar
+      * @var array
       *
       */
      var $aegir_location = null;

@@ -7,8 +7,8 @@
  */
 
 /**
- * This is the class that defines which URLs should be handled by this module. 
- * 
+ * This is the class that defines which URLs should be handled by this module.
+ *
  * @package no.odindata.quickform2
  */
 class no_odindata_quickform2_viewer extends midcom_baseclasses_components_request
@@ -28,7 +28,7 @@ class no_odindata_quickform2_viewer extends midcom_baseclasses_components_reques
         /**
          * Prepare the request switch, which contains URL handlers for the component
          */
-         
+
         // Handle /config
         $this->_request_switch['config'] = array
         (
@@ -62,8 +62,8 @@ class no_odindata_quickform2_viewer extends midcom_baseclasses_components_reques
      *
      * This function is usually called statically from various handlers.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the event.
-     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the event.
+     * @param midcom_services_indexer &$indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */
@@ -101,7 +101,7 @@ class no_odindata_quickform2_viewer extends midcom_baseclasses_components_reques
      * @access protected
      */
     function _populate_node_toolbar()
-    {   
+    {
         /*
         if ($this->_content_topic->can_do('midgard:create'))
         {
@@ -133,7 +133,7 @@ class no_odindata_quickform2_viewer extends midcom_baseclasses_components_reques
                 )
             );
         }
-        
+
     }
 
     /**

@@ -227,7 +227,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     function get_additional_questions_schema()
     {
         $this->_populate_dm();
-        
+
         if (count($this->_dm->types['additional_questions']->selection) > 0)
         {
             return $this->_dm->types['additional_questions']->selection[0];
@@ -307,7 +307,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
         $this->_populate_dm();
 
         $this->_dm->types['open_registration']->value = new Date();
-        
+
         // Handle closing time intelligently
         if ($this->closeregistration < time())
         {
@@ -550,7 +550,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * We need a better solution here in DBA core actually, but it will be difficult to
      * do this as we cannot determine the current class in a polymorphic environment without
      * having a this (this call is static).
-     * 
+     *
      * @static
      */
     function new_query_builder()
@@ -596,7 +596,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     /**
      * Lists open events in format suitable for DM2 select types
      *
-     * NOTE: this is most often called before we can properly initialize DM2, thus 
+     * NOTE: this is most often called before we can properly initialize DM2, thus
      * the is_open check is made bypass DM2 and use the default storage for checking
      *
      * @param string $key property to use as key
@@ -913,8 +913,8 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      *
      * This function is usually called statically.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the event.
-     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the event.
+     * @param midcom_services_indexer &$indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */

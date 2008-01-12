@@ -20,7 +20,7 @@ class midcom_admin_folder_handler_move extends midcom_baseclasses_components_han
      * Object requested for move editing
      *
      * @access private
-     * @var $_object mixed Object for move editing
+     * @var mixed Object for move editing
      */
     var $_object = null;
 

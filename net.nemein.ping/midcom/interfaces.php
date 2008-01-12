@@ -1,5 +1,9 @@
 <?php
 /**
+ * @package net.nemein.ping
+ */
+
+/**
  * Weblog pinger library based on
  * Weblog_Pinger PHP Class Library by Rogers Cadenhead
  * http://www.cadenhead.org/workbench/weblog-pinger

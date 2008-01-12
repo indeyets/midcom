@@ -654,7 +654,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
      *
      * @see midcom_helper_toolbar::bind_to()
      * @see create_object_toolbar()
-     * @var $toolbar
+     * @param &$toolbar
      *
      * @todo This is a stub implementation only, no hooks are added yet. For testing purposes
      *     however the permalink of the bound object is added to the toolbar for all users.

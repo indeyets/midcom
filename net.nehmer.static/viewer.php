@@ -102,7 +102,7 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
                 'handler' => Array('net_nehmer_static_handler_view', 'view'),
             );
         }
-        
+
         // AJAX version of view, which skips style.
         $this->_request_switch['view_raw'] = Array
         (
@@ -110,7 +110,7 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
             'fixed_args' => ('raw'),
             'variable_args' => 1,
         );
-        
+
         $this->_request_switch['view'] = Array
         (
             'handler' => Array('net_nehmer_static_handler_view', 'view'),
@@ -166,8 +166,8 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
      *
      * This function is usually called statically from various handlers.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the event.
-     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the event.
+     * @param midcom_services_indexer &$indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */

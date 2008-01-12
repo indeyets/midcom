@@ -46,7 +46,7 @@ if ($GLOBALS['midcom_config']['indexer_backend'] === false)
  * 
  * If an attachment is passed to the function, it is ignored silently.
  * 
- * @param midcom_services_indexer $indexer The indexer instance to use.
+ * @param midcom_services_indexer &$indexer The indexer instance to use.
  * @param MidgardObject $object The object to reindex. 
  */
 function index_object (&$indexer, $object)

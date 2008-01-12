@@ -584,7 +584,7 @@ class midcom_helper_datamanager {
      * requests.
      *
      * @param string $schema	The schema name which should be used for creation of the new object.
-     * @param object $object	The callback object containing the creation code.
+     * @param object &$object	The callback object containing the creation code.
      * @param string $callback	The method name that should be used to create the new object.
      * @return boolean Indicating success
      */

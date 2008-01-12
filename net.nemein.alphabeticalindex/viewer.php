@@ -7,8 +7,8 @@
  */
 
 /**
- * This is the class that defines which URLs should be handled by this module. 
- * 
+ * This is the class that defines which URLs should be handled by this module.
+ *
  * @package net.nemein.alphabeticalindex
  */
 class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_request
@@ -28,9 +28,9 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
         /**
          * Prepare the request switch, which contains URL handlers for the component
          */
-        
+
         $this->_request_data['topic'] =& $this->_topic;
-         
+
         // Handle /config
         $this->_request_switch['config'] = array
         (
@@ -45,7 +45,7 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
         (
             'handler' => Array('net_nemein_alphabeticalindex_handler_index', 'index'),
         );
-        
+
         // Handle /create/[type]
         $this->_request_switch['create'] = array
         (
@@ -53,7 +53,7 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
             'fixed_args' => Array('create'),
             'variable_args' => 1
         );
-        
+
         // Handle /edit/[guid]
         $this->_request_switch['edit'] = array
         (
@@ -61,7 +61,7 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
             'fixed_args' => Array('edit'),
             'variable_args' => 1
         );
-        
+
         // Handle /delete/[guid]
         $this->_request_switch['delete'] = array
         (
@@ -69,14 +69,14 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
             'fixed_args' => Array('delete'),
             'variable_args' => 1
         );
-        
+
         // Handle /clear_index/
         $this->_request_switch['clear_index'] = array
         (
             'handler' => Array('net_nemein_alphabeticalindex_handler_admin', 'clearindex'),
             'fixed_args' => Array('clear_index')
         );
-        
+
         $_MIDCOM->add_link_head
         (
             array
@@ -86,7 +86,7 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
                 'href' => MIDCOM_STATIC_URL."/net.nemein.alphabeticalindex/styles/main.css",
             )
         );
-    
+
         $_MIDCOM->enable_jquery();
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/net.nemein.alphabeticalindex/js/main.js');
     }
@@ -96,8 +96,8 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
      *
      * This function is usually called statically from various handlers.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the event.
-     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the event.
+     * @param midcom_services_indexer &$indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */
@@ -136,7 +136,7 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
      * @access protected
      */
     function _populate_node_toolbar()
-    {   
+    {
         /*
         if ($this->_content_topic->can_do('midgard:create'))
         {
@@ -177,7 +177,7 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
                 MIDCOM_TOOLBAR_ACCESSKEY => 'n',
             ));
         }
-        
+
         if ($this->_topic->can_do('midgard:delete'))
         {
             $this->_node_toolbar->add_item(Array(
@@ -187,7 +187,7 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
                 MIDCOM_TOOLBAR_ACCESSKEY => 't',
             ));
         }
-                
+
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
         {
@@ -202,7 +202,7 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
                 )
             );
         }
-        
+
     }
 
     /**

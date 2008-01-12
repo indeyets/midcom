@@ -18,7 +18,7 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
     function net_nemein_discussion_viewer($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
-        
+
         // Match /
         $this->_request_switch['index'] = array(
             'handler' => Array('net_nemein_discussion_handler_index', 'index'),
@@ -30,7 +30,7 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_discussion_handler_post', 'create'),
             'fixed_args' => Array('post')
         );
-        
+
         // Match /moderate/
         $this->_request_switch['moderate'] = Array
         (
@@ -43,15 +43,15 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('net_nemein_discussion_handler_thread', 'post'),
             'fixed_args' => Array('read'),
-            'variable_args' => 1,            
+            'variable_args' => 1,
         );
-        
+
         // Match /read/xml/<post guid>
         $this->_request_switch['read_xml'] = Array
         (
             'handler' => Array('net_nemein_discussion_handler_thread', 'post'),
             'fixed_args' => Array('read', 'xml'),
-            'variable_args' => 1,            
+            'variable_args' => 1,
         );
 
         // Match /rss.xml
@@ -81,7 +81,7 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('reply'),
             'variable_args' => 1,
         );
-        
+
         // Match /report/<post guid>
         $this->_request_switch['report'] = Array
         (
@@ -89,16 +89,16 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('report'),
             'variable_args' => 1,
         );
-        
+
         // Match /latest/all/<N>
         $this->_request_switch['latest_all'] = Array
         (
             'handler' => Array('net_nemein_discussion_handler_latest', 'latest_all'),
             'fixed_args' => Array('latest', 'all'),
             'variable_args' => 1,
-        ); 
-        
-        // Match /latest/<N> 
+        );
+
+        // Match /latest/<N>
         $this->_request_switch['latest'] = Array
         (
             'handler' => Array('net_nemein_discussion_handler_latest', 'latest'),
@@ -119,9 +119,9 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
             'schemadb' => 'file:/net/nemein/discussion/config/schemadb_config.inc',
             'schema' => 'config',
             'fixed_args' => Array('config'),
-        );        
+        );
     }
-    
+
     function _on_handle($handler_id, $args)
     {
         $_MIDCOM->add_link_head
@@ -142,7 +142,7 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
                 'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rss.xml',
             )
         );
-        
+
         $this->_node_toolbar->add_item
         (
             array
@@ -169,20 +169,20 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
                 )
             );
-        }  
-        
+        }
+
         $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
-        
+
         return true;
     }
-    
+
     /**
      * Indexes an article.
      *
      * This function is usually called statically from various handlers.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the event.
-     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the event.
+     * @param midcom_services_indexer &$indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */
@@ -199,7 +199,7 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
             }
             $topic = $tmp;
         }
-        
+
         // Ensure the post is in a thread that is in the given topic
         $thread = new net_nemein_discussion_thread_dba($dm->storage->object->thread);
         if ($thread->node != $topic->id)
@@ -219,6 +219,6 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
         $document->author = $dm->storage->object->sendername;
         $document->component = $topic->component;
         $indexer->index($document);
-    }    
+    }
 }
 ?>

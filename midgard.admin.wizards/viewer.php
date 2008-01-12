@@ -7,8 +7,8 @@
  */
 
 /**
- * This is the class that defines which URLs should be handled by this module. 
- * 
+ * This is the class that defines which URLs should be handled by this module.
+ *
  * @package midgard.admin.wizards
  */
 class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
@@ -28,7 +28,7 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
         /**
          * Prepare the request switch, which contains URL handlers for the component
          */
-         
+
         // Handle /config
         $this->_request_switch['config'] = array
         (
@@ -43,16 +43,16 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('midgard_admin_wizards_handler_index', 'index'),
         );
-        
+
         // Handle / plugin group
         $this->_request_switch['group'] = array
         (
             'handler' => Array('midgard_admin_wizards_handler_index', 'group'),
-            'variable_args' => 1, 
+            'variable_args' => 1,
         );
-        
+
     }
-    
+
     /**
      * Loads the plugin identified by $name. Only the on-site listing is loaded.
      * If the plugin has no on-site interface, no changes are made to the request switch.
@@ -72,9 +72,9 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
     {
         // Validate the plugin name and load the associated configuration
         $groups = $this->_config->get('plugin_groups');
-        
+
         $plugins = $groups[$group]['plugins'];
-        
+
         if (   ! $plugins
             || ! array_key_exists($name, $plugins))
         {
@@ -124,7 +124,7 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
     {
         foreach ($handlers as $identifier => $handler_config)
         {
-        
+
             $handler_config['variable_args'] = 3;
         /*
             // First, update the fixed args list (be tolerant here)
@@ -193,8 +193,8 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
      *
      * This function is usually called statically from various handlers.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the event.
-     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the event.
+     * @param midcom_services_indexer &$indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */
@@ -233,7 +233,7 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
      * @access protected
      */
     function _populate_node_toolbar()
-    {   
+    {
 /*
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
@@ -249,7 +249,7 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
                 )
             );
         }
-*/        
+*/
     }
 
     /**
@@ -275,25 +275,25 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
     function _on_can_handle($argc, $argv)
     {
         $_MIDCOM->auth->require_admin_user();
-    
+
         if ($argc = 3 && isset($argv[1]))
         {
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        
+
             $this->_request_data['current_wizard'] = $argv[0];
             $this->_request_data['current_plugin'] = $argv[1];
             $this->_request_data['session_id'] = $argv[2];
-            
+
             $groups = $this->_config->get('plugin_groups');
             $plugins = $groups[$argv[0]]['plugins'];
             $plugin_names = array_keys($plugins);
-            
+
             foreach($plugin_names as $key => $name)
             {
                 if ($name == $argv[1])
                 {
                     $next_key = $key+1;
-                
+
                     if (array_key_exists($next_key, $plugin_names))
                     {
                         $this->_request_data['next_plugin'] = $plugin_names[$next_key];
@@ -304,10 +304,10 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
                     }
                 }
             }
-            
-            $this->_request_data['next_plugin_full_path'] = $prefix . $argv[0] . "/" 
+
+            $this->_request_data['next_plugin_full_path'] = $prefix . $argv[0] . "/"
                 . $this->_request_data['next_plugin'] ."/" . $argv[2];
-        
+
             /**
              * We do not need to check result of this operation, it populates request switch
              * if successful and does nothing if not, this means normal request handling is enough
@@ -317,7 +317,7 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
 
         return true;
     }
-    
+
 }
 
 ?>

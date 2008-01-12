@@ -38,7 +38,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
         (
             'handler' => array('net_nemein_personnel_handler_view', 'index'),
         );
-        
+
         // Show alphabetical order
         if ($this->_config->get('enable_alphabetical'))
         {
@@ -49,7 +49,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
                 'variable_args' => 1,
             );
         }
-        
+
         // Show a subgroup list
         // Match /group/<group guid>/
         $this->_request_switch['subgroup-list'] = array
@@ -58,7 +58,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             'fixed_args' => array ('group'),
             'variable_args' => 1,
         );
-        
+
         // Sort the personnel
         // Match /order
         if ($this->_config->get('sort_order') === 'sorted and grouped')
@@ -70,7 +70,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
                 'fixed_args' => array ('order'),
             );
         }
-        
+
         // View person in a group
         // Match /group/<group guid>/<person identificator>
         $this->_request_switch['view-grouped-person'] = array
@@ -79,7 +79,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             'fixed_args' => array ('group'),
             'variable_args' => 2,
         );
-        
+
         // Create a user account
         // Match /account/<person identificator>
         $this->_request_switch['account'] = array
@@ -88,7 +88,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             'fixed_args' => array('account'),
             'variable_args' => 1,
         );
-        
+
         // Generate random passwords
         // Match /passwords
         $this->_request_switch['passwords'] = array
@@ -96,7 +96,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             'handler' => array('net_nemein_personnel_handler_account', 'passwords'),
             'fixed_args' => array('passwords'),
         );
-        
+
         // Show a person according to the username or GUID
         // Match /<person identificator>
         $this->_request_switch['view-person'] = array
@@ -104,9 +104,9 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             'handler' => array('net_nemein_personnel_handler_view', 'person'),
             'variable_args' => 1,
         );
-        
-        // 
-        
+
+        //
+
         /*
          * not yet implemented
          *
@@ -191,7 +191,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             'handler' => array('net_nemein_personnel_handler_search', 'search'),
             'fixed_args' => array('search'),
         );
-        
+
 
     }
 
@@ -201,19 +201,19 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
     function _on_handle($handler, $args)
     {
         $this->_populate_node_toolbar();
-        
+
         if ($handler === 'config')
         {
             $this->_get_members();
             $this->_get_schemadbs();
         }
-        
+
         return true;
     }
-    
+
     /**
      * Get a list of group members for the configuration page
-     * 
+     *
      * @access private
      */
     function _get_members()
@@ -223,7 +223,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             $GLOBALS['net_nemein_personnel_members'] = array ();
             return;
         }
-        
+
         $qb = midcom_db_member::new_query_builder();
         if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
         {
@@ -236,17 +236,17 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             $group = new midcom_db_group($this->_config->get('group'));
             $qb->add_constraint('gid', '=', $group->id);
         }
-        
+
         $members = array ();
-        
+
         foreach ($qb->execute_unchecked() as $membership)
         {
             $person = new midcom_db_person($membership->uid);
             $members[$person->guid] = $person->rname;
         }
-        
+
         asort($members);
-        
+
         $GLOBALS['net_nemein_personnel_members'] = $members;
     }
 
@@ -301,7 +301,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
                 )
             );
         }
-        
+
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
         {
@@ -330,7 +330,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
         {
             $prefix = "group/{$guid}/";
         }
-        
+
         if (   $person->username
             && $person->username != 'vcard.vcf'
             && $person->username != 'foaf.rdf')
@@ -348,8 +348,8 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
      *
      * This function is usually called statically from various handlers.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the person.
-     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the person.
+     * @param midcom_services_indexer &$indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */

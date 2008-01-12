@@ -212,7 +212,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * - Any midcom_core_user or midcom_core_group object or subtype thereof.
      * - Any string identifier which can be resolved using midcom_services_auth::get_assignee().
      *
-     * @param mixed $assignee An assignee representation as outlined above.
+     * @param mixed &$assignee An assignee representation as outlined above.
      * @return boolean indicating success.
      */
     function set_assignee(&$assignee)
@@ -517,7 +517,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * be called statically.
      *
      * @access protected
-     * @param object $object A reference to the object to query.
+     * @param object &$object A reference to the object to query.
      * @param string $name The name of the privilege to query
      * @param string $assignee The identifier of the assignee to query.
      * @param string $classname The optional classname required only for class-limited SELF privileges.

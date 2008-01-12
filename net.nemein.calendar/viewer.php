@@ -23,20 +23,20 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
      * @access private
      */
     var $_content_topic = null;
-    
+
     /**
      * Simple constructor, connect to the parent class constructor method
-     * 
+     *
      * @access public
      */
     function net_nemein_calendar_viewer($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
     }
-    
+
     /**
      * Set the request switches
-     * 
+     *
      * @access private
      */
     function _on_initialize()
@@ -123,7 +123,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('archive', 'between'),
             'variable_args' => 2,
         );
-        
+
         // Match /calendar/
         $this->_request_switch['calendar_current'] = Array
         (
@@ -131,7 +131,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('calendar'),
             'variable_args' => 0,
         );
-        
+
         // Match /calendar/<year>/<month>/
         $this->_request_switch['calendar_defined'] = Array
         (
@@ -139,14 +139,14 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array ('calendar'),
             'variable_args' => 2,
         );
-        
+
         // /archive Main archive page
         $this->_request_switch['archive-welcome'] = Array
         (
             'handler' => Array('net_nemein_calendar_handler_archive', 'welcome'),
             'fixed_args' => Array('archive'),
         );
-        
+
         // /create/<schema> Event creation view
         $this->_request_switch['create'] = Array
         (
@@ -169,7 +169,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_calendar_handler_edit', 'edit'),
             'fixed_args' => Array('edit'),
             'variable_args' => 1,
-        ); 
+        );
 
         // /delete/<event guid> Event deletion view
         $this->_request_switch['delete'] = Array
@@ -177,7 +177,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_calendar_handler_delete', 'delete'),
             'fixed_args' => Array('delete'),
             'variable_args' => 1,
-        ); 
+        );
 
         // /archive/view/<event GUID> duplicate of the view handler for archive
         // operation, only relevant for style code, it sets a flag
@@ -222,10 +222,10 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             )
         );
     }
-    
+
     /**
      * Load the root objects
-     * 
+     *
      * @access private
      * @return boolean
      */
@@ -237,12 +237,12 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             $qb = midcom_db_topic::new_query_builder();
             $qb->add_constraint('name', '=', (string) $args[0]);
             $qb->add_constraint('up', '=', $this->_topic->id);
-            
+
             if ($qb->count() > 0)
             {
                 return true;
             }
-            
+
             // content topic nested
             $this->_load_root_objects($args[0]);
         }
@@ -250,17 +250,17 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
         {
             $this->_load_root_objects();
         }
-        
+
         return true;
     }
-    
+
     function _enter_language()
     {
         $lang = $this->_config->get('language');
         if ($lang)
         {
             $this->_request_data['original_language'] = $_MIDGARD['lang'];
-            
+
             $language = $_MIDCOM->i18n->code_to_id($lang);
             if ($language)
             {
@@ -268,7 +268,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             }
         }
     }
-    
+
     function _exit_language()
     {
         if (isset($this->_request_data['original_language']))
@@ -276,16 +276,16 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             mgd_set_lang($this->_request_data['original_language']);
         }
     }
-    
+
     function _on_handle($handler, $args)
     {
         // Load schema database
         $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
         $this->_add_categories();
-    
+
         // Populate toolbars
         $this->_populate_node_toolbar();
-    
+
         $_MIDCOM->add_link_head
         (
             array
@@ -296,7 +296,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
                 'href'  => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'rss.xml',
             )
         );
-        
+
         $_MIDCOM->add_link_head
         (
             array
@@ -306,27 +306,27 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
                 'href' => MIDCOM_STATIC_URL . '/net.nemein.calendar/calendar.css',
             )
         );
-        
+
         $this->_enter_language();
         return true;
     }
-    
+
     function _on_handled($handler, $args)
     {
         $this->_exit_language();
     }
-    
+
     function _on_show($handler)
     {
         $this->_enter_language();
         return true;
     }
-    
+
     function _on_shown($handler)
     {
         $this->_exit_language();
     }
-    
+
     function _load_root_objects($arg = '')
     {
         // Load master event if set
@@ -368,9 +368,9 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
                 ));
             }
         }
-        
+
         if ($this->_config->get('rss_subscription_enable'))
-        {        
+        {
             $this->_node_toolbar->add_item
             (
                 array
@@ -407,7 +407,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             );
         }
     }
-    
+
     /**
      * Set the content topic to use. This will check against the configuration setting
      * 'symlink_topic'.
@@ -450,7 +450,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
 
         debug_pop();
     }
-    
+
     /**
      * Populate the categories configured for the topic into the schemas
      */
@@ -462,9 +462,9 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             $this->_request_data['categories'] = Array();
             return false;
         }
-        
+
         $this->_request_data['categories'] = explode(',', $this->_config->get('categories'));
-        
+
         foreach ($this->_request_data['schemadb'] as $name => $schema)
         {
             if (   array_key_exists('categories', $schema->fields)
@@ -479,14 +479,14 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
             }
         }
     }
-    
+
     /**
      * Indexes an event.
      *
      * This function is usually called statically from various handlers.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the event.
-     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the event.
+     * @param midcom_services_indexer &$indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */

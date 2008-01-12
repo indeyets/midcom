@@ -170,7 +170,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
      * In case of MgdSchema objects we also ensure that the corresponding component has been
      * loaded.
      *
-     * @param MidgardObject $object Pre-MgdSchema Midgard Object
+     * @param MidgardObject &$object Pre-MgdSchema Midgard Object
      * @return MgdSchemaObject One of the midcom_baseclasses_database_* MgdSchema objects or null on failure.
      */
     function convert_midgard_to_midcom (&$object)
@@ -497,7 +497,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
                 // Actual import
                 if (!midcom_helper_replicator_import_object($unserialized_object, $use_force))
                 {
-                    /** 
+                    /**
                      * BEGIN workaround
                      * For http://trac.midgard-project.org/ticket/200
                      */

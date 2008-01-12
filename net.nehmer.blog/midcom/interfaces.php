@@ -13,7 +13,7 @@
  * Compatibility Notes:
  *
  * This component is a complete refactoring of de.linkm.newsticker. It specifically drops
- * a good number of legacies in the old component and thus does not guranntee 100%
+ * a good number of legacies in the old component and thus does not guarantee 100%
  * data compatibility. Specifically:
  *
  * 1. Datamanager2 is used
@@ -42,12 +42,12 @@ class net_nehmer_blog_interface extends midcom_baseclasses_components_interface
             'navigation.php',
             'article_link.php',
         );
-        
+
         $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager2'
         );
-        
+
         if ($GLOBALS['midcom_config']['positioning_enable'])
         {
             $this->_autoload_libraries[] = 'org.routamc.positioning';
@@ -134,7 +134,7 @@ class net_nehmer_blog_interface extends midcom_baseclasses_components_interface
             return null;
         }
         $arg = $article->name ? $article->name : $article->guid;
-        
+
         if ($config->get('view_in_url'))
         {
             return "view/{$arg}.html";

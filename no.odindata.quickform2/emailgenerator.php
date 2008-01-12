@@ -197,7 +197,7 @@ class no_odindata_quickform2_emailgenerator
     }
     /**
      * The fromaddress
-     * @var $from string
+     * @param string $from
      */
     function set_from( $from )
     {

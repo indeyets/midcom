@@ -460,7 +460,8 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      *
      * The variable is to be considered read-only.
      *
-     * @var public
+     * @var boolean
+     * @access public
      */
     var $auth_credentials_found = false;
 

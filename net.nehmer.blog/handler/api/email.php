@@ -8,8 +8,11 @@
  */
 
 /**
- * E-Mail import handler. This uses the OpenPsa 2 email importer MDA system. Emails are imported into blog,
- * with a possible attached image getting stored using 'image' type in schema if available.
+ * E-Mail import handler. 
+ *
+ * This uses the OpenPsa 2 email importer MDA system. Emails are imported 
+ * into blog, with a possible attached image getting stored using 'image' 
+ * type in schema if available.
  *
  * @package net.nehmer.blog
  */

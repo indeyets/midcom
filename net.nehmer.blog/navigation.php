@@ -241,7 +241,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
      * @param int $topic_id     ID of the content topic
      * @param int $offset       Offset for the query
      * @param int $limit        How many results should be returned
-     * @param array $results    Result set
+     * @param array &$results   Result set
      * @return Array            Containing results
      * @access public
      * @static

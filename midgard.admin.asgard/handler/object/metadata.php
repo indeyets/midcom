@@ -20,7 +20,7 @@ class midgard_admin_asgard_handler_object_metadata extends midcom_baseclasses_co
      * Object requested for metadata editing
      *
      * @access private
-     * @var $_object mixed Object for metadata editing
+     * @var mixed Object for metadata editing
      */
     var $_object = null;
 
@@ -28,7 +28,7 @@ class midgard_admin_asgard_handler_object_metadata extends midcom_baseclasses_co
      * Edit controller instance for Datamanager 2
      *
      * @access private
-     * @var $_controller midcom_helper_datamanager2_controller
+     * @var midcom_helper_datamanager2_controller
      */
     var $_controller = null;
 
@@ -36,7 +36,7 @@ class midgard_admin_asgard_handler_object_metadata extends midcom_baseclasses_co
      * Datamanager 2 schema instance
      *
      * @access private
-     * @var $_schemadb midcom_helper_datamanager2_schema
+     * @var midcom_helper_datamanager2_schema
      */
     var $_schemadb = null;
 

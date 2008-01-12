@@ -211,7 +211,7 @@ function mgd_memberships_to_gid ($fetchable) {
  * It will return TRUE if successful, FALSE on failure.
  *
  * @param Array $array			The data to store (keys will be preserved).
- * @param MidgardObject $object	The object where to store the information.
+ * @param MidgardObject &$object	The object where to store the information.
  * @param string $domain		The domain where to save the information.
  * @return boolean					Indicating success.
  */
@@ -243,7 +243,7 @@ function mgd_save_custom_fields_param($array, &$object, $domain) {
  * automatically. So this function should no longer be needed.
  *
  * @param Array $array			The variable names to load.
- * @param MidgardObject $object	The object where to load the information.
+ * @param MidgardObject &$object	The object where to load the information.
  * @param string $domain		The domain where to load the information.
  */
 function mgd_load_custom_fields_param($array, &$object, $domain) {
@@ -561,7 +561,7 @@ function mgd_get_style_by_name2 ($id, $name) {
  * Delete all extensions (parameters and attachments) to a
  * Midgard object
  *
- * @param MidgardObject $object	The object that should be cleared.
+ * @param MidgardObject &$object	The object that should be cleared.
  * @return boolean Indicating success.
  */
 function mgd_delete_extensions(&$object) {

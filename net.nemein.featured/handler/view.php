@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package net.nemein.featured
+ */
 
 /**
  * Featured index page handler

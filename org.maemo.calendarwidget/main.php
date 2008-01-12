@@ -1,12 +1,16 @@
 <?php
 /**
- * Class for rendering maemo calendar widgets
- *
  * @package org.maemo.calendarwidget 
  * @author Jerry Jalava, http://protoblogr.net
  * @copyright Nemein Oy, http://www.nemein.com
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @link http://www.microformats.org/wiki/hcalendar hCalendar microformat
+ */
+
+/**
+ * Class for rendering maemo calendar widgets
+ *
+ * @package org.maemo.calendarwidget 
  */
 class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 {

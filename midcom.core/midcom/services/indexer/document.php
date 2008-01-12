@@ -100,7 +100,7 @@ class midcom_services_indexer_document
      *
      * This field is mandatory.
      *
-     * @var GUID
+     * @var string GUID
      */
     var $topic_guid = '';
 

@@ -23,7 +23,7 @@ die('The class midcom_helper_datamanager2_widget_table has been disabled, it' .
  * This widget supports all types that export the <i>rows</i> variable as the place to get
  * values. Atm that is only the parameters type.
  *
- *
+ * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_widget_table extends midcom_helper_datamanager2_widget
 {

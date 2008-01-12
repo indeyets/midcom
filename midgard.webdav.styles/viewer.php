@@ -7,8 +7,8 @@
  */
 
 /**
- * This is the class that defines which URLs should be handled by this module. 
- * 
+ * This is the class that defines which URLs should be handled by this module.
+ *
  * @package midgard.webdav.styles
  */
 class midgard_webdav_styles_viewer extends midcom_baseclasses_components_request
@@ -37,31 +37,31 @@ class midgard_webdav_styles_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('config'),
         );
 
-        $this->_request_switch['allstyles'] = array( 
+        $this->_request_switch['allstyles'] = array(
             'handler' => Array ( 'midgard_webdav_styles_handler_allstyles', 'allstyles_index' ),
             'fixed_args' => 'allstyles',
             'variable_args' => -1
         );
-        $this->_request_switch['allstyles_sub'] = array( 
+        $this->_request_switch['allstyles_sub'] = array(
             'handler' => Array ( 'midgard_webdav_styles_handler_allstyles', 'allstyles' ),
             'fixed_args' => 'allstyles_sub',
-            'variable_args' => 1 
+            'variable_args' => 1
         );
 
 
         // a list of available midcoms
-        $this->_request_switch['midcoms'] = array( 
+        $this->_request_switch['midcoms'] = array(
             'handler' => Array ( 'midgard_webdav_styles_handler_midcoms', 'midcoms' ),
             'fixed_args' => 'midcoms',
         );
-$this->_request_switch['midcoms_stylelement'] = array( 
+$this->_request_switch['midcoms_stylelement'] = array(
             'handler' => Array ( 'midgard_webdav_styles_handler_midcoms', 'element' ),
             'fixed_args' => array('midcoms'),
             'variable_args' => 2
         );
 
         // one midcoms style elements
-         $this->_request_switch['midcoms_styleelements'] = array( 
+         $this->_request_switch['midcoms_styleelements'] = array(
             'handler' => Array ( 'midgard_webdav_styles_handler_midcoms', 'styleelements' ),
             'fixed_args' => array('midcoms'),
             'variable_args' => 1
@@ -84,7 +84,7 @@ $this->_request_switch['midcoms_stylelement'] = array(
 
 
         /*
-    
+
         require 'HTTP/WebDAV/Server.php';
         require 'dav.php';
        	$_MIDCOM->cache->content->no_cache();
@@ -97,8 +97,8 @@ $this->_request_switch['midcoms_stylelement'] = array(
      *
      * This function is usually called statically from various handlers.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the event.
-     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the event.
+     * @param midcom_services_indexer &$indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */
@@ -136,8 +136,8 @@ $this->_request_switch['midcoms_stylelement'] = array(
      * @access protected
      */
     function _populate_node_toolbar()
-    {   
-        return true;              
+    {
+        return true;
     }
 
     /**

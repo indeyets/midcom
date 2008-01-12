@@ -52,7 +52,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
     /**
      * The GUID of the object we're bound to.
      *
-     * @var guid
+     * @var string GUID
      * @access private
      */
     var $_objectguid = null;

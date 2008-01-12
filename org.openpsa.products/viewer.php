@@ -88,7 +88,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'handler' => Array('org_openpsa_products_handler_group_csvimport', 'csv_select'),
             'fixed_args' => Array('import', 'group', 'csv'),
         );
-        
+
         // Handle /import/group/csv2
         $this->_request_switch['import_group'] = Array
         (
@@ -112,14 +112,14 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('product', 'create'),
             'variable_args' => 2,
         );
-        
+
         // Handle /import/product/csv
         $this->_request_switch['import_product_csv'] = Array
         (
             'handler' => Array('org_openpsa_products_handler_product_csvimport', 'csv_select'),
             'fixed_args' => Array('import', 'product', 'csv'),
         );
-        
+
         // Handle /import/group/csv2
         $this->_request_switch['import_product'] = Array
         (
@@ -150,7 +150,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('product', 'raw'),
             'variable_args' => 2,
         );
-        
+
 
         // Handle /product/<product group>/<product guid>
         $this->_request_switch['view_product_intree'] = Array
@@ -159,7 +159,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('product'),
             'variable_args' => 2,
         );
-        
+
         // Handle /updated/<N>
         $this->_request_switch['updated_products'] = Array
         (
@@ -252,7 +252,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('search'),
             'variable_args' => 1,
         );
-        
+
         // Handle /search/raw/<product schema>
         $this->_request_switch['view_search_raw'] = Array
         (
@@ -260,7 +260,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('search', 'raw'),
             'variable_args' => 1,
         );
-        
+
         // Handle /api/product/get/<guid>
         $this->_request_switch['api_product_get'] = Array
         (
@@ -268,14 +268,14 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('api', 'product', 'get'),
             'variable_args' => 1,
         );
-        
+
         // Handle /api/product/list/
         $this->_request_switch['api_product_list_all'] = Array
         (
             'handler' => Array('org_openpsa_products_handler_product_api', 'product_list'),
             'fixed_args' => Array('api', 'product', 'list'),
         );
-        
+
         // Handle /api/product/list/<product_group>
         $this->_request_switch['api_product_list'] = Array
         (
@@ -298,7 +298,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('api', 'product', 'update'),
             'variable_args' => 1,
         );
-        
+
         // Handle /api/product/delete/<guid>
         $this->_request_switch['api_product_delete'] = Array
         (
@@ -306,14 +306,14 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('api', 'product', 'delete'),
             'variable_args' => 1,
         );
-        
+
         // Handle /api/product/csv
         $this->_request_switch['api_product_csv'] = Array
         (
             'handler' => Array('org_openpsa_products_handler_product_csv', 'csv'),
             'fixed_args' => Array('api', 'product', 'csv'),
         );
-        
+
         // Handle /api/product/csv/<filename>
         $this->_request_switch['api_product_csv_filename'] = Array
         (
@@ -328,9 +328,9 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'handler' => Array('org_openpsa_products_handler_group_list', 'list'),
             'variable_args' => 2,
         );
-    
+
     }
-    
+
     /**
      * Generate markdown documentation for API docs based on schema
      *
@@ -356,13 +356,13 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
 
                 $schema_string .= "\n";
                 $schema_string .= ":    {$field_setup['title']}.";
-                
+
                 if (   $field_setup['type'] == 'select'
                     && isset($field_setup['type_config']['options']))
                 {
                     $schema_string .= " Options: _" . implode(', ', array_keys($field_setup['type_config']['options'])) . "_.";
                 }
-                
+
                 $schema_string .= "\n";
             }
         }
@@ -374,8 +374,8 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
      *
      * This function is usually called statically from various handlers.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the event.
-     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the event.
+     * @param midcom_services_indexer &$indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */
@@ -562,14 +562,14 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
                     $parentgroup_qb->add_constraint('id', '=', $object->up);
                     $group = $parentgroup_qb->execute();
                     if (count($group) > 0)
-                    {                        
+                    {
                         $tmp[] = array
                         (
                             MIDCOM_NAV_URL => "{$group[0]->code}/{$object->code}",
                             MIDCOM_NAV_NAME => $object->title,
                         );
                     }
-                } 
+                }
                 else if ($parent != NULL)
                 {
                     $tmp[] = array

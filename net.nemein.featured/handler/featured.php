@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package net.nemein.featured
+ */
 
 /**
  * Featured object handler

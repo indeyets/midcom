@@ -7,8 +7,8 @@
  */
 
 /**
- * This is the class that defines which URLs should be handled by this module. 
- * 
+ * This is the class that defines which URLs should be handled by this module.
+ *
  * @package net.nemein.quickpoll
  */
 class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
@@ -21,7 +21,7 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
      * @access private
      */
     var $_content_topic = null;
-    
+
     function net_nemein_quickpoll_viewer($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
@@ -35,13 +35,13 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
     function _on_initialize()
     {
         $this->_content_topic = new midcom_db_topic($this->_topic->id);
-        
+
         $this->_request_data['content_topic'] =& $this->_content_topic;
         /**
          * Prepare the request switch, which contains URL handlers for the component
          */
 
-        // Administrative stuff        
+        // Administrative stuff
         // Handle /config
         $this->_request_switch['config'] = array
         (
@@ -79,21 +79,21 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('manage'),
             'variable_args' => 1,
         );
-        
+
         // Handle /archive/
         $this->_request_switch['archive'] = Array
         (
             'handler' => Array('net_nemein_quickpoll_handler_archive', 'archive'),
             'fixed_args' => Array('archive'),
         );
-        
-        
+
+
         // Handle /
         $this->_request_switch['index'] = array
         (
             'handler' => Array('net_nemein_quickpoll_handler_index', 'index'),
         );
-        
+
         // Handle /<article_id>
         $this->_request_switch['view'] = array
         (
@@ -108,7 +108,7 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('index'),
             'variable_args' => 1,
         );
-        
+
         // Handle /polldata/<result_type>/<article_id>
         // Available types: XML, ajax
         $this->_request_switch['polldata-with-type'] = array
@@ -117,7 +117,7 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('polldata'),
             'variable_args' => 2,
         );
-        
+
         // Handle /vote/<article_id>
         $this->_request_switch['vote'] = Array
         (
@@ -125,7 +125,7 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('vote'),
             'variable_args' => 1,
         );
-        
+
         // Handle /vote/<type>/<article_id>
         // Available types: XML,ajax
         $this->_request_switch['vote-with-type'] = Array
@@ -133,7 +133,7 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_quickpoll_handler_vote', 'vote'),
             'fixed_args' => Array('vote'),
             'variable_args' => 2,
-        );        
+        );
     }
 
     /**
@@ -141,8 +141,8 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
      *
      * This function is usually called statically from various handlers.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the event.
-     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the event.
+     * @param midcom_services_indexer &$indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */
@@ -180,8 +180,8 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
      * @access protected
      */
     function _populate_node_toolbar()
-    {   
-      
+    {
+
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
         {
@@ -212,7 +212,7 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
                 ));
             }
         }
-        
+
     }
 
     /**
@@ -227,7 +227,7 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
 
         return true;
     }
-    
+
     /**
      * Returns vote status by IP address to specific poll article
      * @param String $guid Poll article guid
@@ -242,16 +242,16 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The article {$guid} was not found.");
             // This will exit.
         }
-        
+
         $qb_vote = net_nemein_quickpoll_vote_dba::new_query_builder();
         $qb_vote->add_constraint('article', '=', $article->guid);
         $qb_vote->add_constraint('ip', '=', $ip);
-        
+
         if ($qb_vote->count() > 0)
         {
             return true;
         }
-        
+
         return false;
     }
 

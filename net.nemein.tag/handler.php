@@ -1,15 +1,15 @@
 <?php
 /**
  * @package net.nemein.tag
- * @author Henri Bergius, http://bergie.iki.fi 
+ * @author Henri Bergius, http://bergie.iki.fi
  * @version $Id: main.php,v 1.26 2006/07/21 08:40:58 rambo Exp $
  * @copyright Nemein Oy, http://www.nemein.com
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
- 
+
 /**
  * Tag handling library
- * 
+ *
  * @package net.nemein.tag
  */
 class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
@@ -18,14 +18,14 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
     {
         parent::midcom_baseclasses_components_purecode();
     }
-    
+
     /**
      * Tags given object with the tags in the string
      *
      * Creates missing tags and tag_links, sets tag_link navorder
      * Deletes tag links from object that are not in the list provided
      *
-     * @param object $object MidCOM DBA object
+     * @param object &$object MidCOM DBA object
      * @param array $tags List of tags and urls, tag is key, url is value
      * @return boolean indicating success/failure
      * @todo Set the link->navorder property (only in 1.8)
@@ -67,7 +67,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
                 $remove_tags[$tagname] = true;
             }
         }
-        
+
         // Excute
         foreach ($remove_tags as $tagname => $bool)
         {
@@ -154,10 +154,10 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
             $link->fromGuid = $object->guid;
             $link->fromClass = get_class($object);
             $link->fromComponent = $component;
-            
+
             // Carry the original object's publication date to the tag as well
             $link->metadata->published = $object->metadata->published;
-            
+
             if (!$link->create())
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
@@ -166,10 +166,10 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
                 continue;
             }
         }
-        
+
         return true;
     }
-    
+
     /**
      * Resolve actual tag from user-inputted tags that may have contexts or values in them
      *
@@ -242,7 +242,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
         {
             return false;
         }
-        
+
         $tags = $this->get_object_tags($from);
         return $this->tag_object($to, $tags, $component);
     }
@@ -252,14 +252,14 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
      *
      * Tag names are modified to include a possible context in format
      * context:tag
-     * 
+     *
      * @return array list of tags and urls, tag is key, url is value (or false on failure)
      */
     function get_object_tags(&$object)
     {
         return net_nemein_tag_handler::get_tags_by_guid($object->guid);
     }
-    
+
     function get_tags_by_guid($guid)
     {
         $tags = array();
@@ -270,7 +270,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
             // 1.8 branch allows ordering by linked properties
             // PONDER: Order by metadata->navorder or by tag alpha ??
             $qb->add_order('tag.tag', 'ASC');
-        }   
+        }
         $links = $qb->execute();
         if (!is_array($links))
         {
@@ -321,13 +321,13 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
         return $tagname;
     }
 
-    
+
     /**
      * Gets list of tags linked to objects of a particular class
      *
      * Tag names are modified to include a possible context in format
      * context:tag
-     * 
+     *
      * @return array list of tags and counts, tag is key, count is value
      */
     function get_tags_by_class($class, $user = null)
@@ -336,13 +336,13 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
         $tags_handled = array();
         $qb = net_nemein_tag_link_dba::new_query_builder();
         $qb->add_constraint('fromClass', '=', $class);
-        
+
         if (!is_null($user))
         {
             // TODO: User metadata.authors?
             $qb->add_constraint('metadata.creator', '=', $user->guid);
         }
-        
+
         // TODO: Order by metadata->navorder
         $links = $qb->execute();
         if (!is_array($links))
@@ -359,20 +359,20 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
             $tagname = net_nemein_tag_handler::tag_link2tagname($link, $tag);
             */
             $tagname = $tag->tag;
-            
+
             if (!array_key_exists($tagname, $tags))
             {
                 $tags[$tagname] = 0;
             }
-            
+
             $tags[$tagname]++;
         }
         return $tags;
     }
-    
+
     /**
      * Gets list of tags linked to the object arranged by context
-     * 
+     *
      * @return array list of contexts containing arrays of tags and urls, tag is key, url is value
      */
     function get_object_tags_by_contexts(&$object)
@@ -385,7 +385,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
         {
             // 1.8 branch allows ordering by linked properties
             $qb->add_order('tag.tag', 'ASC');
-        }   
+        }
         $links = $qb->execute();
         if (!is_array($links))
         {
@@ -401,19 +401,19 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
             {
                 $context = $link->context;
             }
-            
+
             if (!array_key_exists($context, $tags))
             {
                 $tags[$context] = array();
             }
-            
+
             $tag = new net_nemein_tag_dba($link->tag);
             $tagname = net_nemein_tag_handler::tag_link2tagname($link, $tag, false);
             $tags[$context][$tagname] = $tag->url;
         }
         return $tags;
     }
-    
+
     /**
      * Reads machine tag string from content and returns it, the string is removed from content on the fly
      *
@@ -440,7 +440,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
 
     /**
      * Gets list of machine tags linked to the object with a context
-     * 
+     *
      * @return array of maching tags and values, tag is key, value is value
      */
     function get_object_machine_tags_in_context(&$object, $context)
@@ -460,14 +460,14 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
             $tag = new net_nemein_tag_dba($link->tag);
             $key = $tag->tag;
             $value = $link->value;
-            
+
             $tags[$key] = $value;
         }
         return $tags;
     }
-    
+
     /**
-     * Lists all known tags 
+     * Lists all known tags
      *
      * @return array list of tags and urls, tag is key, url is value
      */
@@ -675,7 +675,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
     /**
      * Creates string representation of the tag array
      *
-     * @param array $tags 
+     * @param array $tags
      * @return string representation
      */
     function tag_array2string($tags)
@@ -688,7 +688,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
                 // This tag contains whitespace, surround with quotes
                 $tag = "\"{$tag}\"";
             }
-            
+
             // Simply place the tags into a string
             $ret .= "{$tag} ";
         }

@@ -83,12 +83,12 @@ class midcom_helper_metadata
      * The guid of the object, it is cached for fast access to avoid repeated
      * database queries.
      *
-     * @var GUID
+     * @var string GUID
      */
     var $guid = '';
 
     /**
-     * Holds the values alread read from the database.
+     * Holds the values already read from the database.
      *
      * @access private
      * @var Array

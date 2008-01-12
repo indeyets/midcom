@@ -258,7 +258,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
         {
             $this->name = $this->username;
         }
-        
+
         $this->rname = trim("{$this->_storage->lastname}, {$this->_storage->firstname}");
         if ($this->name == '')
         {
@@ -330,7 +330,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * Returns the specific per class global privilege set assigned to this user, taking all
      * parent groups into account. If the class specified is unknown, an empty array is returned.
      *
-     * @param object $object The object for which we should look up privileges for. This is passed by-reference.
+     * @param object &$object The object for which we should look up privileges for. This is passed by-reference.
      * @return Array Array keys are the privilege names, the values are the Privilege states (ALLOW/DENY).
      */
     function get_per_class_privileges(&$object)

@@ -104,7 +104,7 @@ class org_openpsa_httplib extends midcom_baseclasses_components_purecode
      * Post variables and get the resulting page
      *
      * @param string $url Fully qualified URL
-     * @param array $variables The data to POST (key => value pairs)
+     * @param array &$variables The data to POST (key => value pairs)
      * @param array $headers Additional HTTP headers
      * @return string Contents
      */

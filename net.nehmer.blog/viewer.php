@@ -56,7 +56,7 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
-        // Handler for /category/<category>         
+        // Handler for /category/<category>
         $this->_request_switch['index-category'] = Array
         (
             'handler' => Array('net_nehmer_blog_handler_index', 'index'),
@@ -81,13 +81,13 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('net_nehmer_blog_handler_feed', 'feed'),
             'fixed_args' => Array('feeds', 'category'),
-            'variable_args' => 1,            
-        );         
+            'variable_args' => 1,
+        );
         $this->_request_switch['feed-rss2'] = Array
         (
             'handler' => Array('net_nehmer_blog_handler_feed', 'feed'),
             'fixed_args' => Array('rss.xml'),
-        );        
+        );
         $this->_request_switch['feed-rss1'] = Array
         (
             'handler' => Array('net_nehmer_blog_handler_feed', 'feed'),
@@ -107,7 +107,7 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('net_nehmer_blog_handler_api_metaweblog', 'rsd'),
             'fixed_args' => Array('rsd.xml'),
-        );        
+        );
 
         // The Archive
         $this->_request_switch['archive-welcome'] = Array
@@ -167,13 +167,13 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
             'schema' => 'config',
             'fixed_args' => Array('config'),
         );
-        
+
         $this->_request_switch['api-email'] = Array
         (
             'handler' => Array('net_nehmer_blog_handler_api_email', 'import'),
             'fixed_args' => Array('api', 'email'),
         );
-        
+
         $this->_request_switch['api-metaweblog'] = Array
         (
             'handler' => Array('net_nehmer_blog_handler_api_metaweblog', 'server'),
@@ -204,7 +204,7 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
             $_MIDCOM->load_library('net.nemein.rss');
             $rss_switches = net_nemein_rss_manage::get_plugin_handlers();
             $this->_request_switch = array_merge($this->_request_switch, $rss_switches);
-        }  
+        }
     }
 
     /**
@@ -234,7 +234,7 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
                 )
             );
         }
-        
+
         // RSD (Really Simple Discoverability) autodetection
         $_MIDCOM->add_link_head
         (
@@ -273,7 +273,7 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         }
 
         if ($this->_config->get('rss_subscription_enable'))
-        {        
+        {
             $this->_node_toolbar->add_item
             (
                 array
@@ -317,14 +317,14 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
             ));
         }
     }
-    
+
     function _enter_language()
     {
         $lang = $this->_config->get('language');
         if ($lang)
         {
             $this->_request_data['original_language'] = $_MIDGARD['lang'];
-            
+
             $language = $_MIDCOM->i18n->code_to_id($lang);
             if ($language && $language != $_MIDGARD['lang'])
             {
@@ -332,7 +332,7 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
             }
         }
     }
-    
+
     function _exit_language()
     {
         if (isset($this->_request_data['original_language']))
@@ -371,24 +371,24 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         $this->_enter_language();
         return true;
     }
-    
+
     function _on_handled($handler, $args)
     {
         $this->_exit_language();
     }
-    
+
     function _on_show($handler)
     {
         $this->_enter_language();
         return true;
     }
-    
+
     function _on_shown($handler)
     {
         $this->_exit_language();
     }
-    
-    
+
+
     /**
      * Populate the categories configured for the topic into the schemas
      */
@@ -400,9 +400,9 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
             $this->_request_data['categories'] = Array();
             return false;
         }
-        
+
         $this->_request_data['categories'] = explode(',', $this->_config->get('categories'));
-        
+
         foreach ($this->_request_data['schemadb'] as $name => $schema)
         {
             if (   array_key_exists('categories', $schema->fields)
@@ -466,8 +466,8 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
      *
      * This function is usually called statically from various handlers.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the event.
-     * @param midcom_services_indexer $indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the event.
+     * @param midcom_services_indexer &$indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */

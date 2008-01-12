@@ -1088,7 +1088,7 @@ EOF;
      * Simple helper to check whether we are dealing with a legacy midgard object
      * or a subclass thereof.
      *
-     * @param object $object The object to check
+     * @param object &$object The object to check
      * @return boolean true if this is a Legacy Midgard object, false otherwise.
      */
     function is_legacy_midgard_object(&$object)
@@ -1125,7 +1125,7 @@ EOF;
     /**
      * Get a MidCOM DB class name for a legacy Midgard Object.
      *
-     * @param object $object The object to check
+     * @param object &$object The object to check
      * @return string The corresponding MidCOM DB class name, false otherwise.
      */
     function get_midcom_class_name_for_legacy_midgard_object(&$object)
@@ -1145,7 +1145,7 @@ EOF;
      * Simple helper to check whether we are dealing with a MgdSchema object
      * or a subclass thereof.
      *
-     * @param object $object The object to check
+     * @param object &$object The object to check
      * @return boolean true if this is a MgdSchema object, false otherwise.
      */
     function is_mgdschema_object(&$object)
@@ -1164,7 +1164,7 @@ EOF;
     /**
      * Get a MidCOM DB class name for a MgdSchema Object.
      *
-     * @param object $object The object to check
+     * @param object &$object The object to check
      * @return string The corresponding MidCOM DB class name, false otherwise.
      */
     function get_midcom_class_name_for_mgdschema_object(&$object)
@@ -1230,7 +1230,7 @@ EOF;
      * Simple helper to check whether we are dealing with a MidCOM Database object
      * or a subclass thereof.
      *
-     * @param object $object The object to check
+     * @param object &$object The object to check
      * @return boolean true if this is a MidCOM Database object, false otherwise.
      */
     function is_midcom_db_object(&$object)

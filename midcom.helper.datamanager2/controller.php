@@ -30,26 +30,31 @@
 class midcom_helper_datamanager2_controller extends midcom_baseclasses_components_purecode
 {
     /**
-     * The schemadb to handle by this controller. This is a list of midcom_helper_datamanager2_schema
-     * instances, indexed by their name. Set this member using the load_schemadb or set_schemadb helpers
-     * unless you know what you're doing.
+     * The schemadb to handle by this controller. 
      *
-     * @var Array()
+     * This is a list of midcom_helper_datamanager2_schema instances, indexed 
+     * by their name. Set this member using the load_schemadb or set_schemadb 
+     * helpers unless you know what you're doing.
+     *
+     * @var Array
      */
     var $schemadb = Array();
 
     /**
-     * The datamanager instance which is used for data I/O processing. Set this member using the
-     * set_storage() helper function unless you definitely know what you're doing.
+     * The datamanager instance which is used for data I/O processing. 
+     *
+     * Set this member using the set_storage() helper function unless you 
+     * definitely know what you're doing.
      *
      * @var midcom_helper_datamanager2
      */
     var $datamanager = null;
 
     /**
-     * The form manager instance which is currently in use by this class. This should always
-     * be the a single instance, even for multi-page forms. Usually, it is created by the controller
-     * class during initialization.
+     * The form manager instance which is currently in use by this class. 
+     *
+     * This should always be the a single instance, even for multi-page forms. 
+     * Usually, it is created by the controller class during initialization.
      *
      * @var midcom_helper_datamanager2_formmanager
      */
@@ -96,7 +101,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
      * Uses an already loaded schema database. If you want to load a schema database
      * from disk, use the load_schemadb method instead.
      *
-     * @param array $schemadb The schema database to use, this must be an array of midcom_helper_datamanager2_schema
+     * @param array &$schemadb The schema database to use, this must be an array of midcom_helper_datamanager2_schema
      *     instances, which is taken by reference.
      * @see load_schemadb()
      */
@@ -124,7 +129,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
      *
      * You must load a schema database before actually
      *
-     * @param object $storage A reference to either an initialized datamanager, an initialized
+     * @param object &$storage A reference to either an initialized datamanager, an initialized
      *     storage backend or to a DBA compatible class instance.
      * @param string $schema This is an optional schema name that should be used to edit the
      *     storage object. If it is null, the controller will try to autodetect the schema

@@ -14,7 +14,7 @@
  * Compatibility Notes:
  *
  * This component is a complete refactoring of de.linkm.taviewer. It specifically drops
- * a good number of legacies in the old component and thus does not guranntee 100%
+ * a good number of legacies in the old component and thus does not guarantee 100%
  * data compatibility. Specifically:
  *
  * 1. Datamanager2 is used
