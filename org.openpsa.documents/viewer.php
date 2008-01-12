@@ -178,7 +178,7 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
             midcom_show_style('show-search-results-header');
             foreach ($this->_request_data['results'] as $document)
             {
-                // $obj->RI will contain either document or attachement GUID depending on match, ->source will always contain the document GUID
+                // $obj->RI will contain either document or attachment GUID depending on match, ->source will always contain the document GUID
                 $this->_request_data['metadata'] = $this->_metadata_handler->_load_metadata($document->source);
                 if ($this->_request_data['metadata'])
                 {

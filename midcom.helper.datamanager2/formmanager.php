@@ -195,7 +195,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      * This function fully initializes the class for operation. This is not done during the
      * constructor call, to allow for full reference safety.
      *
-     * @param name The name of the form. This defaults to the name of the currently active component, which should
+     * @param mixed $name The name of the form. This defaults to the name of the currently active component, which should
      *     suffice in most cases.
      * @return boolean Indicating success.
      * @todo Refactor into subfunctions for better readability.

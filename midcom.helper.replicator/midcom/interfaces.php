@@ -141,7 +141,7 @@ class midcom_helper_replicator_interface extends midcom_baseclasses_components_i
      * Used by staging-live to handle scheduling
      *
      * @param array $args handler arguments
-     * @param object $handler reference to the cron_handler object calling this method.
+     * @param object &$handler reference to the cron_handler object calling this method.
      * @return boolean indicating success/failure
      * @todo figure out how to handle deleted (not purged) object replication
      */

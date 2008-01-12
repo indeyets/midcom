@@ -243,7 +243,7 @@ class midcom_debug
      * Dump a variable (by reference)
      *
      * @param string $message	The message to be logged
-     * @param mixed $variable	The variable to be logged
+     * @param mixed &$variable	The variable to be logged
      * @param int $loglevel		The log level
      */
     function print_r($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)
@@ -317,7 +317,7 @@ class midcom_debug
      * Dump a variables type (by reference)
      *
      * @param string $message	The message to be logged
-     * @param mixed $variable	The variable of which the type should be logged
+     * @param mixed &$variable	The variable of which the type should be logged
      * @param int $loglevel		The log level
      */
     function print_type ($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)
@@ -394,7 +394,7 @@ function debug_add($message, $loglevel = MIDCOM_LOG_DEBUG)
  * Shortcut: Dump a variable (by reference)
  *
  * @param string $message	The message to be logged
- * @param mixed $variable	The variable to be logged
+ * @param mixed &$variable	The variable to be logged
  * @param int $loglevel		The log level
  */
 function debug_print_r($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)
@@ -417,7 +417,7 @@ function debug_print_function_stack($message, $loglevel = MIDCOM_LOG_DEBUG)
  * Shortcut: Dump a variables type (by reference)
  *
  * @param string $message	The message to be logged
- * @param mixed $variable	The variable of which the type should be logged
+ * @param mixed &$variable	The variable of which the type should be logged
  * @param int $loglevel		The log level
  */
 function debug_print_type($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)

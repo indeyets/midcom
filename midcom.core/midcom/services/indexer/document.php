@@ -25,7 +25,7 @@
  * - <i>text</i> is stored, indexed and tokenized.
  *
  * This class should not be instantiated directly, a new instance of this class
- * can be obtained using the midcom_service_indexer class.
+ * can be obtained using the midcom_services_indexer class.
  *
  * A number of predefined fields are available using member fields. These fields
  * are all meta-fields. See their individual documentation for details. All fields
@@ -288,7 +288,7 @@ class midcom_services_indexer_document
     {
         if (! array_key_exists($name, $this->_fields))
         {
-            debug_push('midcom_service_indexer_document::get_field');
+            debug_push('midcom_services_indexer_document::get_field');
             debug_add("Field {$name} not found in the document.", MIDCOM_LOG_INFO);
             debug_pop();
             return false;
@@ -310,7 +310,7 @@ class midcom_services_indexer_document
     {
         if (! array_key_exists($name, $this->_fields))
         {
-            debug_push('midcom_service_indexer_document::get_field_record');
+            debug_push('midcom_services_indexer_document::get_field_record');
             debug_add("Field {$name} not found in the document.", MIDCOM_LOG_INFO);
             debug_pop();
             return false;
@@ -733,7 +733,7 @@ class midcom_services_indexer_document
     /**
      * Tries to resolve created,revised,author,editor and creator for the document from Midgard object
      *
-     * @param midgard_object $object object to use as source for the info
+     * @param midgard_object &$object object to use as source for the info
      */
     function read_metadata_from_object(&$object)
     {

@@ -248,7 +248,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
     /**
      * Statically callable method to count children of given object
      *
-     * @param midgard_object $object object to get children for
+     * @param midgard_object &$object object to get children for
      * @param boolean $deleted whether to count (only) deleted or not-deleted objects
      * @return array multidimensional array (keyed by classname) of objects or false on failure
      */
@@ -297,7 +297,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
      * NOTE: since this might fall back to pure MgdSchema never trust that MidCOM DBA features
      * are available, check for is_callable/method_exists first !
      *
-     * @param midgard_object $object the object to get parent for
+     * @param midgard_object &$object the object to get parent for
      */
     function get_parent(&$object)
     {
@@ -410,7 +410,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
     /**
      * Statically callable method to get children of given object
      *
-     * @param midgard_object $object object to get children for
+     * @param midgard_object &$object object to get children for
      * @param boolean $deleted whether to get (only) deleted or not-deleted objects
      * @return array multidimensional array (keyed by classname) of objects or false on failure
      */

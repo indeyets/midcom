@@ -724,7 +724,7 @@ class midcom_baseclasses_components_interface
      *
      * It will call the corresponding event handler reading the topic configuration beforehand.
      *
-     * @param midcom_services_indexer_document $document The document to check. This object is passed by
+     * @param midcom_services_indexer_document &$document The document to check. This object is passed by
      *     reference and may therefore be modified to match the current security policy.
      * @param MidgardTopic $topic The topic this document is assigned to.
      * @return boolean True if the object may be shown, false otherwise.
@@ -950,7 +950,7 @@ class midcom_baseclasses_components_interface
      *
      * @param MidgardTopic $topic The topic to reindex.
      * @param midgard_helper_config $config The configuration associated with this topic.
-     * @param midcom_service_indexer The indexer object to use for indexing. (Passed by reference!)
+     * @param midcom_services_indexer The indexer object to use for indexing. (Passed by reference!)
      * @return boolean Indicating success.
      */
     function _on_reindex($topic, $config, &$indexer)
@@ -971,7 +971,7 @@ class midcom_baseclasses_components_interface
      * You may modify the document that has been passed, to limit the information available to the client,
      * though this <i>should</i> be avoided if possible.
      *
-     * @param midcom_services_indexer_document $document The document to check. This object is passed by
+     * @param midcom_services_indexer_document &$document The document to check. This object is passed by
      *     reference and may therefore be modified to match the current security policy.
      * @param midcom_helper_configuration $config The configuration associated with the topic.
      * @param MidgardTopic $topic The topic this document is assigned to.

@@ -9,24 +9,32 @@
  
 // Constants for the MidCOM System
 
-// MidCOM Property Keys
+/**#@+
+ * MidCOM Property Keys
+ */
 define ('MIDCOM_PROP_DLOAD', 0); /* DEPRECATED ??? */
 define ('MIDCOM_PROP_VERSION', 1);
 define ('MIDCOM_PROP_PURECODE', 2);
 define ('MIDCOM_PROP_NAME', 3);
 define ('MIDCOM_PROP_ACL_PRIVILEGES', 4);
 define ('MIDCOM_PROP_VGROUPS', 5);
+/**#@-*/
 
-// MidCOM Default Error Codes (-> HTTP)
+/**#@+
+ *MidCOM Default Error Codes (-> HTTP)
+ */
 define ('MIDCOM_ERROK',200);
 define ('MIDCOM_ERRNOTFOUND',404);
 define ('MIDCOM_ERRFORBIDDEN',403);
 define ('MIDCOM_ERRAUTH',401);
 define ('MIDCOM_ERRCRIT',500);
+/**#@-*/
 
 // MidCOM NAP URL Information Constants
 
-// MidCOM Meta Data Constants
+/**#@+
+ * MidCOM Meta Data Constants
+ */
 define ('MIDCOM_NAV_URL',0);
 define ('MIDCOM_NAV_NAME',1);
 define ('MIDCOM_NAV_NODEID',2);
@@ -58,8 +66,11 @@ define ('MIDCOM_META_CREATOR',100); /* DEPRECATED AS OF 2.4.0 */
 define ('MIDCOM_META_CREATED',101); /* DEPRECATED AS OF 2.4.0 */
 define ('MIDCOM_META_EDITOR',102); /* DEPRECATED AS OF 2.4.0 */
 define ('MIDCOM_META_EDITED',103); /* DEPRECATED AS OF 2.4.0 */
+/**#@-*/
 
-// MidCOM Component Context Keys
+/**#@+
+ * MidCOM Component Context Keys
+ */
 define ('MIDCOM_CONTEXT_ANCHORPREFIX',0);
 define ('MIDCOM_CONTEXT_SUBSTYLE',1);
 define ('MIDCOM_CONTEXT_REQUESTTYPE',2);
@@ -72,25 +83,36 @@ define ('MIDCOM_CONTEXT_PAGETITLE',9);
 define ('MIDCOM_CONTEXT_LASTMODIFIED', 10);
 define ('MIDCOM_CONTEXT_PERMALINKGUID', 11);
 define ('MIDCOM_CONTEXT_URI', 12);
+/**#@-*/
 
-// INTERNAL Context Keys, not accessible from outside midcom_application.
+/**
+ * INTERNAL Context Keys, not accessible from outside midcom_application.
+ */
 define ('MIDCOM_CONTEXT_CUSTOMDATA', 1000);
 
-// URL PARSER Object Types
+/**#@+
+ * URL PARSER Object Types
+ */
 define ('MIDCOM_HELPER_URLPARSER_TOPIC',0);
 define ('MIDCOM_HELPER_URLPARSER_ARTICLE',1);
 define ('MIDCOM_HELPER_URLPARSER_ATTACHMENT',2);
 define ('MIDCOM_HELPER_URLPARSER_KEY',3);
 define ('MIDCOM_HELPER_URLPARSER_VALUE',4);
+/**#@-*/
 
-// Debugger
+/**#@+
+ * Debugger
+ */
 define ('MIDCOM_LOG_DEBUG', 4);
 define ('MIDCOM_LOG_INFO', 3);
 define ('MIDCOM_LOG_WARN', 2);
 define ('MIDCOM_LOG_ERROR', 1);
 define ('MIDCOM_LOG_CRIT', 0);
+/**#@-*/
 
-// Client Status Array Keys
+/**#@+
+ * Client Status Array Keys
+ */
 define ('MIDCOM_CLIENT_MOZILLA',0);
 define ('MIDCOM_CLIENT_IE',1);
 define ('MIDCOM_CLIENT_OPERA',2);
@@ -98,13 +120,19 @@ define ('MIDCOM_CLIENT_NETSCAPE',3);
 define ('MIDCOM_CLIENT_UNIX',10);
 define ('MIDCOM_CLIENT_MAC',11);
 define ('MIDCOM_CLIENT_WIN',12);
+/**#@-*/
 
-// Request Types
+/**#@+
+ * Request Types
+ */
 define ('MIDCOM_REQUEST_CONTENT',0);
 define ('MIDCOM_REQUEST_CONTENTADM',1);
 define ('MIDCOM_REQUEST_COMPONENTADM',2);
+/**#@-*/
 
-// Data Manager
+/**#@+
+ * Data Manager
+ */
 define ('MIDCOM_DATAMGR_EDITING',0);
 define ('MIDCOM_DATAMGR_SAVED',1);
 define ('MIDCOM_DATAMGR_FAILED',2);
@@ -113,21 +141,27 @@ define ('MIDCOM_DATAMGR_CANCELLED_NONECREATED',4);
 define ('MIDCOM_DATAMGR_CREATING',5);
 define ('MIDCOM_DATAMGR_CREATEFAILED',6);
 define ('MIDCOM_DATAMGR_SAVE_DELAYED',7);
+/**#@-*/
 
-// MidCOM Core Status Codes
+/**#@+
+ * MidCOM Core Status Codes
+ */
 define ('MIDCOM_STATUS_PREPARE',0);
 define ('MIDCOM_STATUS_CANHANDLE',1);
 define ('MIDCOM_STATUS_HANDLE',2);
 define ('MIDCOM_STATUS_CONTENT',3);
 define ('MIDCOM_STATUS_CLEANUP',4);
 define ('MIDCOM_STATUS_ABORT',5);
+/**#@-*/
 
-// MidCOM NAP Sorting Modes
+/**#@+
+ * MidCOM NAP Sorting Modes
+ */
 define ('MIDCOM_NAVORDER_DEFAULT', 0);
 define ('MIDCOM_NAVORDER_ARTICLESFIRST', 1);
 define ('MIDCOM_NAVORDER_TOPICSFIRST', 2);
 define ('MIDCOM_NAVORDER_SCORE', 3);
-
+/**#@-*/
 
 /**#@+
  * MidCOM Toolbar Service

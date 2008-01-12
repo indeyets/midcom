@@ -207,7 +207,7 @@ class midcom_application
     /**
      * I18n service class
      *
-     * @var midcom_helper_i18n
+     * @var midcom_services_i18n
      */
     public $i18n = null;
 

@@ -15,7 +15,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
     /**
      * The subscription object the transporter has been instantiated for
      *
-     * @var midcom_helper_replication_subscription_dba
+     * @var midcom_helper_replicator_subscription_dba
      * @access protected
      */
     var $subscription;
@@ -29,7 +29,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      *
-     * @param midcom_helper_replication_subscription_dba $subscription Subscription
+     * @param midcom_helper_replicator_subscription_dba $subscription Subscription
      */
     function midcom_helper_replicator_exporter($subscription)
     {
@@ -49,7 +49,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
      *
      * <b>This function must be called statically.</b>
      *
-     * @param midcom_helper_replication_subscription_dba $subscription Subscription
+     * @param midcom_helper_replicator_subscription_dba $subscription Subscription
      * @return midcom_helper_replicator_exporter A reference to the newly created exporter instance.
      * @static
      */
@@ -127,13 +127,13 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
     /**
      * Serialize attachment object
      *
-     * @param midgard_attachment $object The attachment object to serialize
+     * @param midgard_attachment &$attachment The attachment object to serialize
      * @return array Array of exported attachments metadata and blob
      */
     function serialize_attachment(&$attachment)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("called for attachement {$attachment->guid}");
+        debug_add("called for attachment {$attachment->guid}");
         $serializations = array();
 
         // Serialize metadata
@@ -187,7 +187,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
     /**
      * Serialize attachments of an object
      *
-     * @param midgard_object $object The Object to export attachments of
+     * @param midgard_object &$object The Object to export attachments of
      * @return array Array of exported attachments as XML indexed by GUID
      */
     function serialize_attachments(&$object)
@@ -240,7 +240,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
     /**
      * Serialize parameters of an object
      *
-     * @param midgard_object $object The Object to export parameters of
+     * @param midgard_object &$object The Object to export parameters of
      * @return array Array of exported parameters as XML indexed by GUID
      */
     function serialize_parameters(&$object)
@@ -294,7 +294,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
      *
      * This will also serialize the attachments and parameters of the object.
      *
-     * @param midgard_object $object The Object to export parameters of
+     * @param midgard_object &$object The Object to export parameters of
      * @return array Array of exported objects as XML indexed by GUID
      */
     function serialize_object(&$object, $skip_children = false)
@@ -430,7 +430,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
      * This is the checkpoint of the exporter. This should be overridden in subclasses for more
      * contextual handling of dependencies.
      *
-     * @param midgard_object $object The Object to export parameters of
+     * @param midgard_object &$object The Object to export parameters of
      * @return boolean Whether the object may be exported with this exporter
      */
     function is_exportable(&$object)
@@ -468,7 +468,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
      * This is the main entry point of the exporter. This should be overridden in subclasses for more
      * contextual handling of dependencies.
      *
-     * @param midgard_object $object The Object to export parameters of
+     * @param midgard_object &$object The Object to export parameters of
      * @return array Array of exported objects as XML indexed by GUID
      */
     function serialize(&$object)

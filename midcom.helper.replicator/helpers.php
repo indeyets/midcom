@@ -13,7 +13,7 @@
  * Manifests as "Wrong parameter count for serialize()" when you call
  * it (otherwise properly) inside MidCOM application
  *
- * @param midgard_object $object reference to an object
+ * @param midgard_object &$object reference to an object
  * @return string object serialized (or false in case of failure)
  */
 function midcom_helper_replicator_serialize(&$object)
@@ -69,7 +69,7 @@ function midcom_helper_replicator_unserialize(&$xml, $use_force = false)
  * Manifests as "Wrong parameter count for import_object()" when you call
  * it (otherwise properly) inside MidCOM application
  *
- * @param midgard_object $object reference to an object
+ * @param midgard_object &$object reference to an object
  * @param boolean $use_force whether to use force
  * @return boolean indicating success/failure
  */

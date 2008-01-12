@@ -15,7 +15,7 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
     /**
      * The subscription object the transporter has been instantiated for
      *
-     * @var midcom_helper_replication_subscription_dba
+     * @var midcom_helper_replicator_subscription_dba
      * @access protected
      */
     var $subscription;
@@ -31,7 +31,7 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      *
-     * @param midcom_helper_replication_subscription_dba $subscription Subscription
+     * @param midcom_helper_replicator_subscription_dba $subscription Subscription
      */
     function midcom_helper_replicator_transporter($subscription)
     {
@@ -51,7 +51,7 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
      *
      * <b>This function must be called statically.</b>
      *
-     * @param midcom_helper_replication_subscription_dba $subscription Subscription
+     * @param midcom_helper_replicator_subscription_dba $subscription Subscription
      * @return midcom_helper_replicator_transporter A reference to the newly created transporter instance.
      * @static
      */

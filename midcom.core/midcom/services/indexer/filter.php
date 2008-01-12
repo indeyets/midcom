@@ -17,7 +17,7 @@
  * 
  * @abstract Abstract indexer filter class
  * @package midcom.services
- * @see midcom_service_indexer
+ * @see midcom_services_indexer
  */
 
 class midcom_services_indexer_filter

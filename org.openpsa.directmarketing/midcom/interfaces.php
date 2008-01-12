@@ -56,7 +56,7 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
     /**
      * Test case for the AT service
      * @param array $args handler arguments
-     * @param object $handler reference to the cron_handler object calling this method.
+     * @param object &$handler reference to the cron_handler object calling this method.
      * @return boolean Always true
      */
     function at_test($args, &$handler)
@@ -72,7 +72,7 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
     /**
      * Background message sending AT batch handler
      * @param array $args handler arguments
-     * @param object $handler reference to the cron_handler object calling this method.
+     * @param object &$handler reference to the cron_handler object calling this method.
      * @return boolean indicating success/failure
      */
     function background_send_message($args, &$handler)
@@ -137,7 +137,7 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
     /**
      * For updating smart campaigns members in background
      * @param array $args handler arguments
-     * @param object $handler reference to the cron_handler object calling this method.
+     * @param object &$handler reference to the cron_handler object calling this method.
      * @return boolean indicating success/failure
      */
     function background_update_campaign_members($args, &$handler)

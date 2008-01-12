@@ -68,7 +68,7 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
     /**
      * ...
      *
-     * @param name The name of the form. This defaults to the name of the currently active component, which should
+     * @param mixed $name The name of the form. This defaults to the name of the currently active component, which should
      *     suffice in most cases.
      * @return boolean Indicating success.
      */

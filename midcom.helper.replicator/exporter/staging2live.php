@@ -42,7 +42,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
      * This is the main entry point of the exporter. Since we're mirroring
      * all content this will always return true.
      *
-     * @param midgard_object $object The Object to export parameters of
+     * @param midgard_object &$object The Object to export parameters of
      * @return boolean Whether the object may be exported with this exporter
      */
     function is_exportable(&$object, $check_exported = true)
@@ -282,7 +282,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
     /**
      * Export some children of the object
      *
-     * @param midgard_object $object The Object to export parameters of
+     * @param midgard_object &$object The Object to export parameters of
      * @return array Array of exported objects as XML indexed by GUID
      * @todo rethink child/parent handling
      */

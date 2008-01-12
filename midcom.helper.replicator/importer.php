@@ -75,10 +75,11 @@ class midcom_helper_replicator_importer extends midcom_baseclasses_components_pu
     }
     
     /**
-     * This is the checkpoint of the importer. This should be overridden in subclasses for more
-     * contextual handling of dependencies.
+     * This is the checkpoint of the importer. 
+     * 
+     * This should be overridden in subclasses for more contextual handling of dependencies.
      *
-     * @param midgard_object $object The Object to import
+     * @param midgard_object &$object The Object to import
      * @return boolean Whether the object may be imported with this importer
      */
     function is_importable(&$object)
@@ -87,8 +88,9 @@ class midcom_helper_replicator_importer extends midcom_baseclasses_components_pu
     }
     
     /**
-     * This is the main entry point of the importer. This should be overridden in subclasses for more
-     * contextual handling of dependencies.
+     * This is the main entry point of the importer. 
+     * 
+     * This should be overridden in subclasses for more contextual handling of dependencies.
      *
      * @param string $xml XML replication content
      * @param boolean $use_force Whether to force importing

@@ -69,7 +69,7 @@ class midgard_admin_sitegroup_creation_config
     }
     /**
      * Sets a value to null
-     * @param name of the value
+     * @param string $valuename of the value
      * @return boolean true if value was deleted.
      */
     function delete_value($valuename)

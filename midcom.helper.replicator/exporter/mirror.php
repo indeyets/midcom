@@ -84,7 +84,7 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
      * This is the main entry point of the exporter. Since we're mirroring
      * all content this will always return true.
      *
-     * @param midgard_object $object The Object to export parameters of
+     * @param midgard_object &$object The Object to export parameters of
      * @return boolean Whether the object may be exported with this exporter
      */
     function is_exportable(&$object)
@@ -161,7 +161,7 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
     /**
      * Export some children of the object
      *
-     * @param midgard_object $object The Object to export parameters of
+     * @param midgard_object &$object The Object to export parameters of
      * @return array Array of exported objects as XML indexed by GUID
      */
     function serialize_children(&$object)
@@ -185,7 +185,7 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
      * This will also serialize the attachments and parameters of the object
      * and walk the object's parent tree as needed.
      *
-     * @param midgard_object $object The Object to export parameters of
+     * @param midgard_object &$object The Object to export parameters of
      * @return array Array of exported objects as XML indexed by GUID
      */
     function serialize_object(&$object, $skip_children = false)
@@ -264,7 +264,7 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
      * This is the main entry point of the exporter. It exports not only the
      * object itself, but also its parent hierarchy.
      *
-     * @param midgard_object $object The Object to export parameters of
+     * @param midgard_object &$object The Object to export parameters of
      * @return array Array of exported objects as XML indexed by GUID
      */
     function serialize(&$object)

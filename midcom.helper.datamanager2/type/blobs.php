@@ -35,9 +35,9 @@
 class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_type
 {
     /**
-     * All attachments covered by this field. The array contains
-     * midcom_baseclasses_database_attachment objects indexed by their identifier
-     * within the field.
+     * All attachments covered by this field. 
+     * The array contains midcom_baseclasses_database_attachment objects indexed by their 
+     * identifier within the field.
      *
      * See the $attachments_info member for a more general approach easily usable
      * within styles.
@@ -48,9 +48,11 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     var $attachments = Array();
 
     /**
-     * This is the base URL used for attachment serving. It defaults to the global
-     * MidCOM attachment handler at the sites root. When constructing Attachment
-     * Info blocks, this URL is completed using "{$baseurl}{$guid}/{$filename}".
+     * This is the base URL used for attachment serving. 
+     *
+     * It defaults to the global MidCOM attachment handler at the sites root. 
+     * When constructing Attachment Info blocks, this URL is completed using 
+     * "{$baseurl}{$guid}/{$filename}".
      *
      * @var string
      * @access public
@@ -59,8 +61,10 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
 
     /**
      * This member is populated and synchronized with all known changes to the
-     * attachments listing. It contains a batch of metadata that makes presenting
-     * them easy. The information is kept in an array per attachment, again indexed
+     * attachments listing. 
+     *
+     * It contains a batch of metadata that makes presenting them easy. The 
+     * information is kept in an array per attachment, again indexed
      * by their identifiers. The following keys are defined:
      *
      * - filename: The name of the file (useful to produce nice links).
@@ -96,8 +100,9 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     var $max_count = 0;
 
     /**
-     * Set the base URL accordingly (this requires midcom_config access and is thus
-     * not possible using class member initializers.
+     * Set the base URL accordingly
+     *
+     * this requires midcom_config access and is thus not possible using class member initializers.
      */
     function _on_configuring($config)
     {
@@ -108,8 +113,9 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     }
 
     /**
-     * This function loads all known attachments from the storage object. It
-     * will leave the field empty in case the storage object is null.
+     * This function loads all known attachments from the storage object. 
+     *
+     * It will leave the field empty in case the storage object is null.
      */
     function convert_from_storage ($source)
     {
@@ -153,10 +159,11 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     }
 
     /**
-     * This function sorts the attachment lists by filename. It has to be called
-     * after each attachment operation. It uses a user-defined ordering function
-     * for each of the two arrays to be sorted: _sort_attachments_callback() and
-     * _sort_attachments_info_callback().
+     * This function sorts the attachment lists by filename. 
+     *
+     * It has to be called after each attachment operation. It uses a 
+     * user-defined ordering function for each of the two arrays to be sorted: 
+     * _sort_attachments_callback() and _sort_attachments_info_callback().
      *
      * @access protected
      */
@@ -169,8 +176,9 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     }
 
     /**
-     * User-defined array sorting callback, used for sorting $attachments. See the
-     * usort() documentation for further details.
+     * User-defined array sorting callback, used for sorting $attachments. 
+     *
+     * See the usort() documentation for further details.
      *
      * @access protected
      * @param midcom_baseclasses_database_attachment $a The first attachment.
@@ -183,8 +191,9 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     }
 
     /**
-     * User-defined array sorting callback, used for sorting $attachments_info. See the
-     * usort() documentation for further details.
+     * User-defined array sorting callback, used for sorting $attachments_info. 
+     *
+     * See the usort() documentation for further details.
      *
      * @access protected
      * @param Array $a The first attachment.
@@ -550,8 +559,9 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     }
 
     /**
-     * Updates the title field of the specified attachment. This will automatically update
-     * the attachment info as well.
+     * Updates the title field of the specified attachment. 
+     *
+     * This will automatically update the attachment info as well.
      *
      * @param string $identifier The identifier of the new attachment.
      * @param string $title The new title of the attachment, set this to null to
