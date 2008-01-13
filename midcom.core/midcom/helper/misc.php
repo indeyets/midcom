@@ -277,7 +277,7 @@ function mgd_get_createstr($object_type) {
  *
  * <b>Note:</b> This function is quite slow. It does everything on  a PHP level.
  *
- * @param Array $array		The ID-Array to sort.
+ * @param Array &$array		The ID-Array to sort.
  * @param string $sortkey	The name of the member that should be sorted (prepend "reverse" for a reverse sorting).
  * @param string $object_type	The type of the object referenced by the IDs
  * @param int $sorting		The PHP sorting mechanism to use.
@@ -329,7 +329,7 @@ function mgd_sort_id_array(&$array, $sortkey, $object_type, $sorting = SORT_REGU
  *
  * Works with a reference array (doesn't return anything)
  *
- * @param Array $array		The object-array to sort (used via reference).
+ * @param Array &$array		The object-array to sort (used via reference).
  * @param string $sortkey	The name of the member that should be sorted (prepend "reverse" for a reverse sorting).
  * @param int $sorting		The PHP sorting mechanism to use.
  */
@@ -461,7 +461,7 @@ function mgd_sort_group_id_array(&$array, $element_type, $group_type, $elementso
  * through serialization.
  *
  * @param MidgardObject $object	The object at which to save the data.
- * @param mixed $var			The variable that should be saved.
+ * @param mixed &$var			The variable that should be saved.
  * @param string $name			The identifier to use for storage.
  * @return boolean Indicating success.
  */
@@ -642,8 +642,8 @@ function mgd_include_snippet_php ($path)
  * Gives an image with a higher quality then the built-in gdlib functions.
  * It is recommended to use imagemagick in favor of this function.
  *
- * @param int $dst_img	Destination Image Handle.
- * @param int $src_img	Source image Handle.
+ * @param int &$dst_img	Destination Image Handle.
+ * @param int &$src_img	Source image Handle.
  * @param int $dst_x	X-offest of the destination.
  * @param int $dst_y	Y-offest of the destination.
  * @param int $src_x	X-offest of the source.
@@ -716,8 +716,8 @@ function ImageCopyResampleBicubicPalette(&$dst_img, &$src_img, $dst_x, $dst_y, $
  * Gives an image with a higher quality then the built-in gdlib functions.
  * It is recommended to use imagemagick in favor of this function.
  *
- * @param int $dst_img	Destination Image Handle.
- * @param int $src_img	Source image Handle.
+ * @param int &$dst_img	Destination Image Handle.
+ * @param int &$src_img	Source image Handle.
  * @param int $dst_x	X-offest of the destination.
  * @param int $dst_y	Y-offest of the destination.
  * @param int $src_x	X-offest of the source.

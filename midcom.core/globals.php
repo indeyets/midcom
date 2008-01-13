@@ -27,7 +27,7 @@ $GLOBALS['midcom'] = null;
  * which should not be turned off any longer. Instead, step up the
  * error reporting level to something above MIDCOM_LOG_DEBUG.
  *
- * @global midcom_helper_debug $GLOBALS['midcom_debugger']
+ * @global midcom_debug $GLOBALS['midcom_debugger']
  */
 $GLOBALS['midcom_debugger'] = null;
 

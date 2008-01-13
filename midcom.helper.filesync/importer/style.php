@@ -8,25 +8,25 @@
 */
 
 /**
- * Export a site style to the format used by Site Wizard
+ * Import a site style from the format used by Site Wizard
  *
  * @package midcom.helper.filesync
  */
 class midcom_helper_filesync_importer_style extends midcom_helper_filesync_importer
 {
     var $root_dir = '';
-    
+
     function midcom_helper_filesync_importer_style()
     {
         parent::midcom_helper_filesync_importer();
-        
+
         $this->root_dir = midcom_helper_filesync_interface::prepare_dir('style');
     }
-    
+
     function read_style($path, $parent_id)
     {
         $style_name = basename($path);
-        
+
         $object_qb = midcom_db_style::new_query_builder();
         $object_qb->add_constraint('up', '=', $parent_id);
         $object_qb->add_constraint('name', '=', $style_name);
@@ -47,23 +47,23 @@ class midcom_helper_filesync_importer_style extends midcom_helper_filesync_impor
             $style = $styles[0];
         }
 
-        $directory = dir($path);        
-        while (false !== ($entry = $directory->read())) 
+        $directory = dir($path);
+        while (false !== ($entry = $directory->read()))
         {
             if (substr($entry, 0, 1) == '.')
             {
                 // Ignore dotfiles
                 continue;
             }
-        
+
             if (is_dir("{$path}/{$entry}"))
             {
                 // Recurse deeper
                 $this->read_style("{$path}/{$entry}", $style->id);
             }
-            
+
             // Deal with element
-            
+
             // Check file type
             $filename_parts = explode('.', $entry);
             if (count($filename_parts) < 2)
@@ -82,14 +82,14 @@ class midcom_helper_filesync_importer_style extends midcom_helper_filesync_impor
             {
                 continue;
             }
-            
+
             $file_contents = file_get_contents("{$path}/{$entry}");
             $encoding = mb_detect_encoding($file_contents);
             if ($encoding != 'UTF-8')
             {
                 $file_contents = @iconv($encoding, 'UTF-8', $file_contents);
             }
-            
+
             $qb = midcom_db_element::new_query_builder();
             $qb->add_constraint('style', '=', $style->id);
             $qb->add_constraint('name', '=', $element_name);
@@ -106,7 +106,7 @@ class midcom_helper_filesync_importer_style extends midcom_helper_filesync_impor
 
             $elements = $qb->execute();
             $element = $elements[0];
-            
+
             // Update existing elements only if they have actually changed
             if ($element->$field != $file_contents)
             {
@@ -116,18 +116,18 @@ class midcom_helper_filesync_importer_style extends midcom_helper_filesync_impor
         }
         $directory->close();
     }
-    
+
     function read_styledir($path)
     {
-        $directory = dir($path);        
-        while (false !== ($entry = $directory->read())) 
+        $directory = dir($path);
+        while (false !== ($entry = $directory->read()))
         {
             if (substr($entry, 0, 1) == '.')
             {
                 // Ignore dotfiles
                 continue;
             }
-        
+
             if (is_dir("{$path}/{$entry}"))
             {
                 // Recurse deeper
@@ -136,7 +136,7 @@ class midcom_helper_filesync_importer_style extends midcom_helper_filesync_impor
         }
         $directory->close();
     }
- 
+
     function import()
     {
         $this->read_styledir($this->root_dir);

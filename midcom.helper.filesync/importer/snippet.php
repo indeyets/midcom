@@ -8,25 +8,25 @@
 */
 
 /**
- * Export a site snippet to the format used by Site Wizard
+ * Import a site snippet from the format used by Site Wizard
  *
  * @package midcom.helper.filesync
  */
 class midcom_helper_filesync_importer_snippet extends midcom_helper_filesync_importer
 {
     var $root_dir = '';
-    
+
     function midcom_helper_filesync_importer_snippet()
     {
         parent::midcom_helper_filesync_importer();
-        
+
         $this->root_dir = midcom_helper_filesync_interface::prepare_dir('snippets');
     }
-    
+
     function read_snippetdir($path, $parent_id)
     {
         $snippetdir_name = basename($path);
-        
+
         $object_qb = midcom_baseclasses_database_snippetdir::new_query_builder();
         $object_qb->add_constraint('up', '=', $parent_id);
         $object_qb->add_constraint('name', '=', $snippetdir_name);
@@ -47,21 +47,21 @@ class midcom_helper_filesync_importer_snippet extends midcom_helper_filesync_imp
             $snippetdir = $snippetdirs[0];
         }
 
-        $directory = dir($path);        
-        while (false !== ($entry = $directory->read())) 
+        $directory = dir($path);
+        while (false !== ($entry = $directory->read()))
         {
             if (substr($entry, 0, 1) == '.')
             {
                 // Ignore dotfiles
                 continue;
             }
-        
+
             if (is_dir("{$path}/{$entry}"))
             {
                 // Recurse deeper
                 $this->read_snippetdir("{$path}/{$entry}", $snippetdir->id);
             }
-            
+
             // Check file type
             $filename_parts = explode('.', $entry);
             if (count($filename_parts) < 2)
@@ -83,7 +83,7 @@ class midcom_helper_filesync_importer_snippet extends midcom_helper_filesync_imp
             {
                 continue;
             }
-                        
+
             // Deal with element
             $file_contents = file_get_contents("{$path}/{$entry}");
             $encoding = mb_detect_encoding($file_contents);
@@ -91,7 +91,7 @@ class midcom_helper_filesync_importer_snippet extends midcom_helper_filesync_imp
             {
                 $file_contents = @iconv($encoding, 'UTF-8', $file_contents);
             }
-            
+
             $qb = midcom_baseclasses_database_snippet::new_query_builder();
             $qb->add_constraint('up', '=', $snippetdir->id);
             $qb->add_constraint('name', '=', $snippet_name);
@@ -108,7 +108,7 @@ class midcom_helper_filesync_importer_snippet extends midcom_helper_filesync_imp
 
             $snippets = $qb->execute();
             $snippet = $snippets[0];
-            
+
             // Update existing elements only if they have actually changed
             if ($snippet->$field != $file_contents)
             {
@@ -118,18 +118,18 @@ class midcom_helper_filesync_importer_snippet extends midcom_helper_filesync_imp
         }
         $directory->close();
     }
-    
+
     function read_dirs($path)
     {
-        $directory = dir($path);        
-        while (false !== ($entry = $directory->read())) 
+        $directory = dir($path);
+        while (false !== ($entry = $directory->read()))
         {
             if (substr($entry, 0, 1) == '.')
             {
                 // Ignore dotfiles
                 continue;
             }
-        
+
             if (is_dir("{$path}/{$entry}"))
             {
                 // Recurse deeper
@@ -138,7 +138,7 @@ class midcom_helper_filesync_importer_snippet extends midcom_helper_filesync_imp
         }
         $directory->close();
     }
- 
+
     function import()
     {
         $this->read_dirs($this->root_dir);
