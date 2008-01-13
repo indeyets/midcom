@@ -27,7 +27,8 @@ if (   array_key_exists('HTTP_X_MOZ', $_SERVER)
  *
  * This makes life much, much better when making static copies for whatever reason
  */
-if (!preg_match('%\?|/$|midcom-.+-|/.+\..+$%', $_SERVER['REQUEST_URI']))
+if (!preg_match('%\?|/$|midcom-.+-|/.+\..+$%', $_SERVER['REQUEST_URI'])
+    && (!isset($_POST) || sizeof($_POST) < 1))
 {
     header('HTTP/1.0 301 Moved Permanently');
     header("Location: {$_SERVER['REQUEST_URI']}/");
