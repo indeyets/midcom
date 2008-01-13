@@ -154,7 +154,7 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
             <div class="tabs_content" id="invite_yahoo">
                 <h2>Invite your Yahoo friends</h2>
                 <div class="invite_login_form">
-                    <form name="invite_yahoo" method="POST" onsubmit="return com_magnettechnologies_contactgrabber_validate(this);" action="">
+                    <form name="invite_yahoo" method="post" onsubmit="return com_magnettechnologies_contactgrabber_validate(this);" action="">
                         <input type="hidden" name="domain" value="yahoo.com" />
                         <?php
                         if ($email_parts[1] == 'yahoo.com')
@@ -175,7 +175,7 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
             <div class="tabs_content" id="invite_myspace" style="display: none;">
                 <h2>Invite your MySpace friends</h2>
                 <div class="invite_login_form">
-                    <form name="invite_myspace" method="POST" onsubmit="return com_magnettechnologies_contactgrabber_validate(this);" action="">
+                    <form name="invite_myspace" method="post" onsubmit="return com_magnettechnologies_contactgrabber_validate(this);" action="">
                         <input type="hidden" name="domain" value="myspace.com" />
                         <label><?php echo $data['l10n']->get('username'); ?>:</label><input class="text" type="text" name="username" value="" />
                         <div class="clear_fix"></div>
@@ -189,7 +189,7 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
             <div class="tabs_content" id="invite_hotmail" style="display: none;">
                 <h2>Invite your Hotmail friends</h2>
                 <div class="invite_login_form">
-                    <form name="invite_hotmail" method="POST" onsubmit="return com_magnettechnologies_contactgrabber_validate(this);" action="">
+                    <form name="invite_hotmail" method="post" onsubmit="return com_magnettechnologies_contactgrabber_validate(this);" action="">
                         <input type="hidden" name="domain" value="hotmail.com" />
                         <?php
                         if ($email_parts[1] == 'hotmail.com')

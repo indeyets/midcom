@@ -17,7 +17,7 @@ $revised_after_choices[$date] = $_MIDCOM->i18n->get_string('1 month', 'midgard.a
 <div id="latest_objects">
     
     <div class="filter">
-        <form name="latest_objects_filter" method="GET">
+        <form name="latest_objects_filter" method="get">
             <div class="revised_after">
                 <label for="revised_after"><?php echo $_MIDCOM->i18n->get_string('objects revised within', 'midgard.admin.asgard'); ?></label>
                 <select name="revised_after" id="revised_after">
@@ -39,11 +39,11 @@ $revised_after_choices[$date] = $_MIDCOM->i18n->get_string('1 month', 'midgard.a
         </form>
     </div>
     
-    <form name="latest_objects_mass_action" method="POST">
 <?php
 if (count($data['revised']) > 0)
 {
     $revisors = array();
+    echo "    <form name=\"latest_objects_mass_action\" method=\"post\">";
     echo "<table class=\"results\">\n";
     echo "    <thead>\n";
     echo "        <tr>\n";

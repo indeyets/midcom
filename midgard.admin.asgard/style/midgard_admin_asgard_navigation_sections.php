@@ -36,4 +36,5 @@ foreach ($data['label_mapping'] as $type => $label)
                 window.location = '<?php echo "{$_MIDGARD['self']}__mfa/asgard/"; ?>' + $j(this).attr('value') + '/';
             }
         });
+    // ]]>
 </script>

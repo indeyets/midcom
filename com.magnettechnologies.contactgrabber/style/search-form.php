@@ -19,7 +19,7 @@ if ($_MIDCOM->auth->user)
     <div class="tabs_content" id="invite_gmail">
         <h2><?php echo $_MIDCOM->i18n->get_string('invite your gmail friends', 'com.magnettechnologies.contactgrabber'); ?></h2>
         <div class="invite_login_form">
-            <form name="invite_gmail" method="POST" onsubmit="return com_magnettechnologies_contactgrabber_validate(this, 'gmail');" action="">
+            <form name="invite_gmail" method="post" onsubmit="return com_magnettechnologies_contactgrabber_validate(this, 'gmail');" action="">
                 <input type="hidden" name="domain" value="gmail.com" />
                 <?php
                 if ($email_parts[1] == 'gmail.com')
