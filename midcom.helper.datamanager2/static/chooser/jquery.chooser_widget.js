@@ -553,7 +553,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
                     var id = this.id.match(/_([0-9]+)$/);
                     
                     // Skip the selected or match failed
-                    if (   !id[1]
+                    if (   !id
+                        || !id[1]
                         || id[1] == item_id)
                     {
                         return;
