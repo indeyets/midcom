@@ -123,7 +123,7 @@ EOF;
                     break;
                     
                 default:
-                    $_MIDCOM->generate_error("Indexer XMLCommClient: Encountered unknown filter type {$filter->type}.");
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Indexer XMLCommClient: Encountered unknown filter type {$filter->type}.");
                     // This will exit.
             }
             $this->_request .= "  </filter>\n";

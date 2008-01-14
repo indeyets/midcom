@@ -129,7 +129,7 @@ class midcom_helper_datamanager2_type_date extends midcom_helper_datamanager2_ty
                 }
 
             default:
-                $_MIDCOM->generate_error("Invalid storage type for the Datamanager Date Type: {$this->storage_type}");
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Invalid storage type for the Datamanager Date Type: {$this->storage_type}");
                 // This will exit.
         }
     }

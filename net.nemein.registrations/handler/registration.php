@@ -432,7 +432,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
             // Reject registration, then relocate to registration list.
             if (! $this->_event->reject_registration($this->_registration, $notice))
             {
-                $_MIDCOM->generate_error("Failed to reject the registration {$args[0]}, see the debug level log for details.");
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to reject the registration {$args[0]}, see the debug level log for details.");
                 // This will exit.
             }
             $_MIDCOM->relocate("event/list_registrations/{$this->_event->guid}.html");
@@ -450,7 +450,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
             // Reject registration, then relocate to registration list.
             if (! $this->_event->rejectdelete_registration($this->_registration, $notice))
             {
-                $_MIDCOM->generate_error("Failed to reject the registration {$args[0]}, see the debug level log for details.");
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to reject the registration {$args[0]}, see the debug level log for details.");
                 // This will exit.
             }
             $_MIDCOM->relocate("event/list_registrations/{$this->_event->guid}.html");
