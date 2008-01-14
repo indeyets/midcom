@@ -88,7 +88,7 @@ class net_nemein_simpledb_handler_admin extends midcom_baseclasses_components_ha
         if (! $updated)
         {
             debug_print_r('Failed to update the Article with a new URL, last article state:', $entry);
-            $_MIDCOM->generate_error('Could not update the article\'s URL Name: ' . mgd_errstr());
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not update the article\'s URL Name: ' . mgd_errstr());
             // This will exit()
         }
 

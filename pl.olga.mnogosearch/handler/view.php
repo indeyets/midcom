@@ -42,7 +42,7 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
     function _on_initialize()
     {
 	if (!extension_loaded('mnogosearch')) {
-    	    $_MIDCOM->generate_error(500,"Mnogosearch PHP extension is required to run Mnogosearch frontend!");
+    	    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Mnogosearch PHP extension is required to run Mnogosearch frontend!");
 	}
 
     	$this->_topic =& $this->_request_data['content_topic'];
@@ -163,7 +163,7 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
 
         if(!$res)
         {
-            $_MIDCOM->generate_error(500,Udm_Error($this->udm_agent));
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, Udm_Error($this->udm_agent));
         }
         else
         {

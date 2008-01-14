@@ -66,7 +66,7 @@ class net_nemein_bookmarks_admin
             debug_add("Failed to open symlink content topic, (might also be an invalid object) last Midgard Error: "
                 . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_print_r("Retrieved object was:", $object, MIDCOM_LOG_INFO);
-            $_MIDCOM->generate_error("Failed to open symlink content topic.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to open symlink content topic.");
         }
 
         /* Check topic validity */
@@ -76,7 +76,7 @@ class net_nemein_bookmarks_admin
             debug_add("Content Topic is invalid, see LOG_INFO object dump", MIDCOM_LOG_ERROR);
             debug_print_r("Retrieved object was:", $object, MIDCOM_LOG_INFO);
             debug_print_r("ROOT topic object was:", $root, MIDCOM_LOG_INFO);
-            $_MIDCOM->generate_error("Failed to open symlink content topic.");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to open symlink content topic.");
         }
 
         $this->_topic = $object;

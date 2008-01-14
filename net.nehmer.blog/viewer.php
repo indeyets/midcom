@@ -446,7 +446,7 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         {
             debug_add('Failed to open symlink content topic, (might also be an invalid object) last Midgard Error: '
                 . mgd_errstr(), MIDCOM_LOG_ERROR);
-            $_MIDCOM->generate_error('Failed to open symlink content topic.');
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to open symlink content topic.');
             // This will exit.
         }
 
