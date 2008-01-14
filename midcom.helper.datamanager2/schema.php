@@ -247,8 +247,7 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
         // Setup the raw schema reference
         if (! array_key_exists($name, $this->_raw_schemadb))
         {
-            $_MIDCOM->generate_error("The schema {$name} was not found in the schema database.",
-                MIDCOM_ERRCRIT);
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "The schema {$name} was not found in the schema database.");
             // This will exit.
         }
         $this->_raw_schema =& $this->_raw_schemadb[$name];
@@ -335,8 +334,7 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
     {
         if (array_key_exists($name, $this->fields))
         {
-            $_MIDCOM->generate_error("Duplicate field {$name} encountered, schema operation is invalid. Aborting.",
-                MIDCOM_ERRCRIT);
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Duplicate field {$name} encountered, schema operation is invalid. Aborting.");
             // This will exit.
         }
 

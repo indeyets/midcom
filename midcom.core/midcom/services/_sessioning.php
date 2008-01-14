@@ -64,8 +64,7 @@ class midcom_service__sessioning
 
         if ($started)
         {
-            $_MIDCOM->generate_error("MidCOM Sessioning has already been started, it must not be started twice. Aborting",
-                                               MIDCOM_ERRCRIT);
+	  $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "MidCOM Sessioning has already been started, it must not be started twice. Aborting");
         }
 
         $started = true;

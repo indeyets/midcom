@@ -101,8 +101,8 @@ class midcom_helper_datamanager2_storage extends midcom_baseclasses_components_p
             {
                 if ($type_definition['required'] == true)
                 {
-                    $_MIDCOM->generate_error("Failed to process the type array for the schema {$this->_schema->name}: "
-                        . "The type for the required field {$name} was not found.", MIDCOM_ERRCRIT);
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to process the type array for the schema {$this->_schema->name}: "
+                        . "The type for the required field {$name} was not found.");
                     // This will exit.
                 }
                 else
@@ -172,8 +172,8 @@ class midcom_helper_datamanager2_storage extends midcom_baseclasses_components_p
             {
                 if ($type_definition['required'] == true)
                 {
-                    $_MIDCOM->generate_error("Failed to process the type array for the schema {$this->_schema->name}: "
-                        . "The type for the required field {$name} was not found.", MIDCOM_ERRCRIT);
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to process the type array for the schema {$this->_schema->name}: "
+                        . "The type for the required field {$name} was not found.");
                     // This will exit.
                 }
                 else

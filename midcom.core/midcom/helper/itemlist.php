@@ -117,7 +117,7 @@ class midcom_helper_itemlist
     {
         if (! is_a($parent_topic, 'midgard_topic' )) 
         {
-           $_MIDCOM->generate_error('midcom_helper_itemlist::factory: parent topic not a midgard_topic object', MIDCOM_LOG_WARN); 
+	  $_MIDCOM->generate_error(MIDCOM_LOG_WARN, 'midcom_helper_itemlist::factory: parent topic not a midgard_topic object'); 
         }
      
         $class = basename($sorting);
@@ -129,7 +129,7 @@ class midcom_helper_itemlist
          $sortclass = &new $class();
          $sortclass->_init($_basicnav, $parent_topic);
         } else {
-         $_MIDCOM->generate_error("Tried to load sorting helper class for order {$sorting}, but the class was undefined.", MIDCOM_LOG_WARN);      
+	  $_MIDCOM->generate_error(MIDCOM_LOG_WARN, "Tried to load sorting helper class for order {$sorting}, but the class was undefined.");      
         } 
      
         return $sortclass;

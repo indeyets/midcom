@@ -1970,8 +1970,7 @@ class midcom_helper_datamanager {
             $this->_lock["user_record"] = $user;
             $locker = mgd_get_person($lock["user"]);
             if (! $locker)
-                $_MIDCOM->generate_error("CRITICAL FAILURE: Locker person record does not exist: "
-                                                   . mgd_errstr(), MIDCOM_ERRCRIT);
+	      $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "CRITICAL FAILURE: Locker person record does not exist: " . mgd_errstr());
             $this->_lock["user_name"] = $locker->name;
             $this->_lock["user_record"] = $locker;
         } else {
