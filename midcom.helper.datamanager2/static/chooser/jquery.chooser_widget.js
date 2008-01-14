@@ -376,7 +376,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         list_jq_items,
         active = -1,
         data,
-        block_width = 100;
+        block_width = 90;
 
     list.mouseover( function(event) {
         var jq_elem = jQuery(target(event)).addClass(CLASSES.HOVER);
