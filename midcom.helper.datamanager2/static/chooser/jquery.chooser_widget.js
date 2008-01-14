@@ -660,6 +660,10 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     
     function inactivate(id)
     {
+        if (jQuery('#'+options.widget_id + '_result_item_'+id).attr("keep_on_list") == "false" )
+        {
+            return;
+        }
         jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: 0 });
         jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.DELETED);
         jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.ACTIVE);
