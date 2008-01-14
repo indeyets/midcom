@@ -106,7 +106,8 @@ input.chooser_widget_search_input
 {
     display: none;
     
-    position: fixed;
+    position: fixed !important;
+	position: absolute;
     top: 5%;
     left: 50%;
     
