@@ -307,6 +307,11 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
         creation_dialog = jQuery('#' + options.widget_id + '_creation_dialog');
         create_button = jQuery('#' + options.widget_id + '_create_button');
         create_button.bind('click', function(){
+	        if (jQuery('#' + options.widget_id + '_creation_dialog').css('display') == 'block')
+	        {
+	           jQuery('#' + options.widget_id + '_creation_dialog').hide();
+	           return;
+	        }
             var creation_url = options.creation_handler;
             
             if (last_term != "undefined")
