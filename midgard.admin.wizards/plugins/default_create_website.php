@@ -102,6 +102,16 @@ class default_create_website extends midcom_baseclasses_components_handler
                 $this->_request_data['report']['port'] = $host->port;
                 $this->_request_data['report']['sitename'] = $root_page->title;
                 $this->_request_data['report']['topicname'] = $root_topic->name;
+                
+                $pieces = explode('.', $host->name);
+                $alias = '';
+                
+                if ($pieces[0] = 'www')
+                {
+                    $alias = $pieces[1] . "." . $pieces[2];
+                }
+                
+                $this->_request_data['report']['alias'] = $alias;
 
                 $vhost_path = $this->_request_data['plugin_config']['vhost_save_path'];
 
@@ -120,6 +130,7 @@ class default_create_website extends midcom_baseclasses_components_handler
                         $vhost_config = str_replace('__HOST_IP__', $this->_request_data['plugin_config']['host_ip'], $vhost_config);
                         $vhost_config = str_replace('__HOST_PORT__', $host->port, $vhost_config);
                         $vhost_config = str_replace('__SERVER_NAME__', $host->name, $vhost_config);
+                        $vhost_config = str_replace('__SERVER_ALIAS__', $alias, $vhost_config);
                         $vhost_config = str_replace('__DOC_ROOT__', $this->_request_data['plugin_config']['document_root'], $vhost_config);
                         $vhost_config = str_replace('__MYSQL_DB_USER_PASS__', $this->_request_data['plugin_config']['mysql_db_user_pass'], $vhost_config);
                         $vhost_config = str_replace('__MIDGARD_ROOT__', $this->_request_data['plugin_config']['midgard_root'], $vhost_config);

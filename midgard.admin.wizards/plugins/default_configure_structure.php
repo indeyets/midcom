@@ -127,7 +127,7 @@ class default_configure_structure extends midcom_baseclasses_components_handler
         {
             $schemadb = $structure_creator->get_schemadb();
 
-            print_r($schemadb);
+            //print_r($schemadb);
 
             if ($schemadb == null || empty($schemadb['settings']['fields']))
             {
