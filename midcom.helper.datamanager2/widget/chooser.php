@@ -198,6 +198,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
     /**
      * These options are always visible
+     * 
+     * @var array
      */
     var $static_options = array();
 
@@ -211,7 +213,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
      *     'auto_wildcards' => 'both',
      * </code>
      *
-     * $var string
+     * @var string
      */
     var $auto_wildcards = 'end';
 
@@ -276,6 +278,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
     /**
      * The group of widgets items as QuickForm elements
+     * 
+     * @var array
      */
     var $widget_elements = array();
 

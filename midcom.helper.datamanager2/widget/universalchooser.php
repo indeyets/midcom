@@ -133,7 +133,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
      *     'auto_wildcards' => 'both',
      * </code>
      *
-     * $var string
+     * @var string
      */
     var $auto_wildcards = false;
 
