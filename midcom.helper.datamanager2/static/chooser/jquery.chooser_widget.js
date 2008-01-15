@@ -254,10 +254,11 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
             
             case KEY.TAB:
             case KEY.RETURN:
+                event.preventDefault();
                 if( selectCurrent() )
                 {
                     input_element.focus();
-                    event.preventDefault();
+
                 }
                 break;
                 
@@ -307,11 +308,11 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
         creation_dialog = jQuery('#' + options.widget_id + '_creation_dialog');
         create_button = jQuery('#' + options.widget_id + '_create_button');
         create_button.bind('click', function(){
-	        if (jQuery('#' + options.widget_id + '_creation_dialog').css('display') == 'block')
-	        {
-	           jQuery('#' + options.widget_id + '_creation_dialog').hide();
-	           return;
-	        }
+            if (jQuery('#' + options.widget_id + '_creation_dialog').css('display') == 'block')
+            {
+               jQuery('#' + options.widget_id + '_creation_dialog').hide();
+               return;
+            }
             var creation_url = options.creation_handler;
             
             if (last_term != "undefined")
@@ -543,23 +544,6 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             }
             else
             {
-                // Remove activation from each list element
-                jQuery(this.parentNode).find('li.' + CLASSES.ACTIVE).each(function(i)
-                {
-                    var id = this.id.match(/_([0-9]+)$/);
-                    
-                    // Skip the selected or match failed
-                    if (   !id
-                        || !id[1]
-                        || id[1] == item_id)
-                    {
-                        return;
-                    }
-                    
-                    // Inactivate
-                    inactivate(id[1]);
-                });
-                
                 activate(item_id);
             }
         })
@@ -646,6 +630,26 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 
     function activate(id)
     {
+        if (!options.allow_multiple)
+        {
+            // Remove activation from each list element
+            jQuery(this.parent).find('li.' + CLASSES.ACTIVE).each(function(i)
+                {
+                    var id = this.id.match(/_([0-9]+)$/);
+                    
+                    // Skip the selected or match failed
+                    if (   !id
+                        || !id[1]
+                        || id[1] == id)
+                    {
+                        return;
+                    }
+                    
+                    // Inactivate
+                    inactivate(id[1]);
+                });
+        }
+
         jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: id });
         jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.DELETED);
         jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.INACTIVE);
