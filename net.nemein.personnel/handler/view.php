@@ -632,6 +632,8 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
 
         if ($this->_persons)
         {
+            $data['persons'] =& $this->_persons;
+            
             midcom_show_style('show-index-header');
 
             $current_col = 0;
