@@ -513,33 +513,32 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             var current_delete_status = jQuery(li_element).attr("deleted");
             var current_presel_status = jQuery(li_element).attr("pre_selected");
             
-            // On allow_multiple create multiple items that can be selected at the same moment
-            if (options.allow_multiple)
+            if (current_keep_status == "true")
             {
-                if (current_keep_status == "true")
+                if (current_delete_status == "false")
                 {
-                    if (current_delete_status == "false")
+                    jQuery(li_element).removeClass(CLASSES.ACTIVE);
+                    if (current_presel_status == "true")
                     {
-                        jQuery(li_element).removeClass(CLASSES.ACTIVE);
-                        if (current_presel_status == "true")
-                        {
-                            remove(item_id);
-                        }
-                        else
-                        {
-                            inactivate(item_id);
-                        }
+                        remove(item_id);
                     }
                     else
                     {
-                        restore(item_id);                    
+                        inactivate(item_id);
                     }
                 }
                 else
                 {
-                    activate(item_id);
+                    if(options.allow_multiple)
+                    {
+                        restore(item_id);
+                    }
+	                else
+	                {
+	                    activate(item_id);
+	                }
                 }
-    
+
                 return false;
             }
             else
