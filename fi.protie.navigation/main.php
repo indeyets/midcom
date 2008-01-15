@@ -486,6 +486,7 @@ class fi_protie_navigation
 
             $first_last = '';
             $has_children = '';
+            $component = '';
 
             if($item_counter == 1 && $item_counter == $item_count)
             {
@@ -508,7 +509,7 @@ class fi_protie_navigation
                 $active = $this->css_active;
             }
 
-            if($this->has_children_to_class)
+            if ($this->has_children_to_class)
             {
                 $children = $this->_nap->list_nodes($child[MIDCOM_NAV_ID]);
                 if(count($children)>0)
