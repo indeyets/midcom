@@ -378,15 +378,6 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         data,
         block_width = 90;
 
-    list.mouseover( function(event) {
-        var jq_elem = jQuery(target(event)).addClass(CLASSES.HOVER);
-    }).mouseout( function(event) {
-        jQuery(target(event)).removeClass(CLASSES.HOVER);
-    }).click(function(event) {
-        select_function();
-        return false;
-    });
-
     function target(event)
     {
         var element = event.target;
@@ -571,7 +562,13 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
                 
                 activate(item_id);
             }
-        });
+        })
+        .mouseover( function(event) {
+        	var jq_elem = jQuery(target(event)).addClass(CLASSES.HOVER);
+    	})
+    	.mouseout( function(event) {
+        	jQuery(target(event)).removeClass(CLASSES.HOVER);
+    	});
         
         if (data['pre_selected'])
         {
