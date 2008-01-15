@@ -9,7 +9,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         <?php echo $data['l10n']->get('match csv columns to database fields'); ?>
     </p>
 
-    <form action="&(prefix);campaign/import/csv2/<?php echo $data['campaign']->guid; ?>" method="post" class="datamanager">
+    <form action="&(prefix);campaign/import/csv2/<?php echo $data['campaign']->guid; ?>/" method="post" class="datamanager">
         <input type="hidden" name="org_openpsa_directmarketing_import_separator" value="<?php echo $data['separator']; ?>" />
         <input type="hidden" name="org_openpsa_directmarketing_import_tmp_file" value="<?php echo $data['tmp_file']; ?>" />
         <table>
