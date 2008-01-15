@@ -823,7 +823,7 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options, bl
         .addClass('chooser_widget_item_part')
         .attr({ id: 'chooser_widget_item_part_id' })
         .html( item.id )
-        .hide()
+        .css('display', 'none')
         .appendTo(item_parts);
 
     jQuery.each( options.result_headers, function(i,n) {
