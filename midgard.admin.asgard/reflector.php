@@ -459,7 +459,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
                 $icon = 'document.png';
         }
 
-        $icon = "<img src='/midcom-static/stock-icons/16x16/{$icon}' align='absmiddle' border='0' /> ";
+        $icon = "<img src='/midcom-static/stock-icons/16x16/{$icon}' align='absmiddle' border='0' alt='". get_class($obj) . " '/> ";
         debug_pop();
         return $icon;
     }
