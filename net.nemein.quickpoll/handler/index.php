@@ -163,13 +163,12 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
 
         $this->_request_data['name']  = "net.nemein.quickpoll";
 
-        $qb_vote_count_total = net_nemein_quickpoll_vote_dba::new_query_builder();
+        $qb_vote_count_total = new midgard_query_builder('net_nemein_quickpoll_vote');
         $qb_vote_count_total->add_constraint('article', '=', $this->_article->id);
         $this->_vote_count = $qb_vote_count_total->count();
 
-        $qb_vote = net_nemein_quickpoll_vote_dba::new_query_builder();
+        $qb_vote = new midgard_query_builder('net_nemein_quickpoll_vote');
         $qb_vote->add_constraint('article', '=', $this->_article->id);
-
         if ($this->_config->get('lock_ip_address'))
         {
             $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
@@ -179,8 +178,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
         }
 
-        $vote_count = $qb_vote->count();
-        
+        $vote_count = $qb_vote->count();        
         if ($vote_count > 0)
         {
             $this->_request_data['voted'] =  true;
@@ -212,17 +210,17 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         {
             if (! isset($options_data[$option->id]))
             {
-                $options_data[$option->id] = array(
+                $options_data[$option->id] = array
+                (
                     'title' => $option->title,
                     'votes' => 0,
                 );
             }
         }
 
-        $qb_votes = net_nemein_quickpoll_vote_dba::new_query_builder();
+        $qb_votes = new midgard_query_builder('net_nemein_quickpoll_vote');
         $qb_votes->add_constraint('article', '=', $this->_article->id);
         $votes = $qb_votes->execute();
-        
         foreach ($votes as $vote)
         {
             if (! isset($options_data[$vote->selectedoption]))
@@ -232,20 +230,18 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             
             if (! isset($options_data[$vote->selectedoption]['votes']))
             {
-                $options_data[$vote->selectedoption]['votes'] = 1;
-            }
-            else
-            {
-                $options_data[$vote->selectedoption]['votes'] += 1;                
+                $options_data[$vote->selectedoption]['votes'] = 0;
             }
             
+            $options_data[$vote->selectedoption]['votes'] += 1;
             $total_count++;
         }
         
-        $poll_results = array(
-            'poll' => $poll_data,
+        $poll_results = array
+        (
+            'poll'    => $poll_data,
             'options' => $options_data,
-            'total' => $total_count,
+            'total'   => $total_count,
         );
         
         $data['poll_results'] =& $poll_results;
