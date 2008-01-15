@@ -921,47 +921,66 @@ class midcom_baseclasses_core_dbobject
     /**
      * Generates URL-safe name for an object and stores it if needed
      *
-     * @param MidgardObject &$object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     * NOTE: Calling this in _on_updated has possibility on introducing infinite loops
+     * since this will call update if deemed neccessary, which calls _on_updated, etc ad nauseam
+     *
+     * @param MidgardObject &$object A class inherited from one of the MgdSchema driven Midgard classes
+     * @return bool indicating success/failure
      */
-    function generate_urlname($object, $titlefield = 'title')
+    function generate_urlname(&$object, $titlefield = 'title')
     {
         if (!isset($object->name))
         {
             return false;
         }
-
+        
         if (   !isset($object->$titlefield)
             || empty($object->$titlefield))
         {
             return false;
         }
 
-        if (!$_MIDCOM->serviceloader->can_load('midcom_core_service_urlgenerator'))
-        {
-            return false;
-        }
-
-        $urlgenerator = $_MIDCOM->serviceloader->load('midcom_core_service_urlgenerator');
-        $name = $urlgenerator->from_string($object->$titlefield);
-        if (   $object->name == $name
-            || (   !empty($object->name)
-                && $object->name == $urlgenerator->from_string($object->name)))
+        $name = midcom_generate_urlname_from_string($object->$titlefield);
+        // Strip the incrementing count suffix from name for checking
+        $object_name_wosuffix = preg_replace('/-[0-9]{3}$/', '', $object->name);
+        if (   $object_name_wosuffix == $name
+            || (   !empty($object_name_wosuffix)
+                && $object_name_wosuffix == midcom_generate_urlname_from_string($object->name)))
         {
             // We're happy with the existing URL name
             return true;
         }
-
+        
         $object->name = $name;
+        if ($object->update())
+        {
+            return true;
+        }
+        if (mgd_errno() !== MGD_ERR_OBJECT_NAME_EXISTS)
+        {
+            // The error is not duplicate name, don't bother retrying
+            return false;
+        }
         $tries = 0;
         $maxtries = 999;
-        while(   !$object->update()
-              && $tries < $maxtries)
+        while($tries < $maxtries)
         {
             // Append an integer if articles with same name exist
             $object->name = $name . sprintf("-%03d", $tries);
             $tries++;
+            // TODO: Use reflection and core collector to do saner checking
+            if ($object->update())
+            {
+                return true;
+            }
+            if (mgd_errno() !== MGD_ERR_OBJECT_NAME_EXISTS)
+            {
+                // The error is not duplicate name, don't bother retrying any more
+                return false;
+            }
         }
-        return true;
+        // we fell through, this should only happen if we run out of maxtries space.
+        return false;
     }
 
     /**
