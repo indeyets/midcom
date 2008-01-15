@@ -709,7 +709,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * user as an optional argument.
      *
      * @param string $privilege The privilege to check for
-     * @param MidgardObject $content_object A Midgard Content Object
+     * @param MidgardObject &$content_object A Midgard Content Object
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
      *     You may specify "EVERYONE" instead of an object to check what an anonymous user can do.
      * @return boolean True if the privilege has been granted, false otherwise.
@@ -983,7 +983,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * to the same object do not cause repeating checks. Be aware that this means, that
      * new privileges set are not guaranteed to take effect until the next request.
      *
-     * @param MidgardObject $content_object A Midgard Content Object
+     * @param MidgardObject &$content_object A Midgard Content Object
      * @param midcom_core_user $user The user against which to check the privilege, defaults to the currently authenticated user.
      *     You may specify "EVERYONE" instead of an object to check what an anonymous user can do.
      * @return Array Associative listing of all privileges and their value.
@@ -1557,7 +1557,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * If the email is empty or unknown, false is returned.
      *
      * @param string $email The email of the user to look up.
-     * @return array/midcom_core_user A reference to the user object matching the email, array if multiple matches
+     * @return array|midcom_core_user A reference to the user object matching the email, array if multiple matches
      *     or false if the email is unknown.
      */
     function get_user_by_email($email)
