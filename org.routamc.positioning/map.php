@@ -72,7 +72,7 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
      *
      * @return boolean
      */
-    function add_object($object)
+    function add_object($object, $icon = null)
     {
         $object_position = new org_routamc_positioning_object($object);
         $coordinates = $object_position->get_coordinates();
@@ -101,6 +101,11 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         if (isset($object->abstract))
         {
             $marker['abstract'] = $object->abstract;
+        }
+        
+        if (!is_null($icon))
+        {
+            $marker['icon'] = $icon;
         }
         
         return $this->add_marker($marker);
