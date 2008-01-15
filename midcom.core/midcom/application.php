@@ -2821,7 +2821,7 @@ class midcom_application
      *
      * <code>
      * <HTML>
-     *     <BODY <?php echo $_MIDCOM->print_jsonload();?>>
+     *     <BODY <?php $_MIDCOM->print_jsonload();?>>
      *            <!-- your actual body -->
      *     </BODY>
      * </HTML>
