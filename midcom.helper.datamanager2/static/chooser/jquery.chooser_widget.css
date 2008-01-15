@@ -134,19 +134,6 @@ input.chooser_widget_search_input
     text-align: center;
 }*/
 
-.chooser_widget_result_item_hover
-{
-/*  background-color: #c3c3c3;
-    color: #000;*/
-}
-.chooser_widget_result_item_hover #chooser_widget_item_part_status
-{
-    width: 20px;
-    text-align: center;
-    float: right;
-    margin-right: 3px;
-    background : url('../../stock-icons/16x16/approved_fade_50.png') center center no-repeat;
-}
 .chooser_widget_result_item_active
 {
     background-color: #eeeeef !important;
@@ -170,6 +157,19 @@ input.chooser_widget_search_input
     float: right;
     margin-right: 3px;
     background : none;
+}
+.chooser_widget_result_item_hover
+{
+/*  background-color: #c3c3c3;
+    color: #000;*/
+}
+.chooser_widget_result_item_hover #chooser_widget_item_part_status
+{
+    width: 20px;
+    text-align: center;
+    float: right;
+    margin-right: 3px;
+    background : url('../../stock-icons/16x16/approved_fade_50.png') center center no-repeat;
 }
 .chooser_widget_result_item_deleted
 {
