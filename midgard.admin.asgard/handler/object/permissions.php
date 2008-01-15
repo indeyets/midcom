@@ -560,7 +560,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         {
             if (is_a($row, 'HTML_QuickForm_hidden'))
             {
-                $html = "<input type=\"hidden\" ";
+                $html = "<input  ";
                 foreach ($row->_attributes as $key => $value)
                 {
                     $html .= "{$key}=\"{$value}\" ";
@@ -689,7 +689,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
 
     function _render_button($object)
     {
-        $html = "    <input type=\"$object->_type\" ";
+        $html = "    <input ";
         foreach ($object->_attributes as $key => $value)
         {
             $html .= "{$key}=\"{$value}\" ";
@@ -698,7 +698,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                 $element_name = $value;
             }
         }
-        $html .= ">\n";
+        $html .= " />\n";
 
         return $html;
     }
