@@ -55,7 +55,7 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
      */
     function _check_duplicate_membership()
     {
-        $qb = new MidgardQueryBuilder('org_openpsa_campaign_member');
+        $qb = new midgard_query_builder('org_openpsa_campaign_member');
         $qb->add_constraint('person', '=', $this->person);
         $qb->add_constraint('campaign', '=', $this->campaign);
         //For tester membership check only other tester memberships for duplicates, for other memberships check all BUT testers

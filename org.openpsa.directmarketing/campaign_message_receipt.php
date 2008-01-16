@@ -35,7 +35,7 @@ class midcom_org_openpsa_campaign_message_receipt extends __midcom_org_openpsa_c
      */
     function token_is_free($token, $type = ORG_OPENPSA_MESSAGERECEIPT_SENT)
     {
-        $qb = new MidgardQueryBuilder('org_openpsa_campaign_message_receipt');
+        $qb = new midgard_query_builder('org_openpsa_campaign_message_receipt');
         $qb->add_constraint('token', '=', $token);
         if ($type)
         {

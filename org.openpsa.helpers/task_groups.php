@@ -42,7 +42,7 @@ function org_openpsa_helpers_task_groups(&$task, $mode = 'id')
         return $ret;
     }
 
-    $qb = new MidgardQueryBuilder('midgard_member');
+    $qb = new midgard_query_builder('midgard_member');
     $qb->begin_group('OR');
     foreach ($task->contacts as $pid => $bool)
     {

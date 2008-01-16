@@ -48,7 +48,7 @@ class midcom_org_openpsa_task_status extends __midcom_org_openpsa_task_status
         }
 
         //Check for duplicate(s) (for some reason at times the automagic actions in task object try to create duplicate statuses)
-        $qb = new MidgardQueryBuilder('org_openpsa_task_status');
+        $qb = new midgard_query_builder('org_openpsa_task_status');
         $qb->add_constraint('task', '=', 'task');
         $qb->add_constraint('type', '=', 'type');
         $qb->add_constraint('timestamp', '=', 'timestamp');

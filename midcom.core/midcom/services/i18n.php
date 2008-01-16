@@ -277,7 +277,7 @@ class midcom_services_i18n
 
     function code_to_id($code)
     {
-        $qb = new MidgardQueryBuilder('midgard_language');
+        $qb = new midgard_query_builder('midgard_language');
         $qb->add_constraint('code', '=', $code);
         $ret = $qb->execute();
         if ($ret)

@@ -89,7 +89,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $serializations = array();
-        $qb = new MidgardQueryBuilder('midcom_core_privilege_db');
+        $qb = new midgard_query_builder('midcom_core_privilege_db');
         $qb->add_constraint('objectguid', '=', $object->guid);
         // Privilege deletes (or changes) do not go through the DBA object, thus do not get exported through the watchers
         if (method_exists($qb, 'include_deleted'))

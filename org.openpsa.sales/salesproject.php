@@ -283,7 +283,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
             $prefix='';
         }
 
-        $qb = new MidgardQueryBuilder('org_openpsa_salesproject_member');
+        $qb = new midgard_query_builder('org_openpsa_salesproject_member');
         $qb->add_constraint('salesproject', '=', $this->id);
         $ret = @$qb->execute();
         if (   is_array($ret)

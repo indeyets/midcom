@@ -53,7 +53,7 @@ class midcom_org_openpsa_relatedto extends __midcom_org_openpsa_relatedto
      */
     function check_db($check_status = true)
     {
-        $qb = new MidgardQueryBuilder('org_openpsa_relatedto');
+        $qb = new midgard_query_builder('org_openpsa_relatedto');
         $qb->add_constraint('fromClass', '=', $this->fromClass);
         $qb->add_constraint('toClass', '=', $this->toClass);
         $qb->add_constraint('fromGuid', '=', $this->fromGuid);

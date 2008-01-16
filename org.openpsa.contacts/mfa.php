@@ -382,7 +382,7 @@ class org_openpsa_contacts_mfa extends midcom_baseclasses_components_handler
                     foreach ($member_uids as $muidk => $muval) {
                         $uid = $mc->get_subkey($muidk, 'uid');
 
-                        $qb = new MidgardQueryBuilder('midgard_person');
+                        $qb = new midgard_query_builder('midgard_person');
                         $qb->add_constraint('id', '=', $uid);
                         $person = $qb->execute();
 

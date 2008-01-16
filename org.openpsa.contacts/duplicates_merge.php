@@ -297,7 +297,7 @@ class org_openpsa_contacts_duplicates_merge
                 return false;
                 break;
         }
-        $qb = new MidgardQueryBuilder('midgard_parameter');
+        $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=', 'org.openpsa.contacts.duplicates:possible_duplicate');
         $qb->add_constraint('tablename', '=', $ptable);
         $qb->add_order('oid', 'ASC');

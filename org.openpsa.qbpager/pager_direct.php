@@ -16,9 +16,9 @@ class org_openpsa_qbpager_direct extends org_openpsa_qbpager
 
         $this->_limit =& $this->results_per_page;
         $this->_pager_id = $pager_id;
-        $this->_midcom_qb = new MidgardQueryBuilder($classname);
+        $this->_midcom_qb = new midgard_query_builder($classname);
         // Make another QB for counting, we need to do this to avoid trouble with core internal references system
-        $this->_midcom_qb_count = new MidgardQueryBuilder($classname);
+        $this->_midcom_qb_count = new midgard_query_builder($classname);
         if (!$this->_sanity_check())
         {
             return false;

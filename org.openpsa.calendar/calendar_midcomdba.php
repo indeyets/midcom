@@ -689,7 +689,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     function search_vCal_uid($uid)
     {
         //TODO: MidCOM DBAize
-        $qb = new MidgardQueryBuilder('org_openpsa_event');
+        $qb = new midgard_query_builder('org_openpsa_event');
         $qb->begin_group('OR');
             $qb->add_constraint('guid', '=', $uid);
             $qb->add_constraint('externalGuid', '=', $uid);
@@ -1235,7 +1235,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         $part = array();
 
         // Participants
-        $qb = new MidgardQueryBuilder('org_openpsa_eventmember');
+        $qb = new midgard_query_builder('org_openpsa_eventmember');
         $qb->add_constraint('eid', '=', $this->id);
         $ret = $qb->execute();
         if (   is_array($ret)
@@ -1248,7 +1248,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         }
         // Resources
         //mgd_debug_start();
-        $qb2 = new MidgardQueryBuilder('org_openpsa_calendar_event_resource');
+        $qb2 = new midgard_query_builder('org_openpsa_calendar_event_resource');
         $qb2->add_constraint('event', '=', $this->id);
         $ret2 = $qb2->execute();
         //mgd_debug_stop();

@@ -130,7 +130,7 @@ class org_openpsa_notifications extends midcom_baseclasses_components_purecode
         }
 
         // Seek possible preferences for this action from user's groups
-        $qb = new MidgardQueryBuilder('midgard_parameter');
+        $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=', 'org.openpsa.notifications');
         $qb->add_constraint('name', '=', "{$component}:{$action}");
 

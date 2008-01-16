@@ -39,7 +39,7 @@ $ret2 = $dfinder->check_all_groups();
 echo "check_all_groups returned: <pre>\n" . sprint_r($ret2) . "</pre>\n";
 */
 
-$qb = new MidgardQueryBuilder('midgard_parameter');
+$qb = new midgard_query_builder('midgard_parameter');
 $qb->add_constraint('domain', '=', 'org.openpsa.contacts.duplicates:possible_duplicate');
 $qb->add_constraint('tablename', '=', 'person');
 $qb->add_order('oid', 'ASC');

@@ -108,7 +108,7 @@ class net_nemein_wiki_notes extends midcom_baseclasses_components_purecode
             }
             else
             {
-                $qb = new MidgardQueryBuilder('midgard_parameter');
+                $qb = new midgard_query_builder('midgard_parameter');
             }
             
             $qb->begin_group('OR');

@@ -111,7 +111,7 @@ class import_style {
             die("$file is not accessible!\n");
         }
 
-        $qb = new MidgardQueryBuilder('midgard_element');
+        $qb = new midgard_query_builder('midgard_element');
         $qb->add_constraint('style', '=', $style->id);
         $qb->add_constraint('name', '=', $element_name);
         $elements = @$qb->execute();

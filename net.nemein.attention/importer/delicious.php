@@ -28,7 +28,7 @@ class net_nemein_attention_importer_delicious extends net_nemein_attention_impor
     function seek_delicious_users()
     {
         // TODO: With 1.8 we can query parameters more efficiently
-        $qb = new MidgardQueryBuilder('midgard_parameter');
+        $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=','net.nemein.attention:delicious');
         $qb->add_constraint('name', '=','username');
         $accounts = $qb->execute();

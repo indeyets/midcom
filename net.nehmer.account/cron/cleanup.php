@@ -34,7 +34,7 @@ class net_nehmer_account_cron_cleanup extends midcom_baseclasses_components_cron
         // We need to query the parameters table explicitly, as otherwise we'd have to
         // check all persons manually. We need to use a pure Midgard QB here,
         // as Parameter Query support is not yet supported in MidCOM/Midgard
-        $query = new MidgardQueryBuilder('midgard_parameter');
+        $query = new midgard_query_builder('midgard_parameter');
         $query->add_constraint('tablename', '=', 'person');
         $query->add_constraint('domain', '=', 'net.nehmer.account');
         $query->add_constraint('name', '=', 'activation_hash_created');

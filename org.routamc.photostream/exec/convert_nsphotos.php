@@ -9,7 +9,7 @@ while(@ob_end_flush());
 if (   !isset($_REQUEST['stream_node_guid'])
     || empty($_REQUEST['stream_node_guid']))
 {
-    $qb = new MidgardQueryBuilder('midgard_topic');
+    $qb = new midgard_query_builder('midgard_topic');
     $qb->add_constraint('component', '=', 'org.routamc.photostream');
     $nodes = $qb->execute();
     if (empty($nodes))
@@ -88,7 +88,7 @@ flush();
 ini_set('memory_limit', -1);
 ini_set('max_execution_time', 0);
 
-$qb = new MidgardQueryBuilder('midgard_topic');
+$qb = new midgard_query_builder('midgard_topic');
 $qb->add_constraint('component', '=', 'net.siriux.photos-convertme-org.routamc.gallery');
 $nodes = $qb->execute();
 if (empty($nodes))

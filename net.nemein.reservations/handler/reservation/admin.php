@@ -323,7 +323,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
             }
             else
             {
-                $qb = new MidgardQueryBuilder('midgard_parameter');
+                $qb = new midgard_query_builder('midgard_parameter');
                 $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
                 $qb->add_constraint('name', '=', 'master_guid');
                 $qb->add_constraint('value', '=', $guid);

@@ -57,7 +57,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
     function _fill_virtual_groups()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $qb = new MidgardQueryBuilder('org_openpsa_task');
+        $qb = new midgard_query_builder('org_openpsa_task');
         //$qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_project');
         // FIXME: Constant ORG_OPENPSA_WGTYPE_ACTIVE is not set yet
         $qb->add_constraint('orgOpenpsaWgtype', '=', 3);
@@ -235,7 +235,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             debug_pop();
             return;
         }
-        $qb = new MidgardQueryBuilder('org_openpsa_task_resource');
+        $qb = new midgard_query_builder('org_openpsa_task_resource');
         //Target task starts or ends inside given events window or starts before and ends after
         $qb->begin_group('OR');
             $qb->begin_group('AND');
@@ -299,7 +299,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         //List all projects and tasks given person is involved with
-        $qb = new MidgardQueryBuilder('org_openpsa_task_resource');
+        $qb = new midgard_query_builder('org_openpsa_task_resource');
         $qb->add_constraint('person', '=', $object->id);
         /* This could reduce clutter somewhat with a minor risk of missing a link
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);

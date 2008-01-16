@@ -68,7 +68,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
         }
         else
         {
-            $qb = new MidgardQueryBuilder('midgard_parameter');
+            $qb = new midgard_query_builder('midgard_parameter');
             $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
             $qb->add_constraint('name', '=', 'master_guid');
             $qb->add_constraint('value', '=', $guid);
@@ -393,7 +393,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
         }
         else
         {
-            $qb = new MidgardQueryBuilder('midgard_parameter');
+            $qb = new midgard_query_builder('midgard_parameter');
             $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
             $qb->add_constraint('name', '=', 'master_guid');
             $qb->add_constraint('value', '=', $master_guid);
@@ -429,7 +429,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
         }
         else
         {
-            $qb = new MidgardQueryBuilder('midgard_parameter');
+            $qb = new midgard_query_builder('midgard_parameter');
             $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
             $qb->add_constraint('name', '=', 'master_guid');
             $qb->add_constraint('value', '=', $master_guid);
@@ -478,7 +478,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
         }
         else
         {
-            $qb = new MidgardQueryBuilder('midgard_parameter');
+            $qb = new midgard_query_builder('midgard_parameter');
             $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
             $qb->add_constraint('name', '=', 'master_guid');
             $qb->add_constraint('value', '=', $master_guid);

@@ -229,7 +229,7 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
 
         // Find out if some campaign watches the topic
         $campaigns = Array();
-        $qb = new MidgardQueryBuilder('midgard_parameter');
+        $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('tablename', '=', 'org_openpsa_campaign');
         $qb->add_constraint('domain', '=', 'org.openpsa.directmarketing');
         $qb->add_constraint('name', '=', 'watch_discussion');

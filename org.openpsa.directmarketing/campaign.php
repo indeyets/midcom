@@ -99,7 +99,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
             debug_pop();
             return false;
         }
-        $qb = new MidgardQueryBuilder('org_openpsa_campaign_member');
+        $qb = new midgard_query_builder('org_openpsa_campaign_member');
         $qb->add_constraint('campaign', '=', $this->id);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_CAMPAIGN_TESTER);
         $ret = @$qb->execute();
@@ -129,7 +129,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
             return false;
         }
         $old_testers = array();
-        $qb = new MidgardQueryBuilder('org_openpsa_campaign_member');
+        $qb = new midgard_query_builder('org_openpsa_campaign_member');
         $qb->add_constraint('campaign', '=', $this->id);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_CAMPAIGN_TESTER);
         $ret = @$qb->execute();

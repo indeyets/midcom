@@ -117,7 +117,7 @@ class org_openpsa_contacts_handler_duplicates_person extends midcom_baseclasses_
         while ($i < 100)
         {
             debug_add("Loop iteration {$i}");
-            $qb = new MidgardQueryBuilder('midgard_parameter');
+            $qb = new midgard_query_builder('midgard_parameter');
             $qb->add_constraint('domain', '=', 'org.openpsa.contacts.duplicates:possible_duplicate');
             $qb->add_constraint('tablename', '=', 'person');
             $qb->add_order('oid', 'ASC');

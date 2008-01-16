@@ -51,7 +51,7 @@ class fi_mik_lentopaikkakisa_handler_score extends midcom_baseclasses_components
 
         $_MIDCOM->set_pagetitle($data['view_title']);
 
-        $qb = new MidgardQueryBuilder('midgard_parameter');
+        $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=', 'fi.mik.lentopaikkakisa');
         $qb->add_constraint('name', '=', "{$report_type}_scores");
         $qb->add_order('value', 'DESC');

@@ -132,7 +132,7 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
 
         /*
         TODO: Move to new SG API when one exists
-        $qb = new MidgardQueryBuilder('midgard_sitegroup');
+        $qb = new midgard_query_builder('midgard_sitegroup');
         $this->_request_data['sitegroups'] = $qb->execute();
         */
         $this->_request_data['sitegroups'] = Array();

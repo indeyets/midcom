@@ -38,12 +38,12 @@ class org_openpsa_contacts_duplicates
         $ret = array();
         //Search for all potential duplicates (more detailed checking is done later)
         $qb = org_openpsa_contacts_person::new_query_builder();
-        //$qb = new MidgardQueryBuilder('org_openpsa_person');
+        //$qb = new midgard_query_builder('org_openpsa_person');
         $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
         if ($person->id)
         {
             $qb->add_constraint('id', '<>', $person->id);
-            $qb2 = new MidgardQueryBuilder('midgard_member');
+            $qb2 = new midgard_query_builder('midgard_member');
             $qb2->add_constraint('uid', '=', $person->id);
             $memberships = @$qb2->execute();
         }
@@ -59,7 +59,7 @@ class org_openpsa_contacts_duplicates
             if (  isset($memberships)
                 && is_array($memberships))
             {
-                $qb3 = MidgardQueryBuilder('midgard_member');
+                $qb3 = midgard_query_builder('midgard_member');
                 $qb3->begin_group('OR');
                 foreach ($memberships as $member)
                 {

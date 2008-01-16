@@ -36,7 +36,7 @@ class org_routamc_photostream_importer_flickr extends org_routamc_photostream_im
     function seek_flickr_users()
     {
         // TODO: With 1.8 we can query parameters more efficiently
-        $qb = new MidgardQueryBuilder('midgard_parameter');
+        $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=','org.routamc.photostream:flickr');
         $qb->add_constraint('name', '=','username');
         $accounts = $qb->execute();

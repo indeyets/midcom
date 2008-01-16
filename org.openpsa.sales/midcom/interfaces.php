@@ -133,7 +133,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
             debug_pop();
             return;
         }
-        $qb = new MidgardQueryBuilder('org_openpsa_salesproject_member');
+        $qb = new midgard_query_builder('org_openpsa_salesproject_member');
         // Target sales project starts or ends inside given events window or starts before and ends after
         $qb->begin_group('OR');
             $qb->begin_group('AND');
@@ -200,7 +200,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
      */
     function _org_openpsa_relatedto_find_suspects_person(&$object, &$defaults, &$links_array)
     {
-        $qb = new MidgardQueryBuilder('org_openpsa_salesproject_member');
+        $qb = new midgard_query_builder('org_openpsa_salesproject_member');
         $qb->add_constraint('person', '=', $object->id);
         $qb->add_constraint('salesproject.status', '=', ORG_OPENPSA_SALESPROJECTSTATUS_ACTIVE);
         $qbret = @$qb->execute();

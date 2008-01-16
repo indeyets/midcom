@@ -353,7 +353,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         {
             //PONDER: Should we just skip midcom QB here and use the real thing in stead, ACLs are not exactly an issue here
             //$qb_receipts = org_openpsa_directmarketing_campaign_message_receipt::new_query_builder();
-            $qb_receipts = new MidgardQueryBuilder('org_openpsa_campaign_message_receipt');
+            $qb_receipts = new midgard_query_builder('org_openpsa_campaign_message_receipt');
             $qb_receipts->add_constraint('message', '=', $this->id);
             $qb_receipts->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_MESSAGERECEIPT_SENT);
             /* Array not supported yet (and MidCOM refuses to support the string form for safety reasons)
@@ -473,14 +473,14 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
     function send_email_status()
     {
         //$qb_mem = org_openpsa_directmarketing_campaign_member::new_query_builder();
-        $qb_mem = new MidgardQueryBuilder('org_openpsa_campaign_member');
+        $qb_mem = new midgard_query_builder('org_openpsa_campaign_member');
         $qb_mem->add_constraint('person.email', 'LIKE', '%@%');
         $this->_qb_common_constaints($qb_mem);
         //$valid_members = $qb_mem->count_unchecked();
         $valid_members = $qb_mem->count();
 
         //$qb_receipts = org_openpsa_directmarketing_campaign_message_receipt::new_query_builder();
-        $qb_receipts = new MidgardQueryBuilder('org_openpsa_campaign_message_receipt');
+        $qb_receipts = new midgard_query_builder('org_openpsa_campaign_message_receipt');
         $qb_receipts->add_constraint('message', '=', $this->id);
         $qb_receipts->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_MESSAGERECEIPT_SENT);
         //mgd_debug_start();
@@ -938,14 +938,14 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
     function send_sms_status()
     {
         //$qb_mem = org_openpsa_directmarketing_campaign_member::new_query_builder();
-        $qb_mem = new MidgardQueryBuilder('org_openpsa_campaign_member');
+        $qb_mem = new midgard_query_builder('org_openpsa_campaign_member');
         $qb_mem->add_constraint('person.handphone', '<>', '');
         $this->_qb_common_constaints($qb_mem);
         //$valid_members = $qb_mem->count_unchecked();
         $valid_members = $qb_mem->count();
 
         //$qb_receipts = org_openpsa_directmarketing_campaign_message_receipt::new_query_builder();
-        $qb_receipts = new MidgardQueryBuilder('org_openpsa_campaign_message_receipt');
+        $qb_receipts = new midgard_query_builder('org_openpsa_campaign_message_receipt');
         $qb_receipts->add_constraint('message', '=', $this->id);
         $qb_receipts->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_MESSAGERECEIPT_SENT);
         //$send_receipts = $qb_receipts->count_unchecked();
@@ -1210,14 +1210,14 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
     function send_mms_status()
     {
         //$qb_mem = org_openpsa_directmarketing_campaign_member::new_query_builder();
-        $qb_mem = new MidgardQueryBuilder('org_openpsa_campaign_member');
+        $qb_mem = new midgard_query_builder('org_openpsa_campaign_member');
         $qb_mem->add_constraint('person.handphone', '<>', '');
         $this->_qb_common_constaints($qb_mem);
         //$valid_members = $qb_mem->count_unchecked();
         $valid_members = $qb_mem->count();
 
         //$qb_receipts = org_openpsa_directmarketing_campaign_message_receipt::new_query_builder();
-        $qb_receipts = new MidgardQueryBuilder('org_openpsa_campaign_message_receipt');
+        $qb_receipts = new midgard_query_builder('org_openpsa_campaign_message_receipt');
         $qb_receipts->add_constraint('message', '=', $this->id);
         $qb_receipts->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_MESSAGERECEIPT_SENT);
         //$send_receipts = $qb_receipts->count_unchecked();

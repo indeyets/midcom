@@ -96,7 +96,7 @@ class org_openpsa_projects_projectbroker
         static $group_cache = array();
         foreach ($prospects as $key => $person)
         {
-            $qb = new MidgardQueryBuilder('midgard_member');
+            $qb = new midgard_query_builder('midgard_member');
             $qb->add_constraint('uid', '=', $person->id);
             $qb->begin_group('OR');
             foreach ($this->membership_filter as $guid)

@@ -288,7 +288,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
      */
     function _expand_group_members2persons($id, &$array)
     {
-        $qb_grp_mem = new MidgardQueryBuilder('midgard_member');
+        $qb_grp_mem = new midgard_query_builder('midgard_member');
         $qb_grp_mem->add_constraint('gid', '=', $id);
         $grp_mems = @$qb_grp_mem->execute();
         if (!is_array($grp_mems))
@@ -350,7 +350,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
             $tmpObj = new $group['class']();
             if (!method_exists($tmpObj, 'new_query_builder'))
             {
-                $this->_qbs[$group['class']] = new MidgardQueryBuilder($group['class']);
+                $this->_qbs[$group['class']] = new midgard_query_builder($group['class']);
             }
             else
             {

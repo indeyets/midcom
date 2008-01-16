@@ -333,7 +333,7 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
         if ($this->config->get_value('extend_style') != 'none')
         {
             // Extend existing style template
-            $qb = new MidgardQueryBuilder('midgard_style');
+            $qb = new midgard_query_builder('midgard_style');
             $qb->add_constraint('up', '=', 0);
             $qb->add_constraint('name', '=', $this->config->get_value('extend_style'));
             $styles = @$qb->execute();

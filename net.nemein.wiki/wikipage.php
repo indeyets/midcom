@@ -154,7 +154,7 @@ class net_nemein_wiki_wikipage extends midcom_db_article
         $topic = new midcom_db_topic($this->topic);
         // Get list of people watching this page
         $watchers = array();
-        $qb = new MidgardQueryBuilder('midgard_parameter');
+        $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=', 'net.nemein.wiki:watch');
         $qb->begin_group('OR');
             $qb->begin_group('AND');
