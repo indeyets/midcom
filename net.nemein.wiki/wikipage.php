@@ -39,7 +39,7 @@ class net_nemein_wiki_wikipage extends midcom_db_article
      * 
      * @static
      */
-    function new_query_builder()
+    static function new_query_builder()
     {
         return $_MIDCOM->dbfactory->new_query_builder(__CLASS__);
     }

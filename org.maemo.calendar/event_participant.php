@@ -67,7 +67,7 @@ class org_maemo_calendar_eventparticipant
         debug_pop();
     }
     
-    function new_query_builder()
+    static function new_query_builder()
     {
         return $_MIDCOM->dbfactory->new_query_builder('midcom_db_person');
     }    

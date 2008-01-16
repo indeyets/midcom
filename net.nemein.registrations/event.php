@@ -553,7 +553,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      *
      * @static
      */
-    function new_query_builder()
+    static function new_query_builder()
     {
         return $_MIDCOM->dbfactory->new_query_builder(__CLASS__);
     }

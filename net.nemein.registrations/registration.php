@@ -85,7 +85,7 @@ class net_nemein_registrations_registration extends midcom_db_eventmember
      * 
      * @static
      */
-    function new_query_builder()
+    static function new_query_builder()
     {
         return $_MIDCOM->dbfactory->new_query_builder(__CLASS__);
     }

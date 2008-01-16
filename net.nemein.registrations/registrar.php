@@ -82,7 +82,7 @@ class net_nemein_registrations_registrar extends midcom_db_person
      * 
      * @static
      */
-    function new_query_builder()
+    static function new_query_builder()
     {
         return $_MIDCOM->dbfactory->new_query_builder(__CLASS__);
     }
