@@ -678,8 +678,8 @@ EOF;
     function is_owner(\$person = null) { return midcom_baseclasses_core_dbobject::is_owner(\$this, \$person); }
     function list_attachments() { return midcom_baseclasses_core_dbobject::list_attachments(\$this); }
     function list_parameters(\$domain = null) { return midcom_baseclasses_core_dbobject::list_parameters(\$this, \$domain); }
-    function new_query_builder() { return \$_MIDCOM->dbfactory->new_query_builder('{$this->_class_definition['midcom_class_name']}'); }
-    function new_collector(\$domain, \$value) { return \$_MIDCOM->dbfactory->new_collector('{$this->_class_definition['midcom_class_name']}', \$domain, \$value); }
+    static function new_query_builder() { return \$_MIDCOM->dbfactory->new_query_builder('{$this->_class_definition['midcom_class_name']}'); }
+    static function new_collector(\$domain, \$value) { return \$_MIDCOM->dbfactory->new_collector('{$this->_class_definition['midcom_class_name']}', \$domain, \$value); }
     function open_attachment(\$name, \$mode = 'w') { return midcom_baseclasses_core_dbobject::open_attachment(\$this, \$name, \$mode); }
     function refresh() { return midcom_baseclasses_core_dbobject::refresh(\$this); }
     function set_parameter(\$domain, \$name, \$value) { return midcom_baseclasses_core_dbobject::set_parameter(\$this, \$domain, \$name, \$value); }

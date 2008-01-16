@@ -45,7 +45,7 @@ class midcom_db_page extends midcom_baseclasses_database_page
      * 
      * @static
      */
-    function new_query_builder()
+    static function new_query_builder()
     {
         return $_MIDCOM->dbfactory->new_query_builder(__CLASS__);
     }
