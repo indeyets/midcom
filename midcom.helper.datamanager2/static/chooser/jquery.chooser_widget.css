@@ -1,12 +1,13 @@
 input.chooser_widget_search_input
 {
-    
+    margin-bottom: 5px
 }
 
 .chooser_widget_headers
 {
-    border: 1px solid WindowFrame;
-    background-color: Window;
+    border: 2px inset ThreeDLightShadow;
+    border-bottom: 1px solid ThreeDDarkShadow;
+    background-color: ThreeDLightShadow;
     overflow: hidden;
     clear: left;
     width: 100%;
@@ -30,7 +31,8 @@ input.chooser_widget_search_input
 
 .chooser_widget_results
 {
-    border: 1px solid WindowFrame;
+    border: 2px inset ThreeDLightShadow;
+    border-top: 0;
     background-color: #ffffff;
     color: #000000;
     overflow: hidden;
@@ -105,9 +107,8 @@ input.chooser_widget_search_input
 .chooser_widget_creation_dialog
 {
     display: none;
-    
     position: fixed !important;
-	position: absolute;
+    position: absolute;
     top: 5%;
     left: 50%;
     
@@ -155,12 +156,16 @@ input.chooser_widget_search_input
 }
 .chooser_widget_result_item_hover
 {
-/*  background-color: #c3c3c3;
+    background-color: Highlight;
+    color: HighlightText
+    /*  background-color: #c3c3c3;
     color: #000;*/
 }
 .chooser_widget_result_item_hover #chooser_widget_item_part_status
 {
     background : url('../../stock-icons/16x16/approved_fade_50.png') center center no-repeat;
+    background-color: Highlight;
+    color: HighlightText
 }
 .chooser_widget_result_item_deleted
 {

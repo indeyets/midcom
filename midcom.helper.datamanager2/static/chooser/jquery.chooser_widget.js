@@ -501,11 +501,6 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         .attr("keep_on_list","false")
         .attr("pre_selected","false")
         .addClass("chooser_widget_result_item")
-        .css({
-            margin: 0,
-            padding: 0,
-            background: 'none'
-        })
         .click(function(event) {
             var li_element = target(event);
             
@@ -632,7 +627,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         if (!options.allow_multiple)
         {
             // Remove activation from each list element
-            jQuery(this.parent).find('li.' + CLASSES.ACTIVE).each(function(i)
+            jQuery('#'+options.widget_id + '_results li.' + CLASSES.ACTIVE).each(function(i)
                 {
                     var id = this.id.match(/_([0-9]+)$/);
                     
@@ -755,9 +750,6 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         },
         activate_item: function(item)
         {
-            // if (options.allow_multiple) {
-            //     
-            // }
             var item_id = item[options.id_field];
             activate(item_id);
         },
@@ -816,12 +808,11 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options, bl
     var formatted = '';
 
     var item_parts = jQuery("<div>")
-    .attr({ id: options.widget_id + '_result_item_'+item.id })
+    .attr({ id: options.widget_id + '_result_item_parts_'+item.id })
     .addClass("chooser_widget_result_item_parts");
 
     var item_content = jQuery("<div>")
         .addClass('chooser_widget_item_part')
-        .attr({ id: 'chooser_widget_item_part_id' })
         .html( item.id )
         .css('display', 'none')
         .appendTo(item_parts);
@@ -834,12 +825,12 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options, bl
         {
             value = midcom_helper_datamanager2_widget_chooser_format_value(options.format_items[n.name], item[n.name]);
         }
+
         value = midcom_helper_datamanager2_widget_chooser_format_value('unescape', item[n.name]);
         
         item_content = jQuery("<div>")
         .addClass('chooser_widget_item_part')
         .attr({
-            id: 'chooser_widget_item_part_'+n.name,
             title: midcom_helper_datamanager2_widget_chooser_format_value('html2text', value)
         })
         .css({
