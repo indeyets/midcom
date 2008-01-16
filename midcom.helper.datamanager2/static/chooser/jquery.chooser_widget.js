@@ -411,12 +411,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             var li_elem = jQuery("<li>")
                 .addClass('chooser_widget_header_item')
                 .css({
-                    margin: 0,
-                    padding: 0,
-                    background: 'none',
                     width: block_width+'%'
                 })
-                .attr({ id: 'chooser_widget_header_item_'+n.name });
             var item_content = jQuery("<div>")
                 .html( n.title )
                 .appendTo(li_elem);
@@ -841,8 +837,7 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options, bl
     });
 
     item_content = jQuery("<div>")
-    .addClass('chooser_widget_item_part')
-    .attr({ id: 'chooser_widget_item_part_status' })
+    .addClass('chooser_widget_item_part_status')
     .html( "&nbsp;" )
     .appendTo(item_parts);    
     
