@@ -52,11 +52,80 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
         $_MIDCOM->load_library('net.nehmer.markdown');
     }
 
-    function _generate_file_path($help_id, $component, $language)
+    function _get_documentation_dir($component)
     {
         $component_dir = str_replace('.', '/', $component);
-        $file = MIDCOM_ROOT . "/{$component_dir}/documentation/{$help_id}.{$language}.txt";
+        return MIDCOM_ROOT . "/{$component_dir}/documentation/";
+    }
+
+    function _generate_file_path($help_id, $component, $language)
+    {
+        $file = $this->_get_documentation_dir($component) . "{$help_id}.{$language}.txt";
         return $file;
+    }
+    
+    function list_files($component)
+    {
+        $files = array();
+        
+        $path = $this->_get_documentation_dir($component);
+        if (!file_exists($path))
+        {
+            return $files;
+        }
+        
+        $directory = dir($path);
+        while (false !== ($entry = $directory->read()))
+        {
+            if (substr($entry, 0, 1) == '.')
+            {
+                // Ignore dotfiles
+                continue;
+            }
+            
+            $filename_parts = explode('.', $entry);
+            if (count($filename_parts) < 3)
+            {
+                continue;
+            }
+            
+            if ($filename_parts[2] != 'txt')
+            {
+                // Not text file, skip
+                continue;
+            }
+            
+            if (   $filename_parts[1] != $_MIDCOM->i18n->get_current_language()
+                && $filename_parts[1] != $GLOBALS['midcom_config']['i18n_fallback_language'])
+            {
+                // Wrong language
+                continue;
+            }
+            
+            $subject = $_MIDCOM->i18n->get_string($filename_parts[0], $component);
+            
+            // We need to parse the file to get a title
+            $file_contents = $this->get_help_contents($filename_parts[0], $component);
+            if (preg_match("/\<h1\>(.*)\<\/h1\>/", $file_contents, $titles))
+            {
+                $subject = $titles[1];
+            }
+            else
+            if (preg_match("/\<h2\>(.*)\<\/h2\>/", $file_contents, $titles))
+            {
+                $subject = $titles[1];
+            }
+            
+            $files[$filename_parts[0]] = array
+            (
+                'path' => "{$path}{$entry}",
+                'subject' => $subject,
+                'lang' => $filename_parts[1],
+            );
+        }
+        $directory->close();
+        
+        return $files;
     }
 
     /**
