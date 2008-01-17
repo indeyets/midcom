@@ -31,6 +31,7 @@ class midgard_admin_asgard_interface extends midcom_baseclasses_components_inter
 
         $this->_autoload_libraries = array
         (
+            'midcom.helper.reflector',
             'midcom.admin.help',
         );
 
@@ -49,13 +50,6 @@ class midgard_admin_asgard_interface extends midcom_baseclasses_components_inter
 
         // Enable jQuery
         $_MIDCOM->enable_jquery();
-        
-        // Load reflector
-        if (!class_exists('midcom_helper_reflector_tree'))
-        {
-            $filename = MIDCOM_ROOT . "/midcom/helper/reflector_tree.php";
-            require_once($filename);
-        }
 
         return true;
     }

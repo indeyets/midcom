@@ -1217,11 +1217,7 @@ class midcom_baseclasses_core_dbobject
     function _delete_children(&$object)
     {
         // Load reflector
-        if (!class_exists('midcom_helper_reflector_tree'))
-        {
-            $filename = MIDCOM_ROOT . "/midcom/helper/reflector_tree.php";
-            require_once($filename);
-        }
+        $_MIDCOM->load_library('midcom.helper.reflector');
         $ref = midcom_helper_reflector_tree::get($object);
 
         // Delete all children
