@@ -297,6 +297,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
                     {
                         $child->delete();
                     }
+                    $child_guids[] = $child->guid;
                 }
                 $this->_purge($child_guids, $type);
             }

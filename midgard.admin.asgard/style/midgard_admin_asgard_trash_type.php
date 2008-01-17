@@ -1,14 +1,93 @@
 <?php
-$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 $label = $data['label_property'];
 echo "<h2>";
 echo sprintf($_MIDCOM->i18n->get_string('%s trash', 'midgard.admin.asgard'), midgard_admin_asgard_plugin::get_type_label($data['type']));
 echo "</h2>";
 
+$shown = array();
+
+function midgard_admin_asgard_trash_type_show($object, $indent = 0, $prefix = '', $enable_undelete = true)
+{
+    static $persons = array();
+    static $shown = array();
+    static $url_prefix = '';
+    if (!$url_prefix)
+    {
+        $url_prefix =$_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+    }
+    
+    if (isset($shown[$object->guid]))
+    {
+        return;
+    }
+    
+    if (!isset($persons[$object->metadata->revisor]))
+    {
+        $persons[$object->metadata->revisor] = $_MIDCOM->auth->get_user($object->metadata->revisor);
+    }
+    
+    $reflector = midcom_helper_reflector_tree::get($object);
+    $icon = $reflector->get_object_icon($object);
+    $label = $reflector->get_label_property();
+
+    echo "{$prefix}<tr>\n";
+    
+    $disabled = '';
+    if (!$enable_undelete)
+    {
+        $disabled = ' disabled="disabled"';
+    }
+    
+    echo "{$prefix}    <td class=\"checkbox\"><input type=\"checkbox\" name=\"undelete[]\"{$disabled} value=\"{$object->guid}\" id=\"{$object->guid}\" /></td>\n";
+    //echo "{$prefix}    <td class=\"label\" style=\"padding-left: {$indent}px\"><label for=\"{$object->guid}\"><a href=\"{$url_prefix}__mfa/asgard/object/view/{$object->guid}/\">{$icon} {$object->$label}</a></label></td>\n";
+echo "{$prefix}    <td class=\"label\" style=\"padding-left: {$indent}px\"><label for=\"{$object->guid}\">{$icon} {$object->$label}</label></td>\n";
+    echo "{$prefix}    <td>" . strftime('%x %X', strtotime($object->metadata->revised)) . "</td>\n";
+
+    if ($persons[$object->metadata->revisor]->guid)
+    {
+        echo "{$prefix}    <td><a href=\"{$url_prefix}__mfa/asgard/object/view/{$persons[$object->metadata->revisor]->guid}/\">{$persons[$object->metadata->revisor]->name}</a></td>\n";
+    }
+    else
+    {
+        echo "{$prefix}    <td>&nbsp;</td>\n";
+    }
+    echo "{$prefix}    <td>" . midcom_helper_filesize_to_string($object->metadata->size) . "</td>\n";
+    echo "{$prefix}</tr>\n";
+    
+    $child_types = $reflector->get_child_objects($object, true);
+    if (   is_array($child_types)
+        && count($child_types) > 0)
+    {
+        $child_indent = $indent + 20;
+        echo "{$prefix}<tbody class=\"children\">\n";
+        foreach ($child_types as $type => $children)
+        {
+            if (   count($children) < 10
+                || isset($_GET['show_children'][$object->guid][$type]))
+            {
+                foreach ($children as $child)
+                {
+                    midgard_admin_asgard_trash_type_show($child, $child_indent, "{$prefix}    ", false);
+                }
+            }
+            else
+            {
+
+                echo "{$prefix}    <tr>\n";
+                echo "{$prefix}        <td class=\"label\" style=\"padding-left: {$child_indent}px\" colspan=\"5\"><a href=\"?show_children[{$object->guid}][{$type}]=1\">" . sprintf($_MIDCOM->i18n->get_string('show %s %s children'), count($children), $type) . "</a></td>\n";
+                echo "{$prefix}    </tr>\n";
+            }
+        }
+        
+        echo "{$prefix}</tbody>\n";
+    }
+    $shown[$object->guid] = true;   
+}
+
 if ($data['trash'])
 {
     echo "<form method=\"post\">\n";
-    echo "<table>\n";
+    echo "<table class=\"trash\">\n";
     echo "    <thead>\n";
     echo "        <tr>\n";
     echo "            <th>&nbsp;</th>\n";
@@ -22,23 +101,7 @@ if ($data['trash'])
 
     foreach ($data['trash'] as $object)
     {
-        $revisor = $_MIDCOM->auth->get_user($object->metadata->revisor);
-
-        echo "        <tr>\n";
-        echo "            <td><input type=\"checkbox\" name=\"undelete[]\" value=\"{$object->guid}\" id=\"{$object->guid}\" /></td>\n";
-        echo "            <td><label for=\"{$object->guid}\">{$object->$label}</label></td>\n";
-        echo "            <td>" . strftime('%x %X', strtotime($object->metadata->revised)) . "</td>\n";
-
-        if ($revisor->guid)
-        {
-            echo "            <td><a href=\"{$prefix}__mfa/asgard/object/view/{$revisor->guid}/\">{$revisor->name}</a></td>\n";
-        }
-        else
-        {
-            echo "            <td>&nbsp;</td>\n";
-        }
-        echo "            <td>" . midcom_helper_filesize_to_string($object->metadata->size) . "</td>\n";
-        echo "        </tr>\n";
+        midgard_admin_asgard_trash_type_show($object, 0, '        ');
     }
 
     echo "    </tbody>\n";
