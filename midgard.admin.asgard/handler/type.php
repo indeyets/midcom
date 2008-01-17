@@ -41,6 +41,79 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
     function _prepare_request_data()
     {
     }
+    
+    function _prepare_qb($dummy_object)
+    {
+        // Figure correct MidCOM DBA class to use and get midcom QB
+        $qb = false;
+        $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($dummy_object);
+        if (empty($midcom_dba_classname))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("MidCOM DBA does not know how to handle {$schema_type}", MIDCOM_LOG_ERROR);
+            debug_pop();
+            $x = false;
+            return $x;
+        }
+        if (!$_MIDCOM->dbclassloader->load_mgdschema_class_handler($midcom_dba_classname))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to load the handling component for {$midcom_dba_classname}, cannot continue.", MIDCOM_LOG_ERROR);
+            debug_pop();
+            $x = false;
+            return $x;
+        }
+        $qb_callback = array($midcom_dba_classname, 'new_query_builder');
+        if (!is_callable($qb_callback))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Static method {$midcom_dba_classname}::new_query_builder() is not callable", MIDCOM_LOG_ERROR);
+            debug_pop();
+            $x = false;
+            return $x;
+        }
+        $qb = call_user_func($qb_callback);
+            
+        return $qb;
+    }
+    
+    function _search($term)
+    {
+        $type_class = $this->type;
+        $dummy_object = new $type_class();
+        $type_fields = array_keys(get_object_vars($dummy_object));
+        $reflector = new midgard_reflection_property($type_class);
+        unset($type_fields['metadata']);
+        
+        $qb = $this->_prepare_qb($dummy_object);
+        if (!$qb)
+        {
+            return null;
+        }
+        
+        $constraints = 0;
+        $qb->begin_group('OR');
+        foreach ($type_fields as $key)
+        {
+            $field_type = $reflector->get_midgard_type($key);
+            switch ($field_type)
+            {
+                case MGD_TYPE_STRING:
+                case MGD_TYPE_LONGTEXT:
+                    $qb->add_constraint($key, 'LIKE', "%{$term}%");
+                    $constraints++;
+                    break;
+            }
+        }
+        $qb->end_group();
+        
+        if (!$constraints)
+        {
+            return null;
+        }
+        
+        return $qb->execute();
+    }
 
     /**
      * Object editing view
@@ -109,6 +182,11 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
                     )
                 );
             }
+        }
+        
+        if (isset($_GET['search']))
+        {
+            $data['search_results'] = $this->_search($_GET['search']);
         }
 
         midgard_admin_asgard_plugin::get_common_toolbar($data);
