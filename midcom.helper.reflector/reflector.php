@@ -342,11 +342,20 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
 
     function get_create_icon($type)
     {
-        static $config_icon_map = false;
-        if (!$config_icon_map)
+        static $config_icon_map = array();
+        if (empty($config_icon_map))
         {
             $icons2classes = $this->_config->get('create_type_magic');
-            if (is_array($icons2classes))
+            //sanity
+            if (!is_array($icons2classes))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add('Config key "create_type_magic" is not an array', MIDCOM_LOG_ERROR);
+                debug_print_r("\$this->_config->get('create_type_magic')", $icons2classes, MIDCOM_LOG_INFO);
+                debug_pop();
+                unset($icons2classes);
+            }
+            else
             {
                 foreach ($icons2classes as $icon => $classes)
                 {
@@ -355,8 +364,8 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
                         $config_icon_map[$class] = $icon;
                     }
                 }
+                unset($icons2classes, $classes, $class, $icon);
             }
-            unset($icons2classes, $classes, $class, $icon);
         }
 
         $icon_callback = array($type, 'get_create_icon');
@@ -397,27 +406,30 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
 
     function get_object_icon(&$obj)
     {
-        $properties = get_object_vars($obj);
-        if (empty($properties))
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Could not list object properties, aborting", MIDCOM_LOG_ERROR);
-            debug_pop();
-            return false;
-        }
-        
-        static $config_icon_map = false;
-        if (!$config_icon_map)
+        static $config_icon_map = array();
+        if (empty($config_icon_map))
         {
             $icons2classes = $this->_config->get('object_icon_magic');
-            foreach ($icons2classes as $icon => $classes)
+            //sanity
+            if (!is_array($icons2classes))
             {
-                foreach ($classes as $class)
-                {
-                    $config_icon_map[$class] = $icon;
-                }
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add('Config key "object_icon_magic" is not an array', MIDCOM_LOG_ERROR);
+                debug_print_r("\$this->_config->get('object_icon_magic')", $icons2classes, MIDCOM_LOG_INFO);
+                debug_pop();
+                unset($icons2classes);
             }
-            unset($icons2classes, $classes, $class, $icon);
+            else
+            {
+                foreach ($icons2classes as $icon => $classes)
+                {
+                    foreach ($classes as $class)
+                    {
+                        $config_icon_map[$class] = $icon;
+                    }
+                }
+                unset($icons2classes, $classes, $class, $icon);
+            }
         }
 
         $object_class = get_class($obj);
