@@ -68,7 +68,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
                 continue;
             }
 
-            $mgdschema_class = midgard_admin_asgard_reflector::class_rewrite($schema_type);
+            $mgdschema_class = midcom_helper_reflector::class_rewrite($schema_type);
             $dummy_object = new $mgdschema_class();
             $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($dummy_object);
             if (empty($midcom_dba_classname))
@@ -101,7 +101,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
             {
                 if (!isset($this->_reflectors[$class]))
                 {
-                    $this->_reflectors[$class] = new midgard_admin_asgard_reflector($objects[0]);
+                    $this->_reflectors[$class] = new midcom_helper_reflector($objects[0]);
                 }
             }
 
