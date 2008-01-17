@@ -1,4 +1,4 @@
-﻿Edit metadata
+Edit metadata
 =============
 
 Metadata is information describing the content. Through the metadata it is possible to describe e.g. when the content should be available, what it is about and how external indexers or search robots should index it.

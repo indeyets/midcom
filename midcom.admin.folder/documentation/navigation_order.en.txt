@@ -1,4 +1,4 @@
-﻿Navigation order
+Navigation order
 ================
 
 It is possible to arrange navigational elements to some extent. All of the folders are sortable and depending on the type of the folder its content might also offer the sorting feature.
