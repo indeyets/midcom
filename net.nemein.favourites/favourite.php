@@ -34,6 +34,14 @@ class net_nemein_favourites_favourite_dba extends __net_nemein_favourites_favour
     {
         return $this->metadata->creator;
     }
+    
+    /**
+     * Get label for Asgard and other display purposes
+     */
+    function get_label()
+    {
+        return $this->objectTitle;
+    }
 
     /**
      * Returns the number of favs associated with a given object. This is intended for
