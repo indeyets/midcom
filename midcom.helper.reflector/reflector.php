@@ -27,7 +27,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      */
     function midcom_helper_reflector($src)
     {
-        $this->_component = 'midgard.admin.asgard';
+        $this->_component = 'midcom.helper.reflector';
         parent::midcom_baseclasses_components_purecode();
         // Handle object vs string
         if (is_object($src))
@@ -714,7 +714,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         static $extends = false;
         if ($extends === false)
         {
-            $extends = $GLOBALS['midcom_component_data']['midgard.admin.asgard']['config']->get('class_extends');
+            $extends = $GLOBALS['midcom_component_data']['midcom.helper.reflector']['config']->get('class_extends');
             // Safety against misconfiguration
             if (!is_array($extends))
             {

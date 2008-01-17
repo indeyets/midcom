@@ -735,7 +735,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
     function _resolve_root_classes()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $root_exceptions_notroot = $GLOBALS['midcom_component_data']['midgard.admin.asgard']['config']->get('root_class_exceptions_notroot');
+        $root_exceptions_notroot = $GLOBALS['midcom_component_data']['midcom.helper.reflector']['config']->get('root_class_exceptions_notroot');
         // Safety against misconfiguration
         if (!is_array($root_exceptions_notroot))
         {
@@ -807,7 +807,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             $root_classes[] = $schema_type;
         }
         unset($root_exceptions_notroot);
-        $root_exceptions_forceroot = $GLOBALS['midcom_component_data']['midgard.admin.asgard']['config']->get('root_class_exceptions_forceroot');
+        $root_exceptions_forceroot = $GLOBALS['midcom_component_data']['midcom.helper.reflector']['config']->get('root_class_exceptions_forceroot');
         // Safety against misconfiguration
         if (!is_array($root_exceptions_forceroot))
         {
