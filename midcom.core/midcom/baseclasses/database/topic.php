@@ -143,7 +143,18 @@ class midcom_baseclasses_database_topic extends __midcom_baseclasses_database_to
      */
     function _on_created()
     {
-        midcom_baseclasses_core_dbobject::generate_urlname($this, 'extra');
+        if (isset($GLOBALS['midcom_baseclasses_database_topic_on_created_loop_{$this->guid}']))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Detected _on_created loop on #{$this->id}", MIDCOM_LOG_ERROR);
+            debug_pop();
+        }
+        else
+        {
+            $GLOBALS['midcom_baseclasses_database_topic_on_created_loop_{$this->guid}'] = true;
+            midcom_baseclasses_core_dbobject::generate_urlname($this, 'extra');
+            unset($GLOBALS['midcom_baseclasses_database_topic_on_created_loop_{$this->guid}']);
+        }
         return true;
     }
     
@@ -154,7 +165,18 @@ class midcom_baseclasses_database_topic extends __midcom_baseclasses_database_to
      */
     function _on_updated()
     {
-        midcom_baseclasses_core_dbobject::generate_urlname($this, 'extra');
+        if (isset($GLOBALS['midcom_baseclasses_database_topic__on_updated_loop_{$this->guid}']))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Detected _on_updated loop on #{$this->id}", MIDCOM_LOG_ERROR);
+            debug_pop();
+        }
+        else
+        {
+            $GLOBALS['midcom_baseclasses_database_topic__on_updated_loop_{$this->guid}'] = true;
+            midcom_baseclasses_core_dbobject::generate_urlname($this, 'extra');
+            unset($GLOBALS['midcom_baseclasses_database_topic__on_updated_loop_{$this->guid}']);
+        }
         return true;
     } 
 }
