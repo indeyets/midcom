@@ -247,7 +247,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         {
             $css_class .= ' sg0';
         }
-        if (in_array($object->guid, $this->_object_path))
+        if ($this->_is_selected($object))
         {
             $css_class .= ' selected';
         }
