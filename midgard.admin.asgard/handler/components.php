@@ -38,6 +38,7 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
         $component_array = array();
         $component_array['name'] = $name;
         $component_array['title'] = $_MIDCOM->i18n->get_string($name, $name);
+        $component_array['purecode'] = $manifest->purecode;
 
         if (isset($manifest->_raw_data['icon']))
         {
@@ -56,7 +57,14 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
         {
             $component_array['description'] = '';
         }
+        
         $component_array['version'] = $manifest->_raw_data['version'];
+        
+        $component_array['maintainers'] = array();
+        if (isset($manifest->_raw_data['package.xml']['maintainers']))
+        {
+            $component_array['maintainers'] = $manifest->_raw_data['package.xml']['maintainers'];
+        }
 
         $component_array['toolbar'] = new midcom_helper_toolbar();
         $component_array['toolbar']->add_item

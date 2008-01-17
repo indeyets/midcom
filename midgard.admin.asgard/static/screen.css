@@ -554,6 +554,26 @@ html > body #siteinfo
     vertical-align: middle;
 }
 
+#content div.midgard_admin_asgard_components_component div.maintainers
+{
+    width: 200px;
+    float: right;
+}
+
+#content div.midgard_admin_asgard_components_component div.maintainers ul,
+#content div.midgard_admin_asgard_components_component div.maintainers ul li
+{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+#content div.midgard_admin_asgard_components_component div.maintainers ul li.passive,
+#content div.midgard_admin_asgard_components_component div.maintainers ul li.passive a
+{
+    color: #eeeeee;
+}
+
 div.midcom_services_uimessages_holder div.midcom_services_uimessages_message
 {
     background-color: #3465a4;
