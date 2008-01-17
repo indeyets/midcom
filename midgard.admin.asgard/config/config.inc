@@ -124,9 +124,11 @@
     /* And then some objects that just don't make sense to show as roots */
     'net_nemein_tag',
     'org_openpsa_query',
-    /* Persons as toplevel is mostly harmful as there can be really many entries */
+    /* Persons and groups as toplevel is mostly harmful as there can be really many entries */
     'midgard_person',
     'org_openpsa_person',
+    'midgard_group',
+    'org_openpsa_organization',
 ),
 // Classes that should always be listed as root class (mainly workaround for schema bugs)
 'root_class_exceptions_forceroot' => array

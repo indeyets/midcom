@@ -1159,6 +1159,17 @@ class midcom_baseclasses_core_dbobject
     }
 
     /**
+     * Internal helper function, called upon successful delete. It will delete all children of an object as well.
+     *
+     * @param MidgardObject &$object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     * @return boolean Indicating Success.
+     * @access private
+     */
+    function _delete_children(&$object)
+    {
+    }
+
+    /**
      * Internal helper function, called upon successful delete. It will unconditionally
      * drop all privileges assigned to the given object.
      *

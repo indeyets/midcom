@@ -251,7 +251,7 @@ foreach ($results as $object)
         if ($reflector->is_link($reflector_key))
         {
             $linked_type = $reflector->get_link_name($reflector_key);
-            // $linked_type_reflector = midgard_admin_asgard_reflector::get($linked_type);
+            // $linked_type_reflector = midcom_helper_reflector::get($linked_type);
             // $type = $reflector->get_midgard_type($reflector_key);
             // $type_label = midgard_admin_asgard_plugin::get_type_label($linked_type);
         
@@ -263,7 +263,7 @@ foreach ($results as $object)
         
             // debug_print_r('$object',$object;
         
-            // $reflector_tree = new midgard_admin_asgard_reflector_tree($object);
+            // $reflector_tree = new midcom_helper_reflector_tree($object);
             // debug_print_r('$reflector_tree',$reflector_tree);
         }
 

@@ -208,7 +208,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
      */
     function _undelete($guids, $type)
     {
-        $ref = midgard_admin_asgard_reflector_tree::get($type);
+        $ref = midcom_helper_reflector_tree::get($type);
         foreach ($guids as $guid)
         {
             $object = $this->_get_object($guid, $type);
@@ -275,7 +275,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
      */
     function _purge($guids, $type)
     {
-        $ref = midgard_admin_asgard_reflector_tree::get($type);
+        $ref = midcom_helper_reflector_tree::get($type);
         foreach ($guids as $guid)
         {
             $object = $this->_get_object($guid, $type);
@@ -396,7 +396,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         $_MIDCOM->cache->content->no_cache();
 
         $this->type = $args[0];
-        $root_types = midgard_admin_asgard_reflector_tree::get_root_classes();
+        $root_types = midcom_helper_reflector_tree::get_root_classes();
 
         $data['view_title'] = midgard_admin_asgard_plugin::get_type_label($this->type);
         $_MIDCOM->set_pagetitle($data['view_title']);
@@ -412,7 +412,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
             return false;
         }
         $data['type'] = $this->type;
-        $data['reflector'] = midgard_admin_asgard_reflector::get($data['type']);
+        $data['reflector'] = midcom_helper_reflector::get($data['type']);
         $data['label_property'] = $data['reflector']->get_label_property();
 
         if (   isset($_POST['undelete']) && !isset($_POST['purge'])

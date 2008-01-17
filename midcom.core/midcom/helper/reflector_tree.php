@@ -1,6 +1,6 @@
 <?php
 /**
- * @package midgard.admin.asgard
+ * @package midcom
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: acl_editor.php 5538 2007-03-20 13:22:41Z rambo $
  * @copyright The Midgard Project, http://www.midgard-project.org
@@ -8,21 +8,21 @@
  */
 
 /** @ ignore */
-if (!class_exists('midgard_admin_asgard_reflector'))
+if (!class_exists('midcom_helper_reflector'))
 {
     require_once('reflector.php');
 }
 
 /**
  * The Grand Unified Reflector, Tree information
- * @package midgard.admin.asgard
+ * @package midcom
  */
-class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
+class midcom_helper_reflector_tree extends midcom_helper_reflector
 {
 
-    function midgard_admin_asgard_reflector_tree($src)
+    function midcom_helper_reflector_tree($src)
     {
-        parent::midgard_admin_asgard_reflector($src);
+        parent::midcom_helper_reflector($src);
     }
 
     function &get($src)
@@ -35,11 +35,11 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         {
             $classname = $src;
         }
-        if (!isset($GLOBALS['midgard_admin_asgard_reflector_tree_singletons'][$classname]))
+        if (!isset($GLOBALS['midcom_helper_reflector_tree_singletons'][$classname]))
         {
-            $GLOBALS['midgard_admin_asgard_reflector_tree_singletons'][$classname] =  new midgard_admin_asgard_reflector_tree($src);
+            $GLOBALS['midcom_helper_reflector_tree_singletons'][$classname] =  new midcom_helper_reflector_tree($src);
         }
-        return $GLOBALS['midgard_admin_asgard_reflector_tree_singletons'][$classname];
+        return $GLOBALS['midcom_helper_reflector_tree_singletons'][$classname];
     }
 
 
@@ -51,7 +51,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
     function &_root_objects_qb(&$deleted)
     {
         $schema_type =& $this->_mgdschema_class;
-        $root_classes = midgard_admin_asgard_reflector_tree::get_root_classes();
+        $root_classes = midcom_helper_reflector_tree::get_root_classes();
         if (!in_array($schema_type, $root_classes))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -263,11 +263,11 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             debug_pop();
             return false;
         }
-        $resolver = new midgard_admin_asgard_reflector_tree($object);
+        $resolver = new midcom_helper_reflector_tree($object);
         if (!$resolver)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Could not instantiate midgard_admin_asgard_reflector_tree from \$object", MIDCOM_LOG_ERROR);
+            debug_add("Could not instantiate midcom_helper_reflector_tree from \$object", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
@@ -318,7 +318,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         }
 
         // Reflection magick
-        $resolver = new midgard_admin_asgard_reflector_tree($object);
+        $resolver = new midcom_helper_reflector_tree($object);
         $ref =& $resolver->_mgd_reflector;
         $schema_type =& $resolver->_mgdschema_class;
 
@@ -425,11 +425,11 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             debug_pop();
             return false;
         }
-        $resolver = new midgard_admin_asgard_reflector_tree($object);
+        $resolver = new midcom_helper_reflector_tree($object);
         if (!$resolver)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Could not instantiate midgard_admin_asgard_reflector_tree from \$object", MIDCOM_LOG_ERROR);
+            debug_add("Could not instantiate midcom_helper_reflector_tree from \$object", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
@@ -701,7 +701,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         $ref = new midgard_reflection_property($prospect_type);
         $link_class = $ref->get_link_name($property);
         debug_add("got link_class '{$link_class}' for property '{$property}' in type '{$prospect_type}'");
-        if (midgard_admin_asgard_reflector::is_same_class($link_class, $schema_type))
+        if (midcom_helper_reflector::is_same_class($link_class, $schema_type))
         {
             debug_pop();
             return true;
@@ -721,7 +721,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
         static $root_classes = false;
         if (empty($root_classes))
         {
-            $root_classes = midgard_admin_asgard_reflector_tree::_resolve_root_classes();
+            $root_classes = midcom_helper_reflector_tree::_resolve_root_classes();
         }
         return $root_classes;
     }
@@ -753,7 +753,7 @@ class midgard_admin_asgard_reflector_tree extends midgard_admin_asgard_reflector
             }
 
             // Class extensions mapping
-            $schema_type = midgard_admin_asgard_reflector::class_rewrite($schema_type);
+            $schema_type = midcom_helper_reflector::class_rewrite($schema_type);
 
             // Make sure we only add classes once
             if (in_array($schema_type, $root_classes))

@@ -52,7 +52,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         $this->_object_path = $this->get_object_path();
         $this->_request_data =& $request_data;
 
-        $this->root_types = midgard_admin_asgard_reflector_tree::get_root_classes();
+        $this->root_types = midcom_helper_reflector_tree::get_root_classes();
 
         if (array_key_exists('current_type', $this->_request_data))
         {
@@ -111,7 +111,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         }
         if (!isset($this->_reflectors[$classname]))
         {
-            $this->_reflectors[$classname] = midgard_admin_asgard_reflector_tree::get($object);
+            $this->_reflectors[$classname] = midcom_helper_reflector_tree::get($object);
         }
         return $this->_reflectors[$classname];
     }
@@ -146,7 +146,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
             debug_pop();
             return;
         }
-        $siblings = midgard_admin_asgard_reflector_tree::get_child_objects($object);
+        $siblings = midcom_helper_reflector_tree::get_child_objects($object);
         if (   is_array($siblings)
             && count($siblings) > 0)
         {
@@ -279,7 +279,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
             midcom_show_style('midgard_admin_asgard_navigation_section_header');
             if (   isset($root_object)
                 && (is_a($root_object, $root_type)
-                    || midgard_admin_asgard_reflector::is_same_class($root_type,$root_object->__midcom_class_name__))
+                    || midcom_helper_reflector::is_same_class($root_type,$root_object->__midcom_class_name__))
                 || in_array($root_type, $this->expanded_root_types))
             {
                 $root_objects = $ref->get_root_objects();

@@ -380,7 +380,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
 
     function get_type_label($type)
     {
-        $ref = midgard_admin_asgard_reflector_tree::get($type);
+        $ref = midcom_helper_reflector_tree::get($type);
         return $ref->get_class_label();
     }
 
@@ -428,8 +428,8 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         // Tell our object to MidCOM
         $_MIDCOM->bind_view_to_object($object);
         $_MIDCOM->set_26_request_metadata($object->metadata->revised, $object->guid);
-        $data['object_reflector'] = midgard_admin_asgard_reflector::get($object);
-        $data['tree_reflector'] = midgard_admin_asgard_reflector_tree::get($object);
+        $data['object_reflector'] = midcom_helper_reflector::get($object);
+        $data['tree_reflector'] = midcom_helper_reflector_tree::get($object);
 
         $data['object'] =& $object;
 
@@ -710,7 +710,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                && $i < 10)
         {
             $i++;
-            $parent_reflector = midgard_admin_asgard_reflector::get($parent);
+            $parent_reflector = midcom_helper_reflector::get($parent);
             $parent_label = $parent_reflector->get_object_label($parent);
             $breadcrumb[] = array
             (

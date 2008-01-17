@@ -1,6 +1,6 @@
 <?php
 /**
- * @package midgard.admin.asgard
+ * @package midcom
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: acl_editor.php 5538 2007-03-20 13:22:41Z rambo $
  * @copyright The Midgard Project, http://www.midgard-project.org
@@ -9,9 +9,9 @@
 
 /**
  * The Grand Unified Reflector
- * @package midgard.admin.asgard
+ * @package midcom
  */
-class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purecode
+class midcom_helper_reflector extends midcom_baseclasses_components_purecode
 {
 
     var $_mgdschema_class = false;
@@ -25,7 +25,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
      *
      * @param string/midgard_object $src classname or object
      */
-    function midgard_admin_asgard_reflector($src)
+    function midcom_helper_reflector($src)
     {
         $this->_component = 'midgard.admin.asgard';
         parent::midcom_baseclasses_components_purecode();
@@ -40,7 +40,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         }
 
         // Resolve root class name
-        $this->_mgdschema_class = midgard_admin_asgard_reflector::resolve_baseclass($this->_original_class);
+        $this->_mgdschema_class = midcom_helper_reflector::resolve_baseclass($this->_original_class);
 
         // Could not resolve root class name
         if (empty($this->_mgdschema_class))
@@ -90,11 +90,11 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         {
             $classname = $src;
         }
-        if (!isset($GLOBALS['midgard_admin_asgard_reflector_singletons'][$classname]))
+        if (!isset($GLOBALS['midcom_helper_reflector_singletons'][$classname]))
         {
-            $GLOBALS['midgard_admin_asgard_reflector_singletons'][$classname] =  new midgard_admin_asgard_reflector($src);
+            $GLOBALS['midcom_helper_reflector_singletons'][$classname] =  new midcom_helper_reflector($src);
         }
-        return $GLOBALS['midgard_admin_asgard_reflector_singletons'][$classname];
+        return $GLOBALS['midcom_helper_reflector_singletons'][$classname];
     }
 
     /**
@@ -104,13 +104,13 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
     function &get_component_l10n()
     {
         // Use cache if we have it
-        if (!isset($GLOBALS['midgard_admin_asgard_reflector_get_component_l10n_cache']))
+        if (!isset($GLOBALS['midcom_helper_reflector_get_component_l10n_cache']))
         {
-            $GLOBALS['midgard_admin_asgard_reflector_get_component_l10n_cache'] = array();
+            $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'] = array();
         }
-        if (isset($GLOBALS['midgard_admin_asgard_reflector_get_component_l10n_cache'][$this->_mgdschema_class]))
+        if (isset($GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->_mgdschema_class]))
         {
-            return $GLOBALS['midgard_admin_asgard_reflector_get_component_l10n_cache'][$this->_mgdschema_class];
+            return $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->_mgdschema_class];
         }
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Trying to resolve good l10n for type {$this->_mgdschema_class}");
@@ -120,7 +120,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             // Could not resolve MidCOM DBA class name, fallback early to our own l10n
             debug_add("Could not get MidCOM DBA classname for type {$this->_mgdschema_class}, using our own l10n", MIDCOM_LOG_INFO);
             debug_pop();
-            $GLOBALS['midgard_admin_asgard_reflector_get_component_l10n_cache'][$this->_mgdschema_class] = $this->_l10n;
+            $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->_mgdschema_class] = $this->_l10n;
             return $this->_l10n;
         }
         if (   !isset($_MIDCOM->dbclassloader->_mgdschema_class_handler[$midcom_dba_classname])
@@ -129,7 +129,7 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
             // Cannot resolve component, fallback early to our own l10n
             debug_add("Could not resolve component for DBA class {$midcom_dba_classname}, using our own l10n", MIDCOM_LOG_INFO);
             debug_pop();
-            $GLOBALS['midgard_admin_asgard_reflector_get_component_l10n_cache'][$this->_mgdschema_class] = $this->_l10n;
+            $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->_mgdschema_class] = $this->_l10n;
             return $this->_l10n;
         }
         // Got component, try to load the l10n helper for it
@@ -141,14 +141,14 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
         {
             debug_add("Got l10n handler for component {$component}, returning that");
             debug_pop();
-            $GLOBALS['midgard_admin_asgard_reflector_get_component_l10n_cache'][$this->_mgdschema_class] =& $component_l10n;
+            $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->_mgdschema_class] =& $component_l10n;
             return $component_l10n;
         }
 
         // Could not get anything else, use our own l10n
         debug_add("Everything else failed, using our own l10n for type {$this->_mgdschema_class}", MIDCOM_LOG_WARN);
         debug_pop();
-        $GLOBALS['midgard_admin_asgard_reflector_get_component_l10n_cache'][$this->_mgdschema_class] = $this->_l10n;
+        $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->_mgdschema_class] = $this->_l10n;
         return $this->_l10n;
     }
 
@@ -746,17 +746,17 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
      */
     function is_same_class($class_one, $class_two)
     {
-        $one = midgard_admin_asgard_reflector::resolve_baseclass($class_one);
-        $two = midgard_admin_asgard_reflector::resolve_baseclass($class_two);
+        $one = midcom_helper_reflector::resolve_baseclass($class_one);
+        $two = midcom_helper_reflector::resolve_baseclass($class_two);
         if ($one == $two)
         {
             return true;
         }
-        if (midgard_admin_asgard_reflector::class_rewrite($one) == $two)
+        if (midcom_helper_reflector::class_rewrite($one) == $two)
         {
             return true;
         }
-        if ($one == midgard_admin_asgard_reflector::class_rewrite($two))
+        if ($one == midcom_helper_reflector::class_rewrite($two))
         {
             return true;
         }
@@ -785,12 +785,12 @@ class midgard_admin_asgard_reflector extends midcom_baseclasses_components_purec
 
 /**
  * I hope we don't need these workarounds but in case we do, keep them handy
-function midgard_admin_asgard_reflector_get_property_parent(&$src)
+function midcom_helper_reflector_get_property_parent(&$src)
 {
     return midgard_object_class::get_property_parent($src);
 }
 
-function midgard_admin_asgard_reflector_get_property_up(&$src)
+function midcom_helper_reflector_get_property_up(&$src)
 {
     return midgard_object_class::get_property_up($src);
 }
