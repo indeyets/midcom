@@ -342,6 +342,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
 
     function get_create_icon($type)
     {
+        // FIXME make 1. smarter 2. configurable
         switch ($type)
         {
             case 'midgard_topic':
@@ -400,6 +401,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         	case (method_exists($obj,'get_icon')):
         		$icon = $obj->get_icon();
         		break;
+            // FIXME make 1. smarter 2. configurable
             case (is_a($obj, 'midgard_person')):
             case (is_a($obj, 'org_openpsa_person')):
                 $icon = 'stock_person.png';

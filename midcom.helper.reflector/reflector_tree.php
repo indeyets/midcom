@@ -19,9 +19,12 @@ if (!class_exists('midcom_helper_reflector'))
  */
 class midcom_helper_reflector_tree extends midcom_helper_reflector
 {
+    var $show_sg0_objects = true;
+    var $sg_context = false;
 
     function midcom_helper_reflector_tree($src)
     {
+        $this->sg_context = $_MIDGARD['sitegroup'];
         parent::midcom_helper_reflector($src);
     }
 
@@ -114,10 +117,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             $qb->add_constraint('metadata.deleted', '<>', 0);
         }
 
-        if ($_MIDGARD['sitegroup'])
-        {
-            $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
-        }
+        $this->_sg_constraints($qb);
 
         // Figure out constraint to use to get root level objects
         $upfield = midgard_object_class::get_property_up($schema_type);
@@ -142,6 +142,19 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             }
         }
         return $qb;
+    }
+
+    /**
+     * Sets sitegroup constraints to QB/MC instance
+     */
+    function _sg_constraints(&$qb)
+    {
+        $sgs_to_show = array( 0 => &$this->sg_context );
+        if ($this->show_sg0_objects)
+        {
+            $sgs_to_show[] = 0;
+        }
+        $qb->add_constraint('sitegroup', 'IN', $sgs_to_show);
     }
 
     /**
@@ -519,10 +532,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             $qb->add_constraint('metadata.deleted', '<>', 0);
         }
 
-        if ($_MIDGARD['sitegroup'])
-        {
-            $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
-        }
+        $this->_sg_constraints($qb);
 
         // Figure out constraint to use to get child objects
         // TODO: Review this code
