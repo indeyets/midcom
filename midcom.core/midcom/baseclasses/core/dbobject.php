@@ -43,22 +43,71 @@ class midcom_baseclasses_core_dbobject
      * @return boolean Indicating success.
      */
     function update_pre_checks(&$object)
-    {
-        debug_push_class($object, __FUNCTION__);
+    {   
+        // Check ACL
         if (! $_MIDCOM->auth->can_do('midgard:update', $object))
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Failed to load object, update privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             mgd_set_errno(MGD_ERR_ACCESS_DENIED);
+            debug_pop();
             return false;
         }
+        
+        // Call DBA-level update handlers
         if (! $object->_on_updating())
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("The _on_updating event handler returned false.");
             debug_pop();
             return false;
         }
-        debug_pop();
+        
+        // Prevent circular UP references
+        if (!isset($object->__new_class_name__))
+        {
+            return true;
+        }
+        $upfield = midgard_object_class::get_property_up($object->__new_class_name__);
+        if (!empty($upfield))
+        {
+            $ref = new midgard_reflection_property($object->__new_class_name__);
+            $uptype = $ref->get_midgard_type($upfield);
+            $uptarget = $ref->get_link_target($upfield);
+            
+            if ($uptarget == $object->__new_class_name__)
+            {
+                switch ($uptype)
+                {
+                    case MGD_TYPE_STRING:
+                    case MGD_TYPE_GUID:
+                        if ($object->guid == $object->$upfield)
+                        {
+                            debug_push_class($object, __FUNCTION__);
+                            debug_add("Object up field {$upfield} points to itself with GUID {$object->guid}.", MIDCOM_LOG_ERROR);
+                            debug_pop();
+                            // TODO: in 1.9 we can use MGD_ERR_TREE_IS_CIRCULAR
+                            mgd_set_errno(MGD_ERR_INVALID_PROPERTY_VALUE);
+                            return false;
+                        }
+                        break;
+                    case MGD_TYPE_INT:
+                    case MGD_TYPE_UINT:
+                        if ($object->id == $object->$upfield)
+                        {
+                            debug_push_class($object, __FUNCTION__);
+                            debug_add("Object up field {$upfield} points to itself with ID {$object->id}.", MIDCOM_LOG_ERROR);
+                            debug_pop();
+                            // TODO: in 1.9 we can use MGD_ERR_TREE_IS_CIRCULAR
+                            mgd_set_errno(MGD_ERR_INVALID_PROPERTY_VALUE);
+                            return false;
+                        }
+                        break;
+                }
+            }
+        }
+        
         return true;
     }
 
@@ -1167,6 +1216,24 @@ class midcom_baseclasses_core_dbobject
      */
     function _delete_children(&$object)
     {
+        // Load reflector
+        if (!class_exists('midcom_helper_reflector_tree'))
+        {
+            $filename = MIDCOM_ROOT . "/midcom/helper/reflector_tree.php";
+            require_once($filename);
+        }
+        $ref = midcom_helper_reflector_tree::get($object);
+
+        // Delete all children
+        $children_types = $ref->get_child_objects($object);
+        foreach ($children_types as $type => $children)
+        {
+            $child_guids = array();
+            foreach ($children as $child)
+            {
+                $child->delete();
+            }
+        }
     }
 
     /**
