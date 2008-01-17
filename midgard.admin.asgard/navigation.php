@@ -174,19 +174,9 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
 
                     $ref =& $this->_get_reflector(&$child);
 
-                    $selected = false;
+                    $selected = $this->_is_selected($child);
                     $css_class = $type;
-                    if (in_array($child->guid, $this->_object_path))
-                    {
-                        $selected = true;
-                        $css_class .= ' selected';
-                    }
-
-                    if ($child->guid == $this->_object->guid)
-                    {
-                        $css_class .= ' current';
-                    }
-
+                    $this->_common_css_classes($child, $ref, $css_class);
                     $this->shown_objects[$child->guid] = true;
 
                     echo "{$prefix}    <li class=\"{$css_class}\">";
@@ -234,6 +224,37 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
             }
 
             midcom_show_style('midgard_admin_asgard_navigation_section_footer');
+        }
+    }
+
+    function _is_selected(&$object)
+    {
+        if (in_array($object->guid, $this->_object_path))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    function _common_css_classes(&$object, &$ref, &$css_class)
+    {
+        $css_class .= " {$ref->mgdschema_class}";
+        if ($object->sitegroup !== $ref->sg_context)
+        {
+            $css_class .= ' cross_sg';
+        }
+        if ($object->sitegroup === 0)
+        {
+            $css_class .= ' sg0';
+        }
+        if (in_array($object->guid, $this->_object_path))
+        {
+            $css_class .= ' selected';
+        }
+        if (   is_object($this->_object)
+            && $object->guid == $this->_object->guid)
+        {
+            $css_class .= ' current';
         }
     }
 
@@ -300,19 +321,9 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                     foreach ($object_label_mapping as $index => $label)
                     {
                         $object =& $root_objects[$index];
-                        $selected = false;
+                        $selected = $this->_is_selected($object);
                         $css_class = get_class($object);
-                        if (in_array($object->guid, $this->_object_path))
-                        {
-                            $selected = true;
-                            $css_class .= ' selected';
-                        }
-
-                        if (   is_object($this->_object)
-                            && $object->guid == $this->_object->guid)
-                        {
-                            $css_class .= ' current';
-                        }
+                        $this->_common_css_classes($object, $ref, $css_class);
                         $this->shown_objects[$object->guid] = true;
 
                         echo "    <li class=\"{$css_class}\">";
@@ -414,19 +425,9 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
             foreach ($object_label_mapping as $index => $label)
             {
                 $object =& $root_objects[$index];
-                $selected = false;
+                $selected = $this->_is_selected($object);
                 $css_class = get_class($object);
-                if (in_array($object->guid, $this->_object_path))
-                {
-                    $selected = true;
-                    $css_class .= ' selected';
-                }
-
-                if (   is_object($this->_object)
-                    && $object->guid == $this->_object->guid)
-                {
-                    $css_class .= ' current';
-                }
+                $this->_common_css_classes($object, $ref, $css_class);
                 $this->shown_objects[$object->guid] = true;
 
                 echo "    <li class=\"{$css_class}\">";
