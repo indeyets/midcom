@@ -53,7 +53,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
      */
     function &_root_objects_qb(&$deleted)
     {
-        $schema_type =& $this->_mgdschema_class;
+        $schema_type =& $this->mgdschema_class;
         $root_classes = midcom_helper_reflector_tree::get_root_classes();
         if (!in_array($schema_type, $root_classes))
         {
@@ -167,8 +167,8 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
     function count_root_objects($deleted = false)
     {
         // Check against static calling
-        if (   !isset($this->_mgdschema_class)
-            || empty($this->_mgdschema_class))
+        if (   !isset($this->mgdschema_class)
+            || empty($this->mgdschema_class))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
@@ -215,8 +215,8 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
     function get_root_objects($deleted = false, $all = false)
     {
         // Check against static calling
-        if (   !isset($this->_mgdschema_class)
-            || empty($this->_mgdschema_class))
+        if (   !isset($this->mgdschema_class)
+            || empty($this->mgdschema_class))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
@@ -333,7 +333,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
         // Reflection magick
         $resolver = new midcom_helper_reflector_tree($object);
         $ref =& $resolver->_mgd_reflector;
-        $schema_type =& $resolver->_mgdschema_class;
+        $schema_type =& $resolver->mgdschema_class;
 
         // up takes precedence over parent
         $up_property = midgard_object_class::get_property_up($schema_type);
@@ -644,8 +644,8 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
     function get_child_classes()
     {
         // Check against static calling
-        if (   !isset($this->_mgdschema_class)
-            || empty($this->_mgdschema_class))
+        if (   !isset($this->mgdschema_class)
+            || empty($this->mgdschema_class))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
@@ -653,11 +653,11 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             return false;
         }
         static $child_classes_all = array();
-        if (!isset($child_classes_all[$this->_mgdschema_class]))
+        if (!isset($child_classes_all[$this->mgdschema_class]))
         {
-            $child_classes_all[$this->_mgdschema_class] = false;
+            $child_classes_all[$this->mgdschema_class] = false;
         }
-        $child_classes =& $child_classes_all[$this->_mgdschema_class];
+        $child_classes =& $child_classes_all[$this->mgdschema_class];
         if ($child_classes === false)
         {
             $child_classes = $this->_resolve_child_classes();
@@ -673,8 +673,8 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
     function _resolve_child_classes()
     {
         // Check against static calling
-        if (   !isset($this->_mgdschema_class)
-            || empty($this->_mgdschema_class))
+        if (   !isset($this->mgdschema_class)
+            || empty($this->mgdschema_class))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
@@ -686,8 +686,8 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
         {
             $parent_property = midgard_object_class::get_property_parent($schema_type);
             $up_property = midgard_object_class::get_property_up($schema_type);
-            if (   !$this->_resolve_child_classes_links_back($parent_property, $schema_type, $this->_mgdschema_class)
-                && !$this->_resolve_child_classes_links_back($up_property, $schema_type, $this->_mgdschema_class))
+            if (   !$this->_resolve_child_classes_links_back($parent_property, $schema_type, $this->mgdschema_class)
+                && !$this->_resolve_child_classes_links_back($up_property, $schema_type, $this->mgdschema_class))
             {
                 continue;
             }

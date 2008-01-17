@@ -14,7 +14,7 @@
 class midcom_helper_reflector extends midcom_baseclasses_components_purecode
 {
 
-    var $_mgdschema_class = false;
+    var $mgdschema_class = false;
     var $_mgd_reflector = false;
     var $_dummy_object = false;
     var $_original_class = false;
@@ -40,10 +40,10 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         }
 
         // Resolve root class name
-        $this->_mgdschema_class = midcom_helper_reflector::resolve_baseclass($this->_original_class);
+        $this->mgdschema_class = midcom_helper_reflector::resolve_baseclass($this->_original_class);
 
         // Could not resolve root class name
-        if (empty($this->_mgdschema_class))
+        if (empty($this->mgdschema_class))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Could not determnine MgdSchema baseclass", MIDCOM_LOG_ERROR);
@@ -53,27 +53,27 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         }
 
         // Instantiate midgard reflector
-        if (!class_exists($this->_mgdschema_class))
+        if (!class_exists($this->mgdschema_class))
         {
             $x = false;
             return $x;
         }
-        $this->_mgd_reflector = new midgard_reflection_property($this->_mgdschema_class);
+        $this->_mgd_reflector = new midgard_reflection_property($this->mgdschema_class);
         if (!$this->_mgd_reflector)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Could not instantiate midgard_mgd_reflection_property for {$this->_mgdschema_class}", MIDCOM_LOG_ERROR);
+            debug_add("Could not instantiate midgard_mgd_reflection_property for {$this->mgdschema_class}", MIDCOM_LOG_ERROR);
             debug_pop();
             $x = false;
             return $x;
         }
 
         // Instantiate dummy object
-        $this->_dummy_object = new $this->_mgdschema_class();
+        $this->_dummy_object = new $this->mgdschema_class();
         if (!$this->_dummy_object)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Could not instantiate dummy object for {$this->_mgdschema_class}", MIDCOM_LOG_ERROR);
+            debug_add("Could not instantiate dummy object for {$this->mgdschema_class}", MIDCOM_LOG_ERROR);
             debug_pop();
             $x = false;
             return $x;
@@ -108,32 +108,32 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         {
             $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'] = array();
         }
-        if (isset($GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->_mgdschema_class]))
+        if (isset($GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->mgdschema_class]))
         {
-            return $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->_mgdschema_class];
+            return $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->mgdschema_class];
         }
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Trying to resolve good l10n for type {$this->_mgdschema_class}");
+        debug_add("Trying to resolve good l10n for type {$this->mgdschema_class}");
         $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($this->_dummy_object);
         if (empty($midcom_dba_classname))
         {
             // Could not resolve MidCOM DBA class name, fallback early to our own l10n
-            debug_add("Could not get MidCOM DBA classname for type {$this->_mgdschema_class}, using our own l10n", MIDCOM_LOG_INFO);
+            debug_add("Could not get MidCOM DBA classname for type {$this->mgdschema_class}, using our own l10n", MIDCOM_LOG_INFO);
             debug_pop();
-            $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->_mgdschema_class] = $this->_l10n;
+            $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->mgdschema_class] = $this->_l10n;
             return $this->_l10n;
         }
-        if (   !isset($_MIDCOM->dbclassloader->_mgdschema_class_handler[$midcom_dba_classname])
-            || empty($_MIDCOM->dbclassloader->_mgdschema_class_handler[$midcom_dba_classname]))
+        if (   !isset($_MIDCOM->dbclassloader->mgdschema_class_handler[$midcom_dba_classname])
+            || empty($_MIDCOM->dbclassloader->mgdschema_class_handler[$midcom_dba_classname]))
         {
             // Cannot resolve component, fallback early to our own l10n
             debug_add("Could not resolve component for DBA class {$midcom_dba_classname}, using our own l10n", MIDCOM_LOG_INFO);
             debug_pop();
-            $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->_mgdschema_class] = $this->_l10n;
+            $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->mgdschema_class] = $this->_l10n;
             return $this->_l10n;
         }
         // Got component, try to load the l10n helper for it
-        $component = $_MIDCOM->dbclassloader->_mgdschema_class_handler[$midcom_dba_classname];
+        $component = $_MIDCOM->dbclassloader->mgdschema_class_handler[$midcom_dba_classname];
         debug_add("Class {$midcom_dba_classname} is handled by component {$component}");
         $midcom_i18n = $_MIDCOM->get_service('i18n');
         $component_l10n = $midcom_i18n->get_l10n($component);
@@ -141,14 +141,14 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         {
             debug_add("Got l10n handler for component {$component}, returning that");
             debug_pop();
-            $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->_mgdschema_class] =& $component_l10n;
+            $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->mgdschema_class] =& $component_l10n;
             return $component_l10n;
         }
 
         // Could not get anything else, use our own l10n
-        debug_add("Everything else failed, using our own l10n for type {$this->_mgdschema_class}", MIDCOM_LOG_WARN);
+        debug_add("Everything else failed, using our own l10n for type {$this->mgdschema_class}", MIDCOM_LOG_WARN);
         debug_pop();
-        $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->_mgdschema_class] = $this->_l10n;
+        $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->mgdschema_class] = $this->_l10n;
         return $this->_l10n;
     }
 
@@ -157,7 +157,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
 
         static $component_l10n = false;
         $component_l10n = $this->get_component_l10n();
-        $use_classname = $this->_mgdschema_class;
+        $use_classname = $this->mgdschema_class;
         $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($this->_dummy_object);
         if (!empty($midcom_dba_classname))
         {
@@ -197,9 +197,9 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
     function get_label_property()
     {
         // Check against static calling
-        if (   !isset($this->_mgdschema_class)
-            || empty($this->_mgdschema_class)
-            || !class_exists($this->_mgdschema_class))
+        if (   !isset($this->mgdschema_class)
+            || empty($this->mgdschema_class)
+            || !class_exists($this->mgdschema_class))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
@@ -208,7 +208,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         }
 
         debug_push_class(__CLASS__, __FUNCTION__);
-        $obj = new $this->_mgdschema_class;
+        $obj = new $this->mgdschema_class;
         $properties = get_object_vars($obj);
         if (empty($properties))
         {
@@ -251,8 +251,8 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
     function get_object_label(&$obj)
     {
         // Check against static calling
-        if (   !isset($this->_mgdschema_class)
-            || empty($this->_mgdschema_class))
+        if (   !isset($this->mgdschema_class)
+            || empty($this->mgdschema_class))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
@@ -378,8 +378,8 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
     function get_object_icon(&$obj)
     {
         // Check against static calling
-        if (   !isset($this->_mgdschema_class)
-            || empty($this->_mgdschema_class))
+        if (   !isset($this->mgdschema_class)
+            || empty($this->mgdschema_class))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
@@ -492,8 +492,8 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
     function get_search_properties()
     {
         // Check against static calling
-        if (   !isset($this->_mgdschema_class)
-            || empty($this->_mgdschema_class))
+        if (   !isset($this->mgdschema_class)
+            || empty($this->mgdschema_class))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
@@ -503,12 +503,12 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
 
         // Return cached results if we have them
         static $cache = array();
-        if (isset($cache[$this->_mgdschema_class]))
+        if (isset($cache[$this->mgdschema_class]))
         {
-            return $cache[$this->_mgdschema_class];
+            return $cache[$this->mgdschema_class];
         }
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Starting analysis for class {$this->_mgdschema_class}");
+        debug_add("Starting analysis for class {$this->mgdschema_class}");
         $obj =& $this->_dummy_object;
 
         // Get property list and start checking (or abort on error)
@@ -545,15 +545,15 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             $always_search_all = array();
         }
         $always_search = array();
-        if (isset($always_search_all[$this->_mgdschema_class]))
+        if (isset($always_search_all[$this->mgdschema_class]))
         {
-            $always_search = $always_search_all[$this->_mgdschema_class];
+            $always_search = $always_search_all[$this->mgdschema_class];
         }
         foreach ($always_search as $property)
         {
             if (!array_key_exists($property, $properties))
             {
-                debug_add("Property '{$property}' is set as always search, but is not a property in class '{$this->_mgdschema_class}'", MIDCOM_LOG_WARN);
+                debug_add("Property '{$property}' is set as always search, but is not a property in class '{$this->mgdschema_class}'", MIDCOM_LOG_WARN);
                 continue;
             }
             if (in_array($property, $search_properties))
@@ -573,9 +573,9 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             $never_search_all = array();
         }
         $never_search = array();
-        if (isset($never_search_all[$this->_mgdschema_class]))
+        if (isset($never_search_all[$this->mgdschema_class]))
         {
-            $never_search = $never_search_all[$this->_mgdschema_class];
+            $never_search = $never_search_all[$this->mgdschema_class];
         }
         foreach ($never_search as $property)
         {
@@ -593,9 +593,9 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             unset($search_properties[$key]);
         }
 
-        debug_print_r("Search properties for {$this->_mgdschema_class}: ", $search_properties);
+        debug_print_r("Search properties for {$this->mgdschema_class}: ", $search_properties);
         debug_pop();
-        $cache[$this->_mgdschema_class] = $search_properties;
+        $cache[$this->mgdschema_class] = $search_properties;
         return $search_properties;
     }
 
@@ -614,8 +614,8 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
     function get_link_properties()
     {
         // Check against static calling
-        if (   !isset($this->_mgdschema_class)
-            || empty($this->_mgdschema_class))
+        if (   !isset($this->mgdschema_class)
+            || empty($this->mgdschema_class))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('May not be called statically', MIDCOM_LOG_ERROR);
@@ -625,12 +625,12 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
 
         // Return cached results if we have them
         static $cache = array();
-        if (isset($cache[$this->_mgdschema_class]))
+        if (isset($cache[$this->mgdschema_class]))
         {
-            return $cache[$this->_mgdschema_class];
+            return $cache[$this->mgdschema_class];
         }
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Starting analysis for class {$this->_mgdschema_class}");
+        debug_add("Starting analysis for class {$this->mgdschema_class}");
 
         // Shorthands
         $ref =& $this->_mgd_reflector;
@@ -696,9 +696,9 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             unset($linkinfo);
         }
 
-        debug_print_r("Links for {$this->_mgdschema_class}: ", $links);
+        debug_print_r("Links for {$this->mgdschema_class}: ", $links);
         debug_pop();
-        $cache[$this->_mgdschema_class] = $links;
+        $cache[$this->mgdschema_class] = $links;
         return $links;
     }
 
