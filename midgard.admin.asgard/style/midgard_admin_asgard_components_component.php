@@ -24,7 +24,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $gravatar_url  = "http://www.gravatar.com/avatar.php?gravatar_id=" . md5($maintainer['email']) . "&amp;size=20";
                 $gravatar_url .= '&amp;default=' . urlencode('http://www.midgard-project.org/midcom-static/stock-icons/16x16/stock_person.png');
                 
-                echo "<li class=\"{$status} vcard\"><img class=\"photo\" src=\"{$gravatar_url}\" /><a href=\"mailto:{$maintainer['email']}\" class=\"email\"><span class=\"fn\">{$maintainer['name']}</a></a> (<a href=\"http://www.midgard-project.org/community/account/view/{$username}/\">{$username}</a>)</li>\n";
+                echo "<li class=\"{$status} vcard\"><span class=\"photoarea\"><img class=\"photo\" src=\"{$gravatar_url}\" /></span><a href=\"mailto:{$maintainer['email']}\" class=\"email\"><span class=\"fn\">{$maintainer['name']}</a></a> (<a href=\"http://www.midgard-project.org/community/account/view/{$username}/\">{$username}</a>)</li>\n";
             }
             
             echo "</ul>\n";

@@ -566,6 +566,18 @@ html > body #siteinfo
     list-style: none;
     padding: 0px;
     margin: 0px;
+    margin-bottom: 1em;
+}
+
+#content div.midgard_admin_asgard_components_component div.maintainers ul li span.photoarea
+{
+    display: block;
+    clear: left;
+    float: left;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    text-align: center;
 }
 
 #content div.midgard_admin_asgard_components_component div.maintainers ul li.passive,
