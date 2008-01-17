@@ -191,7 +191,20 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
 
         midgard_admin_asgard_plugin::get_common_toolbar($data);
 
-
+        // Set the breadcrumb data
+        $tmp = array();
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => '__mfa/asgard/',
+            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'),
+        );
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => "__mfa/asgard/{$this->type}/",
+            MIDCOM_NAV_NAME => $data['view_title'],
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        
         return true;
     }
 
