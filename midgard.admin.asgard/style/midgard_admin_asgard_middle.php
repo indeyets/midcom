@@ -64,6 +64,14 @@ if (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') !== 'no')
                             }
                         }
                         
+                        if (   isset($data['object'])
+                            && isset($data['object']->__new_class_name__))
+                        {
+                            $ref = midcom_helper_reflector::get($data['object']);
+                            $type_icon = $ref->get_object_icon($data['object']);
+                            echo "<span class=\"object_type_link\"><a href=\"{$prefix}__mfa/asgard/{$data['object']->__new_class_name__}/\">{$type_icon}</a></span> ";
+                        }
+                        
                         echo "{$data['view_title']}</h1>\n";
                         
                         ?>
