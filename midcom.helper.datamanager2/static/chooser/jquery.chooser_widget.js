@@ -34,9 +34,9 @@ jQuery.fn.extend({
         return new jQuery.midcom_helper_datamanager2_widget_chooser(this, options);
         // });
     },
-    midcom_helper_datamanager2_widget_chooser_add_result_item: function(item)
+    midcom_helper_datamanager2_widget_chooser_add_result_item: function(data, item)
     {
-        return this.trigger("add_result_item",[item]);
+        return this.trigger("add_result_item",[data, item]);
     },
     midcom_helper_datamanager2_widget_chooser_remove_result_item: function(item_id)
     {
@@ -78,6 +78,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
         enable_creation_mode();
         insert_after = creation_dialog;
     }
+    
+    input_element.show();
     
     var results_holder = jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder(options, input, insert_after, selectCurrent);    
     
@@ -295,8 +297,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
     }).bind("activate", function(event, data){
         input_element.focus();
         results_holder.activate_item(data);
-    }).bind("add_result_item", function(event, item){
-        results_holder.add_item(item);
+    }).bind("add_result_item", function(event, data, item){
+        results_holder.add_item(data, item);
     }).bind("remove_result_item", function(event, item_id){
         results_holder.del_item();
     });
@@ -307,6 +309,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
         
         creation_dialog = jQuery('#' + options.widget_id + '_creation_dialog');
         create_button = jQuery('#' + options.widget_id + '_create_button');
+        create_button.css('display', 'block');
         create_button.bind('click', function(){
             if (jQuery('#' + options.widget_id + '_creation_dialog').css('display') == 'block')
             {
@@ -459,7 +462,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         return true;
     }
     
-    function add(data)
+    function add(data, item)
     {
         // console.log('ResultsHolder add');
         // console.log(data);
@@ -467,13 +470,19 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         //console.log('data.guid: '+data.guid);
         
         var n=null;
-        jQuery.each( options.result_headers, function(i,n) {
-            //console.log("data."+n.name+": "+data[n.name]);
-        });
         
         var item_id = data[options.id_field];
         //console.log('options.id_field: '+options.id_field);
         //console.log('item_id: '+item_id);
+        
+        // var static_row = jQuery("#" + options.widget_id + "_existing_item_" + item_id + "_row");
+        // if (typeof static_row[0] != 'undefined')
+        // {
+        //     var static_input = jQuery("#" + options.widget_id + "_existing_item_" + item_id + "_input");
+        //     static_input.delete();
+        //     static_row.delete();
+        // }
+        
         if (! can_add(item_id))
         {
             //console.log("Can't add!");
@@ -482,7 +491,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         
         //console.log("Can add!");
         
-        if (!has_content)
+        if (! has_content)
         {
             has_content = true;
             element.show();
@@ -549,16 +558,17 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             li_elem.attr("pre_selected","true");
         }        
         
-        if (options.renderer_callback)
+        if (   options.renderer_callback
+            && typeof item != 'undefined')
         {
             //console.log("use renderer");
-            //TODO: Implement
-            // PONDER:  How should we handle the renderer_callback rendering?
+            // PONDER:  How should we really handle the renderer_callback rendering?
             //          We could use custom javascript function, or require the data
             //          object to contain a content field which is already formatted html...
-            var item_content = jQuery("<div>")
-            // .attr({ id: options.widget_id + '_result_item_'+data.id })
-            // .html( midcom_helper_datamanager2_widget_chooser_format_item(data, options) )
+            var item_content = jQuery("<div>").html(item)
+            .appendTo(li_elem);
+            var input_elem = jQuery("<input type=\"hidden\">")
+            .attr({ name: input_elem_name, value: 0, id: options.widget_id + '_result_item_'+item_id+'_input' })
             .appendTo(li_elem);
         }
         else
@@ -567,7 +577,6 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             .appendTo(li_elem);
             var input_elem = jQuery("<input type=\"hidden\">")
             .attr({ name: input_elem_name, value: 0, id: options.widget_id + '_result_item_'+item_id+'_input' })
-            .hide()
             .appendTo(li_elem);
         }
         
@@ -733,10 +742,10 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             data = d;
             dataToDom();
         },
-        add_item: function(item)
+        add_item: function(data, item)
         {
-            add(item);
-            var item_id = item[options.id_field];
+            add(data, item);
+            var item_id = data[options.id_field];
             activate(item_id);
         },
         del_item: function(item)

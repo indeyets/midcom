@@ -66,10 +66,10 @@ foreach ($map as $map_key)
     }
 }
 
-if (! empty($reflector_key))
-{
-    $_MIDCOM->componentloader->load_graceful('midgard.admin.asgard');
-}
+// if (! empty($reflector_key))
+// {
+//     
+// }
 
 debug_pop();
 debug_push_class('midcom_helper_datamanager2_widget_chooser_handler', 'search');
