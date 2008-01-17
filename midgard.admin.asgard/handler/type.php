@@ -114,6 +114,24 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
         
         return $qb->execute();
     }
+    
+    function _find_component()
+    {
+        // Figure out the component
+        $dummy = new $this->type;
+        $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($dummy);
+        $component = $_MIDCOM->dbclassloader->_mgdschema_class_handler[$midcom_dba_classname];
+        $help_component = '';
+        if ( $component == 'midcom')
+        {
+            $component = 'midgard';
+            $help_component = 'midgard.admin.asgard';
+        }
+
+        $help = new midcom_admin_help_help();
+        $this->_request_data['help'] =  $help->get_help_contents('asgard_'.$this->type, $help_component);
+        $this->_request_data['component'] =  $component;
+    }
 
     /**
      * Object editing view
@@ -126,11 +144,11 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
     function _handler_type($handler_id, $args, &$data)
     {
         $this->type = $args[0];
-        $root_types = midcom_helper_reflector_tree::get_root_classes();
-        /*if (!in_array($this->type, $root_types))
+        if (!isset($_MIDGARD['schema']['types'][$this->type]))
         {
-            return false;
-        }*/
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "MgdSchema type '{$args[0]}' not installed.");
+            // This will exit.
+        }
 
         $this->_prepare_request_data();
 
@@ -184,6 +202,20 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
             }
         }
         
+        $this->_find_component();
+        if ($data['component'] != 'midgard')
+        {
+            $data['asgard_toolbar']->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/components/{$data['component']}/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string($data['component'], $data['component']),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/package.png',
+                )
+            );
+        }
+        
         if (isset($_GET['search']))
         {
             $data['search_results'] = $this->_search($_GET['search']);
@@ -204,7 +236,7 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
             MIDCOM_NAV_NAME => $data['view_title'],
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-        
+
         return true;
     }
 
@@ -220,19 +252,6 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
         $data['current_type'] = $this->type;
         midcom_show_style('midgard_admin_asgard_middle');
 
-        $dummy = new $this->type;
-        $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($dummy);
-        $component = $_MIDCOM->dbclassloader->_mgdschema_class_handler[$midcom_dba_classname];
-        $help_component = '';
-        if ( $component == 'midcom')
-        {
-            $component = 'midgard';
-            $help_component = 'midgard.admin.asgard';
-        }
-
-        $help = new midcom_admin_help_help();
-        $data['help'] =  $help->get_help_contents('asgard_'.$this->type, $help_component);
-        $data['component'] =  $component;
         $data['type'] = $this->type;
         midcom_show_style('midgard_admin_asgard_type');
         midcom_show_style('midgard_admin_asgard_footer');

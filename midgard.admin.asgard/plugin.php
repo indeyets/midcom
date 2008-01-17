@@ -58,6 +58,17 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'variable_args' => 0,
             ),
             /**
+             * Component listing page
+             *
+             * Match /components/
+             */
+            'components_component' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_components', 'component'),
+                'fixed_args' => array('components'),
+                'variable_args' => 1,
+            ),
+            /**
              * Component configuration view
              *
              * Match /components/configuration/<component>

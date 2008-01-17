@@ -32,6 +32,53 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
 
         $_MIDCOM->load_library('midcom.helper.datamanager2');
     }
+    
+    function _load_component_data($name, $manifest)
+    {
+        $component_array = array();
+        $component_array['name'] = $name;
+        $component_array['title'] = $_MIDCOM->i18n->get_string($name, $name);
+
+        if (isset($manifest->_raw_data['icon']))
+        {
+            $component_array['icon'] = $manifest->_raw_data['icon'];
+        }
+        else
+        {
+            $component_array['icon'] = 'stock-icons/16x16/package.png';
+        }
+
+        if (isset($manifest->_raw_data['package.xml']['description']))
+        {
+            $component_array['description'] = $manifest->_raw_data['package.xml']['description'];
+        }
+        else
+        {
+            $component_array['description'] = '';
+        }
+        $component_array['version'] = $manifest->_raw_data['version'];
+
+        $component_array['toolbar'] = new midcom_helper_toolbar();
+        $component_array['toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard/components/configuration/{$name}",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+            )
+        );
+        /*$component_array['toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => 'tmp',
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('localization', 'midcom'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/locale.png',
+            )
+        );*/
+        return $component_array;
+    }
 
     function _list_components()
     {
@@ -52,55 +99,14 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
                 $type = 'libraries';
             }
 
-            $component_array = array();
-            $component_array['name'] = $name;
-            $component_array['title'] = $_MIDCOM->i18n->get_string($name, $name);
-
-            if (isset($manifest->_raw_data['icon']))
-            {
-                $component_array['icon'] = $manifest->_raw_data['icon'];
-            }
-            else
-            {
-                $component_array['icon'] = 'stock-icons/16x16/package.png';
-            }
-
-            if (isset($manifest->_raw_data['package.xml']['description']))
-            {
-                $component_array['description'] = $manifest->_raw_data['package.xml']['description'];
-            }
-            else
-            {
-                $component_array['description'] = '';
-            }
-            $component_array['version'] = $manifest->_raw_data['version'];
-
-            $component_array['toolbar'] = new midcom_helper_toolbar();
-            $component_array['toolbar']->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/components/configuration/{$name}",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
-                )
-            );
-            /*$component_array['toolbar']->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => 'tmp',
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('localization', 'midcom'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/locale.png',
-                )
-            );*/
+            $component_array = $this->_load_component_data($name, $manifest);
 
             $this->_request_data[$type][$name] = $component_array;
         }
     }
 
     /**
-     * Object editing view
+     * Component list view
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
@@ -136,7 +142,7 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
     }
 
     /**
-     * Shows the loaded object in editor.
+     * Shows the loaded components
      *
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
@@ -162,6 +168,69 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
             midcom_show_style('midgard_admin_asgard_components_item');
         }
         midcom_show_style('midgard_admin_asgard_components_footer');
+
+        midgard_admin_asgard_plugin::asgard_footer();
+    }
+    
+    /**
+     * Component display
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array &$data The local request data.
+     * @return boolean Indicating success.
+     */
+    function _handler_component($handler_id, $args, &$data)
+    {
+        $data['component'] = $args[0];
+        if (!isset($_MIDCOM->componentloader->manifests[$data['component']]))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Component '{$args[0]}' not installed.");
+            // This will exit.
+        }
+        
+        $data['component_data'] = $this->_load_component_data($data['component'], $_MIDCOM->componentloader->manifests[$data['component']]);
+    
+        $data['view_title'] = $data['component_data']['title'];
+        $_MIDCOM->set_pagetitle($data['view_title']);
+
+        $data['asgard_toolbar'] = new midcom_helper_toolbar();
+        midgard_admin_asgard_plugin::get_common_toolbar($data);
+
+
+        // Set the breadcrumb data
+        $tmp = array();
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => '__mfa/asgard/',
+            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'),
+        );
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => '__mfa/asgard/components/',
+            MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('components', 'midgard.admin.asgard'),
+        );
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => "__mfa/asgard/components/{$data['component']}",
+            MIDCOM_NAV_NAME => $data['component_data']['title'],
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+
+        return true;
+    }
+
+    /**
+     * Shows the loaded component
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
+    function _show_component($handler_id, &$data)
+    {
+        midgard_admin_asgard_plugin::asgard_header();
+        
+        midcom_show_style('midgard_admin_asgard_components_component');
 
         midgard_admin_asgard_plugin::asgard_footer();
     }
