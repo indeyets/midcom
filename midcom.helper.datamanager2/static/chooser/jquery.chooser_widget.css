@@ -127,6 +127,7 @@ input.chooser_widget_search_input
 }
 
 /* Creation dialog related ends */
+
 .chooser_widget_item_part_status
 {
     width: 20px;
@@ -154,22 +155,25 @@ input.chooser_widget_search_input
 .chooser_widget_result_item_hover
 {
     background-color: Highlight;
-    color: HighlightText
-    /*  background-color: #c3c3c3;
-    color: #000;*/
+    color: HighlightText;
 }
 .chooser_widget_result_item_hover .chooser_widget_item_part_status
 {
     background : url('../../stock-icons/16x16/approved_fade_50.png') center center no-repeat;
-    background-color: Highlight;
-    color: HighlightText
 }
 .chooser_widget_result_item_deleted
 {
-/*  color: black;
-    border: 1px solid red;*/
 }
 .chooser_widget_result_item_deleted .chooser_widget_item_part_status
 {
     background : url('../../stock-icons/16x16/cancel.png') center center no-repeat;
+}
+
+.chooser_widget_result_item_active.chooser_widget_result_item_hover .chooser_widget_item_part_status
+{
+    background : url('../../stock-icons/16x16/cancel.png') center center no-repeat;
+}
+.chooser_widget_result_item_deleted.chooser_widget_result_item_hover .chooser_widget_item_part_status
+{
+    background : url('../../stock-icons/16x16/approved_fade_50.png') center center no-repeat;
 }
