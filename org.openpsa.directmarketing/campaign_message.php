@@ -576,6 +576,10 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
             $mail->subject = $subject;
         }
         $mail->from = $from;
+        if (isset($data_array['reply-to']))
+        {
+            $mail->headers['Reply-To'] = $data_array['reply-to'];
+        }
         //Make sure we have some backend and parameters for it defined
         if (!isset($data_array['mail_send_backend']))
         {
