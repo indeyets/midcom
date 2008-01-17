@@ -188,6 +188,7 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
     {
         $_MIDCOM->auth->require_valid_user();
         $_MIDCOM->cache->content->enable_live_mode();
+        $this->_topic->require_do('net.nemein.discussion:moderation');
         
         $qb = new org_openpsa_qbpager('net_nemein_discussion_post_dba', 'net_nemein_discussion_posts');
         $qb->results_per_page = $this->_config->get('display_posts');
