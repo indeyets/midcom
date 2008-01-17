@@ -77,6 +77,10 @@ if (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') !== 'no')
                         ?>
                     </div>
 
+                    <?php
+                    $_MIDCOM->uimessages->show_simple();
+                    ?>
+
                     <div id="breadcrumb">
                         <?php
                         $nap = new midcom_helper_nav();

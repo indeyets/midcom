@@ -417,6 +417,11 @@ html > body #siteinfo
     text-align: center;
 }
 
+#content table.trash tr
+{
+    vertical-align: top;
+}
+
 #midgard_admin_asgard_resizer
 {
   position: fixed;
@@ -541,4 +546,44 @@ html > body #siteinfo
 {
     border: none;
     vertical-align: middle;
+}
+
+div.midcom_services_uimessages_holder div.midcom_services_uimessages_message
+{
+    background-color: #3465a4;
+    color: #ffffff;
+    padding: 2px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+div.midcom_services_uimessages_holder div.midcom_services_uimessages_message div.midcom_services_uimessages_message_type
+{
+    display: none;
+}
+div.midcom_services_uimessages_holder div.midcom_services_uimessages_message div.midcom_services_uimessages_message_title
+{
+    font-weight: bold;
+    display: inline;
+    margin-right: 1em;
+}
+div.midcom_services_uimessages_holder div.midcom_services_uimessages_message div.midcom_services_uimessages_message_msg
+{
+    display: inline;
+}
+div.midcom_services_uimessages_holder div.msu_ok
+{
+    background-color: #73d216;
+}
+div.midcom_services_uimessages_holder div.msu_warning
+{
+    background-color: #f57900;
+}
+div.midcom_services_uimessages_holder div.msu_error
+{
+    background-color: #cc0000;
 }
