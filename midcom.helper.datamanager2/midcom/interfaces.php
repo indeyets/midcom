@@ -38,6 +38,11 @@ class midcom_helper_datamanager2_interface extends midcom_baseclasses_components
             'controller.php',
         );
 
+        $this->_autoload_libraries = array
+        (
+            'midcom.helper.reflector'
+        );
+
         // Subclasses are loaded on demand, add this to the above list for syntax checking:
         /*
             'type/text.php',
