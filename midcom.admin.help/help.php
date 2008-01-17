@@ -110,8 +110,7 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
             {
                 $subject = $titles[1];
             }
-            else
-            if (preg_match("/\<h2\>(.*)\<\/h2\>/", $file_contents, $titles))
+            elseif (preg_match("/\<h2\>(.*)\<\/h2\>/", $file_contents, $titles))
             {
                 $subject = $titles[1];
             }
@@ -119,7 +118,7 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
             $files[$filename_parts[0]] = array
             (
                 'path' => "{$path}{$entry}",
-                'subject' => $subject,
+                'subject' => trim($subject),
                 'lang' => $filename_parts[1],
             );
         }
