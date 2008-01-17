@@ -975,7 +975,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         $type = $this->_object->__new_class_name__;
         $relocate_url = $type;
         $class_extends = $this->_config->get('class_extends');
-        if (array_key_exists($type,$class_extends))
+        if (   is_array($class_extends)
+            && array_key_exists($type, $class_extends))
         {
             $relocate_url = $class_extends[$type];
         }
