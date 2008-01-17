@@ -1,8 +1,8 @@
-<h1><?php echo sprintf($_MIDCOM->i18n->get_string('edit file %s', 'midcom.admin.styleeditor'), $data['filename']); ?></h1>
+<h1><?php echo sprintf($_MIDCOM->i18n->get_string('edit file %s', 'midgard.admin.asgard'), $data['filename']); ?></h1>
 
 <form method="post" enctype="multipart/form-data" class="datamanager2" action="&(_MIDGARD['uri']:h);" onsubmit="midgard_admin_asgard_file_edit.toggleEditor();">
     <fieldset>
-        <legend><?php echo $_MIDCOM->i18n->get_string('upload file', 'midcom.admin.styleeditor'); ?></legend>
+        <legend><?php echo $_MIDCOM->i18n->get_string('upload file', 'midgard.admin.asgard'); ?></legend>
         
         <input type="file" name="midgard_admin_asgard_file" />
     </fieldset>
@@ -32,15 +32,15 @@
         ?>
         <hr />
         <fieldset>
-            <legend><?php echo $_MIDCOM->i18n->get_string('edit text file', 'midcom.admin.styleeditor'); ?></legend>
+            <legend><?php echo $_MIDCOM->i18n->get_string('edit text file', 'midgard.admin.asgard'); ?></legend>
             
             <label>
-                <span><?php echo $_MIDCOM->i18n->get_string('filename', 'midcom.admin.styleeditor'); ?></span>
+                <span><?php echo $_MIDCOM->i18n->get_string('filename', 'midgard.admin.asgard'); ?></span>
                 <input class="text" type="text" name="midgard_admin_asgard_filename" value="<?php echo $data['file']->name; ?>" />
             </label>
 
             <label>
-                <span><?php echo $_MIDCOM->i18n->get_string('file contents', 'midcom.admin.styleeditor'); ?></span>
+                <span><?php echo $_MIDCOM->i18n->get_string('file contents', 'midgard.admin.asgard'); ?></span>
                 <textarea name="midgard_admin_asgard_contents" cols="60" rows="30" wrap="none" id="midgard_admin_asgard_file_edit" class="&(codepress_type); codepress"><?php
                     $f = $data['file']->open('r');
                     if ($f)
@@ -65,7 +65,7 @@
     $mime_icon = midcom_helper_get_mime_icon($data['file']->mimetype);
     ?>
     <fieldset>
-        <legend><?php echo $_MIDCOM->i18n->get_string('file information', 'midcom.admin.styleeditor'); ?></legend>
+        <legend><?php echo $_MIDCOM->i18n->get_string('file information', 'midgard.admin.asgard'); ?></legend>
         
         <div class="icon">
             <a href="&(file_url);">
@@ -74,7 +74,7 @@
             </a>
         </div>
         
-        <label><span><?php echo $_MIDCOM->i18n->get_string('url', 'midcom.admin.styleeditor'); ?></span>
+        <label><span><?php echo $_MIDCOM->i18n->get_string('url', 'midgard.admin.asgard'); ?></span>
             <input class="text" type="text" value="&(file_url);" readonly="readonly" />
         </label>
         <br />
