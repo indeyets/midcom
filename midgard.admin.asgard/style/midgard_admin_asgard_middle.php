@@ -72,7 +72,7 @@ if (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') !== 'no')
                             echo "<span class=\"object_type_link\"><a href=\"{$prefix}__mfa/asgard/{$data['object']->__new_class_name__}/\">{$type_icon}</a></span> ";
                         }
                         
-                        echo htmlentities("{$data['view_title']}") . "</h1>\n";
+                        echo mgd_format("{$data['view_title']}", 's') . "</h1>\n";
                         
                         ?>
                     </div>
