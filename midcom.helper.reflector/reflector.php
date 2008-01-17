@@ -346,11 +346,14 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         if (!$config_icon_map)
         {
             $icons2classes = $this->_config->get('create_type_magic');
-            foreach ($icons2classes as $icon => $classes)
+            if (is_array($icons2classes))
             {
-                foreach ($classes as $class)
+                foreach ($icons2classes as $icon => $classes)
                 {
-                    $config_icon_map[$class] = $icon;
+                    foreach ($classes as $class)
+                    {
+                        $config_icon_map[$class] = $icon;
+                    }
                 }
             }
             unset($icons2classes, $classes, $class, $icon);
