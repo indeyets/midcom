@@ -561,28 +561,34 @@ div.midcom_services_uimessages_holder div.midcom_services_uimessages_message
     margin-left: auto;
     margin-right: auto;
 }
+
 div.midcom_services_uimessages_holder div.midcom_services_uimessages_message div.midcom_services_uimessages_message_type
 {
     display: none;
 }
+
 div.midcom_services_uimessages_holder div.midcom_services_uimessages_message div.midcom_services_uimessages_message_title
 {
     font-weight: bold;
     display: inline;
     margin-right: 1em;
 }
+
 div.midcom_services_uimessages_holder div.midcom_services_uimessages_message div.midcom_services_uimessages_message_msg
 {
     display: inline;
 }
+
 div.midcom_services_uimessages_holder div.msu_ok
 {
     background-color: #73d216;
 }
+
 div.midcom_services_uimessages_holder div.msu_warning
 {
     background-color: #f57900;
 }
+
 div.midcom_services_uimessages_holder div.msu_error
 {
     background-color: #cc0000;
