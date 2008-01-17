@@ -51,6 +51,7 @@
     /* Define what modules this module depends on.  */
     'dependencies' => Array
     (
+        'midcom.helper.reflector' => array(),
         'midcom.helper.datamanager2' => array(),
     ),
 ),
