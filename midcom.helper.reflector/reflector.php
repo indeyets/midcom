@@ -342,32 +342,49 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
 
     function get_create_icon($type)
     {
-        // FIXME make 1. smarter 2. configurable
-        switch ($type)
+        static $config_icon_map = false;
+        if (!$config_icon_map)
         {
-            case 'midgard_topic':
-            case 'midgard_page':
-            case 'midgard_snippetdir':
-            case 'midgard_style':
-            case 'net_nemein_discussion_thread':
-                $icon = 'new-dir.png';
+            $icons2classes = $this->_config->get('create_type_magic');
+            foreach ($icons2classes as $icon => $classes)
+            {
+                foreach ($classes as $class)
+                {
+                    $config_icon_map[$class] = $icon;
+                }
+            }
+            unset($icons2classes, $classes, $class, $icon);
+        }
+
+        $icon_callback = array($type, 'get_create_icon');
+        switch (true)
+        {
+            // class has static method to tell us the answer ? great !
+            case (is_callable($icon_callback)):
+                $icon = call_user_func($icon_callback);
+            // configuration icon
+            case (isset($config_icon_map[$type])):
+                $icon = $config_icon_map[$type];
                 break;
-            case 'midgard_group':
-            case 'org_openpsa_organization':
-            case 'org_openpsa_campaign':
+
+            // heuristics magic (in stead of adding something here, take a look at config key "create_type_magic")
+            case (strpos($type, 'member') !== false):
+            case (strpos($type, 'organization') !== false):
                 $icon = 'stock_people-new.png';
                 break;
-            case 'midgard_person':
-            case 'org_openpsa_person':
-            case 'midgard_member':
-            case 'midgard_eventmember':
+            case (strpos($type, 'person') !== false):
+            case (strpos($type, 'member') !== false):
                 $icon = 'stock_person-new.png';
                 break;
-            case 'midgard_event':
-            case 'org_openpsa_event':
-            case 'net_nemein_calendar_event';
+            case (strpos($type, 'event') !== false):
                 $icon = 'stock_event_new.png';
                 break;
+
+            // Config default value 
+            case (isset($config_icon_map['__default__'])):
+                $icon = $config_icon_map['__default__'];
+                break;
+            // Fallback default value
             default:
                 $icon = 'new-text.png';
                 break;
@@ -377,91 +394,79 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
 
     function get_object_icon(&$obj)
     {
-        // Check against static calling
-        if (   !isset($this->mgdschema_class)
-            || empty($this->mgdschema_class))
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('May not be called statically', MIDCOM_LOG_ERROR);
-            debug_pop();
-            return false;
-        }
-
-        debug_push_class(__CLASS__, __FUNCTION__);
         $properties = get_object_vars($obj);
         if (empty($properties))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Could not list object properties, aborting", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
+        
+        static $config_icon_map = false;
+        if (!$config_icon_map)
+        {
+            $icons2classes = $this->_config->get('object_icon_magic');
+            foreach ($icons2classes as $icon => $classes)
+            {
+                foreach ($classes as $class)
+                {
+                    $config_icon_map[$class] = $icon;
+                }
+            }
+            unset($icons2classes, $classes, $class, $icon);
+        }
 
+        $object_class = get_class($obj);
+        $object_baseclass = midcom_helper_reflector::resolve_baseclass($object_class);
         switch(true)
         {
+            // object knows it's icon, how handy!
         	case (method_exists($obj,'get_icon')):
         		$icon = $obj->get_icon();
         		break;
-            // FIXME make 1. smarter 2. configurable
-            case (is_a($obj, 'midgard_person')):
-            case (is_a($obj, 'org_openpsa_person')):
+
+            // configuration icon
+            case (isset($config_icon_map[$object_class])):
+                $icon = $config_icon_map[$object_class];
+                break;
+            case (isset($config_icon_map[$object_baseclass])):
+                $icon = $config_icon_map[$object_baseclass];
+                break;
+            
+            // heuristics magic (in stead of adding something here, take a look at config key "object_icon_magic")
+            case (strpos($object_class, 'person') !== false):
                 $icon = 'stock_person.png';
                 break;
-
-            case (is_a($obj, 'midgard_topic')):
-            case (is_a($obj, 'midgard_snippetdir'));
-            case (is_a($obj, 'midgard_style')):
-            case (is_a($obj, 'midgard_page')):
-            case (is_a($obj, 'net_nemein_discussion_thread')):
-            case (is_a($obj, 'org_openpsa_products_product_group')):
-                $icon='stock_folder.png';
-                break;
-            case (is_a($obj, 'midgard_event')):
-            case (is_a($obj, 'org_openpsa_event')):
-            case (is_a($obj, 'net_nemein_calendar_event')):
+            case (strpos($object_class, 'event') !== false):
                 $icon='stock_event.png';
                 break;
-            case (is_a($obj, 'midgard_eventmember')):
-            case (is_a($obj, 'midgard_member')):
-            case (is_a($obj, 'midgard_group')):
-            case (is_a($obj, 'org_openpsa_organization')):
-            case (is_a($obj, 'net_nehmer_buddylist_entry_db')):
-            case (is_a($obj, 'org_openpsa_campaign')):
+            case (strpos($object_class, 'member') !== false):
+            case (strpos($object_class, 'organization') !== false):
                 $icon='stock_people.png';
                 break;
             case (is_a($obj, 'midgard_host')):
                 $icon='stock_internet.png';
                 break;
-            case (is_a($obj, 'midgard_pageelement')):
-            case (is_a($obj, 'midgard_element')):
-                $icon = 'text-x-generic-template.png';
-                break;
-            case (is_a($obj, 'org_openpsa_notifications_notification')):
-            case (is_a($obj, 'net_nemein_rss_feed')):
-                $icon = 'stock_news.png';
-                break;
-            case (is_a($obj, 'org_routamc_positioning_country')):
-                $icon = 'locale.png';
-                break;
-            case (is_a($obj, 'org_routamc_positioning_location')):
-                $icon = 'geoclue.png';
-                break;
-            case (is_a($obj, 'net_nemein_discussion_post')):
-                $icon='stock-discussion.png';
-                break;
-            case (is_a($obj, 'org_openpsa_products_product')):
-                $icon='package.png';
-                break;
-            case (is_a($obj, 'org_routamc_photostream_photo')):
-                $icon='camera.png';
-                break;
             case (is_a($obj, 'midgard_snippet')):
                 $icon='script.png';
                 break;
+            case (strpos($object_class, 'element') !== false):
+                $icon = 'text-x-generic-template.png';
+                break;
+
+            // Config default value 
+            case (isset($config_icon_map['__default__'])):
+                $icon = $config_icon_map['__default__'];
+                break;
+            // Fallback default value
             default:
                 $icon = 'document.png';
+                break;
         }
 
-        $icon = "<img src='" . MIDCOM_STATIC_URL . "/stock-icons/16x16/{$icon}' align='absmiddle' border='0' alt='". get_class($obj) . " '/> ";
+        // TODO: What if the icon is not in stock-icons/16x16 ?? especially the ->get_icon should probably be able to specify components static path
+        $icon = "<img src='" . MIDCOM_STATIC_URL . "/stock-icons/16x16/{$icon}' align='absmiddle' border='0' alt='{$object_class}'/> ";
         debug_pop();
         return $icon;
     }

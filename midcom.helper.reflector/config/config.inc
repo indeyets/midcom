@@ -26,6 +26,8 @@
     'midgard_attachment',
     'midgard_language',
     'midgard_quota',
+    /* members should not be root classes by MgSchema, workaround a bug */
+    'midgard_member',
     /* These use GUID to link to many parents */
     'net_nemein_tag_link',
     'net_nehmer_comments_comment_db',
@@ -60,6 +62,71 @@
 'never_search_fields' => array
 (
 ),
-
-'experimental_root_class_detection' => false,
+// keyed by icon, values are arrays of classes (__default__ marking the default icon) names, used to determine icon to use for object
+'object_icon_magic' => array
+(
+    'document.png' => array
+    (
+        '__default__',
+    ),
+    'stock_folder.png' => array
+    (
+        'midgard_topic',
+        'midgard_snippetdir',
+        'midgard_style',
+        'midgard_page',
+        'net_nemein_discussion_thread',
+        'org_openpsa_products_product_group',
+    ),
+    'stock_people.png' => array
+    (
+        'net_nehmer_buddylist_entry_db',
+        'org_openpsa_campaign',
+    ),
+    'stock_news.png' => array
+    (
+        'org_openpsa_notifications_notification',
+        'net_nemein_rss_feed',
+    ),
+    'locale.png' => array
+    (
+        'org_routamc_positioning_country',
+    ),
+    'geoclue.png' => array
+    (
+        'org_routamc_positioning_location',
+    ),
+    'stock-discussion.png' => array
+    (
+        'net_nemein_discussion_post',
+    ),
+    'package.png' => array
+    (
+        'org_openpsa_products_product',
+    ),
+    'camera.png' => array
+    (
+        'org_routamc_photostream_photo',
+    ),
+),
+// This works just like object_icon_magic
+'create_type_magic' => array
+(
+    'new-text.png' => array
+    (
+        '__default__',
+    ),
+    'new-dir.png' => array
+    (
+        'midgard_topic',
+        'midgard_page',
+        'midgard_snippetdir',
+        'midgard_style',
+        'net_nemein_discussion_thread',
+    ),
+    'stock_people-new.png' => array
+    (
+        'org_openpsa_campaign',
+    ),
+),
 
