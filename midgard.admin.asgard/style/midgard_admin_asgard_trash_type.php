@@ -37,7 +37,19 @@ function midgard_admin_asgard_trash_type_show($object, $indent = 0, $prefix = ''
     {
         $disabled = ' disabled="disabled"';
     }
-    
+
+    if (is_array($label))
+    {
+        foreach ($label as $property)
+        {
+            if (   isset($object->$property)
+                && $object->$property)
+            {
+                $label = $property;
+                break;
+            }
+        }
+    }
     echo "{$prefix}    <td class=\"checkbox\"><input type=\"checkbox\" name=\"undelete[]\"{$disabled} value=\"{$object->guid}\" id=\"{$object->guid}\" /></td>\n";
     //echo "{$prefix}    <td class=\"label\" style=\"padding-left: {$indent}px\"><label for=\"{$object->guid}\"><a href=\"{$url_prefix}__mfa/asgard/object/view/{$object->guid}/\">{$icon} {$object->$label}</a></label></td>\n";
     echo "{$prefix}    <td class=\"label\" style=\"padding-left: {$indent}px\"><label for=\"{$object->guid}\">{$icon} {$object->$label}</label></td>\n";

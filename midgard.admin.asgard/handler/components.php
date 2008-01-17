@@ -205,6 +205,15 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
         midgard_admin_asgard_plugin::get_common_toolbar($data);
 
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard/components/configuration/{$data['component']}",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+            )
+        );
 
         // Set the breadcrumb data
         $tmp = array();
