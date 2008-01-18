@@ -54,5 +54,6 @@
         'midcom.helper.reflector' => array(),
         'midcom.helper.datamanager2' => array(),
         'midcom.admin.help' => array(),
+        'midcom.admin.libconfig' => array(),
     ),
 ),
