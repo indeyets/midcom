@@ -41,6 +41,8 @@ class fi_hut_loginbroker_handler_index  extends midcom_baseclasses_components_ha
         $this->_request_data['password'] =& $this->_password;
         $this->_request_data['person'] =& $this->_person;
         $this->_request_data['l10n'] =& $this->_l10n;
+        // The native plugins can use just $this->_config but if external plugins need to read our config they can use this property
+        $this->_request_data['loginbroker_config'] =& $this->_config;
     }
 
     function cookies_domainpath($destsite)
@@ -175,7 +177,7 @@ class fi_hut_loginbroker_handler_index  extends midcom_baseclasses_components_ha
              * The following code must only be executed if 'allow_create_user' is true
              * AND 'create_user_callbacks' is not empty
              */
-            $this->_do_callbacks($callbacks, 'create', &$data);
+            $this->_do_callbacks($callbacks, 'create', $data);
             if (!empty($data['password']))
             {
                 return true;
@@ -264,13 +266,13 @@ class fi_hut_loginbroker_handler_index  extends midcom_baseclasses_components_ha
         $_MIDCOM->auth->request_sudo('fi.hut.loginbroker');
         if (!$this->_check_user($data))
         {
-            // The method should generate its own errors but here we trap anyway
+            // The method should generate it's own errors but here we trap anyway
             return false;
         }
         $this->_update_user($data);
         if (!$this->_login_user($data))
         {
-            // The method should generate its own errors but here we trap anyway
+            // The method should generate it's own errors but here we trap anyway
             return false;
         }
         $_MIDCOM->auth->drop_sudo();
@@ -345,15 +347,13 @@ class fi_hut_loginbroker_handler_index  extends midcom_baseclasses_components_ha
                 debug_pop();
                 continue;
             }
-            // Do we want to do something after successful store ??
+            // Do we want to do something after succesfull store ??
         }
     }
 
     /**
      * This function does the output.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
+     *  
      */
     function _show_index($handler_id, &$data)
     {

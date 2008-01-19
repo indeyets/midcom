@@ -9,6 +9,7 @@
 'create_user_callbacks' => array /* callback class to use when creating new user*/
 (
     'fi_hut_loginbroker_callbacks_createperson',
+    'fi_hut_loginbroker_callbacks_affiliations',
 ),
 'fi_hut_loginbroker_callbacks_createperson_config' => array /* callback configurations should be namespaced like this */
 (
@@ -26,6 +27,16 @@
 'update_user_callbacks' => array /* before redirecting call these classes to update user info from the remote login/identity provider */
 (
     'fi_hut_loginbroker_callbacks_updateperson',
+    'fi_hut_loginbroker_callbacks_affiliations',
+),
+'fi_hut_loginbroker_callbacks_affiliations_config' => array
+(
+    'enable' => false, /* quick way to enable/disable the plugin without messing with other configs */
+    'header' => 'HTTP_SHIB_EPA', /* <AttributeRule Name="urn:mace:dir:attribute-def:eduPersonAffiliation" Header="SHIB_EPA" Alias="affiliation"> */
+    'delimiter' => ';', /* how the header delimits the affiliation values */
+    'map' => array /* keys are affiliations values local group guids */
+    (
+    ),
 ),
 'username_header' => 'REMOTE_USER', /* which $_SERVER key has the username */
 'property_map' => array /* Map $_SERVER keys to keys of the property array passed to the callbacks */
