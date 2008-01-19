@@ -112,7 +112,8 @@
  * $template->set_parameters($parameters);
  * $template->parse();
  * $failed = $template->send($this->dm->data["email"]);
- * if ($failed > 0) {
+ * if ($failed > 0)
+ * {
  *     debug_add("$failed E-Mails could not be sent.", MIDCOM_LOG_WARN);
  * }
  * </code>
@@ -131,7 +132,8 @@
  *
  * @package midcom
  */
-class midcom_helper_mailtemplate {
+class midcom_helper_mailtemplate
+{
 
     /**
      * The Mail template, a mailtemplate datamanager type.
@@ -230,7 +232,8 @@ class midcom_helper_mailtemplate {
      *
      * @param Array $template	The value of a Datamanager mailtemplate type
      */
-    function midcom_helper_mailtemplate ($template) {
+    function midcom_helper_mailtemplate ($template)
+    {
         /* First, we include all necessary PEAR classes */
         debug_add('Mailtemplate::c\'tor: loading PEAR package Mail (if not already required)...');
         require_once("Mail.php");
@@ -259,7 +262,8 @@ class midcom_helper_mailtemplate {
      * @param Array $parameters	The template parameters.
      * @param string $encoding	The character encoding in which $parameters are passed.
      */
-    function set_parameters ($parameters, $encoding = null) {
+    function set_parameters ($parameters, $encoding = null)
+    {
         $this->_parameters = $parameters;
         $this->_parameters_encoding = $encoding;
     }
@@ -269,7 +273,8 @@ class midcom_helper_mailtemplate {
      *
      * @return Array	Current parameter set.
      */
-    function get_parameters () {
+    function get_parameters ()
+    {
         return $this->_parameters;
     }
 
@@ -278,7 +283,8 @@ class midcom_helper_mailtemplate {
      *
      * @return string	The encoding name.
      */
-    function get_parameters_encoding () {
+    function get_parameters_encoding ()
+    {
         return $this->_parameters_encoding;
     }
 
@@ -288,7 +294,8 @@ class midcom_helper_mailtemplate {
      * Internally, it relies heavily on Perl Regular Expressions to
      * replace the template parameters with their values.
      */
-    function parse () {
+    function parse ()
+    {
         debug_push("Mailtemplate::parse");
         /* For each parameter, add values to the preg search and
          * replace arrays, and, where necessary, do some charset
@@ -298,7 +305,8 @@ class midcom_helper_mailtemplate {
         $patterns = Array();
         $replacements = Array();
 
-        foreach ($this->_parameters as $key => $value) {
+        foreach ($this->_parameters as $key => $value)
+        {
             /* Different parameters:
              * - Single value (anything that is neither an object or an array), replace directly
              * - Array and objects, allow access to subkeys or dump the whole thing.
@@ -318,26 +326,34 @@ class midcom_helper_mailtemplate {
              *
              * Note, that all key's will be compared case-insensitive.
              */
-            if (is_array($value)) {
+            if (is_array($value))
+            {
                 $patterns[] = "/__{$key}__/";
                 $replacements[] = $this->_charset_convert($this->_format_array($value));
                 $patterns[] = "/__{$key}_([^ \.>\"-]*?)__/e";
                 $replacements[] =  '$this->_charset_convert($this->_parameters["' . $key . '"]["\1"])';
-            } else if (is_object($value)) {
-                if (is_a($value, "midcom_helper_datamanager")) {
+            }
+            else if (is_object($value))
+            {
+                if (is_a($value, "midcom_helper_datamanager"))
+                {
                     $patterns[] = "/__{$key}__/";
                     $replacements[] = $this->_charset_convert($this->_format_dm($value));
                     $patterns[] = "/__{$key}_([^ \.>\"-]*?)__/e";
                     $replacements[] = '$this->_charset_convert($this->_parameters["'
                                       . $key . '"]->_datatypes["\1"]->get_csv_data())';
-                } else {
+                }
+                else
+                {
                     $patterns[] = "/__{$key}__/";
                     $replacements[] = $this->_charset_convert($this->_format_object($value));
                     $patterns[] = "/__{$key}_([^ \.>\"-]*?)__/e";
                     $replacements[] = '$this->_charset_convert($this->_parameters["'
                                       . $key . '"]->\1)';
                 }
-            } else {
+            }
+            else
+            {
                 $patterns[] = "/__{$key}__/";
                 $replacements[] = $this->_charset_convert($value);
             }
@@ -372,8 +388,10 @@ class midcom_helper_mailtemplate {
      * @param mixed $to		Recipients, either a single string (one recipient), or an Array of strings (multiple recipients).
      * @return boolean			Indicating success.
      */
-    function send ($to) {
-        if (! $this->_parsed) {
+    function send ($to)
+    {
+        if (! $this->_parsed)
+        {
             debug_add("Template was not parsed, doing it now.");
             $this->parse();
         }
@@ -391,7 +409,8 @@ class midcom_helper_mailtemplate {
             $all = array_merge($all, $cc);
             debug_print_r("CC Recipients:", $cc);
         }
-        if ($this->_template['bcc'] != '') {
+        if ($this->_template['bcc'] != '')
+        {
             $bcc = explode(",", $this->_template["bcc"]);
             $all = array_merge($all, $bcc);
             debug_print_r("BCC Recipients:", $bcc);
@@ -415,10 +434,13 @@ class midcom_helper_mailtemplate {
 
         $params = Array();
         $params["head_charset"] = $this->_template["charset"];
-        if (strpos($this->_template["body_mime_type"], "html") !== false) {
+        if (strpos($this->_template["body_mime_type"], "html") !== false)
+        {
             $params["html_charset"] = $this->_template["charset"];
             $this->_mail_mime->setHTMLBody($this->_body);
-        } else {
+        }
+        else
+        {
             $params["text_charset"] = $this->_template["charset"];
             $this->_mail_mime->setTXTBody($this->_body);
         }
@@ -447,12 +469,16 @@ class midcom_helper_mailtemplate {
         debug_print_r("Body:", $body);
 
         /* Disabled, as CC and the like are processed by the PEAR packages.
-        foreach ($all as $address) {
+        foreach ($all as $address)
+        {
             $result = $this->_mail->send($address, $hdrs, $body);
-            if ($result === true) {
+            if ($result === true)
+            {
                 debug_add("Successfully sent to $address");
                 $this->success[$address] = "OK";
-            } else {
+            }
+            else
+            {
                 debug_add("Failed to send to $address, error was: " . $result->toString);
                 $this->failed[$address] = $result->toString();
             }
@@ -478,17 +504,21 @@ class midcom_helper_mailtemplate {
      * @return string		String representation.
      * @access private
      */
-    function _format_object ($obj) {
+    function _format_object ($obj)
+    {
         $result = "";
-        foreach (get_object_vars($obj) as $key => $value) {
+        foreach (get_object_vars($obj) as $key => $value)
+        {
             if (substr($key, 0, 1) == "_")
                 continue;
             $key = trim($key);
-            if (is_object($value)) {
+            if (is_object($value))
+            {
                 $value = get_class($value) . " object";
                 debug_add("The key {$key} contains another object of type {$value}, can't dump this.");
             }
-            if (is_array($value)) {
+            if (is_array($value))
+            {
                 $value = "Array";
                 debug_add("The key {$key} contains an array, can't dump this.");
             }
@@ -512,11 +542,16 @@ class midcom_helper_mailtemplate {
      * @return string		String representation.
      * @access private
      */
-    function _format_dm ($dm) {
+    function _format_dm ($dm)
+    {
         $result = "";
-        foreach ($dm->_fields as $name => $desc) {
+        foreach ($dm->_fields as $name => $desc)
+        {
             if ($desc["hidden"] == true || $desc["aisonly"] == true)
+            {
                 continue;
+            }
+            
             $key = trim($desc["description"]);
             $value = trim($dm->_datatypes[$name]->get_csv_data());
             $result .= "{$key}: ";
@@ -535,15 +570,20 @@ class midcom_helper_mailtemplate {
      * @return string		String representation.
      * @access private
      */
-    function _format_array ($array) {
+    function _format_array ($array)
+    {
         $result = "";
-        foreach ($array as $key => $value) {
+        foreach ($array as $key => $value)
+        {
             $key = trim($key);
-            if (is_object($value)) {
+            if (is_object($value))
+            {
                 $value = get_class($value) . " object";
                 debug_add("The key {$key} contains another object of type {$value}, can't dump this.");
             }
-            if (is_array($value)) {
+            
+            if (is_array($value))
+            {
                 $value = "Array";
                 debug_add("The key {$key} contains an array, can't dump this.");
             }
@@ -588,7 +628,5 @@ class midcom_helper_mailtemplate {
         }
         return $this->_i18n->iconv($src, $dst, $string);
     }
-
 }
-
 ?>
