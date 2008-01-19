@@ -579,30 +579,21 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      */
     function send_registration_mail(&$person, $password, $activation_link, $config)
     {
-        $from = $config->get('activation_mail_sender');
-        if (! $from)
+        $mail = new org_openpsa_mail();
+        $mail->from = $config->get('activation_mail_sender');
+        
+        if (!$mail->from)
         {
-            $from = $person->email;
+            $mail->from = $person->email;
         }
 
-        $template = array
-        (
-            'from' => $from,
-            'reply-to' => '',
-            'cc' => '',
-            'bcc' => '',
-            'x-mailer' => '',
-            'subject' => $_MIDCOM->i18n->get_string($config->get('activation_mail_subject'), 'net.nehmer.account'),
-            'body' => $_MIDCOM->i18n->get_string($config->get('activation_mail_body'), 'net.nehmer.account'),
-            'body_mime_type' => 'text/plain',
-            'charset' => 'UTF-8',
-        );
-
-        $mail = new midcom_helper_mailtemplate($template);
-
+        $mail->subject = $_MIDCOM->i18n->get_string($config->get('activation_mail_subject'), 'net.nehmer.account');
+        $mail->body = $_MIDCOM->i18n->get_string($config->get('activation_mail_body'), 'net.nehmer.account');
+        $mail->to = $person->email;
+        
         // Get the commonly used parameters
-        $parameters = net_nehmer_account_viewer::get_mail_parameters($person);
-
+        $parameters = net_nehmer_account_viewer::get_mail_parameters($this->_person);
+        
         // Extra parameters
         $parameters['USERNAME'] = $person->username;
         if (isset($person->name))
@@ -620,11 +611,13 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
 
         $parameters['PASSWORD'] = $password;
         $parameters['ACTIVATIONLINK'] = $activation_link;
-
-        // Set the parameters and parse the message
-        $mail->set_parameters($parameters);
-        $mail->parse();
-        return $mail->send($person->email);
+        
+        // Convert the parameters
+        $mail->subject = net_nehmer_account_viewer::parse_parameters($parameters, $mail->subject);
+        $mail->body = net_nehmer_account_viewer::parse_parameters($parameters, $mail->body);
+        
+        // Finally send the email
+        return $mail->send();
     }
 
      /**
@@ -637,34 +630,25 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      */
     function send_password_reset_mail($person, $link, &$config)
     {
-        $from = $config->get('password_reset_mail_sender');
-        if (! $from)
+        $mail = new org_openpsa_mail();
+        $mail->from = $config->get('password_reset_mail_sender');
+        
+        if (!$mail->from)
         {
-            $from = $person->email;
+            $mail->from = $person->email;
         }
 
-        $template = array
-        (
-            'from' => $from,
-            'reply-to' => '',
-            'cc' => '',
-            'bcc' => '',
-            'x-mailer' => '',
-            'subject' => $_MIDCOM->i18n->get_string($config->get('lost_password_reset_mail_subject'), 'net.nehmer.account'),
-            'body' => $_MIDCOM->i18n->get_string($config->get('lost_password_reset_mail_body'), 'net.nehmer.account'),
-            'body_mime_type' => 'text/plain',
-            'charset' => 'UTF-8',
-        );
-
-        $mail = new midcom_helper_mailtemplate($template);
-
-        $prefix = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-
+        $mail->subject = $_MIDCOM->i18n->get_string($config->get('lost_password_reset_mail_subject'), 'net.nehmer.account');
+        $mail->body = $_MIDCOM->i18n->get_string($config->get('lost_password_reset_mail_body'), 'net.nehmer.account');
+        $mail->to = $person->email;
+        
         // Get the commonly used parameters
-        $parameters = net_nehmer_account_viewer::get_mail_parameters($person);
-        $parameters['CURRENTADDRESS'] = "{$prefix}lostpassword/reset/";
-
+        $parameters = net_nehmer_account_viewer::get_mail_parameters($this->_person);
+        
         // Extra parameters
+        $prefix = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        $parameters['CURRENTADDRESS'] = "{$prefix}lostpassword/reset/";
+        
         $parameters['USERNAME'] = $person->username;
         if (isset($person->name))
         {
@@ -679,13 +663,15 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             $parameters['LASTNAME'] = $person->lastname;
         }
 
+        $parameters['PASSWORD'] = $password;
         $parameters['PASSWORD_RESET_LINK'] = $link;
-
-        // Set the parameters and parse the message
-        $mail->set_parameters($parameters);
-        $mail->parse();
-
-        return $mail->send($person->email);
+        
+        // Convert the parameters
+        $mail->subject = net_nehmer_account_viewer::parse_parameters($parameters, $mail->subject);
+        $mail->body = net_nehmer_account_viewer::parse_parameters($parameters, $mail->body);
+        
+        // Finally send the email
+        return $mail->send();
     }
 
 
@@ -712,6 +698,144 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         );
 
         return $parameters;
+    }
+    
+    /**
+     * Parse the parameters
+     * 
+     * @access static public
+     * @param Array $parameters    Presented parameters
+     * @param String source        String to be parsed
+     */
+    function parse_parameters($parameters, $source)
+    {
+        foreach ($parameters as $key => $value)
+        {
+            /* Different parameters:
+             * - Single value (anything that is neither an object or an array), replace directly
+             * - Array and objects, allow access to subkeys or dump the whole thing.
+             * - Datamanager objects have special treatment with datatype recognition.
+             *
+             * Syntax for single values:
+             * __KEY__ will be replaced by its value
+             *
+             * Syntax for arrays, objects and datamanager classes:
+             * __KEY__ will yield a dump of the complete object
+             * __KEY_SUBKEY__ will yield the value of the element SUBKEY of the given
+             *  array or object
+             *
+             * Datamanager notes: Currently the get_csv interface to get a string
+             * representation of a given datatype. Should be ok for now, at least
+             * until the Datamanager v3 arrives.
+             *
+             * Note, that all key's will be compared case-insensitive.
+             */
+            if (is_array($value))
+            {
+                $patterns[] = "/__{$key}__/";
+                $replacements[] = net_nehmer_account_viewer::format_array($value);
+                $patterns[] = "/__{$key}_([^ \.>\"-]*?)__/e";
+                $replacements[] =  '$parameters["' . $key . '"]["\1"]';
+            }
+            else if (is_object($value))
+            {
+                if (is_a($value, "midcom_helper_datamanager"))
+                {
+                    $patterns[] = "/__{$key}__/";
+                    $replacements[] = net_nehmer_account_viewer::format_dm($value);
+                    $patterns[] = "/__{$key}_([^ \.>\"-]*?)__/e";
+                    $replacements[] = '$parameters["'. $key . '"]->_datatypes["\1"]->get_csv_data()';
+                }
+                else
+                {
+                    $patterns[] = "/__{$key}__/";
+                    $replacements[] = net_nehmer_account_viewer::format_object($value);
+                    $patterns[] = "/__{$key}_([^ \.>\"-]*?)__/e";
+                    $replacements[] = '$parameters["' . $key . '"]->\1';
+                }
+            }
+            else
+            {
+                $patterns[] = "/__{$key}__/";
+                $replacements[] = $value;
+            }
+        }
+        
+        return preg_replace($patterns, $replacements, $source);
+    }
+    
+    /**
+     * Helper function to convert an object into a string representation.
+     *
+     * Uses word wrapping and skips members beginning with an underscore
+     * (which are private per definition). Relies on reflection to parse
+     * the object.
+     *
+     * @param mixed $obj	Any PHP object that can be parsed with get_object_vars().
+     * @return string		String representation.
+     * @access public
+     * @static
+     */
+    function format_object ($obj)
+    {
+        $result = "";
+        foreach (get_object_vars($obj) as $key => $value)
+        {
+            if (substr($key, 0, 1) == "_")
+            {
+                continue;
+            }
+            
+            $key = trim($key);
+            if (is_object($value))
+            {
+                $value = get_class($value) . " object";
+            }
+            if (is_array($value))
+            {
+                $value = "Array";
+            }
+            $value = trim($value);
+            $result .= "$key: ";
+            $result .= wordwrap($value, 74 - strlen($key), "\n" . str_repeat(" ", 2 + strlen($key)));
+            $result .= "\n";
+        }
+        
+        return $result;
+    }
+
+    /**
+     * Helper function to convert an array into a string representation
+     *
+     * Uses word wrapping and skips recursive Arrays or objects.
+     *
+     * @param Array $array	The array to be dumped.
+     * @return string		String representation.
+     * @access public
+     * @static
+     */
+    function format_array ($array)
+    {
+        $result = "";
+        foreach ($array as $key => $value)
+        {
+            $key = trim($key);
+            if (is_object($value))
+            {
+                $value = get_class($value) . " object";
+            }
+            
+            if (is_array($value))
+            {
+                $value = "Array";
+            }
+            $value = trim($value);
+            $result .= "{$key}: ";
+            $result .= wordwrap($value, 74 - strlen($key), "\n" . str_repeat(" ", 2 + strlen($key)));
+            $result .= "\n";
+        }
+        
+        return $result;
     }
 }
 ?>

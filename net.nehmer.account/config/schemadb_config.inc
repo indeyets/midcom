@@ -180,7 +180,7 @@
         ),
         'allow_view_by_username' => array
         (
-            'title' => 'allow publishing user accounts',
+            'title' => 'allow viewing by username',
             'storage' => array
             (
                 'location' => 'configuration',

@@ -126,7 +126,7 @@ Do you really want to cancel your membership?
 ---STRINGEND
 
 ---STRING cancelled
-Peruutettu
+Cancelled
 ---STRINGEND
 
 ---STRING change email
@@ -194,6 +194,10 @@ Email subject
 Enter account Details
 ---STRINGEND
 
+---STRING failed to find user with given email
+Failed to find user with given email.
+---STRINGEND
+
 ---STRING failed to send the activation message to %s
 Failed to send the activation message to %s
 ---STRINGEND
@@ -238,6 +242,28 @@ Last login
 Lastname
 ---STRINGEND
 
+---STRING lost password
+Lost password
+---STRINGEND
+
+---STRING lost password helptext
+If you cannot remember your password, please enter your username in the form below. A new random password will be set and sent to the email address registered in your account.
+---STRINGEND
+
+---STRING lost password reset helptext
+If you cannot remember your password, please enter your email registered for your account in the form below. A confirmation link will be sent to the given email address.
+---STRINGEND
+
+---STRING lost_password_reset_mail_body
+Click the link below to verify this request and change your password.
+
+__PASSWORD_RESET_LINK__
+---STRINGEND
+
+---STRING lost_password_reset_mail_subject
+You have requested new password for your account
+---STRINGEND
+
 ---STRING make online state visible to other users
 Make your online state visible to other users
 ---STRINGEND
@@ -252,6 +278,11 @@ Message sent to %s
 
 ---STRING multiple
 Multiple
+---STRINGEND
+
+---STRING multiple users found with given email
+Multiple users found with given email!
+Enter your username also
 ---STRINGEND
 
 ---STRING name
@@ -290,6 +321,10 @@ The old password supplied is invalid.
 Online state
 ---STRINGEND
 
+---STRING password already reset
+Your password has already been resetted. Check your email for new password.
+---STRINGEND
+
 ---STRING password changed.
 Your password has been changed.
 ---STRINGEND
@@ -298,28 +333,12 @@ Your password has been changed.
 The password must be at least %d characters long.
 ---STRINGEND
 
----STRING lost password
-Lost password
----STRINGEND
-
----STRING lost password helptext
-If you cannot remember your password, please enter your username in the form below. A new random password will be set and sent to the E-Mail address registered in your account.
----STRINGEND
-
----STRING lost password reset helptext
-If you cannot remember your password, please enter your E-Mail registered for your account in the form below. A confirmation link will be sent to the given E-Mail address.
----STRINGEND
-
----STRING password already reset
-Your password has already been resetted. Check your email for new password.
+---STRING password reset request sent, check your email.
+Reset confirmation link has been sent to your email. Follow that link to complete this request.
 ---STRINGEND
 
 ---STRING password reset, mail sent.
-Your password has been reset. The new password has been sent to you by E-Mail.
----STRINGEND
-
----STRING password reset request sent, check your email.
-Reset confirmation link has been sent to your email. Follow that link to complete this request.
+Your password has been reset. The new password has been sent to you by email.
 ---STRINGEND
 
 ---STRING password_minlength
@@ -334,16 +353,6 @@ __PASSWORD__
 
 ---STRING password_reset_mail_subject
 Your password has been reset.
----STRINGEND
-
----STRING lost_password_reset_mail_subject
-You have requested new password for your account
----STRINGEND
-
----STRING lost_password_reset_mail_body
-Click the link below to verify this request and change your password.
-
-__PASSWORD_RESET_LINK__
 ---STRINGEND
 
 ---STRING pending approvals
@@ -377,6 +386,10 @@ Publish
 Publish account details
 ---STRINGEND
 
+---STRING publish account details page
+Publish account details page
+---STRINGEND
+
 ---STRING publish_all_on_activation
 Automatically publish all fields (including online state) on account activation
 ---STRINGEND
@@ -387,6 +400,14 @@ Your account details have been published.
 
 ---STRING register
 Register
+---STRINGEND
+
+---STRING registration completed
+Registration completed
+---STRINGEND
+
+---STRING registration completed successfully
+Registration was completed successfully
 ---STRINGEND
 
 ---STRING registration finished
@@ -403,14 +424,6 @@ Registration was successful
 
 ---STRING registration successful message
 Your registration was successful. An email with instructions to activate your account has been sent to you. Your account will not be usable until you follow these instructions.
----STRINGEND
-
----STRING registration completed
-Registration completed
----STRINGEND
-
----STRING registration completed successfully
-Registration was completed successfully
 ---STRINGEND
 
 ---STRING reject
@@ -441,6 +454,10 @@ Select account type
 Please select an account type
 ---STRINGEND
 
+---STRING show lost password in navi
+Show Lost password-link in navi
+---STRINGEND
+
 ---STRING social web settings
 Social web settings
 ---STRINGEND
@@ -451,6 +468,10 @@ Street
 
 ---STRING submit
 Submit
+---STRINGEND
+
+---STRING the email is unknown
+The email is unknown
 ---STRINGEND
 
 ---STRING the user is offline.
@@ -469,25 +490,16 @@ The username is already in use. Please choose a different one.
 The username is unknown
 ---STRINGEND
 
----STRING the email is unknown
-The email is unknown
----STRINGEND
-
----STRING failed to find user with given email
-Failed to find user with given email.
----STRINGEND
-
----STRING multiple users found with given email
-Multiple users found with given email!
-Enter your username also
----STRINGEND
-
----STRING username and email doesn't match
-Username and E-Mail doesn't match
+---STRING these settings control social web data import
+These settings control data import from various social web services.
 ---STRINGEND
 
 ---STRING username
 Username
+---STRINGEND
+
+---STRING username and email doesn't match
+Username and email doesn't match
 ---STRINGEND
 
 ---STRING username changed.
@@ -498,6 +510,10 @@ Your username has been changed.
 Username is email address
 ---STRINGEND
 
+---STRING view page
+View page
+---STRINGEND
+
 ---STRING welcome_mail_body
 Welcome to the community. Your account has been activated and is now fully operational.
 
@@ -506,6 +522,10 @@ The Administration.
 
 ---STRING welcome_mail_subject
 Welcome!
+---STRINGEND
+
+---STRING where to redirect from edit page
+Where to redirect from edit page
 ---STRINGEND
 
 ---STRING you may now log in to the system.
@@ -532,22 +552,7 @@ Your account has not yet been activated
 Your registration is now pending for approval
 ---STRINGEND
 
----STRING these settings control social web data import
-These settings control data import from various social web services.
+---STRING person %s has been rejected and deleted
+Person %s has been rejected and deleted
 ---STRINGEND
 
----STRING show lost password in navi
-Show Lost password-link in navi
----STRINGEND
-
----STRING where to redirect from edit page
-Where to redirect from edit page
----STRINGEND
-
----STRING view page
-View page
----STRINGEND
-
----STRING publish account details page
-Publish account details page
----STRINGEND

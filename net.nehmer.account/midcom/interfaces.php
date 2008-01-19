@@ -61,8 +61,11 @@ class net_nehmer_account_interface extends midcom_baseclasses_components_interfa
             'invite.php',
             'calculator.php',
         );
-        $this->_autoload_libraries = Array(
-            'midcom.helper.datamanager2'
+        
+        $this->_autoload_libraries = Array
+        (
+            'midcom.helper.datamanager2',
+            'org.openpsa.mail',
         );
     }
     
@@ -72,10 +75,13 @@ class net_nehmer_account_interface extends midcom_baseclasses_components_interfa
         {
             require(MIDCOM_ROOT . '/midcom/helper/itemlist.php');
         }
+        
+        /** This should be deprecated
         if (!class_exists('midcom_helper_mailtemplate'))
         {
             require(MIDCOM_ROOT . '/midcom/helper/mailtemplate.php');
         }
+        */
         return true;
     }
     

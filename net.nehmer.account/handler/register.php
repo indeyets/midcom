@@ -191,9 +191,6 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
     /**
      * Lists the available account types.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_select_type($handler_id, &$data)
     {
@@ -267,8 +264,6 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
     /**
      * @todo Please comment *at least* on a method scope what these are doing!
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_register_invitation($handler_id, &$data)
     {
@@ -527,9 +522,6 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
     /**
      * Lists the available account types.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_register($handler_id, &$data)
     {
@@ -846,37 +838,27 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      */
     function _send_activation_pending_mail()
     {
-        $from = $this->_config->get('activation_mail_sender');
-        if (!$from)
+        $mail = new org_openpsa_mail();
+        $mail->from = $this->_config->get('activation_mail_sender');
+        
+        if (!$mail->from)
         {
-            $from = $this->_person->email;
+            $mail->from = $this->_person->email;
         }
 
-        $template = array
-        (
-            'from' => $from,
-            'reply-to' => '',
-            'cc' => '',
-            'bcc' => '',
-            'x-mailer' => '',
-            'subject' => $this->_l10n->get($this->_config->get('pending_mail_subject')),
-            'body' => $this->_l10n->get($this->_config->get('pending_mail_body')),
-            'body_mime_type' => 'text/plain',
-            'charset' => 'UTF-8',
-        );
-
-        // Initialize mailer
-        $mail = new midcom_helper_mailtemplate($template);
+        $mail->subject = $this->_l10n->get($this->_config->get('pending_mail_subject'));
+        $mail->body = $this->_l10n->get($this->_config->get('pending_mail_body'));
+        $mail->to = $this->_person->email;
 
         // Get the commonly used parameters
         $parameters = net_nehmer_account_viewer::get_mail_parameters($this->_person);
-
-        // Set the parameters and parse the message
-        $mail->set_parameters($parameters);
-        $mail->parse();
-
+        
+        // Convert the parameters
+        $mail->subject = net_nehmer_account_viewer::parse_parameters($parameters, $mail->subject);
+        $mail->body = net_nehmer_account_viewer::parse_parameters($parameters, $mail->body);
+        
         // Finally send the email
-        return $mail->send($this->_person->email);
+        return $mail->send();
     }
 
     /**
@@ -889,41 +871,29 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      */
     function _send_activation_request_mail()
     {
-        $from = $this->_config->get('activation_mail_sender');
-        if (!$from)
+        $mail = new org_openpsa_mail();
+        $mail->from = $this->_config->get('activation_mail_sender');
+        
+        if (!$mail->from)
         {
-            $from = $this->_person->email;
+            $mail->from = $this->_person->email;
         }
 
-        $template = array
-        (
-            'from' => $from,
-            'reply-to' => '',
-            'cc' => '',
-            'bcc' => '',
-            'x-mailer' => '',
-            'subject' => $this->_l10n->get($this->_config->get('approval_mail_subject')),
-            'body' => $this->_l10n->get($this->_config->get('approval_mail_body')),
-            'body_mime_type' => 'text/plain',
-            'charset' => 'UTF-8',
-        );
-
-        // Initialize mailer
-        $mail = new midcom_helper_mailtemplate($template);
-
-        // Prefix for the content topic
+        $mail->subject = $this->_l10n->get($this->_config->get('approval_mail_subject'));
+        $mail->body = $this->_l10n->get($this->_config->get('approval_mail_body'));
+        $mail->to = $this->_config->get('administrator_email');
+        
+        // Get the commonly used parameters
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-
-        // Get the common parameters for net.nehmer.account mails
         $parameters = net_nehmer_account_viewer::get_mail_parameters($this->_person);
         $parameters['APPROVALURI'] = "{$prefix}pending/{$this->_person->guid}/";
-
-        // Set the parameters and parse the message
-        $mail->set_parameters($parameters);
-        $mail->parse();
-
+        
+        // Convert the parameters
+        $mail->subject = net_nehmer_account_viewer::parse_parameters($parameters, $mail->subject);
+        $mail->body = net_nehmer_account_viewer::parse_parameters($parameters, $mail->body);
+        
         // Finally send the email
-        return $mail->send($this->_config->get('administrator_email'));
+        return $mail->send();
     }
 
     /**
@@ -993,9 +963,6 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
     /**
      * Lists the available account types.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_activate($handler_id, &$data)
     {
@@ -1009,22 +976,17 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_finish($handler_id, $args, &$data)
     {
         return true;
     }
 
-    /**
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
-     */
     function _show_finish($handler_id, &$data)
     {
         midcom_show_style('registration-finished');
@@ -1230,7 +1192,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
 
         $sender_guid = $this->_config->get('welcome_mail_sender');
 
-	if (!empty($sender_guid))
+        if (!empty($sender_guid))
         {
             $sender =& $_MIDCOM->auth->get_user($sender_guid);
             if (! $sender)

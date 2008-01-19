@@ -299,7 +299,7 @@ class net_nehmer_account_handler_pending extends midcom_baseclasses_components_h
 
             foreach ($this->persons as $person)
             {
-                if ($this->_send_rejection_mail($person, $subject, $body))
+                if ($this->_send_rejection_mail(&$person, $subject, $body))
                 {
                     $_MIDCOM->uimessages->add($this->_l10n->get('net.nehmer.account'), sprintf($this->_l10n->get('%s, message sent to %s'), $this->_l10n->get('rejected'), $person->email));
                 }
@@ -324,48 +324,33 @@ class net_nehmer_account_handler_pending extends midcom_baseclasses_components_h
      * @param string $subject             Subject of the message that will be sent to the user
      * @param string $body                Body of the message that will be sent to the user
      */
-    function _send_rejection_mail($person, $subject, $body)
+    function _send_rejection_mail(&$person, $subject, $body)
     {
-        // Get either the configured email address of the one of the rejected person
-        $from = $this->_config->get('activation_mail_sender');
-        if (! $from)
+        $mail = new org_openpsa_mail();
+        $mail->from = $this->_config->get('activation_mail_sender');
+        
+        if (!$mail->from)
         {
-            $from = $person->email;
+            $mail->from = $person->email;
         }
 
-        // Template for the mail
-        $template = array
-        (
-            'from' => $from,
-            'reply-to' => '',
-            'cc' => '',
-            'bcc' => '',
-            'from' => $from,
-            'reply-to' => '',
-            'cc' => '',
-            'bcc' => '',
-            'x-mailer' => '',
-            'subject' => $subject,
-            'body' => $body,
-            'body_mime_type' => 'text/plain',
-            'charset' => 'UTF-8',
-        );
-
-        // Initialize mailer
-        $mail = new midcom_helper_mailtemplate($template);
-
+        $mail->subject = $subject;
+        $mail->body = $body;
+        $mail->to = $person->email;
+        
         // Get the commonly used parameters
         $parameters = net_nehmer_account_viewer::get_mail_parameters($person);
-
-        // Set the parameters and parse the message
-        $mail->set_parameters($parameters);
-        $mail->parse();
-
+        
+        // Convert the parameters
+        $mail->subject = net_nehmer_account_viewer::parse_parameters($parameters, $mail->subject);
+        $mail->body = net_nehmer_account_viewer::parse_parameters($parameters, $mail->body);
+        
+        $_MIDCOM->uimessages->add($this->_l10n->get('net.nehmer.account'), sprintf($this->_l10n->get('person %s has been rejected and deleted'), $person->name));
+        
         // Delete the person in the end
         $person->delete();
-
-        // Finally send the email
-        return $mail->send($this->_config->get('administrator_email'));
+        
+        return $mail->send();
     }
 }
 ?>
