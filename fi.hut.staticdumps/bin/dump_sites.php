@@ -4,6 +4,7 @@ ini_set('error_reporting', E_ALL);
 
 $wget_options = "-erobots=off -q -m -nH";
 $rsync_options = '-a';
+$http_timeout = 300; // seconds = 5minutes
 
 function better_die($msg)
 {
@@ -37,8 +38,6 @@ if (!test_command('find --version'))
     better_die('find not executable in path');
 }
 require_once('midcom/lib/org/openpsa/httplib/nonmidcom.php');
-// NOTE: This way of forcing config only works with the nonmidcom mode of httplib, do not think you could use this elsewhere !
-$GLOBALS['midcom_component_data']['org.openpsa.httplib']['config']->options['http_timeout'] = 300;
 
 if (   !isset($argv[1])
     || empty($argv[1]))
@@ -150,6 +149,7 @@ foreach ($sites_config as $k => $site_config)
             $suffix = '';
         }
         $client = new org_openpsa_httplib();
+        $client->_config->options['http_timeout'] = $http_timeout;
         // Quick and Dirty way to do retries (the result might be empty and still be valid...)
         $retries = 5;
         do
@@ -202,6 +202,7 @@ foreach ($sites_config as $k => $site_config)
             $suffix = '';
         }
         $client = new org_openpsa_httplib();
+        $client->_config->options['http_timeout'] = $http_timeout;
         // Quick and Dirty way to do retries (the result might be empty and still be valid...)
         $retries = 5;
         do
