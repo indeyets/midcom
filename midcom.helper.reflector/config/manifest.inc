@@ -13,7 +13,7 @@
     'description' => 'Contains helper methods for shortcutting common reflection based tasks',
     'maintainers' => array
     (
-        'username' => array
+        'rambo' => array
         (
             'name' => 'Eero af Heurlin',
             'email' => 'rambo@nemein.com',
