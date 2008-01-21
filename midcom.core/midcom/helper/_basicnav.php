@@ -1139,6 +1139,10 @@ class midcom_helper__basicnav
 
         $collector->add_order('metadata.score', 'DESC');
         $collector->add_order('metadata.created');
+        
+        // FIXME: This is a workaround for some MultiLang bugs
+        $collector->add_order('lang', 'DESC');
+        
         $collector->execute();
 
         // Get the GUIDs of the subnodes
