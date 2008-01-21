@@ -291,6 +291,14 @@ Approve
 Configuration
 ---STRINGEND
 
+---STRING global
+Global
+---STRINGEND
+
+---STRING local
+Local
+---STRINGEND
+
 ---STRING midgard objects
 Midgard objects
 ---STRINGEND
