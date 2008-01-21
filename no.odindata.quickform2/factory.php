@@ -46,8 +46,9 @@ class no_odindata_quickform2_factory
     function no_odindata_quickform2_factory( $schema, $config )
     {
         $this->schema = $schema;
-        $this->email  = new no_odindata_quickform2_email( $config, $this );
         $this->config = $config;
+	$this->_load_controller();
+        $this->email  = new no_odindata_quickform2_email( $config, $this );
     }
 
     /**
@@ -99,7 +100,7 @@ class no_odindata_quickform2_factory
     function process_form()
     {
         debug_push( __CLASS__, __FUNCTION__ );
-        $this->_load_controller();
+        //$this->_load_controller();
 
         $res = $this->_controller->process_form();
         debug_add( "Process_form: $res", MIDCOM_LOG_INFO );
