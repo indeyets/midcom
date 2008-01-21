@@ -88,13 +88,13 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
             $mc->add_constraint('name', '<>', 'index');
         }
         
+        // FIXME: This is a workaround for some MultiLang bugs
+        $mc->add_order('lang', 'DESC');
+        
         $mc->add_order($this->_config->get('sort_order'));
 
         // Sort items with the same primary sort key by title.
         $mc->add_order('title');
-
-        // FIXME: This is a workaround for some MultiLang bugs
-        $mc->add_order('lang', 'DESC');
 
         $mc->execute();
         

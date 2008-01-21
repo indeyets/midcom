@@ -1137,11 +1137,11 @@ class midcom_helper__basicnav
         $collector->add_constraint('name', '<>', '');
         $collector->add_constraint('metadata.navnoentry', '=', 0);
 
-        $collector->add_order('metadata.score', 'DESC');
-        $collector->add_order('metadata.created');
-        
         // FIXME: This is a workaround for some MultiLang bugs
         $collector->add_order('lang', 'DESC');
+
+        $collector->add_order('metadata.score', 'DESC');
+        $collector->add_order('metadata.created');
         
         $collector->execute();
 
