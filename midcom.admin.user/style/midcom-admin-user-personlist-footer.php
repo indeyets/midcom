@@ -67,47 +67,47 @@ if (count($data['persons']) > 0)
                 {
                     $j(active).css({display: 'none'});
                 }
-                
+
                 $j(this).attr('value');
                 switch ($j(this).attr('value'))
                 {
                     case 'passwords':
                         active = '#midcom_admin_user_action_passwords';
-                        
+
                         if (document.getElementById('midcom_admin_user_action_passwords'))
                         {
                             $j('#midcom_admin_user_action_passwords').css({display:'block'});
                             break;
                         }
-                        
+
                         $j('<div></div>')
                             .attr('id', 'midcom_admin_user_action_passwords')
                             .appendTo('#midcom_admin_user_batch_process');
-                        
+
                         // Load the form for outputting the style
                         $j('#midcom_admin_user_action_passwords').load('&(prefix);__mfa/asgard_midcom.admin.user/password/batch/?ajax&timestamp=<?php echo time(); ?>');
-                        
+
                         $j('#midcom_admin_user_batch_process').submit(function()
                         {
                             var action = '&(prefix);__mfa/asgard_midcom.admin.user/password/batch/?ajax';
                             $j(this).attr('action', action);
                         });
                         break;
-                    
+
                     case 'groupadd':
                         $j('#midcom_admin_user_group').css({display: 'inline'});
                         active = '#midcom_admin_user_group';
                         break;
-                    
+
                     default:
                         active = null;
-                        
+
                         // Return the original submit functionality
                         $j('#midcom_admin_user_batch_process').submit(function()
                         {
                             var action = '&(prefix);__mfa/asgard_midcom.admin.user/';
                             $j(this).attr('action', action);
-                            
+
                             return true;
                         });
                 }
@@ -115,7 +115,7 @@ if (count($data['persons']) > 0)
             $j('#midcom_admin_user_batch_process table').tablesorter(
             {
                 headers: {0: {sorter: false}},
-                widgets: ['column_highlight'],
+                widgets: ['zebra'],
                 sortList: [[2,0]]
             });
         // ]]>

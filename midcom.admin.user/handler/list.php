@@ -1,7 +1,7 @@
 <?php
 /**
  * @package midcom.admin.user
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: viewer.php 3975 2006-09-06 17:36:03Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -9,7 +9,7 @@
 
 /**
  * Style editor class for listing style elements
- * 
+ *
  * @package midcom.admin.user
  */
 class midcom_admin_user_handler_list extends midcom_baseclasses_components_handler
@@ -18,7 +18,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
 
     /**
      * Simple constructor
-     * 
+     *
      * @access public
      */
     function midcom_admin_user_handler_list()
@@ -42,16 +42,15 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
                 'href' => MIDCOM_STATIC_URL . '/midcom.admin.user/usermgmt.css',
             )
         );
-        
+
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.tablesorter.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.admin.user/jquery.tablesorter.widget.column_highlight.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.admin.user/jquery.midcom_admin_user.js');
 
         midgard_admin_asgard_plugin::prepare_plugin($this->_l10n->get('midcom.admin.user'),$this->_request_data);
 
     }
 
-    
+
     function _update_breadcrumb()
     {
         // Populate breadcrumb
@@ -98,7 +97,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
 
         midgard_admin_asgard_plugin::get_common_toolbar($data);
     }
-    
+
     /**
      * Handler method for listing style elements for the currently used component topic
      *
@@ -109,12 +108,12 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
      * @return boolean Indicating successful request
      */
     function _handler_list($handler_id, $args, &$data)
-    {   
+    {
 
         // See what fields we want to use in the search
         $data['search_fields'] = $this->_config->get('search_fields');
         $data['list_fields'] = $this->_config->get('list_fields');
-        
+
         // Set the passwords elsewhere, but check the request first
         if (   isset($_POST['midcom_admin_user_action'])
             && $_POST['midcom_admin_user_action'] === 'passwords')
@@ -127,12 +126,12 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
             else
             {
                 $get = implode('&midcom_admin_user[]=', $_POST['midcom_admin_user']);
-                
+
                 $_MIDCOM->relocate("__mfa/asgard_midcom.admin.user/password/batch/?midcom_admin_user[]={$get}");
                 // This will exit
             }
         }
-        
+
         if (   isset($_POST['midcom_admin_user'])
             && is_array($_POST['midcom_admin_user'])
             && $_POST['midcom_admin_user_action'])
@@ -140,7 +139,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
             foreach ($_POST['midcom_admin_user'] as $person_id)
             {
                 $person = new midcom_db_person($person_id);
-                
+
                 switch ($_POST['midcom_admin_user_action'])
                 {
                     case 'removeaccount':
@@ -156,7 +155,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
                             $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.user'), sprintf($this->_l10n->get('user account revoked for %s'), $person->name));
                         }
                         break;
-                        
+
                     case 'groupadd':
                         if (isset($_POST['midcom_admin_user_group']))
                         {
@@ -172,7 +171,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
                 }
             }
         }
-        
+
         if (isset($_REQUEST['midcom_admin_user_search']))
         {
             // Run the person-seeking QB
@@ -185,23 +184,23 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
             $qb->end_group('OR');
             $qb->add_order('lastname');
             $qb->add_order('firstname');
-            
+
             $this->_persons = $qb->execute();
         }
         else
         {
             // List all persons if there are less than N of them
             $qb = midcom_db_person::new_query_builder();
-            
+
             if ($qb->count_unchecked() < $this->_config->get('list_without_search'))
             {
                 $qb->add_order('lastname');
                 $qb->add_order('firstname');
-            
+
                 $this->_persons = $qb->execute();
             }
         }
-        
+
         $data['groups'] = array
         (
             0 => 'Midgard Administrators',
@@ -215,17 +214,17 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
                 $data['groups'][$group->id] = $group;
             }
         }
-        
+
         $this->_update_breadcrumb();
         $this->_prepare_toolbar($data);
-        $_MIDCOM->set_pagetitle($data['view_title']);        
+        $_MIDCOM->set_pagetitle($data['view_title']);
 
         return true;
     }
-    
+
     /**
      * Show list of the style elements for the currently edited topic component
-     * 
+     *
      * @access private
      * @param string $handler_id Name of the used handler
      * @param mixed &$data Data passed to the show method
@@ -234,10 +233,10 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
     {
         midgard_admin_asgard_plugin::asgard_header();
         $data['config'] =& $this->_config;
-        
+
         $data['persons'] =& $this->_persons;
         midcom_show_style('midcom-admin-user-personlist-header');
-        
+
         $data['even'] = false;
         foreach ($data['persons'] as $person)
         {
@@ -252,10 +251,10 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
                 $data['even'] = false;
             }
         }
-        
+
         midcom_show_style('midcom-admin-user-personlist-footer');
         midgard_admin_asgard_plugin::asgard_footer();
-        
+
     }
 }
 ?>
