@@ -12,6 +12,7 @@
  *
  * @package net.nemein.registrations
  */
+
 class net_nemein_registrations_handler_welcome extends midcom_baseclasses_components_handler
 {
     /**
@@ -65,12 +66,7 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
     }
 
     /**
-     * The welcome handler loads the currently visible events and displays them.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * The welcome handler loades the currently visible events and displays them.
      */
     function _handler_welcome($handler_id, $args, &$data)
     {
@@ -86,7 +82,7 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata(time(), null);
         $_MIDCOM->set_pagetitle($this->_topic->extra);
-
+        
         $_MIDCOM->bind_view_to_object($this->_root_event);
 
         if ($this->_root_event->can_do('midgard:create'))
@@ -118,15 +114,12 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
                 )
             );
         }
-
+        
         return true;
     }
 
     /**
-     * The welcome handler loads the currently visible events and displays them.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
+     * The welcome handler loades the currently visible events and displays them.
      */
     function _show_welcome($handler_id, &$data)
     {
@@ -134,31 +127,31 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
 
         midcom_show_style('welcome-start');
 
-        if (! $this->_events)
+        if (empty($this->_events))
         {
             midcom_show_style('welcome-nonefound');
+            midcom_show_style('welcome-end');
+            return;
         }
-        else
-        {
-            foreach ($this->_events as $event)
-            {
-                $data['registration_allowed'] = $event->can_do('midgard:create');
-                $data['registration_open'] = $event->is_open();
-                $data['register_url'] = $event->get_registration_link();
-                if ($event->is_registered())
-                {
-                    $registration = $event->get_registration();
-                    $data['registration_url'] = "{$prefix}registration/view/{$registration->guid}.html";
-                }
-                else
-                {
-                    $data['registration_url'] = null;
-                }
-                $data['view_url'] = "{$prefix}event/view/{$event->guid}.html";
-                $data['event'] =& $event;
 
-                midcom_show_style('welcome-item');
+        foreach ($this->_events as $event)
+        {
+            $data['registration_allowed'] = $event->can_do('midgard:create');
+            $data['registration_open'] = $event->is_open();
+            $data['register_url'] = $event->get_registration_link();
+            if ($event->is_registered())
+            {
+                $registration = $event->get_registration();
+                $data['registration_url'] = "{$prefix}registration/view/{$registration->guid}.html";
             }
+            else
+            {
+                $data['registration_url'] = null;
+            }
+            $data['view_url'] = "{$prefix}event/view/{$event->guid}.html";
+            $data['event'] =& $event;
+
+            midcom_show_style('welcome-item');
         }
 
         midcom_show_style('welcome-end');

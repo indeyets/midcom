@@ -7,18 +7,22 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+// Make sure our dependencies are loaded
+if (!class_exists('net_nemein_calendar_event_dba'))
+{
+    $_MIDCOM->componentloader->load('net.nemein.calendar');
+}
+
 /**
  * Event registration system: Event class
  *
- * This class encapsulates an event which can be registered to.
+ * This class encaspulates an event which can be registered to.
  *
  * TODO...
  *
  * @package net.nemein.registrations
  */
-$_MIDCOM->componentloader->load('net.nemein.calendar');
-
-class net_nemein_registrations_event extends net_nemein_calendar_event
+class net_nemein_registrations_event extends net_nemein_calendar_event_dba
 {
    /**
     * Human readable start and end date
@@ -73,7 +77,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     var $_root_event;
 
     /**
-     * The DM2 datamanager instance encapsulating this object. Initialized on first access
+     * The DM2 datamanager instance encaspulating this object. Initialized on first access
      * via get_datamanager.
      *
      * @var midcom_helper_datamanager2_datamanager
@@ -102,8 +106,8 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      */
     function net_nemein_registrations_event($id = null)
     {
-        parent::net_nemein_calendar_event($id);
-        // Intercept failed class instantiations.
+        parent::net_nemein_calendar_event_dba($id);
+        // Intercept failed class instantinations.
         if ($this)
         {
             $this->_bind_to_request_data();
@@ -117,12 +121,14 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
         {
             return false;
         }
-        $this->start_hr_date = strftime('%x', $this->start);
-        $this->end_hr_date = strftime('%x', $this->end);
-        $this->start_hr_datetime = strftime('%x', $this->start) . date(' H:i', $this->start);
-        $this->end_hr_datetime = strftime('%x', $this->end) . date(' H:i', $this->end);
-        $this->start2end_hr_datetime = net_nemein_calendar_functions_daylabel('start', $this->start, $this->end) . ' - ' . midcom_helper_generate_daylabel('end', $this->start, $this->end);
-        $this->start2end_hr_date = net_nemein_calendar_functions_daylabel('start', $this->start, $this->end, false) . ' - ' . midcom_helper_generate_daylabel('end', $this->start, $this->end, false);
+        $start_ts = strtotime($this->start);
+        $end_ts = strtotime($this->end);
+        $start_ts_hr_date = strftime('%x', $start_ts);
+        $end_ts_hr_date = strftime('%x', $end_ts);
+        $start_ts_hr_datetime = strftime('%x', $start_ts) . date(' H:i', $start_ts);
+        $end_ts_hr_datetime = strftime('%x', $end_ts) . date(' H:i', $end_ts);
+        $start_ts2end_hr_datetime = net_nemein_calendar_functions_daylabel('start', $start_ts, $end_ts) . ' - ' . midcom_helper_generate_daylabel('end', $start_ts, $end_ts);
+        $start_ts2end_hr_date = net_nemein_calendar_functions_daylabel('start', $start_ts, $end_ts, false) . ' - ' . midcom_helper_generate_daylabel('end', $start_ts, $end_ts, false);
         return true;
     }
 
@@ -227,7 +233,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     function get_additional_questions_schema()
     {
         $this->_populate_dm();
-
+        
         if (count($this->_dm->types['additional_questions']->selection) > 0)
         {
             return $this->_dm->types['additional_questions']->selection[0];
@@ -241,7 +247,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     /**
      * Checks if the event is open for registration.
      *
-     * @return boolean True if open.
+     * @return bool True if open.
      */
     function is_open($use_dm = true)
     {
@@ -307,7 +313,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
         $this->_populate_dm();
 
         $this->_dm->types['open_registration']->value = new Date();
-
+        
         // Handle closing time intelligently
         if ($this->closeregistration < time())
         {
@@ -335,7 +341,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
 
 
     /**
-     * Returns a list of registrar records associated with this object.
+     * Returns a list of registrar records accociated with this object.
      *
      * @return Array of net_nemein_registration_registrar records.
      */
@@ -375,7 +381,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * @param mixed $user This can either be a midcom_core_user, a midcom_baseclasses_database_person,
      *     or any valid person id/guid. If you omit the argument, it defaults to the currently
      *     authenticated user.
-     * @return net_nemein_registrations_registration The found registration record, or false if
+     * @return net_nemein_registrations_registration_dba The found registration record, or false if
      *     the user is not yet registered.
      */
     function get_registration($user = null)
@@ -438,7 +444,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * @param mixed $user This can either be a midcom_core_user, a midcom_baseclasses_database_person,
      *     or any valid person id/guid. If you omit the argument, it defaults to the currently
      *     authenticated user.
-     * @return boolean Registration state.
+     * @return bool Registration state.
      */
     function is_registered($user = null)
     {
@@ -452,7 +458,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * 1. If we have an anonymous user, the registration link is available always. The final
      *    permission checks are done on the registration page, where registration will
      *    be allowed due to correct config/privileges, or, if denied, a login page will be shown.
-     * 2. If a use is authenticated, we first check whether we have sufficient privileges to
+     * 2. If an use is authenticated, we first check wether we have sufficient privileges to
      *    create a registration. If not, we return false.
      * 3. If the privileges are granted, we check if this event is open for registration and if
      *    we have not yet registered for it. If yes, the URL will be returned.
@@ -486,21 +492,21 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * Returns an initialized querybuilder which will list all registrations of this event
      * without further constraints or orderings.
      *
-     * This is essentially a reimplementation of the net_nemein_calendar_event::get_event_members_qb,
-     * but with net_nemein_registrations_registration as type.
+     * This is essentially a reimplementation of the net_nemein_calendar_event_dba::get_event_members_qb,
+     * but with net_nemein_registrations_registration_dba as type.
      *
      * @return midcom_core_querybuilder A prepared QB instance.
-     * @see net_nemein_calendar_event::get_event_members_qb
+     * @see net_nemein_calendar_event_dba::get_event_members_qb
      */
     function get_registrations_qb()
     {
-        $qb = net_nemein_registrations_registration::new_query_builder();
+        $qb = net_nemein_registrations_registration_dba::new_query_builder();
         $qb->add_constraint('eid', '=', $this->id);
         return $qb;
     }
 
     /**
-     * Returns a list of registration records associated with this object.
+     * Returns a list of registration records accociated with this object.
      *
      * @return Array of net_nemein_registration_registration records.
      * @todo Once QB supports it, order by Names
@@ -509,6 +515,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     function get_registrations()
     {
         $qb = $this->get_registrations_qb();
+        // TODO: 1.8.4 AFAIK can do this, so make a version_compare call
         // Cannot do this, QB is too stupid.
         // $qb->add_order('uid.lastname');
         // $qb->add_order('uid.firstname');
@@ -520,7 +527,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
 
     /**
      * This function returns a query builder prepared to query all events linked to the
-     * root event associated with the current request state. If an event type filter is
+     * root event accociated with the current request state. If an event type filter is
      * configured, this is taken into account as well.
      *
      * No ordering whatsoever is done in this helper. Also there is no restriction regarding
@@ -550,10 +557,8 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * We need a better solution here in DBA core actually, but it will be difficult to
      * do this as we cannot determine the current class in a polymorphic environment without
      * having a this (this call is static).
-     *
-     * @static
      */
-    static function new_query_builder()
+    function new_query_builder()
     {
         return $_MIDCOM->dbfactory->new_query_builder(__CLASS__);
     }
@@ -561,7 +566,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     /**
      * Returns a list of all events open for registration.
      *
-     * Implementation note: Unfortunately, open registration processing must still be done using
+     * Implementation note: Unfortunalety, open registration processing must still be done using
      * the PHP level, as the open/close timestamps are contained in parameters.
      *
      * This is built on the list_all function for now, see there for further comments about
@@ -572,6 +577,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     function list_open($use_dm = true)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
+        // TODO: We could be smarter about this now...
         $all_events = net_nemein_registrations_event::list_all();
         $result = Array();
         $cnt = count($all_events);
@@ -589,6 +595,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
                 $result[] = $event;
             }
         }
+        debug_add('Returning ' . count($result) . ' events');
         debug_pop();
         return $result;
     }
@@ -596,11 +603,11 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     /**
      * Lists open events in format suitable for DM2 select types
      *
-     * NOTE: this is most often called before we can properly initialize DM2, thus
+     * NOTE: this is most often called before we can properly initialize DM2, thus 
      * the is_open check is made bypass DM2 and use the default storage for checking
      *
-     * @param string $key property to use as key
-     * @param string $title property to use as value
+     * @param $key string property to use as key
+     * @param $title string property to use as value
      * @return Array DM2 select type options array
      */
     function list_open_optionsarray($key = 'guid', $title = 'title')
@@ -632,9 +639,15 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
     function list_all()
     {
         $qb = net_nemein_registrations_event::get_events_querybuilder();
-        $qb->add_constraint('end', '>', time());
+        $qb->add_constraint('end', '>', date('Y-m-d H:i:s'));
         $qb->add_order('start');
-        return $qb->execute();
+        //mgd_debug_start();
+        $ret = $qb->execute();
+        //mgd_debug_stop();
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add('Got ' . count($ret) . ' events that have not ended yet');
+        debug_pop();
+        return $ret;
     }
 
 
@@ -646,7 +659,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * This requires update and parameters privileges on the registration and the registrar (the
      * latter for OpenPSA compatibility).
      *
-     * @param net_nemein_registrations_registration $registration A reference to the registration
+     * @param net_nemein_registrations_registration_dba $registration A reference to the registration
      *     to be approved.
      * @todo Rewrite Mail handling to PEAR_Mail.
      */
@@ -659,13 +672,18 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
         $_MIDCOM->auth->require_do('midgard:update', $registration);
         $_MIDCOM->auth->require_do('midgard:parameters', $registration);
 
-        // Check registrar privileges (for OpenPSA 1 compatibility)
+        // Check registrar privileges (for OpenPSA 1 compatiblity)
         $_MIDCOM->auth->require_do('midgard:update', $registrar_object);
         $_MIDCOM->auth->require_do('midgard:parameters', $registrar_object);
 
         // Approve the registration
         $registration->set_parameter('net.nemein.registrations', 'approved', time());
-        $registration->set_parameter('net.nemein.registrations', 'approver', $_MIDCOM->auth->user->guid);
+        if (   isset($_MIDCOM->auth->user)
+            && is_object($_MIDCOM->auth->user)
+            && isset($_MIDCOM->auth->user->guid))
+        {
+            $registration->set_parameter('net.nemein.registrations', 'approver', $_MIDCOM->auth->user->guid);
+        }
 
         // OpenPSA 1 Compatibility
         $registrar_object->set_parameter('campaign', $this->guid, 'on');
@@ -707,7 +725,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
             '$registrar_data["\1"]',
             $registration_all,
             '$registration_data["\1"]',
-            $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
+            $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "event/view/{$this->guid}/",
         );
         $subject = preg_replace($search, $replace, $subject);
         $body = preg_replace($search, $replace, $body);
@@ -752,7 +770,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      *
      * Requires delete privileges on the registration.
      *
-     * @param net_nemein_registrations_registration $registration A reference to the registration
+     * @param net_nemein_registrations_registration_dba $registration A reference to the registration
      *     to be rejected.
      * @param string $reason The reason entered by the admin when he rejected the registration.
      */
@@ -801,7 +819,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
             $registration_all,
             '$registration_data["\1"]',
             $reason,
-            $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
+            $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "event/view/{$this->guid}/",
         );
         $subject = preg_replace($search, $replace, $subject);
         $body = preg_replace($search, $replace, $body);
@@ -847,7 +865,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      *
      * Requires delete privileges on the registration and the registrar.
      *
-     * @param net_nemein_registrations_registration $registration A reference to the registration
+     * @param net_nemein_registrations_registration_dba $registration A reference to the registration
      *     to be rejected.
      * @param string $reason The reason entered by the admin when he rejected the registration.
      */
@@ -878,7 +896,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * Internal helper, converts a DM2 instance to a string based representation suitable
      * for mailing.
      *
-     * @todo This is a little bit of a hack, as it is currently difficult to
+     * TODO: This is a littlebit of a hack, as it is currently difficult to
      * get a plaint-text representation of a given datatype explicitly,
      * so this interface is used for a start (avoids arrays). Same is
      * true for the datamanager-completed field-definitions.
@@ -886,7 +904,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      * We don't use the official get_csv_line interface btw., as this would
      * require us to un-csv-quote that string. (END TODO)
      *
-     * @todo Rewrite to a more suitable implementation with DM2 side support.
+     * @todo Rewrite to a more suitable implementaiton with DM2 side support.
      */
     function _dm_array_to_string(&$dm)
     {
@@ -913,8 +931,8 @@ class net_nemein_registrations_event extends net_nemein_calendar_event
      *
      * This function is usually called statically.
      *
-     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the event.
-     * @param midcom_services_indexer &$indexer The indexer instance to use.
+     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encaspulating the event.
+     * @param midcom_services_indexer $indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.
      */

@@ -54,7 +54,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
     /**
      * The created registration record, used during the save operation.
      *
-     * @var net_nemein_registrations_registration
+     * @var net_nemein_registrations_registration_dba
      * @access private
      */
     var $_registration = null;
@@ -115,17 +115,12 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
     /**
      * Registration uses a, lets say, creative way of using the DM2 architecture: If the current
      * user can register to an event, a new schema is constructed out of the registrar and
-     * registration schemas. They need to have unique fieldnames for exactly this operation.
+     * registeration schemas. They need to have unique fieldnames for exactly this operation.
      * Upon successful save, two individual DM2 instances are used to actually process the
      * data.
      *
      * If an event is not open for registration, a 404 is triggered. The same will be done
-     * if a user is already registered to the event.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * if an user is already registered to the event.
      */
     function _handler_register($handler_id, $args, &$data)
     {
@@ -149,7 +144,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
             // This will exit.
         }
 
-        // Before we do anything, check whether there is a cancel button in the request.
+        // Before we do anything, check wether there is a cancel button in the request.
         // If yes, redirect back to the welcome page.
         // This will shortcut without creating any datamanager to avoid the possibly
         // expensive creation process.
@@ -232,7 +227,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
                 }
                 // Restore backup
                 $this->_event = $this_event_backup;
-                // List the successful registrations
+                // List the successfull registrations
                 $session = new midcom_service_session();
                 $session->set('registration_ids', $registration_ids);
                 // just to keep defaults from barfing
@@ -270,7 +265,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
      * This function will run under sudo privileges if no user is authenticated, otherwise
      * we would be unable to correctly create the new record (we don't have an owner).
      *
-     * @param boolean $drop_registrar Set this to true if you want to delete the registrar record
+     * @param bool $drop_registrar Set this to true if you want to delete the registrar record
      *     on any error.
      * @access private
      */
@@ -286,7 +281,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
             }
         }
 
-        $this->_registration = new net_nemein_registrations_registration();
+        $this->_registration = new net_nemein_registrations_registration_dba();
         $this->_registration->eid = $this->_event->id;
         $this->_registration->uid = $this->_registrar->id;
         if (! $this->_registration->create())
@@ -327,7 +322,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
         {
             $registration_schema = $event_dm->types['additional_questions']->selection[0];
         }
-
+        
         $this->_registration->set_parameter('midcom.helper.datamanager2', 'schema_name', $registration_schema);
 
         // Update the account with the selected information
@@ -548,7 +543,7 @@ EOF;
         // bottom of the field list.
         $registrar_schema = $this->_schemadb[$this->_config->get('registrar_schema')];
         $event_dm =& $this->_event->get_datamanager();
-
+        
         if (count($event_dm->types['additional_questions']->selection) > 0)
         {
             $registration_schema = $this->_schemadb[$event_dm->types['additional_questions']->selection[0]];
@@ -605,10 +600,8 @@ EOF;
 
 
     /**
-     * The register handler loads the currently visible events and displays them.
+     * The register handler loades the currently visible events and displays them.
      *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      * @access private
      */
     function _show_register($handler_id, &$data)
@@ -619,15 +612,10 @@ EOF;
 
     /**
      * This page shows a success page. It uses sessioning to receive its argument from the registration
-     * sequence for security reasons.
+     * sequece for security reasons.
      *
      * The record is loaded in sudo mode if no user is authenticated, since anonymous users don't
      * have access to any registration in the system.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
      */
     function _handler_success($handler_id, $args, &$data)
     {
@@ -648,7 +636,7 @@ EOF;
                 // This will exit.
             }
         }
-        $this->_registration = new net_nemein_registrations_registration($id);
+        $this->_registration = new net_nemein_registrations_registration_dba($id);
         if (! $_MIDCOM->auth->user)
         {
             $_MIDCOM->auth->drop_sudo();
@@ -672,9 +660,6 @@ EOF;
 
     /**
      * Shows the success page.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_success($handler_id, &$data)
     {

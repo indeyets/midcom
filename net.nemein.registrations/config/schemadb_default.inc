@@ -7,10 +7,11 @@
         (
             // COMPONENT-REQUIRED
             'title' => 'name',
-            'storage' => 'extra',
-            'required' => true,
+            'storage' => 'name',
+            'required' => false,
             'type' => 'text',
             'widget' => 'text',
+            'hidden' => !($_MIDCOM->auth->admin),
         ),
         'title' => Array
         (
@@ -38,7 +39,7 @@
             'title' => 'start date',
             'storage' => 'start',
             'type' => 'date',
-            'type_config' => Array ( 'storage_type' => 'UNIXTIME' ),
+            'type_config' => Array ( 'storage_type' => 'ISO' ),
             'widget' => 'jsdate',
         ),
         'end' => Array
@@ -47,7 +48,7 @@
             'title' => 'end date',
             'storage' => 'end',
             'type' => 'date',
-            'type_config' => Array ( 'storage_type' => 'UNIXTIME' ),
+            'type_config' => Array ( 'storage_type' => 'ISO' ),
             'widget' => 'jsdate',
         ),
 
@@ -57,7 +58,7 @@
             'title' => 'open registration at',
             'storage' => 'openregistration',
             'type' => 'date',
-            'type_config' => Array ( 'storage_type' => 'UNIXTIME' ),
+            'type_config' => Array ( 'storage_type' => 'ISO' ),
             'widget' => 'jsdate',
         ),
         'close_registration' => Array
@@ -66,7 +67,7 @@
             'title' => 'close registration at',
             'storage' => 'closeregistration',
             'type' => 'date',
-            'type_config' => Array ( 'storage_type' => 'UNIXTIME' ),
+            'type_config' => Array ( 'storage_type' => 'ISO' ),
             'widget' => 'jsdate',
         ),
         'additional_questions' => Array
@@ -117,7 +118,7 @@
 
 'person' => Array
 (
-    'description' => 'Registered Person Record',
+    'description' => 'Registred Person Record',
     'fields' => Array
     (
         'p_firstname' => Array

@@ -67,11 +67,6 @@ class net_nemein_registrations_handler_admin extends midcom_baseclasses_componen
 
     /**
      * Manages the root event
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
      */
     function _handler_rootevent($handler_id, $args, &$data)
     {
@@ -98,7 +93,7 @@ class net_nemein_registrations_handler_admin extends midcom_baseclasses_componen
             if ($_REQUEST[$this->_request_data['select_guid']] != $this->_request_data['create_new_value'])
             {
                 $guid = $_REQUEST[$this->_request_data['select_guid']];
-                $event = new net_nemein_calendar_event($guid);
+                $event = new net_nemein_calendar_event_dba($guid);
                 if (! $event)
                 {
                     $this->_processing_msg = sprintf($this->_l10n->get('failed to open root event %s: %s'), $guid, mgd_errstr());
@@ -122,7 +117,7 @@ class net_nemein_registrations_handler_admin extends midcom_baseclasses_componen
             }
             else
             {
-                $event = new net_nemein_calendar_event();
+                $event = new net_nemein_calendar_event_dba();
                 $event->title = "registrations for {$this->_topic->extra} (#{$this->_topic->id})";
                 if (! $event->create())
                 {
@@ -172,14 +167,11 @@ class net_nemein_registrations_handler_admin extends midcom_baseclasses_componen
 
     /**
      * Lists the registrations of a particular event, manage permissions required.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_rootevent($handler_id, &$data)
     {
         // Load list root events:
-        $qb = net_nemein_calendar_event::new_query_builder();
+        $qb = net_nemein_calendar_event_dba::new_query_builder();
         $qb->add_constraint('up', '=', '');
         $this->_request_data['root_events'] = $qb->execute();
 

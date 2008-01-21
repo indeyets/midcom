@@ -10,7 +10,7 @@
 /**
  * Event registration system: Registration class
  *
- * This class encapsulates a registration record.
+ * This class encaspulates an registration record.
  *
  * Approval and rejection of registrations is done through their event, as its information
  * is readily available there.
@@ -20,7 +20,7 @@
  * @package net.nemein.registrations
  */
 
-class net_nemein_registrations_registration extends midcom_db_eventmember
+class net_nemein_registrations_registration_dba extends __net_nemein_registrations_registration_dba
 {
     /**
      * Request data information
@@ -58,6 +58,12 @@ class net_nemein_registrations_registration extends midcom_db_eventmember
     var $_l10n_midcom;
 
     /**
+     * References to uid and eid respectively (NOTE: cannot be used as properties with QB!)
+     */
+    var $person = false;
+    var $event = false;
+
+    /**
      * The default constructor will create an empty object. Optionally, you can pass
      * an object ID or GUID to the object which will then initialize the object with
      * the corresponding DB instance.
@@ -67,14 +73,30 @@ class net_nemein_registrations_registration extends midcom_db_eventmember
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function net_nemein_registrations_registration($id = null)
+    function net_nemein_registrations_registration_dba($id = null)
     {
-        parent::midcom_db_eventmember($id);
-        // Intercept failed class instantiations.
-        if ($this)
-        {
-            $this->_bind_to_request_data();
-        }
+        return parent::__net_nemein_registrations_registration_dba($id);
+    }
+
+    function _do_bindings()
+    {
+        // Reference the "properly" named properties to mgdschema properties
+        $this->person =& $this->uid;
+        $this->event =& $this->eid;
+        // Bind request_data
+        $this->_bind_to_request_data();
+    }
+
+    function _on_loaded()
+    {
+        $this->_do_bindings();
+        return true;
+    }
+
+    function _on_created()
+    {
+        $this->_do_bindings();
+        return true;
     }
 
     /**
@@ -82,10 +104,8 @@ class net_nemein_registrations_registration extends midcom_db_eventmember
      * We need a better solution here in DBA core actually, but it will be difficult to
      * do this as we cannot determine the current class in a polymorphic environment without
      * having a this (this call is static).
-     * 
-     * @static
      */
-    static function new_query_builder()
+    function new_query_builder()
     {
         return $_MIDCOM->dbfactory->new_query_builder(__CLASS__);
     }
@@ -122,6 +142,12 @@ class net_nemein_registrations_registration extends midcom_db_eventmember
      */
     function & create_simple_controller($schema = null)
     {
+        /*
+        echo "DEBUG: \$this->_request_data['schemadb']<pre>\n";
+        print_r($this->_request_data['schemadb']);
+        echo "</pre>\n";
+        die('Debugging');
+        */
         $controller = midcom_helper_datamanager2_controller::create('simple');
         $controller->schemadb = $this->_request_data['schemadb'];
         $controller->set_storage($this, $schema);
@@ -131,7 +157,7 @@ class net_nemein_registrations_registration extends midcom_db_eventmember
     }
 
     /**
-     * Retrieve the registrar object associated with this registration.
+     * Retrive the registrar object accociated with this registration.
      *
      * @return net_nemein_registrations_registrar The registrar.
      */
@@ -140,9 +166,8 @@ class net_nemein_registrations_registration extends midcom_db_eventmember
         return new net_nemein_registrations_registrar($this->uid);
     }
 
-
     /**
-     * Retrieve the event object associated with this registration.
+     * Retrive the event object accociated with this registration.
      *
      * @return net_nemein_registrations_event The event.
      */
@@ -154,7 +179,7 @@ class net_nemein_registrations_registration extends midcom_db_eventmember
     /**
      * Checks, if the event is approved.
      *
-     * @return boolean Indicating approval state
+     * @return bool Indicating approval state
      */
     function is_approved()
     {

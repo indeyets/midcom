@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+
+  <type name="net_nemein_registrations_registration" table="net_nemein_registrations_registration" parent="net_nemein_calendar_event" parentfield="eid">
+    <property name="id" type="integer" primaryfield="id"/>
+    <property name="eid" type="integer" link="net_nemein_calendar_event:id" parentfield="eid" />
+    <property name="uid" type="integer" link="midgard_person:id"/>
+    <property name="extra" type="text"/>
+    <property name="state" type="integer" />
+  </type>
+
+</Schema>

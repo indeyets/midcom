@@ -15,7 +15,7 @@
  * <b>Required privileges:</b>
  *
  * Each user which is allowed to do registrations must have midgard:create privileges on the root
- * event. This implies create privileges for event members, as these are children of the actual
+ * event. This implies create privileges for event members, as these are childs of the actual
  * events.
  *
  * In addition, registered users should have update privileges to their own person record. If these
@@ -28,7 +28,7 @@
  *
  * During each request, these keys will always be available:
  *
- * - net_nemein_calendar_event 'root_event': The root event to use.
+ * - net_nemein_calendar_event_dba 'root_event': The root event to use.
  * - array 'schemadb': The schemadb specified in the configuration.
  *
  * Be aware that this data isloaded during the _on_handle callback, which means that you can't make
@@ -37,10 +37,10 @@
  * <b>Privilege notes</b>
  *
  * All users that should be able to register need the midgard:create privilege on the event
- * in question. This <i>includes</i> anonymous users if the component is cleared for anonymous
+ * in question. This <em>includes</em> anonymous users if the component is cleared for anonymous
  * registration. Permissions are checked on a per-event level granularity.
  *
- * All registrations will have their owner privilege pointing to the associated person record.
+ * All registrations will have their owner privilege pointing to the accociated person record.
  * In addition, the system will revoke the midgard:read privilege on each created registration.
  *
  * The net.nemein.registrations:manage privilege controls access to registration management
@@ -49,10 +49,10 @@
  *
  * I recommend assigning the management group ownership privileges to the root event or at least
  * the event they should manage. From there the required privileges will then inherit down to the
- * event members. Owners will <i>not</i> receive the manage privilege automatically, it has to
+ * event members. Owners will <em>not</em> receive the manage privilege automatically, it has to
  * be granted manually.
  *
- * Upon approval of a registration, the system will revoke the ownership privilege of the
+ * Upon approval of an registration, the system will revoke the ownership privilege of the
  * registrar, replacing it by a simple read privilege. (Registrations, which are approved, should
  * no longer be changeable by the registrar). Thus, managers also need privilege management permissions
  * on the registration (they are part of midgard:owner).
@@ -73,6 +73,7 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
         $this->_autoload_files = Array
         (
             'viewer.php',
+            'admin.php',
             'navigation.php',
             'event.php',
             'registrar.php',
@@ -85,9 +86,15 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
         );
     }
 
+    function _on_initialize()
+    {
+        $_MIDCOM->componentloader->load('net.nemein.calendar');
+        return true;
+    }
+
     function _on_reindex($topic, $config, &$indexer)
     {
-        $root_event = new net_nemein_calendar_event($config->get('root_event'));
+        $root_event = new net_nemein_calendar_event_dba($config->get('root_event'));
         if (! $root_event)
         {
             debug_add("Failed to load root event, aborting.");
@@ -100,7 +107,7 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
             return;
         }
 
-        $qb = net_nemein_calendar_event::new_query_builder();
+        $qb = net_nemein_calendar_event_dba::new_query_builder();
         $qb->add_constraint('up', '=', $root_event->id);
         $result = $qb->execute();
 
@@ -126,26 +133,28 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
 
     function _on_resolve_permalink($topic, $config, $guid)
     {
-        $root_event = new net_nemein_calendar_event($config->get('root_event'));
-        if (! $root_event)
+        $root_event = new net_nemein_calendar_event_dba($config->get('root_event'));
+        if (   !$root_event
+            || !isset($root_event->guid)
+            || empty($root_event->guid))
         {
             return null;
         }
 
         $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
 
-        if (   is_a($object, 'net_nemein_calendar_event')
+        if (   is_a($object, 'net_nemein_calendar_event_dba')
             && $object->up == $root_event->id)
         {
-            return "event/view/{$guid}.html";
+            return "event/view/{$guid}/";
         }
 
-        if (is_a($object, 'midcom_db_eventmember'))
+        if (is_a($object, 'net_nemein_registrations_registration_dba'))
         {
-            $event = new net_nemein_calendar_event($object->eid);
+            $event = new net_nemein_calendar_event_dba($object->eid);
             if ($event->up == $root_event->id)
             {
-                return "registration/view/{$guid}.html";
+                return "registration/view/{$guid}/";
             }
         }
 

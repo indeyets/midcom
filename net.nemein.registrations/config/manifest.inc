@@ -1,7 +1,7 @@
 
   'name' => 'net.nemein.registrations',
   'purecode' => false,
-  'version' => '0.1.10beta1',
+  'version' => '2.0.0beta1',
   'state' => 'beta',
   'privileges' => 
   array (
@@ -9,6 +9,7 @@
   ),
   'class_definitions' => 
   array (
+    'midcom_dba_classes.inc',
   ),
   'package.xml' => 
   array (
@@ -30,12 +31,16 @@
         'role' => 'lead',
         'active' => 'yes',
       ),
+      'rambo' => 
+      array (
+        'name' => 'Eero af Heurlin',
+        'email' => 'rambo@nemein.com',
+        'role' => 'lead',
+        'active' => 'yes',
+      ),
     ),
     'dependencies' => 
     array (
-      'midcom.helper.datamanager' => 
-      array (
-      ),
       'midcom.helper.datamanager2' => 
       array (
       ),
