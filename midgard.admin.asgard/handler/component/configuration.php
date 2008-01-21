@@ -35,7 +35,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL . '/midcom.admin.libconfig/style.css',
+                'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/libconfig.css',
             )
         );
 
@@ -183,7 +183,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         if (!$schemadb)
         {
             // Create dummy schema. Naughty component would not provide config schema.
-            $schemadb = midcom_helper_datamanager2_schema::load_database("file:/midcom/admin/libconfig/config/schemadb_template.inc");
+            $schemadb = midcom_helper_datamanager2_schema::load_database("file:/midgard/admin/asgard/config/schemadb_libconfig.inc");
         }
         $schemadb[$schema]->l10n_schema = $component;
 
