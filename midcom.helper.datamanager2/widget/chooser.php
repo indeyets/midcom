@@ -9,8 +9,7 @@
 
 if (! class_exists('midcom_helper_reflector'))
 {
-    $filename = MIDCOM_ROOT . "/midcom/helper/reflector.php";
-    require_once($filename);
+    $_MIDCOM->load_library('midcom.helper.reflector');
 }
 
 /**
