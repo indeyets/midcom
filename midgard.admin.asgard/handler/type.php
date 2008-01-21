@@ -39,7 +39,7 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
     function _prepare_request_data()
     {
     }
-    
+
     function _prepare_qb($dummy_object)
     {
         // Figure correct MidCOM DBA class to use and get midcom QB
@@ -71,10 +71,10 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
             return $x;
         }
         $qb = call_user_func($qb_callback);
-            
+
         return $qb;
     }
-    
+
     function _search($term)
     {
         $type_class = $this->type;
@@ -82,13 +82,13 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
         $type_fields = array_keys(get_object_vars($dummy_object));
         $reflector = new midgard_reflection_property($type_class);
         unset($type_fields['metadata']);
-        
+
         $qb = $this->_prepare_qb($dummy_object);
         if (!$qb)
         {
             return null;
         }
-        
+
         $constraints = 0;
         $qb->begin_group('OR');
         foreach ($type_fields as $key)
@@ -104,15 +104,15 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
             }
         }
         $qb->end_group();
-        
+
         if (!$constraints)
         {
             return null;
         }
-        
+
         return $qb->execute();
     }
-    
+
     function _find_component()
     {
         // Figure out the component
@@ -199,7 +199,7 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
                 );
             }
         }
-        
+
         $this->_find_component();
         if ($data['component'] != 'midgard')
         {
@@ -213,10 +213,20 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
                 )
             );
         }
-        
+
         if (isset($_GET['search']))
         {
             $data['search_results'] = $this->_search($_GET['search']);
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.tablesorter.js');
+	        $_MIDCOM->add_link_head
+	        (
+	            array
+	            (
+	                'rel' => 'stylesheet',
+	                'type' => 'text/css',
+	                'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/searchresults.css',
+	            )
+	        );
         }
 
         midgard_admin_asgard_plugin::get_common_toolbar($data);

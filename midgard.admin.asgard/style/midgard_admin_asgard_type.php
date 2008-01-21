@@ -9,7 +9,7 @@ else
     $component_label = $_MIDCOM->i18n->get_string($data['component'], $data['component']);
 }
 echo "<h2>";
-echo sprintf($_MIDCOM->i18n->get_string('%s in %s', 'midcom'), 
+echo sprintf($_MIDCOM->i18n->get_string('%s in %s', 'midcom'),
         midgard_admin_asgard_plugin::get_type_label($data['type']),
         $component_label);
 echo "</h2>";
@@ -40,10 +40,10 @@ if (isset($data['search_results']))
     {
         echo "<p>" . $_MIDCOM->i18n->get_string('no results', 'midgard.admin.asgard') . "</p>\n";
     }
-    
+
     else
     {
-        echo "<table class=\"search_results\">\n";
+        echo "<table id=\"search_results\">\n";
         echo "    <thead>\n";
         echo "        <tr>\n";
         echo "            <th>" . $_MIDCOM->i18n->get_string('title', 'midcom') . "</th>\n";
@@ -62,11 +62,11 @@ if (isset($data['search_results']))
             {
                 $persons[$result->metadata->creator] = $_MIDCOM->auth->get_user($result->metadata->creator);
             }
-    
+
             echo "        <tr>\n";
-            echo "            <td class=\"label\"><a href=\"{$prefix}__mfa/asgard/object/view/{$result->guid}/\">{$icon} {$result->$label}</a></td>\n";
+            echo "            <td><a href=\"{$prefix}__mfa/asgard/object/view/{$result->guid}/\">{$icon} {$result->$label}</a></td>\n";
             echo "            <td>" . strftime('%x %X', $result->metadata->created) . "</td>\n";
-            
+
             if ($persons[$result->metadata->creator]->guid)
             {
                 echo "            <td><a href=\"{$prefix}__mfa/asgard/object/view/{$persons[$result->metadata->creator]->guid}/\">{$persons[$result->metadata->creator]->name}</a></td>\n";
@@ -75,11 +75,20 @@ if (isset($data['search_results']))
             {
                 echo "            <td>&nbsp;</td>\n";
             }
-    
+
             echo "        </tr>\n";
         }
         echo "    </tbody>\n";
         echo "</table>\n";
+        echo "<script type=\"text/javascript\">\n";
+        echo "        // <![CDATA[\n";
+        echo "            \$j('#search_results').tablesorter(\n";
+        echo "            {\n ";
+        echo "                widgets: ['zebra'],";
+        echo "                sortList: [[0,0]],\n";
+        echo "            });\n";
+        echo "        // ]]>\n";
+        echo "    </script>\n";
     }
 }
 ?>

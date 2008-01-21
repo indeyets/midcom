@@ -1,0 +1,44 @@
+#search_results
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#search_results thead
+{
+    background-color: #555753;
+    color: #ffffff;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+#search_results thead th,
+#search_results td
+{
+    padding-left: 4px;
+    padding-right: 2px;
+    text-align: left;
+}
+
+#search_results thead th
+{
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 20px;
+  cursor: pointer;
+}
+
+#search_results thead th.headerSortDown
+{
+  background-image: url('../stock-icons/16x16/down.png');
+}
+
+#search_results thead th.headerSortUp
+{
+  background-image: url('../stock-icons/16x16/up.png');
+}
+
+#search_results tr.even td
+{
+    background-color: #eeeeef;
+}
