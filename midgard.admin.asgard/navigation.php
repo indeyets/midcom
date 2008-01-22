@@ -153,20 +153,9 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
             echo "{$prefix}<ul>\n";
             foreach ($siblings as $type => $children)
             {
-                $label_mapping = Array();
-                $i = 0;
+
                 foreach ($children as $child)
                 {
-                    $ref =& $this->_get_reflector(&$child);
-                    $label_mapping[$i] = htmlspecialchars($ref->get_object_label($child));
-                    $i++;
-                }
-                asort($label_mapping);
-
-
-                foreach($label_mapping as $index => $label)
-                {
-                    $child =& $children[$index];
                     if (isset($this->shown_objects[$child->guid]))
                     {
                         continue;
@@ -174,6 +163,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
 
                     $ref =& $this->_get_reflector(&$child);
 
+					$label = $this->_get_reflector(&$child);
                     $selected = $this->_is_selected($child);
                     $css_class = $type;
                     $this->_common_css_classes($child, $ref, $css_class);
@@ -202,6 +192,47 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
             echo "{$prefix}</ul>\n";
         }
     }
+
+	/**
+	 * Renders the given root objects to HTML and calls _list_child_elements()
+	 *
+	 * @param array &$root_objects reference to the array of root objects
+	 * @param midcom_helper_reflector_tree &$ref Reflector singleton
+	 */
+	function _list_root_elements(&$root_objects, &$ref)
+	{
+	    echo "<ul class=\"midgard_admin_asgard_navigation\">\n";
+
+	    foreach ($root_objects as $object)
+	    {
+	        $label = $ref->get_object_label($object);
+	        $selected = $this->_is_selected($object);
+	        $css_class = get_class($object);
+	        $this->_common_css_classes($object, $ref, $css_class);
+	        $this->shown_objects[$object->guid] = true;
+
+	        echo "    <li class=\"{$css_class}\">";
+
+	        $label = htmlspecialchars($label);
+	        $icon = $ref->get_object_icon($object);
+
+	        if (empty($label))
+	        {
+	            $label = "#oid_{$object->id}";
+	        }
+
+	        echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$object->guid}/\" title=\"GUID: {$object->guid}, ID: {$object->id}\">{$icon}{$label}</a>\n";
+
+	        if ($selected)
+	        {
+	            $this->_list_child_elements($object);
+	        }
+
+	        echo "    </li>\n";
+	    }
+
+	    echo "</ul>\n";
+	}
 
     function _draw_plugins()
     {
@@ -256,6 +287,10 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         {
             $css_class .= ' current';
         }
+        if ( !$object->can_do('midgard:update'))
+        {
+            $css_class .= ' readonly';
+        }
     }
 
     function draw()
@@ -306,46 +341,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                 $root_objects = $ref->get_root_objects();
                 if (count($root_objects) > 0)
                 {
-                    echo "<ul class=\"midgard_admin_asgard_navigation\">\n";
-
-                    $object_label_mapping = Array();
-
-                    $i = 0;
-                    foreach ($root_objects as $object)
-                    {
-                        $object_label_mapping[$i] = $ref->get_object_label($object);
-                        $i++;
-                    }
-                    asort($object_label_mapping);
-
-                    foreach ($object_label_mapping as $index => $label)
-                    {
-                        $object =& $root_objects[$index];
-                        $selected = $this->_is_selected($object);
-                        $css_class = get_class($object);
-                        $this->_common_css_classes($object, $ref, $css_class);
-                        $this->shown_objects[$object->guid] = true;
-
-                        echo "    <li class=\"{$css_class}\">";
-
-                        $label = htmlspecialchars($label);
-                        $icon = $ref->get_object_icon($object);
-                        if (empty($label))
-                        {
-                            $label = "#{$object->id}";
-                        }
-
-                        echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$object->guid}/\" title=\"GUID: {$object->guid}, ID: {$object->id}\">{$icon}{$label}</a>\n";
-
-                        if ($selected)
-                        {
-                            $this->_list_child_elements($root_object);
-                        }
-
-                        echo "    </li>\n";
-                    }
-
-                    echo "</ul>\n";
+					$this->_list_root_elements($root_objects, &$ref);
                 }
             }
             midcom_show_style('midgard_admin_asgard_navigation_section_footer');
@@ -409,49 +405,9 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         if (   is_array($root_objects)
             && count($root_objects) > 0)
         {
-            midcom_show_style('midgard_admin_asgard_navigation_section_header');
-            echo "<ul class=\"midgard_admin_asgard_navigation\">\n";
-
-            $object_label_mapping = Array();
-
-            $i = 0;
-            foreach ($root_objects as $object)
-            {
-                $object_label_mapping[$i] = $ref->get_object_label($object);
-                $i++;
-            }
-            asort($object_label_mapping);
-
-            foreach ($object_label_mapping as $index => $label)
-            {
-                $object =& $root_objects[$index];
-                $selected = $this->_is_selected($object);
-                $css_class = get_class($object);
-                $this->_common_css_classes($object, $ref, $css_class);
-                $this->shown_objects[$object->guid] = true;
-
-                echo "    <li class=\"{$css_class}\">";
-
-                $label = htmlspecialchars($label);
-                $icon = $ref->get_object_icon($object);
-
-                if (empty($label))
-                {
-                    $label = "#oid_{$object->id}";
-                }
-
-                echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$object->guid}/\" title=\"GUID: {$object->guid}, ID: {$object->id}\">{$icon}{$label}</a>\n";
-
-                if ($selected)
-                {
-                    $this->_list_child_elements($root_object);
-                }
-
-                echo "    </li>\n";
-            }
-
-            echo "</ul>\n";
-            midcom_show_style('midgard_admin_asgard_navigation_section_footer');
+			midcom_show_style('midgard_admin_asgard_navigation_section_header');
+			$this->_list_root_elements($root_objects, $ref);
+			midcom_show_style('midgard_admin_asgard_navigation_section_footer');
         }
     }
 }

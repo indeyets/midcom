@@ -248,6 +248,9 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             $qb->set_limit(25);
         }*/
 
+		$ref = $this->get($this->mgdschema_class);
+		$qb->add_order('sitegroup', 'DESC');
+        $qb->add_order($ref->get_label_property());
         $objects = $qb->execute();
 
         return $objects;
@@ -468,6 +471,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             $child_objects[$schema_type] = $type_children;
             unset($type_children);
         }
+
         return $child_objects;
     }
 
@@ -612,6 +616,9 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             debug_pop();
             return false;
         }
+        $ref = $this->get($schema_type);
+		$qb->add_order('sitegroup', 'DESC');
+        $qb->add_order($ref->get_label_property());
         $objects = $qb->execute();
         return $objects;
     }

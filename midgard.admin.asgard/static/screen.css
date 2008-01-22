@@ -139,6 +139,13 @@ body
 {
     font-weight: normal;
 }
+#navigation div.section ul.midgard_admin_asgard_navigation li.readonly a
+{
+    color: #444444;
+}
+#navigation div.section ul.midgard_admin_asgard_navigation li.readonly li a
+{
+}
 
 #navigation h3
 {
