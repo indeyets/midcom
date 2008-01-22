@@ -142,7 +142,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         $qb->results_per_page = 1;
         $data['qb'] =& $qb;
         $index_poll = $qb->execute();
-        if(array_key_exists(0, $index_poll))
+        if (isset($index_poll[0]))
         {
             $this->_article = $index_poll[0];
         }
@@ -154,21 +154,19 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
 
         $this->_load_datamanager();
 
-        $poll_data = array(
+        $poll_data = array
+        (
             'id' => $this->_article->id,
             'guid' => $this->_article->guid,
             'title' => $this->_article->title,
             'abstract' => mgd_format($this->_article->abstract, 'h'),
         );
 
-        $this->_request_data['name']  = "net.nemein.quickpoll";
-
-        $qb_vote_count_total = new midgard_query_builder('net_nemein_quickpoll_vote');
-        $qb_vote_count_total->add_constraint('article', '=', $this->_article->id);
-        $this->_vote_count = $qb_vote_count_total->count();
+        $this->_request_data['name']  = 'net.nemein.quickpoll';
 
         $qb_vote = new midgard_query_builder('net_nemein_quickpoll_vote');
         $qb_vote->add_constraint('article', '=', $this->_article->id);
+        
         if ($this->_config->get('lock_ip_address'))
         {
             $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
@@ -177,7 +175,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         {
             $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
         }
-
+        
         $vote_count = $qb_vote->count();        
         if ($vote_count > 0)
         {
@@ -213,28 +211,11 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
                 $options_data[$option->id] = array
                 (
                     'title' => $option->title,
-                    'votes' => 0,
+                    'votes' => $option->votes,
                 );
+                
+                $total_count += $option->votes;
             }
-        }
-
-        $qb_votes = new midgard_query_builder('net_nemein_quickpoll_vote');
-        $qb_votes->add_constraint('article', '=', $this->_article->id);
-        $votes = $qb_votes->execute();
-        foreach ($votes as $vote)
-        {
-            if (! isset($options_data[$vote->selectedoption]))
-            {
-                continue;
-            }
-            
-            if (! isset($options_data[$vote->selectedoption]['votes']))
-            {
-                $options_data[$vote->selectedoption]['votes'] = 0;
-            }
-            
-            $options_data[$vote->selectedoption]['votes'] += 1;
-            $total_count++;
         }
         
         $poll_results = array
@@ -243,10 +224,19 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             'options' => $options_data,
             'total'   => $total_count,
         );
+        $this->_vote_count = $total_count;
         
         $data['poll_results'] =& $poll_results;
 
         $this->_prepare_request_data();
+
+        // Set context data
+        /**
+         * TODO: Figure out the metadata_revised of a handy object to get the correct timestamp
+         * this should give us reasonably working caching but the MIDCOM_CONTEXT_LASTMODIFIED is
+         * naturally wrong
+         */
+        $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
 
         return true;
     }
@@ -439,6 +429,14 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             $this->_request_data['voted'] =  true;
         }
 
+        // Set context data
+        /**
+         * TODO: Figure out the metadata_revised of a handy object to get the correct timestamp
+         * this should give us reasonably working caching but the MIDCOM_CONTEXT_LASTMODIFIED is
+         * naturally wrong
+         */
+        $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
+
         return true;
     }
 
@@ -493,7 +491,8 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         $options_data = array();
         $total_count = 0;
         
-        $poll_data = array(
+        $poll_data = array
+        (
             'id' => $this->_article->id,
             'guid' => $this->_article->guid,
             'title' => $this->_article->title,
@@ -508,39 +507,17 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         {
             if (! isset($options_data[$option->id]))
             {
-                $options_data[$option->id] = array(
+                $options_data[$option->id] = array
+                (
                     'title' => $option->title,
-                    'votes' => 0,
+                    'votes' => $option->votes,
                 );
+                $total_count += $option->votes;
             }
         }
 
-        $qb_votes = net_nemein_quickpoll_vote_dba::new_query_builder();
-        $qb_votes->add_constraint('article', '=', $this->_article->id);
-        $votes = $qb_votes->execute();
-        
-        foreach ($votes as $vote)
-        {
-            if (! isset($options_data[$vote->selectedoption]))
-            {
-                continue;
-            }
-            
-            if (! isset($options_data[$vote->selectedoption]['votes']))
-            {
-                $options_data[$vote->selectedoption]['votes'] = 1;
-            }
-            else
-            {
-                $options_data[$vote->selectedoption]['votes'] += 1;                
-            }
-            
-            $total_count++;
-        }
-
-        $qb_vote = net_nemein_quickpoll_vote_dba::new_query_builder();
+        $qb_vote = new midgard_query_builder('net_nemein_quickpoll_vote');
         $qb_vote->add_constraint('article', '=', $this->_article->id);
-
         if ($this->_config->get('lock_ip_address'))
         {
             $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
@@ -549,7 +526,6 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         {
             $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
         }
-
         $vote_count = $qb_vote->count();
         
         if ($vote_count > 0)
@@ -575,7 +551,8 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             $this->_request_data['voted'] =  true;
         }
 
-        $poll_results = array(
+        $poll_results = array
+        (
             'poll' => $poll_data,
             'options' => $options_data,
             'total' => $total_count,
@@ -588,6 +565,14 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             $this->_prepare_request_data();
         }
         
+        // Set context data
+        /**
+         * TODO: Figure out the metadata_revised of a handy object to get the correct timestamp
+         * this should give us reasonably working caching but the MIDCOM_CONTEXT_LASTMODIFIED is
+         * naturally wrong
+         */
+        $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
+
         return true;
     }
     
