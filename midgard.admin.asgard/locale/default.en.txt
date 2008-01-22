@@ -75,6 +75,70 @@ Attachments
 Attachments of %s %s
 ---STRINGEND
 
+---STRING upload file
+Upload file
+---STRINGEND
+
+---STRING add text file
+Add text file
+---STRINGEND
+
+---STRING filename
+File name
+---STRINGEND
+
+---STRING mimetype
+MIME type
+---STRINGEND
+
+---STRING cascading style sheet
+Cascading Style Sheet
+---STRINGEND
+
+---STRING javascript
+JavaScript
+---STRINGEND
+
+---STRING plain text
+Plain text
+---STRINGEND
+
+---STRING xml
+XML
+---STRINGEND
+
+---STRING html
+HTML
+---STRINGEND
+
+---STRING edit file %s
+Edit file %s
+---STRINGEND
+
+---STRING edit text file
+Edit text file
+---STRINGEND
+
+---STRING file %s deleted
+File '%s' deleted
+---STRINGEND
+
+---STRING file contents
+File contents
+---STRINGEND
+
+---STRING file information
+File information
+---STRINGEND
+
+---STRING filename
+Filename
+---STRINGEND
+
+---STRING url
+URL
+---STRINGEND
+
 ---STRING back to %s
 Back to page "%s"
 ---STRINGEND

@@ -1,17 +1,17 @@
-<h1><?php echo $_MIDCOM->i18n->get_string('style attachments', 'midgard.admin.asgard'); ?></h1>
+<h1><?php echo $_MIDCOM->i18n->get_string('attachments', 'midgard.admin.asgard'); ?></h1>
 
 <form method="post" class="datamanager2" enctype="multipart/form-data">
     <fieldset class="midgard_admin_asgard_object_attachments_upload">
         <legend><?php echo $_MIDCOM->i18n->get_string('upload file', 'midgard.admin.asgard'); ?></legend>
-        
+
         <input type="file" name="midgard_admin_asgard_file" />
     </fieldset>
-    
+
     <hr />
-    
+
     <fieldset class="midgard_admin_asgard_object_attachments_newfile">
         <legend><?php echo $_MIDCOM->i18n->get_string('add text file', 'midgard.admin.asgard'); ?></legend>
-        
+
         <label>
             <span><?php echo $_MIDCOM->i18n->get_string('filename', 'midgard.admin.asgard'); ?></span>
             <input class="text" type="text" name="midgard_admin_asgard_filename" />

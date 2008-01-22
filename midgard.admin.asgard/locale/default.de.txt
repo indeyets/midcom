@@ -56,7 +56,75 @@ Asgard-Plugins
 ---STRINGEND
 
 ---STRING attachment %s undeleted
-Attachment %s wiederhergestellt
+Datei %s wiederhergestellt
+---STRINGEND
+
+---STRING attachments
+Dateianhänge
+---STRINGEND
+
+---STRING attachments of %s %s
+Dateianhänge von %s %s
+---STRINGEND
+
+---STRING upload file
+Datei hochladen
+---STRINGEND
+
+---STRING add text file
+Text-Datei hinzufügen
+---STRINGEND
+
+---STRING filename
+Dateiname
+---STRINGEND
+
+---STRING mimetype
+MIME-Typ
+---STRINGEND
+
+---STRING cascading style sheet
+Cascading Style Sheet
+---STRINGEND
+
+---STRING javascript
+JavaScript
+---STRINGEND
+
+---STRING plain text
+Plain text
+---STRINGEND
+
+---STRING xml
+XML
+---STRINGEND
+
+---STRING html
+HTML
+---STRINGEND
+
+---STRING edit file %s
+Datei %s bearbeiten
+---STRINGEND
+
+---STRING edit text file
+Text-Datei bearbeiten
+---STRINGEND
+
+---STRING file %s deleted
+Datei '%s' gelöscht
+---STRINGEND
+
+---STRING file contents
+Datei-Inhalt
+---STRINGEND
+
+---STRING file information
+Datei-Übersicht
+---STRINGEND
+
+---STRING url
+URL
 ---STRINGEND
 
 ---STRING back to site
@@ -191,6 +259,14 @@ Freigeben
 Konfiguration
 ---STRINGEND
 
+---STRING global
+Global
+---STRINGEND
+
+---STRING local
+Lokal
+---STRINGEND
+
 ---STRING midgard objects
 Midgard-Objekte
 ---STRINGEND
@@ -295,6 +371,14 @@ Berechtigungen
 Entfernen
 ---STRINGEND
 
+---STRING select exactly two choices
+Genau zwei Möglichkeiten zeigen
+---STRINGEND
+
+---STRING show differences
+Unterschiede anzeigen
+---STRINGEND
+
 ---STRING size
 Größe
 ---STRINGEND
@@ -371,6 +455,34 @@ zurück zu "%s"
 Änderungen seit Version %s
 ---STRINGEND
 
+---STRING code
+Code
+---STRINGEND
+
+---STRING compare
+Vergleichen
+---STRINGEND
+
+---STRING component
+Komponente
+---STRINGEND
+
+---STRING components
+Komponenten
+---STRINGEND
+
+---STRING configuration for %s
+Konfiguration für Komponente %s
+---STRINGEND
+
+---STRING configuration save failed: %s
+Sichern der Konfiguration fehlgeschlagen: %s
+---STRINGEND
+
+---STRING configuration saved successfully
+Konfiguration erfolgreich gespeichert
+---STRINGEND
+
 ---STRING date
 Datum
 ---STRINGEND
@@ -408,7 +520,7 @@ Revisionsgeschichte von %s
 ---STRINGEND
 
 ---STRING show history
-Revisionsgeschichte zeigen
+Revisionsgeschichte
 ---STRINGEND
 
 ---STRING user
