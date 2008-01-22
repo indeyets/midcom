@@ -246,6 +246,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         }
 
         $this->_request_data['rcs_toolbar'] = new midcom_helper_toolbar();
+        $this->_request_data['rcs_toolbar_2'] = new midcom_helper_toolbar();
 
         if (isset($first))
         {
@@ -357,6 +358,31 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
                     MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/rcs/preview/{$this->_guid}/{$last}",
                     MIDCOM_TOOLBAR_LABEL => $last,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/finish.png',
+                )
+            );
+        }
+        
+        // RCS functional toolbar
+        $this->_request_data['rcs_toolbar_2']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/rcs/{$this->_guid}/",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('show history'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/history.png',
+            )
+        );
+        
+        if (isset($current))
+        {
+            $this->_request_data['rcs_toolbar_2']->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/rcs/restore/{$this->_guid}/{$current}/",
+                    MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n->get('restore version %s'), $current),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png',
+                    MIDCOM_TOOLBAR_ENABLED => ($current !== $last) ? true : false,
                 )
             );
         }

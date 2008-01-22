@@ -8,6 +8,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 <div class="rcs_navigation">
 <?php
 echo $data['rcs_toolbar']->render();
+echo $data['rcs_toolbar_2']->render();
 ?>
 </div>
 <dl class="midgard_admin_asgard_rcs_diff">

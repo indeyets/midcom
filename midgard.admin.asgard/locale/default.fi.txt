@@ -415,6 +415,10 @@ Palautus versioon %s epäonnistui, syy %s
 Palautus versioon %s onnistui
 ---STRINGEND
 
+---STRING restore version %s
+Palauta versio %s
+---STRINGEND
+
 ---STRING revision
 Versio
 ---STRINGEND
