@@ -1179,9 +1179,7 @@ class midcom_baseclasses_core_dbobject
 		}
 		
 		debug_pop();
-		return $result;
-		
-		}
+		return $result;	
     }
 
     /**
