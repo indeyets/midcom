@@ -282,16 +282,6 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                 $data['local'] = $this->_detect(null);
             }
 
-            if (   !isset($data['even'])
-                || $data['even'])
-            {
-                $data['even'] = false;
-            }
-            else
-            {
-                $data['even'] = true;
-            }
-
             midcom_show_style('midgard_admin_asgard_component_configuration_item');
         }
         midcom_show_style('midgard_admin_asgard_component_configuration_footer');
