@@ -129,7 +129,11 @@ $_MIDCOM->auth->require_valid_user();
                             // FIXME: IIRC, there was a function for getting this info
                             $server_software = explode(' ', $_SERVER['SERVER_SOFTWARE']);
                             $apache = explode('/', $server_software[0]);
-                            echo $apache[1];
+                            if (   $apache
+                                && count($apache) > 1)
+                            {
+                                echo $apache[1];
+                            }
                             ?></td>
                         <td>Web server</td>
                     </tr>
@@ -143,7 +147,7 @@ $_MIDCOM->auth->require_valid_user();
 
     	    <div id="footer">
             	<div class="midgard">
-            	    Copyright &copy; 1998-2006 <a href="http://www.midgard-project.org/">The Midgard Project</a>. Midgard is <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.
+            	    Copyright &copy; 1998-<?php echo date('Y'); ?> <a href="http://www.midgard-project.org/">The Midgard Project</a>. Midgard is <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.
             	</div>
                 <div class="server">
                     <?php echo "{$_SERVER['SERVER_NAME']}: {$_SERVER['SERVER_SOFTWARE']}"; ?>
