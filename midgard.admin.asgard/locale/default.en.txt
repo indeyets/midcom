@@ -75,6 +75,10 @@ Attachments
 Attachments of %s %s
 ---STRINGEND
 
+---STRING no files
+No files
+---STRINGEND
+
 ---STRING upload file
 Upload file
 ---STRINGEND
