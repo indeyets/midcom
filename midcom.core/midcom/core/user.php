@@ -240,10 +240,15 @@ class midcom_core_user extends midcom_baseclasses_core_object
         else if (is_numeric($id))
         {
             $this->_storage = new midgard_person();
-            if (! $this->_storage->get_by_id($id))
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to retrieve the person ID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
+            
+			try {
+				
+				$this->_storage->get_by_id($id);
+
+			} catch (midgard_error_exception $e) {
+
+			    debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to retrieve the person ID {$id}: " . $e->getMessage(), MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }

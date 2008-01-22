@@ -293,6 +293,8 @@ class midcom_helper__componentloader
         // Check if the component is listed in the class manifest list. If not,
         // we immediately bail - anything went wrong while loading the component
         // (f.x. broken DBA classes).
+	//echo"'".$path."'";
+	//print_r($this->manifests);
         if (! array_key_exists($path, $this->manifests))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -777,6 +779,7 @@ class midcom_helper__componentloader
             }
         }
 
+	//echo "Load $manifest->name";
         $this->manifests[$manifest->name] = $manifest;
 
         // Register Privileges
