@@ -1139,7 +1139,7 @@ class midcom_baseclasses_core_dbobject
     }
 
     /**
-     * This call wraps the original get_by_guid call to provide access control.
+     * This call wraps the original get_by_path call to provide access control.
      * The calling sequence is as with the corresponding constructor.
      *
      * @param MidgardObject &$object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
@@ -1149,10 +1149,10 @@ class midcom_baseclasses_core_dbobject
     function get_by_path(&$object, $path)
     {
         debug_push_class($object, __FUNCTION__);
-	
+
 		try {
-		
-			$object->get_by_path((string) $path);
+			
+			$object->__exec_get_by_path((string) $path);
 
 		} catch (midgard_error_exception $e) {
 		

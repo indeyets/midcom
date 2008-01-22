@@ -944,6 +944,7 @@ EOF;
     function __exec_delete() { return @parent::delete(); }
     function __exec_get_by_id(\$id) { return parent::get_by_id(\$id); }
     function __exec_get_by_guid(\$guid) { return parent::get_by_guid(\$guid); }
+    function __exec_get_by_path(\$path) { return parent::get_by_path(\$path); }
 
     // Legacy API exec handlers
     function __exec_listattachments() { return parent::listattachments(); }
