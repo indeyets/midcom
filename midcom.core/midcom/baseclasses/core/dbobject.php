@@ -398,9 +398,13 @@ class midcom_baseclasses_core_dbobject
 
         midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_isodate($object);
 
-        if (! $object->__exec_create() && $object->id == 0)
-        {
-            debug_add("Failed to create the record, last Midgard error: " . mgd_errstr());
+		try {
+
+			$object->__exec_create();
+		
+		} catch (midgard_error_exception $e) {
+		
+			debug_add("Failed to create the record, last Midgard error: " . $e->getMessage());
             debug_pop();
             return false;
         }
