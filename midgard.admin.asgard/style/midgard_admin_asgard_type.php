@@ -29,10 +29,14 @@ else
 <form method="get">
     <label>
         <?php echo $_MIDCOM->i18n->get_string('search', 'midgard.admin.asgard'); ?>
-        <input type="text" name="search" class="search"<?php if (isset($_GET['search'])) { echo " value=\"{$_GET['search']}\""; } ?> />
+        <input id="search_field" type="text" name="search" class="search"<?php if (isset($_GET['search'])) { echo " value=\"{$_GET['search']}\""; } ?> />
     </label>
     <input class="search" type="submit" value="<?php echo $_MIDCOM->i18n->get_string('go', 'midgard.admin.asgard'); ?>" />
 </form>
+<script type="text/javascript">
+document.getElementById('search_field').focus();
+</script>
+
 <?php
 if (isset($data['search_results']))
 {
