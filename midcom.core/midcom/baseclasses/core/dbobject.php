@@ -1149,38 +1149,39 @@ class midcom_baseclasses_core_dbobject
     function get_by_path(&$object, $path)
     {
         debug_push_class($object, __FUNCTION__);
+	
+		try {
+		
+			$object->get_by_path((string) $path);
 
-        $object->__exec_get_by_path((string) $path);
+		} catch (midgard_error_exception $e) {
+		
+			debug_add("Failed to load the record identified by path {$path}, last Midgard error was: " . $e->getMessage(), MIDCOM_LOG_INFO);
+			debug_pop();
+			return false;
+		}
 
-        if (   $object->id != 0
-            && $object->action != 'delete')
-        {
-            if (! $_MIDCOM->auth->can_do('midgard:read', $object))
-            {
-                debug_add("Failed to load object, read privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
-                    MIDCOM_LOG_ERROR);
-                midcom_baseclasses_core_dbobject::_clear_object($object);
-                debug_pop();
-                return false;
-            }
+		if (! $_MIDCOM->auth->can_do('midgard:read', $object))
+		{
+			debug_add("Failed to load object, read privilege on the {$object->__table__} ID {$object->id} not granted for the current user.", MIDCOM_LOG_ERROR);
+			midcom_baseclasses_core_dbobject::_clear_object($object);
+			debug_pop();
+			return false;
+		}
 
-            midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
-
-            $result = $object->_on_loaded();
-            if (! $result)
-            {
-                debug_add("The _on_loaded event handler returned false.");
-                midcom_baseclasses_core_dbobject::_clear_object($object);
-            }
-            debug_pop();
-            return $result;
-        }
-        else
-        {
-            debug_add("Failed to load the record identified by path {$path}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
-            debug_pop();
-            return false;
-        }
+		midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
+		
+		$result = $object->_on_loaded();
+		if (! $result)
+		{
+			debug_add("The _on_loaded event handler returned false.");
+			midcom_baseclasses_core_dbobject::_clear_object($object);
+		}
+		
+		debug_pop();
+		return $result;
+		
+		}
     }
 
     /**
