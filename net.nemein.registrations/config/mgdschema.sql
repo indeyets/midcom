@@ -15,3 +15,8 @@ CREATE INDEX `net_nemein_registrations_registration_eid_idx` ON net_nemein_regis
 CREATE INDEX `net_nemein_registrations_registration_uid_idx` ON net_nemein_registrations_registration (`uid`);
 ALTER TABLE net_nemein_registrations_registration ADD COLUMN `state` int(11) NOT NULL default '0';
 CREATE INDEX `net_nemein_registrations_registration_state_idx` ON net_nemein_registrations_registration (`state`);
+ALTER TABLE net_nemein_registrations_registration ADD COLUMN `price` float NOT NULL default '0';
+ALTER TABLE net_nemein_registrations_registration ADD COLUMN  `reference` varchar(255) NOT NULL default '';
+CREATE INDEX `net_nemein_registrations_registration_reference_idx` ON net_nemein_registrations_registration (`reference`);
+
+

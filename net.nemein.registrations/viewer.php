@@ -14,6 +14,7 @@
  *
  * @package net.nemein.registrations
  */
+
 class net_nemein_registrations_viewer extends midcom_baseclasses_components_request
 {
     function net_nemein_registrations_viewer($topic, $config)
@@ -125,6 +126,21 @@ class net_nemein_registrations_viewer extends midcom_baseclasses_components_requ
             'fixed_args' => Array('events', 'create'),
         );
 
+
+        $this->_request_switch['compose_test'] = Array
+        (
+            'handler' => Array('net_nemein_registrations_handler_compose', 'compose'),
+            'fixed_args' => Array('compose', 'test'),
+            'variable_args' => 2, // registration guid/output mode
+        );
+        $this->_request_switch['show-invoice'] = Array
+        (
+            'handler' => Array('net_nemein_registrations_handler_compose', 'compose'),
+            'fixed_args' => Array('invoice'),
+            'variable_args' => 1, // registration guid
+        );
+
+
         // Administrative stuff
         $this->_request_switch['admin-rootevent'] = Array
         (
@@ -166,7 +182,7 @@ class net_nemein_registrations_viewer extends midcom_baseclasses_components_requ
      * If this is called for the admin-rootevent handler, any failure to load the root event
      * is silently ignored.
      *
-     * @param string $handler_id The handler ID to load the root event for.
+     * @param $handler_id The handler ID to load the root event for.
      */
     function _load_root_event($handler_id)
     {

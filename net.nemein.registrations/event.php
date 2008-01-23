@@ -16,7 +16,7 @@ if (!class_exists('net_nemein_calendar_event_dba'))
 /**
  * Event registration system: Event class
  *
- * This class encaspulates an event which can be registered to.
+ * This class encapsulates an event which can be registered to.
  *
  * TODO...
  *
@@ -77,7 +77,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
     var $_root_event;
 
     /**
-     * The DM2 datamanager instance encaspulating this object. Initialized on first access
+     * The DM2 datamanager instance encapsulating this object. Initialized on first access
      * via get_datamanager.
      *
      * @var midcom_helper_datamanager2_datamanager
@@ -106,21 +106,20 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
      */
     function net_nemein_registrations_event($id = null)
     {
-        parent::net_nemein_calendar_event_dba($id);
-        // Intercept failed class instantinations.
-        if ($this)
-        {
-            $this->_bind_to_request_data();
-            $this->_root_event =& $this->_request_data['root_event'];
-        }
+        return parent::net_nemein_calendar_event_dba($id);
     }
 
-    function _on_loaded()
+    function _on_created()
     {
-        if (!parent::_on_loaded())
-        {
-            return false;
-        }
+        $this->_do_bindings();
+        return true;
+    }
+
+    function _do_bindings()
+    {
+        $this->_bind_to_request_data();
+        $this->_root_event =& $this->_request_data['root_event'];
+
         $start_ts = strtotime($this->start);
         $end_ts = strtotime($this->end);
         $start_ts_hr_date = strftime('%x', $start_ts);
@@ -129,6 +128,15 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
         $end_ts_hr_datetime = strftime('%x', $end_ts) . date(' H:i', $end_ts);
         $start_ts2end_hr_datetime = net_nemein_calendar_functions_daylabel('start', $start_ts, $end_ts) . ' - ' . midcom_helper_generate_daylabel('end', $start_ts, $end_ts);
         $start_ts2end_hr_date = net_nemein_calendar_functions_daylabel('start', $start_ts, $end_ts, false) . ' - ' . midcom_helper_generate_daylabel('end', $start_ts, $end_ts, false);
+    }
+
+    function _on_loaded()
+    {
+        if (!parent::_on_loaded())
+        {
+            return false;
+        }
+        $this->_do_bindings();
         return true;
     }
 
@@ -138,6 +146,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
      */
     function _bind_to_request_data()
     {
+        // CAVEAT: This is likely to only work correctly when registrations is in fact in charge of the request 
         $this->_request_data =& $_MIDCOM->get_custom_context_data('request_data');
         $this->_config =& $this->_request_data['config'];
         $this->_topic =& $this->_request_data['topic'];
@@ -205,6 +214,8 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
         $controller->defaults = $defaults;
         return $controller;
     }
+
+
 
     /**
      * Returns the mail address to which to send notification E-Mails.
@@ -341,7 +352,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
 
 
     /**
-     * Returns a list of registrar records accociated with this object.
+     * Returns a list of registrar records associated with this object.
      *
      * @return Array of net_nemein_registration_registrar records.
      */
@@ -458,7 +469,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
      * 1. If we have an anonymous user, the registration link is available always. The final
      *    permission checks are done on the registration page, where registration will
      *    be allowed due to correct config/privileges, or, if denied, a login page will be shown.
-     * 2. If an use is authenticated, we first check wether we have sufficient privileges to
+     * 2. If an use is authenticated, we first check whether we have sufficient privileges to
      *    create a registration. If not, we return false.
      * 3. If the privileges are granted, we check if this event is open for registration and if
      *    we have not yet registered for it. If yes, the URL will be returned.
@@ -506,7 +517,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
     }
 
     /**
-     * Returns a list of registration records accociated with this object.
+     * Returns a list of registration records associated with this object.
      *
      * @return Array of net_nemein_registration_registration records.
      * @todo Once QB supports it, order by Names
@@ -527,7 +538,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
 
     /**
      * This function returns a query builder prepared to query all events linked to the
-     * root event accociated with the current request state. If an event type filter is
+     * root event associated with the current request state. If an event type filter is
      * configured, this is taken into account as well.
      *
      * No ordering whatsoever is done in this helper. Also there is no restriction regarding
@@ -662,6 +673,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
      * @param net_nemein_registrations_registration_dba $registration A reference to the registration
      *     to be approved.
      * @todo Rewrite Mail handling to PEAR_Mail.
+     * @todo move to the registration class
      */
     function approve_registration(&$registration)
     {
@@ -697,39 +709,14 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
         // Finally, send out the E-Mails
 
         // Get base data
+        $bodies = $registration->compose_mail_bodies();
         $subject = $this->_config->get('mail_registration_subject');
         $sender = $this->_config->get('mail_registration_sender');
         $cc = explode(',', $this->get_notification_email());
-        $body = midcom_get_snippet_content($this->_config->get('mail_registration_body'));
+        $body = $bodies['accept_text'];
 
-        $registrar_dm =& $registrar_object->get_datamanager();
-        $registrar_data = $registrar_dm->get_content_csv();
-        $registrar_all = $this->_dm_array_to_string($registrar_dm);
-
-        $registration_dm =& $registration->get_datamanager();
-        $registration_data = $registration_dm->get_content_csv();
-        $registration_all = $this->_dm_array_to_string($registration_dm);
-
-        //syntax: _REGISTRAR_arraykey_ bzw. REGISTRATION
-        $search = Array (
-            '/__REGEVENT_([^ \.>"-]*?)__/e',
-            '/__REGISTRAR__/', /* Order important here ! */
-            '/__REGISTRAR_([^"]*?)__/e',
-            '/__REGISTRATION__/', /* Order important here ! */
-            '/__REGISTRATION_([^_"]*?)__/e',
-            '/__URL__/',
-        );
-        $replace = Array (
-            '$this->\1',
-            $registrar_all,
-            '$registrar_data["\1"]',
-            $registration_all,
-            '$registration_data["\1"]',
-            $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "event/view/{$this->guid}/",
-        );
-        $subject = preg_replace($search, $replace, $subject);
-        $body = preg_replace($search, $replace, $body);
-        $headers = "From: {$sender}\r\nReply-To: {$sender}\r\nX-Mailer: PHP/" . phpversion();
+        $subject = $registration->expand_keywords($subject);
+        $body = $registration->expand_keywords($body);
 
         $cc[] = $registrar_object->email;
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -746,6 +733,12 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
             $mail->to = $email;
             $mail->subject = $subject;
             $mail->body = $body;
+            if (!empty($bodies['accept_html']))
+            {
+                // if we have non-empty html body composed, add it to the mail object, resolving embeds etc
+                $mail->html_body = $registration->expand_keywords($bodies['accept_html']);
+                list ($mail->html_body, $mail->embeds) = $mail->html_get_embeds($this, $mail->html_body, $mail->embeds);
+            }
             $mail->from = $sender;
             if (!$mail->send())
             {
@@ -773,6 +766,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
      * @param net_nemein_registrations_registration_dba $registration A reference to the registration
      *     to be rejected.
      * @param string $reason The reason entered by the admin when he rejected the registration.
+     * @todo move to the registration class
      */
     function reject_registration(&$registration, $reason)
     {
@@ -787,43 +781,17 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
             return false;
         }
 
+        $this->request_data['reject_reason'] = $reason;
+
         // Get base data
+        $bodies = $registration->compose_mail_bodies();
         $subject = $this->_config->get('mail_registration_reject_subject');
         $sender = $this->_config->get('mail_registration_reject_sender');
         $cc = explode(',', $this->get_notification_email());
-        $body = midcom_get_snippet_content($this->_config->get('mail_registration_reject_body'));
+        $body = $bodies['reject_text'];
 
-        $registrar_object = $registration->get_registrar();
-        $registrar_dm =& $registrar_object->get_datamanager();
-        $registrar_data = $registrar_dm->get_content_csv();
-        $registrar_all = $this->_dm_array_to_string($registrar_dm);
-
-        $registration_dm =& $registration->get_datamanager();
-        $registration_data = $registration_dm->get_content_csv();
-        $registration_all = $this->_dm_array_to_string($registration_dm);
-
-        //syntax: _REGISTRAR_arraykey_ bzw. REGISTRATION
-        $search = Array (
-            '/__REGEVENT_([^ \.>"-]*?)__/e',
-            '/__REGISTRAR__/', /* Order important here ! */
-            '/__REGISTRAR_([^"]*?)__/e',
-            '/__REGISTRATION__/', /* Order important here ! */
-            '/__REGISTRATION_([^_"]*?)__/e',
-            '/__REASON__/',
-            '/__URL__/',
-        );
-        $replace = Array (
-            '$this->\1',
-            $registrar_all,
-            '$registrar_data["\1"]',
-            $registration_all,
-            '$registration_data["\1"]',
-            $reason,
-            $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "event/view/{$this->guid}/",
-        );
-        $subject = preg_replace($search, $replace, $subject);
-        $body = preg_replace($search, $replace, $body);
-        $headers = "From: {$sender}\r\nReply-To: {$sender}\r\nX-Mailer: PHP/" . phpversion();
+        $subject = $registration->expand_keywords($subject);
+        $body = $registration->expand_keywords($body);
 
         $cc[] = $registrar_object->email;
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -840,6 +808,12 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
             $mail->to = $email;
             $mail->subject = $subject;
             $mail->body = $body;
+            if (!empty($bodies['reject_html']))
+            {
+                // if we have non-empty html body composed, add it to the mail object, resolving embeds etc
+                $mail->html_body = $registration->expand_keywords($bodies['reject_html']);
+                list ($mail->html_body, $mail->embeds) = $mail->html_get_embeds($this, $mail->html_body, $mail->embeds);
+            }
             $mail->from = $sender;
             if (!$mail->send())
             {
@@ -906,7 +880,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
      *
      * @todo Rewrite to a more suitable implementaiton with DM2 side support.
      */
-    function _dm_array_to_string(&$dm)
+    function dm_array_to_string(&$dm)
     {
         $result = "";
         foreach ($dm->schema->fields as $name => $field)
@@ -931,7 +905,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
      *
      * This function is usually called statically.
      *
-     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encaspulating the event.
+     * @param midcom_helper_datamanager2_datamanager $dm The Datamanager encapsulating the event.
      * @param midcom_services_indexer $indexer The indexer instance to use.
      * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
      *     tries to load a new topic instance from the database identified by this parameter.

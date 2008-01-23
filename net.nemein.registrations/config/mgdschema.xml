@@ -7,6 +7,8 @@
     <property name="uid" type="integer" link="midgard_person:id"/>
     <property name="extra" type="text"/>
     <property name="state" type="integer" />
+    <property name="price" type="float" />
+    <property name="reference" type="string"/>
   </type>
 
 </Schema>
