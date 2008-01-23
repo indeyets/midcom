@@ -61,14 +61,23 @@ if (isset($data['search_results']))
         {
             $reflector = midcom_helper_reflector_tree::get($result);
             $icon = $reflector->get_object_icon($result);
-            $label = $reflector->get_label_property();
+            $label_property = $reflector->get_label_property();
+            if (method_exists($result, 'get_label'))
+            {
+                $label = $result->get_label();
+            }
+            else
+            {
+                $label = $result->$label_property;
+            }
+            
             if (!isset($persons[$result->metadata->creator]))
             {
                 $persons[$result->metadata->creator] = $_MIDCOM->auth->get_user($result->metadata->creator);
             }
 
             echo "        <tr>\n";
-            echo "            <td><a href=\"{$prefix}__mfa/asgard/object/view/{$result->guid}/\">{$icon} {$result->$label}</a></td>\n";
+            echo "            <td><a href=\"{$prefix}__mfa/asgard/object/view/{$result->guid}/\">{$icon} {$label}</a></td>\n";
             echo "            <td>" . strftime('%x %X', $result->metadata->created) . "</td>\n";
 
             if ($persons[$result->metadata->creator]->guid)
