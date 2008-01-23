@@ -119,6 +119,11 @@
 'person' => Array
 (
     'description' => 'Registred Person Record',
+    'operations'  => array
+    (
+        'cancel' => 'cancel',
+        'save'   => 'register',
+    ),
     'fields' => Array
     (
         'p_firstname' => Array

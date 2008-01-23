@@ -144,7 +144,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
             // This will exit.
         }
 
-        // Before we do anything, check wether there is a cancel button in the request.
+        // Before we do anything, check whether there is a cancel button in the request.
         // If yes, redirect back to the welcome page.
         // This will shortcut without creating any datamanager to avoid the possibly
         // expensive creation process.
@@ -153,6 +153,9 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
             $_MIDCOM->relocate('');
             // This will exit.
         }
+
+        // $this->_process_nullstorage_controller() might change this!
+        $data['show_style'] = 'register-form';
 
         // Further startup work
         $this->_validate_permissions();
@@ -170,6 +173,16 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
     }
 
     /**
+     * The register handler loades the currently visible events and displays them.
+     *
+     * @access private
+     */
+    function _show_register($handler_id, &$data)
+    {
+        midcom_show_style($data['show_style']);
+    }
+
+    /**
      * Processes data sent back from the client. If the form validates, we do the save cycle and
      * redirect to a thank-you(tm) page. Only the save event is handled here, cancel is already
      * processed during startup.
@@ -178,79 +191,123 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
      */
     function _process_nullstorage_controller()
     {
-        if ($this->_controller->process_form() == 'save')
+        //$schema =& $this->_controller->datamanager->schema;
+        $schema =& $this->_controller->schemadb[$this->_controller->schemaname];
+        switch ($this->_controller->process_form())
         {
-            if (   $this->_config->get('allow_multiple')
-                && isset($this->_controller->datamanager->types['events'])
-                && isset($this->_controller->datamanager->types['events']->selection)
-                && is_array($this->_controller->datamanager->types['events']->selection)
-                && !empty($this->_controller->datamanager->types['events']->selection)
-                )
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add('entered handler for multiple events registration');
-                // We have multiple courses to process, start by verifying the registrar
-                $registar_created = false;
+            default:
+            case 'previous':
+            case 'edit':
+                // If we have both next and save defined in schema, clear the save
+                if (   isset($schema->operations['save'])
+                    && isset($schema->operations['next']))
+                {
+                    unset($schema->operations['save']);
+                }
+                // If we have previous in schema clear it, this is the "first" operation
+                if (isset($schema->operations['previous']))
+                {
+                    unset($schema->operations['previous']);
+                }
+                // re-initialize the formmanager after mucking the schema
+                $this->_controller->formmanager->initialize();
+                $this->_controller->formmanager->process_form();
+                break;
+            case 'next':
+                // If we don't have save defined in schema (weird but valid) add it
+                if (!isset($schema->operations['save']))
+                {
+                    $schema->operations['save'] = 'confirm registration';
+                }
+                // If we don't have previous defined add it
+                if (!isset($schema->operations['previous']))
+                {
+                    $schema->operations['previous'] = 'back';
+                }
+                // And remove the next option (which obviously was there or we would never reach here)
+                unset($schema->operations['next']);
+                
+                // re-initialize the formmanager after mucking the schema
+                $this->_controller->formmanager->initialize();
+                // Should not be strictly neccessary anymore to be exact
+                $this->_controller->formmanager->process_form();
+                $this->_controller->formmanager->freeze(); // Make all elements read-only!
+                $this->_request_data['show_style'] = 'register-confirm';
+                break;
+            case 'save':
+                // TODO: refactor to smaller methods
+                if (   $this->_config->get('allow_multiple')
+                    && isset($this->_controller->datamanager->types['events'])
+                    && isset($this->_controller->datamanager->types['events']->selection)
+                    && is_array($this->_controller->datamanager->types['events']->selection)
+                    && !empty($this->_controller->datamanager->types['events']->selection)
+                    )
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add('entered handler for multiple events registration');
+                    // We have multiple courses to process, start by verifying the registrar
+                    $registar_created = false;
+                    if ($this->_registrar)
+                    {
+                        $this->_update_registrar();
+                    }
+                    else
+                    {
+                        $this->_create_registrar();
+                        $registar_created = true;
+                    }
+                    // Make a backup copy
+                    $this_event_backup = $this->_event;
+                    $registration_ids = array();
+                    foreach ($this->_controller->datamanager->types['events']->selection as $guid)
+                    {
+                        $event = new net_nemein_registrations_event($guid);
+                        if (   !is_object($event)
+                            || empty($event->id))
+                        {
+                            // invalid id/guid
+                            debug_add("Identifier '{$guid}' does not point to a valid event", MIDCOM_LOG_ERROR);
+                            continue;
+                        }
+                        if (!$event->is_open())
+                        {
+                            // not open for registration
+                            debug_add("Event {$event->title} (#{$event->id}) is not open for registration", MIDCOM_LOG_ERROR);
+                            continue;
+                        }
+                        debug_add("Creating registration for event {$event->title} (#{$event->id})", MIDCOM_LOG_INFO);
+                        $this->_event = $event;
+                        // TODO: how to handle failure in the middle of successes ??
+                        $this->_create_registration(false);
+                        $registration_ids[] = $this->_registration->id;
+                    }
+                    // Restore backup
+                    $this->_event = $this_event_backup;
+                    // List the successfull registrations
+                    $session = new midcom_service_session();
+                    $session->set('registration_ids', $registration_ids);
+                    // just to keep defaults from barfing
+                    $session->set('registration_id', $this->_registration->id);
+                    debug_pop();
+                    $_MIDCOM->relocate('register/success.html');
+                }
+                // First, update/create the person
+                // Then, create the registration.
                 if ($this->_registrar)
                 {
                     $this->_update_registrar();
+                    $this->_create_registration(false);
                 }
                 else
                 {
                     $this->_create_registrar();
-                    $registar_created = true;
+                    $this->_create_registration(true);
                 }
-                // Make a backup copy
-                $this_event_backup = $this->_event;
-                $registration_ids = array();
-                foreach ($this->_controller->datamanager->types['events']->selection as $guid)
-                {
-                    $event = new net_nemein_registrations_event($guid);
-                    if (   !is_object($event)
-                        || empty($event->id))
-                    {
-                        // invalid id/guid
-                        debug_add("Identifier '{$guid}' does not point to a valid event", MIDCOM_LOG_ERROR);
-                        continue;
-                    }
-                    if (!$event->is_open())
-                    {
-                        // not open for registration
-                        debug_add("Event {$event->title} (#{$event->id}) is not open for registration", MIDCOM_LOG_ERROR);
-                        continue;
-                    }
-                    debug_add("Creating registration for event {$event->title} (#{$event->id})", MIDCOM_LOG_INFO);
-                    $this->_event = $event;
-                    // TODO: how to handle failure in the middle of successes ??
-                    $this->_create_registration(false);
-                    $registration_ids[] = $this->_registration->id;
-                }
-                // Restore backup
-                $this->_event = $this_event_backup;
-                // List the successfull registrations
+    
                 $session = new midcom_service_session();
-                $session->set('registration_ids', $registration_ids);
-                // just to keep defaults from barfing
                 $session->set('registration_id', $this->_registration->id);
-                debug_pop();
                 $_MIDCOM->relocate('register/success.html');
-            }
-            // First, update/create the person
-            // Then, create the registration.
-            if ($this->_registrar)
-            {
-                $this->_update_registrar();
-                $this->_create_registration(false);
-            }
-            else
-            {
-                $this->_create_registrar();
-                $this->_create_registration(true);
-            }
-
-            $session = new midcom_service_session();
-            $session->set('registration_id', $this->_registration->id);
-            $_MIDCOM->relocate('register/success.html');
+                break;
         }
     }
 
@@ -367,7 +424,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
      * Sends the approval notification E-Mail to the configured notification Mail address
      *
      * @access private
-     * @todo Rewrite Mail handling to org.openpsa.mail.
+     * @todo Rewrite Mail handling to use same system as the other mails.
      */
     function _send_approval_notification()
     {
@@ -524,10 +581,6 @@ EOF;
         $this->_controller->schemaname = 'merged';
         $this->_controller->defaults = $defaults;
         $this->_controller->initialize();
-        if ($this->_config->get('allow_multiple'))
-        {
-            // TODO: figure out a way to select the "current" event
-        }
     }
 
     /**
@@ -543,6 +596,15 @@ EOF;
         // bottom of the field list.
         $registrar_schema = $this->_schemadb[$this->_config->get('registrar_schema')];
         $event_dm =& $this->_event->get_datamanager();
+        // This must be copy-by-value or we will pollute the registrar schema, so use clone() if available
+        if (is_callable('clone'))
+        {
+            $merged_schema = clone($registrar_schema);
+        }
+        else
+        {
+            $merged_schema = $registrar_schema;
+        }
         
         if (count($event_dm->types['additional_questions']->selection) > 0)
         {
@@ -553,7 +615,7 @@ EOF;
             $registration_schema = $this->_schemadb['aq-default'];
         }
 
-        if (   ! $registrar_schema
+        if (   ! $merged_schema
             || ! $registration_schema)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not load registrar or registration schema database.');
@@ -563,24 +625,24 @@ EOF;
         if (   $this->_registrar
             && ! $_MIDCOM->auth->can_do('midgard:update', $this->_registrar))
         {
-            foreach($registrar_schema->field_order as $name)
+            foreach($merged_schema->field_order as $name)
             {
-                $registrar_schema->fields[$name]['readonly'] = true;
+                $merged_schema->fields[$name]['readonly'] = true;
             }
         }
 
         foreach ($registration_schema->field_order as $name)
         {
-            if (in_array($name, $registrar_schema->field_order))
+            if (in_array($name, $merged_schema->field_order))
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Duplicate field name '{$name}' found in both registrar and registration schema, cannot compute merged set. Aborting.");
                 // This will exit.
             }
-            $registrar_schema->append_field($name, $registration_schema->fields[$name]);
+            $merged_schema->append_field($name, $registration_schema->fields[$name]);
         }
 
-        $this->_nullstorage_schemadb['merged'] = $registrar_schema;
+        $this->_nullstorage_schemadb['merged'] = $merged_schema;
         /*
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_print_r('Merged schema:', $registrar_schema);
@@ -597,18 +659,6 @@ EOF;
     {
         $this->_event->require_do('midgard:create');
     }
-
-
-    /**
-     * The register handler loades the currently visible events and displays them.
-     *
-     * @access private
-     */
-    function _show_register($handler_id, &$data)
-    {
-        midcom_show_style('register-form');
-    }
-
 
     /**
      * This page shows a success page. It uses sessioning to receive its argument from the registration

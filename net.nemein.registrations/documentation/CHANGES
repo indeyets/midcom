@@ -6,8 +6,12 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
 
+2008-01-23 rambo
+  ! style-engine based accept/reject mail rendering, breaks mail
+    template compatibility
+
 2008-01-21 rambo
-  ! compatibility with n.n.calendar 2.x versions, breaks all backwards compatibility (though so did n.n.calendar...)
+  ! compatibility with n.n.calendar 2.x versions, breaks almost all backwards compatibility (though so did n.n.calendar...)
 
 2007-05-21 rambo
   ! changed the hr timestamp property names to adhere to naming standards
