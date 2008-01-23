@@ -18,7 +18,7 @@
             ),
             'type' => 'text',
             'widget' => 'text',
-            'start_fieldgroup' => array
+            'start_fieldset' => array
             (
                 'title' => 'display settings',
             ),
@@ -37,6 +37,7 @@
             'widget' => 'text',
         ),
 
+        
         'language' => array
         (
             'title' => 'language',
@@ -236,12 +237,12 @@
                 ),
             ),
             'widget' => 'select',
-            'end_fieldgroup' => '',
+            'end_fieldset' => '',
         ),
         
         'javascript_hover' => array
         (
-            'start_fieldgroup' => array
+            'start_fieldset' => array
             (
                 'title' => 'calendar widget',
             ),
@@ -263,7 +264,7 @@
                 ),
             ),
             'widget' => 'select',
-            'end_fieldgroup' => '',
+            'end_fieldset' => '',
         ),
         
         'rss_subscription_enable' => array
@@ -291,6 +292,7 @@
                'title' => 'rss subscriptions',
             ),
         ),
+        
         'rss_count' => array
         (
             'title' =>  'rss item count',
@@ -317,37 +319,96 @@
             ),
             'type' => 'text',
             'widget' => 'text',
-            'start_fieldgroup' => array
+            'start_fieldset' => array
             (
                 'title' => 'advanced schema and data settings'
             ),
         ),
         
-        'root_event' => array
+        'symlink_topic' => array
         (
-            'title' =>  'root event guid',
+            'title' => 'symlink topic',
             'storage' => array
             (
                 'location' => 'configuration',
                 'domain' => 'net.nemein.calendar',
-                'name' => 'root_event',
+                'name' => 'symlink_topic',
             ),
-            'type' => 'text',
-            'widget' => 'text',
-        ),
-        
-        'master_event' => array
-        (
-            'title' =>  'master event guid',
-            'storage' => array
+            'type' => 'select',
+            'type_config' => array
             (
-                'location' => 'configuration',
-                'domain' => 'net.nemein.calendar',
-                'name' => 'master_event',
+                'require_corresponding_option' => false,
+                'options' => array(),
+                'allow_other' => true,
+                'allow_multiple' => false,
             ),
-            'type' => 'text',
-            'widget' => 'text',
-            'end_fieldgroup' => '',
+            'widget' => 'chooser',
+            'widget_config' => array
+            (
+                'class'       => 'midcom_db_topic',
+                'component'   => 'net.nemein.calendar',
+                'titlefield'  => 'extra',
+                'idfield'     => 'guid',
+                'searchfields' => array
+                (
+                    array
+                    (
+                        'title' => 'ASC',
+                    ),
+                    array
+                    (
+                        'extra' => 'ASC',
+                    ),
+                    array
+                    (
+                        'component' => 'ASC',
+                    ),
+                    array
+                    (
+                        'name' => 'ASC',
+                    ),
+                ),
+                'constraints' => array
+                (
+                    array
+                    (
+                        'field' => 'extra',
+                        'op' => '<>',
+                        'value' => '',
+                    ),
+                    array
+                    (
+                        'field' => 'component',
+                        'op' => '=',
+                        'value' => 'net.nemein.calendar',
+                    ),
+                ),
+                'result_headers' => array
+                (
+                    array
+                    (
+                        'name' => 'extra',
+                        'title' => 'name',
+                    ),
+                ),
+                'orders' => array
+                (
+                    array
+                    (
+                        'title' => 'ASC',
+                    ),
+                    array
+                    (
+                        'extra' => 'ASC',
+                    ),
+                    array
+                    (
+                        'name' => 'ASC',
+                    ),
+                ),
+            ),
+            
+            'end_fieldset' => 1,
         ),
     ),
 ),

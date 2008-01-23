@@ -83,6 +83,10 @@ How many events to show in the main page
 Interval
 ---STRINGEND
 
+---STRING language
+Language
+---STRINGEND
+
 ---STRING list events from folders
 List events from folders
 ---STRINGEND
@@ -223,7 +227,7 @@ Week %1$s of year %2$s
 Weekly
 ---STRINGEND
 
----STRING language
-Language
+---STRING symlink topic
+Link to another content topic ("symlink")
 ---STRINGEND
 

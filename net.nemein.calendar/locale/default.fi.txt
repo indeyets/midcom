@@ -83,6 +83,10 @@ Kuinka monta tapahtumaa näytetään pääsivulla
 Toiston väli
 ---STRINGEND
 
+---STRING language
+Kieli
+---STRINGEND
+
 ---STRING list events from folders
 Listaa tapahtumat kansioista
 ---STRINGEND
@@ -223,7 +227,7 @@ Viikko %1$s vuonna %2$s
 Viikottain
 ---STRINGEND
 
----STRING language
-Kieli
+---STRING symlink topic
+Hae sisältö toisesta ("symlink"-) kansiosta
 ---STRINGEND
 
