@@ -40,6 +40,7 @@
     (
         'midcom.helper.datamanager2' => array (),
         'midcom' => array (),
+        'org.openpsa.mail' => array (),
     ),
 ),
 'customdata' => array
