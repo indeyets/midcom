@@ -15,6 +15,10 @@ Arkiston vuosien järjestys
 Takaisin arkistoon.
 ---STRINGEND
 
+---STRING calendar widget
+Kalenterityökalu
+---STRINGEND
+
 ---STRING categories
 Kategoriat
 ---STRINGEND
@@ -45,6 +49,10 @@ Muokkaa tapahtumaa
 
 ---STRING enable get filters
 Salli kenttien perusteella suodattaminen
+---STRINGEND
+
+---STRING enable rss subscription
+Salli RSS-syötteen tilaaminen
 ---STRINGEND
 
 ---STRING end
@@ -143,6 +151,14 @@ Toistuvuus
 Kansion päätapahtuman GUID
 ---STRINGEND
 
+---STRING rss item count
+Kuinka monta tapahtumaa näytetään RSS-syötteessä
+---STRINGEND
+
+---STRING rss subscriptions
+RSS-syötteiden tilaukset
+---STRINGEND
+
 ---STRING set repeat
 Aseta toisto
 ---STRINGEND
@@ -195,6 +211,10 @@ Varaamaton tapahtuma - Klikkaa varataksesi
 Päivämäärään asti
 ---STRINGEND
 
+---STRING use javascript to emulate hovering effect
+Tuota hover-efekti Javascriptillä
+---STRINGEND
+
 ---STRING week %1$s of year %2$s
 Viikko %1$s vuonna %2$s
 ---STRINGEND
@@ -203,7 +223,7 @@ Viikko %1$s vuonna %2$s
 Viikottain
 ---STRINGEND
 
----STRING use javascript to emulate hovering effect
-Tuota hover-efekti Javascriptillä
+---STRING language
+Kieli
 ---STRINGEND
 

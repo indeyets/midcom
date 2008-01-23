@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-01-23 adrenalin
+  - Added new configuration options to component configuration schemadb
+
 2007-12-27 adrenalin
   - Changed the behavior of editing and deleting of symlinked or remote calendar events. They will be now
     edited or deleted in their original context topics.

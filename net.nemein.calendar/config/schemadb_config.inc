@@ -37,6 +37,22 @@
             'widget' => 'text',
         ),
 
+        'language' => array
+        (
+            'title' => 'language',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'language',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array_merge(array('' => 'default setting'), $_MIDCOM->i18n->list_languages()),
+            ),
+            'widget' => 'select',
+        ),
         
         'type_filter_upcoming' => array
         (
@@ -270,6 +286,23 @@
                 ),
             ),
             'widget' => 'select',
+            'start_fieldset' => array
+            (
+               'title' => 'rss subscriptions',
+            ),
+        ),
+        'rss_count' => array
+        (
+            'title' =>  'rss item count',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.calendar',
+                'name' => 'rss_count',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+            'end_fieldset' => 1,
         ),
         
          /**** Schema settings ****/

@@ -15,6 +15,10 @@ Archive year order
 Back to the archive.
 ---STRINGEND
 
+---STRING calendar widget
+Calendar widget
+---STRINGEND
+
 ---STRING categories
 Categories
 ---STRINGEND
@@ -45,6 +49,10 @@ Edit event
 
 ---STRING enable get filters
 Enable field filters
+---STRINGEND
+
+---STRING enable rss subscription
+Enable RSS subscription
 ---STRINGEND
 
 ---STRING end
@@ -143,6 +151,14 @@ Repeat type
 GUID of the root event
 ---STRINGEND
 
+---STRING rss item count
+How many events to show in the RSS feed
+---STRINGEND
+
+---STRING rss subscriptions
+RSS subscriptions
+---STRINGEND
+
 ---STRING set repeat
 Set repeat
 ---STRINGEND
@@ -205,5 +221,9 @@ Week %1$s of year %2$s
 
 ---STRING weekly
 Weekly
+---STRINGEND
+
+---STRING language
+Language
 ---STRINGEND
 
