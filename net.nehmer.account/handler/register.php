@@ -635,6 +635,13 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         );
         if ($this->_config->get('username_is_email'))
         {
+            $controller->formmanager->form->addRule
+            (
+                'email',
+                $this->_l10n->get('the username is already in use.'),
+                'check_user_name',
+                ''
+            );
             $this->_controller->formmanager->form->addRule
             (
                 'username',
