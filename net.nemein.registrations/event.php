@@ -140,6 +140,17 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
         return true;
     }
 
+    function _on_updating()
+    {
+        if (!parent::_on_updating())
+        {
+            return false;
+        }
+        // This will also recalculate the human-readable properties that might prove usefull
+        $this->_do_bindings();
+        return true;
+    }
+
     /**
      * Binds the object to the current request data. This populates the members
      * _request_data, _config, _topic, _l10n and _l10n_midcom accordingly.

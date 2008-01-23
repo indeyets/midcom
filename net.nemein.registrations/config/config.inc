@@ -26,3 +26,18 @@
 // CSV export config (leave null for csv export class default)
 'csv_separator' => null,
 'csv_newline' => null,
+
+/**
+ * Class to use as pricing plugin
+ *
+ * The class must accept configuration as constructor argument
+ * and must implement process() method that will take as a
+ * reference the net_nemein_registrations_registration_dba object
+ */
+'pricing_plugin' => false,
+/**
+ * Passed as configuration argument to the plugin
+ *
+ * The plugin is responsible for validation
+ */
+'pricing_plugin_config' => array(),

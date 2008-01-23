@@ -261,17 +261,20 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
     function _handler_edit($handler_id, $args, &$data)
     {
         $this->_registration = new net_nemein_registrations_registration_dba($args[0]);
-        if (! $this->_registration)
+        if (   !$this->_registration
+            || !isset($this->_registration->guid)
+            || empty($this->_registration->guid))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "The registration {$args[0]} could not be found.");
             // This will exit.
         }
 
         // Privilege check
-        $_MIDCOM->auth->require_do('midgard:update', $this->_reservation);
+        $_MIDCOM->auth->require_do('midgard:update', $this->_registration);
+        $_MIDCOM->auth->require_do('net.nemein.registrations:manage', $this->_registration);
 
-        $this->_registrar = $this->_registration->get_registrar();
         $this->_event = $this->_registration->get_event();
+        $this->_registrar = $this->_registration->get_registrar();
         $this->_controller =& $this->_registration->create_simple_controller();
 
         if ($this->_controller->process_form() != 'edit')
@@ -311,7 +314,8 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
         }
 
         // Privilege check
-        $_MIDCOM->auth->require_do('midgard:delete', $this->_reservation);
+        $_MIDCOM->auth->require_do('midgard:delete', $this->_registration);
+        $_MIDCOM->auth->require_do('net.nemein.registrations:manage', $this->_registration);
 
         // Processing
         if (array_key_exists('net_nemein_registrations_deleteok', $_REQUEST))

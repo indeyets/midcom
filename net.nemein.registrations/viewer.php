@@ -246,6 +246,22 @@ class net_nemein_registrations_viewer extends midcom_baseclasses_components_requ
         $this->_request_data['schemadb'] = $schemadb;
     }
 
+    function load_callback_class($classname)
+    {
+        if (class_exists($classname))
+        {
+            return true;
+        }
+        // TODO: Check for component of the same name...
+        $include_path = 'midcom/lib/' . str_replace('_', '/', $classname) . '.php';
+        include_once($include_path);
+        if (class_exists($classname))
+        {
+            // TODO: log PHP error if possible
+            return true;
+        }
+        return false;
+    }
 }
 
 ?>
