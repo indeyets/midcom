@@ -1689,7 +1689,8 @@ class midcom_application
             $midcom_errstr = "Requested Context ID $contextid invalid.";
             debug_add ($midcom_errstr, MIDCOM_LOG_ERROR);
             debug_pop();
-            return false;
+            $result = false;
+            return $result;
         }
 
         if (   !array_key_exists($component, $this->_context[$contextid][MIDCOM_CONTEXT_CUSTOMDATA])
