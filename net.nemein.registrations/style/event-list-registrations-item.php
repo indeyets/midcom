@@ -10,7 +10,14 @@ if ($data['approved'])
 {
     $date = strftime("%x %X", $registration->get_parameter('net.nemein.registrations', 'approved'));
     $user =& $_MIDCOM->auth->get_user($registration->get_parameter('net.nemein.registrations', 'approver'));
-    $approved_text = sprintf($data['l10n']->get('approved by %s on %s'), $user->name, $date);
+    if ($user)
+    {
+        $approved_text = sprintf($data['l10n']->get('approved by %s on %s'), $user->name, $date);
+    }
+    else
+    {
+        $approved_text = sprintf($data['l10n']->get('approved on %s'), $date);
+    }
 }
 else
 {
