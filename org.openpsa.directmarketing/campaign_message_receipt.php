@@ -13,10 +13,10 @@
  */
 class midcom_org_openpsa_campaign_message_receipt extends __midcom_org_openpsa_campaign_message_receipt
 {
-    function midcom_org_openpsa_campaign_message_receipt($id = null)
+    function __construct($id = null)
     {
         $this->_use_rcs = false;
-        return parent::__midcom_org_openpsa_campaign_message_receipt($id);
+        return parent::__construct($id);
     }
 
     function _on_creating()
@@ -58,9 +58,9 @@ class midcom_org_openpsa_campaign_message_receipt extends __midcom_org_openpsa_c
  */
 class org_openpsa_directmarketing_campaign_message_receipt extends midcom_org_openpsa_campaign_message_receipt
 {
-    function org_openpsa_directmarketing_campaign_message_receipt($id = null)
+    function __construct($id = null)
     {
-        return parent::midcom_org_openpsa_campaign_message_receipt($id);
+        return parent::__construct($id);
     }
 }
 

@@ -17,9 +17,9 @@ class midcom_helper_replicator_subscription_dba extends __midcom_helper_replicat
     var $filters = false;
     var $autoserialize_filters = false;
 
-    function midcom_helper_replicator_subscription_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_helper_replicator_subscription_dba($id);
+        return parent::__construct($id);
     }
 
     function _unserialize_filters()

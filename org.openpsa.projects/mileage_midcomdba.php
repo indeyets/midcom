@@ -15,9 +15,9 @@
  */
 class org_openpsa_projects_mileage extends org_openpsa_projects_expense
 {
-    function org_openpsa_projects_mileage($identifier=NULL)
+    function __construct($identifier=NULL)
     {
-        parent::org_openpsa_projects_expense($identifier);
+        parent::__construct($identifier);
     }
 }
 ?>

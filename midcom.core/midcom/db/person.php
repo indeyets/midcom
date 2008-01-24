@@ -32,9 +32,9 @@ class midcom_db_person extends midcom_baseclasses_database_person
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function midcom_db_person($id = null)
+    function __construct($id = null)
     {
-        parent::midcom_baseclasses_database_person($id);
+        parent::__construct($id);
     }
 
     /**

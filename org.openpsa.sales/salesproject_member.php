@@ -14,9 +14,9 @@
  */
 class midcom_org_openpsa_salesproject_member extends __midcom_org_openpsa_salesproject_member
 {
-    function midcom_org_openpsa_salesproject_member($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_org_openpsa_salesproject_member($id);
+        return parent::__construct($id);
     }
     
     /**
@@ -90,9 +90,9 @@ class midcom_org_openpsa_salesproject_member extends __midcom_org_openpsa_salesp
  */
 class org_openpsa_sales_salesproject_member extends midcom_org_openpsa_salesproject_member
 {
-    function org_openpsa_sales_salesproject_member($identifier=NULL)
+    function __construct($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_salesproject_member($identifier);
+        return parent::__construct($identifier);
     }
 }
 ?>

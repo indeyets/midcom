@@ -17,9 +17,9 @@ class midcom_org_openpsa_hour_report extends __midcom_org_openpsa_hour_report
     var $is_invoiced = false;
     var $is_approved = false;
 
-    function midcom_org_openpsa_hour_report($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_org_openpsa_hour_report($id);
+        return parent::__construct($id);
     }
 
     function get_parent_guid_uncached()
@@ -163,9 +163,9 @@ class midcom_org_openpsa_hour_report extends __midcom_org_openpsa_hour_report
  */
 class org_openpsa_projects_hour_report extends midcom_org_openpsa_hour_report
 {
-    function org_openpsa_projects_hour_report($identifier=NULL)
+    function __construct($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_hour_report($identifier);
+        return parent::__construct($identifier);
     }
 }
 ?>

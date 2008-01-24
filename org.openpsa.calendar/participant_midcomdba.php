@@ -12,9 +12,9 @@
  */
 class midcom_org_openpsa_eventmember extends __midcom_org_openpsa_eventmember
 {
-    function midcom_org_openpsa_eventmember ($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_org_openpsa_eventmember($id);
+        return parent::__construct($id);
     }
 
     function get_parent_guid_uncached()
@@ -348,12 +348,12 @@ class org_openpsa_calendar_eventmember extends midcom_org_openpsa_eventmember
 
     function _constructor($identifier)
     {
-        return $this->org_openpsa_calendar_eventmember($identifier);
+        return $this->__construct($identifier);
     }
 
-    function org_openpsa_calendar_eventmember($identifier=NULL)
+    function __construct($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_eventmember($identifier);
+        return parent::__construct($identifier);
     }
 
 }
@@ -369,9 +369,9 @@ class org_openpsa_calendar_eventparticipant extends org_openpsa_calendar_eventme
     var $person;
     var $participant;
 
-    function org_openpsa_calendar_eventparticipant($identifier=NULL)
+    function __construct$identifier=NULL)
     {
-        if (parent::_constructor($identifier))
+        if (parent::__construct($identifier))
         {
             $this->event =& $this->eid;
             $this->participant =& $this->uid;

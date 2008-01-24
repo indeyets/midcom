@@ -15,9 +15,9 @@
 class net_nemein_attention_source_dba extends __net_nemein_attention_source_dba
 {
     var $_use_rcs = false;
-    function net_nemein_attention_source_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__net_nemein_attention_source_dba($id);
+        return parent::__construct($id);
     }
     
     function get_source($source_key, $person_id, $profile, $explicit = false)

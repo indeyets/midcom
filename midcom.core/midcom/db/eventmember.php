@@ -32,9 +32,9 @@ class midcom_db_eventmember extends midcom_baseclasses_database_eventmember
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function midcom_db_eventmember($id = null)
+    function __construct($id = null)
     {
-        parent::midcom_baseclasses_database_eventmember($id);
+        parent::__construct($id);
     }
 
     /**

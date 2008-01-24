@@ -26,9 +26,9 @@ class net_nemein_wiki_wikipage extends midcom_db_article
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function net_nemein_wiki_wikipage($id = null)
+    function __construct($id = null)
     {
-        parent::midcom_db_article($id);
+        parent::__construct($id);
     }
 
     /**

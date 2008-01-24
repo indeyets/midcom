@@ -9,9 +9,9 @@
  */
 class midcom_org_openpsa_query extends __midcom_org_openpsa_query
 {
-    function midcom_org_openpsa_query($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_org_openpsa_query($id);
+        return parent::__construct($id);
     }
 
     /**
@@ -52,9 +52,9 @@ class midcom_org_openpsa_query extends __midcom_org_openpsa_query
  */
 class org_openpsa_queries_query extends midcom_org_openpsa_query
 {
-    function org_openpsa_queries_query($id = null)
+    function __construct($id = null)
     {
-        return parent::midcom_org_openpsa_query($id);
+        return parent::__construct($id);
     }
 }
 

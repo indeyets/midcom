@@ -16,9 +16,9 @@
  */
 class net_nehmer_jobmarket_entry extends __net_nehmer_jobmarket_entry
 {
-    function net_nehmer_jobmarket_entry($id = null)
+    function __construct($id = null)
     {
-        parent::__net_nehmer_jobmarket_entry($id);
+        parent::__construct($id);
     }
 
     /**

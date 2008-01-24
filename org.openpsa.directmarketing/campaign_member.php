@@ -13,9 +13,9 @@
  */
 class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_member
 {
-    function midcom_org_openpsa_campaign_member($id = null)
+    function __construct($id = null)
     {
-        $ret = parent::__midcom_org_openpsa_campaign_member($id);
+        $ret = parent::__construct($id);
         if (!$this->orgOpenpsaObtype)
         {
             $this->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER;
@@ -226,9 +226,9 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
  */
 class org_openpsa_directmarketing_campaign_member extends midcom_org_openpsa_campaign_member
 {
-    function org_openpsa_directmarketing_campaign_member($id = null)
+    function __construct($id = null)
     {
-        return parent::midcom_org_openpsa_campaign_member($id);
+        return parent::__construct($id);
     }
 }
 

@@ -17,9 +17,9 @@ require_once('Date.php');
  */
 class net_nehmer_branchenbuch_entry extends __net_nehmer_branchenbuch_entry
 {
-    function net_nehmer_branchenbuch_entry($id = null)
+    function __construct($id = null)
     {
-        parent::__net_nehmer_branchenbuch_entry($id);
+        parent::__construct($id);
     }
 
     /**

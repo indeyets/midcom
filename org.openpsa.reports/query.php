@@ -13,9 +13,9 @@
  */
 class org_openpsa_reports_query extends org_openpsa_queries_query
 {
-    function org_openpsa_reports_query($id = null)
+    function __construct($id = null)
     {
-        $stat = parent::__midcom_org_openpsa_query($id);
+        $stat = parent::__construct($id);
         if (!$this->orgOpenpsaObtype)
         {
             $this->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_REPORT_TEMPORARY;

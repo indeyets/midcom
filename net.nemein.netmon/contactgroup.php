@@ -16,9 +16,9 @@ class net_nemein_netmon_contactgroup_dba extends org_openpsa_contacts_group
 {
     var $nagiosname = '';
 
-    function net_nemein_netmon_contactgroup_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::org_openpsa_contacts_group($id);
+        return parent::__construct($id);
     }
 
     function _on_loaded()

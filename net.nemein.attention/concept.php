@@ -15,9 +15,9 @@
 class net_nemein_attention_concept_dba extends __net_nemein_attention_concept_dba
 {
     var $_use_rcs = false;
-    function net_nemein_attention_concept_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__net_nemein_attention_concept_dba($id);
+        return parent::__construct($id);
     }
     
     function get_concept($concept_key, $person_id, $profile, $explicit = false)

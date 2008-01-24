@@ -13,9 +13,9 @@
  */
 class net_nemein_rss_feed_dba extends __net_nemein_rss_feed_dba
 {
-    function net_nemein_rss_feed_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__net_nemein_rss_feed_dba($id);
+        return parent::__construct($id);
     }
 
     function _on_loaded()

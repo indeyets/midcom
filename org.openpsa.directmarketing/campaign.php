@@ -17,9 +17,9 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
     var $testers2 = array(); // List of testers, in DM2 format
     var $rules = array(); //rules for smart-campaign
 
-    function midcom_org_openpsa_campaign($id = null)
+    function __construct($id = null)
     {
-        $stat = parent::__midcom_org_openpsa_campaign($id);
+        $stat = parent::__construct($id);
         if (   !$this->orgOpenpsaObtype
             && $stat)
         {
@@ -442,9 +442,9 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
  */
 class org_openpsa_directmarketing_campaign extends midcom_org_openpsa_campaign
 {
-    function org_openpsa_directmarketing_campaign($id = null)
+    function __construct($id = null)
     {
-        return parent::midcom_org_openpsa_campaign($id);
+        return parent::__construct($id);
     }
 }
 

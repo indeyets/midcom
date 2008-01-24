@@ -20,9 +20,9 @@ class midcom_org_maemo_event extends midcom_org_openpsa_event
     var $participants = array(); //list of participants (stored as eventmembers, referenced here for easier access)
     var $old_participants = array(); //as above, for diffs
 
-    function midcom_org_maemo_event($id = null)
+    function __construct($id = null)
     {
-        return parent::midcom_org_openpsa_event($id);
+        return parent::__construct($id);
     }
 
     function _on_loaded()
@@ -94,9 +94,9 @@ class midcom_org_maemo_event extends midcom_org_openpsa_event
  */
 class org_maemo_calendar_event extends midcom_org_maemo_event
 {
-    function org_maemo_calendar_event($identifier = NULL)
+    function __construct($identifier = NULL)
     {
-        return parent::midcom_org_maemo_event($identifier);
+        return parent::__construct($identifier);
     }
 }
 ?>

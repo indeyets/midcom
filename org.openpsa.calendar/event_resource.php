@@ -13,9 +13,9 @@
  */
 class org_openpsa_calendar_event_resource_dba extends __org_openpsa_calendar_event_resource_dba
 {
-    function org_openpsa_calendar_event_resource_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__org_openpsa_calendar_event_resource_dba($id);
+        return parent::__construct($id);
     }
 
     /**

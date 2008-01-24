@@ -13,9 +13,9 @@
  */
 class org_openpsa_notifications_notification_dba extends __org_openpsa_notifications_notification_dba
 {
-    function org_openpsa_notifications_notification_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__org_openpsa_notifications_notification_dba($id);
+        return parent::__construct($id);
     }
 }
 ?>

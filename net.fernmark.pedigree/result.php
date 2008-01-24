@@ -14,9 +14,9 @@
  */
 class net_fernmark_pedigree_dog_result_dba extends __net_fernmark_pedigree_dog_result_dba
 {
-    function net_fernmark_pedigree_dog_result_dba($src = null)
+    function __construct($src = null)
     {
-        parent::__net_fernmark_pedigree_dog_result_dba($src);
+        parent::__construct($src);
     }
 }
 

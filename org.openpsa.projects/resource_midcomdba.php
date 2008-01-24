@@ -15,9 +15,9 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
 {
     var $_personobject;
 
-    function midcom_org_openpsa_task_resource($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_org_openpsa_task_resource($id);
+        return parent::__construct($id);
     }
 
 
@@ -189,9 +189,9 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
  */
 class org_openpsa_projects_task_resource extends midcom_org_openpsa_task_resource
 {
-    function org_openpsa_projects_task_resource($identifier=NULL)
+    function __construct($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_task_resource($identifier);
+        return parent::__construct($identifier);
     }
 }
 ?>

@@ -14,9 +14,9 @@
  */
 class org_openpsa_invoices_invoice extends __org_openpsa_invoices_invoice
 {
-    function org_openpsa_invoices_invoice($id = null)
+    function __construct($id = null)
     {
-        return parent::__org_openpsa_invoices_invoice($id);
+        return parent::__construct($id);
     }
 
     function get_invoice_class()

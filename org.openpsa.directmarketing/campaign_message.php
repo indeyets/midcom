@@ -33,9 +33,9 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
     var $_chunk_max_recurse = 15; //How many times to recurse if all results are filtered (speed vs memory [and risk on crashing], higher is faster)
     var $token_size = 15;
 
-    function midcom_org_openpsa_campaign_message($id = null)
+    function __construct($id = null)
     {
-        $stat = parent::__midcom_org_openpsa_campaign_message($id);
+        $stat = parent::__construct($id);
         if ($stat)
         {
             /* To specify different values for MMS and SMS first unset the MMS
@@ -1249,9 +1249,9 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
  */
 class org_openpsa_directmarketing_campaign_message extends midcom_org_openpsa_campaign_message
 {
-    function org_openpsa_directmarketing_campaign_message($id = null)
+    function __construct($id = null)
     {
-        return parent::midcom_org_openpsa_campaign_message($id);
+        return parent::__construct($id);
     }
 }
 

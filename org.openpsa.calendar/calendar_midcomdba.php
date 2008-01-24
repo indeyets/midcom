@@ -60,9 +60,9 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     var $notify_force_add = false; //Used to work around DM creation features to get correct notification type out
     var $search_relatedtos = true;
 
-    function midcom_org_openpsa_event($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_org_openpsa_event($id);
+        return parent::__construct($id);
     }
 
     function get_parent_guid_uncached()
@@ -1636,9 +1636,9 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
  */
 class org_openpsa_calendar_event extends midcom_org_openpsa_event
 {
-    function org_openpsa_calendar_event($identifier = NULL)
+    function __construct($identifier = NULL)
     {
-        return parent::midcom_org_openpsa_event($identifier);
+        return parent::__construct($identifier);
     }
 }
 

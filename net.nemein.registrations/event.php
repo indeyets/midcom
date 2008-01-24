@@ -104,9 +104,9 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function net_nemein_registrations_event($id = null)
+    function __construct($id = null)
     {
-        return parent::net_nemein_calendar_event_dba($id);
+        return parent::__construct($id);
     }
 
     function _on_created()
@@ -136,17 +136,6 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
         {
             return false;
         }
-        $this->_do_bindings();
-        return true;
-    }
-
-    function _on_updating()
-    {
-        if (!parent::_on_updating())
-        {
-            return false;
-        }
-        // This will also recalculate the human-readable properties that might prove usefull
         $this->_do_bindings();
         return true;
     }

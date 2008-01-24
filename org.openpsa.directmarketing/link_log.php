@@ -13,9 +13,9 @@
  */
 class midcom_org_openpsa_link_log extends __midcom_org_openpsa_link_log
 {
-    function midcom_org_openpsa_campaign_link_log($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_org_openpsa_campaign_link_log($id);
+        return parent::__construct($id);
     }
 
     function _on_creating()
@@ -42,9 +42,9 @@ class midcom_org_openpsa_link_log extends __midcom_org_openpsa_link_log
  */
 class org_openpsa_directmarketing_link_log extends midcom_org_openpsa_link_log
 {
-    function org_openpsa_directmarketing_campaign_link_log($id = null)
+    function __construct($id = null)
     {
-        return parent::midcom_org_openpsa_campaign_link_log($id);
+        return parent::__construct($id);
     }
 }
 

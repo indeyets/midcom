@@ -16,9 +16,9 @@
  */
 class net_nehmer_comments_comment extends __net_nehmer_comments_comment
 {
-    function net_nehmer_comments_comment($id = null)
+    function __construct($id = null)
     {
-        parent::__net_nehmer_comments_comment($id);
+        parent::__construct($id);
     }
 
     /**

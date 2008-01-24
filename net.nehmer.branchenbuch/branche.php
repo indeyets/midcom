@@ -19,9 +19,9 @@
  */
 class net_nehmer_branchenbuch_branche extends __net_nehmer_branchenbuch_branche
 {
-    function net_nehmer_branchenbuch_branche($id = null)
+    function __construct($id = null)
     {
-        parent::__net_nehmer_branchenbuch_branche($id);
+        parent::__construct($id);
     }
 
     /**

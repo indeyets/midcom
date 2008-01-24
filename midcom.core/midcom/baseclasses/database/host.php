@@ -25,9 +25,9 @@
  */
 class midcom_baseclasses_database_host extends __midcom_baseclasses_database_host
 {
-    function midcom_baseclasses_database_host($id = null)
+    function __construct($id = null)
     {
-        parent::__midcom_baseclasses_database_host($id);
+        parent::__construct($id);
     }
 }
 

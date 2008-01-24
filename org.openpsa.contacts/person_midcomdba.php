@@ -15,9 +15,9 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
     var $name; //Compound of firstname, lastname and username
     var $rname; //Another compound of firstname, lastname and username
 
-    function midcom_org_openpsa_person ($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_org_openpsa_person($id);
+        return parent::__construct($id);
     }
 
     /**
@@ -320,9 +320,9 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
  */
 class org_openpsa_contacts_person extends midcom_org_openpsa_person
 {
-    function org_openpsa_contacts_person($identifier=NULL)
+    function __construct($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_person($identifier);
+        return parent::__construct($identifier);
     }
 }
 

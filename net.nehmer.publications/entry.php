@@ -16,9 +16,9 @@
  */
 class net_nehmer_publications_entry extends __net_nehmer_publications_entry
 {
-    function net_nehmer_publications_entry($id = null)
+    function __construct($id = null)
     {
-        parent::__net_nehmer_publications_entry($id);
+        parent::__construct($id);
     }
 
     /**

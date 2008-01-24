@@ -13,9 +13,9 @@
  */
 class org_openpsa_products_businessarea_member_dba extends __org_openpsa_products_businessarea_member_dba
 {
-    function org_openpsa_products_businessarea_member_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__org_openpsa_products_businessarea_member_dba($id);
+        return parent::__construct($id);
     }
 
     function get_parent_guid_uncached()

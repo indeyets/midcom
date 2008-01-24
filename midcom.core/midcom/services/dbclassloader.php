@@ -602,20 +602,20 @@ EOF;
     function _write_constructor()
     {
         $this->_class_string .= <<<EOF
-    function __{$this->_class_definition['midcom_class_name']} (\$id = null)
+    function __construct(\$id = null)
     {
         if (mgd_is_guid(\$id))
         {
-            \$construct_stat = parent::{$this->_class_definition['new_class_name']}(\$id);
+            \$construct_stat = parent::__construct(\$id);
         }
         else if (is_numeric(\$id))
         {
-            \$construct_stat = parent::{$this->_class_definition['new_class_name']}((int)\$id);
+            \$construct_stat = parent::__construct((int)\$id);
         }
         else if (   is_object(\$id)
-                 && ! empty(\$id->guid))
+                 /*&& ! empty(\$id->guid)*/)
         {
-            \$construct_stat = parent::{$this->_class_definition['new_class_name']}(\$id->guid);
+            \$construct_stat = parent::__construct(\$id->guid);
             if (!midcom_baseclasses_core_dbobject::cast_object(\$this, \$id))
             {
                 \$x =& \$this;
@@ -625,7 +625,7 @@ EOF;
         }
         else
         {
-            parent::{$this->_class_definition['new_class_name']}();
+            parent::__construct();
             \$construct_stat = true;
         }
         if (!\$construct_stat)

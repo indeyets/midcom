@@ -11,10 +11,10 @@
  */
 class org_maemo_socialnews_score_article_dba extends __org_maemo_socialnews_score_article_dba
 {
-    function org_maemo_socialnews_score_article_dba($id = null)
+    function __construct($id = null)
     {
         $this->_use_rcs = false;
-        parent::__org_maemo_socialnews_score_article_dba($id);
+        parent::__construct($id);
     }
 
     function get_label()

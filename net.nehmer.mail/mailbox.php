@@ -34,9 +34,9 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     var $_message_count = -1;
 
     /** Empty constructor calling parent only. */
-    function net_nehmer_mail_mailbox($id = null)
+    function __construct($id = null)
     {
-        parent::__net_nehmer_mail_mailbox($id);
+        parent::__constructx($id);
     }
 
     /**

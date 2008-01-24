@@ -12,9 +12,9 @@
  */
 class org_openpsa_projects_project extends org_openpsa_projects_task
 {
-    function org_openpsa_projects_project($identifier=NULL)
+    function __construct($identifier=NULL)
     {
-        return parent::org_openpsa_projects_task($identifier);
+        return parent::__construct($identifier);
     }
 
     function _on_creating()

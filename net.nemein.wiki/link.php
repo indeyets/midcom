@@ -13,9 +13,9 @@
  */
 class net_nemein_wiki_link_dba extends __net_nemein_wiki_link_dba
 {
-    function net_nemein_wiki_link_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__net_nemein_wiki_link_dba($id);
+        return parent::__construct($id);
     }
 
     function get_parent_guid_uncached()

@@ -15,9 +15,9 @@
 class org_routamc_gallery_photolink_dba extends __org_routamc_gallery_photolink_dba
 {
 
-    function org_routamc_gallery_photolink_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__org_routamc_gallery_photolink_dba($id);
+        return parent::__construct($id);
     }
 
     function _on_creating()

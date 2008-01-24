@@ -12,9 +12,9 @@
  */
 class cc_kaktus_todo_item_dba extends __cc_kaktus_todo_item_dba
 {
-    function cc_kaktus_todo_item_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__cc_kaktus_todo_item_dba($id);
+        return parent::__construct($id);
     }
 }
 ?>

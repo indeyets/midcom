@@ -25,9 +25,9 @@
  */
 class midcom_baseclasses_database_style extends __midcom_baseclasses_database_style
 {
-    function midcom_baseclasses_database_style($id = null)
+    function __construct($id = null)
     {
-        parent::__midcom_baseclasses_database_style($id);
+        parent::__construct($id);
     }
 }
 

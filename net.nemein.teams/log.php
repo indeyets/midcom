@@ -12,9 +12,9 @@
 class net_nemein_teams_log_dba extends __net_nemein_teams_log_dba
 {
 
-    function net_nemein_teams_log_dba($src = null)
+    function __construct($src = null)
     {
-        parent::__net_nemein_teams_log_dba($src);
+        parent::__construct($src);
     }
 
     function print_log()

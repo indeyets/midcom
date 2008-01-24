@@ -32,9 +32,9 @@ class midcom_db_group extends midcom_baseclasses_database_group
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function midcom_db_group($id = null)
+    function __construct($id = null)
     {
-        parent::midcom_baseclasses_database_group($id);
+        parent::__construct($id);
     }
 
     /**

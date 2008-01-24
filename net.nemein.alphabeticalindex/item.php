@@ -16,9 +16,9 @@ class net_nemein_alphabeticalindex_item extends __net_nemein_alphabeticalindex_i
 {
     var $internal = false;
     
-    function net_nemein_alphabeticalindex_item($id = null)
+    function __construct($id = null)
     {
-        parent::__net_nemein_alphabeticalindex_item($id);
+        parent::__construct($id);
     }
 
     /**

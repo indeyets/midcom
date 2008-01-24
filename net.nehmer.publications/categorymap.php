@@ -22,9 +22,9 @@
  */
 class net_nehmer_publications_categorymap extends __net_nehmer_publications_categorymap
 {
-    function net_nehmer_publications_categorymap($id = null)
+    function __construct($id = null)
     {
-        parent::__net_nehmer_publications_categorymap($id);
+        parent::__construct($id);
     }
 
     /**

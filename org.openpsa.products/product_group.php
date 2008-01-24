@@ -12,9 +12,9 @@
  */
 class org_openpsa_products_product_group_dba extends __org_openpsa_products_product_group_dba
 {
-    function org_openpsa_products_product_group_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__org_openpsa_products_product_group_dba($id);
+        return parent::__construct($id);
     }
 
     function _on_creating()

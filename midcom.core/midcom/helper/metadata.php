@@ -597,6 +597,7 @@ class midcom_helper_metadata
 
         $object = null;
         $guid = '';
+
         if (is_object($source))
         {
             $object = $source;

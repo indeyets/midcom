@@ -14,9 +14,9 @@
  */
 class midcom_org_openpsa_relatedto extends __midcom_org_openpsa_relatedto
 {
-    function midcom_org_openpsa_relatedto($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_org_openpsa_relatedto($id);
+        return parent::__construct($id);
     }
 
     function _on_creating()
@@ -96,9 +96,9 @@ class midcom_org_openpsa_relatedto extends __midcom_org_openpsa_relatedto
  */
 class org_openpsa_relatedto_relatedto extends midcom_org_openpsa_relatedto
 {
-    function org_openpsa_relatedto_relatedto($identifier=NULL)
+    function __construct($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_relatedto($identifier);
+        return parent::__construct($identifier);
     }
 }
 ?>

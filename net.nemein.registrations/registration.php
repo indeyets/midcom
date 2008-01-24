@@ -62,29 +62,14 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
      * an object ID or GUID to the object which will then initialize the object with
      * the corresponding DB instance.
      *
+     * It will bind the instance to the current request data to access configuration
+     * data.
+     *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function net_nemein_registrations_registration_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__net_nemein_registrations_registration_dba($id);
-    }
-
-    /**
-     * We need this in 2.8, in trunk this isn't any slower than the reflection 
-     * generated one so leave it be
-     *
-     * @return string guid of parent or null
-     */
-    function get_parent_guid_uncached()
-    {
-        $mc = net_nemein_registrations_event::new_collector('id', $this->eid);
-        $mc->execute();
-        $keys = $mc->list_keys();
-        if (empty($keys))
-        {
-            return null;
-        }
-        return array_shift($keys);
+        return parent::__construct($id);
     }
 
     function _do_bindings()
@@ -102,53 +87,7 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
     function _on_created()
     {
         $this->_do_bindings();
-        /* we don't have enough information to instantiate DM2 just yet. update will be called anyways...
-        if (!$this->_run_pricing_plugin())
-        {
-            return false;
-        }
-        */
         return true;
-    }
-
-    function _on_updated()
-    {
-        if (!$this->_run_pricing_plugin())
-        {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * If we have a pricing plugin configured, instantiate and run it
-     *
-     * @return bool indicating plugin status
-     */
-    function _run_pricing_plugin()
-    {
-        // The plugin is likely to update us (perhaps many times if it sets parameters...), thus causing loops unless we take care
-        $flag = "net_nemein_registrations_registration_dba__run_pricing_plugin_{$this->guid}";
-        if (isset($GLOBALS[$flag]))
-        {
-            return true;
-        }
-        $plugin_name = $this->_config->get('pricing_plugin');
-        if (empty($plugin_name))
-        {
-            return true;
-        }
-        $plugin_config = $this->_config->get('pricing_plugin_config');
-        if (!net_nemein_registrations_viewer::load_callback_class($plugin_name))
-        {
-            // TODO: Figure a good error to trigger
-            return false;
-        }
-        $plugin_instance = new $plugin_name($plugin_config);
-        $GLOBALS[$flag] = true;
-        $ret = $plugin_instance->process($this);
-        unset($GLOBALS[$flag]);
-        return $ret;
     }
 
     /**
@@ -168,7 +107,7 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
      */
     function _bind_to_request_data()
     {
-        // CAVEAT: This will likely to only work correctly when registrations is in fact in charge of the request 
+        // CAVEAT: This is likely to only work correctly when registrations is in fact in charge of the request 
         $this->_request_data =& $_MIDCOM->get_custom_context_data('request_data');
         $this->_config =& $this->_request_data['config'];
         $this->_topic =& $this->_request_data['topic'];

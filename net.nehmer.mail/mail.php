@@ -14,9 +14,9 @@
  */
 class net_nehmer_mail_mail extends __net_nehmer_mail_mail
 {
-    function net_nehmer_mail_mail($id = null)
+    function __construct($id = null)
     {
-        parent::__net_nehmer_mail_mail($id);
+        parent::__construct($id);
     }
 
     function _on_loaded()

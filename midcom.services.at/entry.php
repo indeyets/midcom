@@ -23,10 +23,10 @@ class midcom_midcom_services_at_entry_db extends __midcom_midcom_services_at_ent
     /**
      * Empty constructor
      */
-    function midcom_midcom_services_at_entry_db($id = null)
+    function __construct($id = null)
     {
         $this->_use_rcs = false;
-        return parent::__midcom_midcom_services_at_entry_db($id);
+        return parent::__construct($id);
     }
     
     /**

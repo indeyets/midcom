@@ -14,9 +14,9 @@
  */
 class org_openpsa_invoices_invoice_hour extends __org_openpsa_invoices_invoice_hour
 {
-    function org_openpsa_invoices_invoice_hour($id = null)
+    function __construct($id = null)
     {
-        return parent::__org_openpsa_invoices_invoice_hour($id);
+        return parent::__construct($id);
     }
 
     function _on_created()

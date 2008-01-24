@@ -25,9 +25,9 @@
  */
 class midcom_baseclasses_database_pageelement extends __midcom_baseclasses_database_pageelement
 {
-    function midcom_baseclasses_database_pageelement($id = null)
+    function __construct($id = null)
     {
-        parent::__midcom_baseclasses_database_pageelement($id);
+        parent::__construct($id);
     }
 
     /**

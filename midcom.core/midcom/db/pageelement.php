@@ -32,9 +32,9 @@ class midcom_db_pageelement extends midcom_baseclasses_database_pageelement
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function midcom_db_pageelement($id = null)
+    function __construct($id = null)
     {
-        parent::midcom_baseclasses_database_pageelement($id);
+        parent::__construct($id);
     }
 
     /**

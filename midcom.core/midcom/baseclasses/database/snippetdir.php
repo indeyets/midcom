@@ -25,9 +25,9 @@
  */
 class midcom_baseclasses_database_snippetdir extends __midcom_baseclasses_database_snippetdir
 {
-    function midcom_baseclasses_database_snippetdir($id = null)
+    function __construct($id = null)
     {
-        parent::__midcom_baseclasses_database_snippetdir($id);
+        parent::__construct($id);
     }
 
     /**

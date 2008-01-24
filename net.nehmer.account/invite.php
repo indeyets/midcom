@@ -13,9 +13,9 @@
  */
 class net_nehmer_accounts_invites_invite_dba extends __net_nehmer_accounts_invites_invite_dba
 {
-    function net_nehmer_accounts_invites_invite_dba($src = null)
+    function __construct($src = null)
     {
-        parent::__net_nehmer_accounts_invites_invite_dba($src);
+        parent::__construct($src);
     }
 
     function get_class_magic_default_privileges()

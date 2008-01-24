@@ -14,9 +14,9 @@
  */
 class midcom_core_group_virtual_dba extends __midcom_core_group_virtual_dba
 {
-    function midcom_core_group_virtual_dba($id=null)
+    function __construct($id=null)
     {
-        return parent::__midcom_core_group_virtual_dba($id);
+        return parent::__construct($id);
     }
 }
 

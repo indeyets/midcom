@@ -16,9 +16,9 @@ class net_nemein_netmon_contact_dba extends org_openpsa_contacts_person
 {
     var $nagiosname = '';
 
-    function net_nemein_netmon_contact_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::org_openpsa_contacts_person($id);
+        return parent::__construct($id);
     }
 
     /**

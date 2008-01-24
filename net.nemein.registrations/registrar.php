@@ -64,9 +64,9 @@ class net_nemein_registrations_registrar extends midcom_db_person
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function net_nemein_registrations_registrar($id = null)
+    function __construct($id = null)
     {
-        parent::midcom_db_person($id);
+        parent::__construct($id);
         // Intercept failed class instantiations.
         if ($this)
         {

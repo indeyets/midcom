@@ -12,9 +12,9 @@
 class net_nemein_teams_team_dba extends __net_nemein_teams_team_dba
 {
 
-    function net_nemein_teams_team_dba($src = null)
+    function __construct($src = null)
     {
-        parent::__net_nemein_teams_team_dba($src);
+        parent::__construct($src);
     }
 
     function count_members()

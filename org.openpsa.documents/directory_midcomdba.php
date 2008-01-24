@@ -14,9 +14,9 @@
  */
 class org_openpsa_documents_directory extends midcom_baseclasses_database_topic
 {
-    function org_openpsa_documents_directory($identifier=NULL)
+    function __construct($identifier=NULL)
     {
-        return parent::midcom_baseclasses_database_topic($identifier);
+        return parent::__construct($identifier);
     }
 
     function _on_created()

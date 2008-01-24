@@ -23,9 +23,9 @@
  */
 class midcom_baseclasses_database_group extends __midcom_baseclasses_database_group
 {
-    function midcom_baseclasses_database_group($id = null)
+    function __construct($id = null)
     {
-        parent::__midcom_baseclasses_database_group($id);
+        parent::__construct($id);
     }
 
     function get_label()

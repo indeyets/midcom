@@ -8,9 +8,9 @@
  */
 class net_nemein_featured_item_dba extends __net_nemein_featured_item_dba
 {
-    function net_nemein_featured_featured_dba()
+    function __construct()
     {
-        parent::__net_nemein_featured_featured_dba();
+        parent::__construct();
     }
 
     function load_featured_item($substyle = "")

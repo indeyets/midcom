@@ -61,9 +61,9 @@ class midcom_baseclasses_database_person extends __midcom_baseclasses_database_p
      */
     var $emaillink = '';
 
-    function midcom_baseclasses_database_person($id = null)
+    function __construct($id = null)
     {
-        parent::__midcom_baseclasses_database_person($id);
+        parent::__construct($id);
     }
 
     /**

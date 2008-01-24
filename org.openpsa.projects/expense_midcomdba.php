@@ -13,9 +13,9 @@
  */
 class midcom_org_openpsa_expense extends __midcom_org_openpsa_expense
 {
-    function midcom_org_openpsa_expense($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_org_openpsa_expense($id);
+        return parent::__construct($id);
     }
 
     function get_parent_guid_uncached()
@@ -101,9 +101,9 @@ class midcom_org_openpsa_expense extends __midcom_org_openpsa_expense
  */
 class org_openpsa_projects_expense extends midcom_org_openpsa_expense
 {
-    function org_openpsa_projects_expense($identifier=NULL)
+    function __construct($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_expense($identifier);
+        return parent::__construct($identifier);
     }
 }
 ?>

@@ -14,9 +14,9 @@
  */
 class org_routamc_positioning_city_dba extends __org_routamc_positioning_city_dba
 {
-    function org_routamc_positioning_city_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__org_routamc_positioning_city_dba($id);
+        return parent::__construct($id);
     }
 
     /**

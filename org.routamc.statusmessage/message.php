@@ -14,9 +14,9 @@
  */
 class org_routamc_statusmessage_message_dba extends __org_routamc_statusmessage_message_dba
 {
-    function org_routamc_statusmessage_message_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__org_routamc_statusmessage_message_dba($id);
+        return parent::__construct($id);
     }
     
     function get_parent_guid_uncached()

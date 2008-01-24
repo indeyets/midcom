@@ -13,9 +13,9 @@
  */
 class net_nemein_quickpoll_option_dba extends __net_nemein_quickpoll_option_dba
 {
-    function net_nemein_quickpoll_option_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__net_nemein_quickpoll_option_dba($id);
+        return parent::__construct($id);
     }
  }
 ?>

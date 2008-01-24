@@ -21,9 +21,9 @@ class net_nehmer_blog_link_dba extends __net_nehmer_blog_link_dba
      * @access public
      * @param mixed $id
      */
-    function net_nehmer_blog_link_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__net_nehmer_blog_link_dba($id);
+        return parent::__construct($id);
     }
     
     /**

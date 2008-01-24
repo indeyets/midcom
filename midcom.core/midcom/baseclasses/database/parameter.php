@@ -25,10 +25,10 @@
  */
 class midcom_baseclasses_database_parameter extends __midcom_baseclasses_database_parameter
 {
-    function midcom_baseclasses_database_parameter($id = null)
+    function __construct($id = null)
     {
         $this->_use_rcs = false;
-        parent::__midcom_baseclasses_database_parameter($id);
+        parent::__construct($id);
     }
 
     /**

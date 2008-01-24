@@ -14,9 +14,9 @@
  */
 class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
 {
-    function net_nemein_calendar_event_dba($guid = null) 
+    function __construct($guid = null) 
     {
-        return parent::__net_nemein_calendar_event_dba($guid);
+        return parent::__construct($guid);
     }
 
     function _on_created()

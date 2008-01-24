@@ -32,9 +32,9 @@ class midcom_db_article extends midcom_baseclasses_database_article
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function midcom_db_article($id = null)
+    function __construct($id = null)
     {
-        parent::midcom_baseclasses_database_article($id);
+        parent::__construct($id);
     }
 
     /**

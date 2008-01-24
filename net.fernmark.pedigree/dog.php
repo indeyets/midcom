@@ -16,9 +16,9 @@ class net_fernmark_pedigree_dog_dba extends __net_fernmark_pedigree_dog_dba
 {
     var $name_with_kennel = '';
 
-    function net_fernmark_pedigree_dog_dba($src = null)
+    function __construct($src = null)
     {
-        parent::__net_fernmark_pedigree_dog_dba($src);
+        parent::__construct($src);
     }
 
     function _on_loaded()

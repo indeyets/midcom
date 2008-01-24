@@ -37,10 +37,10 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
      */
     var $_open_write_mode = false;
 
-    function midcom_baseclasses_database_attachment($id = null)
+    function __construct($id = null)
     {
         $this->_use_rcs = false;
-        parent::__midcom_baseclasses_database_attachment($id);
+        parent::__construct($id);
     }
 
     function get_parent_guid_uncached()

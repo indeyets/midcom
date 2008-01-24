@@ -11,9 +11,9 @@
  */
 class pl_olga_windguru_status_dba extends __pl_olga_windguru_status_dba
 {
-    function pl_olga_windguru_status_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__pl_olga_windguru_status_dba($id);
+        return parent::__construct($id);
     }
 
 
@@ -39,9 +39,9 @@ class pl_olga_windguru_status_dba extends __pl_olga_windguru_status_dba
  */
 class pl_olga_windguru_cache_dba extends __pl_olga_windguru_cache_dba
 {
-    function pl_olga_windguru_cache_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__pl_olga_windguru_cache_dba($id);
+        return parent::__construct($id);
     }
 
 

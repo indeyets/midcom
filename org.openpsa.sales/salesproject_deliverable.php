@@ -20,9 +20,9 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
 
     var $_salesproject = null;
 
-    function org_openpsa_sales_salesproject_deliverable($id = null)
+    function __construct($id = null)
     {
-        return parent::__org_openpsa_sales_salesproject_deliverable($id);
+        return parent::__construct($id);
     }
 
     function get_parent_guid_uncached()

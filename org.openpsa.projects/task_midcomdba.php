@@ -27,9 +27,9 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
     var $status_type = '';    //Shorthand access to status type in simple format, eg. "ongoing"
     var $resource_seek_type = 'none';
 
-    function midcom_org_openpsa_task($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_org_openpsa_task($id);
+        return parent::__construct($id);
     }
 
     /**
@@ -1378,9 +1378,9 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
  */
 class org_openpsa_projects_task extends midcom_org_openpsa_task
 {
-    function org_openpsa_projects_task($identifier = NULL)
+    function __construct($identifier = NULL)
     {
-        return parent::midcom_org_openpsa_task($identifier);
+        return parent::__construct($identifier);
     }
 }
 ?>

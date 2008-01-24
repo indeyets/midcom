@@ -13,9 +13,9 @@
  */
 class midcom_org_openpsa_task_status extends __midcom_org_openpsa_task_status
 {
-    function midcom_org_openpsa_task_status($id = null)
+    function __construct($id = null)
     {
-        $ret = parent::__midcom_org_openpsa_task_status($id);
+        $ret = parent::__construct($id);
         if (!$this->id)
         {
             if (is_object($this))
@@ -113,9 +113,9 @@ class midcom_org_openpsa_task_status extends __midcom_org_openpsa_task_status
 class org_openpsa_projects_task_status extends midcom_org_openpsa_task_status
 {
 
-    function org_openpsa_projects_task_status($identifier=NULL)
+    function __construct($identifier=NULL)
     {
-        return parent::__midcom_org_openpsa_task_status($identifier);
+        return parent::__construct($identifier);
     }
 
 }

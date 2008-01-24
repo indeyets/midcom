@@ -12,9 +12,9 @@
  */
 class org_openpsa_contacts_buddy extends __org_openpsa_contacts_buddy
 {
-    function org_openpsa_contacts_buddy($id = null)
+    function __construct($id = null)
     {
-        return parent::__org_openpsa_contacts_buddy($id);
+        return parent::__construct($id);
     }
 
     function get_parent_guid_uncached()

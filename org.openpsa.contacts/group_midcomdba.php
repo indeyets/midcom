@@ -12,9 +12,9 @@
  */
 class midcom_org_openpsa_organization extends __midcom_org_openpsa_organization
 {
-    function midcom_org_openpsa_organization($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_org_openpsa_organization($id);
+        return parent::__construct($id);
     }
 
     function get_label()
@@ -54,9 +54,9 @@ class org_openpsa_contacts_group extends midcom_org_openpsa_organization
     var $members = array();
     var $members_loaded = false;
 
-    function org_openpsa_contacts_group($identifier=NULL)
+    function __construct($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_organization($identifier);
+        return parent::__construct($identifier);
     }
 
     function get_parent_guid_uncached()

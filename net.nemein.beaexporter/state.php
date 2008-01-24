@@ -21,9 +21,9 @@ class net_nemein_beaexporter_state_dba extends __net_nemein_beaexporter_state_db
             'deleted' => true,
         );
 
-    function net_nemein_beaexporter_state_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__net_nemein_beaexporter_state_dba($id);
+        return parent::__construct($id);
     }
 
     /**

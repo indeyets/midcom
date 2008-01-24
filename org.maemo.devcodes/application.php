@@ -16,9 +16,9 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
 {
     var $title;
 
-    function org_maemo_devcodes_application_dba($src = null)
+    function __construct($src = null)
     {
-        parent::__org_maemo_devcodes_application_dba($src);
+        parent::__construct($src);
     }
 
     /**

@@ -13,9 +13,9 @@
  */
 class fi_mik_flight_dba extends __fi_mik_flight_dba
 {
-    function fi_mik_flight_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__fi_mik_flight_dba($id);
+        return parent::__construct($id);
     }
 
     function get_parent_guid_uncached()

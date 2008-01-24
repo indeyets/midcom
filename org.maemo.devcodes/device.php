@@ -14,9 +14,9 @@
  */
 class org_maemo_devcodes_device_dba extends __org_maemo_devcodes_device_dba
 {
-    function org_maemo_devcodes_device_dba($src = null)
+    function __construct($src = null)
     {
-        parent::__org_maemo_devcodes_device_dba($src);
+        parent::__construct($src);
     }
 
     /**

@@ -12,9 +12,9 @@
  */
 class midcom_org_openpsa_document extends __midcom_org_openpsa_document
 {
-    function midcom_org_openpsa_document($id = null)
+    function __construct($id = null)
     {
-        return parent::__midcom_org_openpsa_document($id);
+        return parent::__construct($id);
     }
 }
 
@@ -28,9 +28,9 @@ class midcom_org_openpsa_document extends __midcom_org_openpsa_document
  */
 class org_openpsa_documents_document extends midcom_org_openpsa_document
 {
-    function org_openpsa_documents_document($identifier=NULL)
+    function __construct($identifier=NULL)
     {
-        return parent::midcom_org_openpsa_document($identifier);
+        return parent::__construct($identifier);
     }
 
     function get_parent_guid_uncached()
