@@ -14,9 +14,9 @@
  */
 class org_routamc_positioning_country_dba extends __org_routamc_positioning_country_dba
 {
-    function org_routamc_positioning_country_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__org_routamc_positioning_country_dba($id);
+        return parent::__construct($id);
     }
 
     /**

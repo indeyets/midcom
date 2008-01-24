@@ -125,6 +125,14 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * @access private
      */
     var $_qb;
+    
+    /**
+     * The number of groups open
+     *
+     * @var int
+     * @access private
+     */
+    var $_groups = 0;
 
     /**
      * The number of records to return to the client at most.
@@ -532,9 +540,22 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         $this->_qb->set_limit($window_size);
         //debug_pop();
     }
+    
+    function _check_groups()
+    {
+        while ($this->_groups > 0)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Ending unterminated QB group', MIDCOM_LOG_INFO);
+            debug_pop();
+            $this->end_group();
+        }
+    }
 
     function execute()
     {
+        $this->_check_groups();
+        
         return $this->execute_windowed();
         //return $this->execute_notwindowed();
     }
@@ -632,6 +653,8 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function execute_unchecked()
     {
+        $this->_check_groups();
+        
         $this->_reset();
 
         if (! call_user_func_array(array($this->_real_class, '_on_prepare_exec_query_builder'), array(&$this)))
@@ -781,6 +804,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function begin_group($operator = 'OR')
     {
+        $this->_groups++;
         $this->_qb->begin_group($operator);
     }
 
@@ -789,6 +813,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function end_group()
     {
+        $this->_groups--;
         $this->_qb->end_group();
     }
 
@@ -856,6 +881,8 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function count()
     {
+        $this->_check_groups();
+        
         if ($this->count == -1)
         {
             $this->execute();
@@ -878,6 +905,8 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function count_unchecked()
     {
+        $this->_check_groups();
+        
         if ($this->_limit)
         {
             $this->_qb->set_limit($this->_limit);
