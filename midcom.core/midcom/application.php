@@ -2351,14 +2351,11 @@ class midcom_application
                 $this->relocate("{$GLOBALS['midcom_config']['attachment_cache_url']}/{$subdir}/{$attachment->guid}_{$attachment->name}", 301);
             }
         }
-
-        debug_push("midcom_application::serve_attachment");
-
+        
         // Sanity check expires
         if (   !is_int($expires)
             || $expires < -1)
         {
-            debug_pop();
             $this->generate_error(MIDCOM_ERRCRIT, "\$expires has to be a positive integer or -1.");
             // This will exit()
         }
@@ -2366,6 +2363,7 @@ class midcom_application
         $stats = $attachment->stat();
         $last_modified =& $stats[9];
 
+        debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Serving Attachment {$attachment->name} (parent: {$attachment->parentguid})", MIDCOM_LOG_INFO);
 
         $etag = md5("{$last_modified}{$attachment->name}{$attachment->mimetype}{$attachment->guid}");
@@ -2374,6 +2372,7 @@ class midcom_application
         if (   $expires <> 0
             && $this->cache->content->_check_not_modified($last_modified, $etag))
         {
+
             debug_add('_check_not_modified returned true, finishing up here then');
             if (!headers_sent())
             {
@@ -2389,6 +2388,14 @@ class midcom_application
             exit();
         }
 
+        $f = $attachment->open('r');
+        if (! $f)
+        {
+            debug_pop();
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to open attachment for reading: ' . mgd_errstr());
+            // This will exit()
+        }
+        
         $this->header("ETag: {$etag}");
         $this->cache->content->register_sent_header("ETag: {$etag}");
         $this->cache->content->content_type($attachment->mimetype);
@@ -2398,6 +2405,11 @@ class midcom_application
         $this->cache->content->register_sent_header("Last-Modified: " . gmdate("D, d M Y H:i:s", $last_modified) . ' GMT');
         $this->header("Content-Length: " . $stats[7]);
         $this->cache->content->register_sent_header("Content-Length: " . $stats[7]);
+        //$this->header("Content-Disposition: attachment; filename={$attachment->name}");
+        //$this->cache->content->register_sent_header("Content-Disposition: attachment; filename={$attachment->name}");
+        $this->header("Content-Description: {$attachment->title}");
+        $this->cache->content->register_sent_header("Content-Description: {$attachment->title}");
+        
         // PONDER: Support ranges ("continue download") somehow ?
         $this->header("Accept-Ranges: none");
         $this->cache->content->register_sent_header("Accept-Ranges: none");
@@ -2413,18 +2425,9 @@ class midcom_application
             $this->cache->content->no_cache();
         }
         // TODO: Check metadata service for the real expiry timestamp ?
-
-        $f = $attachment->open('r');
-        if (! $f)
-        {
-            debug_pop();
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to open attachment for reading: ' . mgd_errstr());
-            // This will exit()
-        }
+        
         $this->cache->content->cache_control_headers();
-        /* live mode automatically enters no_cache, so we disable buffers ourself
-        $this->cache->content->enable_live_mode();
-        */
+
         while(@ob_end_flush());
         fpassthru($f);
         $attachment->close();
