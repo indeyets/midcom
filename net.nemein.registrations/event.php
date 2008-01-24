@@ -2,7 +2,7 @@
 /**
  * @package net.nemein.registrations
  * @author The Midgard Project, http://www.midgard-project.org
- * @version $Id$
+ * @version $Id: event.php 14602 2008-01-23 21:57:34Z rambo $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
@@ -136,6 +136,17 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
         {
             return false;
         }
+        $this->_do_bindings();
+        return true;
+    }
+
+    function _on_updating()
+    {
+        if (!parent::_on_updating())
+        {
+            return false;
+        }
+        // This will also recalculate the human-readable properties that might prove usefull
         $this->_do_bindings();
         return true;
     }
