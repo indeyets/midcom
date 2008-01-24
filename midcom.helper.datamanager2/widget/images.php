@@ -425,7 +425,7 @@ END;
     }
 
     /**
-     * Computes the element list to form the widget. It populates the _elements memeber, which is
+     * Computes the element list to form the widget. It populates the _elements member, which is
      * initialized with a new, empty array during startup.
      *
      * @param boolean $frozen Set this to true, if you want to skip all elements which cannot be frozen.
