@@ -43,6 +43,10 @@ All users
 Add group for privilege assignment
 ---STRINGEND
 
+---STRING add text file
+Add text file
+---STRINGEND
+
 ---STRING always display in top frame
 Always display in top frame
 ---STRINGEND
@@ -75,80 +79,16 @@ Attachments
 Attachments of %s %s
 ---STRINGEND
 
----STRING no files
-No files
----STRINGEND
-
----STRING upload file
-Upload file
----STRINGEND
-
----STRING add text file
-Add text file
----STRINGEND
-
----STRING filename
-File name
----STRINGEND
-
----STRING mimetype
-MIME type
----STRINGEND
-
----STRING cascading style sheet
-Cascading Style Sheet
----STRINGEND
-
----STRING javascript
-JavaScript
----STRINGEND
-
----STRING plain text
-Plain text
----STRINGEND
-
----STRING xml
-XML
----STRINGEND
-
----STRING html
-HTML
----STRINGEND
-
----STRING edit file %s
-Edit file %s
----STRINGEND
-
----STRING edit text file
-Edit text file
----STRINGEND
-
----STRING file %s deleted
-File '%s' deleted
----STRINGEND
-
----STRING file contents
-File contents
----STRINGEND
-
----STRING file information
-File information
----STRINGEND
-
----STRING filename
-Filename
----STRINGEND
-
----STRING url
-URL
----STRINGEND
-
 ---STRING back to %s
 Back to page "%s"
 ---STRINGEND
 
 ---STRING back to site
 Back to site
+---STRINGEND
+
+---STRING cascading style sheet
+Cascading Style Sheet
 ---STRINGEND
 
 ---STRING changes done in revision %s to %s
@@ -243,8 +183,20 @@ Dropdown list
 Edit %s %s
 ---STRINGEND
 
+---STRING edit configuration for %s
+Edit configuration for component %s
+---STRINGEND
+
 ---STRING edit configuration for %s folder %s
 Edit configuration for component %s folder %s
+---STRINGEND
+
+---STRING edit file %s
+Edit file %s
+---STRINGEND
+
+---STRING edit text file
+Edit text file
 ---STRINGEND
 
 ---STRING editor options
@@ -275,6 +227,22 @@ Failed undeleting %s, reason %s
 Failed undeleting attachment %s, reason %s
 ---STRINGEND
 
+---STRING file %s deleted
+File '%s' deleted
+---STRINGEND
+
+---STRING file contents
+File contents
+---STRINGEND
+
+---STRING file information
+File information
+---STRINGEND
+
+---STRING filename
+Filename
+---STRINGEND
+
 ---STRING filter
 Filter
 ---STRINGEND
@@ -287,12 +255,20 @@ Floating freely
 folder
 ---STRINGEND
 
+---STRING global
+Global
+---STRINGEND
+
 ---STRING group %s
 Group %s
 ---STRINGEND
 
 ---STRING guid
 Unique identifier
+---STRINGEND
+
+---STRING html
+HTML
 ---STRINGEND
 
 ---STRING in %s
@@ -323,6 +299,10 @@ Interface language
 Items in trash
 ---STRINGEND
 
+---STRING javascript
+JavaScript
+---STRINGEND
+
 ---STRING last edited by %s on %s (revision %s)
 Last edited by %s on %s (revision %s)
 ---STRINGEND
@@ -333,6 +313,10 @@ Libraries
 
 ---STRING lines
 Lines
+---STRINGEND
+
+---STRING local
+Local
 ---STRINGEND
 
 ---STRING localisation settings
@@ -357,14 +341,6 @@ Approve
 
 ---STRING midcom:component_config
 Configuration
----STRINGEND
-
----STRING global
-Global
----STRINGEND
-
----STRING local
-Local
 ---STRINGEND
 
 ---STRING midgard objects
@@ -399,6 +375,10 @@ Read
 Update
 ---STRINGEND
 
+---STRING mimetype
+MIME type
+---STRINGEND
+
 ---STRING navigation options
 Navigation options
 ---STRINGEND
@@ -417,6 +397,10 @@ Navigation width (in pixels)
 
 ---STRING no changes in content
 No changes in content
+---STRINGEND
+
+---STRING no files
+No files
 ---STRINGEND
 
 ---STRING no title
@@ -461,6 +445,10 @@ Parameters of %s %s
 
 ---STRING permissions for %s %s
 Permissions for %s %s
+---STRINGEND
+
+---STRING plain text
+Plain text
 ---STRINGEND
 
 ---STRING preferences saved
@@ -563,6 +551,14 @@ Undelete
 Under %s
 ---STRINGEND
 
+---STRING upload file
+Upload file
+---STRINGEND
+
+---STRING url
+URL
+---STRINGEND
+
 ---STRING use codepress editor for editing code snippets
 Use CodePress editor for editing code snippets
 ---STRINGEND
@@ -603,7 +599,11 @@ View this revision (%s)
 Version %s of %s
 ---STRINGEND
 
----STRING edit configuration for %s
-Edit configuration for component %s
+---STRING xml
+XML
+---STRINGEND
+
+---STRING show sg0 objects in navigation
+Show sitegroup 0 objects in navigation
 ---STRINGEND
 

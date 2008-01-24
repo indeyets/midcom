@@ -88,6 +88,7 @@
 'codepress_enabled' => true,
 'escape_frameset' => true,
 'enable_quicklinks' => true,
+'show_sg0' => false,
 
 // Welcome page
 // List of types we don't list on latest objects

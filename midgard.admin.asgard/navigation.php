@@ -113,6 +113,29 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         {
             $this->_reflectors[$classname] = midcom_helper_reflector_tree::get($object);
         }
+        
+        // Get the configuration value first
+        if ($this->_config->get('show_sg0'))
+        {
+            $this->_reflectors[$classname]->show_sg0_objects = true;
+        }
+        else
+        {
+            $this->_reflectors[$classname]->show_sg0_objects = false;
+        }
+        
+        // Then override it with user preference if requred
+        switch (midgard_admin_asgard_plugin::get_preference('show_sg0'))
+        {
+            case 'no':
+                $this->_reflectors[$classname]->show_sg0_objects = false;
+                break;
+            
+            case 'yes':
+                $this->_reflectors[$classname]->show_sg0_objects = true;
+                break;
+        }
+        
         return $this->_reflectors[$classname];
     }
 
@@ -163,7 +186,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
 
                     $ref =& $this->_get_reflector(&$child);
 
-					$label = $this->_get_reflector(&$child);
+                    $label = $this->_get_reflector(&$child);
                     $selected = $this->_is_selected($child);
                     $css_class = $type;
                     $this->_common_css_classes($child, $ref, $css_class);
@@ -193,46 +216,46 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         }
     }
 
-	/**
-	 * Renders the given root objects to HTML and calls _list_child_elements()
-	 *
-	 * @param array &$root_objects reference to the array of root objects
-	 * @param midcom_helper_reflector_tree &$ref Reflector singleton
-	 */
-	function _list_root_elements(&$root_objects, &$ref)
-	{
-	    echo "<ul class=\"midgard_admin_asgard_navigation\">\n";
+    /**
+     * Renders the given root objects to HTML and calls _list_child_elements()
+     *
+     * @param array &$root_objects reference to the array of root objects
+     * @param midcom_helper_reflector_tree &$ref Reflector singleton
+     */
+    function _list_root_elements(&$root_objects, &$ref)
+    {
+        echo "<ul class=\"midgard_admin_asgard_navigation\">\n";
 
-	    foreach ($root_objects as $object)
-	    {
-	        $label = $ref->get_object_label($object);
-	        $selected = $this->_is_selected($object);
-	        $css_class = get_class($object);
-	        $this->_common_css_classes($object, $ref, $css_class);
-	        $this->shown_objects[$object->guid] = true;
+        foreach ($root_objects as $object)
+        {
+            $label = $ref->get_object_label($object);
+            $selected = $this->_is_selected($object);
+            $css_class = get_class($object);
+            $this->_common_css_classes($object, $ref, $css_class);
+            $this->shown_objects[$object->guid] = true;
 
-	        echo "    <li class=\"{$css_class}\">";
+            echo "    <li class=\"{$css_class}\">";
 
-	        $label = htmlspecialchars($label);
-	        $icon = $ref->get_object_icon($object);
+            $label = htmlspecialchars($label);
+            $icon = $ref->get_object_icon($object);
 
-	        if (empty($label))
-	        {
-	            $label = "#oid_{$object->id}";
-	        }
+            if (empty($label))
+            {
+                $label = "#oid_{$object->id}";
+            }
 
-	        echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$object->guid}/\" title=\"GUID: {$object->guid}, ID: {$object->id}\">{$icon}{$label}</a>\n";
+            echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$object->guid}/\" title=\"GUID: {$object->guid}, ID: {$object->id}\">{$icon}{$label}</a>\n";
 
-	        if ($selected)
-	        {
-	            $this->_list_child_elements($object);
-	        }
+            if ($selected)
+            {
+                $this->_list_child_elements($object);
+            }
 
-	        echo "    </li>\n";
-	    }
+            echo "    </li>\n";
+        }
 
-	    echo "</ul>\n";
-	}
+        echo "</ul>\n";
+    }
 
     function _draw_plugins()
     {
@@ -334,14 +357,14 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
             $this->_request_data['section_name'] = $label;
             midcom_show_style('midgard_admin_asgard_navigation_section_header');
             if (   isset($root_object)
-                && (is_a($root_object, $root_type)
+                && (   is_a($root_object, $root_type)
                     || midcom_helper_reflector::is_same_class($root_type,$root_object->__midcom_class_name__))
                 || in_array($root_type, $this->expanded_root_types))
             {
                 $root_objects = $ref->get_root_objects();
                 if (count($root_objects) > 0)
                 {
-					$this->_list_root_elements($root_objects, &$ref);
+                    $this->_list_root_elements($root_objects, &$ref);
                 }
             }
             midcom_show_style('midgard_admin_asgard_navigation_section_footer');
@@ -405,9 +428,9 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         if (   is_array($root_objects)
             && count($root_objects) > 0)
         {
-			midcom_show_style('midgard_admin_asgard_navigation_section_header');
-			$this->_list_root_elements($root_objects, $ref);
-			midcom_show_style('midgard_admin_asgard_navigation_section_footer');
+            midcom_show_style('midgard_admin_asgard_navigation_section_header');
+            $this->_list_root_elements($root_objects, $ref);
+            midcom_show_style('midgard_admin_asgard_navigation_section_footer');
         }
     }
 }

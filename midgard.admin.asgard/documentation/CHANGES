@@ -8,6 +8,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-01-25 adrenalin
+  - Added user preference option for toggling SG0 objects in navigation
+
 2007-12-20 adrenalin
   ! Moved Revision Control System to Asgard
 

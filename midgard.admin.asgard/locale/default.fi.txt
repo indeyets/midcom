@@ -175,6 +175,10 @@ Pudotusvalikko
 Muokkaa %s %s
 ---STRINGEND
 
+---STRING edit configuration for %s
+Muokkaa komponentin %s asetuksia
+---STRINGEND
+
 ---STRING edit configuration for %s folder %s
 Muokkaa komponentin %s asetuksia kansiossa %s
 ---STRINGEND
@@ -527,7 +531,7 @@ Näytä tämä versio (%s)
 Versio %s tietueesta %s
 ---STRINGEND
 
----STRING edit configuration for %s
-Muokkaa komponentin %s asetuksia
+---STRING show sg0 objects in navigation
+Näytä sivuryhmä 0:n kohteet navigaatiossa
 ---STRINGEND
 
