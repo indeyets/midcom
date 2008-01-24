@@ -642,6 +642,30 @@ EOF;
             $merged_schema->append_field($name, $registration_schema->fields[$name]);
         }
 
+        $preferred_order = $this->_config->get('merged_schema_field_order');
+        // Add any fields in schema missing from the preferred_order array
+        foreach ($merged_schema->field_order as $fieldname)
+        {
+            if (in_array($fieldname, $preferred_order))
+            {
+                // Present, do nothing
+                continue;
+            }
+            $preferred_order[] = $fieldname;
+        }
+        // Verify that all fields in preferred_order are actually in the schema
+        foreach($preferred_order as $k => $fieldname)
+        {
+            if (isset($merged_schema->fields[$fieldname]))
+            {
+                // Present, do nothing
+                continue;
+            }
+            unset($preferred_order[$k]);
+        }
+        //  array merge will make sure numeric keys are properly continous
+        $merged_schema->field_order = array_merge($preferred_order);
+
         $this->_nullstorage_schemadb['merged'] = $merged_schema;
         /*
         debug_push_class(__CLASS__, __FUNCTION__);

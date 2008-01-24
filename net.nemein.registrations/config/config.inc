@@ -41,3 +41,9 @@
  * The plugin is responsible for validation
  */
 'pricing_plugin_config' => array(),
+/**
+ * Since the registration schema is merge of two schemas
+ * we cannot 100% control the field order in schema only
+ * in this array we can specify preferred order
+ */
+'merged_schema_field_order' => array(),
