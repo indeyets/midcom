@@ -600,7 +600,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      * regular object usage.
      *
      * @access private
-     * @param mixed $object A reference to the GUID or the full object instance for which we should load privileges.
+     * @param mixed &$arg A reference to the GUID or the full object instance for which we should load privileges.
      * @param midcom_core_user $user The MidCOM user for which we should collect the privileges, null uses the currently authenticated user.
      * @return Array An array of privilege_name => privilege_value pairs valid for the given user.
      * @static

@@ -155,7 +155,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      * repeatedly thus switching an existing DM instance over to a new storage object
      * as long as you work with the same schema.
      *
-     * @param mixed $object A reference to either a MidCOM DBA class or a subclass of
+     * @param mixed &$object A reference to either a MidCOM DBA class or a subclass of
      *     midcom_helper_datamanager2_storage.
      * @return boolean Indicating success.
      */
@@ -236,7 +236,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
      *
      * @see set_schema()
      * @see set_storage()
-     * @param mixed $object A reference to either a MidCOM DBA class or a subclass of
+     * @param mixed &$object A reference to either a MidCOM DBA class or a subclass of
      *     midcom_helper_datamanager2_storage.
      * @param boolean $strict Whether we should strictly use only the schema given by object params
      * @return boolean Indicating success.

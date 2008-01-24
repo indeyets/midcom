@@ -197,7 +197,7 @@ class org_maemo_gforgeprofileupdater extends midcom_baseclasses_components_purec
     /**
      * Communicate profile updates to gforge server
      *
-     * @param mixed $object object
+     * @param mixed &$object object
      */
     function updated(&$object)
     {
