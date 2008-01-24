@@ -1,6 +1,10 @@
 'default' => array
 (
     'description' => 'comment',
+    'operations' => array
+    (
+        'save' => 'post'
+    ),
     'fields'      => array
     (
         'subject' => array
@@ -44,7 +48,7 @@
                 //'maxlength' => 160,
             ),
             'widget' => 'markdown',
-            'widget_config' => Array
+            'widget_config' => array
             (
                 'height' => 24,
             ),
@@ -96,7 +100,7 @@
                 'output_mode' => 'markdown' 
             ),
             'widget' => 'textarea',
-            'widget_config' => Array
+            'widget_config' => array
             (
                 'height' => 24,
             ),

@@ -1,9 +1,13 @@
-'comment' => Array
+'comment' => array
 (
     'description' => 'default schema',
-    'fields' => Array
+    'operations' => array
     (
-        'author' => Array
+        'save' => 'post'
+    ),
+    'fields' => array
+    (
+        'author' => array
         (
             'title' => 'author',
             'description' => '',
@@ -15,7 +19,7 @@
             'widget' => 'text',
         ),
 
-        'title' => Array
+        'title' => array
         (
             'title' => 'title',
             'description' => '',
@@ -26,7 +30,7 @@
             'type' => 'text',
             'widget' => 'text',
         ),
-        'content' => Array
+        'content' => array
         (
             'title' => 'content',
             'description' => '',
@@ -35,17 +39,17 @@
             'required' => 'true',
             'storage' => 'content',
             'type' => 'text',
-            'type_config' => Array ( 'output_mode' => 'markdown' ),
+            'type_config' => array ( 'output_mode' => 'markdown' ),
             'widget' => 'textarea',
         ),
-        'rating' => Array
+        'rating' => array
         (
             'title' => 'rating',
             'storage' => 'rating',
             'type' => 'select',
-            'type_config' => Array
+            'type_config' => array
             (
-                'options' => Array
+                'options' => array
                 (
                     0 => '',
                     1 => '*',
