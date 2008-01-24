@@ -643,6 +643,19 @@ class midcom_baseclasses_core_dbobject
                     // This is a special variable, we must not overwrite them.
                     continue;
                 }
+                
+                if (is_object($value))
+                {
+                    // Midgard 1.9 fix, don't copy midgard_metadata object as whole but instead field-by-field
+                    $value_class = get_class($value);
+                    $value_vars = get_object_vars($oldobject);
+                    foreach ($value_vars as $value_key => $value_value)
+                    {
+                        $newobject->$name->$value_key = $value_value;
+                    }
+                    continue;
+                }
+                
                 $newobject->$name = $value;
             }
             return true;
@@ -1204,6 +1217,12 @@ class midcom_baseclasses_core_dbobject
                     && substr($name, -2) == '__'))
             {
                 // This is a special variable, we must not overwrite them.
+                continue;
+            }
+            
+            if (is_object($value))
+            {
+                // Midgard 1.9 workaround, don't try to set midgard_metadata object to null
                 continue;
             }
             $object->$name = null;

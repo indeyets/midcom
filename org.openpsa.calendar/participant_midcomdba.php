@@ -369,7 +369,7 @@ class org_openpsa_calendar_eventparticipant extends org_openpsa_calendar_eventme
     var $person;
     var $participant;
 
-    function __construct$identifier=NULL)
+    function __construct($identifier=NULL)
     {
         if (parent::__construct($identifier))
         {
