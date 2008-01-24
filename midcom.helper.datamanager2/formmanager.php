@@ -221,8 +221,9 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
         $this->widgets = Array();
 
         // iterate over all widgets so that they can add their piece to the form
-        foreach ($this->_schema->fields as $name => $config)
+        foreach ($this->_schema->field_order as $name)
         {
+            $config = $this->_schema->fields[$name];
             if (! $this->_is_widget_visible($name, $config))
             {
                 // Naturally we should skip invisible objects
