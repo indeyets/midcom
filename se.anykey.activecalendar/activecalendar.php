@@ -30,7 +30,7 @@
 * 1. Static calendar without any links
 * 2. Calendar with month's or year's view navigation controls
 * 3. Calendar with linkable days (url or javascript)
-* 4. Calendar with a date picker (year ot month mode)
+* 4. Calendar with a date picker (year or month mode)
 * 5. Calendar with event days (css configuration) and event links
 * 6. Calendar with optionally linkable event contents
 * The layout of can be configured using css, as the class generates various html classes

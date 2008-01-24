@@ -10,7 +10,7 @@
 /**
  * Marketplace Schema callback, post-processes the available categories and makes them
  * accessible. This callback can only be used from within the marketplace component, since
- * it relies on its component context ot be correctly initialized.
+ * it relies on its component context to be correctly initialized.
  *
  * @package net.nehmer.buddylist
  */

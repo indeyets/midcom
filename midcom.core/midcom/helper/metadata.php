@@ -130,7 +130,7 @@ class midcom_helper_metadata
      * as the parameter call is available normally.
      *
      * @param GUID $guid The GUID of the object as it is in the global metadata object cache.
-     * @param mixed $object The MidgardObject ot attach to.
+     * @param mixed $object The MidgardObject to attach to.
      * @param string $schemadb The URL of the schemadb to use.
      * @see midcom_helper_metadata::get()
      * @access private
