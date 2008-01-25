@@ -388,7 +388,17 @@
                     array
                     (
                         'name' => 'extra',
+                        'title' => 'title',
+                    ),
+                    array
+                    (
+                        'name' => 'name',
                         'title' => 'name',
+                    ),
+                    array
+                    (
+                        'name' => 'component',
+                        'title' => 'component',
                     ),
                 ),
                 'orders' => array
