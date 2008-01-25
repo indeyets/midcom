@@ -36,7 +36,7 @@
     (
         'net.nehmer.blog' => array (),
         'midcom.helper.datamanager2' => array (),
-        'midcom.helper.datamanager' => array (),
+        'midcom.helper.dm2config' => array (),
         'midcom' => array (),
     ),
 ),

@@ -1,47 +1,57 @@
 'config' => array
 (
-    'name'        => 'config',
     'description' => 'Default Configuration Schema',
-    'locktimeout' => 0,
-    'fields'      => array
+    'fields' => array
     (
         'sort_order' => array
         (
-            'description' => 'sort_order',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nehmer.static',
-            'config_key' => 'sort_order',
-            'widget' => 'select',
-            'widget_select_choices' => array
+            'title' => 'sort_order',
+            'storage' => array
             (
-                'score' => 'score',
-                'created' => 'created',
-                'reverse created' => 'reverse created',
-                'name' => 'name',
-                'reverse name' => 'reverse name',
-                'reverse score' => 'reverse score',
-                'revised' => 'revised',
-                'reverse revised' => 'reverse revised',
-                'calendar' => 'calendar',
-                'reverse calendar' => 'reverse calendar'
+                'location' => 'configuration',
+                'domain' => 'net.nehmer.static',
+                'name' => 'sort_order',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    'score' => 'score',
+                    'created' => 'created',
+                    'reverse created' => 'reverse created',
+                    'name' => 'name',
+                    'reverse name' => 'reverse name',
+                    'reverse score' => 'reverse score',
+                    'revised' => 'revised',
+                    'reverse revised' => 'reverse revised',
+                    'calendar' => 'calendar',
+                    'reverse calendar' => 'reverse calendar'
+                ),
+            ),
+            'widget' => 'select',
         ),
         'autoindex' => array
         (
-            'description' => 'activate autoindex',
+            'title' => 'activate autoindex',
             'helptext' => 'autoindex-notes',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nehmer.static',
-            'config_key' => 'autoindex',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => array
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'net.nehmer.static',
+                'name' => 'autoindex',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
             'start_fieldgroup' => array
             (
                 'title' => 'display settings'
@@ -50,93 +60,128 @@
         
         'show_blobs_in_autoindex' => array
         (
-            'description' => 'show blobs in autoindex',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nehmer.static',
-            'config_key' => 'show_blobs_in_autoindex',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => array
+            'title' => 'show blobs in autoindex',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'net.nehmer.static',
+                'name' => 'show_blobs_in_autoindex',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
         ),
         
         'indexinnav' => array
         (
-            'description' => 'indexinnav',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nehmer.static',
-            'config_key' => 'indexinnav',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => array
+            'title' => 'indexinnav',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'net.nehmer.static',
+                'name' => 'indexinnav',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
         ),
         
         'ajax_enable' => array
         (
-            'description' => 'ajax_enable',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nehmer.static',
-            'config_key' => 'enable_ajax_editing',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => array
+            'title' => 'ajax_enable',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'net.nehmer.static',
+                'name' => 'enable_ajax_editing',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
         ),
         
         'auto_approve' => array
         (
-            'description' => 'auto_approved',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nehmer.static',
-            'config_key' => 'auto_approve',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => array
+            'title' => 'auto_approved',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'net.nehmer.static',
+                'name' => 'auto_approve',
             ),
-            
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
             'end_fieldgroup' => '',
         ),
         'simple_name_handling' => array
         (
-            'description' => 'simple_name_handling',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nehmer.static',
-            'config_key' => 'simple_name_handling',
-            'widget' => 'config_radiobox',
-            'widget_radiobox_choices' => array
+            'title' => 'simple_name_handling',
+            'storage' => array
             (
-                '' => 'default setting',
-                '1' => 'yes',
-                '0' => 'no',
+                'location' => 'configuration',
+                'domain' => 'net.nehmer.static',
+                'name' => 'simple_name_handling',
             ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
         ),
         'schemadb' => array
         (
-            'description' => 'schemadb',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nehmer.static',
-            'config_key' => 'schemadb',
+            'title' => 'schemadb',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nehmer.static',
+                'name' => 'schemadb',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => $GLOBALS['net_nehmer_static_schemadbs'],
+            ),
             'widget' => 'select',
-            'widget_select_choices' => $GLOBALS['net_nehmer_static_schemadbs'],
             'start_fieldgroup' => array
             (
                 'title' => 'schema settings'
@@ -145,13 +190,96 @@
         
         'symlink_topic' => array
         (
-            'description' => 'symlink_topic',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'net.nehmer.static',
-            'config_key' => 'symlink_topic',
-            'widget' => 'select',
-            'widget_select_choices' => net_nehmer_static_symlink_topic_list(),
+            'title' => 'symlink_topic',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nehmer.static',
+                'name' => 'symlink_topic',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'require_corresponding_option' => false,
+                'options' => array(),
+                'allow_other' => true,
+                'allow_multiple' => false,
+            ),
+            'widget' => 'chooser',
+            'widget_config' => array
+            (
+                'class'       => 'midcom_db_topic',
+                'component'   => 'net.nehmer.static',
+                'titlefield'  => 'extra',
+                'idfield'     => 'guid',
+                'searchfields' => array
+                (
+                    array
+                    (
+                        'title' => 'ASC',
+                    ),
+                    array
+                    (
+                        'extra' => 'ASC',
+                    ),
+                    array
+                    (
+                        'component' => 'ASC',
+                    ),
+                    array
+                    (
+                        'name' => 'ASC',
+                    ),
+                ),
+                'constraints' => array
+                (
+                    array
+                    (
+                        'field' => 'extra',
+                        'op' => '<>',
+                        'value' => '',
+                    ),
+                    array
+                    (
+                        'field' => 'component',
+                        'op' => '=',
+                        'value' => 'net.nehmer.static',
+                    ),
+                ),
+                'result_headers' => array
+                (
+                    array
+                    (
+                        'name' => 'extra',
+                        'title' => 'extra',
+                    ),
+                    array
+                    (
+                        'name' => 'name',
+                        'title' => 'name',
+                    ),
+                    array
+                    (
+                        'name' => 'component',
+                        'title' => 'component',
+                    ),
+                ),
+                'orders' => array
+                (
+                    array
+                    (
+                        'title' => 'ASC',
+                    ),
+                    array
+                    (
+                        'extra' => 'ASC',
+                    ),
+                    array
+                    (
+                        'name' => 'ASC',
+                    ),
+                ),
+            ),
             'end_fieldgroup' => '',
         ),
     ),

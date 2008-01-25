@@ -46,6 +46,11 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
      */
     public function get_leaves()
     {
+        if ($this->_config->get('hide_navigation'))
+        {
+            return array();
+        }
+        
         // Get the required information with midgard_collector
         $mc = midcom_db_article::new_collector('up', 0);
 //        $mc->set_key_property('topic');

@@ -8,6 +8,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-01-25 adrenalin
+  ! Deprecated DM1 configuration, using now midcom.helper.dm2config
+
 2007-10-30 adrenalin
   - Fixed the including of linked articles to navigation
 

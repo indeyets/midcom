@@ -43,6 +43,7 @@ class net_nehmer_static_interface extends midcom_baseclasses_components_interfac
         $this->_autoload_libraries = Array
         (
             'midcom.helper.datamanager2',
+            'midcom.helper.dm2config',
         );
     }
 

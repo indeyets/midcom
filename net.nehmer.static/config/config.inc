@@ -5,6 +5,8 @@
     'file:/net/nehmer/static/config/schemadb_default.inc' => 'Default Schema Database',
 ),
 
+'schemadb_config' => 'file:/net/nehmer/static/config/schemadb_config.inc',
+
 // A valid sort order usable with QB
 'sort_order' => 'score',
 
@@ -14,6 +16,9 @@
 
 // If not in autoindex mode, show the index article in NAP?
 'indexinnav' => false,
+
+// Hide all the leaves from navigation
+'hide_navigation' => false,
 
 // Automatically approve new articles ?
 'auto_approve' => false,
