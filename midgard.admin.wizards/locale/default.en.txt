@@ -2,6 +2,22 @@
 ---VERSION 2.1.0
 ---LANGUAGE en
 
+---STRING new midgard sitegroup
+New Midgard sitegroup
+---STRINGEND
+
+---STRING password
+Password
+---STRINGEND
+
+---STRING admin user
+Admin user
+---STRINGEND
+
+---STRING sitegroup
+Sitegroup
+---STRINGEND
+
 ---STRING midgard wizards
 Midgard Wizards
 ---STRINGEND

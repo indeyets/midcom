@@ -9,6 +9,7 @@
 $vhost_config = "
 <VirtualHost *:__HOST_PORT__>
 ServerName __SERVER_NAME__
+ServerAlias __SERVER_ALIAS__
 DocumentRoot __DOC_ROOT__
 
 <Directory __DOC_ROOT__>

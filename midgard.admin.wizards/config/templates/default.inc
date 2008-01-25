@@ -19,20 +19,7 @@
             'name' => '__HOSTTITLE__ administrators',
         ),
     ),
-    
-    // DM2 schema
-    'schemadb' => array
-    (
-        'settings' => array
-        (
-            'description' => 'settings',
-            'fields'      => array
-            (
 
-            ),
-        ),
-    ),
-    
     // Root node definition		
     'root' => array
     (
