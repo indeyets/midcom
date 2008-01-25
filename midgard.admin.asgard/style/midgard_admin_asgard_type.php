@@ -27,11 +27,13 @@ else
 &(data['help']:h);
 
 <form method="get">
+<div id="search_bar">
     <label>
         <?php echo $_MIDCOM->i18n->get_string('search', 'midgard.admin.asgard'); ?>
         <input id="search_field" type="text" name="search" class="search"<?php if (isset($_GET['search'])) { echo " value=\"{$_GET['search']}\""; } ?> />
     </label>
     <input class="search" type="submit" value="<?php echo $_MIDCOM->i18n->get_string('go', 'midgard.admin.asgard'); ?>" />
+</div>
 </form>
 <script type="text/javascript">
 document.getElementById('search_field').focus();
@@ -40,6 +42,27 @@ document.getElementById('search_field').focus();
 <?php
 if (isset($data['search_results']))
 {
+	function resolve_label(&$object)
+	{
+		if (!isset($object->guid)
+			|| $object->guid == "")
+		{
+		    return;
+		}
+        $reflector = midcom_helper_reflector_tree::get($object);
+        $label_property = $reflector->get_label_property();
+        if (method_exists($object, 'get_label'))
+        {
+            $label = $object->get_label();
+        }
+        else
+        {
+            $label = $object->$label_property;
+        }
+        $parent = $object->get_parent();
+        $label = resolve_label($parent) . "/" . $label;
+        return $label;
+	}
     if (!$data['search_results'])
     {
         echo "<p>" . $_MIDCOM->i18n->get_string('no results', 'midgard.admin.asgard') . "</p>\n";
@@ -59,18 +82,10 @@ if (isset($data['search_results']))
         $persons = array();
         foreach ($data['search_results'] as $result)
         {
-            $reflector = midcom_helper_reflector_tree::get($result);
-            $icon = $reflector->get_object_icon($result);
-            $label_property = $reflector->get_label_property();
-            if (method_exists($result, 'get_label'))
-            {
-                $label = $result->get_label();
-            }
-            else
-            {
-                $label = $result->$label_property;
-            }
-            
+    	    $reflector = midcom_helper_reflector_tree::get($result);
+	        $icon = $reflector->get_object_icon($result);
+			$label = resolve_label($result);
+
             if (!isset($persons[$result->metadata->creator]))
             {
                 $persons[$result->metadata->creator] = $_MIDCOM->auth->get_user($result->metadata->creator);

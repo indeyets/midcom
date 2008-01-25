@@ -77,10 +77,32 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
 
     function _search($term)
     {
+        $dummy_objects = Array();
         $type_class = $this->type;
-        $dummy_object = new $type_class();
-        $type_fields = array_keys(get_object_vars($dummy_object));
-        $reflector = new midgard_reflection_property($type_class);
+        $dummy_type_object = new $type_class();
+
+        $dummy_objects[] =& $dummy_type_object;
+        $resolver = new midcom_helper_reflector_tree($dummy_type_object);
+		$child_classes = $resolver->get_child_classes();
+		foreach ($child_classes as $child_class)
+		{
+		    $dummy_objects[] = new $child_class();
+		}
+
+		$search_results = Array();
+		foreach ($dummy_objects as $dummy_object)
+		{
+			$results = $this->_search_type_qb($dummy_object, $term);
+			$search_results = array_merge($search_results, $results);
+		}
+		return $search_results;
+    }
+
+	function _search_type_qb($dummy_object, $term)
+	{
+		$object_class = get_class($dummy_object);
+	    $type_fields = array_keys(get_object_vars($dummy_object));
+        $reflector = new midgard_reflection_property($object_class);
         unset($type_fields['metadata']);
 
         $qb = $this->_prepare_qb($dummy_object);
@@ -104,14 +126,18 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
             }
         }
         $qb->end_group();
-
         if (!$constraints)
         {
-            return null;
+            return Array();
         }
 
+        if (!$this->_config->get('show_sg0'))
+		{
+		    $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+		}
+
         return $qb->execute();
-    }
+	}
 
     function _find_component()
     {

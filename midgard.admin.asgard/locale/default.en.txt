@@ -607,3 +607,6 @@ XML
 Show sitegroup 0 objects in navigation
 ---STRINGEND
 
+---STRING search
+Search
+---STRINGEND

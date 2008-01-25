@@ -551,3 +551,11 @@ Diese Revision (%s) anzeigen
 Version %s von %s
 ---STRINGEND
 
+
+---STRING show sg0 objects in navigation
+Objekte der Sitegroup 0 in der Navigation anzeigen
+---STRINGEND
+
+---STRING search
+Suche
+---STRINGEND
