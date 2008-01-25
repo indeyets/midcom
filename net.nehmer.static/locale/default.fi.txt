@@ -111,6 +111,10 @@ Koko
 Tyyppi
 ---STRINGEND
 
+---STRING from
+Kansiosta
+---STRINGEND
+
 ---STRING if you want to delete the original article, <a href="%s">click here</a>
 Jos haluat poistaa alkuperäisen artikkelin, <a href="%s">klikkaa tästä</a>.
 ---STRINGEND
@@ -187,7 +191,7 @@ Näytä artikkeli
 Onko kansio näkyvissä
 ---STRINGEND
 
----STRING from
-Kansiosta
+---STRING hide articles from navigation
+Piilota artikkelit navigaatiosta
 ---STRINGEND
 

@@ -191,3 +191,7 @@ View Article
 Should the topic be visible
 ---STRINGEND
 
+---STRING hide articles from navigation
+Hide articles from navigation
+---STRINGEND
+

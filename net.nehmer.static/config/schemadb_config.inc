@@ -103,7 +103,7 @@
         ),
         'hide_navigation' => array
         (
-            'title' => 'hide navigation',
+            'title' => 'hide articles from navigation',
             'storage' => array
             (
                 'location' => 'configuration',
