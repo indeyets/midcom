@@ -101,6 +101,27 @@
             ),
             'widget' => 'select',
         ),
+        'hide_navigation' => array
+        (
+            'title' => 'hide navigation',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nehmer.static',
+                'name' => 'hide_navigation',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
         
         'ajax_enable' => array
         (

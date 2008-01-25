@@ -79,7 +79,6 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
         (
             'handler' => array ('midcom_helper_dm2config_config', 'config'),
             'fixed_args' => array ('config'),
-            'fixed_args' => Array('config'),
         );
 
 
@@ -248,12 +247,10 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
         {
             $GLOBALS['net_nehmer_static_schemadbs'][$key] = $this->_l10n->get($description);
         }
-            
 
         $this->_populate_node_toolbar();
 
         return true;
     }
 }
-
 ?>
