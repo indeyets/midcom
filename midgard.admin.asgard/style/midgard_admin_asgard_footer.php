@@ -1,6 +1,10 @@
                     </div>
                     <div id="object_metadata">
                         <?php
+                        if (isset($data['object']->guid))
+                        {
+                            echo "GUID: {$data['object']->guid}, ID: {$data['object']->id}.\n";
+                        }
                         $view_metadata = $_MIDCOM->metadata->get_view_metadata();
                         if ($view_metadata)
                         {
@@ -15,7 +19,7 @@
                                 echo sprintf($_MIDCOM->i18n->get_string('last edited by %s on %s (revision %s)', 'midgard.admin.asgard'), "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$editor->guid}/\">$editor->name</a>", strftime('%c', $edited), $revision) . "\n";
                             }
                         }
-                        
+
                         if (   isset($data['object'])
                             && isset($data['object']->lang)
                             && !is_a($data['object'], 'midgard_host'))
@@ -30,7 +34,7 @@
                                     $object_lang_ids[] = $object_lang->id;
                                 }
                             }
-    
+
                             $lang_qb = midcom_baseclasses_database_language::new_query_builder();
                             $lang_qb->add_order('name');
                             $langs = $lang_qb->execute();
@@ -43,13 +47,13 @@
                                 {
                                     $class_extra = ' exists';
                                 }
-                                
+
                                 $selected = '';
                                 if ($lang->code == $data['language_code'])
                                 {
                                     $selected = ' selected="selected"';
                                 }
-                                
+
                                 echo "    <option value=\"{$lang->code}\" class=\"{$lang->code}{$class_extra}\"{$selected}>{$lang->name}</option>\n";
                             }
                             echo "</select>\n";
@@ -61,7 +65,7 @@
         </div>
         <div id="siteinfo">
             <span class="copyrights">
-                <img src="<?php echo MIDCOM_STATIC_URL; ?>/Javascript_protoToolkit/images/midgard-logo.png" alt="M" /> 
+                <img src="<?php echo MIDCOM_STATIC_URL; ?>/Javascript_protoToolkit/images/midgard-logo.png" alt="M" />
                 <strong>Asgard for Midgard <?php echo substr(mgd_version(), 0, 3); ?></strong>.
                 Copyright &copy; 1998 - <?php echo date('Y'); ?> <a href="http://www.midgard-project.org/">The Midgard Project</a>.
                 Midgard is a <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under
