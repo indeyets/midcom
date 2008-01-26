@@ -78,7 +78,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
 
         midgard_admin_asgard_plugin::get_common_toolbar($this->_request_data);
     }
-    
+
     function _prepare_breadcrumbs($handler_id)
     {
         // Set the breadcrumb data
@@ -103,7 +103,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             MIDCOM_NAV_URL => "__mfa/asgard/components/configuration/{$this->_request_data['name']}/",
             MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
         );
-        
+
         if ($handler_id == '____mfa-asgard-components_configuration_edit')
         {
             $tmp[] = array
@@ -112,7 +112,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
                 MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('edit', 'midcom'),
             );
         }
-        
+
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 
@@ -251,6 +251,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
         $this->_prepare_toolbar($handler_id);
         $_MIDCOM->set_pagetitle($data['view_title']);
         $this->_prepare_breadcrumbs($handler_id);
+
         return true;
     }
 
@@ -301,17 +302,18 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
 
                 if ($value === true)
                 {
-                    $result = "<img src='" . MIDCOM_STATIC_URL . "/stock-icons/16x16/stock_mark.png'/>";;
+                    $result = "<img src='" . MIDCOM_STATIC_URL . "/stock-icons/16x16/stock_mark.png'/>";
                 }
 
                 break;
             case 'array':
-                $content = '';
+                $content = '<ul>';
                 foreach ($value as $key => $val)
                 {
-                    $content .= "<li>{$key} => ".$this->_detect($val).",</li>";
+                    $content .= "<li>{$key} => " . $this->_detect($val) . ",</li>\n";
                 }
-                $result = "<ul>array<br />(<br />{$content}),</ul>";
+                $content .= '</ul>';
+                $result = "<ul>\n<li>array</li>\n<li>(\n{$content}\n)</li>\n</ul>\n";
                 break;
             case 'object':
                 $result = '<strong>Object</strong>';
