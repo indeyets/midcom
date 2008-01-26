@@ -260,6 +260,16 @@ class midcom_debug
     }
 
     /**
+     * Log a message with warning loglevel
+     *
+     * @param string $message	The message to be logged
+     */
+    static function log_warn($message)
+    {
+        $GLOBALS['midcom_debugger']->log($message, MIDCOM_LOG_WARN);	
+    }
+
+    /**
      * Dump a variable (by reference)
      *
      * @param string $message	The message to be logged
