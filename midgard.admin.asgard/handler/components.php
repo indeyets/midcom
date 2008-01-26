@@ -30,9 +30,19 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->skip_page_style = true;
 
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/components.css',
+            )
+        );
+
         $_MIDCOM->load_library('midcom.helper.datamanager2');
     }
-    
+
     function _load_component_data($name, $manifest)
     {
         $component_array = array();
@@ -57,9 +67,9 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
         {
             $component_array['description'] = '';
         }
-        
+
         $component_array['version'] = $manifest->_raw_data['version'];
-        
+
         $component_array['maintainers'] = array();
         if (isset($manifest->_raw_data['package.xml']['maintainers']))
         {
@@ -179,7 +189,7 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
 
         midgard_admin_asgard_plugin::asgard_footer();
     }
-    
+
     /**
      * Component display
      *
@@ -196,9 +206,9 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Component '{$args[0]}' not installed.");
             // This will exit.
         }
-        
+
         $data['component_data'] = $this->_load_component_data($data['component'], $_MIDCOM->componentloader->manifests[$data['component']]);
-    
+
         $data['view_title'] = $data['component_data']['title'];
         $_MIDCOM->set_pagetitle($data['view_title']);
 
@@ -246,7 +256,7 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
     function _show_component($handler_id, &$data)
     {
         midgard_admin_asgard_plugin::asgard_header();
-        
+
         midcom_show_style('midgard_admin_asgard_components_component');
 
         midgard_admin_asgard_plugin::asgard_footer();
