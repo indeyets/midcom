@@ -440,7 +440,7 @@ Sie haben das Projekt abonniert
 ---STRINGEND
 
 ---STRING reporting %d hours to task %s failed, reason %s
-Melden von %d Arbeitsstunden für Task %s ist fehlgeschlagen, Grund: %s
+Melden von %d Arbeitsstunden für Task %s ist fehlgeschlagen, Ursache: %s
 ---STRINGEND
 
 ---STRING successfully reported %d hours to task %s

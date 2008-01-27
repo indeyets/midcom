@@ -184,19 +184,19 @@ Aufgeklappte Liste
 ---STRINGEND
 
 ---STRING failed purging %s, reason %s
-%s konnte nicht entfernt werden, Grund: %s
+%s konnte nicht entfernt werden, Ursache: %s
 ---STRINGEND
 
 ---STRING failed purging attachment %s => %s, reason %s
-Attachment %s => %s konnte nicht entfernt werden, Grund: %s
+Attachment %s => %s konnte nicht entfernt werden, Ursache: %s
 ---STRINGEND
 
 ---STRING failed undeleting %s, reason %s
-%s konnte nicht wiederhergestellt werden, Grund: %s
+%s konnte nicht wiederhergestellt werden, Ursache: %s
 ---STRINGEND
 
 ---STRING failed undeleting attachment %s, reason %s
-Attachment %s konnte nicht wiederhergestellt werden, Grund: %s
+Attachment %s konnte nicht wiederhergestellt werden, Ursache: %s
 ---STRINGEND
 
 ---STRING filter
@@ -516,7 +516,7 @@ Diese Revision wiederherstellen
 ---STRINGEND
 
 ---STRING restore to version %s failed, reason %s
-Die Wiederherstellung der Revision %s ist fehlgeschlagen, Grund: %s
+Die Wiederherstellung der Revision %s ist fehlgeschlagen, Ursache: %s
 ---STRINGEND
 
 ---STRING restore to version %s successful

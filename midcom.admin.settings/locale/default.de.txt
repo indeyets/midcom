@@ -116,7 +116,7 @@ Standard (%s)
 ---STRINGEND
 
 ---STRING failed to save settings, reason %s
-Einstellungen konnten nicht gespeichert werden, Grund: %s
+Einstellungen konnten nicht gespeichert werden, Ursache: %s
 ---STRINGEND
 
 ---STRING host configuration

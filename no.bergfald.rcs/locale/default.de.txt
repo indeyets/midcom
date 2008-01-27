@@ -36,7 +36,7 @@ Diese Revision wiederherstellen
 ---STRINGEND
 
 ---STRING restore to version %s failed, reason %s
-Die Wiederherstellung der Revision %s ist fehlgeschlagen, Grund: %s
+Die Wiederherstellung der Revision %s ist fehlgeschlagen, Ursache: %s
 ---STRINGEND
 
 ---STRING restore to version %s successful

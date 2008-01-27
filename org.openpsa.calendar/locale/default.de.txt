@@ -72,7 +72,7 @@ Termine am %s
 ---STRINGEND
 
 ---STRING failed to delete event, reason
-Termin konnte nicht gelöscht werden. Grund:
+Termin konnte nicht gelöscht werden. Ursache:
 ---STRINGEND
 
 ---STRING go to
