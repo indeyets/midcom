@@ -1,8 +1,11 @@
 <form method="get" class="midcom_admin_user_search">
     <label>
         <span><?php echo $_MIDCOM->i18n->get_string('search person', 'midcom.admin.user'); ?></span>
-        <input type="text" name="midcom_admin_user_search" value="<?php if (isset($_REQUEST['midcom_admin_user_search'])) { echo $_REQUEST['midcom_admin_user_search']; } ?>" />
+        <input type="text" id="midcom_admin_user_search" name="midcom_admin_user_search" value="<?php if (isset($_REQUEST['midcom_admin_user_search'])) { echo $_REQUEST['midcom_admin_user_search']; } ?>" />
     </label>
+	<script type="text/javascript">
+	document.getElementById('midcom_admin_user_search').focus();
+	</script>
     <input type="submit" value="<?php echo $_MIDCOM->i18n->get_string('go', 'midcom.admin.user'); ?>" />
     <div class="helptext">
         <?php
