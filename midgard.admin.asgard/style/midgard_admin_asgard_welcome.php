@@ -15,7 +15,7 @@ $revised_after_choices[$date] = $_MIDCOM->i18n->get_string('1 month', 'midgard.a
 ?>
 
 <div id="latest_objects">
-    
+
     <div class="filter">
         <form name="latest_objects_filter" method="get">
             <div class="revised_after">
@@ -38,13 +38,13 @@ $revised_after_choices[$date] = $_MIDCOM->i18n->get_string('1 month', 'midgard.a
             <input type="submit" name="filter" value="<?php echo $_MIDCOM->i18n->get_string('filter', 'midgard.admin.asgard'); ?>" />
         </form>
     </div>
-    
+
 <?php
 if (count($data['revised']) > 0)
 {
     $revisors = array();
     echo "    <form name=\"latest_objects_mass_action\" method=\"post\">";
-    echo "<table class=\"results\">\n";
+    echo "<table class=\"results\" id =\"search_results\">\n";
     echo "    <thead>\n";
     echo "        <tr>\n";
     echo "            <th class=\"selection\">&nbsp;</th>\n";
@@ -52,12 +52,12 @@ if (count($data['revised']) > 0)
     echo "            <th class=\"title\">" . $_MIDCOM->i18n->get_string('title', 'midcom') . "</th>\n";
     echo "            <th class=\"revised\">" . $_MIDCOM->i18n->get_string('revised', 'midcom.admin.folder') . "</th>\n";
     echo "            <th class=\"revisor\">" . $_MIDCOM->i18n->get_string('revisor', 'midcom.admin.folder') . "</th>\n";
-    echo "            <th class=\"approved\">" . $_MIDCOM->i18n->get_string('approved', 'midcom.admin.folder') . "</th>\n";
+    echo "            <th class=\"approved\">" . $_MIDCOM->i18n->get_string('approved', 'midcom') . "</th>\n";
     echo "            <th class=\"revision\">" . $_MIDCOM->i18n->get_string('revision', 'midcom.admin.folder') . "</th>\n";
     echo "        </tr>\n";
     echo "    </thead>\n";
     echo "    <tbody>\n";
-    
+
     foreach ($data['revised'] as $object)
     {
         $class = get_class($object);
@@ -72,12 +72,12 @@ if (count($data['revised']) > 0)
         {
             $title = '[' . $_MIDCOM->i18n->get_string('no title', 'midgard.admin.asgard') . ']';
         }
-        
+
         if (!isset($revisors[$object->metadata->revisor]))
         {
             $revisors[$object->metadata->revisor] = $_MIDCOM->auth->get_user($object->metadata->revisor);
         }
-        
+
         echo "        <tr>\n";
         echo "            <td class=\"selection\"><input type=\"checkbox\" name=\"selections[]\" value=\"{$object->guid}\" /></td>\n";
         //{$object->metadata->revised}_{$object->guid}_{$object->metadata->revision}
@@ -89,9 +89,18 @@ if (count($data['revised']) > 0)
         echo "            <td class=\"revision\">{$object->metadata->revision}</td>\n";
         echo "        </tr>\n";
     }
-    
+
     echo "    </tbody>\n";
     echo "</table>\n";
+    echo "<script type=\"text/javascript\">\n";
+    echo "        // <![CDATA[\n";
+    echo "            \$j('#search_results').tablesorter(\n";
+    echo "            {\n ";
+    echo "                widgets: ['zebra'],";
+    echo "                sortList: [[0,0]],\n";
+    echo "            });\n";
+    echo "        // ]]>\n";
+    echo "    </script>\n";
 ?>
         <div class="actions">
             <div class="action">
@@ -101,10 +110,10 @@ if (count($data['revised']) > 0)
                     <option value="approve"><?php echo $_MIDCOM->i18n->get_string('approve', 'midcom'); ?></option>
                 </select>
             </div>
-            <input type="submit" name="execute_mass_action" value="<?php echo $_MIDCOM->i18n->get_string('apply to selected', 'midgard.admin.asgard'); ?>" />    
+            <input type="submit" name="execute_mass_action" value="<?php echo $_MIDCOM->i18n->get_string('apply to selected', 'midgard.admin.asgard'); ?>" />
         </div>
     </form>
-    
+
 <?php
 }
 ?>

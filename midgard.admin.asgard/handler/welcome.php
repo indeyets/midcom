@@ -148,6 +148,16 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
         {
             $data['revised_after'] = date('Y-m-d H:i:s\Z', $_REQUEST['revised_after']);
             $data['revised'] = $this->_list_revised($data['revised_after']);
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.tablesorter.js');
+            $_MIDCOM->add_link_head
+            (
+                array
+                (
+                    'rel' => 'stylesheet',
+                    'type' => 'text/css',
+                    'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/searchresults.css',
+                )
+            );
         }
         // else
         // {
