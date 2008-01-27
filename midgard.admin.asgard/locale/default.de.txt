@@ -87,6 +87,10 @@ Dateiname
 MIME-Typ
 ---STRINGEND
 
+---STRING navigation options
+Navigationseinstellungen
+---STRINGEND
+
 ---STRING cascading style sheet
 Cascading Style Sheet
 ---STRINGEND
@@ -107,12 +111,28 @@ XML
 HTML
 ---STRINGEND
 
+---STRING edit configuration for %s
+Konfiguration von Komponente %s bearbeiten
+---STRINGEND
+
+---STRING edit configuration for %s folder %s
+Konfiguration von Komponente %s im Ordner %s bearbeiten
+---STRINGEND
+
 ---STRING edit file %s
 Datei %s bearbeiten
 ---STRINGEND
 
 ---STRING edit text file
 Text-Datei bearbeiten
+---STRINGEND
+
+---STRING editor options
+Editor-Optionen
+---STRINGEND
+
+---STRING enable quicklinks
+Quicklinks aktivieren
 ---STRINGEND
 
 ---STRING file %s deleted
@@ -169,6 +189,18 @@ Gelöscht von
 
 ---STRING deleted on
 Gelöscht am
+---STRINGEND
+
+---STRING differences between %s and %s
+Unterschiede zwischen %s und %s
+---STRINGEND
+
+---STRING differences between versions %s and %s
+Unterschiede zwischen Versionen %s und %s
+---STRINGEND
+
+---STRING dropdown list
+Dropdown-Liste
 ---STRINGEND
 
 ---STRING edit %s %s
@@ -275,6 +307,10 @@ Global
 Lokal
 ---STRINGEND
 
+---STRING localisation settings
+Spracheinstellungen
+---STRINGEND
+
 ---STRING midgard objects
 Midgard-Objekte
 ---STRINGEND
@@ -319,12 +355,12 @@ Navigationsbreite
 Navigationsbreite (in Pixeln)
 ---STRINGEND
 
----STRING no title
-Kein Titel
+---STRING no changes in content
+Keine Änderungen im Inhalt
 ---STRINGEND
 
----STRING not approved
-Freigegeben
+---STRING no title
+Kein Titel
 ---STRINGEND
 
 ---STRING not approved
@@ -397,6 +433,10 @@ Dies ist ein Midgard CMS Core-Typ.
 
 ---STRING this type belongs to %s component
 Dieser Typ gehört zur Komponente %s
+---STRINGEND
+
+---STRING title
+Titel
 ---STRINGEND
 
 ---STRING toolbar mode
@@ -523,6 +563,10 @@ Die Wiederherstellung der Revision %s ist fehlgeschlagen, Ursache: %s
 Die Wiederherstellung der Version %s war erfolgreich
 ---STRINGEND
 
+---STRING restore version %s
+Version %s wiederherstellen
+---STRINGEND
+
 ---STRING revision
 Revision
 ---STRINGEND
@@ -558,7 +602,6 @@ Diese Revision (%s) anzeigen
 ---STRING viewing version %s of %s
 Version %s von %s
 ---STRINGEND
-
 
 ---STRING show sg0 objects in navigation
 Objekte der Sitegroup 0 in der Navigation anzeigen
