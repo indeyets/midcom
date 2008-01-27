@@ -19,7 +19,7 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
      * @access protected
      */
     var $subscription;
-    
+
     /**
      * Possible processing error.
      *
@@ -36,12 +36,12 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
     function midcom_helper_replicator_transporter($subscription)
     {
          $this->_component = 'midcom.helper.replicator';
-         
+
          $this->subscription = $subscription;
-         
+
          parent::midcom_baseclasses_components_purecode();
     }
-    
+
     /**
      * This is a static factory method which lets you dynamically create transporter instances.
      * It takes care of loading the required class files. The returned instances will be created
@@ -59,7 +59,7 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
     {
         $type = $subscription->transporter;
         $filename = MIDCOM_ROOT . "/midcom/helper/replicator/transporter/{$type}.php";
-        
+
         if (!file_exists($filename))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Requested transporter file {$type} is not installed.");
@@ -67,13 +67,13 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
         }
         require_once($filename);
 
-        $classname = "midcom_helper_replicator_transporter_{$type}";        
+        $classname = "midcom_helper_replicator_transporter_{$type}";
         if (!class_exists($classname))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Requested transporter class {$type} is not installed.");
             // This will exit.
         }
-        
+
         /**
          * Php 4.4.1 does not allow you to return a reference to an expression.
          * http://www.php.net/release_4_4_0.php
@@ -81,14 +81,14 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
         $class = new $classname($subscription);
         return $class;
     }
-    
+
     function list_transports()
     {
         return array
         (
             'email' => $_MIDCOM->i18n->get_string('email transport', 'midcom.helper.replicator'),
             'archive' => $_MIDCOM->i18n->get_string('file archive transport', 'midcom.helper.replicator'),
-            'http' => $_MIDCOM->i18n->get_string('HTTP POST transport', 'midcom.helper.replicator'),
+            'http' => $_MIDCOM->i18n->get_string('http post transport', 'midcom.helper.replicator'),
         );
     }
 
@@ -115,7 +115,7 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
         debug_pop();
         return false;
     }
-    
+
     /**
      * This method allows transporters to tell what they're doing in the subscription list.
      */

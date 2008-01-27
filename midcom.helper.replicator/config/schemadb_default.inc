@@ -39,7 +39,7 @@
         ),
         'filters' => Array
         (
-            'title' => 'XML filters (for advanced users only)',
+            'title' => 'xml filters',
             'storage' => 'filtersSerialized',
             'type' => 'text',
             'widget' => 'textarea',
@@ -56,7 +56,7 @@
                 'options' => midcom_helper_replicator_transporter::list_transports(),
             ),
             'widget' => 'select',
-        ), 
+        ),
     )
 ),
 
@@ -101,7 +101,7 @@
         ),
         'filters' => Array
         (
-            'title' => 'XML filters (for advanced users only)',
+            'title' => 'xml filters',
             'storage' => 'filtersSerialized',
             'type' => 'text',
             'widget' => 'textarea',
@@ -118,7 +118,7 @@
                 'options' => midcom_helper_replicator_transporter::list_transports(),
             ),
             'widget' => 'select',
-        ), 
+        ),
     )
 ),
 
@@ -163,7 +163,7 @@
         ),
         'filters' => Array
         (
-            'title' => 'XML filters (for advanced users only)',
+            'title' => 'xml filters',
             'storage' => 'filtersSerialized',
             'type' => 'text',
             'widget' => 'textarea',
@@ -180,7 +180,7 @@
                 'options' => midcom_helper_replicator_transporter::list_transports(),
             ),
             'widget' => 'select',
-        ), 
+        ),
     )
 ),
 

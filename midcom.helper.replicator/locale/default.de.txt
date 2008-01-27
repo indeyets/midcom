@@ -1,70 +1,70 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE de
 
 ---STRING POST to %s
-HTTP POST to <code>%s</code>
+HTTP POST nach <code>%s</code>
 ---STRINGEND
 
 ---STRING URL to POST to
-URL to POST data to
+Ziel-URL für POST-Daten
 ---STRINGEND
 
 ---STRING archive file path
-Archive file path
+Pfad zur Archivdatei
 ---STRINGEND
 
 ---STRING archive to %s
-Archive to <code>%s</code>
+Nach <code>%s</code> archivieren
 ---STRINGEND
 
 ---STRING archive type
-Archive type
+Archiv-Typ
 ---STRINGEND
 
 ---STRING automatic
-Automatic
+Automatisch
 ---STRINGEND
 
 ---STRING disabled
-Disabled
+Deaktiviert
 ---STRINGEND
 
 ---STRING edit %s
-Edit %s
+%s bearbeiten
 ---STRINGEND
 
 ---STRING email transport
-Email transport
+E-Mail
 ---STRINGEND
 
 ---STRING exported
-Exported from database
+Exportiert aus Datenbank
 ---STRINGEND
 
 ---STRING exporter
-Exporting type
+Typ exportieren
 ---STRINGEND
 
 ---STRING file archive transport
-File archive transport
+Dateiarchiv
 ---STRINGEND
 
 ---STRING from log file
-From log file
+Aus der Logdatei
 ---STRINGEND
 
 ---STRING imported
-Imported to database
+Importiert aus Datenbank
 ---STRINGEND
 
 ---STRING manage replication
-Manage replication
+Replikation verwalten
 ---STRINGEND
 
 ---STRING manual
-Manual
+von Hand
 ---STRINGEND
 
 ---STRING mirroring subscription
@@ -72,31 +72,31 @@ Mirror
 ---STRINGEND
 
 ---STRING never
-Never
+Nie
 ---STRINGEND
 
 ---STRING overwrite existing file
-Overwrite existing file
+Bestehende Datei überschreiben
 ---STRINGEND
 
 ---STRING replication information
-Replication information
+Replikations-Informationen
 ---STRINGEND
 
 ---STRING replication information for %s
-Replication information for %s
+Replikations-Informationen für %s
 ---STRINGEND
 
 ---STRING replication queue is stored to %s
-Replication queue is stored to %s
+Die Replikations-Warteschlange wird unter %s gespeichert
 ---STRINGEND
 
 ---STRING replication subscriptions
-Replication pipelines
+Replikations-Pipelines
 ---STRINGEND
 
 ---STRING staging2live subscription
-Staging/live
+Staging/Live
 ---STRINGEND
 
 ---STRING status
@@ -108,29 +108,29 @@ Pipeline
 ---STRINGEND
 
 ---STRING tar.bz2 archive
-tar.bz2 archive
+tar.bz2-Archiv
 ---STRINGEND
 
 ---STRING transporter
-Transporting type
+Transport-Typ
 ---STRINGEND
 
 ---STRING use force when importing
-Force changes to be imported
+Import von Änderungen erzwingen
 ---STRINGEND
 
----STRING xml filters
-XML filters (for advanced users only)
+---STRING XML filters
+XML-Filter (für fortgeschrittene Benutzer)
 ---STRINGEND
 
 ---STRING http post transport
-HTTP POST transport
+HTTP POST
 ---STRINGEND
 
 ---STRING mirroring subscription
-Mirroring Subscription
+Mirror-Abonnement
 ---STRINGEND
 
 ---STRING staging2live subscription with type filter
-Staging2live subscription with type filter
+Staging/Live-Abonnement mit Typfilter
 ---STRINGEND
