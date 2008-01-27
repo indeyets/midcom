@@ -14,50 +14,132 @@
  */
 class midcom_org_openpsa_event extends __midcom_org_openpsa_event
 {
-    var $participants = array(); //list of participants (stored as eventmembers, referenced here for easier access)
-    var $resources = array();    //like $participants but for resources.
-    var $old_participants = array(); //as above, for diffs
-    var $old_resources = array();    //ditto
+    /**
+     * list of participants
+     * 
+     * (stored as eventmembers, referenced here for easier access)
+     *
+     * @var array
+     */
+    var $participants = array(); 
 
-        /* Tasks as resources are not handled yet at all but will be their own object similar to eventmember and we use similar cache strategy
-      var $task_resources; //array, keys are GUIDs of tasks values true
-        */
+    /**
+     * like $participants but for resources.
+     *
+     * @var array
+     */
+    var $resources = array();
+
+    /**
+     * as above, for diffs
+     *
+     * @var array
+     */
+    var $old_participants = array();
+
+    /**
+     * ditto
+     *
+     * @var array
+     */
+    var $old_resources = array();
+
+    /* Tasks as resources are not handled yet at all but will be their own 
+     * object similar to eventmember and we use similar cache strategy
+     * var $task_resources; //array, keys are GUIDs of tasks values true
+     */
+    
     /* Skip repeat handling for now
-      var $repeat_rule;
-      var $repeat_prev;  //GUID, For repeating events, previous event
-      var $repeat_next;  //GUID, For repeating events, next event
-      var $repeat_rule;  //Array, describes the repeat rules:
-    */
-/*                                * = mandatory key
-                                  * ['type'], string: daily,weekly,monthly_by_dom
-                                  * ['interval'], int: 1 means every day/week/monthday
-                                  * ['from'], int: timestamp of date from which repeating starts (1 second after midnight)
-                                    ['to'], int: timestamp of date to which the repeating ends (1 second before midnight)
-                                    ['num'], int: how many occurences of repeat fit between from and to (mind the interval!)
-                                    ['days'], array: keys are weekday numbers, values TRUE/FALSE
+     * var $repeat_rule;
+     * var $repeat_prev;  //GUID, For repeating events, previous event
+     * var $repeat_next;  //GUID, For repeating events, next event
+     * var $repeat_rule;  //Array, describes the repeat rules:
+     */
 
-                                    It's mandatory to have 'to' or 'num' defined, the other can be calculated from the other,
-                                    if both are defined 'to' has precedence.
-*/
+    /*
+     * * = mandatory key
+     * * ['type'], string: daily,weekly,monthly_by_dom
+     * * ['interval'], int: 1 means every day/week/monthday
+     * * ['from'], int: timestamp of date from which repeating starts (1 second after midnight)
+     *   ['to'], int: timestamp of date to which the repeating ends (1 second before midnight)
+     *   ['num'], int: how many occurences of repeat fit between from and to (mind the interval!)
+     *   ['days'], array: keys are weekday numbers, values TRUE/FALSE
+     *
+     * It's mandatory to have 'to' or 'num' defined, the other can be calculated from the other,
+     * if both are defined 'to' has precedence.
+     */
 
-    var $externalGuid = '';    //vCalendar (or similar external source) GUID for this event (for vCalendar imports)
+    /**
+     * vCalendar (or similar external source) GUID for this event 
+     *
+     * (for vCalendar imports)
+     *
+     * @var string
+     */
+    var $externalGuid = '';    
     var $old_externalGuid = '';    //as above, for diffs
 
     var $vCal_store = array(); //some vCal specific stuff
-            /*
-                        * unserialized from vCalSerialized
-                        * not used for anything yet
-            */
+    /*
+     * unserialized from vCalSerialized
+     * not used for anything yet
+     */
 
-    var $busy_em = false; //In case of busy eventmembers this is an array
-    var $busy_er = false; // In case of busy event resources this is an array
-    var $_compatibility = array(); //Some compatibility switches, mainly for vCal imports
-    var $_carried_participants_obj = array(); //Participants that were not added or removed in update
-    var $_carried_resources_obj = array(); //Resources that were not added or removed in update
+    /**
+     * In case of busy eventmembers this is an array
+     *
+     * @var mixed
+     */
+    var $busy_em = false;
 
-    var $send_notify = true; //Send notifications to participants of the event
-    var $send_notify_me = false; //Send notification also to current user
-    var $notify_force_add = false; //Used to work around DM creation features to get correct notification type out
+    /**
+     * In case of busy event resources this is an array
+     *
+     * @var mixed
+     */
+    var $busy_er = false; 
+
+    /**
+     * Some compatibility switches, mainly for vCal imports
+     *
+     * @var array
+     */
+    var $_compatibility = array();
+
+    /**
+     * Participants that were not added or removed in update
+     *
+     * @var array
+     */
+    var $_carried_participants_obj = array();
+
+    /**
+     * Resources that were not added or removed in update
+     *
+     * @var array
+     */
+    var $_carried_resources_obj = array();
+
+    /**
+     * Send notifications to participants of the event
+     *
+     * @var boolean
+     */
+    var $send_notify = true;
+
+    /**
+     * Send notification also to current user
+     *
+     * @var boolean
+     */
+    var $send_notify_me = false;
+
+    /**
+     * Used to work around DM creation features to get correct notification type out
+     *
+     * @var boolean
+     */
+    var $notify_force_add = false;
     var $search_relatedtos = true;
 
     function __construct($id = null)
@@ -152,7 +234,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     }
 
     /**
-     * Check wheter current user can edit this event
+     * Check whether current user can edit this event
      *
      * @todo Deprecate this in favor of direct ACL calls
      */
