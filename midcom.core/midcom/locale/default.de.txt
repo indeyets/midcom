@@ -47,6 +47,10 @@ Zugriff verweigert: Sie haben keinen Schreibzugriff.
 Zugriff verweigert. Sie müssen am System angemeldet sein.
 ---STRINGEND
 
+---STRING access type
+Zugriffsart 
+---STRINGEND
+
 ---STRING advanced schema and data settings
 Fortgeschrittene Einstellungen zu Schema und Daten
 ---STRINGEND
@@ -115,6 +119,10 @@ nach unten
 nach Name
 ---STRINGEND
 
+---STRING calendar
+nach Erstellungsdatum
+---STRINGEND
+
 ---STRING cancel
 Abbrechen
 ---STRINGEND
@@ -159,6 +167,10 @@ Anlegen
 Neue Seite erstellen
 ---STRINGEND
 
+---STRING created
+nach Erstellungsdatum (älteste zuerst)
+---STRINGEND
+
 ---STRING created on
 Erstellt um
 ---STRINGEND
@@ -197,6 +209,10 @@ runter
 
 ---STRING edit
 Bearbeiten
+---STRINGEND
+
+---STRING edit %s
+%s bearbeiten
 ---STRINGEND
 
 ---STRING edit design
@@ -383,6 +399,10 @@ Seite
 Seite %d von %d
 ---STRINGEND
 
+---STRING parameters
+Parameter
+---STRINGEND
+
 ---STRING password
 Passwort
 ---STRINGEND
@@ -417,6 +437,26 @@ Ablehnen
 
 ---STRING reset
 Zurücksetzen
+---STRINGEND
+
+---STRING reverse calendar
+nach Erstellungsdatum (umgekehrt)
+---STRINGEND
+
+---STRING reverse created
+nach Erstellungsdatum (neueste zuerst)
+---STRINGEND
+
+---STRING reverse name
+nach Namen (umgekehrt)
+---STRINGEND
+
+---STRING reverse revised
+nach letztem Änderungsdatum (umgekehrt)
+---STRINGEND
+
+---STRING reverse score
+nach Score (umgekehrt)
 ---STRINGEND
 
 ---STRING revert to default setting
@@ -479,6 +519,10 @@ Zeitsteuerung
 Schema Datenbank
 ---STRINGEND
 
+---STRING score
+nach Score
+---STRINGEND
+
 ---STRING search
 Suche
 ---STRINGEND
@@ -509,6 +553,46 @@ Wird bis %s angezeigt
 
 ---STRING sitegroup
 Sitegroup
+---STRINGEND
+
+---STRING sort_by_calendar
+nach Kalendar sortieren
+---STRINGEND
+
+---STRING sort_by_name
+nach Namen sortieren
+---STRINGEND
+
+---STRING sort_by_reverse_calendar
+nach Kalendar sortieren (umgekehrt)
+---STRINGEND
+
+---STRING sort_by_reverse_name
+nach Namen sortieren (umgekehrt)
+---STRINGEND
+
+---STRING sort_by_reverse_revised
+nach letztem Änderungsdatum sortieren (umgekehrt)
+---STRINGEND
+
+---STRING sort_by_reverse_score
+nach Score sortieren (umgekehrt)
+---STRINGEND
+
+---STRING sort_by_revised
+nach letztem Änderungsdatum sortieren
+---STRINGEND
+
+---STRING sort_by_score
+nach Score sortieren
+---STRINGEND
+
+---STRING sort_leaves
+Komponenten-Sortierreihenfolge stabil halten
+---STRINGEND
+
+---STRING sort_order
+Wie sollen Leaves sortiert werden?
 ---STRINGEND
 
 ---STRING sorting position
@@ -659,3 +743,10 @@ Staging2live-System
 Tags
 ---STRINGEND
 
+---STRING country
+Land
+---STRINGEND
+
+---STRING url
+URL
+---STRINGEND
