@@ -247,6 +247,10 @@ Filename
 Filter
 ---STRINGEND
 
+---STRING choose action
+Choose action
+---STRINGEND
+
 ---STRING floating freely
 Floating freely
 ---STRINGEND

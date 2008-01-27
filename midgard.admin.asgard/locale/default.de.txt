@@ -203,6 +203,10 @@ Attachment %s konnte nicht wiederhergestellt werden, Grund: %s
 Filtern
 ---STRINGEND
 
+---STRING choose action
+Aktion auswählen
+---STRINGEND
+
 ---STRING floating freely
 Freischwebend
 ---STRINGEND
