@@ -34,6 +34,7 @@
         'title' => '__HOSTTITLE__',
         'component' => 'net.nehmer.static',
         'create_index' => true,
+        'use_inherited_style' => false,
         'style_inherit' => true,
         'acl' => array
         (
