@@ -190,7 +190,7 @@ class net_nehmer_publications_query extends midcom_baseclasses_components_pureco
     }
 
     /**
-     * Executes a ACL aware query. The code will branch between categorized and uncategorized
+     * Executes an ACL aware query. The code will branch between categorized and uncategorized
      * queries according to the $_categories member. See the _categorized_* methods for details.
      *
      * In case of uncategorized queries, the result of the QB is returned directly without
@@ -213,7 +213,7 @@ class net_nehmer_publications_query extends midcom_baseclasses_components_pureco
     }
 
     /**
-     * Executes a ACL unaware query. The code will branch between categorized and uncategorized
+     * Executes an ACL unaware query. The code will branch between categorized and uncategorized
      * queries according to the $_categories member. See the _categorized_(unchecked_)* methods
      * for details.
      *

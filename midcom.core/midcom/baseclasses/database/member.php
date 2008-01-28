@@ -16,7 +16,7 @@
  * Also, all QueryBuilder operations need to be done by the factory class
  * obtainable as midcom_application::dbfactory.
  *
- * This class uses a auto-generated base class provided by midcom_services_dbclassloader.
+ * This class uses an auto-generated base class provided by midcom_services_dbclassloader.
  *
  * @package midcom.baseclasses
  * @see midcom_services_dbclassloader
@@ -29,7 +29,7 @@ class midcom_baseclasses_database_member extends __midcom_baseclasses_database_m
     }
 
     /**
-     * Returns the group the membership record is accociated with. This allows group
+     * Returns the group the membership record is associated with. This allows group
      * owners to manage their members.
      *
      * @return midcom_baseclasses_database_group The owning group or null if the gid is undefined.

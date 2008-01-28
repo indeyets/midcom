@@ -210,7 +210,7 @@ class net_nehmer_account_remote extends midcom_baseclasses_components_purecode
      * You have to ensure that the system has read privileges on the user account you want
      * to access, if loading of the user account fails, generate_error is triggered.
      *
-     * @return Array A array suitable for rendering.
+     * @return Array An array suitable for rendering.
      */
     function get_content_from_account($user = null)
     {

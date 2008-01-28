@@ -40,7 +40,7 @@
  * in question. This <em>includes</em> anonymous users if the component is cleared for anonymous
  * registration. Permissions are checked on a per-event level granularity.
  *
- * All registrations will have their owner privilege pointing to the accociated person record.
+ * All registrations will have their owner privilege pointing to the associated person record.
  * In addition, the system will revoke the midgard:read privilege on each created registration.
  *
  * The net.nemein.registrations:manage privilege controls access to registration management
