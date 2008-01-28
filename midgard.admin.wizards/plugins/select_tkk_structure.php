@@ -77,8 +77,11 @@ class select_tkk_structure extends midcom_baseclasses_components_handler
                 while (($file = readdir($dh)) !== false)
                 {
     	            $path = $dir . $file;
-
-    	            if (file_get_contents($path) != '')
+    	            
+    	            $fileExp = explode('.', $file);
+                    $filetype = $fileExp[count($fileExp) -1];
+                    
+    	            if (file_get_contents($path) != '' && $filetype == 'inc')
     	            {
                         eval("$" . "evaluated" . " = array(" . file_get_contents($path) . ");");
 
