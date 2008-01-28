@@ -63,5 +63,6 @@
         ),
         'midcom' => array (),
         'midcom.helper.imagepopup' => array (),
+        'midcom.helper.reflector' => array (),
     ),
 ),
