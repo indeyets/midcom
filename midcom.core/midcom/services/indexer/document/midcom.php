@@ -44,7 +44,7 @@ class midcom_services_indexer_document_midcom extends midcom_services_indexer_do
      * and populates the metadata fields accordingly.
      * 
      * The source member is automatically populated with the GUID of the document,
-     * the RI is set to it as well. The URL is set to an on-site permalink. 
+     * the RI is set to it as well. The URL is set to a on-site permalink. 
      * 
      * @param mixed $object The content object to load, passed to the metadata constructor.
      * @see midcom_helper_metadata
@@ -84,42 +84,30 @@ class midcom_services_indexer_document_midcom extends midcom_services_indexer_do
      */
     function _process_metadata()
     {
-        /*
-        FIXME: Convert to utilize DM2
         $datamanager =& $this->_metadata->get_datamanager();
-        foreach ($datamanager->data as $key => $value)
+        foreach ($datamanager->types as $key => $instance)
         {
             switch ($key)
             {
+                /**
+                 * @see parent::read_metadata_from_object()
+                 */
+                case 'revised':
+                case 'revisor':
                 case 'created':
-                	$this->created = $this->_metadata->get('created');
-                    break;
-                
                 case 'creator':
-                	$this->creator = $this->_metadata->get('creator');
                     break;
-                    
-                case 'edited':
-                    $this->edited = $this->_metadata->get('edited');
-                    break;
-                    
-                case 'editor':
-                    $this->editor = $this->_metadata->get('editor');
-                    break;
-                    
-                case '_schema':
-                case '_storage_type':
-                case '_storage_id':
-                case '_storage_guid':
-                    break;
-                    
+
+                case 'keywords':
+                case 'tags':
+                    $this->content .= $this->datamanager2_get_text_representation($datamanager, $key) . "\n";
+                    // Fall-through intentional
                 default:
-                    $this->add_text("META_{$key}", $this->datamanager_get_text_representation($this->_metadata->_datamanager, $key));
+                    $this->add_text("META_{$key}", $this->datamanager2_get_text_representation($datamanager, $key));
                     break; 
             }
         }
         $this->_metadata->release_datamanager();
-        */
     }
     
     /**
