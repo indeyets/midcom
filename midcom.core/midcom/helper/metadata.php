@@ -193,9 +193,9 @@ class midcom_helper_metadata
     function load_datamanager()
     {
         $_MIDCOM->load_library('midcom.helper.datamanager2');
-
-        $this->_schemadb = new midcom_helper_datamanager2_schema($this->_schemadb_path);
-
+        
+        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_schemadb_path);
+        
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
         if (! $this->_datamanager)
         {
@@ -204,8 +204,24 @@ class midcom_helper_metadata
             // This will exit()
         }
 
-        $this->_datamanager->set_schema('metadata');
-
+        // Check if we have metadata schema defined in the schemadb specific for the object's schema or component
+        $object_schema = $this->object->get_parameter('midcom.helper.datamanager2', 'schema_name');
+        $component_schema = str_replace('.', '_', $_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT));
+        if (   $object_schema == ''
+            || !isset($this->_schemadb[$object_schema]))
+        {
+            if (isset($this->_schemadb[$component_schema]))
+            {
+                // No specific metadata schema for object, fall back to component-specific metadata schema
+                $object_schema = $component_schema;
+            }
+            else
+            {
+                // No metadata schema for component, fall back to default
+                $object_schema = 'metadata';
+            }
+        }        
+        $this->_datamanager->set_schema($object_schema);
         if (! $this->_datamanager->set_storage($this->object))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
@@ -433,15 +449,15 @@ class midcom_helper_metadata
 
             // Fall-back for non-core properties
             default:
-                $varname = "midcom.helper.metadata_{$key}";
-                if (! array_key_exists($varname, get_object_vars($this->object)))
+                $dm = $this->get_datamanager();
+                if (!isset($dm->types[$key]))
                 {
-                    // Fall back to the parameter reader, this might be a MgdSchema object.
+                    // Fall back to the parameter reader to get legacy MidCOM metadata params
                     $value = $this->object->get_parameter('midcom.helper.metadata', $key);
                 }
                 else
                 {
-                    $value = $this->object->$varname;
+                    $value = $dm->types[$key]->convert_to_csv();
                 }
 
                 break;
