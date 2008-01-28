@@ -720,6 +720,8 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
             }
 
             $this->_handler['handler'][0]->initialize($this);
+            
+            $_MIDCOM->_set_context_data($this->_handler['id'], MIDCOM_CONTEXT_HANDLERID);
         }
     }
 
