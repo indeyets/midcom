@@ -22,6 +22,7 @@ mgd_auth_midgard($argv[2], $argv[3]);
 
 //die($_MIDGARD['sitegroup']);
 
+echo "Starting...\n";
 foreach ($_MIDGARD['schema']['types'] as $type => $arr)
 {
     if ($type == '__midgard_cache')
@@ -78,13 +79,18 @@ foreach ($_MIDGARD['schema']['types'] as $type => $arr)
         
         if (is_orphan($type, $up_value, $parent_value))
         {
-            echo "    {$type} #{$object_id} is an orphan (up: #{$up_value}, parent: #{$parent_value})\n";
+            echo "    {$type} #{$object_id} is an orphan (up: #{$up_value}, parent: #{$parent_value})";
             $orphans++;
+            $obj = new $type($object_id);
+            echo "      deleting, ";
+            $obj->delete();
+            echo mgd_errstr() . "\n";
         }
     }
     
     echo "  {$orphans} orphans out of " . count($objects) . " {$type} objects\n";
 }
+echo "Done.\n";
 
 function is_orphan($class, $up_value, $parent_value)
 {
