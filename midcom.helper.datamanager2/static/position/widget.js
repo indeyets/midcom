@@ -217,7 +217,7 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
         opts_str = opts_str.substr(0,opts_str.length-1);
         
         var get_params = {
-            service: backend_service,
+            service: backend_service
         };
 
         jQuery('.position_widget_input',widget).each(function(i, o){
@@ -320,7 +320,7 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
         }
         if (typeof no_override == 'undefined')
         {
-            var no_override = false;
+            var no_override = true;
         }
         
         enable_tabs();
