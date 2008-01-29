@@ -128,7 +128,7 @@ Ei osallistujia
 ---STRINGEND
 
 ---STRING numbers in parantheses show ongoing events.
-Numerot sulkeissa näyttävät tällä hetkellä käynnissä olevia tapahtumia.
+Numerot sulkeissa näyttävät sillä hetkellä käynnissä olevia tapahtumia.
 ---STRINGEND
 
 ---STRING participants
