@@ -160,6 +160,10 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
         $datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
 
         $qb = midcom_db_article::new_query_builder();
+        $qb->add_order('metadata.score', 'DESC');
+        $qb->add_order('title', 'DESC');
+        $qb->add_order('name');
+        $qb->add_order('score');
 
         // Include the article links to the indexes if enabled
         if ($this->_config->get('enable_article_links'))
@@ -201,7 +205,7 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
 
             $this->_process_datamanager($datamanager, $article, $view);
         }
-        ksort ($view);
+        
         return $view;
     }
 

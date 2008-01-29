@@ -8,6 +8,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-01-29 adrenalin
+  - Autoindex obeys now folder order
+
 2008-01-25 adrenalin
   ! Deprecated DM1 configuration, using now midcom.helper.dm2config
 
