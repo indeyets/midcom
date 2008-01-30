@@ -383,7 +383,13 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
 
     function is_paid()
     {
-        return (bool) $this->get_parameter('net.nemein.registrations', 'paid');
+        $paid_iso = $this->get_parameter('net.nemein.registrations', 'paid');
+        if (   !empty($paid_iso)
+            && $paid_iso !== '0000-00-00 00:00:00')
+        {
+            return true;
+        }
+        return false;
     }
 
     function mark_paid()
