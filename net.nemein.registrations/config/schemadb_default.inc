@@ -187,6 +187,49 @@
             'type_config' => Array ( 'output_mode' => 'markdown' ),
             'widget' => 'textarea',
         ),
-
+        'reg_refno' => array
+        (
+            'title' => 'reference',
+            'storage' => 'reference',
+            'type' => 'text',
+            'widget' => 'text',
+            'readonly' => true,
+            'hidden' => !($_MIDCOM->auth->admin),
+        ),
+        'reg_price' => array
+        (
+            'title' => 'price',
+            'storage' => 'price',
+            'type' => 'number',
+            'type_config' => array('precision' => 2),
+            'widget' => 'text',
+            'readonly' => true,
+            'hidden' => !($_MIDCOM->auth->admin),
+        ),
+        'reg_paid' => array
+        (
+            'title' => 'registration paid',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.registrations',
+                'name' => 'paid',
+            ),
+            'type' => 'date',
+            'type_config' => array('storage_type' => 'ISO'),
+            'widget' => 'jsdate',
+            'readonly' => true,
+            'hidden' => !($_MIDCOM->auth->admin),
+        ),
+        'created' => array
+        (
+            'title' => 'registration date',
+            'type' => 'date',
+            'storage' => 'metadata',
+            'type_config' => array('storage_type' => 'ISO'),
+            'widget' => 'jsdate',
+            'readonly' => true,
+            'hidden' => !($_MIDCOM->auth->admin),
+        ),
     ),
 ), // end of 'aq-default'

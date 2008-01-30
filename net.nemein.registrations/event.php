@@ -2,7 +2,7 @@
 /**
  * @package net.nemein.registrations
  * @author The Midgard Project, http://www.midgard-project.org
- * @version $Id: event.php 14602 2008-01-23 21:57:34Z rambo $
+ * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
@@ -104,9 +104,9 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function __construct($id = null)
+    function net_nemein_registrations_event($id = null)
     {
-        return parent::__construct($id);
+        return parent::net_nemein_calendar_event_dba($id);
     }
 
     function _on_created()
@@ -686,7 +686,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
      * @todo Rewrite Mail handling to PEAR_Mail.
      * @todo move to the registration class
      */
-    function approve_registration(&$registration)
+    function approve_registration(&$registration, $send_mail = true)
     {
         // Get registrar
         $registrar_object = $registration->get_registrar();
@@ -717,6 +717,10 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
         $registration->unset_privilege('midgard:owner', $user);
         $registration->set_privilege('midgard:read', $user);
 
+        if (!$send_mail)
+        {
+            return true;
+        }
         // Finally, send out the E-Mails
 
         // Get base data

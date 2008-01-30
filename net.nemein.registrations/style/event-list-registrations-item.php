@@ -24,6 +24,34 @@ else
     $approved_text = $data['l10n_midcom']->get('unapproved');
 }
 ?>
-<li>
-    <a href="&(data['registration_url']);">&(registrar.name);</a>, &(approved_text);
-</li>
+            <tr>
+                <td><a href="&(data['registration_url']);">&(registrar.name);</a></td>
+                <td><?php echo strftime("%x %X", $registration->metadata->created); ?></td>
+<?php
+$event_dm =& $data['event_dm'];
+if (!$event_dm->types['auto_approve']->value)
+{
+    /* approved checkbox */
+    echo "                <td><input type='checkbox' name='net_nemein_registrations_process[approved][{$registration->guid}]' value=1 ";
+    if ($data['approved'])
+    {
+        echo "checked title='{$approved_text}'";
+    }
+    echo "disabled/></td>\n";
+    /* /approved checkbox */
+}
+if ($data['config']->get('pricing_plugin'))
+{
+    echo "                <td>{$registration->reference}</td>\n";
+    echo sprintf("                <td>%0.2f&euro;</td>\n", $registration->price);
+    /* paid checkbox */
+    echo "            <td><input type='checkbox' name='net_nemein_registrations_process[paid][{$registration->guid}]' value=1";
+    if ($registration->is_paid())
+    {
+        echo  ' checked disabled';
+    }
+    echo "/></td>\n";
+    /* /paid checkbox */
+}
+?>
+            </tr>

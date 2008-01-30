@@ -2,7 +2,7 @@
 /**
  * @package net.nemein.registrations
  * @author The Midgard Project, http://www.midgard-project.org
- * @version $Id: registration.php 14602 2008-01-23 21:57:34Z rambo $
+ * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
@@ -64,9 +64,9 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function __construct($id = null)
+    function net_nemein_registrations_registration_dba($id = null)
     {
-        return parent::__construct($id);
+        return parent::__net_nemein_registrations_registration_dba($id);
     }
 
     /**
@@ -363,7 +363,12 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
      */
     function get_event()
     {
-        return new net_nemein_registrations_event($this->eid);
+        static $event = false;
+        if (!$event)
+        {
+            $event = new net_nemein_registrations_event($this->eid);
+        }
+        return $event;
     }
 
     /**
@@ -376,6 +381,24 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
         return (bool) $this->get_parameter('net.nemein.registrations', 'approved');
     }
 
+    function is_paid()
+    {
+        return (bool) $this->get_parameter('net.nemein.registrations', 'paid');
+    }
+
+    function mark_paid()
+    {
+        if ($this->is_paid())
+        {
+            return true;
+        }
+        if (!$this->can_do('net.nemein.registrations:manage'))
+        {
+            mgd_set_errno(MGD_ERR_ACCESS_DENIED);
+            return false;
+        }
+        return $this->set_parameter('net.nemein.registrations', 'paid', strftime('%Y-%m-%d %T'));
+    }
 }
 
 ?>

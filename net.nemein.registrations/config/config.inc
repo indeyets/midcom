@@ -43,3 +43,9 @@
  * in this array we can specify preferred order
  */
 'merged_schema_field_order' => array(),
+// Will admin_mode registration loop back to itself ?
+'admin_register_loop' => false,
+'admin_register_loop_clear_fields' => array('p_firstname', 'p_lastname', 'p_email'),
+
+
+

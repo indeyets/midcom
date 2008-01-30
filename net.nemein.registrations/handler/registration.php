@@ -143,7 +143,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
 
         if (   $_MIDCOM->auth->can_do('midgard:update', $this->_registration)
             && $_MIDCOM->auth->can_do('midgard:delete', $this->_registration)
-            && $_MIDCOM->auth->can_do('net.nemein.registration:manage', $this->_registration)
+            && $_MIDCOM->auth->can_do('net.nemein.registrations:manage', $this->_registration)
             && ! $this->_request_data['is_approved'])
         {
             $this->_request_data['manage_form_url'] = "{$prefix}registration/manage/{$this->_registration->guid}.html";
@@ -232,7 +232,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
         }
         $this->_registrar = $this->_registration->get_registrar();
         $this->_event = $this->_registration->get_event();
-        $this->_event->require_do('net.nemein.registration:manage');
+        $this->_event->require_do('net.nemein.registrations:manage');
         
         $this->_datamanager =& $this->_registration->get_datamanager();
 

@@ -77,6 +77,8 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
      */
     var $_controller = null;
 
+    var $_admin_mode = false;
+
     /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
@@ -110,6 +112,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
             $this->_registrar = new net_nemein_registrations_registrar($_MIDCOM->auth->user->get_storage());
             // If read-access fails here, we revert transparently to anonymous mode.
         }
+        $this->_request_data['admin_mode'] =& $this->_admin_mode;
     }
 
     /**
@@ -131,12 +134,24 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The event {$args[0]} could not be found.");
             // This will exit.
         }
-        if (! $this->_event->is_open())
+        if ($handler_id === 'admin-register')
+        {
+            $this->_event->require_do('net.nemein.registrations:manage');
+            $this->_admin_mode = true;
+        }
+        if (   !$this->_admin_mode
+            && !$this->_event->is_open())
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The event {$args[0]} is not open for registration.");
             // This will exit.
         }
-        if ($this->_event->is_registered())
+
+        if ($this->_admin_mode)
+        {
+            // Admin mode, register other people...
+            $this->_registrar = null;
+        }
+        elseif ($this->_event->is_registered())
         {
             // In case we are already registered, we relocate to the view registration page.
             $registration = $this->_event->get_registration();
@@ -150,6 +165,10 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
         // expensive creation process.
         if (midcom_helper_datamanager2_formmanager::get_clicked_button() == 'cancel')
         {
+            if ($this->_admin_mode)
+            {
+                $_MIDCOM->relocate("event/view/{$this->_event->guid}/");
+            }
             $_MIDCOM->relocate('');
             // This will exit.
         }
@@ -160,6 +179,15 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
         // Further startup work
         $this->_validate_permissions();
         $this->_prepare_nullstorage_schemadb();
+        if ($this->_admin_mode)
+        {
+            // Don't bother with confirms for admin mode even if set in schema...
+            if (isset($this->_nullstorage_schemadb['merged']->operations['next']))
+            {
+                unset($this->_nullstorage_schemadb['merged']->operations['next']);
+            }
+        }
+        
         $this->_prepare_nullstorage_controller();
 
         // Process the form
@@ -269,7 +297,8 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
                             debug_add("Identifier '{$guid}' does not point to a valid event", MIDCOM_LOG_ERROR);
                             continue;
                         }
-                        if (!$event->is_open())
+                        if (   !$this->_admin_mode
+                            && !$event->is_open())
                         {
                             // not open for registration
                             debug_add("Event {$event->title} (#{$event->id}) is not open for registration", MIDCOM_LOG_ERROR);
@@ -289,6 +318,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
                     // just to keep defaults from barfing
                     $session->set('registration_id', $this->_registration->id);
                     debug_pop();
+                    // TODO: redirect elsewhere in admin mode ?
                     $_MIDCOM->relocate('register/success.html');
                 }
                 // First, update/create the person
@@ -306,7 +336,32 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
     
                 $session = new midcom_service_session();
                 $session->set('registration_id', $this->_registration->id);
+                if ($this->_admin_mode)
+                {
+                    if (!$this->_config->get('admin_register_loop'))
+                    {
+                        $_MIDCOM->relocate("registration/view/{$this->_registration->guid}/");
+                        // This will exit()
+                    }
+                    $_MIDCOM->uimessages->add('net.nemein.registrations', sprintf($this->_l10n->get('registered person %s'), $this->_registrar->name));
+                    // copy _POST variables
+                    $copies = array();
+                    $skip = $this->_config->get('admin_register_loop_clear_fields');
+                    foreach ($schema->fields as $fieldname => $typedef)
+                    {
+                        if (in_array($fieldname, $skip))
+                        {
+                            continue;
+                        }
+                        $copies[$fieldname] = $_POST[$fieldname];
+                    }
+                    $session =& new midcom_service_session();
+                    $session->set('prepopulate_data', $copies);
+                    $_MIDCOM->relocate("admin/register/{$this->_event->guid}/");
+                    // This will exit()
+                }
                 $_MIDCOM->relocate('register/success.html');
+                // This will exit()
                 break;
         }
     }
@@ -405,9 +460,10 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
             // This will exit.
         }
 
-        if ($event_dm->types['auto_approve']->value)
+        if (   $this->_admin_mode
+            || $event_dm->types['auto_approve']->value)
         {
-            $this->_event->approve_registration($this->_registration);
+            $this->_event->approve_registration($this->_registration, !($this->_admin_mode));
         }
         else
         {
@@ -575,6 +631,20 @@ EOF;
                 $defaults['events'] = array($this->_event->guid => true);
             }
         }
+
+        
+        $session =& new midcom_service_session();
+        if ($session->exists('prepopulate_data'))
+        {
+            $defaults = array_merge($defaults, $session->get('prepopulate_data'));
+            /*
+            echo "DEBUG: defaults after session data<pre>\n";
+            print_r($defaults);
+            echo "</pre>\n";
+            */
+            $session->remove('prepopulate_data');
+        }
+        unset($session);
 
         $this->_controller =& midcom_helper_datamanager2_controller::create('nullstorage');
         $this->_controller->set_schemadb($this->_nullstorage_schemadb);

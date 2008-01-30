@@ -74,11 +74,13 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         {
             $this->_request_data['list_registrations_url'] = "{$prefix}event/list_registrations/{$this->_event->guid}.html";
             $this->_request_data['export_csv_url'] = "{$prefix}event/export/csv/{$this->_event->guid}/" . midcom_generate_urlname_from_string($this->_event->title) . date('_Y-m-d') . '.csv';
+            $this->_request_data['admin_register_url'] = "{$prefix}admin/register/{$this->_event->guid}/";
         }
         else
         {
             $this->_request_data['list_registrations_url'] = null;
             $this->_request_data['export_csv_url'] = null;
+            $this->_request_data['admin_register_url'] = null;
         }
 
         if ($this->_event->can_do('midgard:update'))
@@ -140,10 +142,21 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
     {
         $this->_root_event =& $this->_request_data['root_event'];
         $this->_schemadb =& $this->_request_data['schemadb'];
+        $this->_request_data['config'] =& $this->_config;
     }
     
     function _populate_toolbar(&$data)
     {
+        if ($data['admin_register_url'])
+        {
+            $this->_view_toolbar->add_item(Array(
+                MIDCOM_TOOLBAR_URL => $data['admin_register_url'],
+                MIDCOM_TOOLBAR_LABEL => $data['l10n']->get('register other person'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                MIDCOM_TOOLBAR_ENABLED => true,
+            ));
+        }
         if ($data['list_registrations_url'])
         {
             $this->_view_toolbar->add_item(Array(
@@ -335,6 +348,53 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
     }
 
 
+    function _process_actions()
+    {
+        if (   !isset($_POST['net_nemein_registrations_process'])
+            || empty($_POST['net_nemein_registrations_process']))
+        {
+            return;
+        }
+        if (!is_array($_POST['net_nemein_registrations_process']))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Invalid "net_nemein_registrations_process" POSTed');
+            // This will exit()
+        }
+        foreach ($_POST['net_nemein_registrations_process'] as $action => $guids)
+        {
+            switch($action)
+            {
+                case 'paid':
+                    $method = 'mark_paid';
+                    break;
+                default:
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Invalid action '{$action}' in POST");
+                    // This will exit()
+            }
+            foreach ($guids as $guid => $enabled)
+            {
+                if (!$enabled)
+                {
+                    continue;
+                }
+                $registration = new net_nemein_registrations_registration_dba($guid);
+                if (   !$registration
+                    || !isset($registration->guid)
+                    || empty($registration->guid))
+                {
+                    // TODO: Log error
+                    continue;
+                }
+                if (!$registration->$method())
+                {
+                    // TODO: Log error
+                    continue;
+                }
+                //  TODO: Log success
+            }
+        }
+    }
+
     /**
      * Lists the registrations of a particular event.
      */
@@ -347,6 +407,9 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
             // This will exit.
         }
         $this->_event->require_do('net.nemein.registrations:manage');
+
+        $this->_process_actions();
+
 
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata(time(), $this->_event->guid);
@@ -362,6 +425,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
      */
     function _show_list_registrations($handler_id, &$data)
     {
+        // TODO: Paged QB ??
         $data['registrations'] = $this->_event->get_registrations();
 
         midcom_show_style('event-list-registrations-start');

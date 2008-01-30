@@ -100,31 +100,20 @@ class net_nemein_registrations_handler_export extends midcom_baseclasses_compone
 
     function set_dm_storage(&$registration)
     {
-        $dump = array('_datamanager_registrar', '_datamanager_registration');
         $this->_datamanager_registration->set_storage($registration);
         $registrar = $registration->get_registrar();
         $this->_datamanager_registrar->set_storage($registrar);
         $merged_values = array();
-        // ORDER IS IMPORTANT, something is leaking references...
         foreach ($this->_datamanager_registrar->types as $name => $type)
         {
             $merged_values[$name] = $type->convert_to_storage();
-            //echo "DEBUG: set \$merged_values[{$name}] to {$merged_values[$name]}\n";
         }
         unset($name, $type);
         foreach ($this->_datamanager_registration->types as $name => $type)
         {
             $merged_values[$name] = $type->convert_to_storage();
-            //echo "DEBUG: set \$merged_values[{$name}] to {$merged_values[$name]}\n";
         }
-        /*
-        unset($name, $type);
-        echo "DEBUG: \$merged_values\n";
-        print_r($merged_values);
-        echo "\n";
-        */
         $nullstorage = new midcom_helper_datamanager2_storage_null($this->_datamanager->schema, $merged_values);
-        
         return $this->_datamanager->set_storage($nullstorage);
     }
 }

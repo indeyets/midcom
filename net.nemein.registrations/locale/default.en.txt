@@ -167,7 +167,7 @@ delete the registration
 edit the registration
 ---STRINGEND
 
----STRING email address invalid
+---STRING email adress invalid
 Please enter a valid E-Mail address.
 ---STRINGEND
 
@@ -175,7 +175,7 @@ Please enter a valid E-Mail address.
 An E-Mail containing your password has been sent to %s.<br>Please enter this password below to activate your account.
 ---STRINGEND
 
----STRING emailaddress
+---STRING emailadress
 E-Mail address
 ---STRINGEND
 
@@ -343,6 +343,10 @@ Open the event for registration now
 Override global notification E-Mail; leave empty to use the global default
 ---STRINGEND
 
+---STRING paid
+Paid
+---STRINGEND
+
 ---STRING please answer these questions to complete registration
 Please answer these questions to complete your registration to the above event
 ---STRINGEND
@@ -353,6 +357,18 @@ Please login to activate your account
 
 ---STRING please login using a valid account.
 Please login using a valid account.
+---STRINGEND
+
+---STRING price
+Price
+---STRINGEND
+
+---STRING privilege manage
+Registration management
+---STRINGEND
+
+---STRING reference
+Reference
 ---STRINGEND
 
 ---STRING register for %s
@@ -375,6 +391,10 @@ Registrar identification
 Name of the schema to be used for registrars
 ---STRINGEND
 
+---STRING registration date
+Registered
+---STRINGEND
+
 ---STRING registration event
 Event
 ---STRINGEND
@@ -387,7 +407,7 @@ Registration-Configuration for the event
 Registration for %s
 ---STRINGEND
 
----STRING registration is being processed, you will get a mail
+---STRING registration is beeing processed, you will get a mail
 Your registration is being processed, you will receive a confirmation via E-Mail shortly.
 ---STRINGEND
 
@@ -439,7 +459,7 @@ Subject for account creation E-Mails
 Subject for registration notification E-Mails
 ---STRINGEND
 
----STRING this email address is already registered
+---STRING this email adress is already registered
 An account has already been created using this E-Mail address.
 ---STRINGEND
 
@@ -503,7 +523,7 @@ You have already registered for this event.
 Your account has been activated successfully.
 ---STRINGEND
 
----STRING privilege manage
-Registration management
+---STRING registered person %s
+Registered %s
 ---STRINGEND
 
