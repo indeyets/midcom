@@ -184,7 +184,7 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
         else
         {
             // Decimal point format
-            $data = str_replace('.', $this->csv['s'], $data);
+            $data = str_replace('.', $this->csv['d'], $data);
         }
         if ($add_separator)
         {
