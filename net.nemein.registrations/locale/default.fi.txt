@@ -379,6 +379,10 @@ Ilmoittaudu tapahtumaan %s
 Ilmoittaudu tapahtumaan
 ---STRINGEND
 
+---STRING registered person %s
+%s ilmoitettu tapahtumaan
+---STRINGEND
+
 ---STRING registrar
 Ilmoittautuja
 ---STRINGEND
@@ -523,7 +527,7 @@ Olet jo ilmoittautunut tapahtumaan.
 Käyttäjätunnuksesi on aktivoitu onnistuneesti.
 ---STRINGEND
 
----STRING registered person %s
-%s ilmoitettu tapahtumaan
+---STRING register other person
+Ilmoita muita tapahtumaan
 ---STRINGEND
 

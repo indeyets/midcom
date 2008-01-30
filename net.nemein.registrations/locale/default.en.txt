@@ -379,6 +379,10 @@ Register for %s
 Register for this event
 ---STRINGEND
 
+---STRING registered person %s
+Registered %s
+---STRINGEND
+
 ---STRING registrar
 Registrar
 ---STRINGEND
@@ -523,7 +527,7 @@ You have already registered for this event.
 Your account has been activated successfully.
 ---STRINGEND
 
----STRING registered person %s
-Registered %s
+---STRING register other person
+Register someone else
 ---STRINGEND
 
