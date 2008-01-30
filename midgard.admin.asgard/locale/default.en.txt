@@ -614,3 +614,11 @@ Show sitegroup 0 objects in navigation
 ---STRING search
 Search
 ---STRINGEND
+
+---STRING select all
+Select all
+---STRINGEND
+
+---STRING invert selection
+Invert selection
+---STRINGEND

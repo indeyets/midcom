@@ -70,7 +70,7 @@ if (isset($data['search_results']))
 
     else
     {
-        echo "<table id=\"search_results\">\n";
+        echo "<table class=\"table_widget\" id=\"search_results\">\n";
         echo "    <thead>\n";
         echo "        <tr>\n";
         echo "            <th>" . $_MIDCOM->i18n->get_string('title', 'midcom') . "</th>\n";

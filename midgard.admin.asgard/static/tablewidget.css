@@ -1,10 +1,10 @@
-#search_results
+.table_widget
 {
     border-collapse: collapse;
     border-spacing: 0;
 }
 
-#search_results thead
+.table_widget thead
 {
     background-color: #555753;
     color: #ffffff;
@@ -12,15 +12,15 @@
     padding-bottom: 4px;
 }
 
-#search_results thead th,
-#search_results td
+.table_widget thead th,
+.table_widget td
 {
     padding-left: 4px;
     padding-right: 2px;
     text-align: left;
 }
 
-#search_results thead th
+.table_widget thead th
 {
   background-repeat: no-repeat;
   background-position: right center;
@@ -28,17 +28,28 @@
   cursor: pointer;
 }
 
-#search_results thead th.headerSortDown
+.table_widget thead th.headerSortDown
 {
   background-image: url('../stock-icons/16x16/down.png');
 }
 
-#search_results thead th.headerSortUp
+.table_widget thead th.headerSortUp
 {
   background-image: url('../stock-icons/16x16/up.png');
 }
 
-#search_results tr.even td
+.table_widget tr.even td
 {
     background-color: #eeeeef;
+}
+
+.table_widget tr.row_selected td
+{
+    background-color: #C0CEDE;
+    color: #000000;
+}
+
+.table_widget tr.even.row_selected td
+{
+    background-color: #DFE6EE;
 }

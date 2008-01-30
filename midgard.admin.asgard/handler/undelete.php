@@ -33,6 +33,18 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->skip_page_style = true;
 
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.tablesorter.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/jquery.batch_process.js');
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/tablewidget.css',
+            )
+        );
+
         $_MIDCOM->load_library('midcom.helper.datamanager2');
     }
 
@@ -448,7 +460,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         $qb->add_order('metadata.revised', 'DESC');
         $data['qb'] =& $qb;
         $data['trash'] = $qb->execute_unchecked();
-        
+
         // Set the breadcrumb data
         $tmp = array();
         $tmp[] = array
@@ -467,7 +479,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
             MIDCOM_NAV_NAME => sprintf($_MIDCOM->i18n->get_string('%s trash', 'midgard.admin.asgard'), midgard_admin_asgard_plugin::get_type_label($data['type'])),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-        
+
         return true;
     }
 

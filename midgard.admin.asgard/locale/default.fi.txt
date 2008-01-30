@@ -535,3 +535,10 @@ Versio %s tietueesta %s
 Näytä sivuryhmä 0:n kohteet navigaatiossa
 ---STRINGEND
 
+---STRING select all
+Valitse kaikki
+---STRINGEND
+
+---STRING invert selection
+Käännä valinnat päinvastaisiksi
+---STRINGEND

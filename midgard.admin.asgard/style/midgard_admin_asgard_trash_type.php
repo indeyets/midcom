@@ -15,23 +15,23 @@ function midgard_admin_asgard_trash_type_show($object, $indent = 0, $prefix = ''
     {
         $url_prefix =$_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
     }
-    
+
     if (isset($shown[$object->guid]))
     {
         return;
     }
-    
+
     if (!isset($persons[$object->metadata->revisor]))
     {
         $persons[$object->metadata->revisor] = $_MIDCOM->auth->get_user($object->metadata->revisor);
     }
-    
+
     $reflector = midcom_helper_reflector_tree::get($object);
     $icon = $reflector->get_object_icon($object);
     $label = $reflector->get_label_property();
 
     echo "{$prefix}<tr>\n";
-    
+
     $disabled = '';
     if (!$enable_undelete)
     {
@@ -50,9 +50,9 @@ function midgard_admin_asgard_trash_type_show($object, $indent = 0, $prefix = ''
             }
         }
     }
-    echo "{$prefix}    <td class=\"checkbox\"><input type=\"checkbox\" name=\"undelete[]\"{$disabled} value=\"{$object->guid}\" id=\"{$object->guid}\" /></td>\n";
+    echo "{$prefix}    <td class=\"checkbox\"><input type=\"checkbox\" name=\"undelete[]\"{$disabled} value=\"{$object->guid}\" id=\"guid_{$object->guid}\" /></td>\n";
     //echo "{$prefix}    <td class=\"label\" style=\"padding-left: {$indent}px\"><label for=\"{$object->guid}\"><a href=\"{$url_prefix}__mfa/asgard/object/view/{$object->guid}/\">{$icon} {$object->$label}</a></label></td>\n";
-    echo "{$prefix}    <td class=\"label\" style=\"padding-left: {$indent}px\"><label for=\"{$object->guid}\">{$icon} {$object->$label}</label></td>\n";
+    echo "{$prefix}    <td class=\"label\" style=\"padding-left: {$indent}px\"><label for=\"guid_{$object->guid}\">{$icon} {$object->$label}</label></td>\n";
     echo "{$prefix}    <td>" . strftime('%x %X', strtotime($object->metadata->revised)) . "</td>\n";
 
     if ($persons[$object->metadata->revisor]->guid)
@@ -65,7 +65,7 @@ function midgard_admin_asgard_trash_type_show($object, $indent = 0, $prefix = ''
     }
     echo "{$prefix}    <td>" . midcom_helper_filesize_to_string($object->metadata->size) . "</td>\n";
     echo "{$prefix}</tr>\n";
-    
+
     $child_types = $reflector->get_child_objects($object, true);
     if (   is_array($child_types)
         && count($child_types) > 0)
@@ -90,16 +90,16 @@ function midgard_admin_asgard_trash_type_show($object, $indent = 0, $prefix = ''
                 echo "{$prefix}    </tr>\n";
             }
         }
-        
+
         echo "{$prefix}</tbody>\n";
     }
-    $shown[$object->guid] = true;   
+    $shown[$object->guid] = true;
 }
 
 if ($data['trash'])
 {
     echo "<form method=\"post\">\n";
-    echo "<table class=\"trash\">\n";
+    echo "<table class=\"trash table_widget\" id=\"batch_process\">\n";
     echo "    <thead>\n";
     echo "        <tr>\n";
     echo "            <th>&nbsp;</th>\n";
@@ -109,6 +109,24 @@ if ($data['trash'])
     echo "            <th>" . $_MIDCOM->i18n->get_string('size', 'midgard.admin.asgard') . "</th>\n";
     echo "        </tr>\n";
     echo "    </thead>\n";
+    echo "    <tfoot>\n";
+    echo "            <tr>\n";
+    echo "            <td colspan=\"5\">\n";
+    echo "                <label for=\"select_all\">\n";
+    echo "                    <input type=\"checkbox\" name=\"select_all\" id=\"select_all\" value=\"\" onclick=\"\$j(this).check_all('#batch_process tbody');\" />" . $_MIDCOM->i18n->get_string('select all', 'midgard.admin.asgard');
+    echo "                </label>\n";
+    echo "                <label for=\"invert_selection\">\n";
+    echo "                    <input type=\"checkbox\" name=\"invert_selection\" id=\"invert_selection\" value=\"\" onclick=\"\$j(this).invert_selection('#batch_process tbody');\" />" . $_MIDCOM->i18n->get_string('invert selection', 'midgard.admin.asgard');
+    echo "                </label>\n";
+    echo "            </td>\n";
+    echo "        </tr>\n";
+    echo "        <tr>\n";
+    echo "            <td colspan=\"5\">\n";
+    echo "                <input type=\"submit\" value=\"" . $_MIDCOM->i18n->get_string('undelete', 'midgard.admin.asgard') . "\" />\n";
+    echo "                <input type=\"submit\" name=\"purge\" value=\"" . $_MIDCOM->i18n->get_string('purge', 'midgard.admin.asgard') . "\" />\n";
+    echo "            </td>\n";
+    echo "        </tr>\n";
+    echo "    </tfoot>\n";
     echo "    <tbody>\n";
 
     foreach ($data['trash'] as $object)
@@ -117,16 +135,17 @@ if ($data['trash'])
     }
 
     echo "    </tbody>\n";
-    echo "    <tfoot>\n";
-    echo "        <tr>\n";
-    echo "            <td colspan=\"5\">\n";
-    echo "                <input type=\"submit\" value=\"" . $_MIDCOM->i18n->get_string('undelete', 'midgard.admin.asgard') . "\" />\n";
-    echo "                <input type=\"submit\" name=\"purge\" value=\"" . $_MIDCOM->i18n->get_string('purge', 'midgard.admin.asgard') . "\" />\n";
-    echo "            </td>\n";
-    echo "        </tr>\n";
-    echo "    </tfoot>\n";
     echo "</table>\n";
     echo "</form>\n";
+    echo "<script type=\"text/javascript\">\n";
+    echo "// <![CDATA[\n";
+    echo "\$j('#batch_process').tablesorter(\n";
+    echo "  {\n";
+    echo "      widgets: ['zebra'],\n";
+    echo "      sortList: [[1,0]]\n";
+    echo "  });\n";
+    echo "// ]]>\n";
+    echo "</script>\n";
     echo $data['qb']->show_pages();
 }
 else

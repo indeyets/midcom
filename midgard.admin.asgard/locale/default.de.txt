@@ -610,3 +610,11 @@ Objekte der Sitegroup 0 in der Navigation anzeigen
 ---STRING search
 Suche
 ---STRINGEND
+
+---STRING select all
+Alle auswählen
+---STRINGEND
+
+---STRING invert selection
+Auswahl umkehren
+---STRINGEND

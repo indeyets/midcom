@@ -44,7 +44,7 @@ if (count($data['revised']) > 0)
 {
     $revisors = array();
     echo "    <form name=\"latest_objects_mass_action\" method=\"post\">";
-    echo "<table class=\"results\" id =\"search_results\">\n";
+    echo "<table class=\"results table_widget\" id =\"batch_process\">\n";
     echo "    <thead>\n";
     echo "        <tr>\n";
     echo "            <th class=\"selection\">&nbsp;</th>\n";
@@ -56,6 +56,18 @@ if (count($data['revised']) > 0)
     echo "            <th class=\"revision\">" . $_MIDCOM->i18n->get_string('revision', 'midcom.admin.folder') . "</th>\n";
     echo "        </tr>\n";
     echo "    </thead>\n";
+    echo "    <tfoot>\n";
+    echo "            <tr>\n";
+    echo "            <td colspan=\"5\">\n";
+    echo "                <label for=\"select_all\">\n";
+    echo "                    <input type=\"checkbox\" name=\"select_all\" id=\"select_all\" value=\"\" onclick=\"\$j(this).check_all('#batch_process tbody');\" />" . $_MIDCOM->i18n->get_string('select all', 'midgard.admin.asgard');
+    echo "                </label>\n";
+    echo "                <label for=\"invert_selection\">\n";
+    echo "                    <input type=\"checkbox\" name=\"invert_selection\" id=\"invert_selection\" value=\"\" onclick=\"\$j(this).invert_selection('#batch_process tbody');\" />" . $_MIDCOM->i18n->get_string('invert selection', 'midgard.admin.asgard');
+    echo "                </label>\n";
+    echo "            </td>\n";
+    echo "        </tr>\n";
+    echo "    </tfoot>\n";
     echo "    <tbody>\n";
 
     foreach ($data['revised'] as $object)
@@ -94,10 +106,10 @@ if (count($data['revised']) > 0)
     echo "</table>\n";
     echo "<script type=\"text/javascript\">\n";
     echo "        // <![CDATA[\n";
-    echo "            \$j('#search_results').tablesorter(\n";
+    echo "            \$j('#batch_process').tablesorter(\n";
     echo "            {\n ";
     echo "                widgets: ['zebra'],";
-    echo "                sortList: [[0,0]],\n";
+    echo "                sortList: [[1,0]],\n";
     echo "            });\n";
     echo "        // ]]>\n";
     echo "    </script>\n";
