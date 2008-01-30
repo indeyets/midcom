@@ -13,7 +13,7 @@
  * @package midcom.baseclasses
  */
 class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasses_components_handler
-{
+{    
     /**
      * The Datamanager of the project to display.
      *
@@ -21,16 +21,16 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
      * @access private
      */
     var $_datamanager = null;
-
+    
     var $_schema = null;
-
+    
     var $_objects = array();
-
+    
     function midcom_baseclasses_components_handler_dataexport()
     {
         parent::midcom_baseclasses_components_handler();
     }
-
+    
     /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
@@ -40,7 +40,7 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
         $this->_request_data['datamanager'] =& $this->_datamanager;
         $this->_request_data['objects'] =& $this->_objects;
     }
-
+    
     /**
      * Internal helper, loads the datamanager for the current article. Any error triggers a 500.
      *
@@ -62,7 +62,7 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
             // This will exit.
         }
     }
-
+    
     function _load_schemadb()
     {
         $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Method "_load_schemadb" must be overridden in implementation');
@@ -72,26 +72,20 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
     {
         $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Method "_load_data" must be overridden in implementation');
     }
-
-	/**
-	 * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
-	 */
+    
     function _handler_csv($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
-
+            
         //Disable limits
         @ini_set('memory_limit', -1);
         @ini_set('max_execution_time', 0);
-
+            
         $this->_load_datamanager($this->_load_schemadb());
-        $this->_objects = $this->_load_data($handler_id);
-
+        $this->_objects = $this->_load_data($handler_id, $args, $data);
+        
         $_MIDCOM->skip_page_style = true;
-
+        
         if (   !isset($args[0])
             || empty($args[0]))
         {
@@ -100,7 +94,7 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
             $_MIDCOM->relocate("{$_MIDGARD['uri']}/{$fname}");
             // This will exit
         }
-
+        
         $this->_init_csv_variables();
         $_MIDCOM->skip_page_style = true;
         //$_MIDCOM->cache->content->content_type('text/plain');
@@ -172,7 +166,7 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
             debug_pop();
         }
         /* END: Quick'n'Dirty on-the-fly charset conversion */
-
+        
         // Strings and numbers beginning with zero are quoted
         if (   (   !is_numeric($data)
                 || preg_match('/^[0+]/', $data))
@@ -204,10 +198,13 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
     }
 
     /**
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
+     * Sets given object as storage object for DM2
      */
+    function set_dm_storage(&$object)
+    {
+        return $this->_datamanager->set_storage($object);
+    }
+
     function _show_csv($handler_id, &$data)
     {
         // Make real sure we're dumping data live
@@ -220,21 +217,22 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
         $datamanager =& $this->_datamanager;
         foreach ($datamanager->schema->field_order as $name)
         {
+            $field =& $datamanager->schema->fields[$name];
             $i++;
             if ($i < count($datamanager->schema->field_order))
             {
-                echo $this->_encode_csv($datamanager->schema->fields[$name]['title'], true, false);
+                echo $this->_encode_csv($field['title'], true, false);
             }
             else
             {
-                echo $this->_encode_csv($datamanager->schema->fields[$name]['title'], false, true);
+                echo $this->_encode_csv($field['title'], false, true);
             }
         }
 
         // Dump objects
         foreach ($this->_objects as $object)
         {
-            if (!$this->_datamanager->set_storage($object))
+            if (!$this->set_dm_storage($object))
             {
                 // Object failed to load, skip
                 continue;
@@ -244,9 +242,10 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
             $i = 0;
             foreach ($datamanager->schema->field_order as $fieldname)
             {
+                $type =& $datamanager->types[$fieldname];
                 $i++;
                 $data = '';
-                $data = $datamanager->types[$fieldname]->convert_to_csv();
+                $data = $type->convert_to_csv();
                 if ($i < count($datamanager->schema->field_order))
                 {
                     echo $this->_encode_csv($data, true, false);
