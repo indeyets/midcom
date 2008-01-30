@@ -73,7 +73,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         if ($this->_event->can_do('net.nemein.registrations:manage'))
         {
             $this->_request_data['list_registrations_url'] = "{$prefix}event/list_registrations/{$this->_event->guid}.html";
-            $this->_request_data['export_csv_url'] = "{$prefix}event/export/csv/{$this->_event->guid}/{$this->_event->guid}.csv";
+            $this->_request_data['export_csv_url'] = "{$prefix}event/export/csv/{$this->_event->guid}/" . midcom_generate_urlname_from_string($this->_event->title) . date('_Y-m-d') . '.csv';
         }
         else
         {
@@ -141,7 +141,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         $this->_root_event =& $this->_request_data['root_event'];
         $this->_schemadb =& $this->_request_data['schemadb'];
     }
-
+    
     function _populate_toolbar(&$data)
     {
         if ($data['list_registrations_url'])
@@ -174,7 +174,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
                 MIDCOM_TOOLBAR_ENABLED => true,
             ));
         }
-
+        
         if ($data['open_url'])
         {
             $this->_view_toolbar->add_item(Array(
@@ -195,7 +195,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
                 MIDCOM_TOOLBAR_ENABLED => true,
             ));
         }
-
+        
         if ($data['delete_url'])
         {
             $this->_view_toolbar->add_item(Array(
@@ -209,7 +209,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrumb line towards the current
+     * Helper, updates the context so that we get a complete breadcrum line towards the current
      * location.
      *
      * @param string $handler_id
@@ -255,11 +255,6 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Shows an event, no permissions required.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
      */
     function _handler_view($handler_id, $args, &$data)
     {
@@ -277,7 +272,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         $title = $this->_event->title;
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
         $this->_update_breadcrumb_line($handler_id);
-
+        
         $this->_populate_toolbar($data);
 
         return true;
@@ -285,9 +280,6 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Lists the registrations of a particular event, manage permissions required.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_view($handler_id, &$data)
     {
@@ -296,11 +288,6 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Shows an event, no permissions required.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -341,9 +328,6 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Lists the registrations of a particular event, manage permissions required.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_edit($handler_id, &$data)
     {
@@ -353,11 +337,6 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Lists the registrations of a particular event.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
      */
     function _handler_list_registrations($handler_id, $args, &$data)
     {
@@ -380,9 +359,6 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Lists the registrations of a particular event.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_list_registrations($handler_id, &$data)
     {
@@ -410,11 +386,6 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Shows an event, no permissions required.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
      */
     function _handler_delete($handler_id, $args, &$data)
     {
@@ -465,96 +436,10 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
     /**
      * Lists the registrations of a particular event, manage permissions required.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_delete($handler_id, &$data)
     {
         midcom_show_style('event-delete');
-    }
-
-    /**
-     * CSV export handler, no permissions required, does not invoke show method,
-     * will exit immediately.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     */
-    function _handler_export_csv($handler_id, $args, &$data)
-    {
-        $this->_event = new net_nemein_registrations_event($args[0]);
-        if (! $this->_event)
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "The event {$args[0]} could not be found.");
-            // This will exit.
-        }
-        $this->_event->require_do('net.nemein.registrations:manage');
-
-        $registrar_schema = $this->_config->get('registrar_schema');
-        $aq_schema = $this->_event->get_additional_questions_schema();
-
-        // Change the output mode accordingly, enforce UTF-8.
-        header('Content-Type: application/csv;charset=UTF-8');
-        $_MIDCOM->cache->content->enable_live_mode();
-
-        // Prepare required classes and values
-        $dm = new midcom_helper_datamanager2_datamanager($this->_schemadb);
-        require_once(MIDCOM_ROOT . '/midcom/helper/datamanager2/csv.php');
-        $csv = new midcom_helper_datamanager2_csv($dm);
-        if ($this->_config->get('csv_separator'))
-        {
-            $csv->separator = $this->_config->get('csv_separator');
-        }
-        if ($this->_config->get('csv_newline'))
-        {
-            $csv->newline = $this->_config->get('csv_newline');
-        }
-        $newline_length = - strlen($csv->newline);
-
-        // Print Header
-        $dm->set_schema($registrar_schema);
-        echo substr($csv->get_header_line(), 0, $newline_length);
-        echo $csv->separator;
-        $dm->set_schema($aq_schema);
-        echo $csv->get_header_line();
-
-        // Print data
-        $registrations = $this->_event->get_registrations();
-
-        debug_push_class(__CLASS__, __FUNCTION__);
-        if ($registrations)
-        {
-            foreach ($registrations as $registration)
-            {
-                // Skip unapproved registrations (can't be done on the QB level yet)
-                if (! $registration->is_approved())
-                {
-                    debug_add("Skipping registration ID {$registration->id}: Unapproved");
-                    continue;
-                }
-
-                $registrar = $registration->get_registrar();
-
-                if (! $registrar)
-                {
-                    // Skip invalid records.
-                    debug_add("Skipping registration ID {$registration->id}: Cannot get registrar");
-                    continue;
-                }
-
-                $dm->set_schema($registrar_schema);
-                echo substr($csv->get_line($registrar), 0, $newline_length);
-                echo $csv->separator;
-                $dm->set_schema($aq_schema);
-                echo $csv->get_line($registration);
-            }
-        }
-        debug_pop();
-
-        $_MIDCOM->finish();
-        exit();
     }
 
     /**
@@ -563,9 +448,6 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
      * touched, of course.
      *
      * @see net_nemein_registrations_event::open_registration()
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
      */
     function _handler_open($handler_id, $args, &$data)
     {
@@ -590,10 +472,6 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
     /**
      * Closes an event for registration and relocates to view mode. Already closed events
      * are ignored silently.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
      */
     function _handler_close($handler_id, $args, &$data)
     {

@@ -592,81 +592,10 @@ EOF;
      */
     function _prepare_nullstorage_schemadb()
     {
-        // First, extract the base schemas as copies. We add the additional questions to the
-        // bottom of the field list.
-        $registrar_schema = $this->_schemadb[$this->_config->get('registrar_schema')];
-        $event_dm =& $this->_event->get_datamanager();
-        // This must be copy-by-value or we will pollute the registrar schema, so use clone() if available
-        if (is_callable('clone'))
-        {
-            $merged_schema = clone($registrar_schema);
-        }
-        else
-        {
-            $merged_schema = $registrar_schema;
-        }
-        
-        if (count($event_dm->types['additional_questions']->selection) > 0)
-        {
-            $registration_schema = $this->_schemadb[$event_dm->types['additional_questions']->selection[0]];
-        }
-        else
-        {
-            $registration_schema = $this->_schemadb['aq-default'];
-        }
-
-        if (   ! $merged_schema
-            || ! $registration_schema)
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not load registrar or registration schema database.');
-            // This will exit.
-        }
-
-        if (   $this->_registrar
-            && ! $_MIDCOM->auth->can_do('midgard:update', $this->_registrar))
-        {
-            foreach($merged_schema->field_order as $name)
-            {
-                $merged_schema->fields[$name]['readonly'] = true;
-            }
-        }
-
-        foreach ($registration_schema->field_order as $name)
-        {
-            if (in_array($name, $merged_schema->field_order))
-            {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Duplicate field name '{$name}' found in both registrar and registration schema, cannot compute merged set. Aborting.");
-                // This will exit.
-            }
-            $merged_schema->append_field($name, $registration_schema->fields[$name]);
-        }
-
-        $preferred_order = $this->_config->get('merged_schema_field_order');
-        // Add any fields in schema missing from the preferred_order array
-        foreach ($merged_schema->field_order as $fieldname)
-        {
-            if (in_array($fieldname, $preferred_order))
-            {
-                // Present, do nothing
-                continue;
-            }
-            $preferred_order[] = $fieldname;
-        }
-        // Verify that all fields in preferred_order are actually in the schema
-        foreach($preferred_order as $k => $fieldname)
-        {
-            if (isset($merged_schema->fields[$fieldname]))
-            {
-                // Present, do nothing
-                continue;
-            }
-            unset($preferred_order[$k]);
-        }
-        //  array merge will make sure numeric keys are properly continous
-        $merged_schema->field_order = array_merge($preferred_order);
-
-        $this->_nullstorage_schemadb['merged'] = $merged_schema;
+        // A bit hackish but we need the full instance...
+        $interface =& $_MIDCOM->componentloader->get_interface_class('net.nemein.registrations');
+        $viewer =& $interface->_context_data[$_MIDCOM->_currentcontext]['handler'];
+        $this->_nullstorage_schemadb['merged'] = $viewer->create_merged_schema($this->_event, $this->_registrar);
         /*
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_print_r('Merged schema:', $registrar_schema);

@@ -108,7 +108,7 @@ class net_nemein_registrations_viewer extends midcom_baseclasses_components_requ
         );
         $this->_request_switch['event-export_csv'] = Array
         (
-            'handler' => Array('net_nemein_registrations_handler_event', 'export_csv'),
+            'handler' => Array('net_nemein_registrations_handler_export', 'csv'),
             'fixed_args' => Array('event', 'export', 'csv'),
             'variable_args' => 2,
         );
@@ -261,6 +261,85 @@ class net_nemein_registrations_viewer extends midcom_baseclasses_components_requ
             return true;
         }
         return false;
+    }
+
+    function create_merged_schema(&$event, &$registrar)
+    {
+        // First, extract the base schemas as copies. We add the additional questions to the
+        // bottom of the field list.
+        $registrar_schema = $this->_request_data['schemadb'][$this->_config->get('registrar_schema')];
+        $event_dm =& $event->get_datamanager();
+        // This must be copy-by-value or we will pollute the registrar schema, so use clone() if available
+        if (is_callable('clone'))
+        {
+            $merged_schema = clone($registrar_schema);
+        }
+        else
+        {
+            $merged_schema = $registrar_schema;
+        }
+        
+        if (count($event_dm->types['additional_questions']->selection) > 0)
+        {
+            $registration_schema = $this->_request_data['schemadb'][$event_dm->types['additional_questions']->selection[0]];
+        }
+        else
+        {
+            $registration_schema = $this->_request_data['schemadb']['aq-default'];
+        }
+
+        if (   ! $merged_schema
+            || ! $registration_schema)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not load registrar or registration schema database.');
+            // This will exit.
+        }
+
+        if (   $registrar
+            && !$_MIDCOM->auth->can_do('midgard:update', $registrar))
+        {
+            foreach($merged_schema->field_order as $name)
+            {
+                $merged_schema->fields[$name]['readonly'] = true;
+            }
+        }
+
+        foreach ($registration_schema->field_order as $name)
+        {
+            if (in_array($name, $merged_schema->field_order))
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                    "Duplicate field name '{$name}' found in both registrar and registration schema, cannot compute merged set. Aborting.");
+                // This will exit.
+            }
+            $merged_schema->append_field($name, $registration_schema->fields[$name]);
+        }
+
+        $preferred_order = $this->_config->get('merged_schema_field_order');
+        // Add any fields in schema missing from the preferred_order array
+        foreach ($merged_schema->field_order as $fieldname)
+        {
+            if (in_array($fieldname, $preferred_order))
+            {
+                // Present, do nothing
+                continue;
+            }
+            $preferred_order[] = $fieldname;
+        }
+        // Verify that all fields in preferred_order are actually in the schema
+        foreach($preferred_order as $k => $fieldname)
+        {
+            if (isset($merged_schema->fields[$fieldname]))
+            {
+                // Present, do nothing
+                continue;
+            }
+            unset($preferred_order[$k]);
+        }
+        //  array merge will make sure numeric keys are properly continous
+        $merged_schema->field_order = array_merge($preferred_order);
+        
+        return $merged_schema;
     }
 }
 
