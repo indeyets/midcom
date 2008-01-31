@@ -44,7 +44,7 @@ Poista kuva
 ---STRINGEND
 
 ---STRING denotes required field
-merkkaa pakollista kenttää
+Pakollinen kenttä
 ---STRINGEND
 
 ---STRING double click to edit

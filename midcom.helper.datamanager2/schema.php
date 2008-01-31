@@ -351,54 +351,45 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
      */
     function _complete_field_defaults(&$config)
     {
-        if (! array_key_exists('description', $config))
+        // Sanity check for b0rken schemas, missing type/widget would cause DM & PHP to barf later on...
+        if (   !array_key_exists('type', $config)
+            || empty($config['type']))
         {
-            $config['description'] = null;
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Field '{$config['name']}' in schema '{$this->name}' loaded from {$this->_schemadb_path} is missing *type* definition");
+            // this will exit
         }
-        if (! array_key_exists('helptext', $config))
+        if (   !array_key_exists('widget', $config)
+            || empty($config['widget']))
         {
-            $config['helptext'] = null;
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Field '{$config['name']}' in schema '{$this->name}' loaded from {$this->_schemadb_path} is missing *widget* definition");
+            // this will exit
         }
-        if (! array_key_exists('static_prepend', $config))
+        /* Rest of the defaults */
+        // Simple ones
+        $simple_defaults = array
+        (
+            'description' => null,
+            'helptext' => null,
+            'static_prepend' => null,
+            'static_append' => null,
+            'read_privilege' => null,
+            'write_privilege' => null,
+            'default' => null,
+            'readonly' => false,
+            'hidden' => false,
+            'aisonly' => false,
+            'required' => false,
+        );
+        foreach ($simple_defaults as $property => $value)
         {
-            $config['static_prepend'] = null;
+            if (! array_key_exists( $property, $config))
+            {
+                $config[ $property] = $value;
+            }
         }
-        if (! array_key_exists('static_append', $config))
-        {
-            $config['static_append'] = null;
-        }
+        unset($property, $value);
 
-        if (! array_key_exists('readonly', $config))
-        {
-            $config['readonly'] = false;
-        }
-        if (! array_key_exists('hidden', $config))
-        {
-            $config['hidden'] = false;
-        }
-        if (! array_key_exists('aisonly', $config))
-        {
-            $config['aisonly'] = false;
-        }
-        if (! array_key_exists('read_privilege', $config))
-        {
-            $config['read_privilege'] = null;
-        }
-        if (! array_key_exists('write_privilege', $config))
-        {
-            $config['write_privilege'] = null;
-        }
-
-        if (! array_key_exists('required', $config))
-        {
-            $config['required'] = false;
-        }
-
-        if (! array_key_exists('default', $config))
-        {
-            $config['default'] = null;
-        }
-
+        // And complex ones
         if (! array_key_exists('storage', $config))
         {
             $config['storage'] = Array
