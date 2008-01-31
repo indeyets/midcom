@@ -173,7 +173,7 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
                 break;
         }
 
-        $_MIDCOM->add_jsonload("jQuery('.midcom_helper_datamanager2_widget_images_image').dm2ImagePopupConvert();");
+        $_MIDCOM->add_jsonload("jQuery('.midcom_helper_datamanager2_widget_images_image').dm2ImagePopupConvert()");
         $_MIDCOM->add_jsonload("jQuery('.midcom_helper_datamanager2_widget_downloads_download').dm2ImagePopupConvert();");
     }
 
