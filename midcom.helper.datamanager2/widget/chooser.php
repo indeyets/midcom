@@ -1150,7 +1150,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         // debug_print_r('all elements to be added',$elements);
         // debug_pop();
 
-        $this->_static_items_html = "<noscript>\n";        
+        // $this->_static_items_html = "<noscript>\n";        
         $this->_static_items_html .= "<table class=\"widget_chooser_static_items_table\">\n<thead><tr>\n";
         
         if (   !empty($this->reflector_key)
@@ -1195,7 +1195,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             foreach ($elements as $key)
             {
                 // debug_add("Processing key {$key}");
-                $this->_add_existing_item_as_static($key);
+                // $this->_add_existing_item_as_static($key);
                 $data = $this->_get_key_data($key);
                 if ($data)
                 {
@@ -1214,7 +1214,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
         $this->_static_items_html .= "</tbody>\n";
         $this->_static_items_html .= "</table>\n";
-        $this->_static_items_html .= "</noscript>\n";
+        // $this->_static_items_html .= "</noscript>\n";
 
         //$this->_form->addElement('static', "{$this->_element_id}_initscripts", '', $this->_jscript);
 
@@ -1239,7 +1239,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     
     function _add_existing_item_as_static($key)
     {
-        $object =& $this->_get_key_data($key, false, true);
+        $object = $this->_get_key_data($key, false, true);
         $id_field = $this->id_field;
         $item_id = @$object->$id_field;
         
@@ -1255,7 +1255,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             && !$this->result_headers)
         {
             $value = @$object->get_label();
-            $value = rawurlencode($value);
+            // $value = rawurlencode($value);
             //debug_add("adding header item: name=label value={$value}");
             $title = $_MIDCOM->i18n->get_string('label', 'midcom');
             $this->_static_items_html .= "<td class=\"label\">{$value}&nbsp;</td>\n";
@@ -1266,7 +1266,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             {
                 $item_name = $header_item['name'];
                 $value = @$object->$item_name;
-                $value = rawurlencode(utf8_decode($value));
+                // $value = rawurlencode(utf8_decode($value));
                 // debug_add("adding header item: name={$item_name} value={$value}");
         //         
                 $this->_static_items_html .= "<td class=\"{$item_name}\">{$value}&nbsp;</td>";
@@ -1380,7 +1380,6 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     {
         // debug_push_class(__CLASS__, __FUNCTION__);
         // debug_add("get_key_data for key: {$key}");
-
         if ($this->_callback)
         {
             // debug_add("Using callback to fetch key data");
@@ -1390,7 +1389,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 // debug_pop();
                 return $this->_callback->resolve_object_name($key);
             }
-
+                        
             $results = $this->_callback->get_key_data($key);
 
             if (! $results)
@@ -1400,7 +1399,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
             // debug_pop();
 
-            if ($this->_renderer_callback)
+            if (   $this->_renderer_callback
+                || $return_object)
             {
                 return $results;
             }
@@ -1453,7 +1453,6 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         $_MIDCOM->auth->drop_sudo();
         
         // debug_pop();
-
         if ($return_object)
         {
             return $object;

@@ -85,6 +85,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
     
     hideResultsNow();
     
+    jQuery('.widget_chooser_static_items_table').hide();
+    
     function selectCurrent()
     {
         var selected = results_holder.selected();
