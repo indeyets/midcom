@@ -77,3 +77,6 @@ CREATE TABLE net_nemein_quickpoll_vote (
   KEY net_nemein_quickpoll_vote_article_idx (article),
   KEY net_nemein_quickpoll_vote_option_idx (selectedoption)
 );
+
+ALTER TABLE net_nemein_quickpoll_vote ADD COLUMN value int(11) NOT NULL default '0';
+ALTER TABLE net_nemein_quickpoll_vote ADD COLUMN textvalue varchar(255) NOT NULL default '';

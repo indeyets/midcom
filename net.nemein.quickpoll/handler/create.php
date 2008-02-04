@@ -144,9 +144,6 @@ class net_nemein_quickpoll_handler_create extends midcom_baseclasses_components_
         $this->_article = new midcom_db_article();
         $this->_article->topic = $this->_content_topic->id;
 
-        // Hotfix for #133
-        $this->_article->name = time();
-
         if (! $this->_article->create())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -183,6 +180,11 @@ class net_nemein_quickpoll_handler_create extends midcom_baseclasses_components_
             $this->_defaults['name'] = 'index';
             $this->_indexmode = true;
         }
+        
+        if (! isset($data['schemadb'][$this->_schema]))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Schema '{$this->_schema}' is not defined.");
+        }
 
         $this->_load_controller();
 
@@ -190,28 +192,17 @@ class net_nemein_quickpoll_handler_create extends midcom_baseclasses_components_
         {
             case 'save':
                 // Index the article
-//                $indexer =& $_MIDCOM->get_service('indexer');
-//                net_nemein_quickpoll_viewer::index($this->_controller->datamanager, $indexer, $this->_content_topic);
-
-                // Generate URL name
-                if ($this->_article->name == '')
-                {
-                    $this->_article->name = midcom_generate_urlname_from_string($this->_article->title);
-                    $tries = 0;
-                    $maxtries = 999;
-                    while(   !$this->_article->update()
-                          && $tries < $maxtries)
-                    {
-                        $this->_article->name = midcom_generate_urlname_from_string($this->_article->title);
-                        if ($tries > 0)
-                        {
-                            // Append an integer if articles with same name exist
-                            $this->_article->name .= sprintf("-%03d", $tries);
-                        }
-                        $tries++;
-                    }
-                }
-                $_MIDCOM->relocate("manage/{$this->_article->guid}/");
+               $indexer =& $_MIDCOM->get_service('indexer');
+               net_nemein_quickpoll_viewer::index($this->_controller->datamanager, $indexer, $this->_content_topic);
+               
+               if ($this->_schema == 'default')
+               {
+                   $_MIDCOM->relocate("manage/{$this->_article->guid}/");
+               }
+               else
+               {
+                   $_MIDCOM->relocate("{$this->_article->guid}/");
+               }
 
             case 'cancel':
                 $_MIDCOM->relocate('');
@@ -241,7 +232,7 @@ class net_nemein_quickpoll_handler_create extends midcom_baseclasses_components_
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "create/{$this->_schema}.html",
+            MIDCOM_NAV_URL => "create/{$this->_schema}/",
             MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('create %s'), $this->_schemadb[$this->_schema]->description),
         );
 

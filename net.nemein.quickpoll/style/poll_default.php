@@ -1,15 +1,12 @@
 <?php
-// Available request keys: article, datamanager, edit_url, delete_url, create_urls
-
-$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['view_article'];
 $view_id = $data['article']->guid;
 
-$permalink = $_MIDCOM->permalinks->create_permalink($data['article']->guid);
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 $submit_string = $data['l10n']->get('vote');
 $vote_count_string = $data['l10n']->get('vote count');
 ?>
+POLL DEFAULT
 <div class="hentry">
     <h1 class="headline">&(view['title']:h);</h1>
 
@@ -37,9 +34,9 @@ $vote_count_string = $data['l10n']->get('vote count');
         else
         {
             ?>
-            <form method="post"  id="net_nemein_quickpoll_vote_form" name="net_nemein_quickpoll_vote_form" action="&(prefix);vote/&(view_id);">
-            &(view["options"]:h);
-            <br /><br /><input type="submit" value="&(submit_string);" />
+            <form method="post"  id="net_nemein_quickpoll_vote_form" name="net_nemein_quickpoll_vote_form" action="&(prefix);vote/&(view_id);/">
+                &(view["options"]:h);
+                <input type="submit" value="&(submit_string);" />
             </form>
             <?php
         }

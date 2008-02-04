@@ -11,4 +11,5 @@
 'enable_anonymous' => true,
 
 'lock_ip_address' => true,
+'allow_multiple_votes' => false,
 

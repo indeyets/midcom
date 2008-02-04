@@ -54,3 +54,42 @@
     )
 ),
 
+'numeric' => array
+(
+    'description' => 'numeric value poll',
+    'fields'      => array
+    (
+        'name' => Array
+        (
+            // COMPONENT-REQUIRED
+            'title'   => 'url name',
+            'storage' => 'name',
+            'type'    => 'text',
+            'widget'  => 'text',
+            'write_privilege' => array
+            (
+                'privilege' => 'midcom:urlname',
+            ),
+        ),    
+        'title' => Array
+        (
+            // COMPONENT-REQUIRED
+            'title' => 'title',
+            'storage' => 'title',
+            'required' => true,
+            'type' => 'text',
+            'widget' => 'text',
+        ),
+        'abstract' => Array
+        (
+            // COMPONENT-REQUIRED
+            'title' => 'abstract',
+            'storage' => 'abstract',
+            'type' => 'text',
+            'widget' => 'textarea',
+        ),
+    )
+),
+
+
+

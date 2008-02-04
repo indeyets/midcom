@@ -23,11 +23,15 @@
     <property name="id" type="integer" primaryfield="id" />
 
     <property name="selectedoption" link="net_nemein_quickpoll_option:id" reverse="no" parentfield="selectedoption" type="integer"/>
+    <property name="value" type="integer"/>
+    <property name="textvalue" type="string"/>
+    
     <property name="article" link="midgard_article:id" reverse="no" type="integer"/>
         
     <!-- Voter information: user and IP -->
     <property name="user" link="midgard_person:id" reverse="no" type="integer"/>
     <property name="ip" type="string"/>
+    
         
     <!-- 1.7 required metadata -->        
     <property name="revised" type="string"/>

@@ -189,7 +189,7 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_URL => 'config/',
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
@@ -201,14 +201,13 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             foreach (array_keys($this->_request_data['schemadb']) as $name)
             {
                 $this->_node_toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "create/{$name}.html",
+                    MIDCOM_TOOLBAR_URL => "create/{$name}/",
                     MIDCOM_TOOLBAR_LABEL => sprintf
                     (
                         $this->_l10n_midcom->get('create %s'),
                         $this->_l10n->get($this->_request_data['schemadb'][$name]->description)
                     ),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
-                    MIDCOM_TOOLBAR_ACCESSKEY => 'n',
                 ));
             }
         }
@@ -229,31 +228,61 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
     }
 
     /**
-     * Returns vote status by IP address to specific poll article
-     * @param String $guid Poll article guid
-     * @param String $ip IP to check for
-     * @return Boolean
+     * Check if user has voted already either based on login or IP address
+     *
+     * @access static
+     * @return boolean
      */
-    function has_ip_voted($guid, $ip)
+    function has_voted($poll_id, &$config)
     {
-        $article = new midcom_db_article($guid);
-        if (! $article)
+        if (   $config->get('allow_multiple_votes')
+            && (   $config->get('enable_anonymous')
+                || $_MIDCOM->auth->user)
+            )
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The article {$guid} was not found.");
-            // This will exit.
+            // We always let user vote
+            return false;
+        }
+        
+        $qb_vote = new midgard_query_builder('net_nemein_quickpoll_vote');
+        $qb_vote->add_constraint('article', '=', $poll_id);
+
+        if ($config->get('lock_ip_address'))
+        {
+            $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
+        }
+        else if ($_MIDGARD['user'])
+        {
+            $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
         }
 
-        $qb_vote = net_nemein_quickpoll_vote_dba::new_query_builder();
-        $qb_vote->add_constraint('article', '=', $article->guid);
-        $qb_vote->add_constraint('ip', '=', $ip);
-
-        if ($qb_vote->count() > 0)
+        $vote_count = $qb_vote->count();        
+        if ($vote_count > 0)
         {
-            return true;
+            $voted = true;
+        }
+        else
+        {
+            $voted = false;
         }
 
-        return false;
+        if (   $config->get('enable_anonymous')
+            && !$config->get('lock_ip_address')
+            && !$_MIDGARD['user'])
+        {
+            $voted = false;
+        }
+
+        if (   !$config->get('enable_anonymous')
+            && (   !$_MIDCOM->auth->user
+                && !$_MIDCOM->auth->admin))
+        {
+            $voted = true;
+        }
+        
+        return $voted;
     }
+
 
 }
 

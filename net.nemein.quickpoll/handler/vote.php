@@ -79,6 +79,12 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The article {$args[0]} was not found.");
             // This will exit.
         }
+        
+        if (net_nemein_quickpoll_viewer::has_voted($this->_article->id, &$this->_config))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, "You are not allowed to vote in {$this->_article->title}.");
+            // This will exit.
+        }
 
         if ($this->_config->get('enable_anonymous'))
         {
@@ -91,14 +97,22 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
             $sudo_mode = false;
             $this->_article->require_do('midgard:create');
         }
+        // FIXME: Check that user is actually allowed to vote
         
-        if (array_key_exists('net_nemein_quickpoll_option',$_POST))
+        $vote = new net_nemein_quickpoll_vote_dba();
+        $vote->article = $this->_article->id;
+        $vote->user = $_MIDGARD['user'];
+        $vote->ip = $_SERVER['REMOTE_ADDR'];
+        
+        // TODO: Check poll article's schema
+        if (array_key_exists('net_nemein_quickpoll_option', $_POST))
         {
-            $vote = new net_nemein_quickpoll_vote_dba();
-            $vote->article = $this->_article->id;
-            $vote->selectedoption = $_POST['net_nemein_quickpoll_option'];
-            $vote->user = $_MIDGARD['user'];
-            $vote->ip = $_SERVER['REMOTE_ADDR'];
+            $vote->selectedoption = (int) $_POST['net_nemein_quickpoll_option'];
+            $vote->create();
+        }
+        elseif (array_key_exists('net_nemein_quickpoll_value', $_POST))
+        {
+            $vote->value = (int) $_POST['net_nemein_quickpoll_value'];
             $vote->create();
         }
         else
@@ -121,7 +135,7 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
         {            
             if ($type == 'XML')
             {
-                $_MIDCOM->relocate("{$prefix}polldata/{$type}/{$article_id}");
+                $_MIDCOM->relocate("{$prefix}polldata/{$type}/{$article_id}/");
             }
             
             $_MIDCOM->relocate("{$prefix}{$type}/{$article_id}/");

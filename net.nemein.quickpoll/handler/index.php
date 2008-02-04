@@ -39,6 +39,26 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
      * @access private
      */
     var $_datamanager = null;
+    
+    var $_manage = false;
+    
+    var $_schema = 'default';
+    
+    /**
+     * Simple default constructor.
+     */
+    function net_nemein_quickpoll_handler_index()
+    {
+        parent::midcom_baseclasses_components_handler();
+    }
+
+    /**
+     * _on_initialize is called by midcom on creation of the handler.
+     */
+    function _on_initialize()
+    {
+         $this->_content_topic =& $this->_request_data['content_topic'];
+    }
 
     /**
      * Simple helper which references all important members to the request data listing
@@ -60,23 +80,28 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
             ));
-            if ($this->_manage)
+
+            if ($this->_datamanager->schema_name == 'default')
             {
-                $this->_view_toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "{$this->_article->guid}/",
-                    MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('close manage'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-                    MIDCOM_TOOLBAR_ACCESSKEY => 'm',
-                ));
-            }
-            else
-            {
-                $this->_view_toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "manage/{$this->_article->guid}/",
-                    MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('manage'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-                    MIDCOM_TOOLBAR_ACCESSKEY => 'm',
-                ));
+                // The "Manage options" view is needed only for polls that actually have options
+                if ($this->_manage)
+                {
+                    $this->_view_toolbar->add_item(Array(
+                        MIDCOM_TOOLBAR_URL => "{$this->_article->guid}/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('close manage'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                        MIDCOM_TOOLBAR_ACCESSKEY => 'm',
+                    ));
+                }
+                else
+                {
+                    $this->_view_toolbar->add_item(Array(
+                        MIDCOM_TOOLBAR_URL => "manage/{$this->_article->guid}/",
+                        MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('manage'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                        MIDCOM_TOOLBAR_ACCESSKEY => 'm',
+                    ));
+                }
             }
         }
 
@@ -89,23 +114,6 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
             ));
         }
-    }
-
-
-    /**
-     * Simple default constructor.
-     */
-    function net_nemein_quickpoll_handler_index()
-    {
-        parent::midcom_baseclasses_components_handler();
-    }
-
-    /**
-     * _on_initialize is called by midcom on creation of the handler.
-     */
-    function _on_initialize()
-    {
-         $this->_content_topic =& $this->_request_data['content_topic'];
     }
 
     /**
@@ -126,8 +134,9 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         
         $options_data = array();
         $total_count = 0;
-
-        $this->_manage = false;
+        $vote_value = null;
+        
+        // $this->_manage = false;
 
         $qb = new org_openpsa_qbpager('midcom_db_article', 'net_nemein_quickpoll');
         $qb->add_constraint('topic', '=', $this->_content_topic->id);
@@ -149,11 +158,16 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         else
         {
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-            $_MIDCOM->relocate($prefix.'create/'.$this->_config->get('schema'));
+            $_MIDCOM->relocate("{$prefix}create/" . $this->_config->get('schema') . '/');
         }
 
         $this->_load_datamanager();
-
+        
+        // if ($this->_schema == 'numeric')
+        // {
+        //     $vote_value = 0;
+        // }
+        
         $poll_data = array
         (
             'id' => $this->_article->id,
@@ -162,44 +176,11 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             'abstract' => mgd_format($this->_article->abstract, 'h'),
         );
 
-        $this->_request_data['name']  = 'net.nemein.quickpoll';
+        $this->data['name']  = 'net.nemein.quickpoll';
 
-        $qb_vote = new midgard_query_builder('net_nemein_quickpoll_vote');
-        $qb_vote->add_constraint('article', '=', $this->_article->id);
+        // Check if user can vote
+        $data['voted'] = net_nemein_quickpoll_viewer::has_voted($this->_article->id, &$this->_config);
         
-        if ($this->_config->get('lock_ip_address'))
-        {
-            $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
-        }
-        else if ($_MIDGARD['user'])
-        {
-            $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
-        }
-        
-        $vote_count = $qb_vote->count();        
-        if ($vote_count > 0)
-        {
-            $this->_request_data['voted'] =  true;
-        }
-        else
-        {
-            $this->_request_data['voted'] =  false;
-        }
-
-        if (   $this->_config->get('enable_anonymous')
-            && !$this->_config->get('lock_ip_address')
-            && !$_MIDGARD['user'])
-        {
-            $this->_request_data['voted'] =  false;
-        }
-
-        if (   !$this->_config->get('enable_anonymous')
-            && (   !$_MIDCOM->auth->user
-                && !$_MIDCOM->auth->admin))
-        {
-            $this->_request_data['voted'] =  true;
-        }
-
         $qb_options = net_nemein_quickpoll_option_dba::new_query_builder();
         $qb_options->add_constraint('article', '=', $this->_article->id);
         $options = $qb_options->execute();
@@ -220,9 +201,10 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         
         $poll_results = array
         (
-            'poll'    => $poll_data,
+            'poll' => $poll_data,
             'options' => $options_data,
-            'total'   => $total_count,
+            'value' => $vote_value,
+            'total' => $total_count,
         );
         $this->_vote_count = $total_count;
         
@@ -267,6 +249,8 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
                 // This will exit.
             }
         }
+        
+        $this->_schema =& $this->_datamanager->schema_name;
     }
 
     /**
@@ -316,7 +300,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         else
         {
             $this->_request_data['view_article'] = $this->_datamanager->get_content_html();
-            midcom_show_style('index');            
+            midcom_show_style("poll_{$this->_datamanager->schema_name}");
         }
     }
 
@@ -405,29 +389,8 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
 
         $this->_prepare_request_data();
 
-        $qb_vote = net_nemein_quickpoll_vote_dba::new_query_builder();
-        $qb_vote->add_constraint('article', '=', $this->_article->id);
-        $qb_vote->begin_group('OR');
-            $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
-            $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
-        $qb_vote->end_group();
-        $vote_count = $qb_vote->count();
-
-        if ($vote_count > 0)
-        {
-            $this->_request_data['voted'] =  true;
-        }
-        else
-        {
-            $this->_request_data['voted'] =  false;
-        }
-
-        if (   !$this->_config->get('enable_anonymous')
-            && (   !$_MIDCOM->auth->user
-                && !$_MIDCOM->auth->admin))
-        {
-            $this->_request_data['voted'] =  true;
-        }
+        // Check if user can vote
+        $data['voted'] = net_nemein_quickpoll_viewer::has_voted($this->_article->id, &$this->_config);
 
         // Set context data
         /**
@@ -515,41 +478,9 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
                 $total_count += $option->votes;
             }
         }
-
-        $qb_vote = new midgard_query_builder('net_nemein_quickpoll_vote');
-        $qb_vote->add_constraint('article', '=', $this->_article->id);
-        if ($this->_config->get('lock_ip_address'))
-        {
-            $qb_vote->add_constraint('ip', '=', $_SERVER['REMOTE_ADDR']);
-        }
-        else if ($_MIDGARD['user'])
-        {
-            $qb_vote->add_constraint('user', '=', $_MIDGARD['user']);
-        }
-        $vote_count = $qb_vote->count();
-        
-        if ($vote_count > 0)
-        {
-            $this->_request_data['voted'] =  true;
-        }
-        else
-        {
-            $this->_request_data['voted'] =  false;
-        }
-
-        if (   $this->_config->get('enable_anonymous')
-            && !$this->_config->get('lock_ip_address')
-            && !$_MIDGARD['user'])
-        {
-            $this->_request_data['voted'] =  false;
-        }
-
-        if (   !$this->_config->get('enable_anonymous')
-            && (   !$_MIDCOM->auth->user
-                && !$_MIDCOM->auth->admin))
-        {
-            $this->_request_data['voted'] =  true;
-        }
+  
+        // Check if user can vote
+        $data['voted'] = net_nemein_quickpoll_viewer::has_voted($this->_article->id, &$this->_config);
 
         $poll_results = array
         (
@@ -585,7 +516,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
     function _show_view($handler_id, &$data)
     {
         $this->_request_data['view_article'] = $this->_datamanager->get_content_html();
-        midcom_show_style('index');
+        midcom_show_style("poll_{$this->_datamanager->schema_name}");
     }
 
     /**
