@@ -274,6 +274,7 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
     {
         parent::_on_created();
         $this->_verify_privileges();
+        debug_pop();
         return true;
     }
 
