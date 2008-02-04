@@ -6,7 +6,6 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 $submit_string = $data['l10n']->get('vote');
 $vote_count_string = $data['l10n']->get('vote count');
 ?>
-POLL DEFAULT
 <div class="hentry">
     <h1 class="headline">&(view['title']:h);</h1>
 
