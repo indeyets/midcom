@@ -6,6 +6,7 @@
 'index_count'          => 10,      // How many upcoming events to display on index
 'rss_count'            => 10,      // How many upcoming events to display on index
 'type_filter_upcoming' => null,   // What type (int) to filter welcome page items with
+'type_filter_show_old' => false,  // Should the type filtered results include also old events
 'list_from_master'     => false,  // Whether to list events from subdirectories of the master event. Disables creation
 'list_from_topics'     => null,   // List of the event topics displayed in this topic
 'enable_filters'       => false,  // Whether to enable GET filters

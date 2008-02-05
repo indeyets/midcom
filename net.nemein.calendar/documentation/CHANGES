@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-02-03 adrenalin
+  - Added new configuration option for showing past events with type filtering in upcoming events
+
 2008-01-23 adrenalin
   - Added new configuration options to component configuration schemadb
 

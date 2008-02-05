@@ -53,6 +53,14 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
     var $_past = false;
 
     /**
+     * Switch to determine if the past elements should be shown in the upcoming events
+     * 
+     * @var boolean
+     * @access private
+     */
+    var $_show_past_in_upcoming = false;
+    
+    /**
      * Simple default constructor.
      */
     function net_nemein_calendar_handler_view()
@@ -72,12 +80,12 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_open($handler_id, $args, &$data)
     {
         $this->_load_datamanager();
@@ -150,12 +158,12 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $this->_show_event_listing($handler_id);
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_upcoming($handler_id, $args, &$data)
     {
         $this->_load_datamanager();
@@ -170,6 +178,12 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             $this->_request_data['index_count'] = $this->_config->get('index_count');
         }
 
+        // Filter the upcoming list by a type if required
+        if (!is_null($this->_config->get('type_filter_upcoming')))
+        {
+            $this->_show_past_in_upcoming = true;
+        }
+        
         $this->_request_data['events'] = array();
 
         $this->_load_filters();
@@ -190,12 +204,12 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $this->_show_event_listing($handler_id);
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_past($handler_id, $args, &$data)
     {
         $this->_load_datamanager();
@@ -231,12 +245,12 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $this->_show_event_listing($handler_id);
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_week($handler_id, $args, &$data)
     {
         $this->_load_datamanager();
@@ -285,12 +299,12 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $this->_show_event_listing($handler_id);
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_between($handler_id, $args, &$data)
     {
         $this->_load_datamanager();
@@ -410,11 +424,14 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
      */
     function _get_event_listing($from, $to, $list_all = false)
     {
+        $qb = net_nemein_calendar_event_dba::new_query_builder();
+        
         // Filter the upcoming list by a type if required
         $type_filter = $this->_config->get('type_filter_upcoming');
-
-        $qb = net_nemein_calendar_event_dba::new_query_builder();
-
+        
+        // Switch for determining if the filters have already been initialized
+        $filtered = false;
+        
         $qb->begin_group('OR');
 
         // Add root event constraints
@@ -447,10 +464,19 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         $qb->end_group();
 
          // Add filtering constraints
-        if (!is_null($type_filter))
+        if ($this->_show_past_in_upcoming)
         {
-            $qb->add_constraint('type', '=', (int) $type_filter);
+            $qb->begin_group('OR');
+                $qb->add_constraint('type', '=', $type_filter);
+                $qb->add_constraint('end', '>', gmdate('Y-m-d H:i:s', $from));
+            $qb->end_group();
+            
+            $qb->add_order('start');
+            
+            // Prevent the other time filters from being used again
+            $filtered = true;
         }
+        
         foreach ($this->_filters as $field => $filter)
         {
             $qb->add_constraint($field, '=', $filter);
@@ -473,7 +499,8 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         }
 
         // Find all events that occur during [$from, $end]
-        if ($this->_past === false)
+        if (   !$this->_past
+            && !$filtered)
         {
             $qb->begin_group('OR');
                 // The event begins during [$from, $to]
@@ -509,8 +536,9 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 }
             $qb->end_group();
             $qb->add_order('start');
+            $filtered = true;
         }
-        else
+        elseif ($filtered === false)
         {
             $qb->add_constraint('start', '>', '0000-00-00 00:00:00');
             $qb->add_constraint('end', '<', gmdate('Y-m-d H:i:s', time()));
@@ -584,8 +612,6 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
      * Show an event listing populated in $this->_request_data['events']
      *
      * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
-     * @param string
      */
     function _show_event_listing($handler_id)
     {
@@ -611,6 +637,13 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 $year_shown = gmdate('Y', $start);
                 $month_shown = gmdate('m', $start);
                 $day_shown = gmdate('d', $start);
+            }
+            elseif (!is_null($this->_config->get('type_filter_upcoming'))
+                && $this->_config->get('type_filter_show_old'))
+            {
+                $year_shown = gmdate('Y', strtotime($this->_request_data['events'][0]->start));
+                $month_shown = gmdate('m', strtotime($this->_request_data['events'][0]->start));
+                $day_shown = gmdate('d', strtotime($this->_request_data['events'][0]->start));
             }
             else
             {
@@ -656,7 +689,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 $this->_request_data['event_month'] = gmdate('m', strtotime($event->start));
                 $this->_request_data['event_day'] = gmdate('d', strtotime($event->start));
 
-                if ($this->_request_data['event_year'] > $year_shown)
+                if ($this->_request_data['event_year'] !== $year_shown)
                 {
                     midcom_show_style('show_listing_end');
                     $year_shown = $this->_request_data['event_year'];
@@ -666,7 +699,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                     midcom_show_style('show_listing_month_header');
                     midcom_show_style('show_listing_day_header');
                 }
-                elseif ($this->_request_data['event_month'] > $month_shown)
+                elseif ($this->_request_data['event_month'] !== $month_shown)
                 {
                     midcom_show_style('show_listing_end');
                     $month_shown = $this->_request_data['event_month'];
@@ -674,7 +707,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                     midcom_show_style('show_listing_month_header');
                     midcom_show_style('show_listing_day_header');
                 }
-                elseif ($this->_request_data['event_day'] > $day_shown)
+                elseif ($this->_request_data['event_day'] !== $day_shown)
                 {
                     $day_shown = $this->_request_data['event_day'];
                     midcom_show_style('show_listing_day_header');
