@@ -8,6 +8,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-02-05 adrenalin
+  - Fixed wrong number of archived articles given due to skipping ACL checks
+
 2007-12-14 adrenalin
   - Enabled scheduled publishing that takes the metadata published of the article into account
 

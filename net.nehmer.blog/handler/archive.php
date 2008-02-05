@@ -181,7 +181,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
             $qb->end_group();
         }
 
-        return $qb->count_unchecked();
+        return $qb->count();
     }
 
     /**
