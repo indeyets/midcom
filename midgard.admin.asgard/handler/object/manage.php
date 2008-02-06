@@ -816,7 +816,11 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         }
 
         $this->_load_schemadb($this->_new_type);
-        $this->_schemadb['object']->fields['guid']['hidden'] = true;
+        
+        if (isset($this->_schemadb['object']->fields['guid']))
+        {
+            $this->_schemadb['object']->fields['guid']['hidden'] = true;
+        }
 
         // Allow setting defaults from query string, useful for things like "create event for today" and chooser
         if (   isset($_GET['defaults'])
@@ -833,7 +837,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 $data['defaults'][$key] = $value;
             }
         }
-
+        
         $this->_controller = midcom_helper_datamanager2_controller::create('create');
         $this->_controller->schemadb =& $this->_schemadb;
         $this->_controller->schema = 'object';
