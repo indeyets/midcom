@@ -839,13 +839,14 @@ class midcom_baseclasses_core_dbobject
 
         foreach ($metadata_timestamps as $timestamp)
         {
-            if (array_key_exists($timestamp, $object->metadata))
+            if (property_exists($object->metadata, $timestamp))
             {
+                $m = $object->metadata;
                 if (   $object->metadata->$timestamp == '0000-00-00 00:00:00'
                     || $object->metadata->$timestamp == '0000-00-00 00:00:00+0000'
                     || !$object->metadata->$timestamp)
                 {
-                    $object->metadata->$timestamp = 0;
+                    $m->$timestamp = 0;
                 }
                 else
                 {
@@ -858,9 +859,9 @@ class midcom_baseclasses_core_dbobject
                     {
                         $tmp = 0;
                     }
-                    $object->metadata->$timestamp = $tmp;
+                    $m->$timestamp = $tmp;
                 }
-            }          
+            }
         }
     }
 
@@ -891,7 +892,8 @@ class midcom_baseclasses_core_dbobject
         {
             if (array_key_exists($timestamp, $object->metadata))
             {
-                $object->metadata->$timestamp = new DateTime($object->metadata->$timestamp);
+                $m = $object->metadata;
+                $m->$timestamp = new DateTime($object->metadata->$timestamp);
             }
         }
     }
@@ -923,7 +925,8 @@ class midcom_baseclasses_core_dbobject
         {
             if (array_key_exists($timestamp, $object->metadata))
             {
-                $object->metadata->$timestamp = $object->metadata->$timestamp->format('U');
+                $m = $object->metadata;
+                $m->$timestamp = $object->metadata->$timestamp->format('U');
             }
         }
     }
@@ -960,17 +963,18 @@ class midcom_baseclasses_core_dbobject
         {
             if (array_key_exists($timestamp, $object->metadata))
             {
+                $m = $object->metadata;
                 if (! is_numeric($object->metadata->$timestamp))
                 {
-                    $object->metadata->$timestamp = 0;
+                    $m->$timestamp = 0;
                 }
                 if ($object->metadata->$timestamp == 0)
                 {
-                    $object->metadata->$timestamp = '0000-00-00 00:00:00';
+                    $m->$timestamp = '0000-00-00 00:00:00';
                 }
                 else
                 {
-                    $object->metadata->$timestamp = gmstrftime('%Y-%m-%d %T', $object->metadata->$timestamp);
+                    $m->$timestamp = gmstrftime('%Y-%m-%d %T', $object->metadata->$timestamp);
                 }
             }
         }
