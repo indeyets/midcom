@@ -121,14 +121,21 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
             $mc->execute();
 
             $links = $mc->list_keys();
-            $qb->begin_group('OR');
-                foreach ($links as $guid => $link)
-                {
-                    $article_id = $mc->get_subkey($guid, 'article');
-                    $qb->add_constraint('id', '=', $article_id);
-                }
+            if (count($links) > 0)
+            {
+                $qb->begin_group('OR');
+                    foreach ($links as $guid => $link)
+                    {
+                        $article_id = $mc->get_subkey($guid, 'article');
+                        $qb->add_constraint('id', '=', $article_id);
+                    }
+                    $qb->add_constraint('topic', '=', $this->_content_topic->id);
+                $qb->end_group();
+            }
+            else
+            {
                 $qb->add_constraint('topic', '=', $this->_content_topic->id);
-            $qb->end_group();
+            }
         }
         else
         {
