@@ -138,3 +138,23 @@ div.net_nemein_discussion_thread ol li div.net_nemein_discussion_moderation_hist
     font-weight: bold;
     font-style: normal;
 }
+
+div.net_nemein_discussion_tags ul.cloud
+{
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+}
+div.net_nemein_discussion_tags ul.cloud li
+{
+    list-style: none;
+    display: inline;
+    margin-right: 1em;
+    font-size: smaller;
+    white-space: nowrap;
+}
+div.net_nemein_discussion_tags ul.cloud li em
+{
+    font-size: larger;
+    font-style: normal;
+}

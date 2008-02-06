@@ -24,12 +24,12 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
         parent::midcom_baseclasses_components_handler();
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return bool Indicating success.
-	 */
+     */
     function _handler_index($handler_id, $args, &$data)
     {
         $data['forum'] =& $this->_topic;
@@ -160,14 +160,13 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
             midcom_show_style('view-forum-index-footer');
         }
     }
-    
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return bool Indicating success.
-	 */
+     */
     function _handler_tag($handler_id, $args, &$data)
     {
         $data['forum'] =& $this->_topic;
@@ -222,19 +221,26 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
         $qb->display_pages = $this->_config->get('display_pages');
         
         // Constrain by tag links
-        $qb->begin_group('OR');
+        if (count($data['tags_links']) > 1)
+        {
+            $qb->begin_group('OR');
+        }
         foreach ($data['tags_links'] as $guid => $array)
         {
             $thread_guid = $data['mc']->get_subkey($guid, 'fromGuid');
             $qb->add_constraint('guid', '=', $thread_guid);
         }
-        $qb->end_group();
+        if (count($data['tags_links']) > 1)
+        {        
+            $qb->end_group();
+        }
         
         $qb->add_constraint('node', '=', $this->_topic->id);
         $qb->add_constraint('posts', '>', 0);
         $qb->add_order('sticky', 'DESC');
         $qb->add_order($this->_config->get('order_threads_by'), 'DESC');
         $threads = $qb->execute_unchecked();
+        
         $data['thread_qb'] =& $qb;
         $date = null;
         midcom_show_style('view-index-header');
@@ -292,6 +298,40 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
         }
         midcom_show_style('view-index-date-footer');
         midcom_show_style('view-index-footer');
+    }
+    
+    /**
+     * Fetch tags of discussion threads
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array &$data The local request data.
+     * @return bool Indicating success.
+     */
+    function _handler_tags($handler_id, $args, &$data)
+    {
+        $data['forum'] =& $this->_topic;
+        
+        $_MIDCOM->load_library('net.nemein.tag');
+
+        // Set context data
+        $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
+        
+        // Load the tags
+        $data['tags'] = net_nemein_tag_handler::get_tags_by_class('net_nemein_discussion_thread_dba');
+
+        return true;
+    }
+    
+    /**
+     * Display a tag cloud
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
+    function _show_tags($handler_id, &$data)
+    {
+        midcom_show_style('view-tags');
     }
 }
 ?>

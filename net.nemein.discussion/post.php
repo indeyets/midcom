@@ -18,6 +18,19 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
     {
         return parent::__construct($id);
     }
+    
+    function get_parent_guid_uncached()
+    {
+        if ($this->replyto)
+        {
+            $parent = new net_nemein_discussion_post_dba($this->replyto);
+        }
+        else
+        {
+            $parent = new net_nemein_discussion_thread_dba($this->thread);
+        }
+        return $parent->guid;
+    }    
 
     /**
      * Statically callable method to get parent guid when object guid is given

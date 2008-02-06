@@ -53,6 +53,14 @@
                 'height' => 24,
             ),
         ),
+        'tags' => Array
+        (
+            'title' => 'tags',
+            'storage' => null,
+            'type' => 'tags',
+            'widget' => 'text',
+            'hidden' => true,
+        ),
     )
 ),
 'email' => array
