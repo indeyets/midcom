@@ -253,7 +253,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
     {
         if (is_object($object))
         {
-            if (!isset($object->guid))
+            if (!property_exists($object, 'guid'))
             {
                 $object_guid = null;
             }

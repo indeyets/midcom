@@ -65,7 +65,7 @@ class midcom_baseclasses_core_dbobject
         }
         
         // Prevent circular UP references
-        if (!isset($object->__new_class_name__))
+        if (!property_exists($object, '__new_class_name__'))
         {
             return true;
         }
@@ -762,7 +762,7 @@ class midcom_baseclasses_core_dbobject
     {
         // TODO: Do this with midgard_object_class::is_multilang($object) when it works
         if (   $GLOBALS['midcom_config']['i18n_multilang_strict']
-            && isset($object->lang)
+            && !property_exists($object, 'lang')
             && !is_a($object, 'midgard_parameter')
             && !is_a($object, 'midgard_attachment')
             && $object->lang != $_MIDCOM->i18n->get_midgard_language())
@@ -852,23 +852,15 @@ class midcom_baseclasses_core_dbobject
                     // We do this silently to avoid problems with broken values. They are rewritten to a
                     // zero timestamp silently. Also, we need special treatment for NULL timestamps, which
                     // are cast to '0' (which is in theory wrong for a stamp like '0000-00-00 00:00:00').
-                    if (strlen($object->metadata->$timestamp) == 19)
-                    {
-                        // Old format, timestamp doesn't include timezone
-                        $tmp = @strtotime("{$object->metadata->$timestamp} GMT");
-                    }
-                    else
-                    {
-                        // New format, timezone included
-                        $tmp = @strtotime($object->metadata->$timestamp);
-                    }
+                    // Old format, timestamp doesn't include timezone
+                    $tmp = @strtotime("{$object->metadata->$timestamp} GMT");
                     if ($tmp == -1)
                     {
                         $tmp = 0;
                     }
                     $object->metadata->$timestamp = $tmp;
                 }
-            }
+            }          
         }
     }
 
@@ -995,12 +987,12 @@ class midcom_baseclasses_core_dbobject
      */
     function generate_urlname(&$object, $titlefield = 'title')
     {
-        if (!isset($object->name))
+        if (!property_exists($object, 'name'))
         {
             return false;
         }
         
-        if (   !isset($object->$titlefield)
+        if (   !property_exists($object, $titlefield)
             || empty($object->$titlefield))
         {
             return false;
