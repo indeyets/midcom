@@ -285,7 +285,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
             } 
             
             // Display links to language versions
-            $translations = $view_metadata->get_languages();
+            /*$translations = $view_metadata->get_languages();
             foreach ($translations as $translation)
             {
                 if ($translation['host']->id == $_MIDGARD['host'])
@@ -305,7 +305,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
                         'href'  => "{$translation['url']}midcom-permalink-{$view_metadata->object->guid}",
                     )
                 );
-            }
+            }*/
         }
     }
 }

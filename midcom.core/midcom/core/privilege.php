@@ -491,7 +491,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
             return $result;
         }
 
-        foreach($privileges as $privilege_guid => $value)
+        foreach ($privileges as $privilege_guid => $value)
         {
             $privilege = $mc->get($privilege_guid);
             $privilege['objectguid'] = $guid;

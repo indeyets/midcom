@@ -124,7 +124,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
             // No arguments left
 
             return false;
-        }
+        }       
 
         $qb = midcom_db_topic::new_query_builder();
         $qb->add_constraint('name', '=', $this->argv[0]);
