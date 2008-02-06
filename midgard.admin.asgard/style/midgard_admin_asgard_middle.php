@@ -48,7 +48,7 @@ if (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') !== 'no')
                         echo "<h1>";
                         
                         if (   isset($data['object'])
-                            && isset($data['object']->lang))
+                            && property_exists($data['object'], 'lang'))
                         {
                             // FIXME: It would be better to reflect whether object is MultiLang
                             if (   $data['object']->lang == 0

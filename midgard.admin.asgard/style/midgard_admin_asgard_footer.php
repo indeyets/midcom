@@ -21,7 +21,7 @@
                         }
 
                         if (   isset($data['object'])
-                            && isset($data['object']->lang)
+                            && property_exists($data['object'], 'lang')
                             && !is_a($data['object'], 'midgard_host'))
                         {
                             // FIXME: It would be better to reflect whether object is MultiLang
