@@ -23,9 +23,9 @@
  */
 class midcom_baseclasses_database_event extends __midcom_baseclasses_database_event
 {
-    function midcom_baseclasses_database_event($id = null)
+    function __construct($id = null)
     {
-        parent::__midcom_baseclasses_database_event($id);
+        parent::__construct($id);
     }
 
     /**

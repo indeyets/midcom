@@ -16,7 +16,7 @@ class net_nemein_feedcollector_topic_dba extends __net_nemein_feedcollector_topi
 {
     function net_nemein_feedcollector_topic_dba($id = null)
     {
-        return parent::__net_nemein_feedcollector_topic_dba($id);
+        return parent::__construct($id);
     }
 }
 ?>
