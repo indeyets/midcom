@@ -5,31 +5,31 @@
     (
         'language' => Array
         (
-	      // COMPONENT-REQUIRED
-	     'title' => 'language',
+          // COMPONENT-REQUIRED
+         'title' => 'language',
              'storage' => 'language',
              'type' => 'select',
-	     'type_config' => array
-	     (
-	         'options' => array('fi' => 'Fi', 'en' => 'En'),
+         'type_config' => array
+         (
+             'options' => array('fi' => 'Fi', 'en' => 'En'),
              ),
-	     'widget' => 'select',
+         'widget' => 'select',
         ),
         'word' => Array
         (
-	      // COMPONENT-REQUIRED
-	     'title' => 'banned word',
+          // COMPONENT-REQUIRED
+         'title' => 'banned word',
              'storage' => 'bannedWord',
              'type' => 'text',
-	     'widget' => 'text',
+         'widget' => 'text',
         ),
         'description' => Array
         (
-	      // COMPONENT-REQUIRED
-	     'title' => 'description',
+          // COMPONENT-REQUIRED
+         'title' => 'description',
              'storage' => 'description',
              'type' => 'text',
-	     'widget' => 'text',
+         'widget' => 'text',
         ),
     ),
 ),

@@ -63,7 +63,7 @@
                 'height' => 3,
             ),        
         ),  
-    	'related' => array
+        'related' => array
         (
             'title' => 'related stories',
             'storage' => 'extra3',

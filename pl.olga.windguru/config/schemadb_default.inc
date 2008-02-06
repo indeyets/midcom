@@ -13,7 +13,7 @@
             'type' => 'text',
             'widget' => 'text',
         ),
-		'spotid' => Array
+        'spotid' => Array
         (
             // COMPONENT-REQUIRED
             'title' => 'spot id',
@@ -22,7 +22,7 @@
             'type' => 'text',
             'widget' => 'text',
         ),
-		'key' => Array
+        'key' => Array
         (
             // COMPONENT-REQUIRED
             'title' => 'code',
@@ -36,10 +36,10 @@
             'title' => 'comment',
             'storage' => 'content',
             'type' => 'text',
-			'type_config' => array
-			(
-				'output_mode' => 'html',
-			),
+            'type_config' => array
+            (
+                'output_mode' => 'html',
+            ),
             'widget' => 'tinymce',
         ),
 

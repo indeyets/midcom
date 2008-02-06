@@ -1,6 +1,6 @@
 'schemadb_config' => 'file:/pl/olga/mnogosearch/config/schemadb_config.inc',
 
-'dbaddr' =>	'',
+'dbaddr' =>    '',
 
 'cache' => true,
 
@@ -14,8 +14,8 @@
 
 'sortorder' => 'RPD',
 
-'hlbeg' =>	'<font color="#000088"><b>',
-'hlend' =>	'</b></font>',
+'hlbeg' =>    '<font color="#000088"><b>',
+'hlend' =>    '</b></font>',
 
 'excerptsize' => 1024,
 

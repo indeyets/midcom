@@ -3,7 +3,7 @@
     'description' => 'external item',
     'fields'      => array (
     
-    	/* Start of component required fields */
+        /* Start of component required fields */
         
         'title' => array (
             'title' => 'title',
@@ -39,9 +39,9 @@
     'description' => 'internal items',
     'fields'      => array (
 
-    	/* Start of component required fields */
+        /* Start of component required fields */
         
-    	'article' => array
+        'article' => array
         (
             'title' => 'article',
             'storage' => null,
@@ -62,7 +62,7 @@
             'required' => false,
         ),
 
-    	'topic' => array
+        'topic' => array
         (
             'title' => 'topic',
             'storage' => null,
@@ -93,7 +93,7 @@
     'description' => 'edit item',
     'fields'      => array (
     
-    	/* Start of component required fields */
+        /* Start of component required fields */
         
         'title' => array (
             'title' => 'title',

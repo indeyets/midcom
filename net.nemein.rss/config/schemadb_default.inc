@@ -36,7 +36,7 @@
             'widget'  => 'checkbox',
             'hidden' => !$GLOBALS['midcom_config']['metadata_approval'],
         ),
-    	'defaultauthor' => array
+        'defaultauthor' => array
         (
             'title' => 'default author for items',
             'storage' => 'defaultauthor',

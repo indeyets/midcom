@@ -98,7 +98,7 @@
                 '0' => 'no',
             ),
         ),
-	
+    
         'comment_count_cache_to_object_property' => array
         (
             'description' => 'comment_count_cache_to_object_property',

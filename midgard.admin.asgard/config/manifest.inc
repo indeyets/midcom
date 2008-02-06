@@ -37,15 +37,15 @@
         ),
         'solt' => array
         (
-        	'name' => 'Marcin Sołtysiak',
-        	'email' => 'olga@olga.pl',
-        	'role' => 'developer',
+            'name' => 'Marcin Sołtysiak',
+            'email' => 'olga@olga.pl',
+            'role' => 'developer',
         ),
         'w_i' => array
         (
-        	'name' => 'Jerry Jalava',
-        	'email' => 'jerry.jalava@gmail.com',
-        	'role' => 'developer',
+            'name' => 'Jerry Jalava',
+            'email' => 'jerry.jalava@gmail.com',
+            'role' => 'developer',
         ),
     ),
     /* Define what modules this module depends on.  */

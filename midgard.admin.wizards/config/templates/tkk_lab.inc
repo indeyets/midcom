@@ -59,7 +59,7 @@
         ),
     ),
     
-    // Root node definition		
+    // Root node definition        
     'root' => array
     (
         'name' => '__HOSTNAME__',

@@ -16,7 +16,7 @@
     'description' => 'example article',
     'fields'      => array (
     
-    	/* Start of component required fields */
+        /* Start of component required fields */
         
         'title' => array (
             'description' => 'title',

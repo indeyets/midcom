@@ -15,15 +15,15 @@
     ( 
         'juhana' => Array
         (  
-	       'name' => 'Juhana Hirvilahti',  
-    	    'email' => 'juhana@nemein.com',  
-    	    'role' => 'lead',  
-    	 ),
+           'name' => 'Juhana Hirvilahti',  
+            'email' => 'juhana@nemein.com',  
+            'role' => 'lead',  
+         ),
          'w_i' => Array
          (  
             'name' => 'Jerry Jalava',  
-     	    'email' => 'jerry.jalava@gmail.com',  
-     	    'role' => 'lead',  
-     	 ),
+             'email' => 'jerry.jalava@gmail.com',  
+             'role' => 'lead',  
+          ),
      ),
 ),

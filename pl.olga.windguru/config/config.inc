@@ -9,7 +9,7 @@
 
 'status' => array
 (
-	WG_STATUS_GFS,
-	WG_STATUS_NWW3,
-	WG_STATUS_NONE,
+    WG_STATUS_GFS,
+    WG_STATUS_NWW3,
+    WG_STATUS_NONE,
 ),

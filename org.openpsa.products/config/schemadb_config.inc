@@ -5,11 +5,11 @@
 
 'config' => array 
 (
-	'name'        => 'config',
-	'description' => 'Default Configuration Schema', /* This is a topic */
-	'locktimeout' => 0, /* Don't lock this, we always display the edit view */
-	'fields'      => array 
-	(
+    'name'        => 'config',
+    'description' => 'Default Configuration Schema', /* This is a topic */
+    'locktimeout' => 0, /* Don't lock this, we always display the edit view */
+    'fields'      => array 
+    (
         'search_first' => array
         (
             'description' => 'display search on front page',
@@ -146,5 +146,5 @@
             'config_key' => 'schemadb_businessarea',
             'end_fieldgroup' => '',
         ),
-	)
+    )
 ),

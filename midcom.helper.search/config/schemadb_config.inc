@@ -30,7 +30,7 @@
    'widget' => 'select',
    'widget_select_choices' => Array (
     '' => 'default setting',
-	'lucene' => 'Lucene',
+    'lucene' => 'Lucene',
     'plucene' => 'Plucene'
    ),
   ),
