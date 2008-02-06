@@ -23,6 +23,14 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['index'] = array(
             'handler' => Array('net_nemein_discussion_handler_index', 'index'),
         );
+        
+        // Match /tag/<tag>
+        $this->_request_switch['index_tag'] = Array
+        (
+            'handler' => Array('net_nemein_discussion_handler_index', 'tag'),
+            'fixed_args' => Array('tag'),
+            'variable_args' => 1,
+        );
 
         // Match /post/
         $this->_request_switch['post'] = Array

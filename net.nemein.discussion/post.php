@@ -392,7 +392,13 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
                 $thread->update();
             }
         }
-
+        
+        if ($_MIDCOM->componentloader->load_graceful('net.nemein.tag'))
+        {
+            // Copy post tags to thread
+            net_nemein_tag_handler::copy_tags($this, $thread, 'net.nemein.discussion');
+        }
+        
         $_MIDCOM->auth->drop_sudo();
 
         return true;

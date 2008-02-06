@@ -31,6 +31,7 @@
         'org.openpsa.notifications' => array(),
         'org.openpsa.qbpager' => array(),
         'net.nehmer.markdown' => array(),
+        'net.nemein.tag' => array(),
         'midcom.helper.xml' => array(),
         'midcom' => array(),
     ),
