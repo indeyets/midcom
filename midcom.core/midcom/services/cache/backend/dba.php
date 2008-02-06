@@ -59,7 +59,7 @@ class midcom_services_cache_backend_dba extends midcom_services_cache_backend
     /**
      * This handler completes the configuration.
      */
- 	function _on_initialize()
+     function _on_initialize()
     {
         // We need to serialize data
         $this->_auto_serialize = true;
@@ -101,7 +101,7 @@ class midcom_services_cache_backend_dba extends midcom_services_cache_backend
             }
             else
             {
-	            die("dba cache handler autodetection: DBA-Functions unavailable or PHP prior to 4.3 is being used (checked for the function dba_handlers).");
+                die("dba cache handler autodetection: DBA-Functions unavailable or PHP prior to 4.3 is being used (checked for the function dba_handlers).");
                 // This will exit.
             }
         }
@@ -131,7 +131,7 @@ class midcom_services_cache_backend_dba extends midcom_services_cache_backend
      * The handle is stored in $_handle
      * 
      * @param boolean $write Set to true to enable read/write access with the corresponding exclusive lock. Otherwise
-     * 	   shared read-only mode is used.
+     *        shared read-only mode is used.
      */
     function _open($write = false)
     {
@@ -156,7 +156,7 @@ class midcom_services_cache_backend_dba extends midcom_services_cache_backend
     {
         if ($this->_handle == null)
         {
-        	debug_add("There was a NULL handle in the DBA backend, ignoring close request.");
+            debug_add("There was a NULL handle in the DBA backend, ignoring close request.");
             return;
         }
         dba_close($this->_handle);
@@ -210,8 +210,8 @@ class midcom_services_cache_backend_dba extends midcom_services_cache_backend
     
     function _remove_all()
     {
-    	// This will open the database in truncate/write mode once to clear the file.
-    	$handle = @dba_open($this->_filename, 'n', $this->_handler);
+        // This will open the database in truncate/write mode once to clear the file.
+        $handle = @dba_open($this->_filename, 'n', $this->_handler);
         if ($handle === false)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,

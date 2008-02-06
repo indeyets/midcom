@@ -286,30 +286,30 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
 
     function get_label()
     {
-    	if ($this->rname)
-    	{
-    		$label = $this->rname;
-    	}
-    	else
-    	{
-    		$label = $this->username;
-    	}
+        if ($this->rname)
+        {
+            $label = $this->rname;
+        }
+        else
+        {
+            $label = $this->username;
+        }
 
-    	return $label;
+        return $label;
     }
 
     function get_label_property()
     {
-    	if ($this->rname)
-    	{
-    		$property = 'rname';
-    	}
-    	else
-    	{
-    		$property = 'username';
-    	}
+        if ($this->rname)
+        {
+            $property = 'rname';
+        }
+        else
+        {
+            $property = 'username';
+        }
 
-    	return $property;
+        return $property;
     }
 
 }

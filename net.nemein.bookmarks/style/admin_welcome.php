@@ -14,12 +14,12 @@ if ($config)
     <h2><?php echo $GLOBALS["view_l10n"]->get("unify bookmarks with http://del.icio.us"); ?></h2>
     <div id="unify">
         <form name="net_nemein_bookmarks_unify" method="post">
-        	<?php echo $GLOBALS["view_l10n"]->get("delicious username"); ?><br/>
+            <?php echo $GLOBALS["view_l10n"]->get("delicious username"); ?><br/>
             <input type="text" name="net_nemein_bookmarks_unify_username" /><br/>
             <?php echo $GLOBALS["view_l10n"]->get("delicious password"); ?><br/>
             <input type="password" name="net_nemein_bookmarks_unify_password" /><br/>
             <input type="submit" name="net_nemein_bookmarks_unify_submit" value="<?php 
-            	echo $GLOBALS["view_l10n"]->get("unify"); ?>" />
+                echo $GLOBALS["view_l10n"]->get("unify"); ?>" />
         </form>
     <div>
 <?php

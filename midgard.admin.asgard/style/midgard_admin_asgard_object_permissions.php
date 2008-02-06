@@ -26,5 +26,3 @@
     </tr>
 </table>
 <?php echo $data['editor_header_form_end'];?>
-    
-        

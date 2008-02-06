@@ -48,12 +48,12 @@ class org_openpsa_calendar_handler_filters extends midcom_baseclasses_components
         $ajax->simpleReply($update_succeeded, $errstr);
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_edit($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

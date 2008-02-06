@@ -30,12 +30,12 @@ class net_nemein_featured_handler_view extends midcom_baseclasses_components_han
         $this->_request_data['featured_groups'] =& $this->_featured_groups;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_view($handler_id, $args, &$data)
     {
         $this->_featured_groups = $this->_config->get('groups');

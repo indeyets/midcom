@@ -20,9 +20,9 @@ class midcom_helper_search_navigation extends midcom_baseclasses_components_navi
 {
     function get_node()
     {
-		$toolbar = Array();
-		if ($_MIDCOM->auth->can_do('midgard:update', $this->_topic))
-		{
+        $toolbar = Array();
+        if ($_MIDCOM->auth->can_do('midgard:update', $this->_topic))
+        {
             $toolbar[100] = Array
             (
                 MIDCOM_TOOLBAR_URL => '',
@@ -31,7 +31,7 @@ class midcom_helper_search_navigation extends midcom_baseclasses_components_navi
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
                 MIDCOM_TOOLBAR_ENABLED => true
             );
-		}
-		return parent::get_node($toolbar);
+        }
+        return parent::get_node($toolbar);
     }
 }

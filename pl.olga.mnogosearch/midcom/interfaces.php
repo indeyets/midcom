@@ -36,7 +36,7 @@ class pl_olga_mnogosearch_interface extends midcom_baseclasses_components_interf
         $this->_component = 'pl.olga.mnogosearch';
         $this->_autoload_files = Array
         (
-	    'navigation.php',
+        'navigation.php',
             'viewer.php',
         );
         $this->_autoload_libraries = Array

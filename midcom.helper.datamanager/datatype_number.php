@@ -80,7 +80,7 @@ class midcom_helper_datamanager_datatype_number extends midcom_helper_datamanage
         }
         else
         {
-        	debug_push_class(__CLASS__, __FUNCTION__);
+            debug_push_class(__CLASS__, __FUNCTION__);
             $this->_value = (double) str_replace(',', '.', $this->_value);
             debug_add("Set internal Value to [{$this->_value}]");
             debug_pop();
@@ -99,7 +99,7 @@ class midcom_helper_datamanager_datatype_number extends midcom_helper_datamanage
 
     function sync_widget_with_data()
     {
-    	debug_push_class(__CLASS__, __FUNCTION__);
+        debug_push_class(__CLASS__, __FUNCTION__);
 
         $widget =& $this->get_widget();
         if ($this->_precision < 0)
@@ -129,7 +129,7 @@ class midcom_helper_datamanager_datatype_number extends midcom_helper_datamanage
 
     function sync_data_with_widget ()
     {
-    	debug_push_class(__CLASS__, __FUNCTION__);
+        debug_push_class(__CLASS__, __FUNCTION__);
 
         $widget =& $this->get_widget();
         $string = $widget->get_value();

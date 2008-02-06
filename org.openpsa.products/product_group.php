@@ -144,50 +144,50 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
     function list_groups_by_up($up = 0)
     {
         static $group_list = array();
-		$up_code = 0 ;
+        $up_code = 0 ;
 
-		//FIXME: Maemo specific hack
-		if (isset($_MIDGARD["argv"][3])
-			&& isset($_MIDGARD["argv"][2])
-			&& ($_MIDGARD["argv"][2] == "create"))
-		{
-			$up_code=$_MIDGARD["argv"][3];
-		}
-		else
-		{
-			$session = new midcom_service_session();
-			if ($session->exists("target_os"))
-			{
-				$up_code = str_replace("IT OS ","OS",$session->get("target_os"));
-			}
-		}
+        //FIXME: Maemo specific hack
+        if (isset($_MIDGARD["argv"][3])
+            && isset($_MIDGARD["argv"][2])
+            && ($_MIDGARD["argv"][2] == "create"))
+        {
+            $up_code=$_MIDGARD["argv"][3];
+        }
+        else
+        {
+            $session = new midcom_service_session();
+            if ($session->exists("target_os"))
+            {
+                $up_code = str_replace("IT OS ","OS",$session->get("target_os"));
+            }
+        }
 
-		if ((int)$up_code > 0)
-		{
-			$qb2 = org_openpsa_products_product_group_dba::new_query_builder();
-			$qb2->add_constraint('id', '=', $up_code);
-        	$qb2->add_order('id');
-        	$up_group = $qb2->execute();
-			if (isset($up_group[0])
-				&& isset($up_group[0]->up))
-			{
-				$up = $up_group[0]->up;
-			}
-		}
-		else
-		{
-			$qb2 = org_openpsa_products_product_group_dba::new_query_builder();
-			$qb2->add_constraint('code', '=', $up_code);
-        	$qb2->add_order('code');
-        	$up_group = $qb2->execute();
-			if (isset($up_group[0])
-				&& isset($up_group[0]->id))
-			{
-				$up = $up_group[0]->id;
-			}
-		}
+        if ((int)$up_code > 0)
+        {
+            $qb2 = org_openpsa_products_product_group_dba::new_query_builder();
+            $qb2->add_constraint('id', '=', $up_code);
+            $qb2->add_order('id');
+            $up_group = $qb2->execute();
+            if (isset($up_group[0])
+                && isset($up_group[0]->up))
+            {
+                $up = $up_group[0]->up;
+            }
+        }
+        else
+        {
+            $qb2 = org_openpsa_products_product_group_dba::new_query_builder();
+            $qb2->add_constraint('code', '=', $up_code);
+            $qb2->add_order('code');
+            $up_group = $qb2->execute();
+            if (isset($up_group[0])
+                && isset($up_group[0]->id))
+            {
+                $up = $up_group[0]->id;
+            }
+        }
 
-		// END Maemo specific hack
+        // END Maemo specific hack
 
         $qb = org_openpsa_products_product_group_dba::new_query_builder();
         $qb->add_constraint('up', '=', $up);
@@ -208,63 +208,63 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
     function list_groups_parent($up = 0)
     {
         static $group_list = array();
-		$up_code = 0;
+        $up_code = 0;
 
-		//FIXME: Maemo specific hack
-		if (isset($_MIDGARD["argv"][3])
-			&& isset($_MIDGARD["argv"][2])
-			&& ($_MIDGARD["argv"][2] == "create"))
-		{
-			$up_code=$_MIDGARD["argv"][3];
-		}
-		else
-		{
-			$session = new midcom_service_session();
-			if ($session->exists("target_os"))
-			{
-				$up_code = str_replace("IT OS ","OS",$session->get("target_os"));
-			}
-		}
+        //FIXME: Maemo specific hack
+        if (isset($_MIDGARD["argv"][3])
+            && isset($_MIDGARD["argv"][2])
+            && ($_MIDGARD["argv"][2] == "create"))
+        {
+            $up_code=$_MIDGARD["argv"][3];
+        }
+        else
+        {
+            $session = new midcom_service_session();
+            if ($session->exists("target_os"))
+            {
+                $up_code = str_replace("IT OS ","OS",$session->get("target_os"));
+            }
+        }
 
-		if ((int)$up_code > 0)
-		{
-			$qb2 = org_openpsa_products_product_group_dba::new_query_builder();
-			$qb2->add_constraint('id', '=', $up_code);
-        	$qb2->add_order('id');
-        	$up_group = $qb2->execute();
-			if (isset($up_group[0])
-				&& isset($up_group[0]->up))
-			{
-				$up = $up_group[0]->up;
-			}
-		}
-		else if ($_MIDGARD['admin'])
-		{
-			$up = 0;
-		}
-		else
-		{
-			$qb2 = org_openpsa_products_product_group_dba::new_query_builder();
-			$qb2->add_constraint('code', '=', $up_code);
-        	$qb2->add_order('code');
-        	$up_group = $qb2->execute();
-			if (isset($up_group[0])
-				&& isset($up_group[0]->id))
-			{
-				$up = $up_group[0]->id;
-			}
-		}
+        if ((int)$up_code > 0)
+        {
+            $qb2 = org_openpsa_products_product_group_dba::new_query_builder();
+            $qb2->add_constraint('id', '=', $up_code);
+            $qb2->add_order('id');
+            $up_group = $qb2->execute();
+            if (isset($up_group[0])
+                && isset($up_group[0]->up))
+            {
+                $up = $up_group[0]->up;
+            }
+        }
+        else if ($_MIDGARD['admin'])
+        {
+            $up = 0;
+        }
+        else
+        {
+            $qb2 = org_openpsa_products_product_group_dba::new_query_builder();
+            $qb2->add_constraint('code', '=', $up_code);
+            $qb2->add_order('code');
+            $up_group = $qb2->execute();
+            if (isset($up_group[0])
+                && isset($up_group[0]->id))
+            {
+                $up = $up_group[0]->id;
+            }
+        }
 
-		// END Maemo specific hack
+        // END Maemo specific hack
 
         $qb = org_openpsa_products_product_group_dba::new_query_builder();
-		if ($_MIDGARD['admin']) {
-        	$qb->add_constraint('up', '=', $up);
-		}
-		else
-		{
-        	$qb->add_constraint('id', '=', $up);
-		}
+        if ($_MIDGARD['admin']) {
+            $qb->add_constraint('up', '=', $up);
+        }
+        else
+        {
+            $qb->add_constraint('id', '=', $up);
+        }
         $qb->add_order('code');
         $qb->add_order('title');
         $groups = $qb->execute();

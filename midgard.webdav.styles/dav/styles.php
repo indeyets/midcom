@@ -28,10 +28,10 @@ class midgard_webdav_styles_dav_style extends midgard_webdav_styles_dav {
     function PROPFIND (&$param, &$files) {
         $this->log( __CLASS__ . '::PROPFIND');
         $this->log( __CLASS__ . ": Path: " .  $param['path'] . " depth: " . $param['depth']);
-		if (!array_key_exists('files',$files))
-		{
-			$files['files'] = array();
-		}
+        if (!array_key_exists('files',$files))
+        {
+            $files['files'] = array();
+        }
         if ( $param['depth'] == 0 )
         {
            $files['files'][0] = $this->get_style_info( $this->style );
@@ -54,7 +54,7 @@ class midgard_webdav_styles_dav_style extends midgard_webdav_styles_dav {
      * Gets all the substyles to a style
      */
     function get_substyles( ) {
-		$this->log(__CLASS__ . "::get_substyles for id " . $this->style->id);
+        $this->log(__CLASS__ . "::get_substyles for id " . $this->style->id);
         $qb = midcom_db_style::new_query_builder(  );
         $qb->add_constraint( 'up', '=', $this->style->id );
         $styles = $qb->execute( ) ;
@@ -70,7 +70,7 @@ class midgard_webdav_styles_dav_style extends midgard_webdav_styles_dav {
      * Get a style styleelements
      */
     function get_style_elements(  ) {
-		$this->log(__CLASS__ . "::get_style_elements for id " . $this->style->id);
+        $this->log(__CLASS__ . "::get_style_elements for id " . $this->style->id);
         if ( $this->style->id == 0 )
         {
             return array(  );
@@ -109,7 +109,7 @@ class midgard_webdav_styles_dav_style extends midgard_webdav_styles_dav {
         $style = new midcom_db_style($_MIDGARD['style']);
         if (!$style->id)
         {
-        	return false;
+            return false;
         }
         //$elements = $this->get_style_elements($style->id) ;
         $options['mimetype'] = $this->mkprop("getcontenttype", "httpd/unix-directory");

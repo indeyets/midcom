@@ -46,19 +46,19 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
     function _is_person_registered($email)
     {
         $qb = midcom_db_person::new_query_builder();
-       	$qb->add_constraint('sitegroup', '=', $this->_topic->sitegroup);
-       	$qb->add_constraint('email', '=', $email);
+           $qb->add_constraint('sitegroup', '=', $this->_topic->sitegroup);
+           $qb->add_constraint('email', '=', $email);
 
-       	$persons = $qb->execute();
+           $persons = $qb->execute();
 
-       	if (count($persons) > 0)
-       	{
-       	    return $persons;
-       	}
-       	else
-       	{
+           if (count($persons) > 0)
+           {
+               return $persons;
+           }
+           else
+           {
             return false;
-       	}
+           }
     }
 
     /**
@@ -129,12 +129,12 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         debug_pop();
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_remind_invite($handler_id, $args, &$data)
     {
         if (!$this->_config->get('allow_invite'))
@@ -158,12 +158,12 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_delete_invite($handler_id, $args, &$data)
     {
         if (!$this->_config->get('allow_invite'))
@@ -197,12 +197,12 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
 
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_invite($handler_id, $args, &$data)
     {
         if (!$this->_config->get('allow_invite'))
@@ -312,12 +312,12 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
         midcom_show_style('show-invite-emails');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_sent_invites($handler_id, $args, &$data)
     {
         if (!$this->_config->get('allow_invite'))

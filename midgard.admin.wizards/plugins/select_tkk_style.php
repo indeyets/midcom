@@ -18,7 +18,7 @@ class select_tkk_style extends midcom_baseclasses_components_handler
     */
     function select_tkk_style()
     {
-	    parent::midcom_baseclasses_components_handler();
+        parent::midcom_baseclasses_components_handler();
     }
 
     function _on_initialize()
@@ -45,16 +45,16 @@ class select_tkk_style extends midcom_baseclasses_components_handler
     {
         return array
         (
-	        'sitewizard' => array
-	        (
-	            'handler' => array('select_tkk_style', 'select_style'),
-	        ),
-	    );
+            'sitewizard' => array
+            (
+                'handler' => array('select_tkk_style', 'select_style'),
+            ),
+        );
     }
 
-	/**
+    /**
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_select_style()
     {
         $title = $this->_l10n->get('style selection');

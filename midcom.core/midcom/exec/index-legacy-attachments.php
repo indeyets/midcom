@@ -93,7 +93,7 @@ $indexer =& $_MIDCOM->get_service('indexer');
 while (! is_null($nodeid))
 {
     // Index the node
-	$node = $nap->get_node($nodeid);
+    $node = $nap->get_node($nodeid);
     echo "Processing Node {$node[MIDCOM_NAV_FULLURL]}... ";
     
     debug_add("Processing node ID {$nodeid}");
@@ -106,25 +106,25 @@ while (! is_null($nodeid))
     }
     else
     {
-	    // Index the leaves
-	    $leaves = $nap->list_leaves($nodeid);
-	    if ($leaves === false)
-	    {
-	        debug_pop();
-	        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to list the leaves of {$nodeid}. Aborting.");
-	    }
-	    foreach($leaves as $leafid)
-	    {
-	        $leaf = $nap->get_leaf($leafid);
-	        if (is_null($leaf[MIDCOM_NAV_OBJECT]))
-	        {
-	            debug_add("The leaf {$leafid} does not have an associated MidgardObject, skipping it.", MIDCOM_LOG_INFO);
-	            debug_print_r('Leaf strucuture dump:', $leaf); 
-	            continue;
-	        }
-	        debug_add("Processing leaf GUID {$leaf[MIDCOM_NAV_GUID]}");
-	        index_object($indexer, $leaf[MIDCOM_NAV_OBJECT]);
-	    }
+        // Index the leaves
+        $leaves = $nap->list_leaves($nodeid);
+        if ($leaves === false)
+        {
+            debug_pop();
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to list the leaves of {$nodeid}. Aborting.");
+        }
+        foreach($leaves as $leafid)
+        {
+            $leaf = $nap->get_leaf($leafid);
+            if (is_null($leaf[MIDCOM_NAV_OBJECT]))
+            {
+                debug_add("The leaf {$leafid} does not have an associated MidgardObject, skipping it.", MIDCOM_LOG_INFO);
+                debug_print_r('Leaf strucuture dump:', $leaf); 
+                continue;
+            }
+            debug_add("Processing leaf GUID {$leaf[MIDCOM_NAV_GUID]}");
+            index_object($indexer, $leaf[MIDCOM_NAV_OBJECT]);
+        }
     }
     
     echo "\ndone\n";

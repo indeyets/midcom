@@ -245,12 +245,12 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_create($handler_id, $args, &$data)
     {
         // Initialize sessioning first

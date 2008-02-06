@@ -20,7 +20,7 @@ class create_tkk_host extends midcom_baseclasses_components_handler
     */
     function create_tkk_host()
     {
-	    parent::midcom_baseclasses_components_handler();
+        parent::midcom_baseclasses_components_handler();
     }
 
     function _on_initialize()
@@ -48,16 +48,16 @@ class create_tkk_host extends midcom_baseclasses_components_handler
     {
         return array
         (
-	        'sitewizard' => array
-	        (
-	            'handler' => array('create_tkk_host', 'create_host'),
-	        ),
-	    );
+            'sitewizard' => array
+            (
+                'handler' => array('create_tkk_host', 'create_host'),
+            ),
+        );
     }
 
-	/**
+    /**
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_create_host()
     {
         $title = $this->_l10n->get('host creation');
@@ -146,4 +146,3 @@ class create_tkk_host extends midcom_baseclasses_components_handler
 }
 
 ?>
-

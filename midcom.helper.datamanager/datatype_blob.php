@@ -173,9 +173,9 @@ class midcom_helper_datamanager_datatype_blob extends midcom_helper_datamanager_
 
                 if ($changes)
                 {
-	                $att->update();
-	                $this->_update_value($att->id);
-	                $widget->set_value($this->_value);
+                    $att->update();
+                    $this->_update_value($att->id);
+                    $widget->set_value($this->_value);
                     $this->autoindex();
                 }
             }

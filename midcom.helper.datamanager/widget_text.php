@@ -115,47 +115,47 @@ class midcom_helper_datamanager_widget_text extends midcom_helper_datamanager_wi
         switch ($this->_inputstyle)
         {
             case 'shorttext':
-	            if (!array_key_exists("widget_text_maxlength", $field))
-	            {
-	                $field["widget_text_maxlength"] = 255;
-	            }
-	            if (!array_key_exists("widget_text_divstyle", $field))
-	            {
-	                $field["widget_text_divstyle"] = "form_shorttext";
-	            }
+                if (!array_key_exists("widget_text_maxlength", $field))
+                {
+                    $field["widget_text_maxlength"] = 255;
+                }
+                if (!array_key_exists("widget_text_divstyle", $field))
+                {
+                    $field["widget_text_divstyle"] = "form_shorttext";
+                }
                 break;
 
             case 'longtext':
-	            if (!array_key_exists("widget_text_maxlength", $field))
-	            {
-	                $field["widget_text_maxlength"] = null;
-	            }
-	            if (!array_key_exists("widget_text_divstyle", $field))
-	            {
-	                $field["widget_text_divstyle"] = "form_longtext";
-	            }
+                if (!array_key_exists("widget_text_maxlength", $field))
+                {
+                    $field["widget_text_maxlength"] = null;
+                }
+                if (!array_key_exists("widget_text_divstyle", $field))
+                {
+                    $field["widget_text_divstyle"] = "form_longtext";
+                }
                 break;
 
             case 'longtext_preformatted':
-	            if (!array_key_exists("widget_text_maxlength", $field))
-	            {
-	                $field["widget_text_maxlength"] = null;
-	            }
-	            if (!array_key_exists("widget_text_divstyle", $field))
-	            {
-	                $field["widget_text_divstyle"] = "form_longtext_preformatted";
-	            }
+                if (!array_key_exists("widget_text_maxlength", $field))
+                {
+                    $field["widget_text_maxlength"] = null;
+                }
+                if (!array_key_exists("widget_text_divstyle", $field))
+                {
+                    $field["widget_text_divstyle"] = "form_longtext_preformatted";
+                }
                 break;
 
             case 'password':
-		        if (!array_key_exists("widget_text_maxlength", $field))
-		        {
-		            $field["widget_text_maxlength"] = 255;
-		        }
-		        if (!array_key_exists("widget_text_divstyle", $field))
-		        {
-		            $field["widget_text_divstyle"] = "form_shorttext";
-		        }
+                if (!array_key_exists("widget_text_maxlength", $field))
+                {
+                    $field["widget_text_maxlength"] = 255;
+                }
+                if (!array_key_exists("widget_text_divstyle", $field))
+                {
+                    $field["widget_text_divstyle"] = "form_shorttext";
+                }
                 break;
         }
 
@@ -224,19 +224,19 @@ class midcom_helper_datamanager_widget_text extends midcom_helper_datamanager_wi
 
             case "longtext":
                 echo "<textarea class='{$this->_inputstyle}' name='{$this->_fieldname}' id='{$this->_fieldname}'";
-	            if ($this->_height != null || $this->_width != null)
-	            {
-	                echo "style='";
-	                if ($this->_width != null )
-	                {
-	                    echo "width: {$this->_width};";
-	                }
-	                if ($this->_height != null )
-	                {
-	                    echo " height: {$this->_height};";
-	                }
-	                echo "'";
-	            }
+                if ($this->_height != null || $this->_width != null)
+                {
+                    echo "style='";
+                    if ($this->_width != null )
+                    {
+                        echo "width: {$this->_width};";
+                    }
+                    if ($this->_height != null )
+                    {
+                        echo " height: {$this->_height};";
+                    }
+                    echo "'";
+                }
                 echo ">{$this->_value}</textarea>\n";
                 break;
 
@@ -249,10 +249,10 @@ class midcom_helper_datamanager_widget_text extends midcom_helper_datamanager_wi
                 {
                     $value = "";
                 }
-	            $max = htmlspecialchars($this->_maxlength, ENT_QUOTES);
-	            echo "<input type='password' class='{$this->_inputstyle}' name='{$this->_fieldname}' id='{$this->_fieldname}' maxlength='{$this->_maxlength}' value='";
-	            echo htmlspecialchars($this->_value, ENT_QUOTES);
-	            echo "' />\n";
+                $max = htmlspecialchars($this->_maxlength, ENT_QUOTES);
+                echo "<input type='password' class='{$this->_inputstyle}' name='{$this->_fieldname}' id='{$this->_fieldname}' maxlength='{$this->_maxlength}' value='";
+                echo htmlspecialchars($this->_value, ENT_QUOTES);
+                echo "' />\n";
                 break;
         }
     }

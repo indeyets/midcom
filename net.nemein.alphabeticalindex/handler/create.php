@@ -264,12 +264,12 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
         return $this->_item;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_create($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);

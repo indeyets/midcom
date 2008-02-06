@@ -152,7 +152,7 @@ class midcom_helper_datamanager_datatype {
      * @param midcom_helper_datamanager $datamanager The datamanager this type is assigned to.
      * @param MidgardObject $storage The storage object to use.
      * @param Array $field The field definition to construct a datatype from.
-     * @return boolean	False on failure, object is set to false then.
+     * @return boolean    False on failure, object is set to false then.
      * @access protected
      */
     function _constructor (&$datamanager, &$storage, $field)
@@ -462,7 +462,7 @@ class midcom_helper_datamanager_datatype {
      */
     function sync_widget_with_data()
     {
-    	debug_push_class(__CLASS__, __FUNCTION__);
+        debug_push_class(__CLASS__, __FUNCTION__);
         $widget =& $this->get_widget();
         $widget->set_value($this->_value);
         debug_pop();
@@ -477,8 +477,8 @@ class midcom_helper_datamanager_datatype {
      */
     function sync_data_with_widget()
     {
-    	debug_push_class(__CLASS__, __FUNCTION__);
-    	$widget =& $this->get_widget();
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $widget =& $this->get_widget();
         $this->_value = $widget->get_value();
         debug_pop();
     }

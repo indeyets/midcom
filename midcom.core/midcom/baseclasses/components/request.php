@@ -1109,18 +1109,18 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
                 ),
                 'midcom-settings' => array
                 (
-            	    'class' => 'midcom_admin_settings_editor',
-            	    'src' => 'file:/midcom/admin/settings/editor.php',
-            	    'name' => 'MidCOM site configuration',
-            	    'config' => null,
-            	),
-            	'help' => array
-            	(
-            	    'class' => 'midcom_admin_help_help',
-            	    'src' => 'file:/midcom/admin/help/help.php',
-            	    'name' => 'On-site help',
-            	    'config' => null,
-            	),
+                    'class' => 'midcom_admin_settings_editor',
+                    'src' => 'file:/midcom/admin/settings/editor.php',
+                    'name' => 'MidCOM site configuration',
+                    'config' => null,
+                ),
+                'help' => array
+                (
+                    'class' => 'midcom_admin_help_help',
+                    'src' => 'file:/midcom/admin/help/help.php',
+                    'name' => 'On-site help',
+                    'config' => null,
+                ),
             )
         );
 

@@ -24,18 +24,18 @@
 
 function RemoveFromStart( $sourceString, $charToRemove )
 {
-	$sPattern = '|^' . $charToRemove . '+|' ;
-	return preg_replace( $sPattern, '', $sourceString ) ;
+    $sPattern = '|^' . $charToRemove . '+|' ;
+    return preg_replace( $sPattern, '', $sourceString ) ;
 }
 
 function RemoveFromEnd( $sourceString, $charToRemove )
 {
-	$sPattern = '|' . $charToRemove . '+$|' ;
-	return preg_replace( $sPattern, '', $sourceString ) ;
+    $sPattern = '|' . $charToRemove . '+$|' ;
+    return preg_replace( $sPattern, '', $sourceString ) ;
 }
 
 function ConvertToXmlAttribute( $value )
 {
-	return htmlspecialchars( $value ) ;
+    return htmlspecialchars( $value ) ;
 }
 ?>

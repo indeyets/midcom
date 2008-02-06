@@ -52,34 +52,34 @@ function println($testname, $result_code, $recommendations = '&nbsp;')
 
 function ini_get_filesize($setting)
 {
-	$result = ini_get($setting);
-	$last_char = substr($result, -1);
-	if ($last_char == 'M')
-	{
-	    $result = substr($result, 0, -1) * 1024 * 1024;
-	}
-	else if ($last_char == 'K')
-	{
-	    $result = substr($result, 0, -1) * 1024;
-	}
-	else if ($last_char == 'G')
-	{
-	    $result = substr($result, 0, -1) * 1024 * 1024 * 1024;
-	}
+    $result = ini_get($setting);
+    $last_char = substr($result, -1);
+    if ($last_char == 'M')
+    {
+        $result = substr($result, 0, -1) * 1024 * 1024;
+    }
+    else if ($last_char == 'K')
+    {
+        $result = substr($result, 0, -1) * 1024;
+    }
+    else if ($last_char == 'G')
+    {
+        $result = substr($result, 0, -1) * 1024 * 1024 * 1024;
+    }
     return $result;
 }
 
 function ini_get_boolean($setting)
 {
-	$result = ini_get($setting);
-	if ($result == false || $result == "Off" || $result == "off" || $result == "" || $result == "0")
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
+    $result = ini_get($setting);
+    if ($result == false || $result == "Off" || $result == "off" || $result == "" || $result == "0")
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
 }
 
 function check_for_include_file($filename)
@@ -89,14 +89,14 @@ function check_for_include_file($filename)
 
 function println_check_for_include_file($filename, $testname, $fail_code, $fail_recommendations)
 {
-	if (check_for_include_file($filename))
-	{
-	    println($testname, OK);
-	}
-	else
-	{
-	    println($testname, $fail_code, $fail_recommendations);
-	}
+    if (check_for_include_file($filename))
+    {
+        println($testname, OK);
+    }
+    else
+    {
+        println($testname, $fail_code, $fail_recommendations);
+    }
 }
 
 function check_for_utility ($name, $testname, $fail_code, $fail_recommendations)
@@ -105,19 +105,19 @@ function check_for_utility ($name, $testname, $fail_code, $fail_recommendations)
     $testname = "External Utility: {$testname}";
     if (is_null($executable))
     {
-    	println($testname, $fail_code, "The path to the utility {$name} is not configured. {$fail_recommendations}");
+        println($testname, $fail_code, "The path to the utility {$name} is not configured. {$fail_recommendations}");
     }
     else
     {
         exec ("which {$executable}", $output, $exitcode);
-	    if ($exitcode == 0)
-	    {
-	        println($testname, OK);
-	    }
-	    else
-	    {
-	        println($testname, $fail_code, "The utility {$name} is not correctly configured: File ({$executable}) not found. {$fail_recommendations}");
-	    }
+        if ($exitcode == 0)
+        {
+            println($testname, OK);
+        }
+        else
+        {
+            println($testname, $fail_code, "The utility {$name} is not correctly configured: File ({$executable}) not found. {$fail_recommendations}");
+        }
     }
 }
 
@@ -173,25 +173,25 @@ else
 // Register Globals
 if (array_key_exists('midcom_site', $GLOBALS))
 {
-	if (ini_get_boolean('register_globals'))
-	{
-	    println('PHP Setting: register_globals', OK);
-	}
-	else
-	{
-	    println('PHP Setting: register_globals', ERROR, 'register_globals is required for MidCOM-Template usage, which depends on NemeinAuthentication.');
-	}
+    if (ini_get_boolean('register_globals'))
+    {
+        println('PHP Setting: register_globals', OK);
+    }
+    else
+    {
+        println('PHP Setting: register_globals', ERROR, 'register_globals is required for MidCOM-Template usage, which depends on NemeinAuthentication.');
+    }
 }
 else
 {
-	if (ini_get_boolean('register_globals'))
-	{
-	    println('PHP Setting: register_globals', WARNING, 'register_globals is enabled, it is recommended to turn this off for security reasons (unless you rely on Nemein Authentication somewhere).');
-	}
-	else
-	{
-	    println('PHP Setting: register_globals', OK);
-	}
+    if (ini_get_boolean('register_globals'))
+    {
+        println('PHP Setting: register_globals', WARNING, 'register_globals is enabled, it is recommended to turn this off for security reasons (unless you rely on Nemein Authentication somewhere).');
+    }
+    else
+    {
+        println('PHP Setting: register_globals', OK);
+    }
 }
 
 // Track Errors.
@@ -233,7 +233,7 @@ if (! ini_get_boolean('magic_quotes_gpc'))
 }
 else
 {
-	println('PHP Setting: magic_quotes_gpc', ERROR, 'Magic Quotes must be turned off, Midgard/MidCOM does this explicitly where required.');
+    println('PHP Setting: magic_quotes_gpc', ERROR, 'Magic Quotes must be turned off, Midgard/MidCOM does this explicitly where required.');
 }
 if (! ini_get_boolean('magic_quotes_runtime'))
 {
@@ -241,7 +241,7 @@ if (! ini_get_boolean('magic_quotes_runtime'))
 }
 else
 {
-	println('PHP Setting: magic_quotes_runtime', ERROR, 'Magic Quotes must be turned off, Midgard/MidCOM does this explicitly where required.');
+    println('PHP Setting: magic_quotes_runtime', ERROR, 'Magic Quotes must be turned off, Midgard/MidCOM does this explicitly where required.');
 }
 
 
@@ -300,11 +300,11 @@ else
         $overload = ini_get('mbstring.func_overload');
         if ($overload != '7')
         {
-        	println('Multi-Byte String functions', WARNING, 'The Multi-Byte String functions are available, but this is a UTF-8 site and Function overloading is disabled, this is not recommended since string operations are erronous then.');
+            println('Multi-Byte String functions', WARNING, 'The Multi-Byte String functions are available, but this is a UTF-8 site and Function overloading is disabled, this is not recommended since string operations are erronous then.');
         }
         else
         {
-        	println('Multi-Byte String functions', OK);
+            println('Multi-Byte String functions', OK);
         }
     }
     else
@@ -325,7 +325,7 @@ if (! function_exists('read_exif_data'))
     }
     else
     {
-    	if (version_compare($version, '4.2.0', '<'))
+        if (version_compare($version, '4.2.0', '<'))
         {
             println('EXIF reader', OK);
             check_for_utility('jhead', 'jhead', ERROR, 'JHead is required to read the EXIF information from images.');
@@ -339,7 +339,7 @@ if (! function_exists('read_exif_data'))
 }
 else
 {
-	if (version_compare($version, '4.2.0', '<'))
+    if (version_compare($version, '4.2.0', '<'))
     {
         if (! $have_jhead)
         {
@@ -417,11 +417,11 @@ if  (! is_dir($GLOBALS['midcom_config']['cache_base_directory']))
 }
 else if (! is_writable($GLOBALS['midcom_config']['cache_base_directory']))
 {
-	println('MidCOM cache base directory', ERROR, "The configured MidCOM cache base directory ({$GLOBALS['midcom_config']['cache_base_directory']}) is not writable by the Apache user. You have to create it as a directory writable by the Apache user.");
+    println('MidCOM cache base directory', ERROR, "The configured MidCOM cache base directory ({$GLOBALS['midcom_config']['cache_base_directory']}) is not writable by the Apache user. You have to create it as a directory writable by the Apache user.");
 }
 else
 {
-	println('MidCOM cache base directory', OK);
+    println('MidCOM cache base directory', OK);
 }
 
 

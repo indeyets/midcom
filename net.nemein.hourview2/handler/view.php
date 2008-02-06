@@ -326,7 +326,7 @@ class net_nemein_hourview2_handler_view extends midcom_baseclasses_components_ha
                 }
                 midcom_show_style('show-process-footer');
             }
-            midcom_show_style('show-index-footer');	
+            midcom_show_style('show-index-footer');    
         }
         else
         {

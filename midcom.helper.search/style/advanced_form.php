@@ -7,9 +7,9 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 $lastmod_content = Array(
     0 => $data['l10n']->get('no limit'),
     strtotime('-1 month') => $data['l10n']->get('since 1 month'),
-	strtotime('-3 month') => $data['l10n']->get('since 3 months'),
-	strtotime('-6 month') => $data['l10n']->get('since 6 months'),
-	strtotime('-1 year') => $data['l10n']->get('since 1 year')
+    strtotime('-3 month') => $data['l10n']->get('since 3 months'),
+    strtotime('-6 month') => $data['l10n']->get('since 6 months'),
+    strtotime('-1 year') => $data['l10n']->get('since 1 year')
 );
 
 // Prepare the topic and component listings, this is a bit work intensive though, 
@@ -52,46 +52,46 @@ $query = htmlspecialchars($data['query'], ENT_QUOTES);
 <input type='hidden' name='page' value='1' />
  
 <table cellspacing="0" cellpadding="3" border="0">
-	<tr>
-		<td><?php echo $data['l10n']->get('query');?>:</td>
-		<td><input type='text' style="width: 20em;" name='query' value='&(query);' /></td>
-	</tr>
-	<tr>
-		<td><?php echo $data['l10n']->get('limit search by topic tree');?>:</td>
-		<td>
-			<select name="topic" size="1" style="width: 20em;">
+    <tr>
+        <td><?php echo $data['l10n']->get('query');?>:</td>
+        <td><input type='text' style="width: 20em;" name='query' value='&(query);' /></td>
+    </tr>
+    <tr>
+        <td><?php echo $data['l10n']->get('limit search by topic tree');?>:</td>
+        <td>
+            <select name="topic" size="1" style="width: 20em;">
 <?php
 foreach ($topics as $url => $name)
 {
     $selected = ($data['topic'] == $url) ? ' selected' : '';
 ?>
-				<option&(selected); value='&(url);'>&(name:h);</option>
+                <option&(selected); value='&(url);'>&(name:h);</option>
 <?php
 }   
 ?>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td><?php echo $data['l10n']->get('limit search by content type');?>:</td>
-		<td>
-			<select name="component" size="1" style="width: 20em;">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><?php echo $data['l10n']->get('limit search by content type');?>:</td>
+        <td>
+            <select name="component" size="1" style="width: 20em;">
 <?php
 foreach ($components as $id => $name)
 {
     $selected = ($data['component'] == $id) ? ' selected' : '';
 ?>
-				<option&(selected); value='&(id);'>&(name:h);</option>
+                <option&(selected); value='&(id);'>&(name:h);</option>
 <?php
 }   
 ?>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td><?php echo $data['l10n']->get('limit search by last modified');?>:</td>
-		<td>
-			<select name="lastmodified" size="1" style="width: 20em;">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><?php echo $data['l10n']->get('limit search by last modified');?>:</td>
+        <td>
+            <select name="lastmodified" size="1" style="width: 20em;">
 <?php
 
 
@@ -99,15 +99,15 @@ foreach ($lastmod_content as $timestamp => $name)
 {
     $selected = (abs($data['lastmodified'] - $timestamp) < 10000) ? ' selected' : '';
 ?>
-				<option&(selected); value='&(timestamp);'>&(name:h);</option>
+                <option&(selected); value='&(timestamp);'>&(name:h);</option>
 <?php
 }   
 ?>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2"><input type='submit' name='submit' value='<?php echo $data['l10n']->get('search');?>' /></td>
-	</tr>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><input type='submit' name='submit' value='<?php echo $data['l10n']->get('search');?>' /></td>
+    </tr>
 </table>
 </form>

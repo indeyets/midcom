@@ -151,7 +151,8 @@ else
 //function scan_for_utility($name, $executable, $utilityname, $required = true, $recommended_msg = '')
 scan_for_utility('find', 'find', 'find');
 scan_for_utility('file', 'file', 'file');
-scan_for_utility('UnZIP', 'unzip', 'unzip', false, 'UnZIP is recommended for bulk-upload processing (Windows ZIP files).');scan_for_utility('gzip', 'gzip', 'gzip', false, 'gzip is recommended for bulk-upload processing (Linux .tar.gz files).');
+scan_for_utility('UnZIP', 'unzip', 'unzip', false, 'UnZIP is recommended for bulk-upload processing (Windows ZIP files).');
+scan_for_utility('gzip', 'gzip', 'gzip', false, 'gzip is recommended for bulk-upload processing (Linux .tar.gz files).');
 scan_for_utility('tar', 'tar', 'tar', false, 'tar is recommended for bulk-upload processing (Linux .tar.gz files).');
 scan_for_utility('JPEGTran', 'jpegtran', 'jpegtran', false, 'JPEGTran is recommended for lossless JPEG rotation.');
 scan_for_utility('JHead EXIF Reader', 'jhead', 'jhead', false, 'JHead is recommeded for pre 4.3 PHP installations, as the PHP EXIF reader is instable there.');

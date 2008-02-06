@@ -64,7 +64,7 @@ class midcom_service__sessioning
 
         if ($started)
         {
-	  $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "MidCOM Sessioning has already been started, it must not be started twice. Aborting");
+      $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "MidCOM Sessioning has already been started, it must not be started twice. Aborting");
         }
 
         $started = true;
@@ -86,9 +86,9 @@ class midcom_service__sessioning
      *
      * This is often used in conjunction with get to verify a keys existence.
      *
-     * @param string $domain	The domain in which to search for the key.
-     * @param mixed $key		The key to query.
-     * @return boolean				Indicating availability.
+     * @param string $domain    The domain in which to search for the key.
+     * @param mixed $key        The key to query.
+     * @return boolean                Indicating availability.
      */
     function exists ($domain, $key)
     {
@@ -115,9 +115,9 @@ class midcom_service__sessioning
      * This is a small, internal helper function, which will load, unserialize and
      * return a given key's value. It is shared by get and remove.
      *
-     * @param string $domain	The domain in which to search for the key.
-     * @param mixed $key		The key to query.
-     * @return mixed			The session key's data value, or NULL on failure.
+     * @param string $domain    The domain in which to search for the key.
+     * @param mixed $key        The key to query.
+     * @return mixed            The session key's data value, or NULL on failure.
      */
     function _get_helper ($domain, $key)
     {
@@ -132,9 +132,9 @@ class midcom_service__sessioning
      * check, as the sessioning system does allow null values. Use the exists function
      * if unsure.
      *
-     * @param string $domain	The domain in which to search for the key.
-     * @param mixed $key		The key to query.
-     * @return mixed			The session key's data value, or NULL on failure.
+     * @param string $domain    The domain in which to search for the key.
+     * @param mixed $key        The key to query.
+     * @return mixed            The session key's data value, or NULL on failure.
      * @see midcom_service__sessioning::exists()
      */
     function get ($domain, $key)
@@ -161,9 +161,9 @@ class midcom_service__sessioning
      * this is not necessarily a valid non-existence check, as the sessioning
      * system does allow null values. Use the exists function if unsure.
      *
-     * @param string $domain	The domain in which to search for the key.
-     * @param mixed $key		The key to remove.
-     * @return mixed			The session key's data value, or NULL on failure.
+     * @param string $domain    The domain in which to search for the key.
+     * @param mixed $key        The key to remove.
+     * @return mixed            The session key's data value, or NULL on failure.
      * @see midcom_service__sessioning::exists()
      */
     function remove ($domain, $key)
@@ -187,9 +187,9 @@ class midcom_service__sessioning
      * the actual object is not referenced in the session data. You will have to update
      * it manually in case of changes.
      *
-     * @param string $domain	The domain in which to search for the key.
-     * @param mixed	$key		Session value identifier.
-     * @param mixed	$value		Session value.
+     * @param string $domain    The domain in which to search for the key.
+     * @param mixed    $key        Session value identifier.
+     * @param mixed    $value        Session value.
      */
     function set ($domain, $key, $value)
     {

@@ -45,12 +45,12 @@ class org_openpsa_directmarketing_admin extends midcom_baseclasses_components_re
 
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_welcome()
     {
         return true;

@@ -62,7 +62,7 @@ midgard_webdav_styles_handler_midcoms_files
 {
     var $element;
     function set_element( $element ) {
- 		$this->log(__CLASS__ . ": set_element: " . $element);
+         $this->log(__CLASS__ . ": set_element: " . $element);
         $this->element = $element;
     }
 
@@ -164,7 +164,7 @@ class midgard_webdav_styles_handler_midcoms_files extends midgard_webdav_styles_
         while ( false !== ( $file = $files->read( )  ) ) {
             if (substr($file,0,1) == '.')
             {
-            	continue;
+                continue;
             }
             $ret[] = $file;
         }

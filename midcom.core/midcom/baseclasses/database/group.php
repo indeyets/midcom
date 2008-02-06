@@ -91,10 +91,10 @@ class midcom_baseclasses_database_group extends __midcom_baseclasses_database_gr
         $parent = new midcom_baseclasses_database_group($this->owner);
         if (! $parent)
         {
-        	debug_push_class(__CLASS__, __FUNCTION__);
-        	debug_add("Could not load Group ID {$this->owner} from the database, aborting.", 
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Could not load Group ID {$this->owner} from the database, aborting.", 
                 MIDCOM_LOG_INFO);
-        	debug_pop();
+            debug_pop();
             return null;
         }
         

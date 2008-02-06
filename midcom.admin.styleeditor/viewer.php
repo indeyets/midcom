@@ -63,16 +63,16 @@ class midcom_admin_styleeditor_viewer extends midcom_baseclasses_components_requ
                 'variable_args' => 1,
             ),
             /**
-    		 * Create new style element
-    		 *
-    		 * Match /create/
-    		 *
-    		 */
-    		 'style_element_create' => array
-    		 (
-    		 	'handler' => array ('midcom_admin_styleeditor_handler_create','create'),
-    		 	'fixed_args' => array ('create'),
-    		 ),
+             * Create new style element
+             *
+             * Match /create/
+             *
+             */
+             'style_element_create' => array
+             (
+                 'handler' => array ('midcom_admin_styleeditor_handler_create','create'),
+                 'fixed_args' => array ('create'),
+             ),
             /**
              * Create a new file
              * 

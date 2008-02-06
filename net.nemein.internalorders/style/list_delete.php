@@ -9,7 +9,7 @@
 <?php
 foreach($order as $event)
 {
-	echo "<a href=\"edit/".$event->guid().".html\">".$event->title."</a><br />";
+    echo "<a href=\"edit/".$event->guid().".html\">".$event->title."</a><br />";
 }
 ?>
 <br /><br />

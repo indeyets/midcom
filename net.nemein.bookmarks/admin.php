@@ -329,9 +329,9 @@ class net_nemein_bookmarks_admin
 
         $this->_topic_toolbar->disable_item('config.html');
         foreach ($this->_schemadb_index as $name => $desc)
-		{
-		    $this->_topic_toolbar->disable_item("create/{$name}.html");
-		}
+        {
+            $this->_topic_toolbar->disable_item("create/{$name}.html");
+        }
         $this->_local_toolbar->disable_item("edit/{$id}.html");
         $this->_local_toolbar->disable_item("delete/{$id}.html");
         $this->_local_toolbar->disable_view_page();
@@ -354,25 +354,25 @@ class net_nemein_bookmarks_admin
                 //$indexer =& $_MIDCOM->get_service('indexer');
                 //$indexer->index($this->_datamanager);
 
-	            // Redirect to view page.
-	            $_MIDCOM->relocate("view/$id.html");
-	            // This will exit()
+                // Redirect to view page.
+                $_MIDCOM->relocate("view/$id.html");
+                // This will exit()
 
 
-	            // Redirect to view page.
-	            //$_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-	            //     . "view/$id.html");
-	            // This will exit()
+                // Redirect to view page.
+                //$_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+                //     . "view/$id.html");
+                // This will exit()
 
             case MIDCOM_DATAMGR_CANCELLED:
-            	// Redirect to view page.
-	            $_MIDCOM->relocate("view/$id.html");
-	            // This will exit()
-       			/*
-	            // Redirect to view page.
-	            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-	                 . "view/$id.html");
-	            // This will exit()
+                // Redirect to view page.
+                $_MIDCOM->relocate("view/$id.html");
+                // This will exit()
+                   /*
+                // Redirect to view page.
+                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+                     . "view/$id.html");
+                // This will exit()
                 */
             case MIDCOM_DATAMGR_FAILED:
                 $this->errstr = "Datamanager: " . $GLOBALS["midcom_errstr"];
@@ -471,19 +471,19 @@ class net_nemein_bookmarks_admin
             case MIDCOM_DATAMGR_SAVED:
                 debug_add('Datamanager has saved, relocating to view.');
                 $session->remove('admin_create_id');
-	            if ($this->_article->name == '' && $this->_config->get("create_name_from_title"))
-	            {
-	                // Since this is the first editing round generate the URL name from title
-	                // Don't touch the URL names after this to preserve links
-	                // But do it only if no url name has been supplied.
-	                $this->_article = $this->_generate_urlname($this->_article);
-	            }
+                if ($this->_article->name == '' && $this->_config->get("create_name_from_title"))
+                {
+                    // Since this is the first editing round generate the URL name from title
+                    // Don't touch the URL names after this to preserve links
+                    // But do it only if no url name has been supplied.
+                    $this->_article = $this->_generate_urlname($this->_article);
+                }
 
                 // index the article
                 $indexer =& $_MIDCOM->get_service('indexer');
                 $indexer->index($this->_datamanager);
 
-	            // Redirect to view page.
+                // Redirect to view page.
                 $_MIDCOM->relocate("view/{$this->_article->id}.html");
             // This will exit
 
@@ -539,25 +539,25 @@ class net_nemein_bookmarks_admin
         return true;
     }
 
-	function _dm_create_callback(&$datamanager) {
-	    $result = Array (
-	        "success" => true,
-	        "storage" => null,
-	    );
+    function _dm_create_callback(&$datamanager) {
+        $result = Array (
+            "success" => true,
+            "storage" => null,
+        );
 
-	    $midgard = $_MIDCOM->get_midgard();
-	    $this->_article = mgd_get_article();
-	    $this->_article->topic = $this->_topic->id;
-	    $this->_article->author = $midgard->user;
-	    $id = $this->_article->create();
-	    if (! $id) {
-	        debug_add ("net.nemein.bookmarks::admin::_dm_create_callback Could not create article: " . mgd_errstr());
-	        return null;
-	    }
-	    $this->_article = mgd_get_article($id);
-	    $result["storage"] =& $this->_article;
-	    return $result;
-	}
+        $midgard = $_MIDCOM->get_midgard();
+        $this->_article = mgd_get_article();
+        $this->_article->topic = $this->_topic->id;
+        $this->_article->author = $midgard->user;
+        $id = $this->_article->create();
+        if (! $id) {
+            debug_add ("net.nemein.bookmarks::admin::_dm_create_callback Could not create article: " . mgd_errstr());
+            return null;
+        }
+        $this->_article = mgd_get_article($id);
+        $result["storage"] =& $this->_article;
+        return $result;
+    }
 
     function _init_delete($id)
     {
@@ -773,8 +773,8 @@ class net_nemein_bookmarks_admin
                                 }
                                 else
                                 {
-                                	// Invalidating the cache
-                                	$_MIDCOM->cache->invalidate_all();
+                                    // Invalidating the cache
+                                    $_MIDCOM->cache->invalidate_all();
 
                                     debug_add ("Created $id updated");
                                 }

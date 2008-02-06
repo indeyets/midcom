@@ -48,9 +48,9 @@ class midcom_baseclasses_database_eventmember extends __midcom_baseclasses_datab
         $parent = new midcom_baseclasses_database_event($this->eid);
         if (! $parent)
         {
-        	debug_add("Could not load Event ID {$this->eid} from the database, aborting.", 
+            debug_add("Could not load Event ID {$this->eid} from the database, aborting.", 
                 MIDCOM_LOG_INFO);
-        	debug_pop();
+            debug_pop();
             return null;
         }
         

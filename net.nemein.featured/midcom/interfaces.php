@@ -21,14 +21,14 @@ class net_nemein_featured_interface extends midcom_baseclasses_components_interf
         $this->_component = 'net.nemein.featured';
         $this->_autoload_files = array
         (
-	    'featured.php',
-	    'viewer.php',
-	    'navigation.php'
-	);
-	$this->_autoload_libraries = array
-	(
+        'featured.php',
+        'viewer.php',
+        'navigation.php'
+    );
+    $this->_autoload_libraries = array
+    (
             'midcom.helper.datamanager2',
-	);
+    );
     }
 }
 

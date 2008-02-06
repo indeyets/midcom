@@ -25,7 +25,7 @@ class midgard_webdav_styles_handler extends midcom_baseclasses_components_handle
         require 'dav/styles.php';
         require 'dav/element.php';
         require 'dav/midcoms.php';
-       	$_MIDCOM->cache->content->no_cache();
+           $_MIDCOM->cache->content->no_cache();
         $_MIDCOM->skip_page_style = true;
 
     }
@@ -38,7 +38,7 @@ class midgard_webdav_styles_handler extends midcom_baseclasses_components_handle
         $this->log(__CLASS__ . ": root style: " . $style->name);
         if (!$style->id)
         {
-        	return false;
+            return false;
         }
         return $style;
     }

@@ -36,7 +36,7 @@ class midcom_helper_datamanager_datatype_array extends midcom_helper_datamanager
 
     function load_from_storage ()
     {
-    	debug_push_class(__CLASS__, __FUNCTION__);
+        debug_push_class(__CLASS__, __FUNCTION__);
 
         // First load the data from the storage
         parent::load_from_storage();

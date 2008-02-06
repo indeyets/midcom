@@ -28,10 +28,10 @@ class net_nemein_teams_interface extends midcom_baseclasses_components_interface
         (
             'viewer.php', 
             'navigation.php',
-	        'log.php',
-	        'logger.php',
-	        'team.php',
-	        'pending.php',
+            'log.php',
+            'logger.php',
+            'team.php',
+            'pending.php',
         );
         
         // Load all libraries used by component here
@@ -57,7 +57,7 @@ class net_nemein_teams_interface extends midcom_baseclasses_components_interface
     function _on_reindex($topic, $config, &$indexer)
     {
         $nav = new midcom_helper_nav();
-	$node = $nav->get_node($topic->id);
+    $node = $nav->get_node($topic->id);
 
         $qb = net_nemein_teams_team_dba::new_query_builder();
         
@@ -77,27 +77,27 @@ class net_nemein_teams_interface extends midcom_baseclasses_components_interface
                         $player->get_by_id($member->uid);
 
                         $qb = midcom_db_topic::new_query_builder();
-			//$qb->add_constraint('up', '=', $topic->id);
+            //$qb->add_constraint('up', '=', $topic->id);
                         $qb->add_constraint('name', '=', $player->username);
 
                         if ($home_topics = $qb->execute())
-			{
-			    foreach($home_topics as $home_topic)
-			    {
+            {
+                foreach($home_topics as $home_topic)
+                {
 
                                 $document = $indexer->new_document($player);
-		 	        $document->topic_url = $node[MIDCOM_NAV_FULLURL];
-			        $document->topic_guid = $topic->guid;
-			        $document->document_url = "/midcom-permalink-{$home_topic->guid}";
+                     $document->topic_url = $node[MIDCOM_NAV_FULLURL];
+                    $document->topic_guid = $topic->guid;
+                    $document->document_url = "/midcom-permalink-{$home_topic->guid}";
                                 $document->title = "{$player->username}";
                                 $document->abstract = "{$player->username} - {$group->name}";
                                 $document->content = "{$player->username} {$group->name} {$player->extra} {$document->content}";
                                 $document->component = "net.nemein.teams";
-			        $document->read_metadata_from_object($player->storage->object);
+                    $document->read_metadata_from_object($player->storage->object);
                                 $indexer->index($document);
                             }
-		        }
-		    }
+                }
+            }
                 }
             }    
         }

@@ -61,12 +61,12 @@ class midcom_services_indexer_document_midcom extends midcom_services_indexer_do
         }
         else
         {
-	        $this->_metadata =& midcom_helper_metadata::retrieve($object);
-	        if ($this->_metadata == false)
-	        {
-	            debug_add('document_midcom: Failed to retrieve a Metadata object, aborting.');
-	            return false;
-	        }
+            $this->_metadata =& midcom_helper_metadata::retrieve($object);
+            if ($this->_metadata == false)
+            {
+                debug_add('document_midcom: Failed to retrieve a Metadata object, aborting.');
+                return false;
+            }
         }
 
         $this->source = $this->_metadata->object->guid();

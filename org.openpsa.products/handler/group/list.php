@@ -119,7 +119,7 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
 
         if ($handler_id == 'list_intree')
         {
-	        $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
+            $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
             $parentgroup_qb->add_constraint('code', '=', $args[0]);
             $groups = $parentgroup_qb->execute();
             if (count($groups) == 0)
@@ -148,8 +148,8 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             if (count($groups) > 0)
             {
                 $categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
-        	    $categories_qb->add_constraint('id', '=', $groups[0]->up);
-        	    $categories = $categories_qb->execute();
+                $categories_qb->add_constraint('id', '=', $groups[0]->up);
+                $categories = $categories_qb->execute();
 
                 $data['parent_category'] = $categories[0]->code;
             }
@@ -363,7 +363,7 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
 
         if (count($data['groups']) >= 1) //FIXME: Hack
         {
-    	    midcom_show_style('group_header');
+            midcom_show_style('group_header');
 
             $groups_counter = 0;
             $data['groups_count'] = count($data['groups']);
@@ -388,14 +388,14 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
 
                 if ($group->code)
                 {
-		    if (isset($data["parent_category"]))
-		    {
-                	$data['view_group_url'] = "{$prefix}".$data["parent_category"]."/{$group->code}/";
-		    }
-		    else
-		    {
-                	$data['view_group_url'] = "{$prefix}{$group->code}/";
-		    }
+            if (isset($data["parent_category"]))
+            {
+                    $data['view_group_url'] = "{$prefix}".$data["parent_category"]."/{$group->code}/";
+            }
+            else
+            {
+                    $data['view_group_url'] = "{$prefix}{$group->code}/";
+            }
                 }
                 else
                 {
@@ -406,12 +406,12 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             }
 
             midcom_show_style('group_subgroups_footer');
-    	    midcom_show_style('group_footer');
+            midcom_show_style('group_footer');
         }
 
         elseif (count($data['products']) > 0)
         {
-    	    midcom_show_style('group_header');
+            midcom_show_style('group_header');
 
             $products_counter = 0;
             $data['products_count'] = count($data['products']);
@@ -454,7 +454,7 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             }
 
             midcom_show_style('group_products_footer');
-    	    midcom_show_style('group_footer');
+            midcom_show_style('group_footer');
         }
 
     }

@@ -32,7 +32,7 @@
  * - <b>string keywords:</b> The keywords for this object, should be used for META HTML headers.
  * - <b>string description:</b> A short description for this object, should be used for META HTML headers.
  * - <b>string robots:</b> Search engine crawler instructions, one of '' (unset), 'noindex', 'index', 'follow' and 'nofollow'.
- * 	 See the corresponding META HTML header.
+ *      See the corresponding META HTML header.
  * - <b>timestamp published:</b> The publication time of the object, read-only.
  * - <b>MidgardPerson publisher:</b> The person that published the object (i.e. author), read-only except on articles and pages.
  * - <b>timestamp created:</b> The creation time of the object, read-only unless an article is edited.

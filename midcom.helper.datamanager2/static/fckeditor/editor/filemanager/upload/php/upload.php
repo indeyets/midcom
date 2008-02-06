@@ -28,19 +28,19 @@ require('util.php') ;
 // This is the function that sends the results of the uploading process.
 function SendResults( $errorNumber, $fileUrl = '', $fileName = '', $customMsg = '' )
 {
-	echo '<script type="text/javascript">' ;
-	echo 'window.parent.OnUploadCompleted(' . $errorNumber . ',"' . str_replace( '"', '\\"', $fileUrl ) . '","' . str_replace( '"', '\\"', $fileName ) . '", "' . str_replace( '"', '\\"', $customMsg ) . '") ;' ;
-	echo '</script>' ;
-	exit ;
+    echo '<script type="text/javascript">' ;
+    echo 'window.parent.OnUploadCompleted(' . $errorNumber . ',"' . str_replace( '"', '\\"', $fileUrl ) . '","' . str_replace( '"', '\\"', $fileName ) . '", "' . str_replace( '"', '\\"', $customMsg ) . '") ;' ;
+    echo '</script>' ;
+    exit ;
 }
 
 // Check if this uploader has been enabled.
 if ( !$Config['Enabled'] )
-	SendResults( '1', '', '', 'This file uploader is disabled. Please check the "editor/filemanager/upload/php/config.php" file' ) ;
+    SendResults( '1', '', '', 'This file uploader is disabled. Please check the "editor/filemanager/upload/php/config.php" file' ) ;
 
 // Check if the file has been correctly uploaded.
 if ( !isset( $_FILES['NewFile'] ) || is_null( $_FILES['NewFile']['tmp_name'] ) || $_FILES['NewFile']['name'] == '' )
-	SendResults( '202' ) ;
+    SendResults( '202' ) ;
 
 // Get the posted file.
 $oFile = $_FILES['NewFile'] ;
@@ -50,7 +50,7 @@ $sFileName = $oFile['name'] ;
 
 // Replace dots in the name with underscores (only one dot can be there... security issue).
 if ( $Config['ForceSingleExtension'] )
-	$sFileName = preg_replace( '/\\.(?![^.]*$)/', '_', $sFileName ) ;
+    $sFileName = preg_replace( '/\\.(?![^.]*$)/', '_', $sFileName ) ;
 
 $sOriginalFileName = $sFileName ;
 
@@ -66,27 +66,27 @@ if ( !in_array( $sType, array('File','Image','Flash','Media') ) )
     SendResults( 1, '', '', 'Invalid type specified' ) ;
 
 // Get the allowed and denied extensions arrays.
-$arAllowed	= $Config['AllowedExtensions'][$sType] ;
-$arDenied	= $Config['DeniedExtensions'][$sType] ;
+$arAllowed    = $Config['AllowedExtensions'][$sType] ;
+$arDenied    = $Config['DeniedExtensions'][$sType] ;
 
 // Check if it is an allowed extension.
 if ( ( count($arAllowed) > 0 && !in_array( $sExtension, $arAllowed ) ) || ( count($arDenied) > 0 && in_array( $sExtension, $arDenied ) ) )
-	SendResults( '202' ) ;
+    SendResults( '202' ) ;
 
-$sErrorNumber	= '0' ;
-$sFileUrl		= '' ;
+$sErrorNumber    = '0' ;
+$sFileUrl        = '' ;
 
 // Initializes the counter used to rename the file, if another one with the same name already exists.
 $iCounter = 0 ;
 
 // Get the target directory.
 if ( isset( $Config['UserFilesAbsolutePath'] ) && strlen( $Config['UserFilesAbsolutePath'] ) > 0 )
-	$sServerDir = $Config['UserFilesAbsolutePath'] ;
+    $sServerDir = $Config['UserFilesAbsolutePath'] ;
 else
-	$sServerDir = GetRootPath() . $Config["UserFilesPath"] ;
+    $sServerDir = GetRootPath() . $Config["UserFilesPath"] ;
 
 if ( $Config['UseFileType'] )
-	$sServerDir .= strtolower($sType) . '/' ;
+    $sServerDir .= strtolower($sType) . '/' ;
 
 //check for the directory before uploading the file
 if(!is_dir($sServerDir))
@@ -96,34 +96,34 @@ if(!is_dir($sServerDir))
 
 while ( true )
 {
-	// Compose the file path.
-	$sFilePath = $sServerDir . $sFileName ;
+    // Compose the file path.
+    $sFilePath = $sServerDir . $sFileName ;
 
-	// If a file with that name already exists.
-	if ( is_file( $sFilePath ) )
-	{
-		$iCounter++ ;
-		$sFileName = RemoveExtension( $sOriginalFileName ) . '(' . $iCounter . ').' . $sExtension ;
-		$sErrorNumber = '201' ;
-	}
-	else
-	{
-		move_uploaded_file( $oFile['tmp_name'], $sFilePath ) ;
+    // If a file with that name already exists.
+    if ( is_file( $sFilePath ) )
+    {
+        $iCounter++ ;
+        $sFileName = RemoveExtension( $sOriginalFileName ) . '(' . $iCounter . ').' . $sExtension ;
+        $sErrorNumber = '201' ;
+    }
+    else
+    {
+        move_uploaded_file( $oFile['tmp_name'], $sFilePath ) ;
 
-		if ( is_file( $sFilePath ) )
-		{
-			$oldumask = umask(0) ;
-			chmod( $sFilePath, 0777 ) ;
-			umask( $oldumask ) ;
-		}
+        if ( is_file( $sFilePath ) )
+        {
+            $oldumask = umask(0) ;
+            chmod( $sFilePath, 0777 ) ;
+            umask( $oldumask ) ;
+        }
 
-		if ( $Config['UseFileType'] )
-			$sFileUrl = $Config["UserFilesPath"] . strtolower($sType) . '/' . $sFileName ;
-		else
-			$sFileUrl = $Config["UserFilesPath"] . $sFileName ;
+        if ( $Config['UseFileType'] )
+            $sFileUrl = $Config["UserFilesPath"] . strtolower($sType) . '/' . $sFileName ;
+        else
+            $sFileUrl = $Config["UserFilesPath"] . $sFileName ;
 
-		break ;
-	}
+        break ;
+    }
 }
 
 SendResults( $sErrorNumber, $sFileUrl, $sFileName ) ;

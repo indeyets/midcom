@@ -61,7 +61,7 @@ class midcom_helper_datamanager_datatype_integer extends midcom_helper_datamanag
     
     function sync_widget_with_data() 
     {
-    	debug_push_class(__CLASS__, __FUNCTION__);
+        debug_push_class(__CLASS__, __FUNCTION__);
         
         $widget =& $this->get_widget();
         $value = (int) $this->_value;
@@ -78,7 +78,7 @@ class midcom_helper_datamanager_datatype_integer extends midcom_helper_datamanag
     
     function sync_data_with_widget () 
     {
-    	debug_push_class(__CLASS__, __FUNCTION__);
+        debug_push_class(__CLASS__, __FUNCTION__);
         
         $widget =& $this->get_widget();
         $string = $widget->get_value();

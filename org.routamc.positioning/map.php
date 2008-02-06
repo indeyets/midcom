@@ -286,13 +286,13 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         static $i = 0;
         $i++;
         
-		// Just in case.. cast lat/lon to 'dot' delimited numbers
-		$lat = number_format($marker['coordinates']['latitude'],6);
-		$lon = number_format($marker['coordinates']['longitude'],6);
+        // Just in case.. cast lat/lon to 'dot' delimited numbers
+        $lat = number_format($marker['coordinates']['latitude'],6);
+        $lon = number_format($marker['coordinates']['longitude'],6);
 
         $script .= "var marker_{$i} = new Marker(new LatLonPoint({$lat}, {$lon}))\n";
         
-		$title = htmlspecialchars($marker['title'],ENT_QUOTES);
+        $title = htmlspecialchars($marker['title'],ENT_QUOTES);
         $script .= "marker_{$i}.setLabel('{$title}');\n";
         
         if (   !isset($marker['icon'])
@@ -316,7 +316,7 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         
         if (isset($marker['abstract']))
         {
-			$abstract = htmlspecialchars($marker['abstract'],ENT_QUOTES);
+            $abstract = htmlspecialchars($marker['abstract'],ENT_QUOTES);
             $script .= "marker_{$i}.setInfoBubble('{$abstract}');\n";
         }
         

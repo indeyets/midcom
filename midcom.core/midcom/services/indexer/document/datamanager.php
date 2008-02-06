@@ -181,27 +181,27 @@ class midcom_services_indexer_document_datamanager extends midcom_services_index
                     break;
 
                 case 'abstract':
-                	debug_add("Adding field {$name} as abstract");
+                    debug_add("Adding field {$name} as abstract");
                     $this->abstract = $this->_get_text_representation($name);
                     break;
 
                 case 'content':
-                	debug_add("Adding field {$name} to content");
+                    debug_add("Adding field {$name} to content");
                     $this->content .= $this->_get_text_representation($name) . "\n";
                     break;
 
                 case 'title':
-                	debug_add("Adding field {$name} as title");
+                    debug_add("Adding field {$name} as title");
                     $this->title = $this->_get_text_representation($name);
                     break;
 
                 case 'author':
-                	debug_add("Adding field {$name} as author");
+                    debug_add("Adding field {$name} as author");
                     $this->author = $this->_get_text_representation($name);
                     break;
 
                 case 'date':
-                	debug_add("Adding field {$name} as date");
+                    debug_add("Adding field {$name} as date");
                     $this->_add_as_date_field($name);
                     break;
 
@@ -214,7 +214,7 @@ class midcom_services_indexer_document_datamanager extends midcom_services_index
                     $this->_add_field($name, $field['index_method'], $data);
                     if ($field['index_merge_with_content'])
                     {
-                    	$this->content .= $data . "\n";
+                        $this->content .= $data . "\n";
                     }
                     break;
 
@@ -297,7 +297,7 @@ class midcom_services_indexer_document_datamanager extends midcom_services_index
             {
                 debug_add("The string representation of the field {$name} could not be parsed into a timestamp; treating as 0.", MIDCOM_LOG_INFO);
                 debug_print_r('"String representation was:', $string);
-            	$timestamp = 0;
+                $timestamp = 0;
             }
             $this->add_date_pair($name, $timestamp);
         }
@@ -313,25 +313,25 @@ class midcom_services_indexer_document_datamanager extends midcom_services_index
     {
         switch ($name)
         {
-	        case 'abstract':
-            	debug_add("Adding field {$name} as abstract");
-	            $this->abstract = $this->_get_text_representation($name);
-	            break;
+            case 'abstract':
+                debug_add("Adding field {$name} as abstract");
+                $this->abstract = $this->_get_text_representation($name);
+                break;
 
-	        case 'title':
-            	debug_add("Adding field {$name} as title");
-	            $this->title = $this->_get_text_representation($name);
-	            break;
+            case 'title':
+                debug_add("Adding field {$name} as title");
+                $this->title = $this->_get_text_representation($name);
+                break;
 
-	        case 'author':
-            	debug_add("Adding field {$name} as author");
+            case 'author':
+                debug_add("Adding field {$name} as author");
                 $this->author = $this->_get_text_representation($name);
-	            break;
+                break;
 
-	        default:
-            	debug_add("Adding field {$name} to content");
-	            $this->content .= $this->_get_text_representation($name) . "\n";
-	            break;
+            default:
+                debug_add("Adding field {$name} to content");
+                $this->content .= $this->_get_text_representation($name) . "\n";
+                break;
 
         }
     }

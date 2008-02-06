@@ -145,7 +145,7 @@ class midcom_services_indexer_backend_xmlshell extends midcom_services_indexer_b
         (
             0 => Array('pipe', 'r'), // stdin, the child will read from it
             1 => Array('pipe', 'w'), // stdout, the child will write to it.
-			2 => Array('pipe', 'w'), // stderr, the child will write to it.
+            2 => Array('pipe', 'w'), // stderr, the child will write to it.
         );
         
         chdir($GLOBALS['midcom_config']['indexer_xmlshell_working_directory']);

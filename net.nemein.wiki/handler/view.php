@@ -321,12 +321,12 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         midcom_show_style('view-wikipage');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_raw($handler_id, $args, &$data, $view_mode = true)
     {
         $this->_load_page($args[0]);
@@ -357,11 +357,11 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         midcom_show_style('view-wikipage-raw');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-	 */
+     */
     function _handler_subscribe($handler_id, $args, &$data)
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST')
@@ -417,12 +417,12 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
         // This will exit
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_whatlinks($handler_id, $args, &$data, $view_mode = true)
     {
         $this->_load_page($args[0]);

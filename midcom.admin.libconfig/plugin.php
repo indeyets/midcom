@@ -105,7 +105,7 @@ class midcom_admin_libconfig_plugin extends midcom_baseclasses_components_reques
         return $libs;
     }
 
-	public function navigation()
+    public function navigation()
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $libs = midcom_admin_libconfig_plugin::get_libraries();

@@ -87,12 +87,12 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_view($handler_id, $args, &$data)
     {
         $this->_selected_time = $args[0];

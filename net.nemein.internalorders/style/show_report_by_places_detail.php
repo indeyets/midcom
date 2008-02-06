@@ -6,13 +6,13 @@
 <style>
 .note
 {
-	color:#DD0000;
-	font-weight:bold;
+    color:#DD0000;
+    font-weight:bold;
 }
 table.internalorders td
 {
-	padding-left:3px;
-	padding-right:3px;
+    padding-left:3px;
+    padding-right:3px;
 }
 </style>
 
@@ -42,24 +42,24 @@ echo "<h2>".$person->name."</h2>";
 <br /><br />
 
 <table cellpadding="0" cellspacing="0" border="0" class="internalorders">
-	<tr>
-		<td><strong>Nro.</strong></td>
-		<?php
-		if ($data['sent_receive'] == 0)
-		{
-		?>
-		<td><strong>Vastaanottaja</strong></td>
-		<?php
-		}
-		else
-		{
-		?>
-		<td><strong>L&auml;hett&auml;j&auml;</strong></td>
-		<?php } ?>
-		<td><strong>L&auml;hetysaika</strong></td>
-		<td align="right"><strong>L&auml;hetyksen kokonaissumma</strong></td>
-		<td align="right"><strong>Kokonaism&auml;&auml;r&auml;</strong></td>
-	</tr>
+    <tr>
+        <td><strong>Nro.</strong></td>
+        <?php
+        if ($data['sent_receive'] == 0)
+        {
+        ?>
+        <td><strong>Vastaanottaja</strong></td>
+        <?php
+        }
+        else
+        {
+        ?>
+        <td><strong>L&auml;hett&auml;j&auml;</strong></td>
+        <?php } ?>
+        <td><strong>L&auml;hetysaika</strong></td>
+        <td align="right"><strong>L&auml;hetyksen kokonaissumma</strong></td>
+        <td align="right"><strong>Kokonaism&auml;&auml;r&auml;</strong></td>
+    </tr>
 <?php
 
 $tmp_sum = 0;
@@ -77,42 +77,42 @@ else
 $person_tmp = mgd_get_person($event->creator);
 }
 
-/*	echo "<pre>";
-	print_r($event);
-	echo "<pre>";*/
-	$sub_orders_sum = 0;
-	$sub_orders_quant_send = 0;
-	$sub_orders_quant_received = 0;
-	$sub_orders = mgd_list_events($event->id, 'creator');
-	if ($sub_orders)
-	{
-		while ($sub_orders->fetch())
-		{
-			$order = mgd_get_event($sub_orders->id);
-			$sub_orders_sum = $sub_orders_sum + $order->parameter('net.nemein.internalorders', 'sum');
-			$sub_orders_quant_send = $sub_orders_quant_send + $order->parameter('net.nemein.internalorders', 'quantity');
-			$sub_orders_quant_received = $sub_orders_quant_received + $order->parameter('net.nemein.internalorders', 'quantity_received');
-		}
-	}
+/*    echo "<pre>";
+    print_r($event);
+    echo "<pre>";*/
+    $sub_orders_sum = 0;
+    $sub_orders_quant_send = 0;
+    $sub_orders_quant_received = 0;
+    $sub_orders = mgd_list_events($event->id, 'creator');
+    if ($sub_orders)
+    {
+        while ($sub_orders->fetch())
+        {
+            $order = mgd_get_event($sub_orders->id);
+            $sub_orders_sum = $sub_orders_sum + $order->parameter('net.nemein.internalorders', 'sum');
+            $sub_orders_quant_send = $sub_orders_quant_send + $order->parameter('net.nemein.internalorders', 'quantity');
+            $sub_orders_quant_received = $sub_orders_quant_received + $order->parameter('net.nemein.internalorders', 'quantity_received');
+        }
+    }
 
-	echo "	<tr>\n";
-	echo "		<td><a href=\"".$_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."/view/".$event->guid().".html\">".$event->title."</a></td>";
-	echo "		<td>".$person_tmp->name."</td>\n";
-	echo "		<td>&nbsp;".date("d.m.Y G:i", $event->start)."</td>\n";
-	echo "		<td align=\"right\">".str_replace('.', ',', str_replace('EUR', '', money_format('%i', $sub_orders_sum)))."</td>\n";
-	if ($sub_orders_quant_received == $sub_orders_quant_send)
-	{
-	echo "		<td align=\"right\">".$sub_orders_quant_send."</td>\n";
-	}
-	else
-	{
-	echo "		<td class=\"note\" align=\"right\">".$sub_orders_quant_send."</td>\n";
-	}
-	echo "	</tr>\n";
-	$tmp_sum = $tmp_sum + $sub_orders_sum;
-	$tmp_quant = $tmp_quant + $sub_orders_quant_send;
-	$tmp_orders_count++;
-	
+    echo "    <tr>\n";
+    echo "        <td><a href=\"".$_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."/view/".$event->guid().".html\">".$event->title."</a></td>";
+    echo "        <td>".$person_tmp->name."</td>\n";
+    echo "        <td>&nbsp;".date("d.m.Y G:i", $event->start)."</td>\n";
+    echo "        <td align=\"right\">".str_replace('.', ',', str_replace('EUR', '', money_format('%i', $sub_orders_sum)))."</td>\n";
+    if ($sub_orders_quant_received == $sub_orders_quant_send)
+    {
+    echo "        <td align=\"right\">".$sub_orders_quant_send."</td>\n";
+    }
+    else
+    {
+    echo "        <td class=\"note\" align=\"right\">".$sub_orders_quant_send."</td>\n";
+    }
+    echo "    </tr>\n";
+    $tmp_sum = $tmp_sum + $sub_orders_sum;
+    $tmp_quant = $tmp_quant + $sub_orders_quant_send;
+    $tmp_orders_count++;
+    
 }
 echo "\t<tr>\n";
 echo "\t\t<td>&nbsp;</td>\n";

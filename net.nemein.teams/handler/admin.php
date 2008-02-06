@@ -37,26 +37,26 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         $this->_logger = new net_nemein_teams_logger();
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_admin ($handler_id, $args, &$data)
     {
         $title = $this->_l10n_midcom->get('index');
         $_MIDCOM->set_pagetitle(":: {$title}");
 
-	    return true;
+        return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_log ($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
@@ -65,23 +65,23 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         $_MIDCOM->set_pagetitle(":: {$title}");
 
         $qb = net_nemein_teams_log_dba::new_query_builder();
-	    //$qb->add_constraint('teamguid', '=', 'koe');
+        //$qb->add_constraint('teamguid', '=', 'koe');
         $qb->add_order('metadata.created', 'DESC');
 
-	    $logs = $qb->execute();
+        $logs = $qb->execute();
 
-	    $this->_request_data['logs'] = $logs;
+        $this->_request_data['logs'] = $logs;
 
 
-	    return true;
+        return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_manage ($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
@@ -102,12 +102,12 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_manage_delete($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
@@ -162,12 +162,12 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_manage_team($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();

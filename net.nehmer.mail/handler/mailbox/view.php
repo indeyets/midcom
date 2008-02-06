@@ -125,12 +125,12 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_view($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);

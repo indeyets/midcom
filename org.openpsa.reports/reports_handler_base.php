@@ -23,12 +23,12 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
         parent::midcom_baseclasses_components_handler();
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_generator_get($handler_id, $args, &$data)
     {
         $this->_set_active_leaf();
@@ -123,12 +123,12 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
         return null;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_query_form($handler_id, $args, &$data)
     {
         $this->_set_active_leaf();

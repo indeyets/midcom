@@ -53,8 +53,8 @@ function midcom_get_snippet_content_graceful($path)
  * Any error (files not found) will raise a MidCOM Error. If you want a more
  * graceful behavior, look for midcom_get_snippet_content_graceful
  *
- * @param string $path	The URL to the snippet.
- * @return string		The content of the snippet/file.
+ * @param string $path    The URL to the snippet.
+ * @return string        The content of the snippet/file.
  */
 function midcom_get_snippet_content($path)
 {
@@ -87,7 +87,7 @@ function midcom_get_snippet_content($path)
 /**
  * Probes for the installed NemeinRCS root
  *
- * @return string	RCS root or false on failure.
+ * @return string    RCS root or false on failure.
  */
 function midcom_probe_nemein_rcs() {
     if (!class_exists('no_bergfald_rcs_aegirrcs'))
@@ -101,7 +101,7 @@ function midcom_probe_nemein_rcs() {
  *
  * Updates the Nemein RCS information for $object.
  *
- * @param MidgardObject $object	The object that should be version controlled.
+ * @param MidgardObject $object    The object that should be version controlled.
  * @param string $message Change log message
  * @return boolean Indicating success.
  */
@@ -120,9 +120,9 @@ function midcom_update_nemein_rcs($object, $message = null) {
  * Helper function to check whether a given group is a subgroup
  * of another one.
  *
- * @param int $id		Group to query.
- * @param int $rootid	Root group.
- * @return boolean			True if it is a subgroup, false otherwise.
+ * @param int $id        Group to query.
+ * @param int $rootid    Root group.
+ * @return boolean            True if it is a subgroup, false otherwise.
  */
 function mgd_is_group_in_group_tree($id, $rootid) {
     if ($id == $rootid)
@@ -139,8 +139,8 @@ function mgd_is_group_in_group_tree($id, $rootid) {
 /**
  * List all members in a group.
  *
- * @param int $group	The id of the group whose members are queried.
- * @return Array		ID-Array of all group members
+ * @param int $group    The id of the group whose members are queried.
+ * @return Array        ID-Array of all group members
  */
 function mgd_list_persons_in_group_all($group) {
     return false;
@@ -159,8 +159,8 @@ function mgd_list_persons_in_group_all($group) {
 /**
  * Transforms a fetchable into an ID-array
  *
- * @param MidgardFetchable $fetchable	Any result traversable by fetch()
- * @return Arraay	An Array of all object id's in the fetchable.
+ * @param MidgardFetchable $fetchable    Any result traversable by fetch()
+ * @return Arraay    An Array of all object id's in the fetchable.
  */
 function mgd_fetch_to_array($fetchable) {
     if (!$fetchable)
@@ -174,8 +174,8 @@ function mgd_fetch_to_array($fetchable) {
 /**
  * Transforms a membership fetchable to a Person-ID Array
  *
- * @param MidgardFetchable $fetchable	Any result traversable by fetch()
- * @return Arraay	An Array of all person id's in the fetchable.
+ * @param MidgardFetchable $fetchable    Any result traversable by fetch()
+ * @return Arraay    An Array of all person id's in the fetchable.
  */
 function mgd_memberships_to_uid($fetchable) {
     if (!$fetchable)
@@ -189,8 +189,8 @@ function mgd_memberships_to_uid($fetchable) {
 /**
  * Transforms a membership fetchable to a Group-ID Array
  *
- * @param MidgardFetchable $fetchable	Any result traversable by fetch()
- * @return Arraay	An Array of all group id's in the fetchable.
+ * @param MidgardFetchable $fetchable    Any result traversable by fetch()
+ * @return Arraay    An Array of all group id's in the fetchable.
  */
 function mgd_memberships_to_gid ($fetchable) {
     if (!$fetchable)
@@ -210,10 +210,10 @@ function mgd_memberships_to_gid ($fetchable) {
  * (Margin: 255 characters) to fit into a parameter, if not, it will abort.
  * It will return TRUE if successful, FALSE on failure.
  *
- * @param Array $array			The data to store (keys will be preserved).
- * @param MidgardObject &$object	The object where to store the information.
- * @param string $domain		The domain where to save the information.
- * @return boolean					Indicating success.
+ * @param Array $array            The data to store (keys will be preserved).
+ * @param MidgardObject &$object    The object where to store the information.
+ * @param string $domain        The domain where to save the information.
+ * @return boolean                    Indicating success.
  */
 function mgd_save_custom_fields_param($array, &$object, $domain) {
     foreach ($array as $var) {
@@ -242,9 +242,9 @@ function mgd_save_custom_fields_param($array, &$object, $domain) {
  * <b>Note:</b> Midgard currently loads all parameters and assigns them to members
  * automatically. So this function should no longer be needed.
  *
- * @param Array $array			The variable names to load.
- * @param MidgardObject &$object	The object where to load the information.
- * @param string $domain		The domain where to load the information.
+ * @param Array $array            The variable names to load.
+ * @param MidgardObject &$object    The object where to load the information.
+ * @param string $domain        The domain where to load the information.
  */
 function mgd_load_custom_fields_param($array, &$object, $domain) {
     foreach ($array as $var) {
@@ -277,10 +277,10 @@ function mgd_get_createstr($object_type) {
  *
  * <b>Note:</b> This function is quite slow. It does everything on  a PHP level.
  *
- * @param Array &$array		The ID-Array to sort.
- * @param string $sortkey	The name of the member that should be sorted (prepend "reverse" for a reverse sorting).
- * @param string $object_type	The type of the object referenced by the IDs
- * @param int $sorting		The PHP sorting mechanism to use.
+ * @param Array &$array        The ID-Array to sort.
+ * @param string $sortkey    The name of the member that should be sorted (prepend "reverse" for a reverse sorting).
+ * @param string $object_type    The type of the object referenced by the IDs
+ * @param int $sorting        The PHP sorting mechanism to use.
  */
 function mgd_sort_id_array(&$array, $sortkey, $object_type, $sorting = SORT_REGULAR) {
     $createstr = mgd_get_createstr($object_type);
@@ -329,9 +329,9 @@ function mgd_sort_id_array(&$array, $sortkey, $object_type, $sorting = SORT_REGU
  *
  * Works with a reference array (doesn't return anything)
  *
- * @param Array &$array		The object-array to sort (used via reference).
- * @param string $sortkey	The name of the member that should be sorted (prepend "reverse" for a reverse sorting).
- * @param int $sorting		The PHP sorting mechanism to use.
+ * @param Array &$array        The object-array to sort (used via reference).
+ * @param string $sortkey    The name of the member that should be sorted (prepend "reverse" for a reverse sorting).
+ * @param int $sorting        The PHP sorting mechanism to use.
  */
 function mgd_sort_object_array (&$array, $sortkey, $sorting=SORT_REGULAR)
 {
@@ -392,15 +392,15 @@ function mgd_sort_object_array (&$array, $sortkey, $sorting=SORT_REGULAR)
  *
  * <b>Note:</b> This function is quite slow. It does everything on  a PHP level.
  *
- * @param Array $array		The ID-Array to sort and group.
- * @param string $groupkey	The key after which to group the results.
- * @param string $element_type	The type of the element after which to group.
- * @param int $elementsortkey	The key after which to sort the elements.
- * @param string $groupsortkey	The name of the member after which the groups should be sorted (prepend "reverse" for a reverse sorting).
- * @param string $group_type	The type of the object referenced by the groups
- * @param int $elementsorting		The PHP sorting mechanism to use.
- * @param int $groupsorting		The PHP sorting mechanism to use.
- * @return Array	Two-Level array with the grouped and sorted IDs.
+ * @param Array $array        The ID-Array to sort and group.
+ * @param string $groupkey    The key after which to group the results.
+ * @param string $element_type    The type of the element after which to group.
+ * @param int $elementsortkey    The key after which to sort the elements.
+ * @param string $groupsortkey    The name of the member after which the groups should be sorted (prepend "reverse" for a reverse sorting).
+ * @param string $group_type    The type of the object referenced by the groups
+ * @param int $elementsorting        The PHP sorting mechanism to use.
+ * @param int $groupsorting        The PHP sorting mechanism to use.
+ * @return Array    Two-Level array with the grouped and sorted IDs.
  */
 function mgd_group_id_array ($array, $groupkey, $element_type, $group_type, $elementsortkey = "unsorted", $groupsortkey = "unsorted", $elementsorting = SORT_REGULAR, $groupsorting = SORT_REGULAR ) {
     $element_createstr = mgd_get_createstr($element_type);
@@ -460,9 +460,9 @@ function mgd_sort_group_id_array(&$array, $element_type, $group_type, $elementso
  * Save a variable as attachment to a Midgard object. Type is preserved
  * through serialization.
  *
- * @param MidgardObject $object	The object at which to save the data.
- * @param mixed &$var			The variable that should be saved.
- * @param string $name			The identifier to use for storage.
+ * @param MidgardObject $object    The object at which to save the data.
+ * @param mixed &$var            The variable that should be saved.
+ * @param string $name            The identifier to use for storage.
  * @return boolean Indicating success.
  */
 function mgd_save_var_as_attachment($object, &$var, $name) {
@@ -506,8 +506,8 @@ function mgd_save_var_as_attachment($object, &$var, $name) {
 /**
  * Load a variable form an attachment to a Midgard object.
  *
- * @param MidgardObject $object	The object at which to save the data.
- * @param string $name			The identifier to use for storage.
+ * @param MidgardObject $object    The object at which to save the data.
+ * @param string $name            The identifier to use for storage.
  * @return mixed The retrieved variable.
  */
 function mgd_load_var_from_attachment($object, $name) {
@@ -561,7 +561,7 @@ function mgd_get_style_by_name2 ($id, $name) {
  * Delete all extensions (parameters and attachments) to a
  * Midgard object
  *
- * @param MidgardObject &$object	The object that should be cleared.
+ * @param MidgardObject &$object    The object that should be cleared.
  * @return boolean Indicating success.
  */
 function mgd_delete_extensions(&$object) {
@@ -618,7 +618,7 @@ if (!function_exists('mgd_get_snippet_by_path'))
  * construct mgd_include_snippet. Same semantics, but probably a little bit
  * slower.
  *
- * @param string $path	The path of the snippet that should be included.
+ * @param string $path    The path of the snippet that should be included.
  * @return boolean Returns false if the snippet could not be loaded or true, if it was evaluated successfully.
  */
 // This function is there as a backup in case you are not running within the
@@ -642,16 +642,16 @@ function mgd_include_snippet_php ($path)
  * Gives an image with a higher quality then the built-in gdlib functions.
  * It is recommended to use imagemagick in favor of this function.
  *
- * @param int &$dst_img	Destination Image Handle.
- * @param int &$src_img	Source image Handle.
- * @param int $dst_x	X-offest of the destination.
- * @param int $dst_y	Y-offest of the destination.
- * @param int $src_x	X-offest of the source.
- * @param int $src_y	Y-offest of the source.
- * @param int $dst_w	Width of the destination.
- * @param int $dst_h	Height of the destination.
- * @param int $src_w	Width of the source.
- * @param int $src_h	Height of the source.
+ * @param int &$dst_img    Destination Image Handle.
+ * @param int &$src_img    Source image Handle.
+ * @param int $dst_x    X-offest of the destination.
+ * @param int $dst_y    Y-offest of the destination.
+ * @param int $src_x    X-offest of the source.
+ * @param int $src_y    Y-offest of the source.
+ * @param int $dst_w    Width of the destination.
+ * @param int $dst_h    Height of the destination.
+ * @param int $src_w    Width of the source.
+ * @param int $src_h    Height of the source.
  */
 function ImageCopyResampleBicubicPalette(&$dst_img, &$src_img, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h) {
     /*
@@ -716,16 +716,16 @@ function ImageCopyResampleBicubicPalette(&$dst_img, &$src_img, $dst_x, $dst_y, $
  * Gives an image with a higher quality then the built-in gdlib functions.
  * It is recommended to use imagemagick in favor of this function.
  *
- * @param int &$dst_img	Destination Image Handle.
- * @param int &$src_img	Source image Handle.
- * @param int $dst_x	X-offest of the destination.
- * @param int $dst_y	Y-offest of the destination.
- * @param int $src_x	X-offest of the source.
- * @param int $src_y	Y-offest of the source.
- * @param int $dst_w	Width of the destination.
- * @param int $dst_h	Height of the destination.
- * @param int $src_w	Width of the source.
- * @param int $src_h	Height of the source.
+ * @param int &$dst_img    Destination Image Handle.
+ * @param int &$src_img    Source image Handle.
+ * @param int $dst_x    X-offest of the destination.
+ * @param int $dst_y    Y-offest of the destination.
+ * @param int $src_x    X-offest of the source.
+ * @param int $src_y    Y-offest of the source.
+ * @param int $dst_w    Width of the destination.
+ * @param int $dst_h    Height of the destination.
+ * @param int $src_w    Width of the source.
+ * @param int $src_h    Height of the source.
  */
 function ImageCopyResampleBicubic(&$dst_img, &$src_img, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h) {
     /*
@@ -780,9 +780,9 @@ function ImageCopyResampleBicubic(&$dst_img, &$src_img, $dst_x, $dst_y, $src_x, 
 /**
  * Helper function for generating "clean" URL names from titles, etc.
  *
- * @param string $string	String to edit.
- * @param string $replacer	The replacement for invalid characters.
- * @return string			Normalized name.
+ * @param string $string    String to edit.
+ * @param string $replacer    The replacement for invalid characters.
+ * @return string            Normalized name.
  */
 function midcom_generate_urlname_from_string($string, $replacer = "-")
 {
@@ -832,8 +832,8 @@ function midcom_generate_urlname_from_string($string, $replacer = "-")
 /**
  * Helper function for really removing an object
  *
- * @param guid $guid	The GUID of the object or the object itself
- * @param boolean $removeattachments	Remove attachments too? This parameter is ignored in MidCOM 2.5 upwards
+ * @param guid $guid    The GUID of the object or the object itself
+ * @param boolean $removeattachments    Remove attachments too? This parameter is ignored in MidCOM 2.5 upwards
  * @return boolean Indicating success.
  * @deprecated This function is no longer required, use the DBA delete method instead.
  */
@@ -905,7 +905,7 @@ function dump_mem($text)
  * Helper function for finding MIME type image for a document
  *
  * @param string $mimetype  Document MIME type
- * @return string	Path to the icon
+ * @return string    Path to the icon
  */
 function midcom_helper_get_mime_icon($mimetype, $fallback = '')
 {
@@ -943,7 +943,7 @@ function midcom_helper_get_mime_icon($mimetype, $fallback = '')
  * Original from http://www.theukwebdesigncompany.com/articles/php-file-manager.php
  *
  * @param int $size  File size in bytes
- * @return string	Prettified file size
+ * @return string    Prettified file size
  */
 function midcom_helper_filesize_to_string($size)
 {

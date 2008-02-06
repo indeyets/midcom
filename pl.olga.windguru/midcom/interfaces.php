@@ -34,8 +34,8 @@ class pl_olga_windguru_interface extends midcom_baseclasses_components_interface
         (
             'viewer.php',
             'navigation.php',
-			'windguru.php',
-			'dba.php',
+            'windguru.php',
+            'dba.php',
         );
 
         // Load all libraries used by component here

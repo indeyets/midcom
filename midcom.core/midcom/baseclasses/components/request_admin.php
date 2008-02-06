@@ -42,7 +42,7 @@
  * <code>
  *  $this->_request_switch[] = Array
  *  (
- *  	'handler' => 'config_dm',
+ *      'handler' => 'config_dm',
  *      'fixed_args' => Array('config'),
  *      'schemadb' => 'file:/de/linkm/taviewer/config/schemadb_config.inc',
  *      'schema' => 'config',

@@ -203,13 +203,13 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
      */
     function _get_query_string()
     {
-	$query_string = '';
+    $query_string = '';
         foreach(explode('&',$_SERVER["QUERY_STRING"]) as $key)
         {
-    	    if( !preg_match('/org_openpsa_qbpager/', $key)
-		&& $key != '')
-    	    {
-		$query_string .= '&amp;'.$key;
+            if( !preg_match('/org_openpsa_qbpager/', $key)
+        && $key != '')
+            {
+        $query_string .= '&amp;'.$key;
             }
         }
         return $query_string;

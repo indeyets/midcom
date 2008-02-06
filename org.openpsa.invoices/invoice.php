@@ -84,7 +84,7 @@ class org_openpsa_invoices_invoice extends __org_openpsa_invoices_invoice
      */
     function get_label()
     {
-    	return $this->invoiceNumber;
+        return $this->invoiceNumber;
     }
 }
 ?>

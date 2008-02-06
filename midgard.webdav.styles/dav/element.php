@@ -34,7 +34,7 @@ class midgard_webdav_styles_dav_element extends midgard_webdav_styles_dav {
     }
 
     function PROPFIND ( &$param, &$files) {
-    	$this->log(__CLASS__ . ": PROPFIND element: " . $this->element . " style: " . $this->style->name);
+        $this->log(__CLASS__ . ": PROPFIND element: " . $this->element . " style: " . $this->style->name);
         parent::PROPFIND( &$param, &$files) ;
         $element = $this->get_element_by_name( $this->element, $this->style );
         $files['files'][] = $this->get_element_info( $element );
@@ -60,11 +60,11 @@ class midgard_webdav_styles_dav_element extends midgard_webdav_styles_dav {
                 return "403 Forbidden";
             }
         }
-		//element exists, but we don't want to duplicate the content
-		else
-		{
-			$element->value = "";
-		}
+        //element exists, but we don't want to duplicate the content
+        else
+        {
+            $element->value = "";
+        }
 
         while (!feof($options["stream"])) {
           $element->value .= fread($options["stream"], 4096);

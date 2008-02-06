@@ -30,10 +30,10 @@ class net_nemein_hourview2_admin extends midcom_baseclasses_components_request_a
 
         $this->_request_switch[] = Array
         (
-	        /* These two are the default values anyway, so we can skip them. */
-	        // 'fixed_arguments' => null,
-	        // 'variable_arguments' => 0,
-	        'handler' => 'welcome'
+            /* These two are the default values anyway, so we can skip them. */
+            // 'fixed_arguments' => null,
+            // 'variable_arguments' => 0,
+            'handler' => 'welcome'
         );
 
         $this->_request_switch[] = Array

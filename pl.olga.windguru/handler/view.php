@@ -91,16 +91,16 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
 
         // List spots
         $qb = midcom_db_article::new_query_builder();
-		$qb->add_constraint('topic','=',$this->_topic->id);
-		$qb->add_order('metadata.score');
-		$this->_list = $qb->execute();
+        $qb->add_constraint('topic','=',$this->_topic->id);
+        $qb->add_order('metadata.score');
+        $this->_list = $qb->execute();
 
-		$this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
-		$this->_request_data['datamanager'] =& $this->_datamanager;
+        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
+        $this->_request_data['datamanager'] =& $this->_datamanager;
 
 
 
-		$data['page_title'] = $this->_topic->extra;
+        $data['page_title'] = $this->_topic->extra;
 
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: ".$this->_l10n->get('winguru forecasts'));
         $this->_update_breadcrumb_line($handler_id);
@@ -115,19 +115,19 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
      */
     function _show_index($handler_id, &$data)
     {
-		if (count($this->_list))
-		{
+        if (count($this->_list))
+        {
 
-          	$qb = pl_olga_windguru_status_dba::new_query_builder();
-           	$qb->add_constraint('status','=',WG_STATUS_GFS);
-           	$result = $qb->execute();
+              $qb = pl_olga_windguru_status_dba::new_query_builder();
+               $qb->add_constraint('status','=',WG_STATUS_GFS);
+               $result = $qb->execute();
 
-           	$data['modified'] = $result[0]->value;
+               $data['modified'] = $result[0]->value;
 
-			$data['prefix'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-			midcom_show_style("spot-index-start");
-			foreach ($this->_list as $spot)
-			{
+            $data['prefix'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+            midcom_show_style("spot-index-start");
+            foreach ($this->_list as $spot)
+            {
 
                 if (! $this->_datamanager->autoset_storage($spot))
                 {
@@ -139,18 +139,18 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
                 }
 
                 $data['spot'] =& $this->_datamanager->get_content_html();
-				$data['article'] = $spot;
+                $data['article'] = $spot;
 
 
 
-				midcom_show_style("spot-index-item");
-			}
-			midcom_show_style("spot-index-end");
-		}
-		else
-		{
-			midcom_show_style("spot-empty");
-		}
+                midcom_show_style("spot-index-item");
+            }
+            midcom_show_style("spot-index-end");
+        }
+        else
+        {
+            midcom_show_style("spot-empty");
+        }
 
     }
 
@@ -166,12 +166,12 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean True if the request can be handled, false otherwise.
-	 */
+     */
     function _can_handle_view ($handler_id, $args, &$data)
     {
 
@@ -189,12 +189,12 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
 
         return false;
     }
- 	/**
- 	 * @param mixed $handler_id The ID of the handler.
+     /**
+      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
- 	 */
+      */
     function _handler_view ($handler_id, $args, &$data)
     {
 
@@ -209,7 +209,7 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata($this->_article->metadata->revised, $this->_article->guid);
         $_MIDCOM->bind_view_to_object($this->_article, $this->_datamanager->schema->name);
-		$this->_update_breadcrumb_line($handler_id);
+        $this->_update_breadcrumb_line($handler_id);
 
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_article->title}");
 
@@ -223,7 +223,7 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
      */
     function _show_view ($handler_id, &$data)
     {
-		$this->_request_data['view_article'] = $this->_request_data['controller']->get_content_html();
+        $this->_request_data['view_article'] = $this->_request_data['controller']->get_content_html();
 
         midcom_show_style('show-spot');
     }

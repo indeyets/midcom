@@ -196,7 +196,7 @@ class net_nemein_bookmarks_viewer
                     $auth = mgd_auth_midgard($_POST['net_nemein_bookmarks_username'],
                                              $_POST['net_nemein_bookmarks_password'],
                                              0);
-        			   $midgard = mgd_get_midgard();
+                       $midgard = mgd_get_midgard();
 
                     if (!$auth)
                     {
@@ -217,10 +217,10 @@ class net_nemein_bookmarks_viewer
                             $new_bookmark = true;
                         }
 
-    				       $this->_bookmark->title = $_POST['net_nemein_bookmarks_add_title'];
-    				       $this->_bookmark->url = $_POST['net_nemein_bookmarks_add_url'];
-    				       $this->_bookmark->abstract = $_POST['net_nemein_bookmarks_add_extended'];
-    				       $this->_bookmark->content = $_POST['net_nemein_bookmarks_add_tags'];
+                           $this->_bookmark->title = $_POST['net_nemein_bookmarks_add_title'];
+                           $this->_bookmark->url = $_POST['net_nemein_bookmarks_add_url'];
+                           $this->_bookmark->abstract = $_POST['net_nemein_bookmarks_add_extended'];
+                           $this->_bookmark->content = $_POST['net_nemein_bookmarks_add_tags'];
 
                         if ($new_bookmark)
                         {
@@ -344,7 +344,7 @@ class net_nemein_bookmarks_viewer
         else
         {
             midcom_show_style("show-list-empty");
-        	}
+            }
     }
 
     function _show_index()

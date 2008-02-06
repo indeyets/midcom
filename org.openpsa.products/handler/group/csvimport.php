@@ -142,12 +142,12 @@ class org_openpsa_products_handler_group_csvimport extends midcom_baseclasses_co
         return $group;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_csv_select($handler_id, $args, &$data)
     {
         $this->_prepare_handler($args);
@@ -241,12 +241,12 @@ class org_openpsa_products_handler_group_csvimport extends midcom_baseclasses_co
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_csv($handler_id, $args, &$data)
     {
         $this->_prepare_handler($args);

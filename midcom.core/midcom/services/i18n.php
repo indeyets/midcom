@@ -185,7 +185,7 @@ class midcom_services_i18n
     /**
      * Set output character set.
      *
-     * @param string $charset	Charset name.
+     * @param string $charset    Charset name.
      */
     function set_charset ($charset)
     {
@@ -211,7 +211,7 @@ class midcom_services_i18n
      * If <i>$switch_content_lang</i> is set, this call will also synchronize
      * the Midgard content language with the MidCOM language.
      *
-     * @param string $lang	Language ISO 639-1 code
+     * @param string $lang    Language ISO 639-1 code
      * @param boolean $switch_content_lang Whether to switch content language as well
      * @see _synchronize_midgard_language()
      */
@@ -324,7 +324,7 @@ class midcom_services_i18n
     /**
      * Set the fallback language.
      *
-     * @param string $lang	Language name.
+     * @param string $lang    Language name.
      */
     function set_fallback_language($lang)
     {
@@ -428,9 +428,9 @@ class midcom_services_i18n
      * Note that you are receiving a reference here.
      *
      * @see midcom_services__i18n_l10n
-     * @param string $component	The component for which to retrieve a string database.
-     * @param string $database	The string table to retrieve from the component's locale directory.
-     * @return midcom_helper__i18n_l10n	The cached L10n database; honor the reference for memory consumptions sake.
+     * @param string $component    The component for which to retrieve a string database.
+     * @param string $database    The string table to retrieve from the component's locale directory.
+     * @return midcom_helper__i18n_l10n    The cached L10n database; honor the reference for memory consumptions sake.
      */
     function get_l10n ($component = 'midcom', $database = 'default')
     {
@@ -449,9 +449,9 @@ class midcom_services_i18n
      * arguments.
      *
      * @param string $stringid The string to translate.
-     * @param string $component	The component for which to retrieve a string database. If omitted, this defaults to the
+     * @param string $component    The component for which to retrieve a string database. If omitted, this defaults to the
      *     current component (out of the component context).
-     * @param string $database	The string table to retrieve from the component's locale directory. If omitted, the 'default'
+     * @param string $database    The string table to retrieve from the component's locale directory. If omitted, the 'default'
      *     database is used.
      * @return string The translated string
      * @see midcom_helper__i18n_l10n::get()
@@ -479,9 +479,9 @@ class midcom_services_i18n
      * echo_string (Zend won't allow $l10n->echo().)
      *
      * @param string $stringid The string to translate.
-     * @param string $component	The component for which to retrieve a string database. If omitted, this defaults to the
+     * @param string $component    The component for which to retrieve a string database. If omitted, this defaults to the
      *     current component (out of the component context).
-     * @param string $database	The string table to retrieve from the component's locale directory. If omitted, the 'default'
+     * @param string $database    The string table to retrieve from the component's locale directory. If omitted, the 'default'
      *     database is used.
      * @see midcom_helper__i18n_l10n::get()
      * @see get_string()
@@ -497,8 +497,8 @@ class midcom_services_i18n
      * If loading the library failed, generate_error is called, otherwise the l10n
      * db cache is populated accordingly.
      *
-     * @param string $component	The component for which to retrieve a string database.
-     * @param string $database	The string table to retrieve from the component's locale directory.
+     * @param string $component    The component for which to retrieve a string database.
+     * @param string $database    The string table to retrieve from the component's locale directory.
      */
     function _load_l10n_db($component, $database)
     {
@@ -629,9 +629,9 @@ class midcom_services_i18n
 
                 //Fix for Safari
                 if (isset($_SERVER['HTTP_USER_AGENT'])
-	                && strstr($_SERVER['HTTP_USER_AGENT'], 'Safari'))
+                    && strstr($_SERVER['HTTP_USER_AGENT'], 'Safari'))
                 {
-	                $lang = array_shift(explode("-",$lang));
+                    $lang = array_shift(explode("-",$lang));
                 }
 
                 $q = 1.0;

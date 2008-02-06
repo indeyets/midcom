@@ -22,7 +22,7 @@ class default_configure_structure extends midcom_baseclasses_components_handler
     */
     function default_configure_structure()
     {
-	    parent::midcom_baseclasses_components_handler();
+        parent::midcom_baseclasses_components_handler();
     }
 
     function _on_initialize()
@@ -49,11 +49,11 @@ class default_configure_structure extends midcom_baseclasses_components_handler
     {
         return array
         (
-	        'sitewizard' => array
-	        (
-	            'handler' => array('default_configure_structure', 'configure_structure'),
-	        ),
-	    );
+            'sitewizard' => array
+            (
+                'handler' => array('default_configure_structure', 'configure_structure'),
+            ),
+        );
     }
 
     private function prepare_nullstorage_schemadb($schemadb)
@@ -102,9 +102,9 @@ class default_configure_structure extends midcom_baseclasses_components_handler
         }
     }
 
-	/**
+    /**
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_configure_structure()
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
@@ -156,4 +156,3 @@ class default_configure_structure extends midcom_baseclasses_components_handler
 }
 
 ?>
-

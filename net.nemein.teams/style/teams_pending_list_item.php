@@ -9,4 +9,3 @@ echo $data['player_username'];
 echo " <input type=\"checkbox\" name=\"{$data['pending']->playerguid}\"/>";
 echo "</li>";
 ?>
-

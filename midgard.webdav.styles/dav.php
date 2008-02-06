@@ -33,7 +33,7 @@ class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
     }
 
     function set_style( $style ) {
-		$this->log(__CLASS__ . ": setting style " . $style->id);
+        $this->log(__CLASS__ . ": setting style " . $style->id);
         $this->style = $style;
     }
 
@@ -79,14 +79,14 @@ class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
         $info['props'] = array();
         $info["props"][] = $this->mkprop("displayname",urlencode( $style->name ));
         // creation and modification time
-		if ($style->metadata->created)
-		{
-	        $info["props"][] = $this->mkprop("creationdate", strtotime($style->metadata->created) );
-		}
-		if ($style->metadata->revised)
-	    {
-	        $info["props"][] = $this->mkprop("getlastmodified", strtotime($style->metadata->revised) );
-	    }
+        if ($style->metadata->created)
+        {
+            $info["props"][] = $this->mkprop("creationdate", strtotime($style->metadata->created) );
+        }
+        if ($style->metadata->revised)
+        {
+            $info["props"][] = $this->mkprop("getlastmodified", strtotime($style->metadata->revised) );
+        }
         $info["props"][] = $this->mkprop("resourcetype", "collection");
         $info["props"][] = $this->mkprop("getcontenttype", "httpd/unix-directory");
         return $info;
@@ -98,14 +98,14 @@ class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
         $info['props'] = array();
         $info["props"][] = $this->mkprop("displayname", $dirname);
         // creation and modification time
-   		if ($style->metadata->created)
-		{
-	        $info["props"][] = $this->mkprop("creationdate", strtotime($this->style->metadata->created) );
-		}
-		if ($style->metadata->revised)
-		{
-			$info["props"][] = $this->mkprop("getlastmodified", strtotime($this->style->metadata->revised) );
-		}
+           if ($style->metadata->created)
+        {
+            $info["props"][] = $this->mkprop("creationdate", strtotime($this->style->metadata->created) );
+        }
+        if ($style->metadata->revised)
+        {
+            $info["props"][] = $this->mkprop("getlastmodified", strtotime($this->style->metadata->revised) );
+        }
         $info["props"][] = $this->mkprop("resourcetype", "collection");
         $info["props"][] = $this->mkprop("getcontenttype", "httpd/unix-directory");
         return $info;
@@ -116,7 +116,7 @@ class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
      */
     function get_element_by_name($name, $style ) {
 
-		$this->log(__CLASS__ . ": get element " . $name . " from style " .$style->id);
+        $this->log(__CLASS__ . ": get element " . $name . " from style " .$style->id);
         $qb = midcom_db_element::new_query_builder( ) ;
         $qb->add_constraint( 'name' , '=', str_replace( '.php', '' ,$name ));
         $qb->add_constraint( 'style', '=' , $style->id);
@@ -135,19 +135,19 @@ class midgard_webdav_styles_dav extends HTTP_WebDAV_Server {
      * Get an elements info - for directory listings
      */
     function get_element_info($element) {
-		$this->log(__CLASS__ . ": get element info for " .$element->id);
+        $this->log(__CLASS__ . ": get element info for " .$element->id);
         $info = array();
         $info['path'] = $this->get_prefix() .  $element->name . ".php";
         $info['props'] = array();
         $info["props"][] = $this->mkprop("displayname", $element->name);
         // creation and modification time
-   		if ($element->metadata->created)
-   		{
-	        $info["props"][] = $this->mkprop("creationdate", strtotime($element->metadata->created) );
-   		}
-   		if ($element->metadata->revised)
+           if ($element->metadata->created)
+           {
+            $info["props"][] = $this->mkprop("creationdate", strtotime($element->metadata->created) );
+           }
+           if ($element->metadata->revised)
         {
-        	$info["props"][] = $this->mkprop("getlastmodified", strtotime($element->metadata->revised) );
+            $info["props"][] = $this->mkprop("getlastmodified", strtotime($element->metadata->revised) );
         }
         // plain file (WebDAV resource)
         $info["props"][] = $this->mkprop("resourcetype", "");

@@ -116,7 +116,7 @@ class midcom_helper_datamanager_datatype_mailtemplate extends midcom_helper_data
 
     function sync_data_with_widget()
     {
-    	$widget =& $this->get_widget();
+        $widget =& $this->get_widget();
         $this->_data = $this->_convert_to_data_charset($widget->get_value());
         $this->_complete_data_keys();
     }

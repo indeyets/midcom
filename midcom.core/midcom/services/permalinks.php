@@ -130,8 +130,8 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
                 // which point to the outside f.x.
                 if ($nav->is_node_in_tree($parent->id, $nav->get_root_node()))
                 {
-	                $topic = $parent;
-	                break;
+                    $topic = $parent;
+                    break;
                 }
             }
             $parent = $parent->get_parent();           

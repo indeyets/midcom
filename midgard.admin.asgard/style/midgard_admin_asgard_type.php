@@ -42,13 +42,13 @@ document.getElementById('search_field').focus();
 <?php
 if (isset($data['search_results']))
 {
-	function resolve_label(&$object)
-	{
-		if (!isset($object->guid)
-			|| $object->guid == "")
-		{
-		    return;
-		}
+    function resolve_label(&$object)
+    {
+        if (!isset($object->guid)
+            || $object->guid == "")
+        {
+            return;
+        }
         $reflector = midcom_helper_reflector_tree::get($object);
         $label_property = $reflector->get_label_property();
         if (method_exists($object, 'get_label'))
@@ -62,7 +62,7 @@ if (isset($data['search_results']))
         $parent = $object->get_parent();
         $label = resolve_label($parent) . "/" . $label;
         return $label;
-	}
+    }
     if (!$data['search_results'])
     {
         echo "<p>" . $_MIDCOM->i18n->get_string('no results', 'midgard.admin.asgard') . "</p>\n";
@@ -82,9 +82,9 @@ if (isset($data['search_results']))
         $persons = array();
         foreach ($data['search_results'] as $result)
         {
-    	    $reflector = midcom_helper_reflector_tree::get($result);
-	        $icon = $reflector->get_object_icon($result);
-			$label = resolve_label($result);
+            $reflector = midcom_helper_reflector_tree::get($result);
+            $icon = $reflector->get_object_icon($result);
+            $label = resolve_label($result);
 
             if (!isset($persons[$result->metadata->creator]))
             {

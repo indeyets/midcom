@@ -6,22 +6,22 @@
 
 label
 {
-	clear:both;
-	display:block;
+    clear:both;
+    display:block;
 }
 
 
 
 label select, label input
 {
-	display:block;
-	clear:both;
-	float:left;
+    display:block;
+    clear:both;
+    float:left;
 }
 
 fieldset
 {
-	clear:both;
+    clear:both;
 }
 
 .radios label
@@ -37,20 +37,20 @@ fieldset
 <h1><?php echo sprintf($data['l10n']->get('edit %s'), $data['product']->title); ?></h1>
 
 <form method="post" action="" name="net_nemein_internalorders_form">
-	<fieldset>
-		<legend><?php echo $data['l10n']->get('internal order'); ?></legend>
-		<label>
-			<?php echo $data['l10n']->get('title'); ?>
-			<input type="text" name="net_nemein_internalorders_title" value="<?php echo $data['product']->title; ?>" />
-		</label>
-		<label>
-			<?php echo $data['l10n']->get('code'); ?>
-			<input type="text" name="net_nemein_internalorders_name" value="<?php echo $data['product']->name; ?>" />
-		</label>
-		<label>
-			<?php echo $data['l10n']->get('price'); ?>
-			<input type="text" name="net_nemein_internalorders_price" value="<?php echo $data['product']->extra1; ?>" />
-		</label>
+    <fieldset>
+        <legend><?php echo $data['l10n']->get('internal order'); ?></legend>
+        <label>
+            <?php echo $data['l10n']->get('title'); ?>
+            <input type="text" name="net_nemein_internalorders_title" value="<?php echo $data['product']->title; ?>" />
+        </label>
+        <label>
+            <?php echo $data['l10n']->get('code'); ?>
+            <input type="text" name="net_nemein_internalorders_name" value="<?php echo $data['product']->name; ?>" />
+        </label>
+        <label>
+            <?php echo $data['l10n']->get('price'); ?>
+            <input type="text" name="net_nemein_internalorders_price" value="<?php echo $data['product']->extra1; ?>" />
+        </label>
 
                 <label>
                         <?php echo $data['l10n']->get('prod_group'); ?>
@@ -64,33 +64,33 @@ fieldset
                 </label>
 
 
-		<style>
-		#testdata
-		{
-			clear:both;
-		    margin:20px;
-		    border:2px solid #000000;
-		    padding:10px;
-		}
-		
-		</style>
-<!-- 		<div id="testdata">
-		<pre>
-		<?php
+        <style>
+        #testdata
+        {
+            clear:both;
+            margin:20px;
+            border:2px solid #000000;
+            padding:10px;
+        }
+        
+        </style>
+<!--         <div id="testdata">
+        <pre>
+        <?php
 
 
-		?>
-		</pre>
-		</div>
--->		
-		
+        ?>
+        </pre>
+        </div>
+-->        
+        
 
 
 
 <br /><br />
-		<br /><br />
-		<input type="hidden" name="net_nemein_internalorders_pricelist_update" value="1" />
-		<input type="submit" value="<?php echo $data['l10n']->get('submit'); ?>" />
-	</fieldset>
+        <br /><br />
+        <input type="hidden" name="net_nemein_internalorders_pricelist_update" value="1" />
+        <input type="submit" value="<?php echo $data['l10n']->get('submit'); ?>" />
+    </fieldset>
 </form>
 <!-- / edit_order -->

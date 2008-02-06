@@ -74,12 +74,12 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_list($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

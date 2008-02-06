@@ -116,7 +116,7 @@ class net_nehmer_marketplace_handler_submit extends midcom_baseclasses_component
     {
         $guid = $this->_config->get('account_topic');
 
-		if (! $guid)
+        if (! $guid)
         {
             $tmp = midcom_helper_find_node_by_component('net.nehmer.account');
             if (! $tmp)

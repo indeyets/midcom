@@ -81,22 +81,22 @@ class org_openpsa_products_handler_group_edit extends midcom_baseclasses_compone
             while ($group)
             {
                 $parent = $group->get_parent();
-		if ($group->get_parent() != NULL){
-            	    $tmp[] = array
-            	    (
-                	MIDCOM_NAV_URL => "{$parent->code}/{$group->code}",
-                	MIDCOM_NAV_NAME => $group->title,
-            	    );
-		}
-		else
-		{
-            	    $tmp[] = array
-            	    (
-                	MIDCOM_NAV_URL => "{$group->code}/",
-                	MIDCOM_NAV_NAME => $group->title,
-            	    );
+        if ($group->get_parent() != NULL){
+                    $tmp[] = array
+                    (
+                    MIDCOM_NAV_URL => "{$parent->code}/{$group->code}",
+                    MIDCOM_NAV_NAME => $group->title,
+                    );
+        }
+        else
+        {
+                    $tmp[] = array
+                    (
+                    MIDCOM_NAV_URL => "{$group->code}/",
+                    MIDCOM_NAV_NAME => $group->title,
+                    );
 
-		}
+        }
                 $group = $parent;
             }
         }

@@ -68,7 +68,7 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
                     $product_qb->add_constraint('productGroup', 'IN', $categories_in);
                 }
 
-	        }
+            }
 
         }
 
@@ -87,10 +87,10 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
 
         if ($show_products > 1)
         {
-	    /***
-	     * Set the breadcrumb text
-	     */
-	    $this->_update_breadcrumb_line();
+        /***
+         * Set the breadcrumb text
+         */
+        $this->_update_breadcrumb_line();
 
         }
     }
@@ -106,7 +106,7 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
     function _handler_featured($handler_id, $args, &$data)
     {
         $data['products'] = array();
-	    if ($handler_id == 'featured_products_intree')
+        if ($handler_id == 'featured_products_intree')
         {
             $product_group = $args[0];
             $show_products = (int) $args[1];

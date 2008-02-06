@@ -145,7 +145,7 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
         $qb = org_openpsa_products_product_dba::new_query_builder();
         if (($handler_id == 'view_product_intree')
             ||( $handler_id == 'view_product_raw'))
-       	{
+           {
             $group_qb = org_openpsa_products_product_group_dba::new_query_builder();
             $group_qb->add_constraint('code', '=', $args[0]);
             $groups = $group_qb->execute();
@@ -204,10 +204,10 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
                 {
                     return false;
                 }
-        	    $this->_product = new org_openpsa_products_product_dba($args[1]);
-	        }
-	        else
-	        {
+                $this->_product = new org_openpsa_products_product_dba($args[1]);
+            }
+            else
+            {
                 if (!mgd_is_guid($args[0]))
                 {
                     return false;

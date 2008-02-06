@@ -284,18 +284,18 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         }
         if (is_array($this->titlefield))
         {
-        	foreach($this->titlefield as $field)
-        	{
-        		if ($object->$field)
-        		{
-        			$titlefield = $field;
-        			break;
-        		}
-        	}
+            foreach($this->titlefield as $field)
+            {
+                if ($object->$field)
+                {
+                    $titlefield = $field;
+                    break;
+                }
+            }
         }
         else
         {
-        	$titlefield =& $this->titlefield;
+            $titlefield =& $this->titlefield;
         }
 
         $value = $object->$titlefield;

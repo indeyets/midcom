@@ -120,7 +120,7 @@ class midcom_services_indexer
      *
      *
      * @param mixed $documents One or more documents to be indexed, so this is either a
-     * 		  midcom_services_indexer_document or an Array of these objects.
+     *           midcom_services_indexer_document or an Array of these objects.
      * @return boolean Indicating success.
      */
     function index ($documents)

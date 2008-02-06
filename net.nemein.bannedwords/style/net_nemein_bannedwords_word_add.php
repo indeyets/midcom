@@ -5,4 +5,3 @@
 <h2><?php echo $_MIDCOM->i18n->get_string('add banned', 'net.nemein.bannedwords'); ?></h2>
 
 <?php $data['controller']->display_form (); ?>
-

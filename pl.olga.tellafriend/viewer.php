@@ -58,8 +58,8 @@ class pl_olga_tellafriend  extends midcom_baseclasses_components_purecode
 
         $this->controller =& midcom_helper_datamanager2_controller::create('nullstorage');
         $this->controller->schemadb =& $this->_schemadb;
-    	$this->controller->initialize();
-    	$this->controller->formmanager->initialize("pl_olga_tellafriend");
+        $this->controller->initialize();
+        $this->controller->formmanager->initialize("pl_olga_tellafriend");
 
         $this->result = $this->controller->process_form();
 

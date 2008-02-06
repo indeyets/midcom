@@ -22,7 +22,7 @@ class select_tkk_structure extends midcom_baseclasses_components_handler
     */
     function select_tkk_structure()
     {
-	    parent::midcom_baseclasses_components_handler();
+        parent::midcom_baseclasses_components_handler();
     }
 
     function _on_initialize()
@@ -55,11 +55,11 @@ class select_tkk_structure extends midcom_baseclasses_components_handler
     {
         return array
         (
-	        'sitewizard' => array
-	        (
-	            'handler' => array('select_tkk_structure', 'select_structure'),
-	        ),
-	    );
+            'sitewizard' => array
+            (
+                'handler' => array('select_tkk_structure', 'select_structure'),
+            ),
+        );
     }
 
     /**
@@ -76,13 +76,13 @@ class select_tkk_structure extends midcom_baseclasses_components_handler
             {
                 while (($file = readdir($dh)) !== false)
                 {
-    	            $path = $dir . $file;
-    	            
-    	            $fileExp = explode('.', $file);
+                    $path = $dir . $file;
+                    
+                    $fileExp = explode('.', $file);
                     $filetype = $fileExp[count($fileExp) -1];
                     
-    	            if (file_get_contents($path) != '' && $filetype == 'inc')
-    	            {
+                    if (file_get_contents($path) != '' && $filetype == 'inc')
+                    {
                         eval("$" . "evaluated" . " = array(" . file_get_contents($path) . ");");
 
                         $keys = array_keys($evaluated);
@@ -95,17 +95,17 @@ class select_tkk_structure extends midcom_baseclasses_components_handler
                             }
                         }
                     }
-    	        }
-    	        closedir($dh);
-    	    }
+                }
+                closedir($dh);
+            }
         }
 
- 	    return $structures_array;
+         return $structures_array;
     }
 
-	/**
+    /**
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_select_structure()
     {
         $title = $this->_l10n->get('structure selection');
@@ -175,4 +175,3 @@ class select_tkk_structure extends midcom_baseclasses_components_handler
 }
 
 ?>
-

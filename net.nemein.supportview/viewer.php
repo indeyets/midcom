@@ -116,12 +116,12 @@ class net_nemein_supportview_viewer {
                         $this->_show_closed = true;
                         $this->_view = "list";
                         return true;
-            	case "statistics":
-                	$this->_view = "statistics";
-            		return true;
-            	default:
-                	$this->_view = "ticket";
-            		break;
+                case "statistics":
+                    $this->_view = "statistics";
+                    return true;
+                default:
+                    $this->_view = "ticket";
+                    break;
             }
 
             if ($this->_view === "ticket") {

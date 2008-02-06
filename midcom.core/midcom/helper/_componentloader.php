@@ -227,7 +227,7 @@ class midcom_helper__componentloader
      * This function will invoke _load directly. If the loading process
      * is unsuccessful, it will call generate_error.
      *
-     * @param string $path	The component to load explicitly.
+     * @param string $path    The component to load explicitly.
      */
     function load($path)
     {
@@ -241,7 +241,7 @@ class midcom_helper__componentloader
     * This function will invoke _load directly. If the loading process
     * is unsuccessful, false is returned.
     *
-    * @param string $path	The component to load explicitly.
+    * @param string $path    The component to load explicitly.
     * @return boolean Indicating success.
     */
     function load_graceful($path)
@@ -255,7 +255,7 @@ class midcom_helper__componentloader
      * to integrity errors (missing SnippetDirs, Classes, etc.), it will
      * return false and populate $GLOBALS['midcom_errstr'] accordingly.
      *
-     * @param string $path	The component to load.
+     * @param string $path    The component to load.
      * @return boolean Indicating success.
      * @access private
      */
@@ -293,8 +293,8 @@ class midcom_helper__componentloader
         // Check if the component is listed in the class manifest list. If not,
         // we immediately bail - anything went wrong while loading the component
         // (f.x. broken DBA classes).
-	//echo"'".$path."'";
-	//print_r($this->manifests);
+    //echo"'".$path."'";
+    //print_r($this->manifests);
         if (! array_key_exists($path, $this->manifests))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -433,8 +433,8 @@ class midcom_helper__componentloader
      * Returns TRUE if the component identified by the MidCOM path $url
      * is already loaded and available for usage.
      *
-     * @param string $path	The component to be queried.
-     * @return boolean			true if it is loaded, false otherwise.
+     * @param string $path    The component to be queried.
+     * @return boolean            true if it is loaded, false otherwise.
      */
     function is_loaded($path)
     {
@@ -448,8 +448,8 @@ class midcom_helper__componentloader
      * one instance is always active for each component. Missing
      * components will be dynamically loaded into memory.
      *
-     * @param string $path	The component name.
-     * @return mixed		A reference to the concept class in question.
+     * @param string $path    The component name.
+     * @return mixed        A reference to the concept class in question.
      * @deprecated This has been deprecated in MidCOM 2.4 in favor of the new component interface classes.
      */
     function & get_midcom_class ($path)
@@ -477,7 +477,7 @@ class midcom_helper__componentloader
      * one instance is always active for each component. Missing
      * components will be dynamically loaded into memory.
      *
-     * @param string $path	The component name.
+     * @param string $path    The component name.
      * @return midcom_baseclasses_components_interface A reference to the concept class in question or NULL if
      *     the class in question does not yet support the new Interface system.
      */
@@ -542,8 +542,8 @@ class midcom_helper__componentloader
      * Helper, converting a component path (net.nehmer.blog)
      * to a snippetpath (/net/nehmer/blog).
      *
-     * @param string $path	Input string.
-     * @return string		Converted string.
+     * @param string $path    Input string.
+     * @return string        Converted string.
      */
     function path_to_snippetpath($path)
     {
@@ -554,8 +554,8 @@ class midcom_helper__componentloader
      * Helper, converting a snippetpath (/net/nehmer/blog)
      * to a class prefix (net_nehmer_blog).
      *
-     * @param string $snippetpath	Input string.
-     * @return string				Converted string.
+     * @param string $snippetpath    Input string.
+     * @return string                Converted string.
      */
     function snippetpath_to_prefix ($snippetpath)
     {
@@ -566,8 +566,8 @@ class midcom_helper__componentloader
      * Helper, converting a component path (net.nehmer.blog)
      * to a class prefix (net_nehmer_blog).
      *
-     * @param string $path	Input string.
-     * @return string		Converted string.
+     * @param string $path    Input string.
+     * @return string        Converted string.
      */
     function path_to_prefix ($path)
     {
@@ -580,8 +580,8 @@ class midcom_helper__componentloader
      * to the component in question.
      *
      * @todo Currently partly disabled due to the FS-Transition.
-     * @param string $snippetpath	The path to be checked.
-     * @return boolean 				True if valid, false otherwise.
+     * @param string $snippetpath    The path to be checked.
+     * @return boolean                 True if valid, false otherwise.
      */
     function validate_path($snippetpath)
     {
@@ -606,8 +606,8 @@ class midcom_helper__componentloader
      * <i>not</i> check whether the referenced component does exist and
      * whether it is structurally valid.
      *
-     * @param string $path	The path to be checked.
-     * @return boolean 		True if valid, false otherwise.
+     * @param string $path    The path to be checked.
+     * @return boolean         True if valid, false otherwise.
      */
     function validate_url($path)
     {
@@ -629,7 +629,7 @@ class midcom_helper__componentloader
      * Retrieve a list of all loaded components. The Array will contain an
      * unsorted collection of MidCOM Paths.
      *
-     * @return Array	List of loaded components
+     * @return Array    List of loaded components
      */
     function list_loaded_components()
     {
@@ -779,7 +779,7 @@ class midcom_helper__componentloader
             }
         }
 
-	//echo "Load $manifest->name";
+    //echo "Load $manifest->name";
         $this->manifests[$manifest->name] = $manifest;
 
         // Register Privileges

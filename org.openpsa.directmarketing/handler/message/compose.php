@@ -48,12 +48,12 @@ class org_openpsa_directmarketing_handler_message_compose extends midcom_basecla
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_compose($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);

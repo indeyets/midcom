@@ -163,11 +163,11 @@ class phpFlickr {
         } elseif ($this->cache == 'fs') {
             $file = $this->cache_dir . '/' . $reqhash . '.cache';
             if (file_exists($file)) {
-				if ($this->php_version[0] > 4 || ($this->php_version[0] == 4 && $this->php_version[1] >= 3)) {
-					return file_get_contents($file);
-				} else {
-					return implode('', file($file));
-				}
+                if ($this->php_version[0] > 4 || ($this->php_version[0] == 4 && $this->php_version[1] >= 3)) {
+                    return file_get_contents($file);
+                } else {
+                    return implode('', file($file));
+                }
             }
         }
         return false;
@@ -274,27 +274,27 @@ class phpFlickr {
      * but bear in mind that it is no loner supported.  If 23 releases a serialized
      * php format, I'll switch this back on.
      */
-	/*
+    /*
     function setService($service)
     {
 
-		// Sets which service to connect to.  Currently supported services are
-		// "flickr" and "23"
-		if ($service == "23") {
-			$this->service = "23";
-			$this->REST = 'http://www.23hq.com/services/rest/';
-			$this->Upload = 'http://www.23hq.com/services/upload/';
-			$this->Replace = 'http://www.23hq.com/services/replace/';
-		} elseif (strtolower($service) == "flickr") {
-			$this->service = "flickr";
-			$this->REST = 'http://api.flickr.com/services/rest/';
-			$this->Upload = 'http://api.flickr.com/services/upload/';
-			$this->Replace = 'http://api.flickr.com/services/replace/';
-		} else {
-			die ("You have entered a service that does not exist or is not supported at this time.");
-		}
-		
-		return false;
+        // Sets which service to connect to.  Currently supported services are
+        // "flickr" and "23"
+        if ($service == "23") {
+            $this->service = "23";
+            $this->REST = 'http://www.23hq.com/services/rest/';
+            $this->Upload = 'http://www.23hq.com/services/upload/';
+            $this->Replace = 'http://www.23hq.com/services/replace/';
+        } elseif (strtolower($service) == "flickr") {
+            $this->service = "flickr";
+            $this->REST = 'http://api.flickr.com/services/rest/';
+            $this->Upload = 'http://api.flickr.com/services/upload/';
+            $this->Replace = 'http://api.flickr.com/services/replace/';
+        } else {
+            die ("You have entered a service that does not exist or is not supported at this time.");
+        }
+        
+        return false;
     }
     */
     
@@ -312,16 +312,16 @@ class phpFlickr {
     
     function getErrorCode() 
     {
-		// Returns the error code of the last call.  If the last call did not
-		// return an error. This will return a false boolean.
-		return $this->error_code;
+        // Returns the error code of the last call.  If the last call did not
+        // return an error. This will return a false boolean.
+        return $this->error_code;
     }
     
     function getErrorMsg() 
     {
-		// Returns the error message of the last call.  If the last call did not
-		// return an error. This will return a false boolean.
-		return $this->error_msg;
+        // Returns the error message of the last call.  If the last call did not
+        // return an error. This will return a false boolean.
+        return $this->error_msg;
     }
     
     /* These functions are front ends for the flickr calls */
@@ -331,10 +331,10 @@ class phpFlickr {
         //receives an array (can use the individual photo data returned 
         //from an API call) and returns a URL (doesn't mean that the 
         //file size exists)
-		if ($this->service == "23") {
-			$url = "http://www.23hq.com/";
-		} else {
-			$url = "http://static.flickr.com/";
+        if ($this->service == "23") {
+            $url = "http://www.23hq.com/";
+        } else {
+            $url = "http://static.flickr.com/";
         }
         $url .= $photo['server'] . "/" . $photo['id'] . "_" . $photo['secret'];
         switch (strtolower($size)) {
@@ -589,11 +589,11 @@ class phpFlickr {
                 $redirect = $_SERVER['REQUEST_URI'];
             }
             $api_sig = md5($this->secret . "api_key" . $this->api_key . "extra" . $redirect . "perms" . $perms);
-			if ($this->service == "23") {
-				header("Location: http://www.23hq.com/services/auth/?api_key=" . $this->api_key . "&extra=" . $redirect . "&perms=" . $perms . "&api_sig=". $api_sig);
-			} else {
-				header("Location: http://www.flickr.com/services/auth/?api_key=" . $this->api_key . "&extra=" . $redirect . "&perms=" . $perms . "&api_sig=". $api_sig);
-			}
+            if ($this->service == "23") {
+                header("Location: http://www.23hq.com/services/auth/?api_key=" . $this->api_key . "&extra=" . $redirect . "&perms=" . $perms . "&api_sig=". $api_sig);
+            } else {
+                header("Location: http://www.flickr.com/services/auth/?api_key=" . $this->api_key . "&extra=" . $redirect . "&perms=" . $perms . "&api_sig=". $api_sig);
+            }
             exit;
         } else {
             $tmp = $this->die_on_error;
@@ -739,12 +739,12 @@ class phpFlickr {
         return $this->parsed_response ? $this->parsed_response['group'] : false;
     }
     
-	function groups_search ($text, $per_page=NULL, $page=NULL)
-	{
-		/* http://www.flickr.com/services/api/flickr.groups.search.html */
-		$this->request("flickr.groups.search", array("text"=>$text,"per_page"=>$per_page,"page"=>$page));
+    function groups_search ($text, $per_page=NULL, $page=NULL)
+    {
+        /* http://www.flickr.com/services/api/flickr.groups.search.html */
+        $this->request("flickr.groups.search", array("text"=>$text,"per_page"=>$per_page,"page"=>$page));
         return $this->parsed_response ? $this->parsed_response['groups'] : false;
-	}
+    }
     
     /* Groups Pools Methods */
     function groups_pools_add ($photo_id, $group_id) 
@@ -770,7 +770,7 @@ class phpFlickr {
     
     function groups_pools_getPhotos ($group_id, $tags = NULL, $user_id = NULL, $extras = NULL, $per_page = NULL, $page = NULL) 
     {
-		/* http://www.flickr.com/services/api/flickr.groups.pools.getPhotos.html */
+        /* http://www.flickr.com/services/api/flickr.groups.pools.getPhotos.html */
         if (is_array($extras)) {
             $extras = implode(",", $extras);
         }
@@ -786,8 +786,8 @@ class phpFlickr {
     }
     
     /* Interestingness methods */
-	function interestingness_getList($date = NULL, $extras = NULL, $per_page = NULL, $page = NULL) 
-	{
+    function interestingness_getList($date = NULL, $extras = NULL, $per_page = NULL, $page = NULL) 
+    {
         /* http://www.flickr.com/services/api/flickr.interestingness.getList.html */
         if (is_array($extras)) { 
             $extras = implode(",", $extras); 

@@ -203,14 +203,14 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
         
         switch ($this->_controller->process_form())
         {
-	        case 'save':
-    	        $topic = new midcom_db_topic($this->_topic->id);
+            case 'save':
+                $topic = new midcom_db_topic($this->_topic->id);
                 if ($topic) {
                     $topic->update();
                 }
             case 'cancel':
                 $_MIDCOM->relocate('');
-	             // This will exit.
+                 // This will exit.
         }
         
         return true;

@@ -299,11 +299,11 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
         midcom_show_style('view-wikipage-edit');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-	 */
+     */
     function _handler_change($handler_id, $args, &$data)
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST')

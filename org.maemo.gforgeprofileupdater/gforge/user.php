@@ -35,29 +35,29 @@ require_once('common/include/User.class');
 
 // Add The definition of a user object
 $server->wsdl->addComplexType(
-	'User',
-	'complexType',
-	'struct',
-	'sequence',
-	'',
-	array(
-	'user_id' => array('name'=>'user_id', 'type' => 'xsd:int'),
-	'user_name' => array('name'=>'user_name', 'type' => 'xsd:string'),
-	'title' => array('name'=>'title', 'type' => 'xsd:string'),
-	'firstname' => array('name'=>'firstname', 'type' => 'xsd:string'),
-	'lastname' => array('name'=>'lastname', 'type' => 'xsd:string'),
-	'email' => array('name'=>'email', 'type' => 'xsd:string'),
-	'jabber_address' => array('name'=>'jabber_address', 'type' => 'xsd:string'),
-	'address' => array('name'=>'address', 'type' => 'xsd:string'),
-	'address2' => array('name'=>'address2', 'type' => 'xsd:string'),
-	'phone' => array('name'=>'phone', 'type' => 'xsd:string'),
-	'fax' => array('name'=>'fax', 'type' => 'xsd:string'),
-	'status' => array('name'=>'status', 'type' => 'xsd:string'),
-	'timezone' => array('name'=>'timezone', 'type' => 'xsd:string'),
-	'country_code' => array('name'=>'country_code', 'type' => 'xsd:string'),
-	'add_date' => array('name'=>'add_date', 'type' => 'xsd:int'),
-	'language_id' => array('name'=>'language_id', 'type' => 'xsd:int')
-	) );
+    'User',
+    'complexType',
+    'struct',
+    'sequence',
+    '',
+    array(
+    'user_id' => array('name'=>'user_id', 'type' => 'xsd:int'),
+    'user_name' => array('name'=>'user_name', 'type' => 'xsd:string'),
+    'title' => array('name'=>'title', 'type' => 'xsd:string'),
+    'firstname' => array('name'=>'firstname', 'type' => 'xsd:string'),
+    'lastname' => array('name'=>'lastname', 'type' => 'xsd:string'),
+    'email' => array('name'=>'email', 'type' => 'xsd:string'),
+    'jabber_address' => array('name'=>'jabber_address', 'type' => 'xsd:string'),
+    'address' => array('name'=>'address', 'type' => 'xsd:string'),
+    'address2' => array('name'=>'address2', 'type' => 'xsd:string'),
+    'phone' => array('name'=>'phone', 'type' => 'xsd:string'),
+    'fax' => array('name'=>'fax', 'type' => 'xsd:string'),
+    'status' => array('name'=>'status', 'type' => 'xsd:string'),
+    'timezone' => array('name'=>'timezone', 'type' => 'xsd:string'),
+    'country_code' => array('name'=>'country_code', 'type' => 'xsd:string'),
+    'add_date' => array('name'=>'add_date', 'type' => 'xsd:int'),
+    'language_id' => array('name'=>'language_id', 'type' => 'xsd:int')
+    ) );
 
 // Array of users
 $server->wsdl->addComplexType(
@@ -100,69 +100,69 @@ $server->register(
 
 //get user objects for array of user_ids
 function &getUsers($session_ser,$user_ids) {
-	continue_session($session_ser);
-	$usrs =& user_get_objects($user_ids);
-	if (!$usrs) {
-		return new soap_fault ('3001','user','Could Not Get Users By Id','Could Not Get Users By Id');
-	}
+    continue_session($session_ser);
+    $usrs =& user_get_objects($user_ids);
+    if (!$usrs) {
+        return new soap_fault ('3001','user','Could Not Get Users By Id','Could Not Get Users By Id');
+    }
 
-	return users_to_soap($usrs);
+    return users_to_soap($usrs);
 }
 
 //get user objects for array of unix_names
 function &getUsersByName($session_ser,$user_names) {
-	continue_session($session_ser);
-	$usrs =& user_get_objects_by_name($user_names);
-	if (!$usrs) {
-		return new soap_fault ('3002','user','Could Not Get Users By Name','Could Not Get Users By Name');
-	}
+    continue_session($session_ser);
+    $usrs =& user_get_objects_by_name($user_names);
+    if (!$usrs) {
+        return new soap_fault ('3002','user','Could Not Get Users By Name','Could Not Get Users By Name');
+    }
 
-	return users_to_soap($usrs);
+    return users_to_soap($usrs);
 }
 
 //get groups for user_id
 function &userGetGroups($session_ser,$user_id) {
-	continue_session($session_ser);
-	$user =& user_get_object($user_id);
-	if (!$user) {
-		return new soap_fault ('3003','user','Could Not Get Users Groups','Could Not Get Users Groups');
-	}
-	return groups_to_soap($user->getGroups());
+    continue_session($session_ser);
+    $user =& user_get_object($user_id);
+    if (!$user) {
+        return new soap_fault ('3003','user','Could Not Get Users Groups','Could Not Get Users Groups');
+    }
+    return groups_to_soap($user->getGroups());
 }
 
 /**
  * Converts an array of User objects to soap data
  */
 function &users_to_soap($usrs) {
-	$return = array();
-	for ($i=0; $i<count($usrs); $i++) {
-		if ($usrs[$i]->isError()) {
-			return new soap_fault ('','User to soap',$usrs[$i]->getErrorMessage(),$usrs[$i]->getErrorMessage());
-			//skip it if it had an error
-		} else {
-			//build an array of just the fields we want
-			$return[] = array(
-			'user_id'=>$usrs[$i]->data_array['user_id'],
-			'user_name'=>$usrs[$i]->data_array['user_name'],
-			'title'=>$usrs[$i]->data_array['title'],
-			'firstname'=>$usrs[$i]->data_array['firstname'],
-			'lastname'=>$usrs[$i]->data_array['lastname'],
-			'email'=>$usrs[$i]->data_array['email'],
-			'jabber_address'=>$usrs[$i]->data_array['jabber_address'],
-			'address'=>$usrs[$i]->data_array['address'],
-			'address2'=>$usrs[$i]->data_array['address2'],
-			'phone'=>$usrs[$i]->data_array['phone'],
-			'fax'=>$usrs[$i]->data_array['fax'],
-			'status'=>$usrs[$i]->data_array['status'],
-			'timezone'=>$usrs[$i]->data_array['timezone'],
-			'country_code'=>$usrs[$i]->data_array['ccode'],
-			'add_date'=>$usrs[$i]->data_array['add_date'],
-			'language_id'=>$usrs[$i]->data_array['language_id']
-			);
-		}
+    $return = array();
+    for ($i=0; $i<count($usrs); $i++) {
+        if ($usrs[$i]->isError()) {
+            return new soap_fault ('','User to soap',$usrs[$i]->getErrorMessage(),$usrs[$i]->getErrorMessage());
+            //skip it if it had an error
+        } else {
+            //build an array of just the fields we want
+            $return[] = array(
+            'user_id'=>$usrs[$i]->data_array['user_id'],
+            'user_name'=>$usrs[$i]->data_array['user_name'],
+            'title'=>$usrs[$i]->data_array['title'],
+            'firstname'=>$usrs[$i]->data_array['firstname'],
+            'lastname'=>$usrs[$i]->data_array['lastname'],
+            'email'=>$usrs[$i]->data_array['email'],
+            'jabber_address'=>$usrs[$i]->data_array['jabber_address'],
+            'address'=>$usrs[$i]->data_array['address'],
+            'address2'=>$usrs[$i]->data_array['address2'],
+            'phone'=>$usrs[$i]->data_array['phone'],
+            'fax'=>$usrs[$i]->data_array['fax'],
+            'status'=>$usrs[$i]->data_array['status'],
+            'timezone'=>$usrs[$i]->data_array['timezone'],
+            'country_code'=>$usrs[$i]->data_array['ccode'],
+            'add_date'=>$usrs[$i]->data_array['add_date'],
+            'language_id'=>$usrs[$i]->data_array['language_id']
+            );
+        }
 
-	}
-	return $return;
+    }
+    return $return;
 }
 
 
@@ -185,7 +185,7 @@ $server->register
 
 function &updateUser($session_ser, $userdata)
 {
-	continue_session($session_ser);
+    continue_session($session_ser);
     session_require(array('isloggedin'=>'1'));
     // get global user's vars
     $logged_user =& user_get_object(user_getid());

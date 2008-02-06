@@ -112,12 +112,12 @@ class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_componen
         $this->_controller->set_storage($this->_event);
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_show($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

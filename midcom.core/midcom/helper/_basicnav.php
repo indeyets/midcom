@@ -258,7 +258,7 @@ class midcom_helper__basicnav
      * of the regular root topic. This way you can build up Admin Interface
      * Navigation for "external" trees.
      *
-     * @param int $context	The Context ID for which to create NAP data for, defaults to 0
+     * @param int $context    The Context ID for which to create NAP data for, defaults to 0
      */
     function midcom_helper__basicnav($context = 0)
     {
@@ -858,8 +858,8 @@ class midcom_helper__basicnav
      * prevent dynamically loaded components from disrupting active leaf information,
      * as this can happen if dynamic_load is called before showing the navigation.
      *
-     * @param mixed $node	Topic to be processed. Object or ID
-     * @return int			One of the MGD_ERR constants
+     * @param mixed $node    Topic to be processed. Object or ID
+     * @return int            One of the MGD_ERR constants
      */
     function _loadNodeData($node)
     {
@@ -965,8 +965,8 @@ class midcom_helper__basicnav
      * will be indicated with a corresponding return value and an error message
      * in $midcom_errstr.
      *
-     * @param int $node_id	The ID of the topic to be loaded
-     * @return int			MIDCOM_ERROK on success, one of the MIDCOM_ERR... constants upon an error
+     * @param int $node_id    The ID of the topic to be loaded
+     * @return int            MIDCOM_ERROK on success, one of the MIDCOM_ERR... constants upon an error
      * @access private
      */
     function _loadNode($node_id)
@@ -1059,7 +1059,7 @@ class midcom_helper__basicnav
      * Retrieve the ID of the currently displayed node. Defined by the topic of
      * the component that declared able to handle the request.
      *
-     * @return int	The ID of the node in question.
+     * @return int    The ID of the node in question.
      */
     // Keep this doc in sync with midcom_helper_nav
     function get_current_node()
@@ -1073,7 +1073,7 @@ class midcom_helper__basicnav
      * returns FALSE. (Remember to make a type sensitve check, e.g.
      * nav::get_current_leaf() !== false to distinguish "0" and "false".)
      *
-     * @return int	The ID of the leaf in question or false on failure.
+     * @return int    The ID of the leaf in question or false on failure.
      */
     // Keep this doc in sync with midcom_helper_nav
     function get_current_leaf()
@@ -1087,7 +1087,7 @@ class midcom_helper__basicnav
      * root topic ID might. The MIDCOM_NAV_URL entry of the root node's data will
      * always be empty.
      *
-     * @return int	The ID of the root node.
+     * @return int    The ID of the root node.
      */
     // Keep this doc in sync with midcom_helper_nav
     function get_root_node()
@@ -1100,9 +1100,9 @@ class midcom_helper__basicnav
      * an empty array, if there was an error (for instance an unknown parent node
      * ID) you will get FALSE.
      *
-     * @param int $parent_node	The id of the node of which the subnodes are searched.
+     * @param int $parent_node    The id of the node of which the subnodes are searched.
      * @param boolean $show_noentry Show all objects on-site which have the noentry flag set. This parameter has no effect in AIS.
-     * @return Array			An Array of Node IDs or false on failure.
+     * @return Array            An Array of Node IDs or false on failure.
      */
     // Keep this doc in sync with midcom_helper_nav
     function list_nodes($parent_node, $show_noentry)
@@ -1175,9 +1175,9 @@ class midcom_helper__basicnav
      * empty array, if there was an error (for instance an unknown parent node ID)
      * you will get FALSE.
      *
-     * @param int $parent_node	The ID of the node of which the leaves are searched.
+     * @param int $parent_node    The ID of the node of which the leaves are searched.
      * @param boolean $show_noentry Show all objects on-site which have the noentry flag set. This parameter has no effect in AIS.
-     * @return Array 			A list of leaves found, or false on failure.
+     * @return Array             A list of leaves found, or false on failure.
      */
     // Keep this doc in sync with midcom_helper_nav
     function list_leaves ($parent_node, $show_noentry)
@@ -1221,8 +1221,8 @@ class midcom_helper__basicnav
      * $node_id. The defined keys are described above in Node data interchange
      * format. You will get false if the node ID is invalid.
      *
-     * @param int $node_id	The node-id to be retrieved.
-     * @return Array		The node-data as outlined in the class introduction, false on failure
+     * @param int $node_id    The node-id to be retrieved.
+     * @return Array        The node-data as outlined in the class introduction, false on failure
      */
     // Keep this doc in sync with midcom_helper_nav
     function get_node ($node_id)
@@ -1288,8 +1288,8 @@ class midcom_helper__basicnav
      * $node_id. The defined keys are described above in leaf data interchange
      * format. You will get false if the leaf ID is invalid.
      *
-     * @param string $leaf_id	The leaf-id to be retrieved.
-     * @return Array		The leaf-data as outlined in the class introduction, false on failure
+     * @param string $leaf_id    The leaf-id to be retrieved.
+     * @return Array        The leaf-data as outlined in the class introduction, false on failure
      */
     // Keep this doc in sync with midcom_helper_nav
     function get_leaf ($leaf_id)
@@ -1330,8 +1330,8 @@ class midcom_helper__basicnav
      * Returns the ID of the node to which $leaf_id is associated to, false
      * on failure.
      *
-     * @param string $leaf_id	The Leaf-ID to search an uplink for.
-     * @return int 			The ID of the Node for which we have a match, or false on failure.
+     * @param string $leaf_id    The Leaf-ID to search an uplink for.
+     * @return int             The ID of the Node for which we have a match, or false on failure.
      */
     // Keep this doc in sync with midcom_helper_nav
     function get_leaf_uplink($leaf_id)
@@ -1351,8 +1351,8 @@ class midcom_helper__basicnav
      * Returns the ID of the node to which $node_id is associated to, false
      * on failure. The root node's uplink is -1.
      *
-     * @param int $node_id	The Leaf-ID to search an uplink for.
-     * @return int 			The ID of the Node for which we have a match, -1 for the root node, or false on failure.
+     * @param int $node_id    The Leaf-ID to search an uplink for.
+     * @return int             The ID of the Node for which we have a match, -1 for the root node, or false on failure.
      */
     // Keep this doc in sync with midcom_helper_nav
     function get_node_uplink($node_id)

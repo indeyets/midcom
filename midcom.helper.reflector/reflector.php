@@ -221,9 +221,9 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         switch(true)
         {
 
-        	case (method_exists($obj,'get_label_property')):
-        		$label = $obj->get_label();
-        		break;
+            case (method_exists($obj,'get_label_property')):
+                $label = $obj->get_label();
+                break;
             case (is_a($obj, 'midgard_topic')):
                 $property = 'extra';
                 break;
@@ -271,28 +271,28 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
 
         switch(true)
         {
-        	case (method_exists($obj,'get_label')):
-        		$label = $obj->get_label();
-        		break;
+            case (method_exists($obj,'get_label')):
+                $label = $obj->get_label();
+                break;
             case (is_a($obj, 'midgard_person')):
                 if ($obj->rname)
                 {
-                	$label = $obj->rname;
+                    $label = $obj->rname;
                 }
                 else
                 {
-                	$label = $obj->username;
+                    $label = $obj->username;
                 }
                 break;
 
             case (is_a($obj, 'midgard_topic')):
                 if ($obj->extra)
                 {
-                	$label = $obj->extra;
+                    $label = $obj->extra;
                 }
                 else
                 {
-                	$label = $obj->name;
+                    $label = $obj->name;
                 }
                 break;
             case (is_a($obj, 'midgard_event')):
@@ -320,11 +320,11 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
                 if (   $obj->port
                     && $obj->port != '80')
                 {
-                	$label = "{$obj->name}:{$obj->port}{$obj->prefix}";
+                    $label = "{$obj->name}:{$obj->port}{$obj->prefix}";
                 }
                 else
                 {
-                	$label = "{$obj->name}{$obj->prefix}";
+                    $label = "{$obj->name}{$obj->prefix}";
                 }
                 break;
             case (array_key_exists('title', $properties)):
@@ -437,9 +437,9 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         switch(true)
         {
             // object knows it's icon, how handy!
-        	case (method_exists($obj,'get_icon')):
-        		$icon = $obj->get_icon();
-        		break;
+            case (method_exists($obj,'get_icon')):
+                $icon = $obj->get_icon();
+                break;
 
             // configuration icon
             case (isset($config_icon_map[$object_class])):

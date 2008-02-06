@@ -150,7 +150,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
     {
         if ($handler_id == 'self')
         {
-	    	return true;
+            return true;
         }
 
         if (   isset($args[0])
@@ -207,7 +207,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
             case 'other_direct':
                 if (!$this->_get_account($args[0]))
                 {
-            	    return false;
+                    return false;
                 }
                 $this->_view_self = false;
                 $this->_view_quick = false;

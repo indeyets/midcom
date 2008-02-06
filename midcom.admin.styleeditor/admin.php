@@ -13,13 +13,13 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
 
     var $msg;
 
-	/**
-	 * the current topic we are in
-	 *
-	 * @var current_topic
-	 * @access public
-	 */
-	var $_current_topic = 0;
+    /**
+     * the current topic we are in
+     *
+     * @var current_topic
+     * @access public
+     */
+    var $_current_topic = 0;
 
     /**
      * pointer to midcom_session_object
@@ -35,9 +35,9 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
     var $_schemadb = Array();
 
 
-	function midcom_admin_styleeditor_viewer($topic, $config)
+    function midcom_admin_styleeditor_viewer($topic, $config)
     {
-    	//$page = mgd_get_object_by_guid($config->get("root_page"));
+        //$page = mgd_get_object_by_guid($config->get("root_page"));
         parent::midcom_baseclasses_components_request($topic, $config);
 
         $this->msg = "";
@@ -45,11 +45,11 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
         $this->_session = new midcom_service_session();
     }
 
-	function _on_initialize() {
+    function _on_initialize() {
 
 
-       	$_MIDCOM->cache->content->no_cache();
-		$_MIDCOM->auth->require_valid_user();
+           $_MIDCOM->cache->content->no_cache();
+        $_MIDCOM->auth->require_valid_user();
 
         // edit/<page>/topic gives you the root style.
         $this->request_switch[] = Array
@@ -87,37 +87,37 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
      */
     function _prepare_toolbar()
     {
-    	$toolbar = &midcom_helper_toolbars::get_instance();
+        $toolbar = &midcom_helper_toolbars::get_instance();
         $toolbar->top->add_item(Array(
             MIDCOM_TOOLBAR_URL => 'config.html',
             MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
             MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
             MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
             MIDCOM_TOOLBAR_ENABLED => true,
-	        MIDCOM_TOOLBAR_HIDDEN =>
-	        (
-	               ! $_MIDCOM->auth->can_do('midgard:update', $this->_topic)
-	            || ! $_MIDCOM->auth->can_do('midcom:component_config', $this->_topic)
-	        )
+            MIDCOM_TOOLBAR_HIDDEN =>
+            (
+                   ! $_MIDCOM->auth->can_do('midgard:update', $this->_topic)
+                || ! $_MIDCOM->auth->can_do('midcom:component_config', $this->_topic)
+            )
         ));
        // this should be in article.php.
         if (0) foreach (array_reverse($this->_schemadb_article_index, true) as $name => $desc)
         {
             $text = sprintf($this->_l10n_midcom->get('create %s'), $desc);
             $toolbar->top->add_item(
-            	Array
+                Array
                 (
-	                MIDCOM_TOOLBAR_URL => "create/{$name}.html",
-	                MIDCOM_TOOLBAR_LABEL => $text,
-	                MIDCOM_TOOLBAR_HELPTEXT => null,
-	                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_new.png',
-	                MIDCOM_TOOLBAR_ENABLED => true,
+                    MIDCOM_TOOLBAR_URL => "create/{$name}.html",
+                    MIDCOM_TOOLBAR_LABEL => $text,
+                    MIDCOM_TOOLBAR_HELPTEXT => null,
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_new.png',
+                    MIDCOM_TOOLBAR_ENABLED => true,
                     MIDCOM_TOOLBAR_HIDDEN => ($_MIDCOM->auth->can_do('midgard:create', $this->_topic) == false)
                 ), 0);
         }
 
-    	$current_topic = $this->_current_topic;
-		// topic stuff
+        $current_topic = $this->_current_topic;
+        // topic stuff
         $toolbar->top->add_item(Array(
             MIDCOM_TOOLBAR_URL => "styleeditor/topic/create/{$current_topic}",
             MIDCOM_TOOLBAR_LABEL => $this->_l10n->get("create subtopic"),
@@ -164,7 +164,7 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
 
         // First, we retrieve a metadata object for the currently active object.
         // We can only create a toolbar if and only if
-		$nav = new midcom_helper_nav($this->_context);
+        $nav = new midcom_helper_nav($this->_context);
         $nap_obj = null;
         if ($nav->get_current_leaf() !== false)
         {
@@ -272,35 +272,35 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
                 if (   (! $start || $start <= $now)
                     && (! $end || $end >= $now))
                 {
-	                $toolbar->add_item(Array(
-	                    MIDCOM_TOOLBAR_URL => null,
-	                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('scheduled and shown'),
-	                    MIDCOM_TOOLBAR_HELPTEXT => $text,
-	                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/scheduled_and_shown.png',
-	                    MIDCOM_TOOLBAR_ENABLED => false,
-	                ));
+                    $toolbar->add_item(Array(
+                        MIDCOM_TOOLBAR_URL => null,
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('scheduled and shown'),
+                        MIDCOM_TOOLBAR_HELPTEXT => $text,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/scheduled_and_shown.png',
+                        MIDCOM_TOOLBAR_ENABLED => false,
+                    ));
                 }
                 else
                 {
-	                $toolbar->add_item(Array(
-	                    MIDCOM_TOOLBAR_URL => null,
-	                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('scheduled but hidden'),
-	                    MIDCOM_TOOLBAR_HELPTEXT => $text,
-	                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/scheduled_but_hidden.png',
-	                    MIDCOM_TOOLBAR_ENABLED => false,
-	                ));
+                    $toolbar->add_item(Array(
+                        MIDCOM_TOOLBAR_URL => null,
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('scheduled but hidden'),
+                        MIDCOM_TOOLBAR_HELPTEXT => $text,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/scheduled_but_hidden.png',
+                        MIDCOM_TOOLBAR_ENABLED => false,
+                    ));
                 }
             }
         }
     }
 
-	/**
+    /**
      * @return boolean Indicating success.
-	 */
-   	function _handler_index() {
+     */
+       function _handler_index() {
 
-   		return true;
-   	}
+           return true;
+       }
 
     function _show_index() {
        midcom_show_style('index');
@@ -315,7 +315,7 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
      */
     function show()
     {
-     	debug_push_class($this, 'show');
+         debug_push_class($this, 'show');
 
 
 

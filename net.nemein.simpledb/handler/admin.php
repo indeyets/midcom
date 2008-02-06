@@ -187,12 +187,12 @@ class net_nemein_simpledb_handler_admin extends midcom_baseclasses_components_ha
 
             // Try to load the article and to prepare its datamanager.
             $data['entry'] = new midcom_db_article($id);
-	        if (!$data['datamanager']->init($data['entry']))
-	        {
+            if (!$data['datamanager']->init($data['entry']))
+            {
                 $session->remove('admin_create_id');
-	            debug_pop();
-	            return false;
-	        }
+                debug_pop();
+                return false;
+            }
             $create = false;
         }
 

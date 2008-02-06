@@ -163,8 +163,8 @@ class midcom_helper__styleloader {
     /**
      * Returns the path of the style described by $id.
      *
-     * @param int $id	Style id to look up path for
-     * @return	string Style path
+     * @param int $id    Style id to look up path for
+     * @return    string Style path
      * @access public
      */
     function get_style_path_from_id($id)
@@ -200,9 +200,9 @@ class midcom_helper__styleloader {
      * "/rootstyle/style/style/element".
      *
      * @todo complete documentation
-     * @param string $path		The path to retrieve
-     * @param int $rootstyle_id	???
-     * @return	int ID of the matching style or FALSE
+     * @param string $path        The path to retrieve
+     * @param int $rootstyle_id    ???
+     * @return    int ID of the matching style or FALSE
      * @access public
      */
     function get_style_id_from_path($path, $rootstyle = 0)
@@ -353,9 +353,9 @@ class midcom_helper__styleloader {
      * Unlike mgd_get_element_by_name2 it also returns an element if it is not in
      * the given style, but in one of its parent styles.
      *
-     * @param int $id		The style id to search in.
-     * @param string $name	The element to locate.
-     * @return string	Value of the found element, or false on failure.
+     * @param int $id        The style id to search in.
+     * @param string $name    The element to locate.
+     * @return string    Value of the found element, or false on failure.
      * @access private
      */
     function _get_element_in_styletree($id, $name)
@@ -457,9 +457,9 @@ class midcom_helper__styleloader {
      * Looks for a style element matching $path (either in a user defined style
      * or the default style snippetdir) and displays/evaluates it.
      *
-     * @param string $path	The style element to show.
+     * @param string $path    The style element to show.
      * @param array $guids  List of GUIDs included in this element display, if set will enable caching
-     * @return boolean			True on success, false otherwise.
+     * @return boolean            True on success, false otherwise.
      */
     function show($path, $guids = null)
     {
@@ -598,7 +598,7 @@ class midcom_helper__styleloader {
      *
      * @todo Document
      *
-     * @param midcom_db_topic $topic	Current topic
+     * @param midcom_db_topic $topic    Current topic
      * @return int Database ID if the style to use in current view or FALSE
      */
     function _getComponentStyle($topic)
@@ -759,8 +759,8 @@ class midcom_helper__styleloader {
      * and $_snippetdir are adjusted.
      *
      * @todo check documentation
-     * @param int $context	The context to enter
-     * @return boolean			True on success, false on failure.
+     * @param int $context    The context to enter
+     * @return boolean            True on success, false on failure.
      */
     function enter_context($context)
     {
@@ -787,7 +787,7 @@ class midcom_helper__styleloader {
      * and $_snippetdir are adjusted.
      *
      * @todo check documentation
-     * @return boolean			True on success, false on failure.
+     * @return boolean            True on success, false on failure.
      */
     function leave_context()
     {

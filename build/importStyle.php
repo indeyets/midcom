@@ -16,56 +16,56 @@ require_once "phing/Task.php";
 class importStyle extends Task
 {
 
-	protected $style = null; // package name
+    protected $style = null; // package name
 
-	function __construct()
-	{
+    function __construct()
+    {
 
-	}
+    }
 
-	protected $returnProperty; // name of property to set to return value
+    protected $returnProperty; // name of property to set to return value
 
-	/**
-	 * The root path to where the module is stored.
-	 */
-	private $path = null;
-	/**
-	 */
-	protected $template = null;
+    /**
+     * The root path to where the module is stored.
+     */
+    private $path = null;
+    /**
+     */
+    protected $template = null;
 
-	public function setPath($str) 
-	{
-		$this->path = $str;
-	}
-	public function setPackage($str)	
-	{		
-		$this->package = $str;	
-	}
-	public function setTemplate($str) 
-	{ 
-		$this->template = $str; 
-	}
-	/** Sets property name to set with return value of function or expression.*/
-	public function setReturnProperty($r)
-	{
-		$this->returnProperty = $r;
-	}
+    public function setPath($str) 
+    {
+        $this->path = $str;
+    }
+    public function setPackage($str)    
+    {        
+        $this->package = $str;    
+    }
+    public function setTemplate($str) 
+    { 
+        $this->template = $str; 
+    }
+    /** Sets property name to set with return value of function or expression.*/
+    public function setReturnProperty($r)
+    {
+        $this->returnProperty = $r;
+    }
 
 
-	/**
-	 * The init method: Do init steps.
-	 */
-	public function init()
-	{
-		// nothing to do here
-	}
+    /**
+     * The init method: Do init steps.
+     */
+    public function init()
+    {
+        // nothing to do here
+    }
 
-	/**
-	 * The main entry point method.
-	 */
-	public function main()
-	{
-		
+    /**
+     * The main entry point method.
+     */
+    public function main()
+    {
+        
         $name = $this->template;
         $style_name = "template_{$name}";
         $qb = new midgardQueryBuilder('midgard_style');
@@ -115,18 +115,18 @@ class importStyle extends Task
 
         if (!$this->clearCache()) 
         {
-        	echo "Remember that you have to clear the midgard pagecache to see effects!\n";
+            echo "Remember that you have to clear the midgard pagecache to see effects!\n";
         }
         
-		
-	}
-	
-	protected function clearCache() {
-		if (function_exists('mgd_clear_cache')) {
-			return mgd_clear_cache();
-		} 
-		return false;
-	}
-	
+        
+    }
+    
+    protected function clearCache() {
+        if (function_exists('mgd_clear_cache')) {
+            return mgd_clear_cache();
+        } 
+        return false;
+    }
+    
 }
 ?>

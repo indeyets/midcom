@@ -21,10 +21,10 @@ if (!array_key_exists('header-size', $data))
                 <th><?php echo $data['l10n']->get('due'); ?></th>
                 <th><?php
                 if ($data['list_type'] != 'paid')
-				{
-					echo $data['l10n']->get('next action');
-				}
-				else
+                {
+                    echo $data['l10n']->get('next action');
+                }
+                else
                 {
                     echo $data['l10n']->get('paid');
                 }

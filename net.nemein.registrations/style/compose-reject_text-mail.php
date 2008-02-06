@@ -32,4 +32,3 @@ Personal data:
 Additional information:
 
 <?php echo $event->dm_array_to_string($registration_dm); ?>
-

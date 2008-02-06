@@ -499,7 +499,7 @@ class midcom_helper_datamanager {
      * The path to the schema database can be anything accepted by
      * midcom_get_snippet_content().
      *
-     * @param mixed	$layoutdb	Either a string with the URL to a layoutDB or an Array containing the DB.
+     * @param mixed    $layoutdb    Either a string with the URL to a layoutDB or an Array containing the DB.
      * @see midcom_get_snippet_content()
      */
     function midcom_helper_datamanager ($layoutdb = null)
@@ -583,9 +583,9 @@ class midcom_helper_datamanager {
      * form to save the application from keeping track of this variable over the
      * requests.
      *
-     * @param string $schema	The schema name which should be used for creation of the new object.
-     * @param object &$object	The callback object containing the creation code.
-     * @param string $callback	The method name that should be used to create the new object.
+     * @param string $schema    The schema name which should be used for creation of the new object.
+     * @param object &$object    The callback object containing the creation code.
+     * @param string $callback    The method name that should be used to create the new object.
      * @return boolean Indicating success
      */
     function init_creation_mode ($schema, &$object, $callback = "_dm_create_callback") {
@@ -615,11 +615,11 @@ class midcom_helper_datamanager {
      * The DM tries to propagate this change to the outside, to stay compatible with
      * existing code.
      *
-     * @param MidgardObject $storage	The storage object to which the DM should be linked to.
-     * @param string $schema	Do not autodetect the schema but use the one given here.
-     * 	      This is useful if you want to edit the same object with more then one schema.
+     * @param MidgardObject $storage    The storage object to which the DM should be linked to.
+     * @param string $schema    Do not autodetect the schema but use the one given here.
+     *           This is useful if you want to edit the same object with more then one schema.
      *        Can be omitted.
-     * @return boolean	True on success, false on failure, errors go to the debug log.
+     * @return boolean    True on success, false on failure, errors go to the debug log.
      */
     function init (&$storage, $schema = null)
     {
@@ -642,9 +642,9 @@ class midcom_helper_datamanager {
      * translation, as this is the usual form how strings are in the
      * l10n database. (This is for backwards compatibility mainly.)
      *
-     * @param string $schema	Do not autodetect the schema but use the one given here.
-     * 	      This is useful if you want to edit the same object with more then one schema.
-     * @return boolean	Indicating success
+     * @param string $schema    Do not autodetect the schema but use the one given here.
+     *           This is useful if you want to edit the same object with more then one schema.
+     * @return boolean    Indicating success
      * @access private
      */
     function _true_init ($schema) {
@@ -1494,7 +1494,7 @@ class midcom_helper_datamanager {
      * easily used to created custom database applications without having to
      * reimplement the view logic for each datatype again and again.
      *
-     * @param string $name	The name of the field that should be shown
+     * @param string $name    The name of the field that should be shown
      */
     function display_view_field ($name) {
         global $midcom_errstr;
@@ -1536,8 +1536,8 @@ class midcom_helper_datamanager {
      * given newline characters. The internal helper _csv_encode is used
      * to encode the actual data from the components.
      *
-     * @param string $separator	Separator to use between fields.
-     * @param string $newline	Newline character to use.
+     * @param string $separator    Separator to use between fields.
+     * @param string $newline    Newline character to use.
      * @return string CSV line
      * @see midcom_helper_datamanager::get_csv_header_line()
      * @see midcom_helper_datamanager::_csv_encode()
@@ -1578,8 +1578,8 @@ class midcom_helper_datamanager {
      * get_csv_header_line will yield a line containing all the field descriptions to
      * be used as column headers.
      *
-     * @param string $separator	Separator to use between fields.
-     * @param string $newline	Newline character to use.
+     * @param string $separator    Separator to use between fields.
+     * @param string $newline    Newline character to use.
      * @return string CSV line
      * @see midcom_helper_datamanager::get_csv_header_line()
      * @see midcom_helper_datamanager::_csv_encode()
@@ -1622,7 +1622,7 @@ class midcom_helper_datamanager {
     /**
      * Return the data array (a copy of the data member).
      *
-     * @return Array	Current object data
+     * @return Array    Current object data
      * @see midcom_helper_datamanager::data
      */
     function get_array () {
@@ -1803,7 +1803,7 @@ class midcom_helper_datamanager {
      * Note, that this function is public, but should only be called by widgets and
      * datatypes.
      *
-     * @param string $string	The string to append to the error.
+     * @param string $string    The string to append to the error.
      */
     function append_error ($string) {
         if (array_key_exists("view_contentmgr", $GLOBALS))
@@ -1857,8 +1857,8 @@ class midcom_helper_datamanager {
      * <layout line> [ , <layout line> ... ]
      * </pre>
      *
-     * @param string $path	The path to the schema, as passed to midcom_get_snippet_content.
-     * @return Array		The parsed schema.
+     * @param string $path    The path to the schema, as passed to midcom_get_snippet_content.
+     * @return Array        The parsed schema.
      * @see midcom_get_snippet_content()
      * @access private
      */
@@ -1871,7 +1871,7 @@ class midcom_helper_datamanager {
     /**
      * Calls midcom_update_nemein_rcs to update the Nemein RCS store if configured.
      *
-     * @return boolean	Indicating success.
+     * @return boolean    Indicating success.
      * @see midcom_update_nemein_rcs()
      * @access private
      */
@@ -1897,9 +1897,9 @@ class midcom_helper_datamanager {
      * into two double quotes. Any leading or trailing whitespace around the data
      * will be eliminated.
      *
-     * @param string $string	The string to encode.
-     * @param string $separator	Separator to use between fields.
-     * @return string			The encoded string.
+     * @param string $string    The string to encode.
+     * @param string $separator    Separator to use between fields.
+     * @return string            The encoded string.
      * @access private
      */
     function _csv_encode ($string, $separator) {
@@ -1926,7 +1926,7 @@ class midcom_helper_datamanager {
      * us from editing. It returns true, if the storage object is locked for us, false
      * otherwise.
      *
-     * @return boolean	Indicating locking state.
+     * @return boolean    Indicating locking state.
      * @access private
      */
     function _check_lock() {
@@ -1970,7 +1970,7 @@ class midcom_helper_datamanager {
             $this->_lock["user_record"] = $user;
             $locker = mgd_get_person($lock["user"]);
             if (! $locker)
-	      $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "CRITICAL FAILURE: Locker person record does not exist: " . mgd_errstr());
+          $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "CRITICAL FAILURE: Locker person record does not exist: " . mgd_errstr());
             $this->_lock["user_name"] = $locker->name;
             $this->_lock["user_record"] = $locker;
         } else {

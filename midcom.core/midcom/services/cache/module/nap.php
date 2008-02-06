@@ -42,10 +42,10 @@
 class midcom_services_cache_module_nap extends midcom_services_cache_module
 {
     /**#@+
-	 * Internal runtime state variable.
-	 *
-	 * @access private
-	 */
+     * Internal runtime state variable.
+     *
+     * @access private
+     */
 
     /**
      * The configuration to use to start up the backend drivers. Initialized during
@@ -150,13 +150,13 @@ class midcom_services_cache_module_nap extends midcom_services_cache_module
                 }
                 else
                 {
-                	$backend =& $this->_create_backend("NAP_{$real_guid}", $this->_backend_config);
+                    $backend =& $this->_create_backend("NAP_{$real_guid}", $this->_backend_config);
                     $this->_guid_backend_map[$real_guid] =& $backend;
                 }
             }
             else
             {
-            	$backend =& $this->_create_backend("NAP_{$guid}", $this->_backend_config);
+                $backend =& $this->_create_backend("NAP_{$guid}", $this->_backend_config);
             }
 
             $this->_guid_backend_map[$guid] =& $backend;

@@ -147,8 +147,8 @@ class midcom_services__i18n_l10n {
      * path $library and initializes the system completely. The output character 
      * set will be initialized to the language's default.
      * 
-     * @param string $library	Name of the locale library to use.
-     * @param string $database	Name of the database in the library to load.
+     * @param string $library    Name of the locale library to use.
+     * @param string $database    Name of the database in the library to load.
      */
     function midcom_services__i18n_l10n ($library = null, $database) {
         global $midcom_errstr;
@@ -160,7 +160,7 @@ class midcom_services__i18n_l10n {
             debug_add("Default constructor for midcom_services__i18n_l10n forbidden, library path must be present.", MIDCOM_LOG_ERROR);
             debug_pop();
             $midcom->generate_error(MIDCOM_ERRCRIT, 
-            	"Default constructor for midcom_services__i18n_l10n forbidden, library path must be present.");
+                "Default constructor for midcom_services__i18n_l10n forbidden, library path must be present.");
             // This will exit();
         }
         
@@ -421,7 +421,7 @@ class midcom_services__i18n_l10n {
      * 
      * This is usually set through midcom_services_i18n.
      * 
-     * @param string $charset	Charset name.
+     * @param string $charset    Charset name.
      * @see midcom_services_18n::set_charset()
      */
     function set_charset ($encoding) 
@@ -442,7 +442,7 @@ class midcom_services__i18n_l10n {
      * 
      * This is usually set through midcom_services_i18n.
      * 
-     * @param string $lang	Language code.
+     * @param string $lang    Language code.
      * @see midcom_services_i18n::set_language()
      */
     function set_language($lang) 
@@ -464,7 +464,7 @@ class midcom_services__i18n_l10n {
      * 
      * This is usually set through midcom_services_i18n.
      * 
-     * @param string $lang	Language name.
+     * @param string $lang    Language name.
      * @see midcom_services_i18n::set_fallback_language()
      */
     function set_fallback_language ($lang) {
@@ -473,11 +473,11 @@ class midcom_services__i18n_l10n {
     
     /**
      * Checks if a localized string for $string exists. If $language is unset,
-	 * the current language is used.
-	 * 
-	 * @param string $string The string-ID to search for.
-	 * @param string $language The language to search in.
-	 * @return boolean Indicating availability.
+     * the current language is used.
+     * 
+     * @param string $string The string-ID to search for.
+     * @param string $language The language to search in.
+     * @return boolean Indicating availability.
      */
     function string_exists($string, $language = null) {
         if (is_null($language)) 
@@ -528,9 +528,9 @@ class midcom_services__i18n_l10n {
      * 
      * L10n DB loads are done through string_exists.
      * 
-	 * @param string $string The string-ID to search for.
-	 * @param string $language The language to search in, uses the current language as default.
-	 * @return string The translated string if available, the fallback string otherwise.
+     * @param string $string The string-ID to search for.
+     * @param string $language The language to search in, uses the current language as default.
+     * @return string The translated string if available, the fallback string otherwise.
      */
     function get ($string, $language = null) {
         if (is_null($language)) 
@@ -559,9 +559,9 @@ class midcom_services__i18n_l10n {
      * Note, that due to the stupidity of the Zend engine, it is not possible to call
      * this function echo, like it should have been called.
      * 
-	 * @param string $string The string-ID to search for.
-	 * @param string $language The language to search in, uses the current language as default.
-	 * @see get()
+     * @param string $string The string-ID to search for.
+     * @param string $language The language to search in, uses the current language as default.
+     * @see get()
      */
     function show ($string, $language = null)
     {
@@ -574,9 +574,9 @@ class midcom_services__i18n_l10n {
      * function assumes that $translation is in UTF-8. It will create a language
      * subdir if necessary. Returns true on success, false on failure.
      *
-     * @param string $string		The string-ID to edit.
-     * @param string $language		The language to edit.
-     * @param string $translation	The UTF-8 encoded string to add to the translation table.
+     * @param string $string        The string-ID to edit.
+     * @param string $language        The language to edit.
+     * @param string $translation    The UTF-8 encoded string to add to the translation table.
      * @deprecated This method is deprecated and will be dismissed in 2.2.0, the update method replaces this one completely.
      */
     function create ($string, $language, $translation) {
@@ -588,9 +588,9 @@ class midcom_services__i18n_l10n {
      * Updates a string in the database. If it does not exist, it will be created
      * automatically. 
      * 
-     * @param string $string		The string-ID to edit.
-     * @param string $language		The language to edit.
-     * @param string $translation	The UTF-8 encoded string to add/update.
+     * @param string $string        The string-ID to edit.
+     * @param string $language        The language to edit.
+     * @param string $translation    The UTF-8 encoded string to add/update.
      */
     function update ($string, $language, $translation) {
         $this->_check_for_language($language);
@@ -601,8 +601,8 @@ class midcom_services__i18n_l10n {
      * Deletes a string from the database. If the string is not present, it
      * will fail silently.
      * 
-     * @param string $string		The string-ID to edit.
-     * @param string $language		The language to edit.
+     * @param string $string        The string-ID to edit.
+     * @param string $language        The language to edit.
      */
     function delete ($string, $language) {
         // This is error-resilent, deleting a non-existent string will

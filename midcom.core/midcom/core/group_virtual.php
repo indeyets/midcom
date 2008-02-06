@@ -48,7 +48,7 @@ class midcom_core_group_virtual extends midcom_core_group
      * work with vgroups, they should always deal with vgroup identifiers.
      *
      * @param mixed $id This is either a valid full identifier (without the vgroup: prefix)
-     * 	   for a VGroup or a VGroup database record.
+     *        for a VGroup or a VGroup database record.
      */
     function midcom_core_group_virtual($id = null)
     {

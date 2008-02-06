@@ -80,7 +80,7 @@ class midcom_helper_datamanager_widget_select extends midcom_helper_datamanager_
     var $_display_key;
 
     function _constructor (&$datamanager, $field, $defaultvalue) {
- 	    parent::_constructor ($datamanager, $field, $defaultvalue);
+         parent::_constructor ($datamanager, $field, $defaultvalue);
 
         if (!array_key_exists("widget_select_choices", $this->_field))
         {
@@ -113,13 +113,13 @@ class midcom_helper_datamanager_widget_select extends midcom_helper_datamanager_
         if (array_key_exists($this->_value, $this->_choices))
         {
             /* Keep nbsp's intact */
-	        $value = htmlspecialchars($this->_choices[$this->_value]);
-	        $value = str_replace ("&amp;nbsp;", "&nbsp;", $value);
+            $value = htmlspecialchars($this->_choices[$this->_value]);
+            $value = str_replace ("&amp;nbsp;", "&nbsp;", $value);
         }
         else
         {
             /* Fallback in case we have an unknown key */
-	        $value = $this->_value;
+            $value = $this->_value;
         }
         echo htmlspecialchars($value) . '</div>';
     }

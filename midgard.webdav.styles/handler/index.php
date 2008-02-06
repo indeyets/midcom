@@ -36,9 +36,9 @@ class midgard_webdav_styles_handler_index  extends midgard_webdav_styles_handler
      */
     function _handler_index ($handler_id, $args, &$data)
     {
-		$this->log(__CLASS__ . ": index_handler");
+        $this->log(__CLASS__ . ": index_handler");
         $server = new midgard_webdav_styles_dav_style_index();
-	    $server->set_style( $this->get_root_style());
+        $server->set_style( $this->get_root_style());
         $server->ServeRequest();
         return true;
     }

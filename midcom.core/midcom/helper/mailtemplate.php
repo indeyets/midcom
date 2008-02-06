@@ -103,7 +103,7 @@
  * $template = new midcom_helper_mailtemplate($this->_config_dm->data["mail_newreservation"]);
  * $parameters = Array(
  *     "RESOURCE" => $this->_resource->dm,
- *    	"RESERVATION" => $this->dm,
+ *        "RESERVATION" => $this->dm,
  *     "ISOSTART" => $this->dm->data["start"]["strfulldate"],
  *     "ISOEND" => $this->dm->data["end"]["strfulldate"],
  *     "LOCALSTART" => $this->dm->data["start"]["local_strfulldate"],
@@ -230,7 +230,7 @@ class midcom_helper_mailtemplate
      *
      * This will load the pear modules Mail and Mail_Mime.
      *
-     * @param Array $template	The value of a Datamanager mailtemplate type
+     * @param Array $template    The value of a Datamanager mailtemplate type
      */
     function midcom_helper_mailtemplate ($template)
     {
@@ -259,8 +259,8 @@ class midcom_helper_mailtemplate
      * If you omit the encoding, a detection will be attempted (see above).
      * To avoid trouble, try to specify an encoding every time.
      *
-     * @param Array $parameters	The template parameters.
-     * @param string $encoding	The character encoding in which $parameters are passed.
+     * @param Array $parameters    The template parameters.
+     * @param string $encoding    The character encoding in which $parameters are passed.
      */
     function set_parameters ($parameters, $encoding = null)
     {
@@ -271,7 +271,7 @@ class midcom_helper_mailtemplate
     /**
      * Returns the currently set parameters.
      *
-     * @return Array	Current parameter set.
+     * @return Array    Current parameter set.
      */
     function get_parameters ()
     {
@@ -281,7 +281,7 @@ class midcom_helper_mailtemplate
     /**
      * Retrieve the current parameter character encoding.
      *
-     * @return string	The encoding name.
+     * @return string    The encoding name.
      */
     function get_parameters_encoding ()
     {
@@ -385,8 +385,8 @@ class midcom_helper_mailtemplate
      *
      * If the template has not yet been explicitly parsed, this is done silently.
      *
-     * @param mixed $to		Recipients, either a single string (one recipient), or an Array of strings (multiple recipients).
-     * @return boolean			Indicating success.
+     * @param mixed $to        Recipients, either a single string (one recipient), or an Array of strings (multiple recipients).
+     * @return boolean            Indicating success.
      */
     function send ($to)
     {
@@ -500,8 +500,8 @@ class midcom_helper_mailtemplate
      * (which are private per definition). Relies on reflection to parse
      * the object.
      *
-     * @param mixed $obj	Any PHP object that can be parsed with get_object_vars().
-     * @return string		String representation.
+     * @param mixed $obj    Any PHP object that can be parsed with get_object_vars().
+     * @return string        String representation.
      * @access private
      */
     function _format_object ($obj)
@@ -538,8 +538,8 @@ class midcom_helper_mailtemplate
      * Accesses the datamanagers internal field database directly (so this is
      * not 100% clean).
      *
-     * @param midcom_helper_datamanager $dm		A fully initialized Datamanager instance.
-     * @return string		String representation.
+     * @param midcom_helper_datamanager $dm        A fully initialized Datamanager instance.
+     * @return string        String representation.
      * @access private
      */
     function _format_dm ($dm)
@@ -566,8 +566,8 @@ class midcom_helper_mailtemplate
      *
      * Uses word wrapping and skips recursive Arrays or objects.
      *
-     * @param Array $array	The array to be dumped.
-     * @return string		String representation.
+     * @param Array $array    The array to be dumped.
+     * @return string        String representation.
      * @access private
      */
     function _format_array ($array)
@@ -604,8 +604,8 @@ class midcom_helper_mailtemplate
      * "UTF-8, UTF-7, ASCII, ISO-8859-15", so you'd better ensure
      * that the parameter encoding is known.
      *
-     * @param string $string	String in source encoding.
-     * @return string			String in destination encoding.
+     * @param string $string    String in source encoding.
+     * @return string            String in destination encoding.
      * @access private
      */
     function _charset_convert ($string)

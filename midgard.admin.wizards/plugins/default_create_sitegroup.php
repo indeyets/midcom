@@ -20,7 +20,7 @@ class default_create_sitegroup extends midcom_baseclasses_components_handler
     */
     function default_create_sitegroup()
     {
-	    parent::midcom_baseclasses_components_handler();
+        parent::midcom_baseclasses_components_handler();
     }
 
     function _on_initialize()
@@ -47,16 +47,16 @@ class default_create_sitegroup extends midcom_baseclasses_components_handler
     {
         return array
         (
-	        'sitewizard' => array
-	        (
-	            'handler' => array('default_create_sitegroup', 'create_sitegroup'),
-	        ),
-	    );
+            'sitewizard' => array
+            (
+                'handler' => array('default_create_sitegroup', 'create_sitegroup'),
+            ),
+        );
     }
 
-	/**
+    /**
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_create_sitegroup()
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
@@ -107,4 +107,3 @@ class default_create_sitegroup extends midcom_baseclasses_components_handler
 }
 
 ?>
-

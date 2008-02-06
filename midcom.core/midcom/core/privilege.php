@@ -655,15 +655,15 @@ class midcom_core_privilege extends midcom_core_privilege_db
         $_MIDCOM->auth->_internal_sudo = true;
 
         $parent_guid = null;
-		// We need to be careful here in case we have non-persistent objects.
+        // We need to be careful here in case we have non-persistent objects.
         if ($guid === null)
         {
             $tmp = $object->get_parent();
-			if (   $tmp
-			    && $tmp->guid)
-			{
-				$parent_guid = $tmp->guid;
-			}
+            if (   $tmp
+                && $tmp->guid)
+            {
+                $parent_guid = $tmp->guid;
+            }
         }
         else
         {

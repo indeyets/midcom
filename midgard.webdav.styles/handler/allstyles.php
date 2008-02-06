@@ -35,23 +35,23 @@ class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_han
      */
     function _handler_styles ( $handler_id, $args, &$data )
     {
-		$this->log(__CLASS__ . ": styles handler");
-       	$server = new midgard_webdav_styles_dav_style();
+        $this->log(__CLASS__ . ": styles handler");
+           $server = new midgard_webdav_styles_dav_style();
         $server->set_style( $this->get_root_style( ) ) ;
         if (sizeof($args) == 1 && preg_match("/\.php$/",$args[0]))
         {
-        	$filename = $args[0];
-        	$this->log(__CLASS__ . ": filename " . $filename);
-        	$server = new midgard_webdav_styles_dav_element( );
-        	$server->set_element_name( $filename );
-        	$server->set_style( $this->get_root_style( ) ) ;
+            $filename = $args[0];
+            $this->log(__CLASS__ . ": filename " . $filename);
+            $server = new midgard_webdav_styles_dav_element( );
+            $server->set_element_name( $filename );
+            $server->set_style( $this->get_root_style( ) ) ;
         }
-		else
-		{
-			$this->walk_style_tree($args,$server);
-		}
-        	$server->ServeRequest();
-		return true;
+        else
+        {
+            $this->walk_style_tree($args,$server);
+        }
+            $server->ServeRequest();
+        return true;
     }
 
     /**
@@ -63,15 +63,15 @@ class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_han
     function _handler_allstyles_index ($handler_id, $args, &$data)
     {
         //$_MICOM->auth->require_admin_user();
-       	$server = new midgard_webdav_styles_dav_style();
+           $server = new midgard_webdav_styles_dav_style();
         $style = new midcom_db_style;
         $style->id = 0;
         $server->set_style( $style );
         if (sizeof($args) > 0 )
         {
-			$this->walk_style_tree($args,$server);
+            $this->walk_style_tree($args,$server);
         }
-       	$server->ServeRequest();
+           $server->ServeRequest();
         return true;
     }
 
@@ -111,32 +111,32 @@ class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_han
 
     }
 
-	function walk_style_tree( $args , &$server)
-	{
-		$this->log(__CLASS__ . "::walk_style_tree, current style: " . $server->style->id);
-		$this->log($args);
-		$filename = array_shift($args);
+    function walk_style_tree( $args , &$server)
+    {
+        $this->log(__CLASS__ . "::walk_style_tree, current style: " . $server->style->id);
+        $this->log($args);
+        $filename = array_shift($args);
         $server->set_style( $this->get_style( $filename, $server->style->id ) ) ;
         foreach ($args as $filename)
         {
-			$this->log(__CLASS__ . "::walk_style_tree, current style: " . $server->style->id);
-			if ( preg_match("/\.php$/",$filename))
-			{
-				$style = $server->style;
-       			$server = new midgard_webdav_styles_dav_element( );
-	       		$server->set_element_name( $filename );
-	       		$server->set_style($style);
-			}
-			else
-			{
-        		$server->set_style($this->get_style( $filename , $server->style->id));
-			}
+            $this->log(__CLASS__ . "::walk_style_tree, current style: " . $server->style->id);
+            if ( preg_match("/\.php$/",$filename))
+            {
+                $style = $server->style;
+                   $server = new midgard_webdav_styles_dav_element( );
+                   $server->set_element_name( $filename );
+                   $server->set_style($style);
+            }
+            else
+            {
+                $server->set_style($this->get_style( $filename , $server->style->id));
+            }
         }
-	}
+    }
 
 
     function get_style( $filename , $parent_style = 0) {
-		$filename = str_replace("+"," ",$filename);
+        $filename = str_replace("+"," ",$filename);
         $this->log(__CLASS__ . ": get_style: " . $filename . " parent style: " . $parent_style);
         $qb = midcom_db_style::new_query_builder(  );
         $qb->add_constraint( 'name' , "=", $filename );
@@ -144,7 +144,7 @@ class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_han
         $style = array_shift( $qb->execute() );
         if ( !$style )
         {
-        	return false;
+            return false;
         }
         $this->log(__CLASS__ . ": found style " . $style->name);
         return $style;

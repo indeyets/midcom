@@ -26,11 +26,11 @@ require_once 'PEAR/PackageFileManager/File.php';
 class packageMidCOMcore extends Task
 {
 
-	protected $package = null; // package name
-	/**
-	 * The PEAR name of the package.
-	 */
-	protected $package_name;
+    protected $package = null; // package name
+    /**
+     * The PEAR name of the package.
+     */
+    protected $package_name;
     /* pear channel */
     protected $channel = "pear.midcom-project.org";
     // package stability
@@ -38,42 +38,42 @@ class packageMidCOMcore extends Task
     // minimal phpversion
     protected $phpversion = '4.3.0'; // for 2.8
 
-	protected $returnProperty; // name of property to set to return value
+    protected $returnProperty; // name of property to set to return value
     protected $version;
 
-	/**
-	 * The root path to where the module is stored.
-	 */
-	private $path = null;
-	/**
-	 * The target directory where the packagefile should be saved.
-	 */
-	protected $target_dir = null;
-	/**
-	 * The setter for the attribute "message"
-	 */
-	public function setTarget_dir($str)
-	{
-		$this->target_dir = $str;
-	}
-	public function setPath($str)
-	{
+    /**
+     * The root path to where the module is stored.
+     */
+    private $path = null;
+    /**
+     * The target directory where the packagefile should be saved.
+     */
+    protected $target_dir = null;
+    /**
+     * The setter for the attribute "message"
+     */
+    public function setTarget_dir($str)
+    {
+        $this->target_dir = $str;
+    }
+    public function setPath($str)
+    {
         echo "Setting path to $str\n";
-		$this->path = $str;
-	}
-	public function setPackage($str)
-	{
-		$this->package = $str;
-	}
-	public function setChannel($str)
-	{
-		$this->channel = $str;
-	}
-	/** Sets property name to set with return value of function or expression.*/
-	public function setReturnProperty($r)
-	{
-		$this->returnProperty = $r;
-	}
+        $this->path = $str;
+    }
+    public function setPackage($str)
+    {
+        $this->package = $str;
+    }
+    public function setChannel($str)
+    {
+        $this->channel = $str;
+    }
+    /** Sets property name to set with return value of function or expression.*/
+    public function setReturnProperty($r)
+    {
+        $this->returnProperty = $r;
+    }
     /**
      * the template pacakge.xml file to use. 
      */
@@ -95,32 +95,32 @@ class packageMidCOMcore extends Task
      */
     protected $staticFiles ;
 
-	/**
-	 * The init method: Do init steps.
-	 */
-	public function init()
-	{
+    /**
+     * The init method: Do init steps.
+     */
+    public function init()
+    {
         //
         return;
-	}
+    }
 
-	/**
-	 * The main entry point method.
-	 */
-	public function main()
-	{
+    /**
+     * The main entry point method.
+     */
+    public function main()
+    {
         $baseOptions = array('filelistgenerator' => 'File',
             'packagedirectory' => $this->path,
             'baseinstalldir' => 'midcom/lib',
             'installexceptions' => array( 'support' => '/'),
             'dir_roles' => array(), 
             'simpleoutput' => true,
-			            'ignore' => array('package-template.xml'),
-			            'include' => array('*.php', 'midcom*', 'support*'),
+                        'ignore' => array('package-template.xml'),
+                        'include' => array('*.php', 'midcom*', 'support*'),
             );
           
         $package = $this->makeBase($baseOptions);
-		$package->addRole('jpg','web');
+        $package->addRole('jpg','web');
         $package->addRole('gif','web');
         $package->addRole('png','web');
         $package->addRole('zip','web');

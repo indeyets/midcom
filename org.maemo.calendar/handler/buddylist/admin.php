@@ -83,12 +83,12 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_remove($handler_id, $args, &$data)
     {
         if ($handler_id == 'ajax-buddylist-remove')
@@ -129,12 +129,12 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_action($handler_id, $args, &$data)
     {
         if (strpos($handler_id, 'ajax-'))

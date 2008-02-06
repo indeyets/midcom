@@ -57,9 +57,9 @@ $total_contacts = $email_fields + count($contacts);
         <td>
         <input type="text" name="net_nehmer_accounts_invitation_invitee_name_<?php echo $i; ?>"/>
         </td>
-	<td>
+    <td>
         <input type="text" name="net_nehmer_accounts_invitation_invitee_email_<?php echo $i; ?>"/>
-	</td>
+    </td>
      </tr>
     <?php
     }
@@ -70,13 +70,13 @@ $total_contacts = $email_fields + count($contacts);
       <tr>
         <td>
         <input type="checkbox" name="net_nehmer_accounts_invitation_invitee_selected_<?php echo $key+$email_fields; ?>"/>
-	<span class="net_nemein_accounts_invitation_import_name"><?php echo $contact['name']; ?></span>
-	</td>
-	<td>
+    <span class="net_nemein_accounts_invitation_import_name"><?php echo $contact['name']; ?></span>
+    </td>
+    <td>
         <input type="hidden" name="net_nehmer_accounts_invitation_invitee_name_<?php echo $key+$email_fields; ?>" value="<?php echo $contact['name']; ?>"/>
         <input type="hidden" name="net_nehmer_accounts_invitation_invitee_email_<?php echo $key+$email_fields; ?>" value="<?php echo $contact['email']; ?>"/>
-	<span class="net_nemein_accounts_invitation_import_email"><?php echo $contact['email']; ?></span>
-	</td>
+    <span class="net_nemein_accounts_invitation_import_email"><?php echo $contact['email']; ?></span>
+    </td>
       </tr>
     <?php
     }
@@ -90,4 +90,4 @@ $total_contacts = $email_fields + count($contacts);
   </td>
 </table>
 </form>
-	
+    

@@ -19,15 +19,15 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
      */
     var $_controller = null;
 
-	/**
-	 * Listing type
-	 */
-	var $_list_type = null;
+    /**
+     * Listing type
+     */
+    var $_list_type = null;
 
-	/**
-	 * Search results
-	 */
-	var $_search_results = array();
+    /**
+     * Search results
+     */
+    var $_search_results = array();
 
     function midcom_helper_imagepopup_handler_list()
     {
@@ -120,24 +120,24 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
             case '____ais-imagepopup-list_unified':
                 $data['list_type'] = 'unified';
                 $data['list_title'] = $_MIDCOM->i18n->get_string('unified search', 'midcom.helper.imagepopup');
-				$data['query'] = (array_key_exists('query', $_REQUEST) ? $_REQUEST['query'] : '');
+                $data['query'] = (array_key_exists('query', $_REQUEST) ? $_REQUEST['query'] : '');
                 break;
         }
         $this->_list_type = $data['list_type'];
 
         $_MIDCOM->set_pagetitle($data['list_title']);
 
-		if ($data['list_type'] != 'unified')
-		{
-			$this->_create_controller($data);
-		}
-		else
-		{
-			if($data['query'] != '')
-			{
-				$this->_run_search($data);
-			}
-		}
+        if ($data['list_type'] != 'unified')
+        {
+            $this->_create_controller($data);
+        }
+        else
+        {
+            if($data['query'] != '')
+            {
+                $this->_run_search($data);
+            }
+        }
 
         $_MIDCOM->enable_jquery();
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/midcom.helper.imagepopup/functions.js");
@@ -177,50 +177,50 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
         $_MIDCOM->add_jsonload("jQuery('.midcom_helper_datamanager2_widget_downloads_download').dm2ImagePopupConvert();");
     }
 
-	function _run_search(&$data)
-	{
-		$qb = midcom_baseclasses_database_attachment::new_query_builder();
-		$query = str_replace('*', '%', $data['query']);
-		$qb->begin_group('OR');
-        	$qb->add_constraint('name', 'LIKE', $query);
-        	$qb->add_constraint('title', 'LIKE', $query);
-        	$qb->add_constraint('mimetype', 'LIKE', $query);
-		$qb->end_group();
+    function _run_search(&$data)
+    {
+        $qb = midcom_baseclasses_database_attachment::new_query_builder();
+        $query = str_replace('*', '%', $data['query']);
+        $qb->begin_group('OR');
+            $qb->add_constraint('name', 'LIKE', $query);
+            $qb->add_constraint('title', 'LIKE', $query);
+            $qb->add_constraint('mimetype', 'LIKE', $query);
+        $qb->end_group();
 
-		$this->_search_results = $qb->execute();
+        $this->_search_results = $qb->execute();
 
-		$_MIDCOM->add_jsonload("jQuery('.midcom_helper_imagepopup_search_result_item').dm2ImagePopupConvert();");
-	}
+        $_MIDCOM->add_jsonload("jQuery('.midcom_helper_imagepopup_search_result_item').dm2ImagePopupConvert();");
+    }
 
     function _show_list()
     {
         midcom_show_style('midcom_helper_imagepopup_init');
-		if ($this->_list_type == 'unified')
-		{
-			midcom_show_style('midcom_helper_imagepopup_search');
-			$this->_show_search_results();
-		}
-		else
-		{
-			midcom_show_style('midcom_helper_imagepopup_list');
-		}
+        if ($this->_list_type == 'unified')
+        {
+            midcom_show_style('midcom_helper_imagepopup_search');
+            $this->_show_search_results();
+        }
+        else
+        {
+            midcom_show_style('midcom_helper_imagepopup_list');
+        }
         midcom_show_style('midcom_helper_imagepopup_finish');
     }
 
     function _show_search_results()
     {
-		midcom_show_style('midcom_helper_imagepopup_search_result_start');
+        midcom_show_style('midcom_helper_imagepopup_search_result_start');
 
-		if (count($this->_search_results) > 0)
+        if (count($this->_search_results) > 0)
         {
-			foreach ($this->_search_results as $key => $result)
-			{
-				$this->_request_data['result'] = $result;
-				midcom_show_style('midcom_helper_imagepopup_search_result_item');
-			}
+            foreach ($this->_search_results as $key => $result)
+            {
+                $this->_request_data['result'] = $result;
+                midcom_show_style('midcom_helper_imagepopup_search_result_item');
+            }
         }
 
-		midcom_show_style('midcom_helper_imagepopup_search_result_end');
+        midcom_show_style('midcom_helper_imagepopup_search_result_end');
     }
 
     /**

@@ -248,8 +248,8 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             $qb->set_limit(25);
         }*/
 
-		$ref = $this->get($this->mgdschema_class);
-		$qb->add_order('sitegroup', 'DESC');
+        $ref = $this->get($this->mgdschema_class);
+        $qb->add_order('sitegroup', 'DESC');
         $qb->add_order($ref->get_label_property());
         $objects = $qb->execute();
 
@@ -585,11 +585,11 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
                     break;
                 case MGD_TYPE_INT:
                 case MGD_TYPE_UINT:
-                		$qb->begin_group('AND');
-	                        $qb->add_constraint($parentfield, '=', (int)$for_object->$parenttarget);
-	                        // make sure we don't accidentally find other objects with the same id
-    	                    $qb->add_constraint($parentfield . '.guid', '=', (string) $for_object->guid);
-						$qb->end_group();
+                        $qb->begin_group('AND');
+                            $qb->add_constraint($parentfield, '=', (int)$for_object->$parenttarget);
+                            // make sure we don't accidentally find other objects with the same id
+                            $qb->add_constraint($parentfield . '.guid', '=', (string) $for_object->guid);
+                        $qb->end_group();
                     break;
                 default:
                     debug_push_class(__CLASS__, __FUNCTION__);
@@ -622,7 +622,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             return false;
         }
         $ref = $this->get($schema_type);
-		$qb->add_order('sitegroup', 'DESC');
+        $qb->add_order('sitegroup', 'DESC');
         $qb->add_order($ref->get_label_property());
         $objects = $qb->execute();
 

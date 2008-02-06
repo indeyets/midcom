@@ -39,12 +39,12 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_dashboard($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -179,12 +179,12 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         $this->_show_invoice_list();
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_customer($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -271,12 +271,12 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         $this->_show_invoice_list();
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_deliverable($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

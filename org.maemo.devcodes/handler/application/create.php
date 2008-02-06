@@ -209,12 +209,12 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
         midcom_show_style('admin-create-application');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_apply($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

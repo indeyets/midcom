@@ -148,7 +148,7 @@ class org_openpsa_products_handler_product_downloads extends midcom_baseclasses_
                 {
                     if ($handler_id == 'downloads_products_intree')
                     {
-                	    $data['view_product_url'] = "{$prefix}product/". $data['product_group'] ."/{$product->code}/";
+                        $data['view_product_url'] = "{$prefix}product/". $data['product_group'] ."/{$product->code}/";
                     }
                     else
                     {

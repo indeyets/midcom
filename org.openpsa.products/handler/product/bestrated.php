@@ -67,9 +67,9 @@ class org_openpsa_products_handler_product_bestrated extends midcom_baseclasses_
                     $product_qb->add_constraint('productGroup', 'IN', $categories_in);
                 }
 
-	    }
+        }
 
-	}
+    }
 
         $product_qb->add_constraint('start', '<=', time());
         $product_qb->begin_group('OR');

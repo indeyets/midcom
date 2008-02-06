@@ -68,22 +68,22 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['application'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'application'),
-	        'fixed_args' => Array('application'),
-	        'variable_args' => 1,
+            'fixed_args' => Array('application'),
+            'variable_args' => 1,
         );
 
         // Shares /
         $this->_request_switch['shares'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'shares'),
-	        'fixed_args' => Array('shares'),
+            'fixed_args' => Array('shares'),
         );
 
         // Log /
         $this->_request_switch['log'] = array
         (
             'handler' => Array('net_nemein_teams_handler_admin', 'log'),
-	        'fixed_args' => Array('log'),
+            'fixed_args' => Array('log'),
         );
 
         /*
@@ -91,14 +91,14 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['manage_system'] = array
         (
             'handler' => Array('net_nemein_teams_handler_admin', 'manage_system'),
-	        'fixed_args' => Array('manage_system'),
+            'fixed_args' => Array('manage_system'),
         );
 
         // Manage / lockdown
         $this->_request_switch['manage_lockdown'] = array
         (
             'handler' => Array('net_nemein_teams_handler_admin', 'manage_'),
-	        'fixed_args' => Array('manage_system'),
+            'fixed_args' => Array('manage_system'),
         );
          */
 
@@ -106,30 +106,30 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['manage'] = array
         (
             'handler' => Array('net_nemein_teams_handler_admin', 'manage'),
-	        'fixed_args' => Array('manage'),
+            'fixed_args' => Array('manage'),
         );
 
         // Manage / Delete
         $this->_request_switch['manage_delete'] = array
         (
             'handler' => Array('net_nemein_teams_handler_admin', 'manage_delete'),
-	        'fixed_args' => Array('manage', 'delete'),
-	        'variable_args' => 1,
+            'fixed_args' => Array('manage', 'delete'),
+            'variable_args' => 1,
         );
 
         // Manage / Team
         $this->_request_switch['manage_team'] = array
         (
             'handler' => Array('net_nemein_teams_handler_admin', 'manage_team'),
-	        'fixed_args' => Array('manage', 'team'),
-	        'variable_args' => 1,
+            'fixed_args' => Array('manage', 'team'),
+            'variable_args' => 1,
         );
 
         // Handle / Team list
         $this->_request_switch['list'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'list'),
-	        'fixed_args' => Array('list'),
+            'fixed_args' => Array('list'),
         );
 
         // Approve /
@@ -143,28 +143,28 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['create'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'create'),
-	        'fixed_args' => Array('create'),
+            'fixed_args' => Array('create'),
         );
 
         // Quit /
         $this->_request_switch['quit'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'quit'),
-	        'fixed_args' => Array('quit'),
+            'fixed_args' => Array('quit'),
         );
 
         // Quit / Confirm
         $this->_request_switch['quit_confirm'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'quit_confirm'),
-	        'fixed_args' => Array('quit', 'confirm'),
+            'fixed_args' => Array('quit', 'confirm'),
         );
 
         // Lockdown /
         $this->_request_switch['lockdown'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'lockdown'),
-	        'fixed_args' => Array('lockdown'),
+            'fixed_args' => Array('lockdown'),
         );
 
         // $this->_request_switch['action'] = array
@@ -176,7 +176,7 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['action'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'action'),
-	        'fixed_args' => Array('team'),
+            'fixed_args' => Array('team'),
             'variable_args' => 2,
         );
 /*
@@ -184,8 +184,8 @@ class net_nemein_teams_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['create_team_home'] = array
         (
             'handler' => Array('net_nemein_teams_handler_team', 'create_team_home'),
-	        'fixed_args' => Array('create', 'home'),
-	        'variable_args' => 1,
+            'fixed_args' => Array('create', 'home'),
+            'variable_args' => 1,
         );
 */
     }

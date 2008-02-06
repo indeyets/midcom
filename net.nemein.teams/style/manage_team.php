@@ -8,4 +8,3 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
 <?php echo "<a href=\"" . $prefix . "manage/delete/" 
 . $data['team_guid'] . "\">" . $data['l10n']->get('remove team') . "</a>"; ?>
-

@@ -86,7 +86,7 @@
  *   in which case you have to ensure that the loading queue of MidCOM itself (as seen in this
  *   file) is not changed.
  * - <b>string cache_base_directory:</b> The directory where to place cache files for MidCOM.
- * 	 This defaults to /tmp/ (note the trailing slash) as this is writable everywhere.
+ *      This defaults to /tmp/ (note the trailing slash) as this is writable everywhere.
  *
  * - <b>Array cache_module_acl:</b> If this is non-null and an array, MidCOM will create a memcached
  *   caching instance to buffer ACL reads from the DB. You set this parameter to the configuration
@@ -107,7 +107,7 @@
  *   is fixed through a static $i18n->set_language call before code-init. This will improve
  *   the cache's performance.
  * - <b>boolean cache_module_content_uncached:</b> Set this to true if you want the site to run in an uncached
- * 	 mode. This is different from cache_disable in that the regular header preprocessing is
+ *      mode. This is different from cache_disable in that the regular header preprocessing is
  *   done anyway, allowing for browser side caching. Essentially, the computing order is the
  *   same (no_cache for example is considered like usual), but the cache file is not stored.
  *   This defaults to false.
@@ -169,12 +169,12 @@
  * - <b>string indexer_xmltcp_host:</b> The host name or IP address where the indexer daemon is running.
  *   This defaults to "tcp://127.0.0.1", which is the default bind address of the daemon.
  * - <b>int indexer_xmltcp_port:</b> The port to which to connect. This defaults to 2222, which is the
- * 	 default port of the daemon.
+ *      default port of the daemon.
  *
  * <b>Logging configuration</b>
  *
  * - <b>string log_filename:</b> The filename to dump logging messages to, this
- * 	 defaults to /tmp/debug.log.
+ *      defaults to /tmp/debug.log.
  * - <b>int log_level:</b> The logging level to use when starting up the logger, set to
  *   MIDCOM_LOG_ERROR by default. You cannot use the MIDCOM* constants when setting
  *   micdom_config_local, as they are not defined at that point. Use 0 for CRITICAL,

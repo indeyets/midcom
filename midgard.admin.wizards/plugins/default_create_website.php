@@ -18,7 +18,7 @@ class default_create_website extends midcom_baseclasses_components_handler
     */
     function default_create_website()
     {
-	    parent::midcom_baseclasses_components_handler();
+        parent::midcom_baseclasses_components_handler();
     }
 
     function _on_initialize()
@@ -47,16 +47,16 @@ class default_create_website extends midcom_baseclasses_components_handler
     {
         return array
         (
-	        'sitewizard' => array
-	        (
-	            'handler' => array('default_create_website', 'create_website'),
-	        ),
-	    );
+            'sitewizard' => array
+            (
+                'handler' => array('default_create_website', 'create_website'),
+            ),
+        );
     }
 
-	/**
+    /**
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_create_website()
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
@@ -161,20 +161,20 @@ class default_create_website extends midcom_baseclasses_components_handler
                                 else
                                 {
                                     $mail = new org_openpsa_mail();
-	                                $mail->to = $this->_request_data['plugin_config']['notification_email'];
-	                                $mail->from = 'sitewizard@tkk.fi';
-	                                $mail->subject = $this->_l10n->get('new website created');
-	                                $mail->body = $this->_l10n->get('new website created') . "\n\n";
-	                                $mail->body .= $this->_l10n->get('generated vhost') . ": " . $filename . "\n\n";
-	                                $mail->body .= $this->_l10n->get('move vhost config under apache vhosts and restart');
+                                    $mail->to = $this->_request_data['plugin_config']['notification_email'];
+                                    $mail->from = 'sitewizard@tkk.fi';
+                                    $mail->subject = $this->_l10n->get('new website created');
+                                    $mail->body = $this->_l10n->get('new website created') . "\n\n";
+                                    $mail->body .= $this->_l10n->get('generated vhost') . ": " . $filename . "\n\n";
+                                    $mail->body .= $this->_l10n->get('move vhost config under apache vhosts and restart');
 
-	                                if (!$mail->send())
-	                                {
+                                    if (!$mail->send())
+                                    {
                                         $_MIDCOM->uimessages->add(
                                             $this->_l10n->get('midcom.admin.wizards'),
                                             $this->_l10n->get('failed to send notification email')
                                         );
-	                                }
+                                    }
 
                                 }
                             }
@@ -209,4 +209,3 @@ class default_create_website extends midcom_baseclasses_components_handler
 }
 
 ?>
-

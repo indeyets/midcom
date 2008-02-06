@@ -285,16 +285,16 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
             );
         }
 
-	// VIEW LINK: Same as /view/, but this one leaves out /view/.
-	// This provides clean urls like /profile/myname
-	// Account names like 'edit', 'admin' etc. won't work of course.
+    // VIEW LINK: Same as /view/, but this one leaves out /view/.
+    // This provides clean urls like /profile/myname
+    // Account names like 'edit', 'admin' etc. won't work of course.
         if ($this->_config->get('allow_by_username_only'))
         {
-    	    $this->_request_switch['other_direct'] = Array
-    	    (
-        	'handler' => Array('net_nehmer_account_handler_view', 'view'),
-        	'variable_args' => 1,
-    	    );
+            $this->_request_switch['other_direct'] = Array
+            (
+            'handler' => Array('net_nehmer_account_handler_view', 'view'),
+            'variable_args' => 1,
+            );
         }
 
         $_MIDCOM->add_link_head
@@ -771,8 +771,8 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      * (which are private per definition). Relies on reflection to parse
      * the object.
      *
-     * @param mixed $obj	Any PHP object that can be parsed with get_object_vars().
-     * @return string		String representation.
+     * @param mixed $obj    Any PHP object that can be parsed with get_object_vars().
+     * @return string        String representation.
      * @access public
      * @static
      */
@@ -809,8 +809,8 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      *
      * Uses word wrapping and skips recursive Arrays or objects.
      *
-     * @param Array $array	The array to be dumped.
-     * @return string		String representation.
+     * @param Array $array    The array to be dumped.
+     * @return string        String representation.
      * @access public
      * @static
      */

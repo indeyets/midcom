@@ -972,17 +972,17 @@ class midcom_application
                         $this->_showdebuglog($value);
                         break;
 
-	                case 'servejscsscache':
-	                    //$name = $tmp[MIDCOM_HELPER_URLPARSER_VALUE];
-	                    $name = $this->_parser->argv[0];
-	                    if (   !$this->jscss
-	                        || !is_callable(array($this->jscss, 'serve')))
-	                    {
-	                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Cache is not initialized');
-	                        // this will exit
-	                    }
-	                    $this->jscss->serve($name);
-	                    // this will exit()
+                    case 'servejscsscache':
+                        //$name = $tmp[MIDCOM_HELPER_URLPARSER_VALUE];
+                        $name = $this->_parser->argv[0];
+                        if (   !$this->jscss
+                            || !is_callable(array($this->jscss, 'serve')))
+                        {
+                            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Cache is not initialized');
+                            // this will exit
+                        }
+                        $this->jscss->serve($name);
+                        // this will exit()
 
                     default:
                         debug_add("Unknown MidCOM URL Property ignored: {$key} => {$value}", MIDCOM_LOG_WARN);

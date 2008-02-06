@@ -61,20 +61,20 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
         {
             // We're in some level of groups
             $qb = org_openpsa_products_product_group_dba::new_query_builder();
-	    if (($handler_id == 'list_intree')
-		&& ($args[0] != 'search')
-		&& ($args[0] != 'product'))
-	    {
-		$parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
-        	$parentgroup_qb->add_constraint('code', '=', $args[0]);
-        	$groups = $parentgroup_qb->execute();
-		$qb->add_constraint('up', '=', $groups[0]->id);
-		$qb->add_constraint('code', '=', $args[1]);
-	    }
-	    else
-	    {
-        	$qb->add_constraint('code', '=', $args[0]);
-	    }
+        if (($handler_id == 'list_intree')
+        && ($args[0] != 'search')
+        && ($args[0] != 'product'))
+        {
+        $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
+            $parentgroup_qb->add_constraint('code', '=', $args[0]);
+            $groups = $parentgroup_qb->execute();
+        $qb->add_constraint('up', '=', $groups[0]->id);
+        $qb->add_constraint('code', '=', $args[1]);
+        }
+        else
+        {
+            $qb->add_constraint('code', '=', $args[0]);
+        }
             $results = $qb->execute();
             if (count($results) == 0)
             {
@@ -116,9 +116,9 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
         // Query for sub-objects
         $group_qb = org_openpsa_products_product_group_dba::new_query_builder();
 
-	if ($handler_id == 'list_intree')
-	{
-	    $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
+    if ($handler_id == 'list_intree')
+    {
+        $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
             $parentgroup_qb->add_constraint('code', '=', $args[0]);
             $groups = $parentgroup_qb->execute();
             if (count($groups) == 0)
@@ -128,39 +128,39 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
             }
             else
             {
-		//echo $groups[0]->code;
+        //echo $groups[0]->code;
                 $categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
                 $categories_qb->add_constraint('up', '=', $groups[0]->id);
-		$categories_qb->add_constraint('code', '=', $args[1]);
+        $categories_qb->add_constraint('code', '=', $args[1]);
                 $categories = $categories_qb->execute();
-		//echo $categories[0]->id;
-		//$data['parent_group']=$categories[0]->id;
-		$data['parent_category_id'] = $categories[0]->id;
-		$data['parent_category'] = $groups[0]->code;
+        //echo $categories[0]->id;
+        //$data['parent_group']=$categories[0]->id;
+        $data['parent_category_id'] = $categories[0]->id;
+        $data['parent_category'] = $groups[0]->code;
             }
 
-	}
-	else if ($handler_id == 'groupsblock')
-	{
-	    $guidgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
+    }
+    else if ($handler_id == 'groupsblock')
+    {
+        $guidgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
             $guidgroup_qb->add_constraint('guid', '=', $args[0]);
             $groups = $guidgroup_qb->execute();
 
-	    if (count($groups) > 0)
-	    {
-		$categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
-        	$categories_qb->add_constraint('id', '=', $groups[0]->up);
-        	$categories = $categories_qb->execute();
+        if (count($groups) > 0)
+        {
+        $categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
+            $categories_qb->add_constraint('id', '=', $groups[0]->up);
+            $categories = $categories_qb->execute();
 
-		$data['parent_category'] = $categories[0]->code;
-	    }
-	    else
-	    {
-	       //do not set the parent category. The category is already a top category.
-	    }
-	}
+        $data['parent_category'] = $categories[0]->code;
+        }
+        else
+        {
+           //do not set the parent category. The category is already a top category.
+        }
+    }
 
-	$group_qb->add_constraint('up', '=', $data['parent_group']);
+    $group_qb->add_constraint('up', '=', $data['parent_group']);
 
         $group_qb->add_order('code');
         $group_qb->add_order('title');
@@ -170,14 +170,14 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
         {
             $product_qb = new org_openpsa_qbpager('org_openpsa_products_product_dba', 'org_openpsa_products_product_dba');
             $product_qb->results_per_page = $this->_config->get('products_per_page');
-	    if ($handler_id == 'list_intree')
-	    {
-    		$product_qb->add_constraint('productGroup', '=', $data['parent_category_id']);
-	    }
-	    else
-	    {
-    		$product_qb->add_constraint('productGroup', '=', $data['parent_group']);
-	    }
+        if ($handler_id == 'list_intree')
+        {
+            $product_qb->add_constraint('productGroup', '=', $data['parent_category_id']);
+        }
+        else
+        {
+            $product_qb->add_constraint('productGroup', '=', $data['parent_group']);
+        }
 
             // This should be a helper function, same functionality, but with different config-parameter is used in /handler/product/search.php
             foreach ($this->_config->get('products_listing_order') as $ordering)
@@ -388,14 +388,14 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
 
                 if ($group->code)
                 {
-		    if (isset($data["parent_category"]))
-		    {
-                	$data['view_group_url'] = "{$prefix}".$data["parent_category"]."/{$group->code}/";
-		    }
-		    else
-		    {
-                	$data['view_group_url'] = "{$prefix}{$group->code}/";
-		    }
+            if (isset($data["parent_category"]))
+            {
+                    $data['view_group_url'] = "{$prefix}".$data["parent_category"]."/{$group->code}/";
+            }
+            else
+            {
+                    $data['view_group_url'] = "{$prefix}{$group->code}/";
+            }
                 }
                 else
                 {

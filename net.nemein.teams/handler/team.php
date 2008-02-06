@@ -61,25 +61,25 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     {
         $this->_logger = new net_nemein_teams_logger();
 
-	    if ($this->_config->get('teams_root_guid'))
+        if ($this->_config->get('teams_root_guid'))
         {
-	        $root_group_guid = $this->_config->get('teams_root_guid');
-	        $this->_root_group = new midcom_db_group($root_group_guid);
-	    }
+            $root_group_guid = $this->_config->get('teams_root_guid');
+            $this->_root_group = new midcom_db_group($root_group_guid);
+        }
 
-	    $this->_content_topic =& $this->_request_data['content_topic'];
+        $this->_content_topic =& $this->_request_data['content_topic'];
 
-	    $this->_request_data['is_registered'] = false;
+        $this->_request_data['is_registered'] = false;
         $this->_request_data['is_player'] = false;
 
         if ($_MIDCOM->auth->user)
-	    {
-	        $this->_request_data['is_registered'] = true;
+        {
+            $this->_request_data['is_registered'] = true;
 
             if ($this->_is_player())
-	        {
+            {
                 $this->_request_data['is_player'] = true;
-	        }
+            }
         }
     }
 
@@ -181,39 +181,39 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $members = 0;
 
         $qb = midcom_db_group::new_query_builder();
-	    $qb->add_constraint('owner', '=', $this->_root_group->id);
+        $qb->add_constraint('owner', '=', $this->_root_group->id);
 
-	    $teams = $qb->execute();
+        $teams = $qb->execute();
 
-	    if (count($teams) > 0)
-	    {
-	        // Checking if user is a member of a team
-	        foreach($teams as $team)
-	        {
-	            $qb = midcom_db_member::new_query_builder();
-		        $qb->add_constraint('gid', '=', $team->id);
+        if (count($teams) > 0)
+        {
+            // Checking if user is a member of a team
+            foreach($teams as $team)
+            {
+                $qb = midcom_db_member::new_query_builder();
+                $qb->add_constraint('gid', '=', $team->id);
 
-		        if(!is_null($playerguid))
-		        {
-		            $player = new midcom_db_person($playerguid);
-		            $qb->add_constraint('uid', '=', $player->id);
-		        }
-		        else
-		        {
-		            $qb->add_constraint('uid', '=', $_MIDCOM->auth->user->_storage->id);
-	            }
+                if(!is_null($playerguid))
+                {
+                    $player = new midcom_db_person($playerguid);
+                    $qb->add_constraint('uid', '=', $player->id);
+                }
+                else
+                {
+                    $qb->add_constraint('uid', '=', $_MIDCOM->auth->user->_storage->id);
+                }
 
-		        $members = $qb->execute();
+                $members = $qb->execute();
 
-		        if (count($members) > 0)
-		        {
-		            return $members[0]->gid;
+                if (count($members) > 0)
+                {
+                    return $members[0]->gid;
                     //return true;
-		        }
-	        }
-	    }
+                }
+            }
+        }
 
-	    return false;
+        return false;
     }
 
     /**
@@ -228,16 +228,16 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     function _load_controller()
     {
         $this->_load_schemadb();
-	    $this->_controller =& midcom_helper_datamanager2_controller::create('create');
-	    $this->_controller->schemadb =& $this->_schemadb;
-	    $this->_controller->schemaname = 'team';
-	    //$this->_controller->defaults = $this->_defaults;
-	    $this->_controller->callback_object =& $this;
-	    if (! $this->_controller->initialize())
-	    {
-	        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
-	        // This will exit.
-	    }
+        $this->_controller =& midcom_helper_datamanager2_controller::create('create');
+        $this->_controller->schemadb =& $this->_schemadb;
+        $this->_controller->schemaname = 'team';
+        //$this->_controller->defaults = $this->_defaults;
+        $this->_controller->callback_object =& $this;
+        if (! $this->_controller->initialize())
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
+            // This will exit.
+        }
     }
 
     /**
@@ -291,29 +291,29 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                 $this->_l10n->get('error happened during team creation (group)')
             );
             $_MIDCOM->relocate('');
-	    }
-	    else
-	    {
+        }
+        else
+        {
             $this->_team_group->set_parameter('net.nemein.teams:preferences', 'is_recruiting', true);
 
-	        $this->_team_member = new midcom_db_member();
-	        $this->_team_member->gid = $this->_team_group->id;
-	        $this->_team_member->uid = $user->_storage->id;
-	        $this->_team_member->set_privilege('midgard:owner', $user);
+            $this->_team_member = new midcom_db_member();
+            $this->_team_member->gid = $this->_team_group->id;
+            $this->_team_member->uid = $user->_storage->id;
+            $this->_team_member->set_privilege('midgard:owner', $user);
 
-	        if (! $this->_team_member->create())
-	        {
-	            // TODO: Cleanup
+            if (! $this->_team_member->create())
+            {
+                // TODO: Cleanup
                 $_MIDCOM->uimessages->add(
                     $this->_l10n->get('net.nemein.teams'),
                     $this->_l10n->get('error happened during team creation (member)')
                 );
-	            $_MIDCOM->relocate('');
-	        }
-	        else
-	        {
-	            $this->_logger->log("Team group created by " . $_MIDCOM->auth->user->username, $this->_team_group->guid);
-	        }
+                $_MIDCOM->relocate('');
+            }
+            else
+            {
+                $this->_logger->log("Team group created by " . $_MIDCOM->auth->user->username, $this->_team_group->guid);
+            }
         }
 
         $this->_team = new net_nemein_teams_team_dba();
@@ -343,7 +343,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
         $_MIDCOM->auth->drop_sudo();
 
-	    return $this->_team_group;
+        return $this->_team_group;
     }
 
     function _prepare_request_data()
@@ -388,12 +388,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_create ($handler_id, $args, &$data)
     {
         if ($this->_config->get('system_lockdown') == 1)
@@ -409,38 +409,38 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $this->_load_controller();
 
         if ($this->_is_player())
-	    {
+        {
             $_MIDCOM->uimessages->add(
                 $this->_l10n->get('net.nemein.teams'),
                 $this->_l10n->get('you cannot be part of more than one team')
             );
             $_MIDCOM->relocate('');
-	    }
+        }
 
         $this->_content_topic->require_do('midgard:create');
 
         switch ($this->_controller->process_form())
         {
-	        case 'save':
+            case 'save':
                 if ($this->_config->get('create_team_home'))
-		        {
+                {
                     $_MIDCOM->relocate("team/{$this->_team->name}/create_profile");
-		        }
-		        else
-		        {
+                }
+                else
+                {
                     $_MIDCOM->uimessages->add
                     (
                         $this->_l10n->get('net.nemein.teams'),
                         $this->_l10n->get('team created')
                     );
                     $_MIDCOM->relocate($this->_team->name);
-		        }
+                }
             case 'cancel':
-	             $_MIDCOM->relocate('');
-	             // This will exit.
+                 $_MIDCOM->relocate('');
+                 // This will exit.
         }
 
-	    $this->_prepare_request_data();
+        $this->_prepare_request_data();
 
         $tmp = Array();
         $tmp[] = Array
@@ -450,15 +450,15 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
-	    return true;
+        return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_edit($handler_id, $args, &$data)
     {
         if ($this->_config->get('system_lockdown') == 1)
@@ -473,38 +473,38 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
 
         $this->_load_schemadb();
-	    $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
-	    $this->_controller->schemadb =& $this->_schemadb;
+        $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
+        $this->_controller->schemadb =& $this->_schemadb;
         $this->_controller->set_storage($this->_current_team_group);
-	    if (! $this->_controller->initialize())
-	    {
-	        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
-	        // This will exit.
-	    }
+        if (! $this->_controller->initialize())
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
+            // This will exit.
+        }
 
         $this->_content_topic->require_do('midgard:create');
 
         switch ($this->_controller->process_form())
         {
-	        case 'save':
-	            $this->_current_team_group->name = $_REQUEST['team_name'];
-	            $this->_current_team_group->update();
+            case 'save':
+                $this->_current_team_group->name = $_REQUEST['team_name'];
+                $this->_current_team_group->update();
             case 'cancel':
                 $_MIDCOM->relocate("team/{$this->_current_team->name}/view/");
-	             // This will exit.
+                 // This will exit.
         }
 
-	    $this->_prepare_request_data();
+        $this->_prepare_request_data();
 
-	    return true;
+        return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_application ($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -536,24 +536,24 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         }
 
         if (isset($_POST['submit_application']))
-	    {
-	        // Creating a pending application
-	        $pending = new net_nemein_teams_pending_dba();
-	        $pending->playerguid = $_MIDCOM->auth->user->guid;
-	        $pending->groupguid = $this->_current_team->groupguid;
-	        $pending->managerguid = $this->_current_team->managerguid;
+        {
+            // Creating a pending application
+            $pending = new net_nemein_teams_pending_dba();
+            $pending->playerguid = $_MIDCOM->auth->user->guid;
+            $pending->groupguid = $this->_current_team->groupguid;
+            $pending->managerguid = $this->_current_team->managerguid;
 
-	        if (!$pending->create())
-	        {
+            if (!$pending->create())
+            {
                 $_MIDCOM->uimessages->add(
                     $this->_l10n->get('net.nemein.teams'),
                     $this->_l10n->get('error submitting application'),
                     'error'
                 );
-	            $_MIDCOM->relocate('');
-	        }
+                $_MIDCOM->relocate('');
+            }
 
-	        $pending->set_privilege('midgard:owner', "user:{$this->_current_team->managerguid}");
+            $pending->set_privilege('midgard:owner', "user:{$this->_current_team->managerguid}");
 
             if ($this->_config->get('pm_manager'))
             {
@@ -582,9 +582,9 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             );
 
             $_MIDCOM->relocate('');
-	    }
+        }
 
-	    return true;
+        return true;
     }
 
     // function _handler_error ($handler_id, $args, &$data)
@@ -592,12 +592,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
     //     return true;
     // }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_index ($handler_id, $args, &$data)
     {
         $title = $this->_l10n_midcom->get('index');
@@ -612,12 +612,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_create_profile($handler_id, $args, &$data)
     {
         $title = $this->_l10n_midcom->get('create team home');
@@ -630,7 +630,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
         if (! is_null($this->_config->get('on_create_profile')))
         {
-    	    $this->_invoke_profile_creation_callback(&$_MIDCOM->auth->user);
+            $this->_invoke_profile_creation_callback(&$_MIDCOM->auth->user);
         }
         else
         {
@@ -772,12 +772,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             $is_recruiting = $team_group->get_parameter('net.nemein.teams:preferences','is_recruiting');
             $location = null;
 
-	        $this->_load_datamanager($team_group);
-	        $this->_request_data['view_team'] = $this->_request_data['datamanager']->get_content_html();
-	        $this->_request_data['view_team']['member_count'] = $member_count;
-	        $this->_request_data['view_team']['group_guid'] = $team->groupguid;
-	        $this->_request_data['view_team']['description'] = $team_group->get_parameter('midcom.helper.datamanager2','team_description');
-	        $this->_request_data['view_team']['location'] = $team_group->get_parameter('midcom.helper.datamanager2','team_location');
+            $this->_load_datamanager($team_group);
+            $this->_request_data['view_team'] = $this->_request_data['datamanager']->get_content_html();
+            $this->_request_data['view_team']['member_count'] = $member_count;
+            $this->_request_data['view_team']['group_guid'] = $team->groupguid;
+            $this->_request_data['view_team']['description'] = $team_group->get_parameter('midcom.helper.datamanager2','team_description');
+            $this->_request_data['view_team']['location'] = $team_group->get_parameter('midcom.helper.datamanager2','team_location');
 
             $_MIDCOM->load_library('org.routamc.positioning');
             $position = new org_routamc_positioning_object($team_group);
@@ -807,13 +807,13 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
                  $this->_request_data['view_team']['location'] = "{$city_name}, {$country_name}";
             }
 
-	        $this->_request_data['view_team']['is_recruiting'] = false;
+            $this->_request_data['view_team']['is_recruiting'] = false;
 
-	        if (   $member_count < $this->_config->get('max_players_per_team')
-	            && $is_recruiting)
-	        {
-    	        $this->_request_data['view_team']['is_recruiting'] = true;
-	        }
+            if (   $member_count < $this->_config->get('max_players_per_team')
+                && $is_recruiting)
+            {
+                $this->_request_data['view_team']['is_recruiting'] = true;
+            }
 
             $qb = midcom_db_topic::new_query_builder();
             $qb->add_constraint('up', '=', $this->_topic->id);
@@ -831,17 +831,17 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
             $this->_request_data['team'] =& $team;
 
             midcom_show_style('teams_list_item');
-	    }
+        }
 
-	    midcom_show_style('teams_list_end');
+        midcom_show_style('teams_list_end');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_pending($handler_id, $args, &$data)
     {
         if ($this->_config->get('system_lockdown') == 1)
@@ -894,7 +894,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
                             $player = $_MIDCOM->auth->get_user($key);
 
-	                        $subject = $this->_l10n->get('application was accepted by');
+                            $subject = $this->_l10n->get('application was accepted by');
                             $subject .= " " . $_MIDCOM->auth->user->_storage->username;
                             $body = sprintf($this->_l10n->get('your application to team %s '), $this->_current_team->name);
                             $body .= $this->_l10n->get('has been accepted');
@@ -930,7 +930,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
 
                         $player = $_MIDCOM->auth->get_user($key);
 
-	                    $subject = $this->_l10n->get('application declined by');
+                        $subject = $this->_l10n->get('application declined by');
                         $subject .= " " . $_MIDCOM->auth->user->_storage->username;
                         $body = $this->_l10n->get('your application to team') . " " . $this->_current_team->name;
                         $body .= $this->_l10n->get('has been declined');
@@ -965,12 +965,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_team_members($handler_id, $args, &$data)
     {
 
@@ -1028,12 +1028,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         midcom_show_style('team-members-list-end');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_quit($handler_id, $args, &$data)
     {
         $_MIDCOM->set_pagetitle("Quit");
@@ -1055,12 +1055,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_quit_confirm($handler_id, $args, &$data)
     {
         $_MIDCOM->set_pagetitle("Confirm");
@@ -1110,12 +1110,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         midcom_show_style('team_quit_confirm');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_lockdown($handler_id, $args, &$data)
     {
         $_MIDCOM->set_pagetitle(":: Lockdown");
@@ -1228,12 +1228,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
          midcom_show_style('index');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_view($handler_id, $args, &$data)
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
@@ -1291,7 +1291,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         if (   $member_count < $this->_config->get('max_players_per_team')
             && $is_recruiting)
         {
-	        $this->_request_data['view_team']['is_recruiting'] = true;
+            $this->_request_data['view_team']['is_recruiting'] = true;
         }
 
         $qb = midcom_db_topic::new_query_builder();
@@ -1330,12 +1330,12 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
         midcom_show_style('show-team');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_action($handler_id, $args, &$data)
     {
         if (count($args) < 2)

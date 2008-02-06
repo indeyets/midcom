@@ -41,16 +41,16 @@ $Config['UserFilesAbsolutePath'] = '' ;
 // following setting enabled.
 $Config['ForceSingleExtension'] = true ;
 
-$Config['AllowedExtensions']['File']	= array() ;
-$Config['DeniedExtensions']['File']		= array('html','htm','php','php2','php3','php4','php5','phtml','pwml','inc','asp','aspx','ascx','jsp','cfm','cfc','pl','bat','exe','com','dll','vbs','js','reg','cgi','htaccess','asis','sh','shtml','shtm','phtm') ;
+$Config['AllowedExtensions']['File']    = array() ;
+$Config['DeniedExtensions']['File']        = array('html','htm','php','php2','php3','php4','php5','phtml','pwml','inc','asp','aspx','ascx','jsp','cfm','cfc','pl','bat','exe','com','dll','vbs','js','reg','cgi','htaccess','asis','sh','shtml','shtm','phtm') ;
 
-$Config['AllowedExtensions']['Image']	= array('jpg','gif','jpeg','png') ;
-$Config['DeniedExtensions']['Image']	= array() ;
+$Config['AllowedExtensions']['Image']    = array('jpg','gif','jpeg','png') ;
+$Config['DeniedExtensions']['Image']    = array() ;
 
-$Config['AllowedExtensions']['Flash']	= array('swf','fla') ;
-$Config['DeniedExtensions']['Flash']	= array() ;
+$Config['AllowedExtensions']['Flash']    = array('swf','fla') ;
+$Config['DeniedExtensions']['Flash']    = array() ;
 
-$Config['AllowedExtensions']['Media']	= array('swf','fla','jpg','gif','jpeg','png','avi','mpg','mpeg') ;
-$Config['DeniedExtensions']['Media']	= array() ;
+$Config['AllowedExtensions']['Media']    = array('swf','fla','jpg','gif','jpeg','png','avi','mpg','mpeg') ;
+$Config['DeniedExtensions']['Media']    = array() ;
 
 ?>

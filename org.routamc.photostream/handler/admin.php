@@ -317,12 +317,12 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         midcom_show_style('admin_delete');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_recreate($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

@@ -48,7 +48,7 @@ class midcom_helper_nav
      * uses the currently active context which should be sufficient
      * in most cases.
      *
-     * @param int $contextid	The id of the context you want to navigate.
+     * @param int $contextid    The id of the context you want to navigate.
      */
     function midcom_helper_nav($contextid = -1)
     {
@@ -67,7 +67,7 @@ class midcom_helper_nav
      * Retrieve the ID of the currently displayed node. Defined by the topic of
      * the component that declared able to handle the request.
      *
-     * @return int	The ID of the node in question.
+     * @return int    The ID of the node in question.
      * @see midcom_helper__basicnav::get_current_node()
      */
     function get_current_node ()
@@ -81,7 +81,7 @@ class midcom_helper_nav
      * returns FALSE. (Remember to make a type sensitve check, e.g.
      * nav::get_current_leaf() !== false to distinguish '0' and 'false'.)
      *
-     * @return int	The ID of the leaf in question or false on failure.
+     * @return int    The ID of the leaf in question or false on failure.
      * @see midcom_helper__basicnav::get_current_leaf()
      */
     function get_current_leaf ()
@@ -95,7 +95,7 @@ class midcom_helper_nav
      * root topic ID might. The MIDCOM_NAV_URL entry of the root node's data will
      * always be empty.
      *
-     * @return int	The ID of the root node.
+     * @return int    The ID of the root node.
      * @see midcom_helper__basicnav::get_root_node()
      */
     function get_root_node ()
@@ -108,10 +108,10 @@ class midcom_helper_nav
      * an empty array, if there was an error (for instance an unknown parent node
      * ID) you will get FALSE.
      *
-     * @param int $parent_node	The id of the node of which the subnodes are searched.
+     * @param int $parent_node    The id of the node of which the subnodes are searched.
      * @param boolean $show_noentry Show all objects on-site which have the noentry flag set.
      *     This parameter has no effect in AIS. This defaults to false.
-     * @return Array			An Array of Node IDs or false on failure.
+     * @return Array            An Array of Node IDs or false on failure.
      * @see midcom_helper__basicnav::list_nodes()
      */
     function list_nodes ($parent_node, $show_noentry = false)
@@ -124,10 +124,10 @@ class midcom_helper_nav
      * empty array, if there was an error (for instance an unknown parent node ID)
      * you will get FALSE.
      *
-     * @param int $parent_node	The ID of the node of which the leaves are searched.
+     * @param int $parent_node    The ID of the node of which the leaves are searched.
      * @param boolean $show_noentry Show all objects on-site which have the noentry flag set.
      *     This parameter has no effect in AIS. This defaults to false.
-     * @return Array 			A list of leaves found, or false on failure.
+     * @return Array             A list of leaves found, or false on failure.
      * @see midcom_helper__basicnav::list_leaves()
      */
     function list_leaves ($parent_leaf, $show_noentry = false)
@@ -140,8 +140,8 @@ class midcom_helper_nav
      * $node_id. The defined keys are described above in Node data interchange
      * format. You will get false if the node ID is invalid.
      *
-     * @param int $node_id	The node-id to be retrieved.
-     * @return Array		The node-data as outlined in the class introduction, false on failure
+     * @param int $node_id    The node-id to be retrieved.
+     * @return Array        The node-data as outlined in the class introduction, false on failure
      * @see midcom_helper__basicnav::get_node()
      */
     function get_node ($node_id)
@@ -154,8 +154,8 @@ class midcom_helper_nav
      * $node_id. The defined keys are described above in leaf data interchange
      * format. You will get false if the leaf ID is invalid.
      *
-     * @param string $leaf_id	The leaf-id to be retrieved.
-     * @return Array		The leaf-data as outlined in the class introduction, false on failure
+     * @param string $leaf_id    The leaf-id to be retrieved.
+     * @return Array        The leaf-data as outlined in the class introduction, false on failure
      * @see midcom_helper__basicnav::get_leaf()
      */
     function get_leaf ($leaf_id)
@@ -167,8 +167,8 @@ class midcom_helper_nav
      * Returns the ID of the node to which $leaf_id is associated to, false
      * on failure.
      *
-     * @param string $leaf_id	The Leaf-ID to search an uplink for.
-     * @return int 			The ID of the Node for which we have a match, or false on failure.
+     * @param string $leaf_id    The Leaf-ID to search an uplink for.
+     * @return int             The ID of the Node for which we have a match, or false on failure.
      * @see midcom_helper__basicnav::get_leaf_uplink()
      */
     function get_leaf_uplink ($leaf_id)
@@ -180,8 +180,8 @@ class midcom_helper_nav
      * Returns the ID of the node to which $node_id is associated to, false
      * on failure. The root node's uplink is -1.
      *
-     * @param int $node_id	The Leaf-ID to search an uplink for.
-     * @return int 			The ID of the Node for which we have a match, -1 for the root node, or false on failure.
+     * @param int $node_id    The Leaf-ID to search an uplink for.
+     * @return int             The ID of the Node for which we have a match, -1 for the root node, or false on failure.
      * @see midcom_helper__basicnav::get_node_uplink()
      */
     function get_node_uplink ($node_id)
@@ -192,9 +192,9 @@ class midcom_helper_nav
     /**
      * Checks if the given node is within the tree of another node.
      *
-     * @param int	$node_id	The node in question.
-     * @param int	$root_node	The root node to use.
-     * @return boolean				True, if the node is a subnode of the root node, false otherwise.
+     * @param int    $node_id    The node in question.
+     * @param int    $root_node    The root node to use.
+     * @return boolean                True, if the node is a subnode of the root node, false otherwise.
      */
     function is_node_in_tree ($node_id, $root_id)
     {
@@ -243,8 +243,8 @@ class midcom_helper_nav
      * in case of an error FALSE.  NOTE: This method should be quite slow, there's
      * room for improvement... :-)
      *
-     * @param int $parent_node_id	The ID of the parent node.
-     * @return Array				A list of found elements, or false on failure.
+     * @param int $parent_node_id    The ID of the parent node.
+     * @return Array                A list of found elements, or false on failure.
      */
     function list_child_elements($parent_node_id)
     {
@@ -435,8 +435,8 @@ class midcom_helper_nav
      * element (either a leaf or node) and constructs the respective URL relative to
      * the root of the website as passed to the function.
      *
-     * @param string	$baseurl	The base url that leads to the root page of the MidCOM site.
-     * @return string	The full URL to the on-site element in question, null if there is no on-site representation, false on failure
+     * @param string    $baseurl    The base url that leads to the root page of the MidCOM site.
+     * @return string    The full URL to the on-site element in question, null if there is no on-site representation, false on failure
      */
     function view_current_page_url ($baseurl)
     {
@@ -497,11 +497,11 @@ class midcom_helper_nav
      * subtopic and so on. If a leaf or node is selected, that normally would be
      * hidden, only its name will be shown.
      *
-     * @param string	$separator		The separator to use between the elements.
-     * @param string	$class			If not-null, it will be assigned to all A tags.
-     * @param int		$skip_levels	The number of topic levels to skip before starting to work (use this to skip 'Home' links etc.).
-     * @param string	$current_class	The class that should be assigned to the currently active element.
-     * @return string	The computed breadrumb line.
+     * @param string    $separator        The separator to use between the elements.
+     * @param string    $class            If not-null, it will be assigned to all A tags.
+     * @param int        $skip_levels    The number of topic levels to skip before starting to work (use this to skip 'Home' links etc.).
+     * @param string    $current_class    The class that should be assigned to the currently active element.
+     * @return string    The computed breadrumb line.
      */
     function get_breadcrumb_line ($separator = ' &gt; ', $class = null, $skip_levels = 0, $current_class = null)
     {

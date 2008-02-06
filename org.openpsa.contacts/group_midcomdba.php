@@ -19,30 +19,30 @@ class midcom_org_openpsa_organization extends __midcom_org_openpsa_organization
 
     function get_label()
     {
-    	if ($this->official)
-    	{
-    		$label = $this->official;
-    	}
-    	else
-    	{
-    		$label = $this->name;
-    	}
+        if ($this->official)
+        {
+            $label = $this->official;
+        }
+        else
+        {
+            $label = $this->name;
+        }
 
-    	return $label;
+        return $label;
     }
 
     function get_label_property()
     {
-    	if ($this->official)
-    	{
-    		$property = 'official';
-    	}
-    	else
-    	{
-    		$property = 'name';
-    	}
+        if ($this->official)
+        {
+            $property = 'official';
+        }
+        else
+        {
+            $property = 'name';
+        }
 
-    	return $property;
+        return $property;
     }
 }
 

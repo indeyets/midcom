@@ -492,7 +492,7 @@ class midcom_baseclasses_components_interface
     {
         $snippet = new midcom_baseclasses_database_snippet();
         
-	    try {            
+        try {            
             $snippet->get_by_path($snippetpath);            
         } catch(midgard_error_exception $e) {
             return false;

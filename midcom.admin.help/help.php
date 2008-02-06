@@ -253,12 +253,12 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
         midcom_show_style('midcom_admin_help_footer');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_edit ($handler_id, $args, &$data)
     {
         // not yet implemented

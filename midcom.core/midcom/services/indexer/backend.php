@@ -48,7 +48,7 @@ class midcom_services_indexer_backend
      */
     function delete ($RI)
     {
-    	die ('The method midcom_services_indexer_backend::remove must be implemented.');
+        die ('The method midcom_services_indexer_backend::remove must be implemented.');
     }
     
     /**
@@ -60,7 +60,7 @@ class midcom_services_indexer_backend
      */
     function delete_all()
     {
-    	die ('The method midcom_services_indexer_backend::remove_all must be implemented.');
+        die ('The method midcom_services_indexer_backend::remove_all must be implemented.');
     }
     
     /**
@@ -74,7 +74,7 @@ class midcom_services_indexer_backend
      */
     function query ($query, $filter)
     {
-     	die ('The method midcom_services_indexer_backend::query must be implemented.');
+         die ('The method midcom_services_indexer_backend::query must be implemented.');
     }
     
     

@@ -44,9 +44,9 @@ class org_openpsa_documents_admin extends midcom_baseclasses_components_request_
         );
     }
 
-	/**
+    /**
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_welcome()
     {
         return true;

@@ -120,7 +120,7 @@ class midcom_helper_datamanager2_widget_fckeditor extends midcom_helper_datamana
     function _add_initscript()
     {
         $this->_get_configuration();
-		
+        
         $language = $_MIDCOM->i18n->get_current_language();
         // fix to use the correct langcode for norwegian.
         if ($language == 'no')

@@ -33,21 +33,21 @@
 class midcom_helper_datamanager2_widget_checkbox extends midcom_helper_datamanager2_widget
 {
 
-	/**
-	 * JS actions bound to widget
-	 *
-	 * @var array
-	 */
+    /**
+     * JS actions bound to widget
+     *
+     * @var array
+     */
 
-	var $jsevents=null;
+    var $jsevents=null;
 
-	/**
-	 * Whether to show field title or not.
-	 *
-	 * @var array
-	 */
+    /**
+     * Whether to show field title or not.
+     *
+     * @var array
+     */
 
-	var $show_title = true;
+    var $show_title = true;
 
     /**
      * Additional text added to QF element

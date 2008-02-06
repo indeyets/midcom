@@ -10,32 +10,32 @@ require_once 'configwriter.php';
 
 class CreateCrud extends Task {
 
-	function __construct()
-	{
+    function __construct()
+    {
 
-	}
+    }
 
-	protected $returnProperty; // name of property to set to return value
+    protected $returnProperty; // name of property to set to return value
 
-	/**
-	 * The root path to where the module is stored.
-	 */
-	private $root = null;
-	/**
-	 * The target directory where the packagefile should be saved.
-	 */
-	protected $target_dir = null;
+    /**
+     * The root path to where the module is stored.
+     */
+    private $root = null;
+    /**
+     * The target directory where the packagefile should be saved.
+     */
+    protected $target_dir = null;
 
-	public function setRoot($str)
-	{
-		$this->root = $str;
-	}
+    public function setRoot($str)
+    {
+        $this->root = $str;
+    }
 
-	/** Sets property name to set with return value of function or expression.*/
-	public function setReturnProperty($r)
-	{
-		$this->returnProperty = $r;
-	}
+    /** Sets property name to set with return value of function or expression.*/
+    public function setReturnProperty($r)
+    {
+        $this->returnProperty = $r;
+    }
     /**
      * The name of the midcom
      */
@@ -65,20 +65,20 @@ class CreateCrud extends Task {
     public $moduleRoot ;
 
 
-	/**
-	 * The init method: Do init steps.
-	 */
-	public function init()
-	{
-	    echo "Make CRUD - not war! \n"	;
+    /**
+     * The init method: Do init steps.
+     */
+    public function init()
+    {
+        echo "Make CRUD - not war! \n"    ;
         $this->moduleRoot = $this->root . "/" . $this->type;
-	}
-	/**
-	 * The main entry point method.
-	 */
-	public function main()
-	{
-	
+    }
+    /**
+     * The main entry point method.
+     */
+    public function main()
+    {
+    
         $this->moduleRoot = $this->root . "/" . $this->module;
         $schema = new SchemaReader( $this->schema, $this->type  );
 

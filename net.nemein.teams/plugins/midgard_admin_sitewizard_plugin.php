@@ -34,7 +34,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
     */
     function midgard_admin_sitewizard_plugin()
     {
-	    parent::midcom_baseclasses_components_handler();
+        parent::midcom_baseclasses_components_handler();
     }
 
     function _on_initialize()
@@ -47,76 +47,76 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
 
         if (isset($this->_request_data['plugin_config']['host_guid'])
             && !empty($this->_request_data['plugin_config']['host_guid']))
-	    {
+        {
             $this->_host_guid = $this->_request_data['plugin_config']['host_guid'];
-	    }
+        }
 
         if (isset($this->_request_data['plugin_config']['creation_root_topic_component'])
             && !empty($this->_request_data['plugin_config']['creation_root_topic_component']))
-	    {
+        {
             $this->_creation_root_topic_component = $this->_request_data['plugin_config']['creation_root_topic_component'];
-	    }
+        }
 
         if (isset($this->_request_data['plugin_config']['creation_root_topic_parameters'])
             && !empty($this->_request_data['plugin_config']['creation_root_topic_parameters']))
-	    {
+        {
             $this->_creation_root_topic_parameters = $this->_request_data['plugin_config']['creation_root_topic_parameters'];
-	    }
+        }
 
         if (isset($this->_request_data['plugin_config']['creation_root_group_name'])
             && !empty($this->_request_data['plugin_config']['creation_root_group_name']))
-	    {
+        {
             $this->_creation_root_group_name = $this->_request_data['plugin_config']['creation_root_group_name'];
-	    }
+        }
 
         if (isset($this->_request_data['plugin_config']['structure_config_path'])
             && !empty($this->_request_data['plugin_config']['structure_config_path']))
-	    {
+        {
             $this->_structure_config_path = $this->_request_data['plugin_config']['structure_config_path'];
-	    }
+        }
 
         if (isset($this->_request_data['plugin_config']['verbose']) && !empty($this->_request_data['plugin_config']['verbose']))
-	    {
+        {
             $this->_verbose = $this->_request_data['plugin_config']['verbose'];
-	    }
+        }
 
-	    if (isset($this->_request_data['plugin_config']['creation_root_topic_parent_guid'])
-	        && !empty($this->_request_data['plugin_config']['creation_root_topic_parent_guid']))
-	    {
+        if (isset($this->_request_data['plugin_config']['creation_root_topic_parent_guid'])
+            && !empty($this->_request_data['plugin_config']['creation_root_topic_parent_guid']))
+        {
             $this->_creation_root_topic_parent_guid = $this->_request_data['plugin_config']['creation_root_topic_parent_guid'];
-	    }
-	    else if (isset($this->_request_data['plugin_config']['creation_root_topic_guid'])
-	        && !empty($this->_request_data['plugin_config']['creation_root_topic_guid']))
-	    {
+        }
+        else if (isset($this->_request_data['plugin_config']['creation_root_topic_guid'])
+            && !empty($this->_request_data['plugin_config']['creation_root_topic_guid']))
+        {
             $this->_creation_root_topic_guid = $this->_request_data['plugin_config']['creation_root_topic_guid'];
-	    }
+        }
 
-	    if (isset($this->_request_data['plugin_config']['creation_root_group_parent_guid'])
-	        && !empty($this->_request_data['plugin_config']['creation_root_group_parent_guid']))
-	    {
+        if (isset($this->_request_data['plugin_config']['creation_root_group_parent_guid'])
+            && !empty($this->_request_data['plugin_config']['creation_root_group_parent_guid']))
+        {
             $this->_creation_root_group_parent_guid = $this->_request_data['plugin_config']['creation_root_group_parent_guid'];
-	    }
-	    else if (isset($this->_request_data['plugin_config']['creation_root_group_guid'])
-	        && !empty($this->_request_data['plugin_config']['creation_root_group_guid']))
-	    {
+        }
+        else if (isset($this->_request_data['plugin_config']['creation_root_group_guid'])
+            && !empty($this->_request_data['plugin_config']['creation_root_group_guid']))
+        {
             $this->_creation_root_group_guid = $this->_request_data['plugin_config']['creation_root_group_guid'];
-	    }
+        }
     }
 
     function get_plugin_handlers()
     {
         return array
         (
-	        'sitewizard' => array
-	        (
-	            'handler' => array('midgard_admin_sitewizard_plugin', 'create_team_home'),
-	        ),
-	    );
+            'sitewizard' => array
+            (
+                'handler' => array('midgard_admin_sitewizard_plugin', 'create_team_home'),
+            ),
+        );
     }
 
-	/**
+    /**
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_create_team_home()
     {
         $user = $_MIDCOM->auth->user;
@@ -156,50 +156,49 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
             $sitewizard = new midgard_admin_sitewizard();
             $sitewizard->set_verbose($this->_verbose);
 
-	        $structure_creator = $sitewizard->initialize_structure_creation($this->_host_guid);
-	        $structure_creator->read_config($this->_structure_config_path);
+            $structure_creator = $sitewizard->initialize_structure_creation($this->_host_guid);
+            $structure_creator->read_config($this->_structure_config_path);
 
             if ($this->_creation_root_topic_guid != '')
-	        {
+            {
                 $structure_creator->set_creation_root_topic($this->_creation_root_topic_guid);
             }
-	        elseif ($this->_creation_root_topic_parent_guid != '')
-	        {
+            elseif ($this->_creation_root_topic_parent_guid != '')
+            {
 
-	            $structure_creator->create_creation_root_topic($this->_creation_root_topic_parent_guid,
-		        $this->_home_name, $this->_home_title, $this->_creation_root_topic_component,
-		        $this->_creation_root_topic_parameters, $this->_home_title, true);
-	        }
+                $structure_creator->create_creation_root_topic($this->_creation_root_topic_parent_guid,
+                $this->_home_name, $this->_home_title, $this->_creation_root_topic_component,
+                $this->_creation_root_topic_parameters, $this->_home_title, true);
+            }
 
             if ($this->_creation_root_group_guid != '')
-	        {
-	            $structure_creator->set_creation_root_group($this->_creation_root_group_guid);
+            {
+                $structure_creator->set_creation_root_group($this->_creation_root_group_guid);
             }
-	        elseif ($this->_cretion_root_group_parent_guid != '')
-	        {
-	            $structure_creator->create_creation_root_group($this->_creation_root_group_guid,
-	                $this->_creation_root_group_name);
-	        }
+            elseif ($this->_cretion_root_group_parent_guid != '')
+            {
+                $structure_creator->create_creation_root_group($this->_creation_root_group_guid,
+                    $this->_creation_root_group_name);
+            }
 
-	        $guid = $structure_creator->execute();
+            $guid = $structure_creator->execute();
 
-	        $this->_logger->log("Team home folder created by " . $_MIDCOM->auth->user->_storage->username, $this->_team_guid);
+            $this->_logger->log("Team home folder created by " . $_MIDCOM->auth->user->_storage->username, $this->_team_guid);
 
-	        $_MIDCOM->relocate("{$prefix}{$this->_home_name}");
+            $_MIDCOM->relocate("{$prefix}{$this->_home_name}");
 
-	    }
-	    catch (midgard_admin_sitewizard_exception $e)
-	    {
-	        $this->_logger->log("Failed to createa team home folder by " . $_MIDCOM->auth->user->_storage->username, $this->_team_guid);
-	        echo "<h2>Failed to create user home</h2>";
-	        echo "<p>";
-	        $e->error();
-	        echo "</p>";
-	        $_MIDCOM->relocate('error');
         }
-	   echo "</pre>";
+        catch (midgard_admin_sitewizard_exception $e)
+        {
+            $this->_logger->log("Failed to createa team home folder by " . $_MIDCOM->auth->user->_storage->username, $this->_team_guid);
+            echo "<h2>Failed to create user home</h2>";
+            echo "<p>";
+            $e->error();
+            echo "</p>";
+            $_MIDCOM->relocate('error');
+        }
+       echo "</pre>";
     }
 }
 
 ?>
-

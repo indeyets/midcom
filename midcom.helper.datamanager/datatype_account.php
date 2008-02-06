@@ -161,7 +161,7 @@ class midcom_helper_datamanager_datatype_account extends midcom_helper_datamanag
     }
 
     function sync_data_with_widget() {
-    	$widget =& $this->get_widget();
+        $widget =& $this->get_widget();
         $tmp = $widget->get_value();
         $this->_username = $tmp["username"];
         if (strlen($tmp["password"]) > 0)

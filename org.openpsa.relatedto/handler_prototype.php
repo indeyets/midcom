@@ -33,12 +33,12 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
     }
 */
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_render($handler_id, $args, &$data)
     {
         $this->_request_data['object'] = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
@@ -984,12 +984,12 @@ EOF;
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_ajax($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

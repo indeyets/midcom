@@ -14,7 +14,7 @@ class default_select_structure extends midcom_baseclasses_components_handler
     */
     function default_select_structure()
     {
-	    parent::midcom_baseclasses_components_handler();
+        parent::midcom_baseclasses_components_handler();
     }
 
     function _on_initialize()
@@ -47,11 +47,11 @@ class default_select_structure extends midcom_baseclasses_components_handler
     {
         return array
         (
-	        'sitewizard' => array
-	        (
-	            'handler' => array('default_select_structure', 'select_structure'),
-	        ),
-	    );
+            'sitewizard' => array
+            (
+                'handler' => array('default_select_structure', 'select_structure'),
+            ),
+        );
     }
     
     /**
@@ -61,21 +61,21 @@ class default_select_structure extends midcom_baseclasses_components_handler
     {
         $dir = $this->_request_data['plugin_config']['structure_config_path'];
         $structures_array = array();
-         	
+             
         if (is_dir($dir)) 
         {
             if ($dh = opendir($dir)) 
             {
                 while (($file = readdir($dh)) !== false) 
                 {
-    	            $path = $dir . $file;
-    	            
-    	            if (file_get_contents($path) != '')
-    	            {
-    	                if (strstr($file, '.') == '.inc')
-    	                {
+                    $path = $dir . $file;
+                    
+                    if (file_get_contents($path) != '')
+                    {
+                        if (strstr($file, '.') == '.inc')
+                        {
                             eval("$" . "evaluated" . " = array(" . file_get_contents($path) . ");");
-                     	            
+                                     
                             $keys = array_keys($evaluated);
                             if (count($keys) != 0)
                             {
@@ -91,12 +91,12 @@ class default_select_structure extends midcom_baseclasses_components_handler
                             // TODO
                         }
                     }
-    	        }
-    	        closedir($dh);
-    	    }
+                }
+                closedir($dh);
+            }
         }
- 	        
- 	    return $structures_array;
+             
+         return $structures_array;
     }
     
     function _handler_select_structure()
@@ -168,4 +168,3 @@ class default_select_structure extends midcom_baseclasses_components_handler
 }
 
 ?>
-

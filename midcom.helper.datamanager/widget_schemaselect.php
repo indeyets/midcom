@@ -42,7 +42,7 @@
  *
  * <code>
  * "schema_picture" => Array (
- * 	   "description" => "Schema to use for picture records",
+ *        "description" => "Schema to use for picture records",
  *     "datatype" => "text",
  *     "location" => "config",
  *     "config_domain" => "net.siriux.photos",

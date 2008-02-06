@@ -78,7 +78,7 @@ class midcom_service_session {
      * is useful for components that need sessioning while under <i>dynamic_load</i> 
      * conditions or while used as a <i>library</i>.
      * 
-     * @param mixed $context	Either null or a context ID (uses the context's component) or an explicit domain.
+     * @param mixed $context    Either null or a context ID (uses the context's component) or an explicit domain.
      */
     function midcom_service_session($context = null) {
         if (is_null($context))
@@ -98,8 +98,8 @@ class midcom_service_session {
      * check, as the sessioning system does allow null values. Use the exists function
      * if unsure.
      * 
-     * @param mixed $key	The key to query.
-     * @return mixed		The session key's data value, or NULL on failure.
+     * @param mixed $key    The key to query.
+     * @return mixed        The session key's data value, or NULL on failure.
      * @see midcom_service_session::exists()
      */
     function get ($key) {
@@ -110,11 +110,11 @@ class midcom_service_session {
      * This will store the value to the specified key. 
      * 
      * Note, that a _copy_ is stored,
-	 * the actual object is not referenced in the session data. You will have to update
-	 * it manually in case of changes.
-	 * 
-	 * @param	mixed	$key	Session value identifier.
-	 * @param	mixed	$value	Session value.
+     * the actual object is not referenced in the session data. You will have to update
+     * it manually in case of changes.
+     * 
+     * @param    mixed    $key    Session value identifier.
+     * @param    mixed    $value    Session value.
      */
     function set ($key, $value) {
         $this->_sessioning->set($this->_domain, $key, $value);
@@ -125,8 +125,8 @@ class midcom_service_session {
      * 
      * This is often used in conjunction with get to verify a keys existence.
      * 
-     * @param mixed $key	The key to query.
-     * @return boolean			Indicating availability.
+     * @param mixed $key    The key to query.
+     * @return boolean            Indicating availability.
      */
     function exists ($key) {
         return $this->_sessioning->exists($this->_domain, $key);
@@ -137,9 +137,9 @@ class midcom_service_session {
      * is non-existent or the value of the key just removed otherwise. Note, that 
      * this is not necessarily a valid non-existence check, as the sessioning 
      * system does allow null values. Use the exists function if unsure.
-	 * 
-     * @param mixed $key	The key to remove.
-     * @return mixed		The session key's data value, or NULL on failure.
+     * 
+     * @param mixed $key    The key to remove.
+     * @return mixed        The session key's data value, or NULL on failure.
      * @see midcom_service_session::exists()
      */
     function remove ($key) {

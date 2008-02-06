@@ -1203,7 +1203,7 @@ EOF;
      *
      * @param string $classname The name of the MidCOM DBA class that must be available.
      * @return boolean Indicating success. False is returned only if you are requesting unknown
-     * 	   classes and the like. Component loading failure will result in an HTTP 500, as
+     *        classes and the like. Component loading failure will result in an HTTP 500, as
      *     always.
      */
     function load_mgdschema_class_handler($classname)

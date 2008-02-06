@@ -16,35 +16,35 @@ echo "Poistetut: ".$data['removed']."<br />\n";
 ?><br />
 <h3>Tuotenumero tiedossa:</h3>
 <table cellpadding="2" cellspacing="0" border="0">
-	<tr>
-		<td>ID</td>
-		<td>Nimi</td>
-		<td align="right">Yhteens&auml;</td>
-		<td align="right">L&auml;hetyksi&auml;</td>
-	</tr>
+    <tr>
+        <td>ID</td>
+        <td>Nimi</td>
+        <td align="right">Yhteens&auml;</td>
+        <td align="right">L&auml;hetyksi&auml;</td>
+    </tr>
 <?
 foreach($data['product_known'] as $guid => $events)
 {
-	$sent_count = 0;
-	foreach ($events as $event)
-	{
-		$sent_count = $sent_count + $event->parameter('net.nemein.internalorders', 'quantity');
-	}
-	$QB = org_openpsa_products_product_dba::new_query_builder();
-	$QB->add_constraint('code', '=', $guid);
-	$QB->add_order('code', 'ASC');
-	$product = $QB->execute();
-	
-	if ($product)
-	{
-		echo "<tr>\n";
-		echo "<td>".$guid."</td>\n";
-		echo "<td><a href=\"../by_products/detail/".$product[0]->code.".html\">".$product[0]->title."</a></td>\n";
-		echo "<td align=\"right\">".$sent_count."</td>\n";
-		echo "<td align=\"right\">".count($events)."</td>\n";
-		echo "</tr>\n";
-//		echo "<h3><a href=\"sent/".$guid.".html\">".$article->title."</a>, ".$sent_count." kpl, ".count($events)." l&auml;hetyst&auml;</h3>";
-	}
+    $sent_count = 0;
+    foreach ($events as $event)
+    {
+        $sent_count = $sent_count + $event->parameter('net.nemein.internalorders', 'quantity');
+    }
+    $QB = org_openpsa_products_product_dba::new_query_builder();
+    $QB->add_constraint('code', '=', $guid);
+    $QB->add_order('code', 'ASC');
+    $product = $QB->execute();
+    
+    if ($product)
+    {
+        echo "<tr>\n";
+        echo "<td>".$guid."</td>\n";
+        echo "<td><a href=\"../by_products/detail/".$product[0]->code.".html\">".$product[0]->title."</a></td>\n";
+        echo "<td align=\"right\">".$sent_count."</td>\n";
+        echo "<td align=\"right\">".count($events)."</td>\n";
+        echo "</tr>\n";
+//        echo "<h3><a href=\"sent/".$guid.".html\">".$article->title."</a>, ".$sent_count." kpl, ".count($events)." l&auml;hetyst&auml;</h3>";
+    }
 
 }
 ?>
@@ -53,26 +53,26 @@ foreach($data['product_known'] as $guid => $events)
 
 <h3>Ei tuotenumeroa:</h3>
 <table cellpadding="2" cellspacing="0" border="0">
-	<tr>
-		<td>ID</td>
-		<td>Nimi</td>
-		<td align="right">Yhteens&auml;</td>
-		<td align="right">L&auml;hetyksi&auml;</td>
-	</tr>
+    <tr>
+        <td>ID</td>
+        <td>Nimi</td>
+        <td align="right">Yhteens&auml;</td>
+        <td align="right">L&auml;hetyksi&auml;</td>
+    </tr>
 <?
 foreach($data['product_unknown'] as $guid => $events)
 {
-	$sent_count = 0;
-	foreach ($events as $event)
-	{
-		$sent_count = $sent_count + $event->parameter('net.nemein.internalorders', 'quantity');
-	}
-		echo "<tr>\n";
-		echo "<td>".$guid."</td>\n";
-		echo "<td><a href=\"detail/".$event->extra.".html\">".$event->title."</a></td>\n";
-		echo "<td align=\"right\">".$sent_count."</td>\n";
-		echo "<td align=\"right\">".count($events)."</td>\n";
-		echo "</tr>\n";
+    $sent_count = 0;
+    foreach ($events as $event)
+    {
+        $sent_count = $sent_count + $event->parameter('net.nemein.internalorders', 'quantity');
+    }
+        echo "<tr>\n";
+        echo "<td>".$guid."</td>\n";
+        echo "<td><a href=\"detail/".$event->extra.".html\">".$event->title."</a></td>\n";
+        echo "<td align=\"right\">".$sent_count."</td>\n";
+        echo "<td align=\"right\">".count($events)."</td>\n";
+        echo "</tr>\n";
 
 }
 ?>

@@ -98,12 +98,12 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
         $this->_request_data['mail'] =& $this->_mail;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_view($handler_id, $args, &$data)
     {
         $this->_mail = new net_nehmer_mail_mail($args[0]);
@@ -161,11 +161,11 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-	 */
+     */
     function _handler_live_preview($handler_id, $args, &$data)
     {
         $schemadb =& midcom_helper_datamanager2_schema::load_database( $this->_config->get('schemadb') );

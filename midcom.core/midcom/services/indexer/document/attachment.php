@@ -212,7 +212,7 @@ class midcom_services_indexer_document_attachment extends midcom_services_indexe
         $handle = fopen($txtfile, "r");
         $this->content = $this->_get_attachment_content($handle);
         // Kill all ^L (FF) characters
-		$this->content = str_replace("\x0C", '', $this->content);
+        $this->content = str_replace("\x0C", '', $this->content);
         fclose($handle);
         
         unlink ($txtfile);
@@ -346,7 +346,7 @@ class midcom_services_indexer_document_attachment extends midcom_services_indexe
     function _get_attachment_content($handle = null)
     {
         // Read a max of 4 MB
-		debug_add("Returning File content of handle {$handle}");
+        debug_add("Returning File content of handle {$handle}");
         $max = 4194304;
         $close = false;
         if (is_null($handle))
@@ -371,7 +371,7 @@ class midcom_services_indexer_document_attachment extends midcom_services_indexe
     function _write_attachment_tmpfile()
     {
         $tmpname = tempnam('/tmp', 'midcom-indexer');
-		debug_add("Creating an attachment copy as {$tmpname}");
+        debug_add("Creating an attachment copy as {$tmpname}");
         
         $in = mgd_open_attachment($this->_attachment->id, 'r');
         $out = fopen($tmpname, 'w');

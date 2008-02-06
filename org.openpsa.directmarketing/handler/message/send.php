@@ -46,12 +46,12 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_send_bg($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -216,12 +216,12 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
         return $composed;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_send($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

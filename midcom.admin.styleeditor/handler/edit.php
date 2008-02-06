@@ -124,16 +124,16 @@ class midcom_admin_styleeditor_handler_edit extends midcom_baseclasses_component
         }
         elseif (array_key_exists('midcom_admin_styleeditor_style_save', $_POST))
         {
-           	// do we have file uploaded?
-          	// TODO: file should be text/plain only
+               // do we have file uploaded?
+              // TODO: file should be text/plain only
                 
             if ($_FILES['midcom_admin_styleeditor_style_file']['tmp_name'])
             {
-            	$value = file_get_contents($_FILES['midcom_admin_styleeditor_style_file']['tmp_name']);
+                $value = file_get_contents($_FILES['midcom_admin_styleeditor_style_file']['tmp_name']);
             }
             else
             {
-            	$value = $_POST['midcom_admin_styleeditor_style_edit'];
+                $value = $_POST['midcom_admin_styleeditor_style_edit'];
             }
 
             // User is saving, do it

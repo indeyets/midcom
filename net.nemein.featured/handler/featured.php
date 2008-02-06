@@ -123,12 +123,12 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         $this->_featured_objects = $qb->execute();
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_manage($handler_id, $args, &$data)
     {
         $this->_content_topic->require_do('midgard:create');
@@ -181,12 +181,12 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         midcom_show_style('admin_create');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_delete($handler_id, $args, &$data)
     {
         $this->_featured = new net_nemein_featured_item_dba();
@@ -207,12 +207,12 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         $_MIDCOM->relocate('manage');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_edit($handler_id, $args, &$data)
     {
         $this->_content_topic->require_do('midgard:edit');
@@ -251,12 +251,12 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         midcom_show_style('admin_edit');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_move_up($handler_id, $args, &$data)
     {
         $this->_featured = new net_nemein_featured_item_dba();
@@ -281,12 +281,12 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
         $_MIDCOM->relocate('manage');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_move_down($handler_id, $args, &$data)
     {
         $this->_featured = new net_nemein_featured_item_dba();

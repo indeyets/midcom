@@ -81,7 +81,7 @@ class pl_olga_windguru_viewer extends midcom_baseclasses_components_request
     {
         if ($this->_topic->can_do('midgard:create'))
         {
-			$this->_node_toolbar->add_item(Array(
+            $this->_node_toolbar->add_item(Array(
                     MIDCOM_TOOLBAR_URL => "create.html",
                     MIDCOM_TOOLBAR_LABEL => sprintf
                     (

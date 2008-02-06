@@ -163,7 +163,7 @@ class net_nemein_supportview_admin {
                 // Do nothing here, the datamanager will invalidate the cache.
                 // Apart from that, let the user edit the configuration as long
                 // as he likes.
-	            break;
+                break;
 
             case MIDCOM_DATAMGR_FAILED:
                 $this->errstr = "Datamanager: " . $GLOBALS["midcom_errstr"];

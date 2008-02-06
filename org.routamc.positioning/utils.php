@@ -333,11 +333,11 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
         }
 
 
-		if (!isset($current_locale))
-		{
-			$current_locale = setlocale(LC_NUMERIC,"0");
-			setlocale(LC_NUMERIC,"C");
-		}
+        if (!isset($current_locale))
+        {
+            $current_locale = setlocale(LC_NUMERIC,"0");
+            setlocale(LC_NUMERIC,"C");
+        }
 
         $qb->begin_group('AND');
         $qb->add_constraint('latitude', '<', (float) $from['latitude']);
@@ -385,7 +385,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
             }
 
             $modifier = $modifier * 1.05;
-			setlocale(LC_NUMERIC,$current_locale);
+            setlocale(LC_NUMERIC,$current_locale);
             return org_routamc_positioning_utils::get_closest($class, $center, $limit, $modifier);
         }
 
@@ -416,7 +416,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
         {
             array_pop($closest);
         }
-		setlocale(LC_NUMERIC,$current_locale);
+        setlocale(LC_NUMERIC,$current_locale);
         return $closest;
     }
 }

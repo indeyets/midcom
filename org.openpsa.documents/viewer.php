@@ -122,24 +122,24 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_attachment($handler_id, $args, &$data)
     {
         // This hook is for direct PUT and GET of files
         return false;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_search($handler_id, $args, &$data)
     {
         $this->_request_data['results'] = array();

@@ -37,21 +37,21 @@ if ($data['even'])
     <?php
     if ($data['list_type'] != 'paid')
     {
-		if ($_MIDCOM->auth->can_do('midgard:update', $data['invoice']))
-		{
-	        $next_marker_url = $prefix . "invoice/mark_" . $data['next_marker'] . "/" . $data['invoice']->guid . ".html";
-	        ?>
-			<form method="post" action="&(next_marker_url);">
-	    		<button type="submit" name="midcom_helper_toolbar_submit"><?php 
-	    		echo $data['l10n']->get('mark ' . $data['next_marker']); 
-	    		?></button>
-	  		</form><?
-		}
+        if ($_MIDCOM->auth->can_do('midgard:update', $data['invoice']))
+        {
+            $next_marker_url = $prefix . "invoice/mark_" . $data['next_marker'] . "/" . $data['invoice']->guid . ".html";
+            ?>
+            <form method="post" action="&(next_marker_url);">
+                <button type="submit" name="midcom_helper_toolbar_submit"><?php 
+                echo $data['l10n']->get('mark ' . $data['next_marker']); 
+                ?></button>
+              </form><?
+        }
     }
     else
     {
         echo strftime('%x', $view_data['invoice']->paid);
     }
-	?>
+    ?>
     </td>
 </tr>

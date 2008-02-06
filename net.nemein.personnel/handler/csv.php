@@ -177,12 +177,12 @@ class net_nemein_personnel_handler_csv extends midcom_baseclasses_components_han
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_import($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_admin_user();
@@ -604,12 +604,12 @@ class net_nemein_personnel_handler_csv extends midcom_baseclasses_components_han
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_export($handler_id, $args, &$data)
     {
         //Disable limits

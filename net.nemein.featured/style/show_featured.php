@@ -27,5 +27,3 @@ foreach ($featured_groups as $key => $group)
     }
 }
 ?>
-
-

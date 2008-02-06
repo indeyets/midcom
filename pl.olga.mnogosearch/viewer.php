@@ -47,14 +47,14 @@ class pl_olga_mnogosearch_viewer extends midcom_baseclasses_components_request
         $this->_request_switch['config'] = Array
         (
             'handler' => Array('pl_olga_mnogosearch_handler_config', 'config'),
-	    'fixed_args' => array('config'),
+        'fixed_args' => array('config'),
         );
 
         $this->_request_switch['view'] = Array
         (
             'handler' => Array('pl_olga_mnogosearch_handler_view', 'view'),
         );
-	debug_pop();
+    debug_pop();
     }
 
 

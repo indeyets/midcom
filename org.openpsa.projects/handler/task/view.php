@@ -46,12 +46,12 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
         return $task;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_view($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

@@ -7,26 +7,26 @@
 <script>
 function change_view(divToChange)
 {
-	if (divToChange == '1')
-	{
-		elementToChange = document.getElementById('reports_flick_1');
-	}
-	else if (divToChange == '2')
-	{
-		elementToChange = document.getElementById('reports_flick_2');
-	}
-	else
-	{
-		elementToChange = document.getElementById('reports_flick_3');
-	}
-	if(elementToChange.style.display == 'none')
-	{
-		elementToChange.style.display = 'block';
-	}
-	else
-	{
-		elementToChange.style.display = 'none';
-	}
+    if (divToChange == '1')
+    {
+        elementToChange = document.getElementById('reports_flick_1');
+    }
+    else if (divToChange == '2')
+    {
+        elementToChange = document.getElementById('reports_flick_2');
+    }
+    else
+    {
+        elementToChange = document.getElementById('reports_flick_3');
+    }
+    if(elementToChange.style.display == 'none')
+    {
+        elementToChange.style.display = 'block';
+    }
+    else
+    {
+        elementToChange.style.display = 'none';
+    }
 }
 
 
@@ -35,7 +35,7 @@ function change_view(divToChange)
 <style>
 #reports_flick_1, #reports_flick_2
 {
-	display: none;
+    display: none;
 }
 
 </style>
@@ -45,27 +45,27 @@ function change_view(divToChange)
 <div id="reports_flick_1">
 <table cellpadding="0" cellspacing="2" border="0">
 <tr>
-	<td width="100"><strong>Koodi</strong></td>
+    <td width="100"><strong>Koodi</strong></td>
         <td width="200"><strong>Tuote</strong></td>
         <td width="70"><strong>TR<strong></td>
-	<td width="70"><strong>AR</strong></td>
-	<td><strong>Ostohinta</strong></td>
+    <td width="70"><strong>AR</strong></td>
+    <td><strong>Ostohinta</strong></td>
 </tr>
 <?php
 $i = 0;
 foreach($data['products'] as $product)
 {
 $i++;
-//	echo "<pre>";
-//	print_r($product);
-//	echo "</pre>";
-	echo "<tr>\n";
-	echo "<td><a href=\"../productsedit/".$product->id.".html\">".$product->name."</td>\n";
-	echo "<td>".$product->title."</td>\n";
+//    echo "<pre>";
+//    print_r($product);
+//    echo "</pre>";
+    echo "<tr>\n";
+    echo "<td><a href=\"../productsedit/".$product->id.".html\">".$product->name."</td>\n";
+    echo "<td>".$product->title."</td>\n";
         echo "<td>".$product->extra2."</td>";
         echo "<td>".$product->extra3."</td>";
-	echo "<td>".$product->extra1."</td>\n";
-	echo "</tr>\n";
+    echo "<td>".$product->extra1."</td>\n";
+    echo "</tr>\n";
 }
 ?>
 </table>
@@ -75,27 +75,27 @@ $i++;
 <div id="reports_flick_2">
 <table cellpadding="0" cellspacing="2" border="0">
 <tr>
-	<td width="100"><strong>Koodi</strong></td>
+    <td width="100"><strong>Koodi</strong></td>
         <td width="200"><strong>Tuote</strong></td>
         <td width="70"><strong>TR<strong></td>
-	<td width="70"><strong>AR</strong></td>
-	<td><strong>Ostohinta</strong></td>
+    <td width="70"><strong>AR</strong></td>
+    <td><strong>Ostohinta</strong></td>
 </tr>
 <?php
 $i = 0;
 foreach($data['tr'] as $product)
 {
 $i++;
-//	echo "<pre>";
-//	print_r($product);
-//	echo "</pre>";
-	echo "<tr>\n";
-	echo "<td><a href=\"../productsedit/".$product->id.".html\">".$product->name."</td>\n";
-	echo "<td>".$product->title."</td>\n";
+//    echo "<pre>";
+//    print_r($product);
+//    echo "</pre>";
+    echo "<tr>\n";
+    echo "<td><a href=\"../productsedit/".$product->id.".html\">".$product->name."</td>\n";
+    echo "<td>".$product->title."</td>\n";
         echo "<td>".$product->extra2."</td>";
         echo "<td>".$product->extra3."</td>";
-	echo "<td>".$product->extra1."</td>\n";
-	echo "</tr>\n";
+    echo "<td>".$product->extra1."</td>\n";
+    echo "</tr>\n";
 }
 ?>
 <tr><td><br /><br /></td></tr>
@@ -106,27 +106,27 @@ $i++;
 <div id="reports_flick_3">
 <table cellpadding="0" cellspacing="2" border="0">
 <tr>
-	<td width="100"><strong>Koodi</strong></td>
+    <td width="100"><strong>Koodi</strong></td>
         <td width="200"><strong>Tuote</strong></td>
         <td width="70"><strong>TR<strong></td>
-	<td width="70"><strong>AR</strong></td>
-	<td><strong>Ostohinta</strong></td>
+    <td width="70"><strong>AR</strong></td>
+    <td><strong>Ostohinta</strong></td>
 </tr>
 <?php
 $i = 0;
 foreach($data['ar'] as $product)
 {
 $i++;
-//	echo "<pre>";
-//	print_r($product);
-//	echo "</pre>";
-	echo "<tr>\n";
-	echo "<td><a href=\"../productsedit/".$product->id.".html\">".$product->name."</td>\n";
-	echo "<td>".$product->title."</td>\n";
+//    echo "<pre>";
+//    print_r($product);
+//    echo "</pre>";
+    echo "<tr>\n";
+    echo "<td><a href=\"../productsedit/".$product->id.".html\">".$product->name."</td>\n";
+    echo "<td>".$product->title."</td>\n";
         echo "<td>".$product->extra2."</td>";
         echo "<td>".$product->extra3."</td>";
-	echo "<td>".$product->extra1."</td>\n";
-	echo "</tr>\n";
+    echo "<td>".$product->extra1."</td>\n";
+    echo "</tr>\n";
 }
 ?>
 </table>

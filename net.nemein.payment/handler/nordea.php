@@ -49,10 +49,10 @@
 class net_nemein_payment_handler_nordea extends net_nemein_payment_handler
 {
     /**#@+
-	 * Payment handling specific internal variable.
-	 * 
-	 * @access private
-	 */
+     * Payment handling specific internal variable.
+     * 
+     * @access private
+     */
     
     /**
      * Payment interface version.
@@ -408,7 +408,7 @@ class net_nemein_payment_handler_nordea extends net_nemein_payment_handler
      */
     function _generate_return_urls()
     {
-     	$this->_ok_url = "{$this->_return_url}&net_nemein_payment_state=" . NET_NEMEIN_PAYMENT_OK;
+         $this->_ok_url = "{$this->_return_url}&net_nemein_payment_state=" . NET_NEMEIN_PAYMENT_OK;
         $this->_cancel_url = "{$this->_return_url}&net_nemein_payment_state=" . NET_NEMEIN_PAYMENT_CANCELLED;
         $this->_rejected_url = "{$this->_return_url}&net_nemein_payment_state=" . NET_NEMEIN_PAYMENT_REJECTED;
     }

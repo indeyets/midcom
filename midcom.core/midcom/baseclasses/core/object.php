@@ -42,16 +42,16 @@ class midcom_baseclasses_core_object
  */
 if(!class_exists("midgard_error_exception"))
 {
-	class midgard_error_exception extends Exception
-	{
-		function __construct($msg = null, $code = 0)
-		{
-			if($msg == null)
-				$msg = mgd_errstr();
+    class midgard_error_exception extends Exception
+    {
+        function __construct($msg = null, $code = 0)
+        {
+            if($msg == null)
+                $msg = mgd_errstr();
 
-			parent::__construct($msg, $code);
-		}
-	}
+            parent::__construct($msg, $code);
+        }
+    }
 }
 
 ?>

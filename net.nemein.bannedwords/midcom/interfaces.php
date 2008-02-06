@@ -19,13 +19,13 @@ class net_nemein_bannedwords_interface extends midcom_baseclasses_components_int
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'net.nemein.bannedwords';
-	$this->_purecode = true;
+    $this->_purecode = true;
         $this->_autoload_files = array
         (
-	    'formatters.php',
-	    'main.php',
-	    'word.php',
-	);
+        'formatters.php',
+        'main.php',
+        'word.php',
+    );
     }
 }
 

@@ -23,12 +23,12 @@ class fi_mik_lentopaikkakisa_handler_index extends midcom_baseclasses_components
         parent::midcom_baseclasses_components_handler();
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_index($handler_id, $args, &$data)
     {
         $this->_request_data['node'] =& $this->_topic;

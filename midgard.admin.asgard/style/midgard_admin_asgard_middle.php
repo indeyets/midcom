@@ -1,4 +1,4 @@
-                    <?php
+<?php
                     $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                     echo "<a href=\"{$prefix}__mfa/asgard/\">";
                     echo "<img src=\"" . MIDCOM_STATIC_URL . "/midgard.admin.asgard/asgard2.png\" id=\"asgard_logo\" title=\"Asgard\" alt=\"Asgard\" />";

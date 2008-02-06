@@ -110,7 +110,7 @@ class midcom_helper_hostconfig
                 if (method_exists($this->page, 'delete_parameter'))
                 {
                     // Empty config value, try deleting param just in case
-					debug_add("Empty config value, try deleting param just in case", MIDCOM_LOG_ERROR);
+                    debug_add("Empty config value, try deleting param just in case", MIDCOM_LOG_ERROR);
                     $this->page->delete_parameter($this->setting_parameter_domain, $key);
                 }
                 // And then skip

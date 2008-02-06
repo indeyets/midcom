@@ -280,12 +280,12 @@ class net_nehmer_mail_handler_mail_admin extends midcom_baseclasses_components_h
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_restore($handler_id, $args, &$data)
     {
         if (! isset($args[0]))
@@ -324,12 +324,12 @@ class net_nehmer_mail_handler_mail_admin extends midcom_baseclasses_components_h
         return true;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_delete($handler_id, $args, &$data)
     {
         if (! isset($args[0]))

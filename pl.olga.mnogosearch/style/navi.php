@@ -58,7 +58,7 @@ if ($rp>$tp)
 
     if ($lp<1)
     {
-	$lp=1;
+    $lp=1;
     }
 }
 
@@ -69,13 +69,13 @@ if ($lp!=$rp)
         $realp=$i-1;
    
         if ($i==$cp) 
-	{
+    {
             $nav_bar[] = $i;
         }
-	else
-	{
+    else
+    {
             $nav_bar[] = "<a href='?q={$q}&np={$realp}&m={$m}&ps={$ps}'>{$i}</a>";
-	}
+    }
     }
    
 }

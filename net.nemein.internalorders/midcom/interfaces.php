@@ -36,12 +36,12 @@ class net_nemein_internalorders_interface extends midcom_baseclasses_components_
         
         if (!defined('NET_NEMEIN_INTERNALORDERS_NEW'))
         {
-        	define('NET_NEMEIN_INTERNALORDERS_NEW', 0);
-        	define('NET_NEMEIN_INTERNALORDERS_SENT', 1);
-        	define('NET_NEMEIN_INTERNALORDERS_SENT_LOCKED', 2);
-        	define('NET_NEMEIN_INTERNALORDERS_RECEIVED', 3);
-        	define('NET_NEMEIN_INTERNALORDERS_HIDDEN', 4);
-        	define('NET_NEMEIN_INTERNALORDERS_REMOVED', 9);
+            define('NET_NEMEIN_INTERNALORDERS_NEW', 0);
+            define('NET_NEMEIN_INTERNALORDERS_SENT', 1);
+            define('NET_NEMEIN_INTERNALORDERS_SENT_LOCKED', 2);
+            define('NET_NEMEIN_INTERNALORDERS_RECEIVED', 3);
+            define('NET_NEMEIN_INTERNALORDERS_HIDDEN', 4);
+            define('NET_NEMEIN_INTERNALORDERS_REMOVED', 9);
         }
         if (!defined('N_N_INTERNALORDERS_PRODUCT_ACTIVE'))
         {

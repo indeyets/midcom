@@ -111,7 +111,7 @@ class midcom_debug
     /**
      * Is the debugger enabled?
      *
-     * @return boolean	Debugger state
+     * @return boolean    Debugger state
      */
     function is_enabled() {
         return $this->_enabled;
@@ -120,7 +120,7 @@ class midcom_debug
     /**
      * Set log file name
      *
-     * @param string $filename	New logfile name
+     * @param string $filename    New logfile name
      */
     function setLogfile($filename) {
         $this->_filename = $filename;
@@ -129,7 +129,7 @@ class midcom_debug
     /**
      * Set log level
      *
-     * @param int $loglevel		New log level
+     * @param int $loglevel        New log level
      */
     function setLoglevel($loglevel) {
         $this->_loglevel = $loglevel;
@@ -138,7 +138,7 @@ class midcom_debug
     /**
      * Set a new debug prefix
      *
-     * @param string $prefix	The new prefix
+     * @param string $prefix    The new prefix
      */
     function push_prefix($prefix)
     {
@@ -193,8 +193,8 @@ class midcom_debug
     /**
      * Log a message
      *
-     * @param string $message	The message to be logged
-     * @param int $loglevel		The log level
+     * @param string $message    The message to be logged
+     * @param int $loglevel        The log level
      */
     function log($message, $loglevel = MIDCOM_LOG_DEBUG)
     {
@@ -242,39 +242,39 @@ class midcom_debug
     /**
      * Log a message with info loglevel
      *
-     * @param string $message	The message to be logged
+     * @param string $message    The message to be logged
      */
     static function log_info($message)
     {
-        $GLOBALS['midcom_debugger']->log($message, MIDCOM_LOG_INFO);	
+        $GLOBALS['midcom_debugger']->log($message, MIDCOM_LOG_INFO);    
     }
 
     /**
      * Log a message with debug loglevel
      *
-     * @param string $message	The message to be logged
+     * @param string $message    The message to be logged
      */
     static function log_debug($message)
     {
-        $GLOBALS['midcom_debugger']->log($message, MIDCOM_LOG_DEBUG);	
+        $GLOBALS['midcom_debugger']->log($message, MIDCOM_LOG_DEBUG);    
     }
 
     /**
      * Log a message with warning loglevel
      *
-     * @param string $message	The message to be logged
+     * @param string $message    The message to be logged
      */
     static function log_warn($message)
     {
-        $GLOBALS['midcom_debugger']->log($message, MIDCOM_LOG_WARN);	
+        $GLOBALS['midcom_debugger']->log($message, MIDCOM_LOG_WARN);    
     }
 
     /**
      * Dump a variable (by reference)
      *
-     * @param string $message	The message to be logged
-     * @param mixed &$variable	The variable to be logged
-     * @param int $loglevel		The log level
+     * @param string $message    The message to be logged
+     * @param mixed &$variable    The variable to be logged
+     * @param int $loglevel        The log level
      */
     function print_r($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)
     {
@@ -301,8 +301,8 @@ class midcom_debug
     /**
      * Dump stack trace, only working when XDebug is present.
      *
-     * @param string $message	The message to be logged
-     * @param int $loglevel		The log level
+     * @param string $message    The message to be logged
+     * @param int $loglevel        The log level
      * @link http://www.xdebug.org/ xdebug.org
      */
     function print_function_stack($message, $loglevel = MIDCOM_LOG_DEBUG)
@@ -346,9 +346,9 @@ class midcom_debug
     /**
      * Dump a variables type (by reference)
      *
-     * @param string $message	The message to be logged
-     * @param mixed &$variable	The variable of which the type should be logged
-     * @param int $loglevel		The log level
+     * @param string $message    The message to be logged
+     * @param mixed &$variable    The variable of which the type should be logged
+     * @param int $loglevel        The log level
      */
     function print_type ($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)
     {
@@ -375,8 +375,8 @@ class midcom_debug
      *
      * $curmem (delta $delta): $message
      *
-     * @param string $message	The message to be logged
-     * @param int $loglevel		The log level
+     * @param string $message    The message to be logged
+     * @param int $loglevel        The log level
      */
     function print_dump_mem ($message, $loglevel = MIDCOM_LOG_DEBUG)
     {
@@ -412,8 +412,8 @@ $GLOBALS['midcom_debugger'] = new midcom_debug($GLOBALS['midcom_config']['log_fi
 /**
  * Shortcut: Log a message
  *
- * @param string $message	The message to be logged
- * @param int $loglevel		The log level
+ * @param string $message    The message to be logged
+ * @param int $loglevel        The log level
  */
 function debug_add($message, $loglevel = MIDCOM_LOG_DEBUG)
 {
@@ -423,9 +423,9 @@ function debug_add($message, $loglevel = MIDCOM_LOG_DEBUG)
 /**
  * Shortcut: Dump a variable (by reference)
  *
- * @param string $message	The message to be logged
- * @param mixed &$variable	The variable to be logged
- * @param int $loglevel		The log level
+ * @param string $message    The message to be logged
+ * @param mixed &$variable    The variable to be logged
+ * @param int $loglevel        The log level
  */
 function debug_print_r($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)
 {
@@ -435,8 +435,8 @@ function debug_print_r($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)
 /**
  * Shortcut: Create a stack trace and dump it. Works only if XDEBUG is installed.
  *
- * @param string $message	The message to be logged
- * @param int $loglevel		The log level
+ * @param string $message    The message to be logged
+ * @param int $loglevel        The log level
  */
 function debug_print_function_stack($message, $loglevel = MIDCOM_LOG_DEBUG)
 {
@@ -446,9 +446,9 @@ function debug_print_function_stack($message, $loglevel = MIDCOM_LOG_DEBUG)
 /**
  * Shortcut: Dump a variables type (by reference)
  *
- * @param string $message	The message to be logged
- * @param mixed &$variable	The variable of which the type should be logged
- * @param int $loglevel		The log level
+ * @param string $message    The message to be logged
+ * @param mixed &$variable    The variable of which the type should be logged
+ * @param int $loglevel        The log level
  */
 function debug_print_type($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)
 {
@@ -458,8 +458,8 @@ function debug_print_type($message, &$variable, $loglevel = MIDCOM_LOG_DEBUG)
 /**
  * Shortcut: Dump the current memory usage and the delta to the last call of this function.
  *
- * @param string $message	The message to be logged
- * @param int $loglevel		The log level
+ * @param string $message    The message to be logged
+ * @param int $loglevel        The log level
 */
 function debug_dump_mem($message, $loglevel = MIDCOM_LOG_DEBUG)
 {
@@ -469,7 +469,7 @@ function debug_dump_mem($message, $loglevel = MIDCOM_LOG_DEBUG)
 /**
  * Shortcut: Set a new debug prefix
  *
- * @param string $prefix	The new prefix
+ * @param string $prefix    The new prefix
  */
 function debug_push($prefix)
 {

@@ -26,7 +26,7 @@ class midcom_helper_imagepopup_viewer extends midcom_baseclasses_components_requ
             
         // Dumb $this on PHP5 workaround
         $object =& $this;
-	
+    
         // Match /folder/<schema>/<object guid>
         $object->_request_switch['list_folder'] = Array (
             'handler' => Array('midcom_helper_imagepopup_handler_list', 'list'),
@@ -41,19 +41,19 @@ class midcom_helper_imagepopup_viewer extends midcom_baseclasses_components_requ
             'variable_args' => 1,            
         );
 
-	   // Match /unified/<schema>/<object guid>
-	   $object->_request_switch['list_unified'] = Array (
-	       'handler' => Array('midcom_helper_imagepopup_handler_list', 'list'),
-	       'fixed_args' => Array('unified'),
-	       'variable_args' => 2,
-	   );
+       // Match /unified/<schema>/<object guid>
+       $object->_request_switch['list_unified'] = Array (
+           'handler' => Array('midcom_helper_imagepopup_handler_list', 'list'),
+           'fixed_args' => Array('unified'),
+           'variable_args' => 2,
+       );
 
-	   // Match /unified/<schema>
-	   $object->_request_switch['list_unified_noobject'] = Array (
-	       'handler' => Array('midcom_helper_imagepopup_handler_list', 'list'),
-	       'fixed_args' => Array('unified'),
-	       'variable_args' => 1,
-	   );
+       // Match /unified/<schema>
+       $object->_request_switch['list_unified_noobject'] = Array (
+           'handler' => Array('midcom_helper_imagepopup_handler_list', 'list'),
+           'fixed_args' => Array('unified'),
+           'variable_args' => 1,
+       );
         
         // Match /<schema>/<object guid>
         $object->_request_switch['list_object'] = Array (

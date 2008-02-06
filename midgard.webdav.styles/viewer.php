@@ -87,7 +87,7 @@ $this->_request_switch['midcoms_stylelement'] = array(
 
         require 'HTTP/WebDAV/Server.php';
         require 'dav.php';
-       	$_MIDCOM->cache->content->no_cache();
+           $_MIDCOM->cache->content->no_cache();
         $_MIDCOM->skip_page_style = true;
         */
     }

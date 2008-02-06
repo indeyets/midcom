@@ -175,12 +175,12 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         return null;
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_mark_sent($handler_id, $args, &$data)
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST')
@@ -231,11 +231,11 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         // This will exit
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
-	 */
+     */
     function _handler_mark_paid($handler_id, $args, &$data)
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST')
@@ -266,12 +266,12 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         // This will exit
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_view($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -282,7 +282,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         }
 
         $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('invoice') . ' ' . $this->_request_data['invoice']->invoiceNumber);
-		$this->_update_breadcrumb_line();
+        $this->_update_breadcrumb_line();
 
         $this->_view_toolbar->add_item(
             Array(
@@ -432,12 +432,12 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         midcom_show_style('show-invoice');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_edit($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
@@ -445,7 +445,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         $this->_request_data['invoice']->require_do('midgard:update');
 
         $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('invoice') . ' ' . $this->_request_data['invoice']->invoiceNumber);
-		$this->_update_breadcrumb_line();
+        $this->_update_breadcrumb_line();
 
         switch ($this->_datamanager->process_form())
         {
@@ -484,12 +484,12 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         midcom_show_style('show-invoice-edit');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

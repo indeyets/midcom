@@ -108,7 +108,7 @@ function net_nemein_calendar_event2document($event)
     }
     else
     {
-    	$document->abstract = $event->description;
+        $document->abstract = $event->description;
     }
     return $document;
 }

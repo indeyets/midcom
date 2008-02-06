@@ -136,7 +136,7 @@ EOF;
      * 
      * @param string $id The ID of the request.
      * @param mixed $document One or more documents to be indexed, so this is either a 
-     * 		  midcom_services_indexer_document or an Array of these objects.
+     *           midcom_services_indexer_document or an Array of these objects.
      */
     function add_index ($id, $documents)
     {
@@ -348,150 +348,150 @@ class midcom_services_indexer_XMLComm_ResponseReader extends XML_Parser
     }
     
     /**
-	 * Start a new resultset.
-	 * 
-	 * This will store the resultset id, the rest of the work is done by the
-	 * document tag handlers.
-	 * 
-	 * @param object $parser The XML parser resource
-	 * @param string $name The name of the element being parsed
-	 * @param Array $attribs The attributes to the element
-	 * @access private
-	 */
-	function xmltag_resultset($parser, $name, $attribs)
-	{
+     * Start a new resultset.
+     * 
+     * This will store the resultset id, the rest of the work is done by the
+     * document tag handlers.
+     * 
+     * @param object $parser The XML parser resource
+     * @param string $name The name of the element being parsed
+     * @param Array $attribs The attributes to the element
+     * @access private
+     */
+    function xmltag_resultset($parser, $name, $attribs)
+    {
         $this->_current_id = $attribs['ID'];
         $this->resultsets[$this->_current_id] = Array();
-	}
+    }
     
     /**
-	 * The resultset is complete.
-	 *
-	 * @param object $parser The XML parser resource
-	 * @param string $name The name of the element being parsed
-	 * @access private
-	 */
-	function xmltag_resultset_($parser, $name)
-	{
+     * The resultset is complete.
+     *
+     * @param object $parser The XML parser resource
+     * @param string $name The name of the element being parsed
+     * @access private
+     */
+    function xmltag_resultset_($parser, $name)
+    {
         $this->_current_id = '';
-	}
+    }
     
     /**
-	 * Start a new document.
-	 * 
-	 * This will prepare a new document and save the corresponding ID.
-	 * 
-	 * @param object $parser The XML parser resource
-	 * @param string $name The name of the element being parsed
-	 * @param Array $attribs The attributes to the element
-	 * @access private
-	 */
-	function xmltag_document($parser, $name, $attribs)
-	{
-	    $this->_current_document = new midcom_services_indexer_document();
+     * Start a new document.
+     * 
+     * This will prepare a new document and save the corresponding ID.
+     * 
+     * @param object $parser The XML parser resource
+     * @param string $name The name of the element being parsed
+     * @param Array $attribs The attributes to the element
+     * @access private
+     */
+    function xmltag_document($parser, $name, $attribs)
+    {
+        $this->_current_document = new midcom_services_indexer_document();
         $this->_current_document->score = (double) $attribs['SCORE'];
         $this->_current_document_id = $attribs['ID'];
-	}
+    }
    
    /**
-	 * The document is complete.
-	 *
-	 * @param object $parser The XML parser resource
-	 * @param string $name The name of the element being parsed
-	 * @access private
-	 */
-	function xmltag_document_($parser, $name)
-	{
+     * The document is complete.
+     *
+     * @param object $parser The XML parser resource
+     * @param string $name The name of the element being parsed
+     * @access private
+     */
+    function xmltag_document_($parser, $name)
+    {
         $this->_current_document->dump("Document complete:");
-	    $this->resultsets[$this->_current_id][] = $this->_current_document;
+        $this->resultsets[$this->_current_id][] = $this->_current_document;
         $this->_current_document = null;
         $this->_current_document_id = '';
-	}
+    }
    
     /**
-	 * Start a new document field.
-	 * 
-	 * @param object $parser The XML parser resource
-	 * @param string $name The name of the element being parsed
-	 * @param Array $attribs The attributes to the element
-	 * @access private
-	 */
-	function xmltag_field($parser, $name, $attribs)
-	{
+     * Start a new document field.
+     * 
+     * @param object $parser The XML parser resource
+     * @param string $name The name of the element being parsed
+     * @param Array $attribs The attributes to the element
+     * @access private
+     */
+    function xmltag_field($parser, $name, $attribs)
+    {
         $this->_current_field = $attribs['NAME'];
         $this->_current_data = '';
-	}
+    }
     
     /**
-	 * The field is complete.
-	 *
-	 * @param object $parser The XML parser resource
-	 * @param string $name The name of the element being parsed
-	 * @access private
-	 */
-	function xmltag_field_($parser, $name)
-	{
-	    $this->_current_document->add_result($this->_current_field, $this->_current_data);
+     * The field is complete.
+     *
+     * @param object $parser The XML parser resource
+     * @param string $name The name of the element being parsed
+     * @access private
+     */
+    function xmltag_field_($parser, $name)
+    {
+        $this->_current_document->add_result($this->_current_field, $this->_current_data);
         $this->_current_field = null;
-	}
+    }
     
     /**
-	 * Start a new warning record.
-	 * 
-	 * @param object $parser The XML parser resource
-	 * @param string $name The name of the element being parsed
-	 * @param Array $attribs The attributes to the element
-	 * @access private
-	 */
- 	function xmltag_warning($parser, $name, $attribs)
-	{
+     * Start a new warning record.
+     * 
+     * @param object $parser The XML parser resource
+     * @param string $name The name of the element being parsed
+     * @param Array $attribs The attributes to the element
+     * @access private
+     */
+     function xmltag_warning($parser, $name, $attribs)
+    {
         $this->_current_id = $attribs['ID'];
         $this->_current_data = '';
-	}
+    }
    
     /**
-	 * The warning is complete.
-	 *
-	 * @param object $parser The XML parser resource
-	 * @param string $name The name of the element being parsed
-	 * @access private
-	 */
-	function xmltag_warning_($parser, $name)
-	{
-	    $this->warnings[$this->_current_id] = $this->_current_data;
-	}
+     * The warning is complete.
+     *
+     * @param object $parser The XML parser resource
+     * @param string $name The name of the element being parsed
+     * @access private
+     */
+    function xmltag_warning_($parser, $name)
+    {
+        $this->warnings[$this->_current_id] = $this->_current_data;
+    }
     
     /**
-	 * Start an error record.
-	 * 
-	 * @param object $parser The XML parser resource
-	 * @param string $name The name of the element being parsed
-	 * @param Array $attribs The attributes to the element
-	 * @access private
-	 */
-	function xmltag_error($parser, $name, $attribs)
-	{
+     * Start an error record.
+     * 
+     * @param object $parser The XML parser resource
+     * @param string $name The name of the element being parsed
+     * @param Array $attribs The attributes to the element
+     * @access private
+     */
+    function xmltag_error($parser, $name, $attribs)
+    {
         $this->_current_id = $attribs['ID'];
         $this->_current_data = '';
-	}
+    }
   
     /**
-	 * The error is complete.
-	 * 
-	 * This will call generate_error with the error message, as this is a
-	 * rather critical error.
-	 *
-	 * @param object $parser The XML parser resource
-	 * @param string $name The name of the element being parsed
-	 * @access private
-	 */
-	function xmltag_error_($parser, $name)
-	{
+     * The error is complete.
+     * 
+     * This will call generate_error with the error message, as this is a
+     * rather critical error.
+     *
+     * @param object $parser The XML parser resource
+     * @param string $name The name of the element being parsed
+     * @access private
+     */
+    function xmltag_error_($parser, $name)
+    {
             $msg = "The MidCOM Indexer failed critically:\n{$this->_current_data}";
             // $_MIDCOM->generate_error(MIDCOM_ERRCRIT, $msg);
             // This will exit.
             debug_add($msg, MIDCOM_LOG_ERROR);
-	}
+    }
     
     /**
      * This function will parse the given string. Any error from Expat

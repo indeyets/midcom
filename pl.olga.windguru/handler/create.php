@@ -144,7 +144,7 @@ class pl_olga_windguru_handler_create extends midcom_baseclasses_components_hand
         switch ($this->_controller->process_form())
         {
             case 'save':
-				if ($_MIDCOM->serviceloader->can_load('midcom_core_service_urlgenerator'))
+                if ($_MIDCOM->serviceloader->can_load('midcom_core_service_urlgenerator'))
                 {
                     $urlgenerator = $_MIDCOM->serviceloader->load('midcom_core_service_urlgenerator');
                     $this->_article->name = $urlgenerator->from_string($this->_article->title);
@@ -178,7 +178,7 @@ class pl_olga_windguru_handler_create extends midcom_baseclasses_components_hand
 
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
-		return true;
+        return true;
     }
 
     /**

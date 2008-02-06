@@ -62,7 +62,7 @@ class midgard_webdav_styles_handler_midcoms  extends midgard_webdav_styles_handl
     function _handler_styleelements ( $handler_id, $args, &$data )
     {
         $midcom = $args[0];
- 		$this->log(__CLASS__ . "styleelements_handler");
+         $this->log(__CLASS__ . "styleelements_handler");
         $server = new midgard_webdav_styles_handler_midcoms_files( );
         $server->setMidcom( $midcom );
         $server->setStyle( $this->get_root_style( ) ) ;
@@ -89,12 +89,12 @@ class midgard_webdav_styles_handler_midcoms  extends midgard_webdav_styles_handl
     }
 
     function get_root_style(  ) {
- 		$this->log(__CLASS__ . ": get_root_style");
+         $this->log(__CLASS__ . ": get_root_style");
         $style = new midcom_db_style($_MIDGARD['style']);
         if (!$style->id)
-		{
-			return false;
-		}
+        {
+            return false;
+        }
         return $style;
     }
 }

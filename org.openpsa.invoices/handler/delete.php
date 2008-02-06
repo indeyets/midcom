@@ -58,12 +58,12 @@ class org_openpsa_invoices_handler_delete extends midcom_baseclasses_components_
         return $this->_request_data['invoice'];
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_delete($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();

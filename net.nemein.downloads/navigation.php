@@ -17,7 +17,7 @@ class net_nemein_downloads_navigation extends midcom_baseclasses_components_navi
     /**
      * Simple constructor, calls base class.
      */
-	function net_nemein_downloads_navigation() 
+    function net_nemein_downloads_navigation() 
     {
         parent::midcom_baseclasses_components_navigation();
     }

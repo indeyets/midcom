@@ -84,19 +84,19 @@ class midcom_helper_datamanager_datatype_unixdate extends midcom_helper_datamana
         $result = MIDCOM_DATAMGR_SAVED;
         if ($this->_value)
         {
-	        if ($this->_store_as_iso_timestamp)
-	        {
-		            $tmp = strftime("%Y-%m-%d %T", $this->_value);
-		            debug_add("Converted {$this->_value} to {$tmp}");
-		            $oldvalue = $this->_value;
-		            $this->_value = $tmp;
-		            $result = parent::save_to_storage();
-		        	$this->_value = $oldvalue;
-	        }
-	        else
-	        {
-	        	$result = parent::save_to_storage();
-	        }
+            if ($this->_store_as_iso_timestamp)
+            {
+                    $tmp = strftime("%Y-%m-%d %T", $this->_value);
+                    debug_add("Converted {$this->_value} to {$tmp}");
+                    $oldvalue = $this->_value;
+                    $this->_value = $tmp;
+                    $result = parent::save_to_storage();
+                    $this->_value = $oldvalue;
+            }
+            else
+            {
+                $result = parent::save_to_storage();
+            }
         }
         debug_pop();
         return $result;
@@ -120,9 +120,9 @@ class midcom_helper_datamanager_datatype_unixdate extends midcom_helper_datamana
         {
             if ($this->_value)
             {
-	            $tmp = strtotime($this->_value);
-	            debug_add("Converted {$this->_value} to {$tmp}");
-	            $this->_value = $tmp;
+                $tmp = strtotime($this->_value);
+                debug_add("Converted {$this->_value} to {$tmp}");
+                $this->_value = $tmp;
             }
         }
 
@@ -132,7 +132,7 @@ class midcom_helper_datamanager_datatype_unixdate extends midcom_helper_datamana
 
     function sync_widget_with_data ()
     {
-    	$widget =& $this->get_widget();
+        $widget =& $this->get_widget();
         if ($this->_value > 0)
         {
             $widget->set_value(strftime(($this->_withtime == true) ? "%Y-%m-%d %H:%M:%S" : "%Y-%m-%d", $this->_value));

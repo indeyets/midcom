@@ -21,7 +21,7 @@ class pl_olga_tellafriend_interface extends midcom_baseclasses_components_interf
     {
         parent::midcom_baseclasses_components_interface();
 
-	$this->purecode = true;
+    $this->purecode = true;
         $this->_component = 'pl.olga.tellafriend';
         
         $this->_autoload_files = Array(

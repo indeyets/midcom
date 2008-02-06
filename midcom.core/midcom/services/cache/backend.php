@@ -56,10 +56,10 @@
 class midcom_services_cache_backend
 {
     /**#@+
-	 * Configuration variable
-	 *
-	 * @access protected
-	 */
+     * Configuration variable
+     *
+     * @access protected
+     */
    
     /**
      * The backend instance name. This variable my not be written to
@@ -95,10 +95,10 @@ class midcom_services_cache_backend
     /**#@-*/
 
     /**#@+
-	 * Internal state variable
-	 *
-	 * @access private
-	 */
+     * Internal state variable
+     *
+     * @access private
+     */
     
     /**
      * True, if the database has been opened for reading previously. This is also
@@ -206,10 +206,10 @@ class midcom_services_cache_backend
     }
     
     /**#@+
-	 * Event handler function.
-	 *
-	 * @access protected
-	 */
+     * Event handler function.
+     *
+     * @access protected
+     */
     
     /**
      * Backend initialization
@@ -245,7 +245,7 @@ class midcom_services_cache_backend
      * 
      * @param boolean $write True, if read/write access is required.
      */
-	function _open($write) { die ("The method " . __CLASS__ . "::" . __FUNCTION__ . " must be implemented."); }
+    function _open($write) { die ("The method " . __CLASS__ . "::" . __FUNCTION__ . " must be implemented."); }
     
     /**
      * Close the database that has been opened previously with _open().
@@ -356,7 +356,7 @@ class midcom_services_cache_backend
     {
         if (! $this->_open_for_reading)
         {
-        	debug_push_class(__CLASS__, __FUNCTION__);
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("The database is not open, ignoring the request to close the database.");
             debug_pop();
             return;
@@ -377,7 +377,7 @@ class midcom_services_cache_backend
      */
     function exists($key)
     {
-    	if (! $this->_open_for_reading)
+        if (! $this->_open_for_reading)
         {
             $auto_close = true;
             $this->open(false);
@@ -407,7 +407,7 @@ class midcom_services_cache_backend
      */
     function get($key)
     {
-    	if (! $this->_open_for_reading)
+        if (! $this->_open_for_reading)
         {
             $auto_close = true;
             $this->open(false);
@@ -446,7 +446,7 @@ class midcom_services_cache_backend
      */
     function put($key, $data)
     {
-    	if (! $this->_open_for_writing)
+        if (! $this->_open_for_writing)
         {
             $auto_close = true;
             $this->open(true);
@@ -481,7 +481,7 @@ class midcom_services_cache_backend
      */
     function remove($key)
     {
-    	if (! $this->_open_for_writing)
+        if (! $this->_open_for_writing)
         {
             $auto_close = true;
             $this->open(true);
@@ -512,7 +512,7 @@ class midcom_services_cache_backend
      */
     function remove_all()
     {
-    	if ($this->_open_for_reading)
+        if ($this->_open_for_reading)
         {
             $this->close();
         }

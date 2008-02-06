@@ -37,7 +37,7 @@ class midcom_helper_datamanager_widget_contactchooser extends midcom_helper_data
     var $enable_dbe = true;
 
     function _constructor (&$datamanager, $field, $defaultvalue) {
- 	    parent::_constructor ($datamanager, $field, $defaultvalue);
+         parent::_constructor ($datamanager, $field, $defaultvalue);
 
         if (!array_key_exists('widget_contactchooser_contacts_url', $this->_field))
         {

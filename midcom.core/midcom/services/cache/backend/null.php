@@ -33,7 +33,7 @@ class midcom_services_cache_backend_null extends midcom_services_cache_backend
     /**
      * This handler completes the configuration.
      */
- 	function _on_initialize()
+     function _on_initialize()
     {
         return;
     }

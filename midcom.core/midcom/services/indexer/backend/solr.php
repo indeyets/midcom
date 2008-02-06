@@ -162,7 +162,7 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
 
         foreach ($xquery->query('/response/result/doc') as $res)
         {
-    	    $doc = new midcom_services_indexer_document();
+            $doc = new midcom_services_indexer_document();
             foreach ($res->childNodes as $str) {
                 $name = $str->getAttribute('name');
 

@@ -152,9 +152,9 @@ $this->timetoday=time();
 $this->selectedday=-2;
 $this->selectedyear=$year;
 $this->selectedmonth=$month;
-	if (!$month) $month=1;
-	if (!$day) $day=1;
-	else $this->selectedday=$day;
+    if (!$month) $month=1;
+    if (!$day) $day=1;
+    else $this->selectedday=$day;
 $h=$this->mkActiveGMDate("H");
 $m=$this->mkActiveGMDate("i");
 $s=$this->mkActiveGMDate("s");
@@ -162,24 +162,24 @@ $d=$this->mkActiveGMDate("j");
 $mo=$this->mkActiveGMDate("n");
 $y=$this->mkActiveGMDate("Y");
 $is_dst=$this->mkActiveDate("I");
-	if ($GMTDiff!="none") $this->timetoday=$this->mkActiveTime($h,$m,$s,$mo,$d,$y)+(3600*($GMTDiff+$is_dst));
+    if ($GMTDiff!="none") $this->timetoday=$this->mkActiveTime($h,$m,$s,$mo,$d,$y)+(3600*($GMTDiff+$is_dst));
 $this->unixtime=$this->mkActiveTime($h,$m,$s,$month,$day,$year);
-	if ($this->unixtime==-1 || !$year) $this->unixtime=$this->timetoday;
+    if ($this->unixtime==-1 || !$year) $this->unixtime=$this->timetoday;
 $this->daytoday=$this->mkActiveDate("j");
 $this->monthtoday=$this->mkActiveDate("n");
 $this->yeartoday=$this->mkActiveDate("Y");
-	if (!$day) $this->actday=$this->daytoday;
-	else $this->actday=$this->mkActiveDate("j",$this->unixtime);
-	if (!$month) $this->actmonth=$this->monthtoday;
-	else $this->actmonth=$this->mkActiveDate("n",$this->unixtime);
-	if (!$year) $this->actyear=$this->yeartoday;
-	else $this->actyear=$this->mkActiveDate("Y",$this->unixtime);
+    if (!$day) $this->actday=$this->daytoday;
+    else $this->actday=$this->mkActiveDate("j",$this->unixtime);
+    if (!$month) $this->actmonth=$this->monthtoday;
+    else $this->actmonth=$this->mkActiveDate("n",$this->unixtime);
+    if (!$year) $this->actyear=$this->yeartoday;
+    else $this->actyear=$this->mkActiveDate("Y",$this->unixtime);
 $this->has31days=checkdate($this->actmonth,31,$this->actyear);
 $this->isSchalt=checkdate(2,29,$this->actyear);
-	if ($this->isSchalt==1 && $this->actmonth==2) $this->maxdays=29;
-	elseif ($this->isSchalt!=1 && $this->actmonth==2) $this->maxdays=28;
-	elseif ($this->has31days==1) $this->maxdays=31;
-	else $this->maxdays=30;
+    if ($this->isSchalt==1 && $this->actmonth==2) $this->maxdays=29;
+    elseif ($this->isSchalt!=1 && $this->actmonth==2) $this->maxdays=28;
+    elseif ($this->has31days==1) $this->maxdays=31;
+    else $this->maxdays=30;
 $this->firstday=$this->mkActiveDate("w", $this->mkActiveTime(0,0,1,$this->actmonth,1,$this->actyear));
 $this->GMTDiff=$GMTDiff;
 }
@@ -189,10 +189,10 @@ PUBLIC enableYearNav() -> enables the year's navigation controls
 ********************************************************************************
 */
 function enableYearNav($link=false,$arrowBack=false,$arrowForw=false){
-	if ($link) $this->urlNav=$link;
-	else $this->urlNav=$_SERVER['PHP_SELF'];
-	if ($arrowBack) $this->yearNavBack=$arrowBack;
-	if ($arrowForw) $this->yearNavForw=$arrowForw;
+    if ($link) $this->urlNav=$link;
+    else $this->urlNav=$_SERVER['PHP_SELF'];
+    if ($arrowBack) $this->yearNavBack=$arrowBack;
+    if ($arrowForw) $this->yearNavForw=$arrowForw;
 $this->yearNav=true;
 }
 /*
@@ -201,10 +201,10 @@ PUBLIC enableMonthNav() -> enables the month's navigation controls
 ********************************************************************************
 */
 function enableMonthNav($link=false,$arrowBack=false,$arrowForw=false){
-	if ($link) $this->urlNav=$link;
-	else $this->urlNav=$_SERVER['PHP_SELF'];
-	if ($arrowBack) $this->monthNavBack=$arrowBack;
-	if ($arrowForw) $this->monthNavForw=$arrowForw;
+    if ($link) $this->urlNav=$link;
+    else $this->urlNav=$_SERVER['PHP_SELF'];
+    if ($arrowBack) $this->monthNavBack=$arrowBack;
+    if ($arrowForw) $this->monthNavForw=$arrowForw;
 $this->monthNav=true;
 }
 /*
@@ -214,9 +214,9 @@ param javaScript: sets a Javascript function on each day link
 ********************************************************************************
 */
 function enableDayLinks($link=false,$javaScript=false){
-	if ($link) $this->url=$link;
-	else $this->url=$_SERVER['PHP_SELF'];
-	if ($javaScript) $this->javaScriptDay=$javaScript;
+    if ($link) $this->url=$link;
+    else $this->url=$_SERVER['PHP_SELF'];
+    if ($javaScript) $this->javaScriptDay=$javaScript;
 $this->dayLinks=true;
 }
 /*
@@ -225,13 +225,13 @@ PUBLIC enableDatePicker() -> enables the day picker control
 ********************************************************************************
 */
 function enableDatePicker($startYear=false,$endYear=false,$link=false,$button=false){
-	if ($link) $this->urlPicker=$link;
-	else $this->urlPicker=$_SERVER['PHP_SELF'];
-	if ($startYear && $endYear){
-		if ($startYear>=$this->startYear && $startYear<$this->endYear) $this->startYear=$startYear;
-		if ($endYear>$this->startYear && $endYear<=$this->endYear) $this->endYear=$endYear;
-	}
-	if ($button) $this->selBtn=$button;
+    if ($link) $this->urlPicker=$link;
+    else $this->urlPicker=$_SERVER['PHP_SELF'];
+    if ($startYear && $endYear){
+        if ($startYear>=$this->startYear && $startYear<$this->endYear) $this->startYear=$startYear;
+        if ($endYear>$this->startYear && $endYear<=$this->endYear) $this->endYear=$endYear;
+    }
+    if ($button) $this->selBtn=$button;
 $this->datePicker=true;
 }
 /*
@@ -241,7 +241,7 @@ PUBLIC setEvent() -> sets a calendar event, $id: the HTML class (css layout)
 */
 function setEvent($year,$month,$day,$id=false,$url=false){
 $eventTime=$this->mkActiveTime(0,0,1,$month,$day,$year);
-	if (!$id) $id=$this->cssEvent;
+    if (!$id) $id=$this->cssEvent;
 $this->calEvents[$eventTime]=$id;
 $this->calEventsUrl[$eventTime]=$url;
 }
@@ -255,10 +255,10 @@ function setEventContent($year,$month,$day,$content,$url=false,$id=false){
 $eventTime=$this->mkActiveTime(0,0,1,$month,$day,$year);
 $eventContent[$eventTime]=$content;
 $this->calEventContent[]=$eventContent;
-	if (!$id) $id=$this->cssEventContent;
+    if (!$id) $id=$this->cssEventContent;
 $this->calEventContentId[]=$id;
-	if ($url) $this->calEventContentUrl[]=$url;
-	else $this->calEventContentUrl[]=$this->calInit++;
+    if ($url) $this->calEventContentUrl[]=$url;
+    else $this->calEventContentUrl[]=$this->calInit++;
 }
 /*
 ********************************************************************************
@@ -266,8 +266,8 @@ PUBLIC setMonthNames() -> sets the month names, $namesArray must be an array of 
 ********************************************************************************
 */
 function setMonthNames($namesArray){
-	if (!is_array($namesArray) || count($namesArray)!=12) return false;
-	else $this->monthNames=$namesArray;
+    if (!is_array($namesArray) || count($namesArray)!=12) return false;
+    else $this->monthNames=$namesArray;
 }
 /*
 ********************************************************************************
@@ -275,8 +275,8 @@ PUBLIC setDayNames() -> sets the week day names, $namesArray must be an array of
 ********************************************************************************
 */
 function setDayNames($namesArray){
-	if (!is_array($namesArray) || count($namesArray)!=7) return false;
-	else $this->dayNames=$namesArray;
+    if (!is_array($namesArray) || count($namesArray)!=7) return false;
+    else $this->dayNames=$namesArray;
 }
 /*
 ********************************************************************************
@@ -286,7 +286,7 @@ You can change the calendar structure by simply calling these private methods in
 ********************************************************************************
 */
 function showYear($rowCount=false){
-	if ($rowCount) $this->rowCount=$rowCount;
+    if ($rowCount) $this->rowCount=$rowCount;
 $this->monthNav=false; // disables month navigation in yearview
 $out=$this->mkYearHead(); // this should remain first: opens table tag
 $out.=$this->mkYearTitle(); // tr tag: year title and navigation
@@ -312,8 +312,8 @@ $out=$this->mkMonthHead(); // this should remain first: opens table tag
 $out.=$this->mkMonthTitle(); // tr tag: month title and navigation
 $out.=$this->mkDatePicker(); // tr tag: month date picker (month and year selection)
 $out.=$this->mkWeekDays(); // tr tag: the weekday names
-	if ($this->showNoMonthDays==false) $out.=$this->mkMonthBody(); // tr tags: the days of the month
-	else $out.=$this->mkMonthBody(1); // tr tags: the days of the month
+    if ($this->showNoMonthDays==false) $out.=$this->mkMonthBody(); // tr tags: the days of the month
+    else $out.=$this->mkMonthBody(1); // tr tags: the days of the month
 $out.=$this->mkMonthFoot(); // this should remain last: closes table tag
 return $out;
 }
@@ -359,22 +359,22 @@ PRIVATE mkYearTitle() -> creates the tile and navigation tr tag of the year tabl
 ********************************************************************************
 */
 function mkYearTitle(){
-	if ($this->rowCount<1 || $this->rowCount>12) $this->rowCount=4;
-	if (!$this->yearNav){
-		$out="<tr><td colspan=\"".$this->rowCount."\" class=\"".$this->cssYearTitle."\">";
-		$out.=$this->actyear;
-		$out.="</td></tr>\n";
-	}
-	else{
-		$out="<tr><td colspan=\"".$this->rowCount."\" align=\"center\">";
-		$out.="<table><tr><td class=\"".$this->cssYearNav."\">";
-		$out.=$this->mkUrl($this->actyear-1);
-		$out.=$this->yearNavBack."</a></td>";
-		$out.="<td class=\"".$this->cssYearTitle."\">".$this->actyear."</td>";
-		$out.="<td class=\"".$this->cssYearNav."\">";
-		$out.=$this->mkUrl($this->actyear+1);
-		$out.=$this->yearNavForw."</a></td></tr></table></td></tr>\n";
-	}
+    if ($this->rowCount<1 || $this->rowCount>12) $this->rowCount=4;
+    if (!$this->yearNav){
+        $out="<tr><td colspan=\"".$this->rowCount."\" class=\"".$this->cssYearTitle."\">";
+        $out.=$this->actyear;
+        $out.="</td></tr>\n";
+    }
+    else{
+        $out="<tr><td colspan=\"".$this->rowCount."\" align=\"center\">";
+        $out.="<table><tr><td class=\"".$this->cssYearNav."\">";
+        $out.=$this->mkUrl($this->actyear-1);
+        $out.=$this->yearNavBack."</a></td>";
+        $out.="<td class=\"".$this->cssYearTitle."\">".$this->actyear."</td>";
+        $out.="<td class=\"".$this->cssYearNav."\">";
+        $out.=$this->mkUrl($this->actyear+1);
+        $out.=$this->yearNavForw."</a></td></tr></table></td></tr>\n";
+    }
 return $out;
 }
 /*
@@ -385,14 +385,14 @@ PRIVATE mkYearBody() -> creates the tr tags of the year table
 function mkYearBody(){
 $TrMaker = $this->rowCount;
 $out="<tr>\n";
-	for ($x=1; $x<=12; $x++) {
-		$this->activeCalendar($this->actyear,$x,false,$this->GMTDiff);
-		$out.="<td valign=\"top\">\n".$this->showMonth()."</td>\n";
-		if ($x == $TrMaker && $x < 12) {
-			$out.="</tr><tr>";
-			$TrMaker = ($TrMaker+$this->rowCount);
-		}
-	}
+    for ($x=1; $x<=12; $x++) {
+        $this->activeCalendar($this->actyear,$x,false,$this->GMTDiff);
+        $out.="<td valign=\"top\">\n".$this->showMonth()."</td>\n";
+        if ($x == $TrMaker && $x < 12) {
+            $out.="</tr><tr>";
+            $TrMaker = ($TrMaker+$this->rowCount);
+        }
+    }
 $out.="</tr>\n";
 return $out;
 }
@@ -418,23 +418,23 @@ PRIVATE mkMonthTitle() -> creates the tile and navigation tr tag of the month ta
 ********************************************************************************
 */
 function mkMonthTitle(){
-	if (!$this->monthNav){
-		$out="<tr><td class=\"".$this->cssMonthTitle."\" colspan=\"7\">";
-		$out.=$this->getMonthName().$this->monthYearDivider.$this->actyear;
-		$out.="</td></tr>\n";
-	}
-	else{
-		$out="<tr><td class=\"".$this->cssMonthNav."\" colspan=\"2\">";
-		if ($this->actmonth==1) $out.=$this->mkUrl($this->actyear-1,"12");
-		else $out.=$this->mkUrl($this->actyear,$this->actmonth-1);
-		$out.=$this->monthNavBack."</a></td>";
-		$out.="<td class=\"".$this->cssMonthTitle."\" colspan=\"3\">";
-		$out.=$this->getMonthName().$this->monthYearDivider.$this->actyear."</td>";
-		$out.="<td class=\"".$this->cssMonthNav."\" colspan=\"2\">";
-		if ($this->actmonth==12) $out.=$this->mkUrl($this->actyear+1,"1");
-		else $out.=$this->mkUrl($this->actyear,$this->actmonth+1);
-		$out.=$this->monthNavForw."</a></td></tr>\n";
-	}
+    if (!$this->monthNav){
+        $out="<tr><td class=\"".$this->cssMonthTitle."\" colspan=\"7\">";
+        $out.=$this->getMonthName().$this->monthYearDivider.$this->actyear;
+        $out.="</td></tr>\n";
+    }
+    else{
+        $out="<tr><td class=\"".$this->cssMonthNav."\" colspan=\"2\">";
+        if ($this->actmonth==1) $out.=$this->mkUrl($this->actyear-1,"12");
+        else $out.=$this->mkUrl($this->actyear,$this->actmonth-1);
+        $out.=$this->monthNavBack."</a></td>";
+        $out.="<td class=\"".$this->cssMonthTitle."\" colspan=\"3\">";
+        $out.=$this->getMonthName().$this->monthYearDivider.$this->actyear."</td>";
+        $out.="<td class=\"".$this->cssMonthNav."\" colspan=\"2\">";
+        if ($this->actmonth==12) $out.=$this->mkUrl($this->actyear+1,"1");
+        else $out.=$this->mkUrl($this->actyear,$this->actmonth+1);
+        $out.=$this->monthNavForw."</a></td></tr>\n";
+    }
 return $out;
 }
 /*
@@ -443,30 +443,30 @@ PRIVATE mkDatePicker() -> creates the tr tag for the date picker
 ********************************************************************************
 */
 function mkDatePicker($yearpicker=false){
-	if ($yearpicker) $pickerSpan=$this->rowCount;
-	else $pickerSpan=7;
-	if ($this->datePicker){
-		$out="<tr><td class=\"".$this->cssPicker."\" colspan=\"".$pickerSpan."\">\n";
-		$out.="<form name=\"".$this->cssPickerForm."\" class=\"".$this->cssPickerForm."\" action=\"".$this->urlPicker."\" method=\"get\">\n";
-		if (!$yearpicker){
-			$out.="<select name=\"".$this->monthID."\" class=\"".$this->cssPickerMonth."\">\n";
-			for ($z=1;$z<=12;$z++){
-				if ($z==$this->actmonth) $out.="<option value=\"".$z."\" selected=\"selected\">".$this->getMonthName($z)."</option>\n";
-				else $out.="<option value=\"".$z."\">".$this->getMonthName($z)."</option>\n";
-			}
-			$out.="</select>\n";
-		}
-		$out.="<select name=\"".$this->yearID."\" class=\"".$this->cssPickerYear."\">\n";
-		for ($z=$this->startYear;$z<=$this->endYear;$z++){
-			if ($z==$this->actyear) $out.="<option value=\"".$z."\" selected=\"selected\">".$z."</option>\n";
-			else $out.="<option value=\"".$z."\">".$z."</option>\n";
-		}
-		$out.="</select>\n";
-		$out.="<input type=\"submit\" value=\"".$this->selBtn."\" class=\"".$this->cssPickerButton."\"></input>\n";
-		$out.="</form>\n";
-		$out.="</td></tr>\n";
-	}
-	else $out="";
+    if ($yearpicker) $pickerSpan=$this->rowCount;
+    else $pickerSpan=7;
+    if ($this->datePicker){
+        $out="<tr><td class=\"".$this->cssPicker."\" colspan=\"".$pickerSpan."\">\n";
+        $out.="<form name=\"".$this->cssPickerForm."\" class=\"".$this->cssPickerForm."\" action=\"".$this->urlPicker."\" method=\"get\">\n";
+        if (!$yearpicker){
+            $out.="<select name=\"".$this->monthID."\" class=\"".$this->cssPickerMonth."\">\n";
+            for ($z=1;$z<=12;$z++){
+                if ($z==$this->actmonth) $out.="<option value=\"".$z."\" selected=\"selected\">".$this->getMonthName($z)."</option>\n";
+                else $out.="<option value=\"".$z."\">".$this->getMonthName($z)."</option>\n";
+            }
+            $out.="</select>\n";
+        }
+        $out.="<select name=\"".$this->yearID."\" class=\"".$this->cssPickerYear."\">\n";
+        for ($z=$this->startYear;$z<=$this->endYear;$z++){
+            if ($z==$this->actyear) $out.="<option value=\"".$z."\" selected=\"selected\">".$z."</option>\n";
+            else $out.="<option value=\"".$z."\">".$z."</option>\n";
+        }
+        $out.="</select>\n";
+        $out.="<input type=\"submit\" value=\"".$this->selBtn."\" class=\"".$this->cssPickerButton."\"></input>\n";
+        $out.="</form>\n";
+        $out.="</td></tr>\n";
+    }
+    else $out="";
 return $out;
 }
 /*
@@ -475,26 +475,26 @@ PRIVATE mkWeekDays() -> creates the tr tag of the month table for the weekdays
 ********************************************************************************
 */
 function mkWeekDays(){
-	if ($this->startOnSun){
-		$out="<tr class=\"".$this->cssWeekDay."\"><td>".$this->getDayName(0)."</td>";
-		$out.="<td>".$this->getDayName(1)."</td>";
-		$out.="<td>".$this->getDayName(2)."</td>";
-		$out.="<td>".$this->getDayName(3)."</td>";
-		$out.="<td>".$this->getDayName(4)."</td>";
-		$out.="<td>".$this->getDayName(5)."</td>";
-		$out.="<td>".$this->getDayName(6)."</td></tr>\n";
-	}
-	else{
-		$out="<tr class=\"".$this->cssWeekDay."\"><td>".$this->getDayName(1)."</td>";
-		$out.="<td>".$this->getDayName(2)."</td>";
-		$out.="<td>".$this->getDayName(3)."</td>";
-		$out.="<td>".$this->getDayName(4)."</td>";
-		$out.="<td>".$this->getDayName(5)."</td>";
-		$out.="<td>".$this->getDayName(6)."</td>";
-		$out.="<td>".$this->getDayName(0)."</td></tr>\n";
-		$this->firstday=$this->firstday-1;
-		if ($this->firstday<0) $this->firstday=6;
-	}
+    if ($this->startOnSun){
+        $out="<tr class=\"".$this->cssWeekDay."\"><td>".$this->getDayName(0)."</td>";
+        $out.="<td>".$this->getDayName(1)."</td>";
+        $out.="<td>".$this->getDayName(2)."</td>";
+        $out.="<td>".$this->getDayName(3)."</td>";
+        $out.="<td>".$this->getDayName(4)."</td>";
+        $out.="<td>".$this->getDayName(5)."</td>";
+        $out.="<td>".$this->getDayName(6)."</td></tr>\n";
+    }
+    else{
+        $out="<tr class=\"".$this->cssWeekDay."\"><td>".$this->getDayName(1)."</td>";
+        $out.="<td>".$this->getDayName(2)."</td>";
+        $out.="<td>".$this->getDayName(3)."</td>";
+        $out.="<td>".$this->getDayName(4)."</td>";
+        $out.="<td>".$this->getDayName(5)."</td>";
+        $out.="<td>".$this->getDayName(6)."</td>";
+        $out.="<td>".$this->getDayName(0)."</td></tr>\n";
+        $this->firstday=$this->firstday-1;
+        if ($this->firstday<0) $this->firstday=6;
+    }
 return $out;
 }
 /*
@@ -503,45 +503,45 @@ PRIVATE mkMonthBody() -> creates the tr tags of the month table
 ********************************************************************************
 */
 function mkMonthBody($showNoMonthDays=0){
-	if ($this->actmonth==1){
-		$pMonth=12;
-		$pYear=$this->actyear-1;
-	}
-	else{
-		$pMonth=$this->actmonth-1;
-		$pYear=$this->actyear;
-	}
+    if ($this->actmonth==1){
+        $pMonth=12;
+        $pYear=$this->actyear-1;
+    }
+    else{
+        $pMonth=$this->actmonth-1;
+        $pYear=$this->actyear;
+    }
 $out="<tr>";
 $monthday=0;
 $nmonthday=1;
-	for ($x=0; $x<=6; $x++){
-		if ($x>=$this->firstday){
-		$monthday++;
-		$out.=$this->mkDay($monthday);
-		}
-		else{
-			if ($showNoMonthDays==0) $out.="<td class=\"".$this->cssNoMonthDay."\"></td>";
-			else $out.="<td class=\"".$this->cssNoMonthDay."\">".($this->getMonthDays($pMonth,$pYear)-($this->firstday-1)+$x)."</td>";
-		}
-	}
+    for ($x=0; $x<=6; $x++){
+        if ($x>=$this->firstday){
+        $monthday++;
+        $out.=$this->mkDay($monthday);
+        }
+        else{
+            if ($showNoMonthDays==0) $out.="<td class=\"".$this->cssNoMonthDay."\"></td>";
+            else $out.="<td class=\"".$this->cssNoMonthDay."\">".($this->getMonthDays($pMonth,$pYear)-($this->firstday-1)+$x)."</td>";
+        }
+    }
 $out.="</tr>\n";
 $goon=$monthday+1;
 $stop=0;
-	for ($x=0; $x<=6; $x++){
-		if ($goon>$this->maxdays) break;
-		if ($stop==1) break;
-		$out.="<tr>";
-			for ($i=$goon; $i<=$goon+6; $i++){
-				if ($i>$this->maxdays){
-					if ($showNoMonthDays==0) $out.="<td class=\"".$this->cssNoMonthDay."\"></td>";
-					else $out.="<td class=\"".$this->cssNoMonthDay."\">".$nmonthday++."</td>";
-					$stop=1;
-				}
-				else $out.=$this->mkDay($i);
-			}
-		$goon=$goon+7;
-		$out.="</tr>\n";
-	}
+    for ($x=0; $x<=6; $x++){
+        if ($goon>$this->maxdays) break;
+        if ($stop==1) break;
+        $out.="<tr>";
+            for ($i=$goon; $i<=$goon+6; $i++){
+                if ($i>$this->maxdays){
+                    if ($showNoMonthDays==0) $out.="<td class=\"".$this->cssNoMonthDay."\"></td>";
+                    else $out.="<td class=\"".$this->cssNoMonthDay."\">".$nmonthday++."</td>";
+                    $stop=1;
+                }
+                else $out.=$this->mkDay($i);
+            }
+        $goon=$goon+7;
+        $out.="</tr>\n";
+    }
 $this->selectedday="-2";
 return $out;
 }
@@ -553,35 +553,35 @@ PRIVATE mkDay() -> creates each td tag of the month body
 function mkDay($var){
 $eventContent=$this->mkEventContent($var);
 $linkstr=$this->mkUrl($this->actyear,$this->actmonth,$var);
-	if ($this->javaScriptDay) $linkstr="<a href=\"javascript:".$this->javaScriptDay."(".$this->actyear.",".$this->actmonth.",".$var.")\">".$var."</a>";
-	if ($this->isEvent($var)){
-		if ($this->eventUrl){
-			$out="<td class=\"".$this->eventID."\"><a href=\"".$this->eventUrl."\">".$var."</a>".$eventContent."</td>";
-			$this->eventUrl=false;
-		}
-		elseif (!$this->dayLinks) $out="<td class=\"".$this->eventID."\">".$var.$eventContent."</td>";
-		else $out="<td class=\"".$this->eventID."\">".$linkstr.$eventContent."</td>";
-	}
-	elseif ($var==$this->selectedday && $this->actmonth==$this->selectedmonth && $this->actyear==$this->selectedyear){
-		if (!$this->dayLinks) $out="<td class=\"".$this->cssSelecDay."\">".$var.$eventContent."</td>";
-		else $out="<td class=\"".$this->cssSelecDay."\">".$linkstr.$eventContent."</td>";
-	}
-	elseif ($var==$this->daytoday && $this->actmonth==$this->monthtoday && $this->actyear==$this->yeartoday){
-		if (!$this->dayLinks) $out="<td class=\"".$this->cssToday."\">".$var.$eventContent."</td>";
-		else $out="<td class=\"".$this->cssToday."\">".$linkstr.$eventContent."</td>";
-	}
-	elseif ($this->getWeekday($var)==0 && $this->crSunClass){
-		if (!$this->dayLinks) $out="<td class=\"".$this->cssSunday."\">".$var.$eventContent."</td>";
-		else $out="<td class=\"".$this->cssSunday."\">".$linkstr.$eventContent."</td>";
-	}
-	elseif ($this->getWeekday($var)==6 && $this->crSatClass){
-		if (!$this->dayLinks) $out="<td class=\"".$this->cssSaturday."\">".$var.$eventContent."</td>";
-		else $out="<td class=\"".$this->cssSaturday."\">".$linkstr.$eventContent."</td>";
-	}
-	else{
-		if (!$this->dayLinks) $out="<td class=\"".$this->cssMonthDay."\">".$var.$eventContent."</td>";
-		else $out="<td class=\"".$this->cssMonthDay."\">".$linkstr.$eventContent."</td>";
-	}
+    if ($this->javaScriptDay) $linkstr="<a href=\"javascript:".$this->javaScriptDay."(".$this->actyear.",".$this->actmonth.",".$var.")\">".$var."</a>";
+    if ($this->isEvent($var)){
+        if ($this->eventUrl){
+            $out="<td class=\"".$this->eventID."\"><a href=\"".$this->eventUrl."\">".$var."</a>".$eventContent."</td>";
+            $this->eventUrl=false;
+        }
+        elseif (!$this->dayLinks) $out="<td class=\"".$this->eventID."\">".$var.$eventContent."</td>";
+        else $out="<td class=\"".$this->eventID."\">".$linkstr.$eventContent."</td>";
+    }
+    elseif ($var==$this->selectedday && $this->actmonth==$this->selectedmonth && $this->actyear==$this->selectedyear){
+        if (!$this->dayLinks) $out="<td class=\"".$this->cssSelecDay."\">".$var.$eventContent."</td>";
+        else $out="<td class=\"".$this->cssSelecDay."\">".$linkstr.$eventContent."</td>";
+    }
+    elseif ($var==$this->daytoday && $this->actmonth==$this->monthtoday && $this->actyear==$this->yeartoday){
+        if (!$this->dayLinks) $out="<td class=\"".$this->cssToday."\">".$var.$eventContent."</td>";
+        else $out="<td class=\"".$this->cssToday."\">".$linkstr.$eventContent."</td>";
+    }
+    elseif ($this->getWeekday($var)==0 && $this->crSunClass){
+        if (!$this->dayLinks) $out="<td class=\"".$this->cssSunday."\">".$var.$eventContent."</td>";
+        else $out="<td class=\"".$this->cssSunday."\">".$linkstr.$eventContent."</td>";
+    }
+    elseif ($this->getWeekday($var)==6 && $this->crSatClass){
+        if (!$this->dayLinks) $out="<td class=\"".$this->cssSaturday."\">".$var.$eventContent."</td>";
+        else $out="<td class=\"".$this->cssSaturday."\">".$linkstr.$eventContent."</td>";
+    }
+    else{
+        if (!$this->dayLinks) $out="<td class=\"".$this->cssMonthDay."\">".$var.$eventContent."</td>";
+        else $out="<td class=\"".$this->cssMonthDay."\">".$linkstr.$eventContent."</td>";
+    }
 return $out;
 }
 /*
@@ -598,16 +598,16 @@ PRIVATE mkUrl() -> creates the day and navigation link structure
 ********************************************************************************
 */
 function mkUrl($year,$month=false,$day=false){
-	if (strpos($this->url,"?")) $glue="&amp;";
-	else $glue="?";
-	if (strpos($this->urlNav,"?")) $glueNav="&amp;";
-	else $glueNav="?";
+    if (strpos($this->url,"?")) $glue="&amp;";
+    else $glue="?";
+    if (strpos($this->urlNav,"?")) $glueNav="&amp;";
+    else $glueNav="?";
 $yearNavLink="<a href=\"".$this->urlNav.$glueNav.$this->yearID."=".$year."\">";
 $monthNavLink="<a href=\"".$this->urlNav.$glueNav.$this->yearID."=".$year."&amp;".$this->monthID."=".$month."\">";
 $dayLink="<a href=\"".$this->url.$glue.$this->yearID."=".$year."&amp;".$this->monthID."=".$month."&amp;".$this->dayID."=".$day."\">".$day."</a>";
-	if ($year && $month && $day) return $dayLink;
-	if ($year && !$month && !$day) return $yearNavLink;
-	if ($year && $month && !$day) return $monthNavLink;
+    if ($year && $month && $day) return $dayLink;
+    if ($year && !$month && !$day) return $yearNavLink;
+    if ($year && $month && !$day) return $monthNavLink;
 }
 /*
 ********************************************************************************
@@ -617,27 +617,27 @@ PRIVATE mkEventContent() -> creates the table for the event content
 function mkEventContent($var){
 $hasContent=$this->hasEventContent($var);
 $out="";
-	if ($hasContent){
-		for ($x=0;$x<count($hasContent);$x++){
-			foreach($hasContent[$x] as $eventContentid => $eventContentData){
-				foreach($eventContentData as $eventContentUrl => $eventContent){
-					$out.="<table class=\"".$eventContentid."\">";
-					if (is_string($eventContent)){
-						if (is_int($eventContentUrl)) $out.="<tr><td>".$eventContent."</td></tr></table>";
-						else $out.="<tr><td><a href=\"".$eventContentUrl."\">".$eventContent."</a></td></tr></table>";
-					}
-					elseif (is_array($eventContent)){
-						foreach($eventContent as $arrayContent){
-							if (is_int($eventContentUrl)) $out.="<tr><td>".$arrayContent."</td></tr>";
-							else $out.="<tr><td><a href=\"".$eventContentUrl."\">".$arrayContent."</a></td></tr>";
-						}
-					$out.="</table>";
-					}
-					else $out="";
-				}
-			}
-		}
-	}
+    if ($hasContent){
+        for ($x=0;$x<count($hasContent);$x++){
+            foreach($hasContent[$x] as $eventContentid => $eventContentData){
+                foreach($eventContentData as $eventContentUrl => $eventContent){
+                    $out.="<table class=\"".$eventContentid."\">";
+                    if (is_string($eventContent)){
+                        if (is_int($eventContentUrl)) $out.="<tr><td>".$eventContent."</td></tr></table>";
+                        else $out.="<tr><td><a href=\"".$eventContentUrl."\">".$eventContent."</a></td></tr></table>";
+                    }
+                    elseif (is_array($eventContent)){
+                        foreach($eventContent as $arrayContent){
+                            if (is_int($eventContentUrl)) $out.="<tr><td>".$arrayContent."</td></tr>";
+                            else $out.="<tr><td><a href=\"".$eventContentUrl."\">".$arrayContent."</a></td></tr>";
+                        }
+                    $out.="</table>";
+                    }
+                    else $out="";
+                }
+            }
+        }
+    }
 return $out;
 }
 /*
@@ -646,22 +646,22 @@ PRIVATE getMonthName() -> returns the month's name, according to the configurati
 ********************************************************************************
 */
 function getMonthName($var=false){
-	if (!$var) $var=@$this->actmonth;
-	if ($this->monthNames) return $this->monthNames[$var-1];
-	switch($var){
-		case 1: return $this->jan;
-		case 2: return $this->feb;
-		case 3: return $this->mar;
-		case 4: return $this->apr;
-		case 5: return $this->may;
-		case 6: return $this->jun;
-		case 7: return $this->jul;
-		case 8: return $this->aug;
-		case 9: return $this->sep;
-		case 10: return $this->oct;
-		case 11: return $this->nov;
-		case 12: return $this->dec;
-	}
+    if (!$var) $var=@$this->actmonth;
+    if ($this->monthNames) return $this->monthNames[$var-1];
+    switch($var){
+        case 1: return $this->jan;
+        case 2: return $this->feb;
+        case 3: return $this->mar;
+        case 4: return $this->apr;
+        case 5: return $this->may;
+        case 6: return $this->jun;
+        case 7: return $this->jul;
+        case 8: return $this->aug;
+        case 9: return $this->sep;
+        case 10: return $this->oct;
+        case 11: return $this->nov;
+        case 12: return $this->dec;
+    }
 }
 /*
 ********************************************************************************
@@ -669,16 +669,16 @@ PRIVATE getDayName() -> returns the day's name, according to the configuration
 ********************************************************************************
 */
 function getDayName($var=false){
-	if ($this->dayNames) return $this->dayNames[$var];
-	switch($var){
-		case 0: return $this->sun;
-		case 1: return $this->mon;
-		case 2: return $this->tue;
-		case 3: return $this->wed;
-		case 4: return $this->thu;
-		case 5: return $this->fri;
-		case 6: return $this->sat;
-	}
+    if ($this->dayNames) return $this->dayNames[$var];
+    switch($var){
+        case 0: return $this->sun;
+        case 1: return $this->mon;
+        case 2: return $this->tue;
+        case 3: return $this->wed;
+        case 4: return $this->thu;
+        case 5: return $this->fri;
+        case 6: return $this->sat;
+    }
 }
 /*
 ********************************************************************************
@@ -688,10 +688,10 @@ PRIVATE getMonthDays() -> returns the number of days of the month specified
 function getMonthDays($month,$year){
 $has31days=checkdate($month,31,$year);
 $isSchalt=checkdate(2,29,$year);
-	if ($isSchalt==1 && $month==2) $maxdays=29;
-	elseif ($isSchalt!=1 && $month==2) $maxdays=28;
-	elseif ($has31days==1) $maxdays=31;
-	else $maxdays=30;
+    if ($isSchalt==1 && $month==2) $maxdays=29;
+    elseif ($isSchalt!=1 && $month==2) $maxdays=28;
+    elseif ($has31days==1) $maxdays=31;
+    else $maxdays=30;
 return $maxdays;
 }
 /*
@@ -708,21 +708,21 @@ PRIVATE isEvent() -> checks if a date was set as an event and creates the eventI
 ********************************************************************************
 */
 function isEvent($var){
-	if ($this->calEvents){
-		$checkTime=$this->mkActiveTime(0,0,1,$this->actmonth,$var,$this->actyear);
-		$selectedTime=$this->mkActiveTime(0,0,1,$this->selectedmonth,$this->selectedday,$this->selectedyear);
-		$todayTime=$this->mkActiveTime(0,0,1,$this->monthtoday,$this->daytoday,$this->yeartoday);
-		foreach($this->calEvents as $eventTime => $eventID){
-			if ($eventTime==$checkTime){
-				if ($eventTime==$selectedTime) $this->eventID=$this->cssPrefixSelecEvent.$eventID;
-				elseif ($eventTime==$todayTime) $this->eventID=$this->cssPrefixTodayEvent.$eventID;
-				else $this->eventID=$eventID;
-				if ($this->calEventsUrl[$eventTime]) $this->eventUrl=$this->calEventsUrl[$eventTime];
-				return true;
-			}
-		}
-	return false;
-	}
+    if ($this->calEvents){
+        $checkTime=$this->mkActiveTime(0,0,1,$this->actmonth,$var,$this->actyear);
+        $selectedTime=$this->mkActiveTime(0,0,1,$this->selectedmonth,$this->selectedday,$this->selectedyear);
+        $todayTime=$this->mkActiveTime(0,0,1,$this->monthtoday,$this->daytoday,$this->yeartoday);
+        foreach($this->calEvents as $eventTime => $eventID){
+            if ($eventTime==$checkTime){
+                if ($eventTime==$selectedTime) $this->eventID=$this->cssPrefixSelecEvent.$eventID;
+                elseif ($eventTime==$todayTime) $this->eventID=$this->cssPrefixTodayEvent.$eventID;
+                else $this->eventID=$eventID;
+                if ($this->calEventsUrl[$eventTime]) $this->eventUrl=$this->calEventsUrl[$eventTime];
+                return true;
+            }
+        }
+    return false;
+    }
 }
 /*
 ********************************************************************************
@@ -731,17 +731,17 @@ PRIVATE hasEventContent() -> checks if an event content was set
 */
 function hasEventContent($var){
 $hasContent=false;
-	if ($this->calEventContent){
-		$checkTime=$this->mkActiveTime(0,0,1,$this->actmonth,$var,$this->actyear);
-		for ($x=0;$x<count($this->calEventContent);$x++){
-			$eventContent=$this->calEventContent[$x];
-			$eventContentUrl=$this->calEventContentUrl[$x];
-			$eventContentId=$this->calEventContentId[$x];
-			foreach($eventContent as $eventTime => $eventContent){
-				if ($eventTime==$checkTime) $hasContent[][$eventContentId][$eventContentUrl]=$eventContent;
-			}
-		}
-	}
+    if ($this->calEventContent){
+        $checkTime=$this->mkActiveTime(0,0,1,$this->actmonth,$var,$this->actyear);
+        for ($x=0;$x<count($this->calEventContent);$x++){
+            $eventContent=$this->calEventContent[$x];
+            $eventContentUrl=$this->calEventContentUrl[$x];
+            $eventContentId=$this->calEventContentId[$x];
+            foreach($eventContent as $eventTime => $eventContent){
+                if ($eventTime==$checkTime) $hasContent[][$eventContentId][$eventContentUrl]=$eventContent;
+            }
+        }
+    }
 return $hasContent;
 }
 /*
@@ -750,9 +750,9 @@ PRIVATE mkActiveDate() -> checks if ADOdb Date Library is loaded and calls the d
 ********************************************************************************
 */
 function mkActiveDate($param,$acttime=false){
-	if (!$acttime) $acttime=$this->timetoday;
-	if (function_exists("adodb_date")) return adodb_date($param,$acttime);
-	else return date($param,$acttime);
+    if (!$acttime) $acttime=$this->timetoday;
+    if (function_exists("adodb_date")) return adodb_date($param,$acttime);
+    else return date($param,$acttime);
 }
 /*
 ********************************************************************************
@@ -760,9 +760,9 @@ PRIVATE mkActiveGMDate() -> checks if ADOdb Date Library is loaded and calls the
 ********************************************************************************
 */
 function mkActiveGMDate($param,$acttime=false){
-	if (!$acttime) $acttime=time();
-	if (function_exists("adodb_gmdate")) return adodb_gmdate($param,$acttime);
-	else return gmdate($param,$acttime);
+    if (!$acttime) $acttime=time();
+    if (function_exists("adodb_gmdate")) return adodb_gmdate($param,$acttime);
+    else return gmdate($param,$acttime);
 }
 /*
 ********************************************************************************
@@ -770,8 +770,8 @@ PRIVATE mkActiveTime() -> checks if ADOdb Date Library is loaded and calls the m
 ********************************************************************************
 */
 function mkActiveTime($hr,$min,$sec,$month=false,$day=false,$year=false){
-	if (function_exists("adodb_mktime")) return adodb_mktime($hr,$min,$sec,$month,$day,$year);
-	else return mktime($hr,$min,$sec,$month,$day,$year);
+    if (function_exists("adodb_mktime")) return adodb_mktime($hr,$min,$sec,$month,$day,$year);
+    else return mktime($hr,$min,$sec,$month,$day,$year);
 }
 }
 ?>

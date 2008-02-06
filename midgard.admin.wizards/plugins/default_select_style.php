@@ -18,7 +18,7 @@ class default_select_style extends midcom_baseclasses_components_handler
     */
     function default_select_style()
     {
-	    parent::midcom_baseclasses_components_handler();
+        parent::midcom_baseclasses_components_handler();
     }
 
     function _on_initialize()
@@ -45,16 +45,16 @@ class default_select_style extends midcom_baseclasses_components_handler
     {
         return array
         (
-	        'sitewizard' => array
-	        (
-	            'handler' => array('default_select_style', 'select_style'),
-	        ),
-	    );
+            'sitewizard' => array
+            (
+                'handler' => array('default_select_style', 'select_style'),
+            ),
+        );
     }
 
-	/**
+    /**
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_select_style()
     {
         $title = $this->_l10n->get('style selection');

@@ -65,10 +65,10 @@ class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
     var $_handler_config = Array();
 
     /**#@+
-	 * Variables concerning the actual payment, set during render_payment_link.
-	 *
-	 * @access protected
-	 */
+     * Variables concerning the actual payment, set during render_payment_link.
+     *
+     * @access protected
+     */
 
     /**
      * The amount that is being invoiced.
@@ -112,12 +112,12 @@ class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
     /**#@-*/
 
     /**#@+
-	 * Variables indicating the state of the payment processing, set during
-	 * process_payment, the callee can use these variables to determine the
-	 * state of the payment.
-	 *
-	 * @access public
-	 */
+     * Variables indicating the state of the payment processing, set during
+     * process_payment, the callee can use these variables to determine the
+     * state of the payment.
+     *
+     * @access public
+     */
 
     /**
      * Status code, one of NET_NEMEIN_PAYMENT_OK, NET_NEMEIN_PAYMENT_REJECTED,
@@ -160,7 +160,7 @@ class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
      */
     var $machine_response = Array();
 
-	/**#@-*/
+    /**#@-*/
 
     /**
      * Initializes the class, populates the config member variable.
@@ -169,8 +169,8 @@ class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
      */
     function net_nemein_payment_handler ($config)
     {
-     	$this->_component = 'net.nemein.payment';
-    	parent::midcom_baseclasses_components_purecode();
+         $this->_component = 'net.nemein.payment';
+        parent::midcom_baseclasses_components_purecode();
 
         $this->_handler_config = $config;
     }
@@ -242,7 +242,7 @@ class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
      */
     function process_payment()
     {
-    	debug_push_class(__CLASS__, __FUNCTION__);
+        debug_push_class(__CLASS__, __FUNCTION__);
 
         // Call the event handler
         $this->_on_process_payment();

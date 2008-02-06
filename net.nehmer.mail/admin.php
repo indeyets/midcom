@@ -87,7 +87,7 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
             MIDCOM_TOOLBAR_HELPTEXT => null,
             MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/search.png',
             MIDCOM_TOOLBAR_ENABLED => true,
-			MIDCOM_TOOLBAR_HIDDEN => ! $_MIDCOM->auth->can_user_do('browse_other_mailboxes'),
+            MIDCOM_TOOLBAR_HIDDEN => ! $_MIDCOM->auth->can_user_do('browse_other_mailboxes'),
         ), 0);
         */
 
@@ -108,11 +108,11 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
             MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
             MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
             MIDCOM_TOOLBAR_ENABLED => true,
-	        MIDCOM_TOOLBAR_HIDDEN =>
-	        (
-	               ! $_MIDCOM->auth->can_do('midgard:update', $this->_topic)
-	            || ! $_MIDCOM->auth->can_do('midcom:component_config', $this->_topic)
-	        )
+            MIDCOM_TOOLBAR_HIDDEN =>
+            (
+                   ! $_MIDCOM->auth->can_do('midgard:update', $this->_topic)
+                || ! $_MIDCOM->auth->can_do('midcom:component_config', $this->_topic)
+            )
         ));
     }
 
@@ -145,7 +145,7 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
      */
     function _show_welcome ($handler_id, &$data)
     {
-    	echo '<h2>' . $this->_l10n->get('your mailboxes') . '</h2>';
+        echo '<h2>' . $this->_l10n->get('your mailboxes') . '</h2>';
 
         $mailboxes = net_nehmer_mail_mailbox::list_mailboxes();
 
@@ -224,26 +224,26 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
 
         if ($_MIDCOM->auth->can_do('midgard:update', $data['mailbox']))
         {
-	        // If the save is successful, we adjust the privileges.
-	        $oldowner = $data['mailbox']->owner;
+            // If the save is successful, we adjust the privileges.
+            $oldowner = $data['mailbox']->owner;
 
             // Process the form and update the owner if necessary
             switch ($data['controller']->process_form())
             {
                 case 'save':
-	                if ($oldowner != $data['mailbox']->owner)
-	                {
-	                    $data['mailbox']->set_privilege('midgard:owner', "user:{$data['mailbox']->owner}");
+                    if ($oldowner != $data['mailbox']->owner)
+                    {
+                        $data['mailbox']->set_privilege('midgard:owner', "user:{$data['mailbox']->owner}");
 
-	                    // Revert old privileges.
-	                    $data['mailbox']->unset_privilege('midgard:owner', "user:{$oldowner}");
-	                }
+                        // Revert old privileges.
+                        $data['mailbox']->unset_privilege('midgard:owner', "user:{$oldowner}");
+                    }
 
                     // *** FALL THROUGH ***
 
                 case 'cancel':
                     $_MIDCOM->relocate('');
-                	// This will exit.
+                    // This will exit.
             }
         }
         else
@@ -308,8 +308,8 @@ class net_nehmer_mail_admin extends midcom_baseclasses_components_request_admin
         {
             case 'save':
                 $this->_create_mailbox();
-	            $_MIDCOM->relocate('');
-	            // This will exit.
+                $_MIDCOM->relocate('');
+                // This will exit.
 
             case 'cancel':
                 $_MIDCOM->relocate('');

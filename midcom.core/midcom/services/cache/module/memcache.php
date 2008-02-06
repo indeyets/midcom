@@ -43,10 +43,10 @@
 class midcom_services_cache_module_memcache extends midcom_services_cache_module
 {
     /**#@+
-	 * Internal runtime state variable.
-	 *
-	 * @access private
-	 */
+     * Internal runtime state variable.
+     *
+     * @access private
+     */
     
     /**
      * The configuration to use to start up the backend drivers. Initialized during
@@ -109,10 +109,10 @@ class midcom_services_cache_module_memcache extends midcom_services_cache_module
     {
         if ($this->_cache !== null)
         {
-	        foreach ($this->_data_groups as $group)
-	        {
-	            $this->_cache->_remove("{$group}-{$guid}");
-	        }
+            foreach ($this->_data_groups as $group)
+            {
+                $this->_cache->_remove("{$group}-{$guid}");
+            }
         }
     }
 

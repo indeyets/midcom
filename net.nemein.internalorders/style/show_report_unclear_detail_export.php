@@ -25,37 +25,37 @@ foreach($data['unclear'] as $sender => $event)
 $person_tmp_receiver = mgd_get_person($event->extra);
 $person_tmp_sender = mgd_get_person($event->creator);
 
-/*	echo "<pre>";
-	print_r($event);
-	echo "<pre>";*/
-	$sub_orders_sum = 0;
-	$sub_orders_quant_send = 0;
-	$sub_orders_quant_received = 0;
-	$sub_orders = mgd_list_events($event->id, 'creator');
-	if ($sub_orders)
-	{
-		while ($sub_orders->fetch())
-		{
-			$order = mgd_get_event($sub_orders->id);
-			$sub_orders_sum = $sub_orders_sum + $order->parameter('net.nemein.internalorders', 'sum');
-			$sub_orders_quant_send = $sub_orders_quant_send + $order->parameter('net.nemein.internalorders', 'quantity');
-			$sub_orders_quant_received = $sub_orders_quant_received + $order->parameter('net.nemein.internalorders', 'quantity_received');
-		}
-	}
+/*    echo "<pre>";
+    print_r($event);
+    echo "<pre>";*/
+    $sub_orders_sum = 0;
+    $sub_orders_quant_send = 0;
+    $sub_orders_quant_received = 0;
+    $sub_orders = mgd_list_events($event->id, 'creator');
+    if ($sub_orders)
+    {
+        while ($sub_orders->fetch())
+        {
+            $order = mgd_get_event($sub_orders->id);
+            $sub_orders_sum = $sub_orders_sum + $order->parameter('net.nemein.internalorders', 'sum');
+            $sub_orders_quant_send = $sub_orders_quant_send + $order->parameter('net.nemein.internalorders', 'quantity');
+            $sub_orders_quant_received = $sub_orders_quant_received + $order->parameter('net.nemein.internalorders', 'quantity_received');
+        }
+    }
 
-	echo "\n";
-	echo "<a href=\"".$_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."view/".$event->guid().".html\">".$event->title."</a>;";
-	echo $person_tmp_sender->name.";";
-	echo $person_tmp_receiver->name.";";
-	echo date("d.m.Y G:i", $event->start).";";
-	echo str_replace('.', ',', str_replace('EUR', '', money_format('%i', $sub_orders_sum)))."  €;";
-	echo $sub_orders_quant_send.";";
-	echo $sub_orders_quant_received.";";
-	$tmp_sum = $tmp_sum + $sub_orders_sum;
-	$tmp_quant = $tmp_quant + $sub_orders_quant_send;
-	$tmp_quant2 = $tmp_quant2 + $sub_orders_quant_received;
-	$tmp_orders_count++;
-	
+    echo "\n";
+    echo "<a href=\"".$_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."view/".$event->guid().".html\">".$event->title."</a>;";
+    echo $person_tmp_sender->name.";";
+    echo $person_tmp_receiver->name.";";
+    echo date("d.m.Y G:i", $event->start).";";
+    echo str_replace('.', ',', str_replace('EUR', '', money_format('%i', $sub_orders_sum)))."  €;";
+    echo $sub_orders_quant_send.";";
+    echo $sub_orders_quant_received.";";
+    $tmp_sum = $tmp_sum + $sub_orders_sum;
+    $tmp_quant = $tmp_quant + $sub_orders_quant_send;
+    $tmp_quant2 = $tmp_quant2 + $sub_orders_quant_received;
+    $tmp_orders_count++;
+    
 }
 echo "\n\n";
 

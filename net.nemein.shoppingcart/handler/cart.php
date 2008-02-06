@@ -186,9 +186,9 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
         return true;
     }
 
-	/**
+    /**
      * @param Array &$data The local request data.
-	 */
+     */
     function _handler_manage_handle_post(&$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);

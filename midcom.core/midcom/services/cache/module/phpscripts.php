@@ -55,7 +55,7 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
      */
     function _on_initialize()
     {
-    	$this->_cache_dir = $GLOBALS['midcom_config']['cache_base_directory']
+        $this->_cache_dir = $GLOBALS['midcom_config']['cache_base_directory']
             . $GLOBALS['midcom_config']['cache_module_phpscripts_directory'];
         
         if (! file_exists($this->_cache_dir))
@@ -66,11 +66,11 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
                 // This will exit.
             }
         }
-	    else if (! is_dir($this->_cache_dir))
-	    {
-	        die("Failed to create the cache base directory {$this->_cache_dir}: A file of the same name already exists.");
-	        // This will exit.
-	    }
+        else if (! is_dir($this->_cache_dir))
+        {
+            die("Failed to create the cache base directory {$this->_cache_dir}: A file of the same name already exists.");
+            // This will exit.
+        }
     }
     
     /**
@@ -152,7 +152,7 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
             debug_add("Failed to open the file {$filename} for writing.", MIDCOM_LOG_ERROR);
             if (is_set($php_errormsg))
             {
-            	debug_add($php_errormsg, MIDCOM_LOG_ERROR);
+                debug_add($php_errormsg, MIDCOM_LOG_ERROR);
             }
             debug_pop();
             return false;
@@ -164,7 +164,7 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
             debug_add("Failed to write to the file {$filename}.", MIDCOM_LOG_ERROR);
             if (isset($php_errormsg))
             {
-            	debug_add($php_errormsg, MIDCOM_LOG_ERROR);
+                debug_add($php_errormsg, MIDCOM_LOG_ERROR);
             }
             fclose($handle);
             debug_pop();

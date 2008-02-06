@@ -263,12 +263,12 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
         midcom_show_style('show-task-resourcing');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_list_prospects($handler_id, $args, &$data)
     {
         $this->_task = new org_openpsa_projects_task($args[0]);
@@ -306,12 +306,12 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
         midcom_show_style('show-prospects-xml');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_prospect_slots($handler_id, $args, &$data)
     {
         $data['prospect'] = new org_openpsa_projects_task_resource($args[0]);

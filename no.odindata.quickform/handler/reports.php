@@ -89,7 +89,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
     }
 
     function _on_initialize()
-	{
+    {
         $this->_load_schema_database();
 
         $this->_request_data['datamanager'] = & $this->_datamanager;
@@ -104,7 +104,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
             $this->_schema_name = $this->_config->get('schema_name');
         }
 
-	    if (! $this->_prepare_creation_datamanager($this->_schema_name))
+        if (! $this->_prepare_creation_datamanager($this->_schema_name))
         {
             debug_pop();
             return false;
@@ -119,33 +119,33 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
 
         $nap = new midcom_helper_nav();
         $this->_request_data['topic'] = new midcom_db_topic($nap->get_current_node());
-	}
+    }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
-	function _handler_report_index()
+     */
+    function _handler_report_index()
     {
         $tmp[] = Array
-		(
-			MIDCOM_NAV_URL => '',
-			MIDCOM_NAV_NAME => $this->_request_data['topic']->extra,
-		);
+        (
+            MIDCOM_NAV_URL => '',
+            MIDCOM_NAV_NAME => $this->_request_data['topic']->extra,
+        );
 
-		$tmp[] = Array
-		(
-			MIDCOM_NAV_URL => 'reports/',
-			MIDCOM_NAV_NAME => $this->_l10n->get('Reports'),
-		);
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'reports/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('Reports'),
+        );
 
-		$_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
-		$qb_articles = midcom_db_article::new_query_builder();
-		$qb_articles->add_constraint('topic', '=', $this->_request_data['topic']->id);
-		$this->_request_data['articles_count'] = $qb_articles->count();
+        $qb_articles = midcom_db_article::new_query_builder();
+        $qb_articles->add_constraint('topic', '=', $this->_request_data['topic']->id);
+        $this->_request_data['articles_count'] = $qb_articles->count();
 
 
         foreach($this->_request_data['schema_content']['fields'] as $schema_field => $array_content)
@@ -154,7 +154,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
             {
                 $this->_request_data['fields_for_search'][$array_content['location']] = $schema_field;
             }
-		}
+        }
 
 //        $this->_request_data['message'] = $this->_config->get('end_message');
 
@@ -166,37 +166,37 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
         midcom_show_style('show-report');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_report_list_all()
     {
         $tmp[] = Array
-		(
-			MIDCOM_NAV_URL => '',
-			MIDCOM_NAV_NAME => $this->_request_data['topic']->extra,
-		);
-		$tmp[] = Array
-		(
-			MIDCOM_NAV_URL => 'reports/',
-			MIDCOM_NAV_NAME => $this->_l10n->get('Reports'),
-		);
-		$tmp[] = Array
-		(
-			MIDCOM_NAV_URL => 'list_all/',
-			MIDCOM_NAV_NAME => $this->_l10n->get('List all'),
-		);
+        (
+            MIDCOM_NAV_URL => '',
+            MIDCOM_NAV_NAME => $this->_request_data['topic']->extra,
+        );
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'reports/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('Reports'),
+        );
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'list_all/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('List all'),
+        );
 
-		$_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
-		$qb_articles = midcom_db_article::new_query_builder();
-		$qb_articles->add_constraint('topic', '=', $this->_request_data['topic']->id);
-		$qb_articles->add_order('name');
-		$this->_request_data['articles_count'] = $qb_articles->count();
-		$this->_request_data['articles'] = $qb_articles->execute();
+        $qb_articles = midcom_db_article::new_query_builder();
+        $qb_articles->add_constraint('topic', '=', $this->_request_data['topic']->id);
+        $qb_articles->add_order('name');
+        $this->_request_data['articles_count'] = $qb_articles->count();
+        $this->_request_data['articles'] = $qb_articles->execute();
 
 
         foreach($this->_request_data['schema_content']['fields'] as $schema_field => $array_content)
@@ -205,7 +205,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
             {
                 $this->_request_data['fields_for_search'][$array_content['location']] = $schema_field;
             }
-		}
+        }
 
 //        $this->_request_data['message'] = $this->_config->get('end_message');
 
@@ -217,12 +217,12 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
         midcom_show_style('show-report-list');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_report_list_by_key()
     {
         $this->_request_data['articles_by_key'] = Array();
@@ -245,31 +245,31 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
         $tmp_sort_key_1 = $this->_request_data['sort_key_1'];
         $tmp_sort_key_2 = $this->_request_data['sort_key_2'];
 
-		$tmp[] = Array
-		(
-			MIDCOM_NAV_URL => '',
-			MIDCOM_NAV_NAME => $this->_request_data['topic']->extra,
-		);
-		$tmp[] = Array
-		(
-			MIDCOM_NAV_URL => 'reports/',
-			MIDCOM_NAV_NAME => $this->_l10n->get('Reports'),
-		);
-		$tmp[] = Array
-		(
-			MIDCOM_NAV_URL => 'list_by_key/',
-			MIDCOM_NAV_NAME => $this->_l10n->get('List by key'),
-		);
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => '',
+            MIDCOM_NAV_NAME => $this->_request_data['topic']->extra,
+        );
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'reports/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('Reports'),
+        );
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'list_by_key/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('List by key'),
+        );
 
-		$_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
-		$qb_articles = midcom_db_article::new_query_builder();
-		$qb_articles->add_constraint('topic', '=', $this->_request_data['topic']->id);
-		$qb_articles->add_order('name');
+        $qb_articles = midcom_db_article::new_query_builder();
+        $qb_articles->add_constraint('topic', '=', $this->_request_data['topic']->id);
+        $qb_articles->add_order('name');
 
-		$this->_request_data['articles_count'] = $qb_articles->count();
-		$this->_request_data['articles'] = $qb_articles->execute();
-		foreach($this->_request_data['articles'] as $article => $article_content )
+        $this->_request_data['articles_count'] = $qb_articles->count();
+        $this->_request_data['articles'] = $qb_articles->execute();
+        foreach($this->_request_data['articles'] as $article => $article_content )
         {
 //            $this->_request_data['articles_by_key'][$article_content->$tmp_sort_key_1][$article] = $article_content;
             $this->_request_data['articles_by_key'][$article_content->$tmp_sort_key_1][$article_content->$tmp_sort_key_2][$article] = $article_content;
@@ -281,7 +281,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
             {
                 $this->_request_data['fields_for_search'][$array_content['location']] = $schema_field;
             }
-		}
+        }
 
 //        $this->_request_data['message'] = $this->_config->get('end_message');
 
@@ -293,12 +293,12 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
         midcom_show_style('show-report-list-by-key');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_report_list_by_key_distinct()
     {
         $in_csv = false;
@@ -352,31 +352,31 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
 
 
         $tmp[] = Array
-		(
-			MIDCOM_NAV_URL => '',
-			MIDCOM_NAV_NAME => $this->_request_data['topic']->extra,
-		);
-		$tmp[] = Array
-		(
-			MIDCOM_NAV_URL => 'reports/',
-			MIDCOM_NAV_NAME => $this->_l10n->get('Reports'),
-		);
-		$tmp[] = Array
-		(
-			MIDCOM_NAV_URL => 'list_by_key_distinct/',
-			MIDCOM_NAV_NAME => $this->_l10n->get('List responces by key'),
-		);
+        (
+            MIDCOM_NAV_URL => '',
+            MIDCOM_NAV_NAME => $this->_request_data['topic']->extra,
+        );
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'reports/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('Reports'),
+        );
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'list_by_key_distinct/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('List responces by key'),
+        );
 
-		$_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
-		$qb_articles = midcom_db_article::new_query_builder();
-		$qb_articles->add_constraint('topic', '=', $this->_request_data['topic']->id);
-		$qb_articles->add_constraint($tmp_sort_key_1, '=', $tmp_sort_key_1_value);
-		$qb_articles->add_constraint($tmp_sort_key_2, '=', $tmp_sort_key_2_value);
-		$qb_articles->add_order('name');
+        $qb_articles = midcom_db_article::new_query_builder();
+        $qb_articles->add_constraint('topic', '=', $this->_request_data['topic']->id);
+        $qb_articles->add_constraint($tmp_sort_key_1, '=', $tmp_sort_key_1_value);
+        $qb_articles->add_constraint($tmp_sort_key_2, '=', $tmp_sort_key_2_value);
+        $qb_articles->add_order('name');
 
-		$this->_request_data['articles_count'] = $qb_articles->count();
-		$this->_request_data['articles'] = $qb_articles->execute();
+        $this->_request_data['articles_count'] = $qb_articles->count();
+        $this->_request_data['articles'] = $qb_articles->execute();
 
 
         foreach($this->_request_data['schema_content']['fields'] as $schema_field => $array_content)
@@ -385,7 +385,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
             {
                 $this->_request_data['fields_for_search'][$array_content['location']] = $schema_field;
             }
-		}
+        }
 
         return true;
     }

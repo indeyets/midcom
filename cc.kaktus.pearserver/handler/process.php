@@ -157,12 +157,12 @@ class cc_kaktus_pearserver_handler_process extends midcom_baseclasses_components
         debug_add("Execute returned {$output}");
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_process($handler_id, $args, &$data)
     {
         $this->_release = new org_openpsa_products_product($args[0]);

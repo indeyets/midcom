@@ -47,7 +47,7 @@ class no_odindata_quickform2_factory
     {
         $this->schema = $schema;
         $this->config = $config;
-	$this->_load_controller();
+    $this->_load_controller();
         $this->email  = new no_odindata_quickform2_email( $config, $this );
     }
 

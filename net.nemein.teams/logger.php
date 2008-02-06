@@ -22,13 +22,13 @@ class net_nemein_teams_logger
         // TODO: create log message
 
         $log = new net_nemein_teams_log_dba();
-	    $log->message = $message;
-	    $log->teamguid = $teamguid;
+        $log->message = $message;
+        $log->teamguid = $teamguid;
 
-	    if (!$log->create())
-	    {
+        if (!$log->create())
+        {
             // TODO: handle error
-	   }
+       }
     }
 }
 

@@ -82,12 +82,12 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         );
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_opml($handler_id, $args, &$data)
     {
         $_MIDCOM->cache->content->content_type("text/xml");
@@ -126,12 +126,12 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         echo $opml->createFeed();
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_list($handler_id, $args, &$data)
     {
         $qb = net_nemein_rss_feed_dba::new_query_builder();
@@ -269,12 +269,12 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_subscribe($handler_id, $args, &$data)
     {
         $this->_topic->require_do('midgard:create');
@@ -357,12 +357,12 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         }
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_edit($handler_id, $args, &$data)
     {
         $data['feed'] = new net_nemein_rss_feed_dba($args[0]);
@@ -470,12 +470,12 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         midcom_show_style('net-nemein-rss-feed-delete');
     }
 
-	/**
-	 * @param mixed $handler_id The ID of the handler.
+    /**
+     * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-	 */
+     */
     function _handler_fetch($handler_id, $args, &$data)
     {
         $this->_topic->require_do('midgard:create');
