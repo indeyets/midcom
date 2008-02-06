@@ -333,34 +333,48 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
     function get_tags_by_class($class, $user = null)
     {
         $tags = array();
-        $tags_handled = array();
-        $qb = net_nemein_tag_link_dba::new_query_builder();
-        $qb->add_constraint('fromClass', '=', $class);
+        $tags_by_id = array();
+        
+        $mc = net_nemein_tag_link_dba::new_collector('fromClass', $class);
+        $mc->add_value_property('tag');
 
         if (!is_null($user))
         {
             // TODO: User metadata.authors?
-            $qb->add_constraint('metadata.creator', '=', $user->guid);
+            $mc->add_constraint('metadata.creator', '=', $user->guid);
         }
 
-        // TODO: Order by metadata->navorder
-        $links = $qb->execute();
-        if (!is_array($links))
+        $mc->execute();
+        $links = $mc->list_keys();
+        if (count($links) == 0)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('QB reported critical failure, aborting', MIDCOM_LOG_ERROR);
-            debug_pop();
             return false;
         }
-        foreach ($links as $link)
-        {
-            $tag = new net_nemein_tag_dba($link->tag);
-            /* PONDER: here we probably want just the tag ?
-            $tagname = net_nemein_tag_handler::tag_link2tagname($link, $tag);
-            */
-            $tagname = $tag->tag;
 
-            if (!array_key_exists($tagname, $tags))
+        foreach ($links as $link_guid => $array)
+        {
+            $tag_id = $mc->get_subkey($link_guid, 'tag');
+
+            if (!isset($tags_by_id[$tag_id]))
+            {
+                $tag_mc = net_nemein_tag_dba::new_collector('id', $tag_id);
+                $tag_mc->add_value_property('tag');
+                $tag_mc->execute();
+                $tag_names = $tag_mc->list_keys();
+                if (count($tag_names) == 0)
+                {
+                    // No such tag in DB
+                    continue;
+                }
+                
+                foreach ($tag_names as $tag_guid => $tag_array)
+                {
+                    $tags_by_id[$tag_id] = $tag_mc->get_subkey($tag_guid, 'tag');
+                }
+            }
+            
+            $tagname = $tags_by_id[$tag_id];
+            if (!isset($tags[$tagname]))
             {
                 $tags[$tagname] = 0;
             }
