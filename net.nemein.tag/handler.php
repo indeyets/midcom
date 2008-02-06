@@ -243,8 +243,8 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
             return false;
         }
 
-        $tags = $this->get_object_tags($from);
-        return $this->tag_object($to, $tags, $component);
+        $tags = net_nemein_tag_handler::get_object_tags($from);
+        return net_nemein_tag_handler::tag_object($to, $tags, $component);
     }
 
     /**
@@ -348,7 +348,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
         $links = $mc->list_keys();
         if (count($links) == 0)
         {
-            return false;
+            return $tags;
         }
 
         foreach ($links as $link_guid => $array)
