@@ -2,36 +2,43 @@
 <?php
 error_reporting(E_ALL);
 require_once('normalize_whitespace_normalizer.php');
-if ($argc < 4)
+if ($argc < 2)
 {
     $name = basename($argv[0]);
-    echo "\nUsage: {$name} <configfile> <username> <password>\n";
+    echo "\nUsage: {$name} <files_list>\n";
     echo "  For example:\n";
-    echo "  {$name} midgard 'sgadmin+sgname' 'adminpasswd' \n\n";
+    echo "  {$name} `find ~/svn/midcom/ -name '*.php'` \n\n";
     exit(1);
 }
-$conffile =& $argv[1];
-$username =& $argv[2];
-$password =& $argv[3];
-if (!mgd_config_init($conffile))
-{
-    echo "\nInitialization failed\n\n";
-    exit(1);
-}
-mgd_auth_midgard($username, $password);
-if (!$_MIDGARD['user'])
-{
-    echo "\nAuthentication failed\n\n";
-    exit(1);
-}
-if (!$_MIDGARD['sitegroup'] === 0)
-{
-    echo "\nSG0 usage not supported\n\n";
-    exit(1);
-}
+$files = array_slice($argv, 1);
 
-
+if (!function_exists('file_put_contents'))
+{
+    function file_put_contents($file, &$data)
+    {
+        $fp = fopen($file, 'w');
+        if (!$fp)
+        {
+            return false;
+        }
+        $ret = fwrite($fp, $data);
+        fclose($fp);
+        return $ret;
+    }
+}
 
 $normalizer = new midcom_support_wsnormalizer();
+foreach ($files as $file)
+{
+    $data = file_get_contents($file);
+    $normalized = $normalizer->normalize($data);
+    if ($data === $normalized)
+    {
+        unset($data, $normalized);
+        continue;
+    }
+    file_put_contents($file, $normalized);
+    unset($data, $normalized);
+}
 
 ?>
