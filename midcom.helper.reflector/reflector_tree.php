@@ -538,74 +538,78 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
 
         $this->_sg_constraints($qb);
 
-        // Figure out constraint to use to get child objects
-        // TODO: Review this code
+        // Figure out constraint(s) to use to get child objects
         $ref = new midgard_reflection_property($schema_type);
-        $upfield = midgard_object_class::get_property_up($schema_type);
+
+        $multiple_links = false;        
+        $linkfields = array();
+        $linkfields['up'] = midgard_object_class::get_property_up($schema_type);
+        $linkfields['parent'] = midgard_object_class::get_property_parent($schema_type);
         
-        if (   !empty($upfield)
-            && !empty($parentfield))
+        foreach ($linkfields as $link_type => $field)
         {
+            if (empty($field))
+            {
+                // No such field for the object
+                unset($linkfields[$link_type]);
+                continue;
+            }
+            
+            $linked_class = $ref->get_link_name($field);
+            if (!is_a($for_object, $linked_class))
+            {
+                // This link points elsewhere
+                unset($linkfields[$link_type]);
+                continue;
+            }
+        }
+        
+        if (count($linkfields) > 1)
+        {
+            $multiple_links = true;
             $qb->begin_group('OR');
         }
 
-        if (!empty($upfield))
+        foreach ($linkfields as $link_type => $field)
         {
-            $uptype = $ref->get_midgard_type($upfield);
-            $uptarget = $ref->get_link_target($upfield);
-
-            if (!isset($for_object->$uptarget))
+            $field_type = $ref->get_midgard_type($field);
+            $field_target = $ref->get_link_target($field);
+                
+            if (   !$field_target
+                || !isset($for_object->$field_target))
             {
-                $qb->end_group();
+                if ($multiple_links)
+                {
+                    $qb->end_group();
+                }
                 return false;
             }
-            switch ($uptype)
+            switch ($field_type)
             {
                 case MGD_TYPE_STRING:
                 case MGD_TYPE_GUID:
-                    $qb->add_constraint($upfield, '=', (string)$for_object->$uptarget);
+                    $qb->add_constraint($field, '=', (string) $for_object->$field_target);
                     break;
                 case MGD_TYPE_INT:
                 case MGD_TYPE_UINT:
-                    $qb->add_constraint($upfield, '=', (int)$for_object->$uptarget);
-                    break;
-                default:
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("Do not know how to handle upfield '{$upfield}' has type {$uptype}", MIDCOM_LOG_ERROR);
-                    debug_pop();
-                    if (   !empty($upfield)
-                        && !empty($parentfield))
+                    if ($link_type == 'up')
                     {
+                        $qb->add_constraint($field, '=', (int) $for_object->$field_target);
+                    }
+                    else
+                    {
+                        $qb->begin_group('AND');
+                            $qb->add_constraint($field, '=', (int) $for_object->$field_target);
+                            // make sure we don't accidentally find other objects with the same id
+                            $qb->add_constraint($field . '.guid', '=', (string) $for_object->guid);
                         $qb->end_group();
                     }
-                    return false;
-            }
-        }
-        $parentfield = midgard_object_class::get_property_parent($schema_type);
-        if (!empty($parentfield))
-        {
-            $parenttype = $ref->get_midgard_type($parentfield);
-            $parenttarget = $ref->get_link_target($parentfield);
-            switch ($parenttype)
-            {
-                case MGD_TYPE_STRING:
-                case MGD_TYPE_GUID:
-                    $qb->add_constraint($parentfield, '=', (string)$for_object->$parenttarget);
-                    break;
-                case MGD_TYPE_INT:
-                case MGD_TYPE_UINT:
-                        $qb->begin_group('AND');
-                            $qb->add_constraint($parentfield, '=', (int)$for_object->$parenttarget);
-                            // make sure we don't accidentally find other objects with the same id
-                            $qb->add_constraint($parentfield . '.guid', '=', (string) $for_object->guid);
-                        $qb->end_group();
                     break;
                 default:
                     debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("Do not know how to handle parentfield '{$parentfield}' has type {$parenttype}", MIDCOM_LOG_INFO);
+                    debug_add("Do not know how to handle linked field '{$field}', has type {$field_type}", MIDCOM_LOG_INFO);
                     debug_pop();
-                    if (   !empty($upfield)
-                        && !empty($parentfield))
+                    if ($multiple_links)
                     {
                         $qb->end_group();
                     }
@@ -613,12 +617,10 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             }
         }
         
-        if (   !empty($upfield)
-            && !empty($parentfield))
+        if ($multiple_links)
         {
             $qb->end_group();
         }
-        // TODO: /Review this code
 
         return $qb;
     }
