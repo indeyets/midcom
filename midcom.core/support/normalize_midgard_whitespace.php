@@ -7,8 +7,7 @@ if ($argc < 4)
     $name = basename($argv[0]);
     echo "\nUsage: {$name} <configfile> <username> <password>\n";
     echo "  For example:\n";
-    echo "  {$name} midgard_sgx 'sgadmin+sgname' 'adminpasswd' \n\n";
-    echo "(you need to specify the MidgardUser and MidgardPassword\n in the midgard_sgx config file)\n\n";
+    echo "  {$name} midgard 'sgadmin+sgname' 'adminpasswd' \n\n";
     exit(1);
 }
 $conffile =& $argv[1];
@@ -20,6 +19,11 @@ if (!mgd_config_init($conffile))
     exit(1);
 }
 mgd_auth_midgard($username, $password);
+mgd_get_midgard();
+// Workaround for neither mgd_auth_midgard or mgd_get_midgard updating $_MIDGARD['sitegroup']
+$dummy = new midgard_page();
+$_MIDGARD['sitegroup'] = $dummy->sitegroup;
+unset($dummy);
 if (!$_MIDGARD['user'])
 {
     echo "\nAuthentication failed\n\n";
