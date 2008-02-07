@@ -540,9 +540,14 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
 
         // Figure out constraint to use to get child objects
         // TODO: Review this code
-        $qb->begin_group('OR');
         $ref = new midgard_reflection_property($schema_type);
         $upfield = midgard_object_class::get_property_up($schema_type);
+        
+        if (   !empty($upfield)
+            && !empty($parentfield))
+        {
+            $qb->begin_group('OR');
+        }
 
         if (!empty($upfield))
         {
@@ -568,7 +573,11 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
                     debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Do not know how to handle upfield '{$upfield}' has type {$uptype}", MIDCOM_LOG_ERROR);
                     debug_pop();
-                    $qb->end_group();
+                    if (   !empty($upfield)
+                        && !empty($parentfield))
+                    {
+                        $qb->end_group();
+                    }
                     return false;
             }
         }
@@ -595,11 +604,20 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
                     debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Do not know how to handle parentfield '{$parentfield}' has type {$parenttype}", MIDCOM_LOG_INFO);
                     debug_pop();
-                    $qb->end_group();
+                    if (   !empty($upfield)
+                        && !empty($parentfield))
+                    {
+                        $qb->end_group();
+                    }
                     return false;
             }
         }
-        $qb->end_group();
+        
+        if (   !empty($upfield)
+            && !empty($parentfield))
+        {
+            $qb->end_group();
+        }
         // TODO: /Review this code
 
         return $qb;
