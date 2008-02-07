@@ -605,7 +605,7 @@ EOF;
     function __construct(\$id = null)
     {
         if (   is_object(\$id)
-                 /*&& ! empty(\$id->guid)*/)
+            && ! empty(\$id->guid))
         {
             \$construct_stat = parent::__construct(\$id->guid);
             if (!midcom_baseclasses_core_dbobject::cast_object(\$this, \$id))
