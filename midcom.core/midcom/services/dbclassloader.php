@@ -606,11 +606,30 @@ EOF;
     {
         if (mgd_is_guid(\$id))
         {
-            \$construct_stat = parent::__construct(\$id);
+            try 
+    		{	
+                \$construct_stat = parent::__construct(\$id);
+            }
+            catch (midgard_error_exception \$e)
+            {
+                \$x =& \$this;
+                \$x = false;
+                return false;
+            }
         }
         else if (is_numeric(\$id))
         {
-            \$construct_stat = parent::__construct((int)\$id);
+            try 
+    		{	
+
+                \$construct_stat = parent::__construct((int)\$id);
+            }
+            catch (midgard_error_exception \$e)
+            {
+                \$x =& \$this;
+                \$x = false;
+                return false;
+            }
         }
         else if (   is_object(\$id)
                  /*&& ! empty(\$id->guid)*/)
