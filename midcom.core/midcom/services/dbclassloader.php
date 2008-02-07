@@ -604,38 +604,24 @@ EOF;
         $this->_class_string .= <<<EOF
     function __construct(\$id = null)
     {
-        if (mgd_is_guid(\$id))
+        if (   is_object(\$id)
+                 /*&& ! empty(\$id->guid)*/)
+        {
+            \$construct_stat = parent::__construct(\$id->guid);
+            if (!midcom_baseclasses_core_dbobject::cast_object(\$this, \$id))
+            {
+                \$x =& \$this;
+                \$x = false;
+                return false;
+            }
+        }
+        elseif (\$id)
         {
             try 
     		{	
                 \$construct_stat = parent::__construct(\$id);
             }
             catch (midgard_error_exception \$e)
-            {
-                \$x =& \$this;
-                \$x = false;
-                return false;
-            }
-        }
-        else if (is_numeric(\$id))
-        {
-            try 
-    		{	
-
-                \$construct_stat = parent::__construct((int)\$id);
-            }
-            catch (midgard_error_exception \$e)
-            {
-                \$x =& \$this;
-                \$x = false;
-                return false;
-            }
-        }
-        else if (   is_object(\$id)
-                 /*&& ! empty(\$id->guid)*/)
-        {
-            \$construct_stat = parent::__construct(\$id->guid);
-            if (!midcom_baseclasses_core_dbobject::cast_object(\$this, \$id))
             {
                 \$x =& \$this;
                 \$x = false;
