@@ -1,7 +1,7 @@
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
 
     <!-- org.openpsa.documents Objects -->
-    <type name="org_openpsa_document" table="org_openpsa_document" parentfield="topic" parent="midgard_topic">
+    <type name="org_openpsa_document" table="org_openpsa_document" parent="midgard_topic">
         <!-- Copied from NewMidgardArticle -->
         <property name="id" type="integer" primaryfield="id"/>
         <property name="score" type="integer"/>
@@ -19,7 +19,7 @@
         <!-- /Copied from NewMidgardArticle -->
 
         <!-- Does this work as expected (like article->up) ?? -->
-        <property name="nextVersion" upfield="nextVersion" type="integer"/>
+        <property name="nextVersion" upfield="nextVersion" type="integer" link="org_openpsa_document:id"/>
         <!-- Note: non-ML title -->
         <property name="title" type="text"/>
         <property name="abstract" type="text"/>
