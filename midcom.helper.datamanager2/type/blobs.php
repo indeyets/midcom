@@ -805,6 +805,11 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         return '';
     }
 
+    function convert_to_raw()
+    {
+        return $this->convert_to_csv();
+    }
+
     function convert_to_csv()
     {
         $results = array();
