@@ -52,5 +52,10 @@
             'handler' => 'net_nemein_discussion_cron_eraseunpopular',
             'recurrence' => MIDCOM_CRON_DAY,
         ),
+        array
+        (
+            'handler' => 'net_nemein_discussion_cron_popularity',
+            'recurrence' => MIDCOM_CRON_DAY,
+        ),
     ),
 ),

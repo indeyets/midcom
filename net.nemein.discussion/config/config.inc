@@ -53,3 +53,11 @@
 'moderators' => '',
 
 'remove_unpopular_threads' => false,
+
+'popularity_favourites_enable' => true,
+'popularity_favourites_modifier' => 1,
+'popularity_buries_enable' => true,
+'popularity_buries_modifier' => -2,
+'popularity_posts_enable' => true,
+'popularity_posts_modifier' => 2,
+'popularity_badpost_modifier' => -1,
