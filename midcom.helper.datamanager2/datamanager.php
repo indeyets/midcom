@@ -399,7 +399,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
             {
                 continue;
             }
-            $result[$name] = $this->types[$name]->convert_to_storage();
+            $result[$name] = $this->types[$name]->convert_to_raw();
         }
         return $result;
     }

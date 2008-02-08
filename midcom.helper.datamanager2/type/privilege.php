@@ -172,6 +172,11 @@ class midcom_helper_datamanager2_type_privilege extends midcom_helper_datamanage
         return ($this->get_value());
     }
 
+    function convert_to_raw()
+    {
+        return $this->get_value();
+    }
+
     function convert_to_html()
     {
         switch($this->get_value())

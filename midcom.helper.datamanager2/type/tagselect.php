@@ -471,6 +471,11 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
         }
     }
     
+    function convert_to_raw()
+    {
+        return $this->selection;
+    }
+
     /**
      * Merges selection and others arrays, the validation cycle ensures that they are
      * right.

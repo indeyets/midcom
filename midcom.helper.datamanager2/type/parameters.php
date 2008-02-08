@@ -76,6 +76,11 @@ class midcom_helper_datamanager2_type_parameters extends midcom_helper_datamanag
         }
     }
 
+    function convert_to_raw()
+    {
+        return $this->convert_to_csv();
+    }
+
     /**
      *
      * @return Array The storage information.

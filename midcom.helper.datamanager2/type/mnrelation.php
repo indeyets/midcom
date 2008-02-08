@@ -371,6 +371,10 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
         return null;
     }
 
+    function convert_to_raw()
+    {
+        return null;
+    }
 }
 
 ?>

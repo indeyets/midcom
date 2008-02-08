@@ -99,6 +99,11 @@ class midcom_helper_datamanager2_type_privilegeset extends midcom_helper_dataman
         }
     }
 
+    function convert_to_raw()
+    {
+        return '';
+    }
+
     /**
      * Stores the privileges to the database. This call retrieves a temporary object if necessary.
      * If the midgard:privileges privilege is missing, nothing is updated.

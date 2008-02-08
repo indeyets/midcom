@@ -299,6 +299,11 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         $this->attachments_info[$identifier] = $info;
     }
 
+    function convert_to_raw()
+    {
+        return '';
+    }
+
     function convert_to_storage()
     {
         // Synchronize the parameters again with the current attachment listing, just to

@@ -213,6 +213,20 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     }
 
     /**
+     * Transforms the current objects' state into 'raw' representation. Usually 
+     * the convert_to_storage -method returns suitable value, but in some datatypes
+     * (like privilege, blobs-based ones and tags), convert_to_storage does database
+     * IO directly and returns less usefull data.
+     *
+     * @see convert_to_storage
+     * @return mixed The rendered content.
+     */
+    function convert_to_raw()
+    {
+        return $this->convert_to_storage();
+    }
+
+    /**
      * Main validation interface, currently only calls the main type callback, but this
      * can be extended later by a configurable callback into the component.
      *

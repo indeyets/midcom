@@ -51,6 +51,11 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
         }
     }
 
+    function convert_to_raw()
+    {
+        return $this->convert_to_csv();
+    }
+
     function convert_to_storage()
     {
         if (   !$this->storage
