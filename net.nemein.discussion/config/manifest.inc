@@ -45,4 +45,12 @@
             'default' => 'email',
         ),
     ),
+    'midcom.services.cron' => array
+    (
+        array
+        (
+            'handler' => 'net_nemein_discussion_cron_eraseunpopular',
+            'recurrence' => MIDCOM_CRON_DAY,
+        ),
+    ),
 ),

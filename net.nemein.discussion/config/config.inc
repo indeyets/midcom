@@ -51,3 +51,5 @@
 
 // GUIDs of moderators to notify
 'moderators' => '',
+
+'remove_unpopular_threads' => false,
