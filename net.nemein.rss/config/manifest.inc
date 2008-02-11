@@ -32,6 +32,9 @@
       'net.nemein.tag' => 
       array (
       ),
+      'net.nemein.favourites' => 
+      array (
+      ),
       'de.bitfolge.feedcreator' => 
       array (
       ),
