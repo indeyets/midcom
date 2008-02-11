@@ -1,6 +1,6 @@
 
   'name' => 'net.nehmer.comments',
-  'version' => '1.0.1beta1',
+  'version' => '1.0.2beta1',
   'class_definitions' => 
   array (
     0 => 'midcomdba.inc',
@@ -33,6 +33,13 @@
         'role' => 'lead',
         'active' => 'yes',
       ),
+      'xfade' => 
+      array (
+        'name' => 'Niels Breet',
+        'email' => 'nbreet@gmail.com',
+        'role' => 'developer',
+        'active' => 'yes',
+      ),
     ),
     'dependencies' => 
     array (
@@ -43,6 +50,9 @@
       array (
       ),
       'org.openpsa.notifications' => 
+      array (
+      ),
+      'org.openpsa.qbpager' => 
       array (
       ),
       'Text_Password' => 
