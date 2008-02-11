@@ -214,12 +214,12 @@ class net_nemein_favourites_admin
         $html .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/screen.css\" media=\"screen\" />\n\n";
         
         $add_html = '';
-        if (   isset($_REQUEST['net_nemein_favourites_execute_for'])
+        if (   isset($_REQUEST['net_nemein_favourites_execute'])
+            && isset($_REQUEST['net_nemein_favourites_execute_for'])
             && isset($_REQUEST['net_nemein_favourites_url']))
         {
             $action = $_REQUEST['net_nemein_favourites_execute'];
             $guid = $_REQUEST['net_nemein_favourites_execute_for'];
-            // $add_html .= "jQuery('{$element_path}').net_nemein_favourites_execute({$js_options}, '{$action}', '{$guid}', '{$_REQUEST['net_nemein_favourites_url']}');\n";
             
             $add_html .= ".net_nemein_favourites_execute({$js_options}, '{$action}', '{$guid}', '{$_REQUEST['net_nemein_favourites_url']}')\n";
         }
@@ -227,7 +227,6 @@ class net_nemein_favourites_admin
         $html .= "<script type=\"text/javascript\">\n";
         $html .= "jQuery(document).ready(function(){\n";
         $html .= "jQuery('{$element_path}').net_nemein_favourites({$js_options}){$add_html};\n";
-        //$html .= $add_html;
         $html .= "});\n";
         $html .= "</script>\n\n";
         

@@ -1,7 +1,7 @@
 'name'              => 'net.nemein.favourites',
 'icon'              => 'net.nemein.favourites/favorite.png',
 'purecode'          => false,
-'version'           => '1.0.0beta4',
+'version'           => '1.0.0beta5',
 'state'             => 'beta',
 'privileges'        => Array(),
 'class_definitions' => Array('midcom_dba_classes.inc'),

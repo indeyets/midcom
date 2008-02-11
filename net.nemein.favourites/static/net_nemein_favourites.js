@@ -169,12 +169,6 @@
     };
     
     $.net.nemein.favourites.controller = function(holder, options) {
-        // var _self = this;
-        // var fav_btn = $('.'+options.classes.fav_btn, holder);
-        // var bury_btn = $('.'+options.classes.bury_btn, holder);
-        // var favs_cnt = $('.'+options.classes.favs_count, holder);
-        // var bury_cnt = $('.'+options.classes.bury_count, holder);
-
         $.meta.setType("class");
         var data = $(holder).data();
 
