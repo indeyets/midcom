@@ -47,6 +47,12 @@ class org_maemo_socialnews_interface extends midcom_baseclasses_components_inter
             return;
         }
         
+        if (!$_MIDCOM->componentloader->load_graceful('midcom.services.at'))
+        {
+            // No at system installed, skip
+            continue;
+        }
+        
         // Register the recalculate to midcom.services.at instead of running interactively
         $args = array
         (

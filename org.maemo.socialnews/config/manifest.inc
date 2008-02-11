@@ -41,6 +41,7 @@
     (
         'net.nehmer.blog' => array(),
         'org.openpsa.httplib' => array(),
+        'midcom.services.at' => array(),
     ),
 ),
 'customdata' => array
