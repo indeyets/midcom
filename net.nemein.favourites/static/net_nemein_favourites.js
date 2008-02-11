@@ -34,6 +34,7 @@
             var url = arguments[3];
             var action = arguments[1];            
             var btn_class = options.classes[action+'_btn'];
+            var do_post = true;
             
             if (typeof arguments[2] == 'string') {
                 var guid = arguments[2];
@@ -56,25 +57,22 @@
                     },
                     success: function(data) {
                         button.removeClass(loading_class);
-                        $.net.nemein.favourites.update_view(options, data, action);
+                        $.net.nemein.favourites.update_view(options, data, guid);
                         return true;
                     }
                 });
             } else {
                 var button = arguments[2];
-
+                var holder = arguments[4];
                 var loading_class = options.classes[action+'_btn'] + '_loading';
 
-                if (options.force_ssl) {
-                    var needs_to_change = true;
-                    if (window.location.protocol == 'https:') {
-                        needs_to_change = false;
-                    }
+                if (   options.force_ssl
+                    && window.location.protocol != 'https:')
+                {
+                    do_post = false;
 
                     var current_url = '' + (window.location).toString().split('?')[0];
-                    if (needs_to_change) {
-                        current_url = current_url.replace(/http/, 'https');
-                    }
+                    current_url = current_url.replace(/http/, 'https');
 
                     var url_parts = url.split('/');                
                     var guid = url_parts[url_parts.length-1];
@@ -85,7 +83,9 @@
                     window.location.href = current_url + '?net_nemein_favourites_execute='+action+'&net_nemein_favourites_execute_for='+guid+'&net_nemein_favourites_url='+url;
 
                     return true;
-                } else {
+                }
+                
+                if (do_post) {
                     button.addClass(loading_class);
 
                     $.ajax({
@@ -102,22 +102,23 @@
                         },
                         success: function(data) {
                             button.removeClass(loading_class);
-                            $.net.nemein.favourites.update_view(options, data, action);
+                            $.net.nemein.favourites.update_view(options, data, holder);
                             return true;
                         }
                     });
                 }
             }
         },
-        update_view: function(options, data, action) {
-            var fav_btn = $('.'+options.classes.fav_btn);
-            var bury_btn = $('.'+options.classes.bury_btn);
-            var favs_cnt = $('.'+options.classes.favs_count);
-            var bury_cnt = $('.'+options.classes.bury_count);
-            
-            if (typeof action == 'undefined') {
-                action = false;
+        update_view: function(options, data, holder) {
+            if (typeof holder == 'string') {
+                var holder = $('#net_nemein_favourites_for_'+holder);
             }
+
+            var fav_btn = $('.'+options.classes.fav_btn, holder);
+            var bury_btn = $('.'+options.classes.bury_btn, holder);
+            var favs_cnt = $('.'+options.classes.favs_count, holder);
+            var bury_cnt = $('.'+options.classes.bury_count, holder);
+            
 
             if (typeof data['favs'] != 'undefined') {
                 favs_cnt.html(data.favs.toString());            
@@ -132,7 +133,7 @@
                 fav_btn.removeClass(options.classes.fav_btn+'_disabled');
                 favs_cnt.removeClass(options.classes.favs_count+'_disabled');
                 fav_btn.bind("click", function(){        
-                    return $.net.nemein.favourites.execute(options, 'fav', fav_btn, data.fav_url);
+                    return $.net.nemein.favourites.execute(options, 'fav', fav_btn, data.fav_url, holder);
                 });
                 fav_btn.mouseover(function(){
                     fav_btn.addClass(options.classes.fav_btn+'_hover');
@@ -152,7 +153,7 @@
                 bury_btn.removeClass(options.classes.bury_btn+'_disabled');
                 bury_cnt.removeClass(options.classes.bury_count+'_disabled');
                 bury_btn.bind("click", function(){
-                    return $.net.nemein.favourites.execute(options, 'bury', bury_btn, data.bury_url);
+                    return $.net.nemein.favourites.execute(options, 'bury', bury_btn, data.bury_url, holder);
                 });
                 bury_btn.mouseover(function(){
                     bury_btn.addClass(options.classes.bury_btn+'_hover');
@@ -172,7 +173,7 @@
         $.meta.setType("class");
         var data = $(holder).data();
 
-        $.net.nemein.favourites.update_view(options, data);
+        $.net.nemein.favourites.update_view(options, data, holder);
     };
 
 })(jQuery);
