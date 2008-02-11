@@ -25,7 +25,13 @@ class net_nehmer_account_cron_karma extends midcom_baseclasses_components_cron_h
     function _on_execute()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-
+        if (version_compare(phpversion(), '5.0.0', '<'))
+        {
+            debug_add("Karma calculator requires PHP 5", MIDCOM_LOG_DEBUG);
+            debug_pop();
+            return;
+        }
+        require_once(MIDCOM_ROOT . '/net/nehmer/account/calculator.php');
         $calculator = new net_nehmer_account_calculator();
 
         $qb = midcom_db_person::new_query_builder();

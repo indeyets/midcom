@@ -1,4 +1,10 @@
 <?php
+if (version_compare(phpversion(), '5.0.0', '<'))
+{
+    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Karma calculator requires PHP 5");
+    // This wil exit()
+}
+require_once(MIDCOM_ROOT . '/net/nehmer/account/calculator.php');
 $_MIDCOM->auth->require_admin_user();
 
 $calculator = new net_nehmer_account_calculator();

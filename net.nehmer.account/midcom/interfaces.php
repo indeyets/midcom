@@ -59,7 +59,6 @@ class net_nehmer_account_interface extends midcom_baseclasses_components_interfa
             'viewer.php', 
             'navigation.php', 
             'invite.php',
-            'calculator.php',
         );
         
         $this->_autoload_libraries = Array
