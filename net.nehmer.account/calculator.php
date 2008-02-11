@@ -29,7 +29,10 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
     
     private function count_comments($guid)
     {
-        $_MIDCOM->componentloader->load_graceful('net.nehmer.comments');
+        if (!$_MIDCOM->componentloader->load_graceful('net.nehmer.comments'))
+        {
+            return 0;
+        }
         
         $qb = net_nehmer_comments_comment::new_query_builder();
         $qb->add_constraint('metadata.authors', 'LIKE', "%|{$guid}|%");
@@ -39,7 +42,10 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
     
     private function count_favourites($guid)
     {
-        $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
+        if (!$_MIDCOM->componentloader->load_graceful('net.nemein.favourites'))
+        {
+            return 0;
+        }
         
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
         $qb->add_constraint('metadata.creator', '=', $guid);
@@ -49,7 +55,10 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
     
     private function count_buries($guid)
     {
-        $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
+        if (!$_MIDCOM->componentloader->load_graceful('net.nemein.favourites'))
+        {
+            return 0;
+        }
         
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
         $qb->add_constraint('metadata.creator', '=', $guid);
@@ -103,7 +112,10 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
             return $qb->count();
         }
         
-        $_MIDCOM->componentloader->load_graceful('org.maemo.socialnews');        
+        if (!$_MIDCOM->componentloader->load_graceful('org.maemo.socialnews'))
+        {
+            return $qb->count();
+        }
         $blog_karma = 0;
                 
         $blogs = $qb->execute_unchecked();
@@ -134,7 +146,10 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
 
     private function count_products($guid)
     {
-        $_MIDCOM->componentloader->load_graceful('org.openpsa.products');
+        if (!$_MIDCOM->componentloader->load_graceful('org.openpsa.products'))
+        {
+            return 0;
+        }
     
         $qb = org_openpsa_products_product_dba::new_query_builder();
         $qb->add_constraint('metadata.authors', 'LIKE', "%|{$guid}|%");
@@ -159,7 +174,10 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
     
     private function count_discussion($id)
     {
-        $_MIDCOM->componentloader->load_graceful('net.nemein.discussion');    
+        if (!$_MIDCOM->componentloader->load_graceful('net.nemein.discussion'))
+        {
+            return 0;
+        }
     
         $qb = net_nemein_discussion_post_dba::new_query_builder();
         $qb->add_constraint('sender', '=', $id);
