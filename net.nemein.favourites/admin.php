@@ -218,6 +218,7 @@ class net_nemein_favourites_admin
             && isset($_REQUEST['net_nemein_favourites_execute_for'])
             && isset($_REQUEST['net_nemein_favourites_url']))
         {
+            $_MIDCOM->auth->require_valid_user();
             $action = $_REQUEST['net_nemein_favourites_execute'];
             $guid = $_REQUEST['net_nemein_favourites_execute_for'];
             
