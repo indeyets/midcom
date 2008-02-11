@@ -1,16 +1,16 @@
 <?php
 /**
  * @package net.nemein.discussion
- * @author The Midgard Project, http://www.midgard-project.org
+ * @author The Midgard Project, http://www.midgard-project.org 
  * @version $Id: email.php 5434 2007-03-02 16:32:35Z rambo $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
 /**
- * E-Mail import handler.
+ * E-Mail import handler. 
  *
- *
+ * 
  * @package net.nemein.discussion
  * @todo Rewrite for discussion (copied from blog)
  */
@@ -83,6 +83,7 @@ class net_nemein_discussion_handler_api_email extends midcom_baseclasses_compone
             // This will exit.
         }
     }
+
     /**
      * DM2 creation callback, binds to the current content topic.
      *
@@ -134,22 +135,23 @@ class net_nemein_discussion_handler_api_email extends midcom_baseclasses_compone
 
         if (!$importer->parse($_POST['message_source']))
         {
-            // TODO: Error reporting
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not parse message from source.');
+            // This will exit();
         }
-        if (!$importer->import($this->_config->get('api_email_strict_parent'), $this->_config->get('api_email_use_force'), $this->_config->get('api_email_duplicate_is_fatal')))
+        if (   !$importer->import($this->_config->get('api_email_strict_parent'), $this->_config->get('api_email_use_force'))
+            && (   $importer->is_duplicate
+                && !$this->_config->get('api_email_silently_ignore_duplicate')))
         {
-            // TODO: Error reporting
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not import message.');
+            // This will exit();
         }
 
         $_MIDCOM->auth->drop_sudo();
         debug_pop();
         return true;
     }
-
+    
     /**
-     *
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */

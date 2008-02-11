@@ -16,6 +16,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
     var $imported = false;
     var $topic = false;
     var $schema_name = 'email';
+    var $is_duplicate = false;
 
     // Used only for indexing (only when called in correct MidCOM topic context)
     var $controller = false;
@@ -59,7 +60,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
     /**
      * Import the previously parsed body as post
      */
-    function import($strict_parent = true, $force = false, $duplicate_is_fatal = true)
+    function import($strict_parent = true, $force = false)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         if (!is_a($this->parsed, 'org_openpsa_mail'))
@@ -81,12 +82,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         if (   !empty($duplicate)
             && !$force)
         {
-            if (!$duplicate_is_fatal)
-            {
-                debug_add("Found duplicate post #{$duplicate->id} for message-id '{$mail->headers['Message-Id']}', but configured as not-fatal, silently ignoring", MIDCOM_LOG_INFO);
-                debug_pop();
-                return true;
-            }
+            $this->is_duplicate = true;
             debug_add("Found duplicate post #{$duplicate->id} for message-id '{$mail->headers['Message-Id']}', aborting (hint: use force)", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -462,10 +458,14 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
      */
     function get_post_by_message_id($message_id)
     {
+        if (empty($message_id))
+        {
+            return false;
+        }
         $qb = net_nemein_discussion_post_dba::new_query_builder();
         $qb->add_constraint('parameter.domain', '=', 'net.nemein.discussion.mailheaders');
         $qb->add_constraint('parameter.name', '=', 'Message-Id');
-        $qb->add_constraint('parameter.value', '=', $message_id);
+        $qb->add_constraint('parameter.value', '=', (string)$message_id);
         $results = $qb->execute();
         if (empty($results))
         {
