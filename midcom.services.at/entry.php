@@ -175,9 +175,9 @@ class midcom_midcom_services_at_entry_db extends __midcom_midcom_services_at_ent
  */
 class midcom_services_at_entry extends midcom_midcom_services_at_entry_db
 {
-    function midcom_services_at_entry($id = null)
+    function __construct($id = null)
     {
-        return parent::midcom_midcom_services_at_entry_db($id);
+        return parent::__construct($id);
     }
 }
 
