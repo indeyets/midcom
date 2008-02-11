@@ -560,7 +560,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
                 if (isset($object->up)){
                     $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
                     $parentgroup_qb->add_constraint('id', '=', $object->up);
-                    $group = $parentgroup_qb->execute();
+                    $group = $parentgroup_qb->execute_unchecked();
                     if (count($group) > 0)
                     {
                         $tmp[] = array
