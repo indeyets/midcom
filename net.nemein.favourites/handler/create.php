@@ -280,7 +280,13 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
             $_MIDCOM->cache->invalidate($fav->objectGuid);
             $_MIDCOM->cache->content->content_type("application/json");
             $_MIDCOM->header("Content-type: application/json; charset=UTF-8");
-            echo net_nemein_favourites_admin::get_json_data($objectType, $guid);
+            
+            $url = '';
+            if (isset($_REQUEST['net_nemein_favourites_topic_url'])) {
+                $url = $_REQUEST['net_nemein_favourites_topic_url'];
+            }
+            
+            echo net_nemein_favourites_admin::get_json_data($objectType, $guid, $url);
             //$_MIDCOM->finish();
             // This will exit.
             

@@ -29,12 +29,20 @@
             show_activity: false,
             force_ssl: false
         },
+        executed_list: {},
         execute: function() {
             var options = jQuery.extend({}, $.net.nemein.favourites.defaults, arguments[0] || {});
             var url = arguments[3];
             var action = arguments[1];            
             var btn_class = options.classes[action+'_btn'];
             var do_post = true;
+            
+            var base_url = url.substr(0,url.indexOf('/json')) + '/';
+            
+            if (typeof $.net.nemein.favourites.executed_list[url] != 'undefined') {
+                return false;
+            }
+            $.net.nemein.favourites.executed_list[url] = true;
             
             if (typeof arguments[2] == 'string') {
                 var guid = arguments[2];
@@ -44,7 +52,7 @@
 
                 button.addClass(loading_class);
                 $.ajax({
-                    url: url,
+                    url: ''+url+'?net_nemein_favourites_topic_url='+base_url,
                     type: "POST",
                     global: false,
                     cache: false,
@@ -89,7 +97,7 @@
                     button.addClass(loading_class);
 
                     $.ajax({
-                        url: url,
+                        url: ''+url+'?net_nemein_favourites_topic_url='+base_url,
                         type: "POST",
                         global: false,
                         cache: false,
