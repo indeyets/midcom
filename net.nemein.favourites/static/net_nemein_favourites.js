@@ -73,7 +73,7 @@
 
                     var current_url = '' + (window.location).toString().split('?')[0];
                     if (needs_to_change) {
-                        //current_url = current_url.replace(/http/, 'https');
+                        current_url = current_url.replace(/http/, 'https');
                     }
 
                     var url_parts = url.split('/');                
