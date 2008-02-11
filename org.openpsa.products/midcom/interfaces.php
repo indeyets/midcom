@@ -31,7 +31,6 @@ class org_openpsa_products_interface extends midcom_baseclasses_components_inter
         );
         $this->_autoload_libraries = array
         (
-            'de.bitfolge.feedcreator',
             'midcom.helper.datamanager2'
         );
     }
