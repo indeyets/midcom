@@ -25,7 +25,13 @@ class net_nemein_discussion_cron_popularity extends midcom_baseclasses_component
     function _on_execute()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-
+        if (version_compare(phpversion(), '5.0.0', '<'))
+        {
+            debug_add("Populatiry calculator requires PHP 5", MIDCOM_LOG_DEBUG);
+            debug_pop();
+            return;
+        }
+        require_once(MIDCOM_ROOT . '/net/nemein/discussion/calculator.php');
         $calculator = new net_nemein_discussion_calculator();
 
         $qb = net_nemein_discussion_thread_dba::new_query_builder();

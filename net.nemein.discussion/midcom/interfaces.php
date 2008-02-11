@@ -34,7 +34,6 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
             'navigation.php',
             'thread.php',
             'post.php',
-            'calculator.php',
         );
         $this->_autoload_libraries = Array(
             'midcom.helper.datamanager2',

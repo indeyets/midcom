@@ -1,4 +1,10 @@
-<?php
+﻿<?php
+if (version_compare(phpversion(), '5.0.0', '<')) 
+{ 
+    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Populatiry calculator requires PHP 5"); 
+    // This will exit()
+}
+require_once(MIDCOM_ROOT . '/net/nemein/discussion/calculator.php'); 
 $_MIDCOM->auth->require_admin_user();
 
 $calculator = new net_nemein_discussion_calculator();
