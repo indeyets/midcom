@@ -67,8 +67,8 @@
             'widget' => 'universalchooser',
             'widget_config' => array
             (
-                'class'       => 'org_openpsa_contacts_group',
-                'component'   => 'org.openpsa.contacts',
+                'class'       => 'midcom_db_group',
+                'component'   => 'midgard.admin.asgard',
                 'titlefield'  => 'official',
                 'idfield'     => 'id',
                 'constraints' => array

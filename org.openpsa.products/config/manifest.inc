@@ -1,7 +1,7 @@
 
   'name' => 'org.openpsa.products',
   'purecode' => false,
-  'version' => '0.2.3beta1',
+  'version' => '1.1.0beta1',
   'state' => 'beta',
   'privileges' => 
   array (
@@ -28,6 +28,12 @@
         'email' => 'oskari.kokko@nemein.com',
         'role' => 'developer',
       ),
+      'xfade' => 
+      array (
+        'name' => 'Niels Breet',
+        'email' => 'nbreet@gmail.com',
+        'role' => 'developer',
+      ),
     ),
     'dependencies' => 
     array (
@@ -35,9 +41,6 @@
       array (
       ),
       'midcom.helper.datamanager2' => 
-      array (
-      ),
-      'org.openpsa.contacts' => 
       array (
       ),
       'org.openpsa.qbpager' => 

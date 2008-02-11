@@ -38,9 +38,6 @@ class org_openpsa_products_interface extends midcom_baseclasses_components_inter
 
     function _on_initialize()
     {
-        // We need the contacts organization class available.
-        $_MIDCOM->componentloader->load('org.openpsa.contacts');
-
         // Define delivery types
         define('ORG_OPENPSA_PRODUCTS_DELIVERY_SINGLE', 1000);
         define('ORG_OPENPSA_PRODUCTS_DELIVERY_SUBSCRIPTION', 2000);
