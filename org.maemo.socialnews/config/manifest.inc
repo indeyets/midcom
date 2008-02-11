@@ -39,6 +39,7 @@
     /* Define what modules this module depends on.  */
     'dependencies' => Array
     (
+        'net.nemein.attention' => array(),
         'net.nehmer.blog' => array(),
         'org.openpsa.httplib' => array(),
         'midcom.services.at' => array(),
