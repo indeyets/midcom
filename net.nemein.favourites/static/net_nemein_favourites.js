@@ -191,5 +191,6 @@ net_nemein_favourites_admin::get_ajax_headers();
 <div id="net_nemein_favourites_for_<?php echo $data['article']->guid; ?>" class='net_nemein_favourites <?php echo net_nemein_favourites_admin::get_json_data($data['article']->__new_class_name__, $data['article']->guid, '/favourites/');?>'>
     <div class="fav_btn"><span class="favs_count">0</span></div>
     <div class="bury_btn"><span class="bury_count">0</span></div>
+    <div class="net_nemein_favourites_clearfix"></div>
 </div>
 */

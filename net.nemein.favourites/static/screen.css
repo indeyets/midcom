@@ -14,7 +14,6 @@
 .net_nemein_favourites .bury_btn
 {
     float: left;
-    clear: right;
     width: 32px;
     height: 16px;
     margin-right: 3px;
@@ -54,4 +53,13 @@
 .net_nemein_favourites .bury_btn_loading
 {
     background-image: url('loader.gif');
+}
+
+.net_nemein_favourites_clearfix
+{
+    clear: both;
+    height: 0px;
+    line-height: 0px;
+    margin: 0px;
+    padding: 0px;
 }
