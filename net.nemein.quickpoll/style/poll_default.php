@@ -20,7 +20,8 @@ $vote_count_string = $data['l10n']->get('vote count');
             &(view["options"]:h);
             <?php
         }
-        elseif (   array_key_exists('voted',$data) 
+        elseif (   !$data['manage']
+                && array_key_exists('voted',$data) 
                 && $data['voted']
                 && isset($data['vote_count']))
         {

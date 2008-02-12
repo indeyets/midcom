@@ -100,6 +100,15 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_quickpoll_handler_index', 'view'),
             'variable_args' => 1,
         );
+        
+        // Handle /view/<article_id>
+        $this->_request_switch['view-results'] = array
+        (
+            'handler' => Array('net_nemein_quickpoll_handler_index', 'view'),
+            'fixed_args' => Array('view'),
+            'variable_args' => 1,
+        );
+        
         // Handle /index/<result_type>
         // Available types: XML
         $this->_request_switch['index-with-type'] = array
@@ -283,7 +292,55 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
         return $voted;
     }
 
-
+    function vote_value_as_total($poll_id)
+    {
+        $total = 0;
+        
+        $mc = new midgard_collector('net_nemein_quickpoll_vote_dba', 'article', $poll_id);
+        $mc->set_key_property('id');
+        $mc->add_value_property('value');
+        $mc->execute();
+        
+        $votes = $mc->list_keys();
+        
+        if (count($votes) == 0)
+        {
+            return 0;
+        }
+        
+        foreach ($votes as $id => $data)
+        {
+            $total += (int) $mc->get_subkey($id, 'value');
+        }
+        
+        return $total;
+    }
+    
+    function vote_value_as_average($poll_id)
+    {
+        $total = 0;
+        
+        $mc = new midgard_collector('net_nemein_quickpoll_vote_dba', 'article', $poll_id);
+        $mc->set_key_property('id');
+        $mc->add_value_property('value');
+        $mc->execute();
+        
+        $votes = $mc->list_keys();
+        $vote_count = count($votes);
+        if ($vote_count == 0)
+        {
+            return 0;
+        }
+        
+        foreach ($votes as $id => $data)
+        {
+            $total += (int) $mc->get_subkey($id, 'value');
+        }
+        
+        $percent = ($total / $vote_count);
+        
+        return $percent;
+    }
 }
 
 ?>

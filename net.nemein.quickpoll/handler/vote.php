@@ -99,25 +99,44 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
         }
         // FIXME: Check that user is actually allowed to vote
         
+        if (   !array_key_exists('net_nemein_quickpoll_option', $_POST)
+            && !array_key_exists('net_nemein_quickpoll_value', $_POST))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Nothing to vote");
+        }
+        
         $vote = new net_nemein_quickpoll_vote_dba();
         $vote->article = $this->_article->id;
         $vote->user = $_MIDGARD['user'];
         $vote->ip = $_SERVER['REMOTE_ADDR'];
         
+        if (array_key_exists('net_nemein_quickpoll_comment', $_POST))
+        {
+            $vote->comment = $_POST['net_nemein_quickpoll_comment'];
+        }
+        
         // TODO: Check poll article's schema
         if (array_key_exists('net_nemein_quickpoll_option', $_POST))
         {
-            $vote->selectedoption = (int) $_POST['net_nemein_quickpoll_option'];
-            $vote->create();
+            $vote->selectedoption = (int) $_POST['net_nemein_quickpoll_option'];            
         }
         elseif (array_key_exists('net_nemein_quickpoll_value', $_POST))
         {
             $vote->value = (int) $_POST['net_nemein_quickpoll_value'];
-            $vote->create();
         }
-        else
+
+        $vote->create();
+        
+        $additional_keys = $this->_config->get('additional_vote_keys');
+        if (! empty($additional_keys))
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Nothing to vote");
+            foreach ($additional_keys as $key)
+            {
+                if (isset($_POST["net_nemein_quickpoll_{$key}"]))
+                {
+                    $vote->set_parameter('net.nemein.quickpoll', $key, $_POST["net_nemein_quickpoll_{$key}"]);
+                }
+            }
         }
 
         if ($sudo_mode)
@@ -141,7 +160,7 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
             $_MIDCOM->relocate("{$prefix}{$type}/{$article_id}/");
         }
         
-        $_MIDCOM->relocate("{$prefix}{$article_id}/");
+        $_MIDCOM->relocate("{$prefix}view/{$article_id}/");
     }
 }
 

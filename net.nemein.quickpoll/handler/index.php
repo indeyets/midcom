@@ -70,6 +70,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         $this->_request_data['vote_count'] =& $this->_vote_count;
         $this->_request_data['manage'] =& $this->_manage;
         $this->_request_data['datamanager'] =& $this->_datamanager;
+        $this->_request_data['show_results'] = false;
 
         // Populate the toolbar
         if ($this->_article->can_do('midgard:update'))
@@ -81,7 +82,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
             ));
 
-            if ($this->_datamanager->schema_name == 'default')
+            if ($this->_schema == 'default')
             {
                 // The "Manage options" view is needed only for polls that actually have options
                 if ($this->_manage)
@@ -251,6 +252,11 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         }
         
         $this->_schema =& $this->_datamanager->schema_name;
+        
+        if ($this->_manage)
+        {
+            $this->_schema = 'default';
+        }
     }
 
     /**
@@ -300,7 +306,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         else
         {
             $this->_request_data['view_article'] = $this->_datamanager->get_content_html();
-            midcom_show_style("poll_{$this->_datamanager->schema_name}");
+            midcom_show_style("poll_{$this->_schema}");
         }
     }
 
@@ -357,7 +363,10 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
             // Enable creation of new options in the management mode
             foreach ($this->_request_data['schemadb'] as $schemaname => $schema)
             {
-                $this->_request_data['schemadb'][$schemaname]->fields['options']['type_config']['enable_creation'] = true;
+                if (isset($this->_request_data['schemadb'][$schemaname]->fields['options']))
+                {
+                    $this->_request_data['schemadb'][$schemaname]->fields['options']['type_config']['enable_creation'] = true;
+                }
             }
         }
 
@@ -388,6 +397,11 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         $this->_vote_count = $qb_vote_count_total->count();
 
         $this->_prepare_request_data();
+
+        if ($handler_id == 'view-results')
+        {
+            $data['show_results'] = true;
+        }
 
         // Check if user can vote
         $data['voted'] = net_nemein_quickpoll_viewer::has_voted($this->_article->id, &$this->_config);
@@ -514,9 +528,9 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
      * @param mixed &$data The local request data.
      */
     function _show_view($handler_id, &$data)
-    {
+    {        
         $this->_request_data['view_article'] = $this->_datamanager->get_content_html();
-        midcom_show_style("poll_{$this->_datamanager->schema_name}");
+        midcom_show_style("poll_{$this->_schema}");
     }
 
     /**

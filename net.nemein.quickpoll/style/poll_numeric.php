@@ -13,24 +13,25 @@ $vote_count_string = $data['l10n']->get('vote count');
 
     <div class="content">
         <?php
-        if (   array_key_exists('voted',$data) 
+        if (   (   array_key_exists('voted',$data)
                 && $data['voted']
                 && isset($data['vote_count']))
+            || $data['show_results'])
         {
-            ?>
-            Näytetään jotenkin.
+            echo net_nemein_quickpoll_viewer::vote_value_as_average($data['article']->id);
+        ?>
             <br />
             &(vote_count_string);: &(data['vote_count']);
-            <?php
+        <?php
         }
         else
         {
-            ?>
+        ?>
             <form method="post"  id="net_nemein_quickpoll_vote_form" name="net_nemein_quickpoll_vote_form" action="&(prefix);vote/&(view_id);/">
                 <input type="text" name="net_nemein_quickpoll_value" value="" />
                 <input type="submit" value="&(submit_string);" />
             </form>
-            <?php
+        <?php
         }
         ?>
     </div>

@@ -25,6 +25,7 @@
     <property name="selectedoption" link="net_nemein_quickpoll_option:id" reverse="no" parentfield="selectedoption" type="integer"/>
     <property name="value" type="integer"/>
     <property name="textvalue" type="string"/>
+    <property name="comment" type="text"/>
     
     <property name="article" link="midgard_article:id" reverse="no" type="integer"/>
         

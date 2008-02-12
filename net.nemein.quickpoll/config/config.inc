@@ -13,3 +13,9 @@
 'lock_ip_address' => true,
 'allow_multiple_votes' => false,
 
+'additional_vote_keys' => array
+(
+    'age',
+    'city'
+),
+
