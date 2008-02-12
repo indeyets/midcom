@@ -7,6 +7,7 @@ class midcom_support_wsnormalizer
     var $operations = array
     (
         'newlines',
+        'clearnulls',
         'tabs2spaces',
         'open_pre_strip',
         'close_post_strip',
@@ -30,6 +31,17 @@ class midcom_support_wsnormalizer
             $data = $this->$op($data);
         }
         return $data;
+    }
+
+    /**
+     * Replaces nulls with empty string
+     *
+     * @param string $data data to normalize (usually file contents)
+     * @return string normalized
+     */    
+    function clearnulls($data)
+    {
+        return str_replace(null, '', $data);
     }
 
     /**
