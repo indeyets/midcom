@@ -36,6 +36,9 @@ class midcom_support_wsnormalizer
     /**
      * Replaces nulls with empty string
      *
+     * NOTE: If this messes up your code, think about using the null keyword
+     * or "\x00" in stead of the raw binary-null -character.
+     *
      * @param string $data data to normalize (usually file contents)
      * @return string normalized
      */    
