@@ -10,7 +10,7 @@ echo "            <th>" . $data['l10n']->get('comment') . "</th>\n";
 $additional = $data['config']->get('additional_vote_keys');
 foreach ($additional as $field)
 {
-    echo "            <th>{$field}</th>\n";
+    echo "            <th>" . $data['l10n']->get($field) . "</th>\n";
 }
 echo "            <th>&nbsp;</th>\n";
 echo "        </tr>\n";

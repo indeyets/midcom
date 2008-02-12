@@ -105,6 +105,12 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
                 }
             }
         }
+        
+        $this->_view_toolbar->add_item(Array(
+            MIDCOM_TOOLBAR_URL => "comments/{$this->_article->guid}/",
+            MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('moderate comments'),
+            MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+        ));
 
         if ($this->_article->can_do('midgard:delete'))
         {

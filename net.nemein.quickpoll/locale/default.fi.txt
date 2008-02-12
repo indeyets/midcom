@@ -3,12 +3,24 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING age
+Ikä
+---STRINGEND
+
 ---STRING archive
 Arkisto
 ---STRINGEND
 
+---STRING city
+Paikkakunta
+---STRINGEND
+
 ---STRING close manage
 Sulje vaihtoehtojen muokkaus
+---STRINGEND
+
+---STRING comment
+Kommentti
 ---STRINGEND
 
 ---STRING create poll
@@ -23,8 +35,20 @@ Poista äänestys
 Muokkaa äänestystä
 ---STRINGEND
 
+---STRING enable_anonymous
+Salli äänestäminen anonyymisti
+---STRINGEND
+
 ---STRING manage
 Muokkaa vaihtoehtoja
+---STRINGEND
+
+---STRING moderate comments
+Moderoi kommentteja
+---STRINGEND
+
+---STRING name
+Nimi
 ---STRINGEND
 
 ---STRING net.nemein.quickpoll
@@ -39,6 +63,10 @@ vaihtoehto
 Äänestysasetukset
 ---STRINGEND
 
+---STRING posted
+Lähetetty
+---STRINGEND
+
 ---STRING vote
 Äänestä
 ---STRINGEND
@@ -47,7 +75,7 @@ vaihtoehto
 Äänimäärä
 ---STRINGEND
 
----STRING enable_anonymous
-Salli äänestäminen anonyymisti
+---STRING lock_ip_address
+Lukitse äänestäjän IP-osoite
 ---STRINGEND
 
