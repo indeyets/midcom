@@ -18,6 +18,11 @@ class net_nemein_tag_dba extends __net_nemein_tag_dba
         $this->_use_rcs = false;
         return parent::__construct($id);
     }
+    
+    function get_label()
+    {
+        return $this->tag;
+    }
 
     function get_by_tag($tag)
     {
