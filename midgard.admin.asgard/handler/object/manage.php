@@ -319,9 +319,11 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                     }
                     else
                     {
-                        $field_label = sprintf($this->_l10n->get('%s (%s)'), $key, $type_label);
+                        $field_label = sprintf($this->_l10n->get('%s (%s)'), midgard_admin_asgard_plugin::get_type_label($key), $type_label);
                     }
                 }
+                
+                // Get the chooser widgets
                 switch ($field_type)
                 {
                     case MGD_TYPE_INT:
@@ -408,6 +410,61 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                         );
                         break;
                     }
+                    
+                    // Special page treatment
+                    if (   $key === 'info'
+                        && is_a($this->_object, 'midgard_page'))
+                    {
+                        $this->_schemadb['object']->append_field
+                        (
+                            $key,
+                            array
+                            (
+                                'title'       => $key,
+                                'storage'     => $key,
+                                'type'        => 'select',
+                                'type_config' => array
+                                (
+                                    'allow_multiple' => true,
+                                    'multiple_separator' => ',',
+                                    'multiple_storagemode' => 'imploded',
+                                    'options' => array
+                                    (
+                                        'auth'        => 'require authentication',
+                                        'active'      => 'active url parsing',
+                                    ),
+                                ),
+                                'widget'      => 'select',
+                            )
+                        );
+                        break;
+                    }
+                    
+                    if (   $key === 'info'
+                        && is_a($this->_object, 'midgard_pageelement'))
+                    {
+                        $this->_schemadb['object']->append_field
+                        (
+                            $key,
+                            array
+                            (
+                                'title'       => $key,
+                                'storage'     => $key,
+                                'type'        => 'select',
+                                'type_config' => array
+                                (
+                                    'options' => array
+                                    (
+                                        '' => 'not inherited',
+                                        'inherit' => 'inherited',
+                                    ),
+                                ),
+                                'widget'      => 'select',
+                            )
+                        );
+                        break;
+                    }
+                    
                     $this->_schemadb['object']->append_field
                     (
                         $key,

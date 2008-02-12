@@ -39,6 +39,10 @@ Everyone
 All users
 ---STRINGEND
 
+---STRING active url parsing
+Active URL parsing
+---STRINGEND
+
 ---STRING add assignee
 Add group for privilege assignment
 ---STRINGEND
@@ -97,6 +101,10 @@ Changes done in revision %s to %s
 
 ---STRING changes from version %s
 Changes from version %s
+---STRINGEND
+
+---STRING choose action
+Choose action
 ---STRINGEND
 
 ---STRING code
@@ -247,10 +255,6 @@ Filename
 Filter
 ---STRINGEND
 
----STRING choose action
-Choose action
----STRINGEND
-
 ---STRING floating freely
 Floating freely
 ---STRINGEND
@@ -295,8 +299,16 @@ In total %s undeleted
 Info
 ---STRINGEND
 
+---STRING inherited
+Inherited
+---STRINGEND
+
 ---STRING interface language
 Interface language
+---STRINGEND
+
+---STRING invert selection
+Invert selection
 ---STRINGEND
 
 ---STRING items in trash
@@ -419,6 +431,10 @@ Revision control
 Not approved
 ---STRINGEND
 
+---STRING not inherited
+Not inherited
+---STRINGEND
+
 ---STRING object %s approved
 Object %s approved
 ---STRINGEND
@@ -471,6 +487,10 @@ Permissions
 Purge
 ---STRINGEND
 
+---STRING require authentication
+Require authentication
+---STRINGEND
+
 ---STRING restore this revision (%s)
 Restore to this revision (%s)
 ---STRINGEND
@@ -495,6 +515,14 @@ Revision
 Revision history of %s
 ---STRINGEND
 
+---STRING search
+Search
+---STRINGEND
+
+---STRING select all
+Select all
+---STRINGEND
+
 ---STRING select exactly two choices
 Select exactly two choices
 ---STRINGEND
@@ -505,6 +533,10 @@ Show differences
 
 ---STRING show history
 Show revision history
+---STRINGEND
+
+---STRING show sg0 objects in navigation
+Show sitegroup 0 objects in navigation
 ---STRINGEND
 
 ---STRING size
@@ -579,6 +611,10 @@ User
 User preferences
 ---STRINGEND
 
+---STRING value
+Value
+---STRINGEND
+
 ---STRING version %s
 Version %s
 ---STRINGEND
@@ -607,18 +643,7 @@ Version %s of %s
 XML
 ---STRINGEND
 
----STRING show sg0 objects in navigation
-Show sitegroup 0 objects in navigation
+---STRING %s (%s)
+%s (%s)
 ---STRINGEND
 
----STRING search
-Search
----STRINGEND
-
----STRING select all
-Select all
----STRINGEND
-
----STRING invert selection
-Invert selection
----STRINGEND

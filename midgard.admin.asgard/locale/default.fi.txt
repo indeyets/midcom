@@ -39,8 +39,16 @@ Kaikki
 Kaikki tunnistautuneet käyttäjät
 ---STRINGEND
 
+---STRING active url parsing
+Aktiivinen URL-jäsennys
+---STRINGEND
+
 ---STRING add assignee
 Lisää ryhmä käyttöoikeuksia varten
+---STRINGEND
+
+---STRING add text file
+Lisää tekstitiedosto
 ---STRINGEND
 
 ---STRING always display in top frame
@@ -83,12 +91,20 @@ Takaisin sivulle "%s"
 Takaisin sivustolle
 ---STRINGEND
 
+---STRING cascading style sheet
+CSS-tyylitiedosto
+---STRINGEND
+
 ---STRING changes done in revision %s to %s
 Version %s muutokset tietueeseen %s
 ---STRINGEND
 
 ---STRING changes from version %s
 Muutokset versiosta %s
+---STRINGEND
+
+---STRING choose action
+Valitse toiminto
 ---STRINGEND
 
 ---STRING code
@@ -183,6 +199,14 @@ Muokkaa komponentin %s asetuksia
 Muokkaa komponentin %s asetuksia kansiossa %s
 ---STRINGEND
 
+---STRING edit file %s
+Muokkaa tiedostoa %s
+---STRINGEND
+
+---STRING edit text file
+Muokkaa tekstitiedostoa
+---STRINGEND
+
 ---STRING editor options
 Tekstieditorien ominaisuudet
 ---STRINGEND
@@ -211,6 +235,22 @@ Kohteen %s palauttaminen epäonnistui, syy %s
 Liitetiedoston %s palauttaminen epäonnistui, syy %s
 ---STRINGEND
 
+---STRING file %s deleted
+Tiedosto '%s' poistettu
+---STRINGEND
+
+---STRING file contents
+Tiedoston sisältö
+---STRINGEND
+
+---STRING file information
+Tiedoston tiedot
+---STRINGEND
+
+---STRING filename
+Tiedostonimi
+---STRINGEND
+
 ---STRING filter
 Suodatin
 ---STRINGEND
@@ -223,12 +263,20 @@ Vapaasti kelluva
 kansio
 ---STRINGEND
 
+---STRING global
+Globaali
+---STRINGEND
+
 ---STRING group %s
 Ryhmä %s
 ---STRINGEND
 
 ---STRING guid
 GUID-tunniste
+---STRINGEND
+
+---STRING html
+HTML
 ---STRINGEND
 
 ---STRING in %s
@@ -251,12 +299,24 @@ Yhteensä %s palautettu
 Info
 ---STRINGEND
 
+---STRING inherited
+Periytyy
+---STRINGEND
+
 ---STRING interface language
 Käyttöliittymän kieli
 ---STRINGEND
 
+---STRING invert selection
+Käännä valinnat päinvastaisiksi
+---STRINGEND
+
 ---STRING items in trash
 Kohteita roskakorissa
+---STRINGEND
+
+---STRING javascript
+JavaScript
 ---STRINGEND
 
 ---STRING last edited by %s on %s (revision %s)
@@ -269,6 +329,10 @@ Kirjastot
 
 ---STRING lines
 Rivit
+---STRINGEND
+
+---STRING local
+Paikallinen
 ---STRINGEND
 
 ---STRING localisation settings
@@ -327,6 +391,10 @@ Luku
 Päivitys
 ---STRINGEND
 
+---STRING mimetype
+MIME-tyyppi
+---STRINGEND
+
 ---STRING navigation options
 Navigaatio-ominaisuudet
 ---STRINGEND
@@ -347,6 +415,10 @@ Navigaation leveys (pikseleinä)
 Sisällössä ei muutoksia
 ---STRINGEND
 
+---STRING no files
+Ei tiedostoja
+---STRINGEND
+
 ---STRING no title
 Ei otsikkoa
 ---STRINGEND
@@ -357,6 +429,10 @@ Versionhallinta
 
 ---STRING not approved
 Ei hyväksytty
+---STRINGEND
+
+---STRING not inherited
+Ei periydy
 ---STRINGEND
 
 ---STRING object %s approved
@@ -391,6 +467,10 @@ Parametri
 Käyttöoikeudet %s-olioon %s
 ---STRINGEND
 
+---STRING plain text
+Pelkkä teksti
+---STRINGEND
+
 ---STRING preferences saved
 Asetukset tallennettu
 ---STRINGEND
@@ -405,6 +485,10 @@ Käyttöoikeudet
 
 ---STRING purge
 Poista lopullisesti
+---STRINGEND
+
+---STRING require authentication
+Vaadi sisäänkirjautumista
 ---STRINGEND
 
 ---STRING restore this revision (%s)
@@ -431,6 +515,14 @@ Versio
 Muutoshistoria tietueelle %s
 ---STRINGEND
 
+---STRING search
+Hae
+---STRINGEND
+
+---STRING select all
+Valitse kaikki
+---STRINGEND
+
 ---STRING select exactly two choices
 Valitse täsmälleen kaksi vaihtoehtoa
 ---STRINGEND
@@ -441,6 +533,10 @@ Näytä erot
 
 ---STRING show history
 Näytä versiohistoria
+---STRINGEND
+
+---STRING show sg0 objects in navigation
+Näytä sivuryhmä 0:n kohteet navigaatiossa
 ---STRINGEND
 
 ---STRING size
@@ -491,6 +587,14 @@ Palauta
 %s alla
 ---STRINGEND
 
+---STRING upload file
+Lisää tiedosto
+---STRINGEND
+
+---STRING url
+URL
+---STRINGEND
+
 ---STRING use codepress editor for editing code snippets
 Käytä CodePress-editoria koodin muokkaukseen
 ---STRINGEND
@@ -505,6 +609,10 @@ Käyttäjä
 
 ---STRING user preferences
 Käyttöasetukset
+---STRINGEND
+
+---STRING value
+Arvo
 ---STRINGEND
 
 ---STRING version %s
@@ -531,14 +639,11 @@ Näytä tämä versio (%s)
 Versio %s tietueesta %s
 ---STRINGEND
 
----STRING show sg0 objects in navigation
-Näytä sivuryhmä 0:n kohteet navigaatiossa
+---STRING xml
+XML
 ---STRINGEND
 
----STRING select all
-Valitse kaikki
+---STRING %s (%s)
+%s (%s)
 ---STRINGEND
 
----STRING invert selection
-Käännä valinnat päinvastaisiksi
----STRINGEND
