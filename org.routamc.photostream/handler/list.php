@@ -57,8 +57,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         $qb->results_per_page = $this->_config->get('photos_per_page');
         $qb->add_constraint('node', '=', $this->_topic->id);
 
-        $qb->listen_parameter('org_routamc_photostream_order', array('reversed'));
-        $qb->listen_parameter('org_routamc_photostream_order_by', '*');
+        //$qb->listen_parameter('org_routamc_photostream_order', array('reversed'));
+        //$qb->listen_parameter('org_routamc_photostream_order_by', '*');
 
         $this->_request_data['qb'] =& $qb;
         return $qb;
@@ -621,6 +621,53 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
     }
 
     /**
+     * Helper to populate feed URLs to HTML head
+     */
+    function _alternate_links($base_url)
+    {
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel'   => 'alternate',
+                'type'  => 'application/rss+xml',
+                'title' => $this->_l10n->get('rss 2.0 feed'),
+                'href'  => "{$base_url}/rss.xml",
+            )
+        );
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel'   => 'alternate',
+                'type'  => 'application/rss+xml',
+                'title' => $this->_l10n->get('rss 1.0 feed'),
+                'href'  => "{$base_url}/rss1.xml",
+            )
+        );
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel'   => 'alternate',
+                'type'  => 'application/rss+xml',
+                'title' => $this->_l10n->get('rss 0.91 feed'),
+                'href'  => "{$base_url}/rss091.xml",
+            )
+        );
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel'   => 'alternate',
+                'type'  => 'application/atom+xml',
+                'title' => $this->_l10n->get('atom feed'),
+                'href'  => "{$base_url}/atom.xml",
+            )
+        );
+    }
+
+    /**
      * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
@@ -628,6 +675,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
     function _update_breadcrumb_line($handler_id)
     {
         $tmp = Array();
+        $prefix =  $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
         switch ($handler_id)
         {
@@ -638,6 +686,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                     MIDCOM_NAV_URL => "list/{$this->_request_data['user_url']}/",
                     MIDCOM_NAV_NAME => $this->_request_data['view_title'],
                 );
+                $this->_alternate_links("{$prefix}list/{$this->_request_data['user_url']}");
                 break;
             case 'photostream_tags_all':
             case 'photostream_tags':
@@ -646,6 +695,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                     MIDCOM_NAV_URL => "tag/{$this->_request_data['user_url']}/",
                     MIDCOM_NAV_NAME => $this->_request_data['view_title'],
                 );
+                $this->_alternate_links("{$prefix}tag/{$this->_request_data['user_url']}");
                 break;
             case 'photostream_tag_all':
             case 'photostream_tag':
@@ -659,6 +709,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                     MIDCOM_NAV_URL => "tag/{$this->_request_data['user_url']}/{$this->_request_data['tag']}",
                     MIDCOM_NAV_NAME => $this->_request_data['view_title'],
                 );
+                $this->_alternate_links("{$prefix}tag/{$this->_request_data['user_url']}/{$this->_request_data['tag']}");
                 break;
             case 'photostream_rated_all':
             case 'photostream_rated':
@@ -667,6 +718,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                     MIDCOM_NAV_URL => "rated/{$this->_request_data['user_url']}/{$this->_request_data['rating']}",
                     MIDCOM_NAV_NAME => $this->_request_data['view_title'],
                 );
+                $this->_alternate_links("{$prefix}rated/{$this->_request_data['user_url']}/{$this->_request_data['rating']}");
                 break;
         }
 
