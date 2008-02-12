@@ -588,7 +588,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
     /**
      * Returns a list of all events open for registration.
      *
-     * Implementation note: Unfortunalety, open registration processing must still be done using
+     * Implementation note: Unfortunately, open registration processing must still be done using
      * the PHP level, as the open/close timestamps are contained in parameters.
      *
      * This is built on the list_all function for now, see there for further comments about

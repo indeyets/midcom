@@ -395,7 +395,7 @@ class midcom_helper_nav
             return false;
         }
 
-        // Ok, unfortunalety, this is not an immediate topic. We try to traverse
+        // Ok, unfortunately, this is not an immediate topic. We try to traverse
         // upwards in the object chain to find a topic.
         debug_add('Looking for a topic to use via get_parent()');
         $topic = null;
