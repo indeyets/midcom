@@ -363,52 +363,53 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
 
         if (count($data['groups']) >= 1) //FIXME: Hack
         {
-            midcom_show_style('group_header');
+            if ( $this->_config->get('disable_subgroups_on_frontpage') !== true ){
+                midcom_show_style('group_header');
 
-            $groups_counter = 0;
-            $data['groups_count'] = count($data['groups']);
+                $groups_counter = 0;
+                $data['groups_count'] = count($data['groups']);
 
-            midcom_show_style('group_subgroups_header');
+                midcom_show_style('group_subgroups_header');
 
-            foreach ($data['groups'] as $group)
-            {
-                $groups_counter++;
-                $data['groups_counter'] = $groups_counter;
-
-                $data['group'] = $group;
-                if (! $data['datamanager_group']->autoset_storage($group))
+                foreach ($data['groups'] as $group)
                 {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("The datamanager for group #{$group->id} could not be initialized, skipping it.");
-                    debug_print_r('Object was:', $group);
-                    debug_pop();
-                    continue;
-                }
-                $data['view_group'] = $data['datamanager_group']->get_content_html();
+                    $groups_counter++;
+                    $data['groups_counter'] = $groups_counter;
 
-                if ($group->code)
-                {
-            if (isset($data["parent_category"]))
-            {
-                    $data['view_group_url'] = "{$prefix}".$data["parent_category"]."/{$group->code}/";
-            }
-            else
-            {
-                    $data['view_group_url'] = "{$prefix}{$group->code}/";
-            }
-                }
-                else
-                {
-                    $data['view_group_url'] = "{$prefix}{$group->guid}/";
+                    $data['group'] = $group;
+                    if (! $data['datamanager_group']->autoset_storage($group))
+                    {
+                        debug_push_class(__CLASS__, __FUNCTION__);
+                        debug_add("The datamanager for group #{$group->id} could not be initialized, skipping it.");
+                        debug_print_r('Object was:', $group);
+                        debug_pop();
+                        continue;
+                    }
+                    $data['view_group'] = $data['datamanager_group']->get_content_html();
+
+                    if ($group->code)
+                    {
+                        if (isset($data["parent_category"]))
+                        {
+                            $data['view_group_url'] = "{$prefix}".$data["parent_category"]."/{$group->code}/";
+                        }
+                        else
+                        {
+                            $data['view_group_url'] = "{$prefix}{$group->code}/";
+                        }
+                    }
+                    else
+                    {
+                        $data['view_group_url'] = "{$prefix}{$group->guid}/";
+                    }
+
+                    midcom_show_style('group_subgroups_item');
                 }
 
-                midcom_show_style('group_subgroups_item');
+                midcom_show_style('group_subgroups_footer');
+                midcom_show_style('group_footer');
             }
-
-            midcom_show_style('group_subgroups_footer');
-            midcom_show_style('group_footer');
         }
-
         elseif (count($data['products']) > 0)
         {
             midcom_show_style('group_header');

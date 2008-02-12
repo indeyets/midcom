@@ -34,3 +34,5 @@
 // Use custom rss feeds
 'custom_rss_feeds' => false, // array('title' => 'http://example.com')
 
+//When using the subgroups sidebar, you can disable the subgroups block on the frontpage.
+'disable_subgroups_on_frontpage' => false,
