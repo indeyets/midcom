@@ -9,6 +9,9 @@
 'api_email_schema' => 'photo',
 'api_email_default_tags' => 'moblog',
 
+// If not using the chooser widget (for whatever reason) setting this to true is highly recommended.
+'to_gallery_append_static_options' => true,
+
 /* not implemented yet
 'api_metaweblog_enable' => true,
 'api_metaweblog_schema' => 'photo',

@@ -81,9 +81,61 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
             $this->_defaults['photographer'] = $user->id;
         }
 
-        if (isset($_REQUEST['to_gallery']))
+        $this->_to_gallery_defaults();
+    }
+
+    /**
+     * Helper to handle various schema operations related to
+     * the ?to_gallery=<id> upload mode 
+     */
+    function _to_gallery_defaults()
+    {
+        if (   !isset($_REQUEST['to_gallery'])
+            || empty($_REQUEST['to_gallery']))
         {
-            $this->_defaults['to_gallery'] = $_REQUEST['to_gallery'];
+            // No need to do anything
+            return;
+        }
+        $this->_defaults['to_gallery'] = $_REQUEST['to_gallery'];
+        if (!$this->_config->get('to_gallery_append_static_options'))
+        {
+            // Advanced handling disabled, return now
+            return;
+        }
+        $gallery = new midcom_db_topic($_GET['to_gallery']);
+        if (   !$gallery
+            || !isset($gallery->id)
+            || !empty($gallery->id))
+        {
+            // Could not find gallery, PONDER: Should we clear the _defaults value as well ?
+            return;
+        }
+
+        if (   !isset($this->_schemadb['upload'])
+            || !is_object($this->_schemadb['upload'])
+            || !isset($this->_schemadb['upload']->fields['to_gallery']))
+        {
+            // Schema does not contain 'to_gallery' field
+            return;
+        }
+        // Muck aout with the schema to get the gallery to options list
+        $field =& $this->_schemadb['upload']->fields['to_gallery'];
+        // Append gallery to options list (all select-compatible widgets will benefit from this)
+        if (!isset($field['type_config']['options'][$gallery->id]))
+        {
+            $field['type_config']['options'][$gallery->id] = $gallery->extra;
+        }
+        // For universalchooser add to static options list
+        if ($field['widget'] == 'universalchooser')
+        {
+            if (!isset($field['widget_config']['static_options']))
+            {
+                $field['widget_config']['static_options'] = array(0 => 'none');
+            }
+            if (!isset($field['widget_config']['static_options'][$gallery->id]))
+            {
+                $field['widget_config']['static_options'][$gallery->id] = $gallery->extra;
+            }
         }
     }
 
@@ -361,15 +413,15 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add('Called');
-
-        if (!isset($_POST['org_routamc_photostream_to_gallery_chooser_widget_selections']))
+        
+        if (!isset($this->_controller->datamanager->types['to_gallery']))
         {
-            debug_add('Could not find to_gallery-field in POST');
+            debug_add('Could not find to_gallery-field in datamanager->types');
             debug_pop();
             return false;
         }
-
-        $gallery = (int) $_POST['org_routamc_photostream_to_gallery_chooser_widget_selections'];
+        $type =& $this->_controller->datamanager->types['to_gallery'];
+        $gallery = (int) $type->convert_to_storage();
         if (empty($gallery))
         {
             debug_add("to_gallery value ({$gallery}) is empty, skipping");
