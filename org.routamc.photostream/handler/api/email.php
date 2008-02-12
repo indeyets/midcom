@@ -293,38 +293,28 @@ class org_routamc_photostream_handler_api_email extends midcom_baseclasses_compo
         debug_pop();
     }
 
+    /**
+     * Parses email addresses from message mail headers
+     */
     function _parse_email_persons()
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
         //Parse email addresses
-        $regex = '/<?([a-zA-Z0-9_.-]+?@[a-zA-Z0-9_.-]+)>?[ ,]?/';
-        $emails = array();
-        if (preg_match_all($regex, $this->_decoder->headers['To'], $matches_to))
+        $regex = '/(<(.*?@.*?)>|<?([a-zA-Z0-9_.-]+?@[a-zA-Z0-9_.-]+)>?)[ ,]?/';
+        if (!preg_match_all($regex, $this->_decoder->headers['From'], $matches_from))
         {
-            foreach ($matches_to[1] as $email)
-            {
-                //Each address only once
-                $emails[$email] = $email;
-            }
+            debug_add("Could not parse email address in '{$this->_decoder->headers['From']}'", MIDCOM_LOG_WARN);
+            debug_pop();
+            return;
         }
-        if (preg_match_all($regex, $this->_decoder->headers['Cc'], $matches_cc))
+        foreach ($matches_from[2] as $email)
         {
-            foreach ($matches_cc[1] as $email)
-            {
-                //Each address only once
-                $emails[$email] = $email;
-            }
+            //It's unlikely that we'd get multiple matches in From, but we use the latest
+            debug_add("Found address '{$email}'");
+            $this->_request_data['from'] = $email;
         }
-        $from = false;
-        if (preg_match_all($regex, $this->_decoder->headers['From'], $matches_from))
-        {
-            foreach ($matches_from[1] as $email)
-            {
-                //Each address only once
-                $emails[$email] = $email;
-                //It's unlikely that we'd get multiple matches in From, but we use the latest
-                $this->_request_data['from'] = $email;
-            }
-        }
+        debug_add("Using address '{$this->_request_data['from']}' for photographer matching");
+        debug_pop();
     }
 
     function _add_image($att)
