@@ -192,11 +192,6 @@ dm2AjaxEditor.prototype = {
             */
         }
         
-            if (this.formId == 'midcom_helper_datamanager2_controller_ajax_4b2ac795e1dfc64ff11af56337840b5f')
-            {
-                console.info("x1: " + this.formDimensions.x1 + " y1: " + this.formDimensions.y1 + ", x2: " + this.formDimensions.x2 + " y2: " + this.formDimensions.y2);
-            }
-        
         if (   this.formArea
             && !this.creationMode)
         {   
@@ -523,6 +518,11 @@ dm2AjaxEditor.prototype = {
      */
     fetchFields: function()
     {
+        if (this.newState == 'edit')
+        {
+            // Don't load the editor again if we already have it
+            return;
+        }
         this.removeToolbar();
         this.blinder.innerHTML = 'Loading...';    
     
