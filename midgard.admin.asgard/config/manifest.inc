@@ -2,7 +2,7 @@
 'icon' => 'midgard.admin.asgard/asgard2-16.png',
 'purecode' => true,
 'version' => '2.0.1beta11',
-'state' => 'devel',
+'state' => 'beta',
 'privileges' => array
 (
     'access' => MIDCOM_PRIVILEGE_DENY,
