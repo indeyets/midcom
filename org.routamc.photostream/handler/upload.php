@@ -336,9 +336,6 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
                 case 'save':
                     // Change schema on the fly
                     $this->_photo->parameter('midcom.helper.datamanager2', 'schema_name', 'photo');
-                    $this->_photo->read_exif_data(true);
-                    $this->_photo->force_exif = true;
-                    $this->_photo->update();
                     $this->_check_link_photo_gallery();
                     // Set batch number
                     $this->_photo->parameter('org.routamc.photostream', 'batch_number', $batch_number);
@@ -348,7 +345,10 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
                     {
                         // Failed to set_image ? what to do ??
                     }
-                    $this->_photo->update_attachment_links();
+                    $this->_photo->update_attachment_links(false);
+                    $this->_photo->read_exif_data(true);
+                    $this->_photo->force_exif = true;
+                    $this->_photo->update();
                     $this->index_uploaded_photo();
                     break;
                 default:
