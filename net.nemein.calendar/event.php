@@ -55,8 +55,8 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
         $mc->execute();
         $keys = $mc->list_keys();
         list ($key, $copy) = each ($keys);
-        $node_id = (int) $mc_topic->get_subkey($key, 'node');
-        $up_id = (int) $mc_topic->get_subkey($key, 'up');
+        $node_id = (int) $mc->get_subkey($key, 'node');
+        $up_id = (int) $mc->get_subkey($key, 'up');
         if (!empty($node_id))
         {
             return net_nemein_calendar_event_dba::_get_parent_guid_uncached_static_topic($node_id);
