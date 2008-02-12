@@ -474,7 +474,11 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
             // PHP5-TODO: This must be copy-by-value
             $copy = $_FILES['photo_file'];
             unset($_FILES['photo_file']);
-            return $this->_batch_handler($extension_matches[1], $copy);
+            if (!$this->_batch_handler($extension_matches[1], $copy))
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'The batch handler failed critically, see debug log for details');
+                // This will exit
+            }
         }
 
         $this->_load_controller();
