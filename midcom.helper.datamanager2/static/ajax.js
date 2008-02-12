@@ -406,8 +406,11 @@ dm2AjaxEditor.prototype = {
         this.formValues['midcom_helper_datamanager2_' + this.newState] = 1;
         
         // And remove the old state if set so DM2 doesn't get confused by them
-        delete this.formValues['midcom_helper_datamanager2_' + this.oldState];    
-        delete this.formValues[this.formId + '_' + this.oldState];
+        if (this.newState != this.oldState)
+        {
+            delete this.formValues['midcom_helper_datamanager2_' + this.oldState];    
+            delete this.formValues[this.formId + '_' + this.oldState];
+        }
                 
         // QuickForm requires its own identifier to be present
         this.formValues['_qf__' + this.formId + '_qf'] = 1; 
