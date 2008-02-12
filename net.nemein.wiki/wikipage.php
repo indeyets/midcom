@@ -157,14 +157,10 @@ class net_nemein_wiki_wikipage extends midcom_db_article
         $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=', 'net.nemein.wiki:watch');
         $qb->begin_group('OR');
-            $qb->begin_group('AND');
-                // List people watching the whole wiki
-                $qb->add_constraint('parentguid', '=', $topic->guid);
-            $qb->end_group();
-            $qb->begin_group('AND');
-                // List people watching this particular page
-                $qb->add_constraint('parentguid', '=', $this->guid);
-            $qb->end_group();
+            // List people watching the whole wiki
+            $qb->add_constraint('parentguid', '=', $topic->guid);
+            // List people watching this particular page
+            $qb->add_constraint('parentguid', '=', $this->guid);
         $qb->end_group();
         $watcher_params = $qb->execute();
         
