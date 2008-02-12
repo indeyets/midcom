@@ -106,6 +106,7 @@ class midcom_helper_replicator_interface extends midcom_baseclasses_components_i
 
             if ($fresh_object)
             {
+                // FIXME: This doesn't work on Midgard 1.9
                 // got fresh object, copy values for our perusal...
                 while (list($k, $v) = each ($fresh_object->metadata))
                 {
