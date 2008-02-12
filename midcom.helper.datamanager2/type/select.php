@@ -195,6 +195,14 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      * @access public
      */
     var $multiple_storagemode = 'serialized';
+    
+    /**
+     * Glue that will be used for separating the keys
+     * 
+     * @var string
+     * @access public
+     */
+    var $multiple_separator = '|';
 
     /**
      * Initialize the class, if necessary, create a callback instance, otherwise
@@ -475,7 +483,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      */
     function _convert_multiple_from_storage($source)
     {
-        $glue = '|';
+        $glue = $this->multiple_separator;
 
         switch ($this->multiple_storagemode)
         {
@@ -536,7 +544,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
                 return $options;
 
             case 'imploded_wrapped':
-                $glue = '|';
+                $glue = $this->multiple_separator;
                 $options = $this->_get_imploded_options();
                 return "{$glue}{$options}{$glue}";
 
@@ -555,7 +563,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      */
     function _get_imploded_options()
     {
-        $glue = '|';
+        $glue = $this->multiple_separator;
 
         if ($this->others)
         {
@@ -579,7 +587,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
             if (strpos($key, $glue) !== false)
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("The option key '{$key}' contained a pipe (|) char, which is not allowed for imploded storage targets. ignoring silently.",
+                debug_add("The option key '{$key}' contained the multiple separator ({$this->multiple_separator}) char, which is not allowed for imploded storage targets. ignoring silently.",
                     MIDCOM_LOG_WARN);
                 debug_pop();
                 continue;

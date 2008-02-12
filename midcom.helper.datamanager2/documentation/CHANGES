@@ -8,6 +8,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-02-12 adrenalin
+  - Added configuration option for choosing the separating character for multiple storage
+
 2007-12-19 adrenalin
   - Added configurable file and image amount limits to types 'blobs' and 'images'
 
