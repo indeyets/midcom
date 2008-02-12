@@ -375,9 +375,8 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             {
                 continue;
             }
-
-            // PHP5-TODO: Must be copy-by-value
             $new_switch = $switch_data;
+
             // switch handler to the feed dispatcher
             $new_switch['handler'] = array('org_routamc_photostream_handler_feed', 'dispatcher');
             // add a variable arg to end of list for feed type

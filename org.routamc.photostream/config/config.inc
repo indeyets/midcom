@@ -23,6 +23,8 @@
 
 // Stick to the context in photo navigation (e.g. show the next and previous only from the selected user or tag group)
 'navigate_with_context' => true,
+// Resolve next/previous photo for use in style (can be computationally expensive for large streams!)
+'load_next_prev' => true,
 
 // Configuration schema
 'schemadb_config' => 'file:/org/routamc/photostream/config/schemadb_config.inc',

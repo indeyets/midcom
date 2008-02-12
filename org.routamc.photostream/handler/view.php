@@ -180,8 +180,13 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         }
 
         // Get the next and previous
-        $data['previous_guid'] = org_routamc_photostream_photo_dba::get_previous($data['photo'], $limiters, $this->_tags_shared);
-        $data['next_guid'] = org_routamc_photostream_photo_dba::get_next($data['photo'], $limiters, $this->_tags_shared);
+        $data['previous_guid'] = false;
+        $data['next_guid'] = false;
+        if ($this->_config->get('load_next_prev'))
+        {
+            $data['previous_guid'] = org_routamc_photostream_photo_dba::get_previous($data['photo'], $limiters, $this->_tags_shared);
+            $data['next_guid'] = org_routamc_photostream_photo_dba::get_next($data['photo'], $limiters, $this->_tags_shared);
+        }
 
         // Create the link suffix
         $data['suffix'] = '';
