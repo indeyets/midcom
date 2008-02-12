@@ -79,6 +79,21 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('manage'),
             'variable_args' => 1,
         );
+        // Handle /comments/<article_id>
+        $this->_request_switch['comments'] = array
+        (
+            'handler' => Array('net_nemein_quickpoll_handler_votes', 'comments'),
+            'fixed_args' => Array('comments'),
+            'variable_args' => 1,
+        );
+        
+        // Handle /comments/xml/<article_id>
+        $this->_request_switch['comments_xml'] = array
+        (
+            'handler' => Array('net_nemein_quickpoll_handler_votes', 'xml'),
+            'fixed_args' => Array('comments', 'xml'),
+            'variable_args' => 1,
+        );
 
         // Handle /archive/
         $this->_request_switch['archive'] = Array

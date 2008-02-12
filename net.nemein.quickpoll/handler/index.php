@@ -377,7 +377,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "{$this->_article->guid}/",
+            MIDCOM_NAV_URL => "{$this->_article->name}/",
             MIDCOM_NAV_NAME => $this->_article->title,
         );
         if ($this->_manage)

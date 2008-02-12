@@ -1,5 +1,6 @@
 // Schema database to use
 'schemadb' => 'file:/net/nemein/quickpoll/config/schemadb_default.inc',
+'schemadb_vote' => 'file:/net/nemein/quickpoll/config/schemadb_vote.inc',
 'schemadbs'      => Array
 (
     'file:/net/nemein/quickpoll/config/schemadb_default.inc' => 'Default Schema Database',
@@ -15,6 +16,7 @@
 
 'additional_vote_keys' => array
 (
+    'name',
     'age',
     'city'
 ),
