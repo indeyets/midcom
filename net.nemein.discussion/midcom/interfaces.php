@@ -52,6 +52,77 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
         define('NET_NEMEIN_DISCUSSION_NEW_USER', 5);
         define('NET_NEMEIN_DISCUSSION_MODERATED', 6);
     }
+    
+    function _on_watched_dba_create($vote)
+    {
+        if (!$this->_config->get('create_thread_from_quickpoll'))
+        {
+            return;
+        }
+    
+        if (!$_MIDCOM->componentloader->load_graceful('net.nemein.quickpoll'))
+        {
+            // No quickpoll installed, skip
+            return;
+        }
+        
+        if (!is_a($vote, 'net_nemein_quickpoll_vote'))
+        {
+            return;
+        }
+        
+        if (   !isset($vote->comment)
+            || !$vote->comment)
+        {
+            return;
+        }
+        
+        $forum = new midcom_db_topic($this->_config->get('create_thread_from_quickpoll_forum'));
+        if (   !$forum
+            || !$forum->component != 'net.nemein.discussion')
+        {
+            return;
+        }
+        
+        $poll = new midcom_db_article($vote->article);
+        if (   !$poll
+            || !$poll->title)
+        {
+            return;
+        }
+        
+        $thread = new net_nemein_discussion_thread_dba();
+        $thread->node = $forum->id;
+        $thread->title = $poll->title;
+        if (!$thread->create())
+        {
+            return;
+        }
+        $thread->parameter('net.nemein.quickpoll', 'vote', $vote->guid);
+        $thread->parameter('net.nemein.quickpoll', 'quickpoll', $poll->guid);
+        $thread->parameter('net.nemein.discussion', 'thread_type', 'quickpoll');
+        
+        $post = new net_nemein_discussion_post_dba();
+        $post->subject = $poll->title;
+        $post->content = $vote->comment;
+        $post->thread = $thread->id;
+        $post->status = NET_NEMEIN_DISCUSSION_NEW;
+        if (!$post->create())
+        {
+            $thread->delete();
+            return;
+        }
+        
+        $thread->name = midcom_generate_urlname_from_string(strftime('%x %X', time()) . ": {$post->subject}");
+        $thread->firstpost = $post->id;
+        $thread->latestpost = $post->id;
+        $thread->latestposttime = $post->metadata->published;
+        if (!$thread->update())
+        {
+            $post->delete();
+            $thread->delete();
+        }
+    }
 
     /**
      * Iterate over all articles and create index record using the datamanager indexer

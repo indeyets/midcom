@@ -61,3 +61,6 @@
 'popularity_posts_enable' => true,
 'popularity_posts_modifier' => 2,
 'popularity_badpost_modifier' => -1,
+
+'create_thread_from_quickpoll' => false,
+'create_thread_from_quickpoll_forum' => '',

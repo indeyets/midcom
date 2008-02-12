@@ -11,6 +11,17 @@
 (
     'midcom_dba_classes.inc',
 ),
+'watches' => array
+(
+    array
+    (
+        'classes' => array
+        (
+            'net_nemein_quickpoll_vote_dba',
+        ),
+        'operations' => MIDCOM_OPERATION_DBA_CREATE,
+    ),
+),
 'package.xml' => array
 (
     'summary' => 'Discussion forum',
@@ -32,6 +43,7 @@
         'org.openpsa.qbpager' => array(),
         'net.nehmer.markdown' => array(),
         'net.nemein.tag' => array(),
+        'net.nemein.quickpoll' => array(),        
         'midcom.helper.xml' => array(),
         'midcom' => array(),
     ),
