@@ -105,7 +105,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
         $gallery = new midcom_db_topic($_GET['to_gallery']);
         if (   !$gallery
             || !isset($gallery->id)
-            || !empty($gallery->id))
+            || empty($gallery->id))
         {
             // Could not find gallery, PONDER: Should we clear the _defaults value as well ?
             return;
