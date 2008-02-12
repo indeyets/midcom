@@ -102,7 +102,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
             // Advanced handling disabled, return now
             return;
         }
-        $gallery = new midcom_db_topic($_GET['to_gallery']);
+        $gallery = new midcom_db_topic($_REQUEST['to_gallery']);
         if (   !$gallery
             || !isset($gallery->id)
             || empty($gallery->id))
