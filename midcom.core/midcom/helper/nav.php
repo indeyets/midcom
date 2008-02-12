@@ -314,10 +314,11 @@ class midcom_helper_nav
      * service within MidCOM, as it covers more objects then the NAP listings.
      *
      * @param string $guid The GUID of the object to be looked up.
-     * @return mixed Eitehr a node or leaf structure, distinguishable by MIDCOM_NAV_TYPE, or false on failure.
+     * @param boolean $node_is_sufficient if we could return a good guess of correct parent node but said node does not list the $guid in leaves return the node or try to do a full (and very expensive) NAP scan ?
+     * @return mixed Either a node or leaf structure, distinguishable by MIDCOM_NAV_TYPE, or false on failure.
      * @see midcom_services_permalinks
      */
-    function resolve_guid ($guid)
+    function resolve_guid ($guid, $node_is_sufficient = false)
     {
         // First, check if the GUID is already known by basicnav:
         $cached_result = $this->_basicnav->get_loaded_object_by_guid($guid);
@@ -392,6 +393,50 @@ class midcom_helper_nav
             debug_add("The Article GUID {$guid} is somehow hidden from the NAP data in its topic, no results shown.", MIDCOM_LOG_INFO);
             debug_pop();
             return false;
+        }
+
+        // Ok, unfortunalety, this is not an immediate topic. We try to traverse
+        // upwards in the object chain to find a topic.
+        debug_add('Looking for a topic to use via get_parent()');
+        $topic = null;
+
+        $parent = $object->get_parent();
+        
+        while ($parent)
+        {
+            if (is_a($parent, 'midgard_topic'))
+            {
+                // Verify that this topic is within the current sites tree, if it is not,
+                // we ignore it. This might happen on symlink topics with taviewer & co
+                // which point to the outside f.x.
+                if ($this->is_node_in_tree($parent->id, $this->get_root_node()))
+                {
+                    $topic = $parent;
+                    break;
+                }
+            }
+            $parent = $parent->get_parent();           
+        }
+
+        if ($topic !== null)
+        {
+            debug_add("Found topic #{$topic->id}, searching the leaves");
+            $leaves = $this->list_leaves($topic->id, true);
+            foreach ($leaves as $leafid)
+            {
+                $leaf = $this->get_leaf($leafid);
+                if ($leaf[MIDCOM_NAV_GUID] == $guid)
+                {
+                    debug_pop();
+                    return $leaf;
+                }
+            }
+            if ($node_is_sufficient)
+            {
+                debug_add("Could not find guid in leaves (maybe not listed?), but node is sufficient, returning node");
+                debug_pop();
+                return $this->get_node($topic->id);
+            }
         }
 
         // this is the rest of the lot, we need to traverse everything, unfortunately.

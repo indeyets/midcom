@@ -118,7 +118,7 @@ class midcom_services_indexer_document_midcom extends midcom_services_indexer_do
     {
         $nav = new midcom_helper_nav();
         // TODO: Is there a better way ?
-        $object = $nav->resolve_guid($this->source);
+        $object = $nav->resolve_guid($this->source, true);
         if (! $object)
         {
             debug_add("Failed to resolve the topic, skipping autodetection.");
