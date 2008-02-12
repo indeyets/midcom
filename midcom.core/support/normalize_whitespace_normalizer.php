@@ -44,7 +44,7 @@ class midcom_support_wsnormalizer
      */    
     function clearnulls($data)
     {
-        return str_replace(null, '', $data);
+        return preg_replace('%(\x0)%', '', $data);
     }
 
     /**
