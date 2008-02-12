@@ -136,7 +136,19 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
                 )
             );
         }
-
+        if ($GLOBALS['midcom_config']['midcom_services_rcs_enable'])
+        {
+            $this->_request_data['votes_toolbars'][$vote->guid]->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__ais/rcs/{$vote->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('show history', 'no.bergfald.rcs'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/history.png',
+                    MIDCOM_TOOLBAR_ENABLED => $vote->can_do('midgard:update'),
+                )
+            );
+        }
     }
     
     /**
