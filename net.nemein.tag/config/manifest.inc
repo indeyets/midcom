@@ -11,6 +11,14 @@
   array (
     0 => 'midcom_dba_classes.inc',
   ),
+  'watches' => 
+  array (
+    0 => 
+    array (
+      'classes' => NULL,
+      'operations' => MIDCOM_OPERATION_DBA_DELETE,
+    ),
+  ),
   'package.xml' => 
   array (
     'summary' => 'Tag library',
