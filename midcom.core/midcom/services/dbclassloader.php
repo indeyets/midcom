@@ -618,7 +618,7 @@ EOF;
         elseif (\$id)
         {
             try 
-    		{	
+            {    
                 \$construct_stat = parent::__construct(\$id);
             }
             catch (midgard_error_exception \$e)
