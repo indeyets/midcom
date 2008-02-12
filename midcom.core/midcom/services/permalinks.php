@@ -32,7 +32,7 @@
  * modify the permalink lookup rules, you have to invalidate all guids that affected by the
  * changes. MidCOM will assume that the resolution of Permalinks to real URLs is stable over
  * time otherwise. You can also set the no_cache flag during the resolver callback execution
- * if you discover that it is a URL you are responsible for but the result should not be 
+ * if you discover that it is an URL you are responsible for but the result should not be 
  * cached. See there for details. 
  *
  * @see midcom_baseclasses_components_interface::resolve_permalink()
@@ -49,7 +49,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
     {
         parent::midcom_baseclasses_core_object();
     }
-    
+
     /**
      * This function resolves any GUID into a fully qualified URL which can be reolocated
      * to. It operates in multiple phases:
@@ -69,7 +69,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
      */
     function resolve_permalink($guid)
     {
-        // resolves a guid into a fully qualified url, uses some heuristics for that, mainly replaces
+        // resolves a guid into an fully qualified url, uses some heuristics for that, mainly replaces
         // the nap permalink resolver, with the difference that it will be based on the 
         // components permalink interface code.
         
@@ -95,14 +95,14 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
             debug_pop();
             return null;
         }        
-        
+
         $metadata =& midcom_helper_metadata::retrieve($object);
         if (! $metadata->is_object_visible_onsite())
         {
             return null;
         }
         
-        if ($object->__table__ == 'topic')
+        if (is_a($object, 'midgard_topic'))
         {
             $napobj = $nav->get_node($object->id);
             if (! $napobj)
@@ -115,7 +115,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
             return $napobj[MIDCOM_NAV_FULLURL];
         }
         
-        // Ok, unfortunately, this is not an immediate topic. We try to traverse
+        // Ok, unfortunalety, this is not an immediate topic. We try to traverse
         // upwards in the object chain to find a topic.
         $topic = null;
 
@@ -123,10 +123,10 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
         
         while ($parent)
         {
-            if ($parent->__table__ == 'topic')
+            if (is_a($parent, 'midgard_topic'))
             {
                 // Verify that this topic is within the current sites tree, if it is not,
-                // we ignore it. This might happen on symlink topics with static & co
+                // we ignore it. This might happen on symlink topics with taviewer & co
                 // which point to the outside f.x.
                 if ($nav->is_node_in_tree($parent->id, $nav->get_root_node()))
                 {
@@ -143,7 +143,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
         }
         
         // Bad, this means a full scan,
-        // NAP needs to be traversed for the guid.
+        // NAP needs to be tranversed for the guid.
         
         $unprocessed_node_ids = Array ($nav->get_root_node());
 
@@ -205,8 +205,8 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
         }
         
         return "{$node[MIDCOM_NAV_FULLURL]}{$result}";
-    }    
-    
+    }
+
     /**
      * This small helper should be used to create Permalink URLs from GUIDs. It always
      * points to the live site (given correct system configuration).
@@ -218,11 +218,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
     {
         return "{$GLOBALS['midcom_config']['midcom_site_url']}midcom-permalink-{$guid}";
     }
-    
-    
-    
-    
-    
+
 }
 
 ?>
