@@ -103,6 +103,41 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
         return $parent_guid;
     }
 
+    /**
+     * Get topic guid statically
+     *
+     * used by get_parent_guid_uncached_static
+     *
+     * @param id $parent_id id of topic to get the guid for
+     */
+    function _get_parent_guid_uncached_static_topic($parent_id)
+    {
+        if (empty($parent_id))
+        {
+            return null;
+        }
+        $mc_parent = midcom_baseclasses_database_topic::new_collector('id', $parent_id);
+        $mc_parent->add_value_property('guid');
+        if (!$mc_parent->execute())
+        {
+            // Error
+            return null;
+        }
+        $mc_parent_keys = $mc_parent->list_keys();
+        $parent_guids = array_keys($mc_parent_keys);
+        if (count($parent_guids) == 0)
+        {
+            return null;
+        }
+        
+        $parent_guid = $parent_guids[0];
+        if ($parent_guid === false)
+        {
+            return null;
+        }
+        return $parent_guid;
+    }
+
     function _on_created()
     {
         if (isset($GLOBALS['net_nemein_calendar_event_dba__on_created_loop_{$this->guid}']))
