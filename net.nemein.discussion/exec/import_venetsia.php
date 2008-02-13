@@ -13,7 +13,7 @@ if (   !$forum
 $forum->require_do('midgard:create');
 
 //"http://partner.mtv3.fi/nemein/xml_uk/{$datestring}.xml"
-$url = str_replace('__DATE__', date('Ymd', time()), $config->get('venetsia_import_url');
+$url = str_replace('__DATE__', date('Ymd', time()), $config->get('venetsia_import_url'));
 $xml = file_get_contents($url);
 $simplexml = simplexml_load_string($xml);
 
