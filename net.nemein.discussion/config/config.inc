@@ -64,3 +64,7 @@
 
 'create_thread_from_quickpoll' => false,
 'create_thread_from_quickpoll_forum' => '',
+
+'venetsia_import_url' => '',
+'venetsia_import_forum' => '',
+'venetsia_import_series' => array(),
