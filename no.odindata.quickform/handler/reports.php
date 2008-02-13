@@ -117,8 +117,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
 
         $this->_request_data['datamanager'] = & $this->_datamanager;
 
-        $nap = new midcom_helper_nav();
-        $this->_request_data['topic'] = new midcom_db_topic($nap->get_current_node());
+        $this->_request_data['topic'] =& $this->_topic;
     }
 
     /**
