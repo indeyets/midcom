@@ -175,7 +175,7 @@ else
                 debug_add("addconstraint loop: Constraint #{$key} is not correctly defined, skipping", MIDCOM_LOG_WARN);
                 continue;
             }
-            debug_add("Adding constraint: {$data['field']} {$data['op']} '{$data['value']}'");
+            debug_add("Adding constraint: {$data['field']} {$data['op']} " . gettype($data['value']) . " '{$data['value']}'");
             $qb->add_constraint($data['field'], $data['op'], $data['value']);
         }
     }
@@ -208,7 +208,6 @@ else
             }
         }
     }
-    
     $results = $qb->execute();
     if ($results === false)
     {
