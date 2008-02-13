@@ -27,6 +27,10 @@ Järjestele sarakkeen mukaan
 Listaa sarakkeiden mukaan
 ---STRINGEND
 
+---STRING Message to send to user
+Käyttäjälle lähetettävä viesti
+---STRINGEND
+
 ---STRING Reports
 Raportit
 ---STRINGEND
@@ -75,6 +79,10 @@ Kun lomake lähetetään, se lähetetään tähän osoitteeseen.
 Viesti, joka näytetään lomakkeen lähettämisen jälkeen.
 ---STRINGEND
 
+---STRING form article settings
+Lomakkeen artikkelien asetukset
+---STRINGEND
+
 ---STRING form email settings
 Lomakkeen sähköpostiasetukset
 ---STRINGEND
@@ -89,6 +97,14 @@ Sähköpostiviestin lähettäjän osoite
 
 ---STRING include submitted data in the message sent to user
 Sisällytetäänkö lähetetty data käyttäjälle lähetettyyn viestiin?
+---STRINGEND
+
+---STRING mail reply-to address
+Sähköpostin Reply-To osoite
+---STRINGEND
+
+---STRING mail reply-to address for message to the user
+Käyttäjälle lähetettävän viestin Reply-To osoite
 ---STRINGEND
 
 ---STRING mail subject
@@ -107,6 +123,10 @@ Viesti, joka liitetään käyttäjälle lähetetyn viestin yläosaan
 Viesti, joka lähetetään käyttäjälle
 ---STRINGEND
 
+---STRING message to show user after the form has been submitted
+Lähetyksen jälkeen käyttäjälle näytettävä viesti
+---STRINGEND
+
 ---STRING no.odindata.quickform
 Sähköpostilomake
 ---STRINGEND
@@ -119,12 +139,24 @@ Lähetä
 Lähetä sähköposti jollekin jokaisesta uudesta kohteesta?
 ---STRINGEND
 
+---STRING sending the message failed
+Lähetys epäonnistui
+---STRINGEND
+
+---STRING set reply-to address from submitted form (schema must contain a field name email)
+Aseta viestin Reply-To osoite lomakkeen perusteella (skeemassa pitää olla "email"-niminen kenttä)
+---STRINGEND
+
 ---STRING should a copy of the email be sent to the submitter of the form
 Lähetetäänkö kopio viestistä lomakkeen kirjoittajalle?
 ---STRINGEND
 
 ---STRING text to place over the form
 Teksti, joka liitetään lomakkeen yläpuolelle
+---STRINGEND
+
+---STRING there was an error while sending the message
+Virhe lähetyksessä. Ole hyvä ja yritä myöhemmin uudestaan.
 ---STRINGEND
 
 ---STRING this message is appended on top of the email sent to user
@@ -139,19 +171,7 @@ Tämä viesti näytetään lomakkeen lähettämisen jälkeen.
 Käytä tätä kenttään lisätäksesi yksinkertainen teksti lomakkeen yläpuolelle esimerkiksi ohjeeksi lomakkeen täyttöä varten.
 ---STRINGEND
 
----STRING Message to send to user
-Käyttäjälle lähetettävä viesti
----STRINGEND
-
----STRING message to show user after the form has been submitted
-Lähetyksen jälkeen käyttäjälle näytettävä viesti
----STRINGEND
-
----STRING sending the message failed
-Lähetys epäonnistui
----STRINGEND
-
----STRING there was an error while sending the message
-Virhe lähetyksessä. Ole hyvä ja yritä myöhemmin uudestaan.
+---STRING save form as an article
+Tallenna lomakkeen tiedot artikkelina
 ---STRINGEND
 

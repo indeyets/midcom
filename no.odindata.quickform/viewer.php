@@ -139,17 +139,21 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
                 MIDCOM_TOOLBAR_ENABLED => ($this->_topic->can_do('midgard:update') && $this->_topic->can_do('midcom:component_config')) ? true : false,
             )
         );
-        $this->_node_toolbar->add_item
-        (
-            Array
+        
+        if ($this->_config->get('save_form_as_article'))
+        {
+            $this->_node_toolbar->add_item
             (
-                MIDCOM_TOOLBAR_URL => 'reports/',
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('Reports'),
-                MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('Reports helptext'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_data-edit-table.png',
-                MIDCOM_TOOLBAR_ENABLED => ($this->_topic->can_do('midgard:update') && $this->_topic->can_do('midcom:component_config')) ? true : false,
-            )
-        );
+                Array
+                (
+                    MIDCOM_TOOLBAR_URL => 'reports/',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('Reports'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n->get('Reports helptext'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_data-edit-table.png',
+                    MIDCOM_TOOLBAR_ENABLED => ($this->_topic->can_do('midgard:update') && $this->_topic->can_do('midcom:component_config')) ? true : false,
+                )
+            );
+        }
     }
 
     /**

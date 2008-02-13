@@ -75,6 +75,10 @@ Email address to send the submitted form to
 When the form is submitted, it is emailed to this address.
 ---STRINGEND
 
+---STRING form article settings
+Form article settings
+---STRINGEND
+
 ---STRING form email settings
 Form email settings
 ---STRINGEND
@@ -89,6 +93,14 @@ From-address of the email
 
 ---STRING include submitted data in the message sent to user
 Include submitted data in the message sent to user?
+---STRINGEND
+
+---STRING mail reply-to address
+Mail Reply-To address
+---STRINGEND
+
+---STRING mail reply-to address for message to the user
+Mail Reply-To address for message to the user
 ---STRINGEND
 
 ---STRING mail subject
@@ -123,6 +135,10 @@ Send an email to someone for each new item?
 Sending the message failed
 ---STRINGEND
 
+---STRING set reply-to address from submitted form (schema must contain a field name email)
+Set Reply-To address from submitted form (schema must contain a field name "email")
+---STRINGEND
+
 ---STRING should a copy of the email be sent to the submitter of the form
 Should a copy of the email be sent the submitter of the form?
 ---STRINGEND
@@ -145,5 +161,9 @@ This message is displayed after the user has submitted the form.
 
 ---STRING use this field to add a simple text above the form to help the user fill in the form
 Use this field to add a simple text above the form to help the user fill in the form.
+---STRINGEND
+
+---STRING save form as an article
+Save form as an article
 ---STRINGEND
 
