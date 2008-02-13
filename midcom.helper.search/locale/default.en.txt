@@ -72,7 +72,9 @@ Search hints
 ---STRINGEND
 
 ---STRING search hints lucene
-Group terms using double-quotes ("my term").<br /> You can use the boolean operators AND, OR and NOT (must be capitalized).<br/> Check the <a href="http://jakarta.apache.org/lucene/docs/queryparsersyntax.html">Lucene Documentation</a> for further details.
+Group terms using double-quotes ("my term").<br />
+You can use the boolean operators AND, OR and NOT (must be capitalized).<br/>
+Check the <a href="http://jakarta.apache.org/lucene/docs/queryparsersyntax.html">Lucene Documentation</a> for further details.
 ---STRINGEND
 
 ---STRING search hints plucene

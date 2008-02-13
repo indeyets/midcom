@@ -72,7 +72,7 @@ Hakuohjeet
 ---STRINGEND
 
 ---STRING search hints lucene
-Ryhmittele hakusanat käyttäen lainausmerkkejä ("minun hakuni")<br />
+Ryhmittele hakusanat käyttäen lainausmerkkejä ("minun hakuni").<br />
 Voit käyttää hakurajoittimia AND, OR ja NOT joiden täytyy olla isoilla kirjaimilla.<br />
 Lisää hakuohjeita löydät <a href="http://jakarta.apache.org/lucene/docs/queryparsersyntax.html">Lucenen hakuohjeista</a>.
 ---STRINGEND
@@ -114,10 +114,6 @@ Hakusi ei tuottanut tuloksia.
 ---STRINGEND
 
 ---STRING search hints plucene
-Group terms using double-quotes ("my term").<br />
-You can use the boolean operators AND, OR and NOT (must be capitalized).<br/>
-Check the <a href="http://search.cpan.org/dist/Plucene/lib/Plucene.pm">Plucene</a> and <a href="http://jakarta.apache.org/lucene/docs/queryparsersyntax.html">Lucene Documentation</a> for further details.
-
 Ryhmittele termejä käyttäen lainausmerkkejä ("minun hakusanani").<br />
 Voit käyttää operaattoreita AND, OR ja NOT (isoilla kirjoitettuna).<br />
 Katso <a href="http://search.cpan.org/dist/Plucene/lib/Plucene.pm">Plucene</a> ja <a href="http://jakarta.apache.org/lucene/docs/queryparsersyntax.html">Lucene Documentation</a>, jos haluat lisätietoja.
