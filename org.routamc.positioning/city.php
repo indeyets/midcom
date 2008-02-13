@@ -71,14 +71,22 @@ class org_routamc_positioning_city_dba extends __org_routamc_positioning_city_db
 
     function get_by_name($name)
     {
+        // Seek by strict city name first
         $qb = org_routamc_positioning_city_dba::new_query_builder();
-        $qb->begin_group('OR');
-        $qb->add_constraint('city', '=', $name);
-        $qb->add_constraint('alternatenames', 'LIKE', "%{$name}%");
-        $qb->end_group();
-
+        $qb->add_constraint('city', 'LIKE', $name);
         $qb->set_limit(1);
-
+        $matches = $qb->execute_unchecked();
+        if (count($matches) > 0)
+        {
+            return $matches[0];
+        }
+        
+        // Strict name didn't match, seek by alternate names
+        $qb = org_routamc_positioning_city_dba::new_query_builder();
+        $qb->add_constraint('alternatenames', 'LIKE', "%{$name}%");
+        // Most likely we're interested in the biggest city that matches
+        $qb->add_order('population', 'DESC');
+        $qb->set_limit(1);
         $matches = $qb->execute_unchecked();
         if (count($matches) > 0)
         {
