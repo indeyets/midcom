@@ -74,7 +74,12 @@ class create_tkk_host extends midcom_baseclasses_components_handler
 
                 $host_creator = $sitewizard->initialize_host_creation($this->_sitegroup_id);
                 $host_creator->set_page_title($_POST['tkk_sitewizard_sitename']);
-                $host_creator->set_host_url($_POST['tkk_sitewizard_host']);
+                $hostname_cleaned = str_replace('http://', '', $_POST['tkk_sitewizard_host']);  
+                $hostname_cleaned = str_replace('https://', '', $hostname_cleaned);   
+                $pieces = explode(':', $hostname_cleaned);
+                $hostname_cleaned = $pieces[0];
+                   
+                $host_creator->set_host_url($hostname_cleaned);
 
                 if (    isset($_POST['tkk_sitewizard_prefix'])
                     &&  !empty($_POST['tkk_sitewizard_prefix']))
