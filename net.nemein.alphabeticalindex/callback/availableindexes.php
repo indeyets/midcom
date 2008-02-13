@@ -41,8 +41,12 @@ class net_nemein_alphabeticalindex_callback_availableindexes extends midcom_base
         (
         );
         
+        $root_topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
+        
         $qb = midcom_db_topic::new_query_builder();
         $qb->add_constraint('component', '=', 'net.nemein.alphabeticalindex');
+        $qb->add_constraint('up', 'INTREE', $root_topic->id);
+        
         $indexes = $qb->execute();
 
         if (count($indexes) == 0)
