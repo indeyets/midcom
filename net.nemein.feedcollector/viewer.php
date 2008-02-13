@@ -176,12 +176,12 @@ class net_nemein_feedcollector_viewer extends midcom_baseclasses_components_requ
     {
         if (   $this->_topic->can_do('midgard:create'))
         {
-            $this->_view_toolbar->add_item
+            $this->_node_toolbar->add_item
             (
                 array
                 (
                     MIDCOM_TOOLBAR_URL => 'create/',
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('create'),
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('create collection'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n->get('create helptext'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
                 )
@@ -189,7 +189,7 @@ class net_nemein_feedcollector_viewer extends midcom_baseclasses_components_requ
         }
         if (   $this->_topic->can_do('midgard:update'))
         {
-            $this->_view_toolbar->add_item
+            $this->_node_toolbar->add_item
             (
                 array
                 (
@@ -223,9 +223,28 @@ class net_nemein_feedcollector_viewer extends midcom_baseclasses_components_requ
      */
     function _on_handle($handler, $args)
     {
-        $this->_request_data['schemadb'] =
-            midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
+        $this->_request_data['schemadb'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
 
+        if ($this->_config->get('constrain_collection_to_site'))
+        {
+            // Add an INTREE constraint to the topic chooser
+            $root_topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ROOTTOPIC);
+            foreach ($this->_request_data['schemadb'] as $schema_name => $schema)
+            {
+                if (!isset($schema->fields['feedtopic']))
+                {
+                    continue;
+                }
+                
+                $this->_request_data['schemadb'][$schema_name]->fields['feedtopic']['widget_config']['constraints'][] = array
+                (
+                    'field' => 'up',
+                    'op' => 'INTREE',
+                    'value' => $root_topic->id,
+                );
+            }
+        }
+        
         $this->_populate_node_toolbar();
 
         return true;

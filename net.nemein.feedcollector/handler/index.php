@@ -56,14 +56,15 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
         $qb_feedtopics->add_constraint('node', '=', (int)$this->_content_topic->id);
         $qb_feedtopics->add_order($this->_config->get('sort_order'));
         $feedtopics = $qb_feedtopics->execute();
-        if(count($feedtopics) > 0)
+        if (count($feedtopics) > 0)
         {
-            foreach($feedtopics as $feedtopic)
+            foreach ($feedtopics as $feedtopic)
             {
                 $this->topics[$feedtopic->guid]['object'] = $feedtopic;
                 $qb_news = midcom_db_article::new_query_builder();
                 $qb_news->add_constraint('topic','=', (int)$feedtopic->feedtopic);
-                if($feedtopic->categories != '||' && $feedtopic->categories != '')
+                if (   $feedtopic->categories != '||' 
+                    && $feedtopic->categories != '')
                 {
                     $categories = explode('|', $feedtopic->categories);
                     foreach($categories as $category)
@@ -73,6 +74,7 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
                     }
                 }
                 $qb_news->set_limit($this->_config->get('articles_count_index'));
+                $qb_news->add_order('metadata.published', 'DESC');
                 $items = $qb_news->execute();
                 $this->topics[$feedtopic->guid]['items'] = $items;
             }
@@ -108,12 +110,15 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
 
             midcom_show_style('index-header');
 
-            foreach($this->topics as $topic)
+            foreach ($this->topics as $topic)
             {
                 $this->_request_data['counters']['topic_items'] = count($topic['items']);
                 $this->_request_data['counters']['topic']++;
                 $this->_request_data['feedtopic'] = $topic;
-                $this->_request_data['topic'] = new midcom_db_topic($topic['object']->feedtopic);
+
+                $data['topic'] = new midcom_db_topic();
+                $data['topic']->get_by_id($topic['object']->feedtopic);
+
                 midcom_show_style('topic-header');
                 if(count($topic['items']) > 0)
                 {

@@ -16,7 +16,8 @@
  */
 class net_nemein_feedcollector_handler_latest  extends midcom_baseclasses_components_handler
 {
-
+    var $items = array();
+    
     /**
      * Simple default constructor.
      */
@@ -47,34 +48,40 @@ class net_nemein_feedcollector_handler_latest  extends midcom_baseclasses_compon
         $this->_request_data['permalinks'] = new midcom_services_permalinks();
         $this->_request_data['topic_introduction'] = $this->_config->get('topic_introduction');
         $this->_update_breadcrumb_line($handler_id);
-        $title = $this->_l10n_midcom->get('index');
-        $_MIDCOM->set_pagetitle(":: {$title}");
+        $data['view_title'] = $this->_topic->extra;
+        $_MIDCOM->set_pagetitle($data['view_title']);
 
         $topics = array();
 
         $qb_feedtopics = net_nemein_feedcollector_topic_dba::new_query_builder();
-        $qb_feedtopics->add_constraint('node', '=', (int)$this->_content_topic->id);
+        $qb_feedtopics->add_constraint('node', '=', (int) $this->_content_topic->id);
         $qb_feedtopics->add_order($this->_config->get('sort_order'));
         $feedtopics = $qb_feedtopics->execute();
 
-        if(count($feedtopics) > 0)
+        if (count($feedtopics) > 0)
         {
             $qb_news = midcom_db_article::new_query_builder();
             $qb_news->begin_group('OR');
             foreach($feedtopics as $feedtopic)
             {
-                $qb_news->begin_group('AND');
-                $qb_news->add_constraint('topic','=', (int)$feedtopic->feedtopic);
-                if($feedtopic->categories != '||' && $feedtopic->categories != '')
+
+                if (   $feedtopic->categories != '||' 
+                    && $feedtopic->categories != '')
                 {
+                    $qb_news->begin_group('AND');
                     $categories = explode('|', $feedtopic->categories);
                     foreach($categories as $category)
                     {
                         $category = str_replace('|', '', $category);
                         $qb_news->add_constraint('extra1', 'LIKE', "%|{$category}|%");
                     }
+                    $qb_news->add_constraint('topic','=', (int)$feedtopic->feedtopic);
+                    $qb_news->end_group();
                 }
-                $qb_news->end_group();
+                else
+                {
+                    $qb_news->add_constraint('topic','=', (int) $feedtopic->feedtopic);
+                }
             }
             $qb_news->end_group();
             if($handler_id == 'latest')
@@ -86,8 +93,7 @@ class net_nemein_feedcollector_handler_latest  extends midcom_baseclasses_compon
                 $qb_news->set_limit($args[0]);
             }
             $qb_news->add_order('metadata.published', 'DESC');
-            $items = $qb_news->execute();
-            $this->items = $items;
+            $this->items = $qb_news->execute();
         }
 
 
@@ -102,14 +108,15 @@ class net_nemein_feedcollector_handler_latest  extends midcom_baseclasses_compon
      */
     function _show_latest($handler_id, &$data)
     {
-        if(isset($this->items) && is_array($this->items) && count($this->items) > 0 )
+        if (   is_array($this->items) 
+            && count($this->items) > 0)
         {
             $this->_request_data['item_counter'] = 0;
             $this->_request_data['items'] = count($this->items);
 
             midcom_show_style('latest-header');
 
-            foreach($this->items as $item)
+            foreach ($this->items as $item)
             {
                 $this->_request_data['item'] = $item;
                 midcom_show_style('latest-item');

@@ -169,11 +169,11 @@ class net_nemein_feedcollector_handler_create  extends midcom_baseclasses_compon
     {
         $this->_content_topic->require_do('midgard:create');
 
-        $this->_request_data['name']  = "net.nemein.feedcollector";
+        $this->_request_data['name']  = 'net.nemein.feedcollector';
         $this->_request_data['topic_introduction'] = $this->_config->get('topic_introduction');
         $this->_update_breadcrumb_line($handler_id);
-        $title = $this->_l10n_midcom->get('index');
-        $_MIDCOM->set_pagetitle(":: {$title}");
+        $data['view_title'] = $this->_l10n->get('create collection');
+        $_MIDCOM->set_pagetitle($data['view_title']);
 
         $this->_schema = 'default';
         $this->_load_controller();
@@ -214,8 +214,8 @@ class net_nemein_feedcollector_handler_create  extends midcom_baseclasses_compon
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "/",
-            MIDCOM_NAV_NAME => $this->_l10n->get('manage'),
+            MIDCOM_NAV_URL => 'create/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('create collection'),
         );
 
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

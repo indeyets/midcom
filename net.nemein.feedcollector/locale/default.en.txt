@@ -39,6 +39,10 @@ Display settings
 Edit
 ---STRINGEND
 
+---STRING edit feed folder
+Edit feed folder
+---STRINGEND
+
 ---STRING edit metadata
 Edit metadata
 ---STRINGEND
@@ -87,7 +91,7 @@ Text to place over the content
 This text comes to the top of your content
 ---STRINGEND
 
----STRING edit feed folder
-Edit feed folder
+---STRING create collection
+Create collection
 ---STRINGEND
 

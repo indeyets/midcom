@@ -39,6 +39,10 @@ Näyttöasetukset
 Muokkaa
 ---STRINGEND
 
+---STRING edit feed folder
+Muokkaa syötekansiota
+---STRINGEND
+
 ---STRING edit metadata
 Muokkaa metatietoja
 ---STRINGEND
@@ -87,7 +91,7 @@ Teksti ennen uutislistoja
 Tämä teksti tulee sivun yläosaan ennen uutislistoja
 ---STRINGEND
 
----STRING edit feed folder
-Muokkaa syötekansiota
+---STRING create collection
+Luo uutiskokoelma
 ---STRINGEND
 

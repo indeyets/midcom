@@ -8,3 +8,5 @@
 'articles_count_latest_default' => 5,
 
 'symlink_topic' => null,
+
+'constrain_collection_to_site' => true,

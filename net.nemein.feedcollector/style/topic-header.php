@@ -10,7 +10,6 @@
 *    topic_items  - count of items to show in this topic
 * 
 */  
-//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $topic = $data['feedtopic'];
 $url = $data['permalinks']->create_permalink($data['topic']->guid);
 // counter for topic

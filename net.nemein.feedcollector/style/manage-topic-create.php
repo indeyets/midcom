@@ -1,9 +1,7 @@
-<?php
-
-?>
 <div id="net_nemein_feedcollector">
-<h2><?php echo $data['l10n']->get('add a news folder'); ?>: <?php echo $data['controller']->datamanager->types['title']->value; ?></h2>
+    <h1><?php echo $data['view_title']; ?></h1>
 
-<?php $data['controller']->display_form (); ?>
-
+    <?php 
+    $data['controller']->display_form (); 
+    ?>
 </div>
