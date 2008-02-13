@@ -29,7 +29,8 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
     function _on_initialize()
     {
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/codepress/codepress.js');
-        $_MIDCOM->add_jsonload("{$this->name}.toggleReadOnly();");
+        $_MIDCOM->add_jsonload("if(typeof {$this->name} != 'undefined'){{$this->name}.toggleReadOnly()}");
+        
         return true;
     }
 
