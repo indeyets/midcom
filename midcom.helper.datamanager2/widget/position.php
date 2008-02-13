@@ -68,7 +68,16 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
      * @access public
      */
     var $input_defaults = array();
-
+    
+    /**
+     * List of additional XEP fields included in location
+     * (ie. 'text', 'room')
+     *
+     * @var array
+     * @access public
+     */
+    var $use_xep_keys = array();
+    
     /**
      * The group of widgets items as QuickForm elements
      */
@@ -374,8 +383,8 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         $inserted_xep_keys = array();
         foreach ($this->_other_xep_keys as $xep_key)
         {
-            if (   isset($this->_type->location->$xep_key)
-                && $this->_type->location->$xep_key != ''
+            if (   in_array($xep_key, $this->use_xep_keys)
+                && isset($this->_type->location->$xep_key)
                 && !in_array($xep_key, $inserted_xep_keys))
             {
                 $inserted_xep_keys[] = $xep_key;
@@ -689,6 +698,15 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
             && $results["{$this->_element_id}_input_coordinates_longitude"] != '')
         {
             $this->_type->location->longitude = $results["{$this->_element_id}_input_coordinates_longitude"];
+        }
+        
+        foreach ($this->_other_xep_keys as $xep_key)
+        {
+            if (   in_array($xep_key, $this->use_xep_keys)
+                && isset($this->_type->location->$xep_key))
+            {
+                $this->_type->location->$xep_key = $results["{$this->_element_id}_input_place_{$xep_key}"];
+            }
         }
     }
 

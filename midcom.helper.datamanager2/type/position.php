@@ -101,6 +101,10 @@ class midcom_helper_datamanager2_type_position extends midcom_helper_datamanager
         {
             $adr_properties[] = "<span class=\"description\">{$this->location->description}</span>";
         }
+        if ($this->location->text)
+        {
+            $adr_properties[] = "<span class=\"text\">{$this->location->text}</span>";
+        }
         if ($this->location->room)
         {
             $adr_properties[] = "<span class=\"room\">{$this->location->room}</span>";

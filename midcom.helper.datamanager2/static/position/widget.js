@@ -162,7 +162,7 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
             success: function(data){
                 var parsed = parse_response(data);
                 update_widget_inputs(parsed[0], true, true);
-                handle_alternatives(parsed);
+                //handle_alternatives(parsed);
             }
         });
         
@@ -249,7 +249,7 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
             success: function(data){
                 var parsed = parse_response(data);
                 update_widget(parsed[0]);
-                handle_alternatives(parsed);
+                //handle_alternatives(parsed);
             }
         });
 
@@ -328,53 +328,57 @@ jQuery.midcom_helper_datamanager2_widget_position = function(widget_block, mapst
         revindicator.hide();
         geodata_btn.show();
         revgeodata_btn.show();
-                    
+        
+        var skip_keys = {};
+        if (skip_lat_lon) {
+            skip_keys['latitude'] = true;
+            skip_keys['longitude'] = true;
+        }
+        
         jQuery.each(location_data, function(key,value){
             if (input_data[key])
             {
-                if (skip_lat_lon)
+                if (   typeof skip_keys[key] != 'undefined'
+                    && skip_keys[key])
                 {
-                    if (   key != 'latitude'
-                        && key != 'longitude')
-                    {
-                        if (   no_override
-                            && jQuery('#' + input_data[key]['id']).attr('value') == '')
-                        {
-                            jQuery('#' + input_data[key]['id']).attr('value',value);
-                        }
-                        else
-                        {
-                            if (value != '')
-                            {
-                                var parent = jQuery('#' + input_data[key]['id']).parent();
-                                jQuery("span.proposal",parent).html(' (' + value + ')');
-                            }
-                        }
-                        
-                        if (! no_override)
-                        {
-                            jQuery('#' + input_data[key]['id']).attr('value',value);
-                        }
-                    }                    
+                    return;
                 }
-                else
+                
+                if (   key == 'latitude'
+                    || key == 'longitude')
                 {
                     if (   no_override
-                        && jQuery('#' + input_data[key]['id']).attr('value') == '')
+                        && jQuery('#' + input_data[key]['id']).attr('value') == '0')
                     {
                         jQuery('#' + input_data[key]['id']).attr('value',value);
-                    }
-                    else
-                    {
-                        if (value != '')
-                        {
-                            var parent = jQuery('#' + input_data[key]['id']).parent();
-                            jQuery("span.proposal",parent).html(' (' + value + ')');
-                        }
                     }
                     
                     if (! no_override)
                     {
+                        if (value != '0') {
+                            jQuery('#' + input_data[key]['id']).attr('value',value);
+                        }
+                    }
+                }
+                
+                if (   no_override
+                    && (   jQuery('#' + input_data[key]['id']).attr('value') == ''
+                        || typeof jQuery('#' + input_data[key]['id']).attr('value') == 'undefined'))
+                {
+                    jQuery('#' + input_data[key]['id']).attr('value',value);
+                }
+                else
+                {
+                    if (value != '')
+                    {
+                        var parent = jQuery('#' + input_data[key]['id']).parent();
+                        jQuery("span.proposal", parent).html(' (' + value + ')');
+                    }
+                }
+                
+                if (! no_override)
+                {
+                    if (value != '') {
                         jQuery('#' + input_data[key]['id']).attr('value',value);
                     }
                 }
