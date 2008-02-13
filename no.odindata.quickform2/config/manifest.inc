@@ -29,6 +29,9 @@
         'midcom.helper.datamanager2' => array (),
         'midcom.helper.dm2config' => array (),
         'midcom' => array (),
-        'Mail_SMTP' => array(),
+        'Net_SMTP' => array
+        (
+            'channel' => 'pear.php.net',
+        ),
     ),
 ),
