@@ -20,6 +20,7 @@
     'dependencies' => Array
     (
         'midcom.helper.datamanager2' => array(),
+        'midcom.helper.dm2config' => array(),
     ),
 ),
 
