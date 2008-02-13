@@ -1611,10 +1611,25 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         // TODO: handle UID smarter
         $vcal_keys['UID'] = "{$this->guid}-midgardGuid";
 
-        $vcal_keys['LAST-MODIFIED'] = $encoder->vcal_stamp($this->metadata->revised, array('TZID' => 'UTC')) . 'Z';
-        // Difference between these two is very fuzzy
-        $vcal_keys['DTSTAMP'] = $encoder->vcal_stamp($this->metadata->created, array('TZID' => 'UTC')) . 'Z';
-        $vcal_keys['CREATED'] =& $vcal_keys['DTSTAMP'];
+        if (isset($this->metadata))
+        {
+            $revised = $this->metadata->revised;
+            $created = $this->metadata->created;
+        }
+        else
+        {
+            $revised = $this->revised;
+            $created = $this->created;
+        }
+        $vcal_keys['LAST-MODIFIED'] = $encoder->vcal_stamp($revised, array('TZID' => 'UTC')) . 'Z';
+        $vcal_keys['CREATED'] = $encoder->vcal_stamp($created, array('TZID' => 'UTC')) . 'Z';
+        /**
+         * The real meaning of the DTSTAMP is fuzzy at best
+         * http://www.kanzaki.com/docs/ical/dtstamp.html is less than helpfull
+         * http://lists.osafoundation.org/pipermail/ietf-calsify/2007-July/001750.html 
+         * seems to suggest that using the revision would be best
+         */
+        $vcal_keys['DTSTAMP'] =& $vcal_keys['LAST-MODIFIED'];
         // Type handling
         switch ($this->orgOpenpsaAccesstype)
         {
