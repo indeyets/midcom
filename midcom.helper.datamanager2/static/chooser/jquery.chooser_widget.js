@@ -86,6 +86,9 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
     hideResultsNow();
     
     jQuery('.widget_chooser_static_items_table').hide();
+    jQuery('.chooser_widget_existing_item_static_input').each(function(){
+        this.checked = false;
+    });
     
     function selectCurrent()
     {
@@ -608,7 +611,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     }
     
     function remove(id)
-    {
+    {        
         jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: 0 });
         jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.ACTIVE);
         jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.INACTIVE);
@@ -621,7 +624,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     
     function restore(id)
     {
-        jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: id });
+        jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: id }); 
         jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.DELETED);
         jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.INACTIVE);
         jQuery('#'+options.widget_id + '_result_item_'+id).addClass(CLASSES.ACTIVE);
@@ -650,7 +653,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
                     inactivate(id[1]);
                 });
         }
-
+        
         jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: id });
         jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.DELETED);
         jQuery('#'+options.widget_id + '_result_item_'+id).removeClass(CLASSES.INACTIVE);
