@@ -47,7 +47,7 @@ midcom_helper_search_process_node($nap->get_root_node(), $nap, $topics, $compone
 $query = htmlspecialchars($data['query'], ENT_QUOTES);
 
 ?>
-<form method='get' name='midcom_helper_search_form' action='&(prefix);result.html' class='midcom.helper.search'>
+<form method='get' name='midcom_helper_search_form' action='&(prefix);result/' class='midcom.helper.search'>
 <input type='hidden' name='type' value='advanced' />
 <input type='hidden' name='page' value='1' />
  
@@ -63,7 +63,7 @@ $query = htmlspecialchars($data['query'], ENT_QUOTES);
 <?php
 foreach ($topics as $url => $name)
 {
-    $selected = ($data['topic'] == $url) ? ' selected' : '';
+    $selected = ($data['request_topic'] == $url) ? ' selected' : '';
 ?>
                 <option&(selected); value='&(url);'>&(name:h);</option>
 <?php

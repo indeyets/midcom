@@ -22,7 +22,7 @@ if ($data['max_pages'] > 1)
     if ($data['page'] > 1)
     {
         $page = urlencode($data['page'] - 1);
-        $url = "{$prefix}result.html?{$querystring}&page={$page}";
+        $url = "{$prefix}result/?{$querystring}&page={$page}";
         $desc = $data['l10n']->get('previous page');
         echo "<a href='{$url}'>&lArr; {$desc}</a>&nbsp;&nbsp;&nbsp;";
     }
@@ -36,7 +36,7 @@ if ($data['max_pages'] > 1)
         else
         {
             $page = urlencode($i);
-            $url = "{$prefix}result.html?{$querystring}&page={$page}";
+            $url = "{$prefix}result/?{$querystring}&page={$page}";
             echo "<a href='{$url}'>${i}</a> ";
         }
     }
@@ -44,7 +44,7 @@ if ($data['max_pages'] > 1)
     if ($data['page'] < $data['max_pages'])
     {
         $page = urlencode($data['page'] + 1);
-        $url = "{$prefix}result.html?{$querystring}&page={$page}";
+        $url = "{$prefix}result/?{$querystring}&page={$page}";
         $desc = $data['l10n']->get('next page');
         echo "&nbsp;&nbsp;&nbsp;<a href='{$url}'>{$desc} &rArr;</a>";
     }
