@@ -205,7 +205,7 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
             {
                 return null;
             }
-            return "read/{$post->guid}.html";
+            return "read/{$post->guid}/";
         }
         
         return null;
