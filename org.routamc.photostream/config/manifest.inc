@@ -10,8 +10,8 @@
 ),
 'package.xml' => array
 (
-    'summary' => 'Collection of user's photos',
-    'description' => 'Collection of user's photos',
+    'summary' => 'Collection of user\'s photos',
+    'description' => 'Collection of user\'s photos',
     'maintainers' => array
     (
         'rambo' => array
