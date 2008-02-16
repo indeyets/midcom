@@ -405,7 +405,8 @@ class packageMidCOM extends Task
 
         // Generate dependencies, if any
         $package['dependencies'] = '';
-        if (array_key_exists('dependencies', $this->manifest['package.xml']) && is_array($this->manifest['package.xml']['dependencies']))
+        if (   array_key_exists('dependencies', $this->manifest['package.xml']) 
+            && is_array($this->manifest['package.xml']['dependencies']))
         {
             foreach ($this->manifest['package.xml']['dependencies'] as $requirement => $dependency)
             {
@@ -576,7 +577,7 @@ class packageMidCOM extends Task
                     <dependencies>
                         <required>
                             <php>
-                                <min>4.3.0</min>
+                                <min>5.2.0</min>
                             </php>
                             <pearinstaller>
                                 <min>1.4.0</min>
@@ -584,7 +585,7 @@ class packageMidCOM extends Task
                             {$package['dependencies']}  
                             <extension>
                                 <name>midgard</name>
-                                <min>1.8.4</min>
+                                <min>1.9.0alpha1</min>
                             </extension>
                         </required>
                     </dependencies>
