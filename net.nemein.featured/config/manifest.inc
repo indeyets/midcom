@@ -1,22 +1,25 @@
-'name'              => 'net.nemein.featured',
-'purecode'          => false,
-'version'           => '0.0.1',
-'state'             => 'beta',
-'privileges'        => Array(),
-'class_definitions' => Array('midcom_dba_classes.inc'),
-'watches'           => Array(),
-'package.xml' => Array
-(  
-    'license' => 'GPL', 
+'name' => 'net.nemein.featured',
+'purecode' => false,
+'version' => '0.1.0beta1',
+'state' => 'beta',
+'privileges' => array(),
+'class_definitions' => array
+(
+    'midcom_dba_classes.inc',
+),
+'watches' => array(),
+'package.xml' => array
+(
+    'license' => 'GPL',
     'summary' => 'Featured',
     'description' => 'Featured',
-    'maintainers' => Array
-    ( 
-        'juhana' => Array
-        (  
-        'name' => 'Juhana Hirvilahti',  
-        'email' => 'juhana@nemein.com',  
-        'role' => 'lead',  
-     ),  
-     ),
+    'maintainers' => array
+    (
+        'juhana' => array
+        (
+            'name' => 'Juhana Hirvilahti',
+            'email' => 'juhana@nemein.com',
+            'role' => 'lead',
+        ),
+    ),
 ),

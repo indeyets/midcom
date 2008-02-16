@@ -1,13 +1,10 @@
 'name' => 'net.nemein.openid',
 'icon' => 'net.nemein.openid/openid.gif',
 'purecode' => true,
-'version' => '0.0.1',
-'state' => 'devel',
+'version' => '0.1.0beta1',
+'state' => 'beta',
 'privileges' => array(),
 'class_definitions' => array(),
-/**
- * This is used by the PEAR packaging.
- */
 'package.xml' => array
 (
     'summary' => 'OpenID authentication and sign-up system',
@@ -21,7 +18,7 @@
             'role' => 'lead',
         ),
     ),
-    'dependencies' => Array
+    'dependencies' => array
     (
         'net.nehmer.account' => array(),
         'Auth_OpenID' => array
@@ -30,5 +27,3 @@
         ),
     ),
 ),
-
-

@@ -1,9 +1,9 @@
 'name' => 'net.nehmer.account',
-'version' => '1.1.0beta3',
+'version' => '1.2.0beta1',
 'state' => 'beta',
 'class_definitions' => array
 (
-    'midcom_dba_classes.inc'
+    'midcom_dba_classes.inc',
 ),
 'package.xml' => array
 (
@@ -38,9 +38,9 @@
     ),
     'dependencies' => array
     (
-        'midcom.helper.datamanager2' => array (),
-        'midcom' => array (),
-        'org.openpsa.mail' => array (),
+        'midcom.helper.datamanager2' => array(),
+        'midcom' => array(),
+        'org.openpsa.mail' => array(),
     ),
 ),
 'customdata' => array
@@ -50,12 +50,12 @@
         array
         (
             'handler' => 'net_nehmer_account_cron_cleanup',
-            'recurrence' => MIDCOM_CRON_DAY,
+            'recurrence' => 'MIDCOM_CRON_DAY',
         ),
         array
         (
             'handler' => 'net_nehmer_account_cron_karma',
-            'recurrence' => MIDCOM_CRON_DAY,
+            'recurrence' => 'MIDCOM_CRON_DAY',
         ),
     ),
 ),

@@ -1,12 +1,9 @@
 'name' => 'midcom.helper.reflector',
 'purecode' => true,
-'version' => '0.1.1',
+'version' => '0.2.0beta1',
 'state' => 'beta',
 'privileges' => array(),
 'class_definitions' => array(),
-/**
- * This is used by the PEAR packaging.
- */
 'package.xml' => array
 (
     'summary' => 'MidCOM reflection helper',
@@ -21,5 +18,3 @@
         ),
     ),
 ),
-
-

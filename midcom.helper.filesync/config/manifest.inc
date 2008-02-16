@@ -1,7 +1,7 @@
 'name' => 'midcom.helper.filesync',
 'purecode' => true,
-'version' => '0.0.2',
-'state' => 'devel',
+'version' => '0.1.0beta1',
+'state' => 'beta',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array

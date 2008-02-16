@@ -1,6 +1,6 @@
 'name' => 'cc.kaktus.exhibitions',
-'version' => '0.0.2',
-'state'   => 'alpha',
+'version' => '0.1.0beta1',
+'state' => 'beta',
 'package.xml' => array
 (
     'summary' => 'Exhibitions listing',
@@ -17,6 +17,6 @@
     ),
     'dependencies' => array
     (
-        'midcom.helper.datamanager2' => Array(),
+        'midcom.helper.datamanager2' => array(),
     ),
 ),

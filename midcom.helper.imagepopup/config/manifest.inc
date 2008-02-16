@@ -1,58 +1,51 @@
-
-  'name' => 'midcom.helper.imagepopup',
-  'icon' => 'stock-icons/16x16/attach.png',
-  'description' => 'Image upload and insertion tool',
-  'purecode' => true,
-  'version' => '0.1.6beta3',
-  'state' => 'beta',
-  'privileges' => 
-  array (
-  ),
-  'class_definitions' => 
-  array (
-  ),
-  'package.xml' => 
-  array (
+'name' => 'midcom.helper.imagepopup',
+'icon' => 'stock-icons/16x16/attach.png',
+'description' => 'Image upload and insertion tool',
+'purecode' => true,
+'version' => '0.2.0beta1',
+'state' => 'beta',
+'privileges' => array(),
+'class_definitions' => array(),
+'package.xml' => array
+(
     'license' => 'GPL',
-    'maintainers' => 
-    array (
-      'tarjei' => 
-      array (
-        'name' => 'Tarjei Huse',
-        'email' => 'tarjei@nu.no',
-        'role' => 'lead',
-      ),
-      'bergie' => 
-      array (
-        'name' => 'Henri Bergius',
-        'email' => 'henri.bergius@iki.fi',
-        'role' => 'lead',
-      ),
-      'netblade' => 
-      array (
-        'name' => 'Oskari Kokko',
-        'email' => 'oskari.kokko@nemein.com',
-        'role' => 'developer',
-      ),
-      'w_i' => 
-      array (
-        'name' => 'Jerry Jalava',
-        'email' => 'jerry.jalava@nemein.com',
-        'role' => 'developer',
-      ),
+    'maintainers' => array
+    (
+        'tarjei' => array
+        (
+            'name' => 'Tarjei Huse',
+            'email' => 'tarjei@nu.no',
+            'role' => 'lead',
+        ),
+        'bergie' => array
+        (
+            'name' => 'Henri Bergius',
+            'email' => 'henri.bergius@iki.fi',
+            'role' => 'lead',
+        ),
+        'netblade' => array
+        (
+            'name' => 'Oskari Kokko',
+            'email' => 'oskari.kokko@nemein.com',
+            'role' => 'developer',
+        ),
+        'w_i' => array
+        (
+            'name' => 'Jerry Jalava',
+            'email' => 'jerry.jalava@nemein.com',
+            'role' => 'developer',
+        ),
     ),
-    'dependencies' => 
-    array (
-      'midcom.helper.datamanager2' => 
-      array (
-        'min' => '0.8.16',
-      ),
-      'JavaScript_Prototype' => 
-      array (
-        'channel' => 'pearified.com',
-      ),
-      'midcom' => 
-      array (
-      ),
+    'dependencies' => array
+    (
+        'midcom.helper.datamanager2' => array
+        (
+            'min' => '0.8.16',
+        ),
+        'JavaScript_Prototype' => array
+        (
+            'channel' => 'pearified.com',
+        ),
+        'midcom' => array(),
     ),
-  ),
+),

@@ -1,53 +1,34 @@
-
-  'name' => 'org.openpsa.mypage',
-  'purecode' => false,
-  'privileges' => 
-  array (
-  ),
-  'class_definitions' => 
-  array (
-  ),
-  'version' => '2.0.6beta1',
-  'state' => 'beta',
-  'package.xml' => 
-  array (
+'name' => 'org.openpsa.mypage',
+'purecode' => false,
+'privileges' => array(),
+'class_definitions' => array(),
+'version' => '2.1.0beta1',
+'state' => 'beta',
+'package.xml' => array
+(
     'summary' => 'OpenPSA summary page',
     'description' => 'At a glance view of your documents, tasks etc',
-    'maintainers' => 
-    array (
-      'bergie' => 
-      array (
-        'name' => 'Henri Bergius',
-        'email' => 'henri.bergius@iki.fi',
-        'role' => 'lead',
-      ),
+    'maintainers' => array
+    (
+        'bergie' => array
+        (
+            'name' => 'Henri Bergius',
+            'email' => 'henri.bergius@iki.fi',
+            'role' => 'lead',
+        ),
     ),
-    'dependencies' => 
-    array (
-      'org.openpsa.core' => 
-      array (
-      ),
-      'org.openpsa.helpers' => 
-      array (
-      ),
-      'midcom.helper.datamanager' => 
-      array (
-      ),
-      'midcom.helper.datamanager2' => 
-      array (
-      ),
-      'org.openpsa.contactwidget' => 
-      array (
-      ),
-      'Calendar' => 
-      array (
-        'channel' => 'pear.php.net',
-      ),
-      'org.routamc.positioning' => 
-      array (
-      ),
-      'midcom' => 
-      array (
-      ),
+    'dependencies' => array
+    (
+        'org.openpsa.core' => array(),
+        'org.openpsa.helpers' => array(),
+        'midcom.helper.datamanager' => array(),
+        'midcom.helper.datamanager2' => array(),
+        'org.openpsa.contactwidget' => array(),
+        'Calendar' => array
+        (
+            'channel' => 'pear.php.net',
+        ),
+        'org.routamc.positioning' => array(),
+        'midcom' => array(),
     ),
-  ),
+),

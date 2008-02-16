@@ -1,30 +1,23 @@
-
-  'name' => 'midcom.helper.xml',
-  'purecode' => true,
-  'version' => '1.0.3beta1',
-  'privileges' => 
-  array (
-  ),
-  'class_definitions' => 
-  array (
-  ),
-  'package.xml' => 
-  array (
+'name' => 'midcom.helper.xml',
+'purecode' => true,
+'version' => '1.1.0beta1',
+'privileges' => array(),
+'class_definitions' => array(),
+'package.xml' => array
+(
     'license' => 'GPL',
-    'maintainers' => 
-    array (
-      'tarjei' => 
-      array (
-        'name' => 'Tarjei Huse',
-        'email' => 'tarjei@nu.no',
-        'role' => 'lead',
-      ),
+    'maintainers' => array
+    (
+        'tarjei' => array
+        (
+            'name' => 'Tarjei Huse',
+            'email' => 'tarjei@nu.no',
+            'role' => 'lead',
+        ),
     ),
-    'dependencies' => 
-    array (
-      'midcom' => 
-      array (
-      ),
+    'dependencies' => array
+    (
+        'midcom' => array(),
     ),
-  ),
-  'state' => 'beta',
+),
+'state' => 'beta',

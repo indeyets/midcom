@@ -1,5 +1,5 @@
 'name' => 'midcom.helper.datamanager2',
-'version' => '1.0.4beta32',
+'version' => '1.1.0beta1',
 'state' => 'beta',
 'purecode' => true,
 'package.xml' => array
@@ -43,8 +43,8 @@
     ),
     'dependencies' => array
     (
-        'net.nehmer.markdown' => array (),
-        'net.nemein.tag' => array (),
+        'net.nehmer.markdown' => array(),
+        'net.nemein.tag' => array(),
         'HTML_QuickForm' => array
         (
             'channel' => 'pear.php.net',
@@ -61,8 +61,8 @@
         (
             'channel' => 'pearified.com',
         ),
-        'midcom' => array (),
-        'midcom.helper.imagepopup' => array (),
-        'midcom.helper.reflector' => array (),
+        'midcom' => array(),
+        'midcom.helper.imagepopup' => array(),
+        'midcom.helper.reflector' => array(),
     ),
 ),

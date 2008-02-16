@@ -1,17 +1,17 @@
 'name' => 'org.routamc.photostream',
 'icon' => 'stock-icons/16x16/camera.png',
 'purecode' => false,
-'version' => '1.1.0beta1',
+'version' => '1.2.0beta1',
 'state' => 'beta',
-'privileges' => array (),
+'privileges' => array(),
 'class_definitions' => array
 (
     'midcom_dba_classes.inc',
 ),
 'package.xml' => array
 (
-    'summary' => 'Collection of user\'s photos',
-    'description' => 'Collection of user\'s photos',
+    'summary' => 'Collection of user's photos',
+    'description' => 'Collection of user's photos',
     'maintainers' => array
     (
         'rambo' => array
@@ -35,34 +35,34 @@
     ),
     'dependencies' => array
     (
-        'midcom.helper.datamanager2' => array (),
-        'midcom.helper.dm2config' => array (),
-        'net.nemein.tag' => array (),
-        'org.openpsa.qbpager' => array (),
-        'net.nehmer.buddylist' => array (),
-        'midcom' => array (),
+        'midcom.helper.datamanager2' => array(),
+        'midcom.helper.dm2config' => array(),
+        'net.nemein.tag' => array(),
+        'org.openpsa.qbpager' => array(),
+        'net.nehmer.buddylist' => array(),
+        'midcom' => array(),
     ),
 ),
-'customdata' => array 
+'customdata' => array
 (
-      'net.nehmer.account.socialweb' => array
-      (
-          'flickr_username' => array
-          (
-              'storage' => array
-              (
-                  'location'   => 'configuration',
-                  'domain' => 'org.routamc.photostream:flickr',
-                  'name'   => 'username',
-              ),
-          ),
-      ),  
-      'midcom.services.cron' => array
-      (
-          array
-          (
-              'handler' => 'org_routamc_photostream_cron_fetchflickr',
-              'recurrence' => MIDCOM_CRON_HOUR,
-          ),
-      ),
+    'net.nehmer.account.socialweb' => array
+    (
+        'flickr_username' => array
+        (
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream:flickr',
+                'name' => 'username',
+            ),
+        ),
+    ),
+    'midcom.services.cron' => array
+    (
+        array
+        (
+            'handler' => 'org_routamc_photostream_cron_fetchflickr',
+            'recurrence' => 'MIDCOM_CRON_HOUR',
+        ),
+    ),
 ),

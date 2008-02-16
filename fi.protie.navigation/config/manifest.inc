@@ -1,39 +1,37 @@
 'name' => 'fi.protie.navigation',
-'version' => '1.1.2beta2',
+'version' => '1.2.0beta1',
 'state' => 'beta',
 'purecode' => true,
-'package.xml' => Array
+'package.xml' => array
 (
     'summary' => 'Dynamic navigation',
     'description' => 'Versatile class for drawing dynamically navigation elements according to user preferences.',
-    'maintainers' => Array
+    'maintainers' => array
     (
-        'adrenalin' => Array
+        'adrenalin' => array
         (
             'name' => 'Arttu Manninen',
             'email' => 'arttu.manninen@protie.fi',
             'role' => 'lead',
         ),
-        'tarjei' => Array
+        'tarjei' => array
         (
             'name' => 'Tarjei Huse',
             'email' => 'tarjei@nu.no',
             'role' => 'lead',
         ),
-        'netblade' => Array
+        'netblade' => array
         (
             'name' => 'Oskari Kokko',
             'email' => 'oskari.kokko@iki.fi',
             'role' => 'lead',
         ),
-        'w_i' => Array
+        'w_i' => array
         (
             'name' => 'Jerry Jalava',
             'email' => 'jerry.jalava@gmail.com',
             'role' => 'developer',
         ),
     ),
-    'dependencies' => Array
-    (
-    ),
+    'dependencies' => array(),
 ),

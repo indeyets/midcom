@@ -1,5 +1,5 @@
 'name' => 'net.nehmer.mail',
-'version' => '1.8.0',
+'version' => '1.9.0beta1',
 'state' => 'beta',
 'package.xml' => array
 (
@@ -25,23 +25,23 @@
     'dependencies' => array
     (
         'midcom.helper.datamanager2' => array(),
-        'net.nehmer.markdown'        => array(),
-        'net.nemein.tag'             => array(),
-        'org.openpsa.notifications'  => array(),
+        'net.nehmer.markdown' => array(),
+        'net.nemein.tag' => array(),
+        'org.openpsa.notifications' => array(),
     ),
 ),
 'class_definitions' => array
 (
-    'midcomdba.inc'
+    'midcomdba.inc',
 ),
 'privileges' => array
 (
-    'ignore_quota' => MIDCOM_PRIVILEGE_DENY,
-    'browse_other_mailboxes' => MIDCOM_PRIVILEGE_DENY,
+    'ignore_quota' => 'MIDCOM_PRIVILEGE_DENY',
+    'browse_other_mailboxes' => 'MIDCOM_PRIVILEGE_DENY',
     'list_mails' => array
     (
-        MIDCOM_PRIVILEGE_DENY,
-        MIDCOM_PRIVILEGE_ALLOW
+        'MIDCOM_PRIVILEGE_DENY',
+        'MIDCOM_PRIVILEGE_ALLOW',
     ),
 ),
 'watches' => array
@@ -50,9 +50,9 @@
     (
         'classes' => array
         (
-            'midgard_person'
+            'midgard_person',
         ),
-        'operations' => MIDCOM_OPERATION_DBA_DELETE,
+        'operations' => 'MIDCOM_OPERATION_DBA_DELETE',
     ),
 ),
 'customdata' => array

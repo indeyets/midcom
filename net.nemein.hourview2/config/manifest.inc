@@ -1,9 +1,9 @@
 'name' => 'net.nemein.hourview2',
 'purecode' => false,
-'version' => '0.0.5beta2',
+'version' => '0.1.0beta1',
 'state' => 'beta',
-'privileges' => array (),
-'class_definitions' => array (),
+'privileges' => array(),
+'class_definitions' => array(),
 'package.xml' => array
 (
     'summary' => 'Hour report approval tool',
@@ -25,10 +25,10 @@
     ),
     'dependencies' => array
     (
-        'org.openpsa.projects' => array (),
-        'org.openpsa.mail' => array (),
-        'org.openpsa.sales' => array (),
-        'org.openpsa.notifications' => array (),
-        'midcom' => array (),
+        'org.openpsa.projects' => array(),
+        'org.openpsa.mail' => array(),
+        'org.openpsa.sales' => array(),
+        'org.openpsa.notifications' => array(),
+        'midcom' => array(),
     ),
 ),

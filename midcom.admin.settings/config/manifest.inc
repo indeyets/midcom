@@ -1,10 +1,10 @@
 'name' => 'midcom.admin.settings',
 'description' => 'This module handles MidCOM local configuration.',
 'purecode' => true,
-'version' => '0.2.0beta1',
+'version' => '0.3.0beta1',
 'state' => 'beta',
-'privileges' => array (),
-'class_definitions' => array (),
+'privileges' => array(),
+'class_definitions' => array(),
 'package.xml' => array
 (
     'license' => 'LGPL',
@@ -31,9 +31,9 @@
     ),
     'dependencies' => array
     (
-        'midcom.helper.datamanager2' => array (),
-        'midcom' => array (),
-        'midcom.admin.folder' => array (),
+        'midcom.helper.datamanager2' => array(),
+        'midcom' => array(),
+        'midcom.admin.folder' => array(),
     ),
 ),
 'customdata' => array
@@ -43,6 +43,6 @@
         'class' => 'midcom_admin_settings_editor',
         'src' => 'file:/midcom/admin/settings/editor.php',
         'name' => 'midcom.admin.settings',
-        'config' => null,
+        'config' => '',
     ),
 ),

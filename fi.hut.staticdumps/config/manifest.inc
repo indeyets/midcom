@@ -1,9 +1,9 @@
 'name' => 'fi.hut.staticdumps',
 'purecode' => true,
-'version' => '0.1.6',
+'version' => '0.2.0beta1',
 'state' => 'beta',
-'privileges' => array (),
-'class_definitions' => array (),
+'privileges' => array(),
+'class_definitions' => array(),
 'package.xml' => array
 (
     'license' => 'GPL',

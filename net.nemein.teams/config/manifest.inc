@@ -1,17 +1,12 @@
 'name' => 'net.nemein.teams',
-/* if the module is a purecode one, then you cannot use it 
- * to create direct webpages.*/ 
 'purecode' => false,
-/* when using pear packaging, versions > 1 are stable */
-'version' => '0.0.1',
-'state' => 'devel',
-/* use this to set default privileges */
+'version' => '0.1.0beta1',
+'state' => 'beta',
 'privileges' => array(),
-/* use this to initialize your own MgdSchema classes */
-'class_definitions' => Array('midcom_dba_classes.inc'),
-/**
- * This is used by the PEAR packaging.
- */
+'class_definitions' => array
+(
+    'midcom_dba_classes.inc',
+),
 'package.xml' => array
 (
     'summary' => 'Teams',
@@ -25,11 +20,8 @@
             'role' => 'lead',
         ),
     ),
-    /* Define what modules this module depends on.  */
-    'dependencies' => Array
+    'dependencies' => array
     (
         'midcom.helper.datamanager2' => array(),
     ),
 ),
-
-

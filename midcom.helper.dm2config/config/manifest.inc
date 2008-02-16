@@ -1,6 +1,6 @@
 'name' => 'midcom.helper.dm2config',
-'version' => '0.0.1',
-'state' => 'alpha',
+'version' => '0.1.0beta1',
+'state' => 'beta',
 'purecode' => true,
 'package.xml' => array
 (
@@ -18,6 +18,6 @@
     ),
     'dependencies' => array
     (
-        'midcom.helper.datamanager2' => array (),
-    ), 
+        'midcom.helper.datamanager2' => array(),
+    ),
 ),

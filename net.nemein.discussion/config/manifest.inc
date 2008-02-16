@@ -1,11 +1,11 @@
 'name' => 'net.nemein.discussion',
 'icon' => 'stock-icons/16x16/stock-discussion.png',
 'purecode' => false,
-'version' => '2.0.3beta2',
+'version' => '2.1.0beta1',
 'state' => 'beta',
 'privileges' => array
 (
-    'moderation' => MIDCOM_PRIVILEGE_DENY,
+    'moderation' => 'MIDCOM_PRIVILEGE_DENY',
 ),
 'class_definitions' => array
 (
@@ -19,7 +19,7 @@
         (
             'net_nemein_quickpoll_vote_dba',
         ),
-        'operations' => MIDCOM_OPERATION_DBA_CREATE,
+        'operations' => 'MIDCOM_OPERATION_DBA_CREATE',
     ),
 ),
 'package.xml' => array
@@ -49,14 +49,14 @@
         'org.openpsa.qbpager' => array(),
         'net.nehmer.markdown' => array(),
         'net.nemein.tag' => array(),
-        'net.nemein.quickpoll' => array(),        
+        'net.nemein.quickpoll' => array(),
         'midcom.helper.xml' => array(),
         'midcom' => array(),
     ),
 ),
 'customdata' => array
 (
-    'org.openpsa.notifications' => array 
+    'org.openpsa.notifications' => array
     (
         'reported_abuse' => array
         (
@@ -68,12 +68,12 @@
         array
         (
             'handler' => 'net_nemein_discussion_cron_eraseunpopular',
-            'recurrence' => MIDCOM_CRON_DAY,
+            'recurrence' => 'MIDCOM_CRON_DAY',
         ),
         array
         (
             'handler' => 'net_nemein_discussion_cron_popularity',
-            'recurrence' => MIDCOM_CRON_DAY,
+            'recurrence' => 'MIDCOM_CRON_DAY',
         ),
     ),
 ),

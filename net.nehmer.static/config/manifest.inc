@@ -1,5 +1,5 @@
 'name' => 'net.nehmer.static',
-'version' => '1.0.12beta5',
+'version' => '1.1.0beta1',
 'state' => 'beta',
 'class_definitions' => array
 (
@@ -34,9 +34,9 @@
     ),
     'dependencies' => array
     (
-        'net.nehmer.blog' => array (),
-        'midcom.helper.datamanager2' => array (),
-        'midcom.helper.dm2config' => array (),
-        'midcom' => array (),
+        'net.nehmer.blog' => array(),
+        'midcom.helper.datamanager2' => array(),
+        'midcom.helper.dm2config' => array(),
+        'midcom' => array(),
     ),
 ),

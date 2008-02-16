@@ -1,18 +1,18 @@
 'name' => 'midcom.admin.folder',
 'icon' => 'stock-icons/16x16/folder.png',
 'purecode' => true,
-'version' => '1.2.0beta3',
+'version' => '1.3.0beta1',
 'state' => 'beta',
 'privileges' => array
 (
-    'topic_management' => MIDCOM_PRIVILEGE_DENY,
-    'template_management' => MIDCOM_PRIVILEGE_DENY,
+    'topic_management' => 'MIDCOM_PRIVILEGE_DENY',
+    'template_management' => 'MIDCOM_PRIVILEGE_DENY',
 ),
 'package.xml' => array
 (
     'summary' => 'Folder management',
     'description' => 'Management of MidCOM site folders',
-    'maintainers' => array 
+    'maintainers' => array
     (
         'bergie' => array
         (
@@ -36,7 +36,7 @@
     ),
     'dependencies' => array
     (
-        'midcom.helper.datamanager2' => array (),
-        'midcom' => array (),
+        'midcom.helper.datamanager2' => array(),
+        'midcom' => array(),
     ),
 ),

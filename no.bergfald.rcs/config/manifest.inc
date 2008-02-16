@@ -1,42 +1,42 @@
 'name' => 'no.bergfald.rcs',
 'description' => 'Front and backend for a versioning library',
 'purecode' => true,
-'version' => '1.0.2beta2',
+'version' => '1.1.0beta1',
 'state' => 'beta',
-'privileges' => array (),
-'class_definitions' => array (),
+'privileges' => array(),
+'class_definitions' => array(),
 'package.xml' => array
 (
     'license' => 'GPL',
-    'maintainers' =>array
+    'maintainers' => array
     (
-        'tarjei' =>array
+        'tarjei' => array
         (
             'name' => 'Tarjei Huse',
             'email' => 'tarjei@nu.no',
             'role' => 'lead',
         ),
-        'bergie' =>array
+        'bergie' => array
         (
             'name' => 'Henri Bergius',
             'email' => 'henri.bergius@iki.fi',
             'role' => 'developer',
         ),
-        'adrenalin' =>array
+        'adrenalin' => array
         (
             'name' => 'Arttu Manninen',
             'email' => 'arttu@kaktus.cc',
             'role' => 'developer',
         ),
     ),
-    'dependencies' =>array
+    'dependencies' => array
     (
-        'midcom.helper.xml' =>array (),
-        'org.openpsa.contactwidget' =>array (),
-        'Text_Diff' =>array
+        'midcom.helper.xml' => array(),
+        'org.openpsa.contactwidget' => array(),
+        'Text_Diff' => array
         (
             'channel' => 'pear.php.net',
         ),
-        'midcom' =>array (),
+        'midcom' => array(),
     ),
 ),

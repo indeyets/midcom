@@ -1,11 +1,12 @@
 'name' => 'no.odindata.quickform',
 'description' => 'A simple email form generator',
 'purecode' => false,
-'version' => '1.3',
-'state' => 'stable',
-'privileges' => array (),
-'class_definitions' => array (),
-'package.xml' => array (
+'version' => '1.4.0beta1',
+'state' => 'beta',
+'privileges' => array(),
+'class_definitions' => array(),
+'package.xml' => array
+(
     'license' => 'GPL',
     'maintainers' => array
     (
@@ -36,8 +37,8 @@
     ),
     'dependencies' => array
     (
-        'midcom.helper.datamanager' => array (),
-        'org.openpsa.mail' => array (),
-        'midcom' => array (),
+        'midcom.helper.datamanager' => array(),
+        'org.openpsa.mail' => array(),
+        'midcom' => array(),
     ),
 ),

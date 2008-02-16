@@ -1,33 +1,30 @@
-
-  'name' => 'net.nehmer.markdown',
-  'version' => '1.0.4beta1',
-  'state' => 'beta',
-  'purecode' => true,
-  'package.xml' => 
-  array (
+'name' => 'net.nehmer.markdown',
+'version' => '1.1.0beta1',
+'state' => 'beta',
+'purecode' => true,
+'package.xml' => array
+(
     'summary' => 'Markdown formatter',
     'description' => 'PHP Markdown is a port to PHP of the Markdown program written by John Gruber.',
-    'maintainers' => 
-    array (
-      'torben' => 
-      array (
-        'name' => 'Torben Nehmer',
-        'email' => 'torben@nehmer.net',
-        'role' => 'lead',
-        'active' => 'no',
-      ),
-      'rambo' => 
-      array (
-        'name' => 'Eero af Heurlin',
-        'email' => 'eero.afheurlin@iki.fi',
-        'role' => 'lead',
-        'active' => 'yes',
-      ),
+    'maintainers' => array
+    (
+        'torben' => array
+        (
+            'name' => 'Torben Nehmer',
+            'email' => 'torben@nehmer.net',
+            'role' => 'lead',
+            'active' => 'no',
+        ),
+        'rambo' => array
+        (
+            'name' => 'Eero af Heurlin',
+            'email' => 'eero.afheurlin@iki.fi',
+            'role' => 'lead',
+            'active' => 'yes',
+        ),
     ),
-    'dependencies' => 
-    array (
-      'midcom' => 
-      array (
-      ),
+    'dependencies' => array
+    (
+        'midcom' => array(),
     ),
-  ),
+),

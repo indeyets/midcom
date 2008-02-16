@@ -1,11 +1,11 @@
 'name' => 'org.openpsa.directmarketing',
 'purecode' => false,
-'privileges' => array (),
+'privileges' => array(),
 'class_definitions' => array
 (
     'midcom_dba_classes.inc',
 ),
-'version' => '2.2.8beta2',
+'version' => '2.3.0beta1',
 'state' => 'beta',
 'package.xml' => array
 (
@@ -34,21 +34,21 @@
     ),
     'dependencies' => array
     (
-        'org.openpsa.core' => array (),
-        'org.openpsa.contacts' => array (),
-        'org.openpsa.mail' => array (),
-        'org.openpsa.helpers' => array (),
-        'midcom.helper.datamanager2' => array (),
-        'org.openpsa.queries' => array (),
-        'org.openpsa.contactwidget' => array (),
-        'org.openpsa.smslib' => array (),
-        'org.openpsa.qbpager' => array (),
-        'midcom.services.at' => array (),
+        'org.openpsa.core' => array(),
+        'org.openpsa.contacts' => array(),
+        'org.openpsa.mail' => array(),
+        'org.openpsa.helpers' => array(),
+        'midcom.helper.datamanager2' => array(),
+        'org.openpsa.queries' => array(),
+        'org.openpsa.contactwidget' => array(),
+        'org.openpsa.smslib' => array(),
+        'org.openpsa.qbpager' => array(),
+        'midcom.services.at' => array(),
         'Contact_Vcard_Parse' => array
         (
             'channel' => 'pear.php.net',
         ),
-        'midcom' => array (),
+        'midcom' => array(),
     ),
 ),
 'customdata' => array
@@ -58,12 +58,12 @@
         array
         (
             'handler' => 'org_openpsa_directmarketing_cron_updatemembers',
-            'recurrence' => MIDCOM_CRON_DAY,
+            'recurrence' => 'MIDCOM_CRON_DAY',
         ),
         array
         (
             'handler' => 'org_openpsa_directmarketing_cron_cleartokens',
-            'recurrence' => MIDCOM_CRON_DAY,
+            'recurrence' => 'MIDCOM_CRON_DAY',
         ),
     ),
 ),
@@ -75,6 +75,6 @@
         (
             'net_nemein_discussion_post_dba',
         ),
-        'operations' => MIDCOM_OPERATION_DBA_CREATE,
+        'operations' => 'MIDCOM_OPERATION_DBA_CREATE',
     ),
 ),

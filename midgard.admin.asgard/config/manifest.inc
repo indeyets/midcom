@@ -1,16 +1,13 @@
 'name' => 'midgard.admin.asgard',
 'icon' => 'midgard.admin.asgard/asgard2-16.png',
 'purecode' => true,
-'version' => '2.0.1beta11',
+'version' => '2.1.0beta1',
 'state' => 'beta',
 'privileges' => array
 (
-    'access' => MIDCOM_PRIVILEGE_DENY,
+    'access' => 'MIDCOM_PRIVILEGE_DENY',
 ),
 'class_definitions' => array(),
-/**
- * This is used by the PEAR packaging.
- */
 'package.xml' => array
 (
     'summary' => 'Next generation admin interface',
@@ -48,8 +45,7 @@
             'role' => 'developer',
         ),
     ),
-    /* Define what modules this module depends on.  */
-    'dependencies' => Array
+    'dependencies' => array
     (
         'midcom.helper.reflector' => array(),
         'midcom.helper.datamanager2' => array

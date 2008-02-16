@@ -1,8 +1,8 @@
 'name' => 'net.nemein.calendar',
 'purecode' => false,
-'version' => '2.0.0beta11',
+'version' => '2.1.0beta1',
 'state' => 'beta',
-'privileges' => array (),
+'privileges' => array(),
 'class_definitions' => array
 (
     'midcom_dba_classes.inc',
@@ -28,18 +28,18 @@
     ),
     'dependencies' => array
     (
-        'net.nemein.repeathandler' => array (),
+        'net.nemein.repeathandler' => array(),
         'org.openpsa.calendarwidget' => array
         (
             'min' => '2.1.6',
         ),
-        'org.routamc.positioning' => array (),
+        'org.routamc.positioning' => array(),
         'de.bitfolge.feedcreator' => array(),
-        'midcom.helper.dm2config' => array (),
+        'midcom.helper.dm2config' => array(),
         'Calendar' => array
         (
             'channel' => 'pear.php.net',
         ),
-        'midcom' => array (),
+        'midcom' => array(),
     ),
 ),

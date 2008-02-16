@@ -1,53 +1,38 @@
-
-  'name' => 'org.openpsa.projects',
-  'purecode' => false,
-  'privileges' => 
-  array (
-  ),
-  'class_definitions' => 
-  array (
-    0 => 'midcom_dba_classes.inc',
-  ),
-  'version' => '2.3.5beta1',
-  'state' => 'beta',
-  'package.xml' => 
-  array (
+'name' => 'org.openpsa.projects',
+'purecode' => false,
+'privileges' => array(),
+'class_definitions' => array
+(
+    'midcom_dba_classes.inc',
+),
+'version' => '2.4.0beta1',
+'state' => 'beta',
+'package.xml' => array
+(
     'summary' => 'Project/Task management and hour reporting',
     'description' => 'Manage tasks and projects, report hours towards them.',
-    'maintainers' => 
-    array (
-      'bergie' => 
-      array (
-        'name' => 'Henri Bergius',
-        'email' => 'henri.bergius@iki.fi',
-        'role' => 'lead',
-      ),
-      'rambo' => 
-      array (
-        'name' => 'Eero af Heurlin',
-        'email' => 'eero.afheurlin@iki.fi',
-        'role' => 'lead',
-      ),
+    'maintainers' => array
+    (
+        'bergie' => array
+        (
+            'name' => 'Henri Bergius',
+            'email' => 'henri.bergius@iki.fi',
+            'role' => 'lead',
+        ),
+        'rambo' => array
+        (
+            'name' => 'Eero af Heurlin',
+            'email' => 'eero.afheurlin@iki.fi',
+            'role' => 'lead',
+        ),
     ),
-    'dependencies' => 
-    array (
-      'org.openpsa.core' => 
-      array (
-      ),
-      'org.openpsa.helpers' => 
-      array (
-      ),
-      'midcom.helper.datamanager' => 
-      array (
-      ),
-      'midcom.helper.datamanager2' => 
-      array (
-      ),
-      'org.openpsa.contactwidget' => 
-      array (
-      ),
-      'midcom' => 
-      array (
-      ),
+    'dependencies' => array
+    (
+        'org.openpsa.core' => array(),
+        'org.openpsa.helpers' => array(),
+        'midcom.helper.datamanager' => array(),
+        'midcom.helper.datamanager2' => array(),
+        'org.openpsa.contactwidget' => array(),
+        'midcom' => array(),
     ),
-  ),
+),

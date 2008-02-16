@@ -1,60 +1,45 @@
-
-  'name' => 'org.openpsa.reports',
-  'purecode' => false,
-  'privileges' => 
-  array (
-  ),
-  'class_definitions' => 
-  array (
-  ),
-  'version' => '2.0.6beta1',
-  'package.xml' => 
-  array (
+'name' => 'org.openpsa.reports',
+'purecode' => false,
+'privileges' => array(),
+'class_definitions' => array(),
+'version' => '2.1.0beta1',
+'package.xml' => array
+(
     'summary' => 'OpenPSA reporting module',
     'description' => 'Run reports on data from various other modules',
-    'maintainers' => 
-    array (
-      'rambo' => 
-      array (
-        'name' => 'Eero af Heurlin',
-        'email' => 'eero.afheurlin@iki.fi',
-        'role' => 'lead',
-      ),
-      'bergie' => 
-      array (
-        'name' => 'Henri Bergius',
-        'email' => 'henri.bergius@iki.fi',
-        'role' => 'lead',
-      ),
+    'maintainers' => array
+    (
+        'rambo' => array
+        (
+            'name' => 'Eero af Heurlin',
+            'email' => 'eero.afheurlin@iki.fi',
+            'role' => 'lead',
+        ),
+        'bergie' => array
+        (
+            'name' => 'Henri Bergius',
+            'email' => 'henri.bergius@iki.fi',
+            'role' => 'lead',
+        ),
     ),
-    'dependencies' => 
-    array (
-      'org.openpsa.core' => 
-      array (
-      ),
-      'org.openpsa.queries' => 
-      array (
-      ),
-      'org.openpsa.helpers' => 
-      array (
-      ),
-      'midcom.helper.datamanager' => 
-      array (
-      ),
-      'midcom' => 
-      array (
-      ),
+    'dependencies' => array
+    (
+        'org.openpsa.core' => array(),
+        'org.openpsa.queries' => array(),
+        'org.openpsa.helpers' => array(),
+        'midcom.helper.datamanager' => array(),
+        'midcom' => array(),
     ),
-  ),
-  'customdata' => 
-  array (
-    'midcom.services.cron' => 
-    array (
-      0 => 
-      array (
-        'handler' => 'org_openpsa_reports_cron_clearold',
-        'recurrence' => MIDCOM_CRON_DAY,
-      ),
+),
+'customdata' => array
+(
+    'midcom.services.cron' => array
+    (
+        array
+        (
+            'handler' => 'org_openpsa_reports_cron_clearold',
+            'recurrence' => 'MIDCOM_CRON_DAY',
+        ),
     ),
-  ),
-  'state' => 'beta',
+),
+'state' => 'beta',

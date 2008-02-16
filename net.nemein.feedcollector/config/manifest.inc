@@ -1,9 +1,12 @@
 'name' => 'net.nemein.feedcollector',
 'purecode' => false,
-'version' => '1.0.0beta1',
+'version' => '1.1.0beta1',
 'state' => 'beta',
 'privileges' => array(),
-'class_definitions' => array('midcom_dba_classes.inc'),
+'class_definitions' => array
+(
+    'midcom_dba_classes.inc',
+),
 'package.xml' => array
 (
     'summary' => 'Show index-pages of multiple n.n.blog-folders on one index-page',
@@ -17,11 +20,9 @@
             'role' => 'lead',
         ),
     ),
-    'dependencies' => Array
+    'dependencies' => array
     (
         'midcom.helper.datamanager2' => array(),
         'midcom.helper.dm2config' => array(),
     ),
 ),
-
-

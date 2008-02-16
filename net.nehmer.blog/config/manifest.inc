@@ -1,5 +1,5 @@
 'name' => 'net.nehmer.blog',
-'version' => '1.5.0beta5',
+'version' => '1.6.0beta1',
 'state' => 'beta',
 'class_definitions' => array
 (
@@ -35,16 +35,15 @@
     ),
     'dependencies' => array
     (
-        'de.bitfolge.feedcreator'    => array(),
+        'de.bitfolge.feedcreator' => array(),
         'midcom.helper.datamanager2' => array(),
-        'net.nehmer.comments'        => array(),
-        'org.openpsa.mail'           => array(),
-        'org.openpsa.qbpager'        => array(),
-        'net.nemein.rss'             => array(),
-        'XML_RPC'                    => array
+        'net.nehmer.comments' => array(),
+        'org.openpsa.mail' => array(),
+        'org.openpsa.qbpager' => array(),
+        'net.nemein.rss' => array(),
+        'XML_RPC' => array
         (
             'channel' => 'pear.php.net',
         ),
     ),
 ),
-

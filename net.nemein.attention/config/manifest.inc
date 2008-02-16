@@ -1,10 +1,13 @@
 'name' => 'net.nemein.attention',
 'icon' => 'net.nemein.attention/apml-icon-16x16.png',
 'purecode' => true,
-'version' => '0.0.1',
-'state' => 'devel',
+'version' => '0.1.0beta1',
+'state' => 'beta',
 'privileges' => array(),
-'class_definitions' => array('midcom_dba_classes.inc'),
+'class_definitions' => array
+(
+    'midcom_dba_classes.inc',
+),
 'package.xml' => array
 (
     'summary' => 'Attention profiler',
@@ -18,13 +21,12 @@
             'role' => 'lead',
         ),
     ),
-    /* Define what modules this module depends on.  */
-    'dependencies' => Array
+    'dependencies' => array
     (
         'org.openpsa.httplib' => array(),
     ),
 ),
-'customdata' => array 
+'customdata' => array
 (
     'net.nehmer.account.socialweb' => array
     (
@@ -32,18 +34,18 @@
         (
             'storage' => array
             (
-                'location'   => 'configuration',
+                'location' => 'configuration',
                 'domain' => 'net.nemein.attention:delicious',
-                'name'   => 'username',
+                'name' => 'username',
             ),
         ),
         'lastfm_username' => array
         (
             'storage' => array
             (
-                'location'   => 'configuration',
+                'location' => 'configuration',
                 'domain' => 'net.nemein.attention:lastfm',
-                'name'   => 'username',
+                'name' => 'username',
             ),
         ),
     ),
@@ -52,19 +54,17 @@
         array
         (
             'handler' => 'net_nemein_attention_cron_fetchdelicious',
-            'recurrence' => MIDCOM_CRON_DAY,
+            'recurrence' => 'MIDCOM_CRON_DAY',
         ),
         array
         (
             'handler' => 'net_nemein_attention_cron_fetchfavourites',
-            'recurrence' => MIDCOM_CRON_DAY,
+            'recurrence' => 'MIDCOM_CRON_DAY',
         ),
         array
         (
             'handler' => 'net_nemein_attention_cron_fetchlastfm',
-            'recurrence' => MIDCOM_CRON_DAY,
+            'recurrence' => 'MIDCOM_CRON_DAY',
         ),
     ),
 ),
-
-

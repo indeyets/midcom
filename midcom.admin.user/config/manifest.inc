@@ -1,9 +1,9 @@
 'name' => 'midcom.admin.user',
 'description' => 'User management tool',
 'purecode' => true,
-'version' => '1.0.0beta4',
-'privileges' => array (),
-'class_definitions' => array (),
+'version' => '1.1.0beta1',
+'privileges' => array(),
+'class_definitions' => array(),
 'package.xml' => array
 (
     'license' => 'LGPL',
@@ -26,10 +26,10 @@
     (
         'midcom.admin.help' => array(),
         'midcom.helper.datamanager2' => array(),
-        'midcom' => array (),
+        'midcom' => array(),
     ),
 ),
-'state' => 'alpha',
+'state' => 'beta',
 'customdata' => array
 (
     'asgard_plugin' => array
@@ -37,6 +37,6 @@
         'class' => 'midcom_admin_user_plugin',
         'src' => 'file:/midcom/admin/user/plugin.php',
         'name' => 'User Management',
-        'config' => null,
+        'config' => '',
     ),
 ),

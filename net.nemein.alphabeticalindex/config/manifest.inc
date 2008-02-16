@@ -1,16 +1,11 @@
 'name' => 'net.nemein.alphabeticalindex',
-/* if the module is a purecode one, then you cannot use it 
- * to create direct webpages.*/ 
 'purecode' => false,
-/* when using pear packaging, versions > 1 are stable */
-'version' => '1.1.2',
-'state' => 'stable',
-/* use this to set default privileges */
+'version' => '1.2.0beta1',
+'state' => 'beta',
 'privileges' => array(),
-/* use this to initialize your own MgdSchema classes */
 'class_definitions' => array
 (
-    'midcomdba.inc'
+    'midcomdba.inc',
 ),
 'watches' => array
 (
@@ -21,14 +16,9 @@
             'midcom_baseclasses_database_topic',
             'midcom_baseclasses_database_article',
         ),
-        'operations' =>   MIDCOM_OPERATION_DBA_CREATE
-                        | MIDCOM_OPERATION_DBA_UPDATE
-                        | MIDCOM_OPERATION_DBA_DELETE,
+        'operations' => 'MIDCOM_OPERATION_DBA_WWMETE',
     ),
 ),
-/**
- * This is used by the PEAR packaging.
- */
 'package.xml' => array
 (
     'summary' => 'Alphabetical index',
@@ -42,11 +32,8 @@
             'role' => 'lead',
         ),
     ),
-    /* Define what modules this module depends on.  */
-    'dependencies' => Array
+    'dependencies' => array
     (
         'midcom.helper.datamanager2' => array(),
     ),
 ),
-
-

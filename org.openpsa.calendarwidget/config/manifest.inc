@@ -1,9 +1,9 @@
 'name' => 'org.openpsa.calendarwidget',
 'purecode' => true,
 'privileges' => array(),
-'class_definitions' => array (),
-'version' => '2.1.6',
-'state' => 'stable',
+'class_definitions' => array(),
+'version' => '2.2.0beta1',
+'state' => 'beta',
 'package.xml' => array
 (
     'summary' => 'Widget for drawing calendar views',
@@ -37,6 +37,6 @@
     ),
     'dependencies' => array
     (
-        'midcom' => array (),
+        'midcom' => array(),
     ),
 ),

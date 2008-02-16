@@ -1,8 +1,8 @@
 'name' => 'org.routamc.gallery',
 'purecode' => false,
-'version' => '1.1.0beta5',
+'version' => '1.2.0beta1',
 'state' => 'beta',
-'privileges' => array (),
+'privileges' => array(),
 'class_definitions' => array
 (
     'midcom_dba_classes.inc',
@@ -19,7 +19,7 @@
             'email' => 'henri.bergius@nemein.com',
             'role' => 'lead',
         ),
-        'torben' => Array
+        'torben' => array
         (
             'name' => 'Torben Nehmer',
             'email' => 'torben@nehmer.net',
@@ -41,19 +41,22 @@
     ),
     'dependencies' => array
     (
-        'org.routamc.photostream' => array (),
-        'midcom.helper.datamanager2' => array (),
-        'net.nemein.tag' => array (),
-        'org.openpsa.qbpager' => array (),
-        'midcom' => array (),
+        'org.routamc.photostream' => array(),
+        'midcom.helper.datamanager2' => array(),
+        'net.nemein.tag' => array(),
+        'org.openpsa.qbpager' => array(),
+        'midcom' => array(),
     ),
 ),
 'watches' => array
 (
     array
     (
-        'classes' => array('org_routamc_photostream_photo_dba'),
-        'operations' => MIDCOM_OPERATION_DBA_DELETE,
+        'classes' => array
+        (
+            'org_routamc_photostream_photo_dba',
+        ),
+        'operations' => 'MIDCOM_OPERATION_DBA_DELETE',
     ),
 ),
 'customdata' => array
@@ -63,7 +66,7 @@
         array
         (
             'handler' => 'org_routamc_gallery_cron_gallery_sync',
-            'recurrence' => MIDCOM_CRON_DAY,
+            'recurrence' => 'MIDCOM_CRON_DAY',
         ),
     ),
 ),

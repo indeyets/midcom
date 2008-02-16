@@ -1,17 +1,9 @@
 'name' => 'org.maemo.gforgeprofileupdater',
-/* if the module is a purecode one, then you cannot use it 
- * to create direct webpages.*/ 
 'purecode' => true,
-/* when using pear packaging, versions > 1 are stable */
-'version' => '0.0.1',
-'state' => 'devel',
-/* use this to set default privileges */
+'version' => '0.1.0beta1',
+'state' => 'beta',
 'privileges' => array(),
-/* use this to initialize your own MgdSchema classes */
 'class_definitions' => array(),
-/**
- * This is used by the PEAR packaging.
- */
 'package.xml' => array
 (
     'summary' => 'MidCOM module org.maemo.gforgeprofileupdater',
@@ -25,11 +17,13 @@
             'role' => 'lead',
         ),
     ),
-    /* Define what modules this module depends on.  */
-    'dependencies' => Array
+    'dependencies' => array
     (
         'midcom.helper.datamanager2' => array(),
-        'soap' => array ('channel' => 'pear.php.net'),
+        'soap' => array
+        (
+            'channel' => 'pear.php.net',
+        ),
     ),
 ),
 'watches' => array
@@ -41,6 +35,6 @@
             'midcom_baseclasses_database_person',
             'midcom_org_openpsa_person',
         ),
-        'operations' => MIDCOM_OPERATION_DBA_ALL,
+        'operations' => 'MIDCOM_OPERATION_DBA_ALL',
     ),
 ),

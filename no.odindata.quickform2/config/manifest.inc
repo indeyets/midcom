@@ -1,10 +1,10 @@
 'name' => 'no.odindata.quickform2',
 'description' => 'Submit forms to email ',
 'purecode' => false,
-'version' => '0.0.7beta2',
+'version' => '0.1.0beta1',
 'state' => 'beta',
-'privileges' => array (),
-'class_definitions' => array (),
+'privileges' => array(),
+'class_definitions' => array(),
 'package.xml' => array
 (
     'summary' => 'Quickform module for mailing forms. ',
@@ -26,9 +26,9 @@
     ),
     'dependencies' => array
     (
-        'midcom.helper.datamanager2' => array (),
-        'midcom.helper.dm2config' => array (),
-        'midcom' => array (),
+        'midcom.helper.datamanager2' => array(),
+        'midcom.helper.dm2config' => array(),
+        'midcom' => array(),
         'Net_SMTP' => array
         (
             'channel' => 'pear.php.net',

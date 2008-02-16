@@ -1,9 +1,9 @@
 'name' => 'net.nemein.flashplayer',
 'purecode' => true,
-'version' => '1.0.0',
-'state' => 'stable',
-'privileges' => array (),
-'class_definitions' => array (),
+'version' => '1.1.0beta1',
+'state' => 'beta',
+'privileges' => array(),
+'class_definitions' => array(),
 'package.xml' => array
 (
     'summary' => 'Flash player and playlist',
@@ -17,5 +17,5 @@
             'role' => 'lead',
         ),
     ),
-    'dependencies' => array (),
+    'dependencies' => array(),
 ),

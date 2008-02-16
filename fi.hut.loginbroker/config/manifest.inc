@@ -1,9 +1,9 @@
 'name' => 'fi.hut.loginbroker',
 'purecode' => false,
-'version' => '0.9.5',
+'version' => '0.10.0beta1',
 'state' => 'beta',
-'privileges' => array (),
-'class_definitions' => array (),
+'privileges' => array(),
+'class_definitions' => array(),
 'package.xml' => array
 (
     'license' => 'GPL',
