@@ -122,7 +122,7 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
         
         // Execute.
         require_once($filename);
-        
+        //print_r(array_keys($_MIDCOM->componentloader->manifests));
         return true;
     }
     
@@ -141,7 +141,7 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
      *     opening/closing tags, they will be added automatically during cache file creation.
      * @return boolean Indicating success.
      */
-    function add($identifier, $code)
+    function add($identifier, $code, $skip_load = false)
     {
         $filename = "{$this->_cache_dir}{$identifier}.php";
         
@@ -173,7 +173,7 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
         
         fclose($handle);
         
-        require_once($filename);
+        if (!$skip_load) require_once($filename);
         
         return true;
     }
