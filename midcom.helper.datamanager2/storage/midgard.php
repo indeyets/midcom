@@ -81,12 +81,26 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
                 break;
 
             case 'configuration':
-                $this->object->set_parameter
-                (
-                    $this->_schema->fields[$name]['storage']['domain'],
-                    $this->_schema->fields[$name]['storage']['name'],
-                    $data
-                );
+                if (   array_key_exists('multilang', $this->_schema->fields[$name]['storage'])
+                    && $this->_schema->fields[$name]['storage']['multilang']
+                    && $_MIDCOM->i18n->get_midgard_language() != 0)
+                {
+                    $this->object->set_parameter
+                    (
+                        $this->_schema->fields[$name]['storage']['domain'],
+                        $this->_schema->fields[$name]['storage']['name'],
+                        $data
+                    );
+                }
+                else
+                {
+                    $this->object->set_parameter
+                    (
+                        $this->_schema->fields[$name]['storage']['domain'],
+                        $this->_schema->fields[$name]['storage']['name'] . '_' . $_MIDCOM->i18n->get_content_language(),
+                        $data
+                    );
+                }
                 break;
 
             case 'metadata':
@@ -137,6 +151,22 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
                 );
 
             case 'configuration':
+                if (   array_key_exists('multilang', $this->_schema->fields[$name]['storage'])
+                    && $this->_schema->fields[$name]['storage']['multilang']
+                    && $_MIDCOM->i18n->get_midgard_language() != 0)
+                {
+                    // Try to get a translated parameter
+                    $translated_value = $this->object->get_parameter
+                    (
+                        $this->_schema->fields[$name]['storage']['domain'],
+                        $this->_schema->fields[$name]['storage']['name'] . '_' . $_MIDCOM->i18n->get_content_language()
+                    );
+                    if ($translated_value)
+                    {
+                        return $translated_value;
+                    }
+                    // Otherwise fall back to the lang0 version
+                }
                 return $this->object->get_parameter
                 (
                     $this->_schema->fields[$name]['storage']['domain'],
