@@ -34,12 +34,12 @@
         array
         (
             'handler' => 'org_routamc_statusmessage_cron_fetchtwitter',
-            'recurrence' => 'MIDCOM_CRON_MINUTE',
+            'recurrence' => MIDCOM_CRON_MINUTE,
         ),
         array
         (
             'handler' => 'org_routamc_statusmessage_cron_fetchjaiku',
-            'recurrence' => 'MIDCOM_CRON_MINUTE',
+            'recurrence' => MIDCOM_CRON_MINUTE,
         ),
     ),
 ),

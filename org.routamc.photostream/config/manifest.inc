@@ -62,7 +62,7 @@
         array
         (
             'handler' => 'org_routamc_photostream_cron_fetchflickr',
-            'recurrence' => 'MIDCOM_CRON_HOUR',
+            'recurrence' => MIDCOM_CRON_HOUR,
         ),
     ),
 ),

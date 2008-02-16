@@ -66,7 +66,7 @@
         array
         (
             'handler' => 'org_routamc_gallery_cron_gallery_sync',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
     ),
 ),

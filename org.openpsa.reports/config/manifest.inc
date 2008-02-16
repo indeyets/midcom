@@ -38,7 +38,7 @@
         array
         (
             'handler' => 'org_openpsa_reports_cron_clearold',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
     ),
 ),

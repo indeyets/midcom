@@ -58,12 +58,12 @@
         array
         (
             'handler' => 'org_openpsa_directmarketing_cron_updatemembers',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
         array
         (
             'handler' => 'org_openpsa_directmarketing_cron_cleartokens',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
     ),
 ),
@@ -75,6 +75,6 @@
         (
             'net_nemein_discussion_post_dba',
         ),
-        'operations' => 'MIDCOM_OPERATION_DBA_CREATE',
+        'operations' => MIDCOM_OPERATION_DBA_CREATE,
     ),
 ),

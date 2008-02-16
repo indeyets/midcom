@@ -12,8 +12,10 @@
 (
     array
     (
-        'classes' => '',
-        'operations' => 'MIDCOM_OPERATION_DBA_WWMETE',
+        'classes' => array(),
+        'operations' => MIDCOM_OPERATION_DBA_CREATE 
+                | MIDCOM_OPERATION_DBA_UPDATE 
+                | MIDCOM_OPERATION_DBA_DELETE,
     ),
 ),
 'package.xml' => array
@@ -57,12 +59,12 @@
         array
         (
             'handler' => 'midcom_helper_replicator_cron_processqueue',
-            'recurrence' => 'MIDCOM_CRON_MINUTE',
+            'recurrence' => MIDCOM_CRON_MINUTE,
         ),
         array
         (
             'handler' => 'midcom_helper_replicator_cron_queuenondba',
-            'recurrence' => 'MIDCOM_CRON_HOUR',
+            'recurrence' => MIDCOM_CRON_HOUR,
         ),
     ),
 ),
