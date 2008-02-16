@@ -12,7 +12,8 @@
         (
             'midcom_baseclasses_database_article',
         ),
-        'operations' => 'MIDCOM_OPERATION_DBA_WREATE',
+        'operations' => MIDCOM_OPERATION_DBA_UPDATE 
+                    | MIDCOM_OPERATION_DBA_CREATE,
     ),
 ),
 'package.xml' => array

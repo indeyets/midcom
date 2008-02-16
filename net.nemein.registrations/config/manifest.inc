@@ -4,7 +4,7 @@
 'state' => 'beta',
 'privileges' => array
 (
-    'manage' => 'MIDCOM_PRIVILEGE_DENY',
+    'manage' => MIDCOM_PRIVILEGE_DENY,
 ),
 'class_definitions' => array
 (

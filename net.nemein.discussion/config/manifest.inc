@@ -5,7 +5,7 @@
 'state' => 'beta',
 'privileges' => array
 (
-    'moderation' => 'MIDCOM_PRIVILEGE_DENY',
+    'moderation' => MIDCOM_PRIVILEGE_DENY,
 ),
 'class_definitions' => array
 (
@@ -19,7 +19,7 @@
         (
             'net_nemein_quickpoll_vote_dba',
         ),
-        'operations' => 'MIDCOM_OPERATION_DBA_CREATE',
+        'operations' => MIDCOM_OPERATION_DBA_CREATE,
     ),
 ),
 'package.xml' => array
@@ -68,12 +68,12 @@
         array
         (
             'handler' => 'net_nemein_discussion_cron_eraseunpopular',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
         array
         (
             'handler' => 'net_nemein_discussion_cron_popularity',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
     ),
 ),

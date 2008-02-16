@@ -32,7 +32,12 @@
         array
         (
             'handler' => 'midcom_services_at_cron_check',
-            'recurrence' => 'MIDCOM_CRON_MINUTE',
+            'recurrence' => MIDCOM_CRON_MINUTE,
+        ),
+        array
+        (
+            'handler' => 'midcom_services_at_cron_clean',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
     ),
 ),

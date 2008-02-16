@@ -16,7 +16,9 @@
             'midcom_baseclasses_database_topic',
             'midcom_baseclasses_database_article',
         ),
-        'operations' => 'MIDCOM_OPERATION_DBA_WWMETE',
+        'operations' => MIDCOM_OPERATION_DBA_CREATE 
+                    | MIDCOM_OPERATION_DBA_UPDATE 
+                    | MIDCOM_OPERATION_DBA_DELETE,
     ),
 ),
 'package.xml' => array

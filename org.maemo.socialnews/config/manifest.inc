@@ -15,7 +15,7 @@
         (
             'net_nemein_favourites_favourite',
         ),
-        'operations' => 'MIDCOM_OPERATION_DBA_CREATE',
+        'operations' => MIDCOM_OPERATION_DBA_CREATE,
     ),
 ),
 'package.xml' => array
@@ -46,12 +46,12 @@
         array
         (
             'handler' => 'org_maemo_socialnews_cron_refreshscores',
-            'recurrence' => 'MIDCOM_CRON_HOUR',
+            'recurrence' => MIDCOM_CRON_HOUR,
         ),
         array
         (
             'handler' => 'org_maemo_socialnews_cron_archive',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
     ),
 ),

@@ -33,6 +33,6 @@
         (
             'midcom_baseclasses_database_article',
         ),
-        'operations' => 'MIDCOM_OPERATION_DBA_ALL',
+        'operations' => MIDCOM_OPERATION_DBA_ALL,
     ),
 ),

@@ -47,7 +47,7 @@
         array
         (
             'handler' => 'net_nemein_tag_cron_clean',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
     ),
 ),

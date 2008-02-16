@@ -12,7 +12,7 @@
         (
             'midgard_person',
         ),
-        'operations' => 'MIDCOM_OPERATION_DBA_DELETE',
+        'operations' => MIDCOM_OPERATION_DBA_DELETE,
     ),
 ),
 'package.xml' => array

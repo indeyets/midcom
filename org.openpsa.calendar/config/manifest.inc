@@ -2,8 +2,8 @@
 'purecode' => false,
 'privileges' => array
 (
-    'read' => 'MIDCOM_PRIVILEGE_ALLOW',
-    'reserve' => 'MIDCOM_PRIVILEGE_ALLOW',
+    'read' => MIDCOM_PRIVILEGE_ALLOW,
+    'reserve' => MIDCOM_PRIVILEGE_ALLOW,
 ),
 'class_definitions' => array
 (
@@ -50,7 +50,7 @@
         array
         (
             'handler' => 'org_openpsa_calendar_cron_reporthours',
-            'recurrence' => 'MIDCOM_CRON_HOUR',
+            'recurrence' => MIDCOM_CRON_HOUR,
         ),
     ),
 ),

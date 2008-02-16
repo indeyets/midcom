@@ -5,7 +5,7 @@
 'state' => 'beta',
 'privileges' => array
 (
-    'access' => 'MIDCOM_PRIVILEGE_DENY',
+    'access' => MIDCOM_PRIVILEGE_DENY,
 ),
 'class_definitions' => array(),
 'package.xml' => array

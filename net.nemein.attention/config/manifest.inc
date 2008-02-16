@@ -54,17 +54,17 @@
         array
         (
             'handler' => 'net_nemein_attention_cron_fetchdelicious',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
         array
         (
             'handler' => 'net_nemein_attention_cron_fetchfavourites',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
         array
         (
             'handler' => 'net_nemein_attention_cron_fetchlastfm',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
     ),
 ),

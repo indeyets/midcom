@@ -37,7 +37,7 @@
         array
         (
             'handler' => 'net_nemein_rss_cron_fetchfeeds',
-            'recurrence' => 'MIDCOM_CRON_HOUR',
+            'recurrence' => MIDCOM_CRON_HOUR,
         ),
     ),
 ),

@@ -36,12 +36,12 @@
 ),
 'privileges' => array
 (
-    'ignore_quota' => 'MIDCOM_PRIVILEGE_DENY',
-    'browse_other_mailboxes' => 'MIDCOM_PRIVILEGE_DENY',
+    'ignore_quota' => MIDCOM_PRIVILEGE_DENY,
+    'browse_other_mailboxes' => MIDCOM_PRIVILEGE_DENY,
     'list_mails' => array
     (
-        'MIDCOM_PRIVILEGE_DENY',
-        'MIDCOM_PRIVILEGE_ALLOW',
+        MIDCOM_PRIVILEGE_DENY,
+        MIDCOM_PRIVILEGE_ALLOW,
     ),
 ),
 'watches' => array
@@ -52,7 +52,7 @@
         (
             'midgard_person',
         ),
-        'operations' => 'MIDCOM_OPERATION_DBA_DELETE',
+        'operations' => MIDCOM_OPERATION_DBA_DELETE,
     ),
 ),
 'customdata' => array

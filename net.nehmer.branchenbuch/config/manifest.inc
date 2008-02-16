@@ -6,8 +6,8 @@
 ),
 'privileges' => array
 (
-    'manage_categories' => 'MIDCOM_PRIVILEGE_DENY',
-    'view_entries' => 'MIDCOM_PRIVILEGE_DENY',
+    'manage_categories' => MIDCOM_PRIVILEGE_DENY,
+    'view_entries' => MIDCOM_PRIVILEGE_DENY,
 ),
 'watches' => array
 (
@@ -17,7 +17,7 @@
         (
             'midgard_person',
         ),
-        'operations' => 'MIDCOM_OPERATION_DBA_DELETE',
+        'operations' => MIDCOM_OPERATION_DBA_DELETE,
     ),
 ),
 'state' => 'beta',

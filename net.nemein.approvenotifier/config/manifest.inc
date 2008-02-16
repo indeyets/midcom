@@ -28,7 +28,7 @@
         array
         (
             'handler' => 'net_nemein_approvenotifier_cron_checkexpiries',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
     ),
 ),

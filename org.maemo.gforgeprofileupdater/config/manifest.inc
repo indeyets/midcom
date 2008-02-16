@@ -35,6 +35,6 @@
             'midcom_baseclasses_database_person',
             'midcom_org_openpsa_person',
         ),
-        'operations' => 'MIDCOM_OPERATION_DBA_ALL',
+        'operations' => MIDCOM_OPERATION_DBA_ALL,
     ),
 ),

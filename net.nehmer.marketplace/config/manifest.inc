@@ -12,7 +12,7 @@
         (
             'midgard_person',
         ),
-        'operations' => 'MIDCOM_OPERATION_DBA_DELETE',
+        'operations' => MIDCOM_OPERATION_DBA_DELETE,
     ),
 ),
 'customdata' => array
@@ -22,7 +22,7 @@
         array
         (
             'handler' => 'net_nehmer_marketplace_cron_cleanup',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
     ),
 ),

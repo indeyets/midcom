@@ -47,12 +47,12 @@
         array
         (
             'handler' => 'org_openpsa_contacts_cron_duplicates_mark',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
         array
         (
             'handler' => 'org_openpsa_contacts_cron_duplicates_clean',
-            'recurrence' => 'MIDCOM_CRON_DAY',
+            'recurrence' => MIDCOM_CRON_DAY,
         ),
     ),
 ),

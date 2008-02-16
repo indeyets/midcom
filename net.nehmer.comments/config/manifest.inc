@@ -8,8 +8,8 @@
 (
     array
     (
-        'classes' => '',
-        'operations' => 'MIDCOM_OPERATION_DBA_DELETE',
+        'classes' => array(),
+        'operations' => MIDCOM_OPERATION_DBA_DELETE,
     ),
 ),
 'package.xml' => array

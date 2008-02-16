@@ -5,8 +5,8 @@
 'state' => 'beta',
 'privileges' => array
 (
-    'topic_management' => 'MIDCOM_PRIVILEGE_DENY',
-    'template_management' => 'MIDCOM_PRIVILEGE_DENY',
+    'topic_management' => MIDCOM_PRIVILEGE_DENY,
+    'template_management' => MIDCOM_PRIVILEGE_DENY,
 ),
 'package.xml' => array
 (
