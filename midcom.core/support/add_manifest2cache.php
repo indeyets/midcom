@@ -77,13 +77,13 @@ if (file_exists($filename))
 {
     echo "Injecting component {$component} into manifests cache\n\n";
 
-    $manifest_data = file_get_contents($filename);
-    if (strstr($cache_code,$component))
+    if (strstr($cache_code,$filename))
     {
         echo "Component {$component} already in manifests cache\n\n";
         exit;
     }
 
+    $manifest_data = file_get_contents($filename);
     $cache_code .= "\n\$_MIDCOM->componentloader->load_manifest(
                     new midcom_core_manifest(    
                     '{$filename}', array({$manifest_data})));\n";
