@@ -104,7 +104,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "reply/{$post->guid}.html",
+                MIDCOM_TOOLBAR_URL => "reply/{$post->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('reply'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-reply.png',
@@ -123,7 +123,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('report abuse'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_help-agent.png',
@@ -142,7 +142,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm abuse'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -158,7 +158,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm junk'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -174,7 +174,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('not abuse'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',

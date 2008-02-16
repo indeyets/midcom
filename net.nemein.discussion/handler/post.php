@@ -225,7 +225,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "reply/{$post->guid}.html",
+                MIDCOM_TOOLBAR_URL => "reply/{$post->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('reply'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-reply.png',
@@ -245,7 +245,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('report abuse'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_help-agent.png',
@@ -264,7 +264,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm abuse'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -280,7 +280,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm junk'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -296,7 +296,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('not abuse'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
@@ -365,7 +365,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                     $_MIDCOM->auth->drop_sudo();
                 }
 
-                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "read/{$this->_post->guid}.html");
+                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "read/{$this->_post->guid}/");
                 // This will exit.
 
             case 'cancel':
@@ -382,7 +382,16 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         }
 
         $this->_prepare_request_data();
+
+        // Set metadata
         $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('post to') . " {$this->_topic->extra}");
+        $breadcrumb = Array();
+        $breadcrumb[] = Array
+        (
+            MIDCOM_NAV_URL => 'post/',
+            MIDCOM_NAV_NAME => $this->_request_data['l10n']->get('post to') . " {$this->_topic->extra}",
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
 
         $this->_view_toolbar->add_item(
             array
@@ -560,8 +569,21 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 $this->_post_tree['root']['children'] = $this->_list_post_childs($post_id);
                 $this->_post_tree['root']['children_count'] = count($this->_post_tree['root']['children']);
             }
+            $_MIDCOM->set_pagetitle($this->_parent_post->subject);
+        }
+        else
+        {
+            $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('reply to') . " {$this->_parent_post->subject}");
         }
 
+        // Set metadata
+        $breadcrumb = Array();
+        $breadcrumb[] = Array
+        (
+            MIDCOM_NAV_URL => 'reply/' . $this->_parent_post->guid,
+            MIDCOM_NAV_NAME => $this->_parent_post->subject,
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
 
         $this->_load_controller();
 
@@ -590,12 +612,11 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 // *** FALL THROUGH ***
 
             case 'cancel':
-                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "read/{$this->_parent_post->guid}.html");
+                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "read/{$this->_parent_post->guid}/");
                 // This will exit.
         }
 
         $this->_prepare_request_data();
-        $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('reply to') . " {$this->_parent_post->subject}");
 
         return true;
     }

@@ -204,6 +204,16 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "No discussion threads with tag '{$data['tag']}' found.");
             // This will exit
         }
+        
+        // Set metadata
+        $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('tag %s'), $data['tag']));
+        $breadcrumb = Array();
+        $breadcrumb[] = Array
+        (
+            MIDCOM_NAV_URL => "tag/{$data['tag']}/",
+            MIDCOM_NAV_NAME => sprintf($this->_request_data['l10n']->get('tag %s'), $data['tag']),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
 
         return true;
     }
@@ -319,6 +329,16 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
         
         // Load the tags
         $data['tags'] = net_nemein_tag_handler::get_tags_by_class('net_nemein_discussion_thread_dba');
+
+        // Set metadata
+        $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('tags'));
+        $breadcrumb = Array();
+        $breadcrumb[] = Array
+        (
+            MIDCOM_NAV_URL => 'tags/',
+            MIDCOM_NAV_NAME => $this->_request_data['l10n']->get('tags'),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
 
         return true;
     }
