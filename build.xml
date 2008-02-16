@@ -166,13 +166,14 @@
             </then>
         </if>
 
-
+        <!-- DO NOT ENABLE: fscks up DM2 etc
         <packJavascripts
             action="pack"
             path="${module}"
             target_dir="${target_dir}"
             returnProperty="statistics"
             />
+        -->
         <packageMidCOM
             path="${project.basedir}"
             package="${module}"
@@ -182,6 +183,7 @@
             returnProperty="pear_name"
         >
         </packageMidCOM>
+        <!-- DO NOT ENABLE: fscks up DM2 etc
         <packJavascripts
             action="unpack"
             path="${module}"
@@ -189,6 +191,7 @@
             returnProperty="statistics"
         >
         </packJavascripts>
+        -->
         <echo>Package ${pear_name} created in ${target_dir}</echo>
     </target>
     <target name="package-all">
