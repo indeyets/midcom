@@ -274,7 +274,7 @@ class midcom_helper_configuration
      * below).
      *
      * @param mixed    $key    The configuration key to query.
-     * @return mixed        Its value of FALSE, if the key doesn't exist.
+     * @return mixed        Its value or FALSE, if the key doesn't exist.
      * @see midcom_helper_configuration::exists()
      */
     function get($key)
