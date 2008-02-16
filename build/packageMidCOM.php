@@ -191,7 +191,7 @@ class packageMidCOM extends Task
 
     /**
      * Generate the filelist
-     *�@param array $config File listing configuration
+     * @param array $config File listing configuration
      * @return string File XML list
      */
     function directory_list_contents($config, $directory_name_override = null)
@@ -533,7 +533,7 @@ class packageMidCOM extends Task
                     }
                     else
                     {
-                        $data .= "'{$val}'";
+                        $data .= "'" . str_replace("'", "\\'", $val) . "'";
                     }
             }
             
