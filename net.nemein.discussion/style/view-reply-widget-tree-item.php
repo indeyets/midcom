@@ -15,7 +15,7 @@ else
 {
     $sender_str = '<a href="' . $view['senderurl'] . '" target="_blank">' . $view['sendername'] . '</a>';
 }
-$post_created = strftime('%x %X', $view['created']);
+$post_created = "<abbr class=\"dtcommented\" title=\"".gmdate('Y-m-d\TH:i:s\Z', $view['created']). "\">".strftime('%x %X', $view['created'])."</abbr>\n";
 ?>
 <li>
     <div class="times">&(post_created:h);</div>

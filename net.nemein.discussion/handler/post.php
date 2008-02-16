@@ -216,6 +216,102 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
 
         return $this->_post;
     }
+    
+    function _populate_post_toolbar($post)
+    {
+        $toolbar = new midcom_helper_toolbar();
+
+/*        $toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "reply/{$post->guid}.html",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('reply'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-reply.png',
+                MIDCOM_TOOLBAR_ENABLED => $this->_request_data['thread']->can_do('midgard:create'),
+            )
+        );
+        */
+
+        if (   $post->can_do('midgard:update')
+            && $_MIDCOM->auth->user
+            && $post->status < NET_NEMEIN_DISCUSSION_MODERATED)
+        {
+            if (!$post->can_do('net.nemein.discussion:moderation'))
+            {
+                // Regular users can only report abuse
+                $toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('report abuse'),
+                        MIDCOM_TOOLBAR_HELPTEXT => null,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_help-agent.png',
+                        MIDCOM_TOOLBAR_ENABLED =>  $post->can_do('midgard:update'),
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                        (
+                            'mark' => 'abuse',
+                        )
+                    )
+                );
+            }
+            else
+            {
+                $toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm abuse'),
+                        MIDCOM_TOOLBAR_HELPTEXT => null,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                        MIDCOM_TOOLBAR_ENABLED => $post->can_do('net.nemein.discussion:moderation'),
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                        (
+                            'mark' => 'confirm_abuse',
+                        )
+                    )
+                );
+                $toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm junk'),
+                        MIDCOM_TOOLBAR_HELPTEXT => null,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                        MIDCOM_TOOLBAR_ENABLED => $post->can_do('net.nemein.discussion:moderation'),
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                        (
+                            'mark' => 'confirm_junk',
+                        )
+                    )
+                );
+                $toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('not abuse'),
+                        MIDCOM_TOOLBAR_HELPTEXT => null,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
+                        MIDCOM_TOOLBAR_ENABLED => $post->can_do('net.nemein.discussion:moderation'),
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                        (
+                            'mark' => 'not_abuse',
+                        )
+                    )
+                );
+            }
+        }
+        return $toolbar;
+    }
 
     /**
      * Handle thread creation
@@ -546,6 +642,9 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
 
         if ( $this->_config->get('display_thread_mode') == 'tree' )
         {
+        
+            $data['post_toolbar'] = $this->_populate_post_toolbar($data['parent_post']);
+
             $node_for_person_link = midcom_helper_find_node_by_component('net.nehmer.account');
             $this->_request_data['person_link_prefix'] = '';
             if ($node_for_person_link)
