@@ -6,10 +6,10 @@ $dm = $data['datamanager'];
 $spotid = $dm->types['spotid']->value;
 $key = $dm->types['key']->value;
 
-//print_r($data['config']);
-
-$wg = new WindguruFcst($spotid,$key,$lang='',$data['config']);
+$wg = new WindguruFcst($spotid,$key,$data['config']->get('lang'),$data['config']);
 $forecast = $wg->show();
+
+
 ?>
 
 <h1>&(view['title']:h);</h1>

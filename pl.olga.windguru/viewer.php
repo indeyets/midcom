@@ -57,7 +57,6 @@ class pl_olga_windguru_viewer extends midcom_baseclasses_components_request
         );
 
 
-        // Handle /latest/<user>/<n>
         $this->_request_switch['view'] = array
         (
             'handler' => array('pl_olga_windguru_handler_view', 'view'),

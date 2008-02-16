@@ -23,32 +23,6 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
     }
 
     /**
-     * Resolve username or person GUID to a midcom_db_person object
-     *
-     * @param string $username Username or GUID
-     * @return midcom_db_person Matching person or null
-     */
-    function _resolve_user($username)
-    {
-        $qb = midcom_db_person::new_query_builder();
-        $qb->add_constraint('username', '=', $username);
-        $users = $qb->execute();
-        if (count($users) > 0)
-        {
-            return $users[0];
-        }
-
-        if (mgd_is_guid($username))
-        {
-            // Try resolving as GUID as well
-            $user = new midcom_db_person($username);
-            return $user;
-        }
-
-        return null;
-    }
-
-    /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
      */
@@ -97,7 +71,6 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
 
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb']);
         $this->_request_data['datamanager'] =& $this->_datamanager;
-
 
 
         $data['page_title'] = $this->_topic->extra;

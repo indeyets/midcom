@@ -11,9 +11,9 @@
  */
 class pl_olga_windguru_status_dba extends __pl_olga_windguru_status_dba
 {
-    function __construct($id = null)
+    function pl_olga_windguru_status_dba($id = null)
     {
-        return parent::__construct($id);
+        return parent::__pl_olga_windguru_status_dba($id);
     }
 
 
@@ -22,15 +22,15 @@ class pl_olga_windguru_status_dba extends __pl_olga_windguru_status_dba
      */
     function get_label()
     {
-        switch ($this->status)
-        {
-            case WG_STATUS_GFS:
-                return "Model GFS";
-            case WG_STATUS_NWW3:
-                return "Model NWW3";
-            default:
-                return "Internal";
-        }
+		switch ($this->status)
+		{
+			case WG_STATUS_GFS:
+				return "Model GFS";
+			case WG_STATUS_NWW3:
+				return "Model NWW3";
+			default:
+				return $this->status;
+		}
     }
 }
 
@@ -39,9 +39,9 @@ class pl_olga_windguru_status_dba extends __pl_olga_windguru_status_dba
  */
 class pl_olga_windguru_cache_dba extends __pl_olga_windguru_cache_dba
 {
-    function __construct($id = null)
+    function pl_olga_windguru_cache_dba($id = null)
     {
-        return parent::__construct($id);
+        return parent::__pl_olga_windguru_cache_dba($id);
     }
 
 
