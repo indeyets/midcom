@@ -34,6 +34,12 @@
             'email' => 'henri.bergius@iki.fi',
             'role' => 'lead',
         ),
+        'netblade' => array
+        (
+            'name' => 'Oskari Kokko',
+            'email' => 'oskari.kokko@iki.fi',
+            'role' => 'developper',
+        ),
     ),
     'dependencies' => array
     (

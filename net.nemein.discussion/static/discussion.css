@@ -13,6 +13,7 @@ div.net_nemein_discussion_index div.thread div.posts, div.net_nemein_discussion_
   margin-left: 32px;
   margin-top: 2px;
 }
+
 div.net_nemein_discussion_thread div.comment {
   border-top: 1px dotted #999;
   padding-top: 12px;
@@ -34,6 +35,7 @@ div.net_nemein_discussion_thread div.writecomment, div.net_nemein_discussion_new
   background-color: #e0e0e0;
   -moz-border-radius: 7px;
 }
+
 div.net_nemein_discussion_thread div.writecomment h2 {
   margin-top: 0px;
   padding-top: 0px;
@@ -59,6 +61,7 @@ div.net_nemein_discussion_thread ol li
 {
     list-style: none;
 }
+
 li.mfcomment ul.midcom_toolbar
 {
     margin: 0px;
@@ -66,6 +69,7 @@ li.mfcomment ul.midcom_toolbar
     margin-top: 6px;
     margin-bottom: 6px;
 }
+
 li.mfcomment ul.midcom_toolbar li, div.net_nemein_discussion_thread div.thread_toolbar li {
   display: inline;
   list-style: none;
@@ -73,14 +77,17 @@ li.mfcomment ul.midcom_toolbar li, div.net_nemein_discussion_thread div.thread_t
   margin: 3px 0;
   white-space: nowrap !important;
 }
+
 li.mfcomment ul.midcom_toolbar li a, li.mfcomment ul.midcom_toolbar li a 
 {
     text-decoration: none;
     color: #000000;
 }
+
 li.mfcomment ul.midcom_toolbar li img, li.mfcomment ul.midcom_toolbar li img {
   border: 0px;
 }
+
 li.mfcomment ul.midcom_toolbar li form, li.mfcomment ul.midcom_toolbar li button 
 {
     display: inline;
@@ -89,10 +96,12 @@ li.mfcomment ul.midcom_toolbar li form, li.mfcomment ul.midcom_toolbar li button
     cursor: pointer;
     color: #000000;
 }
+
 li.mfcomment abbr.dtcommented
 {
     border: none;
 }
+
 li.mfcomment div.description
 {
     padding-left: 10px;
@@ -145,6 +154,7 @@ div.net_nemein_discussion_tags ul.cloud
     padding: 0px;
     text-align: center;
 }
+
 div.net_nemein_discussion_tags ul.cloud li
 {
     list-style: none;
@@ -153,8 +163,36 @@ div.net_nemein_discussion_tags ul.cloud li
     font-size: smaller;
     white-space: nowrap;
 }
+
 div.net_nemein_discussion_tags ul.cloud li em
 {
     font-size: larger;
     font-style: normal;
+}
+
+div.net_nemein_discussion_treeview
+{
+
+}
+
+div.net_nemein_discussion_treeview li
+{
+    padding-bottom: 3px;
+}
+
+div.net_nemein_discussion_treeview div.sender
+{
+    float: right;
+}
+
+div.net_nemein_discussion_treeview div.sender
+{
+    float: right;
+    padding: 0 5px 0 5px;
+}
+
+
+div.net_nemein_discussion_treeview div.times
+{
+    float: right;
 }

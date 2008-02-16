@@ -82,6 +82,8 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         $this->_request_data['parent_post'] =& $this->_parent_post;
         $this->_request_data['schema'] =& $this->_schema;
         $this->_request_data['schemadb'] =& $this->_schemadb;
+        $this->_request_data['post_tree'] =& $this->_post_tree;
+        $this->_request_data['post_for_tree'] = array();
     }
 
 
@@ -313,6 +315,53 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
     }
 
     /**
+     * Lists post childs
+     *
+     * @param string $post_id The ID of the parentpost.
+     * @return array $returnvalues.
+     */
+    function _list_post_childs($post_id)
+    {
+        $post_tree = array();
+
+        $mc = net_nemein_discussion_post_dba::new_collector('thread', (int) $this->_thread->id);
+        foreach($this->_tree_view_keys as $key)
+        {
+            $mc->add_value_property($key);
+        }
+        $mc->add_constraint('replyto', '=', $post_id);
+        $mc->add_order('id');
+        $keys = $mc->list_keys();
+        foreach ( $keys as $guid => $array )
+        {
+            $post_id = $mc->get_subkey($guid, 'id');
+            foreach( $this->_tree_view_keys as $key )
+            {
+                $post_tree[$post_id][$key] = $mc->get_subkey($guid, $key);
+            }
+            
+            if(!$this->_post_tree_current_passed)
+            {
+                $this->_post_tree['root']['previous'] = $post_tree[$post_id]['guid'];
+            }
+            elseif($this->_post_tree['root']['next'] == '')
+            {
+                $this->_post_tree['root']['next'] = $post_tree[$post_id]['guid'];
+            }
+            
+            if( $this->_parent_post->id == $post_id )
+            {
+                $this->_post_tree_current_passed = true;
+            }
+            
+
+            $post_tree[$post_id]['children'] = $this->_list_post_childs($post_id);
+            $post_tree[$post_id]['children_count'] = count($post_tree[$post_id]['children']);
+        }
+        return $post_tree;
+    }
+
+    /**
      * Handle replies to threads
      *
      * @param mixed $handler_id The ID of the handler.
@@ -373,6 +422,51 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
             $this->_defaults['content'] = $quote;
         }
 
+        if ( $this->_config->get('display_thread_mode') == 'tree' )
+        {
+            $this->_post_tree = array();
+            $this->_post_tree_current_passed = false;
+            $this->_tree_view_keys = explode(',', $this->_config->get('display_tree_keys'));
+            if(!in_array('id',$this->_tree_view_keys))
+            {
+                $this->_tree_view_keys[] = 'id';
+            }
+            if(!in_array('guid',$this->_tree_view_keys))
+            {
+                $this->_tree_view_keys[] = 'guid';
+            }
+            
+            $mc = net_nemein_discussion_post_dba::new_collector('thread', (int) $this->_thread->id);
+            foreach($this->_tree_view_keys as $key)
+            {
+                $mc->add_value_property($key);
+            }
+            $mc->add_constraint('replyto', '=', 0);
+
+            $childrens = $mc->list_keys();
+
+            foreach ( $childrens as $guid => $array )
+            {
+                $post_id = $mc->get_subkey($guid, 'id');
+
+                foreach( $this->_tree_view_keys as $key )
+                {
+                    $this->_post_tree['root'][$key] = $mc->get_subkey($guid, $key);
+                }
+                
+                if( $this->_parent_post->id == $post_id )
+                {
+                    $this->_post_tree['root']['previous'] = '';
+                }
+                $this->_post_tree['root']['previous'] = $this->_post_tree['root']['guid'];
+                $this->_post_tree['root']['next'] = '';
+                
+                $this->_post_tree['root']['children'] = $this->_list_post_childs($post_id);
+                $this->_post_tree['root']['children_count'] = count($this->_post_tree['root']['children']);
+            }
+        }
+
+
         $this->_load_controller();
 
         switch ($this->_controller->process_form())
@@ -410,6 +504,26 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         return true;
     }
 
+    function _show_tree_item($post_tree, $level, $previous_childs = array(), $person_link_prefix)
+    {
+        $this->_request_data['tree_level'] = $level;
+        $this->_request_data['tree_previous_childs'] = $previous_childs;
+        $this->_request_data['tree_previous_childs'][$this->_request_data['tree_level']] = count($post_tree['children']);
+        $this->_request_data['person_link_prefix'] = $person_link_prefix;
+        foreach ( $post_tree['children'] as $this->_request_data['post_for_tree'] )
+        {
+            midcom_show_style('view-reply-widget-tree-item');
+            if( count($this->_request_data['post_for_tree']['children'])> 0 )
+            {
+                $this->_request_data['tree_level']++;
+                midcom_show_style('view-reply-widget-tree-enter-level');
+                $this->_show_tree_item( $this->_request_data['post_for_tree'], $this->_request_data['tree_level'], $this->_request_data['tree_previous_childs'], $this->_request_data['person_link_prefix']);
+                midcom_show_style('view-reply-widget-tree-exit-level');
+                $this->_request_data['tree_level']--;
+            }
+        }
+    }
+
     /**
      * Show reply form
      *
@@ -430,7 +544,46 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         }
         $data['view_parent_post'] = $data['datamanager']->get_content_html();
 
-        midcom_show_style('reply-widget');
+        if ( $this->_config->get('display_thread_mode') == 'tree' )
+        {
+            $node_for_person_link = midcom_helper_find_node_by_component('net.nehmer.account');
+            $this->_request_data['person_link_prefix'] = '';
+            if ($node_for_person_link)
+            {
+                $this->_request_data['person_link_prefix'] = "{$node_for_person_link[MIDCOM_NAV_FULLURL]}view/";
+            }
+            
+
+            $tree_position = $this->_config->get('display_tree_position');
+            
+            $this->_request_data['tree_level'] = 0;
+            midcom_show_style('view-reply-widget-header');
+            if( $tree_position == 'bottom' )
+            {
+                midcom_show_style('view-reply-widget-message');
+            }
+            midcom_show_style('view-reply-widget-tree-header');
+            midcom_show_style('view-reply-widget-tree-item-root');
+            if( count($data['post_tree']['root']['children'])> 0 )
+            {
+                $this->_request_data['tree_level']++;
+                midcom_show_style('view-reply-widget-tree-enter-level');
+                $tree_previous_childs = array( 0 => 1 );
+                $this->_show_tree_item($data['post_tree']['root'], $this->_request_data['tree_level'], $tree_previous_childs, $this->_request_data['person_link_prefix']);
+                midcom_show_style('view-reply-widget-tree-exit-level');
+                $this->_request_data['tree_level']--;
+            }
+            midcom_show_style('view-reply-widget-tree-footer');
+            midcom_show_style('view-reply-widget-footer');
+            if( $tree_position != 'bottom' )
+            {
+                midcom_show_style('view-reply-widget-message');
+            }
+        }
+        else
+        {
+            midcom_show_style('reply-widget');
+        }
     }
 
     /**

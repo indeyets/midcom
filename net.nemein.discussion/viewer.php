@@ -19,6 +19,15 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
     {
         parent::midcom_baseclasses_components_request($topic, $config);
 
+        // Match /config/
+        $this->_request_switch['config'] = Array
+        (
+            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
+            'schemadb' => 'file:/net/nemein/discussion/config/schemadb_config.inc',
+            'schema' => 'config',
+            'fixed_args' => Array('config'),
+        );
+
         // Match /
         $this->_request_switch['index'] = array(
             'handler' => Array('net_nemein_discussion_handler_index', 'index'),
@@ -125,15 +134,6 @@ class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('net_nemein_discussion_handler_api_email', 'import'),
             'fixed_args' => Array('api', 'email'),
-        );
-
-        // Match /config/
-        $this->_request_switch['config'] = Array
-        (
-            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
-            'schemadb' => 'file:/net/nemein/discussion/config/schemadb_config.inc',
-            'schema' => 'config',
-            'fixed_args' => Array('config'),
         );
     }
 
