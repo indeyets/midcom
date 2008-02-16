@@ -27,8 +27,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <email>henri.bergius@iki.fi</email>
         <active>yes</active>
     </developer>
-    <date>2007-04-25</date>
-    <time>15:10:53</time>
+    <date>2008-02-16</date>
+    <time>17:10:53</time>
     <version>
         <release>2.9.0alpha1</release>
         <api>3.0.0</api>
@@ -55,10 +55,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
             </pearinstaller>
             <package>
                 <name>Date</name>
-                <channel>pear.php.net</channel>
-            </package>
-            <package>
-                <name>PHP_Compat</name>
                 <channel>pear.php.net</channel>
             </package>
             <package>
@@ -124,7 +120,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
             </package>      
             <extension>
                 <name>midgard</name>
-                <min>1.8.3</min>
+                <min>1.9.0</min>
             </extension>
         </required>
     </dependencies>
