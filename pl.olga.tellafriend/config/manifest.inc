@@ -6,7 +6,7 @@
 'package.xml' => array
 (
     'summary' => 'Tell a friend',
-    'description' => 'A library for 'notify a friend' feature.',
+    'description' => 'A library for \'notify a friend\' feature.',
     'maintainers' => array
     (
         'solt' => array
