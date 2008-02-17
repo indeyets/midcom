@@ -32,7 +32,7 @@ else
             echo $data['l10n']->get('no customer');
         }
         ?></td>
-    <td><?php echo $data['owner_widget']->show_inline(); ?>
+    <td><?php echo $data['owner_widget']->show_inline(); ?></td>
     <td><?php
         if ($data['salesproject_dmdata']['close_est']['timestamp'])
         {
