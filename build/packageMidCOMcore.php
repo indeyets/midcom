@@ -116,7 +116,7 @@ class packageMidCOMcore extends Task
             'dir_roles' => array(), 
             'simpleoutput' => true,
                         'ignore' => array('package-template.xml'),
-                        'include' => array('*.php', 'midcom*', 'support*'),
+                        'include' => array('*.php', '*.inc', '*.txt', 'midcom*', 'support*'),
             );
           
         $package = $this->makeBase($baseOptions);
