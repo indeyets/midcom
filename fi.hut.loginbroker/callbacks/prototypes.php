@@ -46,9 +46,9 @@ class fi_hut_loginbroker_callbacks_prototype_base extends midcom_baseclasses_com
     }
 
     /**
-     * Helper to generate random string of printable characters of given lenght
+     * Helper to generate random string of printable characters of given length
      *
-     * @param int $lenght how many characters?
+     * @param int $length how many characters?
      * @return string of random garbage
      */
     function generate_password($length=10)

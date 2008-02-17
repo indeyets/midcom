@@ -1,7 +1,7 @@
 'name' => 'midcom.admin.styleeditor',
 'description' => 'Style editor for Midgard style templates',
 'purecode' => true,
-'version' => '0.3.0beta1',
+'version' => '0.3.0',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array
@@ -24,18 +24,18 @@
     ),
     'dependencies' => array
     (
-        'midcom.admin.help',
+        'midcom.admin.help' => array(),
         'midcom' => array(),
     ),
 ),
-'state' => 'beta',
+'state' => 'stable',
 'customdata' => array
 (
     'asgard_plugin' => array
     (
         'class' => 'midcom_admin_styleeditor_viewer',
         'src' => 'file:/midcom/admin/styleeditor/viewer.php',
-        'name' => 'midcom.admin.styleeditor',
+        'name' => 'Style Editor',
         'config' => '',
     ),
 ),

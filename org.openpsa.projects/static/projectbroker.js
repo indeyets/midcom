@@ -98,7 +98,7 @@ project_prospects_renderer.prototype = {
     ajax_checkerror: function(request)
     {
         statuses = request.responseXML.getElementsByTagName('status');
-        if (   statuses.lenght < 1
+        if (   statuses.length < 1
             || !statuses[0])
         {
             new protoGrowl({type: 'error', title: 'Project prospects', message: 'Status tag not found'})
@@ -108,7 +108,7 @@ project_prospects_renderer.prototype = {
         status_value = statuses[0].firstChild.data
         message_str = '';
 
-        if (   messages.lenght > 0
+        if (   messages.length > 0
             && messages[0]
             && messages[0].firstChild)
         {

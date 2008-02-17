@@ -260,7 +260,7 @@
         ),
         'from' => array
         (
-            'title'    => 'from text/number (text max lenght 11 characters, no special characters)',
+            'title'    => 'from text/number (text max length 11 characters, no special characters)',
             'type'     => 'text',
             'widget'   => 'text',
             'storage'  => 'parameter',

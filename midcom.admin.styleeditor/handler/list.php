@@ -102,7 +102,7 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
      * @access private
      * @param string $handler_id Name of the used handler
      * @param mixed $args Array containing the variable arguments passed to the handler
-     * @param mixed &$data Data passed to the show method
+     * @param mixed $data Data passed to the show method
      * @return boolean Indicating successful request
      */
     function _handler_list($handler_id, $args, &$data)
@@ -133,25 +133,6 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
             )
         );
 
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/gohome.png',
-            )
-        );
-
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."midcom-logout-",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout','midcom'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
-            )
-        );
 
         // Set the variables
         $this->_component = $this->_topic->component;
@@ -204,7 +185,7 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
      * 
      * @access private
      * @param string $handler_id Name of the used handler
-     * @param mixed &$data Data passed to the show method
+     * @param mixed $data Data passed to the show method
      */
     function _show_list($handler_id, &$data)
     {

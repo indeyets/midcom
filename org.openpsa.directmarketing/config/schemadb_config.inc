@@ -67,7 +67,7 @@
                 'end_fieldgroup' => 2,
             ),
             'token_size' => array(
-                'description'   => 'recipient token lenght',
+                'description'   => 'recipient token length',
                 'datatype'      => 'number',
                 'default'       => 15,
                 'location'      => 'config',

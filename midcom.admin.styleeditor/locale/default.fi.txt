@@ -19,24 +19,8 @@ CSS-tyylitiedosto
 Komponentin vakiotyyli
 ---STRINGEND
 
----STRING confirm delete of file %s
-Vahvista tiedoston '%s' poisto
----STRINGEND
-
 ---STRING copy to editor
 Kopioi editoriin
----STRINGEND
-
----STRING create a new element
-Luo uusi elementti
----STRINGEND
-
----STRING delete cancelled
-Poisto peruutettu
----STRINGEND
-
----STRING delete file %s
-Poista tiedosto '%s'
 ---STRINGEND
 
 ---STRING edit element %s
@@ -53,26 +37,6 @@ Muokkaa ulkoasupohjaa
 
 ---STRING edit text file
 Muokkaa tekstitiedostoa
----STRINGEND
-
----STRING element %s exists
-Elementti '%s' on olemassa
----STRINGEND
-
----STRING element from file
-Tuo elementti tiedostosta
----STRINGEND
-
----STRING element name
-Elementin nimi
----STRINGEND
-
----STRING element name required
-Elementin nimi on pakollinen
----STRINGEND
-
----STRING file %s deleted
-Tiedosto '%s' poistettu
 ---STRINGEND
 
 ---STRING file contents
@@ -119,14 +83,6 @@ Tyylin liitetiedostot
 Ulkoasueditori
 ---STRINGEND
 
----STRING style element %s created
-Tyylielementti %s luotu
----STRINGEND
-
----STRING style element %s updated
-Tyylielementti %s päivitetty
----STRINGEND
-
 ---STRING style element list
 Tyylielementtilista
 ---STRINGEND
@@ -147,11 +103,47 @@ URL-osoite
 XML
 ---STRINGEND
 
----STRING create new element
+---STRING confirm delete of file %s
+Vahvista tiedoston '%s' poisto
+---STRINGEND
+
+---STRING create a new element
 Luo uusi elementti
 ---STRINGEND
 
----STRING new layout template
-Uusi ulkoasupohja
+---STRING delete cancelled
+Poisto peruutettu
+---STRINGEND
+
+---STRING delete file %s
+Poista tiedosto '%s'
+---STRINGEND
+
+---STRING element %s exists
+Elementti '%s' on olemassa
+---STRINGEND
+
+---STRING element from file
+Tuo elementti tiedostosta
+---STRINGEND
+
+---STRING element name
+Elementin nimi
+---STRINGEND
+
+---STRING element name required
+Elementin nimi on pakollinen
+---STRINGEND
+
+---STRING file %s deleted
+Tiedosto '%s' poistettu
+---STRINGEND
+
+---STRING style element %s created
+Tyylielementti %s luotu
+---STRINGEND
+
+---STRING style element %s updated
+Tyylielementti %s päivitetty
 ---STRINGEND
 

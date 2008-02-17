@@ -528,7 +528,7 @@ function ooAjaxTableFormHandler(viewId, fieldPrefix)
     {
         items = resultList.getElementsByTagName(this.ajaxResultElement);
 
-        if (items.lenght == 0)
+        if (items.length == 0)
         {
             //No results, do something
             return false;

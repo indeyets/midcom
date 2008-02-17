@@ -34,7 +34,7 @@ ALTER TABLE person ADD COLUMN orgOpenpsaAccesstype int(11) NOT NULL default 0;
 
 
 #These will be implemented in Midgard core/data as well in the near future
-#Increase username lenght
+#Increase username length
 alter table person modify username varchar(255) NOT NULL default '';
 #Increase parameter value size (not needed anymore)
 #alter table record_extension modify value text NOT NULL default '';

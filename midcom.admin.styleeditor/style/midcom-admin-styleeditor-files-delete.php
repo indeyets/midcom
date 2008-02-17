@@ -1,4 +1,4 @@
-<h1><?php echo sprintf($_MIDCOM->i18n->get_string('delete file %s', 'midcom.admin.styleeditor'), $data['filename']); ?></h1>
+﻿<h1><?php echo sprintf($_MIDCOM->i18n->get_string('delete file %s', 'midcom.admin.styleeditor'), $data['filename']); ?></h1>
 <p><?php echo sprintf($_MIDCOM->i18n->get_string('confirm delete of file %s', 'midcom.admin.styleeditor'), $data['filename']); ?></p>
 <?php
 if (array_key_exists($data['file']->mimetype, $data['text_types']))

@@ -184,7 +184,7 @@ class midcom_admin_styleeditor_handler_edit extends midcom_baseclasses_component
      * @access private
      * @param string $handler_id Name of the used handler
      * @param mixed $args Array containing the variable arguments passed to the handler
-     * @param mixed &$data Data passed to the show method
+     * @param mixed $data Data passed to the show method
      * @return boolean Indicating successful request
      */
     function _handler_edit($handler_id, $args, &$data)
@@ -300,26 +300,6 @@ class midcom_admin_styleeditor_handler_edit extends midcom_baseclasses_component
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
             )
         );
-
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/gohome.png',
-            )
-        );
-
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."midcom-logout-",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout','midcom'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
-            )
-        );
         
         // Add the page title
         $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('edit element %s', 'midcom.admin.styleeditor'), "<({$data['style_element']})>");
@@ -332,7 +312,7 @@ class midcom_admin_styleeditor_handler_edit extends midcom_baseclasses_component
      * 
      * @access private
      * @param string $handler_id Name of the used handler
-     * @param mixed &$data Data passed to the show method
+     * @param mixed $data Data passed to the show method
      */
     function _show_edit($handler_id, &$data)
     {

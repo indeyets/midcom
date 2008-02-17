@@ -60,58 +60,10 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         
     }
     
-
-    function _prepare_toolbar(&$data)
-    {
-
-        // Set the Asgard toolbar
-        $data['asgard_toolbar'] = new midcom_helper_toolbar();
-        
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/create/",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create a new element', 'midcom.admin.styleeditor'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
-            )
-        );        
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
-            )
-        );
-
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('back to site', 'midgard.admin.asgard'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/gohome.png',
-            )
-        );
-
-        $data['asgard_toolbar']->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)."midcom-logout-",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('logout','midcom'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/exit.png',
-            )
-        );
-
-    }
-
     /**
      * Rewrite a filename to URL safe form
      *
-     * @param string $filename file name to rewrite
+     * @param $filename string file name to rewrite
      * @return string rewritten filename
      */
     function safe_filename($filename)
@@ -381,7 +333,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
      * @access private
      * @param string $handler_id Name of the used handler
      * @param mixed $args Array containing the variable arguments passed to the handler
-     * @param mixed &$data Data passed to the show method
+     * @param mixed $data Data passed to the show method
      * @return boolean Indicating successful request
      */
     function _handler_new($handler_id, $args, &$data)
@@ -414,8 +366,28 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         // Skip the page styles
         $_MIDCOM->skip_page_style = true;
         
-        $this->_prepare_toolbar($data);
-
+        // Set the Asgard toolbar
+        $data['asgard_toolbar'] = new midcom_helper_toolbar();
+        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/create/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create a new element', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
+            )
+        );        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
+            )
+        );
+        
         // Add the page title
         $data['view_title'] = $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor');
         
@@ -427,7 +399,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
      * 
      * @access private
      * @param string $handler_id Name of the used handler
-     * @param mixed &$data Data passed to the show method
+     * @param mixed $data Data passed to the show method
      */
     function _show_new($handler_id, &$data)
     {
@@ -449,7 +421,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
      * @access public
      * @param string $handler_id Name of the used handler
      * @param mixed $args Array containing the variable arguments passed to the handler
-     * @param mixed &$data Data passed to the show method
+     * @param mixed $data Data passed to the show method
      * @return boolean Indicating successful request
      */
     function _handler_edit($handler_id, $args, &$data)
@@ -499,8 +471,28 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         
         // Add the page title
         $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('edit file %s', 'midcom.admin.styleeditor'), "'{$args[0]}'");
-
-        $this->_prepare_toolbar($data);        
+        
+        // Set the Asgard toolbar
+        $data['asgard_toolbar'] = new midcom_helper_toolbar();
+        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/create/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create a new element', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
+            )
+        );        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
+            )
+        );
         
         return true;
     }
@@ -510,7 +502,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
      * 
      * @access private
      * @param string $handler_id Name of the used handler
-     * @param mixed &$data Data passed to the show method
+     * @param mixed $data Data passed to the show method
      */
     function _show_edit($handler_id, &$data)
     {
@@ -533,7 +525,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
      * @access public
      * @param string $handler_id Name of the used handler
      * @param mixed $args Array containing the variable arguments passed to the handler
-     * @param mixed &$data Data passed to the show method
+     * @param mixed $data Data passed to the show method
      * @return boolean Indicating successful request
      */
     function _handler_delete($handler_id, $args, &$data)
@@ -589,7 +581,27 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
         // Add the page title
         $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('delete file %s', 'midcom.admin.styleeditor'), "'{$args[0]}'");
         
-        $this->_prepare_toolbar($data);
+        // Set the Asgard toolbar
+        $data['asgard_toolbar'] = new midcom_helper_toolbar();
+        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/create/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create a new element', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/text-x-generic-template.png',
+            )
+        );        
+        $data['asgard_toolbar']->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.styleeditor/files/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('style attachments', 'midcom.admin.styleeditor'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/attach.png',
+            )
+        );
         
         return true;
     }
@@ -599,7 +611,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
      * 
      * @access private
      * @param string $handler_id Name of the used handler
-     * @param mixed &$data Data passed to the show method
+     * @param mixed $data Data passed to the show method
      */
     function _show_delete($handler_id, &$data)
     {

@@ -119,7 +119,7 @@ function ooAjaxContactsWidget_results(resultList, element)
     //persons = resultList.getElementsByTagNameNS('http://xmlns.com/foaf/0.1/', 'Person');
     persons = compat_getElementsByTagNameNS('http://xmlns.com/foaf/0.1/', 'foaf', 'Person', resultList);
     if (   !persons
-        || persons.lenght==0)
+        || persons.length==0)
     {
         //No results, do something
         return false;
