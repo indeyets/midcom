@@ -69,6 +69,15 @@ class net_nemein_discussion_handler_latest extends midcom_baseclasses_components
         $this->_request_data['latest_posts'] = $qb->execute_unchecked();
 
         // Set context data
+        $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('% latest posts'), $display_comments));
+        $breadcrumb = Array();
+        $breadcrumb[] = Array
+        (
+            MIDCOM_NAV_URL => "latest/{$display_comments}",
+            MIDCOM_NAV_NAME => sprintf($this->_request_data['l10n']->get('% latest posts'), $display_comments),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
+
         /**
          * TODO: Figure out the latest thread/post metadata_revised to get the correct timestamp
          * this should give us reasonably working caching but the MIDCOM_CONTEXT_LASTMODIFIED is
@@ -156,6 +165,15 @@ class net_nemein_discussion_handler_latest extends midcom_baseclasses_components
         $this->_request_data['latest_posts'] = $qb->execute();
 
         // Set context data
+        $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('latest'));
+        $breadcrumb = Array();
+        $breadcrumb[] = Array
+        (
+            MIDCOM_NAV_URL => "latest/",
+            MIDCOM_NAV_NAME => $this->_request_data['l10n']->get('latest'),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
+
         /**
          * TODO: Figure out the latest thread/post metadata_revised to get the correct timestamp
          * this should give us reasonably working caching but the MIDCOM_CONTEXT_LASTMODIFIED is
