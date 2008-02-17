@@ -23,7 +23,7 @@ class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
     var $_data_read_ok = false;
 
     /**
-     * Contant information of the person being displayed
+     * Contact information of the person being displayed
      */
     var $contact_details = array();
 
@@ -335,7 +335,8 @@ class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
         }
 
         if (   $this->show_groups
-            && array_key_exists('id', $this->contact_details))
+            && array_key_exists('id', $this->contact_details)
+            && !empty($this->contact_details['id']))
         {
             $qb = $_MIDCOM->dbfactory->new_query_builder('midcom_db_member');
             $qb->add_constraint('uid', '=', $this->contact_details['id']);
