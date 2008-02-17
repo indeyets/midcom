@@ -306,7 +306,7 @@ function ooAjaxGet(strURL, strQuery, element, callback, timeout, type)
                 // Loading...
                 ooAjaxSetClass(element, 'ajax_editable ajax_focused ajax_busy', false);
             }
-        }
+        };
         try
         {
             xmlHttpReq_store[element.id].send(null);
@@ -423,7 +423,7 @@ function ooAjaxPost(strURL, strSubmit, element, refreshWindow, callback)
                 // Loading...
                 ooAjaxSetClass(element, 'ajax_editable ajax_saving', false);
             }
-        }
+        };
         xmlHttpReq_store[element.id].send(strSubmit);
     }
 }
