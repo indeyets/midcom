@@ -628,7 +628,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         if ($project->create())
         {
             $relation = org_openpsa_relatedto_handler::create_relatedto($project, 'org.openpsa.projects', $salesproject, 'org.openpsa.sales');
-            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.sales', 'org.openpsa.sales'), sprintf($_MIDCOM->i18n->get_string('created project "%s"', 'org.openpsa.projects'), $project->title), 'ok');
+            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.sales', 'org.openpsa.sales'), sprintf($_MIDCOM->i18n->get_string('created project "%s"', 'org.openpsa.sales'), $project->title), 'ok');
             return $project;
         }
         return false;
@@ -680,7 +680,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
             $task->resource_seek_type = 'openpsa';
             $task->update();
 
-            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.sales', 'org.openpsa.sales'), sprintf($_MIDCOM->i18n->get_string('created task "%s"', 'org.openpsa.projects'), $task->title), 'ok');
+            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.sales', 'org.openpsa.sales'), sprintf($_MIDCOM->i18n->get_string('created task "%s"', 'org.openpsa.sales'), $task->title), 'ok');
             return $task;
         }
         return false;
