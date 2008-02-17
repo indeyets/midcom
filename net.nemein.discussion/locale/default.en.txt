@@ -99,3 +99,10 @@ Subject
 No posts to moderate.
 ---STRINGEND
 
+---STRING tags
+Tags
+---STRINGEND
+
+---STRING tag %s
+Tag %s
+---STRINGEND

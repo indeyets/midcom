@@ -99,3 +99,10 @@ Aihe
 Ei moderoitavia viestejä.
 ---STRINGEND
 
+---STRING tags
+Tägit
+---STRINGEND
+
+---STRING tag %s
+Tägi %s
+---STRINGEND
