@@ -504,15 +504,38 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     function get_object_toolbar($object, $handler_id, &$data)
     {
         $toolbar = new midcom_helper_toolbar();
-        $toolbar->add_item
-        (
-            array
+        
+        // Check if the user has configured to enter straight to the editing mode
+        if ($this->_config->get('edit_mode') == 1)
+        {
+            $redirect = true;
+        }
+        else
+        {
+            $redirect = false;
+        }
+        if (midgard_admin_asgard_plugin::get_preference('edit_mode') == 1)
+        {
+            $redirect = true;
+        }
+        else
+        {
+            $redirect = false;
+        }
+        
+        // Show view toolbar button, if the user hasn't configured to use straight the edit mode
+        if (!$redirect)
+        {
+            $toolbar->add_item
             (
-                MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/view/{$object->guid}/{$data['language_code']}",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('view', 'midcom'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/view.png',
-            )
-        );
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/view/{$object->guid}/{$data['language_code']}",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('view', 'midcom'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/view.png',
+                )
+            );
+        }
 
         $link = $_MIDCOM->permalinks->resolve_permalink($object->guid);
         if ($link)

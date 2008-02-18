@@ -49,6 +49,27 @@
                 ),
             ),
             'widget' => 'select',
+        ),
+        'edit_mode' => array
+        (
+            'title' => 'use edit mode instead of view mode as the primary object management page',
+            'storage' => array
+            (
+                'location' => 'parameter',
+                'domain' => 'midgard.admin.asgard:preferences',
+                'name' => 'edit_mode',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
             'end_fieldset' => '',
         ),
         'interface_language' => array

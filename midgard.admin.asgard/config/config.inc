@@ -89,6 +89,7 @@
 'escape_frameset' => true,
 'enable_quicklinks' => true,
 'show_sg0' => false,
+'edit_mode' => false,    // Enable to enter straight to the edit mode and to skip viewing mmode
 
 // Welcome page
 // List of types we don't list on latest objects
