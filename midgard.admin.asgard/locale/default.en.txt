@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING %s (%s)
+%s (%s)
+---STRINGEND
+
 ---STRING %s deleted items
 %s deleted items
 ---STRINGEND
@@ -643,7 +647,7 @@ Version %s of %s
 XML
 ---STRINGEND
 
----STRING %s (%s)
-%s (%s)
+---STRING use edit mode instead of view mode as the primary object management page
+Use edit mode instead of view mode as the primary object management page
 ---STRINGEND
 

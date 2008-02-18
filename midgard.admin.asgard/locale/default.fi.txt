@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING %s (%s)
+%s (%s)
+---STRINGEND
+
 ---STRING %s deleted items
 %s poistettua kohdetta
 ---STRINGEND
@@ -643,7 +647,7 @@ Versio %s tietueesta %s
 XML
 ---STRINGEND
 
----STRING %s (%s)
-%s (%s)
+---STRING use edit mode instead of view mode as the primary object management page
+Käydä muokkausnäkymää objektien päänäkymänä
 ---STRINGEND
 
