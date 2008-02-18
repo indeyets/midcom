@@ -42,15 +42,15 @@ if ($data['even'])
             $next_marker_url = $prefix . "invoice/mark_" . $data['next_marker'] . "/" . $data['invoice']->guid . ".html";
             ?>
             <form method="post" action="&(next_marker_url);">
-                <button type="submit" name="midcom_helper_toolbar_submit"><?php 
-                echo $data['l10n']->get('mark ' . $data['next_marker']); 
+                <button type="submit" name="midcom_helper_toolbar_submit"><?php
+                echo $data['l10n']->get('mark ' . $data['next_marker']);
                 ?></button>
               </form><?
         }
     }
     else
     {
-        echo strftime('%x', $view_data['invoice']->paid);
+        echo strftime('%x', $data['invoice']->paid);
     }
     ?>
     </td>
