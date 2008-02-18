@@ -21,6 +21,7 @@ div.org_openpsa_invoices table.invoices th
     color: #ffffff;
     width: 80px;
     text-align: left;
+    white-space: nowrap;
 }
 div.org_openpsa_invoices table.invoices th.contact
 {
