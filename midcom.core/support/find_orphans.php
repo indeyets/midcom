@@ -10,7 +10,7 @@ $conffile = $argv[1];
 if (version_compare(mgd_version(), '1.9.0alpha', '>='))
 {
     $midgard = new midgard_connection();
-    $midgard->open('bergietest');
+    $midgard->open($conffile);
     //$midgard->set_sitegroup(1);
 }
 else
