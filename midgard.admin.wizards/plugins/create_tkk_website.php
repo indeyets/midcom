@@ -63,22 +63,27 @@ class create_tkk_website extends midcom_baseclasses_components_handler
 
         $title = $this->_l10n->get('website creation');
         $_MIDCOM->set_pagetitle($title);
+        
+        if (   isset($_POST['tkk_sitewizard_website_cancel'])
+            && !empty($_POST['tkk_sitewizard_website_cancel']))
+        {
+            $_MIDCOM->relocate('');
+        }
 
+        $session = new midcom_service_session();
+
+        if (!$session->exists("midgard_admin_wizards_{$this->_request_data['session_id']}"))
+        {
+
+        }
+        else
+        {
+            $structure_creator = $session->get("midgard_admin_wizards_{$this->_request_data['session_id']}");
+        }
 
         if (   isset($_POST['tkk_sitewizard_website_submit'])
             && !empty($_POST['tkk_sitewizard_website_submit']))
         {
-            $session = new midcom_service_session();
-
-            if (!$session->exists("midgard_admin_wizards_{$this->_request_data['session_id']}"))
-            {
-
-            }
-            else
-            {
-                $structure_creator = $session->get("midgard_admin_wizards_{$this->_request_data['session_id']}");
-            }
-
             try
             {
             //print_r($structure_creator);
@@ -186,6 +191,32 @@ class create_tkk_website extends midcom_baseclasses_components_handler
                 $e->error();
                 echo "WE SHOULD HANDLE THIS \n";
             }
+        }
+        else
+        {
+            
+            $host_creator = $structure_creator->previous_link();
+            
+            $this->_request_data['prereport']['hostname'] = $host_creator->get_host_name();
+            $this->_request_data['prereport']['prefix'] = $host_creator->get_host_prefix();
+            $this->_request_data['prereport']['port'] = $host_creator->get_host_port();
+            $this->_request_data['prereport']['sitename'] = $host_creator->get_root_page_title();
+            $this->_request_data['prereport']['topicname'] = $host_creator->get_host_name() . $host_creator->get_host_prefix();
+            
+            $vhost_path = $this->_request_data['plugin_config']['vhost_save_path'];
+
+            $this->_request_data['prereport']['notification_email'] = $this->_request_data['plugin_config']['notification_email'];
+            
+            if (isset($vhost_path) && !empty($vhost_path))
+            {
+                $this->_request_data['prereport']['vhost_filename'] = $vhost_path 
+                    . $host_creator->get_host_name() . "_" . $host_creator->get_host_port();
+            }
+            else
+            {
+                $this->_request_data['prereport']['vhost_filename'] = "";
+            }
+            
         }
 
         return true;

@@ -49,6 +49,12 @@
         (
 
         ),
+        'metadata' => array
+        (
+            'description' => 'koe desc',
+            'keywords' => 'test, koe',
+        ),
+        
         // Child node definitions
         'nodes' => array
         (
@@ -67,6 +73,12 @@
                     (
                         'schemadb' => '/sitegroup-config/net.nehmer.static/schemadb_frontpage',
                     ),
+                ),
+                'metadata' => array
+                (
+                    'description' => 'koe desc',
+                    'keywords' => 'test, koe',
+                    'score' => 3,
                 ),
                 'nodes' => array
                 (
