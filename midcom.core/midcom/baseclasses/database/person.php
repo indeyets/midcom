@@ -30,7 +30,7 @@ class midcom_baseclasses_database_person extends __midcom_baseclasses_database_p
      *
      * @var string
      */
-    var $name = '';
+    public $name = '';
 
     /**
      * Read-Only variable, consisting of "$lastname, $firstname".
@@ -39,7 +39,7 @@ class midcom_baseclasses_database_person extends __midcom_baseclasses_database_p
      *
      * @var string
      */
-    var $rname = '';
+    public $rname = '';
 
     /**
      * Read-Only variable, consisting of a complete A HREF tag to homepage
@@ -49,7 +49,7 @@ class midcom_baseclasses_database_person extends __midcom_baseclasses_database_p
      *
      * @var string
      */
-    var $homepagelink = '';
+    public $homepagelink = '';
 
     /**
      * Read-Only variable, consisting of ta complete mailto A HREF tag to
@@ -59,7 +59,7 @@ class midcom_baseclasses_database_person extends __midcom_baseclasses_database_p
      *
      * @var string
      */
-    var $emaillink = '';
+    public $emaillink = '';
 
     function __construct($id = null)
     {
@@ -174,30 +174,30 @@ class midcom_baseclasses_database_person extends __midcom_baseclasses_database_p
      */
     function _update_computed_members()
     {
-        $this->name = trim("{$this->firstname} {$this->lastname}");
+        @$this->name = trim("{$this->firstname} {$this->lastname}");
 
-        $this->rname = trim($this->lastname);
+        @$this->rname = trim($this->lastname);
         if ($this->rname == '')
         {
-            $this->rname = $this->firstname;
+            @$this->rname = $this->firstname;
         }
         else
         {
-            $this->rname .= ", {$this->firstname}";
+            @$this->rname .= ", {$this->firstname}";
         }
 
         if ($this->homepage != '')
         {
             $title = htmlspecialchars($this->name);
             $url = htmlspecialchars($this->homepage);
-            $this->homepagelink = "<a href=\"{$url}\" title=\"{$title}\">{$url}</a>";
+            @$this->homepagelink = "<a href=\"{$url}\" title=\"{$title}\">{$url}</a>";
         }
 
         if ($this->email != '')
         {
             $title = htmlspecialchars($this->name);
             $url = htmlspecialchars($this->email);
-            $this->emaillink = "<a href=\"mailto:{$url}\" title=\"{$title}\">{$url}</a>";
+            @$this->emaillink = "<a href=\"mailto:{$url}\" title=\"{$title}\">{$url}</a>";
         }
     }
 }
