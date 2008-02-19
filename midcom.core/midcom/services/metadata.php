@@ -106,8 +106,16 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         {
             $topic = $_MIDCOM->get_context_data($context_id, MIDCOM_CONTEXT_CONTENTTOPIC);
         }
+        
+        if (!is_object($topic))
+        {
+            $this->_metadata[$context_id] = Array();
+            $this->_metadata[$context_id][MIDCOM_METADATA_NODE] = null;        
+            $this->_metadata[$context_id][MIDCOM_METADATA_VIEW] = null;
+            return;
+        }
 
-        if (! is_a($topic, 'midcom_baseclasses_database_topic'))
+        if (!is_a($topic, 'midcom_baseclasses_database_topic'))
         {
             // Force-Cast to DBA object
             $topic = new midcom_db_topic($topic->id);
