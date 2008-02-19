@@ -55,3 +55,18 @@ Wochen-Übersicht
 Summen
 ---STRINGEND
 
+---STRING see all %s hours
+Alle %s Arbeitsstunden anzeigen 
+---STRINGEND
+
+---STRING this week
+Diese Woche
+---STRINGEND
+
+---STRING invoiceable
+Abrechenbar
+---STRINGEND
+
+---STRING uninvoiceable
+Nicht abrechenbar
+---STRINGEND

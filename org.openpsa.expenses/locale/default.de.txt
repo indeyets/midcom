@@ -1,13 +1,13 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----LANGUAGE en
+---LANGUAGE de
 
 ---STRING invoiceable
-Invoiceable
+Abrechenbar
 ---STRINGEND
 
 ---STRING uninvoiceable
-Not invoiceable
+Nicht abrechenbar
 ---STRINGEND
 
 ---STRING task
@@ -15,27 +15,27 @@ Task
 ---STRINGEND
 
 ---STRING reporter
-Reporter
+Meldender
 ---STRINGEND
 
 ---STRING hour report
-Hour report
+Stundenbericht
 ---STRINGEND
 
 ---STRING org.openpsa.expenses
-Expense tracking
+Ausgaben-Verwaltung
 ---STRINGEND
 
 ---STRING list_hours_task
-List of Hours by Task
+Liste der Arbeitsstunden pro Task
 ---STRINGEND
 
 ---STRING date
-Date
+Datum
 ---STRINGEND
 
 ---STRING hours
-Hours
+Arbeitsstunden
 ---STRINGEND
 
 ---STRING person
@@ -43,9 +43,9 @@ Person
 ---STRINGEND
 
 ---STRING description
-Description
+Beschreibung
 ---STRINGEND
 
 ---STRING total
-Total
+Summe
 ---STRINGEND

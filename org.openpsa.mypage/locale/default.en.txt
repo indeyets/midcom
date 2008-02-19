@@ -55,3 +55,18 @@ Week review
 Totals
 ---STRINGEND
 
+---STRING see all %s hours
+See all %s hours
+---STRINGEND
+
+---STRING this week
+This week
+---STRINGEND
+
+---STRING invoiceable
+Invoiceable
+---STRINGEND
+
+---STRING uninvoiceable
+Not invoiceable
+---STRINGEND
