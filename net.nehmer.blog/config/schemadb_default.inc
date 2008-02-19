@@ -61,7 +61,7 @@
             'widget_config' => Array 
             ( 
                 'height' => 3,
-            ),        
+            ),
         ),  
         'related' => array
         (

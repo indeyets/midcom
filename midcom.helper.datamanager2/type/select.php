@@ -666,6 +666,13 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
             $this->validation_error = $this->_l10n->get('type select: multiselect not allowed');
             return false;
         }
+        
+        /*if (   ! $this->required
+            && count($this->selection) == 1)
+        {
+            $this->validation_error = $this->_l10n->get('type select: selecting item is required');
+            return false;
+        }*/
 
         return true;
     }

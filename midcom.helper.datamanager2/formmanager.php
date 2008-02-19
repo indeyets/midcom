@@ -728,7 +728,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
                     debug_pop();
                     break;
                 // Match select types (have array data, 'required' will choke on them)
-                case (   is_a($type, 'midcom_helper_datamanager2_type_select')
+                /*case (   is_a($type, 'midcom_helper_datamanager2_type_select')
                       && $type->allow_multiple):
                     debug_add("Callign this->form->addRule('{$name}', '{$message}', 'requiremultiselect', '');");
                     $stat = $this->form->addRule($name, $message, 'requiremultiselect', '');
@@ -739,7 +739,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
                         debug_add("Got PEAR error '{$msg}' from this->form->addRule('{$name}', '{$message}', 'required_multiselect', ''), when adding multiselect required rule", MIDCOM_LOG_WARN);
                         debug_pop();
                     }
-                    break;
+                    break;*/
                 // Other types should be fine with the default string validation offered by 'required'
                 default:
                     $this->form->addRule($name, $message, 'required', '');

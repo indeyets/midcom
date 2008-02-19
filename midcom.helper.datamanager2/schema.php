@@ -300,7 +300,6 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
                 $prepended = false;
                 foreach ($metadata_schema['metadata']->fields as $name => $field)
                 {
-
                     if ($field['required'])
                     {
                         if (!$prepended)
