@@ -25,7 +25,7 @@
         if (!$metadata->is_approved())
         {
             // Skip
-            //continue;
+            continue;
         }
 
         echo "        <comment";
