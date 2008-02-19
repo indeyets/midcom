@@ -72,7 +72,7 @@ Uutiskansiot
 ---STRINGEND
 
 ---STRING no items
-Ei näytettäviä kansioita
+Ei näytettäviä uutisia
 ---STRINGEND
 
 ---STRING no topics
