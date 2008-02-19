@@ -72,8 +72,11 @@ class net_nemein_feedcollector_handler_latest  extends midcom_baseclasses_compon
                     $categories = explode('|', $feedtopic->categories);
                     foreach($categories as $category)
                     {
-                        $category = str_replace('|', '', $category);
-                        $qb_news->add_constraint('extra1', 'LIKE', "%|{$category}|%");
+                        if($category != '')
+                        {
+                            $category = str_replace('|', '', $category);
+                            $qb_news->add_constraint('extra1', 'LIKE', "%|{$category}|%");
+                        }
                     }
                     $qb_news->add_constraint('topic','=', (int)$feedtopic->feedtopic);
                     $qb_news->end_group();

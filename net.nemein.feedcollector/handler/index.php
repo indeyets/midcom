@@ -43,7 +43,6 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
      */
     function _handler_index ($handler_id, $args, &$data)
     {
-
         $this->_request_data['name']  = "net.nemein.feedcollector";
         $this->_request_data['permalinks'] = new midcom_services_permalinks();
         $this->_request_data['topic_introduction'] = $this->_config->get('topic_introduction');
@@ -67,10 +66,14 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
                     && $feedtopic->categories != '')
                 {
                     $categories = explode('|', $feedtopic->categories);
+
                     foreach($categories as $category)
                     {
-                        $category = str_replace('|', '', $category);
-                        $qb_news->add_constraint('extra1', 'LIKE', "%|{$category}|%");
+                        if($category != '')
+                        {
+                            $category = str_replace('|', '', $category);
+                            $qb_news->add_constraint('extra1', 'LIKE', "%|{$category}|%");
+                        }
                     }
                 }
                 $qb_news->set_limit($this->_config->get('articles_count_index'));
