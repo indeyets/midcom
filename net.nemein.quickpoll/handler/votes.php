@@ -188,13 +188,12 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
         $data['votes_controllers'] = array();
         
         $this->_load_schemadb();
-        $data['controller'] =& midcom_helper_datamanager2_controller::create('ajax');
-        $data['controller']->schemadb =& $this->_request_data['schemadb_vote'];
         
         foreach ($data['votes'] as $vote)
         {
             // Load AJAX controllers
-            $data['votes_controllers'][$vote->guid] = $data['controller'];
+            $data['votes_controllers'][$vote->guid] =& midcom_helper_datamanager2_controller::create('ajax');
+            $data['votes_controllers'][$vote->guid]->schemadb =& $this->_request_data['schemadb_vote'];
             $data['votes_controllers'][$vote->guid]->set_storage($vote);
             $data['votes_controllers'][$vote->guid]->process_ajax();
             
