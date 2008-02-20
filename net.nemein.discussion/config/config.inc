@@ -44,7 +44,7 @@
 'api_email_enable' => false,
 'api_email_strict_parent' => false,
 'api_email_use_force' => false,
-'api_email_duplicate_is_fatal' => true,
+'api_email_silently_ignore_duplicate' => false,
 /* override these only on topic level! */
 'email_out_enable' => false,
 'email_out_address' => '',
