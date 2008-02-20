@@ -24,6 +24,7 @@ table.link_statistics th.title
                 <th>&nbsp;</th>
                 <th><?php echo $l10n->get('total clicks'); ?></th>
                 <th><?php echo $l10n->get('% of clicks'); ?></th>
+                <th><?php echo $l10n->get('unique clickers'); ?></th>
                 <th><?php echo $l10n->get('% of recipients'); ?></th>
             </tr>
         </thead>

@@ -51,26 +51,52 @@
                 'options' => array(),
                 'multiple_storagemode' => 'array',
             ),
-            'widget' => 'universalchooser',
+            'widget' => 'chooser',
             'widget_config' => array
             (
-                'class'       => 'org_openpsa_contacts_person',
-                'component'   => 'org.openpsa.contacts',
-                'titlefield'  => 'name',
-                'idfield'     => 'id',
-                'constraints' => array(),
-                'searchfields'  => array
+                'clever_class' => 'person',
+                'id_field' => 'id',
+                'result_headers' => array
                 (
-                    'firstname',
-                    'lastname',
+                    array
+                    (
+                        'name' => 'name',
+                        'title' => 'name',
+                    ),
+                    array
+                    (
+                        'name' => 'email',
+                        'title' => 'email',
+                    ),
+                    array
+                    (
+                        'name' => 'handphone',
+                        'title' => 'handphone',
+                    ),
+                    array
+                    (
+                        'name' => 'username',
+                        'title' => 'username',
+                    ),
+                ),
+                'constraints' => array
+                (
+                    array
+                    (
+                        'field' => 'email',
+                        'op' => '<>',
+                        'value' => '',
+                    ),
+                ),
+                'searchfields' => array
+                (
+                    'firstname', 
+                    'lastname', 
+                    'email', 
                     'username',
+                    'handphone',
                 ),
-                'orders'        => array
-                (
-                    array('lastname'    => 'ASC'), 
-                    array('firstname'    => 'ASC'), 
-
-                ),
+                'auto_wildcards' => 'both',
             ),
         ),
         'orgOpenpsaAccesstype' => array 

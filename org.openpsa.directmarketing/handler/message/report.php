@@ -130,7 +130,11 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
         $qb_links->add_constraint('message', '=', $this->_request_data['message']->id);
         $qb_links->add_constraint('target', 'NOT LIKE', '%unsubscribe%');
         $links = $qb_links->execute_unchecked();
+
         $link_data['total'] = count($links);
+
+        $link_data['tokens'] = array();
+        $segment_data['tokens'] = array();
         foreach($links as $link)
         {
             $segment = '';
@@ -159,29 +163,69 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
             {
                 $segment_data = $segment_prototype;
             }
+            
+            if (!isset($link_data['tokens'][$link->token]))
+            {
+                $link_data['tokens'][$link->token] = 0;
+            }
+            if (!isset($segment_data['tokens'][$link->token]))
+            {
+                $segment_data['tokens'][$link->token] = 0;
+            }
+            
             if (!isset($link_data['counts'][$link->target]))
             {
-                $link_data['counts'][$link->target] = 0;
+                $link_data['counts'][$link->target] = array();
+                $link_data['counts'][$link->target]['total'] = 0;
+            }
+            if (!isset($link_data['counts'][$link->target][$link->token]))
+            {
+                $link_data['counts'][$link->target][$link->token] = 0;
             }
             if (!isset($segment_data['counts'][$link->target]))
             {
-                $segment_data['counts'][$link->target] = 0;
+                $segment_data['counts'][$link->target] = array();
+                $segment_data['counts'][$link->target]['total'] = 0;
+            }
+            if (!isset($segment_data['counts'][$link->target][$link->token]))
+            {
+                $segment_data['counts'][$link->target][$link->token] = 0;
             }
             if (!isset($link_data['percentages']['of_links'][$link->target]))
             {
-                $link_data['percentages']['of_links'][$link->target] = 0;
+                $link_data['percentages']['of_links'][$link->target] = array();
+                $link_data['percentages']['of_links'][$link->target]['total'] = 0;
+            }
+            if (!isset($link_data['percentages']['of_links'][$link->target][$link->token]))
+            {
+                $link_data['percentages']['of_links'][$link->target][$link->token] = 0;
             }
             if (!isset($link_data['percentages']['of_recipients'][$link->target]))
             {
-                $link_data['percentages']['of_recipients'][$link->target] = 0;
+                $link_data['percentages']['of_recipients'][$link->target] = array();
+                $link_data['percentages']['of_recipients'][$link->target]['total'] = 0;
+            }
+            if (!isset($link_data['percentages']['of_recipients'][$link->target][$link->token]))
+            {
+                $link_data['percentages']['of_recipients'][$link->target][$link->token] = 0;
             }
             if (!isset($segment_data['percentages']['of_links'][$link->target]))
             {
-                $segment_data['percentages']['of_links'][$link->target] = 0;
+                $segment_data['percentages']['of_links'][$link->target] = array();
+                $segment_data['percentages']['of_links'][$link->target]['total'] = 0;
+            }
+            if (!isset($segment_data['percentages']['of_links'][$link->target][$link->token]))
+            {
+                $segment_data['percentages']['of_links'][$link->target][$link->token] = 0;
             }
             if (!isset($segment_data['percentages']['of_recipients'][$link->target]))
             {
-                $segment_data['percentages']['of_recipients'][$link->target] = 0;
+                $segment_data['percentages']['of_recipients'][$link->target] = array();
+                $segment_data['percentages']['of_recipients'][$link->target]['total'] = 0;
+            }
+            if (!isset($segment_data['percentages']['of_recipients'][$link->target][$link->token]))
+            {
+                $segment_data['percentages']['of_recipients'][$link->target][$link->token] = 0;
             }
             if (!isset($link_data['rules'][$link->target]))
             {
@@ -284,16 +328,37 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
                     $segment_data['rules'][$link->target]['classes'][] = $segmentrule;
                 }
             }
-            $link_data['counts'][$link->target]++;
-            $segment_data['counts'][$link->target]++;
-            $link_data['percentages']['of_links'][$link->target] = ($link_data['counts'][$link->target]/$link_data['total'])*100;
-            $segment_data['percentages']['of_links'][$link->target] = ($segment_data['counts'][$link->target]/$link_data['total'])*100;
-            $link_data['percentages']['of_recipients'][$link->target] = ($link_data['counts'][$link->target]/($receipt_data['sent']-$receipt_data['bounced']))*100;
-            $segment_data['percentages']['of_recipients'][$link->target] = ($segment_data['counts'][$link->target]/($receipt_data['sent']-$receipt_data['bounced']))*100;
+            $link_data['counts'][$link->target]['total']++;
+            $link_data['counts'][$link->target][$link->token]++;
+            $segment_data['counts'][$link->target]['total']++;
+            $segment_data['counts'][$link->target][$link->token]++;
+            $link_data['percentages']['of_links'][$link->target]['total'] = ($link_data['counts'][$link->target]['total']/$link_data['total'])*100;
+            $link_data['percentages']['of_links'][$link->target][$link->token] = ($link_data['counts'][$link->target][$link->token]/$link_data['total'])*100;
+            $segment_data['percentages']['of_links'][$link->target]['total'] = ($segment_data['counts'][$link->target]['total']/$link_data['total'])*100;
+            $segment_data['percentages']['of_links'][$link->target][$link->token] = ($segment_data['counts'][$link->target][$link->token]/$link_data['total'])*100;
+
+            $link_data['tokens'][$link->token]++;
+            $segment_data['tokens'][$link->token]++;
+
+            $link_data['percentages']['of_recipients'][$link->target]['total'] = ((count($link_data['counts'][$link->target])-1)/($receipt_data['sent']-$receipt_data['bounced']))*100;
+            $link_data['percentages']['of_recipients'][$link->target][$link->token] = ($link_data['counts'][$link->target][$link->token]/($receipt_data['sent']-$receipt_data['bounced']))*100;
+            $segment_data['percentages']['of_recipients'][$link->target]['total'] = ((count($segment_data['counts'][$link->target])-1)/($receipt_data['sent']-$receipt_data['bounced']))*100;
+            $segment_data['percentages']['of_recipients'][$link->target][$link->token] = ($segment_data['counts'][$link->target][$link->token]/($receipt_data['sent']-$receipt_data['bounced']))*100;
+            if(   (!isset($link_data['percentages']['of_recipients']['total']))
+               || $link_data['percentages']['of_recipients'][$link->target]['total'] > $link_data['percentages']['of_recipients']['total'])
+            {
+                $link_data['percentages']['of_recipients']['total'] = $link_data['percentages']['of_recipients'][$link->target]['total'];
+            }
+            if(   (!isset($segment_data['percentages']['of_recipients']['total']))
+               || $segment_data['percentages']['of_recipients'][$link->target]['total'] > $segment_data['percentages']['of_recipients']['total'])
+            {
+                $segment_data['percentages']['of_recipients']['total'] = $segment_data['percentages']['of_recipients'][$link->target]['total'];
+            }
         }
         arsort($link_data['counts']);
         arsort($link_data['percentages']['of_links']);
         arsort($link_data['percentages']['of_recipients']);
+
         if ($segmentation_param)
         {
             ksort($link_data['segments']);
@@ -305,6 +370,7 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
                 arsort($segment_data['percentages']['of_recipients']);
             }
         }
+
         return true;
     }
 

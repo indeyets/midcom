@@ -27,11 +27,14 @@ $body_class = " class='{$data['body_class']}'";
                 </tr>
 <?php       }
             $total = 0;
+/*            echo "<pre>";
+            print_r($link_data);
+            echo "</pre>";*/
             foreach($link_data['counts'] as $target => $count)
             {
-                $total += $count;
-                $of_clicks = $link_data['percentages']['of_links'][$target];
-                $of_recipients = $link_data['percentages']['of_recipients'][$target];
+                $total += $count['total'];
+                $of_clicks = $link_data['percentages']['of_links'][$target]['total'];
+                $of_recipients = $link_data['percentages']['of_recipients'][$target]['total'];
                 $rule_ser = array2code($link_data['rules'][$target]);
                 $visual_width = round($of_clicks*5);
                 $target_label = $target;
@@ -99,8 +102,9 @@ $body_class = " class='{$data['body_class']}'";
                     <td><input type="radio" name="org_openpsa_directmarketing_campaign_userule" value="<?php echo md5($target . $form_suffix); ?>" /></td>
                     <td><a href="<?php echo trim(urldecode($target)); ?>" target="_BLANK" title="<?php echo $target; ?>"><?php echo $target_label; ?></a></td>
                     <td class="bargraph"><div style="width: <?php echo $visual_width; ?>px;" class="link_count_visualization">&nbsp;</div></td>
-                    <td class="numeric"><?php echo $count; ?></td>
+                    <td class="numeric"><?php echo $count['total']; ?></td>
                     <td class="numeric"><?php echo round($of_clicks, 2); ?></td>
+                    <td class="numeric"><?php echo count($count) - 1; ?></td>
                     <td class="numeric"><?php echo round($of_recipients, 2); ?></td>
                 </tr>
                 <?php
@@ -110,6 +114,7 @@ $body_class = " class='{$data['body_class']}'";
                     <td colspan=3>&nbsp;</td>
                     <td class="numeric"><?php echo $total; ?></td>
                     <td>&nbsp;</td>
-                    <td class="numeric"><?php echo round(($total / ($report['receipt_data']['sent']-$report['receipt_data']['bounced']))*100,2); ?></td>
+                    <td>&nbsp;</td>
+                    <td class="numeric"><?php echo round($link_data['percentages']['of_recipients']['total'],2); ?></td>
                 </tr>
             </tbody>
