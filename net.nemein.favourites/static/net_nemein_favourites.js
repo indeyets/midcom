@@ -27,7 +27,8 @@
                 bury_count: 'bury_count'
             },
             show_activity: false,
-            force_ssl: false
+            force_ssl: false,
+            return_to: null
         },
         executed_list: {},
         execute: function() {
@@ -65,6 +66,12 @@
                     },
                     success: function(data) {
                         button.removeClass(loading_class);
+
+                        if (options.return_to != null)
+                        {
+                            window.location.href = options.return_to;
+                        }
+
                         $.net.nemein.favourites.update_view(options, data, guid);
                         return true;
                     }
@@ -110,14 +117,20 @@
                         },
                         success: function(data) {
                             button.removeClass(loading_class);
-                            $.net.nemein.favourites.update_view(options, data, holder);
+
+                            if (options.return_to != null)
+                            {
+                                window.location.href = options.return_to;
+                            }
+                            
+                            $.net.nemein.favourites.update_view(options, data, holder);                                                
                             return true;
                         }
                     });
                 }
             }
         },
-        update_view: function(options, data, holder) {
+        update_view: function(options, data, holder) {            
             if (typeof holder == 'string') {
                 var holder = $('#net_nemein_favourites_for_'+holder);
             }

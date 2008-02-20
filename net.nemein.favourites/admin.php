@@ -206,12 +206,18 @@ class net_nemein_favourites_admin
         echo net_nemein_favourites_admin::get_add_link($objectType, $guid, $url, $link_for_anonymous);
     }
     
-    function get_ajax_headers($js_options='{}', $element_path='.net_nemein_favourites')
+    function get_ajax_headers($js_options='', $element_path='.net_nemein_favourites')
     {
         $html = "<script type=\"text/javascript\" src=\"" . MIDCOM_STATIC_URL . "/jQuery/jquery.metadata.js\"></script>\n";
         $html .= "<script type=\"text/javascript\" src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/net_nemein_favourites.js\" ></script>\n";
 
         $html .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/screen.css\" media=\"screen\" />\n\n";
+        
+        if ($js_options == '')
+        {
+            $return_url = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+            $js_options = '{return_to: "' . $return_url . '"}';
+        }
         
         $add_html = '';
         if (   isset($_REQUEST['net_nemein_favourites_execute'])
