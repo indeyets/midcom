@@ -1,7 +1,7 @@
 'name' => 'midgard.admin.asgard',
 'icon' => 'midgard.admin.asgard/asgard2-16.png',
 'purecode' => true,
-'version' => '2.1.0beta1',
+'version' => '2.2.0beta1',
 'state' => 'beta',
 'privileges' => array
 (

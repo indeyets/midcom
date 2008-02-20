@@ -603,6 +603,10 @@ URL
 Käytä CodePress-editoria koodin muokkaukseen
 ---STRINGEND
 
+---STRING use edit mode instead of view mode as the primary object management page
+Käytä muokkausnäkymää objektien päänäkymänä
+---STRINGEND
+
 ---STRING use tinymce editor for editing content
 Käytä TinyMCE-editoria sisällönmuokkaamiseen
 ---STRINGEND
@@ -645,9 +649,5 @@ Versio %s tietueesta %s
 
 ---STRING xml
 XML
----STRINGEND
-
----STRING use edit mode instead of view mode as the primary object management page
-Käydä muokkausnäkymää objektien päänäkymänä
 ---STRINGEND
 

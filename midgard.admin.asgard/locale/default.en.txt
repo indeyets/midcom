@@ -603,6 +603,10 @@ URL
 Use CodePress editor for editing code snippets
 ---STRINGEND
 
+---STRING use edit mode instead of view mode as the primary object management page
+Use edit mode instead of view mode as the primary object management page
+---STRINGEND
+
 ---STRING use tinymce editor for editing content
 Use TinyMCE editor for editing content
 ---STRINGEND
@@ -645,9 +649,5 @@ Version %s of %s
 
 ---STRING xml
 XML
----STRINGEND
-
----STRING use edit mode instead of view mode as the primary object management page
-Use edit mode instead of view mode as the primary object management page
 ---STRINGEND
 
