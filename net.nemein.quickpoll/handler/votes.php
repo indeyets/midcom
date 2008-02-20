@@ -174,6 +174,8 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
         $qb = new org_openpsa_qbpager('net_nemein_quickpoll_vote_dba', 'net_nemein_quickpoll_votes');
         $qb->add_constraint('article', '=', $this->_article->id);
         $qb->add_constraint('comment', '<>', '');
+        $qb->add_constraint('comment', '<>', 'undefined');
+        $qb->add_order('metadata.published', 'DESC');
         $data['qb'] =& $qb;
         
         $data['view_title'] = $this->_article->title;
