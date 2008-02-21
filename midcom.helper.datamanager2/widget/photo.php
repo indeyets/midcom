@@ -104,10 +104,19 @@ class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2
         }
         else
         {
-            $url = $this->_type->attachments_info['main']['url'];
-            $x = $this->_type->attachments_info['main']['size_x'];
-            $y = $this->_type->attachments_info['main']['size_y'];
             $is_thumbnail = false;
+            if (array_key_exists('main', $this->_type->attachments_info))
+            {
+                $url = $this->_type->attachments_info['main']['url'];
+                $x = $this->_type->attachments_info['main']['size_x'];
+                $y = $this->_type->attachments_info['main']['size_y'];
+            }
+            else
+            {
+                $url = $this->_type->attachments_info['archival']['url'];
+                $x = $this->_type->attachments_info['archival']['size_x'];
+                $y = $this->_type->attachments_info['archival']['size_y'];
+            }
 
             // Downscale Preview image to max 75px, protect against broken images:
             if (   $x != 0
@@ -151,7 +160,7 @@ class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2
                 "<ul class='midcom_helper_datamanager2_widget_image_sizelist'>";
         foreach ($this->_type->attachments_info as $name => $info)
         {
-            //TODO: skip the archival version ??
+            //PONDER: skip the archival version ?? - No
             if (   $info['size_x']
                 && $info['size_y'])
             {
