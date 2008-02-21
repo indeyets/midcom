@@ -29,7 +29,7 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
      * @var net_nemein_registrations_event
      * @access private
      */
-    var $_root_event = null;
+    var $_content_topic = null;
 
     /**
      * The schema database (taken from the request data area)
@@ -61,7 +61,7 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
      */
     function _on_initialize()
     {
-        $this->_root_event =& $this->_request_data['root_event'];
+        $this->_content_topic =& $this->_request_data['content_topic'];
         $this->_schemadb =& $this->_request_data['schemadb'];
     }
 
@@ -83,9 +83,9 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
         $_MIDCOM->set_26_request_metadata(time(), null);
         $_MIDCOM->set_pagetitle($this->_topic->extra);
         
-        $_MIDCOM->bind_view_to_object($this->_root_event);
+        $_MIDCOM->bind_view_to_object($this->_content_topic);
 
-        if ($this->_root_event->can_do('midgard:create'))
+        if ($this->_content_topic->can_do('midgard:create'))
         {
             $this->_node_toolbar->add_item
             (
@@ -100,7 +100,7 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
             );
         }
 
-        if ($this->_root_event->can_do('net.nemein.registrations:manage'))
+        if ($this->_content_topic->can_do('net.nemein.registrations:manage'))
         {
             $this->_node_toolbar->add_item
             (

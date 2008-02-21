@@ -2,7 +2,7 @@
 'schemadb' => 'file:/net/nemein/registrations/config/schemadb_default.inc',
 'registrar_schema' => 'person',
 'event_schema' => 'event',
-'root_event_guid' => null,
+'content_topic_guid' => null,
 'event_type' => null,
 'account_grp' => null,
 'display_leaves' => false,

@@ -34,12 +34,12 @@
    'widget_schemaselect_default_schemapath' => 'file:/net/nemein/registrations/config/schemadb_default.inc',
   ),
 
-  'root_event_guid' => array (
-   'description' => 'root_event_guid',
+  'content_topic_guid' => array (
+   'description' => 'content_topic_guid',
    'datatype' => 'text',
    'location' => 'config',
    'config_domain' => 'net.nemein.registrations',
-   'config_key' => 'root_event_guid',
+   'config_key' => 'content_topic_guid',
   ),
 
   'event_type' => array (

@@ -435,7 +435,7 @@ Hylkää ja poista ilmoittautuminen
 Hylkää ja poista ilmoittautuminen ja ilmoittautuja
 ---STRINGEND
 
----STRING root_event_guid
+---STRING content_topic_guid
 Päätason tapahtuman GUID
 ---STRINGEND
 

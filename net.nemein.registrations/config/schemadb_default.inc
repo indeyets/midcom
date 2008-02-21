@@ -162,6 +162,7 @@
             'hidden' => true,
             'type' => 'text',
             'widget' => 'text',
+            'readonly' => true,
         ),
         'p_rname' => Array
         (
@@ -170,6 +171,7 @@
             'hidden' => true,
             'type' => 'text',
             'widget' => 'text',
+            'readonly' => true,
         ),
     )
 ), // end of 'person'

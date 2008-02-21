@@ -37,7 +37,7 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
      * @var net_nemein_registrations_event
      * @access private
      */
-    var $_root_event = null;
+    var $_content_topic = null;
 
     /**
      * The schema database (taken from the request data area)
@@ -78,7 +78,7 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
      */
     function _on_initialize()
     {
-        $this->_root_event =& $this->_request_data['root_event'];
+        $this->_content_topic =& $this->_request_data['content_topic'];
         $this->_schemadb =& $this->_request_data['schemadb'];
     }
 
@@ -122,7 +122,7 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
      */
     function _handler_list_all($handler_id, $args, &$data)
     {
-        $this->_root_event->require_do('net.nemein.registrations:manage');
+        $this->_content_topic->require_do('net.nemein.registrations:manage');
 
         $qb = net_nemein_registrations_event::get_events_querybuilder();
         $qb->add_order('start');
@@ -174,9 +174,9 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
      */
     function _handler_create($handler_id, $args, &$data)
     {
-        $this->_root_event->require_do('midgard:create');
+        $this->_content_topic->require_do('midgard:create');
 
-        $this->_controller =& $this->_root_event->prepare_create_controller($this);
+        $this->_controller =& net_nemein_registrations_event::prepare_create_controller($this);
         $this->_controller->initialize();
         $this->_process_create_controller();
 
@@ -225,7 +225,7 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
     {
         // Create a fresh storage object. We need sudo for this.
         $this->_event = new net_nemein_registrations_event();
-        $this->_event->up = $this->_root_event->id;
+        $this->_event->node = $this->_content_topic->id;
         if ($this->_config->get('event_type') !== null)
         {
             $this->_event->type = $this->_config->get('event_type');

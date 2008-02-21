@@ -29,7 +29,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
      * @var net_nemein_registrations_event
      * @access private
      */
-    var $_root_event = null;
+    var $_content_topic = null;
 
     /**
      * The schema database (taken from the request data area)
@@ -105,7 +105,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
      */
     function _on_initialize()
     {
-        $this->_root_event =& $this->_request_data['root_event'];
+        $this->_content_topic =& $this->_request_data['content_topic'];
         $this->_schemadb =& $this->_request_data['schemadb'];
         if ($_MIDCOM->auth->user)
         {
@@ -663,8 +663,8 @@ EOF;
     function _prepare_nullstorage_schemadb()
     {
         // A bit hackish but we need the full instance...
-        $interface =& $_MIDCOM->componentloader->get_interface_class('net.nemein.registrations');
-        $viewer =& $interface->_context_data[$_MIDCOM->_currentcontext]['handler'];
+        $interface = $_MIDCOM->componentloader->get_interface_class('net.nemein.registrations');
+        $viewer = $interface->_context_data[$_MIDCOM->get_current_context()]['handler'];
         $this->_nullstorage_schemadb['merged'] = $viewer->create_merged_schema($this->_event, $this->_registrar);
         /*
         debug_push_class(__CLASS__, __FUNCTION__);

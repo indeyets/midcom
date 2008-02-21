@@ -435,7 +435,7 @@ Reject and delete registration
 Reject and delete registration and registrar
 ---STRINGEND
 
----STRING root_event_guid
+---STRING content_topic_guid
 The GUID of the root event to use
 ---STRINGEND
 

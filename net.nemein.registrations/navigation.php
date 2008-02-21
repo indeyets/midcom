@@ -24,7 +24,7 @@ class net_nemein_registrations_navigation extends midcom_baseclasses_components_
      * @var net_nemein_calendar_event_dba
      * @access private
      */
-    var $_root_event = null;
+    var $_content_topic = null;
 
     /**
      * Simple constructor, calls base class.
@@ -36,7 +36,7 @@ class net_nemein_registrations_navigation extends midcom_baseclasses_components_
 
     function get_leaves()
     {
-        if (   !$this->_config->get('root_event_guid')
+        if (   !$this->_config->get('content_topic_guid')
             || !$this->_config->get('display_leaves'))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -47,14 +47,15 @@ class net_nemein_registrations_navigation extends midcom_baseclasses_components_
 
         $result = Array();
 
-        $this->_load_root_event();
+        $this->_load_content_topic();
         $qb = net_nemein_calendar_event_dba::new_query_builder();
-        $qb->add_constraint('up', '=', $this->_root_event->id);
+        $qb->add_constraint('node', '=', $this->_content_topic->id);
+        
         if ($this->_config->get('event_type') !== null)
         {
             $qb->add_constraint('type', '=', $this->_config->get('event_type'));
         }
-        $qb->add_constraint('end', '>', time());
+        $qb->add_constraint('end', '>', gmdate('Y-m-d H:i:s'));
         $qb->add_order('start');
         $query_result = $qb->execute();
 
@@ -72,10 +73,10 @@ class net_nemein_registrations_navigation extends midcom_baseclasses_components_
                      ),
                      MIDCOM_NAV_GUID => $event->guid,
                      MIDCOM_NAV_TOOLBAR => null,
-                     MIDCOM_META_CREATOR => $event->creator,
-                     MIDCOM_META_EDITOR => $event->revisor,
-                     MIDCOM_META_CREATED => $event->created,
-                     MIDCOM_META_EDITED => $event->revised
+                     MIDCOM_META_CREATOR => $event->metadata->creator,
+                     MIDCOM_META_EDITOR => $event->metadata->revisor,
+                     MIDCOM_META_CREATED => $event->metadata->created,
+                     MIDCOM_META_EDITED => $event->metadata->revised
                 );
             }
         }
@@ -85,13 +86,14 @@ class net_nemein_registrations_navigation extends midcom_baseclasses_components_
     /**
      * Tries to load the Systemwide root event.
      */
-    function _load_root_event()
+    function _load_content_topic()
     {
-        if (! $this->_root_event)
+        if (! $this->_content_topic)
         {
-            $guid = $this->_config->get('root_event_guid');
-            $this->_root_event = new net_nemein_calendar_event_dba($guid);
-            if (! $this->_root_event)
+            $guid = $this->_config->get('content_topic_guid');
+            $this->_content_topic = new midcom_db_topic($guid);
+            if (   !$this->_content_topic
+                || !$topic->_content_topic->guid)
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Failed to load the root event '{$guid}', last Midgard error was: " . mgd_errstr());

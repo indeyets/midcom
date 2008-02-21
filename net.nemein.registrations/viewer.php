@@ -141,11 +141,6 @@ class net_nemein_registrations_viewer extends midcom_baseclasses_components_requ
 
 
         // Administrative stuff
-        $this->_request_switch['admin-rootevent'] = Array
-        (
-            'handler' => Array('net_nemein_registrations_handler_admin', 'rootevent'),
-            'fixed_args' => Array('admin', 'rootevent'),
-        );
         $this->_request_switch['admin-register'] = Array
         (
             'handler' => Array('net_nemein_registrations_handler_register', 'register'),
@@ -165,12 +160,12 @@ class net_nemein_registrations_viewer extends midcom_baseclasses_components_requ
     function _on_handle($handler_id, $args)
     {
         // Pre-initialize the request data so that any class startup will succeed
-        $this->_request_data['root_event'] = null;
+        $this->_request_data['content_topic'] = null;
         $this->_request_data['schemadb'] = null;
 
         //echo "DEBUG: _on_handle: 1180179900 comes " . date('Y-m-d H:i:s T (Z)', 1180179900) . ") (TZ: " . getenv('TZ') . ")<br>\n";
 
-        $this->_load_root_event($handler_id);
+        $this->_load_content_topic($handler_id);
         //echo "DEBUG: _on_handle (after load root event): 1180179900 comes " . date('Y-m-d H:i:s T (Z)', 1180179900) . ") (TZ: " . getenv('TZ') . ")<br>\n";
         $this->_load_schemadb();
         //echo "DEBUG: _on_handle (after schemadb): 1180179900 comes " . date('Y-m-d H:i:s T (Z)', 1180179900) . ") (TZ: " . getenv('TZ') . ")<br>\n";
@@ -189,30 +184,25 @@ class net_nemein_registrations_viewer extends midcom_baseclasses_components_requ
      *
      * @param $handler_id The handler ID to load the root event for.
      */
-    function _load_root_event($handler_id)
+    function _load_content_topic($handler_id)
     {
-        $guid = $this->_config->get('root_event_guid');
+        $guid = $this->_config->get('content_topic_guid');
         if (! $guid)
         {
-            if ($handler_id == 'admin-rootevent')
-            {
-                $this->_request_data['root_event'] = null;
-                return;
-            }
-
-            // Component has no configured root event (this will check permissions)
-            $_MIDCOM->relocate('admin/rootevent.html');
-            // This will exit.
+            // Fall back to listing events from current topic
+            $this->_request_data['content_topic'] = $this->_topic;
+            return;
         }
 
-        $event = new net_nemein_registrations_event($guid);
-        if (! $event)
+        $topic = new midcom_db_topic($guid);
+        if (   !$topic
+            || !$topic->guid)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                "Failed to load the root event '{$guid}', last Midgard error was: " . mgd_errstr());
+                "Failed to load the event topic '{$guid}', last Midgard error was: " . mgd_errstr());
             // This will exit.
         }
-        $this->_request_data['root_event'] = $event;
+        $this->_request_data['content_topic'] = $topic;
     }
 
     /**

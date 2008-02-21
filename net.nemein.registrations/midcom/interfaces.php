@@ -28,7 +28,7 @@
  *
  * During each request, these keys will always be available:
  *
- * - net_nemein_calendar_event_dba 'root_event': The root event to use.
+ * - midcom_db_topic 'content_topic': The content topic to use.
  * - array 'schemadb': The schemadb specified in the configuration.
  *
  * Be aware that this data isloaded during the _on_handle callback, which means that you can't make
@@ -73,7 +73,6 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
         $this->_autoload_files = Array
         (
             'viewer.php',
-            'admin.php',
             'navigation.php',
             'event.php',
             'registrar.php',
@@ -88,14 +87,19 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
 
     function _on_initialize()
     {
-        $_MIDCOM->componentloader->load('net.nemein.calendar');
-        return true;
+        return $_MIDCOM->componentloader->load_graceful('net.nemein.calendar');
     }
 
     function _on_reindex($topic, $config, &$indexer)
     {
-        $root_event = new net_nemein_calendar_event_dba($config->get('root_event'));
-        if (! $root_event)
+        $content_topic_guid = $config->get('content_topic');
+        if (!$content_topic_guid)
+        {
+            $content_topic_guid = $topic->guid;
+        }
+        $content_topic = new midcom_db_topic($content_topic_guid);
+        if (   !$content_topic
+            || !$content_topic->guid)
         {
             debug_add("Failed to load root event, aborting.");
             return;
@@ -108,7 +112,7 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
         }
 
         $qb = net_nemein_calendar_event_dba::new_query_builder();
-        $qb->add_constraint('up', '=', $root_event->id);
+        $qb->add_constraint('node', '=', $content_topic->id);
         $result = $qb->execute();
 
         if ($result)
@@ -133,10 +137,15 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
 
     function _on_resolve_permalink($topic, $config, $guid)
     {
-        $root_event = new net_nemein_calendar_event_dba($config->get('root_event'));
-        if (   !$root_event
-            || !isset($root_event->guid)
-            || empty($root_event->guid))
+        $content_topic_guid = $config->get('content_topic');
+        if (!$content_topic_guid)
+        {
+            $content_topic_guid = $topic->guid;
+        }
+        $content_topic = new midcom_db_topic($content_topic_guid);
+        if (   !$content_topic
+            || !isset($content_topic->guid)
+            || empty($content_topic->guid))
         {
             return null;
         }
@@ -144,7 +153,7 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
         $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
 
         if (   is_a($object, 'net_nemein_calendar_event_dba')
-            && $object->up == $root_event->id)
+            && $object->node == $content_topic->id)
         {
             return "event/view/{$guid}/";
         }
@@ -152,7 +161,8 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
         if (is_a($object, 'net_nemein_registrations_registration_dba'))
         {
             $event = new net_nemein_calendar_event_dba($object->eid);
-            if ($event->up == $root_event->id)
+            if (   $event->guid
+                && $event->node == $content_topic->id)
             {
                 return "registration/view/{$guid}/";
             }

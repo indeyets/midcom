@@ -64,9 +64,9 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function net_nemein_registrations_registration_dba($id = null)
+    function __construct($id = null)
     {
-        return parent::__net_nemein_registrations_registration_dba($id);
+        return parent::__construct($id);
     }
 
     /**
@@ -149,17 +149,6 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
         $ret = $plugin_instance->process($this);
         unset($GLOBALS[$flag]);
         return $ret;
-    }
-
-    /**
-     * Overwrite the query builder getter with a version retrieving the right type.
-     * We need a better solution here in DBA core actually, but it will be difficult to
-     * do this as we cannot determine the current class in a polymorphic environment without
-     * having a this (this call is static).
-     */
-    function new_query_builder()
-    {
-        return $_MIDCOM->dbfactory->new_query_builder(__CLASS__);
     }
 
     /**

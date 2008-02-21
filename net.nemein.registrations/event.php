@@ -74,7 +74,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
      *
      * @access private
      */
-    var $_root_event;
+    var $_content_topic;
 
     /**
      * The DM2 datamanager instance encapsulating this object. Initialized on first access
@@ -104,9 +104,9 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function net_nemein_registrations_event($id = null)
+    function __construct($id = null)
     {
-        return parent::net_nemein_calendar_event_dba($id);
+        return parent::__construct($id);
     }
 
     function _on_created()
@@ -118,7 +118,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
     function _do_bindings()
     {
         $this->_bind_to_request_data();
-        $this->_root_event =& $this->_request_data['root_event'];
+        $this->_content_topic =& $this->_request_data['content_topic'];
 
         $start_ts = strtotime($this->start);
         $end_ts = strtotime($this->end);
@@ -494,7 +494,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             return "{$prefix}register/{$this->guid}.html";
         }
-        if (! $this->_root_event->can_do('midgard:create'))
+        if (! $this->_content_topic->can_do('midgard:create'))
         {
             return false;
         }
@@ -548,6 +548,17 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
     // ***************** QUERY TOOLS *********************
 
     /**
+     * Overwrite the query builder getter with a version retrieving the right type.
+     * We need a better solution here in DBA core actually, but it will be difficult to
+     * do this as we cannot determine the current class in a polymorphic environment without
+     * having a this (this call is static).
+     */
+    static function new_query_builder()
+    {
+        return $_MIDCOM->dbfactory->new_query_builder(__CLASS__);
+    }
+
+    /**
      * This function returns a query builder prepared to query all events linked to the
      * root event associated with the current request state. If an event type filter is
      * configured, this is taken into account as well.
@@ -560,29 +571,17 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
     function get_events_querybuilder()
     {
         $request_data =& $_MIDCOM->get_custom_context_data('request_data');
-        $root_event =& $this->_request_data['root_event'];
+        $content_topic =& $this->_request_data['content_topic'];
         $config =& $this->_request_data['config'];
 
         $qb = net_nemein_registrations_event::new_query_builder();
-
-        $qb->add_constraint('up', '=', $root_event->id);
+        $qb->add_constraint('node', '=', $content_topic->id);
         if ($config->get('event_type') !== null)
         {
             $qb->add_constraint('type', '=', $config->get('event_type'));
         }
 
         return $qb;
-    }
-
-    /**
-     * Overwrite the query builder getter with a version retrieving the right type.
-     * We need a better solution here in DBA core actually, but it will be difficult to
-     * do this as we cannot determine the current class in a polymorphic environment without
-     * having a this (this call is static).
-     */
-    function new_query_builder()
-    {
-        return $_MIDCOM->dbfactory->new_query_builder(__CLASS__);
     }
 
     /**
@@ -661,7 +660,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
     function list_all()
     {
         $qb = net_nemein_registrations_event::get_events_querybuilder();
-        $qb->add_constraint('end', '>', date('Y-m-d H:i:s'));
+        $qb->add_constraint('end', '>', gmdate('Y-m-d H:i:s'));
         $qb->add_order('start');
         //mgd_debug_start();
         $ret = $qb->execute();

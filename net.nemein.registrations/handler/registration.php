@@ -29,7 +29,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
      * @var net_nemein_registrations_event
      * @access private
      */
-    var $_root_event = null;
+    var $_content_topic = null;
 
     /**
      * The schema database (taken from the request data area)
@@ -175,7 +175,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
      */
     function _on_initialize()
     {
-        $this->_root_event =& $this->_request_data['root_event'];
+        $this->_content_topic =& $this->_request_data['content_topic'];
         $this->_schemadb =& $this->_request_data['schemadb'];
     }
 

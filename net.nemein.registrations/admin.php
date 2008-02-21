@@ -39,8 +39,8 @@ class net_nemein_registrations_admin extends midcom_baseclasses_components_reque
     /*
      * Legacy Code
 
-    function _create_root_event () {
-        debug_push($this->_debug_prefix . "_create_root_event" );
+    function _create_content_topic () {
+        debug_push($this->_debug_prefix . "_create_content_topic" );
         $event = mgd_get_event();
         $event->owner = $this->_topic->owner;
         $event->title = "__CAMPAIGN";
@@ -56,11 +56,11 @@ class net_nemein_registrations_admin extends midcom_baseclasses_components_reque
             return false;
         }
         $event = mgd_get_event($id);
-        $this->_topic->parameter("net.nemein.registrations","root_event_guid",$event->guid());
+        $this->_topic->parameter("net.nemein.registrations","content_topic_guid",$event->guid());
         $msg = sprintf($this->_l10n->get("created root event <em>%s</em>"),
                        $event->title);
         $GLOBALS["view_contentmgr"]->msg .= "$msg<br>\n";
-        $this->_root_event = $event;
+        $this->_content_topic = $event;
         debug_pop();
         return true;
     }
