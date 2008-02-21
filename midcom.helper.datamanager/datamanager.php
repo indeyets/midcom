@@ -1433,7 +1433,7 @@ class midcom_helper_datamanager {
                  */
                 if (isset($field['widget_content_start']))
                 {
-                    echo '<p>' . htmlspecialchars($field['widget_content_start']) . '</p>\n';
+                    echo '<p>' . htmlspecialchars($field['widget_content_start']) . "</p>\n";
                 }
 
                 $widget->draw_widget();
@@ -1443,7 +1443,7 @@ class midcom_helper_datamanager {
                  */
                 if (isset($field['widget_content_end']))
                 {
-                    echo '<p>' . htmlspecialchars($field['widget_content_end']) . '</p>\n';
+                    echo '<p>' . htmlspecialchars($field['widget_content_end']) . "</p>\n";
                 }
 
                 $widget->draw_widget_end();
