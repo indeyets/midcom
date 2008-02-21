@@ -519,7 +519,7 @@ class midcom_baseclasses_components_interface
      * - <i>admin</i> A flag indicating whether we are in Admin mode or not (set during configure)
      * - <i>handler</i> The class handling the request.
      */
-    private $_context_data = Array();
+    public $_context_data = Array();
 
     /**
      * Configures the component for usage. The configuration is merged, and,
