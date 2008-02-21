@@ -1,41 +1,154 @@
-// nb = Norwegian (bokm&aring;l) lang variables by Knut B. Jacobsen
-
-tinyMCE.addToLang('',{
-bold_desc : 'Fet',
-italic_desc : 'Kursiv',
-underline_desc : 'Understreking',
-striketrough_desc : 'Gjennomstreking',
-justifyleft_desc : 'Venstrestill',
-justifycenter_desc : 'Sentrer',
-justifyright_desc : 'H&oslash;yrestill',
-justifyfull_desc : 'Blokkjustering',
-bullist_desc : 'Punktliste',
-numlist_desc : 'Nummerliste',
-outdent_desc : 'Reduser innrykk',
-indent_desc : '&Oslash;k innrykk',
-undo_desc : 'Angre',
-redo_desc : 'Gj&oslash;r om',
-link_desc : 'Opprett/endre lenke',
-unlink_desc : 'Fjern lenke',
-image_desc : 'Sett inn/endre bilde',
-cleanup_desc : 'Rens grisete kode',
-focus_alert : 'Editoren m&aring; v&aelig;re i fokus f&oslash;r du benytter denne kommando.',
-edit_confirm : 'Vil du benytte WYSIWYG editoren for dette tekstfelt?',
-insert_link_title : 'Opprett/endre lenke',
-insert : 'Sett inn',
-update : 'Oppdater',
-cancel : 'Avbryt',
-insert_link_url : 'Lenkens URL',
-insert_link_target : 'Vindu',
-insert_link_target_same : '&Aring;pne i samme vindu',
-insert_link_target_blank : '&Aring;pne i nytt vindu',
-insert_image_title : 'Opprett/endre bilde',
-insert_image_src : 'Bildets URL',
-insert_image_alt : 'Bildets beskrivelse',
-help_desc : 'Hjelp',
-bold_img : 'bold_de_se.gif',
-italic_img : 'italic_de_se.gif',
-underline_img : 'underline.gif',
-clipboard_msg : 'Klipp ut/Kopier/Lim inn fungerer ikke i Mozilla og Firefox. Vil du vite mer om dette?',
-popup_blocked : 'Sorry, but we have noticed that your popup-blocker has disabled a window that provides application functionality. You will need to disable popup blocking on this site in order to fully utilize this tool.'
-});
+tinyMCE.addI18n({nb:{
+common:{
+edit_confirm:"Vil du benytte WYSIWYG editoren for dette tekstfelt?",
+apply:"Bruk",
+insert:"Sett inn",
+update:"Oppdater",
+cancel:"Avbryt",
+close:"Lukk",
+browse:"Bla gjennom",
+class_name:"Stil",
+not_set:"-- Ikke satt --",
+clipboard_msg:"Kopier/Klipp ut/Lim inn er ikke tilgjengelig i Mozilla/Firefox. Vil du ha mere informasjon om dette?",
+clipboard_no_support:"For tiden ikke st\u00F8ttet av din nettleser, benytt tastatursnarveier i stedet.",
+popup_blocked:"En popup-blokker har sperret et vindu med viktig funksjonalitet, for \u00E5 benytte deg av denne funksjonaliteten m\u00E5 du deaktivere popup-blokkeren for dette nettstedet.",
+invalid_data:"Feil: Ugyldige, verdier merket med r\u00F8dt, er angitt",
+more_colors:"Flere farger"
+},
+contextmenu:{
+align:"Justering",
+left:"Venstre",
+center:"Sentrert",
+right:"H\u00F8yre",
+full:"Full"
+},
+insertdatetime:{
+date_fmt:"%Y-%m-%d",
+time_fmt:"%H:%M:%S",
+insertdate_desc:"Sett inn dato",
+inserttime_desc:"Sett inn tidspunkt",
+months_long:"januar,februar,mars,april,mai,juni,juli,august,september,oktober,november,desember",
+months_short:"jan,feb,mar,apr,mai,jun,jul,aug,sep,oct,nov,des",
+day_long:"s\u00F8ndag,mandag,tirsdag,onsdag,torsdag,fredag,l\u00F8rdag,s\u00F8ndag",
+day_short:"s\u00F8n,man,tir,ons,tor,fre,l\u00F8r,s\u00F8n"
+},
+print:{
+print_desc:"Utskrift"
+},
+preview:{
+preview_desc:"Forh\u00E5ndsvis"
+},
+directionality:{
+ltr_desc:"Retning venstre mot h\u00F8yre",
+rtl_desc:"Retning h\u00F8yre mot venstre"
+},
+layer:{
+insertlayer_desc:"Opprett nytt 'layer'",
+forward_desc:"Flytt forover",
+backward_desc:"Flytt bakover",
+absolute_desc:"P\u00E5/av absolutt posisjonering",
+content:"Nytt 'layer'..."
+},
+save:{
+save_desc:"Lagre",
+cancel_desc:"Kanseller alle endringer"
+},
+nonbreaking:{
+nonbreaking_desc:"Sett inn 'non-breaking' blank karakter"
+},
+iespell:{
+iespell_desc:"Kj\u00F8r stavekontroll",
+download:"ieSpell ikke funnet. \u00D8nsker du \u00E5 installere ieSpell n\u00E5?"
+},
+advhr:{
+advhr_desc:"Horisontal 'ruler'"
+},
+emotions:{
+emotions_desc:"F\u00F8lelser"
+},
+searchreplace:{
+search_desc:"S\u00F8k",
+replace_desc:"S\u00F8k/Erstatt"
+},
+advimage:{
+image_desc:"Opprett/endre bilde"
+},
+advlink:{
+link_desc:"Opprett/endre lenke"
+},
+xhtmlxtras:{
+cite_desc:"Henvisning",
+abbr_desc:"Forkortelse",
+acronym_desc:"Bokstavord",
+del_desc:"Fjerning",
+ins_desc:"Innsetting",
+attribs_desc:"Opprett/Endre Egenskaper"
+},
+style:{
+desc:"Edit CSS Style"
+},
+paste:{
+paste_text_desc:"Lim inn som 'ren' tekst",
+paste_word_desc:"Lim inn fra Office",
+selectall_desc:"Velg alt"
+},
+paste_dlg:{
+text_title:"Bruk CTRL+V p\u00E5 tastaturet ditt for \u00E5 lime inn i dette vinduet.",
+text_linebreaks:"Behold linjebrudd",
+word_title:"Bruk CTRL+V p\u00E5 tastaturet ditt for \u00E5 lime inn i dette vinduet."
+},
+table:{
+desc:"Sett inn en ny tabell",
+row_before_desc:"Sett inn rad foran",
+row_after_desc:"Sett inn rad etter",
+delete_row_desc:"Fjern rad",
+col_before_desc:"Sett inn kolonne foran",
+col_after_desc:"Sett inn kolonne etter",
+delete_col_desc:"Fjern kolonne",
+split_cells_desc:"Splitt tabell celler",
+merge_cells_desc:"Sl\u00E5 sammen tabell celler",
+row_desc:"Tabell rad egenskaper",
+cell_desc:"Tabell celle egenskaper",
+props_desc:"Tabell egenskaper",
+paste_row_before_desc:"Lim inn tabell rad foran",
+paste_row_after_desc:"Lim inn tabell rad etter",
+cut_row_desc:"Klipp ut tabell rad",
+copy_row_desc:"Kopier tabell rad",
+del:"Fjern tabell",
+row:"Rad",
+col:"Kolonne",
+cell:"Celle"
+},
+autosave:{
+unload_msg:"Endringene du gjorde kommer du til \u00E5 miste om du velger \u00E5 forlate denne siden."
+},
+fullscreen:{
+desc:"Sl\u00E5 av/p\u00E5 fullskjerm"
+},
+media:{
+desc:"Opprett / endre innsatt media",
+edit:"Endre innsatt media"
+},
+fullpage:{
+desc:"Dokument egenskaper"
+},
+template:{
+desc:"Sett inn en forh\u00E5ndsdefinert mal"
+},
+visualchars:{
+desc:"Visuell kontroll karakterer av/p\u00E5."
+},
+spellchecker:{
+desc:"Stavekontroll",
+menu:"Oppsett stavekontroll",
+ignore_word:"Ignorer ordet",
+ignore_words:"Ignorer alt",
+langs:"Spr\u00E5k",
+wait:"Vennligst vent...",
+sug:"Forslag",
+no_sug:"Ingen forslag",
+no_mpell:"Ingen stavefeil funnet."
+},
+pagebreak:{
+desc:"Insert page break."
+}}});
