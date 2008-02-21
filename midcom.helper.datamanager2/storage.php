@@ -110,6 +110,12 @@ class midcom_helper_datamanager2_storage extends midcom_baseclasses_components_p
                     continue;
                 }
             }
+            
+            if ($type_definition['readonly'])
+            {
+                // Skip storage as we may raise exceptions if the field doesn't exist
+                continue;
+            }
 
             // Convert_to_storage is called always, the event handler can be used to manage
             // non-storage-backend driven storage operations as well (mainly for the blob type)
