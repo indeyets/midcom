@@ -1427,6 +1427,25 @@ class midcom_helper_datamanager {
                 }
 
                 $widget->draw_widget_start();
+
+                /*
+                 * Adds a paragraph to the start of the field's content.
+                 */
+                if (isset($field['widget_content_start']))
+                {
+                    echo '<p>' . htmlspecialchars($field['widget_content_start']) . '</p>\n';
+                }
+
+                $widget->draw_widget();
+
+                /*
+                 * Adds a paragraph to the end of the field's content.
+                 */
+                if (isset($field['widget_content_end']))
+                {
+                    echo '<p>' . htmlspecialchars($field['widget_content_end']) . '</p>\n';
+                }
+
                 $widget->draw_widget();
                 $widget->draw_widget_end();
 
