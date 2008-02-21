@@ -56,7 +56,7 @@ else
     if (isset($view['id']))
     {
 ?>
-<input type="radio" name="net_nemein_quickpoll_option" value="&(view['id']);" id="net_nemein_quickpoll_option_&(view['id']);">
+<input type="radio" name="net_nemein_quickpoll_option" value="&(view['id']);" id="net_nemein_quickpoll_option_&(view['id']);" />
 <label for="net_nemein_quickpoll_option_&(view['id']);"> &(view['title']:h);</label>
 <?php
     }
