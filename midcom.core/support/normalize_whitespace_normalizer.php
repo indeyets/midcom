@@ -8,6 +8,7 @@ class midcom_support_wsnormalizer
     (
         'newlines',
         'clearnulls',
+        'clear_start_bom',
         'tabs2spaces',
         'open_pre_strip',
         'close_post_strip',
@@ -31,6 +32,17 @@ class midcom_support_wsnormalizer
             $data = $this->$op($data);
         }
         return $data;
+    }
+
+    /**
+     * Replaces Unicode Byte Order Marks in beginning of the string with empty string
+     *
+     * @param string $data data to normalize (usually file contents)
+     * @return string normalized
+     */    
+    function clear_start_bom($data)
+    {
+        return preg_replace('%^((\xEF\xBB\xBF)|(\xFF\xFE)|(\xFE\xFF)|(\xFF\xFE)|(\xFF\xFE\x0\x0)|(\x0\x0\xFE\xFF))+%', '', $data);
     }
 
     /**
