@@ -3,7 +3,7 @@
     $.datamanager2 = $.datamanager2 || {};
     $.datamanager2.imagepopup = {
         items: ''
-    }
+    };
     
     function dm2ImagePopupConverter(item, options)
     {
