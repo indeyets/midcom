@@ -1446,7 +1446,6 @@ class midcom_helper_datamanager {
                     echo '<p>' . htmlspecialchars($field['widget_content_end']) . '</p>\n';
                 }
 
-                $widget->draw_widget();
                 $widget->draw_widget_end();
 
                 if (   $display_hidden == true
