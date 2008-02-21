@@ -12,4 +12,4 @@ CREATE TABLE midcom_helper_replicator_subscription (
   KEY midcom_helper_replicator_subscription_sitegroup_idx (sitegroup),
   KEY midcom_helper_replicator_subscription_status_idx (status),
 );
-ALTER TABLE midcom_helper_replicator_subscription ADD COLUMN filtersSerialized longtext NOT NULL default '';
+ALTER TABLE midcom_helper_replicator_subscription ADD COLUMN filtersSerialized text NOT NULL default '';
