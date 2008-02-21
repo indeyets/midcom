@@ -2,13 +2,23 @@
                    ----------------------------------
 Legend:
 - All items marked with "!" represent a major API-Change that is
-  not guranteed to be backwards compatible to previous versions
+  not guaranteed to be backwards compatible to previous versions
   which might even break existing functionality.
 - All items marked with "+" represent completly new features.
+
+2008-02-21 bergie
+  ! Switch properly to using event's topic (node) instead of up
+
+2008-01-30 rambo
+  - nicer registrations list styling
+  + make it possible to mark registrations paid
+  - better CSV export using midcom baseclass
+  + admins can register other people to events
 
 2008-01-23 rambo
   ! style-engine based accept/reject mail rendering, breaks mail
     template compatibility
+  + pricing plugin system
 
 2008-01-21 rambo
   ! compatibility with n.n.calendar 2.x versions, breaks almost all backwards compatibility (though so did n.n.calendar...)
