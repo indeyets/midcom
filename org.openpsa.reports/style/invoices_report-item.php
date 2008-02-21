@@ -17,7 +17,7 @@ if ($data['invoice']->customer)
 ?>
     <tr&(data['row_class']:h);>
         <td class="id">&(data['invoice_string']:h);</td>
-    	<td><?php echo strftime('%x', $data['invoice']->due); ?></td>
+        <td><?php echo strftime('%x', $data['invoice']->due); ?></td>
         <td>&(customer_card:h);</td>
         <td class="contact"><?php echo $customerContact_card->show_inline(); ?></td>
         <td class="sum"><?php echo sprintf("%01.2f", $data['invoice']->sum); ?></td>

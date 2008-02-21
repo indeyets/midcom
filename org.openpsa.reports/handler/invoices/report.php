@@ -68,10 +68,10 @@ class org_openpsa_reports_handler_invoices_report extends org_openpsa_reports_ha
 
         // List invoices
         $invoice_qb = org_openpsa_invoices_invoice::new_query_builder();
-		$invoice_qb->begin_group('AND');
-			$invoice_qb->add_constraint('due', '>=', $data['start']);
-			$invoice_qb->add_constraint('due', '<', $data['end']);
-		$invoice_qb->end_group();
+        $invoice_qb->begin_group('AND');
+            $invoice_qb->add_constraint('due', '>=', $data['start']);
+            $invoice_qb->add_constraint('due', '<', $data['end']);
+        $invoice_qb->end_group();
         if ($this->_request_data['query_data']['resource'] != 'all')
         {
             $this->_request_data['query_data']['resource_expanded'] = $this->_expand_resource($this->_request_data['query_data']['resource']);
@@ -156,7 +156,7 @@ class org_openpsa_reports_handler_invoices_report extends org_openpsa_reports_ha
             $sums_per_person[$invoice->owner]['price'] += $invoice->sum;
             $sums_all['price'] += $invoice->sum;
 
-			$data['invoice'] = $invoice;
+            $data['invoice'] = $invoice;
 
             midcom_show_style('invoices_report-item');
         }

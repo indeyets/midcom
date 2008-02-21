@@ -21,15 +21,15 @@ class pl_olga_windguru_status_dba extends __pl_olga_windguru_status_dba
      */
     function get_label()
     {
-		switch ($this->status)
-		{
-			case WG_STATUS_GFS:
-				return "Model GFS";
-			case WG_STATUS_NWW3:
-				return "Model NWW3";
-			default:
-				return $this->status;
-		}
+        switch ($this->status)
+        {
+            case WG_STATUS_GFS:
+                return "Model GFS";
+            case WG_STATUS_NWW3:
+                return "Model NWW3";
+            default:
+                return $this->status;
+        }
     }
 }
 
