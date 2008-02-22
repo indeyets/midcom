@@ -228,7 +228,7 @@ Edit %s
 ---STRINGEND
 
 ---STRING edit design
-Edig design
+Edit design
 ---STRINGEND
 
 ---STRING edit page

@@ -2,7 +2,7 @@
 
 /**
  * @package midcom.helper.search
- * @author The Midgard Project, http://www.midgard-project.org 
+ * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id$
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
@@ -10,51 +10,51 @@
 
 /**
  * MidCOM Indexer Front-End, Viewer Class
- * 
+ *
  * ...
- * 
+ *
  * @package midcom.helper.search
  */
 class midcom_helper_search_viewer extends midcom_baseclasses_components_request
 {
     /**
      * Constructor.
-     * 
+     *
      * Nothing fancy, defines the request switch.
      */
     function midcom_helper_search_viewer($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
-        
+
         // Default search form, no args, Basic search from
         $this->_request_switch['basic'] = array
         (
             'handler' => 'searchform'
         );
-        
+
         // Resultlists, controlled using HTTP GET/POST
         $this->_request_switch[] = array
         (
-            'fixed_args' => 'result', 
-            'no_cache' => true, 
+            'fixed_args' => 'result',
+            'no_cache' => true,
             'handler' => 'result'
         );
-        
+
         // Advanced search form, no args
         $this->_request_switch['advanced'] = array
         (
             'fixed_args' => 'advanced',
             'handler' => 'searchform'
         );
-        
+
         // OpenSearch description file
         $this->_request_switch['opensearch_description'] = array
-        ( 
-            'fixed_args' => 'opensearch.xml', 
-            'handler' => 'opensearchdescription' 
+        (
+            'fixed_args' => 'opensearch.xml',
+            'handler' => 'opensearchdescription'
         );
     }
-    
+
     function _on_handle($handler_id, $args)
     {
         $_MIDCOM->add_link_head
@@ -67,18 +67,18 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
                 'href'  => $_MIDCOM->get_host_name() . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . 'opensearch.xml',
             )
         );
-        
+
         return true;
     }
 
     /**
      * Search form handler, nothing to do here.
-     * 
+     *
      * It uses the handler ID to distinguish between basic and advanced search forms.
-     * 
+     *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param mixed &$data The local request data. 
+     * @param mixed &$data The local request data.
      * @return boolean Indicating success.
      */
     function _handler_searchform($handler_id, $args, &$data)
@@ -88,14 +88,14 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
             case 'basic':
                 $data['query'] = (array_key_exists('query', $_REQUEST) ? $_REQUEST['query'] : '');
                 break;
-            
+
             case 'advanced':
                 $data['query'] = (array_key_exists('query', $_REQUEST) ? $_REQUEST['query'] : '');
                 //$data['topic'] = (array_key_exists('topic', $_REQUEST) ? $_REQUEST['topic'] : '');
                 $data['component'] = (array_key_exists('component', $_REQUEST) ? $_REQUEST['component'] : '');
                 $data['lastmodified'] = (array_key_exists('lastmodified', $_REQUEST) ? ((integer) $_REQUEST['lastmodified']) : 0);
                 break;
-                
+
             default:
                 $this->errstr = "Wrong handler ID {$handler_id} for searchform handler";
                 $this->errcode = MIDCOM_ERRCRIT;
@@ -107,10 +107,10 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
 
     /**
      * Search form show handler, displays the search form, including
-     * some hints about how to write queries. 
-     * 
+     * some hints about how to write queries.
+     *
      * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data. 
+     * @param mixed &$data The local request data.
      */
     function _show_searchform($handler_id, &$data)
     {
@@ -160,17 +160,17 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
 
     /**
      * Queries the information from the index and prepares to display the result page.
-     * 
+     *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param mixed &$data The local request data. 
+     * @param mixed &$data The local request data.
      * @return boolean Indicating success.
      */
     function _handler_result($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $indexer =& $_MIDCOM->get_service('indexer');
-        
+
         // Sane defaults for REQUEST vars
         if (!isset($_REQUEST['type']))
         {
@@ -223,7 +223,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
                 debug_add("Final query: {$final_query}");
                 $result = $indexer->query($final_query);
                 break;
-            
+
             case 'advanced':
                 $data['request_topic'] = trim($_REQUEST['topic']);
                 $data['component'] = trim($_REQUEST['component']);
@@ -236,7 +236,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
                 {
                     $filter = null;
                 }
-                
+
                 if ($data['query'] != '' )
                 {
                     $final_query = ( $GLOBALS['midcom_config']['indexer_backend'] == 'solr' ) ? $data['query'] : "({$data['query']})";
@@ -245,7 +245,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
                 {
                     $final_query = '';
                 }
-                
+
                 if ($data['request_topic'] != '')
                 {
                     if ($final_query != '')
@@ -254,7 +254,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
                     }
                     $final_query .= "__TOPIC_URL:\"{$data['request_topic']}*\"";
                 }
-               
+
                 if ($data['component'] != '')
                 {
                     if ($final_query != '')
@@ -272,43 +272,43 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
 
                 $this->add_multilang_terms($final_query);
                 debug_add("Final query: {$final_query}");
-                
+
                 $result = $indexer->query($final_query, $filter);
                 break;
-                
+
             default:
                 $this->errstr = "Wrong handler ID {$handler_id} for searchform handler";
                 $this->errcode = MIDCOM_ERRCRIT;
                 debug_pop();
                 return false;
         }
-        
+
         if ($result === false)
         {
             // Error while searching, we ignore this silently, as this is usually
             // a broken query. We don't have yet a way to pass error messages from
-            // the indexer backend though (what would I give for a decent exectpion
+            // the indexer backend though (what would I give for a decent exception
             // handling here...)
             debug_add('Got boolean false as resultset (likely broken query), casting to empty array', MIDCOM_LOG_WARN);
             $result = Array();
         }
-        
+
         $count = count($result);
         $data['document_count'] = $count;
-        
+
         if ($count > 0)
         {
             $results_per_page = $this->_config->get('results_per_page');
             $max_pages = ceil($count / $results_per_page);
-            $page = min($_REQUEST['page'], $max_pages); 
+            $page = min($_REQUEST['page'], $max_pages);
             $first_document_id = ($page - 1) * $results_per_page;
             $last_document_id = min(($count - 1), (($page * $results_per_page) - 1));
-            
+
             $data['page'] = $page;
             $data['max_pages'] = $max_pages;
             $data['first_document_number'] = $first_document_id + 1;
             $data['last_document_number'] = $last_document_id + 1;
-            $data['shown_documents'] = $last_document_id - $first_document_id + 1; 
+            $data['shown_documents'] = $last_document_id - $first_document_id + 1;
             $data['results_per_page'] = $results_per_page;
             $data['result'] = array_slice($result, $first_document_id, $results_per_page);
         }
@@ -318,7 +318,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
 
     /**
      * Displays the resultset.
-     * 
+     *
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */
@@ -333,13 +333,13 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
             midcom_show_style('no_match');
         }
     }
-    
+
     /**
      * Prepare OpenSearch data file for browser search bar integration.
-     * 
+     *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
-     * @param mixed &$data The local request data. 
+     * @param mixed &$data The local request data.
      * @return boolean Indicating success.
      */
     function _handler_opensearchdescription($handler_id, $args, &$data)
@@ -349,10 +349,10 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         $_MIDCOM->skip_page_style = true;
         return true;
     }
-    
+
     /**
      * Display OpenSearch data file for browser search bar integration.
-     * 
+     *
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */

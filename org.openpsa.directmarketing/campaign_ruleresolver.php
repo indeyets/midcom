@@ -236,7 +236,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                 case is_a($obj, 'midgard_eventmember'):
                     $array[$k] = new org_openpsa_contacts_person($obj->uid);
                     break;
-                //Expand various parameters to correctpondig org_openpsa_contacts_person(s)
+                //Expand various parameters to corresponding org_openpsa_contacts_person(s)
                 case is_a($obj, 'midgard_parameter'):
                     switch ($obj->tablename)
                     {
