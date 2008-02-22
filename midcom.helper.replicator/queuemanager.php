@@ -583,16 +583,25 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         if ($subscription_path === false)
         {
             debug_add('Could not get base dir for subscription', MIDCOM_LOG_ERROR);
-            return;
+            return false;
         }
         $dp_queues = opendir($subscription_path);
         if (!$dp_queues)
         {
             debug_add("Could not open dir '{$subscription_path}' for reading", MIDCOM_LOG_ERROR);
-            return;
+            return false;
         }
-        // TODO: refactor these loops to separate methods
+
+        $queues = array();
         while (($queue_name = readdir($dp_queues)) !== false)
+        {
+            $queues[$queue_name] = $queue_name;
+        }
+        closedir($dp_queues);
+        uksort($queues, array($this, '_process_queue_sort_items'));
+        reset($queues);
+
+        foreach ($queues as $queue_name)
         {
             if ($this->_process_queue_queuepath($queue_name, $subscription_path, $subscription) === false)
             {
@@ -602,7 +611,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                 return false;
             }
         }
-        closedir($dp_queues);
+
         debug_pop();
         return true;
     }
