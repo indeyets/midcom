@@ -25,8 +25,21 @@ class org_openpsa_contacts_cron_duplicates_clean extends midcom_baseclasses_comp
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add('_on_execute called');
+        if (!$this->_config->get('enable_duplicate_search'))
+        {
+            debug_add('Duplicate operations disabled, aborting', MIDCOM_LOG_INFO);
+            debug_pop();
+            return;
+        }
+
+        // Untill the FIXME below is handled we abort
+        debug_add('Duplicate cleanup disabled since it needs code cleanup for 1.8 Midgfard, aborting', MIDCOM_LOG_ERROR);
+        debug_pop();
+        return;
+
         ignore_user_abort();
 
+        // FIXME: write to use person object with parameter contraints tablename & oid are deprecated...
         $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=', 'org.openpsa.contacts.duplicates:possible_duplicate');
         $qb->add_constraint('tablename', '=', 'person');

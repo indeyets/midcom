@@ -7,3 +7,4 @@
 'person_search_fields' => 'username,firstname,lastname,email',
 'organization_search_fields' => 'official,email,name,customerId',
 'default_password_lenght' => 8,
+'enable_duplicate_search' => false, /* NOTE: These are *very* heavy cron jobs run daily */
