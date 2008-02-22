@@ -10,7 +10,6 @@ CREATE TABLE net_nemein_calendar_event (
   `name` varchar(255) NOT NULL default '',
   `start` datetime NOT NULL default '0000-00-00 00:00:00',
   `end` datetime NOT NULL default '0000-00-00 00:00:00',
-  `start` datetime NOT NULL default '0000-00-00 00:00:00',
   `openregistration` datetime NOT NULL default '0000-00-00 00:00:00',
   `closeregistration` datetime NOT NULL default '0000-00-00 00:00:00',
   `location` varchar(255) NOT NULL default '',
