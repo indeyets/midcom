@@ -8,7 +8,8 @@
 'mail_address_to' => '',
 'mail_reply_to' => '',
 'mail_subject' => '',
-    'mail_subject_reciept' => null,
+'mail_subject_reciept' => null,
+
 'mail_encoding' => 'UTF-8',
 'mail_submitter' => false,
 'end_message'  => '',
@@ -19,6 +20,7 @@
 'mail_reciept_data' => '',
 
 'mail_class' => 'no_odindata_quickform2_emailgenerator',
+'style_based_message' => false,
 
 // Keep the additional empty lines below this for safeties sake
 

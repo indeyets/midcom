@@ -20,14 +20,17 @@ class no_odindata_quickform2_emailgenerator
      * @var object The org_openpsa_mail object to be sent to the contact.
      */
     var $mail;
+    
     /**
      * @var object org_openpsa_mail to send to the form submitter.
      */
-    var $reciept;
+    var $recipient;
+    
     /**
      * The submitted values
      * @var array
      */
+     
     var $values;
     /**
      * @var object midcom_helper_datamanager2_schema
@@ -39,68 +42,65 @@ class no_odindata_quickform2_emailgenerator
      * @var string
      */
     var $from;
+    
     /**
      * @var string charset
      */
     var $encoding;
+    
     /**
      *  the receipt message
      * @var string
      */
-    var $reciept_msg = "";
+    var $recipient_msg = "";
+    
     /**
      * @var boolean
      */
-    var $add_reciept_data;
+    var $add_recipient_data;
 
-
-
-    function no_odindata_quickform2_emailgenerator ( $mail, $reciept  )
+    function no_odindata_quickform2_emailgenerator ($mail, $recipient)
     {
         $this->mail = $mail;
-        $this->reciept = $reciept;
+        $this->recipient = $recipient;
         $this->mail->headers = array();
         $this->mail->body = '';
-        $this->reciept->headers = array(  );
+        $this->recipient->headers = array();
     }
 
-
-    function execute(   )
+    function execute()
     {
-
-       $this->_create_recipient_body(  ) ;
-       $this->_create_mail_body(  );
-
+       $this->_create_recipient_body() ;
+       $this->_create_mail_body();
     }
     /**
      * You shouldn't need to extend this method
      * It encapsulates the sending
      */
-    function send(  )
+    function send()
     {
-        debug_push( __CLASS__, __FUNCTION__ );
-
-        if (   $this->mail_reciept && $this->reciept->to )
+        if ($this->mail_recipient && $this->recipient->to)
         {
-            if ( !$this->reciept->send(  ) )
+            debug_push(__CLASS__, __FUNCTION__);
+            if (!$this->recipient->send())
             {
-                debug_add(sprintf( "Mail to recipient failed: mail(%s, %s, %s)", $this->reciept->to, $this->reciept->subject,
-                            $this->reciept->headers), MIDCOM_LOG_INFO);
+                debug_add(sprintf("Mail to recipient failed: mail(%s, %s, %s)", $this->recipient->to, $this->recipient->subject,
+                            $this->recipient->headers), MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }
-           debug_add(sprintf ( "Mail to recipient %s sent SUCCESSFULLY", $this->reciept->to), MIDCOM_LOG_INFO);
-
+            debug_add(sprintf ("Mail to recipient %s sent SUCCESSFULLY", $this->recipient->to), MIDCOM_LOG_INFO);
+            debug_pop();
         }
 
-        if ( !$this->mail->send(  )  )
+        if (!$this->mail->send())
         {
-            debug_add( 'Could not send email', MIDCOM_LOG_INFO );
-            //debug_print_r( 'Email:', $this->mail );
-        } else {
-            debug_add( "Email to " . $this->mail->to . " sendt. ", MIDCOM_LOG_DEBUG );
+            debug_push(__CLASS__, __FUNCTION__);
+            debug_add('Could not send email', MIDCOM_LOG_INFO);
+            //debug_print_r('Email:', $this->mail);
+            debug_pop();
         }
-        debug_pop();
+        
         return true;
 
     }
@@ -108,10 +108,10 @@ class no_odindata_quickform2_emailgenerator
      * Creates the recipient email body.
      * extend this function if you want to have something else in the email.
      */
-    function _create_recipient_body(  )
+    function _create_recipient_body()
     {
-        $this->reciept->body = $this->reciept_msg;
-        $this->reciept->body .= $this->_create_body( );
+        $this->recipient->body = $this->recipient_msg;
+        $this->recipient->body .= $this->_create_body();
     }
 
     /**
@@ -119,10 +119,10 @@ class no_odindata_quickform2_emailgenerator
      * extend this function if you want to have something else in the email.
      * @return  string the email body.
      */
-    function _create_mail_body(  )
+    function _create_mail_body()
     {
-        $this->mail->body = $this->_create_body(  );
-        $this->mail->body .= "\nMail submitted on " . strftime('%x %X', time());
+        $this->mail->body = $this->_create_body();
+        $this->mail->body .= "\n-- \nMail submitted on " . strftime('%x %X', time());
         $this->mail->body .= "\nFrom IP: {$_SERVER['REMOTE_ADDR']}";
     }
 
@@ -130,82 +130,83 @@ class no_odindata_quickform2_emailgenerator
      * Creates the basic email body.
      * @return string a simple formated string
      */
-    function _create_body(  )
+    function _create_body()
     {
-        $msg = "";
+        $message = '';
 
-        foreach ( $this->values as $key => $field)
+        foreach ($this->values as $key => $field)
         {
             $name = $this->schema->fields[$key]['title'];
-            if (is_a ($field, 'midcom_helper_datamanager2_type_select'))
+            if (is_a($field, 'midcom_helper_datamanager2_type_select'))
             {
                 $index = $field->convert_to_storage(null);
                 $value = $field->get_name_for_key($index);
 
-            } else {
+            }
+            else
+            {
                 $value = $field->convert_to_storage(null);
             }
-            $msg .= sprintf( "%s: %s\n", $name , $value);
+            
+            $message .= sprintf("%s: %s\n", $name , $value);
 
         }
-        //var_dump($msg);
-        //exit;
-        return $msg;
-
+        
+        return $message;
     }
 
     /**
      * Add the receipt data
      * @param boolean $add
      */
-    function set_add_reciept_data ( $add )
+    function set_add_recipient_data ($add)
     {
-        $this->add_reciept_data = $add;
+        $this->add_recipient_data = $add;
     }
     /**
      * Set email encoding
      */
-    function set_charset( $enc )
+    function set_charset($enc)
     {
-        debug_pop( __FUNCTION__, __CLASS__ );
+        debug_pop(__FUNCTION__, __CLASS__);
         $this->encoding = $enc;
         $this->mail->encoding = $enc;
-        $ths->reciept->encoding = $enc;
+        $ths->recipient->encoding = $enc;
 
         //$this->mail->headers["Content-Type"] = "text/plain; charset={$enc}";
-        //$this->reciept->headers["Content-Type"] = "text/plain; charset={$enc}";
-        debug_add( "Settingencoding : $enc" );
-        debug_pop(  );
+        //$this->recipient->headers["Content-Type"] = "text/plain; charset={$enc}";
+        debug_add("Settingencoding : $enc");
+        debug_pop();
     }
     /**
      * Set to true if the submitter should get a receipt of the
      * email
      * @param boolean $send true if mail should be sent
      */
-    function set_send_reciept( $send)
+    function set_send_recipient($send)
     {
-        $this->mail_reciept = $send;
+        $this->mail_recipient = $send;
     }
 
     /**
      * Sets the receipt message
-     * @param string $msg
+     * @param string $message
      */
-    function set_reciept_message( $msg )
+    function set_recipient_message($message)
     {
-       $this->reciept_msg = $msg . "\n";
+       $this->recipient_msg = $message . "\n";
     }
     /**
      * The fromaddress
      * @param string $from
      */
-    function set_from( $from )
+    function set_from($from)
     {
         $this->from = $from;
         $this->mail->headers['from'] = $from;
         $this->mail->headers['return-path'] = $from;
-        $this->reciept->headers['from'] = $from;
-        $this->reciept->headers['return-path'] = $from;
+        $this->recipient->headers['from'] = $from;
+        $this->recipient->headers['return-path'] = $from;
 
 
     }
@@ -213,9 +214,9 @@ class no_odindata_quickform2_emailgenerator
      * Sets the reply_to address
      * @param $to string
      */
-    function set_reply_to ( $to )
+    function set_reply_to ($to)
     {
-        if ( $to )
+        if ($to)
         {
             $mail->headers['reply-to'] = $to;
         }
@@ -225,14 +226,14 @@ class no_odindata_quickform2_emailgenerator
     /**
      * @param array $values array the values submitted in the form
      */
-    function set_values( $values )
+    function set_values($values)
     {
         $this->values = $values;
 
         if (array_key_exists('email', $this->values))
         {
             $this->mail->from = $this->values['email']->value;
-            $this->reciept->to = $this->values['email']->value;
+            $this->recipient->to = $this->values['email']->value;
         }
         else
         {
@@ -243,32 +244,31 @@ class no_odindata_quickform2_emailgenerator
     /**
      * @param the form schema
      */
-    function set_schema (  $schema ) {
+    function set_schema ($schema)
+    {
         $this->schema = $schema;
     }
     /**
      * @param string $subject the email subject string
      */
-    function set_subject( $subject , $subject_reciept)
+    function set_subject($subject , $subject_recipient)
     {
         $this->mail->headers['Subject']= $subject;
-        if ( $subject_reciept == null  )
+        if ($subject_recipient == null)
         {
-            $subject_reciept = $subject;
+            $subject_recipient = $subject;
         }
-        $this->reciept->headers['Subject'] = $subject_reciept;
+        $this->recipient->headers['Subject'] = $subject_recipient;
     }
     /**
      * This function sets the emailaddress that the submitted form will
      * be sent to.
      * @param string $to the mailaddress set in the configuration
      */
-    function set_to ( $to )
+    function set_to ($to)
     {
         $this->mail->to = $to;
         $this->mail->headers['to'] = $to;
-
     }
-
 }
-
+?>

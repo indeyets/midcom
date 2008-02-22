@@ -23,6 +23,10 @@ Email address to send the submitted form to
 Form email settings
 ---STRINGEND
 
+---STRING form settings
+Form settings
+---STRINGEND
+
 ---STRING from address of the email
 'From' address of the email
 ---STRINGEND
@@ -63,7 +67,7 @@ Text to place over the form
 The class to use for formatting the email to send
 ---STRINGEND
 
----STRING form settings
-Form settings
+---STRING your message has been delivered
+Your message has been delivered
 ---STRINGEND
 

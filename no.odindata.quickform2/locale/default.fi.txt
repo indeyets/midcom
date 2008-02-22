@@ -23,6 +23,10 @@ Sähköpostiosoite, johon viesti lähetetään
 Lomakkeen sähköpostiasetukset
 ---STRINGEND
 
+---STRING form settings
+Lomakkeen asetukset
+---STRINGEND
+
 ---STRING from address of the email
 Sähköpostiviestin lähettäjän osoite
 ---STRINGEND
@@ -63,7 +67,7 @@ Teksti, joka näytetään lomakkeen yläpuolella
 Luokka, jota käytetään lähetettävän viestin muotoilussa
 ---STRINGEND
 
----STRING form settings
-Lomakkeen asetukset
+---STRING your message has been delivered
+Viestisi on toimitettu eteenpäin
 ---STRINGEND
 

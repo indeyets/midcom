@@ -1,11 +1,10 @@
 <?php
 // Bind the view data, remember the reference assignment:
+echo "<h1>" .$data['form']->error() . "</h1>\n";
 
-//$data =& $_MIDCOM->get_custom_context_data('request_data');
-// if you need to set a spesific value to the schema before showing it:
-// $data['form']->set_value('comment', 'Insert your comment here');
-echo $data['form']->description( );
+echo "<div class=\"description\">\n";
+echo $data['form']->description();
+echo "</div>\n";
 
-echo "<h1>" .$data['form']->error( ) . "</h1>\n";
 $data['form']->display_form(); 
 ?>

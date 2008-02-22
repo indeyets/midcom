@@ -22,6 +22,16 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
      * @var midcom_helper_datamanager2_schema
      */
     var $_schemadb = null;
+    
+    /**
+     * Switch to determine if the message should be already sent.
+     * 
+     * @access private
+     * @var boolean
+     */
+    var $_send_message = false;
+    
+    
     /**
      * Simple default constructor.
      */
@@ -36,11 +46,92 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
     function _on_initialize()
     {
 
-        $this->_request_data['name']  = "no.odindata.quickform2";
-        $this->_schemadb =
-            midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
+        $this->_request_data['name']  = 'no.odindata.quickform2';
+        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
+    }
+    
+    /**
+     * Generate the form by using a style element rather than an automatically
+     * generated message
+     * 
+     * @access private
+     * @param mixed $handler_id the array key from the request array
+     * @param array $args the arguments given to the handler
+     * @param Array &$data The local request data.
+     * @return boolean Indicating success.
+     */
+    function _handler_style($handler_id, $args, &$data)
+    {
+        // Generate the controller
+        $this->_controller =& midcom_helper_datamanager2_controller::create('nullstorage');
+        $this->_controller->schemadb =& $this->_schemadb;
+        if (! $this->_controller->initialize())
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance ");
+            // This will exit.
+        }
+        
+        switch ($this->_controller->process_form())
+        {
+            case 'save':
+                // Skip the styles and proceed to generating the message
+                $_MIDCOM->skip_page_style = true;
+                $this->_send_message = true;
+                break;
+            
+            case 'cancel':
+                // Relocate to self to clear the message data
+                $_MIDCOM->relocate('');
+        }
+        
+        // Since the form hasn't yet been submitted, use the original controller
+        $this->_request_data['form']  = new no_odindata_quickform2_factory($this->_schemadb, $this->_config);
+        
+        return true;
+    }
+    
+    /**
+     * Generate the message body with style element
+     * 
+     * @access private
+     */
+    function _styled_message($handler_id, &$data)
+    {
+        // Populate request data
+        $data['schemadb'] =& $this->_schemadb;
+        $data['controller'] =& $this->_controller;
+        
+        // Get the message with output buffering
+        ob_start();
+        midcom_show_style('quickform-message');
+        $body = ob_get_contents();
+        ob_end_clean();
+        
+        // Use the configured mail class generator
+        $email_gen_class = $this->_config->get('mail_class');
+        
+        $email = new $email_gen_class(new org_openpsa_mail, new org_openpsa_mail);
+        $email->config =& $this->_config;
 
+        $email->set_charset($this->_config->get('mail_encoding'));
+        $email->set_subject($this->_config->get('mail_subject'), $this->_config->get('mail_subject_reciept'));
 
+        $email->set_to($this->_config->get('mail_address_to'));
+        $email->set_from($this->_config->get('mail_address_from'));
+        $email->set_reply_to($this->_config->get('mail_reply_to')) ;
+        $email->set_recipient_message($this->_config->get('mail_reciept_message'));
+        $email->set_add_recipient_data($this->_config->get('mail_reciept_data'));
+        $email->set_send_recipient($this->_config->get('mail_reciept'));
+        
+        $email->mail->body = $body;
+        $email->recipient_msg = $body;
+        
+        if (!$email->send())
+        {
+        $_MIDCOM->relocate('submitnotok/');
+        }
+        
+        $_MIDCOM->relocate('submitok/');
     }
 
     /**
@@ -55,13 +146,19 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
     {
         $title = $this->_l10n_midcom->get( $this->_config->get( 'breadcrumb' ) );
         $_MIDCOM->set_pagetitle("{$title}");
+        
+        // Use style based message formatting instead of the class based message formatting
+        if ($this->_config->get('style_based_message'))
+        {
+            return $this->_handler_style($handler_id, $args, &$data);
+        }
 
         if ( $this->_config->get( 'breadcrumb' ) != '' )
         {
             $this->_update_breadcrumb_line( $this->_config->get( 'breadcrumb' ) );
         }
 
-        $this->_request_data['form']  = new no_odindata_quickform2_factory( $this->_schemadb, $this->_config );
+        $this->_request_data['form']  = new no_odindata_quickform2_factory($this->_schemadb, $this->_config);
         $this->_request_data['form']->process_form();
 
        return true;
@@ -76,8 +173,12 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
      */
     function _show_index($handler_id, &$data)
     {
-
-        // hint: look in the style/index.php file to see what happens here.
+        if ($this->_send_message)
+        {
+            $this->_styled_message($handler_id, &$data);
+            return;
+        }
+        
         midcom_show_style('show-form');
     }
     /**

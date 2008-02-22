@@ -1,8 +1,4 @@
-<?php
-//$data =& $_MIDCOM->get_custom_context_data('request_data');
-$msg = $data['end_message'];
-$submitok = $data['l10n']->get( $msg );
-
-
-?>
-&(submitok:h);
+<h1><?php echo $data['topic']->extra; ?></h1>
+<p>
+    <?php echo $data['l10n']->get('your message has been delivered'); ?>.
+</p>

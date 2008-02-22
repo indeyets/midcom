@@ -148,5 +148,27 @@ class no_odindata_quickform2_viewer extends midcom_baseclasses_components_reques
 
         return true;
     }
+    
+    /**
+     * A simple helper for underlining text
+     * 
+     * @static
+     * @access public
+     * @param String $string     String for underlining
+     * @param String $char       Underlining character
+     */
+    function underline($string, $char = '=')
+    {
+        // Initialize the string
+        $str = '';
+        
+        // Output as many characters as would be printed (thus decode the UTF8)
+        for ($i = 0; $i < strlen(utf8_decode($string)); $i++)
+        {
+            $str .= $char;
+        }
+        
+        return "{$str}\n";
+    }
 }
 ?>

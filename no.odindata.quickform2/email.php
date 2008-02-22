@@ -30,28 +30,33 @@ class no_odindata_quickform2_email
         $this->_factory = $factory;
     }
 
+    /**
+     * Set the email data and send the mail
+     * 
+     * @access public
+     */
     function execute ()
     {
-        debug_push( __CLASS__, __FUNCTION__ );
-        $GLOBALS['midcom_debugger']->setLogLevel( 5 );
+        debug_push(__CLASS__, __FUNCTION__);
 
-        $email_gen_class = $this->_config->get( 'mail_class' );
+        $email_gen_class = $this->_config->get('mail_class');
 
-        $email = new $email_gen_class( new org_openpsa_mail, new org_openpsa_mail  );
+        $email = new $email_gen_class(new org_openpsa_mail, new org_openpsa_mail);
+        $email->config =& $this->_config;
 
-        $email->set_charset( $this->_config->get('mail_encoding'));
+        $email->set_charset($this->_config->get('mail_encoding'));
         $email->set_subject($this->_config->get('mail_subject'),
-                $this->_config->get( 'mail_subject_reciept' )
+                $this->_config->get('mail_subject_reciept')
                 );
 
-        $email->set_to( $this->_config->get('mail_address_to'));
-        $email->set_values( $this->_factory->values() );
-        $email->set_schema( $this->_factory->get_schema() );
-        $email->set_from(  $this->_config->get('mail_address_from'));
-        $email->set_reply_to( $this->_config->get('mail_reply_to')) ;
-        $email->set_reciept_message(  $this->_config->get('mail_reciept_message') );
-        $email->set_add_reciept_data(  $this->_config->get('mail_reciept_data'));
-        $email->set_send_reciept( $this->_config->get( 'mail_reciept' ) );
+        $email->set_to($this->_config->get('mail_address_to'));
+        $email->set_values($this->_factory->values());
+        $email->set_schema($this->_factory->get_schema());
+        $email->set_from($this->_config->get('mail_address_from'));
+        $email->set_reply_to($this->_config->get('mail_reply_to')) ;
+        $email->set_recipient_message($this->_config->get('mail_reciept_message'));
+        $email->set_add_recipient_data($this->_config->get('mail_reciept_data'));
+        $email->set_send_recipient($this->_config->get('mail_reciept'));
 
         $email->execute();
         $email->send();
