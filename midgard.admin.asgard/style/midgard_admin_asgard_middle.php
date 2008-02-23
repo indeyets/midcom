@@ -26,10 +26,11 @@
                     ?>
                 </div>
                 <div id="content"&(content_offset:h);>
-<?php
-if (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') !== 'no')
-{
-?>
+                    <div class="page-title">
+                    <?php
+					if (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') !== 'no')
+					{
+					?>
                     <div class="quicklinks">
                         <ul>
                             <li>
@@ -40,11 +41,8 @@ if (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') !== 'no')
                             </li>
                         </ul>
                     </div>
-<?php
-}
-?>
-                    <div class="page-title">
-                        <?php
+					<?php
+					}
                         echo "<h1>";
                         
                         if (   isset($data['object'])

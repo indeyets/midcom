@@ -195,7 +195,6 @@ body
 {
   font-size: 10pt;
   margin: 0px;
-  width: 100%;
 }
 
 #content div.page-title h1 a
@@ -300,23 +299,25 @@ body
 
 #container #toolbar ul li
 {
-  display: inline-block !important;
   display: inline;
   margin: 0;
-  padding: 0 4px;
   margin-right: 2px;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
 }
 
-#container #toolbar ul li a
+#container #toolbar ul li a,
+#container #toolbar ul li abbr
 {
+  display: inline-block;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  padding: 4px;
   margin: 0;
   white-space: nowrap;
 }
 
 #container #toolbar ul li abbr
 {
+  background-color:#D3D7CF;
   border: none;
 }
 
