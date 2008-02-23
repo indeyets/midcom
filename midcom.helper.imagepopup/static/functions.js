@@ -75,7 +75,7 @@
     	}
     	
     	window.opener.tinyMCE.execCommand("mceInsertContent", true, html_code);
-    }
+    };
     
     $.fn.extend({
         dm2ImagePopupConvert: function(options) {
