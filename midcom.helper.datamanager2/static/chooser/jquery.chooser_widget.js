@@ -247,7 +247,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
             
             case KEY.RETURN:
                 event.preventDefault();
-                results_holder.select();
+                results_holder.select_current();
                 break;
                 
             case KEY.ESC:
@@ -765,9 +765,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         show: function() {
             element.show();
         },
-        select: function() {
+        select_current: function() {
             jQuery("." + CLASSES.HOVER).click();
-            return data && data[active];
         }
     };
 };
