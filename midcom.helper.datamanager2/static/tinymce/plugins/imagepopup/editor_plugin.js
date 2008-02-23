@@ -59,7 +59,7 @@
 				infourl : 'http://www.midgard-project.org/documentation/images-in-midcom/',
 				version : "1.0"
 			};
-		},
+		}
 	
 	});
 
