@@ -81,7 +81,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
     
     input_element.show();
     
-    var results_holder = jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder(options, input, insert_after, selectCurrent);    
+    var results_holder = jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder(options, input, insert_after);    
     
     hideResultsNow();
     
@@ -89,20 +89,6 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
     jQuery('.chooser_widget_existing_item_static_input').each(function(){
         this.checked = false;
     });
-    
-    function selectCurrent()
-    {
-        var selected = results_holder.selected();
-        if (! selected)
-        {
-            return false;
-        }
-        
-        input_element.val('');
-        input.focus();
-        input_element.trigger("activate", [selected.data]);
-        return true;
-    }
 
     function onChange(crap, skipPrevCheck)
     {
@@ -259,14 +245,9 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
                 }
                 break;
             
-            case KEY.TAB:
             case KEY.RETURN:
                 event.preventDefault();
-                if( selectCurrent() )
-                {
-                    input_element.focus();
-
-                }
+                results_holder.select();
                 break;
                 
             case KEY.ESC:
@@ -280,7 +261,6 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
     }).keypress(function(event) {
         // having fun with opera - remove this binding and Opera submits the form when we select an entry via return
         switch(event.keyCode) {
-            case KEY.TAB:
             case KEY.RETURN:
                 event.preventDefault();
                 break;
@@ -361,7 +341,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.defaults = {
     format_items: null
 };
 
-jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(options, input, insert_after, select_function)
+jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(options, input, insert_after)
 {
     var CLASSES = {
         HOVER: "chooser_widget_result_item_hover",
@@ -785,7 +765,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         show: function() {
             element.show();
         },
-        selected: function() {
+        select: function() {
+            jQuery("." + CLASSES.HOVER).click();
             return data && data[active];
         }
     };
