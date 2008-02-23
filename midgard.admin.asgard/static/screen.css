@@ -301,8 +301,9 @@ body
 #container #toolbar ul li
 {
   display: inline;
+  display: inline-block;
   margin: 0;
-  padding: 4px;
+  padding: 0 4px;
   margin-right: 2px;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
