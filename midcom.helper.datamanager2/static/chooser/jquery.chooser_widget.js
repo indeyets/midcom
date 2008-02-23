@@ -63,6 +63,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
     };
 
     var timeout;
+    var blurTimeout;
     var previousValue = "";
     var hasFocus = 0;
     var lastKeyPressCode;
@@ -244,7 +245,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
                     onChange(0, true);
                 }
                 break;
-            
+                
             case KEY.RETURN:
                 event.preventDefault();
                 results_holder.select_current();
@@ -268,12 +269,15 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
     }).focus(function(){
         // track whether the field has focus, we shouldn't process any
         // results if the field no longer has focus
+        clearTimeout(blurTimeout);
         hasFocus++;
     }).blur(function() {
         hasFocus = 0;
         input_element.removeClass(CLASSES.LOADING);
         input_element.removeClass(CLASSES.FAILED);
         input_element.addClass(CLASSES.IDLE);
+        clearTimeout(blurTimeout);
+        blurTimeout = setTimeout(results_holder.clear_unselected, options.delay);
     }).click(function() {
         // show results when clicking in a focused field
         if ( hasFocus++ > 1 && !results_holder.visible() ) {
@@ -493,7 +497,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         .addClass("chooser_widget_result_item")
         .click(function(event) {
             var li_element = target(event);
-            
+            jQuery("#" + options.widget_id + "_search_input").focus();
             var current_keep_status = jQuery(li_element).attr("keep_on_list");
             var current_delete_status = jQuery(li_element).attr("deleted");
             var current_presel_status = jQuery(li_element).attr("pre_selected");
@@ -660,6 +664,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         jQuery.each( removed_items, function(i,n){
             list_items = unset(list_items, n, false, true);
         });
+        jQuery('#' + options.widget_id + '_results li.' + CLASSES.HOVER).removeClass(CLASSES.HOVER);
+        active = -1;
     }
     
     function unset(array, valueToUnset, valueOrIndex, isHash)
@@ -701,15 +707,10 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 
         return output;
     }
-
-    function clear_unselected()
-    {
-        delete_unseleted_from_list();
-    }
     
     return {
         display: function(d) {
-            clear_unselected();
+            delete_unseleted_from_list();
             data = d;
             dataToDom();
         },
@@ -753,7 +754,11 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         },
         select_current: function() {
             jQuery("." + CLASSES.HOVER).click();
-        }
+        },
+        clear_unselected: function()
+	    {
+	        delete_unseleted_from_list();
+	    }
     };
 };
 
