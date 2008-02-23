@@ -281,7 +281,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
         // having fun with opera - remove this binding and Opera submits the form when we select an entry via return
         switch(event.keyCode) {
             case KEY.TAB:
-            case KEY:RETURN:
+            case KEY.RETURN:
                 event.preventDefault();
                 break;
         }
@@ -538,10 +538,10 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
                     {
                         restore(item_id);
                     }
-	                else
-	                {
-	                    activate(item_id);
-	                }
+                    else
+                    {
+                        activate(item_id);
+                    }
                 }
 
                 return false;
@@ -552,11 +552,11 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             }
         })
         .mouseover( function(event) {
-        	var jq_elem = jQuery(target(event)).addClass(CLASSES.HOVER);
-    	})
-    	.mouseout( function(event) {
-        	jQuery(target(event)).removeClass(CLASSES.HOVER);
-    	});
+            var jq_elem = jQuery(target(event)).addClass(CLASSES.HOVER);
+        })
+        .mouseout( function(event) {
+            jQuery(target(event)).removeClass(CLASSES.HOVER);
+        });
         
         if (data['pre_selected'])
         {
@@ -760,8 +760,11 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         },
         activate_item: function(item)
         {
-            var item_id = item[options.id_field];
-            activate(item_id);
+            if(item)
+            {
+                var item_id = item[options.id_field];
+                activate(item_id);
+            }
         },
         visible : function() {
             return element.is(":visible");
