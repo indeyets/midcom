@@ -616,22 +616,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     {
         if (!options.allow_multiple)
         {
-            // Remove activation from each list element
-            jQuery('#'+options.widget_id + '_results li.' + CLASSES.ACTIVE).each(function(i)
-                {
-                    var id = this.id.match(/_([0-9]+)$/);
-                    
-                    // Skip the selected or match failed
-                    if (   !id
-                        || !id[1]
-                        || id[1] == id)
-                    {
-                        return;
-                    }
-                    
-                    // Inactivate
-                    inactivate(id[1]);
-                });
+            // Remove activation from the previously selected list element
+            jQuery('#'+ options.widget_id + '_results li.' + CLASSES.ACTIVE).click();
         }
         
         jQuery('#'+options.widget_id + '_result_item_'+id+'_input', list).attr({ value: id });
