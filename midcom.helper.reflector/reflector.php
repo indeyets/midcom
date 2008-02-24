@@ -792,7 +792,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      * @param string $classname to get the baseclass for
      * @return string the base class name
      */
-    function resolve_baseclass($classname)
+    static public function resolve_baseclass($classname)
     {
         $parent = $classname;
         do
@@ -807,6 +807,116 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         }
         while ($parent !== false);
         return $baseclass;
+    }
+    
+    /**
+     * Copy an object
+     *
+     * @static
+     * @access public
+     * @param mixed $source        GUID or MgdSchema object that will be copied
+     * @param mixed $target        Array with the given details or ID of 'up' field
+     * @param boolean $parameters  Switch to determine if the parameters should be copied
+     * @param boolean $metadata    Switch to determine if the metadata should be copied (excluding created and published)
+     * @return mixed               False on failure, newly created MgdSchema object on success
+     */
+    static public function copy_object($source, $target, $parameters = true, $metadata = true)
+    {
+        if (!is_object($source))
+        {
+            $source_object = $_MIDCOM->dbfactory->get_object_by_guid($source);
+        }
+        else
+        {
+            $source_object =& $source;
+        }
+        
+        // Get the property and id for the future owner
+        if (is_array($target))
+        {
+            // Check the validity of the object
+            if (   !array_key_exists('id', $target)
+                || !array_key_exists('parent', $target))
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Wrong up arguments passed for object copy');
+                // This will exit
+            }
+            
+            $up_link = $target['id'];
+            $up_property = $target['parent'];
+        }
+        else
+        {
+            $up_link = $target;
+            $up_property = 'up';
+        }
+        
+        // Copied metadata properties
+        $metadata_fields = array
+        (
+            'score',
+            'owner',
+            'authors',
+            'schedule_start',
+            'schedule_end',
+            'hidden',
+            'nav_noentry',
+        );
+        
+        // Create a new object
+        $new_class_name = get_class($source_object);
+        $new_object = new $new_class_name();
+        
+        // Copy the keys
+        foreach (array_keys(get_object_vars($source_object)) as $key)
+        {
+            // Skip fields that may not be copied in any case
+            if (   $key === 'id'
+                || $key === 'guid')
+            {
+                continue;
+            }
+            
+            $new_object->$key = $source_object->$key;
+        }
+        
+        // Copy the metadata
+        if ($metadata)
+        {
+            // Copy only the specified fields
+            foreach ($metadata_fields as $key)
+            {
+                if (!isset($source_object->metadata->$key))
+                {
+                    continue;
+                }
+                
+                $new_object->metadata->$key = $source_object->metadata->$key;
+            }
+        }
+        
+        $new_object->$up_property = $up_link;
+        
+        if (!$new_object->create())
+        {
+            return false;
+        }
+        
+        // Copy the parameters
+        if ($parameters)
+        {
+            // Get the domain name first
+            foreach ($source_object->list_parameters() as $domain => $array)
+            {
+                // Get the name and value fields
+                foreach ($array as $name => $value)
+                {
+                    $new_object->set_parameter($domain, $name, $value);
+                }
+            }
+        }
+        
+        return $new_object;
     }
 }
 
