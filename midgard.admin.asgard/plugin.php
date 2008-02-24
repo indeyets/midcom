@@ -244,6 +244,28 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 'variable_args' => 1,
             ),
             /**
+             * Copy object
+             * 
+             * Match /asgard/object/copy/<guid>/
+             */
+            'object_copy' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_object_manage', 'copy'),
+                'fixed_args' => array ('object', 'copy'),
+                'variable_args' => 1,
+            ),
+            /**
+             * Copy object tree
+             * 
+             * Match /asgard/object/copy/tree/<guid>/
+             */
+            'object_copy_tree' => array
+            (
+                'handler' => array ('midgard_admin_asgard_handler_object_manage', 'copy'),
+                'fixed_args' => array ('object', 'copy', 'tree'),
+                'variable_args' => 1,
+            ),
+            /**
              * Create a new file
              *
              * Match /files/
@@ -550,7 +572,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 )
             );
         }
-
+        
         if ($object->can_do('midgard:update'))
         {
             $toolbar->add_item
@@ -562,7 +584,23 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 )
             );
+        }
+        
+        if ($object->can_do('midgard:create'))
+        {
+            $toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/copy/{$object->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('copy', 'midcom'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/editcopy.png',
+                )
+            );
+        }
 
+        if ($object->can_do('midgard:update'))
+        {
             if (   is_a($object, 'midgard_topic')
                 && $object->component
                 && $object->can_do('midcom:component_config'))
@@ -769,6 +807,27 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('edit', 'midcom'),
                 );
                 $toolbar->disable_item("__mfa/asgard/object/edit/{$object->guid}/{$data['language_code']}");
+                break;
+            case '____mfa-asgard-object_copy':
+                $breadcrumb[] = array
+                (
+                    MIDCOM_NAV_URL => "__mfa/asgard/object/copy/{$object->guid}/",
+                    MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('copy', 'midcom'),
+                );
+                $toolbar->disable_item("__mfa/asgard/object/copy/{$object->guid}/{$data['language_code']}");
+                break;
+            case '____mfa-asgard-object_copy_tree':
+                $breadcrumb[] = array
+                (
+                    MIDCOM_NAV_URL => "__mfa/asgard/object/copy/{$object->guid}/",
+                    MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('copy', 'midcom'),
+                );
+                $breadcrumb[] = array
+                (
+                    MIDCOM_NAV_URL => "__mfa/asgard/object/copy/tree/{$object->guid}/",
+                    MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('copy tree', 'midgard.admin.asgard'),
+                );
+                $toolbar->disable_item("__mfa/asgard/object/copy/{$object->guid}/{$data['language_code']}");
                 break;
             case '____mfa-asgard-components_configuration_edit_folder':
                 $breadcrumb[] = array

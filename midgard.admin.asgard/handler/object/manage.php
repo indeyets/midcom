@@ -694,10 +694,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         }
 
         midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
-
         midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
-
-        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         midgard_admin_asgard_plugin::get_common_toolbar($data);
 
         return true;
@@ -1141,6 +1138,134 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
 
         midcom_show_style('midgard_admin_asgard_middle');
         midcom_show_style('midgard_admin_asgard_object_delete');
+        midcom_show_style('midgard_admin_asgard_footer');
+    }
+
+    /**
+     * Copy handler
+     * 
+     * @access public
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array &$data The local request data.
+     * @return boolean Indicating success.
+     */
+    function _handler_copy($handler_id, $args, &$data)
+    {
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
+        
+        // Get the object that will be copied
+        $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
+        
+        // Get the reflector
+        $this->_reflector = new midcom_helper_reflector($this->_object);
+        $label = $this->_reflector->get_label_property();
+        $properties = $this->_reflector->get_link_properties();
+        
+        // Get the parent property
+        $mgdschema_class = midcom_helper_reflector::resolve_baseclass($this->_object);
+        $mgdschema_object = new $mgdschema_class();
+        
+        $parent_property = midgard_object_class::get_property_parent($mgdschema_class);
+        
+        // Get the parent property
+        if ($parent_property)
+        {
+            $target['parent'] = $parent_property;
+            $target['class'] = $properties[$parent_property]['class'];
+        }
+        elseif (   isset($properties['up'])
+                && isset($properties['up']['class']))
+        {
+            $target['parent'] = 'up';
+            $target['class'] = $properties['up']['class'];
+        }
+        else
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not get the parent details');
+            // This will exit
+        }
+        
+        // Load the schemadb for searching the parent object
+        $this->_load_schemadb($target['class']);
+        
+        $this->_load_schemadb($properties['up']['class']);
+        
+        // Some magic needs to be done to the object creation
+        foreach ($this->_schemadb['object']->fields as $key => $array)
+        {
+            if ($key !== $target['parent'])
+            {
+                $this->_schemadb['object']->fields[$key]['hidden'] = true;
+            }
+        }
+        
+        // Load the nullstorage controller
+        $this->_controller = midcom_helper_datamanager2_controller::create('nullstorage');
+        $this->_controller->schemadb =& $this->_schemadb;
+        
+        if (!$this->_controller->initialize())
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to initialize the controller');
+            // This will exit
+        }
+        
+        $this->_prepare_request_data();
+        
+        // Process the form
+        switch ($this->_controller->process_form())
+        {
+            case 'save':
+                // TODO: get the target info
+                $target['id'] = $data['controller']->datamanager->types[$target['parent']]->convert_to_storage();
+                $new_object = midcom_helper_reflector::copy_object($this->_object, $target);
+                
+                if (   !$new_object
+                    || !$new_object->guid)
+                {
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to copy the object');
+                }
+                
+                // Relocate to the newly created object
+                $_MIDCOM->relocate("__mfa/asgard/object/view/{$new_object->guid}/");
+                break;
+            
+            case 'cancel':
+                $_MIDCOM->relocate("__mfa/asgard/object/view/{$args[0]}/");
+        }
+        
+        // Common hooks for Asgard
+        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
+        midgard_admin_asgard_plugin::get_common_toolbar($data);
+        midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
+        
+        // Set the page title
+        $data['page_title'] = sprintf($_MIDCOM->i18n->get_string('copy %s', 'midcom'), $this->_object->$label);
+        
+        return true;
+    }
+    
+    /**
+     * Show copy style
+     * 
+     * @access public
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
+    function _show_copy($handler_id, &$data)
+    {
+        midcom_show_style('midgard_admin_asgard_header');
+
+        midcom_show_style('midgard_admin_asgard_middle');
+        
+        echo "<pre>";
+        if (count($_POST) > 0)
+        {
+            print_r($_POST);
+        }
+        echo "</pre>\n";
+        
+        midcom_show_style('midgard_admin_asgard_object_copy');
         midcom_show_style('midgard_admin_asgard_footer');
     }
 }
