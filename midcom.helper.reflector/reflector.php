@@ -810,6 +810,154 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
     }
     
     /**
+     * Copy an object tree. Usage:
+     * 
+     * - Choose the source and target for copying the object
+     * - It's possible to pass exlusion list, which will stop the tree being copied from that point onwards.
+     *   Exclusion list shall be an array of GUIDs that will not be copied.
+     * 
+     * @static
+     * @access public
+     * @param mixed $source        GUID or MgdSchema object that will be copied
+     * @param mixed $target        Array with the given details or ID of 'up' field
+     * @param array $exclude       IDs that will be excluded from the copying
+     * @param boolean $parameters  Switch to determine if the parameters should be copied
+     * @param boolean $metadata    Switch to determine if the metadata should be copied (excluding created and published)
+     * @return mixed               False on failure, newly created MgdSchema root object on success
+     */
+    static public function copy_object_tree($source, $target, $exclude = array(), $parameters = true, $metadata = true, $root_object = null)
+    {
+        // Copy the root object
+        if (!$root_object)
+        {
+            $root_object = midcom_helper_reflector::copy_object($source, $target, $parameters, $metadata);
+            
+            // Check if the copying was successful
+            if (   !$root_object
+                || !$root_object->guid)
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to copy the root object of the tree, this is fatal.');
+                // This will exit
+            }
+            
+            // Get the reflector for the parent, which will contain all the created objects
+            $reflector = new midcom_helper_reflector($root_object);
+            $label = $reflector->get_label_property();
+            $properties = $reflector->get_link_properties();
+            
+            // Get the parent property
+            $mgdschema_class = midcom_helper_reflector::resolve_baseclass($root_object);
+            $mgdschema_object = new $mgdschema_class();
+            
+            $parent_property = midgard_object_class::get_property_parent($mgdschema_class);
+            
+            // Get the parent property
+            if ($parent_property)
+            {
+                $target['id'] = $root_object->$parent_property;
+            }
+            elseif (   isset($properties['up'])
+                    && isset($properties['up']['class']))
+            {
+                $parent_property = 'up';
+            }
+            else
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not get the parent details');
+                // This will exit
+            }
+            
+            $target['id'] = $root_object->$parent_property;
+        }
+        
+        $siblings = midcom_helper_reflector_tree::get_child_objects($source);
+        
+        // No siblings found, return to the previous state
+        if (   !is_array($siblings)
+            || count($siblings) === 0)
+        {
+            return $root_object;
+        }
+        
+        // Loop through the siblings and generate a copy of each
+        foreach ($siblings as $type => $children)
+        {
+            // Get the reflector for each different type
+            $reflector = new midcom_helper_reflector($children[0]);
+            $label = $reflector->get_label_property();
+            $properties = $reflector->get_link_properties();
+            
+            // Get the parent property
+            $mgdschema_class = midcom_helper_reflector::resolve_baseclass($children[0]);
+            $mgdschema_object = new $mgdschema_class();
+            
+            $parent_property = midgard_object_class::get_property_parent($mgdschema_class);
+            
+            // Get the parent property
+            if ($parent_property)
+            {
+                $target['parent'] = $parent_property;
+                $target['class'] = $properties[$parent_property]['class'];
+            }
+            elseif (   isset($properties['up'])
+                    && isset($properties['up']['class']))
+            {
+                $target['parent'] = 'up';
+                $target['class'] = $properties['up']['class'];
+            }
+            else
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not get the parent details');
+                // This will exit
+            }
+            
+            // Stop the execution if parent property is not available
+            if (   !isset($children[0]->$parent_property)
+                || !$children[0]->$parent_property)
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_print_r("Failed to get the parent property for a children[0]", $children[0], MIDCOM_LOG_ERROR);
+                debug_add("The parent property was {$parent}", MIDCOM_LOG_ERROR);
+                debug_pop();
+                
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to copy the tree, see error level log for details');
+            }
+            
+            // Loop through the children and generate a copy of each
+            foreach ($children as $child)
+            {
+                // This object is in the exlusion list, skip it.
+                if (in_array($child->guid, $exclude))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("Object {$child->guid} ({$type}) was in the exclusion list, no copying allowed.", MIDCOM_LOG_INFO);
+                    debug_pop();
+                    continue;
+                }
+                
+                // Get the parent value
+                $parent = $target['parent'];
+                
+                // Get the object required type information
+                $object = midcom_helper_reflector::copy_object($child, $target, $parameters, $metadata);
+                
+                if (   !$object
+                    || !$object->guid)
+                {
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to copy an object in the tree, see error level log for details');
+                }
+                
+                $target['id'] = $object->$parent;
+                
+                // Check if the current object has its own children
+                midcom_helper_reflector::copy_object_tree($child, $target, $exclude, $parameters, $metadata, $root_object);
+            }
+        }
+        
+        return $root_object;
+    }
+    
+    /**
      * Copy an object
      *
      * @static
@@ -847,6 +995,10 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         }
         else
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Target not properly formatted, trying the default settings');
+            debug_pop();
+            
             $up_link = $target;
             $up_property = 'up';
         }
@@ -899,6 +1051,10 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         
         if (!$new_object->create())
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_print_r('Failed to create a new object', $new_object, MIDCOM_LOG_ERROR);
+            debug_pop();
+            
             return false;
         }
         
