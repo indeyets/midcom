@@ -14,6 +14,11 @@ body
   color: black;
 }
 
+textarea
+{
+  width: 100%;
+}
+
 #container-wrapper
 {
   position: relative;
