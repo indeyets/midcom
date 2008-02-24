@@ -258,7 +258,6 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
 
         if ($storage === 'parameter')
         {
-            /* See core bug #141
             if (version_compare(mgd_version(), '1.7', '>'))
             {
                 $this->_qb->begin_group('AND');
@@ -269,7 +268,6 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
             }
             else
             {
-            */
                 // With Midgard 1.7 it has to be done this way. Unfortunately it means that
                 // we will be including only those search results, which have the parameter
                 // AND a hit in an earlier point. Results might be left out.
@@ -278,7 +276,7 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
                     'constraint' => $constraint,
                     'query' => $value,
                 );
-            //}
+            }
             return;
         }
 
