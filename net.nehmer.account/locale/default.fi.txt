@@ -32,6 +32,8 @@ Tunnus aktivoitu
 ---STRINGEND
 
 ---STRING activation_mail_body
+Käyttäjätunnuksesi on: __USERNAME__
+
 Salasanasi on: __PASSWORD__
 
 Ennen kuin voit kirjautua järjestelmään sinun täytyy aktivoida tunnuksesi.

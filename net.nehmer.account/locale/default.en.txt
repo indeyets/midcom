@@ -32,6 +32,8 @@ Activation successful
 ---STRINGEND
 
 ---STRING activation_mail_body
+Your username is: __USERNAME__
+
 Your password is: __PASSWORD__
 
 Before you can log into the system, you need to activate your account. To do

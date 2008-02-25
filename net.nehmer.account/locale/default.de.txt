@@ -28,6 +28,8 @@ Aktivierung erfolgreich
 ---STRINGEND
 
 ---STRING activation_mail_body
+Ihr Benutzername ist: __USERNAME__
+
 Ihr Passwort ist: __PASSWORD__
 
 Bevor Sie sich anmelden können müssen Sie Ihr Benutzerkonto aktivieren. Besuchen Sie dafür bitte die folgende Webseite:
