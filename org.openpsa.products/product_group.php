@@ -145,21 +145,64 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
     {
         static $group_list = array();
         $up_code = 0 ;
+        $create_or_edit = -1;
 
         //FIXME: Maemo specific hack
-        if (isset($_MIDGARD["argv"][3])
-            && isset($_MIDGARD["argv"][2])
-            && ($_MIDGARD["argv"][2] == "create"))
+
+        if ($_MIDGARD["admin"])
         {
-            $up_code=$_MIDGARD["argv"][3];
+            return org_openpsa_products_product_group_dba::list_groups(0, " > ", 'id');
         }
-        else
+
+        // very ugly, but is needed to work around a midcom argv bug which casts the guid to int.
+        global $midgard;
+
+        if (isset($midgard->argv[3])
+            && isset($midgard->argv[2])
+            && (($midgard->argv[2] == "create") || ($midgard->argv[1] == "create")))
         {
-            $session = new midcom_service_session();
-            if ($session->exists("target_os"))
+            if ($midgard->argv[1] == "create")
             {
-                $up_code = str_replace("IT OS ","OS",$session->get("target_os"));
+                $up_code=$midgard->argv[2];
             }
+            else
+            {
+                $up_code=$midgard->argv[3];
+            }
+            $create_or_edit = 1;
+        }
+
+        if (isset($midgard->argv[2])
+            && isset($midgard->argv[1])
+            && (($midgard->argv[2] == "edit") || ($midgard->argv[1] == "edit")))
+        {
+
+            if ($midgard->argv[1] == "edit")
+            {
+                $guid=$midgard->argv[2];
+            }
+            else
+            {
+                $guid=$midgard->argv[3];
+            }
+
+            $qb3 = org_openpsa_products_product_dba::new_query_builder();
+            $qb3->add_constraint('guid', '=', $guid);
+            $lookup = $qb3->execute_unchecked();
+
+            if (isset($lookup[0])
+                && isset($lookup[0]->productGroup))
+            {
+                $up_code = $lookup[0]->productGroup;
+            }
+            $create_or_edit = 1;
+        }
+
+        if ($create_or_edit == -1)
+        {
+            $group_list=array();
+            $group_list[0] = " ";
+            if ($up_code == 0) return $group_list;
         }
 
         if ((int)$up_code > 0)
@@ -186,6 +229,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
                 $up = $up_group[0]->id;
             }
         }
+
 
         // END Maemo specific hack
 
@@ -197,9 +241,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
 
         foreach ($groups as $group)
         {
-            $group_list['id'][$group->id] = "{$group->code} {$group->title}";
-
-            //org_openpsa_products_product_group_dba::list_groups($group->id, "{$prefix} > ", $keyproperty);
+            $group_list['id'][$group->id] = "{$group->title}";
         }
 
         return $group_list['id'];
@@ -209,21 +251,56 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
     {
         static $group_list = array();
         $up_code = 0;
+        $create_or_edit = -1;
 
         //FIXME: Maemo specific hack
         if (isset($_MIDGARD["argv"][3])
             && isset($_MIDGARD["argv"][2])
-            && ($_MIDGARD["argv"][2] == "create"))
+            && (($_MIDGARD["argv"][2] == "create") || ($_MIDGARD["argv"][1] == "create")))
         {
-            $up_code=$_MIDGARD["argv"][3];
-        }
-        else
-        {
-            $session = new midcom_service_session();
-            if ($session->exists("target_os"))
+            if ($_MIDGARD["argv"][1] == "create")
             {
-                $up_code = str_replace("IT OS ","OS",$session->get("target_os"));
+                $up_code=$_MIDGARD["argv"][2];
             }
+            else
+            {
+                $up_code=$_MIDGARD["argv"][3];
+            }
+            $create_or_edit = 1;
+        }
+        // very ugly, but is needed to work around a midcom argv bug which casts the guid to int.
+        global $midgard;
+
+        if (isset($midgard->argv[2])
+            && isset($midgard->argv[1])
+            && (($midgard->argv[2] == "edit") || ($midgard->argv[1] == "edit")))
+        {
+
+            if ($midgard->argv[1] == "edit")
+            {
+                $guid=$midgard->argv[2];
+            }
+            else
+            {
+                $guid=$midgard->argv[3];
+            }
+            $qb3 = org_openpsa_products_product_dba::new_query_builder();
+            $qb3->add_constraint('guid', '=', $guid);
+            $lookup = $qb3->execute_unchecked();
+
+            if (isset($lookup[0])
+                && isset($lookup[0]->productGroup))
+            {
+                $up_code = $lookup[0]->productGroup;
+            }
+            $create_or_edit = 1;
+        }
+
+        if ($create_or_edit == -1)
+        {
+            $group_list=array();
+            $group_list[0] = " ";
+            if ($up_code == 0) return $group_list;
         }
 
         if ((int)$up_code > 0)
@@ -238,10 +315,6 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
                 $up = $up_group[0]->up;
             }
         }
-        else if ($_MIDGARD['admin'])
-        {
-            $up = 0;
-        }
         else
         {
             $qb2 = org_openpsa_products_product_group_dba::new_query_builder();
@@ -255,6 +328,10 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
             }
         }
 
+        if ($_MIDGARD['admin'])
+        {
+            $up = 0;
+        }
         // END Maemo specific hack
 
         $qb = org_openpsa_products_product_group_dba::new_query_builder();
