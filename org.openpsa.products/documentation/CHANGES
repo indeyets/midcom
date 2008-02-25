@@ -4,6 +4,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-02-25 xfade
+  + Added list of all applications
+
 2007-12-03 xfade
   + Added rss feed for updated products per product group
   - fix breadcrumb links when editing a product

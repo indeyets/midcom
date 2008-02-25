@@ -71,6 +71,15 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
                 $qb->add_constraint('up', '=', $groups[0]->id);
                 $qb->add_constraint('code', '=', $args[1]);
             }
+            else if (($handler_id == 'listall')
+                && ($args[0] != 'search')
+                && ($args[0] != 'product'))
+            {
+                $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
+                $parentgroup_qb->add_constraint('code', '=', $args[0]);
+                $groups = $parentgroup_qb->execute_unchecked();
+                $qb->add_constraint('up', '=', $groups[0]->id);
+            }
             else
             {
                 $qb->add_constraint('code', '=', $args[0]);
@@ -139,6 +148,30 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             }
 
         }
+        else if ($handler_id == 'listall')
+        {
+            $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
+            $parentgroup_qb->add_constraint('code', '=', $args[0]);
+            $groups = $parentgroup_qb->execute_unchecked();
+            $data['group'] = &$groups[0];
+
+            if (count($groups) == 0)
+            {
+                return false;
+                // No matching group
+            }
+            else
+            {
+                $categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
+                $categories_qb->add_constraint('up', '=', $groups[0]->id);
+                $categories = $categories_qb->execute_unchecked();
+                for ($i = 0; $i < count($categories); $i++)
+                {
+                    $categories_in[$i] = $categories[$i]->id;
+                }
+            }
+
+        }
         else if ($handler_id == 'list')
         {
             $guidgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
@@ -172,6 +205,10 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             if ($handler_id == 'list_intree')
             {
                 $product_qb->add_constraint('productGroup', '=', $data['parent_category_id']);
+            }
+            else if ($handler_id == 'listall')
+            {
+                $product_qb->add_constraint('productGroup', 'IN', $categories_in);
             }
             else
             {

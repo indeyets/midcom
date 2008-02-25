@@ -58,6 +58,13 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
+        $this->_request_switch['listall'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_group_list', 'list'),
+            'fixed_args' => Array('list'),
+            'variable_args' => 2,
+        );
+
         // Handle /groupsblock/<productgroup>/
         $this->_request_switch['groupsblock'] = Array
         (
