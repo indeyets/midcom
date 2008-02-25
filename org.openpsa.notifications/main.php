@@ -102,7 +102,8 @@ class org_openpsa_notifications extends midcom_baseclasses_components_purecode
         $recipient = new midcom_db_person($recipient);
 
         if (   !$recipient
-            || !$recipient->guid)
+            || !isset($recipient->guid)
+            || empty($recipient->guid))
         {
             return $preference;
         }
@@ -136,7 +137,7 @@ class org_openpsa_notifications extends midcom_baseclasses_components_purecode
 
         // Seek user's groups
         $member_qb = midcom_db_member::new_query_builder();
-        $member_qb->add_constraint('uid', '=', $recipient->id);
+        $member_qb->add_constraint('uid', '=', (int)$recipient->id);
         $memberships = $member_qb->execute();
         $qb->begin_group('OR');
         foreach ($memberships as $member)
@@ -146,7 +147,7 @@ class org_openpsa_notifications extends midcom_baseclasses_components_purecode
         }
         $qb->end_group();
 
-        $group_preferences = @$qb->execute();
+        $group_preferences = $qb->execute();
         if (count($group_preferences) > 0)
         {
             foreach ($group_preferences as $preference)
