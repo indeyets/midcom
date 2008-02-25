@@ -103,6 +103,12 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
         }
 
         $this->_form->addGroup($this->_elements, $this->name, $this->_translate($this->_field['title']), '');
+
+        if ($this->_field['required'])
+        {
+            $errmsg = sprintf($this->_l10n->get('field %s is required'), $this->_field['title']);
+            $this->_form->addGroupRule($this->name, $errmsg, 'nonzero', null, 3);
+        }
     }
 
     function _generate_items()
