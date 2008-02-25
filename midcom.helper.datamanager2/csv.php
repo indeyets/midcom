@@ -70,7 +70,7 @@ class midcom_helper_datamanager2_csv extends midcom_baseclasses_components_purec
      * Encodes the given string into CSV according to these rules: Any appearance
      * of the separator or one of the two newline characters \n and \r will trigger
      * quoting. In quoting mode, the entire string will be enclosed in double-quotes.
-     * Any occurence of a double quote in the original string wille be transformed
+     * Any occurrence of a double quote in the original string will be transformed
      * into two double quotes. Any leading or trailing whitespace around the data
      * will be eliminated.
      *
@@ -90,7 +90,7 @@ class midcom_helper_datamanager2_csv extends midcom_baseclasses_components_purec
 
         if (preg_match($pattern, $string) != 0)
         {
-            // Qutoed operation required: Escape quotes
+            // Quoted operation required: Escape quotes
             return '"' . str_replace('"','""',$string) . '"';
         }
         else

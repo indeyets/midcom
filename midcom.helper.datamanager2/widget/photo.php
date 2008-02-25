@@ -28,7 +28,7 @@ class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2
      */
     function on_submit($results)
     {
-        // TODO: refator these checks to separate methods
+        // TODO: refactor these checks to separate methods
         if (array_key_exists("{$this->name}_rotate", $results))
         {
             // The direction is the key (since the value is the point clicked on the image input)

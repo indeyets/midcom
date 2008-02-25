@@ -22,7 +22,7 @@
  * topic.
  *
  * The current Permalink implementation limits granularity to a GUID level -- permalinks
- * map object GUIDs to pages. If you have mulitple pages showing the same object, you need
+ * map object GUIDs to pages. If you have multiple pages showing the same object, you need
  * to decide which one you wish to have as permalink and provide that URL for resolution.
  * For the forward lookup, it is allowed to have multiple pages set the same permalink.
  *

@@ -68,7 +68,7 @@ class midcom_helper_datamanager2_widget_hidden extends midcom_helper_datamanager
     }
 
     /**
-     * QF Valiation callback used for number types. It checks the number boundaries
+     * QF Validation callback used for number types. It checks the number boundaries
      * accordingly.
      */
     function validate_number($fields)

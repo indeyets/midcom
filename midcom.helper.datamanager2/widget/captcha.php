@@ -168,7 +168,7 @@ class midcom_helper_datamanager2_widget_captcha extends midcom_helper_datamanage
     }
 
     /**
-     * QF Valiation callback which verifies the passcode against the Captcha.
+     * QF Validation callback which verifies the passcode against the Captcha.
      */
     function validate($fields)
     {

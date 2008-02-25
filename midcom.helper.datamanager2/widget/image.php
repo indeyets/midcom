@@ -374,7 +374,7 @@ class midcom_helper_datamanager2_widget_image extends midcom_helper_datamanager2
     {
         parent::on_submit($results);
 
-        // TODO: refator these checks to separate methods
+        // TODO: refactor these checks to separate methods
         if (array_key_exists("{$this->name}_delete", $results))
         {
             if (! $this->_type->delete_all_attachments())

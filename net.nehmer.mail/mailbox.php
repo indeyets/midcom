@@ -58,7 +58,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
             'USERS' => Array('net.nehmer.mail:list_mails' => MIDCOM_PRIVILEGE_ALLOW),
         );
     }
-    
+
     /**
      * Returns inboxes view url without any prefix ie. view/mailbox/INBOX.html
      */
@@ -66,16 +66,16 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     {
         $url_prefix = "mailbox/view";
         $url_suffix = $this->guid;
-        
+
         if (   strtolower($this->name) == 'inbox'
             || strtolower($this->name) == 'outbox')
         {
             $url_suffix = strtolower($this->name);
         }
-        
+
         return "{$url_prefix}/{$url_suffix}";
     }
-    
+
     /**
      * This function lists all mailboxes for the current user. If no user is authenticated,
      * an ACCESS DENIED error is triggered.
@@ -242,7 +242,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     function get_qb_mails($paging=false)
     {
         $_MIDCOM->auth->require_do('net.nehmer.mail:list_mails', $this);
-        
+
         if ($paging !== false)
         {
             $qb = new org_openpsa_qbpager('net_nehmer_mail_mail', 'net_nehmer_mail_mail');
@@ -250,11 +250,11 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         }
         else
         {
-            $qb = net_nehmer_mail_mail::new_query_builder();            
+            $qb = net_nehmer_mail_mail::new_query_builder();
         }
-        
+
         $qb->add_constraint('mailbox', '=', $this->guid);
-                
+
         return $qb;
     }
 
@@ -268,7 +268,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     function list_mails($order = 'reverse received', $paging = false)
     {
         // debug_push_class(__CLASS__, __FUNCTION__);
-        
+
         $qb =& $this->get_qb_mails($paging);
 
         if ($paging === false)
@@ -286,13 +286,13 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
                 $qb->add_order('received', 'DESC');
             }
         }
-                
+
         if ($paging !== false)
         {
             return $qb;
         }
-        
-        // debug_pop();        
+
+        // debug_pop();
         return $qb->execute();
     }
 
@@ -308,12 +308,12 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         $qb = $this->get_qb_mails();
         $qb->add_order($order);
         $qb->add_constraint('status', '=', NET_NEHMER_MAIL_STATUS_UNREAD);
-        
+
         $results = $qb->execute();
 
         return $results;
     }
-    
+
     /**
      * This is a helper which lists all mails marked as deleted belonging to this mailbox.
      *
@@ -325,26 +325,26 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     // {
     //     $qb =& $this->get_qb_mails();
     //     $qb->add_order($order);
-    //     
+    //
     //     $qb->include_deleted();
     //     $qb->add_constraint('metadata.deleted', '<>', 0);
-    //     
+    //
     //     $results = $qb->execute();
-    //     
+    //
     //     debug_print_r('midcom results',$results);
-    //     
+    //
     //     $qb = new midgard_query_builder('net_nehmer_mail_mail_db');
     //     $qb->add_constraint('mailbox', '=', $this->guid);
     //     $qb->include_deleted();
     //     $qb->add_constraint('metadata.deleted', '<>', 0);
-    //     
+    //
     //     $results = $_MIDCOM->dbfactory->exec_query_builder($qb);
-    // 
+    //
     //     debug_print_r('midgard results',$results);
-    //     
+    //
     //     return $results;
     // }
-    
+
     /**
      * This is a helper which lists all mails with given status belonging to this mailbox.
      *
@@ -358,7 +358,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         $qb = $this->get_qb_mails();
         $qb->add_order($order);
         $qb->add_constraint('status', '=', NET_NEHMER_MAIL_STATUS_STARRED);
-        
+
         $results = $qb->execute();
 
         return $results;
@@ -403,7 +403,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     }
 
     /**
-     * Returns true, if this Mailbox has a qutoa set and the message count is
+     * Returns true, if this Mailbox has a quota set and the message count is
      * equal to or larger then the quota.
      *
      * It reimplements the message count getter, but without the ACL checks so
@@ -426,12 +426,12 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         $this->get_message_count();
         return ($this->_message_count >= $this->quota);
     }
-    
+
     function deliver_mail($sender, $subject, $body)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("delivering mail from {$sender->id}");
-        
+
         $mail = new net_nehmer_mail_mail();
         $mail->sender = $sender->guid;
         $mail->subject = $subject;
@@ -439,7 +439,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         $mail->received = time();
         $mail->status = NET_NEHMER_MAIL_STATUS_SENT;
         $mail->owner = $this->owner;
-                
+
         if (! $mail->create())
         {
             // This should normally not fail, as the class default privilege is set accordingly.
@@ -451,10 +451,10 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         }
 
         $mail->deliver_to(&$this->owner);
-        
+
         debug_pop();
     }
-    
+
     /**
      * This function delivers a mail to this mailbox. If the Quota of the mailbox
      * is set (nonzero) and would be exceeded by this mail delivery, the component
@@ -476,7 +476,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     // {
     //     debug_push_class(__CLASS__, __FUNCTION__);
     //     debug_add("delivering mail from {$sender->id}");
-    //     
+    //
     //     if (   ! $_MIDCOM->auth->can_do('net.nehmer.mail:ignore_quota', $this)
     //         && $this->is_over_quota())
     //     {
@@ -486,7 +486,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     //     {
     //         return $this->raiseError($_MIDCOM->i18n->get_string('access denied', 'midcom'), NET_NEHMER_MAIL_ERROR_DENIED);
     //     }
-    // 
+    //
     //     $mail = new net_nehmer_mail_mail();
     //     // $mail->mailbox = $this->guid;
     //     $mail->sender = $sender->guid;
@@ -494,7 +494,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     //     $mail->body = $body;
     //     $mail->received = time();
     //     $mail->isread = false;
-    // 
+    //
     //     if (! $mail->create())
     //     {
     //         // This should normally not fail, as the class default privilege is set accordingly.
@@ -503,11 +503,11 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     //         $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a mail record. See the debug level log for details.');
     //         // This will exit.
     //     }
-    // 
+    //
     //     $relation = new net_nehmer_mail_relation();
     //     $relation->mailbox = $this->id;
     //     $relation->mail = $mail->id;
-    // 
+    //
     //     if (! $relation->create())
     //     {
     //         // This should normally not fail, as the class default privilege is set accordingly.
@@ -518,7 +518,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     //         $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create a MailToMailbox relation record. See the debug level log for details.');
     //         // This will exit.
     //     }
-    // 
+    //
     //     // We don't want an owner privilege here. Instead, we want to have only the read flag set.
     //     // We do this only if we have a valid user logged on. Otherwise, there won't be any privilege
     //     // to set.
@@ -527,7 +527,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
     //         $mail->set_privilege('midgard:read');
     //         $mail->unset_privilege('midgard:owner');
     //     }
-    //     
+    //
     //     debug_pop();
     //     return $mail->guid;
     // }
@@ -562,7 +562,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         {
             $owner = $user;
         }
-        
+
         $config = $GLOBALS['midcom_component_data']['net.nehmer.mail']['config'];
 
         $mailbox = new net_nehmer_mail_mailbox();
@@ -622,7 +622,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
         {
             $owner = $user;
         }
-        
+
         $config = $GLOBALS['midcom_component_data']['net.nehmer.mail']['config'];
 
         $mailbox = new net_nehmer_mail_mailbox();

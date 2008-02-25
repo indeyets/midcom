@@ -83,7 +83,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
             'id'    => "{$this->_namespace}{$this->name}_video",
         );
         $this->_upload_element_video =& HTML_QuickForm::createElement('file', "{$this->name}_file_video", '', $attributes);
- 
+
         $elements = Array();
         $elements_video = Array();
 
@@ -322,7 +322,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
             $static_html .= "<li title=\"{$info['guid']}\"><a href='{$info['url']}' target='_new'>{$info['filename']}:</a> " .
                 "{$size}, {$info['formattedsize']} Byte</li>\n";
         }
-    
+
         }
         $static_html .= "</ul>\n";
         $elements[] =& HTML_QuickForm::createElement('static', "{$this->name}_start", '', $static_html);
@@ -377,21 +377,21 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
         $elements[] =& HTML_QuickForm::createElement('static', "{$this->name}_end", '', $static_html);
     }
 
-   
+
     function _create_upload_elements_video(&$elements)
     {
         // The table
         $static_html = "<table border='0' class='midcom_helper_datamanager2_widget_image_table' id='{$this->_namespace}{$this->name}_table'>\n";
-        
+
         $elements[] =& HTML_QuickForm::createElement('static', "{$this->name}_start", '', $static_html);
 
         // The video file
         $static_html = "<tr><td>Video:</td><td>" . $this->_l10n->get('no file uploaded') . "</td></tr>\n";
 
     // Video info
-            
+
         $elements[] =& HTML_QuickForm::createElement('static', "{$this->name}_inter2", '', $static_html);
-    
+
         // The upload field
     $static_html = "<tr><td>" . $this->_l10n->get('upload file') . "</td><td>\n";
 
@@ -403,7 +403,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
             'id'    => "{$this->_namespace}{$this->name}_upload_button_video",
         );
         //$elements[] =& HTML_QuickForm::createElement('submit', "{$this->name}_upload_video", $this->_l10n->get('upload file'), $attributes);
-    
+
     $static_html = "</td></tr>\n";
 
         $elements[] =& HTML_QuickForm::createElement('static', "{$this->name}_inter2", '', $static_html);
@@ -416,14 +416,14 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
     {
         // The table
         $static_html = "<table border='0' class='midcom_helper_datamanager2_widget_image_table' id='{$this->_namespace}{$this->name}_table'>\n";
-        
+
         $elements[] =& HTML_QuickForm::createElement('static', "{$this->name}_start", '', $static_html);
 
         // The video file
         $static_html = "<tr><td>Video:</td><td><ul>\n";
 
     // Video info
-            
+
         foreach ($this->_type->attachments_info as $name => $info)
     {
         if ($name == "main_video")
@@ -435,14 +435,14 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
 
     $static_html .= "</ul>\n";
         $elements[] =& HTML_QuickForm::createElement('static', "{$this->name}_inter2", '', $static_html);
-    
+
         // Add the Delete button
         $attributes = Array
         (
             'id'    => "{$this->_namespace}{$this->name}_delete_button",
         );
         $elements[] =& HTML_QuickForm::createElement('submit', "{$this->name}_delete_video", $this->_l10n->get('delete video'), $attributes);
-        
+
     // The upload field
     $static_html = "</td></tr><tr><td>" . $this->_l10n->get('upload file') . "</td><td>\n";
 
@@ -454,7 +454,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
             'id'    => "{$this->_namespace}{$this->name}_upload_button_video",
         );
         //$elements[] =& HTML_QuickForm::createElement('submit', "{$this->name}_upload_video", $this->_l10n->get('upload file'), $attributes);
-    
+
     $static_html = "</td></tr>";
 
         $elements[] =& HTML_QuickForm::createElement('static', "{$this->name}_inter2", '', $static_html);
@@ -521,16 +521,16 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
     }
 
     /**
-     * The on_submit event handles all file uploads immediately. 
-     * 
-     * They are passed through the type at that point. This is required, since we do not have 
+     * The on_submit event handles all file uploads immediately.
+     *
+     * They are passed through the type at that point. This is required, since we do not have
      * persistent upload file management on the QF side. Deletions take precedence over uploads.
      */
     function on_submit($results)
     {
         parent::on_submit($results);
 
-        // TODO: refator these checks to separate methods
+        // TODO: refactor these checks to separate methods
         if (array_key_exists("{$this->name}_delete_video", $results))
         {
             if (! $this->_type->delete_all_attachments())
@@ -570,19 +570,19 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
                 debug_pop();
             }
 
-        }   
+        }
         else
         {
             if ($this->_upload_element_video->isUploadedFile())
             {
-    
+
                 $file_video = $this->_upload_element_video->getValue();
-    
+
                 //echo "<pre>";
                 //print_r($this->_upload_element_video);
                 //print_r($this->_upload_element);
                 //echo "</pre>";
-    
+
                 if (!empty($file_video['name']))
                 {
                     if (! $this->_type->set_video($file_video['name'], $file_video['tmp_name'], 'Video file'))
@@ -598,16 +598,16 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
                     }
                 }
             }
-            
+
             if ($this->_upload_element->isUploadedFile())
             {
                 $file = $this->_upload_element->getValue();
-            
+
                 //echo "<pre>";
                 //print_r($this->_upload_element_video);
                 //print_r($this->_upload_element);
                 //echo "</pre>";
-    
+
                 if ($this->show_title)
                 {
                     $title = $results["{$this->name}_title"];
@@ -616,7 +616,7 @@ class midcom_helper_datamanager2_widget_video extends midcom_helper_datamanager2
                 {
                     $title = '';
                 }
-                
+
                 if (!empty($file['name']))
                 {
                     if (! $this->_type->set_image($file['name'], $file['tmp_name'], $title))

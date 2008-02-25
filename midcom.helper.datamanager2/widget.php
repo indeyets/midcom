@@ -47,8 +47,8 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     var $_external_config = Array();
 
     /**
-     * The name field holds the name of the field the widget is encapsulating. 
-     * 
+     * The name field holds the name of the field the widget is encapsulating.
+     *
      * This maps to the schema's field name. You should never have to change them.
      *
      * @var string
@@ -57,8 +57,8 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     var $name = '';
 
     /**
-     * A reference to the schema field we should draw. 
-     * 
+     * A reference to the schema field we should draw.
+     *
      * Description texts etc. are taken from here.
      *
      * @var Array
@@ -67,9 +67,9 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     var $_field = null;
 
     /**
-     * The schema (not the schema <i>database!</i>) to use for operation. 
-     * 
-     * This variable will always contain a parsed representation of the schema, so that 
+     * The schema (not the schema <i>database!</i>) to use for operation.
+     *
+     * This variable will always contain a parsed representation of the schema, so that
      * one can swiftly switch between individual schemas of the Database.
      *
      * This member is initialized by-reference.
@@ -88,12 +88,12 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     var $_form = null;
 
     /**
-     * This is the Namespace to use for all HTML/CSS/JS elements. 
-     * 
-     * It is deduced by the formmanager and tries to be as smart as possible to work safely with 
+     * This is the Namespace to use for all HTML/CSS/JS elements.
+     *
+     * It is deduced by the formmanager and tries to be as smart as possible to work safely with
      * more then one form on a page.
      *
-     * You have to prefix all elements which must be unique using this string (it includes a 
+     * You have to prefix all elements which must be unique using this string (it includes a
      * trailing underscore).
      *
      * @var string
@@ -127,7 +127,7 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
      * @param string $name The name of the field to which this widget is bound.
      * @param Array $config The configuration data which should be used to customize the widget.
      * @param midcom_helper_datamanager2_schema &$schema A reference to the full schema object.
-     * @param midcom_helper_datamanager2_type $type A reference to the type to which we are bound.
+     * @param midcom_helper_datamanager2_type &$type A reference to the type to which we are bound.
      * @param string $namespace The namespace to use including the trailing underscore.
      * @param boolean $initialize_dependencies Whether to load JS and other dependencies on initialize
      * @return boolean Indicating success. If this is false, the type will be unusable.
@@ -161,7 +161,7 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     /**
      * Set the form reference.
      *
-     * @param HTMLQuickForm $form The form to use.
+     * @param HTMLQuickForm &$form The form to use.
      */
     function set_form(&$form)
     {
@@ -187,9 +187,9 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     }
 
     /**
-     * Gets an external configuration option referenced by its key. 
-     * 
-     * Besides other parts in the datamanager framework, nobody should ever have to 
+     * Gets an external configuration option referenced by its key.
+     *
+     * Besides other parts in the datamanager framework, nobody should ever have to
      * touch this information.
      *
      * @param string $key The key by which this configuration option is referenced.
@@ -205,9 +205,9 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     }
 
     /**
-     * Sets an external configuration option. 
-     * 
-     * Besides other parts in the datamanager framework, nobody should ever have to 
+     * Sets an external configuration option.
+     *
+     * Besides other parts in the datamanager framework, nobody should ever have to
      * touch this information.
      *
      * @param string $key The key by which this configuration option is referenced.
@@ -232,10 +232,10 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     }
 
     /**
-     * Returns the default value for this field as required by HTML_Quickform. 
-     * 
-     * You may either return a single value for simple types, or an array of form 
-     * field name / value pairs in case of composite types. A value of null indicates 
+     * Returns the default value for this field as required by HTML_Quickform.
+     *
+     * You may either return a single value for simple types, or an array of form
+     * field name / value pairs in case of composite types. A value of null indicates
      * no applicable default.
      *
      * This default implementation returns null unconditionally.
@@ -261,9 +261,9 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
 
     /**
      * This function is invoked if the widget should extract the corresponding data
-     * from the form results passed in $results. 
-     * 
-     * Form validation has already been done before, this function will only be called 
+     * from the form results passed in $results.
+     *
+     * Form validation has already been done before, this function will only be called
      * if and only if the form validation succeeds.
      *
      * @param Array $results The complete form results, you need to extract all values
@@ -276,9 +276,9 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
 
     /**
      * This event handler is called if and only if the Formmanager detects an actual
-     * form submission (this is tracked using a hidden form member). 
-     * 
-     * No Form validation has been done at this point. The event is triggered on all 
+     * form submission (this is tracked using a hidden form member).
+     *
+     * No Form validation has been done at this point. The event is triggered on all
      * submissions with the exception of the cancel and previous form events.
      *
      * You should be careful when using this event for data
@@ -304,9 +304,9 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     }
 
     /**
-     * Freezes all form elements associated with the widget. 
-     * 
-     * The default implementation works on the default field name, you don't need to override 
+     * Freezes all form elements associated with the widget.
+     *
+     * The default implementation works on the default field name, you don't need to override
      * this function unless you have multiple widgets in the form.
      *
      * This maps to the HTML_QuickForm_element::freeze() function.
@@ -321,9 +321,9 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     }
 
     /**
-     * Unfreezes all form elements associated with the widget. 
-     * 
-     * The default implementation works on the default field name, you don't need to override 
+     * Unfreezes all form elements associated with the widget.
+     *
+     * The default implementation works on the default field name, you don't need to override
      * this function unless you have multiple widgets in the form.
      *
      * This maps to the HTML_QuickForm_element::unfreeze() function.
@@ -335,9 +335,9 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     }
 
     /**
-     * Checks if the widget is frozen. 
-     * 
-     * The default implementation works on the default field name, usually you don't need to 
+     * Checks if the widget is frozen.
+     *
+     * The default implementation works on the default field name, usually you don't need to
      * override this function unless you have some strange form element logic.
      *
      * This maps to the HTML_QuickForm_element::isFrozen() function.

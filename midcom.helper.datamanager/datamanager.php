@@ -1911,7 +1911,7 @@ class midcom_helper_datamanager {
      * Encodes the given string into CSV according to these rules: Any appearance
      * of the separator or one of the two newline characters \n and \r will trigger
      * quoting. In quoting mode, the entire string will be enclosed in double-quotes.
-     * Any occurence of a double quote in the original string will be transformed
+     * Any occurrence of a double quote in the original string will be transformed
      * into two double quotes. Any leading or trailing whitespace around the data
      * will be eliminated.
      *
@@ -1931,7 +1931,7 @@ class midcom_helper_datamanager {
         // debug_add("Encoding [$data] (HEX: [" . bin2hex($data) . "]) with Pattern [$pattern].");
 
         if (preg_match($pattern, $data) != 0) {
-            // Qutoed operation required: Escape quotes
+            // Quoted operation required: Escape quotes
             return '"' . str_replace('"','""',$data) . '"';
         } else {
             // Unquoted operation required

@@ -16,12 +16,12 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
 {
     /**
      * list of participants
-     * 
+     *
      * (stored as eventmembers, referenced here for easier access)
      *
      * @var array
      */
-    var $participants = array(); 
+    var $participants = array();
 
     /**
      * like $participants but for resources.
@@ -44,11 +44,11 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
      */
     var $old_resources = array();
 
-    /* Tasks as resources are not handled yet at all but will be their own 
+    /* Tasks as resources are not handled yet at all but will be their own
      * object similar to eventmember and we use similar cache strategy
      * var $task_resources; //array, keys are GUIDs of tasks values true
      */
-    
+
     /* Skip repeat handling for now
      * var $repeat_rule;
      * var $repeat_prev;  //GUID, For repeating events, previous event
@@ -62,7 +62,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
      * * ['interval'], int: 1 means every day/week/monthday
      * * ['from'], int: timestamp of date from which repeating starts (1 second after midnight)
      *   ['to'], int: timestamp of date to which the repeating ends (1 second before midnight)
-     *   ['num'], int: how many occurences of repeat fit between from and to (mind the interval!)
+     *   ['num'], int: how many occurrences of repeat fit between from and to (mind the interval!)
      *   ['days'], array: keys are weekday numbers, values TRUE/FALSE
      *
      * It's mandatory to have 'to' or 'num' defined, the other can be calculated from the other,
@@ -70,13 +70,13 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
      */
 
     /**
-     * vCalendar (or similar external source) GUID for this event 
+     * vCalendar (or similar external source) GUID for this event
      *
      * (for vCalendar imports)
      *
      * @var string
      */
-    var $externalGuid = '';    
+    var $externalGuid = '';
     var $old_externalGuid = '';    //as above, for diffs
 
     var $vCal_store = array(); //some vCal specific stuff
@@ -97,7 +97,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
      *
      * @var mixed
      */
-    var $busy_er = false; 
+    var $busy_er = false;
 
     /**
      * Some compatibility switches, mainly for vCal imports
@@ -1626,7 +1626,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         /**
          * The real meaning of the DTSTAMP is fuzzy at best
          * http://www.kanzaki.com/docs/ical/dtstamp.html is less than helpfull
-         * http://lists.osafoundation.org/pipermail/ietf-calsify/2007-July/001750.html 
+         * http://lists.osafoundation.org/pipermail/ietf-calsify/2007-July/001750.html
          * seems to suggest that using the revision would be best
          */
         $vcal_keys['DTSTAMP'] =& $vcal_keys['LAST-MODIFIED'];

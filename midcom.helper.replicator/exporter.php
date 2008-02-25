@@ -21,7 +21,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
     var $subscription;
 
     var $exportability = array();
-    
+
     var $handled_dependencies = array();
 
     var $_serialize_rewrite_to_delete = array();
@@ -34,12 +34,12 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
     function midcom_helper_replicator_exporter($subscription)
     {
          $this->_component = 'midcom.helper.replicator';
-         
+
          $this->subscription = $subscription;
-         
+
          parent::midcom_baseclasses_components_purecode();
     }
-    
+
     /**
      * This is a static factory method which lets you dynamically create exporter instances.
      * It takes care of loading the required class files. The returned instances will be created
@@ -57,7 +57,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
     {
         $type = $subscription->exporter;
         $filename = MIDCOM_ROOT . "/midcom/helper/replicator/exporter/{$type}.php";
-        
+
         if (!file_exists($filename))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Requested exporter file {$type} is not installed.");
@@ -65,13 +65,13 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
         }
         require_once($filename);
 
-        $classname = "midcom_helper_replicator_exporter_{$type}";        
+        $classname = "midcom_helper_replicator_exporter_{$type}";
         if (!class_exists($classname))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Requested exporter class {$type} is not installed.");
             // This will exit.
         }
-        
+
         /**
          * Php 4.4.1 does not allow you to return a reference to an expression.
          * http://www.php.net/release_4_4_0.php
@@ -119,7 +119,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
             unset($privilege_serialized);
         }
         unset($privileges, $privilege, $qb);
-        
+
         debug_pop();
         return $serializations;
     }
@@ -154,7 +154,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
             debug_pop();
             return false;
         }
-        
+
         // Check that we can export parameters of the attachment as well before adding it to the serialized list
         $attachment_parameters = $this->serialize_parameters($attachment);
         if ($attachment_parameters === false)
@@ -217,8 +217,8 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
             {
                 debug_add("Attachment {$attachment->guid} is not exportable", MIDCOM_LOG_INFO);
                 continue;
-            }        
-        
+            }
+
             $attachment_serialized = $this->serialize_attachment($attachment);
             if ($attachment_serialized === false)
             {
@@ -270,7 +270,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
                 debug_add("Parameter {$parameter->guid} is not exportable", MIDCOM_LOG_INFO);
                 continue;
             }
-            
+
             $parameter_serialized = midcom_helper_replicator_serialize($parameter);
             if ($parameter_serialized === false)
             {
@@ -303,8 +303,8 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
         $class = get_class($object);
         debug_add("called for {$class} {$object->guid}");
         $serializations = array();
-        $GLOBALS['midcom_helper_replicator_logger']->push_prefix('exporter');     
-        
+        $GLOBALS['midcom_helper_replicator_logger']->push_prefix('exporter');
+
         // Special case of midgard_attachment (and classes extending it)
         if (is_a($object, 'midgard_attachment'))
         {
@@ -312,11 +312,11 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
             debug_pop();
             return $this->serialize_attachment($object);
         }
-        
+
         if (   version_compare(mgd_version(), '1.8.2', '>=')
             && !$skip_children)
         {
-            // TODO: refator to separate method(s)
+            // TODO: refactor to separate method(s)
             // Reflect the object to handle any linked fields
             $reflector = new midgard_reflection_property(get_class($object));
             foreach (get_object_vars($object) as $property => $value)
@@ -326,21 +326,21 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
                     // We don't need to deal with empty values
                     continue;
                 }
-                if ($reflector->is_link($property)) 
+                if ($reflector->is_link($property))
                 {
                     $linked_class = $reflector->get_link_name($property);
-                    
+
                     if (!array_key_exists($linked_class, $this->handled_dependencies))
                     {
                         $this->handled_dependencies[$linked_class] = array();
                     }
-                    
+
                     if (array_key_exists($value, $this->handled_dependencies[$linked_class]))
                     {
                         // Skip this property, we've already exported this dependency
                         continue;
                     }
-                    
+
                     // TODO: use midcom dbfactory reflection to get the correct classname right away to avoid the convert below
                     $linked_object = new $linked_class($value);
                     if (   is_object($linked_object)
@@ -360,7 +360,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
                 }
             }
         }
-        
+
         // Export object itself
         $object_serialized = midcom_helper_replicator_serialize($object);
         if ($object_serialized === false)
@@ -395,7 +395,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
             }
             $serializations = array_merge($serializations, $object_parameters);
             unset($object_parameters);
-    
+
             // And lastly object's attachments
             $object_attachments = $this->serialize_attachments($object);
             if ($object_attachments === false)
@@ -480,7 +480,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
             $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
             return array();
         }
-    
+
         $serializations = $this->serialize_object($object);
         if ($serializations === false)
         {
