@@ -194,7 +194,7 @@ class midcom_helper_datamanager2_widget_tinymce extends midcom_helper_datamanage
 
         if ($this->_config->get('tinymce_use_compressor'))
         {
-            $gz_config = preg_replace("/theme\s*?:/", "themes :", $config);
+            $gz_config = preg_replace("/^theme\s*?:/", "themes :", $config);
             $script_gz = <<<EOT
 tinyMCE_GZ.init({
 {$gz_config}
