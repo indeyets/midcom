@@ -25,9 +25,10 @@ require_once "HTML/QuickForm.php";
 class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_components_purecode
 {
     /**
-     * The schema (not the schema <i>database!</i>) to use for operation. This variable will always contain a parsed
-     * representation of the schema, so that one can swiftly switch between individual schemas
-     * of the Database.
+     * The schema (not the schema <i>database!</i>) to use for operation.
+     *
+     * This variable will always contain a parsed representation of the schema,
+     * so that one can swiftly switch between individual schemas of the Database.
      *
      * This member is initialized by-reference.
      *
@@ -66,7 +67,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
     /**
      * This is the renderer that quickform will use.
      *
-     * <i>It is set using the set_renderer() or create_renderer calls.</i>
+     * <i>It is set using the set_renderer() or create_renderer() calls.</i>
      *
      * If the configuration option 'default_renderer' (and possibly 'default_renderer_src')
      * are set, the class will create instances of these renderers during startup, so that
@@ -426,7 +427,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             }
         }
 
-        // Translate the requred note
+        // Translate the required note
         $this->form->setRequiredNote
         (
             '<span style="font-size:80%; color:#ff0000;">*</span>' .
@@ -665,7 +666,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
     }
 
     /**
-     * This helper function adds all rules and filters which are deducable from the schema
+     * This helper function adds all rules and filters which are deducible from the schema
      * to the form. It recognizes the following schema options:
      *
      * - required: Adds a required rule to the form, bound to the given element.
@@ -766,6 +767,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
 
     /**
      * Set the value of a formelement.
+     *
      * @param string $key the form field name
      * @param string $value the new value to set
      */
@@ -778,8 +780,10 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
 
 
     /**
-     * Creates an instance of the renderer set in the system configuration. This is called
-     * during the initialize code and will make the renderer available immediately after startup.
+     * Creates an instance of the renderer set in the system configuration.
+     *
+     * This is called during the initialize code and will make the renderer
+     * available immediately after startup.
      */
     function _create_default_renderer()
     {
@@ -866,7 +870,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
         if (   $exitcode == 'save'
             || $exitcode == 'next')
         {
-            // Validate the from.
+            // Validate the form.
             if (! $this->form->validate())
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
@@ -881,8 +885,8 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
     /**
      * Use this function to get the values of submitted form without going through
      * a storage backend.
-     * @return array the submitted values.
      *
+     * @return array the submitted values.
      */
     function get_submit_values(  )
     {
@@ -891,8 +895,10 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
 
     /**
      * Call this before any output is made. It will process the form results, if applicable,
-     * and return an according exit code. This indicates which (if any) submit button was pressed.
-     * If 'editing' is returned, this means that either there was not data submitted yet, or that
+     * and return an according exit code.
+     *
+     * This indicates which (if any) submit button was pressed. If 'editing' is
+     * returned, this means that either there was not data submitted yet, or that
      * form validation has failed.
      *
      * //This call ensures that MidCOM runs uncached.

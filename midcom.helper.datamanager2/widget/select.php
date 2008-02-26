@@ -10,7 +10,7 @@
 /**
  * Datamanager 2 simple select widget.
  *
- * It can only be bound to a select type (or subclass thereof), and inherits the confguration
+ * It can only be bound to a select type (or subclass thereof), and inherits the configuration
  * from there as far as possible.
  *
  * <b>Available configuration options:</b>
@@ -61,7 +61,6 @@ class midcom_helper_datamanager2_widget_select extends midcom_helper_datamanager
      *
      * @var array
      */
-
     var $jsevents = null;
 
     /**

@@ -33,10 +33,11 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     var $serialized_storage = false;
 
     /**
-     * This field contains the reason for the failed validation. The string can be safely
-     * assumed to be localized, and is only valid if a validation has failed previously.
-     * This field will be cleared prior to a new validation attempt. You may use simple
-     * inline HTML in these errors.
+     * This field contains the reason for the failed validation.
+     *
+     * The string can be safely assumed to be localized, and is only valid if a
+     * validation has failed previously. This field will be cleared prior to a
+     * new validation attempt. You may use simple inline HTML in these errors.
      *
      * @var string
      */
@@ -45,7 +46,9 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     /**
      * This variable contains configuration data which is not directly related to the
      * operation of the type, but required for the operation of external tools like the
-     * storage manager. The type should never touch this variable, which is controlled
+     * storage manager.
+     *
+     * The type should never touch this variable, which is controlled
      * by a corresponding getter/setter pair.
      *
      * @var Array
@@ -56,17 +59,20 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     var $_external_config = Array();
 
     /**
-     * The name field holds the name of the field the datatype is encapsulating. This
-     * maps to the schema's field name. You should never have to change them.
+     * The name field holds the name of the field the datatype is encapsulating.
+     *
+     * This maps to the schema's field name. You should never have to change them.
      *
      * @var string
      */
     var $name = '';
 
     /**
-     * A reference to the storage object that this type is using. Use this for attachment
-     * management. The variable may be null until actual processing starts. It may also
-     * change during the lifetime of a type. You should therefore be careful.
+     * A reference to the storage object that this type is using.
+     *
+     * Use this for attachment management. The variable may be null until
+     * actual processing starts. It may also change during the lifetime
+     * of a type. You should therefore be careful.
      *
      * @var midcom_helper_datamanager2_storage
      * @access protected
@@ -89,7 +95,7 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
      *
      * @param string $name The name of the field to which this type is bound.
      * @param Array $config The configuration data which should be used to customize the type.
-     * @param midcom_helper_datamanager2_storage $storage A reference to the storage object to use.
+     * @param midcom_helper_datamanager2_storage &$storage A reference to the storage object to use.
      * @return boolean Indicating success. If this is false, the type will be unusable.
      */
     function initialize($name, $config, &$storage)
@@ -127,7 +133,7 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
      * Small helper which sets the current storage object to a new one. The
      * object is used by-reference.
      *
-     * @var midcom_helper_datamanager2_storage $storage A reference to the storage object to use.
+     * @var midcom_helper_datamanager2_storage &$storage A reference to the storage object to use.
      */
     function set_storage(&$storage)
     {
@@ -148,8 +154,10 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
 
     /**
      * Converts from storage format to "operational" format, which might include
-     * more information then the pure storage format. Depending on the $serialized_storage member,
-     * the framework will automatically deal with deserializaiton of the information.
+     * more information then the pure storage format.
+     *
+     * Depending on the $serialized_storage member, the framework will
+     * automatically deal with deserialization of the information.
      *
      * This function must be overwritten.
      *
@@ -161,8 +169,10 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     }
 
     /**
-     * Converts from "operational" format to from storage format. Depending on the $serialized_storage member,
-     * the framework will automatically deal with deserializaiton of the information.
+     * Converts from "operational" format to from storage format.
+     *
+     * Depending on the $serialized_storage member, the framework will
+     * automatically deal with deserialization of the information.
      *
      * This function must be overwritten.
      *
@@ -187,8 +197,9 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     }
 
     /**
-     * Transforms the current object's state into a CSV string representation. Escaping
-     * and other encoding is done by the caller, you just return the string.
+     * Transforms the current object's state into a CSV string representation.
+     *
+     * Escaping and other encoding is done by the caller, you just return the string.
      *
      * This function must be overwritten.
      *
@@ -200,8 +211,9 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     }
 
     /**
-     * Transforms the current object's state into HTML representation. This is used for displaying
-     * type contents in an automatic fashion.
+     * Transforms the current object's state into HTML representation.
+     *
+     * This is used for displaying type contents in an automatic fashion.
      *
      * This function must be overwritten.
      *
@@ -213,10 +225,10 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     }
 
     /**
-     * Transforms the current objects' state into 'raw' representation. Usually 
-     * the convert_to_storage -method returns suitable value, but in some datatypes
-     * (like privilege, blobs-based ones and tags), convert_to_storage does database
-     * IO directly and returns less usefull data.
+     * Transforms the current objects' state into 'raw' representation.
+     * Usually the convert_to_storage -method returns suitable value, but in
+     * some datatypes (like privilege, blobs-based ones and tags),
+     * convert_to_storage does database IO directly and returns less useful data.
      *
      * @see convert_to_storage
      * @return mixed The rendered content.
@@ -254,8 +266,10 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     }
 
     /**
-     * Gets an external configuration option referenced by its key. Besides other parts
-     * in the datamanager framework, nobody should ever have to touch this information.
+     * Gets an external configuration option referenced by its key.
+     *
+     * Besides other parts in the datamanager framework, nobody should ever
+     * have to touch this information.
      *
      * @param string $key The key by which this configuration option is referenced.
      * @return mixed The configuration value, which is null if the key wasn't found.
@@ -270,8 +284,10 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     }
 
     /**
-     * Sets an external configuration option. Besides other parts
-     * in the datamanager framework, nobody should ever have to touch this information.
+     * Sets an external configuration option.
+     *
+     * Besides other parts in the datamanager framework, nobody should ever
+     * have to touch this information.
      *
      * @param string $key The key by which this configuration option is referenced.
      * @param mixed $value The configuration value.
@@ -283,7 +299,8 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
 
     /**
      * Checks whether the current user has the given privilege on the storage backend.
-     * The storage backend is resposible for the actual execution of this operation,
+     *
+     * The storage backend is responsible for the actual execution of this operation,
      * so this is merely a shortcut.
      *
      * @param string $privilege The privilege to check against.

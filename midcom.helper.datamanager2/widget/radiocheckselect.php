@@ -10,7 +10,7 @@
 /**
  * Datamanager 2 simple checkbox / radiobox select widget.
  *
- * It can only be bound to a select type (or subclass thereof), and inherits the confguration
+ * It can only be bound to a select type (or subclass thereof), and inherits the configuration
  * from there as far as possible.
  *
  * <b>Available configuration options:</b>

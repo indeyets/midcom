@@ -85,12 +85,12 @@ class midcom_helper_datamanager2_widget_jsdate extends midcom_helper_datamanager
             debug_pop();
             return false;
         }
-        
+
         if ($this->_initialize_dependencies)
         {
             $this->_add_external_html_elements();
         }
-        
+
         return true;
     }
 
@@ -281,6 +281,7 @@ EOT;
         }
         echo $this->_type->value->format($format);
     }
+
 }
 
 ?>
