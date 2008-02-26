@@ -806,6 +806,18 @@ class midcom_application
         // This is here to avoid trouble with end-of-processing segfaults. Will block AFAIK
         flush();
         debug_pop();
+        
+        if ($GLOBALS['midcom_config']['enable_included_list'])
+        {
+            $included = get_included_files();
+            echo "<p>" . count($included) . " included files:</p>\n";
+            echo "<ul>\n";
+            foreach ($included as $filename)
+            {
+                echo "<li>{$filename}</li>\n";
+            }
+            echo "</ul>\n";
+        }
 
         debug_add("End of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
     }

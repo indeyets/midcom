@@ -400,6 +400,7 @@ $GLOBALS['midcom_config_default']['indexer_xmlshell_working_directory'] = '';
 $GLOBALS['midcom_config_default']['log_filename'] = '/tmp/midcom.log';
 $GLOBALS['midcom_config_default']['log_level'] = MIDCOM_LOG_ERROR;
 $GLOBALS['midcom_config_default']['log_tailurl_enable'] = false;
+$GLOBALS['midcom_config_default']['enable_included_list'] = false;
 
 // Core configuration
 $GLOBALS['midcom_config_default']['midcom_ais_url'] = '/midcom-admin/ais/';
