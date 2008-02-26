@@ -220,8 +220,7 @@ remove_script_host : true,
 elements : "{$this->_namespace}{$this->name}",
 language : "{$language}",
 {$imagepopup_url}
-docs_language : "{$language}",
-browsers : "msie,gecko,opera"
+docs_language : "{$language}"
 });
 EOT;
 
