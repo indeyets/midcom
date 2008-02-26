@@ -174,6 +174,14 @@ EOT;
         $this->_create_unfrozen_elements($elements);
 
         $this->_form->addGroup($elements, $this->name, $this->_translate($this->_field['title']), '', false);
+
+        if($this->_field['required'])
+        {
+            $errmsg = sprintf($this->_l10n->get('field %s is required'), $this->_field['title']);
+
+            $this->_form->addRule($this->name, $errmsg, 'regex', '/^[^0]/');
+        }
+        $this->_form->addRule($this->name, $this->_translate('validation failed: date'), 'checkjsdate');
     }
 
     /**

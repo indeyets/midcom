@@ -246,6 +246,8 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             }
 
             $this->widgets[$name]->set_form($this->form);
+            //Load custom QF rules, so that they can be used in widgets' add_element_to_form calls
+            $this->_load_type_qfrules($name);
             $this->widgets[$name]->add_elements_to_form();
             $this->_add_rules_and_filters($name, $config);
             $field_default = $this->widgets[$name]->get_default();
@@ -675,7 +677,6 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      */
     function _add_rules_and_filters($name, $config)
     {
-        $this->_load_type_qfrules($name);
         $widget =& $this->widgets[$name];
         if ($config['readonly'])
         {

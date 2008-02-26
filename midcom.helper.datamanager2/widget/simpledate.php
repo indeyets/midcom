@@ -109,6 +109,7 @@ class midcom_helper_datamanager2_widget_simpledate extends midcom_helper_dataman
             $errmsg = sprintf($this->_l10n->get('field %s is required'), $this->_field['title']);
             $this->_form->addGroupRule($this->name, $errmsg, 'nonzero', null, 3);
         }
+        $this->_form->addRule($this->name, $this->_translate('validation failed: date'), 'checksimpledate');
     }
 
     function _generate_items()
