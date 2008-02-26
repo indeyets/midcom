@@ -128,6 +128,10 @@ Bild hochladen
 In diesem Feld sind nur alphanumerische Zeichen erlaubt.
 ---STRINGEND
 
+---STRING validation failed: date
+Dies ist keine gültige Datumsangabe
+---STRINGEND
+
 ---STRING validation failed: email
 Dies ist keine gültige E-Mail-Adresse.
 ---STRINGEND

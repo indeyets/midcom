@@ -156,6 +156,10 @@ Upload image
 Only alphanumeric characters are allowed in this field
 ---STRINGEND
 
+---STRING validation failed: date
+This is not a valid date
+---STRINGEND
+
 ---STRING validation failed: email
 This is not a valid E-Mail address
 ---STRINGEND
