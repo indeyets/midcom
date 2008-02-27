@@ -7,6 +7,10 @@
 <span>%d valokuvaa merkittynä </span>%s
 ---STRINGEND
 
+---STRING a new photo waiting for moderation
+Uusi valokuva odottaa hyväksyntää
+---STRINGEND
+
 ---STRING all
 Kaikki
 ---STRINGEND
@@ -23,12 +27,24 @@ Kaikki kuvat joiden arvio on %s
 Kaikki merkinnät
 ---STRINGEND
 
+---STRING approve
+Hyväksy
+---STRINGEND
+
 ---STRING between %s-%s
 Ajalta %s - %s
 ---STRINGEND
 
 ---STRING delete photo
 Poista valokuva
+---STRINGEND
+
+---STRING disapprove
+Hylkää
+---STRINGEND
+
+---STRING done recreating derived images
+Johdettujen kuvien uudelleenluominen on päättynyt
 ---STRINGEND
 
 ---STRING edit photo
@@ -55,6 +71,10 @@ Salli AJAX-muokkaaminen
 Sisääntulosivun toimintamalli
 ---STRINGEND
 
+---STRING failure when processing photo "%s" (GUID: %s)
+Kuvan "%s" prosessoiminen epäonnistui (GUID: %s)
+---STRINGEND
+
 ---STRING flickr_username
 Flickr-käyttäjätunnus
 ---STRINGEND
@@ -69,6 +89,14 @@ Jos merkitty niin vain kirjautuneet käyttäjät voivat nähdä tämän valokuva
 
 ---STRING if checked only you can see this photo
 Jos merkitty niin vain sinä voit nähdä tämän valokuvan
+---STRINGEND
+
+---STRING moderate
+Moderointi
+---STRINGEND
+
+---STRING moderate photos for folder %s
+Moderoi kansion %s kuvia
 ---STRINGEND
 
 ---STRING my photos
@@ -97,6 +125,10 @@ Valokuvien hallinta
 
 ---STRING photo
 Valokuva
+---STRINGEND
+
+---STRING photo details
+Kuvan tiedot
 ---STRINGEND
 
 ---STRING photo tags
@@ -139,12 +171,28 @@ Edellinen
 Kuva on yksityinen
 ---STRINGEND
 
+---STRING privilege moderate
+Moderointi
+---STRINGEND
+
+---STRING processed photo "%s" (GUID: %s)
+Kuva "%s" prosessoitu (GUID: %s)
+---STRINGEND
+
 ---STRING rating
 Arvio
 ---STRINGEND
 
 ---STRING recreate derived images
 Päivitä generoidut kuvakoot
+---STRINGEND
+
+---STRING recreating derived images
+Uudellen luodaan johdetut kuvat
+---STRINGEND
+
+---STRING return to photostream
+Palaa valokuvien hallintaan
 ---STRINGEND
 
 ---STRING select the user or tags
@@ -172,7 +220,11 @@ Otettu %s paikassa %s
 ---STRINGEND
 
 ---STRING this operation will take some time
-Tämä toiminto kestää aika kauan.
+Tässä toimenpiteessä kestää jonkin aikaa
+---STRINGEND
+
+---STRING thumbnail
+Pikkukuva
 ---STRINGEND
 
 ---STRING upload photos
@@ -189,5 +241,12 @@ Lataa galleriaan
 
 ---STRING user interface settings
 Käyttöliittymäasetukset
+---STRINGEND
+
+---STRING moderation_mail_body
+Uutta materiaalia on odottamassa hyväksyntää. Vierailethan osoitteessa __URL__ arvioimassa materiaalin.
+
+-- 
+Lähetetty osoitteesta __URL__
 ---STRINGEND
 

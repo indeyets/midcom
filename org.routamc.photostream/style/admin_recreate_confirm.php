@@ -11,6 +11,8 @@
 </p>
 
 <form action="" method="post">
-  <input type="submit" name="org_routamc_photostream_recreateok" value="<?php echo $data['l10n']->get('start'); ?> " />
-  <input type="submit" name="org_routamc_photostream_recreatecancel" value="<?php echo $data['l10n_midcom']->get('cancel'); ?>" />
+    <div class="form_toolbar">
+        <input type="submit" name="org_routamc_photostream_recreateok" value="<?php echo $data['l10n']->get('start'); ?> " />
+        <input type="submit" name="org_routamc_photostream_recreatecancel" value="<?php echo $data['l10n_midcom']->get('cancel'); ?>" />
+    </div>
 </form>

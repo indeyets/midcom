@@ -56,6 +56,12 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         $qb = new org_openpsa_qbpager('org_routamc_photostream_photo_dba', 'org_routamc_photostream_photo');
         $qb->results_per_page = $this->_config->get('photos_per_page');
         $qb->add_constraint('node', '=', $this->_topic->id);
+        
+        // Show only the moderated photos
+        if ($this->_config->get('moderate_uploaded_photos'))
+        {
+            $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_APPROVED);
+        }
 
         //$qb->listen_parameter('org_routamc_photostream_order', array('reversed'));
         //$qb->listen_parameter('org_routamc_photostream_order_by', '*');
@@ -190,6 +196,12 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         // List photos
         $qb = org_routamc_photostream_photo_dba::new_query_builder();
         $qb->add_constraint('node', '=', $this->_topic->id);
+
+        // Show only the moderated photos
+        if ($this->_config->get('moderate_uploaded_photos'))
+        {
+            $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_APPROVED);
+        }
 
         if ($handler_id == 'photostream_latest')
         {

@@ -8,7 +8,7 @@
  */
 
 /**
- * Photostream edit/delete photos handler
+ * Photostream edit/delete/approve photos handler
  *
  * Originally copied from net.nehmer.blog
  *
@@ -116,15 +116,20 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
      *
      * @access private
      */
-    function _load_datamanager()
+    function _load_datamanager($photo = null)
     {
         $this->_load_schemadb();
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
-
-        if (   ! $this->_datamanager
-            || ! $this->_datamanager->autoset_storage($this->_photo))
+        
+        if (!$photo)
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance for photo {$this->_photo->id}.");
+            return;
+        }
+        
+        if (   ! $this->_datamanager
+            || ! $this->_datamanager->autoset_storage($photo))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance for photo {$photo->id}.");
             // This will exit.
         }
     }
@@ -255,7 +260,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         }
         $this->_photo->require_do('midgard:delete');
 
-        $this->_load_datamanager();
+        $this->_load_datamanager($this->_photo);
 
         if (array_key_exists('org_routamc_photostream_deleteok', $_REQUEST))
         {
@@ -406,7 +411,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         {
             // PHP5-TODO: (probably) Must be copy-by-value
             $this->_photo = $photo;
-            $this->_load_datamanager();
+            $this->_load_datamanager($photo);
             $photo_field = false;
             foreach ($this->_request_data['schemadb']['upload']->fields as $name => $field)
             {
@@ -420,6 +425,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
                 // Could not figure which field houses the photo type
                 continue;
             }
+            
             $stat = $this->_datamanager->types[$photo_field]->recreate_main_image();
             $this->_request_data['photo'] =& $this->_photo;
             if ($stat)
@@ -440,7 +446,135 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         ob_start();
         // Restart OB to make MidCOM happier
     }
+    
+    /**
+     * Process the moderation form data
+     * 
+     * @access private
+     */
+    function _process_moderate_form()
+    {
+        if (   !isset($_POST['f_approve'])
+            && !isset($_POST['f_disapprove'])
+            || !isset($_POST['guid']))
+        {
+            return;
+        }
+        
+        $photo = new org_routamc_photostream_photo_dba($_POST['guid']);
+        
+        if (   !$photo
+            || !$photo->guid)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to get the requested photo');
+            // This will exit
+        }
+        
+        if (isset($_POST['f_approve']))
+        {
+            $photo->status = ORG_ROUTAMC_PHOTOSTREAM_STATUS_APPROVED;
+        }
+        
+        if (isset($_POST['f_disapprove']))
+        {
+            $photo->status = ORG_ROUTAMC_PHOTOSTREAM_STATUS_REJECTED;
+        }
+        
+        if (!$photo->update())
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to update the photo, check the privileges');
+            // This will exit
+        }
+        
+        // Creation callback function
+        if ($this->_config->get('moderate_callback_function'))
+        {
+            if ($this->_config->get('moderate_callback_snippet'))
+            {
+                $eval = midcom_get_snippet_content($this->_config->get('moderate_callback_snippet'));
 
+                if ($eval)
+                {
+                    eval("?>{$eval}<?php");
+                }
+            }
+
+            $callback = $this->_config->get('moderate_callback_function');
+            $callback($this->_article, $this->_content_topic);
+        }
+        
+        exit;
+    }
+    
+    /**
+     * Moderate the uploaded photos
+     * 
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array &$data The local request data.
+     * @return boolean Indicating success.
+     */
+    function _handler_moderate($handler_id, $args, &$data)
+    {
+        // Custom privilege check
+        $this->_topic->require_do('org.routamc.photostream:moderate');
+        $this->_topic->require_do('midgard:update');
+        
+        // Define the query builder for collecting the photos
+        $qb = org_routamc_photostream_photo_dba::new_query_builder();
+        $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_UNMODERATED);
+        $qb->add_order('taken');
+        
+        // Get the results
+        $this->_photos = $qb->execute();
+        
+        // Load the datamanager for photos
+        $this->_load_datamanager();
+        
+        // Set the breadcrumb data
+        $tmp = array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'moderate/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('moderate'),
+        );
+
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        
+        // Add the jQuery files
+        $_MIDCOM->enable_jquery();
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.form-1.0.3.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.routamc.photostream/jquery-moderate.js');
+        
+        // Process the form
+        $this->_process_moderate_form();
+        
+        return true;
+    }
+    
+    /**
+     * 
+     * 
+     * 
+     */
+    function _show_moderate($handler_id, &$data)
+    {
+        $data['datamanager'] =& $this->_datamanager;
+        midcom_show_style('admin_moderate_header');
+        
+        // Show the unmoderated photos
+        foreach ($this->_photos as $photo)
+        {
+            $this->_datamanager->autoset_storage($photo);
+            $data['photo'] =& $photo;
+            
+            // Get the photographer details
+            $data['photographer'] = new midcom_db_person($photo->photographer);
+            
+            midcom_show_style('admin_moderate_item');
+        }
+        
+        midcom_show_style('admin_moderate_footer');
+    }
 }
-
 ?>

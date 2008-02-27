@@ -176,7 +176,57 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
             // This will exit.
         }
 
+        // Creation callback function
+        if ($this->_config->get('callback_function'))
+        {
+            if ($this->_config->get('callback_snippet'))
+            {
+                $eval = midcom_get_snippet_content($this->_config->get('callback_snippet'));
+
+                if ($eval)
+                {
+                    eval("?>{$eval}<?php");
+                }
+            }
+
+            $callback = $this->_config->get('callback_function');
+            $callback($this->_article, $this->_content_topic);
+        }
+        
         return $this->_photo;
+    }
+    
+    /**
+     * Send a notification message when a new photo has been uploaded
+     * 
+     * @access private
+     */
+    function _send_moderation_notification()
+    {
+        $_MIDCOM->componentloader->load('org.openpsa.mail');
+        $mail = new org_openpsa_mail();
+        $mail->to = $this->_config->get('moderator_email');
+        $mail->from = $this->_config->get('system_mailer_address');
+        $mail->subject = $this->_l10n->get($this->_config->get('moderator_mail_subject'));
+        $mail->body = $this->_l10n->get($this->_config->get('moderator_mail_body'));
+        
+        // Parse the mail variables
+        if (   $this->_config->get('mail_variables')
+            && is_array($this->_config->get('mail_variables')))
+        {
+            // Each __$key__ will be replaced by $value
+            foreach ($this->_config->get('mail_variables') as $key => $value)
+            {
+                $mail->body = str_replace("__{$key}__", $value, $mail->body);
+            }
+        }
+        
+        if (!$mail->send())
+        {
+            return false;
+        }
+        
+        return true;
     }
 
     function _copy__files($as, $from)
@@ -503,6 +553,13 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
                     }
                 }
 
+                // Send an email notification of photos requiring moderation
+                if (   $this->_config->get('moderate_uploaded_photos')
+                    && $this->_config->get('moderator_email'))
+                {
+                    $this->_send_moderation_notification();
+                }
+                
                 $_MIDCOM->relocate("photo/{$this->_photo->guid}/");
                 // This will exit.
 

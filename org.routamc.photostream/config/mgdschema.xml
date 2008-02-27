@@ -14,6 +14,9 @@
         <property name="archival" link="midgard_attachment:id" reverse="yes" type="integer"/>
         <property name="main" link="midgard_attachment:id" reverse="yes" type="integer"/>
         <property name="thumb" link="midgard_attachment:id" reverse="yes" type="integer"/>
+        
+        <!-- Status of the photo (for different purposes, like approved, censored and so on) -->
+        <property name="status" type="integer" />
 
         <!-- Descriptive fields are MLd -->
         <property name="title"       multilang="yes" table="org_routamc_photostream_photo_i" type="string" />

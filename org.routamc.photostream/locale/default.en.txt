@@ -7,6 +7,10 @@
 <span>%d photos tagged with </span>%s
 ---STRINGEND
 
+---STRING a new photo waiting for moderation
+A new photo is waiting for moderation
+---STRINGEND
+
 ---STRING all
 All
 ---STRINGEND
@@ -23,12 +27,24 @@ All photos rated as %s
 All tags
 ---STRINGEND
 
+---STRING approve
+Approve
+---STRINGEND
+
 ---STRING between %s-%s
 Between %s - %s
 ---STRINGEND
 
 ---STRING delete photo
 Delete photo
+---STRINGEND
+
+---STRING disapprove
+Disapprove
+---STRINGEND
+
+---STRING done recreating derived images
+Done recreating derived images
 ---STRINGEND
 
 ---STRING edit photo
@@ -55,8 +71,16 @@ Enable AJAX editing
 Entry page operating model
 ---STRINGEND
 
+---STRING failure when processing photo "%s" (GUID: %s)
+Failure when processing photo "%s" (GUID: %s)
+---STRINGEND
+
 ---STRING flickr_username
 Flickr username
+---STRINGEND
+
+---STRING go straight to the all photos view
+Go straight to the all photos view
 ---STRINGEND
 
 ---STRING if checked only logged in users can see this photo
@@ -65,6 +89,14 @@ If checked only logged in users can see this photo
 
 ---STRING if checked only you can see this photo
 If checked only you can see this photo
+---STRINGEND
+
+---STRING moderate
+Moderate
+---STRINGEND
+
+---STRING moderate photos for folder %s
+Moderate photos for folder %s
 ---STRINGEND
 
 ---STRING my photos
@@ -93,6 +125,10 @@ Photo management
 
 ---STRING photo
 Photo
+---STRINGEND
+
+---STRING photo details
+Photo details
 ---STRINGEND
 
 ---STRING photo tags
@@ -135,12 +171,28 @@ Previous
 Photo is private
 ---STRINGEND
 
+---STRING privilege moderate
+Moderate
+---STRINGEND
+
+---STRING processed photo "%s" (GUID: %s)
+Processed photo "%s" (GUID: %s)
+---STRINGEND
+
 ---STRING rating
 Rating
 ---STRINGEND
 
 ---STRING recreate derived images
 Recreate derived images
+---STRINGEND
+
+---STRING recreating derived images
+Recreating derived images
+---STRINGEND
+
+---STRING return to photostream
+Return to photostream
 ---STRINGEND
 
 ---STRING select the user or tags
@@ -168,7 +220,11 @@ Taken on %s in %s
 ---STRINGEND
 
 ---STRING this operation will take some time
-This operation will take some time.
+This operation will take some time
+---STRINGEND
+
+---STRING thumbnail
+Thumbnail
 ---STRINGEND
 
 ---STRING upload photos
@@ -187,7 +243,10 @@ Upload to gallery
 User interface settings
 ---STRINGEND
 
----STRING go straight to the all photos view
-Go straight to the all photos view
+---STRING moderation_mail_body
+There is new material waiting for approval. Please visit __URL__ to evaluate the material.
+
+-- 
+Sent from __URL__
 ---STRINGEND
 

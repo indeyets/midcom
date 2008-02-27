@@ -3,7 +3,10 @@
 'purecode' => false,
 'version' => '1.2.0beta1',
 'state' => 'beta',
-'privileges' => array(),
+'privileges' => array
+(
+    'moderate' => 'org.routamc.photostream:moderate',
+),
 'class_definitions' => array
 (
     'midcom_dba_classes.inc',

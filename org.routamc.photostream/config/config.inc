@@ -31,3 +31,38 @@
 
 // Configuration schema
 'schemadb_config' => 'file:/org/routamc/photostream/config/schemadb_config.inc',
+
+// Creation callback snippet for defining site-specific function
+'callback_snippet' => null,
+
+// Callback function will be called after creation e.g. to provide interface for page linking system
+// $callback_function($photo, $topic)
+'callback_function' => null,
+
+// Require moderating for newly uploaded photos
+'moderate_uploaded_photos' => false,
+
+// Set the email address if you wish to receive a message of new photos
+'moderator_email' => null,
+
+// Address from which the email messages will be sent
+'system_mailer_address' => '',
+
+// Key-value pairs for replacing __{$key}__ tags with the defined value for customized messages
+'mail_variables' => array
+(
+    'URL' => substr($_MIDCOM->get_page_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
+),
+
+// Moderator mail subject (will be localized)
+'moderator_mail_subject' => 'new photos waiting for moderation',
+'moderator_mail_body' => 'moderation_mail_body',
+
+
+// Moderate callback snippet will be evaluated after moderating a photo
+'moderate_callback_snippet' => null,
+
+// Moderate callback function will be called after moderating
+// $callback_function($photo, $topic)
+'moderate_callback_function' => null,
+

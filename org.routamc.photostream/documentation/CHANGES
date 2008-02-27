@@ -7,6 +7,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-02-27 adrenalin
+  + Added interface for accepting or rejecting uploaded photos before they are included to the photostream
+
 2007-12-18 adrenalin
   + Added static methods for getting the surrounding photos in the photostream
 
