@@ -61,9 +61,14 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
         {
             // We're in some level of groups
             $qb = org_openpsa_products_product_group_dba::new_query_builder();
-            if (($handler_id == 'list_intree')
+            if (   ($handler_id == 'list_intree')
                 && ($args[0] != 'search')
-                && ($args[0] != 'product'))
+                && ($args[0] != 'product')
+                && (   isset($groups[0])
+                    && isset($groups[0]->id)
+                    && !empty($groups[0])
+                    )
+                )
             {
                 $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
                 $parentgroup_qb->add_constraint('code', '=', $args[0]);
