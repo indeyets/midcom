@@ -98,6 +98,7 @@ class fi_hut_loginbroker_handler_index  extends midcom_baseclasses_components_ha
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Could not read username from \$_SERVER['{$username_header}']", MIDCOM_LOG_ERROR);
+            debug_print_r('$_SERVER', $_SERVER, MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
