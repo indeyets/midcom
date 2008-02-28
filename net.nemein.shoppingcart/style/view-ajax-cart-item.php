@@ -6,9 +6,9 @@ $product =& $item['product_obj'];
 $row_value = $product->price * $item['amount'];
 $data['total_value'] += $row_value;
 $product_url = $data['permalinks']->create_permalink($product->guid);
-
 // Base indent
 $idt = '        ';
+// Output
 echo "{$idt}<item>\n";
 echo "{$idt}    <title>{$product->title}</title>\n";
 echo "{$idt}    <guid>{$product->guid}</guid>\n";
@@ -18,15 +18,4 @@ echo "{$idt}    <link>{$product_url}</link>\n";
 $mapper = new midcom_helper_xml_objectmapper();
 echo $mapper->object2data($product, 'product_object');
 echo "{$idt}</item>\n";
-
-/*
-        <tr class="item">
-            <td class="title">
-                <a href="&(product_url:h);" target="_blank">&(product->title);</a>
-            </td>
-            <td class="numeric"><?php echo round($item['amount'], 2); ?></td>
-            <td class="numeric"><?php echo sprintf('%01.2f', round($row_value, 2)); ?></td>
-        </tr>
-*/
-
 ?>
