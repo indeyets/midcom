@@ -140,7 +140,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
     function _handler_contents($handler_id, $args, &$data)
     {
         $data['l10n'] =& $this->_l10n;
-        $data['title'] = $this->_l10n_midcom->get('view cart');
+        $data['title'] = $this->_l10n->get('view cart');
         $_MIDCOM->set_pagetitle($data['title']);
         $this->_update_breadcrumb_line($handler_id);
         $data['total_value'] = 0;

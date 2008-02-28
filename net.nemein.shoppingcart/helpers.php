@@ -45,7 +45,7 @@ function net_nemein_shoppingcart_get_shortlist_content_url()
     {
         return false;
     }
-    return "{$prefix}/shortlist.html";
+    return "{$prefix}shortlist.html";
 }
 
 function net_nemein_shoppingcart_get_node_url()

@@ -1,8 +1,8 @@
 /**
  * Which backend handler to use for checkout
- * Currently supported values: 'email'
+ * Currently supported values: 'null' and 'email'
  */
-'checkout_backend' => 'email',
+'checkout_backend' => 'null',
 /**
  * Where to send the orders processed with the email backend
  */

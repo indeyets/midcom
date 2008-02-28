@@ -136,7 +136,7 @@ class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses
                 }
                 // Clear cart
                 $session = new midcom_service_session();
-                $session->remove('cartdata');
+                $session->remove("cartdata_{$this->_topic->guid}");
                 $_MIDCOM->relocate('checkout/email-ok.html');
                 break;
             case 'cancel':

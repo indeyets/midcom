@@ -73,6 +73,13 @@ class net_nemein_shoppingcart_viewer extends midcom_baseclasses_components_reque
             'handler' => Array('net_nemein_shoppingcart_handler_checkout_redirect', 'redirect'),
         );
 
+        // Handle /checkout/null
+        $this->_request_switch['checkout-null'] = array
+        (
+            'fixed_args' => array('checkout', 'null'),
+            'handler' => Array('net_nemein_shoppingcart_handler_checkout_null', 'phase1'),
+        );
+
         // Handle /checkout/email
         $this->_request_switch['checkout-email-phase1'] = array
         (
@@ -123,7 +130,6 @@ class net_nemein_shoppingcart_viewer extends midcom_baseclasses_components_reque
         return true;
     }
 
-
     /**
      * Gets cart items from (or initializes to) session data
      *
@@ -133,19 +139,19 @@ class net_nemein_shoppingcart_viewer extends midcom_baseclasses_components_reque
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $session = new midcom_service_session();
-        if (!$session->exists('cartdata'))
+        if (!$session->exists("cartdata_{$this->_topic->guid}"))
         {
             debug_add('No shopping cart data in session, creating new one', MIDCOM_LOG_INFO);
             $data['items'] = array();
-            $session->set('cartdata', $data['items']);
+            $session->set("cartdata_{$this->_topic->guid}", $data['items']);
             debug_pop();
             return true;
         }
-        $data['items'] = $session->get('cartdata');
+        $data['items'] = $session->get("cartdata_{$this->_topic->guid}");
         if (!is_array($data['items']))
         {
-            debug_add("FATAL: \$session->get('cartdata') did not return an array", MIDCOM_LOG_ERROR);
-            debug_print_r("\$session->get('cartdata') returned: ", $data['items']);
+            debug_add("FATAL: \$session->get('cartdata_{$this->_topic->guid}') did not return an array", MIDCOM_LOG_ERROR);
+            debug_print_r("\$session->get('cartdata_{$this->_topic->guid}') returned: ", $data['items']);
             unset($data['items']);
             debug_pop();
             return false;
@@ -197,7 +203,7 @@ class net_nemein_shoppingcart_viewer extends midcom_baseclasses_components_reque
             }
         }
         $session = new midcom_service_session();
-        $session->set('cartdata', $data['items']);
+        $session->set("cartdata_{$this->_topic->guid}", $data['items']);
         // TODO: figure out if we can reliably determine whether this actually gets saved to session data (reading it back will not tell us anything)
 
         debug_pop();
