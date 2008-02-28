@@ -43,7 +43,7 @@ class net_nemein_shoppingcart_handler_checkout_redirect  extends midcom_baseclas
     function _handler_redirect($handler_id, $args, &$data)
     {
         $handler = $this->_config->get('checkout_backend');
-        $_MIDCOM->relocate("checkout/{$handler}.html");
+        $_MIDCOM->relocate("checkout/{$handler}/");
         // This should exit
         return false;
     }

@@ -45,7 +45,7 @@ function net_nemein_shoppingcart_get_shortlist_content_url()
     {
         return false;
     }
-    return "{$prefix}shortlist.html";
+    return "{$prefix}shortlist/";
 }
 
 function net_nemein_shoppingcart_get_node_url()
@@ -77,7 +77,7 @@ function net_nemein_shoppingcart_get_additem_url(&$product)
     {
         return false;
     }
-    return "{$prefix}add/{$product->guid}.html";
+    return "{$prefix}add/{$product->guid}/";
 }
 
 function net_nemein_shoppingcart_render_additem_shortlist(&$product)

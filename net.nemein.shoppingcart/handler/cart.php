@@ -55,7 +55,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
             debug_add("Given argument '{$args[0]}' does not point to a valid product, ignoring silently",  MIDCOM_LOG_ERROR);
             debug_pop();
             // PONDER: register UImessage (though displaying it might be hard... since we don't reload the parent viewport)
-            $_MIDCOM->relocate('shortlist.html');
+            $_MIDCOM->relocate('shortlist/');
             // this will exit
         }
 
@@ -81,7 +81,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
         }
 
         debug_pop();
-        $_MIDCOM->relocate('shortlist.html');
+        $_MIDCOM->relocate('shortlist/');
         // this will exit
     }
 
@@ -222,7 +222,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
         {
             // We wish to proceed to checkout immediately after update
             $handler = $this->_config->get('checkout_backend');
-            $_MIDCOM->relocate("checkout/{$handler}.html");
+            $_MIDCOM->relocate("checkout/{$handler}/");
             // This will exit
         }
         debug_pop();
@@ -266,7 +266,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
             case 'cart-manage':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => 'contents.html',
+                    MIDCOM_NAV_URL => 'contents/',
                     MIDCOM_NAV_NAME => $this->_l10n->get('view cart'),
                 );
                 $tmp[] = Array
@@ -283,7 +283,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
                 );
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => 'contents.html',
+                    MIDCOM_NAV_URL => 'contents/',
                     MIDCOM_NAV_NAME => $this->_l10n->get('view cart'),
                 );
                 break;

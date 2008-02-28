@@ -56,7 +56,7 @@ class net_nemein_shoppingcart_handler_checkout_null  extends midcom_baseclasses_
         if (empty($data['items']))
         {
             // Cart is empty, can't checkout...
-            $_MIDCOM->relocate('contents.html');
+            $_MIDCOM->relocate('contents/');
             // This will exit
         }
         $data['title'] = $this->_l10n->get('view cart');
@@ -94,12 +94,12 @@ class net_nemein_shoppingcart_handler_checkout_null  extends midcom_baseclasses_
             default:
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => 'contents.html',
+                    MIDCOM_NAV_URL => 'contents/',
                     MIDCOM_NAV_NAME => $this->_l10n->get('view cart'),
                 );
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => 'checkout/null.html',
+                    MIDCOM_NAV_URL => 'checkout/null/',
                     MIDCOM_NAV_NAME => $data['title'],
                 );
         }

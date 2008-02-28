@@ -116,7 +116,7 @@ class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses
         if (empty($data['items']))
         {
             // Cart is empty, can't checkout...
-            $_MIDCOM->relocate('contents.html');
+            $_MIDCOM->relocate('contents/');
             // This will exit
         }
         $data['title'] = $this->_l10n->get('check out');
@@ -137,7 +137,7 @@ class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses
                 // Clear cart
                 $session = new midcom_service_session();
                 $session->remove("cartdata_{$this->_topic->guid}");
-                $_MIDCOM->relocate('checkout/email-ok.html');
+                $_MIDCOM->relocate('checkout/email-ok/');
                 break;
             case 'cancel':
                 // Cancelled, return to cart edit view
@@ -226,19 +226,19 @@ class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses
             case 'checkout-email-ok':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => 'checkout/email-ok.html',
+                    MIDCOM_NAV_URL => 'checkout/email-ok/',
                     MIDCOM_NAV_NAME => $data['title'],
                 );
                 break;
             default:
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => 'contents.html',
+                    MIDCOM_NAV_URL => 'contents/',
                     MIDCOM_NAV_NAME => $this->_l10n->get('view cart'),
                 );
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => 'checkout/email.html',
+                    MIDCOM_NAV_URL => 'checkout/email/',
                     MIDCOM_NAV_NAME => $data['title'],
                 );
         }
