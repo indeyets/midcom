@@ -190,7 +190,9 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
 
         $campaign = new org_openpsa_directmarketing_campaign($guid);
         debug_add("campaign: ===\n" . sprint_r($campaign) . "===\n");
-        if (!$campaign)
+        if (   !$campaign
+            || !isset($campaign->guid)
+            || $campaign->guid !== $guid)
         {
             $message = new org_openpsa_directmarketing_campaign_message($guid);
             debug_add("message: ===\n" . sprint_r($message) . "===\n");
@@ -198,11 +200,15 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
 
         switch (true)
         {
-            case is_object($campaign):
+            case (   is_object($campaign)
+                  && isset($campaign->guid)
+                  && !empty($campaign->guid)):
                 debug_pop();
                 return "campaign/{$campaign->guid}/";
                 break;
-            case is_object($message):
+            case (   is_object($message)
+                  && isset($message->guid)
+                  && !empty($message->guid)):
                 debug_pop();
                 return "message/{$message->guid}/";
                 break;
