@@ -79,6 +79,11 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
      */
     function _handler_index ($handler_id, $args, &$data)
     {
+        if ($handler_id == 'ajax-latest')
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
+        
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($data['schemadb']);
         $qb = new org_openpsa_qbpager('midcom_db_article', 'net_nehmer_blog_index');
         $data['qb'] =& $qb;
@@ -121,6 +126,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
                     break;
 
                 case 'latest':
+                case 'ajax-latest':
                     $mc->set_limit((int) $args[0]);
                     break;
 
@@ -228,6 +234,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
                 break;
 
             case 'latest':
+            case 'ajax-latest':
                 $qb->results_per_page = $args[0];
                 break;
 

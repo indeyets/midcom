@@ -55,6 +55,14 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('latest'),
             'variable_args' => 1,
         );
+        
+        // Handler for /ajax/latest/<number>
+        $this->_request_switch['ajax-latest'] = Array
+        (
+            'handler' => Array('net_nehmer_blog_handler_index', 'index'),
+            'fixed_args' => Array('ajax', 'latest'),
+            'variable_args' => 1,
+        );
 
         // Handler for /category/<category>
         $this->_request_switch['index-category'] = Array
