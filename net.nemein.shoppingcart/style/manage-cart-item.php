@@ -2,7 +2,7 @@
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 $item =& $data['item'];
 $product =& $item['product_obj'];
-// If you need to muck this, muck it here (REMEMBER: same calculation is done in manage-cart-item)
+// If you need to muck this, muck it here (REMEMBER: same calculation is done in view-cart-item and vie-ajax-cart-item)
 $row_value = $product->price * $item['amount'];
 $data['total_value'] += $row_value;
 $product_url = $data['permalinks']->create_permalink($product->guid);

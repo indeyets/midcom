@@ -48,29 +48,14 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
     function _handler_additem($handler_id, $args, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $product = new org_openpsa_products_product_dba($args[0]);
-        if (   !is_object($product)
-            || empty($product->guid))
+        if (!$this->_items_add_product($data['items'], $args[0]))
         {
-            debug_add("Given argument '{$args[0]}' does not point to a valid product, ignoring silently",  MIDCOM_LOG_ERROR);
+            debug_add("Cuold not add given argument '{$args[0]}' to cart (see warning log for more info), ignoring silently",  MIDCOM_LOG_ERROR);
             debug_pop();
             // PONDER: register UImessage (though displaying it might be hard... since we don't reload the parent viewport)
             $_MIDCOM->relocate('shortlist/');
             // this will exit
         }
-
-        if (!isset($data['items'][$product->guid]))
-        {
-            debug_add("product '{$product->code}' not yet in cart, initializing");
-            $data['items'][$product->guid] = array
-            (
-                'product_obj' => $product,
-                'amount' => 0,
-            );
-        }
-        $item_line =& $data['items'][$product->guid];
-        $item_line['amount']++;
-        debug_add("product '{$product->code}' amount in cart: {$item_line['amount']}");
 
         if (!net_nemein_shoppingcart_viewer::save_items($this->_request_data))
         {
@@ -83,6 +68,34 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
         debug_pop();
         $_MIDCOM->relocate('shortlist/');
         // this will exit
+    }
+
+    function _items_add_product(&$items, $productguid)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $product = new org_openpsa_products_product_dba($productguid);
+        if (   !is_object($product)
+            || !isset($product->guid)
+            || empty($product->guid))
+        {
+            debug_add("Given argument '{$productguid}' does not point to a valid product",  MIDCOM_LOG_WARN);
+            debug_pop();
+            return false;
+        }
+        if (!isset($items[$product->guid]))
+        {
+            debug_add("product '{$product->code}' not yet in cart, initializing");
+            $items[$product->guid] = array
+            (
+                'product_obj' => $product,
+                'amount' => 0,
+            );
+        }
+        $item_line =& $items[$product->guid];
+        $item_line['amount']++;
+        debug_add("product '{$product->code}' amount in cart: {$item_line['amount']}");
+        debug_pop();
+        return true;
     }
 
     /**
@@ -145,6 +158,13 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
         $this->_update_breadcrumb_line($handler_id);
         $data['total_value'] = 0;
         $data['permalinks'] = new midcom_services_permalinks();
+        
+        if ($handler_id === 'ajax-cart-contents')
+        {
+            $_MIDCOM->load_library('midcom.helper.xml');
+            $_MIDCOM->cache->content->content_type('text/xml');
+            $_MIDCOM->skip_page_style = true;
+        }
 
         return true;
     }
@@ -157,6 +177,11 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
      */
     function _show_contents($handler_id, &$data)
     {
+        if ($handler_id === 'ajax-cart-contents')
+        {
+            midcom_show_style('view-ajax-cart');
+            return;
+        }
         if (count($data['items']) == 0)
         {
             midcom_show_style('view-cart-empty');
@@ -173,6 +198,83 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
      * @param Array &$data reference to request_data
      * @return boolean Indicating success.
      */
+    function _handler_xml_manage($handler_id, $args, &$data)
+    {
+        $_MIDCOM->load_library('midcom.helper.xml');
+        $_MIDCOM->cache->content->content_type('text/xml');
+        $_MIDCOM->skip_page_style = true;
+        debug_push_class(__CLASS__, __FUNCTION__);
+
+        // Process item additions, accepts single guid or array or guids
+        if (isset($_POST['net_nemein_shoppingcart_managecart_additems']))
+        {
+            if (!is_array($_POST['net_nemein_shoppingcart_managecart_additems']))
+            {
+                $add_items = array($_POST['net_nemein_shoppingcart_managecart_additems']);
+            }
+            else
+            {
+                $add_items = $_POST['net_nemein_shoppingcart_managecart_additems'];
+            }
+            foreach($add_items as $item_guid)
+            {
+                $this->_items_add_product($data['items'], $item_guid);
+            }
+        }
+
+        // Process amount updates
+        if (   isset($_POST['net_nemein_shoppingcart_managecart_amount'])
+            && is_array($_POST['net_nemein_shoppingcart_managecart_amount']))
+        {
+            foreach ($_POST['net_nemein_shoppingcart_managecart_amount'] as $key => $amount)
+            {
+                if (!isset($data['items'][$key]))
+                {
+                    continue;
+                }
+                debug_add("setting value for key '{$key}' to '{$amount}'");
+                $data['items'][$key]['amount'] = $amount;
+            }
+        }
+
+        // Store data
+        if (!net_nemein_shoppingcart_viewer::save_items($data))
+        {
+            debug_add('FATAL: Could not save items to session', MIDCOM_LOG_ERROR);
+            debug_pop();
+            // TODO: Report as XML
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not save shopping cart to session data');
+            // This will exit
+        }
+
+        // Re-read data to recalculate amounts
+        if (!net_nemein_shoppingcart_viewer::get_items($this->_request_data))
+        {
+            // Don't know what to do
+        }
+
+        debug_pop();
+        return true;
+    }
+
+    /**
+     * This function does the output.
+     *  
+     */
+    function _show_xml_manage($handler_id, &$data)
+    {
+        $data['total_value'] = 0;
+        $data['permalinks'] = new midcom_services_permalinks();
+        midcom_show_style('view-ajax-cart');
+    }
+
+    /**
+     * Handler for displaying the cart management view
+     *
+     * @param mixed $handler_id the array key from the requestarray
+     * @param array $args the arguments given to the handler
+     * @param array $data reference to request_data
+     */
     function _handler_manage($handler_id, $args, &$data)
     {
         $this->_handler_manage_handle_post($data);
@@ -182,7 +284,6 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
         $this->_update_breadcrumb_line($handler_id);
         $data['total_value'] = 0;
         $data['permalinks'] = new midcom_services_permalinks();
-
         return true;
     }
 

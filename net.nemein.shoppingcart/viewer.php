@@ -51,6 +51,22 @@ class net_nemein_shoppingcart_viewer extends midcom_baseclasses_components_reque
             'handler' => Array('net_nemein_shoppingcart_handler_cart', 'contents'),
         );
 
+        // Handle /xml/manage
+        $this->_request_switch['ajax-cart-add'] = array
+        (
+            'fixed_args' => array('xml', 'manage'),
+            'variable_args' => 0,
+            'handler' => Array('net_nemein_shoppingcart_handler_cart', 'xml_manage'),
+        );
+
+        // Handle /xml/contents
+        $this->_request_switch['ajax-cart-contents'] = array
+        (
+            'fixed_args' => array('xml', 'contents'),
+            'variable_args' => 0,
+            'handler' => Array('net_nemein_shoppingcart_handler_cart', 'contents'),
+        );
+
         // Handle /add/<guid>
         $this->_request_switch['cart-add'] = array
         (
