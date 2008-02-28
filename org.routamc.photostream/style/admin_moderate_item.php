@@ -5,6 +5,15 @@ if (isset($data['datamanager']->types['photo']->attachments_info['thumbnail']))
 {
     $thumbnail = $data['datamanager']->types['photo']->attachments_info['thumbnail'];
 }
+else
+{
+    $thumbnail = array
+    (
+        'url' => '',
+        'size_line' => '',
+        'filename' => '',
+    );
+}
 
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
@@ -23,8 +32,12 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 <form method="post" action="&(prefix);moderate/">
                     <p>
                         <input type="hidden" name="guid" value="<?php echo $data['photo']->guid; ?>" />
-                        <input type="submit" name="f_approve" value="<?php echo $data['l10n']->get('approve'); ?>" class="approve" />
-                        <input type="submit" name="f_disapprove" value="<?php echo $data['l10n']->get('disapprove'); ?>" class="disapprove" />
+<?php
+foreach ($data['buttons'] as $button)
+{
+    echo "<input type=\"submit\" name=\"f_{$button}\" value=\"{$data['l10n']->get($button)}\" class=\"{$button}\" />\n";
+}
+?>
                     </p>
                 </form>
             </td>

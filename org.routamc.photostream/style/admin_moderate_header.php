@@ -1,4 +1,7 @@
 <h1><?php echo sprintf($data['l10n']->get('moderate photos for folder %s'), $data['topic']->extra); ?></h1>
+<ul class="org_routamc_photostream_moderate_navigation">
+
+</ul>
 <table id="org_routamc_photostream_moderate">
     <thead>
         <tr>

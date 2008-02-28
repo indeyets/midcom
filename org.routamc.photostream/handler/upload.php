@@ -207,6 +207,13 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
         $mail = new org_openpsa_mail();
         $mail->to = $this->_config->get('moderator_email');
         $mail->from = $this->_config->get('system_mailer_address');
+        
+        // Use a sane default if there is no from address
+        if (!$mail->from)
+        {
+            $mail->from = "www-data@{$_SERVER['SERVER_NAME']}";
+        }
+        
         $mail->subject = $this->_l10n->get($this->_config->get('moderator_mail_subject'));
         $mail->body = $this->_l10n->get($this->_config->get('moderator_mail_body'));
         

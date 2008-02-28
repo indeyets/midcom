@@ -90,6 +90,14 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
             return false;
         }
 
+        // Show only the moderated photos
+        if (   $this->_config->get('moderate_uploaded_photos')
+            && $data['photo']->status !== ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED
+            && !$this->_topic->can_do('org.routamc.photostream:moderate'))
+        {
+            return false;
+        }
+
         if ($handler_id == 'photo_gallery')
         {
             $gallery = new midcom_db_topic($args[1]);

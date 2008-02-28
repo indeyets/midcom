@@ -11,6 +11,10 @@
 Uusi valokuva odottaa hyväksyntää
 ---STRINGEND
 
+---STRING accept
+Hyväksy
+---STRINGEND
+
 ---STRING all
 Kaikki
 ---STRINGEND
@@ -27,20 +31,16 @@ Kaikki kuvat joiden arvio on %s
 Kaikki merkinnät
 ---STRINGEND
 
----STRING approve
-Hyväksy
----STRINGEND
-
 ---STRING between %s-%s
 Ajalta %s - %s
 ---STRINGEND
 
----STRING delete photo
-Poista valokuva
+---STRING delete
+Poista
 ---STRINGEND
 
----STRING disapprove
-Hylkää
+---STRING delete photo
+Poista valokuva
 ---STRINGEND
 
 ---STRING done recreating derived images
@@ -99,6 +99,13 @@ Moderointi
 Moderoi kansion %s kuvia
 ---STRINGEND
 
+---STRING moderation_mail_body
+Uutta materiaalia on odottamassa hyväksyntää. Vierailethan osoitteessa __URL__ arvioimassa materiaalin.
+
+--
+Lähetetty osoitteesta __URL__
+---STRINGEND
+
 ---STRING my photos
 Omat valokuvani
 ---STRINGEND
@@ -125,6 +132,14 @@ Valokuvien hallinta
 
 ---STRING photo
 Valokuva
+---STRINGEND
+
+---STRING photo %s accepted
+Valokuva %s hyväksytty
+---STRINGEND
+
+---STRING photo %s rejected
+Valokuva %s hylätty
 ---STRINGEND
 
 ---STRING photo details
@@ -191,6 +206,10 @@ Päivitä generoidut kuvakoot
 Uudellen luodaan johdetut kuvat
 ---STRINGEND
 
+---STRING reject
+Hylkää
+---STRINGEND
+
 ---STRING return to photostream
 Palaa valokuvien hallintaan
 ---STRINGEND
@@ -243,10 +262,15 @@ Lataa galleriaan
 Käyttöliittymäasetukset
 ---STRINGEND
 
----STRING moderation_mail_body
-Uutta materiaalia on odottamassa hyväksyntää. Vierailethan osoitteessa __URL__ arvioimassa materiaalin.
+---STRING approve
+Hyväksy
+---STRINGEND
 
--- 
-Lähetetty osoitteesta __URL__
+---STRING disapprove
+Hylkää
+---STRINGEND
+
+---STRING status
+Status
 ---STRINGEND
 

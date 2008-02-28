@@ -335,14 +335,22 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
         // Approving methods
         if ($this->_config->get('moderate_uploaded_photos'))
         {
+            // List the photos that haven't been accepted
             $this->_request_switch['moderate_list'] = array
             (
                 'handler' => Array('org_routamc_photostream_handler_admin', 'moderate'),
                 'fixed_args' => Array('moderate'),
             );
-            $this->_request_switch['moderate_item'] = array
+            // List the rejected photos
+            $this->_request_switch['moderate_rejected'] = array
             (
                 'handler' => Array('org_routamc_photostream_handler_admin', 'moderate'),
+                'fixed_args' => Array('moderate', 'rejected'),
+            );
+            // Show an item for moderating
+            $this->_request_switch['moderate_item'] = array
+            (
+                'handler' => Array('org_routamc_photostream_handler_admin', 'view'),
                 'fixed_args' => Array('moderate'),
                 'variable_args' => 1,
             );

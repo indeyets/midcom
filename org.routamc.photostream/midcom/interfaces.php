@@ -43,7 +43,7 @@ class org_routamc_photostream_interface extends midcom_baseclasses_components_in
         
         // Define constants
         define('ORG_ROUTAMC_PHOTOSTREAM_STATUS_UNMODERATED', 0);
-        define('ORG_ROUTAMC_PHOTOSTREAM_STATUS_APPROVED', 1);
+        define('ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED', 1);
         define('ORG_ROUTAMC_PHOTOSTREAM_STATUS_REJECTED', 2);
 
         return true;

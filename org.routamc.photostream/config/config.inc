@@ -58,6 +58,16 @@
 'moderator_mail_subject' => 'new photos waiting for moderation',
 'moderator_mail_body' => 'moderation_mail_body',
 
+// Send message to the user (if applicable) when the status changes
+'send_statuschange_message' => true,
+
+// Status messages for accepted photo
+'status_accepted_title' => 'your photo has been accepted',
+'status_accepted_body' => 'accepted_photo_message',
+
+// Status messages for rejected photo
+'status_rejected_title' => 'your photo has been rejected',
+'status_rejected_body' => 'rejected_photo_message',
 
 // Moderate callback snippet will be evaluated after moderating a photo
 'moderate_callback_snippet' => null,

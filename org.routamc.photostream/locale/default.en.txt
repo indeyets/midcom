@@ -11,6 +11,10 @@
 A new photo is waiting for moderation
 ---STRINGEND
 
+---STRING accept
+Accept
+---STRINGEND
+
 ---STRING all
 All
 ---STRINGEND
@@ -27,20 +31,16 @@ All photos rated as %s
 All tags
 ---STRINGEND
 
----STRING approve
-Approve
----STRINGEND
-
 ---STRING between %s-%s
 Between %s - %s
 ---STRINGEND
 
----STRING delete photo
-Delete photo
+---STRING delete
+Delete
 ---STRINGEND
 
----STRING disapprove
-Disapprove
+---STRING delete photo
+Delete photo
 ---STRINGEND
 
 ---STRING done recreating derived images
@@ -99,6 +99,13 @@ Moderate
 Moderate photos for folder %s
 ---STRINGEND
 
+---STRING moderation_mail_body
+There is new material waiting for approval. Please visit __URL__ to evaluate the material.
+
+--
+Sent from __URL__
+---STRINGEND
+
 ---STRING my photos
 My photos
 ---STRINGEND
@@ -125,6 +132,14 @@ Photo management
 
 ---STRING photo
 Photo
+---STRINGEND
+
+---STRING photo %s accepted
+Photo %s accepted
+---STRINGEND
+
+---STRING photo %s rejected
+Photo %s rejected
 ---STRINGEND
 
 ---STRING photo details
@@ -191,6 +206,10 @@ Recreate derived images
 Recreating derived images
 ---STRINGEND
 
+---STRING reject
+Reject
+---STRINGEND
+
 ---STRING return to photostream
 Return to photostream
 ---STRINGEND
@@ -243,10 +262,7 @@ Upload to gallery
 User interface settings
 ---STRINGEND
 
----STRING moderation_mail_body
-There is new material waiting for approval. Please visit __URL__ to evaluate the material.
-
--- 
-Sent from __URL__
+---STRING status
+Status
 ---STRINGEND
 

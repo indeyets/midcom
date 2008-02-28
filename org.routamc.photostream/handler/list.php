@@ -60,7 +60,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         // Show only the moderated photos
         if ($this->_config->get('moderate_uploaded_photos'))
         {
-            $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_APPROVED);
+            $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED);
         }
 
         //$qb->listen_parameter('org_routamc_photostream_order', array('reversed'));
@@ -200,7 +200,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         // Show only the moderated photos
         if ($this->_config->get('moderate_uploaded_photos'))
         {
-            $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_APPROVED);
+            $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED);
         }
 
         if ($handler_id == 'photostream_latest')

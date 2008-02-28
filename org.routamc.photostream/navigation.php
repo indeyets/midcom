@@ -27,6 +27,47 @@ class org_routamc_photostream_navigation extends midcom_baseclasses_components_n
     {
         parent::midcom_baseclasses_components_navigation();
     }
+    
+    /**
+     *
+     *
+     */
+    function get_leaves()
+    {
+        if (   !$this->_config->get('moderate_uploaded_photos')
+            || !$this->_topic->can_do('org.routamc.photostream:moderate'))
+        {
+            return array();
+        }
+        
+        // Check the quantity of unapproved photos
+        $qb = org_routamc_photostream_photo_dba::new_query_builder();
+        $qb->add_constraint('status', '<>', ORG_ROUTAMC_PHOTOSTREAM_STATUS_UNMODERATED);
+        
+        if ($qb->count() === 0)
+        {
+            return array();
+        }
+        
+        $leaves = array();
+        
+        $leaves["{$this->_topic->id}_ARCHIVE"] = array
+        (
+            MIDCOM_NAV_SITE => Array
+            (
+                MIDCOM_NAV_URL => "moderate/",
+                MIDCOM_NAV_NAME => $this->_l10n->get('moderate'),
+            ),
+            MIDCOM_NAV_ADMIN => null,
+            MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+            MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+            MIDCOM_META_CREATED => $this->_topic->metadata->created,
+            MIDCOM_META_EDITED => $this->_topic->metadata->revised,
+        );
+        
+        return $leaves;
+    }
+     
 }
 
 ?>

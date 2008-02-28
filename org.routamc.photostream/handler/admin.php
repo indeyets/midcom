@@ -8,7 +8,7 @@
  */
 
 /**
- * Photostream edit/delete/approve photos handler
+ * Photostream edit/delete/accept photos handler
  *
  * Originally copied from net.nehmer.blog
  *
@@ -448,14 +448,108 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
     }
     
     /**
+     * Send a message on status change
+     */
+    function _send_status_message($photo)
+    {
+        // Try to get the object by GUID if given parameter is not an object
+        if (!is_object($photo))
+        {
+            $photo = new org_routamc_photostream_photo($photo);
+        }
+        
+        // Bulletproofing for the photo
+        if (   !$photo
+            || !$photo->guid)
+        {
+            $_MIDCOM->generate_message(MIDCOM_ERRCRIT, 'Status message sending failed, given object is not a photo');
+            // This will exit
+        }
+        
+        // Return on false statuses
+        if (   $photo->status !== ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED
+            || $photo->status !== ORG_ROUTAMC_PHOTOSTREAM_STATUS_REJECTED)
+        {
+        
+        }
+        
+        // Get the photographer
+        $photographer = new midcom_db_person($photo->photographer);
+        
+        // Return if the photographer could not be fetched
+        if (   !$photographer
+            || !$photographer->guid)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to get the photographer of the photo {$photo->guid}, cannot send the message", MIDCOM_LOG_INFO);
+            debug_pop();
+            return false;
+        }
+        
+        // Return if the photographer doesn't have a semi-valid email address
+        if (   !$photographer->email
+            || !preg_match('/.+?@.+\./', $photographer->email))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Photographer email address doesn't validate, skipping sending the message of {$photo->guid}", MIDCOM_LOG_INFO);
+            debug_pop();
+            return false;
+        }
+        
+        // Load org.openpsa.mail for mailing purposes
+        $_MIDCOM->componentloader->load('org.openpsa.mail');
+        $mail = new org_openpsa_mail();
+        
+        
+        $mail->to = $photographer->email;
+        $mail->from = $this->_config->get('system_mailer_address');
+        
+        // Use a sane default if there is no from address
+        if (!$mail->from)
+        {
+            $mail->from = "www-data@{$_SERVER['SERVER_NAME']}";
+        }
+        
+        // Get the correct body and subject for the email message
+        if ($photo->status === ORG_ROUTAMC_PHOTOSTREAM_STATUS_REJECTED)
+        {
+            $mail->subject = $this->_l10n->get($this->_config->get('status_rejected_subject'));
+            $mail->body = $this->_l10n->get($this->_config->get('status_rejected_body'));
+        }
+        else
+        {
+            $mail->subject = $this->_l10n->get($this->_config->get('status_accepted_subject'));
+            $mail->body = $this->_l10n->get($this->_config->get('status_accepted_body'));
+        }
+        // Parse the mail variables
+        if (   $this->_config->get('mail_variables')
+            && is_array($this->_config->get('mail_variables')))
+        {
+            // Each __$key__ will be replaced by $value
+            foreach ($this->_config->get('mail_variables') as $key => $value)
+            {
+                $mail->body = str_replace("__{$key}__", $value, $mail->body);
+            }
+        }
+        
+        if (!$mail->send())
+        {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
      * Process the moderation form data
      * 
      * @access private
      */
-    function _process_moderate_form()
+    function _process_moderate_form($handler_id)
     {
-        if (   !isset($_POST['f_approve'])
-            && !isset($_POST['f_disapprove'])
+        if (   !isset($_POST['f_accept'])
+            && !isset($_POST['f_reject'])
+            && !isset($_POST['f_delete'])
             || !isset($_POST['guid']))
         {
             return;
@@ -470,20 +564,50 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
             // This will exit
         }
         
-        if (isset($_POST['f_approve']))
+        // Delete the photo
+        if (isset($_POST['f_delete']))
         {
-            $photo->status = ORG_ROUTAMC_PHOTOSTREAM_STATUS_APPROVED;
+            if ($handler_id === 'moderate_item')
+            {
+                $_MIDCOM->relocate("delete/{$this->_photo->guid}/");
+            }
+            
+            if (!$photo->delete())
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to delete the photo');
+            }
+            
+            // Show user interface message
+            $_MIDCOM->uimessages->add($this->_l10n->get('org.routamc.photostream'), $this->_l10n->get('photo %s deleted'));
+            $_MIDCOM->skip_page_style = true;
+            exit;
         }
         
-        if (isset($_POST['f_disapprove']))
+        // Set the status for accepted
+        if (isset($_POST['f_accept']))
+        {
+            $photo->status = ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED;
+            $message = $this->_l10n->get('photo %s accepted');
+        }
+        
+        // Set the status for rejected
+        if (isset($_POST['f_reject']))
         {
             $photo->status = ORG_ROUTAMC_PHOTOSTREAM_STATUS_REJECTED;
+            $message = $this->_l10n->get('photo %s rejected');
         }
         
+        // Update error handling
         if (!$photo->update())
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to update the photo, check the privileges');
             // This will exit
+        }
+        
+        // Send an appropriate message
+        if ($this->_config->get('send_statuschange_message'))
+        {
+            $this->_send_status_message($photo);
         }
         
         // Creation callback function
@@ -503,6 +627,13 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
             $callback($this->_article, $this->_content_topic);
         }
         
+            $_MIDCOM->uimessages->add($this->_l10n->get('org.routamc.photostream'), $message);
+        
+        // Relocate to the main page
+        if ($handler_id === 'moderate_item')
+        {
+            $_MIDCOM->relocate('moderate/');
+        }
         exit;
     }
     
@@ -522,7 +653,16 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         
         // Define the query builder for collecting the photos
         $qb = org_routamc_photostream_photo_dba::new_query_builder();
-        $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_UNMODERATED);
+        
+        if ($handler_id === 'moderate_rejected')
+        {
+            $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_REJECTED);
+        }
+        else
+        {
+            $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_UNMODERATED);
+        }
+        
         $qb->add_order('taken');
         
         // Get the results
@@ -539,6 +679,29 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
             MIDCOM_NAV_NAME => $this->_l10n->get('moderate'),
         );
 
+        if ($handler_id === 'moderate_rejected')
+        {
+            $tmp[] = Array
+            (
+                MIDCOM_NAV_URL => 'moderate/rejected',
+                MIDCOM_NAV_NAME => $this->_l10n->get('rejected'),
+            );
+            $data['buttons'] = array
+            (
+                'accept',
+                'delete',
+            );
+        }
+        else
+        {
+            $data['buttons'] = array
+            (
+                'accept',
+                'reject',
+                'delete',
+            );
+        }
+        
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         
         // Add the jQuery files
@@ -547,18 +710,36 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.routamc.photostream/jquery-moderate.js');
         
         // Process the form
-        $this->_process_moderate_form();
+        $this->_process_moderate_form($handler_id);
         
         return true;
     }
     
     /**
+     * Show the moderation view
      * 
-     * 
-     * 
+     * @access public
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array &$data The local request data.
      */
     function _show_moderate($handler_id, &$data)
     {
+        // Links for the user interface
+        $data['links'] = array
+        (
+            'unmoderated' => array
+            (
+                'url' => 'moderate/',
+                'selected' => ($handler_id === 'moderate_list') ? true : false,
+            ),
+            'rejected' => array
+            (
+                'url' => 'moderate/rejected/',
+                'selected' => ($handler_id === 'moderate_rejected') ? true : false,
+            ),
+        );
+        $data['handler_id'] = $handler_id;
+        
         $data['datamanager'] =& $this->_datamanager;
         midcom_show_style('admin_moderate_header');
         
@@ -575,6 +756,71 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         }
         
         midcom_show_style('admin_moderate_footer');
+    }
+    
+    /**
+     * Show a photo for moderating
+     * 
+     * @access public
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array &$data The local request data.
+     * @return boolean Indicating success.
+     */
+    function _handler_view($handler_id, $args, &$data)
+    {
+        // Custom privilege check
+        $this->_topic->require_do('org.routamc.photostream:moderate');
+        $this->_topic->require_do('midgard:update');
+        
+        // Get the photo object
+        $this->_photo = new org_routamc_photostream_photo_dba($args[0]);
+        if (   !$this->_photo
+            || !$this->_photo->guid)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The photo {$args[0]} was not found.");
+            // This will exit.
+        }
+        
+        $this->_process_moderate_form($handler_id);
+        
+        // Load the datamanager
+        $this->_load_datamanager($this->_photo);
+        
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "moderate/",
+            MIDCOM_NAV_NAME => $this->_l10n->get('moderate'),
+        );
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "moderate/{$this->_photo->guid}/",
+            MIDCOM_NAV_NAME => $this->_photo->title,
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        return true;
+    }
+    
+    /**
+     * Show the moderation view for a single photo
+     * 
+     * @access public
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array &$data The local request data.
+     */
+    function _show_view($handler_id, &$data)
+    {
+        $data['datamanager'] =& $this->_datamanager;
+        $data['photo'] =& $this->_photo;
+        $data['buttons'] = array
+        (
+            'accept',
+            'reject',
+            'delete',
+        );
+        
+        midcom_show_style('admin_moderate_photo');
     }
 }
 ?>
