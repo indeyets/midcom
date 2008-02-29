@@ -60,7 +60,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         // Show only the moderated photos
         if ($this->_config->get('moderate_uploaded_photos'))
         {
-            $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED);
+            // Limit to show the photos only to the accepted or to the user's own photos
+            $qb->begin_group('OR');
+                $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED);
+                $qb->add_constraint('photographer', '=', $_MIDGARD['user']);
+            $qb->end_group();
         }
 
         //$qb->listen_parameter('org_routamc_photostream_order', array('reversed'));
@@ -200,7 +204,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         // Show only the moderated photos
         if ($this->_config->get('moderate_uploaded_photos'))
         {
-            $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED);
+            // Limit to show the photos only to the accepted or to the user's own photos
+            $qb->begin_group('OR');
+                $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED);
+                $qb->add_constraint('photographer', '=', $_MIDGARD['user']);
+            $qb->end_group();
         }
 
         if ($handler_id == 'photostream_latest')
@@ -287,7 +295,6 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      * @param array $args the arguments given to the handler
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
-     * @todo 1.7 support
      */
     function _handler_photostream_batch($handler_id, $args, &$data)
     {

@@ -21,15 +21,15 @@
             ),
             'type' => 'text',
             'widget' => 'text',
-            'start_fieldgroup' => array
+            'start_fieldset' => array
             ( 
                 'title' => 'advanced schema and data settings',
             ),
-            'end_fieldgroup' => '',
+            'end_fieldset' => '',
         ),
         'enable_ajax_editing' => array
         (
-            'title' => 'enable AJAX editing',
+            'title' => 'enable ajax editing',
             'storage' => array
             (
                 'location' => 'configuration',
@@ -47,7 +47,7 @@
                 ),
             ),
             'widget' => 'select',
-            'start_fieldgroup' => array
+            'start_fieldset' => array
             ( 
                 'title' => 'user interface settings',
             ),
@@ -93,7 +93,202 @@
                 ),
             ),
             'widget' => 'select',
-            'end_fieldgroup' => '',
+            'end_fieldset' => 1,
+        ),
+        'moderate_uploaded_photos' => array
+        (
+            'title' => 'moderate uploaded photos',
+            'static_append' => 'if this is on, photos require moderation before they will be displayed to the public',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'moderate_uploaded_photos',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+            'start_fieldset' => array
+            (
+                'title' => 'moderation settings',
+            ),
+        ),
+        'moderator_email' => array
+        (
+            'title' => 'moderator email address',
+            'static_prepend' => 'this address will receive the messages notifying of new photos',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'moderator_email',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+            'start_fieldset' => array
+            (
+                'title' => 'related to the moderator',
+            ),
+        ),
+        'moderator_mail_subject' => array
+        (
+            'title' => 'moderator mail subject',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'moderator_mail_subject',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+        ),
+        'moderator_mail_body' => array
+        (
+            'title' => 'moderator mail message',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'moderator_mail_body',
+            ),
+            'type' => 'text',
+            'widget' => 'textarea',
+            'end_fieldset' => 1,
+        ),
+        'send_statuschange_message' => array
+        (
+            'title' => 'send status change messages to the photographer',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'send_statuschange_message',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+            'start_fieldset' => array
+            (
+                'title' => 'messages sent to user',
+            ),
+        ),
+        'status_accepted_subject' => array
+        (
+            'title' => 'accepted mail subject',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'status_accepted_subject',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+            'start_fieldset' => array
+            (
+                'title' => 'message sent after accepting a photo',
+            ),
+        ),
+        'status_accepted_body' => array
+        (
+            'title' => 'accepted mail message',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'status_accepted_body',
+            ),
+            'type' => 'text',
+            'widget' => 'textarea',
+            'end_fieldset' => 1,
+        ),
+        'status_rejected_subject' => array
+        (
+            'title' => 'rejected mail subject',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'status_rejected_subject',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+            'start_fieldset' => array
+            (
+                'title' => 'message sent after rejecting a photo',
+            ),
+        ),
+        'status_rejected_body' => array
+        (
+            'title' => 'rejected mail subject',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'status_rejected_body',
+            ),
+            'type' => 'text',
+            'widget' => 'textarea',
+            'end_fieldset' => 2,
+        ),
+
+        'system_mailer_address' => array
+        (
+            'title' => 'system email address for outgoing mail',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'system_mailer_address',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+        ),
+        
+        'moderate_callback_snippet' => array
+        (
+            'title' => 'moderate callback snippet',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'moderate_callback_snippet',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+            'start_fieldset' => array
+            (
+                'title' => 'moderate callback options',
+                'description' => 'these settings are for system administrators only',
+            ),
+        ),
+        'moderate_callback_function' => array
+        (
+            'title' => 'moderate callback function',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'moderate_callback_function',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+            'end_fieldset' => 2,
         ),
         'api_email_enable' => array
         (
@@ -115,7 +310,7 @@
                 ),
             ),
             'widget' => 'select',
-            'start_fieldgroup' => array
+            'start_fieldset' => array
             ( 
                 'title' => 'API settings',
             ),
@@ -177,7 +372,7 @@
             ),
             'type' => 'text',
             'widget' => 'text',
-            'end_fieldgroup' => '',
+            'end_fieldset' => '',
         ),
         */
     ),

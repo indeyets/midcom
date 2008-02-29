@@ -521,16 +521,21 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
             $mail->subject = $this->_l10n->get($this->_config->get('status_accepted_subject'));
             $mail->body = $this->_l10n->get($this->_config->get('status_accepted_body'));
         }
+        
+        // Get the mail variables
+        $mail_vars = $this->_config->get('mail_variables');
+        
         // Parse the mail variables
-        if (   $this->_config->get('mail_variables')
-            && is_array($this->_config->get('mail_variables')))
+        if (   $mail_vars
+            && is_array($mail_vars))
         {
             // Each __$key__ will be replaced by $value
-            foreach ($this->_config->get('mail_variables') as $key => $value)
+            foreach ($mail_vars as $key => $value)
             {
                 $mail->body = str_replace("__{$key}__", $value, $mail->body);
             }
         }
+        
         
         if (!$mail->send())
         {

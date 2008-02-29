@@ -90,8 +90,9 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
             return false;
         }
 
-        // Show only the moderated photos
+        // Show only the moderated photos for those who aren't supposed to see it
         if (   $this->_config->get('moderate_uploaded_photos')
+            && $data['photo']->photographer !== $_MIDGARD['user']
             && $data['photo']->status !== ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED
             && !$this->_topic->can_do('org.routamc.photostream:moderate'))
         {

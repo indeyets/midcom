@@ -52,6 +52,7 @@
 'mail_variables' => array
 (
     'URL' => substr($_MIDCOM->get_page_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX),
+    'DATE' => strftime('%c'),
 ),
 
 // Moderator mail subject (will be localized)
