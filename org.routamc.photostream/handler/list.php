@@ -23,6 +23,14 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
     }
 
     /**
+     * Maps the content topic from the request data to local member variables.
+     */
+    function _on_initialize()
+    {
+        $this->_content_topic =& $this->_request_data['content_topic'];
+    }
+
+    /**
      * Resolve username or person GUID to a midcom_db_person object
      *
      * @param string $username Username or GUID
@@ -55,7 +63,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
     {
         $qb = new org_openpsa_qbpager('org_routamc_photostream_photo_dba', 'org_routamc_photostream_photo');
         $qb->results_per_page = $this->_config->get('photos_per_page');
-        $qb->add_constraint('node', '=', $this->_topic->id);
+        $qb->add_constraint('node', '=', $this->_content_topic->id);
         
         // Show only the moderated photos
         if ($this->_config->get('moderate_uploaded_photos'))
@@ -199,7 +207,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
 
         // List photos
         $qb = org_routamc_photostream_photo_dba::new_query_builder();
-        $qb->add_constraint('node', '=', $this->_topic->id);
+        $qb->add_constraint('node', '=', $this->_content_topic->id);
 
         // Show only the moderated photos
         if ($this->_config->get('moderate_uploaded_photos'))

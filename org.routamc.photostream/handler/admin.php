@@ -207,7 +207,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
             case 'save':
                 // Reindex the photo
                 $indexer =& $_MIDCOM->get_service('indexer');
-                org_routamc_photostream_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
+                org_routamc_photostream_viewer::index($this->_controller->datamanager, $indexer, $this->_content_topic);
 
                 // *** FALL-THROUGH ***
 
@@ -219,7 +219,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         $this->_prepare_request_data();
         $this->_view_toolbar->bind_to($this->_photo);
         $_MIDCOM->set_26_request_metadata($this->_photo->metadata->revised, $this->_photo->guid);
-        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_photo->title}");
+        $_MIDCOM->set_pagetitle("{$this->_content_topic->extra}: {$this->_photo->title}");
         $this->_update_breadcrumb_line($handler_id);
 
         return true;
@@ -291,7 +291,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata($this->_photo->metadata->revised, $this->_photo->guid);
         $this->_view_toolbar->bind_to($this->_photo);
-        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_photo->title}");
+        $_MIDCOM->set_pagetitle("{$this->_content_topic->extra}: {$this->_photo->title}");
         $this->_update_breadcrumb_line($handler_id);
 
         return true;
@@ -345,7 +345,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
 
             $data['process_photos'] = array();
             $qb = org_routamc_photostream_photo_dba::new_query_builder();
-            $qb->add_constraint('node', '=', $this->_topic->id);
+            $qb->add_constraint('node', '=', $this->_content_topic->id);
             $qb->add_order('taken', 'DESC');
             $photos = $qb->execute();
             if (!is_array($photos))
@@ -431,7 +431,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
             if ($stat)
             {
                 // reindex with new thumbnail
-                org_routamc_photostream_viewer::index($this->_datamanager, $indexer, $this->_topic);
+                org_routamc_photostream_viewer::index($this->_datamanager, $indexer, $this->_content_topic);
                 midcom_show_style('admin_recreate_rowok');
             }
             else
@@ -441,7 +441,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
             flush();
         }
         $nap = new midcom_helper_nav();
-        $data['photostream_node'] = $nap->get_node($this->_topic->id);
+        $data['photostream_node'] = $nap->get_node($this->_content_topic->id);
         midcom_show_style('admin_recreate_done');
         ob_start();
         // Restart OB to make MidCOM happier
@@ -653,8 +653,8 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
     function _handler_moderate($handler_id, $args, &$data)
     {
         // Custom privilege check
-        $this->_topic->require_do('org.routamc.photostream:moderate');
-        $this->_topic->require_do('midgard:update');
+        $this->_content_topic->require_do('org.routamc.photostream:moderate');
+        $this->_content_topic->require_do('midgard:update');
         
         // Define the query builder for collecting the photos
         $qb = org_routamc_photostream_photo_dba::new_query_builder();
@@ -781,8 +781,8 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
     function _handler_view($handler_id, $args, &$data)
     {
         // Custom privilege check
-        $this->_topic->require_do('org.routamc.photostream:moderate');
-        $this->_topic->require_do('midgard:update');
+        $this->_content_topic->require_do('org.routamc.photostream:moderate');
+        $this->_content_topic->require_do('midgard:update');
         
         // Get the photo object
         $this->_photo = new org_routamc_photostream_photo_dba($args[0]);

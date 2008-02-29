@@ -37,6 +37,14 @@ class org_routamc_photostream_handler_feed extends org_routamc_photostream_handl
     }
 
     /**
+     * Maps the content topic from the request data to local member variables.
+     */
+    function _on_initialize()
+    {
+        $this->_content_topic =& $this->_request_data['content_topic'];
+    }
+
+    /**
      * We override this to avoid unnecessary controller creations
      */
     function _prepare_ajax_controllers()

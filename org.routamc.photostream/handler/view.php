@@ -37,6 +37,14 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         parent::midcom_baseclasses_components_handler();
     }
 
+    /**
+     * Maps the content topic from the request data to local member variables.
+     */
+    function _on_initialize()
+    {
+        $this->_content_topic =& $this->_request_data['content_topic'];
+    }
+
     function _load_photo($id)
     {
         $data =& $this->_request_data;
@@ -94,7 +102,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         if (   $this->_config->get('moderate_uploaded_photos')
             && $data['photo']->photographer !== $_MIDGARD['user']
             && $data['photo']->status !== ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED
-            && !$this->_topic->can_do('org.routamc.photostream:moderate'))
+            && !$this->_content_topic->can_do('org.routamc.photostream:moderate'))
         {
             return false;
         }
@@ -141,7 +149,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         );
 
         if (   $this->_config->get('moderate_uploaded_photos')
-            && $this->_topic->can_do('org.routamc.photostream:moderate'))
+            && $this->_content_topic->can_do('org.routamc.photostream:moderate'))
         {
             $this->_view_toolbar->add_item
             (

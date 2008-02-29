@@ -23,6 +23,14 @@ class org_routamc_photostream_handler_index extends midcom_baseclasses_component
     }
 
     /**
+     * Maps the content topic from the request data to local member variables.
+     */
+    function _on_initialize()
+    {
+        $this->_content_topic =& $this->_request_data['content_topic'];
+    }
+
+    /**
      * The handler for displaying index to different photo streams
      *
      * @param mixed $handler_id the array key from the request array

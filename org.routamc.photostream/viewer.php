@@ -25,6 +25,25 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
      */
     function _on_initialize()
     {
+        // Prepare for symlink topic
+        if ($this->_config->get('symlink_topic'))
+        {
+            $topic = new midcom_db_topic($this->_config->get('symlink_topic'));
+            
+            // Symlink topic not found
+            if (   !$topic
+                || !$topic->guid)
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Symlinked topic not found');
+            }
+            
+            $this->_request_data['content_topic'] =& $topic;
+        }
+        else
+        {
+            $this->_request_data['content_topic'] =& $this->_topic;
+        }
+
         // *** Prepare the request switch ***
 
         // Handle /config

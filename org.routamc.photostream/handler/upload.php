@@ -55,6 +55,14 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
     }
 
     /**
+     * Maps the content topic from the request data to local member variables.
+     */
+    function _on_initialize()
+    {
+        $this->_content_topic =& $this->_request_data['content_topic'];
+    }
+
+    /**
      * Simple helper which references all important members to the request data listing
      * for usage within the style listing.
      */
@@ -165,7 +173,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
     function &dm2_create_callback(&$controller)
     {
         $this->_photo = new org_routamc_photostream_photo_dba();
-        $this->_photo->node = $this->_topic->id;
+        $this->_photo->node = $this->_content_topic->id;
         if (! $this->_photo->create())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -407,6 +415,24 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
                     $this->_photo->force_exif = true;
                     $this->_photo->update();
                     $this->index_uploaded_photo();
+                    
+                    // Creation callback function
+                    if ($this->_config->get('create_callback_function'))
+                    {
+                        if ($this->_config->get('create_callback_snippet'))
+                        {
+                            $eval = midcom_get_snippet_content($this->_config->get('create_callback_snippet'));
+            
+                            if ($eval)
+                            {
+                                eval("?>{$eval}<?php");
+                            }
+                        }
+            
+                        $callback = $this->_config->get('create_callback_function');
+                        $callback($this->_photo, $this->_content_topic);
+                    }
+                    
                     break;
                 default:
                     debug_add("got unsupported result '{$result}' from this->_controller->process_form(), aborting", MIDCOM_LOG_ERROR);
@@ -463,7 +489,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
     function index_uploaded_photo()
     {
         $indexer =& $_MIDCOM->get_service('indexer');
-        org_routamc_photostream_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
+        org_routamc_photostream_viewer::index($this->_controller->datamanager, $indexer, $this->_content_topic);
     }
 
     function _check_link_photo_gallery()
@@ -522,7 +548,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
      */
     function _handler_upload($handler_id, $args, &$data)
     {
-        $this->_topic->require_do('midgard:create');
+        $this->_content_topic->require_do('midgard:create');
 
         // TODO: Figure out a solid way to detect the correct key in _FILES array based on the schema data
         if (   array_key_exists('photo_file', $_FILES)
@@ -565,6 +591,23 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
                     && $this->_config->get('moderator_email'))
                 {
                     $this->_send_moderation_notification();
+                }
+                
+                // Creation callback function
+                if ($this->_config->get('create_callback_function'))
+                {
+                    if ($this->_config->get('create_callback_snippet'))
+                    {
+                        $eval = midcom_get_snippet_content($this->_config->get('create_callback_snippet'));
+        
+                        if ($eval)
+                        {
+                            eval("?>{$eval}<?php");
+                        }
+                    }
+        
+                    $callback = $this->_config->get('create_callback_function');
+                    $callback($this->_photo, $this->_content_topic);
                 }
                 
                 $_MIDCOM->relocate("photo/{$this->_photo->guid}/");

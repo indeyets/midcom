@@ -321,6 +321,7 @@
             ),
             'type' => 'text',
             'widget' => 'text',
+            'end_fieldset' => 1,
         ),
         /* not implemented yet
         'api_metaweblog_enable' => array
@@ -355,7 +356,7 @@
             ),
             'type' => 'text',
             'widget' => 'text',
-            'end_fieldset' => '',
+            'end_fieldset' => 1,
         ),
         */
         'schemadb' => array
@@ -373,6 +374,99 @@
             ),
             'type' => 'text',
             'widget' => 'text',
+        ),
+        'symlink_topic' => array
+        (
+            'title' => 'symlinked folder',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'symlink_topic',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'require_corresponding_option' => false,
+                'options' => array(),
+                'allow_other' => true,
+                'allow_multiple' => false,
+            ),
+            'widget' => 'chooser',
+            'widget_config' => array
+            (
+                'class'       => 'midcom_db_topic',
+                'component'   => 'org.routamc.photostream',
+                'titlefield'  => 'extra',
+                'id_field'     => 'guid',
+                'searchfields' => array
+                (
+                    array
+                    (
+                        'title' => 'ASC',
+                    ),
+                    array
+                    (
+                        'extra' => 'ASC',
+                    ),
+                    array
+                    (
+                        'component' => 'ASC',
+                    ),
+                    array
+                    (
+                        'name' => 'ASC',
+                    ),
+                ),
+                'constraints' => array
+                (
+                    array
+                    (
+                        'field' => 'extra',
+                        'op' => '<>',
+                        'value' => '',
+                    ),
+                    array
+                    (
+                        'field' => 'component',
+                        'op' => '=',
+                        'value' => 'org.routamc.photostream',
+                    ),
+                ),
+                'result_headers' => array
+                (
+                    array
+                    (
+                        'name' => 'Title',
+                        'title' => 'extra',
+                    ),
+                    array
+                    (
+                        'name' => 'name',
+                        'title' => 'name',
+                    ),
+                    array
+                    (
+                        'name' => 'component',
+                        'title' => 'component',
+                    ),
+                ),
+                'orders' => array
+                (
+                    array
+                    (
+                        'title' => 'ASC',
+                    ),
+                    array
+                    (
+                        'extra' => 'ASC',
+                    ),
+                    array
+                    (
+                        'name' => 'ASC',
+                    ),
+                ),
+            ),
         ),
         'create_callback_snippet' => array
         (

@@ -77,3 +77,5 @@
 // $callback_function($photo, $topic)
 'moderate_callback_function' => null,
 
+// Symlink topic
+'symlink_topic' => null,
