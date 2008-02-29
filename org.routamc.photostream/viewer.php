@@ -344,7 +344,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
         );
         
         // Handle /sort/<property>/
-        $this->_request_switch['filter_direction'] = Array
+        $this->_request_switch['sort_by'] = Array
         (
             'handler' => Array('org_routamc_photostream_handler_list', 'sort'),
             'fixed_args' => array('sort'),
@@ -352,7 +352,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
         );
 
         // Handle /sort/<property>/<direction>/
-        $this->_request_switch['filter_direction'] = Array
+        $this->_request_switch['sort_by_direction'] = Array
         (
             'handler' => Array('org_routamc_photostream_handler_list', 'sort'),
             'fixed_args' => array('sort'),

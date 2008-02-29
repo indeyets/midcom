@@ -273,6 +273,10 @@ Käyttäjän %s kuvat joiden arvio on %s
 Käyttäjän %s "%s":llä merkityt valokuvat
 ---STRINGEND
 
+---STRING sorted by %s %s
+Järjestelty ominaisuuden %s mukaan %s järjestyksessä
+---STRINGEND
+
 ---STRING photos tagged with %s
 "%s":llä merkityt valokuvat
 ---STRINGEND
@@ -432,7 +436,7 @@ Valokuvasi on hyväksytty
 Valokuvasi on hylätty
 ---STRINGEND
 
----STRING photos sorted by %s %s
-Valokuvat järjesteltynä %sn mukaan %s järjestyksessä
+---STRING photos sorted by %s
+Järjestelty ominaisuuden %s mukaan
 ---STRINGEND
 

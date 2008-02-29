@@ -253,6 +253,10 @@ Photos of %s rated as %s
 Photos of %s tagged with "%s"
 ---STRINGEND
 
+---STRING sorted by %s %s
+Sorted by %s in %s order
+---STRINGEND
+
 ---STRING photos tagged with %s
 Photos tagged with "%s"
 ---STRINGEND
@@ -412,7 +416,7 @@ Your photo has been accepted
 Your photo has been rejected
 ---STRINGEND
 
----STRING photos sorted by %s %s
-Photos sorted by %s in %s order
+---STRING sorted by %s
+Sorted by %s
 ---STRINGEND
 

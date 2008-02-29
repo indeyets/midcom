@@ -754,7 +754,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
     }
     
     /**
-     * Filter by type
+     * Sort by any of the photo properties in either ascending (asc) or descending (desc)
      * 
      * @access public
      * @param mixed $handler_id the array key from the request array
@@ -775,21 +775,36 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         // List photos
         $qb =& $this->_prepare_photo_qb();
         
+        // Initialize the breadcrumb array
+        $tmp = Array();
+        
         // Set the order
         if (isset($args[1]))
         {
-            if (!preg_match('/^(asc|desc)$/i', $args[1]))
+            if (!preg_match('/^(asc|desc)/i', $args[1], $regs))
             {
                 return false;
             }
             
-            $data['view_title'] = sprintf($this->_l10n->get('photos sorted by %s %s'), $this->_l10n->get($args[0]), "{$args[1]}ending");
-            $qb->add_order($args[0], strtoupper($args[1]));
+            $data['view_title'] = sprintf($this->_l10n->get('sorted by %s %s'), $this->_l10n->get($args[0]), "{$regs[1]}ending");
+            $qb->add_order($args[0], strtoupper($regs[1]));
+            
+            $tmp[] = Array
+            (
+                MIDCOM_NAV_URL => "sort/{$args[0]}/{$regs[1]}",
+                MIDCOM_NAV_NAME => $this->_request_data['view_title'],
+            );
         }
         else
         {
-            $data['view_title'] = sprintf($this->_l10n->get('photos sorted by %s'), $this->_l10n->get($args[0]));
+            $data['view_title'] = sprintf($this->_l10n->get('sorted by %s'), $this->_l10n->get($args[0]));
             $qb->add_order($args[0]);
+            
+            $tmp[] = Array
+            (
+                MIDCOM_NAV_URL => "sort/{$args[0]}/",
+                MIDCOM_NAV_NAME => $this->_request_data['view_title'],
+            );
         }
         
         if (array_key_exists('net_nemein_flashplayer_playlist',$_REQUEST))
@@ -806,6 +821,9 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
         $this->_update_breadcrumb_line($handler_id);
 
+        // Set the breadcrumb
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+        
         return true;
     }
 
