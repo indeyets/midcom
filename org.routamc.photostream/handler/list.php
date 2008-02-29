@@ -167,7 +167,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
     }
 
     /**
-     *
+     * Show the photostream list according to the query builder
+     * 
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */
@@ -750,6 +751,73 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         }
 
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+    }
+    
+    /**
+     * Filter by type
+     * 
+     * @access public
+     * @param mixed $handler_id the array key from the request array
+     * @param array $args the arguments given to the handler
+     * @param Array &$data The local request data.
+     * @return boolean Indicating success.
+     */
+    function _handler_sort($handler_id, $args, &$data)
+    {
+        $photo = new org_routamc_photostream_photo_dba();
+        
+        // If the property doesn't exist, return false
+        if (!isset($photo->$args[0]))
+        {
+            return false;
+        }
+        
+        // List photos
+        $qb =& $this->_prepare_photo_qb();
+        
+        // Set the order
+        if (isset($args[1]))
+        {
+            if (!preg_match('/^(asc|desc)$/i', $args[1]))
+            {
+                return false;
+            }
+            
+            $data['view_title'] = sprintf($this->_l10n->get('photos sorted by %s %s'), $this->_l10n->get($args[0]), "{$args[1]}ending");
+            $qb->add_order($args[0], strtoupper($args[1]));
+        }
+        else
+        {
+            $data['view_title'] = sprintf($this->_l10n->get('photos sorted by %s'), $this->_l10n->get($args[0]));
+            $qb->add_order($args[0]);
+        }
+        
+        if (array_key_exists('net_nemein_flashplayer_playlist',$_REQUEST))
+        {
+            $_MIDCOM->skip_page_style = true;
+            $data['output_for_nnf_playlist'] = true;
+        }
+
+        $data['photos'] = $qb->execute();
+
+        // Make photos AJAX-editable
+        $this->_prepare_ajax_controllers();
+
+        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
+        $this->_update_breadcrumb_line($handler_id);
+
+        return true;
+    }
+
+    /**
+     * Show the photostream list according to the query builder
+     * 
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
+    function _show_sort($handler_id, &$data)
+    {
+        $this->_show_photostream($handler_id, &$data);
     }
 }
 ?>

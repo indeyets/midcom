@@ -25,7 +25,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
      */
     function _on_initialize()
     {
-        // Prepare for symlink topic
+        // Prepare the symlink topic
         if ($this->_config->get('symlink_topic'))
         {
             $topic = new midcom_db_topic($this->_config->get('symlink_topic'));
@@ -341,6 +341,22 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
         (
             'handler' => Array('org_routamc_photostream_handler_api_email', 'import'),
             'fixed_args' => Array('api', 'email'),
+        );
+        
+        // Handle /sort/<property>/
+        $this->_request_switch['filter_direction'] = Array
+        (
+            'handler' => Array('org_routamc_photostream_handler_list', 'sort'),
+            'fixed_args' => array('sort'),
+            'variable_args' => 1,
+        );
+
+        // Handle /sort/<property>/<direction>/
+        $this->_request_switch['filter_direction'] = Array
+        (
+            'handler' => Array('org_routamc_photostream_handler_list', 'sort'),
+            'fixed_args' => array('sort'),
+            'variable_args' => 2,
         );
 
         /* not implemented yet

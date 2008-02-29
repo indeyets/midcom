@@ -9,6 +9,7 @@ Legend:
 
 2008-02-29 adrenalin
   + Added option for symlinking photo galleries
+  + Added handler for showing photos in different orders (useful e.g. for dynamic_load)
 
 2008-02-27 adrenalin
   + Added interface for accepting or rejecting uploaded photos before they are included to the photostream

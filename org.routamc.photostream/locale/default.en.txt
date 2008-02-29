@@ -46,8 +46,16 @@ All photos rated as %s
 All tags
 ---STRINGEND
 
+---STRING ascending
+ascending
+---STRINGEND
+
 ---STRING between %s-%s
 Between %s - %s
+---STRINGEND
+
+---STRING create callback function
+Create callback function
 ---STRINGEND
 
 ---STRING create callback snippet
@@ -60,6 +68,10 @@ Delete
 
 ---STRING delete photo
 Delete photo
+---STRINGEND
+
+---STRING descending
+descending
 ---STRINGEND
 
 ---STRING done recreating derived images
@@ -400,7 +412,7 @@ Your photo has been accepted
 Your photo has been rejected
 ---STRINGEND
 
----STRING create callback function
-Create callback function
+---STRING photos sorted by %s %s
+Photos sorted by %s in %s order
 ---STRINGEND
 

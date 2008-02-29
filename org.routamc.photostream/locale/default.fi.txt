@@ -50,8 +50,16 @@ Kaikki merkinnät
 Hyväksy
 ---STRINGEND
 
+---STRING ascending
+nousevassa
+---STRINGEND
+
 ---STRING between %s-%s
 Ajalta %s - %s
+---STRINGEND
+
+---STRING create callback function
+Luomisvaiheen callback-funktio
 ---STRINGEND
 
 ---STRING create callback snippet
@@ -64,6 +72,10 @@ Poista
 
 ---STRING delete photo
 Poista valokuva
+---STRINGEND
+
+---STRING descending
+laskevassa
 ---STRINGEND
 
 ---STRING disapprove
@@ -420,7 +432,7 @@ Valokuvasi on hyväksytty
 Valokuvasi on hylätty
 ---STRINGEND
 
----STRING create callback function
-Luomisvaiheen callback-funktio
+---STRING photos sorted by %s %s
+Valokuvat järjesteltynä %sn mukaan %s järjestyksessä
 ---STRINGEND
 
