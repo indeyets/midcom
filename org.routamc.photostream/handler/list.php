@@ -767,7 +767,9 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         $photo = new org_routamc_photostream_photo_dba();
         
         // If the property doesn't exist, return false
-        if (!isset($photo->$args[0]))
+        if (   !isset($photo->$args[0])
+            && (   preg_match('/metadata\.(.+)$/', $args[0], $regs)
+                && !isset($photo->metadata->$regs[1])))
         {
             return false;
         }
