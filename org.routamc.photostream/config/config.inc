@@ -33,11 +33,11 @@
 'schemadb_config' => 'file:/org/routamc/photostream/config/schemadb_config.inc',
 
 // Creation callback snippet for defining site-specific function
-'callback_snippet' => null,
+'create_callback_snippet' => null,
 
 // Callback function will be called after creation e.g. to provide interface for page linking system
-// $callback_function($photo, $topic)
-'callback_function' => null,
+// $create_callback_function($photo, $topic)
+'create_callback_function' => null,
 
 // Require moderating for newly uploaded photos
 'moderate_uploaded_photos' => false,

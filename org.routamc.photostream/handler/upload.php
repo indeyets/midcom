@@ -177,11 +177,11 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
         }
 
         // Creation callback function
-        if ($this->_config->get('callback_function'))
+        if ($this->_config->get('create_callback_function'))
         {
-            if ($this->_config->get('callback_snippet'))
+            if ($this->_config->get('create_callback_snippet'))
             {
-                $eval = midcom_get_snippet_content($this->_config->get('callback_snippet'));
+                $eval = midcom_get_snippet_content($this->_config->get('create_callback_snippet'));
 
                 if ($eval)
                 {
@@ -189,7 +189,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
                 }
             }
 
-            $callback = $this->_config->get('callback_function');
+            $callback = $this->_config->get('create_callback_function');
             $callback($this->_article, $this->_content_topic);
         }
         

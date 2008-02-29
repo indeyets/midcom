@@ -10,25 +10,12 @@
     'locktimeout' => 0, /* Don't lock this, we always display the edit view */
     'fields'      => array 
     (
-        'schemadb' => array
-        (
-            'title' => 'schema database',
-            'storage' => array
-            (
-                'location' => 'configuration',
-                'domain' => 'org.routamc.photostream',
-                'name' => 'schemadb',
-            ),
-            'type' => 'text',
-            'widget' => 'text',
-            'start_fieldset' => array
-            ( 
-                'title' => 'advanced schema and data settings',
-            ),
-            'end_fieldset' => '',
-        ),
         'enable_ajax_editing' => array
         (
+            'start_fieldset' => array
+            ( 
+                'title' => 'user interface settings',
+            ),
             'title' => 'enable ajax editing',
             'storage' => array
             (
@@ -47,10 +34,6 @@
                 ),
             ),
             'widget' => 'select',
-            'start_fieldset' => array
-            ( 
-                'title' => 'user interface settings',
-            ),
         ),
         'entry_page' => array
         (
@@ -97,6 +80,10 @@
         ),
         'moderate_uploaded_photos' => array
         (
+            'start_fieldset' => array
+            (
+                'title' => 'moderation settings',
+            ),
             'title' => 'moderate uploaded photos',
             'static_append' => 'if this is on, photos require moderation before they will be displayed to the public',
             'storage' => array
@@ -116,13 +103,13 @@
                 ),
             ),
             'widget' => 'select',
-            'start_fieldset' => array
-            (
-                'title' => 'moderation settings',
-            ),
         ),
         'moderator_email' => array
         (
+            'start_fieldset' => array
+            (
+                'title' => 'related to the moderator',
+            ),
             'title' => 'moderator email address',
             'static_prepend' => 'this address will receive the messages notifying of new photos',
             'storage' => array
@@ -133,10 +120,6 @@
             ),
             'type' => 'text',
             'widget' => 'text',
-            'start_fieldset' => array
-            (
-                'title' => 'related to the moderator',
-            ),
         ),
         'moderator_mail_subject' => array
         (
@@ -165,6 +148,10 @@
         ),
         'send_statuschange_message' => array
         (
+            'start_fieldset' => array
+            (
+                'title' => 'messages sent to user',
+            ),
             'title' => 'send status change messages to the photographer',
             'storage' => array
             (
@@ -183,13 +170,13 @@
                 ),
             ),
             'widget' => 'select',
-            'start_fieldset' => array
-            (
-                'title' => 'messages sent to user',
-            ),
         ),
         'status_accepted_subject' => array
         (
+            'start_fieldset' => array
+            (
+                'title' => 'message sent after accepting a photo',
+            ),
             'title' => 'accepted mail subject',
             'storage' => array
             (
@@ -199,10 +186,6 @@
             ),
             'type' => 'text',
             'widget' => 'text',
-            'start_fieldset' => array
-            (
-                'title' => 'message sent after accepting a photo',
-            ),
         ),
         'status_accepted_body' => array
         (
@@ -219,6 +202,10 @@
         ),
         'status_rejected_subject' => array
         (
+            'start_fieldset' => array
+            (
+                'title' => 'message sent after rejecting a photo',
+            ),
             'title' => 'rejected mail subject',
             'storage' => array
             (
@@ -228,10 +215,6 @@
             ),
             'type' => 'text',
             'widget' => 'text',
-            'start_fieldset' => array
-            (
-                'title' => 'message sent after rejecting a photo',
-            ),
         ),
         'status_rejected_body' => array
         (
@@ -262,6 +245,11 @@
         
         'moderate_callback_snippet' => array
         (
+            'start_fieldset' => array
+            (
+                'title' => 'moderate callback options',
+                'description' => 'these settings are for system administrators only',
+            ),
             'title' => 'moderate callback snippet',
             'storage' => array
             (
@@ -271,11 +259,6 @@
             ),
             'type' => 'text',
             'widget' => 'text',
-            'start_fieldset' => array
-            (
-                'title' => 'moderate callback options',
-                'description' => 'these settings are for system administrators only',
-            ),
         ),
         'moderate_callback_function' => array
         (
@@ -292,6 +275,10 @@
         ),
         'api_email_enable' => array
         (
+            'start_fieldset' => array
+            ( 
+                'title' => 'API settings',
+            ),
             'title' => 'email API enable',
             'storage' => array
             (
@@ -310,10 +297,6 @@
                 ),
             ),
             'widget' => 'select',
-            'start_fieldset' => array
-            ( 
-                'title' => 'API settings',
-            ),
         ),
         'api_email_schema' => array
         (
@@ -375,5 +358,46 @@
             'end_fieldset' => '',
         ),
         */
+        'schemadb' => array
+        (
+            'start_fieldset' => array
+            ( 
+                'title' => 'advanced schema and data settings',
+            ),
+            'title' => 'schema database',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'schemadb',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+        ),
+        'create_callback_snippet' => array
+        (
+            'title' => 'create callback snippet',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'create_callback_snippet',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+        ),
+        'create_callback_function' => array
+        (
+            'title' => 'create callback function',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'create_callback_function',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+            'end_fieldset' => 1,
+        ),
     ),
 ),
