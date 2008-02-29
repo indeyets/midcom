@@ -629,7 +629,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
             }
 
             $callback = $this->_config->get('moderate_callback_function');
-            $callback($this->_article, $this->_content_topic);
+            $callback($this->_photo, $this->_content_topic);
         }
         
             $_MIDCOM->uimessages->add($this->_l10n->get('org.routamc.photostream'), $message);

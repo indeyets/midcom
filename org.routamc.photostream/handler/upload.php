@@ -23,7 +23,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
     var $_photo = null;
 
     /**
-     * The Controller of the article used for editing
+     * The Controller of the photo used for editing
      *
      * @var midcom_helper_datamanager2_controller_simple
      * @access private
@@ -39,7 +39,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
     var $_schemadb = null;
 
     /**
-     * The defaults to use for the new article.
+     * The defaults to use for the new photo.
      *
      * @var Array
      * @access private
@@ -190,7 +190,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
             }
 
             $callback = $this->_config->get('create_callback_function');
-            $callback($this->_article, $this->_content_topic);
+            $callback($this->_photo, $this->_content_topic);
         }
         
         return $this->_photo;
@@ -508,12 +508,12 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
     }
 
     /**
-     * Displays an article edit view.
+     * Displays an photo edit view.
      *
-     * Note, that the article for non-index mode operation is automatically determined in the can_handle
+     * Note, that the photo for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If upload privileges apply, we relocate to the index creation article
+     * If upload privileges apply, we relocate to the index creation photo
      *
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
@@ -597,7 +597,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
     }
 
     /**
-     * Shows the loaded article.
+     * Shows the loaded photo.
      *
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
