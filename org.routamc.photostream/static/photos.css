@@ -96,3 +96,92 @@ div.org_routamc_photostream_photo_thumbnail span.title
 {
     display: block;
 }
+
+#org_routamc_photostream_moderate
+{
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+#org_routamc_photostream_moderate td,
+#org_routamc_photostream_moderate th
+{
+  padding: 0.3em;
+  color: #000000;
+}
+
+#org_routamc_photostream_moderate td.buttons input
+{
+  background-repeat: no-repeat;
+  background-position: 2px 2px;
+  background-color: #EBE9ED;
+  border: solid 1px black;
+  padding-left: 20px;
+  height: 22px;
+  line-height: 22px;
+}
+
+#org_routamc_photostream_moderate td.buttons input:hover
+{
+  border-color: #222222;
+  background-color: #DEDCE0;
+}
+
+#org_routamc_photostream_moderate td.buttons input.accept
+{
+  background-image: url('../stock-icons/16x16/approved.png');
+}
+
+#org_routamc_photostream_moderate td.buttons input.delete
+{
+  background-image: url('../stock-icons/16x16/trash.png');
+}
+
+#org_routamc_photostream_moderate td.buttons input.reject
+{
+  background-image: url('../stock-icons/16x16/cancel.png');
+}
+
+#org_routamc_photostream_moderate tbody tr.loading
+{
+  background-color: #000000;
+  background-image: url('../midcom.helper.datamanager2/ajax-loading-black.gif');
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#org_routamc_photostream_moderate tr
+{
+  background-color: #ffffff;
+}
+
+#org_routamc_photostream_moderate tbody tr.accepted
+{
+  background-color: #ddffdd;
+}
+
+#org_routamc_photostream_moderate tbody tr.rejected
+{
+  background-color: #ffdddd;
+}
+
+ul.org_routamc_photostream_moderate_navigation
+{
+  list-style: none;
+  margin: 1em 0;
+  padding: 0;
+}
+
+ul.org_routamc_photostream_moderate_navigation li
+{
+  display: inline;
+  border-left: solid 1px black;
+  padding: 0 0.5em;
+}
+
+ul.org_routamc_photostream_moderate_navigation li:first-child,
+ul.org_routamc_photostream_moderate_navigation li.first
+{
+  border-left: none;
+  padding-left: 0;
+}

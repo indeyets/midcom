@@ -140,6 +140,20 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
             )
         );
 
+        if (   $this->_config->get('moderate_uploaded_photos')
+            && $this->_topic->can_do('org.routamc.photostream:moderate'))
+        {
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "moderate/{$data['photo']->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('moderate'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
+                )
+            );
+        }
+        
         $_MIDCOM->bind_view_to_object($data['photo'], $data['datamanager']->schema->name);
 
         $data['view_title'] = $data['photo']->title;

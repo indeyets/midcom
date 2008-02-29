@@ -36,7 +36,15 @@ jQuery.fn.moderate_form = function()
         
         jQuery(this).ajaxSubmit(
         {
-            target: '#' + jQuery(object).attr('id')
+            target: '#' + jQuery(object).attr('id'),
+            beforeSubmit: function()
+            {
+                jQuery(object).addClass('loading');
+            },
+            success: function()
+            {
+                jQuery(object).removeClass('loading');
+            }
         });
         
         return false;

@@ -134,6 +134,10 @@ Moderate callback function
 Moderate callback options
 ---STRINGEND
 
+---STRING moderate callback snippet
+Moderate callback snippet
+---STRINGEND
+
 ---STRING moderate photos for folder %s
 Moderate photos for folder %s
 ---STRINGEND
@@ -368,6 +372,14 @@ Upload to gallery
 User interface settings
 ---STRINGEND
 
+---STRING view rejected photos
+View rejected photos
+---STRINGEND
+
+---STRING view unmoderated photos
+View unmoderated photos
+---STRINGEND
+
 ---STRING your photo has been accepted
 Your photo has been accepted
 ---STRINGEND
@@ -376,7 +388,7 @@ Your photo has been accepted
 Your photo has been rejected
 ---STRINGEND
 
----STRING moderate callback snippet
-Moderate callback snippet
+---STRING view all photos
+View all photos
 ---STRINGEND
 

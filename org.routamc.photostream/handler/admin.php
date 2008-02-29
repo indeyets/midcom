@@ -659,13 +659,50 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         // Define the query builder for collecting the photos
         $qb = org_routamc_photostream_photo_dba::new_query_builder();
         
-        if ($handler_id === 'moderate_rejected')
+        // Set the breadcrumb data
+        $tmp = array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => 'moderate/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('moderate'),
+        );
+        
+        switch ($handler_id)
         {
-            $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_REJECTED);
-        }
-        else
-        {
-            $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_UNMODERATED);
+            case 'moderate_rejected':
+                $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_REJECTED);
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => 'moderate/rejected/',
+                    MIDCOM_NAV_NAME => $this->_l10n->get('rejected'),
+                );
+                $data['buttons'] = array
+                (
+                    'accept',
+                    'delete',
+                );
+                break;
+            case 'moderate_all':
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => 'moderate/all/',
+                    MIDCOM_NAV_NAME => $this->_l10n->get('all'),
+                );
+                // Fall through
+            
+            case 'moderate_list':
+            default:
+                if ($handler_id !== 'moderate_all')
+                {
+                    $qb->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_UNMODERATED);
+                }
+                $data['buttons'] = array
+                (
+                    'accept',
+                    'reject',
+                    'delete',
+                );
+                break;
         }
         
         $qb->add_order('taken');
@@ -675,37 +712,6 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         
         // Load the datamanager for photos
         $this->_load_datamanager();
-        
-        // Set the breadcrumb data
-        $tmp = array();
-        $tmp[] = Array
-        (
-            MIDCOM_NAV_URL => 'moderate/',
-            MIDCOM_NAV_NAME => $this->_l10n->get('moderate'),
-        );
-
-        if ($handler_id === 'moderate_rejected')
-        {
-            $tmp[] = Array
-            (
-                MIDCOM_NAV_URL => 'moderate/rejected',
-                MIDCOM_NAV_NAME => $this->_l10n->get('rejected'),
-            );
-            $data['buttons'] = array
-            (
-                'accept',
-                'delete',
-            );
-        }
-        else
-        {
-            $data['buttons'] = array
-            (
-                'accept',
-                'reject',
-                'delete',
-            );
-        }
         
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         

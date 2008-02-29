@@ -16,8 +16,20 @@ else
 }
 
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+
+switch ($data['photo']->status)
+{
+    case ORG_ROUTAMC_PHOTOSTREAM_STATUS_REJECTED:
+        $class = 'rejected';
+        break;
+    case ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED:
+        $class = 'accepted';
+        break;
+    default:
+        $class = 'unapproved';
+}
 ?>
-        <tr id="org_routamc_photostream_moderate_item_<?php echo $data['photo']->guid; ?>">
+        <tr id="org_routamc_photostream_moderate_item_<?php echo $data['photo']->guid; ?>" class="&(class);">
             <td class="thumbnail">
                 <a href="&(prefix);moderate/<?php echo $data['photo']->guid; ?>"><img src="&(thumbnail['url']:h);" &(thumbnail['size_line']:h); alt="&(thumbnail['filename']:h);" /></a>
             </td>

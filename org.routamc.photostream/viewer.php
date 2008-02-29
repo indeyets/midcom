@@ -347,6 +347,12 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
                 'handler' => Array('org_routamc_photostream_handler_admin', 'moderate'),
                 'fixed_args' => Array('moderate', 'rejected'),
             );
+            // List the rejected photos
+            $this->_request_switch['moderate_all'] = array
+            (
+                'handler' => Array('org_routamc_photostream_handler_admin', 'moderate'),
+                'fixed_args' => Array('moderate', 'all'),
+            );
             // Show an item for moderating
             $this->_request_switch['moderate_item'] = array
             (
