@@ -50,6 +50,10 @@ All tags
 Between %s - %s
 ---STRINGEND
 
+---STRING create callback snippet
+Create callback snippet
+---STRINGEND
+
 ---STRING delete
 Delete
 ---STRINGEND
@@ -316,6 +320,10 @@ Start
 Status
 ---STRINGEND
 
+---STRING symlinked folder
+Read the content from a different folder (symlink)
+---STRINGEND
+
 ---STRING system email address for outgoing mail
 System email address for outgoing mail
 ---STRINGEND
@@ -372,6 +380,10 @@ Upload to gallery
 User interface settings
 ---STRINGEND
 
+---STRING view all photos
+View all photos
+---STRINGEND
+
 ---STRING view rejected photos
 View rejected photos
 ---STRINGEND
@@ -388,7 +400,7 @@ Your photo has been accepted
 Your photo has been rejected
 ---STRINGEND
 
----STRING view all photos
-View all photos
+---STRING create callback function
+Create callback function
 ---STRINGEND
 
