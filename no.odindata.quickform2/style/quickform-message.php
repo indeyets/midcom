@@ -118,4 +118,4 @@ foreach ($data['schemadb'][$schema_name]->fields as $key => $field)
 
 
 -- 
-<?php echo sprintf($data['l10n']->get('sent from %s'), substr($_MIDCOM->get_page_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)); ?> on <?php echo strftime('%c'); ?>
+<?php echo sprintf($data['l10n']->get('sent from %s'), $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)); ?> on <?php echo strftime('%c'); ?>
