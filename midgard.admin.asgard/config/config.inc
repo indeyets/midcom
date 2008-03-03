@@ -108,3 +108,5 @@
     'text/xml'                 => 'xml',
     'text/html'                => 'html',
 ),
+
+'enable_review_dates' => false,

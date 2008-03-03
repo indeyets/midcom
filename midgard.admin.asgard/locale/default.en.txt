@@ -31,6 +31,10 @@
 1 week
 ---STRINGEND
 
+---STRING 2 weeks
+2 weeks
+---STRINGEND
+
 ---STRING ANONYMOUS
 Anonymous users
 ---STRINGEND
@@ -57,6 +61,10 @@ Add text file
 
 ---STRING always display in top frame
 Always display in top frame
+---STRINGEND
+
+---STRING any
+Any
 ---STRINGEND
 
 ---STRING apply to selected
@@ -447,6 +455,10 @@ Object %s approved
 Object %s removed
 ---STRINGEND
 
+---STRING objects expiring within
+Objects expiring within
+---STRINGEND
+
 ---STRING objects revised within
 Objects changed within
 ---STRINGEND
@@ -509,6 +521,10 @@ Restore to version %s was successful
 
 ---STRING restore version %s
 Restore version %s
+---STRINGEND
+
+---STRING review date
+Review date
 ---STRINGEND
 
 ---STRING revision
@@ -649,5 +665,9 @@ Version %s of %s
 
 ---STRING xml
 XML
+---STRINGEND
+
+---STRING only mine
+Only mine
 ---STRINGEND
 

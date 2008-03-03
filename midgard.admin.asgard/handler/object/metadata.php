@@ -83,6 +83,31 @@ class midgard_admin_asgard_handler_object_metadata extends midcom_baseclasses_co
 
         $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
         $this->_controller->schemadb =& $this->_schemadb;
+        
+        if (   $this->_config->get('enable_review_dates')
+            && !isset($this->_schemadb['metadata']->fields['review_date']))
+        {
+            $this->_schemadb['metadata']->append_field
+            (
+                'review_date',
+                array
+                (
+                    'title' => $this->_l10n->get('review date'),
+                    'type' => 'date',
+                    'type_config' => array
+                    (
+                        'storage_type' => 'UNIXTIME',
+                    ),
+                    'storage' => array
+                    (
+                        'location' => 'parameter',
+                        'domain' => 'midcom.helper.metadata',
+                        'name' => 'review_date',
+                    ),
+                    'widget' => 'jsdate',
+                )
+            );
+        }
 
         $this->_controller->set_storage($this->_object, 'metadata');
 

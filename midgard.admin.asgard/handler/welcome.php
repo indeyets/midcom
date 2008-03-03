@@ -53,7 +53,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
     {
     }
 
-    function _list_revised($since)
+    function _list_revised($since, $review_by = null, $type = null, $only_mine = false)
     {
         $classes = array();
         $revised = array();
@@ -63,6 +63,13 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
         foreach ($_MIDGARD['schema']['types'] as $schema_type => $dummy)
         {
             if (in_array($schema_type, $skip))
+            {
+                // Skip
+                continue;
+            }
+
+            if (   !is_null($type)
+                && $schema_type != $type)
             {
                 // Skip
                 continue;
@@ -93,7 +100,18 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
                 continue;
             }
             $qb = call_user_func($qb_callback);
-            $qb->add_constraint('metadata.revised', '>=', $since);
+            
+            if ($since != 'any')
+            {
+                $qb->add_constraint('metadata.revised', '>=', $since);
+            }
+            
+            if (   $only_mine
+                && $_MIDCOM->auth->user)
+            {
+                $qb->add_constraint('metadata.authors', 'LIKE', "|{$_MIDCOM->auth->user->guid}|");
+            }
+            
             $qb->add_order('metadata.revision', 'DESC');
             $objects = $qb->execute();
 
@@ -107,6 +125,16 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
 
             foreach ($objects as $object)
             {
+                if (!is_null($review_by))
+                {
+                    $object_review_by = (int) $object->get_parameter('midcom.helper.metadata', 'review_date');
+                    if ($object_review_by > $review_by)
+                    {
+                        // Skip
+                        continue;
+                    }
+                }
+            
                 $revised["{$object->metadata->revised}_{$object->guid}_{$object->metadata->revision}"] = $object;
             }
         }
@@ -146,8 +174,33 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
         $data['revised'] = array();
         if (isset($_REQUEST['revised_after']))
         {
-            $data['revised_after'] = date('Y-m-d H:i:s\Z', $_REQUEST['revised_after']);
-            $data['revised'] = $this->_list_revised($data['revised_after']);
+            $data['revised_after'] = $_REQUEST['revised_after'];
+            if ($data['revised_after'] != 'any')
+            {
+                $data['revised_after'] = date('Y-m-d H:i:s\Z', $_REQUEST['revised_after']);
+            }
+            
+            $data['review_by'] = null;
+            if (   $this->_config->get('enable_review_dates')
+                && isset($_REQUEST['review_by']))
+            {
+                $data['review_by'] = (int) $_REQUEST['review_by'];
+            }
+            
+            $data['type_filter'] = null;
+            if (isset($_REQUEST['type_filter']))
+            {
+                $data['type_filter'] = $_REQUEST['type_filter'];
+            }
+            
+            $data['only_mine'] = false;
+            if (   isset($_REQUEST['only_mine'])
+                && $_REQUEST['only_mine'] == 1)
+            {
+                $data['only_mine'] = $_REQUEST['only_mine'];
+            }
+            
+            $data['revised'] = $this->_list_revised($data['revised_after'], $data['review_by'], $data['type_filter'], $data['only_mine']);
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.tablesorter.js');
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/jquery.batch_process.js');
             $_MIDCOM->add_link_head
@@ -265,6 +318,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
     function _show_welcome($handler_id, &$data)
     {
         $data['reflectors'] = $this->_reflectors;
+        $data['config'] = $this->_config;
         midcom_show_style('midgard_admin_asgard_header');
         midcom_show_style('midgard_admin_asgard_middle');
         midcom_show_style('midgard_admin_asgard_welcome');

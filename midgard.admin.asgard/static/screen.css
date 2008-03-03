@@ -427,11 +427,16 @@ html > body #siteinfo
     margin-top: 5px;
 }
 
-#latest_objects .filter .revised_after,
+#latest_objects .filter div,
 #latest_objects .actions .action
 {
     float: left;
     margin-right: 10px;
+}
+
+#latest_objects .filter div label
+{
+    white-space: nowrap;
 }
 
 #latest_objects table.results
