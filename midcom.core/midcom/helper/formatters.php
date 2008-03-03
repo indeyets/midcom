@@ -48,7 +48,7 @@ if (!function_exists('midcom_helper_formatters_links'))
                     $new_block = eregi_replace('(((f|ht){1}tp://)[-a-zA-Z0-9@:%_\+.~#?&//=]+)', '<a href="\\1">\\1</a>', $new_block);
                     if ($new_block == $block)
                     {
-                        $new_block = eregi_replace('(www.[-a-zA-Z0-9@:%_\+.~#?&//=]+)', '<a href="http://\\1">\\1</a>', $new_block);
+                        $new_block = eregi_replace('( www.[-a-zA-Z0-9@:%_\+.~#?&//=]+)', '<a href="http://\\1">\\1</a>', $new_block);
                     }
 
                     _midcom_helper_formatters_replace_content($content, $new_block, $start, $end);
