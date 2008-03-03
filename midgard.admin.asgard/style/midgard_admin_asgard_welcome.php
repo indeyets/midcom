@@ -2,16 +2,17 @@
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
 $type_choices = array();
-$type_choices['any'] = $_MIDCOM->i18n->get_string('any', 'midgard.admin.asgard');
 foreach ($_MIDGARD['schema']['types'] as $schema_type => $dummy)
 {
     if (!isset($data['reflectors'][$schema_type]))
     {
         $data['reflectors'][$schema_type] = new midcom_helper_reflector($schema_type);
     }
-    
+
     $type_choices[$schema_type] = $data['reflectors'][$schema_type]->get_class_label();
+    asort($type_choices);
 }
+$type_choices = Array('any' => $_MIDCOM->i18n->get_string('any', 'midgard.admin.asgard')) + $type_choices;
 
 $revised_after_choices = array();
 if ($data['config']->get('enable_review_dates'))
@@ -122,12 +123,12 @@ if (count($data['revised']) > 0)
     echo "            <th class=\"selection\">&nbsp;</th>\n";
     echo "            <th class=\"icon\">&nbsp;</th>\n";
     echo "            <th class=\"title\">" . $_MIDCOM->i18n->get_string('title', 'midcom') . "</th>\n";
-    
+
     if ($data['config']->get('enable_review_dates'))
     {
         echo "            <th class=\"review_by\">" . $_MIDCOM->i18n->get_string('review date', 'midgard.admin.asgard') . "</th>\n";
     }
-    
+
     echo "            <th class=\"revised\">" . $_MIDCOM->i18n->get_string('revised', 'midcom.admin.folder') . "</th>\n";
     echo "            <th class=\"revisor\">" . $_MIDCOM->i18n->get_string('revisor', 'midcom.admin.folder') . "</th>\n";
     echo "            <th class=\"approved\">" . $_MIDCOM->i18n->get_string('approved', 'midcom') . "</th>\n";
@@ -172,7 +173,7 @@ if (count($data['revised']) > 0)
         echo "            <td class=\"selection\"><input type=\"checkbox\" name=\"selections[]\" value=\"{$object->guid}\" /></td>\n";
         echo "            <td class=\"icon\">" . $data['reflectors'][$class]->get_object_icon(&$object) . "</td>\n";
         echo "            <td class=\"title\"><a href=\"{$prefix}__mfa/asgard/object/view/{$object->guid}/\" title=\"{$class}\">" . $title . "</a></td>\n";
-        
+
         if ($data['config']->get('enable_review_dates'))
         {
             $review_date = $object->get_parameter('midcom.helper.metadata', 'review_date');
@@ -185,7 +186,7 @@ if (count($data['revised']) > 0)
                 echo "            <td class=\"review_by\">" . strftime('%x', $review_date) . "</td>\n";
             }
         }
-        
+
         echo "            <td class=\"revised\">" . strftime('%x %X', $object->metadata->revised) . "</td>\n";
         echo "            <td class=\"revisor\">{$revisors[$object->metadata->revisor]->name}</td>\n";
         echo "            <td class=\"approved\">{$approved_str}</td>\n";
