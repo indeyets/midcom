@@ -544,11 +544,12 @@ class midcom_helper_nav
      *
      * @param string    $separator        The separator to use between the elements.
      * @param string    $class            If not-null, it will be assigned to all A tags.
-     * @param int        $skip_levels    The number of topic levels to skip before starting to work (use this to skip 'Home' links etc.).
+     * @param int       $skip_levels      The number of topic levels to skip before starting to work (use this to skip 'Home' links etc.).
      * @param string    $current_class    The class that should be assigned to the currently active element.
+     * @param array     $skip_guids       Array of guids that are skipped.
      * @return string    The computed breadrumb line.
      */
-    function get_breadcrumb_line ($separator = ' &gt; ', $class = null, $skip_levels = 0, $current_class = null)
+    function get_breadcrumb_line ($separator = ' &gt; ', $class = null, $skip_levels = 0, $current_class = null, $skip_guids = array())
     {
         $breadcrumb_data = $this->get_breadcrumb_data();
         $result = '';
@@ -573,7 +574,7 @@ class midcom_helper_nav
             }
         }
 
-        while(current($breadcrumb_data) !== false)
+        while (current($breadcrumb_data) !== false)
         {
             $data = current($breadcrumb_data);
             $data[MIDCOM_NAV_NAME] = htmlspecialchars($data[MIDCOM_NAV_NAME]);
@@ -592,6 +593,13 @@ class midcom_helper_nav
             }
             else
             {
+                if (   isset($data['napobject'])
+                    && in_array($data['napobject'][MIDCOM_NAV_GUID], $skip_guids)
+                   )
+                {
+                    continue;
+                }
+
                 $result .= "<a href=\"{$data[MIDCOM_NAV_URL]}\""
                   . (is_null($class) ? '' : " class=\"{$class}\"")
                   . ">{$data[MIDCOM_NAV_NAME]}</a>{$separator}";
