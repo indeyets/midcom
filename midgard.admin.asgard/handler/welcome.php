@@ -182,13 +182,15 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
             
             $data['review_by'] = null;
             if (   $this->_config->get('enable_review_dates')
-                && isset($_REQUEST['review_by']))
+                && isset($_REQUEST['review_by'])
+                && $_REQUEST['review_by'] != 'any')
             {
                 $data['review_by'] = (int) $_REQUEST['review_by'];
             }
             
             $data['type_filter'] = null;
-            if (isset($_REQUEST['type_filter']))
+            if (   isset($_REQUEST['type_filter'])
+                && $_REQUEST['type_filter'] != 'any')
             {
                 $data['type_filter'] = $_REQUEST['type_filter'];
             }
