@@ -23,6 +23,10 @@
 1 Woche
 ---STRINGEND
 
+---STRING 2 weeks
+2 Wochen
+---STRINGEND
+
 ---STRING ANONYMOUS
 Anonyme Benutzer
 ---STRINGEND
@@ -105,6 +109,10 @@ Plain text
 
 ---STRING xml
 XML
+---STRINGEND
+
+---STRING only mine
+Nur eigene
 ---STRINGEND
 
 ---STRING html
@@ -375,6 +383,10 @@ Objekt %s freigegeben
 Objekt %s gelöscht
 ---STRINGEND
 
+---STRING objects expiring within
+Objekte mit Ablaufdatum innerhalb
+---STRINGEND
+
 ---STRING objects revised within
 Objekte mit Änderungen seit 
 ---STRINGEND
@@ -445,6 +457,10 @@ Toolbar-Modus
 
 ---STRING always display in top frame
 Immer im obersten Frame anzeigen
+---STRINGEND
+
+---STRING any
+Alle
 ---STRINGEND
 
 ---STRING topic privileges
@@ -565,6 +581,10 @@ Die Wiederherstellung der Version %s war erfolgreich
 
 ---STRING restore version %s
 Version %s wiederherstellen
+---STRINGEND
+
+---STRING review date
+Review-Datum
 ---STRINGEND
 
 ---STRING revision
