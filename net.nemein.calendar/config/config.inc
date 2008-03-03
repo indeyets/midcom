@@ -27,5 +27,9 @@
 'categories_in_navigation' => false,
 
 'rss_subscription_enable' => false,
+'rss_sort_rules' => array
+(
+    'start' => 'ASC',
+),
 
 'language' => null,

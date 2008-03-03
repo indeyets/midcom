@@ -89,6 +89,8 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
     {
         $_MIDCOM->load_library('de.bitfolge.feedcreator');
         $_MIDCOM->cache->content->content_type("text/xml");
+        // FIXME: There should be some lifetime specification for the cache engine
+        $_MIDCOM->cache->content->uncached();
         $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");
 
         $_MIDCOM->skip_page_style = true;
@@ -134,11 +136,19 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
         }
 
         // Show only events that haven't ended
-        $qb->add_constraint('end', '>', time());
+        $qb->add_constraint('end', '>', date('Y-m-d H:i:s'));
 
         $qb->set_limit($this->_config->get('rss_count'));
 
-        $qb->add_order('closeregistration');
+        $sorts = $this->_config->get('rss_sort_rules');
+        if (!is_array($sorts))
+        {
+            $sorts = array('start' => 'ASC');
+        }
+        foreach ($sorts as $prop => $rule)
+        {
+            $qb->add_order($prop, $rule);
+        }
 
         $this->_events = $qb->execute();
 
