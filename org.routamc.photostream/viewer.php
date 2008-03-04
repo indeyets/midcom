@@ -249,6 +249,30 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             ),
             'variable_args' => 1,
         );
+        
+        // List configured amount of random photos
+        // Handle /list/random/
+        $this->_request_switch['photostream_list_random'] = array
+        (
+            'handler' => array ('org_routamc_photostream_handler_list', 'random'),
+            'fixed_args' => array('random'),
+        );
+        
+        // Handle /list/random/<username|count>/
+        $this->_request_switch['photostream_list_random_count'] = array
+        (
+            'handler' => array ('org_routamc_photostream_handler_list', 'random'),
+            'fixed_args' => array('random'),
+            'variable_args' => 1,
+        );
+        
+        // Handle /list/random/<username>/<count>/
+        $this->_request_switch['photostream_list_random_user'] = array
+        (
+            'handler' => array ('org_routamc_photostream_handler_list', 'random'),
+            'fixed_args' => array('random'),
+            'variable_args' => 2,
+        );
 
         // Handle /batch/<batch_id>
         $this->_request_switch['photostream_batch'] = array

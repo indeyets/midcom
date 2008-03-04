@@ -420,3 +420,6 @@ Your photo has been rejected
 Sorted by %s
 ---STRINGEND
 
+---STRING random photos
+Random photos
+---STRINGEND

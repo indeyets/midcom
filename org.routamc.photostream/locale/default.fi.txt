@@ -440,3 +440,6 @@ Valokuvasi on hylätty
 Järjestelty ominaisuuden %s mukaan
 ---STRINGEND
 
+---STRING random photos
+Arvotut valokuvat
+---STRINGEND

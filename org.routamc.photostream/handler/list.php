@@ -839,5 +839,158 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
     {
         $this->_show_photostream($handler_id, &$data);
     }
+    
+    /**
+     * Get configured or requested amount of random photos
+     * 
+     * @access public
+     * @param mixed $handler_id the array key from the request array
+     * @param array $args the arguments given to the handler
+     * @param Array &$data The local request data.
+     * @return boolean Indicating success.
+     */
+    function _handler_random($handler_id, $args, &$data)
+    {
+        // Get the GUIDs with collector
+        $mc = org_routamc_photostream_photo_dba::new_collector('node', $this->_content_topic->id);
+        
+        // Show only the moderated photos
+        if ($this->_config->get('moderate_uploaded_photos'))
+        {
+            // Limit to show the photos only to the accepted or to the user's own photos
+            $mc->begin_group('OR');
+                $mc->add_constraint('status', '=', ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED);
+                $mc->add_constraint('photographer', '=', $_MIDGARD['user']);
+            $mc->end_group();
+        }
+        
+        // Breadcrumb storage array
+        $tmp = array();
+        $limit = $this->_config->get('photos_per_page');
+
+        // Determine the constraints according to the handler
+        switch ($handler_id)
+        {
+            case 'photostream_list_random_user':
+                $limit = (int) $args[1];
+                $data['view_title'] = $this->_l10n->get('random photos');
+                
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => "random/{$args[0]}/{$args[1]}/",
+                    MIDCOM_NAV_NAME => $args[1],
+                );
+                // Fall through
+            
+            case 'photostream_list_random_count':
+                $photographer = $this->_resolve_user($args[0]);
+                
+                if (   $photographer
+                    && $photographer->guid)
+                {
+                    $mc->add_constraint('photographer', '=', $photographer->id);
+                    $data['view_title'] = $photographer->name;
+                    
+                    $tmp[] = Array
+                    (
+                        MIDCOM_NAV_URL => "random/{$args[0]}/",
+                        MIDCOM_NAV_NAME => $photographer->name,
+                    );
+                    $tmp[] = Array
+                    (
+                        MIDCOM_NAV_URL => "random/",
+                        MIDCOM_NAV_NAME => $this->_l10n->get('random photos'),
+                    );
+                }
+                elseif (is_numeric($args[0]))
+                {
+                    $limit = (int) $args[0];
+                    $data['view_title'] = $this->_l10n->get('random photos');
+                    
+                    $tmp[] = Array
+                    (
+                        MIDCOM_NAV_URL => "random/{$args[0]}/",
+                        MIDCOM_NAV_NAME => $args[0],
+                    );
+                    $tmp[] = Array
+                    (
+                        MIDCOM_NAV_URL => "random/",
+                        MIDCOM_NAV_NAME => $this->_l10n->get('random photos'),
+                    );
+                }
+                else
+                {
+                    return false;
+                }
+                
+                break;
+            
+            case 'photostream_list_random':
+            default:
+                $data['view_title'] = $this->_l10n->get('random photos');
+                
+                $tmp[] = Array
+                (
+                    MIDCOM_NAV_URL => "random/",
+                    MIDCOM_NAV_NAME => $this->_l10n->get('random photos'),
+                );
+                break;
+        }
+        
+        // Execute the collector
+        $mc->execute();
+        
+        // Get a list of keys
+        $guids = array();
+        foreach ($mc->list_keys() as $guid => $array)
+        {
+            $guids[] = $guid;
+        }
+        
+        // Initialize required variables
+        $data['photos'] = array();
+        $count = count($data['photos']);
+        $count_guids = count($guids);
+        $i = 0;
+        
+        // Randomize the result set
+        while ($count < $limit
+            && $count <= $count_guids
+            && $i < 100)
+        {
+            $guid = $guids[rand(0, $count_guids - 1)];
+            
+            if (!array_key_exists($guid, $data['photos']))
+            {
+                $data['photos'][$guid] = new org_routamc_photostream_photo_dba($guid);
+            }
+            
+            // Refresh the count
+            $count = count($data['photos']);
+            ++$i;
+        }
+        
+        // Load the AJAX controllers
+        $this->_prepare_ajax_controllers();
+        
+        // Set the page title
+        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
+        
+        // Set the breadcrumb line
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', array_reverse($tmp));
+        
+        return true;
+    }
+    
+    /**
+     * Show the photostream list according to the query builder
+     * 
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
+    function _show_random($handler_id, &$data)
+    {
+        $this->_show_photostream($handler_id, &$data);
+    }
 }
 ?>

@@ -7,6 +7,11 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-03-04 adrenalin
+  + Added an URL interface for loading random photos with three different options (random limited by
+    configured amount of items, random limited by person or manually defined amount and random limited
+    by both person and manually defined amount).
+
 2008-02-29 adrenalin
   + Added option for symlinking photo galleries
   + Added handler for showing photos in different orders (useful e.g. for dynamic_load)
