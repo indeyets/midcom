@@ -10,18 +10,30 @@
     'locktimeout' => 0, /* Don't lock this, we always display the edit view */
     'fields'      => array 
     (
-        'enable_ajax_editing' => array
+        'photos_per_page' => array
         (
             'start_fieldset' => array
             ( 
                 'title' => 'user interface settings',
             ),
-            'title' => 'enable ajax editing',
+            'title' => 'how many photos should be shown per page',
             'storage' => array
             (
                 'location' => 'configuration',
                 'domain' => 'org.routamc.photostream',
-                'name' => 'enable_ajax_editing',
+                'name' => 'photos_per_page',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+        ),
+        'load_next_prev' => array
+        (
+            'title' => 'show next and previous links (can be computationally expensive for large streams)',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'load_next_prev',
             ),
             'type' => 'select',
             'type_config' => array
@@ -64,6 +76,27 @@
                 'location' => 'configuration',
                 'domain' => 'org.routamc.photostream',
                 'name' => 'navigate_with_context',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
+        'enable_ajax_editing' => array
+        (
+            'title' => 'enable ajax editing',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'enable_ajax_editing',
             ),
             'type' => 'select',
             'type_config' => array

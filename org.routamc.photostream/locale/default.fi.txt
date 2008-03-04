@@ -134,6 +134,10 @@ Flickr-käyttäjätunnus
 Siirry suoraan katsomaan kaikkia valokuvia
 ---STRINGEND
 
+---STRING how many photos should be shown per page
+Kuinka monta valokuvaa näytetään sivua kohti
+---STRINGEND
+
 ---STRING if checked only logged in users can see this photo
 Jos merkitty niin vain kirjautuneet käyttäjät voivat nähdä tämän valokuvan
 ---STRINGEND
@@ -273,8 +277,8 @@ Käyttäjän %s kuvat joiden arvio on %s
 Käyttäjän %s "%s":llä merkityt valokuvat
 ---STRINGEND
 
----STRING sorted by %s %s
-Järjestelty ominaisuuden %s mukaan %s järjestyksessä
+---STRING photos sorted by %s
+Järjestelty ominaisuuden %s mukaan
 ---STRINGEND
 
 ---STRING photos tagged with %s
@@ -295,6 +299,10 @@ Moderointi
 
 ---STRING processed photo "%s" (GUID: %s)
 Kuva "%s" prosessoitu (GUID: %s)
+---STRINGEND
+
+---STRING random photos
+Arvotut valokuvat
 ---STRINGEND
 
 ---STRING rating
@@ -346,6 +354,10 @@ Valitse käyttäjä tai tagit
 
 ---STRING send status change messages to the photographer
 Lähetä statuksen muutoksista viesti valokuvaajalle
+---STRINGEND
+
+---STRING sorted by %s %s
+Järjestelty ominaisuuden %s mukaan %s järjestyksessä
 ---STRINGEND
 
 ---STRING start
@@ -436,10 +448,7 @@ Valokuvasi on hyväksytty
 Valokuvasi on hylätty
 ---STRINGEND
 
----STRING photos sorted by %s
-Järjestelty ominaisuuden %s mukaan
+---STRING show next and previous links (can be computationally expensive for large streams)
+Näytä linkit 'Seuraava' ja 'Edellinen' (saattaa olla laskentatehollisesti raskasta suurille tietokannoille)
 ---STRINGEND
 
----STRING random photos
-Arvotut valokuvat
----STRINGEND

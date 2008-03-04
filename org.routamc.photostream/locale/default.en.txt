@@ -114,6 +114,10 @@ Flickr username
 Go straight to the all photos view
 ---STRINGEND
 
+---STRING how many photos should be shown per page
+How many photos should be shown per page
+---STRINGEND
+
 ---STRING if checked only logged in users can see this photo
 If checked only logged in users can see this photo
 ---STRINGEND
@@ -253,10 +257,6 @@ Photos of %s rated as %s
 Photos of %s tagged with "%s"
 ---STRINGEND
 
----STRING sorted by %s %s
-Sorted by %s in %s order
----STRINGEND
-
 ---STRING photos tagged with %s
 Photos tagged with "%s"
 ---STRINGEND
@@ -275,6 +275,10 @@ Moderate
 
 ---STRING processed photo "%s" (GUID: %s)
 Processed photo "%s" (GUID: %s)
+---STRINGEND
+
+---STRING random photos
+Random photos
 ---STRINGEND
 
 ---STRING rating
@@ -326,6 +330,14 @@ Select the user or tags
 
 ---STRING send status change messages to the photographer
 Send status change messages to the photographer
+---STRINGEND
+
+---STRING sorted by %s
+Sorted by %s
+---STRINGEND
+
+---STRING sorted by %s %s
+Sorted by %s in %s order
 ---STRINGEND
 
 ---STRING start
@@ -416,10 +428,7 @@ Your photo has been accepted
 Your photo has been rejected
 ---STRINGEND
 
----STRING sorted by %s
-Sorted by %s
+---STRING show next and previous links (can be computationally expensive for large streams)
+Show next and previous links (can be computationally expensive for large streams)
 ---STRINGEND
 
----STRING random photos
-Random photos
----STRINGEND
