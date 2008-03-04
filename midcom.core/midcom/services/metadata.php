@@ -108,7 +108,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         }
         
         if (   !is_object($topic)
-            || isset($topic->id)
+            || !isset($topic->id)
             || empty($topic->id))
         {
             $this->_metadata[$context_id] = Array();
