@@ -96,10 +96,17 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
         
         $qb = midcom_db_member::new_query_builder();
         $qb->add_constraint('gid', '=', $this->_group->id);
-        if ($qb->count_unchecked() > $this->_config->get('list_users_max'))
+        if (   $qb->count_unchecked() > $this->_config->get('list_users_max')
+            && isset($this->_schemadb['default']->fields['persons']))
         {
             unset($this->_schemadb['default']->fields['persons']);
+            $field_order_key = array_search('persons', $this->_schemadb['default']->field_order);
+            if ($field_order_key !== false)
+            {
+                unset($this->_schemadb['default']->field_order[$field_order_key]);
+            }
         }
+        unset($qb);
         
         $this->_controller =& midcom_helper_datamanager2_controller::create('simple');
         $this->_controller->schemadb =& $this->_schemadb;

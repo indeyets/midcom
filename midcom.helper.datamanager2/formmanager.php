@@ -226,7 +226,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
         {
             if (!isset($this->_schema->fields[$name]))
             {
-                debug_push_class(__CLASS__, __FUNCTION);
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Field {$name} is not present in \$this->_schema->fields (read from \$this->_schema->field_order)", MIDCOM_LOG_ERROR);
                 debug_pop();
                 continue;
