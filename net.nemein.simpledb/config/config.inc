@@ -7,3 +7,4 @@
 'enable_onsite_editing' => false,
 'enable_filtering' => true,
 'sort_order' => 'name',
+'autoapprove_created' => false,

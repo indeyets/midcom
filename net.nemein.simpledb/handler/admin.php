@@ -240,6 +240,12 @@ class net_nemein_simpledb_handler_admin extends midcom_baseclasses_components_ha
                 // Reindex the article
                 $indexer =& $_MIDCOM->get_service('indexer');
                 $indexer->index($data['datamanager']);
+                
+                if ($this->_config->get('autoapprove_created'))
+                {
+                    $metadata = $data['entry']->get_metadata();
+                    $metadata->approve();
+                }
 
                 $_MIDCOM->relocate("view/{$this->_request_data['entry']->guid}.html");
                 // This will exit
