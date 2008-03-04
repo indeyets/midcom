@@ -53,6 +53,24 @@ class org_routamc_photostream_handler_feed extends org_routamc_photostream_handl
     }
 
     /**
+     * Check if the request can be handled
+     * 
+     * @access public
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @return boolean Indicating success.
+     */
+    function _can_handle_dispatcher($handler_id, $args)
+    {
+        if (!array_key_exists($args[0], $this->_supported_types))
+        {
+            return false;
+        }
+        
+        return true;
+    }
+
+    /**
      * This rather sneaky dispatcher is able to create a feed from any
      * request_switch supported by org_routamc_photostream_handler_list
      * that populates $data['photos'] (with a little help from org_routamc_photostream_viewer)
