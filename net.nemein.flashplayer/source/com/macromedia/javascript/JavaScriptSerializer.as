@@ -134,7 +134,7 @@ class com.macromedia.javascript.JavaScriptSerializer
 		for(var x:String in o)
 		{
 
-			//dont include functions
+			//don't include functions
 			if(typeof(x[o]) == "function")
 			{
 				continue;

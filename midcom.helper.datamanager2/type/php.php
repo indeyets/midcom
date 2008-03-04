@@ -22,7 +22,7 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
      * @access public
      */
     var $value = '';
-    
+
     var $code_valid = true;
     var $code_valid_errors = array();
 
@@ -30,7 +30,7 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
     {
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/codepress/codepress.js');
         $_MIDCOM->add_jsonload("if(typeof {$this->name} != 'undefined'){{$this->name}.toggleReadOnly()}");
-        
+
         return true;
     }
 
@@ -43,7 +43,7 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
     {
         // Normalize line breaks to the UNIX format
         $this->value = preg_replace("/\n\r|\r\n|\r/", "\n", $this->value);
-        
+
         return $this->value;
     }
 
@@ -58,7 +58,7 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
     }
 
     /**
-     * The validation callback ensures that we dont't have an array or an object
+     * The validation callback ensures that we don't have an array or an object
      * as a value, which would be wrong.
      *
      * @return boolean Indicating validity.
@@ -73,14 +73,14 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
             debug_pop();
             return false;
         }
-        
+
         /* bergie says this segfaults
         if (function_exists('parsekit_compile_string'))
         {
             // Use parsekit for evaluation if available
             $errors = array();
             parsekit_compile_string("?>{$this->value}", $errors, PARSEKIT_QUIET);
-            
+
             if (!empty($errors))
             {
                 $parse_errors = array();
@@ -91,7 +91,7 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
                         $parse_errors[$error['lineno']] = $error['errstr'];
                     }
                 }
-    
+
                 if (count($parse_errors) > 0)
                 {
                     $error_message = '';
@@ -104,7 +104,7 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
                     return false;
                 }
             }
-            
+
             debug_pop();
             return true;
         }

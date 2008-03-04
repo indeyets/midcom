@@ -8,7 +8,7 @@
 
 /************************ External References ******************************
  * These must go first, so that CSS is happy.
- * Dont use any media Tags, IE will ignore it.
+ * Don't use any media Tags, IE will ignore it.
  */
 
 @import "../midcom.helper.datamanager/jscript-calendar/jscalendar.css";

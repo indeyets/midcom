@@ -56,14 +56,14 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
      * @access private
      */
     var $output_mode = 'specialchars';
-    
+
     /**
      * Runs HTML contents through the HTML Purifier library to ensure safe XHTML compatibility.
      *
      * Note: Applies only when output_mode is 'html'
      */
     var $purify = false;
-    
+
     /**
      * Configuration values for HTML Purifier
      */
@@ -85,7 +85,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
             }
             debug_pop();
         }
-        
+
         $this->purify = $this->_config->get('html_purify');
         $this->purify_config = $this->_config->get('html_purify_config');
     }
@@ -98,18 +98,18 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
 
     function purify_content()
     {
-        if (isset($this->purify_config['Cache']['SerializerPath']) 
+        if (isset($this->purify_config['Cache']['SerializerPath'])
             && !file_exists($this->purify_config['Cache']['SerializerPath']))
         {
             mkdir($this->purify_config['Cache']['SerializerPath']);
         }
-    
+
         require_once('HTMLPurifier.php');
         // For some reason we lose this along the way!
         error_reporting(E_ALL);
 
         $purifier = new HTMLPurifier($this->purify_config);
-        
+
         // Set local IDPrefix to field name...
         $purifier->config->set('Attr', 'IDPrefixLocal', "{$this->name}_");
 
@@ -167,7 +167,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
     {
         // Normalize line breaks to the UNIX format
         $this->value = preg_replace("/\n\r|\r\n|\r/", "\n", $this->value);
-                
+
         if ($this->purify)
         {
             switch ($this->output_mode)
@@ -178,7 +178,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
                     break;
             }
         }
-        
+
         return $this->value;
     }
 
@@ -193,7 +193,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
     }
 
     /**
-     * The validation callback ensures that we dont't have an array or an object
+     * The validation callback ensures that we don't have an array or an object
      * as a value, which would be wrong.
      *
      * @return boolean Indicating validity.

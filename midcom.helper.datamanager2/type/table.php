@@ -160,7 +160,7 @@ class midcom_helper_datamanager2_type_table extends midcom_helper_datamanager2_t
     }
 
     /**
-     * The validation callback ensures that we dont't have an array or an object
+     * The validation callback ensures that we don't have an array or an object
      * as a value, which would be wrong.
      *
      * @return boolean Indicating validity.

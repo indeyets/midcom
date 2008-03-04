@@ -8,13 +8,13 @@
  */
 
 /**
- * Datamanager 2 parameters type. This allows the editing of all parameters of 
+ * Datamanager 2 parameters type. This allows the editing of all parameters of
  * the storage object.
- * 
+ *
  * <b>Configuration options:</b>
  * <i>headers</i>
  * Array with headernames in the same order as the row columns.
- *  
+ *
  *
  * @package midcom.helper.datamanager2
  */
@@ -31,7 +31,7 @@ class midcom_helper_datamanager2_type_parameters extends midcom_helper_datamanag
      * @access public
      */
     var $headers = array('domain', 'name', 'value', 'delete');
-    
+
        /**
      * Set this to true if you want the keys to be exported to the csv dump instead of the
      * values. Note, that this does not affect import, which is only available with keys, not
@@ -67,10 +67,10 @@ class midcom_helper_datamanager2_type_parameters extends midcom_helper_datamanag
         }
         // reset the rows.
         $this->rows = array();
-        foreach ($this->storage->object->list_parameters() as $domain => $name) 
+        foreach ($this->storage->object->list_parameters() as $domain => $name)
         {
-            $this->rows[] = array (0 => $domain, 
-                                   1 => key($name), 
+            $this->rows[] = array (0 => $domain,
+                                   1 => key($name),
                                    2 => $name[key($name)],
                                    3 => 0);
         }
@@ -93,34 +93,34 @@ class midcom_helper_datamanager2_type_parameters extends midcom_helper_datamanag
          * 1 = name
          * 2 = value
          */
-        
+
         $rows = $this->rows;
         $this->rows = array();
-        foreach ($rows as $key => $row ) 
+        foreach ($rows as $key => $row )
         {
-            if (array_key_exists(3 , $row ) && $row[3] == 1) 
+            if (array_key_exists(3 , $row ) && $row[3] == 1)
             {
                 $this->storage->object->delete_parameter( $row[0],$row[1]);
-                unset ($this->rows[$key]);    
-            } // only update parameters that do not have empty names or domains. 
-            else if (trim($row[0]) != '' && trim($row[1]) != '') 
+                unset ($this->rows[$key]);
+            } // only update parameters that do not have empty names or domains.
+            else if (trim($row[0]) != '' && trim($row[1]) != '')
             {
-                
+
                 if (! $this->storage->object->set_parameter(
                     $row[0],
                     $row[1],
                     $row[2]
-                )) 
+                ))
                 {
                     echo "Could not update parameter {$row[0]} {$row[1]}!";
                 }
-                
-            } 
+
+            }
         }
-        
+
         $this->convert_from_storage(true);
         return;
-        
+
     }
 
     /**
@@ -171,7 +171,7 @@ class midcom_helper_datamanager2_type_parameters extends midcom_helper_datamanag
     }
 
     /**
-     * The validation callback ensures that we dont't have an array or an object
+     * The validation callback ensures that we don't have an array or an object
      * as a value, which would be wrong.
      *
      * @return boolean Indicating validity.
@@ -184,21 +184,21 @@ class midcom_helper_datamanager2_type_parameters extends midcom_helper_datamanag
     function convert_to_html()
     {
         $table = "<table border='0' cellspacing='0' ><tr>";
-        foreach ($this->headers as $header ) 
+        foreach ($this->headers as $header )
         {
             $table .= "<td>{$header}</td>\n";
         }
         $table .= "</tr>\n";
-        foreach ($this->rows as $key => $row) 
+        foreach ($this->rows as $key => $row)
         {
             $table .= "<tr>\n";
-            foreach ($row as $row_key => $value ) 
+            foreach ($row as $row_key => $value )
             {
                 $table .= "<td>{$value}</td>\n";
             }
         }
-        $table .= "</tr>\n";    
-        
+        $table .= "</tr>\n";
+
         return $table;
     }
 

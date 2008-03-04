@@ -195,10 +195,10 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      * @access public
      */
     var $multiple_storagemode = 'serialized';
-    
+
     /**
      * Glue that will be used for separating the keys
-     * 
+     *
      * @var string
      * @access public
      */
@@ -646,7 +646,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
     }
 
     /**
-     * The validation callback ensures that we dont't have an array or an object
+     * The validation callback ensures that we don't have an array or an object
      * as a value, which would be wrong.
      *
      * @return boolean Indicating validity.
@@ -666,7 +666,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
             $this->validation_error = $this->_l10n->get('type select: multiselect not allowed');
             return false;
         }
-        
+
         /*if (   ! $this->required
             && count($this->selection) == 1)
         {
