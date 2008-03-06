@@ -267,6 +267,7 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
         $data['qb_options'] =& $qb_options;
         
         $data['article'] =& $this->_article;
+        $data['config'] =& $this->_config;
         
         $_MIDCOM->skip_page_style = true;
         
