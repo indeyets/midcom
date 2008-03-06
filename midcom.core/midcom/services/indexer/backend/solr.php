@@ -129,7 +129,7 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
         }
         */
 
-        // TODO: Make this configurable, even better: adapt the whole indexer system to fetching enable querying for counts and slices
+        // FIXME: Make this configurable, even better: adapt the whole indexer system to fetching enable querying for counts and slices
         $maxrows = 1000;
         $url = "http://{$GLOBALS['midcom_config']['indexer_xmltcp_host']}:{$GLOBALS['midcom_config']['indexer_xmltcp_port']}/solr/select?q={$query}&fl=*,score&rows={$maxrows}";
         if (isset($_REQUEST['debug'])) var_dump($url);
@@ -163,7 +163,8 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
         foreach ($xquery->query('/response/result/doc') as $res)
         {
             $doc = new midcom_services_indexer_document();
-            foreach ($res->childNodes as $str) {
+            foreach ($res->childNodes as $str)
+            {
                 $name = $str->getAttribute('name');
 
                 $doc->add_result($name,($str->tagName == 'float') ? (float) $str->nodeValue : (string) $str->nodeValue  ) ;
@@ -175,6 +176,13 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
                 }
 
             }
+            /* FIXME: before result slicing is properly supported this can be too heavy
+            if (   isset($doc->source)
+                && mgd_is_guid($doc->source))
+            {
+                $_MIDCOM->cache->content->register($doc->source);
+            }
+            */
             $result[] = $doc;
         }
         debug_add(sprintf('Returning %d results', count($result)), MIDCOM_LOG_INFO);

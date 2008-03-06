@@ -35,8 +35,8 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         // Resultlists, controlled using HTTP GET/POST
         $this->_request_switch[] = array
         (
-            'fixed_args' => 'result',
-            'no_cache' => true,
+            'fixed_args' => 'result', 
+            /* 'no_cache' => true, */
             'handler' => 'result'
         );
 
@@ -296,6 +296,11 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
         $count = count($result);
         $data['document_count'] = $count;
 
+        if ($data['document_count'] == 0)
+        {
+            $_MIDCOM->cache->content->uncached();
+        }
+
         if ($count > 0)
         {
             $results_per_page = $this->_config->get('results_per_page');
@@ -311,6 +316,17 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
             $data['shown_documents'] = $last_document_id - $first_document_id + 1;
             $data['results_per_page'] = $results_per_page;
             $data['result'] = array_slice($result, $first_document_id, $results_per_page);
+            // Register GUIDs for cache engine
+            foreach($data['result'] as $doc)
+            {
+                if (   !isset($doc->source)
+                    || !mgd_is_guid($doc->source))
+                {
+                    continue;
+                }
+                $_MIDCOM->cache->content->register($doc->source);
+            }
+            reset($data['result']);
         }
         debug_pop();
         return true;
