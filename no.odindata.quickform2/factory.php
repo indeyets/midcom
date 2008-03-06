@@ -108,9 +108,11 @@ class no_odindata_quickform2_factory
         {
             case 'save':
                 $this->_save();
-
+                return 'save';
+                
             case 'cancel':
                 $this->_cancel();
+                return 'cancel';
         }
 
         debug_pop();
@@ -129,7 +131,7 @@ class no_odindata_quickform2_factory
      */
     function _cancel()
     {
-        $_MIDCOM->relocate( 'submitok.html' );
+        $_MIDCOM->relocate('');
     }
 
     /**

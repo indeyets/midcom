@@ -24,3 +24,10 @@
 
 // Keep the additional empty lines below this for safeties sake
 
+// Callback function for sending the message
+// Creation callback snippet for defining site-specific function
+'create_callback_snippet' => null,
+
+// Callback function will be called after creation e.g. to provide interface for page linking system
+// $create_callback_function($controller, $config)
+'create_callback_function' => null,

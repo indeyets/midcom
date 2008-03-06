@@ -128,10 +128,36 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
         
         if (!$email->send())
         {
-        $_MIDCOM->relocate('submitnotok/');
+            $_MIDCOM->relocate('submitnotok/');
         }
         
+        $this->_send_callback();
         $_MIDCOM->relocate('submitok/');
+    }
+    
+    /**
+     * Run the callback script if the component has been configured to do so
+     * 
+     * @access private
+     */
+    function _send_callback()
+    {
+        // Creation callback function
+        if ($this->_config->get('callback_function'))
+        {
+            if ($this->_config->get('callback_snippet'))
+            {
+                $eval = midcom_get_snippet_content($this->_config->get('callback_snippet'));
+
+                if ($eval)
+                {
+                    eval("?>{$eval}<?php");
+                }
+            }
+
+            $callback = $this->_config->get('callback_function');
+            $callback($this->_request_data['controller'], $this->_config);
+        }
     }
 
     /**
@@ -159,7 +185,19 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
         }
 
         $this->_request_data['form']  = new no_odindata_quickform2_factory($this->_schemadb, $this->_config);
-        $this->_request_data['form']->process_form();
+        
+        switch ($this->_request_data['form']->process_form())
+        {
+            case 'save':
+                // Check for the callback function
+                $this->_send_callback();
+                $_MIDCOM->relocate('submitok.html');
+                break;
+            
+            case 'cancel':
+                $_MIDCOM->relocate('');
+                break;
+        }
 
        return true;
     }
