@@ -76,7 +76,7 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
         $this->_article = new midcom_db_article($article_id);
         if (   !$this->_article
             || !$this->_article->guid
-            || $this->article->topic != $this->_content_topic->id)
+            || $this->_article->topic != $this->_content_topic->id)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The article {$args[0]} was not found.");
             // This will exit.

@@ -87,6 +87,13 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
         
+        // Handle /comments/latest/xml/
+        $this->_request_switch['comments_xml_latest'] = array
+        (
+            'handler' => Array('net_nemein_quickpoll_handler_votes', 'xml'),
+            'fixed_args' => Array('comments', 'latest', 'xml'),
+        );
+
         // Handle /comments/xml/<article_id>
         $this->_request_switch['comments_xml'] = array
         (

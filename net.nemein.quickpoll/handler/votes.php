@@ -225,7 +225,27 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
      */
     function _handler_xml($handler_id, $args, &$data)
     {        
-        $this->_article = new midcom_db_article($args[0]);
+        if ($handler_id == 'comments_xml_latest')
+        {
+            $mc = midcom_db_article::new_collector('topic', $this->_content_topic->id);
+            $mc->add_value_property('guid');
+            $mc->add_constraint('topic', '=', $this->_content_topic->id);
+            $mc->add_order('metadata.created', 'DESC');
+            $mc->set_limit(1);
+            $mc->execute();
+            
+            $guids = $mc->list_keys();
+            foreach ($guids as $key => $data)
+            {
+                $article_guid = $mc->get_subkey($key, 'guid');
+            }
+            $this->_article = new midcom_db_article($article_guid);
+        }
+        else
+        {
+            $this->_article = new midcom_db_article($args[0]);
+        }
+        
         if (   !$this->_article
             || !$this->_article->guid
             || $this->_article->topic != $this->_content_topic->id)
