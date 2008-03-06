@@ -307,11 +307,11 @@ class org_routamc_photostream_handler_api_email extends midcom_baseclasses_compo
             debug_pop();
             return;
         }
-        foreach ($matches_from[2] as $email)
+        foreach ($matches_from as $email)
         {
             //It's unlikely that we'd get multiple matches in From, but we use the latest
             debug_add("Found address '{$email}'");
-            $this->_request_data['from'] = $email;
+            $this->_request_data['from'] = $email[0];
         }
         debug_add("Using address '{$this->_request_data['from']}' for photographer matching");
         debug_pop();
