@@ -81,10 +81,14 @@
         <property name="importer" type="string"/>
 
         <!--
-        Accuracy options:
-            10: Position is accurate down to a few meters (for example from GPS)
-            20: Position is accurate down to few hundred meters (for example from a Google Maps click)
-            30: Position is approximate based on a city name
+        Accuracy options (numbers used here. In quotes we have Fire Eagle equivalent terms):
+            10, "exact":     Position is accurate down to a few meters (for example from GPS)
+            20, "postal":    Position is accurate down to few hundred meters (for example from a Google Maps click)
+            30, "city":      Position is approximate based on a city name
+            50, "state":     Position is somewhere in a state
+            60, "country":   Position is somewhere in a country
+            70, "continent": Position is somewhere in a continent
+            80, "planet":    Position is somewhere on a planet
         -->
         <property name="accuracy" type="integer"/>
 
