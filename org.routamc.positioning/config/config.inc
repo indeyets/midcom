@@ -14,3 +14,6 @@
 'map_api_key'  => '',
 
 'yahoo_application_key' => 'fXM3gd3V34H6hqVeOgJEkFRTtvOvvJyVzeoXJ0CsoJZQYtPIFVD6ScwnbKIVoPMhbX5k',
+
+'fireeagle_consumer_key' => '9YVbfRKjulCt',
+'fireeagle_consumer_secret' => '7WKhSLjV0fOnEoVv2SxJ8FosS46WiSoJ',
