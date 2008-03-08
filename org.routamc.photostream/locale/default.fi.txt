@@ -314,7 +314,7 @@ Päivitä generoidut kuvakoot
 ---STRINGEND
 
 ---STRING recreating derived images
-Uudellen luodaan johdetut kuvat
+Luodaan uudelleen alkuperäisistä johdetut kuvat
 ---STRINGEND
 
 ---STRING reject
@@ -354,6 +354,10 @@ Valitse käyttäjä tai tagit
 
 ---STRING send status change messages to the photographer
 Lähetä statuksen muutoksista viesti valokuvaajalle
+---STRINGEND
+
+---STRING show next and previous links (can be computationally expensive for large streams)
+Näytä linkit 'Seuraava' ja 'Edellinen' (saattaa olla laskentatehollisesti raskasta suurille tietokannoille)
 ---STRINGEND
 
 ---STRING sorted by %s %s
@@ -446,9 +450,5 @@ Valokuvasi on hyväksytty
 
 ---STRING your photo has been rejected
 Valokuvasi on hylätty
----STRINGEND
-
----STRING show next and previous links (can be computationally expensive for large streams)
-Näytä linkit 'Seuraava' ja 'Edellinen' (saattaa olla laskentatehollisesti raskasta suurille tietokannoille)
 ---STRINGEND
 

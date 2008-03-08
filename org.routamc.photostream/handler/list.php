@@ -714,6 +714,9 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                     MIDCOM_NAV_URL => "list/{$this->_request_data['user_url']}/",
                     MIDCOM_NAV_NAME => $this->_request_data['view_title'],
                 );
+                // Fall through
+            
+            case 'photostream_list_all_frontpage':
                 $this->_alternate_links("{$prefix}list/{$this->_request_data['user_url']}");
                 break;
             case 'photostream_tags_all':

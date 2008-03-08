@@ -332,6 +332,10 @@ Select the user or tags
 Send status change messages to the photographer
 ---STRINGEND
 
+---STRING show next and previous links (can be computationally expensive for large streams)
+Show next and previous links (can be computationally expensive for large streams)
+---STRINGEND
+
 ---STRING sorted by %s
 Sorted by %s
 ---STRINGEND
@@ -426,9 +430,5 @@ Your photo has been accepted
 
 ---STRING your photo has been rejected
 Your photo has been rejected
----STRINGEND
-
----STRING show next and previous links (can be computationally expensive for large streams)
-Show next and previous links (can be computationally expensive for large streams)
 ---STRINGEND
 
