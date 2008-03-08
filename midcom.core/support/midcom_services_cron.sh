@@ -13,6 +13,16 @@
 # those that do not start with "http" or "https" get prefixed with "http://".
 # If the Midgard host has a prefix add that without the trailing slash
 SITES="example.com/test https://secure.example.com"
+
+# You can also place the list of sites in a config file. This saves you
+# having to update this script every time you upgrade your server.
+
+CONFIGFILE="/etc/midgard/sites.list"
+if [ -f $CONFIGFILE ]; then
+    SITES=$(cat $CONFIGFILE)
+fi
+
+
 # alternatively use elinks, you also specify other options here
 # like "lynx -auth=username:password" for HTTP basic-auth
 LYNX="lynx" 
