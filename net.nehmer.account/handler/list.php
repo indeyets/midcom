@@ -45,7 +45,14 @@ class net_nehmer_account_handler_list extends midcom_baseclasses_components_hand
 
         $qb = new org_openpsa_qbpager('midcom_db_person', 'net_nehmer_account_list');
         $data['qb'] =& $qb;
-        $qb->add_order('metadata.score', 'DESC');
+        
+        $list_orders = $this->_config->get('list_order');
+        foreach ($list_orders as $property => $order)
+        {
+            $qb->add_order($property, $order);
+        }
+        $qb->results_per_page = $this->_config->get('list_entries');
+        
         $data['users'] = $qb->execute();
 
         $tmp[] = Array

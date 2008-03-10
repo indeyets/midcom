@@ -6,6 +6,13 @@
 // Configuration schema
 'schemadb_config' => 'file:/net/nehmer/account/config/schemadb_config.inc',
 
+'list_order' => array
+(
+    'metadata.score' => 'DESC',
+    'lastname', 'DESC',
+),
+'list_entries' => 30,
+
 // Features
 'allow_register' => true,
 'allow_change_username' => true,
