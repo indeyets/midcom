@@ -42,7 +42,8 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 &(view['description']:h);
 
 <?php
-if ($data['enable_components'])
+if (   $data['enable_components']
+    && array_key_exists('components', $view))
 {
     ?>
     &(view['components']:h);
