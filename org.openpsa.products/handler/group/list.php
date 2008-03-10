@@ -188,8 +188,11 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
                 $categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
                 $categories_qb->add_constraint('id', '=', $groups[0]->up);
                 $categories = $categories_qb->execute_unchecked();
-
-                $data['parent_category'] = $categories[0]->code;
+                
+                if (count($categories) > 0)
+                {
+                    $data['parent_category'] = $categories[0]->code;                    
+                }
             }
             else
             {
