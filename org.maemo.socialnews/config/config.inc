@@ -1,5 +1,7 @@
 'socialnews_title' => '',
 
+'link_to_external_url' => true,
+
 'frontpage_score_start' => 1,
 'frontpage_score_hour_penalty' => 0.25,
 'frontpage_limit_days' => 20,

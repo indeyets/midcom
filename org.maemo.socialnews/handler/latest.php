@@ -96,7 +96,8 @@ class org_maemo_socialnews_handler_latest  extends midcom_baseclasses_components
             }
             $date = $date_id;
 
-            if (empty($article->url))
+            if (   !$this->_config->get('link_to_external_url')
+                || empty($article->url))
             {
                 // Local item
                 $article->url = $_MIDCOM->permalinks->create_permalink($article->guid);

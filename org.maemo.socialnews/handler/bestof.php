@@ -158,7 +158,8 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
                 $article->abstract = $this->generate_caption($article->abstract, $this->_config->get('frontpage_show_abstract_length'));
             }
 
-            if (empty($article->url))
+            if (   !$this->_config->get('link_to_external_url')
+                || empty($article->url))
             {
                 // Local item
                 $article->url = $_MIDCOM->permalinks->create_permalink($article->guid);
