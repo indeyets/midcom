@@ -158,7 +158,6 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
             $parentgroup_qb->add_constraint('code', '=', $args[0]);
             $groups = $parentgroup_qb->execute_unchecked();
-            $data['group'] = &$groups[0];
 
             if (count($groups) == 0)
             {
@@ -167,6 +166,7 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             }
             else
             {
+                $data['group'] = $groups[0];
                 $categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
                 $categories_qb->add_constraint('up', '=', $groups[0]->id);
                 $categories = $categories_qb->execute_unchecked();
@@ -362,7 +362,7 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
         if (   $this->_config->get('display_navigation')
             && $this->_request_data['group'])
         {
-            $group =& $this->_request_data['group'];
+            $group = $this->_request_data['group'];
 
             // Loop as long as it is possible to get the parent group
             while ($group->guid)
