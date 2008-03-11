@@ -191,34 +191,57 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
                 $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
             }
             
-            // Check if the attachment can be read anonymously
-            if (   $GLOBALS['midcom_config']['attachment_cache_enabled']
-                && $this->can_do('midgard:read', 'EVERYONE'))
+            $this->file_to_cache();
+        }
+    }
+    
+    function file_to_cache()
+    {
+        // Check if the attachment can be read anonymously
+        if (   !$GLOBALS['midcom_config']['attachment_cache_enabled']
+            || !$this->can_do('midgard:read', 'EVERYONE'))
+        {
+            return;
+        }
+        
+        // Copy the file to the static directory
+        if (!file_exists($GLOBALS['midcom_config']['attachment_cache_root']))
+        {
+            mkdir($GLOBALS['midcom_config']['attachment_cache_root']);
+        }
+        
+        $subdir = substr($this->guid, 0, 1);
+        if (!file_exists("{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}"))
+        {
+            mkdir("{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}");
+        }
+        
+        $filename = "{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$this->guid}_{$this->name}";
+        
+        // First try to symlink
+        if (   isset($GLOBALS['midcom_config']['attachment_cache_blobdir'])
+            && file_exists("{$GLOBALS['midcom_config']['attachment_cache_blobdir']}/{$this->location}"))
+        {
+            if (file_exists($filename))
             {
-                // Copy the file to the static directory
-                if (!file_exists($GLOBALS['midcom_config']['attachment_cache_root']))
-                {
-                    mkdir($GLOBALS['midcom_config']['attachment_cache_root']);
-                }
-                
-                $subdir = substr($this->guid, 0, 1);
-                if (!file_exists("{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}"))
-                {
-                    mkdir("{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}");
-                }
-                
-                $filename = "{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$this->guid}_{$this->name}";
-                
-                $fh = $this->open('r');
-                $data = '';
-                while (!feof($fh))
-                {
-                    $data .= fgets($fh);
-                }
-                
-                file_put_contents($filename, $data);
+                return;
+            }
+        
+            if (symlink("{$GLOBALS['midcom_config']['attachment_cache_blobdir']}/{$this->location}", $filename))
+            {
+                return;
             }
         }
+        
+        // Actually copy the data
+        $fh = $this->open('r');
+        $data = '';
+        while (!feof($fh))
+        {
+            $data .= fgets($fh);
+        }
+        
+        file_put_contents($filename, $data);
     }
 
     /**
