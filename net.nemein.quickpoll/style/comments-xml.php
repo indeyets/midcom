@@ -1,4 +1,4 @@
-<?php echo '<?xml version="1.0"?>' . "\n"; ?>
+<?php echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n"; ?>
 <poll guid="<?php echo $data['article']->guid; ?>">
     <text><![CDATA[<?php echo $data['article']->title; ?>]]></text>
 <?php

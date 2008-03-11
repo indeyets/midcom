@@ -112,7 +112,9 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
         $vote->user = $_MIDGARD['user'];
         $vote->ip = $_SERVER['REMOTE_ADDR'];
         
-        if (array_key_exists('net_nemein_quickpoll_comment', $_POST))
+        if (   array_key_exists('net_nemein_quickpoll_comment', $_POST)
+            && $_POST['net_nemein_quickpoll_comment'] != ''
+            && $_POST['net_nemein_quickpoll_comment'] != 'undefined')
         {
             $vote->comment = $_POST['net_nemein_quickpoll_comment'];
         }
@@ -134,7 +136,9 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
         {
             foreach ($additional_keys as $key)
             {
-                if (isset($_POST["net_nemein_quickpoll_{$key}"]))
+                if (   array_key_exists("net_nemein_quickpoll_{$key}", $_POST)
+                    && $_POST["net_nemein_quickpoll_{$key}"] != ''
+                    && $_POST["net_nemein_quickpoll_{$key}"] != 'undefined')
                 {
                     $vote->set_parameter('net.nemein.quickpoll', $key, $_POST["net_nemein_quickpoll_{$key}"]);
                 }
