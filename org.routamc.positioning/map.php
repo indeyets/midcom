@@ -221,8 +221,12 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
     
     /**
      * Display the map
+     *
+     * @param integer $width Width of the map in pixels
+     * @param integer $height Height of the map in pixels
+     * @param integer $zoom_level Zoom level of the map. Leave to NULL for autozoom
      */
-    function show($width = 300, $height = 200, $echo_output=true)
+    function show($width = 300, $height = 200, $zoom_level = null, $echo_output = true)
     {
         $html = '';
         $script = '';
@@ -260,22 +264,25 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         }
         $script .= "    mapstraction_{$this->id}.addSmallControls();\n";
         $script .= "    mapstraction_{$this->id}.autoCenterAndZoom();\n";
-        $script .= "}\n";        
+        $script .= "}\n";
+        
+        if (!is_null($zoom_level))
+        {
+            $script .= "    mapstraction_{$this->id}.setZoom({$zoom_level});\n";
+        }
+        
         if ($echo_output)
         {
             $script .= "</script>\n";
         }
         
-        if ($echo_output == true)
-        {
-            $output = $html.$script;
-            echo $output;
-        }
-        else
+        if (!$echo_output)
         {
             $_MIDCOM->add_jquery_state_script($script);
             return $html;
-        }
+        }      
+        
+        echo "{$html}{$script}";
     }
     
     /**
