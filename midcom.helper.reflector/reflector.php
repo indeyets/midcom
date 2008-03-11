@@ -100,6 +100,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
     /**
      * Gets a midcom_helper_l10n instance for component governing the type
      *
+     * @return midcom_services__i18n_l10n  Localization library for the reflector object class
      */
     function &get_component_l10n()
     {
@@ -153,7 +154,10 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
     }
     
     /**
+     * Get the localized label of the class
+     * 
      * @access public
+     * @return string Class label
      */
     function get_class_label()
     {
@@ -848,6 +852,13 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      * - MidCOM db object
      * - predefined target array (@see get_target_properties())
      * - ID or GUID of the object
+     * - left empty to copy as a parentless object
+     * 
+     * This method is self-aware and will refuse to perform any infinite loops (e.g. to copy
+     * itself to its descendant, copying itself again and again and again).
+     * 
+     * Eventually this method will return the first root object that was created, i.e. the root
+     * of the new tree.
      *
      * @static
      * @access public
@@ -862,6 +873,8 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
     {
         // Copy the root object
         $root = midcom_helper_reflector::copy_object($source, $parent, $parameters, $metadata);
+        
+        // Add the newly copied object to the exclusion list to prevent infinite loops
         $exclude[] = $root->guid;
         
         // Get the children
@@ -889,6 +902,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             }
         }
         
+        // Return the newly created root object
         return $root;
     }
     
@@ -900,6 +914,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      * - MidCOM db object
      * - predefined target array (@see get_target_properties())
      * - ID or GUID of the object
+     * - left empty to copy as a parentless object
      *
      * @static
      * @access public
@@ -1094,10 +1109,14 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             'reflector' => new midcom_helper_reflector($object),
         );
         
+        // Get the class label
         $target['label'] = $target['reflector']->get_label_property();
         
+        // Try to get the parent property for determining, which property should be
+        // used to point the parent of the new object
         $parent_property = midgard_object_class::get_property_parent($mgdschema_object);
         
+        // Try once more to get the parent property, but now try up as a backup
         if (!$parent_property)
         {
             $up_property = midgard_object_class::get_property_up($mgdschema_object);
@@ -1114,6 +1133,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             $target['parent'] = $parent_property;
         }
         
+        // Cache the results
         $targets[$mgdschema_class] = $target;
         return $targets[$mgdschema_class];
     }
