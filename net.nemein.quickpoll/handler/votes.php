@@ -203,6 +203,9 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
             $this->_vote_toolbar($vote);
         }
         
+        // Prevent client / proxy from caching the resulting page
+        $_MIDCOM->cache->content->no_cache();
+        
         return true;
     }
     
@@ -270,6 +273,9 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
         $data['config'] =& $this->_config;
         
         $_MIDCOM->skip_page_style = true;
+
+        // Prevent client / proxy from caching the resulting page
+        $_MIDCOM->cache->content->no_cache();
         
         return true;
     }
