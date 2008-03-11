@@ -119,6 +119,10 @@ Changes from version %s
 Choose action
 ---STRINGEND
 
+---STRING choose the target
+Choose the target
+---STRINGEND
+
 ---STRING code
 Code
 ---STRINGEND
@@ -157,6 +161,18 @@ Content changed
 
 ---STRING contentowner
 Content owner
+---STRINGEND
+
+---STRING copy %s and its descendants
+Copy '%s' and its descendants
+---STRINGEND
+
+---STRING copy successful, you have been relocated to the root of the new object tree
+Copy successful, you have been relocated to the root of the new object tree.
+---STRINGEND
+
+---STRING copy tree
+Copy tree
 ---STRINGEND
 
 ---STRING create %s under %s
@@ -467,6 +483,10 @@ Objects changed within
 On top of the content area
 ---STRINGEND
 
+---STRING only mine
+Only mine
+---STRINGEND
+
 ---STRING owner
 Owner
 ---STRINGEND
@@ -667,7 +687,7 @@ Version %s of %s
 XML
 ---STRINGEND
 
----STRING only mine
-Only mine
+---STRING copy successful, you have been relocated to the new object
+Copy successful, you have been relocated to the new object.
 ---STRINGEND
 

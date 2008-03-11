@@ -176,7 +176,6 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
             echo "{$prefix}<ul>\n";
             foreach ($siblings as $type => $children)
             {
-
                 foreach ($children as $child)
                 {
                     if (isset($this->shown_objects[$child->guid]))

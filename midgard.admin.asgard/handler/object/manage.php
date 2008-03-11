@@ -1157,39 +1157,22 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         // Get the object that will be copied
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         
-        // Get the reflector
-        $this->_reflector = new midcom_helper_reflector($this->_object);
-        $label = $this->_reflector->get_label_property();
-        $properties = $this->_reflector->get_link_properties();
+        static $targets = array();
         
-        // Get the parent property
-        $mgdschema_class = midcom_helper_reflector::resolve_baseclass($this->_object);
-        $mgdschema_object = new $mgdschema_class();
+        $mgdschema_class = midcom_helper_reflector::resolve_baseclass(get_class($this->_object));
         
-        $parent_property = midgard_object_class::get_property_parent($mgdschema_class);
-        
-        // Get the parent property
-        if ($parent_property)
+        // Get the target details
+        if (in_array($mgdschema_class, $targets))
         {
-            $target['parent'] = $parent_property;
-            $target['class'] = $properties[$parent_property]['class'];
-        }
-        elseif (   isset($properties['up'])
-                && isset($properties['up']['class']))
-        {
-            $target['parent'] = 'up';
-            $target['class'] = $properties['up']['class'];
+            $target = $targets[$mgdschema_class];
         }
         else
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not get the parent details');
-            // This will exit
+            $target = midcom_helper_reflector::get_target_properties($this->_object);
         }
         
         // Load the schemadb for searching the parent object
         $this->_load_schemadb($target['class']);
-        
-        $this->_load_schemadb($properties['up']['class']);
         
         // Some magic needs to be done to the object creation
         foreach ($this->_schemadb['object']->fields as $key => $array)
@@ -1199,6 +1182,9 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 $this->_schemadb['object']->fields[$key]['hidden'] = true;
             }
         }
+        
+        // Change the name for the parent field
+        $this->_schemadb['object']->fields[$target['parent']]['title'] = $_MIDCOM->i18n->get_string('choose the target', 'midgard.admin.asgard');
         
         // Load the nullstorage controller
         $this->_controller = midcom_helper_datamanager2_controller::create('nullstorage');
@@ -1218,12 +1204,39 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             case 'save':
                 // TODO: get the target info
                 $target['id'] = $data['controller']->datamanager->types[$target['parent']]->convert_to_storage();
-                $new_object = midcom_helper_reflector::copy_object($this->_object, $target);
+                
+                if ($handler_id === '____mfa-asgard-object_copy_tree')
+                {
+                    $exclude = array();
+                    
+                    foreach ($_POST['all_objects'] as $guid)
+                    {
+                        if (!in_array($guid, $_POST['selected']))
+                        {
+                            $exclude[] = $guid;
+                        }
+                    }
+                    
+                    $new_object = midcom_helper_reflector::copy_object_tree($this->_object, $target, $exclude);
+                }
+                else
+                {
+                    $new_object = midcom_helper_reflector::copy_object($this->_object->guid, $target);
+                }
                 
                 if (   !$new_object
                     || !$new_object->guid)
                 {
                     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to copy the object');
+                }
+                
+                if ($handler_id === '____mfa-asgard-object_copy_tree')
+                {
+                    $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), $this->_l10n->get('copy successful, you have been relocated to the root of the new object tree'));
+                }
+                else
+                {
+                    $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), $this->_l10n->get('copy successful, you have been relocated to the new object'));
                 }
                 
                 // Relocate to the newly created object
@@ -1240,7 +1253,21 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
         
         // Set the page title
-        $data['page_title'] = sprintf($_MIDCOM->i18n->get_string('copy %s', 'midcom'), $this->_object->$label);
+        switch ($handler_id)
+        {
+            case '____mfa-asgard-object_copy_tree':
+                $data['page_title'] = sprintf($_MIDCOM->i18n->get_string('copy %s and its descendants', 'midgard.admin.asgard'), $this->_object->$target['label']);
+                break;
+            default:
+                $data['page_title'] = sprintf($_MIDCOM->i18n->get_string('copy %s', 'midgard.admin.asgard'), $this->_object->$target['label']);
+                
+        }
+        
+        $data['target'] = $target;
+        
+        // Add jQuery file for the checkbox operations
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/jquery-copytree.js');
+        $_MIDCOM->add_jscript('jQuery(document).ready(function(){jQuery("#midgard_admin_asgard_copytree").tree_checker();})');
         
         return true;
     }
@@ -1258,14 +1285,19 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
 
         midcom_show_style('midgard_admin_asgard_middle');
         
-        echo "<pre>";
-        if (count($_POST) > 0)
+        // Show the tree hieararchy
+        if ($handler_id === '____mfa-asgard-object_copy_tree')
         {
-            print_r($_POST);
+            $data['tree'] = new midgard_admin_asgard_copytree($this->_object, &$data);
+            $data['tree']->copy_tree = true;
+            
+            midcom_show_style('midgard_admin_asgard_object_copytree');
         }
-        echo "</pre>\n";
-        
-        midcom_show_style('midgard_admin_asgard_object_copy');
+        else
+        {
+            // Show the copy page
+            midcom_show_style('midgard_admin_asgard_object_copy');
+        }
         midcom_show_style('midgard_admin_asgard_footer');
     }
 }

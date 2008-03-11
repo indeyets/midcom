@@ -575,3 +575,37 @@ div.midcom_services_uimessages_holder div.msu_error
 {
     background-color: #cc0000;
 }
+
+#midgard_admin_asgard_copytree
+{
+  float: right;
+}
+
+#midgard_admin_asgard_copytree ul
+{
+  list-style: none;
+  padding-left: 0;
+}
+
+#midgard_admin_asgard_copytree ul ul
+{
+  padding-left: 20px;
+}
+
+#midgard_admin_asgard_copytree li.readonly
+{
+  color: #888888;
+  font-style: italic;
+}
+
+#midgard_admin_asgard_copytree label
+{
+  display: inline;
+  font-weight: normal;
+}
+
+#midgard_admin_asgard_copytree label.deselected span.title
+{
+  color: red;
+  text-decoration: line-through;
+}
