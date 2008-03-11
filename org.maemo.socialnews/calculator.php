@@ -184,14 +184,24 @@ class org_maemo_socialnews_calculator extends midcom_baseclasses_components_pure
     
     public function calculate_article($article, $cache = false)
     {
-        /*
         if (empty($article->url))
         {
             // Local news item
             $nap = new midcom_helper_nav();
-            $node = $nap->get_node($article->
+            $node = $nap->get_node($article->topic);
+            if (   $node
+                && $node[MIDCOM_NAV_COMPONENT] == 'net.nehmer.blog')
+            {
+                if ($node[MIDCOM_NAV_CONFIGURATION]->get('view_in_url'))
+                {
+                    $article->url = "{$node[MIDCOM_NAV_FULLURL]}view/{$article->name}.html";
+                }
+                else
+                {
+                    $article->url = "{$node[MIDCOM_NAV_FULLURL]}{$article->name}.html";
+                }
+            }
         }
-        */
     
         $article_scores = $this->calculate_object($article->guid, $article->url);
 
