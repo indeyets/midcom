@@ -112,12 +112,11 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         {
             return $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->mgdschema_class];
         }
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Trying to resolve good l10n for type {$this->mgdschema_class}");
         $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($this->_dummy_object);
         if (empty($midcom_dba_classname))
         {
             // Could not resolve MidCOM DBA class name, fallback early to our own l10n
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Could not get MidCOM DBA classname for type {$this->mgdschema_class}, using our own l10n", MIDCOM_LOG_INFO);
             debug_pop();
             $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->mgdschema_class] = $this->_l10n;
@@ -127,6 +126,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             || empty($_MIDCOM->dbclassloader->mgdschema_class_handler[$midcom_dba_classname]))
         {
             // Cannot resolve component, fallback early to our own l10n
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Could not resolve component for DBA class {$midcom_dba_classname}, using our own l10n", MIDCOM_LOG_INFO);
             debug_pop();
             $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->mgdschema_class] = $this->_l10n;
@@ -139,26 +139,31 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         $component_l10n = $midcom_i18n->get_l10n($component);
         if (!empty($component_l10n))
         {
-            debug_add("Got l10n handler for component {$component}, returning that");
-            debug_pop();
             $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->mgdschema_class] =& $component_l10n;
             return $component_l10n;
         }
 
         // Could not get anything else, use our own l10n
+        debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Everything else failed, using our own l10n for type {$this->mgdschema_class}", MIDCOM_LOG_WARN);
         debug_pop();
+        
         $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->mgdschema_class] = $this->_l10n;
         return $this->_l10n;
     }
-
+    
+    /**
+     * @access public
+     */
     function get_class_label()
     {
 
         static $component_l10n = false;
         $component_l10n = $this->get_component_l10n();
         $use_classname = $this->mgdschema_class;
+        
         $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($this->_dummy_object);
+        
         if (!empty($midcom_dba_classname))
         {
             $use_classname = $midcom_dba_classname;
@@ -248,6 +253,13 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         return $property;
     }
 
+    /**
+     * Get the object label property value
+     * 
+     * @access public
+     * @param mixed $obj    MgdSchema object
+     * @return String       Label of the object
+     */
     function get_object_label(&$obj)
     {
         // Check against static calling
@@ -340,6 +352,14 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         return $label;
     }
 
+    /**
+     * Get the name of the create icon image
+     * 
+     * @static
+     * @access public
+     * @param string $type  Name of the type
+     * @return string       URL name of the image
+     */
     function get_create_icon($type)
     {
         static $config_icon_map = array();
@@ -404,6 +424,14 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         return $icon;
     }
 
+    /**
+     * Get the name of the icon image
+     * 
+     * @static
+     * @access public
+     * @param mixed $obj    MgdSchema object
+     * @return string       URL name of the image
+     */
     function get_object_icon(&$obj)
     {
         static $config_icon_map = array();
@@ -488,6 +516,9 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
 
     /**
      * Get headers to be used with chooser
+     * 
+     * @access public
+     * @return array
      */
     function get_result_headers()
     {
@@ -810,269 +841,281 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
     }
     
     /**
-     * Copy an object tree. Usage:
+     * Copy an object tree. Both source and parent may be liberally filled. Source can be either
+     * MgdSchema or MidCOM db object or GUID of the object and parent can be
      * 
-     * - Choose the source and target for copying the object
-     * - It's possible to pass exlusion list, which will stop the tree being copied from that point onwards.
-     *   Exclusion list shall be an array of GUIDs that will not be copied.
-     * 
+     * - MgdSchema object
+     * - MidCOM db object
+     * - predefined target array (@see get_target_properties())
+     * - ID or GUID of the object
+     *
      * @static
      * @access public
      * @param mixed $source        GUID or MgdSchema object that will be copied
-     * @param mixed $target        Array with the given details or ID of 'up' field
+     * @param mixed $parent        MgdSchema or MidCOM db object, predefined array or ID of the parent object
      * @param array $exclude       IDs that will be excluded from the copying
      * @param boolean $parameters  Switch to determine if the parameters should be copied
      * @param boolean $metadata    Switch to determine if the metadata should be copied (excluding created and published)
      * @return mixed               False on failure, newly created MgdSchema root object on success
      */
-    static public function copy_object_tree($source, $target, $exclude = array(), $parameters = true, $metadata = true, $root_object = null)
+    static public function copy_object_tree($source, $parent, $exclude = array(), $parameters = true, $metadata = true)
     {
         // Copy the root object
-        if (!$root_object)
+        $root = midcom_helper_reflector::copy_object($source, $parent, $parameters, $metadata);
+        $exclude[] = $root->guid;
+        
+        // Get the children
+        $children = midcom_helper_reflector_tree::get_child_objects($source);
+        
+        if (   !$children
+            || count($children) === 0)
         {
-            $root_object = midcom_helper_reflector::copy_object($source, $target, $parameters, $metadata);
-            
-            // Check if the copying was successful
-            if (   !$root_object
-                || !$root_object->guid)
-            {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to copy the root object of the tree, this is fatal.');
-                // This will exit
-            }
-            
-            // Get the reflector for the parent, which will contain all the created objects
-            $reflector = new midcom_helper_reflector($root_object);
-            $label = $reflector->get_label_property();
-            $properties = $reflector->get_link_properties();
-            
-            // Get the parent property
-            $mgdschema_class = midcom_helper_reflector::resolve_baseclass($root_object);
-            $mgdschema_object = new $mgdschema_class();
-            
-            $parent_property = midgard_object_class::get_property_parent($mgdschema_class);
-            
-            // Get the parent property
-            if ($parent_property)
-            {
-                $target['id'] = $root_object->$parent_property;
-            }
-            elseif (   isset($properties['up'])
-                    && isset($properties['up']['class']))
-            {
-                $parent_property = 'up';
-            }
-            else
-            {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not get the parent details');
-                // This will exit
-            }
-            
-            $target['id'] = $root_object->$parent_property;
+            return $root;
         }
         
-        $siblings = midcom_helper_reflector_tree::get_child_objects($source);
-        
-        // No siblings found, return to the previous state
-        if (   !is_array($siblings)
-            || count($siblings) === 0)
+        // Loop through the children and copy them to their corresponding parents
+        foreach ($children as $type => $children)
         {
-            return $root_object;
-        }
-        
-        // Loop through the siblings and generate a copy of each
-        foreach ($siblings as $type => $children)
-        {
-            // Get the reflector for each different type
-            $reflector = new midcom_helper_reflector($children[0]);
-            $label = $reflector->get_label_property();
-            $properties = $reflector->get_link_properties();
-            
-            // Get the parent property
-            $mgdschema_class = midcom_helper_reflector::resolve_baseclass($children[0]);
-            $mgdschema_object = new $mgdschema_class();
-            
-            $parent_property = midgard_object_class::get_property_parent($mgdschema_class);
-            
-            // Get the parent property
-            if ($parent_property)
-            {
-                $target['parent'] = $parent_property;
-                $target['class'] = $properties[$parent_property]['class'];
-            }
-            elseif (   isset($properties['up'])
-                    && isset($properties['up']['class']))
-            {
-                $target['parent'] = 'up';
-                $target['class'] = $properties['up']['class'];
-            }
-            else
-            {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Could not get the parent details');
-                // This will exit
-            }
-            
-            // Stop the execution if parent property is not available
-            if (   !isset($children[0]->$parent_property)
-                || !$children[0]->$parent_property)
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_print_r("Failed to get the parent property for a children[0]", $children[0], MIDCOM_LOG_ERROR);
-                debug_add("The parent property was {$parent}", MIDCOM_LOG_ERROR);
-                debug_pop();
-                
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to copy the tree, see error level log for details');
-            }
-            
-            // Loop through the children and generate a copy of each
+            // Get the children of each type
             foreach ($children as $child)
             {
-                // This object is in the exlusion list, skip it.
+                // Skip the excluded child
                 if (in_array($child->guid, $exclude))
                 {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("Object {$child->guid} ({$type}) was in the exclusion list, no copying allowed.", MIDCOM_LOG_INFO);
-                    debug_pop();
                     continue;
                 }
                 
-                // Get the parent value
-                $parent = $target['parent'];
-                
-                // Get the object required type information
-                $object = midcom_helper_reflector::copy_object($child, $target, $parameters, $metadata);
-                
-                if (   !$object
-                    || !$object->guid)
-                {
-                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to copy an object in the tree, see error level log for details');
-                }
-                
-                $target['id'] = $object->$parent;
-                
-                // Check if the current object has its own children
-                midcom_helper_reflector::copy_object_tree($child, $target, $exclude, $parameters, $metadata, $root_object);
+                midcom_helper_reflector::copy_object_tree($child, $root, $exclude, $parameters, $metadata);
             }
         }
         
-        return $root_object;
+        return $root;
     }
     
     /**
-     * Copy an object
+     * Copy an object. Both source and parent may be liberally filled. Source can be either
+     * MgdSchema or MidCOM db object or GUID of the object and parent can be
+     * 
+     * - MgdSchema object
+     * - MidCOM db object
+     * - predefined target array (@see get_target_properties())
+     * - ID or GUID of the object
      *
      * @static
      * @access public
      * @param mixed $source        GUID or MgdSchema object that will be copied
-     * @param mixed $target        Array with the given details or ID of 'up' field
+     * @param mixed $parent        MgdSchema or MidCOM db object, predefined array or ID of the parent object
      * @param boolean $parameters  Switch to determine if the parameters should be copied
      * @param boolean $metadata    Switch to determine if the metadata should be copied (excluding created and published)
      * @return mixed               False on failure, newly created MgdSchema object on success
      */
-    static public function copy_object($source, $target, $parameters = true, $metadata = true)
+    static public function copy_object($source, $parent, $parameters = true, $metadata = true)
     {
-        if (!is_object($source))
+        // Get the baseclass of the object
+        if (is_object($source))
+        {
+            switch (true)
+            {
+                // This is a MidCOM db object
+                case $_MIDCOM->dbclassloader->is_midcom_db_object($source):
+                    $source_object =& $source;
+                    break;
+                
+                // This is a MgdSchema object
+                case $_MIDCOM->dbclassloader->is_legacy_midgard_object($source):
+                    $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($source);
+                    $source_object = new $midcom_dba_classname($source->guid);
+                    break;
+                
+                // Unable to determine, force the result out
+                default:
+                    // Get the MidCOM dba classname for the element
+                    $classname = midcom_helper_reflector::resolve_baseclass(get_class($source));
+                    $temp = new $classname($source->guid);
+                    
+                    $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($source_object);
+                    $source_object = new $midcom_dba_classname($source->guid);
+            }
+        }
+        else
         {
             $source_object = $_MIDCOM->dbfactory->get_object_by_guid($source);
         }
-        else
-        {
-            $source_object =& $source;
-        }
         
-        // Get the property and id for the future owner
-        if (is_array($target))
-        {
-            // Check the validity of the object
-            if (   !array_key_exists('id', $target)
-                || !array_key_exists('parent', $target))
-            {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Wrong up arguments passed for object copy');
-                // This will exit
-            }
-            
-            $up_link = $target['id'];
-            $up_property = $target['parent'];
-        }
-        else
+        // Check the source object validity
+        if (   !$source_object
+            || !$source_object->guid)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Target not properly formatted, trying the default settings');
+            debug_add("Failed to get the source by GUID even though mgd_is_guid returned true", MIDCOM_LOG_ERROR);
             debug_pop();
             
-            $up_link = $target;
-            $up_property = 'up';
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Unexpected error: unable to get the source object');
         }
         
-        // Copied metadata properties
-        $metadata_fields = array
-        (
-            'score',
-            'owner',
-            'authors',
-            'schedule_start',
-            'schedule_end',
-            'hidden',
-            'nav_noentry',
-        );
+        // Get the MgdSchema class
+        $mgdschema_class = midcom_helper_reflector::resolve_baseclass(get_class($source_object));
+        static $targets = array();
         
-        // Create a new object
-        $new_class_name = get_class($source_object);
-        $new_object = new $new_class_name();
-        
-        // Copy the keys
-        foreach (array_keys(get_object_vars($source_object)) as $key)
+        // Try to get the cached properties
+        if (isset($targets[$mgdschema_class]))
         {
-            // Skip fields that may not be copied in any case
-            if (   $key === 'id'
-                || $key === 'guid')
+            $properties = $targets[$mgdschema_class];
+        }
+        else
+        {
+            $properties = midcom_helper_reflector::get_target_properties($source_object);
+        }
+        
+        // Check the type of the requested parent
+        switch (true)
+        {
+            case is_object($parent):
+                $parent_object =& $parent;
+                break;
+            case mgd_is_guid($parent):
+                $parent_object = $_MIDCOM->dbfactory->get_object_by_guid($parent);
+                break;
+            case is_array($parent):
+                // parent properties were already parsed, skip this phase
+                $properties = $parent;
+                $mgdschema_class = $properties['class'];
+                $parent_object = new $mgdschema_class($properties['id']);
+                break;
+            default:
+                $mgdschema_class = $properties['class'];
+                $parent_object = new $mgdschema_class($parent);
+        }        
+        
+        // Duplicate the object
+        $class_name = get_class($source_object);
+        $target = new $class_name();
+        
+        // Copy the object properties
+        foreach (array_keys(get_object_vars($source_object)) as $property)
+        {
+            // Skip certain fields
+            if (preg_match('/^(_|metadata|guid|id)/', $property))
             {
                 continue;
             }
             
-            $new_object->$key = $source_object->$key;
+            $target->$property = $source_object->$property;
         }
         
-        // Copy the metadata
+        // Copy to the requested target
+        if (isset($properties['parent']))
+        {
+            $property = $properties['parent'];
+            $target->$property = $parent_object->id;
+        }
+        
+        // Copy the requested metadata
         if ($metadata)
         {
-            // Copy only the specified fields
-            foreach ($metadata_fields as $key)
+            // Copied metadata fields
+            $skip_fields = array
+            (
+                'locker',
+                'locked',
+                'revision',
+                'approver',
+                'approved',
+                'size',
+            );
+            
+            foreach (array_keys(get_object_vars($source_object->metadata)) as $property)
             {
-                if (!isset($source_object->metadata->$key))
+                if (   in_array($property, $skip_fields)
+                    || !isset($target->metadata->$property))
                 {
                     continue;
                 }
                 
-                $new_object->metadata->$key = $source_object->metadata->$key;
+                $target->metadata->$property = $source_object->metadata->$property;
             }
         }
         
-        $new_object->$up_property = $up_link;
-        
-        if (!$new_object->create())
+        if (!$target->create())
         {
+            // Copying failed
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_print_r('Failed to create a new object', $new_object, MIDCOM_LOG_ERROR);
+            debug_print_r('Failed to create this object:', $target, MIDCOM_LOG_ERROR);
+            debug_add('Last Midgard error was ' . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_pop();
             
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to copy the object. See error level log for details');
+            // This will exit
         }
         
         // Copy the parameters
         if ($parameters)
         {
-            // Get the domain name first
             foreach ($source_object->list_parameters() as $domain => $array)
             {
-                // Get the name and value fields
                 foreach ($array as $name => $value)
                 {
-                    $new_object->set_parameter($domain, $name, $value);
+                    $target->set_parameter($domain, $name, $value);
                 }
             }
         }
         
-        return $new_object;
+        return $target;
+    }
+    
+    /**
+     * Get the target properties and return an array that is used e.g. in copying
+     * 
+     * @static
+     * @access public
+     * @param mixed $object     MgdSchema object or MidCOM db object
+     * @return array            id, parent property, class and label of the object
+     */
+    function get_target_properties($object)
+    {
+        $mgdschema_class = midcom_helper_reflector::resolve_baseclass(get_class($object));
+        $mgdschema_object = new $mgdschema_class($object->guid);
+        
+        static $targets = array();
+        
+        // Return the cached results
+        if (isset($targets[$mgdschema_class]))
+        {
+            return $targets[$mgdschema_class];
+        }
+        
+        // Empty result set for the current class
+        $target = array
+        (
+            'id' => null,
+            'parent' => '',
+            'class' => $mgdschema_class,
+            'label' => '',
+            'reflector' => new midcom_helper_reflector($object),
+        );
+        
+        $target['label'] = $target['reflector']->get_label_property();
+        
+        $parent_property = midgard_object_class::get_property_parent($mgdschema_object);
+        
+        if (!$parent_property)
+        {
+            $up_property = midgard_object_class::get_property_up($mgdschema_object);
+            
+            if (!$up_property)
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to get the parent property for copying');
+            }
+            
+            $target['parent'] = $up_property;
+        }
+        else
+        {
+            $target['parent'] = $parent_property;
+        }
+        
+        $targets[$mgdschema_class] = $target;
+        return $targets[$mgdschema_class];
     }
 }
 
