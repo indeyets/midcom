@@ -205,7 +205,8 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
         
         // Prevent client / proxy from caching the resulting page
         $_MIDCOM->cache->content->no_cache();
-        
+        $_MIDCOM->cache->content->uncached();
+                
         return true;
     }
     
@@ -276,6 +277,7 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
 
         // Prevent client / proxy from caching the resulting page
         $_MIDCOM->cache->content->no_cache();
+        $_MIDCOM->cache->content->uncached();
         
         return true;
     }
