@@ -971,9 +971,17 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
      */
     function convert_to_storage()
     {
-        foreach ($this->attachments as $identifier => $copy)
+        // FIXME: better safety for image*s* datatype calling parent::convert_to_storage()
+        if (!empty($this->title))
         {
-            $this->update_attachment_title($identifier, $this->title);
+            foreach ($this->attachments as $identifier => $copy)
+            {
+                if ($copy->title === $this->title)
+                {
+                    continue;
+                }
+                $this->update_attachment_title($identifier, $this->title);
+            }
         }
 
         return parent::convert_to_storage();

@@ -369,13 +369,13 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      */
     function convert_to_storage()
     {
-        /*
-         * TODO: Title handling
+        /**
+         * FIXME: Title handling (now handled separately by the images widget which is incorrect)
         foreach ($this->attachments as $identifier => $copy)
         {
             $this->update_attachment_title($identifier, $this->_title);
         }
-         */
+        */
 
         return parent::convert_to_storage();
     }
@@ -489,7 +489,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
             if (!array_key_exists('images_identifier', $info))
             {
                 // We have somehow broken data, try heuristics
-                $info['images_identifier'] = substr($identifier, 0, 32);
+                $info['images_identifier'] = substr($identifier, 0, 32); // NOTE: the 16 byte identifier is MD5 not GUID, so this is safe
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("\$info['images_identifier'] was not set, used heuristics to set it to '{$info['images_identifier']}' (from '{$identifier}')", MIDCOM_LOG_WARN);
                 debug_pop();
@@ -497,7 +497,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
             if (!array_key_exists('images_name', $info))
             {
                 // We have somehow broken data, try heuristics
-                $info['images_name'] = substr($identifier, 32);
+                $info['images_name'] = substr($identifier, 32); // NOTE: the 16 byte identifier is MD5 not GUID, so this is safe
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("\$info['images_name'] was not set, used heuristics to set it to '{$info['images_name']}' (from '{$identifier}')", MIDCOM_LOG_WARN);
                 debug_pop();
