@@ -38,6 +38,7 @@
         'net.nehmer.buddylist' => array(),
         'org.routamc.positioning' => array(),
         'midcom' => array(),
+        'midcom.services.at' => array(),
     ),
 ),
 'customdata' => array
