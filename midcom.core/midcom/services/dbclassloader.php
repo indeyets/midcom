@@ -257,8 +257,6 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
      */
     function load_classes($component, $filename)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         $cache_identifier = $_MIDCOM->cache->phpscripts->create_identifier('midcom.dba', "{$component}-{$filename}");
         $this->_create_class_definition_filename($component, $filename);
 
@@ -281,11 +279,9 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
         if ($cache_hit)
         {
             //debug_add("We had a cache hit for {$component}/{$filename}.");
-            debug_pop();
             return true;
         }
 
-        debug_add("Reading and evaluating the class list for {$component}/{$filename}");
         $contents = $this->_read_class_definition_file();
 
         $definition_list = Array();
@@ -305,12 +301,13 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
 
         if (! $_MIDCOM->cache->phpscripts->add($cache_identifier, $code))
         {
+            debug_push_class(__CLASS__, __FUNCTION);
             debug_add("Could not add the generated classes for {$component}/{$filename} to the PHP script cache.", MIDCOM_LOG_ERROR);
             debug_add('We fall back to direct evaluation to keep MidCOM running.');
+            debug_pop();
             eval($code);
         }
 
-        debug_pop();
         return true;
     }
 
