@@ -179,18 +179,25 @@
             'widget' => 'textarea',
             'end_fieldset' => 1,
         ),
-        'send_statuschange_message' => array
+        'status_accepted_send_email' => array
         (
             'start_fieldset' => array
             (
-                'title' => 'messages sent to user',
+                array
+                (
+                    'title' => 'messages sent to user',
+                ),
+                array
+                (
+                    'title' => 'message sent after accepting a photo',
+                ),
             ),
-            'title' => 'send status change messages to the photographer',
+            'title' => 'send accepting message',
             'storage' => array
             (
                 'location' => 'configuration',
                 'domain' => 'org.routamc.photostream',
-                'name' => 'send_statuschange_message',
+                'name' => 'status_accepted_send_email',
             ),
             'type' => 'select',
             'type_config' => array
@@ -206,10 +213,6 @@
         ),
         'status_accepted_subject' => array
         (
-            'start_fieldset' => array
-            (
-                'title' => 'message sent after accepting a photo',
-            ),
             'title' => 'accepted mail subject',
             'storage' => array
             (
@@ -233,12 +236,33 @@
             'widget' => 'textarea',
             'end_fieldset' => 1,
         ),
-        'status_rejected_subject' => array
+        'status_rejected_send_email' => array
         (
             'start_fieldset' => array
             (
                 'title' => 'message sent after rejecting a photo',
             ),
+            'title' => 'send rejection message',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.routamc.photostream',
+                'name' => 'status_rejected_send_email',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'widget' => 'select',
+        ),
+        'status_rejected_subject' => array
+        (
             'title' => 'rejected mail subject',
             'storage' => array
             (

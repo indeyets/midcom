@@ -466,11 +466,22 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
             // This will exit
         }
         
-        // Return on false statuses
-        if (   $photo->status !== ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED
-            || $photo->status !== ORG_ROUTAMC_PHOTOSTREAM_STATUS_REJECTED)
+        switch ($photo->status)
         {
-        
+            case ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED:
+                if (!$this->_config->get('status_accepted_send_email'))
+                {
+                    return false;
+                }
+                break;
+            case ORG_ROUTAMC_PHOTOSTREAM_STATUS_REJECTED:
+                if (!$this->_config->get('status_rejected_send_email'))
+                {
+                    return false;
+                }
+                break;
+            default:
+                return false;
         }
         
         // Get the photographer
@@ -610,10 +621,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         }
         
         // Send an appropriate message
-        if ($this->_config->get('send_statuschange_message'))
-        {
-            $this->_send_status_message($photo);
-        }
+        $this->_send_status_message($photo);
         
         // Creation callback function
         if ($this->_config->get('moderate_callback_function'))

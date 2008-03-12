@@ -352,6 +352,10 @@ Tietokantakuvaus
 Valitse käyttäjä tai tagit
 ---STRINGEND
 
+---STRING send accepting message
+Lähetä hyväksymisviesti
+---STRINGEND
+
 ---STRING send status change messages to the photographer
 Lähetä statuksen muutoksista viesti valokuvaajalle
 ---STRINGEND
@@ -450,5 +454,9 @@ Valokuvasi on hyväksytty
 
 ---STRING your photo has been rejected
 Valokuvasi on hylätty
+---STRINGEND
+
+---STRING send rejection message
+Lähetä hylkäysviesti
 ---STRINGEND
 

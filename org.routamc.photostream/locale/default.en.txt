@@ -328,6 +328,10 @@ Schema database
 Select the user or tags
 ---STRINGEND
 
+---STRING send accepting message
+Send accepting message
+---STRINGEND
+
 ---STRING send status change messages to the photographer
 Send status change messages to the photographer
 ---STRINGEND
@@ -430,5 +434,9 @@ Your photo has been accepted
 
 ---STRING your photo has been rejected
 Your photo has been rejected
+---STRINGEND
+
+---STRING send rejection message
+Send rejection message
 ---STRINGEND
 

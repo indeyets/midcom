@@ -44,6 +44,7 @@ jQuery.fn.moderate_form = function()
             success: function()
             {
                 jQuery(object).removeClass('loading');
+                jQuery(object).css('display', 'none');
             }
         });
         
