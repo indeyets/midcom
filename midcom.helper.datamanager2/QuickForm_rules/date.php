@@ -67,7 +67,7 @@ class midcom_helper_datamanager2_qfrule_date_checkjsdate extends HTML_QuickForm_
          * if the field has the default value or is empty, the user gets a free pass
          * (if the field is required, this is caught by a separate rule)
          */
-        if ( $value == ""
+        if (   $value == ""
             || $value == "0000-00-00"
             || $value == "0000-00-00 00:00:00")
         {
@@ -82,7 +82,15 @@ class midcom_helper_datamanager2_qfrule_date_checkjsdate extends HTML_QuickForm_
             debug_pop();
             return false;
         }
+
+        $date_time = explode(" ", $value);
         $date_array = explode("-", $value);
+        
+        if (is_array($date_time))
+        {
+            $date_array = explode("-", $date_time[0]);
+        }
+
         $ret = checkdate($date_array[1], $date_array[2], $date_array[0]);
         return $ret;
     }
