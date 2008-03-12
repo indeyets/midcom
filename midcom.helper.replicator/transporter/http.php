@@ -32,7 +32,7 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
     }
 
     /**
-     * Reads transport configuration fomr subscriptions parameters
+     * Reads transport configuration from subscription's parameters
      *
      * Also does some sanity checking
      */
