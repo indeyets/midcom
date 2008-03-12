@@ -297,7 +297,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
             $city_id = $this->_get_city_by_name($_REQUEST["{$this->_element_id}_input_place_city"]);
             if (! $city_id)
             {
-                $city_name = $results["{$this->_element_id}_input_place_city"];
+                $city_name = $_REQUEST["{$this->_element_id}_input_place_city"];
             }
         }
 
