@@ -125,16 +125,19 @@ div.org_routamc_photostream_photo_thumbnail span.title
 {
   border-color: #222222;
   background-color: #DEDCE0;
+  display: block;
 }
 
 #org_routamc_photostream_moderate td.buttons input.accept
 {
   background-image: url('../stock-icons/16x16/approved.png');
+  display: block;
 }
 
 #org_routamc_photostream_moderate td.buttons input.delete
 {
   background-image: url('../stock-icons/16x16/trash.png');
+  display: block;
 }
 
 #org_routamc_photostream_moderate td.buttons input.reject
