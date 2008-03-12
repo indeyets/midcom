@@ -201,7 +201,7 @@ if (!$runner->verbose)
 if (   $runner->validate() 
     && $runner->run()) 
 {
-    echo "Host created with id : " . $runner->host->id;    
+    echo "Host created with id : " . $runner->host->id . "\n";    
 } 
 else 
 {
