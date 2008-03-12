@@ -89,7 +89,7 @@
  *
  * Be aware that this class is designed to work on *datamanager2* instances, not
  * formmanagers, controllers or storage backends. It is also only targeted for the
- * actual database storage backend, so the nullstorage backand will not work.
+ * actual database storage backend, so the nullstorage backend will not work.
  *
  * @package midcom.services
  * @see midcom_services_indexer

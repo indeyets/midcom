@@ -1018,14 +1018,14 @@ class midcom_helper_datamanager {
                 /* Ok, we do now have a storage object to work with. Note, that
                  * if the DM returns MIDCOM_DATAMGR_EDITING, you must honor this
                  * by no longer entering the creation mode, you'll have to fall
-                 * back to the original bahvoir for future runs in that case.
+                 * back to the original behavior for future runs in that case.
                  * See the data array for a guid/id off the content object.
                  */
             }
 
-            /* Frist, synchronize all data and check for required fields.
+            /* First, synchronize all data and check for required fields.
              * Note, that this place could be used for validation as well.
-             * For readonly/hidden fields, do the opposit, resync the widget
+             * For readonly/hidden fields, do the opposite, resync the widget
              * with the datatype, just to be on the safe side.
              */
             $this->_missing_required_fields = Array();

@@ -58,7 +58,7 @@
  * document to populate the title as a last resort.
  *
  * Due to the performance drawbacks it should be avoided to rely on this
- * bahvoir. Instead, if you don't have a field called 'title' set to auto-indexing,
+ * behavior. Instead, if you don't have a field called 'title' set to auto-indexing,
  * set another field to the index-method title (see below). Note, that you should
  * configure that field in a way so that it is not allowed to leave the field empty,
  * as an empty field would again trigger the NAP fallback.

@@ -1,5 +1,5 @@
 // Payment handlers, override this in your sitegroup configuration
-// Handlers are indexed by arbitary values which are not used for further
+// Handlers are indexed by arbitrary values which are not used for further
 // processing.
 //
 // The default will use the pay by invoice handler only.

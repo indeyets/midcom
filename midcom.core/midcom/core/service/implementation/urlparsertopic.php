@@ -124,7 +124,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
             // No arguments left
 
             return false;
-        }       
+        }
 
         $qb = midcom_db_topic::new_query_builder();
         $qb->add_constraint('name', '=', $this->argv[0]);
@@ -168,10 +168,10 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
      * Try to fetch a URL variable.
      *
      * Try to decode an <namespace>-<key>-<value> pair at the current URL
-     * position. Namespace must be a valid MidCOM Path, Key must mach the RegEx
+     * position. Namespace must be a valid MidCOM Path, Key must match the RegEx
      * [a-zA-Z0-9]* and value must not contain a "/".
      *
-     * On success it returns an acciocative array containing two rows,
+     * On success it returns an associative array containing two rows,
      * indexed with MIDGARD_HELPER_URLPARSER_KEY and _VALUE which hold
      * the elements that have been parsed. $this->argv[0] will be dropped
      * and $this->argc will be reduced by one.
