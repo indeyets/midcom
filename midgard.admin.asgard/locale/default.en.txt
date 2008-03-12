@@ -167,6 +167,18 @@ Content owner
 Copy '%s' and its descendants
 ---STRINGEND
 
+---STRING copy metadata
+Copy metadata
+---STRINGEND
+
+---STRING copy parameters
+Copy parameters
+---STRINGEND
+
+---STRING copy successful, you have been relocated to the new object
+Copy successful, you have been relocated to the new object.
+---STRINGEND
+
 ---STRING copy successful, you have been relocated to the root of the new object tree
 Copy successful, you have been relocated to the root of the new object tree.
 ---STRINGEND
@@ -687,7 +699,7 @@ Version %s of %s
 XML
 ---STRINGEND
 
----STRING copy successful, you have been relocated to the new object
-Copy successful, you have been relocated to the new object.
+---STRING object %s
+Object %s
 ---STRINGEND
 

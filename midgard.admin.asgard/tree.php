@@ -13,6 +13,7 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
      * Choose the target type
      * 
      * @access public
+     * @var String
      */
     var $input_type;
     
@@ -20,8 +21,25 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
      * Choose the target name for the form
      * 
      * @access public
+     * @var String
      */
     var $input_name;
+    
+    /**
+     * Show the link to view the object
+     * 
+     * @access public
+     * @var boolean
+     */
+    var $show_link = false;
+    
+    /**
+     * Page prefix
+     * 
+     * @var String
+     * @access public
+     */
+    var $page_prefix = '';
     
     /**
      * Constructor, connect to the parent class constructor.
@@ -34,6 +52,7 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
     function midgard_admin_asgard_copytree($object, &$request_data)
     {
         parent::midgard_admin_asgard_navigation($object, &$request_data);
+        $this->page_prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
     }
     
     /**
@@ -133,6 +152,15 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
                     
                     echo "{$prefix}        <label for=\"item_{$child->guid}\">\n";
                     echo "{$prefix}            <span class=\"title\">{$icon}{$label}</span>\n";
+                    
+                    // Show the link to the object
+                    if ($this->show_link)
+                    {
+                        echo "{$prefix}            <a href=\"{$this->page_prefix}__mfa/asgard/object/view/{$child->guid}/\" class=\"thickbox\" target=\"_blank\" title=\"" . sprintf($_MIDCOM->i18n->get_string('object %s', 'midgard.admin.asgard'), $label) . "\">\n";
+                        echo "{$prefix}                <img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/view.png\" alt=\"" . $_MIDCOM->i18n->get_string('view object', 'midgard.admin.asgard') . "\" />\n";
+                        echo "{$prefix}            </a>\n";
+                    }
+                    
                     echo "{$prefix}        </label>\n";
                     
                     // List the child elements

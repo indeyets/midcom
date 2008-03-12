@@ -5,6 +5,7 @@ ob_start();
 <div id="midgard_admin_asgard_copytree">
 <h2><?php echo $_MIDCOM->i18n->get_string('copy tree', 'midgard.admin.asgard'); ?></h2>
 <?php
+$data['tree']->show_link = true;
 $data['tree']->draw();
 ?>
 </div>

@@ -609,3 +609,9 @@ div.midcom_services_uimessages_holder div.msu_error
   color: red;
   text-decoration: line-through;
 }
+
+#midgard_admin_asgard_copytree a img
+{
+  border: none;
+}
+

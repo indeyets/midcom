@@ -396,7 +396,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         $this->_view_toolbar->add_item(
             array
             (
-                MIDCOM_TOOLBAR_URL => $_MIDCOM->permalinks->create_permalink($this->_guid),
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/view/{$this->_guid}/",
                 MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n->get('back to %s'), $this->_resolve_object_title()),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_up.png',
@@ -751,8 +751,8 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         if (   $this->_backend->version_exists($args[1])
             && $this->_backend->restore_to_revision($args[1]))
         {
-            $_MIDCOM->uimessages->add($this->_l10n->get('no.bergfald.rcs'), sprintf($this->_l10n->get('restore to version %s successful'), $args[1]), 'ok');
-            $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_object->guid));
+            $_MIDCOM->uimessages->add($this->_l10n->get('no.bergfald.rcs'), sprintf($this->_l10n->get('restore to version %s successful'), $args[1]));
+            $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_guid}/");
         }
         else
         {
