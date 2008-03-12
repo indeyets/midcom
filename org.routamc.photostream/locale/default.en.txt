@@ -332,6 +332,10 @@ Select the user or tags
 Send accepting message
 ---STRINGEND
 
+---STRING send rejection message
+Send rejection message
+---STRINGEND
+
 ---STRING send status change messages to the photographer
 Send status change messages to the photographer
 ---STRINGEND
@@ -436,7 +440,7 @@ Your photo has been accepted
 Your photo has been rejected
 ---STRINGEND
 
----STRING send rejection message
-Send rejection message
+---STRING moderate photos
+Moderate photos
 ---STRINGEND
 

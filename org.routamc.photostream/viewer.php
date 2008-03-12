@@ -659,6 +659,20 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             )
         );
 
+        if (   $this->_config->get('moderate_uploaded_photos')
+            && $this->_topic->can_do('org.routamc.photostream:moderate'))
+        {
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'moderate/',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('moderate photos'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/topic-score.png',
+                )
+            );
+        }
+
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
         {
@@ -673,7 +687,6 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
                 )
             );
         }
-
     }
 
     /**
