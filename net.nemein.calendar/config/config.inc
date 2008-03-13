@@ -2,6 +2,7 @@
 'symlink_topic'        => null,
 'schemadb'             => 'file:/net/nemein/calendar/config/schemadb_default.inc',
 'schemadb_config'      => 'file:/net/nemein/calendar/config/schemadb_config.inc',
+'schemadb_feed'        => 'file:/net/nemein/rss/config/schemadb_default.inc',
 
 'index_count'          => 10,      // How many upcoming events to display on index
 'rss_count'            => 10,      // How many upcoming events to display on index

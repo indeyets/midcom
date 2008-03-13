@@ -504,13 +504,18 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         {
             $qb->begin_group('OR');
                 // The event begins during [$from, $to]
-                $qb->begin_group('AND');
+                if (is_null($to))
+                {
                     $qb->add_constraint('start', '>=', gmdate('Y-m-d H:i:s', $from));
-                    if (!is_null($to))
-                    {
+                }
+                else
+                {
+                    $qb->begin_group('AND');
+                        $qb->add_constraint('start', '>=', gmdate('Y-m-d H:i:s', $from));
                         $qb->add_constraint('start', '<=', gmdate('Y-m-d H:i:s', $to));
-                    }
-                $qb->end_group();
+                    $qb->end_group();
+                }
+                
                 if ($this->_config->get('list_started'))
                 {
                     // The event begins before and ends after [$from, $to]
@@ -525,14 +530,18 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                             $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $from));
                         }
                     $qb->end_group();
-                     // The event ends during [$from, $to]
-                    $qb->begin_group('AND');
+                    // The event ends during [$from, $to]
+                    if (is_null($to))
+                    {
                         $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $from));
-                        if (!is_null($to))
-                        {
+                    }
+                    else
+                    {
+                        $qb->begin_group('AND');
+                            $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $from));
                             $qb->add_constraint('end', '<=', gmdate('Y-m-d H:i:s', $to));
-                        }
-                    $qb->end_group();
+                        $qb->end_group();
+                    }
                 }
             $qb->end_group();
             $qb->add_order('start');
