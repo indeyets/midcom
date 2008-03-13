@@ -341,6 +341,8 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             $sd = new midcom_baseclasses_database_snippetdir();
             $sd->up = 0;
             $sd->name = $GLOBALS['midcom_config']['midcom_sgconfig_basedir'];
+            // remove leading slash from name
+            $sd->name = preg_replace("/^\//", "", $sd->name);
             if (!$sd->create())
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create snippetdir {$GLOBALS['midcom_config']['midcom_sgconfig_basedir']}: " . mgd_errstr());
