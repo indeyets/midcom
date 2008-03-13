@@ -587,6 +587,56 @@ class midcom_baseclasses_core_dbobject
         debug_pop();
         return true;
     }
+    
+    /**
+     * Execute a DB delete of the object passed and delete its descendants. This will call the corresponding
+     * event handlers. Calling sequence with method signatures:
+     *
+     * 1. Get all of the child objects
+     * 2. Delete them recursively starting from the top, working towards the root
+     * 3. Finally delete the root object
+     *
+     * @param MidgardObject &$object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     * @return boolean Indicating success.
+     */
+    function delete_tree(&$object)
+    {
+        if (!class_exists('midcom_helper_reflector_tree'))
+        {
+            $_MIDCOM->componentloader->load('midcom.helper.reflector');
+        }
+        
+        // Get the child nodes
+        $children = midcom_helper_reflector_tree::get_child_objects(&$object);
+        
+        // Children found
+        if (   $children
+            && count($children))
+        {
+            // Delete first the descendants
+            foreach ($children as $type => $array)
+            {
+                foreach ($array as $child)
+                {
+                    if (!$child->delete_tree())
+                    {
+                        debug_push_class(__CLASS__, __FUNCTION__);
+                        debug_print_r('Failed to delete the children of this object:', $object, MIDCOM_LOG_NOTICE);
+                        debug_pop();
+                    }
+                }
+            }
+        }
+        
+        if (!$object->delete())
+        {
+            debug_print_r('Failed to delete the object', $object, MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        
+        return true;
+    }
 
     /**
      * Post object creation operations for delete

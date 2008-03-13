@@ -665,6 +665,7 @@ EOF;
     function delete() { return midcom_baseclasses_core_dbobject::delete(\$this); }
     function delete_attachment(\$name) { return midcom_baseclasses_core_dbobject::delete_attachment(\$this, \$name); }
     function delete_parameter(\$domain, \$name) { return midcom_baseclasses_core_dbobject::delete_parameter(\$this, \$domain, \$name); }
+    function delete_tree() { return midcom_baseclasses_core_dbobject::delete_tree(\$this); }
     function get_attachment(\$name) { return midcom_baseclasses_core_dbobject::get_attachment(\$this, \$name); }
     function get_attachment_qb() { return midcom_baseclasses_core_dbobject::get_attachment_qb(\$this); }
     function get_by_guid(\$guid) { return midcom_baseclasses_core_dbobject::get_by_guid(\$this, \$guid); }
