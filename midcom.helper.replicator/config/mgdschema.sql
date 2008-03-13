@@ -10,6 +10,6 @@ CREATE TABLE midcom_helper_replicator_subscription (
 # other fields/indexes as ALTER TABLE statements
   PRIMARY KEY  (id),
   KEY midcom_helper_replicator_subscription_sitegroup_idx (sitegroup),
-  KEY midcom_helper_replicator_subscription_status_idx (status),
+  KEY midcom_helper_replicator_subscription_status_idx (status)
 );
 ALTER TABLE midcom_helper_replicator_subscription ADD COLUMN filtersSerialized text NOT NULL default '';
