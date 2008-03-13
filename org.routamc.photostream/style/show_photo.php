@@ -31,12 +31,18 @@ if (   isset($data['next_guid'])
 
     <div class="taken location">
         <?php
+        $coordinates = null;
         if (   $GLOBALS['midcom_config']['positioning_enable']
             && class_exists('org_routamc_positioning_object')
             && $data['photo']->photographer)
         {
             $position_object = new org_routamc_positioning_object($data['photo']);
             $coordinates = $position_object->get_coordinates($data['photo']->photographer, $data['photo']->taken);
+        }
+        if (   $coordinates
+            && $coordinates['latitude']
+            && $coordinates['longitude'])
+        {
             echo sprintf($data['l10n']->get('taken on %s in %s'), strftime('%x %X', $data['photo']->taken), org_routamc_positioning_utils::pretty_print_location($coordinates['latitude'], $coordinates['longitude']));
         }
         else
