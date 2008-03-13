@@ -2,10 +2,10 @@
 // Get the form with output buffering for modifications
 ob_start();
 ?>
-<div id="midgard_admin_asgard_copytree">
-<h2><?php echo $_MIDCOM->i18n->get_string('copy tree', 'midgard.admin.asgard'); ?></h2>
+<div id="midgard_admin_asgard_copytree" class="midgard_admin_asgard_tree">
+<h2><?php echo $data['l10n']->get('copy tree'); ?></h2>
 <?php
-$data['tree']->show_link = true;
+$data['tree']->view_link = true;
 $data['tree']->draw();
 ?>
 </div>
@@ -21,7 +21,7 @@ $data['controller']->display_form();
 $form = ob_get_contents();
 ob_end_clean();
 
-// Inject to the form
+// Inject the tree to the form
 echo preg_replace('/(<form.*?>)/i', '\1' . $tree_select, $form);
 ?>
 

@@ -199,7 +199,7 @@ textarea
 #content div.page-title h1
 {
   font-size: 10pt;
-  margin: 0px;
+  margin-top: 0px;
 }
 
 #content div.page-title h1 a
@@ -211,6 +211,29 @@ textarea
 #content div.page-title h1 .object_language
 {
     float: right;
+}
+
+#content-text h1,
+#content-text h2,
+#content-text h3,
+#content-text h4
+{
+  margin: 1em 0 0.5em;
+}
+
+#content-text h1
+{
+  font-size: 150%;
+}
+
+#content-text h2
+{
+  font-size: 130%;
+}
+
+#content-text h3
+{
+  font-size: 120%;
 }
 
 #content .midcom_helper_datamanager2_view .value
@@ -581,36 +604,36 @@ div.midcom_services_uimessages_holder div.msu_error
   float: right;
 }
 
-#midgard_admin_asgard_copytree ul
+div.midgard_admin_asgard_tree ul
 {
   list-style: none;
   padding-left: 0;
 }
 
-#midgard_admin_asgard_copytree ul ul
+div.midgard_admin_asgard_tree ul ul
 {
   padding-left: 20px;
 }
 
-#midgard_admin_asgard_copytree li.readonly
+div.midgard_admin_asgard_tree li.readonly
 {
   color: #888888;
   font-style: italic;
 }
 
-#midgard_admin_asgard_copytree label
+div.midgard_admin_asgard_tree label
 {
   display: inline;
   font-weight: normal;
 }
 
-#midgard_admin_asgard_copytree label.deselected span.title
+div.midgard_admin_asgard_tree label.deselected span.title
 {
   color: red;
   text-decoration: line-through;
 }
 
-#midgard_admin_asgard_copytree a img
+div.midgard_admin_asgard_tree a img
 {
   border: none;
 }

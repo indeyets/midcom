@@ -10,6 +10,14 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
     var $copy_tree = false;
     
     /**
+     * Switch to determine the visibility of inputs
+     * 
+     * @access public
+     * @var boolean
+     */
+    var $inputs = true;
+    
+    /**
      * Choose the target type
      * 
      * @access public
@@ -31,7 +39,15 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
      * @access public
      * @var boolean
      */
-    var $show_link = false;
+    var $view_link = false;
+    
+    /**
+     * Show the link to view the object
+     * 
+     * @access public
+     * @var boolean
+     */
+    var $edit_link = false;
     
     /**
      * Page prefix
@@ -144,24 +160,38 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
                         $checked = '';
                     }
                     
-                    echo "{$prefix}        <input id=\"item_{$child->guid}\" type=\"{$this->input_type}\" name=\"{$this->input_name}\" value=\"{$child->guid}\"{$checked} />\n";
+                    if ($this->inputs)
+                    {
+                        // This value is used for compiling the exlusion list: if the object is found from this list, but not from the selection list,
+                        // it means that the selection did not include the object GUID
+                        echo "{$prefix}        <input type=\"hidden\" name=\"all_objects[]\" value=\"{$child->guid}\" />\n";
+                        
+                        echo "{$prefix}        <label for=\"item_{$child->guid}\">\n";
+                        echo "{$prefix}        <input id=\"item_{$child->guid}\" type=\"{$this->input_type}\" name=\"{$this->input_name}\" value=\"{$child->guid}\"{$checked} />\n";
+                    }
                     
-                    // This value is used for compiling the exlusion list: if the object is found from this list, but not from the selection list,
-                    // it means that the selection did not include the object GUID
-                    echo "{$prefix}        <input type=\"hidden\" name=\"all_objects[]\" value=\"{$child->guid}\" />\n";
-                    
-                    echo "{$prefix}        <label for=\"item_{$child->guid}\">\n";
                     echo "{$prefix}            <span class=\"title\">{$icon}{$label}</span>\n";
                     
                     // Show the link to the object
-                    if ($this->show_link)
+                    if ($this->view_link)
                     {
                         echo "{$prefix}            <a href=\"{$this->page_prefix}__mfa/asgard/object/view/{$child->guid}/\" class=\"thickbox\" target=\"_blank\" title=\"" . sprintf($_MIDCOM->i18n->get_string('%s (%s)', 'midgard.admin.asgard'), $label, $ref->get_class_label()) . "\">\n";
                         echo "{$prefix}                <img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/view.png\" alt=\"" . $_MIDCOM->i18n->get_string('view object', 'midgard.admin.asgard') . "\" />\n";
                         echo "{$prefix}            </a>\n";
                     }
                     
-                    echo "{$prefix}        </label>\n";
+                    // Show the link to the object
+                    if ($this->edit_link)
+                    {
+                        echo "{$prefix}            <a href=\"{$this->page_prefix}__mfa/asgard/object/edit/{$child->guid}/\" target=\"_blank\" title=\"" . sprintf($_MIDCOM->i18n->get_string('%s (%s)', 'midgard.admin.asgard'), $label, $ref->get_class_label()) . "\">\n";
+                        echo "{$prefix}                <img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/edit.png\" alt=\"" . $_MIDCOM->i18n->get_string('edit object', 'midgard.admin.asgard') . "\" />\n";
+                        echo "{$prefix}            </a>\n";
+                    }
+                    
+                    if ($this->inputs)
+                    {
+                        echo "{$prefix}        </label>\n";
+                    }
                     
                     // List the child elements
                     $this->_list_child_elements($child, "{$prefix}        ", $level+1);
