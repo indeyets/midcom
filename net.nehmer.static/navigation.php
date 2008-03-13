@@ -118,7 +118,7 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
             
             $leaves[$article['id']] = array
             (
-                MIDCOM_NAV_URL => "{$article['name']}.html",
+                MIDCOM_NAV_URL => "{$article['name']}/",
                 MIDCOM_NAV_NAME => ($article['title']) ? $article['title'] : $article['name'],
                 MIDCOM_NAV_GUID => $guid,
                 MIDCOM_META_CREATED => 0,
