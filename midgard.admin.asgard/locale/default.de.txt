@@ -175,6 +175,30 @@ Inhalt verändert
 Inhalts-Besitzer
 ---STRINGEND
 
+---STRING copy %s and its descendants
+Kopiere '%s' und Kindelemente
+---STRINGEND
+
+---STRING copy metadata
+Metadaten kopieren
+---STRINGEND
+
+---STRING copy parameters
+Parameter kopieren
+---STRINGEND
+
+---STRING copy successful, you have been relocated to the new object
+Kopiervorgang erfolgreich, Sie wurden zum neuen Objekt weitergeleitet
+---STRINGEND
+
+---STRING copy successful, you have been relocated to the root of the new object tree
+Kopiervorgang erfolgreich, Sie wurden zum Wurzelement des neuen Objektbaums weitergeleitet
+---STRINGEND
+
+---STRING copy tree
+Objektbaum kopieren
+---STRINGEND
+
 ---STRING create %s under %s
 %s unter %s anlegen
 ---STRINGEND
@@ -197,6 +221,10 @@ Gelöscht von
 
 ---STRING deleted on
 Gelöscht am
+---STRINGEND
+
+---STRING all of the following items will be deleted
+Alle nachfolgenden Objekte werden gelöscht
 ---STRINGEND
 
 ---STRING differences between %s and %s
@@ -245,6 +273,10 @@ Filtern
 
 ---STRING choose action
 Aktion auswählen
+---STRINGEND
+
+---STRING choose the target
+Ziel auswählen
 ---STRINGEND
 
 ---STRING floating freely

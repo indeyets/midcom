@@ -215,6 +215,10 @@ Deleted by
 Deleted on
 ---STRINGEND
 
+---STRING all of the following items will be deleted
+All of the following items will be deleted
+---STRINGEND
+
 ---STRING differences between %s and %s
 Differences between %s and %s
 ---STRINGEND
