@@ -42,6 +42,7 @@
             'widget_select_choices' => array(
                 301 => '301 Moved Permanently',            
                 302 => '302 Found',
+                410 => '410 Gone',
             ),
             'default'        => 302,
             'end_fieldgroup' => '',            
