@@ -6,10 +6,27 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         <?php
         if (count($data['files']) > 0)
         {
-            echo "<ul>\n";
+            static $persons = array();
+
+            echo "<table class=\"attachments table_widget\" id=\"attachment_table\">\n";
+            echo "    <thead>\n";
+            echo "        <tr>\n";
+            echo "            <th>" . $_MIDCOM->i18n->get_string('title', 'midcom') . "</th>\n";
+            echo "            <th>" . $_MIDCOM->i18n->get_string('revised on', 'midgard.admin.asgard') . "</th>\n";
+            echo "            <th>" . $_MIDCOM->i18n->get_string('revised by', 'midgard.admin.asgard') . "</th>\n";
+            echo "            <th>" . $_MIDCOM->i18n->get_string('size', 'midgard.admin.asgard') . "</th>\n";
+            echo "            <th>" . $_MIDCOM->i18n->get_string('actions', 'midgard.admin.asgard') . "</th>\n";
+            echo "        </tr>\n";
+            echo "    </thead>\n";
+            echo "    <tbody>\n";
             foreach ($data['files'] as $file)
             {
                 $mime_icon = midcom_helper_get_mime_icon($file->mimetype);
+
+                if (!isset($persons[$file->metadata->revisor]))
+                {
+                    $persons[$file->metadata->revisor] = $_MIDCOM->auth->get_user($file->metadata->revisor);
+                }
 
                 $class = '';
                 if (   isset($data['file'])
@@ -19,18 +36,47 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 }
 
                 $delete_title = sprintf($_MIDCOM->i18n->get_string('delete %s %s', 'midgard.admin.asgard'), $_MIDCOM->i18n->get_string('attachment', 'midgard.admin.asgard'), $file->name);
-
-                echo "<li{$class}><a href=\"{$prefix}__mfa/asgard/object/attachments/{$data['object']->guid}/{$file->name}/\"><img src=\"{$mime_icon}\" width=\"20\" height=\"24\"/> {$file->name}</a> ";
-                echo "<a class=\"thickbox\" title=\"{$file->name}\" target=\"_self\" href=\"";
-                echo $_MIDCOM->get_host_prefix() . "midcom-serveattachmentguid-{$file->guid}/{$file->name}\">\n";
-                echo "<img alt=\"{$file->name}\" src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/view.png\"/>\n";
-                echo "</a> \n";
-                echo "<a title=\"{$delete_title}\" href=\"";
-                echo "{$prefix}__mfa/asgard/object/attachments/delete/{$data['object']->guid}/{$file->name}/\">\n";
-                echo "<img alt=\"{$delete_title}\" src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/trash.png\"/>\n";
-                echo "</a></li>\n";
+                echo "<tr>\n";
+                echo "  <td{$class}>\n";
+                echo "    <a href=\"{$prefix}__mfa/asgard/object/attachments/{$data['object']->guid}/{$file->name}/\">\n";
+                echo "      <img src=\"{$mime_icon}\" width=\"16\" height=\"16\"/>\n";
+                echo "        {$file->name}\n";
+                echo "    </a>\n ";
+                echo "  </td>\n";
+                echo "  <td>" . strftime('%x %X', strtotime($file->metadata->revised)) . "</td>\n";
+                if ($persons[$file->metadata->revisor]->guid)
+                {
+                    echo "<td><a href=\"{$prefix}__mfa/asgard/object/view/{$persons[$file->metadata->revisor]->guid}/\">{$persons[$file->metadata->revisor]->name}</a></td>\n";
+                }
+                else
+                {
+                    echo "<td>&nbsp;</td>\n";
+                }
+                echo "  <td>" . midcom_helper_filesize_to_string($file->metadata->size) . "</td>\n";
+                echo "  <td>\n";
+                echo "    <a class=\"thickbox\" title=\"{$file->name}\" target=\"_self\" href=\"{$prefix}midcom-serveattachmentguid-{$file->guid}/{$file->name}\">\n";
+                echo "      <img alt=\"{$file->name}\" src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/view.png\"/>\n";
+                echo "    </a> \n";
+                echo "    <a title=\"{$delete_title}\" href=\"{$prefix}__mfa/asgard/object/attachments/delete/{$data['object']->guid}/{$file->name}/\">\n";
+                echo "      <img alt=\"{$delete_title}\" src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/trash.png\"/>\n";
+                echo "    </a>\n";
+                echo "  </td>\n";
+                echo "</tr>\n";
             }
-            echo "</ul>\n";
+
+            echo "    </tbody>\n";
+            echo "</table>\n";
+            echo "</form>\n";
+            echo "<script type=\"text/javascript\">\n";
+            echo "// <![CDATA[\n";
+            echo "\$j('#attachment_table').tablesorter(\n";
+            echo "  {\n";
+            echo "      widgets: ['zebra'],\n";
+            echo "      sortList: [[0,0]]\n";
+            echo "  });\n";
+            echo "// ]]>\n";
+            echo "</script>\n";
+
         }
         else
         {

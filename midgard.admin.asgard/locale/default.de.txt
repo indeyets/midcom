@@ -215,6 +215,18 @@ Objektbaum kopieren
 Erstellt von %s am %s
 ---STRINGEND
 
+---STRING revised by
+Bearbeitet von
+---STRINGEND
+
+---STRING revised on
+Bearbeitet am
+---STRINGEND
+
+---STRING actions
+Aktionen
+---STRINGEND
+
 ---STRING default language
 Standardsprache
 ---STRINGEND

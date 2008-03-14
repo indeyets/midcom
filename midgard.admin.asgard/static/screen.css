@@ -634,7 +634,8 @@ div.midgard_admin_asgard_tree label.deselected span.title
   text-decoration: line-through;
 }
 
-div.midgard_admin_asgard_tree a img
+div.midgard_admin_asgard_tree a img,
+table.table_widget a img
 {
   border: none;
 }

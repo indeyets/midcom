@@ -199,6 +199,18 @@ Create %s under %s
 Created by %s on %s
 ---STRINGEND
 
+---STRING revised by
+Revised by
+---STRINGEND
+
+---STRING revised on
+Revised on
+---STRINGEND
+
+---STRING actions
+Actions
+---STRINGEND
+
 ---STRING date
 Date
 ---STRINGEND
