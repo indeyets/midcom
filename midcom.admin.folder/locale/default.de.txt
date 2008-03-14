@@ -16,7 +16,7 @@ Alle Inhalte dieses Ordners werden gelöscht:
 ---STRINGEND
 
 ---STRING all style elements
-Alls Style-Elemente
+Alle Style-Elemente
 ---STRINGEND
 
 ---STRING alpha
@@ -43,6 +43,10 @@ Beta
 von Hand sortiert
 ---STRINGEND
 
+---STRING cancelled
+Abgebrochen
+---STRINGEND
+
 ---STRING change component
 Komponente ändern
 ---STRINGEND
@@ -53,6 +57,10 @@ Standardeinstellung der Komponente
 
 ---STRING copy to editor
 In den Editor kopieren
+---STRINGEND
+
+---STRING could not save folder: %s
+Ordner konnte nicht gespeichert werden. Ursache: %s
 ---STRINGEND
 
 ---STRING create folder
@@ -135,6 +143,18 @@ Exportiert
 Neue Stilvorlage konnte nicht erstellt werden!
 ---STRINGEND
 
+---STRING folder created
+Ordner erstellt
+---STRINGEND
+
+---STRING folder page class
+Ordner-Klasse
+---STRINGEND
+
+---STRING folder saved
+Ordner gespeichert
+---STRINGEND
+
 ---STRING folder type
 Ordner-Typ
 ---STRINGEND
@@ -191,6 +211,10 @@ Reihenfolge der Navigationselemente
 [Neue Stilvorlage]
 ---STRINGEND
 
+---STRING new style created
+Neue Stilvorlage wurde erstellt
+---STRINGEND
+
 ---STRING no sortable elements found
 keine sortierbaren Elemente gefunden
 ---STRINGEND
@@ -216,7 +240,7 @@ Seiten zuerst
 ---STRINGEND
 
 ---STRING prevent entering
-Prevent entering
+Eingabe verhindern
 ---STRINGEND
 
 ---STRING privilege template_management
