@@ -33,7 +33,7 @@
         ),
         'autoindex' => array
         (
-            'title' => 'activate autoindex',
+            'title' => 'autoindex',
             'helptext' => 'autoindex-notes',
             'storage' => array
             (
@@ -57,10 +57,10 @@
                 'title' => 'display settings'
             ),
         ),
-        
+
         'show_blobs_in_autoindex' => array
         (
-            'title' => 'show blobs in autoindex',
+            'title' => 'show_blobs_in_autoindex',
             'storage' => array
             (
                 'location' => 'configuration',
@@ -79,7 +79,7 @@
             ),
             'widget' => 'select',
         ),
-        
+
         'indexinnav' => array
         (
             'title' => 'indexinnav',
@@ -103,7 +103,7 @@
         ),
         'hide_navigation' => array
         (
-            'title' => 'hide articles from navigation',
+            'title' => 'hide_navigation',
             'storage' => array
             (
                 'location' => 'configuration',
@@ -122,10 +122,10 @@
             ),
             'widget' => 'select',
         ),
-        
-        'ajax_enable' => array
+
+        'enable_ajax_editing' => array
         (
-            'title' => 'ajax_enable',
+            'title' => 'enable_ajax_editing',
             'storage' => array
             (
                 'location' => 'configuration',
@@ -144,10 +144,10 @@
             ),
             'widget' => 'select',
         ),
-        
+
         'auto_approve' => array
         (
-            'title' => 'auto_approved',
+            'title' => 'auto_approve',
             'storage' => array
             (
                 'location' => 'configuration',
@@ -208,7 +208,7 @@
                 'title' => 'schema settings'
             ),
         ),
-        
+
         'symlink_topic' => array
         (
             'title' => 'symlink_topic',

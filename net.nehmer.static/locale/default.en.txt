@@ -7,11 +7,11 @@
 Only show approved articles
 ---STRINGEND
 
----STRING activate autoindex
+---STRING autoindex
 Automatically create an index page for this topic?
 ---STRINGEND
 
----STRING ajax_enable
+---STRING enable_ajax_editing
 Enable AJAX on-site editing
 ---STRINGEND
 
@@ -31,7 +31,7 @@ Article %s deleted
 Article link deleted
 ---STRINGEND
 
----STRING auto_approved
+---STRING auto_approve
 Approve new articles by default
 ---STRINGEND
 
@@ -155,7 +155,7 @@ Select Schema
 Settings
 ---STRINGEND
 
----STRING show blobs in autoindex
+---STRING show_blobs_in_autoindex
 Show blobs in autoindex
 ---STRINGEND
 
@@ -191,7 +191,22 @@ View Article
 Should the topic be visible
 ---STRINGEND
 
----STRING hide articles from navigation
+---STRING hide_navigation
 Hide articles from navigation
 ---STRINGEND
 
+---STRING sort_order
+Sort order
+---STRINGEND
+
+---STRING enable_article_links
+Page linking system
+---STRINGEND
+
+---STRING callback_snippet
+Creation callback snippet for defining site-specific function
+---STRINGEND
+
+---STRING callback_function
+Callback function will be called after creation e.g. to provide interface for page linking system
+---STRINGEND

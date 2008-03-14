@@ -7,11 +7,11 @@
 Pokaż tylko zatwierdzone artykuły
 ---STRINGEND
 
----STRING activate autoindex
+---STRING autoindex
 Automatycznie twórz artykuł indeksowy.
 ---STRINGEND
 
----STRING ajax_enable
+---STRING enable_ajax_editing
 Włącz edycję poprzez AJAX
 ---STRINGEND
 
@@ -23,7 +23,7 @@ Zatwierdź
 Artykuł
 ---STRINGEND
 
----STRING auto_approved
+---STRING auto_approve
 Automatycznie zatwierdzaj nowe artykuły
 ---STRINGEND
 

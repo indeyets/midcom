@@ -15,7 +15,7 @@ Soll für diese Rubrik automatisch eine Index-Seite erstellt werden?
 Freigeben
 ---STRINGEND
 
----STRING auto_approved
+---STRING auto_approve
 Neue Artikel standardmäßig freigegeben
 ---STRINGEND
 
@@ -107,6 +107,14 @@ Schema auswählen
 Einstellungen
 ---STRINGEND
 
+---STRING show blobs in autoindex
+Dateianhänge im automatischen Index anzeigen
+---STRINGEND
+
+---STRING simple_name_handling
+Soll die URL des Artikels automatisch generiert werden?
+---STRINGEND
+
 ---STRING symlink_topic
 Daten aus einem anderen Ordner nehmen ("Symlink")
 ---STRINGEND
@@ -131,7 +139,7 @@ Artikel anzeigen
 Ordner-Sichtbarkeit
 ---STRINGEND
 
----STRING ajax_enable
+---STRING enable_ajax_editing
 AJAX-basierte on-site-Bearbeitung aktivieren
 ---STRINGEND
 
@@ -143,3 +151,22 @@ Artikel
 Inhalt
 ---STRINGEND
 
+---STRING hide_navigation
+Artikel in der Navigation verstecken
+---STRINGEND
+
+---STRING sort_order
+Sortierreihenfolge
+---STRINGEND
+
+---STRING enable_article_links
+Seitenverlinkungs-System
+---STRINGEND
+
+---STRING callback_snippet
+Callback-Snippet für site-spezifische Funktion bei Erstellung
+---STRINGEND
+
+---STRING callback_function
+Callback-Funktion, die nach Erstellung ausgeführt wird, um z.B. ein Interface zum Seitenverlinkungssystem bereitzustellen
+---STRINGEND

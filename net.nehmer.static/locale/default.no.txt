@@ -7,7 +7,7 @@
 Vis kun godkjente artikler
 ---STRINGEND
 
----STRING activate autoindex
+---STRING autoindex
 Vis liste over artikler på forsiden?
 ---STRINGEND
 
@@ -15,7 +15,7 @@ Vis liste over artikler på forsiden?
 Vis på siden
 ---STRINGEND
 
----STRING auto_approved
+---STRING auto_approve
 Vis alle nye artikkler automatisk?
 ---STRINGEND
 

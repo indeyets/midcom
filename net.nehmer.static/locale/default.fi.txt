@@ -7,7 +7,7 @@
 Näytä vain hyväksytyt artikkelit
 ---STRINGEND
 
----STRING activate autoindex
+---STRING autoindex
 Luo automaattinen sisällysluettelo kansiolle?
 ---STRINGEND
 
@@ -31,7 +31,7 @@ Artikkeli %s poistettu
 Artikkelilinkki poistettu
 ---STRINGEND
 
----STRING auto_approved
+---STRING auto_approve
 Hyväksy uudet artikkelit oletuksena
 ---STRINGEND
 
@@ -155,7 +155,7 @@ Valitse tyyppi
 Asetukset
 ---STRINGEND
 
----STRING show blobs in autoindex
+---STRING show_blobs_in_autoindex
 Näytä liitetiedostot automaattisessa sisällysluettelossa
 ---STRINGEND
 
@@ -191,7 +191,7 @@ Näytä artikkeli
 Onko kansio näkyvissä
 ---STRINGEND
 
----STRING hide articles from navigation
+---STRING hide_navigation
 Piilota artikkelit navigaatiosta
 ---STRINGEND
 

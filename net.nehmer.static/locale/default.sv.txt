@@ -3,7 +3,7 @@
 ---CVS $Id$
 ---LANGUAGE sv
 
----STRING activate autoindex
+---STRING autoindex
 Automatiskt skapa en index sida för det här ämnet?
 ---STRINGEND
 
