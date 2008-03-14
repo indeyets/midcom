@@ -127,6 +127,10 @@ Konfiguration von Komponente %s bearbeiten
 Konfiguration von Komponente %s im Ordner %s bearbeiten
 ---STRINGEND
 
+---STRING global value
+Globale Einstellung
+---STRINGEND
+
 ---STRING edit file %s
 Datei %s bearbeiten
 ---STRINGEND

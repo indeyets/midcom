@@ -243,6 +243,10 @@ Edit configuration for component %s
 Edit configuration for component %s folder %s
 ---STRINGEND
 
+---STRING global value
+Global value
+---STRINGEND
+
 ---STRING edit file %s
 Edit file %s
 ---STRINGEND
