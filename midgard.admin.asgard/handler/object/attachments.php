@@ -54,16 +54,6 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/style-editor.css',
-            )
-        );
-
-        $_MIDCOM->add_link_head
-        (
-            array
-            (
-                'rel' => 'stylesheet',
-                'type' => 'text/css',
                 'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/attachments/layout.css',
             )
         );

@@ -43,7 +43,8 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 echo "        {$file->name}\n";
                 echo "    </a>\n ";
                 echo "  </td>\n";
-                echo "  <td>" . strftime('%x %X', strtotime($file->metadata->revised)) . "</td>\n";
+                $last_edit = ($file->metadata->revised == 0 ) ? $file->metadata->created : $file->metadata->revised;
+                echo "  <td>" . strftime('%x %X', $last_edit) . "</td>\n";
                 if ($persons[$file->metadata->revisor]->guid)
                 {
                     echo "<td><a href=\"{$prefix}__mfa/asgard/object/view/{$persons[$file->metadata->revisor]->guid}/\">{$persons[$file->metadata->revisor]->name}</a></td>\n";
@@ -54,7 +55,12 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 }
                 echo "  <td>" . midcom_helper_filesize_to_string($file->metadata->size) . "</td>\n";
                 echo "  <td>\n";
-                echo "    <a class=\"thickbox\" title=\"{$file->name}\" target=\"_self\" href=\"{$prefix}midcom-serveattachmentguid-{$file->guid}/{$file->name}\">\n";
+                $class = "";
+                if (strpos($file->mimetype, "application") !== 0)
+                {
+                    $class = 'class="thickbox"';
+                }
+                echo "    <a {$class} title=\"{$file->name}\" target=\"_self\" href=\"{$prefix}midcom-serveattachmentguid-{$file->guid}/{$file->name}\">\n";
                 echo "      <img alt=\"{$file->name}\" src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/view.png\"/>\n";
                 echo "    </a> \n";
                 echo "    <a title=\"{$delete_title}\" href=\"{$prefix}__mfa/asgard/object/attachments/delete/{$data['object']->guid}/{$file->name}/\">\n";
