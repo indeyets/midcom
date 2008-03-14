@@ -1,4 +1,5 @@
 'name' => 'net.nemein.calendar',
+'icon' => 'stock-icons/16x16/stock_event.png',
 'purecode' => false,
 'version' => '2.1.0beta1',
 'state' => 'beta',

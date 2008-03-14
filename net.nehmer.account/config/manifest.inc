@@ -1,4 +1,5 @@
 'name' => 'net.nehmer.account',
+'icon' => 'stock-icons/16x16/stock_person.png',
 'version' => '1.2.0beta1',
 'state' => 'beta',
 'class_definitions' => array

@@ -1,4 +1,5 @@
 'name' => 'org.routamc.gallery',
+'icon' => 'stock-icons/16x16/images.png',
 'purecode' => false,
 'version' => '1.2.0beta1',
 'state' => 'beta',
