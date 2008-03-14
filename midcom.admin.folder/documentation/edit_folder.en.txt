@@ -1,4 +1,4 @@
-On the page _Edit Fodler_ it is possible to edit the folder settings: _URL name_, _Title_, _Style template_, _Inherit template to subfolders_ and _Order of navigation items_.
+On the page _Edit Folder_ it is possible to edit the folder settings: _URL name_, _Title_, _Style template_, _Inherit template to subfolders_ and _Order of navigation items_.
 
 * _URL name_ is name of the target. Through this name it is possible to define, which URL refers to the currently created folder.
 * _Title_ is the name, which will be shown in the navigation.
