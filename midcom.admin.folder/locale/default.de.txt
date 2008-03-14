@@ -320,7 +320,7 @@ Style-Elemente der Stilvorlage %s
 ---STRINGEND
 
 ---STRING style template
-Style template
+Stilvorlage
 ---STRINGEND
 
 ---STRING this component is still being developed and tested and might contain undocumented features
