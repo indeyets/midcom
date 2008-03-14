@@ -461,8 +461,11 @@ class midcom_baseclasses_components_interface
      */
     public function read_array_from_file ($filename)
     {
-        $data = @file_get_contents($filename);
-        if ($data === false)
+        try
+        {
+            $data = @file_get_contents($filename);
+        }
+        catch (Exception $e)
         {
             return false;
         }
