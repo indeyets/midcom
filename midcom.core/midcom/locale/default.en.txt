@@ -79,6 +79,10 @@ anonymous
 Approval
 ---STRINGEND
 
+---STRING approvals
+Approvals
+---STRINGEND
+
 ---STRING approve
 Approve
 ---STRINGEND

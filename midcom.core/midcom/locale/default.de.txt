@@ -79,6 +79,10 @@ Anonym
 Freigabe
 ---STRINGEND
 
+---STRING approvals
+Freigaben
+---STRINGEND
+
 ---STRING approve
 Freigeben
 ---STRINGEND
