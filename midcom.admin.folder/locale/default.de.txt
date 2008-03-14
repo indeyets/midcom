@@ -319,6 +319,10 @@ Liste der Style-Elemente
 Style-Elemente der Stilvorlage %s
 ---STRINGEND
 
+---STRING style template
+Style template
+---STRINGEND
+
 ---STRING this component is still being developed and tested and might contain undocumented features
 Diese Komponente befindet sich noch in der Entwicklung und könnte undokumentierte Features enthalten
 ---STRINGEND
