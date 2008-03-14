@@ -271,6 +271,33 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
     }
 
     /**
+     * Helper function that adds the necessary files for attachment operations,
+     * if attachments exist
+     */
+    function _add_jscripts()
+    {
+        if (sizeof($this->_files) > 0)
+        {
+
+            // Add Thickbox
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/object_browser.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/thickbox/jquery-thickbox-3.1.pack.js');
+            $_MIDCOM->add_link_head
+            (
+                array
+                (
+                    'rel' => 'stylesheet',
+                    'type' => 'text/css',
+                    'href' => MIDCOM_STATIC_URL . '/jQuery/thickbox/thickbox.css',
+                    'media' => 'screen',
+                )
+            );
+            $_MIDCOM->add_jscript('var tb_pathToImage = "' . MIDCOM_STATIC_URL . '/jQuery/thickbox/loadingAnimation.gif"');
+
+        }
+    }
+
+    /**
      * Handler method for creating new attachments
      *
      * @access private
@@ -302,6 +329,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
         }
 
         $this->_list_files();
+        $this->_add_jscripts();
 
         midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
         midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
@@ -375,6 +403,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
         }
 
         $this->_list_files();
+        $this->_add_jscripts();
 
         // Add the codepress syntax highlight
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/codepress/codepress.js');

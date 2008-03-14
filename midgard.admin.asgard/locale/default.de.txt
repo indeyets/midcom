@@ -63,6 +63,10 @@ Asgard-Plugins
 Datei %s wiederhergestellt
 ---STRINGEND
 
+---STRING attachment
+Dateianhang
+---STRINGEND
+
 ---STRING attachments
 Dateianhänge
 ---STRINGEND

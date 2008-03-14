@@ -287,6 +287,7 @@ textarea
     cursor: pointer;
 }
 #content form.datamanager2 div.form_toolbar input.save,
+#content form.datamanager2 div.form_toolbar input.delete,
 #content form.datamanager2 div.form_toolbar input.cancel
 {
     background-color: #eeeeec;

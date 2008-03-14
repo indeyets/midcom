@@ -87,6 +87,10 @@ Asgard plugins
 Attachment %s undeleted
 ---STRINGEND
 
+---STRING attachment
+Attachment
+---STRINGEND
+
 ---STRING attachments
 Attachments
 ---STRINGEND
