@@ -155,6 +155,11 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
     var $_title = null;
 
     /**
+     * Titles of each image, keyed by the MD5 identifier
+     */
+    var $titles = array();
+
+    /**
      * Output mode
      *
      * @access public
@@ -169,6 +174,12 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      * @var integer
      */
     var $max_count = 0;
+
+    function _on_initialize()
+    {
+        $this->_instance_mode = 'multiple';
+        return parent::_on_initialize();
+    }
 
     /**
      * Adds a new image to the list.
@@ -246,6 +257,7 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
         }
         $this->_identifier = $identifier;
         $this->_title = $title;
+        $this->titles[$identifier] = $title;
         if (array_key_exists($this->_identifier, $this->images))
         {
             // PHP5-TODO: Must be copy-by-value
@@ -355,13 +367,11 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
 
         parent::convert_from_storage($source);
 
-        /*
-         * TODO: Title handling
-        if (array_key_exists('main', $this->attachments))
+        foreach ($this->_attachment_map as $blobs_identifier => $info)
         {
-            $this->_title = $this->attachments['main']->title;
+            $images_identifier = $info[0];
+            $this->titles[$images_identifier] = $this->attachments_info[$blobs_identifier]['object']->title;
         }
-        */
     }
 
     /**
@@ -369,13 +379,25 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      */
     function convert_to_storage()
     {
-        /**
-         * FIXME: Title handling (now handled separately by the images widget which is incorrect)
-        foreach ($this->attachments as $identifier => $copy)
+        foreach ($this->titles as $images_identifier => $title)
         {
-            $this->update_attachment_title($identifier, $this->_title);
+            if (empty($title))
+            {
+                continue;
+            }
+            if (!isset($this->images[$images_identifier]))
+            {
+                continue;
+            }
+            foreach($this->images[$images_identifier] as $key => $info)
+            {
+                if ($info['object']->title === $title)
+                {
+                    continue;
+                }
+                $this->update_attachment_title($info['identifier'], $title);
+            }
         }
-        */
 
         return parent::convert_to_storage();
     }

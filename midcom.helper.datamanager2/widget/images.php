@@ -346,6 +346,19 @@ END;
             $preview = "<a href='{$url}' class='download'><img src='{$url}' {$size_line} /></a>";
         }
 
+        $img_title = '';
+        // Some reason we're kicking out-of-sync, check explicitly for POSTed value
+        if (   isset($_POST[$this->name])
+            && is_array($_POST[$this->name])
+            && isset($_POST[$this->name]["e_exist_{$identifier}_title"]))
+        {
+            $img_title = $_POST[$this->name]["e_exist_{$identifier}_title"];
+        }
+        // Otherwise use the type title if available
+        elseif (isset($this->_type->titles[$identifier]))
+        {
+            $img_title = $this->_type->titles[$identifier];
+        }
 
         // Filename column
         $html = "<tr title='{$info['guid']}' class='midcom_helper_datamanager2_widget_images_image'>\n" .
@@ -355,7 +368,7 @@ END;
         $this->_elements["s_exist_{$identifier}_filename"] =& HTML_QuickForm::createElement('static', "s_exist_{$identifier}_filename", '', $html);
 
         // Title Column, set the value explicitly, as we are sometimes called after the defaults kick in.
-        $html = "<td class='exist title' title='{$info['description']}'>";
+        $html = "<td class='exist title' title='{$img_title}'>";
         $this->_elements["s_exist_{$identifier}_title"] =& HTML_QuickForm::createElement('static', "s_exist_{$identifier}_title", '', $html);
         $attributes = Array
         (
@@ -363,7 +376,7 @@ END;
             'id'    => "{$this->_namespace}{$this->name}_e_exist_{$identifier}_title",
         );
         $this->_elements["e_exist_{$identifier}_title"] =& HTML_QuickForm::createElement('text', "e_exist_{$identifier}_title", '', $attributes);
-        $this->_elements["e_exist_{$identifier}_title"]->setValue($info['description']);
+        $this->_elements["e_exist_{$identifier}_title"]->setValue($img_title);
 
         if (! $frozen)
         {
@@ -466,51 +479,54 @@ END;
             return;
         }
 
-        if ($this->_elements['e_new_file']->isUploadedFile())
+        if (!$this->_elements['e_new_file']->isUploadedFile())
         {
-            $file = $this->_elements['e_new_file']->getValue();
+            // not uploaded file, abort
+            return;
+        }
 
-            if ( preg_match('/\.(zip|tar(\.gz|\.bz2)?|tgz)$/', strtolower($file['name']), $extension_matches))
-            {
-                // PHP5-TODO: This must be copy-by-value
-                $copy = $file;
-                unset($file);
-                if (! $this->_type->_batch_handler($extension_matches[1], $copy))
-                {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("Failed to add attachments from compressed files to the field '{$this->name}'. Ignoring silently.", MIDCOM_LOG_WARN);
-                    debug_pop();
-                }
-                return;
-            }
+        $file = $this->_elements['e_new_file']->getValue();
 
-            
-            if (   array_key_exists('e_new_title', $values)
-                && !empty($values['e_new_title']))
-            {
-                $title = $values['e_new_title'];
-            }
-            else
-            {
-                $title = $file['name'];
-            }
-            
-            if (   array_key_exists('e_new_filename', $values)
-                && !empty($values['e_new_filename']))
-            {
-                $filename = $values['e_new_filename'];
-            }
-            else
-            {
-                $filename = $file['name'];
-            }
-
-            if (! $this->_type->add_image($filename, $file['tmp_name'], $title))
+        if ( preg_match('/\.(zip|tar(\.gz|\.bz2)?|tgz)$/', strtolower($file['name']), $extension_matches))
+        {
+            // PHP5-TODO: This must be copy-by-value
+            $copy = $file;
+            unset($file);
+            if (! $this->_type->_batch_handler($extension_matches[1], $copy))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to add an attachment to the field '{$this->name}'. Ignoring silently.", MIDCOM_LOG_WARN);
+                debug_add("Failed to add attachments from compressed files to the field '{$this->name}'. Ignoring silently.", MIDCOM_LOG_WARN);
                 debug_pop();
             }
+            return;
+        }
+
+        
+        if (   array_key_exists('e_new_title', $values)
+            && !empty($values['e_new_title']))
+        {
+            $title = $values['e_new_title'];
+        }
+        else
+        {
+            $title = $file['name'];
+        }
+        
+        if (   array_key_exists('e_new_filename', $values)
+            && !empty($values['e_new_filename']))
+        {
+            $filename = $values['e_new_filename'];
+        }
+        else
+        {
+            $filename = $file['name'];
+        }
+
+        if (! $this->_type->add_image($filename, $file['tmp_name'], $title))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to add an attachment to the field '{$this->name}'. Ignoring silently.", MIDCOM_LOG_WARN);
+            debug_pop();
         }
     }
 
@@ -519,7 +535,6 @@ END;
      *
      * 1. If the delete button was clicked, the image is dropped.
      * 2. If a new file has been uploaded, it replaces the current one.
-     * 3. If neither of the above is triggered, the title of the image is synchronized.
      *
      * Calls for images which are not listed in the form, will be silently ignored.
      * This may happen, for example, if two users edit the same object simultaneoulsy,
@@ -537,42 +552,36 @@ END;
             return;
         }
 
-        if (array_key_exists("{$this->name}_e_exist_{$identifier}_delete", $values))
+        switch(true)
         {
-            if (! $this->_type->delete_image($identifier))
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to delete the image {$identifier} on the field '{$this->name}'. Ignoring silently.", MIDCOM_LOG_WARN);
-                debug_pop();
-            }
-        }
-        else if
-        (   array_key_exists("e_exist_{$identifier}_file", $this->_elements)
-                 && $this->_elements["e_exist_{$identifier}_file"]->isUploadedFile())
-        {
-            $file = $this->_elements["e_exist_{$identifier}_file"]->getValue();
-            $title = $values["e_exist_{$identifier}_title"];
-            $filename = $this->_type->images[$identifier]['main']['filename'];
-
-            if (! $title)
-            {
-                $title = $filename;
-            }
-
-            if (! $this->_type->update_image($identifier, $filename, $file['tmp_name'], $title))
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to update the image {$identifier} on the field '{$this->name}'. Ignoring silently.", MIDCOM_LOG_WARN);
-                debug_pop();
-            }
-        }
-        else if
-        (   array_key_exists("e_exist_{$identifier}_title", $values)
-                 && isset($this->_type->images[$identifier]['main'])
-                 && isset($this->_type->images[$identifier]['main']['description'])
-                 && $values["e_exist_{$identifier}_title"] != $this->_type->images[$identifier]['main']['description'])
-        {
-            $this->_type->update_image_title($identifier, $values["e_exist_{$identifier}_title"]);
+            // Image to be deleted
+            case (array_key_exists("{$this->name}_e_exist_{$identifier}_delete", $values)):
+                if (! $this->_type->delete_image($identifier))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("Failed to delete the image {$identifier} on the field '{$this->name}'. Ignoring silently.", MIDCOM_LOG_WARN);
+                    debug_pop();
+                }
+                break;
+            // Image to be updated
+            case (   array_key_exists("e_exist_{$identifier}_file", $this->_elements)
+                  && $this->_elements["e_exist_{$identifier}_file"]->isUploadedFile()):
+                $file = $this->_elements["e_exist_{$identifier}_file"]->getValue();
+                $title = $values["e_exist_{$identifier}_title"];
+                $filename = $this->_type->images[$identifier]['main']['filename'];
+    
+                if (! $title)
+                {
+                    $title = $filename;
+                }
+    
+                if (! $this->_type->update_image($identifier, $filename, $file['tmp_name'], $title))
+                {
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("Failed to update the image {$identifier} on the field '{$this->name}'. Ignoring silently.", MIDCOM_LOG_WARN);
+                    debug_pop();
+                }
+                break;
         }
     }
 
@@ -628,7 +637,19 @@ END;
     /**
      * Nothing to do here.
      */
-    function sync_type_with_widget($results) {}
+    function sync_type_with_widget($results)
+    {
+        $values = $results[$this->name];
+
+        foreach ($this->_type->images as $identifier => $info)
+        {
+            if (!isset($values["e_exist_{$identifier}_title"]))
+            {
+                continue;
+            }
+            $this->_type->titles[$identifier] = $values["e_exist_{$identifier}_title"];
+        }
+    }
 
     /**
      * Populates the title fields with their defaults.
@@ -638,10 +659,9 @@ END;
         $defaults = Array();
         foreach($this->_type->images as $identifier => $images)
         {
-            if (   isset($images['main'])
-                && isset($images['main']['description']))
+            if (isset($this->_type->titles[$identifier]))
             {
-                $defaults["e_exist_{$identifier}_title"] = $images['main']['description'];
+                $defaults["e_exist_{$identifier}_title"] = $this->_type->titles[$identifier];
             }
             else
             {

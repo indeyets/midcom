@@ -199,6 +199,14 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
      */
     var $output_mode = 'html';
 
+    /**
+     * Whether this instance is handling single image or multiple images
+     *
+     * @var string
+     * @access private
+     */
+    var $_instance_mode = 'single';
+
     function _on_initialize()
     {
         if (   (   !empty($this->auto_thumbnail)
@@ -971,8 +979,8 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
      */
     function convert_to_storage()
     {
-        // FIXME: better safety for image*s* datatype calling parent::convert_to_storage()
-        if (!empty($this->title))
+        if (   $this->_instance_mode === 'single'
+            && !empty($this->title))
         {
             foreach ($this->attachments as $identifier => $copy)
             {
