@@ -10,6 +10,28 @@
  *
  */
 
+/*
+
+NOTES:
+
+- You'll probably need PHP 5.2.3+.  If you find you don't have the
+  hash_hmac() function, see here for a pure PHP version:
+
+    http://laughingmeme.org/code/hmacsha1.php.txt
+
+- To get HTTPS working on Windows, download curl-ca-bundle.crt from
+  here:
+
+    http://curl.haxx.se/latest.cgi?curl=win32-ssl
+
+  Then add this line after the curl_init() call in the
+  Fireeagle::http() function, replacing c:/web with the path of the
+  folder containing curl-ca-bundle.crt:
+
+    curl_setopt($ch, CURLOPT_CAINFO, 'c:/web/curl-ca-bundle.crt');
+
+*/
+
 // Requires OAuth.php from http://oauth.googlecode.com/svn/code/php/OAuth.php
 require_once(dirname(__FILE__)."/OAuth.php");
 
@@ -129,8 +151,8 @@ class FireEagle {
     if (isset($r->user->location_hierarchy)) {
       $r->user->best_guess = NULL;
       foreach ($r->user->location_hierarchy as &$loc) {
-	$c = $loc->geojson->coordinates;
-	switch ($loc->geojson->type) {
+	$c = $loc->geometry->coordinates;
+	switch ($loc->geometry->type) {
 	case 'Box': // DEPRECATED
 	  $loc->bbox = $c;
 	  $loc->latitude = ($c[0][0] + $c[1][0]) / 2;
@@ -138,7 +160,7 @@ class FireEagle {
 	  $loc->geotype = 'box';
 	  break;
 	case 'Polygon':
-	  $loc->bbox = $bbox = $loc->geojson->bbox;
+	  $loc->bbox = $bbox = $loc->geometry->bbox;
 	  $loc->latitude = ($bbox[0][0] + $bbox[1][0]) / 2;
 	  $loc->longitude = ($bbox[0][1] + $bbox[1][1]) / 2;
 	  $loc->geotype = 'box';
