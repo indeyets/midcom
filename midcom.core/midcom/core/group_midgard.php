@@ -129,7 +129,7 @@ class midcom_core_group_midgard extends midcom_core_group
 
         return true;
     }
-    
+
     /**
      * Retrieves a list of groups owned by this group.
      *
@@ -198,6 +198,7 @@ class midcom_core_group_midgard extends midcom_core_group
     function list_memberships($user)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
+        debug_pop();
 
         $qb = new midgard_query_builder('midgard_member');
         $qb->add_constraint('uid', '=', $user->_storage->id);
@@ -206,7 +207,7 @@ class midcom_core_group_midgard extends midcom_core_group
         {
             return $result;
         }
-        
+
         $return = Array();
         foreach ($result as $member)
         {
@@ -221,7 +222,6 @@ class midcom_core_group_midgard extends midcom_core_group
             $return[$group->id] = $group;
         }
 
-        debug_pop();
         return $return;
     }
 

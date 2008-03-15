@@ -20,7 +20,7 @@
 class midcom_core_user extends midcom_baseclasses_core_object
 {
     /**
-     * The storage object on which we are based. 
+     * The storage object on which we are based.
      *
      * This is no MidCOM DBA layer object since it must not do any Access Control
      * for the internal system to work. The instance may not be accessed from the outside.
@@ -44,7 +44,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
     /**
      * The full name of the current user.
      *
-     * Built from the first and last name of the user record, falling back 
+     * Built from the first and last name of the user record, falling back
      * to the username if both are unset. It is to be considered read-only.
      *
      * @var string
@@ -55,7 +55,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
     /**
      * The full reversed name of the current user.
      *
-     * Built from the first and last name of the user record, falling back 
+     * Built from the first and last name of the user record, falling back
      * to the username if both are unset. It is to be considered read-only.
      *
      * @var string
@@ -96,7 +96,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
 
     /**
      * This array lists all groups the user is a member in ordered by their inheritance
-     * chain. 
+     * chain.
      *
      * The first element in the array is always the top-level group, while the last
      * one is always a member of $_direct_groups. This is therefore a multilevel array and is
@@ -139,7 +139,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
 
     /**
      * The identification string used to internally identify the user uniquely
-     * in the system. 
+     * in the system.
      *
      * This is usually some kind of user:$guid string combination.
      *
@@ -157,8 +157,8 @@ class midcom_core_user extends midcom_baseclasses_core_object
     var $guid;
 
     /**
-     * The scope value, which must be set during the _load callback, indicates the 
-     * "depth" of the group in the inheritance tree. 
+     * The scope value, which must be set during the _load callback, indicates the
+     * "depth" of the group in the inheritance tree.
      *
      * This is used during privilege merging in the content privilege code, which
      * needs a way to determine the proper ordering. All persons currently
@@ -205,7 +205,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
     }
 
     /**
-     * Helper function that will look up a user in the Midgard Database and 
+     * Helper function that will look up a user in the Midgard Database and
      * assign the object to the $storage member.
      *
      * @param mixed $id This is either a Midgard Person ID or GUID, a midcom_user ID or an already instantiated midgard_person.
@@ -240,9 +240,9 @@ class midcom_core_user extends midcom_baseclasses_core_object
         else if (is_numeric($id))
         {
             $this->_storage = new midgard_person();
-            
+
             try {
-                
+
                 $this->_storage->get_by_id($id);
 
             } catch (midgard_error_exception $e) {
@@ -344,7 +344,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
 
     /**
      * Returns the specific per class global privilege set assigned to this user, taking all
-     * parent groups into account. 
+     * parent groups into account.
      *
      * If the class specified is unknown, an empty array is returned.
      *
@@ -376,14 +376,13 @@ class midcom_core_user extends midcom_baseclasses_core_object
     function _load_direct_groups()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
+        debug_pop();
 
         $this->_direct_groups = array_merge
         (
             midcom_core_group_midgard::list_memberships($this),
             midcom_core_group_virtual::list_memberships($this)
         );
-
-        debug_pop();
     }
 
     /**
@@ -422,7 +421,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
     }
 
     /**
-     * Load the privileges from the database. 
+     * Load the privileges from the database.
      *
      * This uses the inheritance chains
      * loaded by _load_all_groups().
@@ -437,6 +436,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Loading privileges for user {$this->name} ({$this->id})");
+            debug_pop();
 
             if (is_null($this->_all_groups))
             {
@@ -459,7 +459,6 @@ class midcom_core_user extends midcom_baseclasses_core_object
             $this->_merge_privileges($this->_get_privileges());
             $cache[$this->id]['direct'] = $this->_privileges;
             $cache[$this->id]['class'] = $this->_per_class_privileges;
-            debug_pop();
         }
         else
         {
@@ -469,7 +468,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
     }
 
     /**
-     * Merge privileges helper. 
+     * Merge privileges helper.
      *
      * It loads the privileges of the given object and
      * loads all "SELF" assignee privileges into the class.
@@ -574,7 +573,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
     }
 
     /**
-     * This function will return a MidCOM DBA level storage object for the current user. 
+     * This function will return a MidCOM DBA level storage object for the current user.
      * Be aware that depending on ACL information, the retrieval of the user may fail.
      *
      * @return midcom_db_person The user which is associated with this record or false if the object cannot be accessed.
@@ -705,10 +704,10 @@ class midcom_core_user extends midcom_baseclasses_core_object
     }
 
     /**
-     * Returns the last login of the given user. 
+     * Returns the last login of the given user.
      *
-     * You require the privilege midcom:isonline for the storage object you are 
-     * going to check. The privilege is not granted by default, to allow users 
+     * You require the privilege midcom:isonline for the storage object you are
+     * going to check. The privilege is not granted by default, to allow users
      * full control over their privacy.
      *
      * null is returned in cases where you have insufficient permissions.
@@ -728,10 +727,10 @@ class midcom_core_user extends midcom_baseclasses_core_object
 
 
     /**
-     * Returns the first login time of the user, if available. 
+     * Returns the first login time of the user, if available.
      *
-     * In contrast to get_last_login and is_online this query does not require 
-     * the isonline privilege, as it is usually used to determine the "age" 
+     * In contrast to get_last_login and is_online this query does not require
+     * the isonline privilege, as it is usually used to determine the "age"
      * of a user account in a community.
      *
      * @return int The time of the first login, or zero in case of users which have never
@@ -743,7 +742,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
     }
 
     /**
-     * Deletes the current user account. 
+     * Deletes the current user account.
      *
      * This will cleanup all information associated with
      * the user that is managed by the core (like login sessions and privilege records).
