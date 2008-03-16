@@ -54,9 +54,11 @@
 class midcom_services_toolbars extends midcom_baseclasses_core_object
 {
     /**
-     * The toolbars currently available. This array is indexed by context id; each
-     * value consists of a flat array of two toolbars, the first object being the
-     * Node toolbar, the second View toolbar. The toolbars are created on-demand.
+     * The toolbars currently available.
+     *
+     * This array is indexed by context id; each value consists of a flat array
+     * of two toolbars, the first object being the Node toolbar, the second
+     * View toolbar. The toolbars are created on-demand.
      *
      * @var Array
      * @access private
@@ -778,9 +780,10 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
     }
 
     /**
-     * Renders the specified toolbar for the indicated context. If the toolbar is undefined,
-     * an empty string is returned. If you want to show the toolbar directly, look for
-     * the _show_toolbar method.
+     * Renders the specified toolbar for the indicated context.
+     *
+     * If the toolbar is undefined, an empty string is returned. If you want to
+     * show the toolbar directly, look for the _show_toolbar method.
      *
      * @param int $toolbar_identifier The toolbar identifier constant (one of
      *     MIDCOM_TOOLBAR_NODE or MIDCOM_TOOLBAR_VIEW etc.)
