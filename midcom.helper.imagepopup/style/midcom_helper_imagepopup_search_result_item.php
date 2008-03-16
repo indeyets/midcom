@@ -10,6 +10,7 @@ $item_type = "image";
             case 'image/x-png':
             case 'image/png':
             case 'image/jpeg':
+            case 'image/pjpeg':
             case 'image/gif':
                 break;
             default:
@@ -26,12 +27,12 @@ if ($item_type == "image")
 {
 ?>
     <a href='&(prefix);midcom-serveattachmentguid-&(item.guid);/&(item.name);'>
-        <img src='&(prefix);midcom-serveattachmentguid-&(item.guid);/&(item.name);' width='75' height='54' align='texttop' />
+        <img src='&(prefix);midcom-serveattachmentguid-&(item.guid);/&(item.name);' height='54' align='texttop' />
     </a>
     <a href='&(prefix);midcom-serveattachmentguid-&(item.guid);/&(item.name);'>
         <span title="name">&(item.name);</span>
     </a>
-<?php    
+<?php
 }
 else
 {
@@ -40,7 +41,7 @@ else
     <a href='&(prefix);midcom-serveattachmentguid-&(item.guid);/&(item.name);'>
         <span title="name">&(item.name);</span>
     </a>
-<?php    
+<?php
 }
 ?>
 
