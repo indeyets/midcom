@@ -27,3 +27,10 @@ Page attachments
 Unified search
 ---STRINGEND
 
+---STRING query
+Query
+---STRINGEND
+
+---STRING search
+Search
+---STRINGEND

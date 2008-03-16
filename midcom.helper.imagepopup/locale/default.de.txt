@@ -26,3 +26,11 @@ Seiten-Anhänge
 ---STRING unified search
 Vereinheitlichte Suche
 ---STRINGEND
+
+---STRING query
+Suchbegriff
+---STRINGEND
+
+---STRING search
+Suchen
+---STRINGEND
