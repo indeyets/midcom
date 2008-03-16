@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE de
 
+---STRING %s category %s
+%s: Kategorie "%s"
+---STRINGEND
+
 ---STRING add a new entry
 Einen neuen Eintrag hinzufügen
 ---STRINGEND
@@ -24,11 +28,15 @@ Reihenfolge der Einträge im Archiv
 ---STRINGEND
 
 ---STRING archive_enable
-Archivzugriff aaktivieren
+Archivzugriff aktivieren
 ---STRINGEND
 
 ---STRING article
 Artikel
+---STRINGEND
+
+---STRING article %s deleted
+Artikel %s gelöscht
 ---STRINGEND
 
 ---STRING ascending
@@ -49,6 +57,10 @@ Die folgenden Formate zur Content Syndication sind verfügbar:
 
 ---STRING back to overview
 Zurück zur Übersicht
+---STRINGEND
+
+---STRING blog link deleted
+Blog-link gelöscht
 ---STRINGEND
 
 ---STRING blog settings
@@ -72,15 +84,27 @@ Artikel anlegen
 ---STRINGEND
 
 ---STRING create name from title
-URL Namen automatisch vom Titel des Artikels generieren
+URL Namen automatisch aus dem Titel des Artikels generieren
 ---STRINGEND
 
 ---STRING create news article
-Neue Nachricht erstellen
+Neuen News-Artikel erstellen
 ---STRINGEND
 
 ---STRING delete article
 Artikel löschen
+---STRINGEND
+
+---STRING delete article link
+Artikel-Link löschen
+---STRINGEND
+
+---STRING delete cancelled
+Löschvorgang abgebrochen
+---STRINGEND
+
+---STRING delete link
+Link löschen
 ---STRINGEND
 
 ---STRING descending
@@ -127,8 +151,20 @@ News-Artikel aus Unterordnern in die Übersicht einbeziehen (auch RSS)
 Experten-Einstellungen
 ---STRINGEND
 
+---STRING failed to delete the blog link, contact the site administrator
+Der Blog-Link konnte nicht gelöscht werden, verständigen Sie bitte den Site-Administrator
+---STRINGEND
+
 ---STRING first post was made on %s.
 Die erste Nachricht wurde am %s veröffentlicht.
+---STRINGEND
+
+---STRING from
+Von
+---STRINGEND
+
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+Wenn Sie den ursprünglichen Artikel löschen möchten, <a href="%s">klicken Sie bitte hier</a>.
 ---STRINGEND
 
 ---STRING index count
@@ -172,11 +208,11 @@ Keine Artikel gefunden.
 ---STRINGEND
 
 ---STRING no schema available
-Keine Schemata verfügbar
+Kein Layout-Schema verfügbar
 ---STRINGEND
 
 ---STRING not enough privileges to create articles
-Sie haben keine ausreichenden Berechtigungen, um neue Artikel erstellen zu können.
+Sie haben keine ausreichenden Berechtigungen, um neue Artikel zu erstellen.
 ---STRINGEND
 
 ---STRING posted on %s.
@@ -199,24 +235,28 @@ Datamanager-Schema für die öffentlichen Beiträge
 Midgard Benutzername für die öffentlichen Eingaben (leer um den gerade aktiven Benutzer zu verwenden)
 ---STRINGEND
 
+---STRING related stories
+Verwandte Artikel
+---STRINGEND
+
 ---STRING rss 0.91 feed
-RSS 0.91 Feed
+RSS 0.91-Feed
 ---STRINGEND
 
 ---STRING rss 1.0 feed
-RSS 1.0 Feed
+RSS 1.0-Feed
 ---STRINGEND
 
 ---STRING rss 2.0 feed
-RSS 2.0 Feed
+RSS 2.0-Feed
 ---STRINGEND
 
 ---STRING rss export settings
-RSS Export
+RSS-Export
 ---STRINGEND
 
 ---STRING rss feed
-RSS Feed
+RSS-Feed
 ---STRINGEND
 
 ---STRING rss_count
@@ -248,7 +288,7 @@ Titel des RSS-Feeds (keine Eingabe verwendet den Titel des Ordners als Standardw
 ---STRINGEND
 
 ---STRING rss_webmaster
-Webmaster
+E-Mail-Adresse des Webmasters
 ---STRINGEND
 
 ---STRING schema database
@@ -269,6 +309,10 @@ Artikel-Typ auswählen
 
 ---STRING set this to no if you want to hide feeds and archive links in navigation
 Wählen Sie hier "Nein", um Feed- und Archiv-Links aus der Navigation auszublenden
+---STRINGEND
+
+---STRING set to no for de.linkm.newsticker compatibility
+Wählen Sie hier "Nein" für de.linkm.newsticker-Kompatibilität
 ---STRINGEND
 
 ---STRING settings
@@ -299,10 +343,22 @@ Kein Ordner ausgewählt
 Es sind insgesamt %d Nachrichten vorhanden.
 ---STRINGEND
 
+---STRING this blog entry has been linked from <a href="%s">%s</a> and confirming will delete only the link
+Dieser Blog-Eintrag wurde von<a href="%s">%s</a> verlinkt, Bestätigung löscht lediglich den Link.
+---STRINGEND
+
 ---STRING use view prefix in url
 'view' als URL-Präfix verwenden
 ---STRINGEND
 
 ---STRING visible
 Ordner-Sichtbarkeit
+---STRINGEND
+
+---STRING language
+Sprache
+---STRINGEND
+
+---STRING enable scheduled publishing
+Zeitversetzte Veröffentlichung aktivieren
 ---STRINGEND
