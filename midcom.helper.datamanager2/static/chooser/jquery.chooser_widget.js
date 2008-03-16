@@ -866,6 +866,6 @@ function midcom_helper_datamanager2_widget_chooser_format_value(format, value)
     {
         formatted = '&nbsp;';
     }
-    
+        
     return formatted;
 }

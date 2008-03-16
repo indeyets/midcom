@@ -148,6 +148,10 @@ The value of a text type may not be an array or an object.
 Upload file
 ---STRINGEND
 
+---STRING add new file
+Add a new file
+---STRINGEND
+
 ---STRING upload image
 Upload image
 ---STRINGEND

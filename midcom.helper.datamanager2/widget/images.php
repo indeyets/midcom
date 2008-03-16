@@ -25,9 +25,9 @@
  *
  * <b>Available configuration options:</b>
  *
- * - set_name_and_title_on_upload use this if you want the user to be able to set the 
- *   filename and title when uploading a form. 
- * - integer max_count Maximum number of images allowed for a field. Set this 
+ * - set_name_and_title_on_upload use this if you want the user to be able to set the
+ *   filename and title when uploading a form.
+ * - integer max_count Maximum number of images allowed for a field. Set this
  *
  * <b>Implementation notes:</b>
  *
@@ -77,14 +77,14 @@ class midcom_helper_datamanager2_widget_images extends midcom_helper_datamanager
 
     /**
      * Should the user be able to set the filename and title on upload?
-     * If so , set this to true. 
+     * If so , set this to true.
      * @var boolean
      */
     var $set_name_and_title_on_upload = true;
 
     /**
      * Maximum amount of images allowed to be stored in the same field
-     * 
+     *
      * @access public
      * @var integer
      */
@@ -117,7 +117,7 @@ class midcom_helper_datamanager2_widget_images extends midcom_helper_datamanager
 
         return true;
     }
-    
+
     function _get_filename_validation_script()
     {
         return <<<END
@@ -134,7 +134,7 @@ function midcom_helper_dm2_widget_images_check(evt, id) {
         }
     }
 }
-    
+
 END;
     }
 
@@ -180,7 +180,7 @@ END;
         {
             return;
         }
-        
+
         // Filename column
         $html = "<tr >\n" .
                 "<td class='new filename'>";
@@ -220,7 +220,7 @@ END;
                 'class' => 'new upload',
                 'id'    => "{$this->_namespace}{$this->name}_e_new_upload",
             );
-            
+
             $this->_elements['e_new_upload'] =& HTML_QuickForm::createElement('submit', "{$this->name}_e_new_upload", $this->_l10n->get('upload file'), $attributes);
         }
 
@@ -242,13 +242,13 @@ END;
         {
             return;
         }
-        
+
         // Filename column
         $html = "<tr >\n" .
                 "<td class='new text' colspan='1'>";
-        $html .= sprintf("%s:", $this->_l10n->get('Add new file'));       
+        $html .= sprintf("%s:", $this->_l10n->get('add new file'));
         $this->_elements['s_new_filename'] =& HTML_QuickForm::createElement('static', 's_new_filename', '', $html);
-        
+
         if (! $frozen)
         {
             // Controls Column
@@ -398,7 +398,7 @@ END;
                 'id'    => "{$this->_namespace}{$this->name}_e_exist_{$identifier}_upload",
             );
             $this->_elements["e_exist_{$identifier}_upload"] =& HTML_QuickForm::createElement('submit', "{$this->name}_e_exist_{$identifier}_upload", $this->_l10n->get('replace file'), $attributes);
-                        
+
             $attributes = Array
             (
                 'class' => 'exist delete',
@@ -454,7 +454,7 @@ END;
         {
             $this->_add_image_row($identifier, $frozen);
         }
-        if ($this->set_name_and_title_on_upload) 
+        if ($this->set_name_and_title_on_upload)
         {
             $this->_add_new_upload_row_old($frozen);
         }
@@ -501,7 +501,7 @@ END;
             return;
         }
 
-        
+
         if (   array_key_exists('e_new_title', $values)
             && !empty($values['e_new_title']))
         {
@@ -511,7 +511,7 @@ END;
         {
             $title = $file['name'];
         }
-        
+
         if (   array_key_exists('e_new_filename', $values)
             && !empty($values['e_new_filename']))
         {
@@ -569,12 +569,12 @@ END;
                 $file = $this->_elements["e_exist_{$identifier}_file"]->getValue();
                 $title = $values["e_exist_{$identifier}_title"];
                 $filename = $this->_type->images[$identifier]['main']['filename'];
-    
+
                 if (! $title)
                 {
                     $title = $filename;
                 }
-    
+
                 if (! $this->_type->update_image($identifier, $filename, $file['tmp_name'], $title))
                 {
                     debug_push_class(__CLASS__, __FUNCTION__);

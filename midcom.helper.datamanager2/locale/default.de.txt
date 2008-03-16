@@ -120,6 +120,10 @@ Der Wert eines Text-Typs darf kein Array oder Objekt sein.
 Datei hochladen
 ---STRINGEND
 
+---STRING add new file
+Neue Datei hinzufügen
+---STRINGEND
+
 ---STRING upload image
 Bild hochladen
 ---STRINGEND
