@@ -83,7 +83,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
         {
             $_MIDCOM->skip_page_style = true;
         }
-        
+
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($data['schemadb']);
         $qb = new org_openpsa_qbpager('midcom_db_article', 'net_nehmer_blog_index');
         $data['qb'] =& $qb;
@@ -206,7 +206,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
             {
                 $this->_component_data['active_leaf'] = "{$this->_topic->id}_CAT_{$data['category']}";
             }
-            
+
             // Add RSS feed to headers
             if ($this->_config->get('rss_enable'))
             {
@@ -286,6 +286,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
         if ($this->_articles)
         {
             $total_count = count($this->_articles);
+            $data['article_count'] = $total_count;
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             foreach ($this->_articles as $article_counter => $article)
             {
@@ -300,7 +301,6 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
 
                 $data['article'] =& $article;
                 $data['article_counter'] = $article_counter;
-                $data['article_count'] = $total_count;
                 $arg = $article->name ? $article->name : $article->guid;
 
                 if (   $this->_config->get('link_to_external_url')
