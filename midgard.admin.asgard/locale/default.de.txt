@@ -243,6 +243,14 @@ Gelöscht von
 Gelöscht am
 ---STRINGEND
 
+---STRING created by
+Erstellt von
+---STRINGEND
+
+---STRING created on
+Erstellt am
+---STRINGEND
+
 ---STRING all of the following items will be deleted
 Alle nachfolgenden Objekte werden gelöscht
 ---STRINGEND

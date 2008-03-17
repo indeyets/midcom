@@ -24,8 +24,9 @@
 {
   background-repeat: no-repeat;
   background-position: right center;
-  padding-right: 20px;
+  padding: 2px 20px 2px 5px;
   cursor: pointer;
+  white-space: nowrap
 }
 
 .table_widget thead th.headerSortDown
@@ -48,7 +49,7 @@
 
 .table_widget tr.odd td
 {
-    background-odd: white;
+    background-color: white;
 }
 .table_widget tr.row_selected td
 {

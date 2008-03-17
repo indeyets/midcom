@@ -231,6 +231,14 @@ Deleted by
 Deleted on
 ---STRINGEND
 
+---STRING created by
+Created by
+---STRINGEND
+
+---STRING created on
+Created on
+---STRINGEND
+
 ---STRING differences between %s and %s
 Differences between %s and %s
 ---STRINGEND
