@@ -550,6 +550,14 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $this->_check_page_vars();
+        
+        if ($this->_current_page == 'all')
+        {
+            debug_add("displaying all results");
+            debug_pop();
+            return;
+        }
+        
         $qb->set_limit($this->_limit);
         $qb->set_offset($this->_offset);
         debug_add("set offset to {$this->_offset} and limit to {$this->_limit}");
