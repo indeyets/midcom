@@ -93,7 +93,7 @@ if (isset($data['search_results']))
 
             echo "        <tr>\n";
             echo "            <td><a href=\"{$prefix}__mfa/asgard/object/{$data['default_mode']}/{$result->guid}/\">{$icon} {$label}</a></td>\n";
-            echo "            <td>" . strftime('%x %X', $result->metadata->created) . "</td>\n";
+            echo "            <td class=\"nowrap\">" . strftime('%x %X', $result->metadata->created) . "</td>\n";
 
             if ($persons[$result->metadata->creator]->guid)
             {

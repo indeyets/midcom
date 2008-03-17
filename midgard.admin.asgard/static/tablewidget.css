@@ -37,7 +37,10 @@
 {
   background-image: url('../stock-icons/16x16/up.png');
 }
-
+.table_widget td
+{
+    padding: 2px 5px
+}
 .table_widget tr.even td
 {
     background-color: #eeeeef;
@@ -56,4 +59,9 @@
 .table_widget tr.even.row_selected td
 {
     background-color: #DFE6EE;
+}
+
+.table_widget td.nowrap
+{
+    white-space: nowrap
 }
