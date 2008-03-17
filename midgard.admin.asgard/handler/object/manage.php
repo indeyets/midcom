@@ -98,6 +98,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         // Get the localization library for Asgard
         $this->_request_data['l10n'] = $_MIDCOM->i18n->get_l10n('midgard.admin.asgard');
         $this->_l10n =& $this->_request_data['l10n'];
+        midgard_admin_asgard_plugin::get_default_mode(&$this->_request_data);
     }
 
     /**
@@ -786,7 +787,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 // This will exit.
 
             case 'cancel':
-                $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}/{$data['language_code']}");
+                $_MIDCOM->relocate("__mfa/asgard/object/{$this->_request_data['default_mode']}/{$this->_object->guid}/{$data['language_code']}");
                 // This will exit.
         }
 
@@ -977,7 +978,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 $data['cancelled'] = true;
                 if ($this->_object)
                 {
-                    $objecturl = "object/view/{$this->_object->guid}/";
+                    $objecturl = "object/{$this->_request_data['default_mode']}/{$this->_object->guid}/";
                 }
                 else
                 {
@@ -1122,13 +1123,13 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             if ($data['language_code'] != '')
             {
                 // Relocate to lang0 view page
-                $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}/");
+                $_MIDCOM->relocate("__mfa/asgard/object/{$this->_request_data['default_mode']}/{$this->_object->guid}/");
                 // This will exit()
             }
 
             if ($parent)
             {
-                $_MIDCOM->relocate("__mfa/asgard/object/view/{$parent->guid}/");
+                $_MIDCOM->relocate("__mfa/asgard/object/{$this->_request_data['default_mode']}/{$parent->guid}/");
                 // This will exit()
             }
 
@@ -1138,8 +1139,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
 
         if (array_key_exists('midgard_admin_asgard_deletecancel', $_REQUEST))
         {
-            // Redirect to view page.
-            $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}/{$data['language_code']}");
+            // Redirect to default object mode page.
+            $_MIDCOM->relocate("__mfa/asgard/object/{$this->_request_data['default_mode']}/{$this->_object->guid}/{$data['language_code']}");
             // This will exit()
         }
 
@@ -1330,11 +1331,11 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 }
 
                 // Relocate to the newly created object
-                $_MIDCOM->relocate("__mfa/asgard/object/view/{$new_object->guid}/");
+                $_MIDCOM->relocate("__mfa/asgard/object/{$this->_request_data['default_mode']}/{$new_object->guid}/");
                 break;
 
             case 'cancel':
-                $_MIDCOM->relocate("__mfa/asgard/object/view/{$args[0]}/");
+                $_MIDCOM->relocate("__mfa/asgard/object/{$this->_request_data['default_mode']}/{$args[0]}/");
         }
 
         // Common hooks for Asgard
