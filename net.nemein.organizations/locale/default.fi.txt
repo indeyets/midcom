@@ -43,6 +43,10 @@ Sukunimi
 Listan asetukset
 ---STRINGEND
 
+---STRING location
+Sijainti
+---STRINGEND
+
 ---STRING net.nemein.organizations
 Organisaatiot
 ---STRINGEND
@@ -91,7 +95,7 @@ Työpuhelin
 Puutteelliset käyttöoikeudet ryhmän katseluun
 ---STRINGEND
 
----STRING location
-Sijainti
+---STRING official name
+Virallinen nimi
 ---STRINGEND
 

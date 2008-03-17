@@ -371,6 +371,7 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
     {
         if ($this->_groups)
         {
+            $data['groups'] =& $this->_groups;
             midcom_show_style('show-index-header');
 
             $current_col = 0;

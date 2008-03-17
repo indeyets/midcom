@@ -43,6 +43,10 @@ Last name
 List settings
 ---STRINGEND
 
+---STRING location
+Location
+---STRINGEND
+
 ---STRING net.nemein.organizations
 Organizations
 ---STRINGEND
@@ -91,7 +95,7 @@ Work phone
 Your account has insufficient permissions to access details of this group
 ---STRINGEND
 
----STRING location
-Location
+---STRING official name
+Official name
 ---STRINGEND
 

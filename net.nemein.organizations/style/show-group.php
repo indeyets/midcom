@@ -1,14 +1,19 @@
 <?php
-// Available request keys: article, datamanager
-
-//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['datamanager']->get_content_html();
 ?>
+<div class="vcard">
+    <h1 class="fn org organization-name">&(view['official']:h);</h1>
 
-<h1>&(view['official']:h);</h1>
+    <address>&(view['location']:h);</address>
 
-<?php if ($view["email"]) { ?>
-  <p>Email: <a href="mailto:&(view["email"]);">&(view["email"]);</a></p>
-<?php } ?>
+    <?php 
+    if ($view['email']) 
+    { 
+        echo "<p><a href=\"mailto:{$view['email']}\">{$view['email']}</a></p>\n";
+    }
+    ?>
 
-&(view["description"]:h);
+    <div class="description">
+        &(view["description"]:h);
+    </div>
+</div>
