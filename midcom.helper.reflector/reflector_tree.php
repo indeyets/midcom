@@ -452,9 +452,12 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
         $child_classes = $resolver->get_child_classes();
         if (!$child_classes)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('resolver returned false (critical failure) from get_child_classes()', MIDCOM_LOG_ERROR);
-            debug_pop();
+            if ($child_classes === false)
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add('resolver returned false (critical failure) from get_child_classes()', MIDCOM_LOG_ERROR);
+                debug_pop();
+            }
             return false;
         }
 
@@ -541,11 +544,11 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
         // Figure out constraint(s) to use to get child objects
         $ref = new midgard_reflection_property($schema_type);
 
-        $multiple_links = false;        
+        $multiple_links = false;
         $linkfields = array();
         $linkfields['up'] = midgard_object_class::get_property_up($schema_type);
         $linkfields['parent'] = midgard_object_class::get_property_parent($schema_type);
-        
+
         foreach ($linkfields as $link_type => $field)
         {
             if (empty($field))
@@ -554,7 +557,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
                 unset($linkfields[$link_type]);
                 continue;
             }
-            
+
             $linked_class = $ref->get_link_name($field);
             if (!is_a($for_object, $linked_class))
             {
@@ -563,7 +566,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
                 continue;
             }
         }
-        
+
         if (count($linkfields) > 1)
         {
             $multiple_links = true;
@@ -574,7 +577,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
         {
             $field_type = $ref->get_midgard_type($field);
             $field_target = $ref->get_link_target($field);
-                
+
             if (   !$field_target
                 || !isset($for_object->$field_target))
             {
@@ -616,7 +619,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
                     return false;
             }
         }
-        
+
         if ($multiple_links)
         {
             $qb->end_group();
