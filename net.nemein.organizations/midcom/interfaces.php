@@ -64,7 +64,8 @@ class net_nemein_organizations_interface extends midcom_baseclasses_components_i
         }
         
         $group = new midcom_db_group($group_guid);
-        if (!$group)
+        if (   !$group
+            || !$group->guid)
         {
             debug_add("Could not instantiate group {$group_guid}", MIDCOM_LOG_ERROR);
             debug_pop();
