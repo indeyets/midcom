@@ -5,6 +5,8 @@ ini_set('error_reporting', E_ALL);
 $wget_options = "-erobots=off -q -m -nH";
 $rsync_options = '-a';
 $http_timeout = 300; // seconds = 5minutes
+$lockfile_path = '/var/run';
+$lockfile_prefix = 'fi_hut_staticdumps_';
 
 function better_die($msg)
 {
@@ -23,6 +25,25 @@ function test_command($cmd)
         return false;
     }
     return true;
+}
+
+if (!function_exists('file_put_contents'))
+{
+    function file_put_contents($filename, &$data)
+    {
+        $fp = fopen($filename, 'w');
+        if (!$fp)
+        {
+            return false;
+        }
+        if (!fwrite($fp, $data))
+        {
+            fclose($fp);
+            return false;
+        }
+        fclose($fp);
+        return true;
+    }
 }
 
 if (!test_command('rsync --version'))
@@ -55,12 +76,11 @@ if (!is_readable($conffile))
 {
     better_die("File {$conffile} not readable\n");
 }
-
+$pid = posix_getpid();
 $all_ok = true;
 eval('$sites_config = array(' . file_get_contents($conffile) . ');');
 foreach ($sites_config as $k => $site_config)
 {
-    // TODO: site locking so we can do multiple dumps in parallel
     if (!isset($site_config['url']))
     {
         better_die("'url' not set for site {$k}");
@@ -73,6 +93,30 @@ foreach ($sites_config as $k => $site_config)
     {
         better_die("{$site_config['dump_path']} is not writable");
     }
+
+    // Site locking so we can dump many sites in parallel
+    $lockfile = "{$lockfile_path}/{$lockfile_prefix}" . md5(serialize($site_config)) . '.pid';
+    //echo "DEBUG: pid={$pid}, lockfile={$lockfile}\n";
+    if (file_exists($lockfile))
+    {
+        // File exists, check if the process_id within is valid
+        $check_pid = (int)trim(file_get_contents($lockfile));
+        $parent_pid = posix_getsid($check_pid);
+        if (   !empty($parent_pid)
+            && is_numeric($parent_pid))
+        {
+            //echo "DEBUG: {$lockfile} exists and containts valid PID {$check_pid}, skipping this site\n";
+            continue;
+        }
+        else
+        {
+            // Lockfile contains invalid PID
+            echo "\nWARN: {$lockfile} exists but contains INVALID PID {$check_pid}, previous run crashed ?\n";
+            echo "      Removing the stale lockfile and continuing\n";
+            unlink($lockfile);
+        }
+    }
+    file_put_contents($lockfile, $pid);
 
     /**
      * Run pre-dump script, continue to next site if returns nonzero code
@@ -88,6 +132,7 @@ foreach ($sites_config as $k => $site_config)
     {
         echo "command: {$pre_dump_cmd} exited with status {$pre_dump_ret}\n";
         $all_ok = false;
+        unlink($lockfile);
         continue;
     }
     
@@ -316,9 +361,8 @@ EOD;
         }
     }
 
-
     /**
-     * Run pre-dump script, continue to next site if returns nonzero code
+     * Run post-dump script
      */
     $post_dump_ret = 0;
     if (   isset($site_config['post_dump_script'])
@@ -333,6 +377,7 @@ EOD;
         echo "command: {$post_dump_cmd} exited with status {$post_dump_ret}\n";
         $all_ok = false;
     }
+    unlink($lockfile);
 }
 
 if (!$all_ok)
