@@ -513,7 +513,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         }
 
         // TODO: What if the icon is not in stock-icons/16x16 ?? especially the ->get_icon should probably be able to specify components static path
-        $icon = "<img src='" . MIDCOM_STATIC_URL . "/stock-icons/16x16/{$icon}' align='absmiddle' border='0' alt='{$object_class}'/> ";
+        $icon = "<img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/{$icon}\" align=\"absmiddle\" border=\"0\" alt=\"{$object_class}\" /> ";
         debug_pop();
         return $icon;
     }
@@ -822,6 +822,38 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
     }
 
     /**
+     * Get an object, deleted or not
+     * 
+     * @static
+     * @access public
+     * @param string $guid    GUID of the object
+     * @param string $type    MgdSchema type
+     * @return mixed          MgdSchema object
+     */
+    function get_object($guid, $type)
+    {
+        static $objects = array();
+
+        if (!isset($objects[$guid]))
+        {
+            $qb = new midgard_query_builder($type);
+            $qb->add_constraint('guid', '=', $guid);
+            $qb->include_deleted();
+            $results = $qb->execute();
+            if (count($results) == 0)
+            {
+                $objects[$guid] = null;
+            }
+            else
+            {
+                $objects[$guid] = $results[0];
+            }
+        }
+
+        return $objects[$guid];
+    }
+
+    /**
      * Get the root level classname for given class, statically callable
      *
      * @param string $classname to get the baseclass for
@@ -867,9 +899,10 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      * @param array $exclude       IDs that will be excluded from the copying
      * @param boolean $parameters  Switch to determine if the parameters should be copied
      * @param boolean $metadata    Switch to determine if the metadata should be copied (excluding created and published)
+     * @param boolean $attachments Switch to determine if the attachments should be copied (creates only a new link, doesn't duplicate the content)
      * @return mixed               False on failure, newly created MgdSchema root object on success
      */
-    static public function copy_object_tree($source, $parent, $exclude = array(), $parameters = true, $metadata = true)
+    static public function copy_object_tree($source, $parent, $exclude = array(), $parameters = true, $metadata = true, $attachments = true)
     {
         // Copy the root object
         $root = midcom_helper_reflector::copy_object($source, $parent, $parameters, $metadata);
@@ -898,7 +931,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
                     continue;
                 }
                 
-                midcom_helper_reflector::copy_object_tree($child, $root, $exclude, $parameters, $metadata);
+                midcom_helper_reflector::copy_object_tree($child, $root, $exclude, $parameters, $metadata, $attachments);
             }
         }
         
@@ -922,9 +955,10 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      * @param mixed $parent        MgdSchema or MidCOM db object, predefined array or ID of the parent object
      * @param boolean $parameters  Switch to determine if the parameters should be copied
      * @param boolean $metadata    Switch to determine if the metadata should be copied (excluding created and published)
+     * @param boolean $attachments Switch to determine if the attachments should be copied (creates only a new link, doesn't duplicate the content)
      * @return mixed               False on failure, newly created MgdSchema object on success
      */
-    static public function copy_object($source, $parent, $parameters = true, $metadata = true)
+    static public function copy_object($source, $parent, $parameters = true, $metadata = true, $attachments = true)
     {
         // Get the baseclass of the object
         if (is_object($source))
@@ -1051,6 +1085,12 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             }
         }
         
+        // Attachments special case
+        if (is_a($target, 'midcom_baseclasses_database_attachment'))
+        {
+            $target->_duplicate = true;
+        }
+        
         if (!$target->create())
         {
             // Copying failed
@@ -1072,6 +1112,16 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
                 {
                     $target->set_parameter($domain, $name, $value);
                 }
+            }
+        }
+        
+        if ($attachments)
+        {
+            foreach ($source_object->list_attachments() as $attachment)
+            {
+                $duplicate = midcom_helper_reflector::copy_object($attachment, $target, $parameters, $metadata, false);
+                $duplicate->parentguid = $target->guid;
+                $duplicate->update();
             }
         }
         
@@ -1109,12 +1159,19 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             'reflector' => new midcom_helper_reflector($object),
         );
         
+        // Try to get the parent property for determining, which property should be
+        // used to point the parent of the new object. Attachments are a special case.
+        if (!is_a($object, 'midcom_baseclasses_database_attachment'))
+        {
+            $parent_property = midgard_object_class::get_property_parent($mgdschema_object);
+        }
+        else
+        {
+            $parent_property = 'parentobject';
+        }
+        
         // Get the class label
         $target['label'] = $target['reflector']->get_label_property();
-        
-        // Try to get the parent property for determining, which property should be
-        // used to point the parent of the new object
-        $parent_property = midgard_object_class::get_property_parent($mgdschema_object);
         
         // Try once more to get the parent property, but now try up as a backup
         if (!$parent_property)
