@@ -76,9 +76,25 @@ if (!is_readable($conffile))
 {
     better_die("File {$conffile} not readable\n");
 }
+$process_site = -1; // all
+if (   isset($argv[2])
+    && !empty($argv[2]))
+{
+    $process_site = (int)$argv[2];
+}
 $pid = posix_getpid();
 $all_ok = true;
 eval('$sites_config = array(' . file_get_contents($conffile) . ');');
+if (   $process_site > 0)
+{
+    if (!isset($sites_config[$process_site]))
+    {
+        better_die("Key {$process_site} doesn't exists in $conffile");
+    }
+    // Overwrite the sites_config array to contain only the site to be processed
+    $site_config = $sites_config[$process_site];
+    $sites_config = array($site_config);
+}
 foreach ($sites_config as $k => $site_config)
 {
     if (!isset($site_config['url']))
