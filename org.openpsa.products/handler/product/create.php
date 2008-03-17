@@ -191,11 +191,17 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
         else
         {
             $parent = new org_openpsa_products_product_group_dba($this->_request_data['up']);
-            if (!$parent)
+            if (   !$parent
+                || !$parent->guid)
             {
                 return false;
             }
             $parent->require_do('midgard:create');
+            
+            if ($parent->orgOpenpsaObtype == ORG_OPENPSA_PRODUCTS_PRODUCT_GROUP_TYPE_SMART)
+            {
+                return false;
+            }
         }
 
         $data['selected_schema'] = $args[1];

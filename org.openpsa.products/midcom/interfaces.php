@@ -52,6 +52,8 @@ class org_openpsa_products_interface extends midcom_baseclasses_components_inter
         // Component that a product is based on, usually something
         // acquired from a supplier
         define('ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_COMPONENT', 3000);
+        
+        define('ORG_OPENPSA_PRODUCTS_PRODUCT_GROUP_TYPE_SMART', 1000);
 
         return true;
     }

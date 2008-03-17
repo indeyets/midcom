@@ -210,11 +210,50 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
         {
             $product_qb = new org_openpsa_qbpager('org_openpsa_products_product_dba', 'org_openpsa_products_product_dba');
             $product_qb->results_per_page = $this->_config->get('products_per_page');
-            if ($handler_id == 'list_intree')
+            if (   $data['group']
+                && $data['group']->orgOpenpsaObtype == ORG_OPENPSA_PRODUCTS_PRODUCT_GROUP_TYPE_SMART)
+            {
+                // Smart group, query products by stored constraints
+                $constraints = $data['group']->list_parameters('org.openpsa.products:constraints');
+                if (empty($constraints))
+                {
+                    $product_qb->add_constraint('productGroup', '=', $data['parent_group']);
+                }
+                
+                $reflector = new midgard_reflection_property('org_openpsa_products_product');
+                
+                foreach ($constraints as $constraint_string)
+                {
+                    $constraint_members = explode(',', $constraint_string);
+                    if (count($constraint_members) != 3)
+                    {
+                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Invalid constraint '{$constraint_string}'");
+                    }
+                    
+                    // Reflection is needed here for safety
+                    $field_type = $reflector->get_midgard_type($constraint_members[0]);
+                    switch ($field_type)
+                    {
+                        case 4:
+                            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Invalid constraint: '{$constraint_members[0]}' is not a Midgard property");
+                        case MGD_TYPE_INT:
+                            $constraint_members[2] = (int) $constraint_members[2];
+                            break;
+                        case MGD_TYPE_FLOAT:
+                            $constraint_members[2] = (float) $constraint_members[2];
+                            break; 
+                        case MGD_TYPE_BOOLEAN:
+                            $constraint_members[2] = (boolean) $constraint_members[2];
+                            break;
+                    }
+                    $product_qb->add_constraint($constraint_members[0], $constraint_members[1], $constraint_members[2]);
+                }
+            }
+            elseif ($handler_id == 'list_intree')
             {
                 $product_qb->add_constraint('productGroup', '=', $data['parent_category_id']);
             }
-            else if ($handler_id == 'listall')
+            elseif ($handler_id == 'listall')
             {
                 $product_qb->add_constraint('productGroup', 'IN', $categories_in);
             }
@@ -299,7 +338,12 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
         if ($data['group'])
         {
             $allow_create_group = $data['group']->can_do('midgard:create');
-            $allow_create_product = $data['group']->can_do('midgard:create');
+            $allow_create_product = $data['group']->can_do('midgard:create');            
+            
+            if ($data['group']->orgOpenpsaObtype == ORG_OPENPSA_PRODUCTS_PRODUCT_GROUP_TYPE_SMART)
+            {
+                $allow_create_product = false;
+            }
         }
         else
         {
