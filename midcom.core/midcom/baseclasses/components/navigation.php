@@ -249,7 +249,5 @@ class midcom_baseclasses_components_navigation
     {
         return true;
     }
-
 }
-
 ?>

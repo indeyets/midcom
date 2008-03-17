@@ -36,6 +36,16 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
      * Internal tracking state variable, TRUE if the attachment has a handle opened in write mode
      */
     var $_open_write_mode = false;
+    
+    /**
+     * This switch will tell the checkup routines whether the current creation is going to
+     * duplicate the object or not. It is used to create a new blob entry when copying an object
+     * containing this attachment.
+     * 
+     * @var boolean
+     * @access public
+     */
+    var $_duplicate = false;
 
     function __construct($id = null)
     {
@@ -350,7 +360,12 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         {
             return false;
         }
-        $this->location = $this->_create_attachment_location();
+        
+        if (!$this->_duplicate)
+        {
+            $this->location = $this->_create_attachment_location();
+        }
+        
         return true;
     }
 
@@ -406,12 +421,19 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
 
         if ($GLOBALS['midcom_config']['attachment_cache_enabled'])
         {
-            // Remove attachment cache
-            $subdir = substr($this->guid, 0, 1);
-            $filename = "{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$this->guid}_{$this->name}";
-            if (file_exists($filename))
+            // Check if other attachments point to the same file
+            $mc = midcom_baseclasses_database_attachment::new_collector('name', $this->name);
+            $mc->execute();
+            
+            if (count($mc->list_keys()) > 0)
             {
-                @unlink($filename);
+                // Remove attachment cache
+                $subdir = substr($this->guid, 0, 1);
+                $filename = "{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$this->guid}_{$this->name}";
+                if (file_exists($filename))
+                {
+                    @unlink($filename);
+                }
             }
         }
 
@@ -497,8 +519,5 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         fclose($source);
         return $result;
     }
-
-
 }
-
 ?>
