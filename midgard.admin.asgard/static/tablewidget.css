@@ -43,6 +43,10 @@
     background-color: #eeeeef;
 }
 
+.table_widget tr.odd td
+{
+    background-odd: white;
+}
 .table_widget tr.row_selected td
 {
     background-color: #C0CEDE;

@@ -8,10 +8,14 @@ body
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
-  font-size: 10pt;
   background-color: white;
   color: black;
+}
+
+body, td
+{
+  font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
+  font-size: 10pt;
 }
 
 textarea
