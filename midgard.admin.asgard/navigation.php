@@ -52,6 +52,8 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         $this->_object_path = $this->get_object_path();
         $this->_request_data =& $request_data;
 
+        midgard_admin_asgard_plugin::get_default_mode();
+
         $this->root_types = midcom_helper_reflector_tree::get_root_classes();
 
         if (array_key_exists('current_type', $this->_request_data))
@@ -199,7 +201,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                         $label = "#{$child->id}";
                     }
 
-                    echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$child->guid}/\" title=\"GUID: {$child->guid}, ID: {$child->id}\">{$icon}{$label}</a>\n";
+                    echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/{$this->_request_data['default_mode']}/{$child->guid}/\" title=\"GUID: {$child->guid}, ID: {$child->id}\">{$icon}{$label}</a>\n";
 
 
                     if ($selected)
@@ -242,7 +244,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                 $label = "#oid_{$object->id}";
             }
 
-            echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$object->guid}/\" title=\"GUID: {$object->guid}, ID: {$object->id}\">{$icon}{$label}</a>\n";
+            echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/{$this->_request_data['default_mode']}/{$object->guid}/\" title=\"GUID: {$object->guid}, ID: {$object->id}\">{$icon}{$label}</a>\n";
 
             if ($selected)
             {

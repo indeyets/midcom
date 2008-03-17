@@ -245,7 +245,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Copy object
-             * 
+             *
              * Match /asgard/object/copy/<guid>/
              */
             'object_copy' => array
@@ -256,7 +256,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             ),
             /**
              * Copy object tree
-             * 
+             *
              * Match /asgard/object/copy/tree/<guid>/
              */
             'object_copy_tree' => array
@@ -521,32 +521,44 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     }
 
     /**
+     * Static helper function that sets the default object mode
+     */
+    function get_default_mode()
+    {
+        //only set mode once per request
+        if (!empty($this->_request_data['default_mode']))
+        {
+            return;
+        }
+        if ($this->_config->get('edit_mode') == 1)
+        {
+            $this->_request_data['default_mode'] = 'edit';
+        }
+        else
+        {
+            $this->_request_data['default_mode'] = 'view';
+        }
+        if (midgard_admin_asgard_plugin::get_preference('edit_mode') == 1)
+        {
+            $this->_request_data['default_mode'] = 'edit';
+        }
+        else
+        {
+            $this->_request_data['default_mode'] = 'view';
+        }
+    }
+
+    /**
      * Static method for populating the object toolbar
      */
     function get_object_toolbar($object, $handler_id, &$data)
     {
         $toolbar = new midcom_helper_toolbar();
-        
-        // Check if the user has configured to enter straight to the editing mode
-        if ($this->_config->get('edit_mode') == 1)
-        {
-            $redirect = true;
-        }
-        else
-        {
-            $redirect = false;
-        }
-        if (midgard_admin_asgard_plugin::get_preference('edit_mode') == 1)
-        {
-            $redirect = true;
-        }
-        else
-        {
-            $redirect = false;
-        }
-        
+
+        midgard_admin_asgard_plugin::get_default_mode();
+
         // Show view toolbar button, if the user hasn't configured to use straight the edit mode
-        if (!$redirect)
+        if ($this->_request_data['default_mode'] == 'view')
         {
             $toolbar->add_item
             (
@@ -572,7 +584,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 )
             );
         }
-        
+
         if ($object->can_do('midgard:update'))
         {
             $toolbar->add_item
@@ -585,7 +597,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 )
             );
         }
-        
+
         if ($object->can_do('midgard:create'))
         {
             if (midcom_helper_reflector_tree::get_child_objects($object))
