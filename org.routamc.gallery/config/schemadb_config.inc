@@ -27,10 +27,6 @@
                 ),
             ),
             'widget' => 'select',
-            'start_fieldgroup' => array
-            (
-                'title' => 'groovy',
-            ),
         ),
         'handpicked_photos' => array
         (
@@ -45,28 +41,26 @@
                  'master_is_id' => true,
                  'member_fieldname' => 'photo',
             ),
-            'widget' => 'universalchooser',
+            'widget' => 'chooser',
             'widget_config' => array
             (
-                'class'       => 'org_routamc_photostream_photo_dba',
-                'component'   => 'org.routamc.photostream',
-                'titlefield'  => 'thumbnail_html',
-                //'titlefield'  => 'title',
-                'idfield'     => 'id',
-                'constraints' => array
-                (
-                ),
-                'searchfields'  => array
+                'class' => 'org_routamc_photostream_photo_dba',
+                'component' => 'org.routamc.photostream',
+                'id_field' => 'id',
+                'searchfields' => array
                 (
                     'title',
                     'description',
                 ),
-                'orders'        => array
+                'result_headers' => array
                 (
-                    array('taken' => 'DESC'),
+                    array
+                    (
+                        'title' => 'Kuva',
+                        'name' => 'thumbnail_html',
+                    ),
                 ),
             ),
-            'end_fieldgroup' => '',
         ),
         'photos_per_page' => array
         (
