@@ -1,97 +1,97 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE fi
 
 ---STRING create group
-Create group
+Luo ryhmä
 ---STRINGEND
 
 ---STRING delete group
-Delete group
+Poista ryhmä
 ---STRINGEND
 
 ---STRING delete group confirmation message
-Are you sure that you want to delete this group?
+Oletko varma että haluat poistaa ryhmän?
 ---STRINGEND
 
 ---STRING edit group
-Edit group
+Muokkaa ryhmää
 ---STRINGEND
 
 ---STRING email
-Email
+Sähköposti
 ---STRINGEND
 
 ---STRING firstname
-First name
+Etunimi
 ---STRINGEND
 
 ---STRING group
-Group to display
+Näytettävä pääryhmä
 ---STRINGEND
 
 ---STRING job title
-Title
+Titteli
 ---STRINGEND
 
 ---STRING lastname
-Last name
+Sukunimi
 ---STRINGEND
 
 ---STRING list settings
-List settings
+Listan asetukset
 ---STRINGEND
 
 ---STRING net.nemein.organizations
-Organizations
+Organisaatiot
 ---STRINGEND
 
 ---STRING no groups found.
-There are no groups in this group.
+Pääryhmän alla ei ole ryhmiä.
 ---STRINGEND
 
 ---STRING no permissions for
-No permissions for
+Ei oikeuksia
 ---STRINGEND
 
 ---STRING none
-None
+Ei ole
 ---STRINGEND
 
 ---STRING organizations
-Organizations
+Organisaatiot
 ---STRINGEND
 
 ---STRING organizations folder
-Organizations folder
+Organisaatiokansio
 ---STRINGEND
 
 ---STRING select
-Select
+Valitse
 ---STRINGEND
 
 ---STRING select group to display
-Select group to display
+Valitse näytettävä ryhmä
 ---STRINGEND
 
 ---STRING select member to display first
-Select member to display first
+Valitse ensiksi näytettävä jäsen
 ---STRINGEND
 
 ---STRING view group
-View group
+Näytä ryhmä
 ---STRINGEND
 
 ---STRING work phone
-Work phone
+Työpuhelin
 ---STRINGEND
 
 ---STRING your account has insufficient permissions
-Your account has insufficient permissions to access details of this group
+Puutteelliset käyttöoikeudet ryhmän katseluun
 ---STRINGEND
 
 ---STRING location
-Location
+Sijainti
 ---STRINGEND
 
