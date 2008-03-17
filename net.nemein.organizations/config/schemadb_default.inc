@@ -11,6 +11,10 @@
             'type'        => 'text',
             'widget'      => 'text',
             'index_method' => 'noindex',
+            'write_privilege' => array
+            (
+                'privilege' => 'midcom:urlname',
+            ),
         ),
         'official' => array 
         (
@@ -28,40 +32,12 @@
             'storage'     => 'email',
             'validation'  => 'email',
         ),
-        'street' => array 
+        'location' => array 
         (
-            'title'       => 'street address',
-            'type'        => 'text',
-            'widget'      => 'text',
-            'storage'     => 'street'
-        ),
-        'street' => array 
-        (
-            'title'       => 'street address',
-            'type'        => 'text',
-            'widget'      => 'text',
-            'storage'     => 'street'
-        ),
-        'postcode' => array 
-        (
-            'title'       => 'postal code',
-            'type'        => 'text',
-            'widget'      => 'text',
-            'storage'     => 'postcode'
-        ),
-        'city' => array 
-        (
-            'title'       => 'city',
-            'type'        => 'text',
-            'widget'      => 'text',
-            'storage'     => 'city'
-        ),
-        'country' => array 
-        (
-            'title'       => 'country',
-            'type'        => 'text',
-            'widget'      => 'text',
-            'storage'     => 'country'
+            'title'       => 'location',
+            'type'        => 'position',
+            'widget'      => 'position',
+            'storage'     => null
         ),
         'description' => array 
         (

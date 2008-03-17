@@ -40,6 +40,15 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
         }
 
 
+        // Match /config/
+        $this->_request_switch['config'] = Array
+        (
+            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
+            'schemadb' => 'file:/net/nemein/organizations/config/schemadb_config.inc',
+            'schema' => 'config',
+            'fixed_args' => Array('config'),
+        );
+
         // The view handler checks against GUIDs or usernames. The index handler
         // takes care to avoid users named "vcard.vcf" and "foaf.rdf".
         $this->_request_switch['view-group'] = Array
@@ -106,15 +115,6 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
             'handler' => Array('net_nemein_organizations_handler_search', 'search'),
             'fixed_args' => Array('search'),
         );
-
-        // Match /config/
-        $this->_request_switch['config'] = Array
-        (
-            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
-            'schemadb' => 'file:/net/nemein/organizations/config/schemadb_config.inc',
-            'schema' => 'config',
-            'fixed_args' => Array('config'),
-        );
     }
 
     /**
@@ -164,7 +164,7 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
      *
      * All 1 argument handlers are filtered here.
      *
-     * @param org_openpsa_contacts_group The group to query.
+     * @param midcom_db_group The group to query.
      * @return string The URL to use.
      */
     function get_url($group)

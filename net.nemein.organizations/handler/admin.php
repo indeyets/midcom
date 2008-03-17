@@ -26,7 +26,7 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
     /**
      * The group to operate on
      *
-     * @var org_openpsa_contacts_group
+     * @var midcom_db_group
      * @access private
      */
     var $_group = null;
@@ -159,7 +159,7 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
      */
     function _handler_edit($handler_id, $args, &$data)
     {
-        $this->_group = new org_openpsa_contacts_group($args[0]);
+        $this->_group = new midcom_db_group($args[0]);
         if (! $this->_group)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The group {$args[0]} was not found.");
@@ -246,7 +246,7 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
      */
     function _handler_delete($handler_id, $args, &$data)
     {
-        $this->_group = new org_openpsa_contacts_group($args[0]);
+        $this->_group = new midcom_db_group($args[0]);
         if (! $this->_group)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The article {$args[0]} was not found.");
@@ -335,7 +335,7 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
      */
     function & dm2_create_callback (&$controller)
     {
-        $group = new org_openpsa_contacts_group($this->_config->get('group'));
+        $group = new midcom_db_group($this->_config->get('group'));
         if (! $group)
         {
             $guid = $this->_config->get('group');
@@ -344,7 +344,7 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
             // This will exit.
         }
 
-        $this->_group = new org_openpsa_contacts_group();
+        $this->_group = new midcom_db_group();
         $this->_group->owner = $group->id;
         if (! $this->_group->create())
         {

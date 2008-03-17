@@ -20,7 +20,7 @@
     'dependencies' => array
     (
         'midcom.helper.datamanager2' => array(),
-        'org.openpsa.contacts' => array(),
+        'org.routamc.positioning' => array(),
         'midcom' => array(),
     ),
 ),

@@ -42,8 +42,6 @@ class net_nemein_organizations_interface extends midcom_baseclasses_components_i
      */
     function _on_initialize()
     {
-        $_MIDCOM->componentloader->load('org.openpsa.contacts');
-        
         return true;
     }
     

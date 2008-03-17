@@ -18,7 +18,7 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
     /**
      * The group to display in single view mode.
      *
-     * @var org_openpsa_contacts_group
+     * @var midcom_db_group
      * @access private
      */
     var $_group = null;
@@ -103,9 +103,9 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
         {
             return false;
         }
-        $qb = org_openpsa_contacts_group::new_query_builder();
+        $qb = midcom_db_group::new_query_builder();
 
-        $parent = new org_openpsa_contacts_group($this->_config->get('group'));
+        $parent = new midcom_db_group($this->_config->get('group'));
         $qb->add_constraint('owner', '=', $parent->id);
         $qb->begin_group('OR');
             $qb->add_constraint('name', '=', $args[0]);
@@ -129,7 +129,7 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
             }
             elseif (mgd_is_guid($args[0]))
             {
-                $group = new org_openpsa_contacts_group($args[0]);
+                $group = new midcom_db_group($args[0]);
                 if (   !$group
                     || $group->owner != $parent->id)
                 {
@@ -249,9 +249,9 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
      */
     function _load_index_groups()
     {
-        $qb = org_openpsa_contacts_group::new_query_builder();
+        $qb = midcom_db_group::new_query_builder();
 
-        $parent = new org_openpsa_contacts_group($this->_config->get('group'));
+        $parent = new midcom_db_group($this->_config->get('group'));
         $qb->add_constraint('owner', '=', $parent->id);
 
         if ($this->_alpha_filter)

@@ -218,9 +218,9 @@ class net_nemein_organizations_handler_search extends midcom_baseclasses_compone
         $filtered_groups = array();
         $php_constraints = array();
 
-        $qb = org_openpsa_contacts_group::new_query_builder();
+        $qb = midcom_db_group::new_query_builder();
 
-        $group = new org_openpsa_contacts_group($this->_config->get('group'));
+        $group = new midcom_db_group($this->_config->get('group'));
         $qb->add_constraint('owner', '=', $group->id);
         foreach ($this->_config->get('index_order') as $ordering)
         {
