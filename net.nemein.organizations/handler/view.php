@@ -109,7 +109,7 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
         $qb->add_constraint('owner', '=', $parent->id);
         $qb->begin_group('OR');
             $qb->add_constraint('name', '=', $args[0]);
-            //$qb->add_constraint('guid', '=', $args[0]);
+            $qb->add_constraint('guid', '=', $args[0]);
         $qb->end_group();
 
         $qb->set_limit(1);
@@ -422,5 +422,67 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
         {
             midcom_show_style('show-index-empty');
         }
+    }
+    
+    /**
+     * Renders list of groups nearest to given location.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array &$data The local request data.
+     * @return boolean Indicating success.
+     */
+    function _handler_nearest($handler_id, $args, &$data)
+    {
+        if (!$this->_config->get('group'))
+        {
+            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "config.html");
+        }
+        
+        if (   !isset($_GET['location'])
+            || !is_array($_GET['location']))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Missing location query attributes");
+        }
+        
+        $_MIDCOM->load_library('org.routamc.positioning');
+        $geocoder = org_routamc_positioning_geocoder::create($this->_config->get('show_nearest_geocoder'));
+        $results = $geocoder->geocode($_GET['location']);
+        if (!$results)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Failed to geocode query: " . $geocoder->error);
+        }
+        $center = $results[0];
+        $this->_groups = org_routamc_positioning_utils::get_closest('midcom_baseclasses_database_group', $center, $this->_config->get('show_nearest'), $modifier = 0.15);
+
+        $this->_load_datamanager();
+
+        $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
+        $this->_prepare_request_data();
+        
+        $data['location_string'] = org_routamc_positioning_utils::pretty_print_location($center['latitude'], $center['longitude']);
+        $data['view_title'] = "{$this->_topic->extra}: " . sprintf($this->_l10n->get('nearest groups to %s'), $data['location_string']);
+        $_MIDCOM->set_pagetitle($data['view_title']);
+
+        $tmp = Array();
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "nearest/",
+            MIDCOM_NAV_NAME => sprintf($this->_l10n->get('nearest groups to %s'), $data['location_string']),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+
+        return true;
+    }
+    
+    /**
+     * Renders the list of latest groups
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
+    function _show_nearest($handler_id, &$data)
+    {
+        $this->_show_index($handler_id, &$data);
     }
 }

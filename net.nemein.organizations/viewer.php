@@ -38,7 +38,12 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
                 'variable_args' => 1,
             );
         }
-
+        
+        $this->_request_switch['view-index-nearest'] = Array
+        (
+            'handler' => Array('net_nemein_organizations_handler_view', 'nearest'),
+            'fixed_args' => 'nearest',
+        );
 
         // Match /config/
         $this->_request_switch['config'] = Array

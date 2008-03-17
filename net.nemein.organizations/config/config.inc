@@ -14,6 +14,9 @@
 // Groups columns in the index view
 'groups_in_row' => 3,
 
+'show_nearest' => 3,
+'show_nearest_geocoder' => 'city',
+
 // Index view ordering sequence. This is a list of midcom_core_querybuidler::add_order
 // compatible field names. Use the "reverse" prefix for descending order.
 // Note, that these orders are relative to the *membership* table, not to the *group*

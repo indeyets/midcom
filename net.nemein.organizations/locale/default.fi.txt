@@ -63,6 +63,10 @@ Ei oikeuksia
 Ei ole
 ---STRINGEND
 
+---STRING official name
+Virallinen nimi
+---STRINGEND
+
 ---STRING organizations
 Organisaatiot
 ---STRINGEND
@@ -95,7 +99,7 @@ Työpuhelin
 Puutteelliset käyttöoikeudet ryhmän katseluun
 ---STRINGEND
 
----STRING official name
-Virallinen nimi
+---STRING nearest groups to %s
+Paikkaa %s lähimmät
 ---STRINGEND
 

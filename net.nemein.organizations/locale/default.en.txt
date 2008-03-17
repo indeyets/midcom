@@ -63,6 +63,10 @@ No permissions for
 None
 ---STRINGEND
 
+---STRING official name
+Official name
+---STRINGEND
+
 ---STRING organizations
 Organizations
 ---STRINGEND
@@ -95,7 +99,7 @@ Work phone
 Your account has insufficient permissions to access details of this group
 ---STRINGEND
 
----STRING official name
-Official name
+---STRING nearest groups to %s
+Nearest to %s
 ---STRINGEND
 
