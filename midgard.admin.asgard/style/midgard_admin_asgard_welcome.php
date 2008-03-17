@@ -200,8 +200,8 @@ if (count($data['revised']) > 0)
     echo "        // <![CDATA[\n";
     echo "            \$j('#batch_process').tablesorter(\n";
     echo "            {\n ";
-    echo "                widgets: ['zebra'],";
-    echo "                sortList: [[1,0]],\n";
+    echo "                widgets: ['zebra'],\n";
+    echo "                sortList: [[1,0]]\n";
     echo "            });\n";
     echo "        // ]]>\n";
     echo "    </script>\n";

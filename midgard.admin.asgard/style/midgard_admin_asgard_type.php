@@ -112,8 +112,8 @@ if (isset($data['search_results']))
         echo "        // <![CDATA[\n";
         echo "            \$j('#search_results').tablesorter(\n";
         echo "            {\n ";
-        echo "                widgets: ['zebra'],";
-        echo "                sortList: [[0,0]],\n";
+        echo "                widgets: ['zebra'],\n";
+        echo "                sortList: [[0,0]]\n";
         echo "            });\n";
         echo "        // ]]>\n";
         echo "    </script>\n";
