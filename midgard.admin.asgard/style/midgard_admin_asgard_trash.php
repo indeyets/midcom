@@ -5,7 +5,7 @@ echo $_MIDCOM->i18n->get_string('trash', 'midgard.admin.asgard');
 echo "</h2>";
 ?>
 
-<table class="deleted">
+<table class="deleted table_widget" id="deleted">
     <thead>
         <tr>
             <th><?php echo $_MIDCOM->i18n->get_string('type', 'midgard.admin.asgard'); ?></th>
@@ -30,3 +30,12 @@ echo "</h2>";
         ?>
     </tbody>
 </table>
+<script type="text/javascript">
+     // <![CDATA[
+        $j('#deleted').tablesorter(
+        {
+            widgets: ['zebra'],
+            sortList: [[0,0]]
+        });
+    // ]]>
+</script>
