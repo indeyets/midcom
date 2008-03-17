@@ -73,6 +73,23 @@ foreach ($sites_config as $k => $site_config)
     {
         better_die("{$site_config['dump_path']} is not writable");
     }
+
+    /**
+     * Run pre-dump script, continue to next site if returns nonzero code
+     */
+    $pre_dump_ret = 0;
+    if (   isset($site_config['pre_dump_script'])
+        && !empty($site_config['pre_dump_script']))
+    {
+        $pre_dump_cmd = $site_config['pre_dump_script'] . ' ' . escapeshellarg($site_config['url']);
+        system($pre_dump_cmd, $pre_dump_ret);
+    }
+    if ($pre_dump_ret !== 0)
+    {
+        echo "command: {$pre_dump_cmd} exited with status {$pre_dump_ret}\n";
+        $all_ok = false;
+        continue;
+    }
     
     /**
      * wget dump
@@ -297,6 +314,24 @@ EOD;
             echo "command: {$rsync_cmd} exited with status {$rsync_ret}\n";
             $all_ok = false;
         }
+    }
+
+
+    /**
+     * Run pre-dump script, continue to next site if returns nonzero code
+     */
+    $post_dump_ret = 0;
+    if (   isset($site_config['post_dump_script'])
+        && !empty($site_config['post_dump_script']))
+    {
+        $all_ok_int = (int)$all_ok;
+        $post_dump_cmd = $site_config['post_dump_script'] . ' ' . escapeshellarg($site_config['url']) . " {$all_ok_int} {$wget_ret} {$rsync_ret}";
+        system($post_dump_cmd, $post_dump_ret);
+    }
+    if ($post_dump_ret !== 0)
+    {
+        echo "command: {$post_dump_cmd} exited with status {$post_dump_ret}\n";
+        $all_ok = false;
     }
 }
 
