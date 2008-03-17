@@ -261,7 +261,7 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
         if ($this->_preview)
         {
             // Populate preview page with values from form
-            $data['preview_page'] = clone($this->_page);
+            $data['preview_page'] = $this->_page;
             foreach ($this->_controller->datamanager->schema->fields as $name => $type_definition)
             {
                 if (!is_a($this->_controller->datamanager->types[$name], 'midcom_helper_datamanager2_type_text'))
