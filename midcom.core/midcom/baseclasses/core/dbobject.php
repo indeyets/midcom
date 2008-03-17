@@ -452,9 +452,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function delete(&$object)
     {
-        debug_push_class($object, __FUNCTION__);
-
-
         // Delete all extensions:
         // Attachments can't have attachments so no need to query those
         if (!is_a($object, 'midcom_baseclasses_database_attachment'))
@@ -462,8 +459,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             $list = $object->list_attachments();
             foreach ($list as $attachment)
             {
-                if (! $attachment->delete())
+                if (!$attachment->delete())
                 {
+                    debug_push_class($object, __FUNCTION__);
                     debug_add("Failed to delete attachment ID {$attachment->id}", MIDCOM_LOG_ERROR);
                     // debug_print_r('Full record:', $attachment);
                     debug_pop();
@@ -480,6 +478,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             {
                 if (! $parameter->delete())
                 {
+                    debug_push_class($object, __FUNCTION__);
                     debug_add("Failed to delete parameter ID {$parameter->id}", MIDCOM_LOG_ERROR);
                     debug_pop();
                     return false;
@@ -488,7 +487,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
         if (! midcom_baseclasses_core_dbobject::_delete_privileges($object))
         {
-            debug_add('Failed to delete the object privileges.');
+            debug_push_class($object, __FUNCTION__);
+            debug_add('Failed to delete the object privileges.', MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
@@ -496,7 +496,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         // Finally, delete the object itself
         if (! $object->__exec_delete())
         {
-            debug_add("Failed to create the record, last Midgard error: " . mgd_errstr());
+            debug_push_class($object, __FUNCTION__);
+            debug_add("Failed to create the record, last Midgard error: " . mgd_errstr(), MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
@@ -505,7 +506,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         $object->metadata->deleted = true;
         midcom_baseclasses_core_dbobject::delete_post_ops($object);
 
-        debug_pop();
         return true;
     }
 
@@ -567,8 +567,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      **/
     function delete_post_ops(&$object)
     {
-        debug_push_class($object, __FUNCTION__);
-
         $object->_on_deleted();
         $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_DELETE, $object);
         if ($object->_use_rcs) 
@@ -585,11 +583,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 || is_a($object, 'midgard_pageelement'))
             )
         {
-            debug_add('invalidating Midgard page cache');
             mgd_cache_invalidate();
         }
-
-        debug_pop();
     }
     
     /**
@@ -1334,8 +1329,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function get_by_id(&$object, $id)
     {
-        debug_push_class($object, __FUNCTION__);
-
         $object->__exec_get_by_id((int) $id);
 
         if (   $object->id != 0
@@ -1343,6 +1336,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         {
             if (! $_MIDCOM->auth->can_do('midgard:read', $object))
             {
+                debug_push_class($object, __FUNCTION__);
                 debug_add("Failed to load object, read privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
                     MIDCOM_LOG_ERROR);
                 midcom_baseclasses_core_dbobject::_clear_object($object);
@@ -1355,14 +1349,13 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             $result = $object->_on_loaded();
             if (! $result)
             {
-                debug_add("The _on_loaded event handler returned false.");
                 midcom_baseclasses_core_dbobject::_clear_object($object);
             }
-            debug_pop();
             return $result;
         }
         else
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Failed to load the record identified by {$id}, last Midgard error was:" . mgd_errstr(), MIDCOM_LOG_INFO);
             debug_pop();
             return false;
@@ -1379,8 +1372,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function get_by_guid(&$object, $guid)
     {
-        debug_push_class($object, __FUNCTION__);
-
         $object->__exec_get_by_guid((string) $guid);
 
         if (   $object->id != 0
@@ -1388,6 +1379,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         {
             if (! $_MIDCOM->auth->can_do('midgard:read', $object))
             {
+                debug_push_class($object, __FUNCTION__);
                 debug_add("Failed to load object, read privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
                     MIDCOM_LOG_ERROR);
                 midcom_baseclasses_core_dbobject::_clear_object($object);
@@ -1400,14 +1392,13 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             $result = $object->_on_loaded();
             if (! $result)
             {
-                debug_add("The _on_loaded event handler returned false.");
                 midcom_baseclasses_core_dbobject::_clear_object($object);
             }
-            debug_pop();
             return $result;
         }
         else
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Failed to load the record identified by {$id}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
             debug_pop();
             return false;
@@ -1424,8 +1415,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function get_by_path(&$object, $path)
     {
-        debug_push_class($object, __FUNCTION__);
-
         $object->__exec_get_by_path((string) $path);
 
         if (   $object->id != 0
@@ -1433,6 +1422,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         {
             if (! $_MIDCOM->auth->can_do('midgard:read', $object))
             {
+                debug_push_class($object, __FUNCTION__);
                 debug_add("Failed to load object, read privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
                     MIDCOM_LOG_ERROR);
                 midcom_baseclasses_core_dbobject::_clear_object($object);
@@ -1445,14 +1435,13 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             $result = $object->_on_loaded();
             if (! $result)
             {
-                debug_add("The _on_loaded event handler returned false.");
                 midcom_baseclasses_core_dbobject::_clear_object($object);
             }
-            debug_pop();
             return $result;
         }
         else
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Failed to load the record identified by path {$path}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
             debug_pop();
             return false;
@@ -1727,8 +1716,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _list_parameters_domain(&$object, $domain)
     {
-        debug_push_class($object, __FUNCTION__);
-        
         // TODO: Switch to collector
         $query = new midgard_query_builder('midgard_parameter');
         $query->add_constraint('parentguid', '=', $object->guid);
@@ -1741,8 +1728,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
         if (count($result) == 0)
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Cannot retrieve the parameter {$domain} for {$object->__table__} ID {$object->id}; query execution failed, this is most probably an empty resultset.",
-                MIDCOM_LOG_DEBUG);
+                MIDCOM_LOG_INFO);
             debug_pop();
             return Array();
         }
@@ -1753,7 +1741,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             $return[$parameter->name] = $parameter->value;
         }
 
-        debug_pop();
         return $return;
     }
 
@@ -1768,8 +1755,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _list_parameters_all(&$object)
     {
-        debug_push_class($object, __FUNCTION__);
-        
         // TODO: Switch to collector
         $query = new midgard_query_builder('midgard_parameter');
         $query->add_constraint('parentguid', '=', $object->guid);
@@ -1781,6 +1766,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
         if (count($result) == 0)
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Cannot retrieve all parameters for {$object->__table__} ID {$object->id}; query execution failed, this is most probably an empty resultset.",
                 MIDCOM_LOG_DEBUG);
             debug_pop();
@@ -1794,7 +1780,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             $return[$parameter->domain][$parameter->name] = $parameter->value;
         }
 
-        debug_pop();
         return $return;
     }
 
@@ -1814,10 +1799,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function set_parameter(&$object, $domain, $name, $value)
     {
-        debug_push_class($object, __FUNCTION__);
-
         if (! $object->guid)
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add('Cannot set parameters on a non-persistant object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
@@ -1826,6 +1810,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if (   ! $_MIDCOM->auth->can_do('midgard:update', $object)
             || ! $_MIDCOM->auth->can_do('midgard:parameters', $object))
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Failed to set parameters, midgard:update or midgard:parameters on the {$object->__table__} ID {$object->id} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             debug_pop();
@@ -1855,7 +1840,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         */
 
         $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
-        debug_pop();
         return true;
     }
 
@@ -1871,7 +1855,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _create_parameter_object($object, $domain, $name, $value)
     {
-        debug_push_class($object, __FUNCTION__);
         $parameter = new midgard_parameter();
         $parameter->domain = $domain;
         $parameter->name = $name;
@@ -1879,7 +1862,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         $parameter->tablename = $object->__table__;
         $parameter->oid = $object->id;
         $parameter->parentguid = $object->guid;
-        debug_pop();
         return @$parameter->create();
     }
 
@@ -1901,10 +1883,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function delete_parameter(&$object, $domain, $name)
     {
-        debug_push_class($object, __FUNCTION__);
-
         if (! $object->guid)
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add('Cannot set parameters on a non-persistant object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
@@ -1913,6 +1894,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if (   ! $_MIDCOM->auth->can_do('midgard:update', $object)
             || ! $_MIDCOM->auth->can_do('midgard:parameters', $object))
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Failed to delete parameters, midgard:update or midgard:parameters on the {$object->__table__} ID {$object->id} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             debug_pop();
@@ -1933,7 +1915,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         $result = @$parameter->delete();
         */
         $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
-        debug_pop();
         return $result;
     }
 
@@ -1949,18 +1930,16 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function get_privileges(&$object)
     {
-        debug_push_class($object, __FUNCTION__);
-
         if (! $_MIDCOM->auth->can_do('midgard:privileges', $object))
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add('Could not query the privileges, permission denied.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
 
         $result = midcom_core_privilege::get_all_privileges($object->guid);
-
-        debug_pop();
+        
         return $result;
     }
 
@@ -2127,11 +2106,10 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function unset_all_privileges(&$object)
     {
-        debug_push_class($object, __FUNCTION__);
         $privileges = $object->get_privileges();
         if (! $privileges)
         {
-            debug_add('Failed to access the privileges. See above for details.');
+            debug_add('Failed to access the privileges. See above for details.', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
@@ -2139,12 +2117,12 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         {
             if (! $object->unset_privilege($privilege))
             {
+                debug_push_class($object, __FUNCTION__);
                 debug_add('Failed to drop a privilege record, see debug log for more information, aborting.', MIDCOM_LOG_WARN);
                 debug_pop();
                 return false;
             }
         }
-        debug_pop();
         return true;
     }
 
@@ -2191,12 +2169,11 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function delete_attachment(&$object, $name)
     {
-        debug_push_class($object, __FUNCTION__);
-
         $attachment = $object->get_attachment($name);
 
         if (!$attachment)
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Tried to delete the attachment {$name} at the object {$object->__table__} ID {$object->id}, but it did not exist. Failing silently.");
             debug_pop();
             return false;
@@ -2205,12 +2182,13 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if (   ! $_MIDCOM->auth->can_do('midgard:update', $object)
             || ! $_MIDCOM->auth->can_do('midgard:attachments', $object))
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Failed to set parameters, midgard:update or midgard:attachments on the {$object->__table__} ID {$object->id} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
+            debug_pop();
             return false;
         }
 
-        debug_pop();
         return $attachment->delete();
     }
 
@@ -2225,10 +2203,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function create_attachment(&$object, $name, $title, $mimetype)
     {
-         debug_push_class($object, __FUNCTION__);
-
         if (! $object->id)
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add('Cannot retrieve attachments on a non-persistant object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
@@ -2237,6 +2214,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if (   ! $_MIDCOM->auth->can_do('midgard:update', $object)
             || ! $_MIDCOM->auth->can_do('midgard:attachments', $object))
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Failed to set parameters, midgard:update or midgard:attachments on the {$object->__table__} ID {$object->id} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             return false;
@@ -2254,6 +2232,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if (   ! $result
             || ! $attachment->id)
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Could not create the attachment {$name} at the object {$object->__table__} ID {$object->id}: Creation failed.",
                 MIDCOM_LOG_INFO);
             debug_add('Last Midgard error was: ' . mgd_errstr());
@@ -2262,7 +2241,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             return false;
         }
 
-        debug_pop();
         return $attachment;
     }
 
@@ -2280,14 +2258,11 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function createattachment(&$object, $name, $title, $mimetype)
     {
-         debug_push_class($object, __FUNCTION__);
         $attachment = $object->create_attachment($name, $title, $mimetype);
         if (! $attachment)
         {
-            debug_pop();
             return false;
         }
-        debug_pop();
         return $attachment->id;
     }
 
@@ -2302,14 +2277,11 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function open_attachment(&$object, $name, $mode)
     {
-         debug_push_class($object, __FUNCTION__);
         $attachment = $object->get_attachment($name);
         if (! $attachment)
         {
-            debug_pop();
             return false;
         }
-        debug_pop();
         return $attachment->open($mode);
     }
 
@@ -2322,10 +2294,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function get_attachment_qb(&$object)
     {
-        debug_push_class($object, __FUNCTION__);
-
         if (!$object->id)
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add('Cannot retrieve attachments on a non-persistant object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
@@ -2334,7 +2305,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         $qb = $_MIDCOM->dbfactory->new_query_builder('midcom_baseclasses_database_attachment');
         $qb->add_constraint('parentguid', '=', $object->guid);
 
-        debug_pop();
         return $qb;
     }
 
@@ -2347,10 +2317,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function list_attachments(&$object)
     {
-        debug_push_class($object, __FUNCTION__);
-
         if (! $object->id)
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add('Cannot retrieve attachments on a non-persistant object.', MIDCOM_LOG_WARN);
             debug_pop();
             return array();
@@ -2364,7 +2333,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             return array();
         }
 
-        debug_pop();
         return $result;
     }
 
@@ -2379,16 +2347,14 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function listattachments(&$object)
     {
-        debug_push_class($object, __FUNCTION__);
-
         if (! $object->id)
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add('Cannot retrieve attachments on a non-persistant object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
 
-        debug_pop();
         return $object->__exec_listattachments();
     }
 
@@ -2408,8 +2374,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function is_owner(&$object, $person)
     {
-        debug_push_class($object, __FUNCTION__);
-
         if ($object->__table__ == 'grp')
         {
             $function_name = 'mgd_is_group_owner';
@@ -2419,9 +2383,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             $function_name = "mgd_is_{$object->__table__}_owner";
         }
 
-        debug_add("Looking for the function {$function_name}.");
         if (! function_exists($function_name))
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("The function {$function_name} is unavailable, no owner check can be done reliably.", MIDCOM_LOG_INFO);
             debug_pop();
             return true;
@@ -2446,13 +2410,12 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
         else
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add('The person passed to is_owner is not of a valid type.', MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
 
-        debug_add("Checking against person id {$id}.");
-        debug_pop();
         return $function_name($id);
     }
 
@@ -2473,10 +2436,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function create_new_privilege_object(&$object, $name, $assignee = null, $value = MIDCOM_PRIVILEGE_ALLOW, $classname = '')
     {
-        debug_push_class($object, __FUNCTION__);
-
         if (! $_MIDCOM->auth->can_do('midgard:privileges', $object))
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add('Could not create a new privilege, permission denied.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
@@ -2497,7 +2459,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         $privilege = new midcom_core_privilege();
         if (! $privilege->set_assignee($assignee))
         {
-            debug_add('Failed to set the assignee, aborting.');
+            debug_push_class($object, __FUNCTION__);
+            debug_add('Failed to set the assignee, aborting.', MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
@@ -2508,11 +2471,11 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
         if (! $privilege->validate())
         {
-            debug_add('Failed to validate the newly created privilege.');
+            debug_push_class($object, __FUNCTION__);
+            debug_add('Failed to validate the newly created privilege.', MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
-        debug_pop();
         return $privilege;
     }
 
@@ -2525,17 +2488,15 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function & get_metadata($object)
     {
-        debug_push_class($object, __FUNCTION__);
-
         $metadata =& midcom_helper_metadata::retrieve($object);
         if (! $metadata)
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Failed to load the metadata for the {$object->__table__} ID {$object->id}.",
                 MIDCOM_LOG_ERROR);
             return false;
         }
 
-        debug_pop();
         return $metadata;
     }
 
@@ -2548,17 +2509,15 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function is_object_visible_onsite($object)
     {
-        debug_push_class($object, __FUNCTION__);
-        
         $metadata =& $object->get_metadata();
         if (! $metadata)
         {
+            debug_push_class($object, __FUNCTION__);
             debug_add("Failed to load the metadata for the {$object->__table__} ID {$object->id}, assuming invisible object.",
                 MIDCOM_LOG_ERROR);
             return false;
         }
 
-        debug_pop();
         return $metadata->is_object_visible_onsite();
     }
 
@@ -2589,5 +2548,4 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         return $_MIDCOM->dbfactory->get_object_by_guid($object->get_parent_guid());
     }
 }
-
 ?>
