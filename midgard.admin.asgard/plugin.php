@@ -397,6 +397,11 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
 
     /**
      * Static method other plugins may use
+     * 
+     * @static
+     * @access public
+     * @param string $title     Page title
+     * @param array &$data      Local request data
      */
     function prepare_plugin($title, &$data)
     {
@@ -405,7 +410,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         $_MIDCOM->cache->content->no_cache();
         $data['view_title'] = $title;
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
-
+        
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->style->prepend_component_styledir(str_replace('asgard_','',$data['plugin_name']));
@@ -519,46 +524,57 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         $_MIDCOM->set_pagetitle($data['view_title']);
 
     }
-
+    
     /**
-     * Static helper function that sets the default object mode
+     * Helper function that sets the default object mode
+     * 
+     * @static
+     * @access public
      */
-    function get_default_mode()
+    function get_default_mode(&$data)
     {
         //only set mode once per request
-        if (!empty($this->_request_data['default_mode']))
+        if (!empty($data['default_mode']))
         {
-            return;
+            return $data['default_mode'];
         }
+        
         if ($this->_config->get('edit_mode') == 1)
         {
-            $this->_request_data['default_mode'] = 'edit';
+            $data['default_mode'] = 'edit';
         }
         else
         {
-            $this->_request_data['default_mode'] = 'view';
+            $data['default_mode'] = 'view';
         }
+        
         if (midgard_admin_asgard_plugin::get_preference('edit_mode') == 1)
         {
-            $this->_request_data['default_mode'] = 'edit';
+            $data['default_mode'] = 'edit';
         }
         else
         {
-            $this->_request_data['default_mode'] = 'view';
+            $data['default_mode'] = 'view';
         }
+        
+        return $data['default_mode'];
     }
 
     /**
-     * Static method for populating the object toolbar
+     * Populate the object toolbar
+     * 
+     * @param mixed $object        MgdSchema object for which the toolbar will be created
+     * @param String $handler_id   Initialized handler id
+     * @param Array $data          Local request data
      */
     function get_object_toolbar($object, $handler_id, &$data)
     {
         $toolbar = new midcom_helper_toolbar();
 
-        midgard_admin_asgard_plugin::get_default_mode();
+        midgard_admin_asgard_plugin::get_default_mode(&$data);
 
         // Show view toolbar button, if the user hasn't configured to use straight the edit mode
-        if ($this->_request_data['default_mode'] == 'view')
+        if ($data['default_mode'] === 'view')
         {
             $toolbar->add_item
             (
@@ -959,15 +975,25 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
 
         return $toolbar;
     }
-
-    // Add Asgard styling for plugins
-
+    
+    /**
+     * Add Asgard styling for plugins
+     * 
+     * @static
+     * @access public
+     */
     function asgard_header()
     {
         midcom_show_style('midgard_admin_asgard_header');
         midcom_show_style('midgard_admin_asgard_middle');
     }
 
+    /**
+     * Add Asgard styling for plugins
+     * 
+     * @static
+     * @access public
+     */
     function asgard_footer()
     {
         midcom_show_style('midgard_admin_asgard_footer');
@@ -980,40 +1006,21 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     /**
      * Get a preference for the current user
      *
-     * @access public
      * @static
+     * @access public
      * @param string $preference    Name of the preference
      */
     function get_preference($preference)
     {
-        $person = new midcom_db_person($_MIDCOM->auth->user->guid);
-
-        return $person->get_parameter('midgard.admin.asgard:preferences', $preference);
-
-        /** For some odd reason Midgard crashes here
-        $mc = midcom_baseclasses_database_parameter::new_collector('parentguid', $_MIDCOM->auth->user->guid);
-        $mc->add_value_property('value');
-        $mc->add_constraint('domain', '=', 'midgard.admin.asgard.preferences');
-        $mc->add_constraint('name', '=', $preference);
-        $mc->add_constraint('metadata.deleted', '=', 0);
-        $mc->set_limit(1);
-
-        $mc->execute();
-
-        if ($mc->count() === 0)
+        static $preferences = array();
+        
+        if (!isset($preferences[$preference]))
         {
-            return null;
+            $person = new midcom_db_person($_MIDCOM->auth->user->guid);
+            $preferences[$preference] = $person->get_parameter('midgard.admin.asgard:preferences', $preference);
         }
-
-        $keys = $mc->list_keys();
-
-        foreach ($keys as $guid => $array)
-        {
-            $value = $mc->get_subkey($guid, 'value');
-
-            return $mc->get_subkey($guid, 'value');
-        }
-        */
+        
+        return $preferences[$preference];
     }
 }
 ?>

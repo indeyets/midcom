@@ -47,6 +47,10 @@ Everyone
 All users
 ---STRINGEND
 
+---STRING actions
+Actions
+---STRINGEND
+
 ---STRING active url parsing
 Active URL parsing
 ---STRINGEND
@@ -57,6 +61,10 @@ Add group for privilege assignment
 
 ---STRING add text file
 Add text file
+---STRINGEND
+
+---STRING all of the following items will be deleted
+All of the following items will be deleted
 ---STRINGEND
 
 ---STRING always display in top frame
@@ -83,12 +91,12 @@ Asgard Home
 Asgard plugins
 ---STRINGEND
 
----STRING attachment %s undeleted
-Attachment %s undeleted
----STRINGEND
-
 ---STRING attachment
 Attachment
+---STRINGEND
+
+---STRING attachment %s undeleted
+Attachment %s undeleted
 ---STRINGEND
 
 ---STRING attachments
@@ -167,6 +175,10 @@ Content changed
 Content owner
 ---STRINGEND
 
+---STRING copy %s
+Copy %s
+---STRINGEND
+
 ---STRING copy %s and its descendants
 Copy '%s' and its descendants
 ---STRINGEND
@@ -199,18 +211,6 @@ Create %s under %s
 Created by %s on %s
 ---STRINGEND
 
----STRING revised by
-Revised by
----STRINGEND
-
----STRING revised on
-Revised on
----STRINGEND
-
----STRING actions
-Actions
----STRINGEND
-
 ---STRING date
 Date
 ---STRINGEND
@@ -229,10 +229,6 @@ Deleted by
 
 ---STRING deleted on
 Deleted on
----STRINGEND
-
----STRING all of the following items will be deleted
-All of the following items will be deleted
 ---STRINGEND
 
 ---STRING differences between %s and %s
@@ -257,10 +253,6 @@ Edit configuration for component %s
 
 ---STRING edit configuration for %s folder %s
 Edit configuration for component %s folder %s
----STRINGEND
-
----STRING global value
-Global value
 ---STRINGEND
 
 ---STRING edit file %s
@@ -329,6 +321,10 @@ folder
 
 ---STRING global
 Global
+---STRINGEND
+
+---STRING global value
+Global value
 ---STRINGEND
 
 ---STRING group %s
@@ -499,6 +495,10 @@ Not approved
 Not inherited
 ---STRINGEND
 
+---STRING object %s
+Object %s
+---STRINGEND
+
 ---STRING object %s approved
 Object %s approved
 ---STRINGEND
@@ -581,6 +581,14 @@ Restore version %s
 
 ---STRING review date
 Review date
+---STRINGEND
+
+---STRING revised by
+Revised by
+---STRINGEND
+
+---STRING revised on
+Revised on
 ---STRINGEND
 
 ---STRING revision
@@ -723,7 +731,7 @@ Version %s of %s
 XML
 ---STRINGEND
 
----STRING object %s
-Object %s
+---STRING copy attachments
+Copy attachments
 ---STRINGEND
 
