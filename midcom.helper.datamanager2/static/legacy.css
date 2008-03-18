@@ -47,7 +47,7 @@ form.datamanager2 label input.shorttext,
     form.datamanager2 label iframe
 {
     margin: 0.5ex 0 0 0;
-    display: block !important;
+    display: block;
 }
 
 form.datamanager2 label input.radiobutton
