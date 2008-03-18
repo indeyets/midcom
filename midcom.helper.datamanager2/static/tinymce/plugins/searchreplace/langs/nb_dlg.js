@@ -1,9 +1,9 @@
 tinyMCE.addI18n('nb.searchreplace_dlg',{
 searchnext_desc:"S\u00F8k igjen",
-notfound:"S\u00F8kingen avsluttet. Fant ikke s\u00F8kestrengen.",
+notfound:"S\u00F8ket er avsluttet. Fant ikke s\u00F8kestrengen.",
 search_title:"S\u00F8k",
 replace_title:"S\u00F8k/Erstatt",
-allreplaced:"Alle treff p\u00E5 s\u00F8kestrengen erstattet.",
+allreplaced:"Alle forekomster av s\u00F8kestrengen er erstattet.",
 findwhat:"Finn hva",
 replacewith:"Erstatt med",
 direction:"Retning",

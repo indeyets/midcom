@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 609 2008-02-18 16:19:27Z spocke $
+ * $Id: editor_plugin_src.js 689 2008-03-09 18:47:19Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
@@ -23,12 +23,14 @@
 						closeFullscreen(); // Call to close in new window
 					else {
 						window.setTimeout(function() {
+							tinymce.dom.Event.remove(window, 'resize', t.resizeFunc);
 							tinyMCE.get(ed.getParam('fullscreen_editor_id')).setContent(ed.getContent({format : 'raw'}), {format : 'raw'});
 							tinyMCE.remove(ed);
 							DOM.remove('mce_fullscreen_container');
 							de.style.overflow = ed.getParam('fullscreen_html_overflow');
 							DOM.setStyle(document.body, 'overflow', ed.getParam('fullscreen_overflow'));
 							window.scrollTo(ed.getParam('fullscreen_scrollx'), ed.getParam('fullscreen_scrolly'));
+							tinyMCE.settings = tinyMCE.oldSettings; // Restore old settings
 						}, 10);
 					}
 
@@ -36,13 +38,14 @@
 				}
 
 				if (ed.getParam('fullscreen_new_window')) {
-					win = window.open(url + "/fullscreen.htm", "mceFullScreenPopup", "fullscreen=yes,menubar=no,toolbar=no,scrollbars=no,resizable=no,left=0,top=0,width=" + screen.availWidth + ",height=" + screen.availHeight);
+					win = window.open(url + "/fullscreen.htm", "mceFullScreenPopup", "fullscreen=yes,menubar=no,toolbar=no,scrollbars=no,resizable=yes,left=0,top=0,width=" + screen.availWidth + ",height=" + screen.availHeight);
 					try {
 						win.resizeTo(screen.availWidth, screen.availHeight);
 					} catch (e) {
 						// Ignore
 					}
 				} else {
+					tinyMCE.oldSettings = tinyMCE.settings; // Store old settings
 					s.fullscreen_overflow = DOM.getStyle(document.body, 'overflow', 1) || 'auto';
 					s.fullscreen_html_overflow = DOM.getStyle(de, 'overflow', 1);
 					vp = DOM.getViewPort();
@@ -104,6 +107,12 @@
 					t.fullscreenElement = new tinymce.dom.Element('mce_fullscreen_container');
 					t.fullscreenElement.update();
 					//document.body.overflow = 'hidden';
+
+					t.resizeFunc = tinymce.dom.Event.add(window, 'resize', function() {
+						var vp = tinymce.DOM.getViewPort();
+
+						t.fullscreenEditor.theme.resizeTo(vp.w, vp.h);
+					});
 				}
 			});
 

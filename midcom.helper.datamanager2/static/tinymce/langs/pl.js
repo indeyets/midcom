@@ -1,6 +1,6 @@
 tinyMCE.addI18n({pl:{
 common:{
-edit_confirm:"Do you want to use the WYSIWYG mode for this textarea?",
+edit_confirm:"Czy chcesz u\u017Cy\u0107 trybu WYSIWYG dla tego pola formularza?",
 apply:"Zastosuj",
 insert:"Wstaw",
 update:"Aktualizuj",
@@ -10,8 +10,8 @@ browse:"Przegl\u0105daj",
 class_name:"Klasa",
 not_set:"-- Nie ustawiony --",
 clipboard_msg:"Kopiuj/Wytnij/Wklej nie jest dost\u0119pny w Mozilla and Firefox.\Czy chcesz wi\u0119cej informacji o tym problemie?",
-clipboard_no_support:"Aktualnie nie jest wspomagany przez twoja przegl\u0105darke, u\u017Cyj skr\u00F3tt\u00F3w klawiaturowych w zamian.",
-popup_blocked:"Przepraszamy, ale zauwazylismy, \u017Ce twoje blokowanie wyskakuj\u0105cych okienek wy\u0142\u0105czy\u0142o okno kt\u00F3re dostarcza funkcjonalno\u015B\u0107 aplikacji. B\u0119dziesz potrzebowa\u0142 wy\u0142\u0105czy\u0107 blokowanie wyskakuj\u0105cych okienek na tej stronie aby w pe\u0142ni wykorzystywa\u0107 to narz\u0119dzie.",
+clipboard_no_support:"Aktualnie nie jest wspomagany przez Twoj\u0105 przegl\u0105dark\u0119, u\u017Cyj skr\u00F3t\u00F3w klawiaturowych w zamian.",
+popup_blocked:"Przepraszamy, ale zauwa\u017Cyli\u015Bmy, \u017Ce Twoje blokowanie wyskakuj\u0105cych okienek wy\u0142\u0105czy\u0142o okno, kt\u00F3re dostarcza funkcjonalno\u015B\u0107 aplikacji. B\u0119dziesz potrzebowa\u0142 wy\u0142\u0105czy\u0107 blokowanie wyskakuj\u0105cych okienek na tej stronie aby w pe\u0142ni wykorzysta\u0107 to narz\u0119dzie.",
 invalid_data:"B\u0142\u0105d: Zosta\u0142y wprowadzone b\u0142\u0119dne dane, s\u0105 zaznaczone na czerwono.",
 more_colors:"Wi\u0119cej kolor\u00F3w"
 },

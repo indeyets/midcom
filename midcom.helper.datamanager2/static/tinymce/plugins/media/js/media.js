@@ -180,6 +180,8 @@ function init() {
 function insertMedia() {
 	var fe, f = document.forms[0], h;
 
+	tinyMCEPopup.restoreSelection();
+
 	if (!AutoValidator.validate(f)) {
 		alert(ed.getLang('invalid_data'));
 		return false;
@@ -303,7 +305,7 @@ function getType(v) {
 	fo = ed.getParam("media_types", "flash=swf;flv=flv;shockwave=dcr;qt=mov,qt,mpg,mp3,mp4,mpeg;shockwave=dcr;wmp=avi,wmv,wm,asf,asx,wmx,wvx;rmp=rm,ra,ram").split(';');
 
 	// YouTube
-	if (v.match(/v=(.+)(.*)/)) {
+	if (v.match(/watch\?v=(.+)(.*)/)) {
 		f.width.value = '425';
 		f.height.value = '350';
 		f.src.value = 'http://www.youtube.com/v/' + v.match(/v=(.*)(.*)/)[0].split('=')[1];
@@ -492,6 +494,9 @@ function getBool(p, n, d, tv, fv) {
 function getStr(p, n, d) {
 	var e = document.forms[0].elements[(p != null ? p + "_" : "") + n];
 	var v = e.type == "text" ? e.value : e.options[e.selectedIndex].value;
+
+	if (n == 'src')
+		v = tinyMCEPopup.editor.convertURL(v, 'src', null);
 
 	return ((n == d || v == '') ? '' : n + ":'" + jsEncode(v) + "',");
 }
