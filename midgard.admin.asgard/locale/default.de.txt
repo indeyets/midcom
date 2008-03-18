@@ -698,3 +698,7 @@ Alle auswählen
 ---STRING invert selection
 Auswahl umkehren
 ---STRINGEND
+
+---STRING validation error in field %s: %s
+Validationsfehler im Feld %s: %s
+---STRINGEND

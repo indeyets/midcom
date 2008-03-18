@@ -789,6 +789,22 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             case 'cancel':
                 $_MIDCOM->relocate("__mfa/asgard/object/{$this->_request_data['default_mode']}/{$this->_object->guid}/{$data['language_code']}");
                 // This will exit.
+	        case 'edit':
+                $qf =& $this->_controller->formmanager->form;
+                if(isset($_REQUEST['midcom_helper_datamanager2_save']) && isset($qf->_errors))
+                {
+                    foreach($qf->_errors as $field => $error)
+                    {
+                        $element =& $qf->getElement($field);
+                        $message = sprintf($this->_l10n->get('validation error in field %s: %s'), $element->getLabel(), $error);
+                        $_MIDCOM->uimessages->add
+                            (
+                                $this->_l10n->get('midgard.admin.asgard'),
+                                $message,
+                                'error'
+                            );
+                    }
+                }
         }
 
         $this->_prepare_request_data();

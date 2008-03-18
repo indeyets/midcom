@@ -743,3 +743,6 @@ XML
 Copy attachments
 ---STRINGEND
 
+---STRING validation error in field %s: %s
+Validation error in field %s: %s
+---STRINGEND
