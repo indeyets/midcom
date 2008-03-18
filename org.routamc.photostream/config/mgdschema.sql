@@ -22,6 +22,8 @@ CREATE TABLE org_routamc_photostream_photo (
 );
 ALTER TABLE org_routamc_photostream_photo ADD COLUMN externalid varchar(255) NOT NULL DEFAULT '';
 CREATE INDEX org_routamc_photostream_photo_externalid_idx on org_routamc_photostream_photo (externalid(100));
+ALTER TABLE org_routamc_photostream_photo ADD COLUMN status int(11) NOT NULL DEFAULT 0;
+CREATE INDEX org_routamc_photostream_photo_status_idx on org_routamc_photostream_photo (status);
 
 CREATE TABLE org_routamc_photostream_photo_i (
   id int(11) NOT NULL auto_increment,
