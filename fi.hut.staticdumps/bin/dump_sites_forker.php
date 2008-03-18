@@ -45,6 +45,9 @@ foreach ($sites_config as $k => $site_config)
             $dump_script = dirname($argv[0]) . '/dump_sites.php';
             $dump_cmd = "{$dump_script} {$conffile} {$k}";
             $dump_cmd_ret = 0;
+            /**
+             * PONDER: use pnctl_exec in stead ??
+             */
             system($dump_cmd, $dump_cmd_ret);
             if ($dump_cmd_ret !== 0)
             {

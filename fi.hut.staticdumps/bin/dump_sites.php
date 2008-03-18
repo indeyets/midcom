@@ -105,10 +105,6 @@ foreach ($sites_config as $k => $site_config)
     {
         better_die("'dump_path' not set for site {$k}");
     }
-    if (!is_writable($site_config['dump_path']))
-    {
-        better_die("{$site_config['dump_path']} is not writable");
-    }
 
     // Site locking so we can dump many sites in parallel
     $lockfile = "{$lockfile_path}/{$lockfile_prefix}" . md5(serialize($site_config)) . '.pid';
@@ -151,7 +147,12 @@ foreach ($sites_config as $k => $site_config)
         unlink($lockfile);
         continue;
     }
-    
+
+    if (!is_writable($site_config['dump_path']))
+    {
+        better_die("{$site_config['dump_path']} is not writable");
+    }
+
     /**
      * wget dump
      */
