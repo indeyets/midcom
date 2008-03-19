@@ -107,10 +107,10 @@ textarea
 
 #navigation div.section ul.midgard_admin_asgard_navigation
 {
-  margin: 0;
   padding: 5px;
   list-style-type: none;
-  width: 90%;
+  width: 94% !important;
+  width: 100%;
   overflow: auto;
 }
 #navigation div.section ul.midgard_admin_asgard_navigation ul
@@ -191,7 +191,7 @@ textarea
 {
   background-color: #555753;
   color: #ffffff;
-  padding: 0.5em 0.5em;
+  padding: 0.5em;
   margin-left: -0.5em;
   margin-right: -0.5em;
   margin-top: -0.5em;
@@ -518,8 +518,6 @@ html > body #siteinfo
   top: 0;
   bottom: expression((document.body.clientHeight - 20) + 'px');
   height: 100%;
-  margin-left: -23px;
-  width: 20px;
 }
 
 #midgard_admin_asgard_resizer:hover,

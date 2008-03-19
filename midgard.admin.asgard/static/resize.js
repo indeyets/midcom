@@ -29,8 +29,8 @@ $j(document).ready(function()
             }
             else
             {
-                var navigation_width = offset.left - 20;
-                var content_margin_left = offset.left + 22;
+                var navigation_width = offset.left - 16;
+                var content_margin_left = offset.left + 6;
             }
             
             $j('#navigation').css('width', navigation_width + 'px');
