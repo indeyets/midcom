@@ -9,6 +9,8 @@ if (   midgard_admin_asgard_plugin::get_preference('escape_frameset')
 }
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 
+$pref_found = false;
+
 if (($width = midgard_admin_asgard_plugin::get_preference('offset')))
 {
     $navigation_width = $width - 40;
