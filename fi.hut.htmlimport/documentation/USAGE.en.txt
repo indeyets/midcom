@@ -1,0 +1,69 @@
+# fi.hut.htmlimport
+
+This component is designed to import a directory of static HTML files to net.nehmer.static compatible topic/article tree based on given rules.
+
+## Preparations
+
+### Backup your database
+
+In theory this does nothing that would irreparably harm the database but it's good to have recent backups in hand (and when was the last time you verified the automatic backups you thought you had)
+
+### Get the HTML files
+
+If the HTML files you have make heavy use SSI (Server Side Include) or such features use wget or similar tool to dump the version your browser sees
+
+    wget -erobots=off -q -m -k -K http://www.example.com
+
+Othewise just copy the files to a local directory on the server that the Apache process has read access to.
+
+### Configure your ruleset
+
+Supposing the default ruleset does not match your needs you need to make your own, create snippet `/sitegroup-config/fi.hut.htmlimport/config` and override the `rulesets` config key, copy the default from `config.inc` as base.
+
+The rulesets array is keyed by ruleset name (later when importing you need to choose which ruleset you want to use) and the value is another multidimensional array, with the following keys
+
+  - `schemadb`: string, path to the schemadb to use
+  - `schema_name`: string, name of the schema (from the schemadb) to use
+  - `field_map`: array of rules, the first matching rule per field is used.
+
+Each rule of the map has the following common keys and some keys dependent on the rule type:
+
+  - `type`: string, which type of matching to use, valid values
+    - xpath
+    - preg_match
+  - `field`: string, name the DM2 schema field to put matched value into, currently the following DM2 datatypes are supported:
+    - text
+  - `purify`: boolean, whether to run HTMLPurifier against the value we have matched (NOTE: Depending on DM2 configuration and datatype options DM2 might do this as well).
+
+#### Type xpath
+
+This matching type uses the simplexml xpath to query for data, for this the raw file data in run through HTMLPurifier to make it proper XML. Due to HTMLPurifier limitations all tag ids (`<div id="..." />`)  that begin with underscore will have the underscore stripped.
+
+There are two extra keys for the rule with this type:
+
+  - `path`: string, xpath expression.
+  - `matches_key`, int, which key of the returned matches array to use as the value, -1 indicated that all keys of the matches array should be concatenated to the value.
+
+#### Type preg_match
+
+This type uses the [preg_match] function to get a value. You must specify the full regular expression with limiters and modifiers.
+
+There are two extra keys for the rule with this type:
+
+  - `regex`: string, full Perl compatible regular expression.
+  - `matches_key`, int, which key of the matches array to use as the value, see the function documentation for details.
+
+[preg_match]: http://www.php.net/preg_match
+
+### Importing
+
+If you want to import HTML files as new MidCOM site you need to first create the site (with root topic etc, all in working order) and then you can import.
+
+1. Point your browser to http://midcom.example.com/midcom-exec-fi.hut.htmlimport/import-directory.php
+2. Enter the local path for your HTML files
+3. Select the topic to import under (it's recommended to import under specific "import" topic and then move the imported data to correct place after verifying  it)
+4. Select the ruleset to use (in case you have multiple rulesets defined)
+5. Click "Import" and wait
+6. In another window/tab check your imported data
+
+If you notice you made a mistake with your rulesets edit them and repost the import window to re-read the data. Do note though that fields that have no match or the match is empty will not get updated. In such case you must first delete the import topic (using the net.nehmer.static "Delete folder" functionality). I would also recommend emptying the trash after this.
