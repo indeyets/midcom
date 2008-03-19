@@ -6,8 +6,8 @@
 'class_definitions' => array(),
 'package.xml' => array
 (
-    'summary' => 'Sitewizard plugins',
-    'description' => 'Sitewizard plugins',
+    'summary' => 'Midgard Site Wizard',
+    'description' => 'Plugin-based Web shell for the Midgard Site Wizard',
     'maintainers' => array
     (
         'juhana' => array
@@ -20,5 +20,6 @@
     'dependencies' => array
     (
         'midcom.helper.datamanager2' => array(),
+        'org.openpsa.mail' => array(),
     ),
 ),

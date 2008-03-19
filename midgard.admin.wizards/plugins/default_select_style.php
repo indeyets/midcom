@@ -23,19 +23,22 @@ class default_select_style extends midcom_baseclasses_components_handler
 
     function _on_initialize()
     {
-        if (   isset($this->_request_data['plugin_config']['sitewizard_path'])
-            && !empty($this->_request_data['plugin_config']['sitewizard_path']))
+        // Load the Midgard Site Wizard classes from midgard-data (1.9 onwards)
+        if (   !isset($this->_request_data['plugin_config']['sitewizard_path'])
+            || empty($this->_request_data['plugin_config']['sitewizard_path'])
+            || !file_exists($this->_request_data['plugin_config']['sitewizard_path']))
         {
-            require_once($this->_request_data['plugin_config']['sitewizard_path']);
-        }
-        else
-        {
-            $_MIDCOM->uimessages->add(
+            $_MIDCOM->uimessages->add
+            (
                 $this->_l10n->get('midcom.admin.wizards'),
-                $this->_l10n->get('sitewizard was not found')
+                $this->_l10n->get('sitewizard class not found'),
+                'error'
             );
             $_MIDCOM->relocate('');
+            // This will exit
         }
+        
+        require_once($this->_request_data['plugin_config']['sitewizard_path']);
 
         parent::_on_initialize();
 
@@ -105,11 +108,12 @@ class default_select_style extends midcom_baseclasses_components_handler
         // TODO: Check for sitegroups?
         $templates = $qb->execute();
 
-        foreach($templates as $template)
+        foreach ($templates as $template)
         {
-            if (count($this->_request_data['plugin_config']['show_style_templates']) > 0)
+            if (   isset($this->_request_data['plugin_config']['show_style_templates'])
+                && count($this->_request_data['plugin_config']['show_style_templates']) > 0)
             {
-                foreach($this->_request_data['plugin_config']['show_style_templates'] as $show)
+                foreach ($this->_request_data['plugin_config']['show_style_templates'] as $show)
                 {
                     if ($template->name == $show)
                     {

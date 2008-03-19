@@ -48,8 +48,8 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
  ?>
         
 <form method="post" name="tkk_sitewizard_website">        
- <input type="submit" name="tkk_sitewizard_website_submit" value="<?php echo $data['l10n']->get('create'); ?>">
- <input type="submit" name="tkk_sitewizard_website_cancel" value="<?php echo $data['l10n']->get('cancel'); ?>">
+ <input type="submit" name="tkk_sitewizard_website_submit" value="<?php echo $data['l10n']->get('create'); ?>" />
+ <input type="submit" name="tkk_sitewizard_website_cancel" value="<?php echo $data['l10n']->get('cancel'); ?>" />
 </form>   
 
 <?php

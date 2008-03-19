@@ -9,103 +9,89 @@
 
 'plugin_groups' => array
 (
-    'tkk_sitewizard' => array
+    'sitewizard' => array
     (
-        'title' => 'TKK Sitewizard',
-        'description' => 'TKK Sitewizard',
+        'title' => 'Site Wizard',
+        'description' => 'Site Wizard',
         'plugins' => array 
         (
-        /*
-            'create_tkk_sitegroup' => array
+            'create_sitegroup' => array
             (
-                'class' => 'create_tkk_sitegroup',
-                'src' => 'file:/midgard/admin/wizards/plugins/create_tkk_sitegroup.php',
-                'name' => 'TKK Sitegroup creation',    
+                'class' => 'default_create_sitegroup',
+                'src' => 'file:/midgard/admin/wizards/plugins/default_create_sitegroup.php',
+                'name' => 'Sitegroup creation',    
                 'config' => array
                 (
-                    'sitewizard_path' => '/usr/share/php/midcom/static/data/midgard_admin_sitewizard.php',
+                    'sitewizard_path' => '/usr/share/midgard/svn/midgard/trunk/midgard-data/midgard_admin_sitewizard.php',
                 ),        
             ),
-        */
-            'create_tkk_host' => array
+            'create_host' => array
             (
-                'class' => 'create_tkk_host',
-                'src' => 'file:/midgard/admin/wizards/plugins/create_tkk_host.php',
-                'name' => 'TKK Host Creation',
+                'class' => 'default_create_host',
+                'src' => 'file:/midgard/admin/wizards/plugins/default_create_host.php',
+                'name' => 'Host Creation',
                 'config' => array
                 (
-                    'sitewizard_path' => '/usr/share/php/midcom/static/data/midgard_admin_sitewizard.php',
-                    'default_sitegroup_id' => 1,
-                    'copy_host_port' => 8001,
-                    'copy_host_name' => 'wwwcms.hut.fi',
+                    'sitewizard_path' => '/usr/share/midgard/svn/midgard/trunk/midgard-data/midgard_admin_sitewizard.php',
+                    'copy_host_port' => 8080,
+                    'copy_host_name' => 'www.tky.fi',
                 ),            
             ),
-            'select_tkk_style' => array
+            'select_style' => array
             (
-                'class' => 'select_tkk_style',
-                'src' => 'file:/midgard/admin/wizards/plugins/select_tkk_style.php',
-                'name' => 'TKK Style Selection',
+                'class' => 'default_select_style',
+                'src' => 'file:/midgard/admin/wizards/plugins/default_select_style.php',
+                'name' => 'Style Selection',
                 'config' => array
                 (
-                    'sitewizard_path' => '/usr/share/php/midcom/static/data/midgard_admin_sitewizard.php',
-                    'show_style_templates' => array
+                    'sitewizard_path' => '/usr/share/midgard/svn/midgard/trunk/midgard-data/midgard_admin_sitewizard.php',
+                    /*'show_style_templates' => array
                     (
                         'template_SimpleGray',
-                    ),
+                        'template_Kubrick',
+                    ),*/
                 ),            
             ),
-            'select_tkk_structure' => array
+            'select_structure' => array
             (
-                'class' => 'select_tkk_structure',
-                'src' => 'file:/midgard/admin/wizards/plugins/select_tkk_structure.php',
-                'name' => 'TKK Structure Selection',
+                'class' => 'default_select_structure',
+                'src' => 'file:/midgard/admin/wizards/plugins/default_select_structure.php',
+                'name' => 'Structure Selection',
                 'config' => array
                 (
-                    'sitewizard_path' => '/usr/share/php/midcom/static/data/midgard_admin_sitewizard.php',
-                    'structure_config_path' => '/usr/share/midgard/svn/midcom-trunk/midgard.admin.wizards/config/templates/',
+                    'sitewizard_path' => '/usr/share/midgard/svn/midgard/trunk/midgard-data/midgard_admin_sitewizard.php',
+                    'structure_config_path' => '/usr/share/pear/midcom/lib/midgard/admin/wizards/config/templates/',
                 ),            
             ),
-            'configure_tkk_structure' => array
+            /*'configure_structure' => array
             (
-                'class' => 'configure_tkk_structure',
-                'src' => 'file:/midgard/admin/wizards/plugins/configure_tkk_structure.php',
-                'name' => 'TKK Structure Configuration',
+                'class' => 'default_configure_structure',
+                'src' => 'file:/midgard/admin/wizards/plugins/default_configure_structure.php',
+                'name' => 'Structure Configuration',
                 'config' => array
                 (
-                    'sitewizard_path' => '/usr/share/php/midcom/static/data/midgard_admin_sitewizard.php',
+                    'sitewizard_path' => '/usr/share/midgard/svn/midgard/trunk/midgard-data/midgard_admin_sitewizard.php',
                 ),            
-            ),
-            'create_tkk_website' => Array
+            ),*/
+            'create_website' => Array
             (
-                'class' => 'create_tkk_website',
-                'src' => 'file:/midgard/admin/wizards/plugins/create_tkk_website.php',
-                'name' => 'TKK Website Creation',
+                'class' => 'default_create_website',
+                'src' => 'file:/midgard/admin/wizards/plugins/default_create_website.php',
+                'name' => 'Website Creation',
                 'config' => Array
                 (
-                    'sitewizard_path' => '/usr/share/php/midcom/static/data/midgard_admin_sitewizard.php',                  
-                    'creation_root_topic_guid' => '5c7c4a76761711dc96616575a3e41a5c1a5c',
-                    'creation_root_group_guid' => 'e32da6065ac411dba4b95bbbb548039a039a',
-                    
+                    'sitewizard_path' => '/usr/share/midgard/svn/midgard/trunk/midgard-data/midgard_admin_sitewizard.php',
                     'verbose' => false,
-                    'structure_config_path' => '/usr/share/midgard/svn/midcom-trunk/midgard.admin.wizards/config/templates/',
-                    'vhost_save_path' => '/usr/share/midgard/svn/midcom-trunk/midgard.admin.wizards/',
-                    'notification_email' => 'juhana@nemein.com',
-                    'host_ip' => '84.34.133.216',
+                    'structure_config_path' => '/usr/share/pear/midcom/lib/midgard/admin/wizards/config/templates/',
+                    'vhost_save_path' => '/etc/midgard/apache/vhosts/sitewizard/',
+                    'notification_email' => 'henri.bergius@nemein.com',
+                    'host_ip' => '82.130.62.227',
                     'mysql_db_user_pass' => 'midgard midgard midgard',
-                    'document_root' => '/var/lib/midgard/vhosts/devel-xen-devel.nemein.net/80/',
-                    'midgard_root' => '/usr/lib/apache2/modules/midgard-root.php',
+                    'document_root' => '/var/lib/midgard/vhosts/www.tky.fi/80/',
+                    'midgard_root' => '/usr/lib/httpd/modules/midgard-root.php',
+                    'staging2live' => false,
                 ),
             ),
         ),    
-    ),
-    
-    'some_wizard' => array 
-    (
-        'title' => 'Some Wizard',
-        'description' => 'Some Wizard',
-        'plugins' => array
-        (
-        
-        ),
     ),
 ),
