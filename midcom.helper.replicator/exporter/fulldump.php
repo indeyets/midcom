@@ -118,7 +118,7 @@ class midcom_helper_replicator_exporter_fulldump extends midcom_helper_replicato
             return false;
         }
         // Only dump objects in current SG, otherwise SG0 objects will cause issues...
-        $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+        $qb->add_constraint('sitegroup', '=', $this->subscription->sitegroup);
         // REMINDER: we can't use include_deleted with MidCOM QB.
         $objects = $qb->execute();
         unset($qb);

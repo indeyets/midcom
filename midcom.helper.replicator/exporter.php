@@ -452,7 +452,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
             // Never replicate login sessions
             case (is_a($object, 'midcom_core_login_session_db')):
             // Never replicate across SG borders
-            case ($object->sitegroup != $_MIDGARD['sitegroup']):
+            case ($object->sitegroup != $this->subscription->sitegroup):
                 $this->exportability[$object->guid] = false;
                 break;
             // Replicate everything else by default

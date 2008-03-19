@@ -1,2 +1,2 @@
-'queue_root_dir' => '/var/spool/midgard/replicator_queue/' . midcom_helper_replicator_queuemanager::safe_sg_name(),
+'queue_root_dir' => '/var/spool/midgard/replicator_queue/',
 'log_filename'   => "{$GLOBALS['midcom_config']['log_filename']}.replicator",

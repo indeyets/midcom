@@ -90,6 +90,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         $GLOBALS['midcom_helper_replicator_logger']->push_prefix('Queue Manager');
         debug_push_class(__CLASS__, __FUNCTION__);
         $qb = midcom_helper_replicator_subscription_dba::new_query_builder();
+        $qb->add_constraint('sitegroup', '=', $object->sitegroup);
         // NOTE: if this constraint is changed see can_add_to_queue()
         $qb->add_constraint('status', '=', MIDCOM_REPLICATOR_AUTOMATIC);
         $subscriptions = $qb->execute();
@@ -251,7 +252,25 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
             }
             debug_pop();
         }
-        $subscription_path = "{$global_base}/{$subscription->guid}";
+        
+        // Append sitegroup name
+        $sitegroup_base = "{$global_base}/" . $this->safe_sg_name($subscription->sitegroup);
+        if (!is_dir($sitegroup_base))
+        {
+            // The configuration key might have dynamic part to it
+            debug_push_class(__CLASS__, __FUNCTION__);    
+            debug_add("directory {$sitegroup_base} does not exist, creating", MIDCOM_LOG_DEBUG);
+            if (!mkdir($sitegroup_base))
+            {
+                // TODO: Error reporting
+                debug_add("could not create directory {$sitegroup_base}", MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+            }
+            debug_pop();
+        }
+        
+        $subscription_path = "{$sitegroup_base}/{$subscription->guid}";
         if (!is_dir($subscription_path))
         {
             debug_push_class(__CLASS__, __FUNCTION__);    
@@ -285,7 +304,24 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
             }
             debug_pop();
         }
-        $subscription_path = "{$global_base}/{$subscription->guid}-quarantine";
+        
+        // Append sitegroup name
+        $sitegroup_base = "{$global_base}/" . $this->safe_sg_name($subscription->sitegroup);
+        if (!is_dir($sitegroup_base))
+        {
+            // The configuration key might have dynamic part to it
+            debug_push_class(__CLASS__, __FUNCTION__);    
+            debug_add("directory {$sitegroup_base} does not exist, creating", MIDCOM_LOG_DEBUG);
+            if (!mkdir($sitegroup_base))
+            {
+                // TODO: Error reporting
+                debug_add("could not create directory {$sitegroup_base}", MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+            }
+            debug_pop();
+        }        
+        $subscription_path = "{$sitegroup_base}/{$subscription->guid}-quarantine";
         if (!is_dir($subscription_path))
         {
             debug_push_class(__CLASS__, __FUNCTION__);    
@@ -679,13 +715,19 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
     /**
      * statically callable method to get url/filesystem safe name for current SG name
      */
-    function safe_sg_name()
+    function safe_sg_name($sitegroup = null)
     {
-        if ($_MIDGARD['sitegroup'] == 0)
+        if (is_null($sitegroup))
+        {
+            $sitegroup = $_MIDGARD['sitegroup'];
+        }
+        
+        if ($sitegroup == 0)
         {
             return 'sg0';
         }
-        $sg = mgd_get_sitegroup($_MIDGARD['sitegroup']);
+        
+        $sg = mgd_get_sitegroup($sitegroup);
         if (   !is_object($sg)
             || empty($sg->name))
         {
