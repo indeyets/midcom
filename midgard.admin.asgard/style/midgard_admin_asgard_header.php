@@ -11,12 +11,10 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 
 if (($width = midgard_admin_asgard_plugin::get_preference('offset')))
 {
-    $width -= 40;
-    $navigation_width = " style=\"width: {$width}px\"";
-}
-else
-{
-    $navigation_width = '';
+    $navigation_width = $width - 40;
+    $navigation_width_ie = $width - 20;
+    $content_offset = $width + 2;
+    $pref_found = true;
 }
 
 // JavasScript libraries required by Asgard
@@ -34,14 +32,41 @@ $_MIDCOM->add_jscript("var MIDGARD_ROOT = '{$_MIDGARD['self']}';");
         <link rel="stylesheet" type="text/css" href="<?php echo MIDCOM_STATIC_URL; ?>/midcom.helper.datamanager2/legacy.css" media="all" />
         <?php
         $_MIDCOM->print_head_elements();
-        ?>
+        if ($pref_found)
+        {?>
+              <style type="text/css">
+                #container > #navigation
+                {
+                 width: &(navigation_width);px;
+                }
+                
+                #container > #content
+                {
+                  margin-left: &(content_offset);px;
+                }
+            </style>
+        <?php } ?>
         <!--[if IE 6]>
             <script type="text/javascript">
                 var ie6 = true;
             </script>
+            <?php if ($pref_found)
+            {?>
+                <style type="text/css">
+                    #container div#navigation
+                    {
+                     width: &(navigation_width_ie);px;
+                    }
+                    
+                    #container #content
+                    {
+                      margin-left: &(content_offset);px;
+                    }
+                </style>
+            <?php } ?>
         <![endif]-->
     </head>
     <body class="asgard"<?php $_MIDCOM->print_jsonload(); ?>>
         <div id="container-wrapper">
             <div id="container">
-                <div id="navigation"&(navigation_width:h);>
+                <div id="navigation">
