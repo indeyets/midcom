@@ -19,6 +19,22 @@ if (($width = midgard_admin_asgard_plugin::get_preference('offset')))
     $pref_found = true;
 }
 
+if (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') !== 'no')
+{
+    $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/object_browser.js');
+    $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/thickbox/jquery-thickbox-3.1.pack.js');
+    $_MIDCOM->add_link_head
+    (
+        array
+        (
+            'rel' => 'stylesheet',
+            'type' => 'text/css',
+            'href' => MIDCOM_STATIC_URL . '/jQuery/thickbox/thickbox.css',
+            'media' => 'screen',
+        )
+    );
+}
+
 // JavasScript libraries required by Asgard
 $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.mouse.js');
 $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.draggable.js');

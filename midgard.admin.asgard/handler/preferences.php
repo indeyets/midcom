@@ -162,17 +162,22 @@ class midgard_admin_asgard_handler_preferences extends midcom_baseclasses_compon
         // Load the controller instance
         $this->_load_controller();
 
+        $return_page = '__mfa/asgard';
+        if(isset($_GET['return_uri']))
+        {
+            $return_page = $_GET['return_uri'];
+        }
         // Process the requested form
         switch ($this->_controller->process_form())
         {
             case 'save':
                 $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'), $_MIDCOM->i18n->get_string('preferences saved', 'midgard.admin.asgard'));
-                $_MIDCOM->relocate('__mfa/asgard/');
+                $_MIDCOM->relocate($return_page);
                 // This will exit
                 break;
             case 'cancel':
                 $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midgard.admin.asgard', 'midgard.admin.asgard'), $_MIDCOM->i18n->get_string('cancelled', 'midcom'));
-                $_MIDCOM->relocate('__mfa/asgard/');
+                $_MIDCOM->relocate($return_page);
                 // This will exit
                 break;
         }
@@ -192,6 +197,11 @@ class midgard_admin_asgard_handler_preferences extends midcom_baseclasses_compon
      */
     function _show_preferences($handler_id, &$data)
     {
+        if (isset($_GET['ajax']))
+        {
+            midcom_show_style('midgard_admin_asgard_preferences');
+            return true;
+        }
         midcom_show_style('midgard_admin_asgard_header');
         midcom_show_style('midgard_admin_asgard_middle');
         midcom_show_style('midgard_admin_asgard_preferences');
