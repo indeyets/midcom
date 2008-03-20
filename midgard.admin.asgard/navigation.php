@@ -246,7 +246,10 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
 
             echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/{$this->_request_data['default_mode']}/{$object->guid}/\" title=\"GUID: {$object->guid}, ID: {$object->id}\">{$icon}{$label}</a>\n";
 
-            if ($selected)
+	    /* If there is exactly one root object, show its children, since 
+	     * this is what the user most likely wants to reach
+	     */
+            if ($selected || sizeof($root_objects) == 1)
             {
                 $this->_list_child_elements($object);
             }
@@ -366,6 +369,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                 {
                     $this->_list_root_elements($root_objects, &$ref);
                 }
+
             }
             midcom_show_style('midgard_admin_asgard_navigation_section_footer');
         }
