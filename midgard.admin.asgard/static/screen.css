@@ -23,6 +23,11 @@ textarea
   width: 100%;
 }
 
+p
+{
+  margin-bottom: 10px
+}
+
 #container-wrapper
 {
   position: relative;
