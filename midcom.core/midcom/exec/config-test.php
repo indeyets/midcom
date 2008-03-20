@@ -33,22 +33,22 @@ function println($testname, $result_code, $recommendations = '&nbsp;')
         case OK:
             echo "    <td style='color: green;'>OK</td>\n";
             break;
-            
+
         case WARNING:
             echo "    <td style='color: orange;'>WARNING</td>\n";
             break;
-            
+
         case ERROR:
             echo "    <td style='color: red;'>ERROR</td>\n";
             break;
-            
+
         default:
             die ("Unknown error code {$result_code}. Aborting.");
     }
-    
+
     echo "    <td>{$recommendations}</td>\n";
     echo "  </tr>\n";
-} 
+}
 
 function ini_get_filesize($setting)
 {
@@ -121,25 +121,25 @@ function check_for_utility ($name, $testname, $fail_code, $fail_recommendations)
     }
 }
 
-function check_rcs() 
+function check_rcs()
 {
     $config = $GLOBALS['midcom_config'];
-    if (array_key_exists('midcom_services_rcs_enable', $config) && $config['midcom_services_rcs_enable']) 
+    if (array_key_exists('midcom_services_rcs_enable', $config) && $config['midcom_services_rcs_enable'])
     {
-        if (!is_writable($config['midcom_services_rcs_root'])) 
+        if (!is_writable($config['midcom_services_rcs_root']))
         {
             println("MidCOM RCS", ERROR, "You must make the directory <b>{$config['midcom_services_rcs_root']}</b> writable by your webserver!");
         }
         else if (!is_executable($config['midcom_services_rcs_bin_dir'] . "/ci"))
         {
             println("MidCOM RCS", ERROR, "You must make <b>{$config['midcom_services_rcs_bin_dir']}/ci</b> executable by your webserver!");
-        } 
-        else 
+        }
+        else
         {
             println("MidCOM RCS", OK);
         }
-    } 
-    else 
+    }
+    else
     {
             println("MidCOM RCS", WARNING, "The MidCOM RCS service is disabled.");
     }
@@ -167,7 +167,7 @@ if ($cur_limit >= (20 * 1024 * 1024))
 }
 else
 {
-    println('PHP Setting: memory_limit', ERROR, "MidCOM requires a minimum memory limit of 20 MB to operate correctly. Smaller amounts will lead to PHP Errors. Detected limit was {$cur_limit}.");   
+    println('PHP Setting: memory_limit', ERROR, "MidCOM requires a minimum memory limit of 20 MB to operate correctly. Smaller amounts will lead to PHP Errors. Detected limit was {$cur_limit}.");
 }
 
 // Register Globals
@@ -212,8 +212,8 @@ if ($upload_limit >= (50 * 1024 * 1024))
 }
 else
 {
-    println('PHP Setting: upload_max_filesize', 
-        WARNING, "To make bulk uploads (for exampe in the Image Gallery) useful, you should increase the Upload limit to something above 50 MB. (Current setting: {$upload_limit})"); 
+    println('PHP Setting: upload_max_filesize',
+        WARNING, "To make bulk uploads (for exampe in the Image Gallery) useful, you should increase the Upload limit to something above 50 MB. (Current setting: {$upload_limit})");
 }
 
 $post_limit = ini_get_filesize('post_max_size');
@@ -229,7 +229,7 @@ else
 // Magic Quotes
 if (! ini_get_boolean('magic_quotes_gpc'))
 {
-    println('PHP Setting: magic_quotes_gpc', OK); 
+    println('PHP Setting: magic_quotes_gpc', OK);
 }
 else
 {
@@ -237,7 +237,7 @@ else
 }
 if (! ini_get_boolean('magic_quotes_runtime'))
 {
-    println('PHP Setting: magic_quotes_runtime', OK); 
+    println('PHP Setting: magic_quotes_runtime', OK);
 }
 else
 {
@@ -259,7 +259,7 @@ else
 
 if (! function_exists('dba_open'))
 {
-    println('Simple Database functions (dbm-style abstraction)', ERROR, 
+    println('Simple Database functions (dbm-style abstraction)', ERROR,
         'The dba module with support for BerkleyDB must be available for proper operation of the caching engine.');
 }
 else
@@ -358,13 +358,13 @@ else
 }
 
 // Date PEAR Package for Datamanager2 date type.
-println_check_for_include_file('Date.php', 'PEAR Package: Date', 
+println_check_for_include_file('Date.php', 'PEAR Package: Date',
     WARNING, 'The Date package is required to use the Date type made available by the midcom.helper.datamanager2 library.');
 
 // Mail and Mail_Mime PEAR packages for the Mailtemplate interface
-println_check_for_include_file('Mail.php', 'PEAR Package: Mail', 
+println_check_for_include_file('Mail.php', 'PEAR Package: Mail',
     WARNING, 'The Mail package is required to use the Mailtemplate system used by various components with auto-mailing support (like n.n.orders).');
-println_check_for_include_file('Mail/mime.php', 'PEAR Package: Mail_Mime', 
+println_check_for_include_file('Mail/mime.php', 'PEAR Package: Mail_Mime',
     WARNING, 'The Mail_Mime package is required to use the Mailtemplate system used by various components with auto-mailing support (like n.n.orders).');
 
 // HTML_Quickform for Datamanager validation support
@@ -380,7 +380,7 @@ check_rcs();
 println_check_for_include_file('Text/Diff.php', 'PEAR Package: Text_Diff', WARNING, 'The Text_Diff package is used by no.bergfald.rcs to show text diffs.');
 
 // XML_Serilizer
-println_check_for_include_file('XML/Serializer.php', 'PEAR Package: XML_Serializer', WARNING, 'The xml_serilizer package is used to read and write rcs diffs by rcs.bergfald.no.');
+println_check_for_include_file('XML/Serializer.php', 'PEAR Package: XML_Serializer', WARNING, 'The xml_serializer package is used to read and write rcs diffs by no.bergfald.rcs.');
 // ImageMagick
 $cmd = "{$GLOBALS['midcom_config']['utility_imagemagick_base']}identify -version";
 exec ($cmd, $output, $result);
@@ -413,7 +413,7 @@ if ($GLOBALS['midcom_config']['indexer_backend'])
 // Validate the Cache Base Directory.
 if  (! is_dir($GLOBALS['midcom_config']['cache_base_directory']))
 {
-    println('MidCOM cache base directory', ERROR, "The configured MidCOM cache base directory ({$GLOBALS['midcom_config']['cache_base_directory']}) does not exist or is not a directory. You have to create it as a directory writable by the Apache user."); 
+    println('MidCOM cache base directory', ERROR, "The configured MidCOM cache base directory ({$GLOBALS['midcom_config']['cache_base_directory']}) does not exist or is not a directory. You have to create it as a directory writable by the Apache user.");
 }
 else if (! is_writable($GLOBALS['midcom_config']['cache_base_directory']))
 {
