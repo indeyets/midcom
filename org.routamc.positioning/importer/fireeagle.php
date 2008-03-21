@@ -79,7 +79,7 @@ class org_routamc_positioning_importer_fireeagle extends org_routamc_positioning
                 $position['accuracy'] = 60;
                 break;
         }
-        
+
         $position['latitude'] = $best_position->latitude;
         $position['longitude'] = $best_position->longitude;
 

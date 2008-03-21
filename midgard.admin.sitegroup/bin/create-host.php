@@ -179,7 +179,15 @@ foreach ($opts_config as $key => $value )
 
 $configfile = $args->isDefined('configuration') ? $args->getValue('configuration') : 'midgard';
 echo "Starting midgard with config file: " . $configfile. "\n";
-mgd_config_init($configfile);
+if (version_compare(mgd_version(), '1.9.0alpha', '>='))
+{
+    $midgard = new midgard_connection();
+    $midgard->open($configfile);
+}
+else
+{
+    mgd_config_init($configfile);
+}
 
 $config->set_password($args->getValue('password'));
 $config->set_username($args->getValue('user'));

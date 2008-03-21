@@ -266,7 +266,7 @@ class midgard_admin_sitegroup_creation_host extends midgard_admin_sitegroup_crea
             return true;
         }
         $sitegroup = mgd_get_sitegroup($sitegroup_id);
-        if ($midgard->sitegroup != $sitegroup)
+        if ($_MIDGARD['sitegroup'] != $sitegroup)
         {
             echo "Logging in as " . $this->config->get_username()."!".$sitegroup->name . "\n";
             mgd_auth_midgard($this->config->get_username()."!".$sitegroup->name, $this->config->get_password(), false);

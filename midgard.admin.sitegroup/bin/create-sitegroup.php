@@ -119,7 +119,15 @@ error_reporting(E_ALL);
     }
     
     echo "Starting midgard with config file: " . $args->getValue('configuration') . "\n";
-    mgd_config_init($args->getValue('configuration'));
+    if (version_compare(mgd_version(), '1.9.0alpha', '>='))
+    {
+        $midgard = new midgard_connection();
+        $midgard->open($args->getValue('configuration'));
+    }
+    else
+    {
+        mgd_config_init($args->getValue('configuration'));
+    }
     
     $config->set_password($args->getValue('password'));
     $config->set_username($args->getValue('user'));
