@@ -104,7 +104,7 @@ Attachments
 ---STRINGEND
 
 ---STRING attachments of %s %s
-Attachments of %s %s
+Attachments of %s "%s"
 ---STRINGEND
 
 ---STRING back to %s
@@ -220,7 +220,7 @@ Default language
 ---STRINGEND
 
 ---STRING delete %s %s
-Delete %s %s
+Delete %s "%s"
 ---STRINGEND
 
 ---STRING deleted by
@@ -252,7 +252,7 @@ Dropdown list
 ---STRINGEND
 
 ---STRING edit %s %s
-Edit %s %s
+Edit %s "%s"
 ---STRINGEND
 
 ---STRING edit configuration for %s
@@ -416,7 +416,7 @@ Message
 ---STRINGEND
 
 ---STRING metadata of %s %s
-Metadata of %s %s
+Metadata of %s "%s"
 ---STRINGEND
 
 ---STRING midcom:approve
@@ -540,11 +540,11 @@ Parameter
 ---STRINGEND
 
 ---STRING parameters of %s %s
-Parameters of %s %s
+Parameters of %s "%s"
 ---STRINGEND
 
 ---STRING permissions for %s %s
-Permissions for %s %s
+Permissions for %s "%s"
 ---STRINGEND
 
 ---STRING plain text

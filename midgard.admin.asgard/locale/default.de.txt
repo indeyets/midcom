@@ -72,7 +72,7 @@ Dateianhänge
 ---STRINGEND
 
 ---STRING attachments of %s %s
-Dateianhänge von %s %s
+Dateianhänge von %s "%s"
 ---STRINGEND
 
 ---STRING no files
@@ -232,7 +232,7 @@ Standardsprache
 ---STRINGEND
 
 ---STRING delete %s %s
-%s %s löschen
+%s "%s" löschen
 ---STRINGEND
 
 ---STRING deleted by
@@ -268,7 +268,7 @@ Dropdown-Liste
 ---STRINGEND
 
 ---STRING edit %s %s
-%s %s bearbeiten
+%s "%s" bearbeiten
 ---STRINGEND
 
 ---STRING expanded list
@@ -356,7 +356,7 @@ Objekt-Verwaltung
 ---STRINGEND
 
 ---STRING metadata of %s %s
-Metadaten von %s %s
+Metadaten von %s "%s"
 ---STRINGEND
 
 ---STRING midcom:approve
@@ -464,11 +464,11 @@ Parameter
 ---STRINGEND
 
 ---STRING parameters of %s %s
-Parameter von %s %s
+Parameter von %s "%s"
 ---STRINGEND
 
 ---STRING permissions for %s %s
-Berechtigungen für %s %s
+Berechtigungen für %s "%s"
 ---STRINGEND
 
 ---STRING preferences saved
