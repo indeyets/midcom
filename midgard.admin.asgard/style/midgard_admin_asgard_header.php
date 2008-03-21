@@ -34,6 +34,8 @@ if (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') !== 'no')
         )
     );
 }
+    $_MIDCOM->add_jscript('var tb_pathToImage = "' . MIDCOM_STATIC_URL . '/jQuery/thickbox/loadingAnimation.gif"');
+
 
 // JavasScript libraries required by Asgard
 $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.mouse.js');
