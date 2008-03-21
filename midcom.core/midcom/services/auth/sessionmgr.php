@@ -199,7 +199,16 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
 
             if (! $valid)
             {
-                if (! $session->delete())
+                try
+                {
+                    if (! $session->delete())
+                    {
+                        debug_push_class(__CLASS__, __FUNCTION__);
+                        debug_add("Failed to delete the invalid session {$session->guid} (#{$session->id}): " . mgd_errstr(), MIDCOM_LOG_INFO);
+                        debug_pop();
+                    }
+                }
+                catch (Exception $e)
                 {
                     debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Failed to delete the invalid session {$session->guid} (#{$session->id}): " . mgd_errstr(), MIDCOM_LOG_INFO);
@@ -212,7 +221,16 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
             {
                 // Update the timestamp.
                 $session->timestamp = time();
-                if (! $session->update())
+                try 
+                {
+                    if (! $session->update())
+                    {
+                        debug_push_class(__CLASS__, __FUNCTION__);
+                        debug_add("Failed to update the session {$session->guid} (#{$session->id}) to the current timestamp: " . mgd_errstr(), MIDCOM_LOG_INFO);
+                        debug_pop();
+                    }
+                }
+                catch (Exception $e)
                 {
                     debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Failed to update the session {$session->guid} (#{$session->id}) to the current timestamp: " . mgd_errstr(), MIDCOM_LOG_INFO);
