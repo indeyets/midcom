@@ -310,7 +310,7 @@ p
 }
 
 #content .object_edit label > iframe,
-#content .object_edit label > input,
+#content .object_edit > div > label > input,
 #content .object_edit label > textarea,
 #content .object_edit label > select.dropdown
 {
