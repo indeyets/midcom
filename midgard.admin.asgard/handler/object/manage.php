@@ -680,17 +680,6 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
     {
         midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
 
-        // Get the default mode
-        midgard_admin_asgard_plugin::get_default_mode(&$data);
-
-        // Relocate, if the user has configured to use straight the edit mode
-        if (   $data['default_mode'] === 'edit'
-            && !isset($_GET['ajax']))
-        {
-            $_MIDCOM->relocate("__mfa/asgard/object/edit/{$args[0]}/");
-            // This will exit
-        }
-
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
 
         if (! $this->_object)
