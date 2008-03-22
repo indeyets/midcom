@@ -18,11 +18,6 @@ body, td, th
   font-size: 10pt;
 }
 
-textarea
-{
-  width: 100%;
-}
-
 p
 {
   margin-bottom: 10px
@@ -53,17 +48,16 @@ p
 #navigation
 {
   background-color: #d3d7cf;
-  width: 210px;
-  float: left;
+  width: 190px;
   padding: 10px;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
   padding-top: 16px;
-}
-
-#container > #navigation
-{
-  width: 190px;
+  overflow: auto;
+  position: fixed !important;
+  position: absolute;
+  top: 10px;
+  bottom: 58px
 }
 
 #asgard_logo
@@ -200,9 +194,14 @@ p
   margin-left: -0.5em;
   margin-right: -0.5em;
   margin-top: -0.5em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
+}
+
+* html #content div.page-title
+{
+      width: 100%;
 }
 
 #content div.page-title h1
@@ -245,26 +244,6 @@ p
   font-size: 120%;
 }
 
-#content .midcom_helper_datamanager2_view .value
-{
-  background-color: #EEEEEC;
-  -moz-border-radius-bottomleft: 6px;
-  -moz-border-radius-bottomright: 6px;
-  -webkit-border-radius: 6px;
-  padding: 2px 6px;
-  margin-left: 0 !important;
-}
-
-#content .midcom_helper_datamanager2_view .title
-{
-  margin-top: 10px;
-  -moz-border-radius-topleft: 6px;
-  -moz-border-radius-topright: 6px;
-  background-color: #BABDB6;
-  font-size: 100%;
-  padding: 0.2em 0.5em;
-}
-
 #content div.backtosite
 {
   width: auto;
@@ -272,6 +251,115 @@ p
   margin-left: 0.5em;
   margin-right: 0.5em;
   margin-bottom: 0.5em;        
+}
+
+#content .object_view .field,
+#content .object_edit form > div > label,
+#content .object_edit form > div > div
+{
+  border-bottom: 1px solid #555753;
+  border-top: 3px solid #D3D7CF;
+  background-color: #EEEEEC;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  padding: 2px 6px;
+  margin-left: 0 !important;
+}
+
+
+* html #content .object_view .field,
+* html #content .object_edit form div label,
+* html #content .object_edit form div div
+{
+  background-color: #EEEEEC;
+  border-bottom: 1px solid #555753;
+  border-top: 2px solid #D3D7CF;
+  height: 2em;
+}
+
+#content .object_view .title,
+#content .object_edit .field_text
+{
+  float: left;
+  width: 150px;
+  overflow: hidden;
+  font-size: 100%;
+  padding: 0.2em 0 0.2em 0.5em;
+  display: block;
+}
+
+#content .object_view .value
+{
+    margin: 0.3em 0;
+    background-color: white;
+    margin-left: 170px !important;
+    display:block;
+    padding: 3px 10px;
+}
+
+*html #content .object_view .value
+{
+    height: 1.6em;
+}
+
+
+#content .object_view textarea,
+#content .object_edit label textarea
+{
+    width: 600px;
+}
+
+#content .object_edit label > iframe,
+#content .object_edit label > input,
+#content .object_edit label > textarea,
+#content .object_edit label > select.dropdown
+{
+    margin-left: 170px;
+    margin-bottom: 0.4em
+}
+
+* html #content .object_edit input,
+* html #content .object_view .value textarea
+{
+    margin-left: -150px;
+    display:inline-block;
+}
+
+#content .object_edit fieldset
+{
+    margin-top: 0;
+    margin-left: 0;
+    padding: 0
+}
+
+
+* html #content .object_edit fieldset
+{
+    margin-left: 150px;
+    display:inline;
+}
+
+* html #content .object_edit fieldset input,
+* html #content .object_edit .form_toolbar input
+{
+    margin-left: 0px;
+    display:inline;
+}
+
+#content div.object_edit div div label,
+#content div.object_edit div div div,
+#content div.object_edit .form_toolbar
+{
+    border: 1px;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    margin-left: 0;
+    background-color: transparent
+}
+
+#content .object_edit div div span.field_text
+{
+    display: block
 }
 
 #content select.language_chooser option.exists
@@ -322,6 +410,12 @@ p
   text-decoration: underline;
 }
 
+
+#container #toolbar
+{
+  margin-bottom: 20px;
+}
+
 #container #toolbar ul
 {
   padding: 0;
@@ -333,6 +427,11 @@ p
   line-height: 22px;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
+}
+
+* html #container #toolbar ul
+{
+      width: 100%;
 }
 
 #container #toolbar ul li
@@ -384,6 +483,7 @@ p
   margin-bottom: 1em;
   font-size: 90%;
   border-bottom: solid 1px black;
+  width: 100%;
 }
 
 #siteinfo
@@ -392,13 +492,14 @@ p
   background-position: top left;
   background-repeat: repeat-x;
   height: 58px;
-  margin-top: -58px;
-  line-height: 28px;
-  padding-top: 30px;
+  padding-top: 25px;
   padding-left: 1em;
   vertical-align: middle;
   overflow: hidden;
-  position: relative;
+  position: absolute;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   clear: both;
 }
 
@@ -521,7 +622,6 @@ html > body #siteinfo
 {
   position: absolute;
   top: 0;
-  bottom: expression((document.body.clientHeight - 20) + 'px');
   height: 100%;
 }
 
