@@ -40,7 +40,7 @@ E-Mail
 ---STRINGEND
 
 ---STRING exported
-Exportiert aus Datenbank
+Exportiert
 ---STRINGEND
 
 ---STRING exporter
@@ -56,7 +56,7 @@ Aus der Logdatei
 ---STRINGEND
 
 ---STRING imported
-Importiert aus Datenbank
+Importiert
 ---STRINGEND
 
 ---STRING manage replication
@@ -84,8 +84,7 @@ Replikations-Informationen
 ---STRINGEND
 
 ---STRING replication information for %s
-Replikations-Informationen für %s
----STRINGEND
+Replikations-Informationen für "%s"
 
 ---STRING replication queue %s does not exist
 Die Replikations-Warteschlange %s existiert nicht
@@ -96,7 +95,7 @@ Der Apache-Benutzer hat keine Schreibrechte auf die Replikations-Warteschlange %
 ---STRINGEND
 
 ---STRING replication queue is stored to %s
-Die Replikations-Warteschlange wird unter %s gespeichert
+Die Replikations-Warteschlange wird unter "%s" gespeichert
 ---STRINGEND
 
 ---STRING replication subscriptions
