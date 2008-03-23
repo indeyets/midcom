@@ -309,6 +309,24 @@ p
     width: 600px;
 }
 
+#content .object_edit .shorttext,
+#content .object_edit select,
+#content .object_edit .longtext,
+#content .object_edit input.date
+{
+    border: 1px solid #666666;
+    background-color: white;
+    padding: 1px 2px
+}
+
+#content .object_edit .shorttext:focus,
+#content .object_edit select:focus,
+#content .object_edit .longtext:focus,
+#content .object_edit input.date:focus
+{
+    border: 1px solid Highlight;
+}
+
 #content .object_edit label > iframe,
 #content .object_edit form > div > label > input,
 #content .object_edit label > textarea,
@@ -348,7 +366,8 @@ p
 
 #content div.object_edit div div label,
 #content div.object_edit div div div,
-#content div.object_edit .form_toolbar
+#content div.object_edit .form_toolbar,
+#content div.object_edit .required_note
 {
     border: 1px;
     -moz-border-radius: 0;
