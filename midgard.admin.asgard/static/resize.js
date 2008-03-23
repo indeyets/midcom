@@ -22,16 +22,8 @@ $j(document).ready(function()
         {
             var offset = $j(this).offset();
             
-            if (!ie6)
-            {
-                var navigation_width = offset.left - 36;
-                var content_margin_left = offset.left + 6;
-            }
-            else
-            {
-                var navigation_width = offset.left - 16;
-                var content_margin_left = offset.left + 6;
-            }
+            var navigation_width = offset.left - 36;
+            var content_margin_left = offset.left + 6;
             
             $j('#navigation').css('width', navigation_width + 'px');
             $j('#content').css('margin-left', content_margin_left + 'px');

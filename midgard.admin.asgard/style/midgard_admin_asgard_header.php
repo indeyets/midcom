@@ -20,7 +20,6 @@ $pref_found = false;
 if (($width = midgard_admin_asgard_plugin::get_preference('offset')))
 {
     $navigation_width = $width - 40;
-    $navigation_width_ie = $width - 20;
     $content_offset = $width + 2;
     $pref_found = true;
 }
@@ -61,12 +60,12 @@ $_MIDCOM->add_jscript("var MIDGARD_ROOT = '{$_MIDGARD['self']}';");
         if ($pref_found)
         {?>
               <style type="text/css">
-                #container > #navigation
+                #container #navigation
                 {
                  width: &(navigation_width);px;
                 }
                 
-                #container > #content
+                #container #content
                 {
                   margin-left: &(content_offset);px;
                 }
@@ -76,20 +75,6 @@ $_MIDCOM->add_jscript("var MIDGARD_ROOT = '{$_MIDGARD['self']}';");
             <script type="text/javascript">
                 var ie6 = true;
             </script>
-            <?php if ($pref_found)
-            {?>
-                <style type="text/css">
-                    #container div#navigation
-                    {
-                     width: &(navigation_width_ie);px;
-                    }
-                    
-                    #container #content
-                    {
-                      margin-left: &(content_offset);px;
-                    }
-                </style>
-            <?php } ?>
         <![endif]-->
     </head>
     <body class="asgard"<?php $_MIDCOM->print_jsonload(); ?>>
