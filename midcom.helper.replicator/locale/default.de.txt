@@ -44,7 +44,7 @@ Exportiert aus Datenbank
 ---STRINGEND
 
 ---STRING exporter
-Typ exportieren
+Exporter
 ---STRINGEND
 
 ---STRING file archive transport
