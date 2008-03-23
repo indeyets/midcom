@@ -87,6 +87,14 @@ Replikations-Informationen
 Replikations-Informationen für %s
 ---STRINGEND
 
+---STRING replication queue %s does not exist
+Die Replikations-Warteschlange %s existiert nicht
+---STRINGEND
+
+---STRING replication queue %s cannot be written by Apache user
+Der Apache-Benutzer hat keine Schreibrechte auf die Replikations-Warteschlange %s
+---STRINGEND
+
 ---STRING replication queue is stored to %s
 Die Replikations-Warteschlange wird unter %s gespeichert
 ---STRINGEND

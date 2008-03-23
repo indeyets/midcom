@@ -87,6 +87,14 @@ Replication information
 Replication information for %s
 ---STRINGEND
 
+---STRING replication queue %s does not exist
+Replication queue %s does not exist
+---STRINGEND
+
+---STRING replication queue %s cannot be written by Apache user
+Replication queue %s cannot be written by Apache user
+---STRINGEND
+
 ---STRING replication queue is stored to %s
 Replication queue is stored to %s
 ---STRINGEND
