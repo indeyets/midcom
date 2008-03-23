@@ -25,13 +25,14 @@ p
 
 #container-wrapper
 {
-  position: relative;
+  position: absolute;
   min-height: 100%;
+  z-index: 2;
 }
 
 * html #container-wrapper
 {
-  height: 100%;
+  height: expression(document.body.offsetHeight - 58);
 }
 
 #container
@@ -108,8 +109,6 @@ p
 {
   padding: 5px;
   list-style-type: none;
-  width: 94% !important;
-  width: 100%;
   overflow: auto;
 }
 #navigation div.section ul.midgard_admin_asgard_navigation ul
@@ -132,7 +131,6 @@ p
 #navigation div.section ul.midgard_admin_asgard_navigation li a
 {
     display: block !important;
-    display: inline-block;
     width: 100%;
 }
 #navigation div.section ul.midgard_admin_asgard_navigation li a:hover
@@ -273,9 +271,32 @@ p
 {
   background-color: #EEEEEC;
   border-bottom: 1px solid #555753;
-  border-top: 2px solid #D3D7CF;
+  border-top: 3px solid #D3D7CF;
+  padding: 2px 6px;
+  margin-left: 0;
   height: 2em;
 }
+
+* html #content div.object_edit .form_toolbar,
+* html #content div.object_edit .required_note
+{
+    border: 1px;
+    background-color: transparent
+}
+
+* html #content div.object_edit div div div
+{
+    border: 0;
+    background-color: transparent
+}
+
+* html #content div.object_edit div div label,
+* html #content div.object_edit div div label label
+{
+    display: inline;
+    border: 0;
+}
+
 
 #content .object_view .title,
 #content .object_edit .field_text
@@ -319,6 +340,7 @@ p
     padding: 1px 2px
 }
 
+
 #content .object_edit .shorttext:focus,
 #content .object_edit select:focus,
 #content .object_edit .longtext:focus,
@@ -326,6 +348,7 @@ p
 {
     border: 1px solid Highlight;
 }
+
 
 #content .object_edit label > iframe,
 #content .object_edit form > div > label > input,
@@ -350,30 +373,11 @@ p
     padding: 0
 }
 
-
-* html #content .object_edit fieldset
-{
-    margin-left: 150px;
-    display:inline;
-}
-
 * html #content .object_edit fieldset input,
 * html #content .object_edit .form_toolbar input
 {
     margin-left: 0px;
     display:inline;
-}
-
-#content div.object_edit div div label,
-#content div.object_edit div div div,
-#content div.object_edit .form_toolbar,
-#content div.object_edit .required_note
-{
-    border: 1px;
-    -moz-border-radius: 0;
-    -webkit-border-radius: 0;
-    margin-left: 0;
-    background-color: transparent
 }
 
 #content .object_edit div div span.field_text
@@ -450,7 +454,8 @@ p
 
 * html #container #toolbar ul
 {
-      width: 100%;
+    padding: 0.4em 0;
+    width: 100%;
 }
 
 #container #toolbar ul li
@@ -510,13 +515,12 @@ p
   background-image: url('grid.png');
   background-position: top left;
   background-repeat: repeat-x;
-  height: 58px;
-  padding-top: 25px;
+  padding-top: 20px;
   padding-left: 1em;
   vertical-align: middle;
   overflow: hidden;
+  position: fixed !important;
   position: absolute;
-  position: fixed;
   bottom: 0;
   width: 100%;
   clear: both;
@@ -526,11 +530,6 @@ p
 {
     vertical-align: middle;
     margin-right: 1em;
-}
-
-html > body #siteinfo
-{
-  height: 28px;
 }
 
 #siteinfo span.copyrights
