@@ -351,7 +351,8 @@ p
 
 
 #content .object_edit label > iframe,
-#content .object_edit form > div > label > input,
+#content .object_edit form > div > label > input.shorttext,
+#content .object_edit form > div > label > input.longtext,
 #content .object_edit label > textarea,
 #content .object_edit label > select.dropdown
 {
@@ -359,8 +360,10 @@ p
     margin-bottom: 0.4em
 }
 
-* html #content .object_edit input,
-* html #content .object_view .value textarea
+* html #content .object_edit input.longtext,
+* html #content .object_edit input.shorttext,
+* html #content .object_view .value textarea,
+* html #content .object_edit textarea
 {
     margin-left: -150px;
     display:inline-block;
@@ -374,6 +377,7 @@ p
 }
 
 * html #content .object_edit fieldset input,
+* html #content .object_edit fieldset input.shorttext,
 * html #content .object_edit .form_toolbar input
 {
     margin-left: 0px;
@@ -764,4 +768,3 @@ table.table_widget a img
 {
   border: none;
 }
-
