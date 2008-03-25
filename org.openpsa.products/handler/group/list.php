@@ -64,17 +64,19 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             if (   ($handler_id == 'list_intree')
                 && ($args[0] != 'search')
                 && ($args[0] != 'product')
-                && (   isset($groups[0])
-                    && isset($groups[0]->id)
-                    && !empty($groups[0])
-                    )
-                )
+               )
             {
                 $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
                 $parentgroup_qb->add_constraint('code', '=', $args[0]);
                 $groups = $parentgroup_qb->execute_unchecked();
-                $qb->add_constraint('up', '=', $groups[0]->id);
-                $qb->add_constraint('code', '=', $args[1]);
+                if (   isset($groups[0])
+                    && isset($groups[0]->id)
+                    && !empty($groups[0])
+                   )
+                {
+                    $qb->add_constraint('up', '=', $groups[0]->id);
+                    $qb->add_constraint('code', '=', $args[1]);
+                }
             }
             else if (($handler_id == 'listall')
                 && ($args[0] != 'search')
@@ -83,7 +85,13 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
                 $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
                 $parentgroup_qb->add_constraint('code', '=', $args[0]);
                 $groups = $parentgroup_qb->execute_unchecked();
-                $qb->add_constraint('up', '=', $groups[0]->id);
+                if (   isset($groups[0])
+                    && isset($groups[0]->id)
+                    && !empty($groups[0])
+                   )
+                {
+                    $qb->add_constraint('up', '=', $groups[0]->id);
+                }
             }
             else
             {
