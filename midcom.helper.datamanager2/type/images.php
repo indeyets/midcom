@@ -370,7 +370,12 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
         foreach ($this->_attachment_map as $blobs_identifier => $info)
         {
             $images_identifier = $info[0];
-            $this->titles[$images_identifier] = $this->attachments_info[$blobs_identifier]['object']->title;
+            if (   isset($this->attachments_info[$blobs_identifier]['object'])
+                && isset($images_identifier)
+               )
+            {
+                $this->titles[$images_identifier] = $this->attachments_info[$blobs_identifier]['object']->title;
+            }
         }
     }
 
