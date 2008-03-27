@@ -322,7 +322,7 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         }
 
         if (   isset($marker['shadow_icon'])
-            || is_array($marker['shadow_icon']))
+            && is_array($marker['shadow_icon']))
         {
             if (   isset($marker['shadow_icon']['width'])
                 && isset($marker['shadow_icon']['height']))
