@@ -320,7 +320,21 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         {
             $script .= "marker_{$i}.setIconSize([{$marker['icon']['width']}, {$marker['icon']['height']}]);\n";
         }
-        
+
+        if (   isset($marker['shadow_icon'])
+            || is_array($marker['shadow_icon']))
+        {
+            if (   isset($marker['shadow_icon']['width'])
+                && isset($marker['shadow_icon']['height']))
+            {   
+                $script .= "marker_{$i}.setShadowIcon('{$marker['shadow_icon']['path']}', [{$marker['shadow_icon']['width']}, {$marker['shadow_icon']['height']}]);\n";
+            }       
+            else
+            {
+                $script .= "marker_{$i}.setShadowIcon('{$marker['shadow_icon']['path']}');\n";
+            }
+        }
+
         if (isset($marker['abstract']))
         {
             $abstract = htmlspecialchars($marker['abstract'],ENT_QUOTES);
