@@ -113,12 +113,13 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
             return;
         }
         
-        if (!file_exists("{$this->_dirname}{$key}"))
-        {
-            return;
+        try {
+            unlink("{$this->_dirname}{$key}");
         }
-        
-        unlink("{$this->_dirname}{$key}");
+        catch(Exception $e)
+        {
+            /* Do nothing, be quite */
+        }
     }
     
     function _remove_all()
