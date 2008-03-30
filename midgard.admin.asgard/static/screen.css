@@ -276,8 +276,8 @@ p
   height: 2em;
 }
 
-* html #content div.object_edit .form_toolbar,
-* html #content div.object_edit .required_note
+#content div.object_edit .form_toolbar,
+#content div.object_edit .required_note
 {
     border: 1px;
     background-color: transparent
