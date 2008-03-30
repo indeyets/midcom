@@ -16,6 +16,19 @@
                     ?>
                 </div>
                 <div id="content">
+
+                    <div id="breadcrumb">
+                        <?php
+                        $nap = new midcom_helper_nav();
+                        echo $nap->get_breadcrumb_line(" &gt; ", null, 1);
+                        ?>
+                    </div>
+
+
+                    <?php
+                    $_MIDCOM->uimessages->show_simple();
+                    ?>
+
                     <div class="page-title">
                         <?php
                         if (midgard_admin_asgard_plugin::get_preference('enable_quicklinks') !== 'no')
@@ -64,17 +77,6 @@
                         
                         ?>
                     </div>
-
-                    <?php
-                    $_MIDCOM->uimessages->show_simple();
-                    ?>
-
-                    <div id="breadcrumb">
-                        <?php
-                        $nap = new midcom_helper_nav();
-                        echo $nap->get_breadcrumb_line(" &gt; ", null, 1);
-                        ?>
-                    </div>
 <?php
 $toolbar_style = '';
 if (($position = midgard_admin_asgard_plugin::get_preference('toolbar_mode')))
@@ -118,4 +120,5 @@ if ($position === 'absolute')
 ?>
 
                     </div>
+
                     <div id="content-text">

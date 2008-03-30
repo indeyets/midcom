@@ -191,7 +191,6 @@ p
   padding: 0.5em;
   margin-left: -0.5em;
   margin-right: -0.5em;
-  margin-top: -0.5em;
   margin-bottom: 0;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
@@ -452,8 +451,10 @@ p
   background-color: #eeeeef;
   padding: 0.4em 1em;
   line-height: 22px;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
+  -moz-border-radius-bottomleft: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  -moz-border-radius-bottomright: 6px;
+  -webkit-border-bottom-right-radius: 6px;
 }
 
 * html #container #toolbar ul
@@ -508,7 +509,7 @@ p
 
 #breadcrumb
 {
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   font-size: 90%;
   border-bottom: solid 1px black;
   width: 100%;
