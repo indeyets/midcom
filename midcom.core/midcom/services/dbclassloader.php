@@ -619,6 +619,8 @@ EOF;
         catch(midgard_error_exception \$e)
         {
             midcom_baseclasses_core_dbobject::_clear_object(\$this);
+	    /* FIXME: exception should be thrown to avoid kind of "ghost" objects on PHP level */
+	    /* throw new midgard_error_exception(\$e->getMessage()); */
         }
         
         midcom_baseclasses_core_dbobject::post_db_load_checks(\$this);
