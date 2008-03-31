@@ -601,50 +601,27 @@ EOF;
         $this->_class_string .= <<<EOF
     function __construct(\$id = null)
     {
-        if (   is_object(\$id)
-            && ! empty(\$id->guid))
+        \$_id = null;
+        
+        if(is_object(\$id))
         {
-            \$construct_stat = parent::__construct(\$id->guid);
-            if (!midcom_baseclasses_core_dbobject::cast_object(\$this, \$id))
-            {
-                \$x =& \$this;
-                \$x = false;
-                return false;
-            }
-        }
-        elseif (\$id)
-        {
-            try 
-            {    
-                \$construct_stat = parent::__construct(\$id);
-            }
-            catch (midgard_error_exception \$e)
-            {
-                \$x =& \$this;
-                \$x = false;
-                return false;
-            }
+            \$_id = \$id->guid;
         }
         else
         {
-            parent::__construct();
-            \$construct_stat = true;
-        }
-        if (!\$construct_stat)
-        {
-            midcom_baseclasses_core_dbobject::_clear_object(\$this);
-            \$x =& \$this;
-            \$x = false;
-            return false;
+            \$_id = \$id;
         }
 
-        if (   ! is_null(\$id)
-            && ! midcom_baseclasses_core_dbobject::post_db_load_checks(\$this))
+        try
         {
-            \$x =& \$this;
-            \$x = false;
-            return false;
+            parent::__construct(\$_id);
         }
+        catch(midgard_error_exception \$e)
+        {
+            midcom_baseclasses_core_dbobject::_clear_object(\$this);
+        }
+        
+        midcom_baseclasses_core_dbobject::post_db_load_checks(\$this);
     }
 EOF;
         $this->_class_string .= "\n    \n";
@@ -670,7 +647,8 @@ EOF;
     function get_attachment_qb() { return midcom_baseclasses_core_dbobject::get_attachment_qb(\$this); }
     function get_by_guid(\$guid) { return midcom_baseclasses_core_dbobject::get_by_guid(\$this, \$guid); }
     function get_by_id(\$id) { return midcom_baseclasses_core_dbobject::get_by_id(\$this, \$id); }
-    function get_by_path(\$path) { return midcom_baseclasses_core_dbobject::get_by_path(\$this, \$path); }
+    function get_by_path(\$path) { return midcom_baseclasses_core_dbobject::get_by_path(\$this, \$path); }  
+    /* function get_by_path(\$path) { return parent::get_by_path(\$this, \$path); } */
     function & get_metadata() { return midcom_baseclasses_core_dbobject::get_metadata(\$this); }
     function get_parameter(\$domain, \$name) { return midcom_baseclasses_core_dbobject::get_parameter(\$this, \$domain, \$name); }
     function get_parent() { return midcom_baseclasses_core_dbobject::get_parent(\$this); }
