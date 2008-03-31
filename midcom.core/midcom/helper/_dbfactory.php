@@ -92,14 +92,18 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
             return null;
         }
 
-        $tmp = midgard_object_class::get_object_by_guid($guid);
-        if (! $tmp)
+        try
+        {
+            $tmp = midgard_object_class::get_object_by_guid($guid);
+        }
+        catch(midgard_error_exception $e)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("The Midgard core failed to resolve the GUID {$guid}: " . mgd_errstr(), MIDCOM_LOG_INFO);
+            debug_add("The Midgard core failed to resolve the GUID {$guid}: " . $e->getMessage(), MIDCOM_LOG_INFO);
             debug_pop();
             return null;
         }
+
         return $this->convert_midgard_to_midcom($tmp);
     }
 
