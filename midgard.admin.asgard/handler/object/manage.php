@@ -883,6 +883,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
     {
         midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
         $this->_new_type = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($args[0]);
+
         $_MIDCOM->dbclassloader->load_mgdschema_class_handler($this->_new_type);
         if (!class_exists($this->_new_type))
         {

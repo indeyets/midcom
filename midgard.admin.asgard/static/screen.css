@@ -254,13 +254,13 @@ p
 #content .object_edit form > div > label,
 #content .object_edit form > div > div
 {
-  border-bottom: 1px solid #555753;
-  border-top: 3px solid #D3D7CF;
+  clear: left;
   background-color: #EEEEEC;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
   padding: 2px 6px;
   margin-left: 0 !important;
+  margin-bottom: 0.5em
 }
 
 
@@ -268,12 +268,13 @@ p
 * html #content .object_edit form div label,
 * html #content .object_edit form div div
 {
+  clear: left;
   background-color: #EEEEEC;
-  border-bottom: 1px solid #555753;
-  border-top: 3px solid #D3D7CF;
   padding: 2px 6px;
   margin-left: 0;
+  margin-bottom: 0.5em
   height: 2em;
+  width: 95%;
 }
 
 #content div.object_edit .form_toolbar,
