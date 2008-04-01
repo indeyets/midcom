@@ -668,6 +668,48 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/metadata.png',
                 )
             );
+            /** COPIED from midcom_services_toolbars */
+            if ($GLOBALS['midcom_config']['metadata_approval'])
+            {
+                $metadata =& midcom_helper_metadata::retrieve($object);
+                if (   $metadata
+                    && $metadata->is_approved())
+                {
+                    $toolbar->add_item(Array(
+                        MIDCOM_TOOLBAR_URL => "__ais/folder/unapprove.html",
+                        MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('unapprove', 'midcom'),
+                        MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('approved', 'midcom'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => Array
+                        (
+                            'guid' => $object->guid,
+                            'return_to' => $_SERVER['REQUEST_URI'],
+                        ),
+                        MIDCOM_TOOLBAR_ACCESSKEY => 'u',
+                        MIDCOM_TOOLBAR_ENABLED => $object->can_do('midcom:approve'),
+                    ));
+                }
+                else
+                {
+                    $toolbar->add_item(Array(
+                        MIDCOM_TOOLBAR_URL => "__ais/folder/approve.html",
+                        MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('approve', 'midcom'),
+                        MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('unapproved', 'midcom'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/not_approved.png',
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => Array
+                        (
+                            'guid' => $object->guid,
+                            'return_to' => $_SERVER['REQUEST_URI'],
+                        ),
+                        MIDCOM_TOOLBAR_ACCESSKEY => 'a',
+                        MIDCOM_TOOLBAR_ENABLED => $object->can_do('midcom:approve'),
+                    ));
+                }
+            }
+            /** /COPIED from midcom_services_toolbars */
+
 
             $toolbar->add_item
             (

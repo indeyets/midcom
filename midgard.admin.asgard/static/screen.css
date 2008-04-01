@@ -464,7 +464,8 @@ p
     width: 100%;
 }
 
-#container #toolbar ul li
+#container #toolbar ul li,
+#container #toolbar ul li form
 {
   display: inline;
   margin: 0;

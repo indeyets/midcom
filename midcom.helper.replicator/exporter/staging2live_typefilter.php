@@ -25,26 +25,34 @@ class midcom_helper_replicator_exporter_staging2live_typefilter extends midcom_h
     /**
      * array of $object->type values to allow replication for
      *
-     * @todo make configurable
+     * @see configuration key exporter_staging2live_typefilter_pass_types
+     * @todo configurable on per subscription basis ?
      */
-    var $pass_types = array
-    (
-        0,
-    );
+    var $pass_types = array();
 
     /**
      * array of classes for which to check the type for
      *
-     * @todo make configurable
+     * @see configuration key exporter_staging2live_typefilter_check_types_for
+     * @todo configurable on per subscription basis ?
      */
-    var $check_types_for = array
-    (
-        'midgard_article',
-    );
+    var $check_types_for = array();
 
     function midcom_helper_replicator_exporter_staging2live_typefilter($subscription)
     {
         parent::midcom_helper_replicator_exporter_staging2live($subscription);
+        $this->pass_types = $this->_config->get('exporter_staging2live_typefilter_pass_types');
+        if (!is_array($this->pass_types))
+        {
+            // Safety
+            $this->pass_types = array();
+        }
+        $this->check_types_for = $this->_config->get('exporter_staging2live_typefilter_check_types_for');
+        if (!is_array($this->check_types_for))
+        {
+            // Safety
+            $this->check_types_for = array();
+        }
     }
 
     function is_exportable(&$object, $check_exported = true)

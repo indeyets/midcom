@@ -26,16 +26,23 @@ $_MIDCOM->load_library('midcom.services.at');
  */
 class midcom_helper_replicator_exporter_staging2live extends midcom_helper_replicator_exporter_mirror
 {
-
-    var $check_approvals_for = array
-    (
-        'midgard_topic',
-        'midgard_article',
-    );
+    /**
+     * array of classes for which to check the approval for
+     *
+     * @see configuration key exporter_staging2live_check_approvals_for
+     * @todo configurable on per subscription basis ?
+     */
+    var $check_approvals_for = array();
 
     function midcom_helper_replicator_exporter_staging2live($subscription)
     {
         parent::midcom_helper_replicator_exporter_mirror($subscription);
+        $this->check_approvals_for = $this->_config->get('exporter_staging2live_check_approvals_for');
+        if (!is_array($this->check_approvals_for))
+        {
+            // Safety
+            $this->check_approvals_for = array();
+        }
     }
 
     /**
@@ -218,7 +225,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
         }
 
         if (   is_a($object, 'midgard_article')
-            && $object->up)
+            && !empty($object->up))
         {
             // Child articles don't currently have any approval UI, skip approval
             $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Child article, no approval checks to be made');
@@ -310,31 +317,6 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
             $dependency_serializations = $this->serialize_component_dependencies(&$object);
             $serializations = array_merge($serializations, $dependency_serializations);
             unset($dependency_serializations);
-
-            /* FIXME: This contradicts general tree logic where children *must not* be exported if parent
-               is not approved
-            // We should export child articles and topics as they may have been approved
-            // even while their parent topic wasn't
-            $qb = midcom_db_article::new_query_builder();
-            $qb->add_constraint('topic', '=', $object->id);
-            $articles = $qb->execute();
-            foreach ($articles as $article)
-            {
-                $child_serializations = $this->serialize_object($article);
-                $serializations = array_merge($serializations, $child_serializations);
-                unset($child_serializations);
-            }
-
-            $qb = midcom_db_topic::new_query_builder();
-            $qb->add_constraint('up', '=', $object->id);
-            $topics = $qb->execute();
-            foreach ($topics as $topic)
-            {
-                $child_serializations = $this->serialize_object($topic);
-                $serializations = array_merge($serializations, $child_serializations);
-                unset($child_serializations);
-            }
-            */
         }
 
         return $serializations;

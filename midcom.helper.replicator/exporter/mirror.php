@@ -136,6 +136,7 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
      */
     function serialize_component_dependencies(&$node)
     {
+        // FIXME: components interface class should have a method to return dependencies
         switch ($node->component)
         {
             case 'net.nehmer.static':
