@@ -3,4 +3,3 @@
 // Get the form with output buffering for modifications
 $data['controller']->display_form();
 ?>
-

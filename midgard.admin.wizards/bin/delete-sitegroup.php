@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if (count($argv) != 5)
 {
     die("Usage: php delete-sitegroup.php sitegroup midgardconffile username password\n");

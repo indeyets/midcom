@@ -24,4 +24,3 @@ ob_end_clean();
 // Inject the tree to the form
 echo preg_replace('/(<form.*?>)/i', '\1' . $tree_select, $form);
 ?>
-

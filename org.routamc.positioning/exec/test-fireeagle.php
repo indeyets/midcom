@@ -16,10 +16,10 @@ if (   !$access_key
     || !$access_secret)
 {
     $session = new midcom_service_session('org_routamc_positioning_fireeagle');
-	if (   isset($_GET['f'])
-	    && $_GET['f'] == 'start') 
-	{
-		// get a request token + secret from FE and redirect to the authorization page
+    if (   isset($_GET['f'])
+        && $_GET['f'] == 'start') 
+    {
+        // get a request token + secret from FE and redirect to the authorization page
         $fireeagle = new FireEagle($fireeagle_consumer_key, $fireeagle_consumer_secret);
         $request_token = $fireeagle->getRequestToken();
         if (   !isset($request_token['oauth_token'])
@@ -31,26 +31,26 @@ if (   !$access_key
         }
         
         // Save request token to session and redirect user
-		$session->set('auth_state', 'start');
-		$session->set('request_token', $request_token['oauth_token']);
-		$session->set('request_secret', $request_token['oauth_token_secret']);
-		
-		?>
-		<p><a href="<?php echo $fireeagle->getAuthorizeURL($request_token['oauth_token']); ?>" target="_blank">Authorize this application</a></p>
-		<p><a href="?f=callback">And then click here</a></p>
-		<?php
+        $session->set('auth_state', 'start');
+        $session->set('request_token', $request_token['oauth_token']);
+        $session->set('request_secret', $request_token['oauth_token_secret']);
+        
+        ?>
+        <p><a href="<?php echo $fireeagle->getAuthorizeURL($request_token['oauth_token']); ?>" target="_blank">Authorize this application</a></p>
+        <p><a href="?f=callback">And then click here</a></p>
+        <?php
         $_MIDCOM->finish();
         die();
-	} 
-	elseif (   isset($_GET['f'])
-	        && $_GET['f'] == 'callback')
+    } 
+    elseif (   isset($_GET['f'])
+            && $_GET['f'] == 'callback')
     {
-		// the user has authorized us at FE, so now we can pick up our access token + secret
-		if (   !$session->exists('auth_state')
-		    || $session->get('auth_state') != 'start') 
-		{
-			die("Out of sequence.");
-		}
+        // the user has authorized us at FE, so now we can pick up our access token + secret
+        if (   !$session->exists('auth_state')
+            || $session->get('auth_state') != 'start') 
+        {
+            die("Out of sequence.");
+        }
 
         $fireeagle = new FireEagle($fireeagle_consumer_key, $fireeagle_consumer_secret, $session->get('request_token'), $session->get('request_secret'));
         $access_token = $fireeagle->getAccessToken();

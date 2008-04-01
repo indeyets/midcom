@@ -73,9 +73,9 @@ class FireEagle {
   function methodURL($method) { return self::$FE_API_ROOT.'/api/0.1/'.$method.'.json'; }
 
   function __construct($consumerKey,
-		       $consumerSecret, 
-		       $oAuthToken = null, 
-		       $oAuthTokenSecret = null)  {
+               $consumerSecret, 
+               $oAuthToken = null, 
+               $oAuthTokenSecret = null)  {
     $this->sha1_method = new OAuthSignatureMethod_HMAC_SHA1();
     $this->consumer = new OAuthConsumer($consumerKey, $consumerSecret, NULL);
     if (!empty($oAuthToken) && !empty($oAuthTokenSecret)) {
@@ -151,27 +151,27 @@ class FireEagle {
     if (isset($r->user->location_hierarchy)) {
       $r->user->best_guess = NULL;
       foreach ($r->user->location_hierarchy as &$loc) {
-	$c = $loc->geometry->coordinates;
-	switch ($loc->geometry->type) {
-	case 'Box': // DEPRECATED
-	  $loc->bbox = $c;
-	  $loc->latitude = ($c[0][0] + $c[1][0]) / 2;
-	  $loc->longitude = ($c[0][1] + $c[1][1]) / 2;
-	  $loc->geotype = 'box';
-	  break;
-	case 'Polygon':
-	  $loc->bbox = $bbox = $loc->geometry->bbox;
-	  $loc->latitude = ($bbox[0][0] + $bbox[1][0]) / 2;
-	  $loc->longitude = ($bbox[0][1] + $bbox[1][1]) / 2;
-	  $loc->geotype = 'box';
-	  break;
-	case 'Point':
-	  list($loc->longitude, $loc->latitude) = $c;
-	  $loc->geotype = 'point';
-	  break;
-	}
-	if ($loc->best_guess) $r->user->best_guess = $loc; // add shortcut to get 'best guess' loc
-	unset($loc);
+    $c = $loc->geometry->coordinates;
+    switch ($loc->geometry->type) {
+    case 'Box': // DEPRECATED
+      $loc->bbox = $c;
+      $loc->latitude = ($c[0][0] + $c[1][0]) / 2;
+      $loc->longitude = ($c[0][1] + $c[1][1]) / 2;
+      $loc->geotype = 'box';
+      break;
+    case 'Polygon':
+      $loc->bbox = $bbox = $loc->geometry->bbox;
+      $loc->latitude = ($bbox[0][0] + $bbox[1][0]) / 2;
+      $loc->longitude = ($bbox[0][1] + $bbox[1][1]) / 2;
+      $loc->geotype = 'box';
+      break;
+    case 'Point':
+      list($loc->longitude, $loc->latitude) = $c;
+      $loc->geotype = 'point';
+      break;
+    }
+    if ($loc->best_guess) $r->user->best_guess = $loc; // add shortcut to get 'best guess' loc
+    unset($loc);
       }
     }
     
@@ -253,11 +253,11 @@ class FireEagle {
       self::dump("Final URL: $url\n\n");
       $url_bits = parse_url($url);
       if (isset($postData)) {
-	self::dump("POST ".$url_bits['path']." HTTP/1.0\nHost: ".$url_bits['host']."\nContent-Type: application/x-www-urlencoded\nContent-Length: ".strlen($postData)."\n\n$postData\n");
+    self::dump("POST ".$url_bits['path']." HTTP/1.0\nHost: ".$url_bits['host']."\nContent-Type: application/x-www-urlencoded\nContent-Length: ".strlen($postData)."\n\n$postData\n");
       } else {
-	$get_url = $url_bits['path'];
-	if ($url_bits['query']) $get_url .= '?' . $url_bits['query'];
-	self::dump("GET $get_url HTTP/1.0\nHost: ".$url_bits['host']."\n\n");
+    $get_url = $url_bits['path'];
+    if ($url_bits['query']) $get_url .= '?' . $url_bits['query'];
+    self::dump("GET $get_url HTTP/1.0\nHost: ".$url_bits['host']."\n\n");
       }
     }
     $ch = curl_init();

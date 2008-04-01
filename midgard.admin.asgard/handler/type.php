@@ -242,15 +242,15 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
 
         if (isset($_GET['search']))
         {
-    	    midgard_admin_asgard_plugin::get_default_mode(&$data);
+            midgard_admin_asgard_plugin::get_default_mode(&$data);
             $data['search_results'] = $this->_search($_GET['search']);
 
-    	    //If there is exactly one result, go there directly
+            //If there is exactly one result, go there directly
             if (sizeof($data['search_results']) == 1)
-    	    {
+            {
                   $_MIDCOM->relocate('__mfa/asgard/object/' . $data['default_mode'] . '/' . $data['search_results'][0]->guid) . '/';
                   //this will exit
-    	    }
+            }
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.tablesorter.js');
             $_MIDCOM->add_link_head
             (
