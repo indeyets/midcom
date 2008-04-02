@@ -1,6 +1,6 @@
 <?php
 $importer = midcom_helper_filesync_importer::create('snippet');
-$trusted_ips = $importer->config->get('trusted_ips');
+$trusted_ips = $importer->_config->get('trusted_ips');
 $ip_sudo = false;
 
 if ($trusted_ips
