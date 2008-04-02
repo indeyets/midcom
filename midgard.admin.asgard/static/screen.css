@@ -305,7 +305,7 @@ p
   width: 150px;
   overflow: hidden;
   font-size: 100%;
-  padding: 0.3em 0;
+  padding: 0.3em 0.1em;
   display: block;
 }
 
@@ -363,7 +363,7 @@ p
 #content .object_edit label > textarea,
 #content .object_edit label > select.dropdown
 {
-    margin-left: 170px;
+    margin-left: 164px;
     margin-bottom: 0.4em
 }
 
