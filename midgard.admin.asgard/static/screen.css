@@ -268,26 +268,25 @@ p
 * html #content .object_edit form div label,
 * html #content .object_edit form div div
 {
-  clear: left;
   background-color: #EEEEEC;
   padding: 2px 6px;
   margin-left: 0;
-  margin-bottom: 0.5em
+  margin-bottom: 0.5em;
   height: 2em;
-  width: 95%;
+  padding-right: .5em
 }
 
 #content div.object_edit .form_toolbar,
 #content div.object_edit .required_note
 {
-    border: 1px;
-    background-color: transparent
+    background-color: transparent;
 }
 
 * html #content div.object_edit div div div
 {
     border: 0;
-    background-color: transparent
+    background-color: transparent;
+    margin-bottom: 0;
 }
 
 * html #content div.object_edit div div label,
@@ -296,7 +295,6 @@ p
     display: inline;
     border: 0;
 }
-
 
 #content .object_view .title,
 #content .object_edit .field_text
@@ -308,6 +306,14 @@ p
   padding: 0.3em 0.1em;
   display: block;
 }
+
+
+* html #content .object_view .title,
+* html #content .object_edit .field_text
+{
+  display: inline-block;
+}
+
 
 #content .object_view .value
 {
@@ -321,6 +327,7 @@ p
 *html #content .object_view .value
 {
     height: 1.6em;
+    display: inline-block;
 }
 
 
@@ -344,7 +351,8 @@ p
 {
     border: 1px solid #888888;
     background-color: white;
-    padding: 1px 2px
+    padding: 1px 2px;
+    display: inline !important
 }
 
 
@@ -363,18 +371,21 @@ p
 #content .object_edit label > textarea,
 #content .object_edit label > select.dropdown
 {
-    margin-left: 164px;
     margin-bottom: 0.4em
 }
 
-* html #content .object_edit input.longtext,
-* html #content .object_edit input.shorttext,
-* html #content .object_view .value textarea,
-* html #content .object_edit textarea
+#content .object_edit label iframe,
+* html #content .object_edit label .mceEditor 
 {
-    margin-left: -150px;
-    display:inline-block;
+    margin-left: 165px
 }
+
+
+#content .object_edit label .mceEditor iframe
+{
+    margin-left: 0
+}
+
 
 #content .object_edit fieldset
 {
@@ -388,7 +399,6 @@ p
 * html #content .object_edit .form_toolbar input
 {
     margin-left: 0px;
-    display:inline;
 }
 
 #content .object_edit div div span.field_text
