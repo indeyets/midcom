@@ -14,8 +14,8 @@ Use the bin/dump_sites.php to dump a number of sites, it requires a config file 
       'redirect_htaccess_suffix' => '', // optional, remove key alltogether to disable generation of redirection .htaccess files
       'username' => 'someuser', // optional
       'password' => 'userpass', // optional
-      'pre_dump_script => '', // optional, if returns nonzero exit code, dump will be aborted!, the url is passed as argument
-      'post_dump_script => '', // optional, the url is passed as argument along with general status indicator exit codes some certain prior operations are passed as arguments 
+      'pre_dump_script => '', // optional, if returns nonzero exit code, dump will be aborted!, the url and dump path are passed as arguments
+      'post_dump_script => '', // optional, the url is passed as argument along with general status indicator exit codes some certain prior operations and dump path are passed as arguments 
     ),
 
 In the VirtualHost directive of your static apache set the following to handle URLs with GET parameters in them nicely:

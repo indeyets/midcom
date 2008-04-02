@@ -7,6 +7,13 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-04-01 rambo
+  - Added dump_path to post/pre dump script arguments
+  - fixed forker script
+
+2008-xx-xx rambo
+  + forker script
+
 2008-01-02 rambo
   - increased HTTP GET timeout
   - Minor changes to USAGE

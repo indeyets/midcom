@@ -137,7 +137,7 @@ foreach ($sites_config as $k => $site_config)
     if (   isset($site_config['pre_dump_script'])
         && !empty($site_config['pre_dump_script']))
     {
-        $pre_dump_cmd = $site_config['pre_dump_script'] . ' ' . escapeshellarg($site_config['url']);
+        $pre_dump_cmd = $site_config['pre_dump_script'] . ' ' . escapeshellarg($site_config['url']) . ' ' . escapeshellarg($site_config['dump_path']);
         system($pre_dump_cmd, $pre_dump_ret);
     }
     if ($pre_dump_ret !== 0)
@@ -385,7 +385,7 @@ EOD;
         && !empty($site_config['post_dump_script']))
     {
         $all_ok_int = (int)$all_ok;
-        $post_dump_cmd = $site_config['post_dump_script'] . ' ' . escapeshellarg($site_config['url']) . " {$all_ok_int} {$wget_ret} {$rsync_ret}";
+        $post_dump_cmd = $site_config['post_dump_script'] . ' ' . escapeshellarg($site_config['url']) . " {$all_ok_int} {$wget_ret} {$rsync_ret} " . escapeshellarg($site_config['dump_path']);
         system($post_dump_cmd, $post_dump_ret);
     }
     if ($post_dump_ret !== 0)
