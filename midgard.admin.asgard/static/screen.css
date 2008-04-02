@@ -331,6 +331,14 @@ p
 }
 
 #content .object_edit .shorttext,
+#content .object_view textarea,
+#content .object_edit label textarea
+{
+    font-family: monospace;
+    font-weight: normal
+}
+
+#content .object_edit .shorttext,
 #content .object_edit select,
 #content .object_edit .longtext,
 #content .object_edit input.date
