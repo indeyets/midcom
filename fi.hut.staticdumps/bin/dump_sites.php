@@ -191,7 +191,6 @@ foreach ($sites_config as $k => $site_config)
         $output = array();
         $ret = 0;
         exec($cmd, $output, $ret);
-        // TODO: check return status
         if (   $ret === 0
             && !empty($output))
         {
@@ -229,7 +228,7 @@ foreach ($sites_config as $k => $site_config)
         }
         $client = new org_openpsa_httplib();
         $client->_config->options['http_timeout'] = $http_timeout;
-        // Quick and Dirty way to do retries (the result might be empty and still be valid...)
+        // Quick and Dirty way to do retries (NOTE: the result might be empty and still be valid, too bad...)
         $retries = 5;
         do
         {
@@ -282,7 +281,7 @@ foreach ($sites_config as $k => $site_config)
         }
         $client = new org_openpsa_httplib();
         $client->_config->options['http_timeout'] = $http_timeout;
-        // Quick and Dirty way to do retries (the result might be empty and still be valid...)
+        // Quick and Dirty way to do retries (NOTE: the result might be empty and still be valid, too bad...)
         $retries = 5;
         do
         {
