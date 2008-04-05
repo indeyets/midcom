@@ -116,6 +116,10 @@ Available Sizes
 Thumbnail
 ---STRINGEND
 
+---STRING type php: parse error in line %s
+Parse Error in line %s
+---STRINGEND
+
 ---STRING type number: value must not be larger then %s
 The value of this field may not be larger then %s.
 ---STRINGEND

@@ -120,7 +120,9 @@ class midcom_helper_datamanager2_type_php extends midcom_helper_datamanager2_typ
 
         if (strstr($parse_results, 'Parse error'))
         {
-            $this->validation_error = $this->_l10n->get('type php: parse error');
+            $line = preg_replace('/\n.+?on line (\d+?)\n.*\n/', '\1', $parse_results);
+            $this->validation_error = sprintf($this->_l10n->get('type php: parse error in line %s'), $line);
+      
             debug_pop();
             return false;
         }
