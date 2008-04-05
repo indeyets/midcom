@@ -188,24 +188,8 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
             debug_pop();
             return null;
         }
-
-        if ($_MIDCOM->dbclassloader->is_legacy_midgard_object($object))
-        {
-            $classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_object($object);
-
-            if (! array_key_exists('id', $object))
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_print_type("Cannot cast the object to a MgdSchema type, there is no ID property, we got this type:",
-                    $object, MIDCOM_LOG_ERROR);
-                debug_print_r("Object dump:", $object);
-                debug_pop();
-                return null;
-            }
-
-            $result = new $classname($object->id);
-        }
-        else if ($_MIDCOM->dbclassloader->is_mgdschema_object($object))
+     
+        if ($_MIDCOM->dbclassloader->is_mgdschema_object($object))
         {
             $classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($object);
             if (! $_MIDCOM->dbclassloader->load_mgdschema_class_handler($classname))
@@ -214,7 +198,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
                 debug_add("Failed to load the handling component for {$classname}, cannot convert.", MIDCOM_LOG_ERROR);
                 debug_pop();
                 return null;
-            }
+            } 
             $result = new $classname($object);
         }
         else
