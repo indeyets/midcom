@@ -715,13 +715,13 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * @return boolean True if the privilege has been granted, false otherwise.
      */
     function can_do($privilege, &$content_object, $user = null)
-    {
+    {	
         if (   $privilege != 'midgard:read'
             && $_MIDGARD['sitegroup'] != 0
             && $content_object->sitegroup != $_MIDGARD['sitegroup'])
         {
             return false;
-        }
+        }	
         return $this->can_do_byguid($privilege, $content_object->guid, get_class($content_object), $user);
     }
 
@@ -1009,6 +1009,15 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      */
     function get_privileges_byguid($object_guid, $object_class, $user = null)
     {
+        $_empty_array = array();
+
+        /* No idea if there should be some special log message written */
+        if($object_guid == '' || !isset($object_guid)
+            || $object_class == '' || !isset($object_class))
+            {
+                return $_empty_array;
+            }
+
         // TODO: Clean if/else shorthands, make sure this works correctly for magic assignees as well
         if (is_null($user))
         {
@@ -1055,7 +1064,11 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "class '{$object_class}' does not exist");
             // This will exit()
         }
-        $dummy_object_init = new $object_class();
+        
+        /* FIXME! We create new instance of the same class, which means we will check privileges once again 
+         * for newly created object, which means we will create another one object once again.... and so on.
+         * This may produce very ugly loops */
+        $dummy_object_init = new $object_class(); 
         if (! $_MIDCOM->dbclassloader->is_midcom_db_object($dummy_object_init))
         {
             $dummy_object = $_MIDCOM->dbfactory->convert_midgard_to_midcom($dummy_object_init);
