@@ -1033,10 +1033,10 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             midcom_baseclasses_core_dbobject::_clear_object($object);
             debug_pop();
             return false;
-        }
-
+        }	
+	
         midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
-
+	
         $result = $object->_on_loaded();
         if (! $result)
         {
@@ -1449,27 +1449,12 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     }
 
     /**
-     * Internal helper function, which clears all variables of an object with the exception
-     * of the __ prefixed internal ones. This is used to reset an object after a failed
-     * permission check for example.
-     *
-     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
+     * This method is deprecated. It does nothing.
      * @access private
      */
     function _clear_object (&$object)
     {
-        $vars = get_object_vars($object);
-        foreach ($vars as $name => $value)
-        {
-            if (   $name == '__res'
-                || (  substr($name, 0, 2) == '__'
-                    && substr($name, -2) == '__'))
-            {
-                // This is a special variable, we must not overwrite them.
-                continue;
-            }
-            $object->$name = null;
-        }
+    	return;
     }
 
     /**
