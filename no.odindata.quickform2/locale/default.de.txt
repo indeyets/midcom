@@ -1,0 +1,69 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE de
+
+---STRING This is the index
+This is the index
+---STRINGEND
+
+---STRING You can change this to something else :-)
+You can change this to something else :-)
+---STRINGEND
+
+---STRING breadcrumb text
+Breadcrumb-Text
+---STRINGEND
+
+---STRING email address to send the submitted form to
+E-Mail-Adresse, an die das Formular gesendet werden soll
+---STRINGEND
+
+---STRING form email settings
+Einstellungen für das E-Mail-Formular
+---STRINGEND
+
+---STRING from address of the email
+Absender-Adresse der E-Mail
+---STRINGEND
+
+---STRING include submitted data in the message sent to user
+Formularinhalte in die E-Mail an den Absender aufnehmen
+---STRINGEND
+
+---STRING mail subject
+Betreffzeile der E-Mail
+---STRINGEND
+
+---STRING message of the mail sent to user
+Inhalt für die E-Mail an den Absender
+---STRINGEND
+
+---STRING message to show user after the form has been submitted
+Nachricht, die nach Absenden des Formulars angezeigt werden soll
+---STRINGEND
+
+---STRING no.odindata.quickform2
+E-Mail-Formular v2
+---STRINGEND
+
+---STRING should a copy of the email be sent to the submitter of the form
+Soll eine Kopie der E-Mail an den Absender des Formulars geschickt werden
+---STRINGEND
+
+---STRING subject in mail to the form committer
+Betreffzeile der E-Mail an den Absender
+---STRINGEND
+
+---STRING text to place over the form
+Text, der über dem Formular angezeigt werden soll
+---STRINGEND
+
+---STRING the class to use for formatting the email to send
+Formatierungs-Klasse für die zu verschickenden E-Mails
+---STRINGEND
+
+---STRING form settings
+Formular-Einstellungen
+---STRINGEND
+
