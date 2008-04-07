@@ -73,6 +73,10 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
         // Validate the plugin name and load the associated configuration
         $groups = $this->_config->get('plugin_groups');
 
+        if (!isset($groups[$group]))
+        {
+            return false;
+        }
         $plugins = $groups[$group]['plugins'];
 
         if (   ! $plugins
@@ -287,6 +291,14 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
             $this->_request_data['session_id'] = $argv[2];
 
             $groups = $this->_config->get('plugin_groups');
+            if (!isset($groups[$argv[0]]))
+            {
+                /**
+                 * NOTE if we return false we trigger 404, but must not try
+                 * to proceed further or we cause weird issues for asgard etc
+                 */
+                return true;
+            }
             $plugins = $groups[$argv[0]]['plugins'];
             $plugin_names = array_keys($plugins);
 
