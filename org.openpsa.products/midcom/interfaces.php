@@ -147,7 +147,7 @@ class org_openpsa_products_interface extends midcom_baseclasses_components_inter
         debug_push_class(__CLASS__, __FUNCTION__);
         if ($dms['group']->autoset_storage($group))
         {
-            if ($config->get('index_groups')
+            if ($config->get('index_groups'))
             {
                 org_openpsa_products_viewer::index($dms['group'], $indexer, $topic);
             }
