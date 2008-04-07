@@ -193,45 +193,6 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
     }
 
     /**
-     * Indexes an article.
-     *
-     * This function is usually called statically from various handlers.
-     *
-     * @param midcom_helper_datamanager2_datamanager &$dm The Datamanager encapsulating the event.
-     * @param midcom_services_indexer &$indexer The indexer instance to use.
-     * @param midcom_db_topic The topic which we are bound to. If this is not an object, the code
-     *     tries to load a new topic instance from the database identified by this parameter.
-     */
-    function index(&$dm, &$indexer, $topic)
-    {
-        if (!is_object($topic))
-        {
-            $tmp = new midcom_db_topic($topic);
-            if (! $tmp)
-            {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Failed to load the topic referenced by {$topic} for indexing, this is fatal.");
-                // This will exit.
-            }
-            $topic = $tmp;
-        }
-
-        // Don't index directly, that would loose a reference due to limitations
-        // of the index() method. Needs fixes there.
-
-        $nav = new midcom_helper_nav();
-        $node = $nav->get_node($topic->id);
-        $author = $_MIDCOM->auth->get_user($dm->storage->object->creator);
-
-        $document = $indexer->new_document($dm);
-        $document->topic_guid = $topic->guid;
-        $document->component = $topic->component;
-        $document->topic_url = $node[MIDCOM_NAV_FULLURL];
-        $document->read_metadata_from_object($dm->storage->object);
-        $indexer->index($document);
-    }
-
-    /**
      * Populates the node toolbar depending on the user's rights.
      *
      * @access protected
