@@ -612,7 +612,7 @@ EOF;
             \$_id = \$id;
         }
 
-    	try
+        try
         {
             parent::__construct(\$_id);
         }
@@ -623,10 +623,11 @@ EOF;
             /* throw new midgard_error_exception(\$e->getMessage()); */
             /* Basically, there should be no try/catch block. Just unconditional parent constructor */
         }
-      	
-	    if(mgd_is_guid(\$this->guid))
+          
+        if (  \$this->guid
+            && mgd_is_guid(\$this->guid))
         {
-		    midcom_baseclasses_core_dbobject::post_db_load_checks(\$this);
+            midcom_baseclasses_core_dbobject::post_db_load_checks(\$this);
         }
     }
 EOF;
@@ -1089,8 +1090,8 @@ EOF;
      */
     function is_legacy_midgard_object(&$object)
     {
-    	/* TODO, remove this method and all its references */
-        $classname = get_class($object);	
+        /* TODO, remove this method and all its references */
+        $classname = get_class($object);    
         foreach ($this->_loaded_classes as $class_definition)
         {
             if (is_a($object, $class_definition['old_class_name']))
