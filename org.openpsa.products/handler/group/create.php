@@ -177,7 +177,7 @@ class org_openpsa_products_handler_group_create extends midcom_baseclasses_compo
         {
             case 'save':
 
-                if ($this->_config->get('index_groups')
+                if ($this->_config->get('index_groups'))
                 {
                     // Index the group
                     $indexer =& $_MIDCOM->get_service('indexer');

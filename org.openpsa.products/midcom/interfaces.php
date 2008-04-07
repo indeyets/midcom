@@ -157,7 +157,7 @@ class org_openpsa_products_interface extends midcom_baseclasses_components_inter
             debug_add("Warning, failed to initialize datamanager for product group {$group->id}. Skipping it.", MIDCOM_LOG_WARN);
         }
 
-        if ($config->get('index_products')
+        if ($config->get('index_products'))
         {
             $qb_products = org_openpsa_products_product_dba::new_query_builder();
             $qb_products->add_constraint('productGroup', '=', $group->id);

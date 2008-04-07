@@ -104,7 +104,7 @@ class org_openpsa_products_handler_product_edit extends midcom_baseclasses_compo
         {
             case 'save':
 
-                if ($this->_config->get('index_products')
+                if ($this->_config->get('index_products'))
                 {
                     // Index the product
                     $indexer =& $_MIDCOM->get_service('indexer');
