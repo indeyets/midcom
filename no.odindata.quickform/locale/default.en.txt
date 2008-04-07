@@ -123,6 +123,10 @@ Message to show user after the form has been submitted.
 Email form
 ---STRINGEND
 
+---STRING save form as an article
+Save form as an article
+---STRINGEND
+
 ---STRING send
 Send
 ---STRINGEND
@@ -163,7 +167,7 @@ This message is displayed after the user has submitted the form.
 Use this field to add a simple text above the form to help the user fill in the form.
 ---STRINGEND
 
----STRING save form as an article
-Save form as an article
+---STRING form temporarily disabled
+<h2>form temporarily disabled</h2>
 ---STRINGEND
 

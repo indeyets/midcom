@@ -7,6 +7,8 @@
 'form_user' => null,
 'form_pass' => null,
 
+'disable_form_useragent_regex' => '%Wget%', // In case making static dumps we better have some explanation for the user
+
 'mail' => true,
 'mail_address_from' => '',
 'mail_address_to' => '',

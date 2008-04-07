@@ -270,7 +270,19 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
      */
     function _show_index($handler_id, &$data)
     {
-       midcom_show_style('show-form');
+        if (!preg_match($this->_config->get('disable_form_useragent_regex'), $_SERVER['HTTP_USER_AGENT']))
+        {
+            midcom_show_style('show-form');
+        }
+        else
+        {
+            $data['disabled_message'] = $this->_config->get('disabled_message');
+            if (empty($data['disabled_message']))
+            {
+                $data['disabled_message'] = $this->_l10n->get('form temporarily disabled');
+            }
+            midcom_show_style('show-form_disabled');
+        }
     }
 
     /**

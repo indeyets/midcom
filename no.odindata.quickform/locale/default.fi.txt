@@ -131,6 +131,10 @@ Lähetyksen jälkeen käyttäjälle näytettävä viesti
 Sähköpostilomake
 ---STRINGEND
 
+---STRING save form as an article
+Tallenna lomakkeen tiedot artikkelina
+---STRINGEND
+
 ---STRING send
 Lähetä
 ---STRINGEND
@@ -171,7 +175,7 @@ Tämä viesti näytetään lomakkeen lähettämisen jälkeen.
 Käytä tätä kenttään lisätäksesi yksinkertainen teksti lomakkeen yläpuolelle esimerkiksi ohjeeksi lomakkeen täyttöä varten.
 ---STRINGEND
 
----STRING save form as an article
-Tallenna lomakkeen tiedot artikkelina
+---STRING form temporarily disabled
+<h2>Lomake väliaikaisesti pois käytöstä</h2>
 ---STRINGEND
 

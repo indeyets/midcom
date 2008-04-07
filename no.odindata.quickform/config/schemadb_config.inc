@@ -150,6 +150,18 @@
             'default' => '',
             'helptext'  => 'this message is displayed after the user has submitted the form',
         ),
+        'disabled_message' => array
+        (
+            'description' => 'message to show user if the form is disabled',
+            'datatype' => 'text',
+            'location' => 'config',
+            'widget' => 'tinymce',
+            'config_key' => 'disabled_message',
+            'config_domain' => 'no.odindata.quickform',
+            //'widget_text_height' => '4em',
+            'default' => '',
+            'helptext'  => 'this message is displayed in stead of the form if the form is disabled, this can happen for example when making static dumps with wget. You can provide also HTML for an alternative form processed elsewhere.',
+        ),
         'schemadb' => array
         (
             'description' => 'Schema database',
