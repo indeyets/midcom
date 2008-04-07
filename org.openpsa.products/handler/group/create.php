@@ -176,6 +176,14 @@ class org_openpsa_products_handler_group_create extends midcom_baseclasses_compo
         switch ($this->_controller->process_form())
         {
             case 'save':
+
+                if ($this->_config->get('index_groups')
+                {
+                    // Index the group
+                    $indexer =& $_MIDCOM->get_service('indexer');
+                    org_openpsa_products_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
+                }
+
                 $_MIDCOM->relocate("{$this->_group->guid}/");
                 // This will exit.
 

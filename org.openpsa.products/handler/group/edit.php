@@ -148,10 +148,13 @@ class org_openpsa_products_handler_group_edit extends midcom_baseclasses_compone
         switch ($this->_request_data['controller']->process_form())
         {
             case 'save':
-                // Reindex the article
-                //$indexer =& $_MIDCOM->get_service('indexer');
-                //net_nemein_wiki_viewer::index($this->_request_data['controller']->datamanager, $indexer, $this->_topic);
-                // *** FALL-THROUGH ***
+
+                if ($this->_config->get('index_groups')
+                {
+                    // Index the group
+                    $indexer =& $_MIDCOM->get_service('indexer');
+                    org_openpsa_products_viewer::index($this->_request_data['controller']->datamanager, $indexer, $this->_topic);
+                }
             case 'cancel':
                 $_MIDCOM->relocate("{$this->_group->guid}.html");
                 // This will exit.

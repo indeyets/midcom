@@ -117,6 +117,41 @@
             'widget_select_choices' => org_openpsa_products_product_group_dba::list_groups(0, '', 'guid'),
             'end_fieldgroup' => '',
         ),
+        'index_products' => array
+        (
+            'description' => 'Index products',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'index_products',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+            'start_fieldgroup' => array
+            ( 
+                'title' => 'Indexer related',
+            ),
+        ),
+        'index_groups' => array
+        (
+            'description' => 'Index groups',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'index_groups',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+            'end_fieldgroup' => '',
+        ),
         'schemadb_product' => array
         (
             'description' => 'product schema database',

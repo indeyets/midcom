@@ -216,6 +216,14 @@ class org_openpsa_products_handler_product_create extends midcom_baseclasses_com
         switch ($this->_controller->process_form())
         {
             case 'save':
+
+                if ($this->_config->get('index_products')
+                {
+                    // Index the product
+                    $indexer =& $_MIDCOM->get_service('indexer');
+                    org_openpsa_products_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
+                }
+
                 $_MIDCOM->cache->invalidate($this->_product->guid);
 
                 $_MIDCOM->relocate("product/{$this->_product->guid}/");

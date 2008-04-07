@@ -18,6 +18,10 @@
 // How the search results should be indexed. You can use metadata and linked options, for example metadata.score
 'search_index_order' => array('productGroup', 'code'),
 
+// Indexer related
+'index_products' => true, // wheter to index products
+'index_groups' => true, // wheter to index groups
+
 // How to list products when browsing groups
 'products_listing_order' => array('code', 'title'),
 

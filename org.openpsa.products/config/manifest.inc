@@ -23,13 +23,13 @@
         (
             'name' => 'Oskari Kokko',
             'email' => 'oskari.kokko@nemein.com',
-            'role' => 'developer',
+            'role' => 'lead',
         ),
         'xfade' => array
         (
             'name' => 'Niels Breet',
             'email' => 'nbreet@gmail.com',
-            'role' => 'developer',
+            'role' => 'lead',
         ),
     ),
     'dependencies' => array
