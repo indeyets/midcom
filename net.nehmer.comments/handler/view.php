@@ -134,8 +134,16 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             {
                 $parent_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_objectguid);
                 // TODO: Figure out whether to round
+                if (!$this->_config->get('ratings_cache_to_object_use_rcs'))
+                {
+                    $parent_object->_use_rcs = false;
+                }
                 $parent_object->$parent_property = $value;
                 $parent_object->update();
+                if (!$this->_config->get('ratings_cache_to_object_use_rcs'))
+                {
+                    $parent_object->_use_rcs = true;
+                }
             }
 
             // Get parent object
@@ -148,8 +156,16 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             else
             {
                 $parent_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_objectguid);
+                if (!$this->_config->get('comment_count_cache_to_object_use_rcs'))
+                {
+                    $parent_object->_use_rcs = false;
+                }
                 $parent_object->$parent_property = count($comments);
                 $parent_object->update();
+                if (!$this->_config->get('comment_count_cache_to_object_use_rcs'))
+                {
+                    $parent_object->_use_rcs = true;
+                }
             }
             $_MIDCOM->auth->drop_sudo();
         }

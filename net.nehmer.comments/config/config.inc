@@ -21,11 +21,12 @@
 'ratings_cache_to_object' => false,
 'ratings_cache_to_object_property' => 'score',
 'ratings_cache_to_object_property_metadata' => false,
+'ratings_cache_to_object_use_rcs' => true,
 
 'ratings_cache_total' => false,
 'comment_count_cache_to_object' => false,
 'comment_count_cache_to_object_property' => '',
-
+'comment_count_cache_to_object_use_rcs' => true,
 
 'items_to_show' => 6, //false == no limit
 'item_ordering' => 'ASC', //DESC OR ASC
