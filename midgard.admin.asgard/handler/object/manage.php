@@ -422,6 +422,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
 
                             $components[$manifest->name] = $_MIDCOM->i18n->get_string($manifest->name, $manifest->name) . " ({$manifest->name})";
                         }
+			asort($components);
 
                         $this->_schemadb['object']->append_field
                         (
