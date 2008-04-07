@@ -618,10 +618,9 @@ EOF;
         }
         catch(midgard_error_exception \$e)
         {
-            midcom_baseclasses_core_dbobject::_clear_object(\$this);
-            /* FIXME: exception should be thrown to avoid kind of "ghost" objects on PHP level */
-            /* throw new midgard_error_exception(\$e->getMessage()); */
-            /* Basically, there should be no try/catch block. Just unconditional parent constructor */
+            \$x =& \$this; 
+            \$x = false; 
+            return false; 
         }
           
         if (  \$this->guid
