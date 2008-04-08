@@ -70,7 +70,7 @@
                 Copyright &copy; 1998 - <?php echo date('Y'); ?> <a href="http://www.midgard-project.org/">The Midgard Project</a>.
                 Midgard is a <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under
                 <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.<br />
-                devel-xen-devel.nemein.net: Apache/2.0.54 (Debian GNU/Linux) DAV/2 PHP/4.3.10-19 Midgard/1.8.3
+		&(_SERVER['SERVER_NAME']);: &(_SERVER['SERVER_SOFTWARE']);
             </span>
         </div>
     </body>
