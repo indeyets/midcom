@@ -52,6 +52,11 @@ class org_maemo_socialnews_handler_feed extends midcom_baseclasses_components_ha
      */
     function _handler_feed ($handler_id, $args, &$data)
     {
+        if (!$this->_config->get('rss_archive_enable'))
+        {
+            return false;
+        }
+    
         $_MIDCOM->load_library('de.bitfolge.feedcreator');
         $_MIDCOM->cache->content->content_type("text/xml");
         $_MIDCOM->header("Content-type: text/xml; charset=UTF-8");

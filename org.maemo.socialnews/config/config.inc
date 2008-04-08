@@ -15,6 +15,7 @@
 
 'bestof_items' => 10,
 'rss_count' => 5,
+'rss_archive_enable' => false,
 
 'archive_generation_topic' => null,
 'archive_generation_substyle' => '',

@@ -1454,7 +1454,19 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _clear_object (&$object)
     {
-    	return;
+        $vars = get_object_vars($object);
+        foreach ($vars as $name => $value)
+        {
+            if (   $name == '__res' 
+                || (  substr($name, 0, 2) == '__' 
+                    && substr($name, -2) == '__')) 
+            { 
+                // This is a special variable, we must not overwrite them. 
+                continue; 
+            } 
+            $object->$name = null; 
+        } 
+        return;
     }
 
     /**
