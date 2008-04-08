@@ -290,6 +290,14 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('api', 'product', 'list'),
             'variable_args' => 1,
         );
+        
+        // Handle /api/product/list/intree/<product_group>
+        $this->_request_switch['api_product_list_intree'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_api', 'product_list'),
+            'fixed_args' => Array('api', 'product', 'list', 'intree'),
+            'variable_args' => 1,
+        );
 
         // Handle /api/product/create/
         $this->_request_switch['api_product_create'] = Array

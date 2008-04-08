@@ -292,7 +292,14 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
                     // This will exit
                 }
 
-                $qb->add_constraint('productGroup', '=', $product_group->id);
+                if ($handler_id == 'api_product_list_intree')
+                {
+                    $qb->add_constraint('productGroup', 'INTREE', $product_group->id);
+                }
+                else
+                {
+                    $qb->add_constraint('productGroup', '=', $product_group->id);
+                }
             }
         }
         $_MIDCOM->cache->content->content_type('text/xml');
