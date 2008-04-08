@@ -73,36 +73,40 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
     }
 
     /**
-     *
+     * Helper to make an array usable with DM2 select datatype for selecting product groups
      *
      * @access public
      * @static
      * @param mixed $up            Either the ID or GUID of the product group
      * @param string $prefix       Prefix for the code
-     * @param string $keyproperty
+     * @param string $keyproperty  Property to use as the key of the resulting array
+     * @param array $label_fields  Object properties to show in the label (will be shown space separated)
+     * @return array
      */
-    function list_groups($up = 0, $prefix = '', $keyproperty = 'id', $order_by_score = false)
+    function list_groups($up = 0, $prefix = '', $keyproperty = 'id', $order_by_score = false, $label_fields = array('code', 'title'))
     {
-        static $group_list = array();
-
-        if (!array_key_exists($keyproperty, $group_list))
+        static $result_cache = array();
+        $cache_key = md5($up . $keyproperty . $prefix . $order_by_score . implode('', $label_fields));
+        if (isset($result_cache[$cache_key]))
         {
-            $group_list[$keyproperty] = array();
+            return $result_cache[$cache_key]; 
         }
 
-        if (count($group_list[$keyproperty]) == 0)
+        $result_cache[$cache_key] = array();
+        $ret =& $result_cache[$cache_key];
+
+        if (empty($up))
         {
+            // TODO: use reflection to see what kind of property this is ?
             if ($keyproperty == 'id')
             {
-                $group_list[$keyproperty][0] = $_MIDCOM->i18n->get_string('toplevel', 'org.openpsa.products');
+                $ret[0] = $_MIDCOM->i18n->get_string('toplevel', 'org.openpsa.products');
             }
             else
             {
-                $group_list[$keyproperty][''] = $_MIDCOM->i18n->get_string('toplevel', 'org.openpsa.products');
+                $ret[''] = $_MIDCOM->i18n->get_string('toplevel', 'org.openpsa.products');
             }
         }
-
-        // Check for the request and change GUID to int if required
         if (mgd_is_guid($up))
         {
             $group = new org_openpsa_products_product_group_dba($up);
@@ -117,32 +121,58 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
             $up = $group->id;
         }
 
-        $qb = org_openpsa_products_product_group_dba::new_query_builder();
-        $qb->add_constraint('up', '=', $up);
+        $mc = org_openpsa_products_product_group_dba::new_collector('up', (int)$up);
+        
+        $mc->add_value_property('title');
+        $mc->add_value_property('code');
+        $mc->add_value_property('id');
+        if ($keyproperty !== 'id')
+        {
+            $mc->add_value_property($keyproperty);
+        }
+        foreach($label_fields as $fieldname)
+        {
+            if (   $fieldname == 'id'
+                || $fieldname == $keyproperty)
+            {
+                continue;
+            }
+            $mc->add_value_property($fieldname);
+        }
+        unset($fieldname);
 
         // Order by score if required
         if ($order_by_score)
         {
-            $qb->add_order('metadata.score', 'DESC');
+            $mc->add_order('metadata.score', 'DESC');
         }
-
-        $qb->add_order('code');
-        $qb->add_order('title');
-        $groups = $qb->execute_unchecked();
-
-        // Get the properties of each group
-        foreach ($groups as $group)
+        $mc->add_order('code');
+        $mc->add_order('title');
+        $mc->execute();
+        $mc_keys = $mc->list_keys();
+        foreach($mc_keys as $mc_key => $dummy)
         {
-            $group_list[$keyproperty][$group->$keyproperty] = "{$prefix}{$group->code} {$group->title}";
-
-            org_openpsa_products_product_group_dba::list_groups($group->id, "{$prefix} > ", $keyproperty);
+            $id = $mc->get_subkey($mc_key, 'id');
+            $key = $mc->get_subkey($mc_key, $keyproperty);
+            //$ret[$key] = "{$prefix}{$code} {$title}";
+            $ret[$key] = $prefix;
+            foreach ($label_fields as $fieldname)
+            {
+                $field_val = $mc->get_subkey($mc_key, $fieldname);
+                $ret[$key] .= "{$field_val} ";
+            }
+            unset($fieldname, $field_val);
+            $ret = $ret + org_openpsa_products_product_group_dba::list_groups($id, "{$prefix} > ", $keyproperty, $label_fields);
+            unset($id, $key);
         }
+        unset($mc, $mc_keys, $dummy, $mc_key);
 
-        return $group_list[$keyproperty];
+        return $ret;
     }
 
     function list_groups_by_up($up = 0)
     {
+        //FIXME rewrite to use collector, rewrite to use (per request) result caching
         static $group_list = array();
         $up_code = 0 ;
         $create_or_edit = -1;
@@ -249,6 +279,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
 
     function list_groups_parent($up = 0)
     {
+        //FIXME rewrite to use collector, rewrite to use (per request) result caching
         static $group_list = array();
         $up_code = 0;
         $create_or_edit = -1;
