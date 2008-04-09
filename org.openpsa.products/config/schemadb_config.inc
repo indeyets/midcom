@@ -90,6 +90,21 @@
                 '0' => 'no',
             ),
         ),
+        'listing_primary' => array
+        (
+            'description' => 'if we have subgroups and products in group, what shall we show',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'org.openpsa.products',
+            'config_key' => 'listing_primary',
+            'widget' => 'select',
+            'widget_select_choices' => array
+            (
+                '' => 'default setting',
+                'products' => 'Products',
+                'groups' => 'Groups',
+            ),
+        ),
         'products_per_page' => array
         (
             'description' => 'products per page',

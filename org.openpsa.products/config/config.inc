@@ -40,3 +40,6 @@
 
 //When using the subgroups sidebar, you can disable the subgroups block on the frontpage.
 'disable_subgroups_on_frontpage' => false,
+
+// if we have subgroups and products in group, what shall we show. Allowed options 'products' and 'groups'.
+'listing_primary' => 'products',
