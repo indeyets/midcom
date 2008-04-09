@@ -44,6 +44,12 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
             'handler' => Array('net_nemein_organizations_handler_view', 'nearest'),
             'fixed_args' => 'nearest',
         );
+        
+        $this->_request_switch['select_organization'] = Array
+        (
+            'handler' => Array('net_nemein_organizations_handler_select', 'select'),
+            'fixed_args' => Array('select'),
+        );
 
         // Match /config/
         $this->_request_switch['config'] = Array
