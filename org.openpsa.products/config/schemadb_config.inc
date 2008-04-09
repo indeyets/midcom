@@ -51,7 +51,7 @@
             'location' => 'config',
             'config_domain' => 'org.openpsa.products',
             'config_key' => 'search_index_order',
-        ),   
+        ),
         'products_listing_order' => array
         (
             'description' => 'index order for products when browsing groups',
@@ -59,7 +59,7 @@
             'location' => 'config',
             'config_domain' => 'org.openpsa.products',
             'config_key' => 'products_listing_order',
-        ),   
+        ),
         'enable_components' => array
         (
             'description' => 'whether to enable adding subcomponents to products',
@@ -112,7 +112,7 @@
             'location' => 'config',
             'config_domain' => 'org.openpsa.products',
             'config_key' => 'products_per_page',
-        ),        
+        ),
         'show_items_in_feed' => array
         (
             'description' => 'number of items in feed',
@@ -120,7 +120,7 @@
             'location' => 'config',
             'config_domain' => 'org.openpsa.products',
             'config_key' => 'show_items_in_feed',
-        ),        
+        ),
         'root_group' => array
         (
             'description' => 'root product group',
