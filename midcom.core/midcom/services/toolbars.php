@@ -273,7 +273,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
      * @todo Better privilege checks
      * @todo Localize
      *
-     * @param midcom_helper_toolbar $toolbar A reference to the toolbar to use.
+     * @param midcom_helper_toolbar &$toolbar A reference to the toolbar to use.
      * @param int $context_id The context to use (the topic is drawn from there). This defaults
      *     to the currently active context.
      */
@@ -477,7 +477,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
      * @todo Better privilege checks
      * @todo Localize
      *
-     * @param midcom_helper_toolbar $toolbar A reference to the toolbar to use.
+     * @param midcom_helper_toolbar &$toolbar A reference to the toolbar to use.
      * @param int $context_id The context to use (the topic is drawn from there). This defaults
      *     to the currently active context.
      */
@@ -557,7 +557,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
      * @todo Better privilege checks
      * @todo Localize
      *
-     * @param midcom_helper_toolbar $toolbar A reference to the toolbar to use.
+     * @param midcom_helper_toolbar &$toolbar A reference to the toolbar to use.
      * @param int $context_id The context to use (the topic is drawn from there). This defaults
      *     to the currently active context.
      */
