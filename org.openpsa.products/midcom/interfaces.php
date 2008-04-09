@@ -135,14 +135,14 @@ class org_openpsa_products_interface extends midcom_baseclasses_components_inter
         $root_groups = $qb->execute();
         foreach ($root_groups as $group)
         {
-            $this->_on_reindex_tree_iterator($indexer, $dms, $topic, $group);
+            $this->_on_reindex_tree_iterator($indexer, $dms, $topic, $group, $topic);
         }
 
         debug_pop();
         return true;
     }
 
-    function _on_reindex_tree_iterator(&$indexer, &$dms, &$topic, &$group)
+    function _on_reindex_tree_iterator(&$indexer, &$dms, &$topic, &$group, &$topic)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         if ($dms['group']->autoset_storage($group))
@@ -191,7 +191,7 @@ class org_openpsa_products_interface extends midcom_baseclasses_components_inter
         }
         foreach ($subgroups as $subgroup)
         {
-            $this->_on_reindex_tree_iterator($indexer, $dms, $topic, $subgroup);
+            $this->_on_reindex_tree_iterator($indexer, $dms, $topic, $subgroup, $topic);
             unset($subgroup);
         }
         unset($subgroups);
