@@ -460,15 +460,15 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Failed to geocode query: " . $geocoder->error);
             // This will exit
         }
-        $center = $results[0];
-        $this->_groups = org_routamc_positioning_utils::get_closest('midcom_baseclasses_database_group', $center, $this->_config->get('show_nearest'), $modifier = 0.15);
+        $data['geocode_center'] = $results[0];
+        $this->_groups = org_routamc_positioning_utils::get_closest('midcom_baseclasses_database_group', $data['geocode_center'], $this->_config->get('show_nearest'), $modifier = 0.15);
 
         $this->_load_datamanager();
 
         $_MIDCOM->set_26_request_metadata(time(), $this->_topic->guid);
         $this->_prepare_request_data();
         
-        $data['location_string'] = org_routamc_positioning_utils::pretty_print_location($center['latitude'], $center['longitude']);
+        $data['location_string'] = org_routamc_positioning_utils::pretty_print_location($data['geocode_center']['latitude'], $data['geocode_center']['longitude']);
         $data['view_title'] = "{$this->_topic->extra}: " . sprintf($this->_l10n->get('nearest groups to %s'), $data['location_string']);
         $_MIDCOM->set_pagetitle($data['view_title']);
 
