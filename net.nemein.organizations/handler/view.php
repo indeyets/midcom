@@ -437,12 +437,14 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
         if (!$this->_config->get('group'))
         {
             $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "config.html");
+            // This will exit
         }
         
         if (   !isset($_GET['location'])
             || !is_array($_GET['location']))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Missing location query attributes");
+            // This will exit
         }
         
         $_MIDCOM->load_library('org.routamc.positioning');
@@ -450,7 +452,13 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
         $results = $geocoder->geocode($_GET['location']);
         if (!$results)
         {
+            if ($this->_config->get('show_nearest_geocoder_redirect'))
+            {
+                $_MIDCOM->relocate('show_nearest_geocoder_redirect_url');
+                // This will exit
+            }
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Failed to geocode query: " . $geocoder->error);
+            // This will exit
         }
         $center = $results[0];
         $this->_groups = org_routamc_positioning_utils::get_closest('midcom_baseclasses_database_group', $center, $this->_config->get('show_nearest'), $modifier = 0.15);

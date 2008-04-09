@@ -16,6 +16,8 @@
 
 'show_nearest' => 3,
 'show_nearest_geocoder' => 'city',
+'show_nearest_geocoder_redirect' => false,
+'show_nearest_geocoder_redirect_url' => '',
 
 // Index view ordering sequence. This is a list of midcom_core_querybuidler::add_order
 // compatible field names. Use the "reverse" prefix for descending order.
