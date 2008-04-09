@@ -69,6 +69,11 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
                 $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
                 $parentgroup_qb->add_constraint('code', '=', $args[0]);
                 $groups = $parentgroup_qb->execute_unchecked();
+                if (empty($groups))
+                {
+                    // No such parent group found
+                    return false;
+                }
                 if (   isset($groups[0])
                     && isset($groups[0]->id)
                     && !empty($groups[0])
@@ -78,17 +83,21 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
                     $qb->add_constraint('code', '=', $args[1]);
                 }
             }
-            else if (($handler_id == 'listall')
-                && ($args[0] != 'search')
-                && ($args[0] != 'product'))
+            elseif (   $handler_id == 'listall'
+                    && $args[0] != 'search'
+                    && $args[0] != 'product')
             {
                 $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
                 $parentgroup_qb->add_constraint('code', '=', $args[0]);
                 $groups = $parentgroup_qb->execute_unchecked();
+                if (empty($groups))
+                {
+                    // No such parent group found
+                    return false;
+                }
                 if (   isset($groups[0])
                     && isset($groups[0]->id)
-                    && !empty($groups[0])
-                   )
+                    && !empty($groups[0]))
                 {
                     $qb->add_constraint('up', '=', $groups[0]->id);
                 }
