@@ -9,7 +9,7 @@
 'list_order' => array
 (
     'metadata.score' => 'DESC',
-    'lastname', 'DESC',
+    'lastname' => 'DESC',
 ),
 'list_entries' => 30,
 
