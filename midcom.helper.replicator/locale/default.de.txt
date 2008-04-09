@@ -85,6 +85,7 @@ Replikations-Informationen
 
 ---STRING replication information for %s
 Replikations-Informationen für "%s"
+---STRINGEND
 
 ---STRING replication queue %s does not exist
 Die Replikations-Warteschlange %s existiert nicht
