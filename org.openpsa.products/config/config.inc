@@ -12,6 +12,8 @@
 'root_group' => 0,
 'root_businessarea' => 0,
 
+'code_in_title' => false,
+
 // Search related
 'search_first' => false,
 'search_default_to_all' => true,

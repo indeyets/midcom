@@ -119,7 +119,16 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             }
 
             $data['parent_group'] = $data['group']->id;
-            $data['view_title'] = "{$data['group']->code} {$data['group']->title}";
+            
+            if ($this->_config->get('code_in_title'))
+            {
+                $data['view_title'] = "{$data['group']->code} {$data['group']->title}";
+            }
+            else
+            {
+                $data['view_title'] = $data['group']->title;
+            }
+            
             $data['acl_object'] = $data['group'];
         }
 
