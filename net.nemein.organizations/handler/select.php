@@ -41,6 +41,8 @@ class net_nemein_organizations_handler_select extends midcom_baseclasses_compone
             // This will exit
         }
         
+        $_MIDCOM->auth->request_sudo('net.nemein.organizations');
+        
         $person = $_MIDCOM->auth->user->get_storage();
         if ($_POST['group'] == 'remove')
         {
@@ -56,6 +58,8 @@ class net_nemein_organizations_handler_select extends midcom_baseclasses_compone
             
             $person->set_parameter('net.nemein.organizations', 'default_organization', $group->guid);
         }
+        
+        $_MIDCOM->auth->drop_sudo();
         
         if (isset($_POST['return_url']))
         {
