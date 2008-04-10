@@ -454,7 +454,7 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
         {
             if ($this->_config->get('show_nearest_geocoder_redirect'))
             {
-                $_MIDCOM->relocate('show_nearest_geocoder_redirect_url');
+                $_MIDCOM->relocate($this->_config->get('show_nearest_geocoder_redirect_url'));
                 // This will exit
             }
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Failed to geocode query: " . $geocoder->error);
