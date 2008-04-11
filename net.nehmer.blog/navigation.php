@@ -46,6 +46,12 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         }
 
         $leaves = array();
+        
+        if (!$this->_content_topic->guid)
+        {
+            // Safety in case symlink is broken
+            return $leaves;
+        }
 
         if (   $this->_config->get('archive_enable')
             && $this->_config->get('archive_in_navigation')
