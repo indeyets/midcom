@@ -69,6 +69,32 @@ class midcom_service__sessioning
 
         $started = true;
 
+    }
+
+    function _initialize($unconditional_start = false)
+    {
+        static $initialized = false;
+        if ($initialized)
+        {
+            return true;
+        }
+
+        if (   !$GLOBALS['midcom_config']['sessioning_service_enable']
+            && !(   $GLOBALS['midcom_config']['sessioning_service_always_enable_for_users']
+                 && $_MIDGARD['user']
+                 )
+            )
+        {
+            return false;
+        }
+
+        // Try to start session only if the client sends the id OR we need to set data
+        if (   !isset($_REQUEST[session_name()])
+            && !$unconditional_start)
+        {
+            return false;
+        }
+
         @session_start();
 
         /* Cache disabling made conditional based on domain/key existence */
@@ -79,6 +105,8 @@ class midcom_service__sessioning
             $_SESSION["midcom_session_data"] = Array();
             $_SESSION["midcom_session_data"]["midcom.service.sessioning"]["startup"] = serialize(time());
         }
+        $initialized = true;
+        return true;
     }
 
     /**
@@ -92,6 +120,10 @@ class midcom_service__sessioning
      */
     function exists ($domain, $key)
     {
+        if (!$this->_initialize())
+        {
+            return false;
+        }
         if (! array_key_exists($domain, $_SESSION["midcom_session_data"]))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -193,6 +225,10 @@ class midcom_service__sessioning
      */
     function set ($domain, $key, $value)
     {
+        if (!$this->_initialize(true))
+        {
+            return false;
+        }
         static $no_cache = false;
         if (!$no_cache)
         {

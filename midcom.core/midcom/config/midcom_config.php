@@ -526,6 +526,12 @@ $GLOBALS['midcom_config_default']['jquery_no_conflict'] = true;
 
 $GLOBALS['midcom_config_default']['auto_formatter'] = array();
 
+/**
+ * Sessioning service, disabling the service will help with external caches.
+ * The second option is to allow logged in users to benefit from the service
+ */
+$GLOBALS['midcom_config_default']['sessioning_service_enable'] = true;
+$GLOBALS['midcom_config_default']['sessioning_service_always_enable_for_users'] = true;
 
 /* ----- Include the site config ----- */
 /* This should be replaced by $_MIDGARD constructs */

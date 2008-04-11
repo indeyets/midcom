@@ -575,9 +575,11 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
      */
      function register_to_session($guid)
      {
-        $session =& $_MIDCOM->get_service('session');
         $key = $this->name .  $guid;
+        // Seems we do not need this anymore, but return key still
+        return $key;
 
+        $session =& $_MIDCOM->get_service('session');
         $session->set('midcom.helper.datamanager2', $key, $this->_raw_schema);
         return $key;
 
