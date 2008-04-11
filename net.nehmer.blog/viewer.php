@@ -520,8 +520,17 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $content_topic->id);
         $qb->add_order('metadata.revised', 'DESC');
-        $qb->set_limit(4);
+        /**
+         * Apart from the ML problem which does not exist when using normal execute I see no reason to use limit
+         * greater than 1 here
+         */
+        $qb->set_limit(1);
+        /**
+         * execute_unchecked has issues with ML and since the windowed QB
+         * it doesn't offer significant advantage for queries without offsets
         $articles = $qb->execute_unchecked();
+         */
+        $articles = $qb->execute();
 
         if ($articles)
         {

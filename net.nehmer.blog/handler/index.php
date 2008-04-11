@@ -247,7 +247,12 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
                 break;
         }
 
+        /**
+         * execute_unchecked has issues with ML and since the windowed QB
+         * it doesn't offer significant advantage for queries without offsets
         $this->_articles = $qb->execute_unchecked();
+         */
+        $this->_articles = $qb->execute();
 
         $this->_prepare_request_data();
         $_MIDCOM->set_26_request_metadata(net_nehmer_blog_viewer::get_last_modified($this->_topic, $this->_content_topic), $this->_topic->guid);

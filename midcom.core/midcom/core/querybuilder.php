@@ -314,6 +314,25 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         debug_push_class(__CLASS__, __FUNCTION__);
         foreach ($result as $key => $value)
         {
+            if (isset($value->lang))
+            {
+                // Workaround ML bugs, see if the next result is same object with different language
+                $check_key = $key+1;
+                //echo "DEBUG: \$key={$key} \$value->guid={$value->guid}, \$value->lang={$value->lang}<br/>\n";
+                if (isset($result[$check_key]))
+                {
+                    $check =& $result[$check_key];
+                    //echo "DEBUG: \$check_key={$check_key} \$check->guid={$check->guid}, \$check->lang={$check->lang}<br/>\n";
+                    if (   $check->guid === $value->guid
+                        && $value->lang === 0
+                        && $check->lang !== 0)
+                    {
+                        //echo "DEBUG: skipping key {$key}, next one is localized version of same guid<br/>\n";
+                        continue;
+                    }
+                }
+            }
+
             // Workaround to ML bug where we get multiple results in non-strict mode
             if (isset($this->_seen_guids[$value->guid]))
             {
@@ -676,7 +695,8 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         // Add the limit / offsets
         if ($this->_limit)
         {
-            $this->_qb->set_limit($this->_limit);
+            // ML bug workaround, get bit above limit and trim down later
+            $this->_qb->set_limit($this->_limit+5);
         }
         if ($this->_offset)
         {
@@ -689,7 +709,13 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             return $newresult;
         }
 
+        while(count($newresult) > $this->_limit)
+        {
+            array_pop($newresult);
+        }
+
         call_user_func_array(array($this->_real_class, '_on_process_query_result'), array(&$newresult));
+
 
         $this->count = count($newresult);
 
