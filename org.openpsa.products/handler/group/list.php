@@ -576,6 +576,10 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
             midcom_show_style('group_products_footer');
             midcom_show_style('group_footer');
         }
+        else
+        {
+            midcom_show_style('group_empty');
+        }
 
     }
 
