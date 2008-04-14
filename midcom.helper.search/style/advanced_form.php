@@ -44,7 +44,8 @@ $topics[''] = $data['l10n']->get('search anywhere');
 $components[''] = $data['l10n']->get('search all content types');
 
 midcom_helper_search_process_node($nap->get_root_node(), $nap, $topics, $components, '');
-$query = htmlspecialchars($data['query'], ENT_QUOTES);
+$_MIDCOM->load_library('midcom.helper.xsspreventer');
+$query = midcom_helper_xsspreventer::escape_attribute($data['query']);
 
 ?>
 <form method='get' name='midcom_helper_search_form' action='&(prefix);result/' class='midcom.helper.search'>
@@ -54,7 +55,7 @@ $query = htmlspecialchars($data['query'], ENT_QUOTES);
 <table cellspacing="0" cellpadding="3" border="0">
     <tr>
         <td><?php echo $data['l10n']->get('query');?>:</td>
-        <td><input type='text' style="width: 20em;" name='query' value='&(query);' /></td>
+        <td><input type='text' style="width: 20em;" name='query' value=&(query:h); /></td>
     </tr>
     <tr>
         <td><?php echo $data['l10n']->get('limit search by topic tree');?>:</td>
