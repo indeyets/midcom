@@ -45,6 +45,7 @@
         'midcom' => array
         (
             'org_openpsa_httplib',
+            'midcom_helper_reflector',
         ),
     ),
 ),
