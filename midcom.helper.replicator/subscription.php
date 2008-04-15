@@ -96,5 +96,15 @@ class midcom_helper_replicator_subscription_dba extends __midcom_helper_replicat
         $this->_serialize_filters();
         return true;
     }
+
+    /**
+     * As default only admins can read subscriptions that do not have specific privileges granted.
+     */
+    function get_class_magic_default_privileges()
+    {
+        $privileges = parent::get_class_magic_default_privileges();
+        $privileges['EVERYONE']['midgard:read'] = MIDCOM_PRIVILEGE_DENY;
+        return $privileges;
+    }
 }
 ?>

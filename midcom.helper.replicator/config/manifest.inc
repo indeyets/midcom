@@ -3,7 +3,10 @@
 'purecode' => true,
 'version' => '0.1.0beta1',
 'state' => 'beta',
-'privileges' => array(),
+'privileges' => array
+(
+    'manage' => MIDCOM_PRIVILEGE_DENY,
+),
 'class_definitions' => array
 (
     'midcom_dba_classes.inc',

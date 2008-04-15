@@ -190,7 +190,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
 
     function _handler_list($handler_id, $args, &$data)
     {
-        $_MIDCOM->auth->require_admin_user();
+        $_MIDCOM->auth->require_user_do('midcom.helper.replicator:manage');
 
         $qb = midcom_helper_replicator_subscription_dba::new_query_builder();
         $qb->add_order('title');
@@ -267,7 +267,9 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
     function _handler_edit($handler_id, $args, &$data)
     {
         $this->_subscription = new midcom_helper_replicator_subscription_dba($args[0]);
-        if (!$this->_subscription)
+        if (   !is_object($this->_subscription)
+            || !isset($this->_subscription->guid)
+            || empty($this->_subscription->guid))
         {
             return false;
         }
@@ -350,7 +352,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
      */
     function _handler_create($handler_id, $args, &$data)
     {
-        $_MIDCOM->auth->require_admin_user();
+        $_MIDCOM->auth->require_user_do('midcom.helper.replicator:manage');
 
         $this->_schema = $args[0];
         if (!array_key_exists($this->_schema, $this->_schemadb))
@@ -420,7 +422,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
      */
     function _handler_object($handler_id, $args, &$data)
     {
-        $_MIDCOM->auth->require_admin_user();
+        $_MIDCOM->auth->require_user_do('midcom.helper.replicator:manage');
 
         $bind_toolbar = true;
         $data['object'] = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
