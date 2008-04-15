@@ -253,7 +253,6 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
                 array_pop($parent_check_stack);
                 if (!$this->exportability[$object->guid])
                 {
-                    // TODO: Uimessage, but how to give only one ??
                     $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Parent not approved, skipping');
                     if (empty($parent_check_stack))
                     {
@@ -266,7 +265,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
                             sprintf
                             (
                                 $this->_l10n->get('%s %s could not be exported for replication because one of its parents is not approved'), 
-                                $ref->get_class_label(), 
+                                $ref->get_class_label(),
                                 $ref->get_object_label($object)
                             ),
                             'warning'
