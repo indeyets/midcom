@@ -22,6 +22,12 @@ class org_openpsa_products_handler_product_csv extends midcom_baseclasses_compon
     function _load_schemadb()
     {
         $this->_schema = $this->_config->get('csv_export_schema');
+        
+        if (isset($this->_request_data['schemadb_product'][$data['filename']))
+        {
+            $this->_schema = $data['filename'];
+        }
+        
         return $this->_request_data['schemadb_product'];
     }
 
@@ -31,8 +37,20 @@ class org_openpsa_products_handler_product_csv extends midcom_baseclasses_compon
 
         $qb->add_order('code');
         $qb->add_order('title');
+        
+        $products = array();
 
-        $products = $qb->execute();
+        $all_products = $qb->execute();
+        foreach ($all_products as $product)
+        {
+            $schema = $object->object->get_parameter('midcom.helper.datamanager2', 'schema_name');
+            if ($schema != $this->_schema)
+            {
+                continue;
+            }
+            
+            $products[] = $product;
+        }
 
         return $products;
     }

@@ -95,6 +95,8 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
             // This will exit
         }
         
+        $data['filename'] = str_replace('.csv', '', $args[0]);
+        
         $this->_init_csv_variables();
         $_MIDCOM->skip_page_style = true;
         //$_MIDCOM->cache->content->content_type('text/plain');
