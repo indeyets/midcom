@@ -132,9 +132,9 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                 continue;
             }
             if (   !isset($this->file_counts[$subscription->guid])
-                || !is_array($this->file_counts[$subscription->guid]))
+                || !is_numeric($this->file_counts[$subscription->guid]))
             {
-                $this->file_counts[$subscription->guid] = array();
+                $this->file_counts[$subscription->guid] = 1;
             }
             $i =& $this->file_counts[$subscription->guid];
             debug_add('about to queue ' . count($exporter_serializations) . ' keys');
@@ -197,7 +197,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                 }
 
                 unset($key, $data);
-                $i++;
+                ++$i;
             }
             unset($exporter_serializations);
             debug_add('all keys queued, now marking them exported');
@@ -242,7 +242,8 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
      */
     function _get_subscription_basedir(&$subscription)
     {
-        $global_base = $this->_config->get('queue_root_dir');
+        // Normalize basedir, no trailing slash and no consecutive slashes
+        $global_base = preg_replace('%/{2,}|/$%', '', $this->_config->get('queue_root_dir'));
         if (!is_dir($global_base))
         {
             // The configuration key might have dynamic part to it

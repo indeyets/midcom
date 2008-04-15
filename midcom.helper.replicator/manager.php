@@ -453,6 +453,22 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
             return false;
         }
 
+        if (isset($_POST['midcom_helper_replicator_requeue']))
+        {
+            $qmanager =& midcom_helper_replicator_queuemanager::get();
+            //TODO: Is there a more graceful way to do this ? (see also mirror.php)
+            $GLOBALS['midcom_helper_replicator_exporter_retry_mode'] = true;
+            if (!$qmanager->add_to_queue($data['object']))
+            {
+                $_MIDCOM->uimessages->add
+                (
+                    $this->_l10n->get('midcom.helper.replicator'),
+                    $this->_l10n->get('re-queuing failed'), 
+                    'warning'
+                );
+            }
+            unset($GLOBALS['midcom_helper_replicator_exporter_retry_mode']);
+        }
 
         if ($bind_toolbar)
         {
@@ -473,6 +489,8 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
                 'href' => MIDCOM_STATIC_URL."/midcom.helper.replicator/replicator.css",
             )
         );
+
+        $data['queue_root_dir'] = preg_replace('%/{2,}|/$%', '', $this->_local_config->get('queue_root_dir'));
 
         return true;
     }

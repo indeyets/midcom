@@ -28,6 +28,13 @@ else
         <th><?php echo $_MIDCOM->i18n->get_string('exported', 'midcom.helper.replicator'); ?></th>
         <td>&(exported);</td>
     </tr>
+    <tr>
+        <td colspan=2>
+            <form method="post" class="midcom_helper_replicator_requeue_form">
+                <input type="submit" class="button" name="midcom_helper_replicator_requeue" value="<?php echo $_MIDCOM->i18n->get_string('re-queue object', 'midcom.helper.replicator'); ?>" />
+            </form>
+        </td>
+    </tr>
 </table>
 
 <?php
@@ -36,6 +43,7 @@ echo "<h2>" . $_MIDCOM->i18n->get_string('from log file', 'midcom.helper.replica
 $output = array();
 exec("grep '{$data['object']->guid}' '{$GLOBALS['midcom_helper_replicator_logger']->_filename}'", $output);
 
+$path_regex = "%{$data['queue_root_dir']}.*?/[0-9a-f]{32,80}(-quarantine)?/[0-9]+/%";
 echo "<ul class=\"midcom_helper_replicator_object\">\n";
 foreach ($output as $line)
 {
@@ -54,6 +62,7 @@ foreach ($output as $line)
 
     $component = str_replace('midcom_helper_replicator_importer', 'importer', str_replace('Queue Manager', 'queuemanager', $item_component));
     $message = str_replace($data['object']->guid, "<abbr title=\"{$data['object']->guid}\">&lt;GUID&gt;</abbr>", $item_content);
+    $message = preg_replace($path_regex, '<abbr title="\\0">&lt;PATH&gt;</abbr>/', $message);
     
     echo "<li class=\"{$item_class} {$component}\">";
     echo "<span class=\"date\">" . strftime('%x %X', strtotime($item_time)) . "</span>";

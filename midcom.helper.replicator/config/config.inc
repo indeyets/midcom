@@ -1,4 +1,4 @@
-'queue_root_dir' => '/var/spool/midgard/replicator_queue/',
+'queue_root_dir' => '/var/spool/midgard/replicator_queue//',
 'log_filename'   => "{$GLOBALS['midcom_config']['log_filename']}.replicator",
 'exporter_staging2live_check_approvals_for' => array
 (

@@ -46,11 +46,12 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
     }
 
     /**
-     * This is the main entry point of the exporter. Since we're mirroring
-     * all content this will always return true.
+     * This is the main entry point of the exporter, we'll do some approval and scheduling checks
      *
      * @param midgard_object &$object The Object to export parameters of
+     * @param boolean $check_exported check if the object has already been exported or not
      * @return boolean Whether the object may be exported with this exporter
+     * @todo log the debug messages to generic debug log and log only more informative reasons to object replication log
      */
     function is_exportable(&$object, $check_exported = true)
     {
@@ -88,15 +89,15 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
         if ($check_exported)
         {
             // CAVEAT: may cause issues with multiple subscriptions
-            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "BEFORE is_exportable_by_metadata check: exportability = " . (int)$this->exportability[$object->guid]);
+            //$GLOBALS['midcom_helper_replicator_logger']->log_object($object, "BEFORE is_exportable_by_metadata check: exportability = " . (int)$this->exportability[$object->guid]);
             $this->exportability[$object->guid] = parent::is_exportable_by_metadata(&$object);
-            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "AFTER is_exportable_by_metadata check: exportability = " . (int)$this->exportability[$object->guid]);
+            //$GLOBALS['midcom_helper_replicator_logger']->log_object($object, "AFTER is_exportable_by_metadata check: exportability = " . (int)$this->exportability[$object->guid]);
         }
 
         // Approvals checks
-        $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "BEFORE approval check: exportability = " . (int)$this->exportability[$object->guid]);
+        //$GLOBALS['midcom_helper_replicator_logger']->log_object($object, "BEFORE approval check: exportability = " . (int)$this->exportability[$object->guid]);
         $this->_check_approval($object);
-        $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "AFTER approval check: exportability = " . (int)$this->exportability[$object->guid]);
+        //$GLOBALS['midcom_helper_replicator_logger']->log_object($object, "AFTER approval check: exportability = " . (int)$this->exportability[$object->guid]);
 
         /**
          * Check scheduling, muck object->deleted and register AT service handlers as needed
@@ -138,7 +139,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
                 $schedule_action = 'ok';
             }
         }
-        $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "BEFORE schedule check: \$schedule_action = {$schedule_action}, exportability = " . (int)$this->exportability[$object->guid]);
+        //$GLOBALS['midcom_helper_replicator_logger']->log_object($object, "BEFORE schedule check: \$schedule_action = {$schedule_action}, exportability = " . (int)$this->exportability[$object->guid]);
         switch ($schedule_action)
         {
             case 'ok':
@@ -178,9 +179,9 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
                 }
                 break;
         }
-        $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "AFTER schedule check: exportability = " . (int)$this->exportability[$object->guid]);
+        //$GLOBALS['midcom_helper_replicator_logger']->log_object($object, "AFTER schedule check: exportability = " . (int)$this->exportability[$object->guid]);
 
-        $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "is_exportable checks done, returning " . (int)$this->exportability[$object->guid]);
+        //$GLOBALS['midcom_helper_replicator_logger']->log_object($object, "is_exportable checks done, returning " . (int)$this->exportability[$object->guid]);
         $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
         return $this->exportability[$object->guid];
     }
@@ -190,7 +191,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
         static $parent_check_stack = array();
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Called for {$object->guid}");
-        $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "_check_approval called");
+        //$GLOBALS['midcom_helper_replicator_logger']->log_object($object, "_check_approval called");
 
         // Do not check approvals for deletes
         if (   $object->metadata->deleted
@@ -199,7 +200,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
         {
             $msg = 'Object is deleted, do not check approvals, setting exportability explicitly to true';
             $this->exportability[$object->guid] = true;
-            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, $msg);
+            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, $msg, MIDCOM_LOG_INFO);
             debug_add($msg);
             debug_pop();
             return;
@@ -229,14 +230,14 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
             && !empty($object->up))
         {
             // Child articles don't currently have any approval UI, skip approval for them (but do check parent below)
-            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Child article, not checking approval status');
+            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Reply article, not checking approval status', MIDCOM_LOG_INFO);
             $this->exportability[$object->guid] = true;
         }
         elseif ($object->metadata->revised > $object->metadata->approved)
         {
             // FIXME: use metadata service (?)
             // Not approved since last update
-            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Not approved, skipping');
+            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Object could not be exported for replication because it\'s not approved', MIDCOM_LOG_WARN);
             $this->exportability[$object->guid] = false;
         }
 
@@ -253,11 +254,10 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
                 array_pop($parent_check_stack);
                 if (!$this->exportability[$object->guid])
                 {
-                    $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Parent not approved, skipping');
+                    //$GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Parent not approved, skipping');
                     if (empty($parent_check_stack))
                     {
                         // Empty stack means we're  not inside parent recursion, thus we can raise an UIMessage
-                        $_MIDCOM->load_library('midcom.helper.reflector');
                         $ref = new midcom_helper_reflector($object);
                         $_MIDCOM->uimessages->add
                         (
@@ -270,6 +270,8 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
                             ),
                             'warning'
                         );
+                        unset($ref);
+                        $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Object could not be exported for replication because one of its parents is not approved', MIDCOM_LOG_WARN);
                     }
                 }
             }

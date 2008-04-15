@@ -7,6 +7,8 @@
 * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
 */
 
+$_MIDCOM->load_library('midcom.helper.reflector');
+
 /**
  * @package midcom.helper.replicator
  */
@@ -17,40 +19,14 @@ class midcom_helper_replicator_logger extends midcom_debug
         parent::midcom_debug($filename);
     }
 
-    function _resolve_object_title($object)
+    function log_object(&$object, $action, $loglevel = MIDCOM_LOG_DEBUG)
     {
-        $vars = get_object_vars($object);
-        
-        if (is_a($object, 'midgard_parameter'))
-        {
-            return "{$object->domain}/{$object->name}";
-        }
-        elseif (is_a($object, 'midgard_topic'))
-        {
-            return $object->extra;
-        }
-        elseif (   array_key_exists('title', $vars)
-            && !empty($object->title))
-        {
-            return $object->title;
-        } 
-        elseif (   array_key_exists('name', $vars)
-                && !empty($object->name)) 
-        {
-            return $object->name;
-        }
-        else
-        {
-            return "#{$object->id}";
-        }
-    }  
-    
-    function log_object($object, $action, $loglevel = MIDCOM_LOG_DEBUG)
-    {
+        $ref = new midcom_helper_reflector($object);
         $message = $action;
         $message .= " {$object->guid}";
-        $message .= ', ' . get_class($object);
-        $message .= ' "' . $this->_resolve_object_title($object) . '"';
+        $message .= ', ' . $ref->get_class_label();
+        $message .= ' "' . $ref->get_object_label($object) . '"';
+        unset($ref);
         
         $this->log($message, $loglevel);
     }

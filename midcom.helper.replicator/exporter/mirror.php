@@ -30,7 +30,15 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
      */
     function is_exportable_by_metadata(&$object)
     {
-        $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "is_exportable_by_metadata called");
+        //$GLOBALS['midcom_helper_replicator_logger']->log_object($object, "is_exportable_by_metadata called");
+        //TODO: Is there a more graceful way to do this ? (see also manager.php)
+        $check_exported = true;
+        if (   isset($GLOBALS['midcom_helper_replicator_exporter_retry_mode'])
+            && !empty($GLOBALS['midcom_helper_replicator_exporter_retry_mode']))
+        {
+            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "Retry mode, not checking metadata->exported");
+            return true;
+        }
         if (   $object->metadata->deleted
             || (   isset($this->_serialize_rewrite_to_delete[$object->guid])
                 && $this->_serialize_rewrite_to_delete[$object->guid]))
@@ -73,7 +81,7 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
         if ($exported_unixtime >= $revised_unixtime)
         {
             // This has been exported already
-            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "has alrady been exported ({$exported_unixtime} >= {$revised_unixtime}), returning false", MIDCOM_LOG_INFO);
+            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "has alrady been exported", MIDCOM_LOG_INFO);
             return false;
         }
 
