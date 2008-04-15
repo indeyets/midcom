@@ -55,6 +55,10 @@ File archive transport
 From log file
 ---STRINGEND
 
+---STRING http post transport
+HTTP POST transport
+---STRINGEND
+
 ---STRING imported
 Imported to database
 ---STRINGEND
@@ -68,7 +72,7 @@ Manual
 ---STRINGEND
 
 ---STRING mirroring subscription
-Mirror
+Mirroring Subscription
 ---STRINGEND
 
 ---STRING never
@@ -87,12 +91,12 @@ Replication information
 Replication information for %s
 ---STRINGEND
 
----STRING replication queue %s does not exist
-Replication queue %s does not exist
----STRINGEND
-
 ---STRING replication queue %s cannot be written by Apache user
 Replication queue %s cannot be written by Apache user
+---STRINGEND
+
+---STRING replication queue %s does not exist
+Replication queue %s does not exist
 ---STRINGEND
 
 ---STRING replication queue is stored to %s
@@ -105,6 +109,10 @@ Replication pipelines
 
 ---STRING staging2live subscription
 Staging/live
+---STRINGEND
+
+---STRING staging2live subscription with type filter
+Staging2live subscription with type filter
 ---STRINGEND
 
 ---STRING status
@@ -131,14 +139,7 @@ Force changes to be imported
 XML filters (for advanced users only)
 ---STRINGEND
 
----STRING http post transport
-HTTP POST transport
+---STRING %s %s could not be exported for replication because one of its parents is not approved
+%s %s could not be exported for replication because one of its parents is not approved
 ---STRINGEND
 
----STRING mirroring subscription
-Mirroring Subscription
----STRINGEND
-
----STRING staging2live subscription with type filter
-Staging2live subscription with type filter
----STRINGEND

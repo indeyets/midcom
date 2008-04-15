@@ -187,6 +187,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
 
     function _check_approval(&$object)
     {
+        static $parent_check_stack = array();
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Called for {$object->guid}");
         $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "_check_approval called");
@@ -243,14 +244,34 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
         {
             // Check the parent also, as that may be unapproved
             $parent = $object->get_parent();
-            if ($parent)
+            if (   is_object($parent)
+                && isset($parent->guid)
+                && !empty($parent->guid))
             {
+                array_push($parent_check_stack, $object->guid);
                 $this->exportability[$object->guid] = $this->is_exportable($parent, false);
-
+                array_pop($parent_check_stack);
                 if (!$this->exportability[$object->guid])
                 {
                     // TODO: Uimessage, but how to give only one ??
                     $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Parent not approved, skipping');
+                    if (empty($parent_check_stack))
+                    {
+                        // Empty stack means we're  not inside parent recursion, thus we can raise an UIMessage
+                        $_MIDCOM->load_library('midcom.helper.reflector');
+                        $ref = new midcom_helper_reflector($object);
+                        $_MIDCOM->uimessages->add
+                        (
+                            $this->_l10n->get('midcom.helper.replicator'),
+                            sprintf
+                            (
+                                $this->_l10n->get('%s %s could not be exported for replication because one of its parents is not approved'), 
+                                $ref->get_class_label(), 
+                                $ref->get_object_label($object)
+                            ),
+                            'warning'
+                        );
+                    }
                 }
             }
         }
