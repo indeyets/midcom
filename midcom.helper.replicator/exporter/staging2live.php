@@ -58,9 +58,11 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
         // If we already know the state return early
         if (isset($this->exportability[$object->guid]))
         {
+            /*
             $GLOBALS['midcom_helper_replicator_logger']->push_prefix('exporter');
             $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "\$this->exportability already set, returning " . (int)$this->exportability[$object->guid]);
             $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
+            */
             return $this->exportability[$object->guid];
         }
 
@@ -316,7 +318,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
      */
     function serialize_children(&$object)
     {
-        $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "serialize_children called");
+        //$GLOBALS['midcom_helper_replicator_logger']->log_object($object, "serialize_children called");
         $serializations = array();
         if (   $object->metadata->deleted
             || (   isset($this->_serialize_rewrite_to_delete[$object->guid])

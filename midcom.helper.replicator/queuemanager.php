@@ -84,6 +84,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
      * will then store the serialized data for each queue.
      * @todo refactor to smaller methods
      * @todo query for subscriptions only once
+     * @todo raise UIMessage in style of 'N object queued to subscription X'
      */
     function add_to_queue(&$object, $rewrite_to_delete = false)
     {
@@ -218,7 +219,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                 if ($marked_exported)
                 {
                     $msg = "Marked GUID '{$export_guid}' as exported to queue \"{$subscription->title}\"";
-                    $GLOBALS['midcom_helper_replicator_logger']->log($msg);
+                    //$GLOBALS['midcom_helper_replicator_logger']->log($msg);
                     debug_add($msg);
                 }
                 else
@@ -236,11 +237,38 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         return true;
     }
 
-    /**
-     * Gets/creates the path for subscriptions spool dir
-     * @todo make a smarter recursive directory creator
-     */
-    function _get_subscription_basedir(&$subscription)
+    function list_path_items($path)
+    {
+        $path = preg_replace('%/{2,}|/$%', '', $path);
+        $ret = array();
+        $dp = opendir($path);
+        if (!$dp)
+        {
+            return false;
+        }
+        
+        while (($file_name = readdir($dp)) !== false)
+        {
+            if (   $file_name == '.'
+                || $file_name == '..')
+            {
+                continue;
+            }
+            $file_path = "{$path}/{$file_name}";
+            if (is_dir($file_path))
+            {
+                $ret = array_merge($ret, midcom_helper_replicator_queuemanager::list_path_items($file_path));
+                continue;
+            }
+            $ret[] = $file_path;
+        }
+        closedir($dp);
+
+        sort($ret);
+        return $ret;
+    }
+
+    function get_sg_basedir(&$subscription)
     {
         // Normalize basedir, no trailing slash and no consecutive slashes
         $global_base = preg_replace('%/{2,}|/$%', '', $this->_config->get('queue_root_dir'));
@@ -258,7 +286,6 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
             }
             debug_pop();
         }
-
         // Append sitegroup name
         $sitegroup_base = "{$global_base}/" . $this->safe_sg_name($subscription->sitegroup);
         if (!is_dir($sitegroup_base))
@@ -274,6 +301,20 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                 return false;
             }
             debug_pop();
+        }
+        return $sitegroup_base;
+    }
+
+    /**
+     * Gets/creates the path for subscriptions spool dir
+     * @todo make a smarter recursive directory creator
+     */
+    function get_subscription_basedir(&$subscription)
+    {
+        $sitegroup_base = $this->get_sg_basedir($subscription);
+        if ($sitegroup_base === false)
+        {
+            return false;
         }
 
         $subscription_path = "{$sitegroup_base}/{$subscription->guid}";
@@ -293,40 +334,14 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         return $subscription_path;
     }
 
-    function _get_subscription_quarantine_basedir(&$subscription)
+    function get_subscription_quarantine_basedir(&$subscription)
     {
-        $global_base = $this->_config->get('queue_root_dir');
-        if (!is_dir($global_base))
+        $sitegroup_base = $this->get_sg_basedir($subscription);
+        if ($sitegroup_base === false)
         {
-            // The configuration key might have dynamic part to it
-            debug_push_class(__CLASS__, __FUNCTION__);    
-            debug_add("directory {$global_base} does not exist, creating", MIDCOM_LOG_DEBUG);
-            if (!mkdir($global_base))
-            {
-                // TODO: Error reporting
-                debug_add("could not create directory {$global_base}", MIDCOM_LOG_ERROR);
-                debug_pop();
-                return false;
-            }
-            debug_pop();
+            return false;
         }
-        
-        // Append sitegroup name
-        $sitegroup_base = "{$global_base}/" . $this->safe_sg_name($subscription->sitegroup);
-        if (!is_dir($sitegroup_base))
-        {
-            // The configuration key might have dynamic part to it
-            debug_push_class(__CLASS__, __FUNCTION__);    
-            debug_add("directory {$sitegroup_base} does not exist, creating", MIDCOM_LOG_DEBUG);
-            if (!mkdir($sitegroup_base))
-            {
-                // TODO: Error reporting
-                debug_add("could not create directory {$sitegroup_base}", MIDCOM_LOG_ERROR);
-                debug_pop();
-                return false;
-            }
-            debug_pop();
-        }        
+
         $subscription_path = "{$sitegroup_base}/{$subscription->guid}-quarantine";
         if (!is_dir($subscription_path))
         {
@@ -346,7 +361,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
 
     function _get_subscription_quarantine_queuedir(&$subscription)
     {
-        $quarantine_path = $this->_get_subscription_quarantine_basedir($subscription);
+        $quarantine_path = $this->get_subscription_quarantine_basedir($subscription);
         if ($quarantine_path === false)
         {
             // TODO: Error reporting
@@ -372,7 +387,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
 
     function _get_subscription_queue_basedir(&$subscription)
     {
-        $subscription_path = $this->_get_subscription_basedir($subscription);
+        $subscription_path = $this->get_subscription_basedir($subscription);
         if ($subscription_path === false)
         {
             // TODO: Error reporting
@@ -461,7 +476,6 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         return true;
     }
 
-
     /**
      * Helper for process_queue, removes processed items, quarantines failed ones
      */
@@ -483,7 +497,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                 debug_add("Could not remove file '{$item_path}'", MIDCOM_LOG_ERROR);
                 continue;
             }
-            $GLOBALS['midcom_helper_replicator_logger']->log("File {$item_path} removed from queue \"{$subscription->title}\"");
+            //$GLOBALS['midcom_helper_replicator_logger']->log("File {$item_path} removed from queue \"{$subscription->title}\"");
             unset($items_paths[$item_key]);
         }
         $this->_quarantine_items(&$q_items, &$items_paths, &$subscription);
@@ -492,6 +506,8 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         set_time_limit(ini_get('max_execution_time'));
         debug_pop();
     }
+
+
 
     /**
      * Helper for process_queue, gets items for given queue directory pointer
@@ -538,7 +554,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                 debug_pop();
                 return false;
             }
-            $GLOBALS['midcom_helper_replicator_logger']->log("Read {$item_key} from queue \"{$subscription->title}\" file {$item_path}");
+            //$GLOBALS['midcom_helper_replicator_logger']->log("Read {$item_key} from queue \"{$subscription->title}\" file {$item_path}");
             $items_paths[$item_key] = $item_path;
             unset($item_key, $item_path);
         }
@@ -647,11 +663,12 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
 
     /**
      * Helper for process_queue, processes given subscriptions queues
+     * @todo use list_path_items ??
      */
     function _process_queue_subscription(&$subscription)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $subscription_path = $this->_get_subscription_basedir($subscription);
+        $subscription_path = $this->get_subscription_basedir($subscription);
         if ($subscription_path === false)
         {
             debug_add('Could not get base dir for subscription', MIDCOM_LOG_ERROR);
