@@ -31,6 +31,17 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 <option value=",">,</option>
             </select>
         </label>
+        <label for="org_openpsa_products_import_schema">
+            <span class="field_text"><?php echo $data['l10n']->get('schema'); ?></span>
+            <select class="dropdown" name="org_openpsa_products_import_schema" id="org_openpsa_products_import_schema">
+                <?php
+                foreach (array_keys($data['schemadb_product']) as $name)
+                {
+                    echo "                <option value=\"{$name}\">" . $data['l10n']->get($data['schemadb_product'][$name]->description) . "</option>\n";
+                }
+                ?>
+            </select>
+        </label>
         <div class="form_toolbar">
             <input type="submit" class="save" value="<?php echo $data['l10n']->get('import'); ?>" />
         </div>

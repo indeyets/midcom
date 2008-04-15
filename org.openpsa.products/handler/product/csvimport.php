@@ -46,7 +46,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
     function _datamanager_process($productdata, $object)
     {
         // Load datamanager2 for the object
-        if (!$this->_datamanager->autoset_storage($object))
+        if (!$this->_datamanager->set_storage($object))
         {
             return false;
         }
@@ -177,6 +177,16 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
     {
         $this->_prepare_handler($args);
 
+        if (isset($_POST['org_openpsa_products_import_schema']))
+        {
+            $data['schema'] = $_POST['org_openpsa_products_import_schema'];
+        }
+        else
+        {
+            $data['schema'] = 'default';
+        }
+        $this->_datamanager->set_schema($data['schema']);
+
         if (array_key_exists('org_openpsa_products_import_separator', $_POST))
         {
             $data['time_start'] = time();
@@ -283,6 +293,12 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'No CSV separator specified.');
             // This will exit.
         }
+        
+        if (!array_key_exists('org_openpsa_products_import_schema', $_POST))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'No schema specified.');
+            // This will exit.
+        }
 
         if (!file_exists($_POST['org_openpsa_products_import_tmp_file']))
         {
@@ -294,6 +310,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
 
         $data['rows'] = array();
         $data['separator'] = $_POST['org_openpsa_products_import_separator'];
+        $data['schema'] = $_POST['org_openpsa_products_import_schema'];        
 
         // Start processing the file
         $read_rows = 0;
@@ -348,7 +365,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
                 {
                     $schema_field = $field_matching;
 
-                    if (   !array_key_exists($schema_field, $data['schemadb_product']['default']->fields)
+                    if (   !array_key_exists($schema_field, $data['schemadb_product'][$data['schema']]->fields)
                         && $schema_field != 'org_openpsa_products_import_parent_group')
                     {
                         // Invalid matching, skip

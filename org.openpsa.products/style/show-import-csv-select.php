@@ -11,6 +11,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
     <form action="&(prefix);import/&(data['type']);/csv2/" method="post" class="datamanager">
         <input type="hidden" name="org_openpsa_products_import_separator" value="<?php echo $data['separator']; ?>" />
+        <input type="hidden" name="org_openpsa_products_import_schema" value="<?php echo $data['schema']; ?>" />
         <input type="hidden" name="org_openpsa_products_import_tmp_file" value="<?php echo $data['tmp_file']; ?>" />
         <table>
             <thead>
@@ -45,13 +46,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
                     // Show fields from "default" schemas as selectors
                     $schemadb = $data['schemadb'];
-                    if (!array_key_exists('default', $schemadb))
-                    {
-                        // No default schema in this schemadb, skip
-                        continue;
-                    }
-
-                    foreach ($schemadb['default']->fields as $field_id => $field)
+                    foreach ($schemadb[$data['schema']]->fields as $field_id => $field)
                     {
                         if (   array_key_exists('hidden', $field)
                             && $field['hidden'])
@@ -61,7 +56,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                             continue;
                         }
 
-                        $field_label = $schemadb['default']->translate_schema_string($field['title']);
+                        $field_label = $schemadb[$data['schema']]->translate_schema_string($field['title']);
                         echo "            <option value=\"{$field_id}\">{$field_label}</option>\n";
                     }
                     
