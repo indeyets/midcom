@@ -227,11 +227,9 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
         if (   is_a($object, 'midgard_article')
             && !empty($object->up))
         {
-            // Child articles don't currently have any approval UI, skip approval
-            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Child article, no approval checks to be made');
+            // Child articles don't currently have any approval UI, skip approval for them (but do check parent below)
+            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Child article, not checking approval status');
             $this->exportability[$object->guid] = true;
-            debug_pop();
-            return;
         }
         elseif ($object->metadata->revised > $object->metadata->approved)
         {
@@ -251,6 +249,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
 
                 if (!$this->exportability[$object->guid])
                 {
+                    // TODO: Uimessage, but how to give only one ??
                     $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Parent not approved, skipping');
                 }
             }

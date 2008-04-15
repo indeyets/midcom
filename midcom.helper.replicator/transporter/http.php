@@ -139,7 +139,9 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
         // TODO: Other immediate retries ??
 
         // Log the failure details
+        $this->item_errors[$key] = $error_string;
         $msg = "Failed to send key {$key}, error: {$error_string}";
+        // PONDER: use the replicator log instead ?
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add($msg, MIDCOM_LOG_WARN);
         debug_print_r('Response body: ', $response_body);
@@ -162,8 +164,12 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
                  */
                  continue;
             }
-            $GLOBALS['midcom_helper_replicator_logger']->log("Successfully sent key {$key}", MIDCOM_LOG_INFO);
+            $GLOBALS['midcom_helper_replicator_logger']->log("Succesfully sent key {$key}", MIDCOM_LOG_DEBUG);
             unset($items[$key]);
+            if (isset($this->item_errors[$key]))
+            {
+                unset($this->item_errors[$key]);
+            }
         }
         unset($key, $data);
         

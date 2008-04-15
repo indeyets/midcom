@@ -6,6 +6,8 @@
     'midgard_article',
     'midgard_style',
     'midgard_element', // Style-elements
+    'midgard_snippetdir',
+    'midgard_snippet',
 ),
 'exporter_staging2live_typefilter_pass_types' => array
 (

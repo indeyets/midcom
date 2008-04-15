@@ -21,12 +21,20 @@ class midcom_helper_replicator_transporter extends midcom_baseclasses_components
     var $subscription;
 
     /**
-     * Possible processing error.
+     * Possible processing error (single message).
      *
      * @var string
-     * @access protected
+     * @access read-only
      */
     var $error = '';
+
+    /**
+     * Possible processing errors (per key)
+     *
+     * @var string
+     * @access read-only
+     */
+    var $item_errors = array();
 
     /**
      * Initializes the class. The real startup is done by the initialize() call.

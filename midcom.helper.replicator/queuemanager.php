@@ -16,9 +16,9 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
     var $transporters = array();
     var $started = 0;
     /**
-     * @todo this should be per-subscription
+     * file counts keyed by subscription guid
      */
-    var $file_count = 0;
+    var $file_counts = array();
 
     /**
      * Initializes the class. The real startup is done by the initialize() call.
@@ -131,7 +131,12 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                 debug_add('could not get queue dir for subscription', MIDCOM_LOG_ERROR);
                 continue;
             }
-            $i =& $this->file_count;
+            if (   !isset($this->file_counts[$subscription->guid])
+                || !is_array($this->file_counts[$subscription->guid]))
+            {
+                $this->file_counts[$subscription->guid] = array();
+            }
+            $i =& $this->file_counts[$subscription->guid];
             debug_add('about to queue ' . count($exporter_serializations) . ' keys');
             reset($exporter_serializations);
             foreach ($exporter_serializations as $key => $data)
@@ -252,7 +257,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
             }
             debug_pop();
         }
-        
+
         // Append sitegroup name
         $sitegroup_base = "{$global_base}/" . $this->safe_sg_name($subscription->sitegroup);
         if (!is_dir($sitegroup_base))
@@ -269,7 +274,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
             }
             debug_pop();
         }
-        
+
         $subscription_path = "{$sitegroup_base}/{$subscription->guid}";
         if (!is_dir($subscription_path))
         {
@@ -415,36 +420,61 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
     }
 
     /**
-     * Helper for process_queue, quarantines failed items
+     * Helper for process_queue, moves quarantined items to correct directory
+     */
+    function _quarantine_items(&$q_items, &$items_paths, &$subscription)
+    {
+        if (!is_array($q_items))
+        {
+            return false;
+        }
+        if (empty($q_items))
+        {
+            return true;
+        }
+        $quarantine_path = $this->_get_subscription_quarantine_queuedir($subscription);
+        if (!is_dir($quarantine_path))
+        {
+            // Could not get valid dir
+            return false;
+        }
+        foreach ($q_items as $item_key => $item_path)
+        {
+            // Reset time limit counter while processing files
+            set_time_limit(30);
+            $quarantine_filepath = $quarantine_path . '/' . basename($item_path);
+            debug_add("Quarantineing '{$item_key}' as '{$quarantine_filepath}'", MIDCOM_LOG_DEBUG);
+            $output = array();
+            $code = 0;
+            exec("mv {$item_path} {$quarantine_filepath}", $output, $code);
+            if ($code != 0)
+            {
+                debug_add("Failed to quarantine '{$item_path}' as '{$quarantine_filepath}'", MIDCOM_LOG_ERROR);
+                continue;
+            }
+
+            // TODO: write per-item error if available to some index file.
+
+            unset($q_items[$item_key], $items_paths[$item_key]);
+        }
+        return true;
+    }
+
+
+    /**
+     * Helper for process_queue, removes processed items, quarantines failed ones
      */
     function _process_queue_quarantines(&$items, &$items_paths, &$subscription)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
+        $q_items = array();
         foreach ($items_paths as $item_key => $item_path)
         {
             if (array_key_exists($item_key, $items))
             {
                 // Item still in array (transporter should remove each key as it's transported properly)
-                debug_add("Transporter left key '{$item_key}' into items, quarantineing '{$item_path}'", MIDCOM_LOG_INFO);
-                $quarantine_path = $this->_get_subscription_quarantine_queuedir($subscription);
-                if (!is_dir($quarantine_path))
-                {
-                    // Could not get valid dir
-                    continue;
-                }
-                $quarantine_filepath = $quarantine_path . '/' . basename($item_path);
-                $output = array();
-                $code = 0;
-                exec("mv {$item_path} {$quarantine_filepath}", $output, $code);
-                if ($code != 0)
-                {
-                    debug_add("Failed to quarantine '{$item_path}' as '{$quarantine_filepath}'", MIDCOM_LOG_ERROR);
-                }
-                else
-                {
-                    debug_add("Quarantined '{$item_path}' as '{$quarantine_filepath}'", MIDCOM_LOG_INFO);
-                }
-                // TODO: create notice
+                debug_add("Transporter left key '{$item_key}' into items, marking for quarantineing", MIDCOM_LOG_INFO);
+                $q_items[$item_key] = $item_path;
                 continue;
             }
             if (!unlink($item_path))
@@ -453,7 +483,12 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                 continue;
             }
             $GLOBALS['midcom_helper_replicator_logger']->log("File {$item_path} removed from queue \"{$subscription->title}\"");
+            unset($items_paths[$item_key]);
         }
+        $this->_quarantine_items(&$q_items, &$items_paths, &$subscription);
+        unset($q_items);
+        // Restore to original value
+        set_time_limit(ini_get('max_execution_time'));
         debug_pop();
     }
 
