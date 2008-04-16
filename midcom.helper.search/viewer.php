@@ -315,6 +315,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
             $data['last_document_number'] = $last_document_id + 1;
             $data['shown_documents'] = $last_document_id - $first_document_id + 1;
             $data['results_per_page'] = $results_per_page;
+	    $data['all_results'] =& $result;
             $data['result'] = array_slice($result, $first_document_id, $results_per_page);
             // Register GUIDs for cache engine
             foreach($data['result'] as $doc)
