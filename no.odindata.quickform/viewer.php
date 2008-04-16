@@ -53,7 +53,9 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
     function _on_initialize()
     {
         // no caching as different input requires different emails .)
+        /* POSTS are always uncached
         $_MIDCOM->cache->content->no_cache();
+        */
 
         $this->_request_data['topic'] =& $this->_topic;
 
@@ -608,47 +610,6 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
-     /**
-     * Callback for the datamanager create mode.
-     *
-     * @access protected
-     */
-    function _dm_create_callback(&$datamanager)
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        $result = Array
-        (
-            'success' => true,
-            'storage' => null,
-        );
-
-        $midgard = $_MIDCOM->get_midgard();
-        $this->_article = new midcom_baseclasses_database_article();
-        if (   array_key_exists('create_index', $_REQUEST)
-            && $_REQUEST['create_index'] == 1)
-        {
-            $this->_article->name = 'index';
-        }
-
-        $this->_article->topic = $this->_topic->id;
-        $this->_article->author = $midgard->user;
-        if (! $this->_article->create())
-        {
-            debug_add('Could not create article: ' . mgd_errstr(), MIDCOM_LOG_WARN);
-            debug_pop();
-            return null;
-        }
-
-        if ( $this->_config->get('auto_approved') == true )
-        {
-            $meta =& midcom_helper_metadata::retrieve($this->_article);
-            $meta->approve();
-        }
-
-        $result['storage'] =& $this->_article;
-        debug_pop();
-        return $result;
-    }
 }
 
 ?>
