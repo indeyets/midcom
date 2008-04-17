@@ -108,8 +108,17 @@ foreach ($sites_config as $k => $site_config)
              */
             // Start the standard dump script with specific config key
             $dump_script = dirname($argv[0]) . '/dump_sites.php';
-            $dump_cmd = $dump_script;
-            $dump_args = array($conffile, $k);
+            if (is_executable($dump_script))
+            {
+                $dump_cmd = $dump_script;
+                $dump_args = array($conffile, $k);
+            }
+            else
+            {
+                // TODO: Figure out php executable location better
+                $dump_cmd = '/usr/bin/php';
+                $dump_args = array($dump_script, $conffile, $k);
+            }
             /*
             echo "DEBUG: calling pcntl_exec({$dump_cmd}, \$dump_args, \$_ENV\n";
             echo "       \$dump_args\n";
