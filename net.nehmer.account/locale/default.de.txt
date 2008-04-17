@@ -66,7 +66,7 @@ Benutzerdaten bestätigen
 ---STRINGEND
 
 ---STRING confirm account details explaination
-Bitte überprüfen Sie alle eingegebenen Informationen bevor sie fortfahren.
+Bitte überprüfen Sie alle eingegebenen Informationen bevor Sie fortfahren.
 ---STRINGEND
 
 ---STRING edit account
