@@ -43,28 +43,28 @@ ltr_desc:"Direction left to right",
 rtl_desc:"Direction right to left"
 },
 layer:{
-insertlayer_desc:"Insert new layer",
-forward_desc:"Move forward",
-backward_desc:"Move backward",
+insertlayer_desc:"Ch\u00E8n l\u1EDBp m\u1EDBi",
+forward_desc:"Chuy\u1EC3n \u0111\u1EBFn tr\u01B0\u1EDBc",
+backward_desc:"Chuy\u1EC3n ra sau",
 absolute_desc:"Toggle absolute positioning",
-content:"New layer..."
+content:"L\u1EDBp m\u1EDBi..."
 },
 save:{
 save_desc:"Save",
-cancel_desc:"Cancel all changes"
+cancel_desc:"Hu\u1EF7 t\u1EA5t c\u1EA3 thay \u0111\u1ED5i"
 },
 nonbreaking:{
 nonbreaking_desc:"Insert non-breaking space character"
 },
 iespell:{
-iespell_desc:"Run spell checking",
+iespell_desc:"Ki\u1EC3m tra ch\u00EDnh t\u1EA3",
 download:"ieSpell not detected. Do you want to install it now?"
 },
 advhr:{
 advhr_desc:"Horizontale rule"
 },
 emotions:{
-emotions_desc:"Emotions"
+emotions_desc:"H\u00ECnh bi\u1EC3u th\u1ECB x\u00FAc c\u1EA3m"
 },
 searchreplace:{
 search_desc:"Find",

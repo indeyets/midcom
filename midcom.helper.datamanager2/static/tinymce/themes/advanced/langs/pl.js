@@ -55,7 +55,7 @@ newdocument_desc:"Nowy dokument",
 help_desc:"Pomoc",
 blockquote_desc:"Blok cytatu",
 clipboard_msg:"Wtnij/Kopiuj/Wklej nie jest dost\u0119pne w Mozilla and Firefox.\r\nCzy chcesz wi\u0119cej informacji o tym problemie?",
-path:"\u015Aie\u017Cka",
+path:"\u015Acie\u017Cka",
 newdocument:"Czy jeste\u015B pewnien, ze chcesz wyczy\u015Bci\u0107 ca\u0142\u0105 zawarto\u015B\u0107?",
 toolbar_focus:"Przeskocz do przycisk\u00F3w narz\u0119dzi - Alt+Q, Przeskocz do edytora - Alt-Z, Przeskocz do elementu \u015Bcie\u017Cki - Alt-X",
 more_colors:"Wi\u0119cej kolor\u00F3w"

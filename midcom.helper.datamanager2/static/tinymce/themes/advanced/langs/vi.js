@@ -1,6 +1,6 @@
 tinyMCE.addI18n('vi.advanced',{
 style_select:"Ki\u1EC3u",
-font_size:"C\u1EDF ch\u1EEF",
+font_size:"C\u1EE1 ch\u1EEF",
 fontdefault:"Ph\u00F4ng ch\u1EEF",
 block:"\u0110\u1ECBnh d\u1EA1ng",
 paragraph:"\u0110o\u1EA1n v\u0103n b\u1EA3n",

@@ -9,8 +9,8 @@ replacewith:"Csere erre",
 direction:"Ir\u00E1ny",
 up:"Fel",
 down:"Le",
-mcase:"Kis/Nagybet\u0171 \u00E9rz\u00E9kenys\u00E9g",
+mcase:"Kis- \u00E9s nagybet\u0171k megk\u00FCl\u00F6nb\u00F6ztet\u00E9se",
 findnext:"Keres\u00E9s",
-replace:"Cser\u00E9l",
-replaceall:"Mindet cser\u00E9l"
+replace:"Csere",
+replaceall:"Minden tal\u00E1lat cser\u00E9je"
 });

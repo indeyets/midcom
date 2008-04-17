@@ -15,6 +15,6 @@ smile:"Vigyor",
 surprised:"Meglepett",
 tongue_out:"Nyelv\u00F6lt\u00E9s",
 undecided:"Hat\u00E1rozatlan",
-wink:"Kacsit\u00E1s",
+wink:"Kacsint\u00E1s",
 yell:"\u00DCv\u00F6lt\u00E9s"
 });
