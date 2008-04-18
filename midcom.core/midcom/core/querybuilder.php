@@ -709,13 +709,15 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             return $newresult;
         }
 
-        while(count($newresult) > $this->_limit)
+        if ($this->_limit)
         {
-            array_pop($newresult);
+            while(count($newresult) > $this->_limit)
+            {
+                array_pop($newresult);
+            }
         }
 
         call_user_func_array(array($this->_real_class, '_on_process_query_result'), array(&$newresult));
-
 
         $this->count = count($newresult);
 
