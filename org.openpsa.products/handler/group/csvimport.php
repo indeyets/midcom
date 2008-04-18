@@ -83,7 +83,7 @@ class org_openpsa_products_handler_group_csvimport extends midcom_baseclasses_co
         {
             $qb = org_openpsa_products_product_group_dba::new_query_builder();
             $qb->add_constraint('code', '=', (string) $groupdata['code']);
-            $groups = $qb->execute_unchecked();
+            $groups = $qb->execute();
             if (count($groups) > 0)
             {
                 // Match found, use it

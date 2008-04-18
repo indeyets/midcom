@@ -67,7 +67,7 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
         {
             $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
             $parentgroup_qb->add_constraint('code', '=', $args[0]);
-            $groups = $parentgroup_qb->execute_unchecked();
+            $groups = $parentgroup_qb->execute();
             $qb->add_constraint('up', '=', $groups[0]->id);
             $qb->add_constraint('code', '=', $args[1]);
         }
@@ -75,7 +75,7 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
         {
             $qb->add_constraint('code', '=', $args[0]);
         }
-            $results = $qb->execute_unchecked();
+            $results = $qb->execute();
             if (count($results) == 0)
             {
                 if (!mgd_is_guid($args[0]))
@@ -120,7 +120,7 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
         {
             $parentgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
             $parentgroup_qb->add_constraint('code', '=', $args[0]);
-            $groups = $parentgroup_qb->execute_unchecked();
+            $groups = $parentgroup_qb->execute();
             if (count($groups) == 0)
             {
                 return false;
@@ -132,7 +132,7 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
                 $categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
                 $categories_qb->add_constraint('up', '=', $groups[0]->id);
                 $categories_qb->add_constraint('code', '=', $args[1]);
-                $categories = $categories_qb->execute_unchecked();
+                $categories = $categories_qb->execute();
                 //echo $categories[0]->id;
                 //$data['parent_group']=$categories[0]->id;
                 $data['parent_category_id'] = $categories[0]->id;
@@ -144,13 +144,13 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
     {
         $guidgroup_qb = org_openpsa_products_product_group_dba::new_query_builder();
         $guidgroup_qb->add_constraint('guid', '=', $args[0]);
-        $groups = $guidgroup_qb->execute_unchecked();
+        $groups = $guidgroup_qb->execute();
 
         if (count($groups) > 0)
         {
             $categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
             $categories_qb->add_constraint('id', '=', $groups[0]->up);
-            $categories = $categories_qb->execute_unchecked();
+            $categories = $categories_qb->execute();
 
             $data['parent_category'] = $categories[0]->code;
         }
@@ -164,7 +164,7 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
 
         $group_qb->add_order('code');
         $group_qb->add_order('title');
-        $data['groups'] = $group_qb->execute_unchecked();
+        $data['groups'] = $group_qb->execute();
         $data['products'] = array();
         if ($this->_config->get('group_list_products'))
         {
@@ -227,7 +227,7 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
                 $product_qb->add_constraint('end', '=', 0);
                 $product_qb->add_constraint('end', '>=', time());
             $product_qb->end_group();
-            $data['products'] = $product_qb->execute_unchecked();
+            $data['products'] = $product_qb->execute();
             $data['products_qb'] =& $product_qb;
         }
 

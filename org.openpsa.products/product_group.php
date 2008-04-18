@@ -64,7 +64,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
             $qb->add_constraint('up', '=', $this->up);
         }
 
-        $result = $qb->execute_unchecked();
+        $result = $qb->execute();
         if (count($result) > 0)
         {
             return true;
@@ -218,7 +218,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
 
             $qb3 = org_openpsa_products_product_dba::new_query_builder();
             $qb3->add_constraint('guid', '=', $guid);
-            $lookup = $qb3->execute_unchecked();
+            $lookup = $qb3->execute();
 
             if (isset($lookup[0])
                 && isset($lookup[0]->productGroup))
@@ -240,7 +240,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
             $qb2 = org_openpsa_products_product_group_dba::new_query_builder();
             $qb2->add_constraint('id', '=', $up_code);
             $qb2->add_order('id');
-            $up_group = $qb2->execute_unchecked();
+            $up_group = $qb2->execute();
             if (isset($up_group[0])
                 && isset($up_group[0]->up))
             {
@@ -252,7 +252,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
             $qb2 = org_openpsa_products_product_group_dba::new_query_builder();
             $qb2->add_constraint('code', '=', $up_code);
             $qb2->add_order('code');
-            $up_group = $qb2->execute_unchecked();
+            $up_group = $qb2->execute();
             if (isset($up_group[0])
                 && isset($up_group[0]->id))
             {
@@ -267,7 +267,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
         $qb->add_constraint('up', '=', $up);
         $qb->add_order('code');
         $qb->add_order('title');
-        $groups = $qb->execute_unchecked();
+        $groups = $qb->execute();
 
         foreach ($groups as $group)
         {
@@ -317,7 +317,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
             }
             $qb3 = org_openpsa_products_product_dba::new_query_builder();
             $qb3->add_constraint('guid', '=', $guid);
-            $lookup = $qb3->execute_unchecked();
+            $lookup = $qb3->execute();
 
             if (isset($lookup[0])
                 && isset($lookup[0]->productGroup))
@@ -339,7 +339,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
             $qb2 = org_openpsa_products_product_group_dba::new_query_builder();
             $qb2->add_constraint('id', '=', $up_code);
             $qb2->add_order('id');
-            $up_group = $qb2->execute_unchecked();
+            $up_group = $qb2->execute();
             if (isset($up_group[0])
                 && isset($up_group[0]->up))
             {
@@ -351,7 +351,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
             $qb2 = org_openpsa_products_product_group_dba::new_query_builder();
             $qb2->add_constraint('code', '=', $up_code);
             $qb2->add_order('code');
-            $up_group = $qb2->execute_unchecked();
+            $up_group = $qb2->execute();
             if (isset($up_group[0])
                 && isset($up_group[0]->id))
             {
@@ -375,7 +375,7 @@ class org_openpsa_products_product_group_dba extends __org_openpsa_products_prod
         }
         $qb->add_order('code');
         $qb->add_order('title');
-        $groups = $qb->execute_unchecked();
+        $groups = $qb->execute();
 
         foreach ($groups as $group)
         {

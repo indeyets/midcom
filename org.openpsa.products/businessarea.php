@@ -73,7 +73,7 @@ class org_openpsa_products_businessarea_dba extends __org_openpsa_products_busin
             $qb->add_constraint('id', '<>', $this->id);
         }
 
-        $result = $qb->execute_unchecked();
+        $result = $qb->execute();
         if (count($result) > 0)
         {
             return true;

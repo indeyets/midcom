@@ -86,7 +86,7 @@ class org_openpsa_products_product_dba extends __org_openpsa_products_product_db
             // Make sure the product is in the same product group
             $qb->add_constraint('productGroup', '=', (int)$this->productGroup);
         }
-        $result = $qb->execute_unchecked();
+        $result = $qb->execute();
         if (count($result) > 0)
         {
             if ($quickform_mode)
