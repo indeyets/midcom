@@ -57,13 +57,18 @@ class org_routamc_positioning_city_dba extends __org_routamc_positioning_city_db
     function _on_creating()
     {
         $qb = org_routamc_positioning_city_dba::new_query_builder();
-        $qb->add_constraint('longitude', '=', $this->longitude);
-        $qb->add_constraint('latitude', '=', $this->latitude);
+        $qb->add_constraint('longitude', '=', (double)$this->longitude);
+        $qb->add_constraint('latitude', '=', (double)$this->latitude);
         $qb->set_limit(1);
         $matches = $qb->execute_unchecked();
-        if (count($matches) > 0)
+        if (   !empty($matches)
+               /* doublecheck */
+            && $matches[0]->longitude === $this->longitude
+            && $matches[0]->latitude === $this->latitude
+            )
         {
             // We don't need to save duplicate entries
+            mgd_set_errno(MGD_ERR_DUPLICATE);
             return false;
         }
         return parent::_on_creating();
