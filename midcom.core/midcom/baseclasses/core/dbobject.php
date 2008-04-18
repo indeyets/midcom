@@ -766,7 +766,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         $ref = midcom_helper_reflector_tree::get($type);
         foreach ($guids as $guid)
         {
-            $object = midcom_baseclasses_core_dbobject::get_object($guid, $type);
+            $object = midcom_helper_reflector::get_object($guid, $type);
             if (is_null($object))
             {
                 // Something wrong
