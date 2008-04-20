@@ -119,6 +119,48 @@ echo "DEBUG: remove_files\n";
 print_r($remove_files);
 */
 
+/**
+ * Sort array of filenames to alphabetical tree order
+ */
+function by_tree($a_part, $b_part)
+{
+    global $dump_path;
+    $a_path = $dump_path . $a_part;
+    $b_path = $dump_path . $b_part;
+    $a_components = explode('/', $a_part);
+    $b_components = explode('/', $b_part);
+    $a_score = count($a_components);
+    $b_score = count($b_components);
+    if (is_dir($a_path))
+    {
+        --$a_score;
+    }
+    if (is_dir($b_path))
+    {
+        --$b_score;
+    }
+    if ($a_score === $b_score)
+    {
+        // Equal scores, sort by strnatcmp
+        return strnatcmp($a_part, $b_part);
+    }
+    // Standard gt/lt response
+    if ($a_score > $b_score)
+    {
+        return 1;
+    }
+    if ($a_score < $b_score)
+    {
+        return -1;
+    }
+}
+
+usort($remove_files, 'by_tree');
+$remove_files = array_reverse($remove_files);
+/*
+echo "DEBUG: remove_files (ofter sort)\n";
+print_r($remove_files);
+*/
 foreach ($remove_files as $partial_path)
 {
     if (empty($partial_path))
@@ -139,6 +181,11 @@ foreach ($remove_files as $partial_path)
     }
 }
 
+usort($add_files, 'by_tree');
+/*
+echo "DEBUG: add_files (after sort)\n";
+print_r($add_files);
+*/
 foreach ($add_files as $partial_path)
 {
     if (empty($partial_path))
@@ -206,6 +253,12 @@ if (!$commit)
     }
     exit(1);
 }
+
+/*
+echo "DEBUG: svn diff {$svn_path}\n";
+$svn_diff_cmd = "cd {$svn_path} && svn diff";
+system($svn_diff_cmd);
+*/
 
 $commit_message = "Automatic commit of {$site_url} with " . basename($argv[0]);
 $svn_commit_cmd = "cd {$svn_path} && svn commit -m " . escapeshellarg($commit_message);
