@@ -81,25 +81,37 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
         @ini_set('memory_limit', -1);
         @ini_set('max_execution_time', 0);
             
-        $this->_load_datamanager($this->_load_schemadb());
+        $this->_load_datamanager($this->_load_schemadb($handler_id, $args, $data));
         $this->_objects = $this->_load_data($handler_id, $args, $data);
         
         $_MIDCOM->skip_page_style = true;
-        
+
         if (   !isset($args[0])
             || empty($args[0]))
         {
             //We do not have filename in URL, generate one and redirect
             $fname = preg_replace('/[^a-z0-9-]/i', '_', strtolower($this->_topic->extra)) . '_' . date('Y-m-d') . '.csv';
-            $_MIDCOM->relocate("{$_MIDGARD['uri']}/{$fname}");
+            if(strpos($_MIDGARD['uri'], '/', strlen($_MIDGARD['uri'])-2))
+            {
+                $_MIDCOM->relocate("{$_MIDGARD['uri']}{$fname}");
+            }
+            else
+            {
+                $_MIDCOM->relocate("{$_MIDGARD['uri']}/{$fname}");
+            }
             // This will exit
         }
-        
-        $data['filename'] = str_replace('.csv', '', $args[0]);
-        
+
+        if(   !isset($data['filename'])
+           || $data['filename'] == '')
+        {
+            $data['filename'] = str_replace('.csv', '', $args[0]);
+        }
+
         $this->_init_csv_variables();
         $_MIDCOM->skip_page_style = true;
-        //$_MIDCOM->cache->content->content_type('text/plain');
+
+//        $_MIDCOM->cache->content->content_type('text/plain');
         // FIXME: Use global configuration
         $_MIDCOM->cache->content->content_type('application/csv');
         //$_MIDCOM->cache->content->content_type($this->_config->get('csv_export_content_type'));
