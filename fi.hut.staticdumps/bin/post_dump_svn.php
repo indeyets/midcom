@@ -13,7 +13,7 @@ ini_set('error_reporting', E_ALL);
  * is an existing checkout where current can commit non-interactively
  */
 // TODO: How to make configurable ?
-$file_exclude_patterns = array('%\.orig$%', '%\.sedbackup[0-9]*$%');
+$file_exclude_patterns = array('%\.svn%', '%\.orig$%', '%\.sedbackup[0-9]*$%');
 
 // Normalize dump_path (no consecutive slashes, no trailing slash)
 $dump_path = preg_replace(array('%/{2,}%','%/$%'), array('/', ''), $argv[5]);
@@ -36,21 +36,43 @@ if (!file_exists($svn_path))
     exit(1);
 }
 
-//echo "DEBUG: dump_path={$dump_path}, svn_path={$svn_path}\n";
-
-$dump_files = array();
-$dump_find_ret = 0;
-$dump_find_cmd = "find {$dump_path}";
-exec($dump_find_cmd, $dump_files, $dump_find_ret);
-/*
-echo "DEBUG: {$dump_find_cmd} returned {$dump_find_ret}, output\n";
-print_r($dump_files);
-*/
-if ($dump_find_ret !== 0)
+/**
+ * recursively lists files in directory
+ */
+function list_path_files_recursive($path)
 {
-    echo "\nERROR: Could not get list of dumped files\n";
-    exit(1);
+    $path = preg_replace('%/{2,}|/$%', '', $path);
+    $ret = array();
+    $dp = opendir($path);
+    if (!$dp)
+    {
+        return false;
+    }
+    
+    while (($file_name = readdir($dp)) !== false)
+    {
+        if (   $file_name == '.'
+            || $file_name == '..')
+        {
+            continue;
+        }
+        $file_path = "{$path}/{$file_name}";
+        if (   is_dir($file_path)
+            && !is_link($file_path))
+        {
+            $ret[] = $file_path;
+            $ret = array_merge($ret, list_path_files_recursive($file_path));
+            continue;
+        }
+        $ret[] = $file_path;
+    }
+    closedir($dp);
+
+    sort($ret);
+    return $ret;
 }
+
+$dump_files = list_path_files_recursive($dump_path);
 $dump_comparable = array();
 foreach ($dump_files as $k => $v)
 {
@@ -74,19 +96,11 @@ if ($svn_up_ret !== 0)
     exit(1);
 }
 
-$svn_files = array();
-$svn_find_ret = 0;
-$svn_find_cmd = "find {$svn_path} | grep -v '\.svn'";
-exec($svn_find_cmd, $svn_files, $svn_find_ret);
+$svn_files = list_path_files_recursive($svn_path);
 /*
-echo "DEBUG: {$svn_find_cmd} returned {$svn_find_ret}, output\n";
+echo "DEBUG: svn_files\n";
 print_r($svn_files);
 */
-if ($svn_find_ret !== 0)
-{
-    echo "\nERROR: Could not get list of checkout files\n";
-    exit(1);
-}
 $svn_comparable = array();
 foreach ($svn_files as $k => $v)
 {
@@ -158,7 +172,7 @@ function by_tree($a_part, $b_part)
 usort($remove_files, 'by_tree');
 $remove_files = array_reverse($remove_files);
 /*
-echo "DEBUG: remove_files (ofter sort)\n";
+echo "DEBUG: remove_files (after sort)\n";
 print_r($remove_files);
 */
 foreach ($remove_files as $partial_path)
@@ -168,7 +182,12 @@ foreach ($remove_files as $partial_path)
         continue;
     }
     $filepath = $svn_path . $partial_path;
-    $svn_del_cmd =  "svn delete {$filepath}";
+    if (!file_exists($filepath))
+    {
+        // extra safety
+        continue;
+    }
+    $svn_del_cmd =  'svn delete --force ' . escapeshellarg($filepath);
     $svn_del_output = array();
     $svn_del_ret = 0;
     exec($svn_del_cmd, $svn_del_output, $svn_del_ret);
@@ -194,13 +213,25 @@ foreach ($add_files as $partial_path)
     }
     $dump_filepath = $dump_path . $partial_path;
     $svn_filepath = $svn_path . $partial_path;
-    if (is_dir($dump_filepath))
+    if (!file_exists($dump_filepath))
     {
-        $svn_add_cmd =  "mkdir -p {$svn_filepath} && svn add {$svn_filepath}";
+        // extra safety
+        continue;
+    }
+    if (file_exists($svn_filepath))
+    {
+        // extra safety
+        $update_files[] = $partial_path;
+        continue;
+    }
+    if (   is_dir($dump_filepath)
+        && !is_link($dump_filepath))
+    {
+        $svn_add_cmd =  'mkdir -p ' . escapeshellarg($svn_filepath) . ' && svn add ' . escapeshellarg($svn_filepath);
     }
     else
     {
-        $svn_add_cmd =  "cp -f {$dump_filepath} {$svn_filepath} && svn add {$svn_filepath}";
+        $svn_add_cmd =  'cp -fP ' . escapeshellarg($dump_filepath) . ' ' . escapeshellarg($svn_filepath) . ' && svn add ' . escapeshellarg($svn_filepath);
     }
     $svn_add_output = array();
     $svn_add_ret = 0;
@@ -222,11 +253,18 @@ foreach ($update_files as $partial_path)
     }
     $dump_filepath = $dump_path . $partial_path;
     $svn_filepath = $svn_path . $partial_path;
-    if (is_dir($dump_filepath))
+    if (!file_exists($dump_filepath))
+    {
+        // extra safety
+        continue;
+    }
+    if (   is_dir($dump_filepath)
+        && !is_link($dump_filepath))
     {
         continue;
     }
-    $cp_cmd =  "cp -f {$dump_filepath} {$svn_filepath}";
+    //$cp_cmd =  'cp -fP ' . escapeshellarg($dump_filepath) . ' ' . escapeshellarg($svn_filepath);
+    $cp_cmd =  'cp -fP ' . escapeshellarg($dump_filepath) . ' ' . escapeshellarg($svn_filepath);
     $cp_output = array();
     $cp_ret = 0;
     exec($cp_cmd, $cp_output, $cp_ret);
@@ -242,7 +280,7 @@ foreach ($update_files as $partial_path)
 if (!$commit)
 {
     echo "ERROR detected, rolling back checkout\n";
-    $svn_up_cmd = "cd {$svn_path} && rm -rf * && svn up";
+    $svn_up_cmd = 'cd ' . escapeshellarg($svn_path) . ' && rm -rf * && svn up';
     $svn_up_output = array();
     $svn_up_ret = 0;
     exec($svn_up_cmd, $svn_up_output, $svn_up_ret);
@@ -261,7 +299,7 @@ system($svn_diff_cmd);
 */
 
 $commit_message = "Automatic commit of {$site_url} with " . basename($argv[0]);
-$svn_commit_cmd = "cd {$svn_path} && svn commit -m " . escapeshellarg($commit_message);
+$svn_commit_cmd = 'cd ' . escapeshellarg($svn_path) . ' && svn commit -m ' . escapeshellarg($commit_message);
 $svn_commit_output = array();
 $svn_commit_ret = 0;
 exec($svn_commit_cmd, $svn_commit_output, $svn_commit_ret);
