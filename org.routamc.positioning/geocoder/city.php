@@ -69,6 +69,7 @@ class org_routamc_positioning_geocoder_city extends org_routamc_positioning_geoc
             $qb->add_constraint('country', '=', $location['country']);
         }
         
+        $qb->add_order('population', 'DESC');
         $qb->set_limit($parameters['maxRows']);
         $matches = $qb->execute();
         
