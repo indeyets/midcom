@@ -426,6 +426,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
         $document->component = $topic->component;
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
         $document->read_metadata_from_object($dm->storage->object);
+        $document->content = "{$dm->schema->name} {$dm->schema->description} {$document->content}";
         $indexer->index($document);
     }
 
