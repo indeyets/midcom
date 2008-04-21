@@ -268,6 +268,13 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
+        // Handle /api/product/
+        $this->_request_switch['api_product_options'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_api', 'options'),
+            'fixed_args' => Array('api', 'product'),
+        );
+
         // Handle /api/product/get/<guid>
         $this->_request_switch['api_product_get'] = Array
         (
@@ -329,8 +336,8 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'fixed_args' => Array('api', 'product', 'csv'),
         );
 
-        // Handle /api/product/csv/<filename>
-        $this->_request_switch['api_product_csv_filename'] = Array
+        // Handle /api/product/csv/<schema_name>
+        $this->_request_switch['api_product_csv_schemaname'] = Array
         (
             'handler' => Array('org_openpsa_products_handler_product_csv', 'csv'),
             'fixed_args' => Array('api', 'product', 'csv'),
@@ -447,6 +454,30 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             );
         }
         */
+        if (   $this->_topic->can_do('midgard:update')
+            && $this->_topic->can_do('midgard:create'))
+        {
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'api/product/',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('export products'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('export products'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/editshred.png',
+                )
+            );
+            $this->_node_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'import/product/csv/',
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('import products'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('import products from csv-file'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/editshred.png',
+                )
+            );
+        }
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midcom:component_config'))
         {

@@ -34,6 +34,12 @@
 'api_products_enable' => true,
 'api_products_schema' => 'default',
 
+// default schema to use when exporting products
+'csv_export_schema' => 'default',
+
+// default schema to use when importing products
+'csv_import_schema' => 'default',
+
 // Navigation
 'display_navigation' => true,
 

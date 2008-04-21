@@ -220,6 +220,29 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
         return new XML_RPC_Response(new XML_RPC_Value($attachment_array, 'struct'));
     }
     */
+    
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array &$data The local request data.
+     * @return boolean Indicating success.
+     */
+    function _handler_options($handler_id, $args, &$data)
+    {
+        $_MIDCOM->skip_page_style = false;
+        
+        return true;
+    }
+
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
+    function _show_options($handler_id, &$data)
+    {
+        midcom_show_style('api_product_options');
+    }
 
     /**
      * @param mixed $handler_id The ID of the handler.

@@ -19,19 +19,45 @@ class org_openpsa_products_handler_product_csv extends midcom_baseclasses_compon
         parent::midcom_baseclasses_components_handler_dataexport();
     }
 
-    function _load_schemadb()
+    function _load_schemadb($handler_id, &$args, &$data)
     {
-        $this->_schema = $this->_config->get('csv_export_schema');
-        
-        if (isset($this->_request_data['schemadb_product'][$data['filename']))
+        $_MIDCOM->skip_page_style = true;
+        if(isset($args[0]))
         {
-            $this->_schema = $data['filename'];
+            $data['filename'] = $args[0] . '_' . date('Y-m-d') . '.csv';
+            $this->_request_data['schemadb_to_use'] = $args[0];
         }
-        
+        elseif(    isset($_POST)
+                && array_key_exists('org_openpsa_products_export_schema', $_POST))
+        {
+            //We do not have filename in URL, generate one and redirect
+            $schemaname = $_POST['org_openpsa_products_export_schema'];
+            if(strpos($_MIDGARD['uri'], '/', strlen($_MIDGARD['uri'])-2))
+            {
+                $_MIDCOM->relocate("{$_MIDGARD['uri']}{$schemaname}");
+            }
+            else
+            {
+                $_MIDCOM->relocate("{$_MIDGARD['uri']}/{$schemaname}");
+            }
+            // This will exit
+        }
+        else
+        {
+            $this->_request_data['schemadb_to_use'] = $this->_config->get('csv_export_schema');
+        }
+
+        $this->_schema = $this->_config->get('csv_export_schema');
+
+        if (isset($this->_request_data['schemadb_product'][$this->_request_data['schemadb_to_use']]))
+        {
+            $this->_schema = $this->_request_data['schemadb_to_use'];
+        }
+
         return $this->_request_data['schemadb_product'];
     }
 
-    function _load_data($handler_id)
+    function _load_data($handler_id, &$args, &$data)
     {
         $qb = org_openpsa_products_product_dba::new_query_builder();
 
@@ -43,7 +69,7 @@ class org_openpsa_products_handler_product_csv extends midcom_baseclasses_compon
         $all_products = $qb->execute();
         foreach ($all_products as $product)
         {
-            $schema = $object->object->get_parameter('midcom.helper.datamanager2', 'schema_name');
+            $schema = $product->get_parameter('midcom.helper.datamanager2', 'schema_name');
             if ($schema != $this->_schema)
             {
                 continue;
