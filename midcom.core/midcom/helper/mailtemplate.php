@@ -461,8 +461,8 @@ class midcom_helper_mailtemplate
         // Kill these from the headers again, it seems that the Mail package
         // adds these again, resulting in a broken E-Mail. So we rather skip
         // the encoding lines entirely.
-        unset($hdrs['Content-Type']);
-        unset($hdrs['Content-Transfer-Encoding']);
+        // unset($hdrs['Content-Type']);
+        // unset($hdrs['Content-Transfer-Encoding']);
 
         debug_print_r("Custom Headers:", $headers);
         debug_print_r("Computed Headers:", $hdrs);
