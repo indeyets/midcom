@@ -357,6 +357,7 @@ EOD;
     /**
      * Documentroot sync
      */
+    $rsync_ret = 0;
     if (isset($site_config['documentroot']))
     {
         if (isset($site_config['rsync_extra_options']))
@@ -367,7 +368,6 @@ EOD;
         {
             $rsync_cmd = "rsync {$rsync_options} {$site_config['documentroot']}/* {$site_config['dump_path']}/";
         }
-        $rsync_ret = 0;
         //echo "executing: {$rsync_cmd}\n";
         system($rsync_cmd, $rsync_ret);
         if ($rsync_ret !== 0)
