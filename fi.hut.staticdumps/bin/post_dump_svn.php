@@ -280,7 +280,7 @@ foreach ($update_files as $partial_path)
 if (!$commit)
 {
     echo "ERROR detected, rolling back checkout\n";
-    $svn_up_cmd = 'cd ' . escapeshellarg($svn_path) . ' && rm -rf * && svn up';
+    $svn_up_cmd = 'cd ' . escapeshellarg($svn_path) . ' && rm -rf * && svn up && svn revert --recursive .';
     $svn_up_output = array();
     $svn_up_ret = 0;
     exec($svn_up_cmd, $svn_up_output, $svn_up_ret);
