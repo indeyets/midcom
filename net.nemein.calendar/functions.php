@@ -112,4 +112,80 @@ function net_nemein_calendar_event2document($event)
     }
     return $document;
 }
+
+function net_nemein_calendar_compute_first_event(&$parent)
+{
+    $qb = net_nemein_calendar_event_dba::new_query_builder();
+    if (is_a($parent, 'net_nemein_calendar_event'))
+    {
+        $qb->add_constraint('up', 'INTREE', $parent->id);
+    }
+    elseif (is_a($parent, 'midgard_topic'))
+    {
+        $qb->add_constraint('node', '=', $parent->id);
+    }
+    else
+    {
+        return false;
+    }
+    // Avoid problems with events too close to the epoch (highly unlikely usage scenario in any case)
+    $qb->add_constraint('start', '>', '1972-01-02 00:00:00');
+    $qb->add_order('start');
+    $qb->set_limit(1);
+
+    if ($_MIDCOM->auth->request_sudo())
+    {
+        $result = $qb->execute();
+        $_MIDCOM->auth->drop_sudo();
+    }
+    else
+    {
+        $result = $qb->execute();
+    }
+    unset($qb);
+    if (empty($result))
+    {
+        return false;
+    }
+    return $result[0];
+}
+
+function net_nemein_calendar_compute_last_event(&$parent)
+{
+    $qb = net_nemein_calendar_event_dba::new_query_builder();
+    if (is_a($parent, 'net_nemein_calendar_event'))
+    {
+        $qb->add_constraint('up', 'INTREE', $parent->id);
+    }
+    elseif (is_a($parent, 'midgard_topic'))
+    {
+        $qb->add_constraint('node', '=', $parent->id);
+    }
+    else
+    {
+        return false;
+    }
+    // Avoid problems with events too close to the epoch (highly unlikely usage scenario in any case)
+    $qb->add_constraint('start', '>', '1972-01-02 00:00:00');
+    $qb->add_order('end', 'DESC');
+    $qb->set_limit(1);
+
+    if ($_MIDCOM->auth->request_sudo())
+    {
+        $result = $qb->execute();
+        $_MIDCOM->auth->drop_sudo();
+    }
+    else
+    {
+        $result = $qb->execute();
+    }
+    unset($qb);
+    if (empty($result))
+    {
+        return false;
+    }
+    return $result[0];
+}
+
+
 ?>

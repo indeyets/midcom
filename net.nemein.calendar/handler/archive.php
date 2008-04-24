@@ -119,8 +119,7 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
      * resultset.
      *
      * This is done under sudo if possible, to avoid problems arising if the first posting
-     * is hidden. This keeps up performance, as an execute_unchecked() can be made in this case.
-     * If sudo cannot be acquired, the system falls back to excute().
+     * is hidden.
      *
      * This call will put the event on which the first month is based into the request key
      * 'first_event'.
@@ -130,24 +129,19 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
      */
     function _compute_first_month()
     {
-        $qb = $this->_get_events_qb();
-        $qb->add_order('start');
-        $qb->set_limit(1);
-
-        if ($_MIDCOM->auth->request_sudo())
+        if ($this->_config->get('list_from_master'))
         {
-            $result = $qb->execute_unchecked();
-            $_MIDCOM->auth->drop_sudo();
+            $result = net_nemein_calendar_compute_first_event($this->_request_data['master_event_obj']);
         }
         else
         {
-            $result = $qb->execute();
+            $result = net_nemein_calendar_compute_first_event($this->_request_data['content_topic']);
         }
 
         if ($result)
         {
-            $this->_request_data['first_event'] = $result[0];
-            return Calendar_Factory::createByTimestamp('Month', strtotime($result[0]->start));
+            $this->_request_data['first_event'] = $result;
+            return Calendar_Factory::createByTimestamp('Month', strtotime($result->start));
         }
         else
         {
@@ -173,24 +167,19 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
      */
     function _compute_last_month()
     {
-        $qb = $this->_get_events_qb();
-        $qb->add_order('end', 'DESC');
-        $qb->set_limit(1);
-
-        if ($_MIDCOM->auth->request_sudo())
+        if ($this->_config->get('list_from_master'))
         {
-            $result = $qb->execute_unchecked();
-            $_MIDCOM->auth->drop_sudo();
+            $result = net_nemein_calendar_compute_last_event($this->_request_data['master_event_obj']);
         }
         else
         {
-            $result = $qb->execute();
+            $result = net_nemein_calendar_compute_last_event($this->_request_data['content_topic']);
         }
 
         if ($result)
         {
-            $this->_request_data['last_event'] = $result[0];
-            return Calendar_Factory::createByTimestamp('Month', strtotime($result[0]->end));
+            $this->_request_data['last_event'] = $result;
+            return Calendar_Factory::createByTimestamp('Month', strtotime($result->end));
         }
         else
         {
