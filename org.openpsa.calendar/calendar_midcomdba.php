@@ -359,6 +359,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         {
             debug_add('Event cannot end before it starts, aborting');
             debug_pop();
+            mgd_set_errno(MGD_ERR_RANGE);
             return false;
         }
 

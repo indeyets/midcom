@@ -38,6 +38,9 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
     {
         $this->_request_data['event'] = new net_nemein_calendar_event_dba();
         $this->_request_data['event']->node = $this->_request_data['content_topic']->id;
+        // FIXME read via formmanager
+        $this->_request_data['event']->start = $_POST['start'];
+        $this->_request_data['event']->end = $_POST['end'];
 
         if ($this->_request_data['master_event'])
         {
@@ -115,6 +118,13 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
 
                 $data['defaults'][$key] = $value;
             }
+        }
+        if (   !isset($data['defaults']['start'])
+            || !isset($data['defaults']['end']))
+        {
+            // Prevent people from shooting themselves to the foot accidentally:
+            $data['defaults']['start'] = date('Y-m-d H:00:00');
+            $data['defaults']['end'] = date('Y-m-d H:00:00');
         }
 
         $this->_load_controller();

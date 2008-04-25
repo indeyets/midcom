@@ -138,6 +138,42 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
         return $parent_guid;
     }
 
+    function _check_time_range()
+    {
+        if (   $this->start === '0000-00-00 00:00:00'
+            && $this->end === '0000-00-00 00:00:00')
+        {
+            // Allow true zeros as valid range
+            return true;
+        }
+        $start_comparable = str_replace(array('-', ':'), '', $this->start);
+        $end_comparable = str_replace(array('-', ':'), '', $this->end);
+        if ($end_comparable < $start_comparable)
+        {
+            mgd_set_errno(MGD_ERR_RANGE);
+            return false;
+        }
+        // Avoid problems with events too close to the epoch (highly unlikely usage scenario in any case)
+        $epoch = '19720102000000';
+        if (   $start_comparable < $epoch
+            || $end_comparable < $epoch)
+        {
+            mgd_set_errno(MGD_ERR_RANGE);
+            return false;
+        }
+        return true;
+    }
+
+    function _on_creating()
+    {
+        return $this->_check_time_range();
+    }
+
+    function _on_updating()
+    {
+        return $this->_check_time_range();
+    }
+
     function _on_created()
     {
         if (isset($GLOBALS['net_nemein_calendar_event_dba__on_created_loop_{$this->guid}']))
