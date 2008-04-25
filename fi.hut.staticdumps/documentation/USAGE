@@ -18,6 +18,16 @@ Use the bin/dump_sites.php to dump a number of sites, it requires a config file 
       'post_dump_script => '', // optional, the url is passed as argument along with general status indicator exit codes some certain prior operations and dump path are passed as arguments 
     ),
 
+Also if you wish to override some of the more basic settings there are the following config keys and their default values:
+
+    'wget_options' => '-erobots=off -q -m -nH',
+    'rsync_options' => '-a',
+    'http_timeout' => 300, // seconds = 5minutes
+    'lockfile_path' => '/var/run',
+    'lockfile_prefix' => 'fi_hut_staticdumps_',
+
+The command used to execute `wget` is formed from the wget_options internal default concatenated with the `wget_extra_options` (if defined), ditto for `rsync`. `http_timeout` is used when querying for protected/redirection folder list. If you have multiple nodes sharing the load of dumping a ton of sites `lockfile_path` should point to a shared directory they all can write to, `lockfile_prefix` is configurable for completeness sake.
+
 In the VirtualHost directive of your static apache set the following to handle URLs with GET parameters in them nicely:
 
     RewriteEngine on

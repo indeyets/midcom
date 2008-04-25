@@ -2,11 +2,14 @@
 <?php
 ini_set('error_reporting', E_ALL);
 
-$wget_options = "-erobots=off -q -m -nH";
-$rsync_options = '-a';
-$http_timeout = 300; // seconds = 5minutes
-$lockfile_path = '/var/run';
-$lockfile_prefix = 'fi_hut_staticdumps_';
+$defaults = array
+(
+    'wget_options' => '-erobots=off -q -m -nH',
+    'rsync_options' => '-a',
+    'http_timeout' => 300, // seconds = 5minutes
+    'lockfile_path' => '/var/run',
+    'lockfile_prefix' => 'fi_hut_staticdumps_',
+);
 
 function better_die($msg)
 {
@@ -97,6 +100,17 @@ if (   $process_site > 0)
 }
 foreach ($sites_config as $k => $site_config)
 {
+    foreach ($defaults as $key => $val)
+    {
+        if (isset($site_config[$key]))
+        {
+            $$key = $site_config[$key];
+        }
+        else
+        {
+            $$key = $val;
+        }
+    }
     if (!isset($site_config['url']))
     {
         better_die("'url' not set for site {$k}");
@@ -196,6 +210,11 @@ foreach ($sites_config as $k => $site_config)
         {
             foreach($output as $filepath)
             {
+                if (preg_match('/\.orig$/', $filepath))
+                {
+                    // Skip wget --keep-originals .orig files from rename
+                    continue;
+                }
                 list($filepart, $querypart) = explode('?', $filepath);
                 $newpath = dirname($filepart) . "/{$querypart}_" . basename($filepart);
                 $mv_cmd = "mv -f '{$filepath}' '{$newpath}'";
