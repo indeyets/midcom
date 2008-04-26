@@ -70,6 +70,9 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
     {
         $qb = net_nemein_calendar_event_dba::new_query_builder();
 
+        $qb->begin_group('OR');
+
+        // Add root event constraints
         if ($this->_config->get('list_from_master'))
         {
             $qb->add_constraint('up', 'INTREE', $this->_request_data['master_event']);
@@ -78,6 +81,25 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
         {
             $qb->add_constraint('node', '=', $this->_request_data['content_topic']->id);
         }
+
+        // Add all the folders that are configured
+        if ($this->_config->get('list_from_folders'))
+        {
+            $guids = explode('|', $this->_config->get('list_from_folders'));
+            foreach ($guids as $guid)
+            {
+                // Skip empty and broken guids
+                if (   !$guid
+                    || !mgd_is_guid($guid))
+                {
+                    continue;
+                }
+
+                $qb->add_constraint('node.guid', '=', $guid);
+            }
+        }
+
+        $qb->end_group();
 
         $type_filter = $this->_config->get('type_filter_upcoming');
         if (!is_null($type_filter))
