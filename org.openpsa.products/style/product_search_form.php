@@ -1,6 +1,7 @@
 <?php
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+$_MIDCOM->load_library('midcom.helper.xsspreventer');
 if (!function_exists('org_openpsa_products_search_options_helper'))
 {
     function org_openpsa_products_search_options_helper($options, $request_key, $request_name = 'org_openpsa_products_search')
@@ -13,7 +14,9 @@ if (!function_exists('org_openpsa_products_search_options_helper'))
             {
                 $selected = ' selected';
             }
-            echo "        <option value=\"{$key}\"{$selected}>{$value}</option>\n";
+            $key_esc = midcom_helper_xsspreventer::escape_attribute($key);
+            $value_esc = midcom_helper_xsspreventer::escape_element('option', $value);
+            echo "        <option value={$key_esc}{$selected}>{$value_esc}</option>\n";
         }
     }
 }
@@ -23,7 +26,7 @@ if (!function_exists('org_openpsa_products_search_value_helper'))
     {
         if (isset($_REQUEST[$request_name][$request_key]['value']))
         {
-            echo " value=\"{$_REQUEST[$request_name][$request_key]['value']}\"";
+            echo ' value=' . midcom_helper_xsspreventer::escape_attribute($_REQUEST[$request_name][$request_key]['value']);
         }
     }
 }
