@@ -219,7 +219,8 @@ class midcom_helper_datamanager_widget_text extends midcom_helper_datamanager_wi
                     }
                     echo "'";
                 }
-                echo ">{$this->_value}</textarea>\n";
+                $_MIDCOM->load_library('midcom.helper.xsspreventer');
+                echo '>' . midcom_helper_xsspreventer::escape_element('textarea', $this->_value) . "</textarea>\n";
                 break;
 
             case "longtext":
@@ -237,7 +238,8 @@ class midcom_helper_datamanager_widget_text extends midcom_helper_datamanager_wi
                     }
                     echo "'";
                 }
-                echo ">{$this->_value}</textarea>\n";
+                $_MIDCOM->load_library('midcom.helper.xsspreventer');
+                echo '>' . midcom_helper_xsspreventer::escape_element('textarea', $this->_value) . "</textarea>\n";
                 break;
 
             case "password":
