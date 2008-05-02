@@ -1,23 +1,27 @@
 <h1><?php echo $data['view_title']; ?></h1>
 
 <?php
-// FIXME: the configs may have all kinds of dynamic parts, also should be per subscription
-if (!is_dir($data['local_config']->get('queue_root_dir')))
+$qm =& midcom_helper_replicator_queuemanager::get();
+$dummy = new midcom_helper_replicator_subscription_dba();
+$dummy->sitegroup = $_MIDGARD['sitegroup'];
+$sg_queue_path = $qm->get_sg_basedir($dummy);
+unset($dummy);
+if (!is_dir($sg_queue_path))
 {
     ?>
     <p class="error">
         <?php
-        echo sprintf($_MIDCOM->i18n->get_string('replication queue %s does not exist', 'midcom.helper.replicator'), "<code>" . $data['local_config']->get('queue_root_dir') . "</code>");
+        echo sprintf($_MIDCOM->i18n->get_string('replication queue %s does not exist', 'midcom.helper.replicator'), "<code>" . $sg_queue_path . "</code>");
         ?>
     </p>
     <?php
 }
-elseif (!is_writable($data['local_config']->get('queue_root_dir')))
+elseif (!is_writable($sg_queue_path))
 {
     ?>
     <p class="error">
         <?php
-        echo sprintf($_MIDCOM->i18n->get_string('replication queue %s cannot be written by Apache user', 'midcom.helper.replicator'), "<code>" . $data['local_config']->get('queue_root_dir') . "</code>");
+        echo sprintf($_MIDCOM->i18n->get_string('replication queue %s cannot be written by Apache user', 'midcom.helper.replicator'), "<code>" . $sg_queue_path . "</code>");
         ?>
     </p>
     <?php
@@ -27,7 +31,7 @@ else
     ?>
     <p>
         <?php
-        echo sprintf($_MIDCOM->i18n->get_string('replication queue is stored to %s', 'midcom.helper.replicator'), "<code>" . $data['local_config']->get('queue_root_dir') . "</code>");
+        echo sprintf($_MIDCOM->i18n->get_string('replication queue is stored to %s', 'midcom.helper.replicator'), "<code>" . $sg_queue_path . "</code>");
         ?>
     </p>
     <?php
@@ -52,16 +56,19 @@ if (count($data['subscriptions']) > 0)
             foreach ($data['subscriptions'] as $subscription)
             {
                 $transporter = midcom_helper_replicator_transporter::create($subscription);
-                $queued_items = $qm->list_path_items($qm->get_subscription_basedir($subscription));
-                $quarantined_items = $qm->list_path_items($qm->get_subscription_quarantine_basedir($subscription));
+                $queue_path = $qm->get_subscription_basedir($subscription);
+                $queued_items = $qm->list_path_items($queue_path);
+                $quarantine_path = $qm->get_subscription_quarantine_basedir($subscription);
+                $quarantined_items = $qm->list_path_items($quarantine_path);
                 ?>
                 <tr>
-                    <td><?php echo count($queued_items) . '&nbsp;/&nbsp;' . count($quarantined_items); ?></td>
+                    <td><?php echo "<abbr title='{$queue_path}'>" . count($queued_items) . "</abbr>&nbsp;/&nbsp;<abbr title='{$quarantine_path}'>" . count($quarantined_items) . '</abbr>'; ?></td>
                     <td><a href="&(prefix);edit/&(subscription.guid);/">&(subscription.title);</a></th>
                     <td><?php echo $_MIDCOM->i18n->get_string($data['schemadb'][$subscription->exporter]->description, 'midcom.helper.replicator'); ?></td>
                     <td class="subscription_info"><?php echo $transporter->get_information(); ?></td>
                 </tr>
                 <?php
+                unset($queued_items, $queue_path, $quarantined_items, $quarantine_path);
             }
             ?>
         </tbody>
