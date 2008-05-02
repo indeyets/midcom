@@ -511,8 +511,9 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
 
     /**
      * Helper for process_queue, gets items for given queue directory pointer
+     * @todo use list_path_items ??
      */
-    function _process_queue_get_items(&$dp_queue, &$queue_path, &$subscription)
+    function _process_queue_get_items(&$queue_path, &$subscription)
     {
         // Start crunching each file into key => XML array
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -520,16 +521,10 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         $items_paths = array();
         $items_sort = array();
         $GLOBALS['_process_queue_get_items__items_sort'] =& $items_sort;
-        while (($queue_item = readdir($dp_queue)) !== false)
+        $files = $this->list_path_items($queue_path);
+        foreach ($files as $item_path)
         {
-            if (   $queue_item == '.'
-                || $queue_item == '..'
-                || $queue_item == 'quarantine')
-            {
-                // Skip the . and .. entries (which are always present) & old style quarantine dir
-                continue;
-            }
-            $item_path = "{$queue_path}/{$queue_item}";
+            $queue_item = basename($item_path);
             if (   !is_readable($item_path)
                 || !is_file($item_path))
             {
@@ -604,15 +599,6 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         debug_push_class(__CLASS__, __FUNCTION__);
         $queue_path = "{$subscription_path}/{$queue_name}";
 
-        // Open handle
-        $dp_queue = opendir($queue_path);
-        if (!$dp_queue)
-        {
-            debug_add("Cannot open queue path '{$queue_path}' for reading", MIDCOM_LOG_ERROR);
-            debug_pop();
-            return;
-        }
-
         // Get us the transporter
         $transporter = midcom_helper_replicator_transporter::create($subscription);
         if (!is_a($transporter, 'midcom_helper_replicator_transporter'))
@@ -625,18 +611,15 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         /**
          * TODO: Read only X items to memory at a time ?
          */
-        $items_ret = $this->_process_queue_get_items($dp_queue, $queue_path, $subscription);
+        $items_ret = $this->_process_queue_get_items($queue_path, $subscription);
         if ($items_ret === false)
         {
-            closedir($dp_queue);
             debug_add("Fatal error while reading items in {$queue_name}", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
         $items =& $items_ret[0];
         $items_paths =& $items_ret[1];
-
-        closedir($dp_queue);
 
         if (!$transporter->process($items))
         {
