@@ -264,5 +264,62 @@
             'widget' => 'select',
             'end_fieldset' => '',
         ),
+        'midgard_types_model' => array
+        (
+            'title' => 'model for selecting navigation types',
+            'storage' => array
+            (
+                'location' => 'parameter',
+                'domain' => 'midgard.admin.asgard:preferences',
+                'name' => 'midgard_types_model',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    'exclude' => 'exclude',
+                    'include' => 'include',
+                ),
+            ),
+            'widget' => 'select',
+            'start_fieldset' => array
+            (
+                'title' => 'mgdschema type visibility in navigation',
+            ),
+        ),
+        'midgard_types' => array
+        (
+            'title' => 'select the types',
+            'storage' => array
+            (
+                'location' => 'parameter',
+                'domain' => 'midgard.admin.asgard:preferences',
+                'name' => 'midgard_types_excluded',
+            ),
+            'type' => 'select',
+            'type_config' => array
+            (
+                'options' => midgard_admin_asgard_plugin::get_root_classes(),
+                'allow_multiple' => true,
+                'require_corresponding_option' => false,
+                'multiple_storagemode' => 'imploded_wrapped',
+            ),
+            'widget' => 'select',
+        ),
+        'midgard_types_regexp' => array
+        (
+            'title' => 'regular expression for selecting mgdschema types',
+            'storage' => array
+            (
+                'location' => 'parameter',
+                'domain' => 'midgard.admin.asgard:preferences',
+                'name' => 'midgard_types_regexp',
+            ),
+            'type' => 'text',
+            'widget' => 'text',
+            'end_fieldset' => 1,
+        ),
     ),
 ),

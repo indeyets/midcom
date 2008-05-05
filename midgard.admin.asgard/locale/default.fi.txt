@@ -47,6 +47,10 @@ Kaikki
 Kaikki tunnistautuneet käyttäjät
 ---STRINGEND
 
+---STRING actions
+Toiminnot
+---STRINGEND
+
 ---STRING active url parsing
 Aktiivinen URL-jäsennys
 ---STRINGEND
@@ -57,6 +61,10 @@ Lisää ryhmä käyttöoikeuksia varten
 
 ---STRING add text file
 Lisää tekstitiedosto
+---STRINGEND
+
+---STRING all of the following items will be deleted
+Kaikki seuraavat kohteet poistetaan
 ---STRINGEND
 
 ---STRING always display in top frame
@@ -81,6 +89,10 @@ Asgardin etusivu
 
 ---STRING asgard plugins
 Asgardin lisätoiminnot
+---STRINGEND
+
+---STRING attachment
+Liite
 ---STRINGEND
 
 ---STRING attachment %s undeleted
@@ -171,6 +183,10 @@ Kopioi %s
 Kopioi '%s' ja sen alla olevat kohteet
 ---STRINGEND
 
+---STRING copy attachments
+Kopioi liitetiedostot
+---STRINGEND
+
 ---STRING copy metadata
 Kopioi metatiedot
 ---STRINGEND
@@ -197,6 +213,10 @@ Luo %s %s:n alle
 
 ---STRING created by %s on %s
 Luonut %s %s
+---STRINGEND
+
+---STRING created on
+Luotu
 ---STRINGEND
 
 ---STRING date
@@ -259,6 +279,10 @@ Tekstieditorien ominaisuudet
 Käytä pikalinkkejä
 ---STRINGEND
 
+---STRING exclude
+Sulje pois
+---STRINGEND
+
 ---STRING expanded list
 Laajennettu lista
 ---STRINGEND
@@ -311,6 +335,10 @@ kansio
 Globaali
 ---STRINGEND
 
+---STRING global value
+Globaali arvo
+---STRINGEND
+
 ---STRING group %s
 Ryhmä %s
 ---STRINGEND
@@ -337,6 +365,10 @@ Yhteensä %s tyhjennetty
 
 ---STRING in total %s undeleted
 Yhteensä %s palautettu
+---STRINGEND
+
+---STRING include
+Liitä mukaan
 ---STRINGEND
 
 ---STRING info
@@ -395,6 +427,10 @@ Viesti
 %s %s metatiedot
 ---STRINGEND
 
+---STRING mgdschema type visibility in navigation
+MgdSchema-tyyppien näkyvyys navigaatiossa
+---STRINGEND
+
 ---STRING midcom:approve
 Hyväksyntä
 ---STRINGEND
@@ -437,6 +473,10 @@ Päivitys
 
 ---STRING mimetype
 MIME-tyyppi
+---STRINGEND
+
+---STRING model for selecting navigation types
+Navigaatiotyyppien valintamalli
 ---STRINGEND
 
 ---STRING navigation options
@@ -567,6 +607,14 @@ Palauta versio %s
 Tarkistuspäivä
 ---STRINGEND
 
+---STRING revised by
+Muokannut
+---STRINGEND
+
+---STRING revised on
+Muokattu
+---STRINGEND
+
 ---STRING revision
 Versio
 ---STRINGEND
@@ -585,6 +633,10 @@ Valitse kaikki
 
 ---STRING select exactly two choices
 Valitse täsmälleen kaksi vaihtoehtoa
+---STRINGEND
+
+---STRING select the types
+Valitse tyypit
 ---STRINGEND
 
 ---STRING show differences
@@ -675,6 +727,10 @@ Käyttäjä
 Käyttöasetukset
 ---STRINGEND
 
+---STRING validation error in field %s: %s
+Validointivirhe kentässä %s: %s
+---STRINGEND
+
 ---STRING value
 Arvo
 ---STRINGEND
@@ -707,7 +763,7 @@ Versio %s tietueesta %s
 XML
 ---STRINGEND
 
----STRING copy attachments
-Kopioi liitetiedostot
+---STRING regular expression for selecting mgdschema types
+Säännöllinen lauseke MgdSchema-tyyppien valintaan
 ---STRINGEND
 

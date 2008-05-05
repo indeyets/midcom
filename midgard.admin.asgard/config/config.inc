@@ -89,7 +89,11 @@
 'escape_frameset' => true,
 'enable_quicklinks' => true,
 'show_sg0' => false,
-'edit_mode' => false,    // Enable to enter straight to the edit mode and to skip viewing mmode
+'edit_mode' => false,               // Enable to enter straight to the edit mode and to skip viewing mmode
+'midgard_types_model' => 'exclude', // Either 'exclude' or 'include'
+'midgard_types' => '',              // List of types, imploded and wrapped (e.g. |midgard_article|,|midgard_topic|)
+'midgard_types_regexp' => '',       // Perl-styled regular expression
+'edit_mode' => false,               // Enable to enter straight to the edit mode and to skip viewing mode
 
 // Welcome page
 // List of types we don't list on latest objects

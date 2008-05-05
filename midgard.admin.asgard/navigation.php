@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * @package midgard.admin.asgard
  * @author The Midgard Project, http://www.midgard-project.org
@@ -336,15 +336,90 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         {
             $root_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_object_path[0]);
         }
+        
+        // Included or excluded types
+        $types = array();
 
+        // Get the types that might have special display conditions
+        if (   $this->_config->get('midgard_types')
+            && preg_match_all('/\|([a-z0-9\.\-_]+)/', $this->_config->get('midgard_types'), $regs))
+        {
+            $types = $regs[1];
+        }
+        
+        // Override with user selected
+        // @TODO: Should this just include to the configuration selection, although it would break the consistency
+        // of other similar preference sets, which simply override the global settings?
+        if (   midgard_admin_asgard_plugin::get_preference('midgard_types')
+            && preg_match_all('/\|([a-z0-9\.\-_]+)/', midgard_admin_asgard_plugin::get_preference('midgard_types'), $regs))
+        {
+            $types = $regs[1];
+        }
+        
+        // Get the inclusion/exclusion model
+        $model = $this->_config->get('midgard_types_model');
+        if (   midgard_admin_asgard_plugin::get_preference('midgard_types_model'))
+        {
+            $model = midgard_admin_asgard_plugin::get_preference('midgard_types_model');
+        }
+        
+        // Get the possible regular expression
+        $regexp = $this->_config->get('midgard_types_regexp');
+        if (midgard_admin_asgard_plugin::get_preference('midgard_types_regexp'))
+        {
+            $regexp = midgard_admin_asgard_plugin::get_preference('midgard_types_regexp');
+        }
+        
+        // "Convert" quickly to PERL regular expression
+        if (!preg_match('/^[\/|]/', $regexp))
+        {
+            $regexp = "/{$regexp}/";
+        }
+        
         $label_mapping = Array();
         foreach ($this->root_types as $root_type)
         {
+            // If there are any types or if the regular expression has been set, check which
+            // types should be shown
+            if (   !empty($types)
+                || $regexp !== '//')
+            {
+                // Skip the excluded
+                if ($model === 'exclude')
+                {
+                    if (   !empty($types)
+                        && in_array($root_type, $types))
+                    {
+                        continue;
+                    }
+                    
+                    if (   $regexp !== '//'
+                        && preg_match($regexp, $root_type))
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    if (   !empty($types)
+                        && !in_array($root_type, $types))
+                    {
+                        continue;
+                    }
+                    
+                    if (   $regexp !== '//'
+                        && !preg_match($regexp, $root_type))
+                    {
+                        continue;
+                    }
+                }
+            }
+            
             $ref = $this->_get_reflector($root_type);
             $label_mapping[$root_type] = $ref->get_class_label();
         }
         asort($label_mapping);
-
+        
         foreach ($label_mapping as $root_type => $label)
         {
             $ref = $this->_get_reflector($root_type);

@@ -183,6 +183,10 @@ Copy %s
 Copy '%s' and its descendants
 ---STRINGEND
 
+---STRING copy attachments
+Copy attachments
+---STRINGEND
+
 ---STRING copy metadata
 Copy metadata
 ---STRINGEND
@@ -207,8 +211,16 @@ Copy tree
 Create %s under %s
 ---STRINGEND
 
+---STRING created by
+Created by
+---STRINGEND
+
 ---STRING created by %s on %s
 Created by %s on %s
+---STRINGEND
+
+---STRING created on
+Created on
 ---STRINGEND
 
 ---STRING date
@@ -229,14 +241,6 @@ Deleted by
 
 ---STRING deleted on
 Deleted on
----STRINGEND
-
----STRING created by
-Created by
----STRINGEND
-
----STRING created on
-Created on
 ---STRINGEND
 
 ---STRING differences between %s and %s
@@ -277,6 +281,10 @@ Editor options
 
 ---STRING enable quicklinks
 Enable quicklinks
+---STRINGEND
+
+---STRING exclude
+Exclude
 ---STRINGEND
 
 ---STRING expanded list
@@ -363,6 +371,10 @@ In total %s purged
 In total %s undeleted
 ---STRINGEND
 
+---STRING include
+Include
+---STRINGEND
+
 ---STRING info
 Info
 ---STRINGEND
@@ -419,6 +431,10 @@ Message
 Metadata of %s "%s"
 ---STRINGEND
 
+---STRING mgdschema type visibility in navigation
+MgdSchema type visibility in navigation
+---STRINGEND
+
 ---STRING midcom:approve
 Approve
 ---STRINGEND
@@ -461,6 +477,10 @@ Update
 
 ---STRING mimetype
 MIME type
+---STRINGEND
+
+---STRING model for selecting navigation types
+Model for selecting navigation types
 ---STRINGEND
 
 ---STRING navigation options
@@ -619,6 +639,10 @@ Select all
 Select exactly two choices
 ---STRINGEND
 
+---STRING select the types
+Select the types
+---STRINGEND
+
 ---STRING show differences
 Show differences
 ---STRINGEND
@@ -707,6 +731,10 @@ User
 User preferences
 ---STRINGEND
 
+---STRING validation error in field %s: %s
+Validation error in field %s: %s
+---STRINGEND
+
 ---STRING value
 Value
 ---STRINGEND
@@ -739,10 +767,7 @@ Version %s of %s
 XML
 ---STRINGEND
 
----STRING copy attachments
-Copy attachments
+---STRING regular expression for selecting mgdschema types
+Regular expression for selecting MgdSchema types
 ---STRINGEND
 
----STRING validation error in field %s: %s
-Validation error in field %s: %s
----STRINGEND

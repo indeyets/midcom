@@ -1064,5 +1064,40 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         
         return $preferences[$preference];
     }
+    
+    /**
+     * Get the MgdSchema root classes
+     * 
+     * @static
+     * @access public
+     * @return Array containing class name and translated name
+     */
+    function get_root_classes()
+    {
+        static $root_classes = array();
+        
+        // Return cached results
+        if (!empty($root_classes))
+        {
+            return $root_classes;
+        }
+        
+        // Initialize the returnable array
+        $root_classes = array();
+        
+        // Get the classes
+        $classes = midcom_helper_reflector_tree::get_root_classes();
+        
+        // Get the translated name
+        foreach ($classes as $class)
+        {
+            $ref = new midcom_helper_reflector($class);
+            $root_classes[$class] = $ref->get_class_label();
+        }
+        
+        asort($root_classes);
+        
+        return $root_classes;
+    }
 }
 ?>
