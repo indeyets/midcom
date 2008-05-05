@@ -30,6 +30,7 @@ class midcom_admin_user_handler_user_create extends midcom_baseclasses_component
     function _on_initialize()
     {
 
+        $_MIDCOM->load_library('midcom.helper.datamanager2');
         $this->_l10n = $_MIDCOM->i18n->get_l10n('midcom.admin.user');
         $this->_request_data['l10n'] = $this->_l10n;
 
