@@ -403,6 +403,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
      */
     function index(&$dm, &$indexer, $topic)
     {
+        $object =& $dm->storage->object;
         if (!is_object($topic))
         {
             $tmp = new midcom_db_topic($topic);
@@ -418,14 +419,29 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
         // Don't index directly, that would loose a reference due to limitations
         // of the index() method. Needs fixes there.
 
-        $nav = new midcom_helper_nav();
-        $node = $nav->get_node($topic->id);
-
         $document = $indexer->new_document($dm);
+        if (is_a($object, 'org_openpsa_products_product'))
+        {
+            // Check start/end for products
+            if (   (   $object->start != 0
+                    && $object->start > time())
+                || (   $object->end != 0
+                    && $object->end < time())
+                )
+            {
+                // Not in market, remove from index
+                $indexer->delete($document->RI);
+                return;
+            }
+            // FIXME: add midcom at job or somesuch to reindex products after their end time (and start time if in the future)
+        }
+
         $document->topic_guid = $topic->guid;
         $document->component = $topic->component;
+        $nav = new midcom_helper_nav();
+        $node = $nav->get_node($topic->id);
         $document->topic_url = $node[MIDCOM_NAV_FULLURL];
-        $document->read_metadata_from_object($dm->storage->object);
+        $document->read_metadata_from_object($object);
         $document->content = "{$dm->schema->name} {$dm->schema->description} {$document->content}";
         $indexer->index($document);
     }
