@@ -7,7 +7,7 @@
     'description' => 'configuration',
     'fields'      => array
     (
-        'type' => array
+        'gallery_type' => array
         (
             'title'   => 'photo selection method',
             'storage' => array
