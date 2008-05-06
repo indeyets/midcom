@@ -7,16 +7,16 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         <tr class="navigation">
             <th class="previous">
 <?php
-if (   !$data['calendar_widget']->first_year
-    || $data['calendar_widget']->_previous_year > $data['calendar_widget']->first_year)
+if (   $data['calendar_widget']->first_year
+    && $data['calendar_widget']->_previous_year < $data['calendar_widget']->first_year)
+{
+    echo "                &nbsp;\n";
+}
+else
 {
 ?>
                 <a href="&(prefix);calendar/&(data['previous_year']:h);/&(data['previous_month']:h);/">&lt;&lt;</a>
 <?php
-}
-else
-{
-    echo "                &nbsp;\n";
 }
 ?>
             </th>
@@ -25,16 +25,16 @@ else
             </th>
             <th class="next">
 <?php
-if (   !$data['calendar_widget']->last_year
-    || $data['calendar_widget']->_next_year < $data['calendar_widget']->last_year)
+if (   $data['calendar_widget']->last_year
+    && $data['calendar_widget']->_next_year > $data['calendar_widget']->last_year)
+{
+    echo "                &nbsp;\n";
+}
+else
 {
 ?>
                 <a href="&(prefix);calendar/&(data['next_year']:h);/&(data['next_month']:h);/">&gt;&gt;</a>
 <?php
-}
-else
-{
-    echo "                &nbsp;\n";
 }
 ?>
             </th>
