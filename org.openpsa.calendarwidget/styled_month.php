@@ -216,6 +216,7 @@ class org_openpsa_calendarwidget_styled_month extends org_openpsa_calendarwidget
      */
     function _draw_month($month = FALSE, $year = FALSE)
     {
+        $this->_request_data['calendar_widget'] =& $this;
         $this->_draw_month_header();
         $this->_draw_month_body();
         $this->_draw_month_footer();

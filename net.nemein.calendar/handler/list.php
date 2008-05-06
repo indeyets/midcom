@@ -779,15 +779,25 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             $this->_calendar->set_month($this->_month);
         }
 
-        // Prevent the robots from ending in an "endless" parsing cycle
-        $_MIDCOM->add_meta_head
-        (
-            array
-            (
-                'name' => 'robots',
-                'content' => 'none',
-            )
-        );
+        // Prevent the robots from ending in an "endless" parsing cycle by limiting the year range via first and last event
+        if ($this->_config->get('list_from_master'))
+        {
+            $last_event = net_nemein_calendar_compute_last_event($this->_request_data['master_event_obj']);
+            $first_event = net_nemein_calendar_compute_first_event($this->_request_data['master_event_obj']);
+        }
+        else
+        {
+            $last_event = net_nemein_calendar_compute_last_event($this->_request_data['content_topic']);
+            $first_event = net_nemein_calendar_compute_first_event($this->_request_data['content_topic']);
+        }        
+        if ($last_event)
+        {
+            $this->_calendar->last_year = (int)date('Y', strtotime($last_event->end));
+        }
+        if ($first_event)
+        {
+            $this->_calendar->first_year = (int)date('Y', strtotime($first_event->start));
+        }
 
         // Point to the request data
         $this->_calendar->_request_data =& $data;

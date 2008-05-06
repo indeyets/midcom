@@ -483,6 +483,23 @@ class org_openpsa_calendarwidget_month
      */
     var $additional_name_for_links = '';
 
+
+    /**
+     * Last year to show (leave false to allow going forward in time infinitely)
+     *
+     * @access public
+     * @var string
+     */
+    var $last_year = false;
+
+    /**
+     * First year to show (leave false to allow going back in time infinitely)
+     *
+     * @access public
+     * @var string
+     */
+    var $first_year = false;
+
     /**
      * Simple constructor method. Initializes
      */
@@ -702,6 +719,7 @@ class org_openpsa_calendarwidget_month
             $this->_next_month = 1;
             $this->_next_year = $this->_year + 1;
         }
+        
     }
 
     /**
@@ -777,8 +795,15 @@ class org_openpsa_calendarwidget_month
                 {
                     $suffix = "?{$this->suffix}";
                 }
-
-                echo "                ". $this->_draw_link($this->previous, strftime('%B %Y', mktime(0, 0, 0, $this->_previous_month, $this->_day, $this->_previous_year)), "{$this->path}{$this->_previous_year}/{$this->_previous_month}/{$suffix}") ."\n";
+                if (   !$this->first_year
+                    || $this->_previous_year > $this->first_year)
+                {
+                    echo "                " . $this->_draw_link($this->previous, strftime('%B %Y', mktime(0, 0, 0, $this->_previous_month, $this->_day, $this->_previous_year)), "{$this->path}{$this->_previous_year}/{$this->_previous_month}/{$suffix}") ."\n";
+                }
+                else
+                {
+                    echo "                &nbsp;";
+                }
             }
             else
             {
@@ -787,7 +812,15 @@ class org_openpsa_calendarwidget_month
                     $suffix = "&{$this->suffix}";
                 }
 
-                echo "                ". $this->_draw_link($this->previous, strftime('%B %Y', mktime(0, 0, 0, $this->_previous_month, $this->_day, $this->_previous_year)), "?month={$this->_previous_month}&year={$this->_previous_year}&{$suffix}") ."\n";
+                if (   !$this->first_year
+                    || $this->_previous_year > $this->first_year)
+                {
+                    echo "                " . $this->_draw_link($this->previous, strftime('%B %Y', mktime(0, 0, 0, $this->_previous_month, $this->_day, $this->_previous_year)), "?month={$this->_previous_month}&year={$this->_previous_year}&{$suffix}") ."\n";
+                }
+                else
+                {
+                    echo "                &nbsp;";
+                }
             }
         }
 
@@ -819,8 +852,15 @@ class org_openpsa_calendarwidget_month
                 {
                     $suffix = "?{$this->suffix}";
                 }
-
-                echo "                ". $this->_draw_link($this->next, strftime('%B %Y', mktime(0, 0, 0, $this->_next_month, $this->_day, $this->_next_year)), "{$this->path}{$this->_next_year}/{$this->_next_month}/{$suffix}") ."\n";
+                if (   !$this->last_year
+                    || $this->_next_year < $this->last_year)
+                {
+                    echo "                " . $this->_draw_link($this->next, strftime('%B %Y', mktime(0, 0, 0, $this->_next_month, $this->_day, $this->_next_year)), "{$this->path}{$this->_next_year}/{$this->_next_month}/{$suffix}") ."\n";
+                }
+                else
+                {
+                    echo "                &nbsp;";
+                }
             }
             else
             {
@@ -829,7 +869,15 @@ class org_openpsa_calendarwidget_month
                     $suffix = "&{$this->suffix}";
                 }
 
-                echo "                ". $this->_draw_link($this->next, strftime('%B %Y', mktime(0, 0, 0, $this->_next_month, $this->_day, $this->_next_year)), "?month={$this->_next_month}&year={$this->_next_year}{$suffix}") ."\n";
+                if (   !$this->last_year
+                    || $this->_next_year < $this->last_year)
+                {
+                    echo "                " . $this->_draw_link($this->next, strftime('%B %Y', mktime(0, 0, 0, $this->_next_month, $this->_day, $this->_next_year)), "?month={$this->_next_month}&year={$this->_next_year}{$suffix}") ."\n";
+                }
+                else
+                {
+                    echo "                &nbsp;";
+                }
             }
         }
 
