@@ -794,9 +794,17 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         {
             $this->_calendar->last_year = (int)date('Y', strtotime($last_event->end));
         }
+        else
+        {
+            $this->_calendar->last_year = (int)date('Y');
+        }
         if ($first_event)
         {
             $this->_calendar->first_year = (int)date('Y', strtotime($first_event->start));
+        }
+        else
+        {
+            $this->_calendar->first_year = (int)date('Y');
         }
 
         // Point to the request data
