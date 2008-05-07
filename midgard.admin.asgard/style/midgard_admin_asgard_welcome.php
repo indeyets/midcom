@@ -154,7 +154,7 @@ if (count($data['revised']) > 0)
         $class = get_class($object);
         $approved = $object->metadata->approved;
         $approved_str = strftime('%x %X', $approved);
-        if ($approved == 0)
+        if ($approved == 0  || $approved < $object->metadata->revised)
         {
             $approved_str = $_MIDCOM->i18n->get_string('not approved', 'midgard.admin.asgard');
         }
