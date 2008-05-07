@@ -137,52 +137,70 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
      */
     function _handler_view($handler_id, $args, &$data)
     {
-        if ($handler_id == 'view_product_raw')
+        if (preg_match('/_raw$/', $handler_id))
         {
             $_MIDCOM->skip_page_style = true;
         }
 
         $qb = org_openpsa_products_product_dba::new_query_builder();
-        if (($handler_id == 'view_product_intree')
-            ||( $handler_id == 'view_product_raw'))
-           {
+        if (preg_match('/^view_product_intree/', $handler_id))
+        {
             $group_qb = org_openpsa_products_product_group_dba::new_query_builder();
-            $group_qb->add_constraint('code', '=', $args[0]);
-            $groups = $group_qb->execute();
-
-            if (count($groups) == 0)
+            if (mgd_is_guid($args[0]))
             {
-                return false;
-                // No matching group
+                $group_qb->add_constraint('guid', '=', $args[0]);
             }
             else
             {
-                $categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
-                $categories_qb->add_constraint('up', '=', $groups[0]->id);
-                $categories = $categories_qb->execute();
-                $categories_in = array();
-                if (count($categories) == 0){
-                    /* No matching categories belonging to this group
-                     * So we can search for the application using only
-                     * this group id
-                     */
-                    $qb->add_constraint('productGroup', 'INTREE', $groups[0]->id);
-                }
-                else
-                {
-                    for ($i = 0; $i < count($categories); $i++)
-                    {
-                        $categories_in[$i] = $categories[$i]->id;
-                    }
-                    $qb->add_constraint('productGroup', 'IN', $categories_in);
-                }
+                $group_qb->add_constraint('code', '=', $args[0]);
+            }
+            $groups = $group_qb->execute();
 
+            if (empty($groups))
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Product group {$args[0]} not found" );
+                // This will exit
+            }
+
+            $categories_qb = org_openpsa_products_product_group_dba::new_query_builder();
+            $categories_qb->add_constraint('up', '=', $groups[0]->id);
+            $categories = $categories_qb->execute();
+            $categories_in = array();
+            if (count($categories) == 0){
+                /* No matching categories belonging to this group
+                 * So we can search for the application using only
+                 * this group id
+                 */
+                $qb->add_constraint('productGroup', 'INTREE', $groups[0]->id);
+            }
+            else
+            {
+                for ($i = 0; $i < count($categories); $i++)
+                {
+                    $categories_in[$i] = $categories[$i]->id;
+                }
+                $qb->add_constraint('productGroup', 'IN', $categories_in);
+            }
+
+            if (mgd_is_guid($args[1]))
+            {
+                $qb->add_constraint('guid', '=', $args[1]);
+            }
+            else
+            {
                 $qb->add_constraint('code', '=', $args[1]);
             }
         }
         else
         {
-            $qb->add_constraint('code', '=', $args[0]);
+            if (mgd_is_guid($args[0]))
+            {
+                $qb->add_constraint('guid', '=', $args[0]);
+            }
+            else
+            {
+                $qb->add_constraint('code', '=', $args[0]);
+            }
         }
 
         $qb->add_constraint('start', '<=', time());
@@ -196,13 +214,18 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
         $qb->end_group();
         $results = $qb->execute();
 
-        if (count($results) == 0)
+        if (!empty($results))
         {
-            if ($handler_id == 'view_product_intree')
+            $this->_product = $results[0];
+        }
+        else
+        {
+            if (preg_match('/^view_product_intree/', $handler_id))
             {
                 if (!mgd_is_guid($args[1]))
                 {
-                    return false;
+                    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Product {$args[1]} not found" );
+                    // This will exit
                 }
                 $this->_product = new org_openpsa_products_product_dba($args[1]);
             }
@@ -210,19 +233,18 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
             {
                 if (!mgd_is_guid($args[0]))
                 {
-                    return false;
+                    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Product {$args[0]} not found" );
+                    // This will exit
                 }
                 $this->_product = new org_openpsa_products_product_dba($args[0]);
             }
-            if (   !$this->_product
-                || !$this->_product->guid)
-            {
-                return false;
-            }
         }
-        else
+        if (   !$this->_product
+            || !isset($this->_product->guid)
+            || empty($this->_product->guid))
         {
-            $this->_product = $results[0];
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Fell through to last product sanity-check and failed");
+            // This will exit
         }
 
         $this->_modify_schema();

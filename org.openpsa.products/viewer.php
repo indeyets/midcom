@@ -150,14 +150,21 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
-        // Handle /product/raw/<product group>/<product guid>
+        // Handle /product/raw/<product guid/code>
         $this->_request_switch['view_product_raw'] = Array
+        (
+            'handler' => Array('org_openpsa_products_handler_product_view', 'view'),
+            'fixed_args' => Array('product', 'raw'),
+            'variable_args' => 1,
+        );
+
+        // Handle /product/raw/<product group guid/code>/<product guid/code>
+        $this->_request_switch['view_product_intree_raw'] = Array
         (
             'handler' => Array('org_openpsa_products_handler_product_view', 'view'),
             'fixed_args' => Array('product', 'raw'),
             'variable_args' => 2,
         );
-
 
         // Handle /product/<product group>/<product guid>
         $this->_request_switch['view_product_intree'] = Array
