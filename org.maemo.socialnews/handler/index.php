@@ -146,6 +146,58 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
 
     }
 
+    private function word_count_truncater(&$content, &$url)
+    {
+        // Normalize newlines to \n
+        $content = preg_replace("/\n\r|\r\n|\r/", "\n", $content);
+        $content = strip_tags($content, $this->_config->get('frontpage_allowed_tags'));
+
+        $word_limit = $this->_config->get('frontpage_show_abstract_length_words');
+        // Naive but works
+        $words = count(preg_split('/\b/', strip_tags($content)));
+        if ($words <= $word_limit)
+        {
+            return $content;
+        }
+
+        // The difficult part starts here
+        // In stead of trying parse the HTML tree to get N words while correctly closing all tags we get first paragraph
+
+        $content_matches = array();
+        if (preg_match("%((^\s+.*?)|(^.*?))(</p>|(\n\s*){2,}|(<br\s*/?>\s*){2,}|\w+\s*<p>)%ms", $content, $content_matches))
+        {
+            // We found usable "first paragraph", or so we think...
+            $first_paragraph =& $content_matches[1];
+
+        }
+        else if (strpos($content, "\n"))
+        {
+            //This post doesn't have sensible paragraphs, use raw substr from first newline...
+            $first_paragraph = substr($content, 0, strpos($content, "\n"));
+        }
+
+        if (isset($first_paragraph))
+        {
+            $first_paragraph_words = count(preg_split('/\b/', strip_tags($first_paragraph)));
+            // Check that our "first paragraph" is of sane size
+            if ($first_paragraph_words <= $word_limit)
+            {
+                $remaining_words = $words - $first_paragraph_words;
+                $ret = $first_paragraph;
+                if ($remaining_words < 1)
+                {
+                    return $ret;
+                }
+                $ret .= "<div class='entry-truncated'><a href='{$url}'>" . sprintf($this->_l10n->get('click to read %d more words'), $remaining_words) . "</a></div>\n";
+                return $ret;
+            }
+        }
+
+        // Fallback, show only "xxx words, click here to read"
+        $ret = "<div class='entry-truncated'><a href='{$url}'>" . sprintf($this->_l10n->get('click to read %d words'), $words) . "</a></div>\n";
+        return $ret;
+    }
+
     private function generate_caption($data, $getCnt)
     {
         if (strlen($data) == 0)
@@ -220,11 +272,25 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         {
             if (empty($article->abstract))
             {
-                $article->abstract = $this->generate_caption($article->content, $this->_config->get('frontpage_show_abstract_length'));
+                if ($this->_config->get('frontpage_show_abstract_length_words') > 0)
+                {
+                    $article->abstract = $this->word_count_truncater($article->content, $article->url);
+                }
+                else
+                {
+                    $article->abstract = $this->generate_caption($article->content, $this->_config->get('frontpage_show_abstract_length'));
+                }
             }
             else
             {
-                $article->abstract = $this->generate_caption($article->abstract, $this->_config->get('frontpage_show_abstract_length'));
+                if ($this->_config->get('frontpage_show_abstract_length_words') > 0)
+                {
+                    $article->abstract = $this->word_count_truncater($article->abstract, $article->url);
+                }
+                else
+                {
+                    $article->abstract = $this->generate_caption($article->abstract, $this->_config->get('frontpage_show_abstract_length'));
+                }
             }
 
             $this->articles[$guid] = $article;

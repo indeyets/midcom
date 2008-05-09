@@ -8,6 +8,8 @@
 
 'frontpage_show_main_items' => 3,
 'frontpage_show_abstract_length' => 1000,
+'frontpage_show_abstract_length_words' => 0,
+'frontpage_allowed_tags' => '<p><a><img><b><i><strong><pre><ul><li><br>',
 
 'frontpage_show_secondary_items' => 7,
 

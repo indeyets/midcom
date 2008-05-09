@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING %s to %s by %s with score %d
+%s kansioon %s, kirjoittanut %s %d pisteellä.
+---STRINGEND
+
 ---STRING %s to %s with score %d
 %s kansioon %s %d pisteellä.
 ---STRINGEND
@@ -13,6 +17,10 @@ Arkisto
 
 ---STRING best of %s
 %s:n parhaat
+---STRINGEND
+
+---STRING click to read %d more words
+Napsauta lukeaksesi %d sanaa lisää
 ---STRINGEND
 
 ---STRING item %s has been registered for score recalculation
@@ -27,7 +35,7 @@ Sosiaalinen uutispalvelu
 Sinun huomiosi: %s%%.
 ---STRINGEND
 
----STRING %s to %s by %s with score %d
-%s kansioon %s, kirjoittanut %s %d pisteellä.
+---STRING click to read %d words
+Napsauta lukeaksesi %d sanaa
 ---STRINGEND
 

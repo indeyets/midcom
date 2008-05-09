@@ -7,6 +7,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-05-09 rambo
+  + svn merge -r 16354:16358 ../branch-28
+    (RSS feed for latest items, Add more intelligent word count truncater)
+
 2007-08-29 bergie
   + RSS feed of archived issues
 

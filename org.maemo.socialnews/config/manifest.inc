@@ -1,6 +1,6 @@
 'name' => 'org.maemo.socialnews',
 'purecode' => false,
-'version' => '0.1.0beta1',
+'version' => '1.1.5beta1',
 'state' => 'beta',
 'privileges' => array(),
 'class_definitions' => array

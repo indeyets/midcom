@@ -19,6 +19,10 @@ Archive
 Best of %s
 ---STRINGEND
 
+---STRING click to read %d more words
+Click to read %d more words
+---STRINGEND
+
 ---STRING item %s has been registered for score recalculation
 Item %s has been registered for score recalculation.
 ---STRINGEND
@@ -29,5 +33,9 @@ Social news aggregator
 
 ---STRING your attention: %s%%
 Your attention: %s%%.
+---STRINGEND
+
+---STRING click to read %d words
+Click to read %d words
 ---STRINGEND
 
