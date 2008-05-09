@@ -744,8 +744,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             );
 
 
-            if (   array_key_exists('midcom.helper.replicator', $_MIDCOM->componentloader->manifests)
-                && $_MIDCOM->auth->admin)
+            if (   array_key_exists('midcom.helper.replicator', $_MIDCOM->componentloader->manifests))
             {
                 $toolbar->add_item
                 (

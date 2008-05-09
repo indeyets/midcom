@@ -422,8 +422,6 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
      */
     function _handler_object($handler_id, $args, &$data)
     {
-        $_MIDCOM->auth->require_user_do('midcom.helper.replicator:manage');
-
         $bind_toolbar = true;
         $data['object'] = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (!$data['object'])
