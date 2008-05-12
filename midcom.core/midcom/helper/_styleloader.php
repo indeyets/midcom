@@ -229,7 +229,17 @@ class midcom_helper__styleloader {
 
             //$mc = new midgard_collector('midgard_style', 'up', $current_style);
             //$mc->set_key_property('guid');
+            /** 
+             * BEGIN: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+             */
+            $ml_strict_backup = $GLOBALS['midcom_config']['i18n_multilang_strict'];
+            $GLOBALS['midcom_config']['i18n_multilang_strict'] = false;
             $mc = midcom_db_style::new_collector('up', $current_style);
+            $GLOBALS['midcom_config']['i18n_multilang_strict'] = $ml_strict_backup;
+            unset($ml_strict_backup);
+            /** 
+             * END: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+             */
             $mc->add_value_property('id');
             $mc->add_constraint('name', '=', $path_item);
             $mc->execute();
@@ -259,8 +269,17 @@ class midcom_helper__styleloader {
     function _get_nodes_inheriting_style($node)
     {
         $nodes = array();
-        
+        /** 
+         * BEGIN: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+         */
+        $ml_strict_backup = $GLOBALS['midcom_config']['i18n_multilang_strict'];
+        $GLOBALS['midcom_config']['i18n_multilang_strict'] = false;
         $child_qb = midcom_db_topic::new_query_builder();
+        $GLOBALS['midcom_config']['i18n_multilang_strict'] = $ml_strict_backup;
+        unset($ml_strict_backup);
+        /** 
+         * END: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+         */
         $child_qb->add_constraint('up', '=', $node->id);
         $child_qb->add_constraint('style', '=', '');
         $children = $child_qb->execute();
@@ -285,7 +304,17 @@ class midcom_helper__styleloader {
     {
         $style_nodes = array();
         // Get topics directly using the style
+        /** 
+         * BEGIN: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+         */
+        $ml_strict_backup = $GLOBALS['midcom_config']['i18n_multilang_strict'];
+        $GLOBALS['midcom_config']['i18n_multilang_strict'] = false;
         $qb = midcom_db_topic::new_query_builder();
+        $GLOBALS['midcom_config']['i18n_multilang_strict'] = $ml_strict_backup;
+        unset($ml_strict_backup);
+        /** 
+         * END: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+         */
         $qb->add_constraint('style', '=', $style);
         $nodes = $qb->execute();
         
@@ -360,13 +389,33 @@ class midcom_helper__styleloader {
      */
     function _get_element_in_styletree($id, $name)
     {
+        $ml_strict_backup = $GLOBALS['midcom_config']['i18n_multilang_strict'];
+        /** 
+         * BEGIN: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+         */
+        $GLOBALS['midcom_config']['i18n_multilang_strict'] = false;
         $style_mc = midcom_db_style::new_collector('id', $id);
+        $GLOBALS['midcom_config']['i18n_multilang_strict'] = $ml_strict_backup;
+        unset($ml_strict_backup);
+        /** 
+         * END: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+         */
         $style_mc->add_value_property('up');
         $style_mc->execute();
         $styles = $style_mc->list_keys();
         foreach ($styles as $style_guid => $value)
         {
+            /** 
+             * BEGIN: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+             */
+            $ml_strict_backup = $GLOBALS['midcom_config']['i18n_multilang_strict'];
+            $GLOBALS['midcom_config']['i18n_multilang_strict'] = false;
             $element_mc = midcom_db_element::new_collector('style', $id);
+            $GLOBALS['midcom_config']['i18n_multilang_strict'] = $ml_strict_backup;
+            unset($ml_strict_backup);
+            /** 
+             * END: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+             */
             $element_mc->add_value_property('value');
             $element_mc->add_constraint('name', '=', $name);
             $element_mc->execute();
@@ -441,7 +490,17 @@ class midcom_helper__styleloader {
         if ($style_id == $_MIDGARD['style'])
         {
             // We're in site main style, append elements from there to the list of "common elements"
+            /** 
+             * BEGIN: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+             */
+            $ml_strict_backup = $GLOBALS['midcom_config']['i18n_multilang_strict'];
+            $GLOBALS['midcom_config']['i18n_multilang_strict'] = false;
             $qb = midcom_db_element::new_query_builder();
+            $GLOBALS['midcom_config']['i18n_multilang_strict'] = $ml_strict_backup;
+            unset($ml_strict_backup);
+            /** 
+             * END: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+             */
             $qb->add_constraint('style', '=', $_MIDGARD['style']);
             $style_elements = $qb->execute();
             foreach ($style_elements as $element)
@@ -827,7 +886,17 @@ class midcom_helper__styleloader {
             return;
         }
         $style = $this->get_style();
+        /** 
+         * BEGIN: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+         */
+        $ml_strict_backup = $GLOBALS['midcom_config']['i18n_multilang_strict'];
+        $GLOBALS['midcom_config']['i18n_multilang_strict'] = false;
         $mc = midcom_baseclasses_database_attachment::new_collector('parentguid', $style->guid);
+        $GLOBALS['midcom_config']['i18n_multilang_strict'] = $ml_strict_backup;
+        unset($ml_strict_backup);
+        /** 
+         * END: ML Styles issue workaround, see http://trac.midgard-project.org/ticket/237
+         */
         $mc->add_constraint('mimetype', '=', 'text/css');
         $mc->add_value_property('name');
         $mc->execute();
