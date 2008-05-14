@@ -247,13 +247,35 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
         return true;
     }
 
-    function _on_creating()
+    /**
+     * Clears the name field if user is not allowed to set it explicitly
+     *
+     * But only when in the fallback language
+     */
+    function _check_clear_name()
     {
+        // FIXME: use midgard_connection::get_default_lang() with 1.9/2.0
+        $fallback_language = mgd_get_default_lang();
+        /*
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("checking lang");
+        $fallback_language = mgd_get_default_lang();
+        debug_add("if (\$this->lang={$this->lang} != \$fallback_language={$fallback_language})");
+        debug_pop();
+        */
+        if ($this->lang != $fallback_language)
+        {
+            return;
+        }
         if (!$this->_config->get('allow_name_change'))
         {
             $this->name = '';
         }
+    }
 
+    function _on_creating()
+    {
+        $this->_check_clear_name();
         if (!$this->_check_time_range())
         {
             return false;
@@ -267,10 +289,9 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
 
     function _on_updating()
     {
-        if (   !$this->_config->get('allow_name_change')
-            && !isset($GLOBALS['net_nemein_calendar_event_dba__on_updated_loop_{$this->guid}']))
+        if (!isset($GLOBALS['net_nemein_calendar_event_dba__on_updated_loop_{$this->guid}']))
         {
-            $this->name = '';
+            $this->_check_clear_name();
         }
 
         if (!$this->_check_time_range())
@@ -292,6 +313,7 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
 
     function _on_created()
     {
+        // In theory we should never be able to loop here since it goes on to the update callbacks, but better to be safe
         if (isset($GLOBALS['net_nemein_calendar_event_dba__on_created_loop_{$this->guid}']))
         {
             debug_push_class(__CLASS__, __FUNCTION__);

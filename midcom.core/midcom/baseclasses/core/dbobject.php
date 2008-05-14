@@ -1260,6 +1260,28 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             return false;
         }
 
+        if (   isset($object->lang)
+            && !empty($object->name))
+        {
+            /**
+             * ML Object with non-empty name
+             *
+             * Check that we're doing anything stupid like overwriting name 
+             * derived in "lang0" with one derived from localized title
+             */
+            // FIXME: use midgard_connection::get_default_lang() with 1.9/2.0
+            $fallback_language = mgd_get_default_lang();
+            if ($object->lang != $fallback_language)
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Not regenerating name for {$object->guid}, current version is not the fallback-language one", MIDCOM_LOG_INFO);
+                debug_add("\$object->lang={$object->lang} != \$fallback_language={$fallback_language}");
+                debug_pop();
+                // This is localized version of the object, do not overwrite name silently abort instead
+                return true;
+            }
+        }
+
         $name = midcom_generate_urlname_from_string($object->$titlefield);
         // Strip the incrementing count suffix from name for checking
         $object_name_wosuffix = preg_replace('/-[0-9]{3}$/', '', $object->name);
