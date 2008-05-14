@@ -315,7 +315,7 @@ class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanag
                     {
                         // It seems to be a critical error.
                         $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                            'Failed to save the data to disk, check the debug level log for more information.');
+                            'Failed to save the data to disk, last midgard error code: ' . mgd_errstr() . '. Check the debug level log for more information.');
                         // This will exit.
                     }
                 }

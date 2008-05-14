@@ -120,7 +120,7 @@ class midcom_helper_datamanager2_controller_simple extends midcom_helper_dataman
                     {
                         // It seems to be a critical error.
                         $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                            'Failed to save the data to disk, check the debug level log for more information.');
+                            'Failed to save the data to disk, last Midgard error: ' . mgd_errstr() . '. Check the debug level log for more information.');
                         // This will exit.
                     }
                 }
