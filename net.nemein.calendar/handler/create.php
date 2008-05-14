@@ -41,6 +41,11 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
         // FIXME read via formmanager
         $this->_request_data['event']->start = $_POST['start'];
         $this->_request_data['event']->end = $_POST['end'];
+        if (   $this->_config->get('allow_name_change')
+            && isset($_POST['name']))
+        {
+            $this->_request_data['event']->name = $_POST['name'];
+        }
 
         if ($this->_request_data['master_event'])
         {
@@ -136,25 +141,6 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
                 $indexer =& $_MIDCOM->get_service('indexer');
                 net_nemein_calendar_viewer::index($this->_controller->datamanager, $indexer, $this->_topic);
 
-                // Generate URL name
-                if ($data['event']->name == '')
-                {
-                    $data['event']->name = midcom_generate_urlname_from_string($data['event']->title);
-                    $tries = 0;
-                    $maxtries = 999;
-                    while(   !$data['event']->update()
-                          && $tries < $maxtries)
-                    {
-                        $data['event']->name = midcom_generate_urlname_from_string($data['event']->title);
-                        if ($tries > 0)
-                        {
-                            // Append an integer if articles with same name exist
-                            $data['event']->name .= sprintf("-%03d", $tries);
-                        }
-                        $tries++;
-                    }
-                }
-
                 if ($handler_id != 'create_chooser')
                 {
                     $_MIDCOM->relocate("{$data['event']->name}/");
@@ -190,7 +176,6 @@ class net_nemein_calendar_handler_create extends midcom_baseclasses_components_h
 
         return true;
     }
-
 
     /**
      * Shows the loaded article.

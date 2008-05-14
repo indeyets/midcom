@@ -33,4 +33,6 @@
     'start' => 'ASC',
 ),
 
+
 'language' => null,
+'allow_name_change' => false, // WARNING: Enabling this enables you to shoot your own foot

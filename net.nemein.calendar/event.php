@@ -14,9 +14,14 @@
  */
 class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
 {
+    var $_config = false;
+
     function __construct($guid = null) 
     {
-        return parent::__construct($guid);
+        $stat = parent::__construct($guid);
+        $interface =& $_MIDCOM->componentloader->get_interface_class('net.nemein.calendar');
+        $this->_config = $interface->get_config_for_topic();
+        return $stat;
     }
 
     /**
@@ -138,8 +143,39 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
         return $parent_guid;
     }
 
+    /**
+     * Checks that the event time range is sane
+     * @return bool indicating sanity
+     */
     function _check_time_range()
     {
+        static $valid_date_format = '/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/';
+        // Safety against stupid mistakes (probably asgard)
+        if (   !preg_match($valid_date_format, $this->start)
+            && is_numeric($this->start))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Start looks like UNIX timestamp, must be ISO date, rewriting ({$this->start})", MIDCOM_LOG_WARN);
+            debug_pop();
+            $this->start = date('Y-m-d H:i:s', $this->start);
+        }
+        if (   !preg_match($valid_date_format, $this->end)
+            && is_numeric($this->end))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("End looks like UNIX timestamp, must be ISO date, rewriting ({$this->end})", MIDCOM_LOG_WARN);
+            debug_pop();
+            $this->end = date('Y-m-d H:i:s', $this->end);
+        }
+        // Final format safeguard
+        if (   !preg_match($valid_date_format, $this->start)
+            || !preg_match($valid_date_format, $this->end))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Start or end not in valid format ({$this->start} & {$this->end})", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
         if (   $this->start === '0000-00-00 00:00:00'
             && $this->end === '0000-00-00 00:00:00')
         {
@@ -150,28 +186,108 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
         $end_comparable = str_replace(array('-', ':'), '', $this->end);
         if ($end_comparable < $start_comparable)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Cannot end before starting ({$end_comparable} < {$start_comparable})", MIDCOM_LOG_ERROR);
+            debug_pop();
             mgd_set_errno(MGD_ERR_RANGE);
             return false;
         }
         // Avoid problems with events too close to the epoch (highly unlikely usage scenario in any case)
-        $epoch = '19720102000000';
+        static $epoch = '19720102000000';
         if (   $start_comparable < $epoch
             || $end_comparable < $epoch)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("start or end less than epoch ({$start_comparable} < {$epoch} || {$end_comparable} < {$epoch})", MIDCOM_LOG_ERROR);
+            debug_pop();
             mgd_set_errno(MGD_ERR_RANGE);
             return false;
         }
         return true;
     }
 
+    /**
+     * Checks that the event name is unique (in node/event tree)
+     * @return bool indicating uniqueness
+     */
+    function name_is_unique()
+    {
+        if (empty($this->name))
+        {
+            return true;
+        }
+        $qb = new midgard_query_builder('net_nemein_calendar_event');
+        if (!empty($this->id))
+        {
+            $qb->add_constraint('id', '<>', $this->id);
+        }        
+        $qb->add_constraint('name', '=', $this->name);
+        $qb->add_constraint('node', '=', $this->node);
+        if (!empty($this->up))
+        {
+            $qb->add_constraint('up', '=', $this->up);
+        }        
+        
+        $results = $qb->count();
+        unset($qb);
+
+        if ($results === false)
+        {
+            // QB error (I wonder if this raises some specific error ?
+            //mgd_set_errno(MGD_ERR_ERROR);
+            return false;
+        }
+
+        if ($results > 0)
+        {
+            mgd_set_errno(MGD_ERR_OBJECT_NAME_EXISTS);
+            return false;
+        }
+
+        return true;
+    }
+
     function _on_creating()
     {
-        return $this->_check_time_range();
+        if (!$this->_config->get('allow_name_change'))
+        {
+            $this->name = '';
+        }
+
+        if (!$this->_check_time_range())
+        {
+            return false;
+        }
+        if (!$this->name_is_unique())
+        {
+            return false;
+        }
+        return true;
     }
 
     function _on_updating()
     {
-        return $this->_check_time_range();
+        if (   !$this->_config->get('allow_name_change')
+            && !isset($GLOBALS['net_nemein_calendar_event_dba__on_updated_loop_{$this->guid}']))
+        {
+            $this->name = '';
+        }
+
+        if (!$this->_check_time_range())
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("\$this->_check_time_range() returned false on #{$this->id}", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        if (!$this->name_is_unique())
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("\$this->name_is_unique() returned false on #{$this->id}", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        return true;
     }
 
     function _on_created()
@@ -179,13 +295,22 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
         if (isset($GLOBALS['net_nemein_calendar_event_dba__on_created_loop_{$this->guid}']))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Detected _on_updated loop on #{$this->id}", MIDCOM_LOG_ERROR);
+            debug_add("Detected _on_created loop on #{$this->id}", MIDCOM_LOG_ERROR);
             debug_pop();
         }
         else
         {
             $GLOBALS['net_nemein_calendar_event_dba__on_created_loop_{$this->guid}'] = true;
-            midcom_baseclasses_core_dbobject::generate_urlname($this);
+            if (   !$this->_config->get('allow_name_change')
+                || empty($this->name))
+            {
+                /*
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Calling midcom_baseclasses_core_dbobject::generate_urlname(\$this) on #{$this->id}");
+                debug_pop();
+                */
+                midcom_baseclasses_core_dbobject::generate_urlname($this);
+            }
             unset($GLOBALS['net_nemein_calendar_event_dba__on_updated_loop_{$this->guid}']);
         }
         return true;
@@ -202,7 +327,16 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
         else
         {
             $GLOBALS['net_nemein_calendar_event_dba__on_updated_loop_{$this->guid}'] = true;
-            midcom_baseclasses_core_dbobject::generate_urlname($this);
+            if (   !$this->_config->get('allow_name_change')
+                || empty($this->name))
+            {
+                /*
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Calling midcom_baseclasses_core_dbobject::generate_urlname(\$this) on #{$this->id}");
+                debug_pop();
+                */
+                midcom_baseclasses_core_dbobject::generate_urlname($this);
+            }
             unset($GLOBALS['net_nemein_calendar_event_dba__on_updated_loop_{$this->guid}']);
         }
         return true;
