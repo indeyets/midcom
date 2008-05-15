@@ -361,6 +361,39 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
+     * @return boolean Indicating success.
+     */
+    function _handler_source($handler_id, $args, &$data, $view_mode = true)
+    {
+        $this->_load_page($args[0]);
+        if (!$this->_page)
+        {
+            return false;
+        }
+        $_MIDCOM->skip_page_style = true;
+        $this->_load_datamanager();
+
+        return true;
+    }
+
+    /**
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
+    function _show_source($handler_id, &$data)
+    {
+        $data['wikipage_view'] = $this->_controller->get_content_html();
+        $data['autogenerate_toc'] = $this->_config->get('autogenerate_toc');
+        $data['display_related_to'] = $this->_config->get('display_related_to');
+        $data['wikipage_view']['content'] = $this->_page->content;
+        midcom_show_style('view-wikipage-source');
+    }
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array &$data The local request data.
      */
     function _handler_subscribe($handler_id, $args, &$data)
     {

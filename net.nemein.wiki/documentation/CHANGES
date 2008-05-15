@@ -6,6 +6,9 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-05-15 xfade
+  + Added source handler to show the raw MarkDown code for a page.
+
 2007-12-03 adrenalin
   + Added support for showing wikipages in navigation on request
 

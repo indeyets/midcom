@@ -32,6 +32,13 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_wiki_handler_view', 'raw'),
         );
 
+        // Match /source/<wikipage>
+        $this->_request_switch[] = array(
+            'fixed_args' => 'source',
+            'variable_args' => 1,
+            'handler' => Array('net_nemein_wiki_handler_view', 'source'),
+        );
+
         // Match /whatlinks/<wikipage>
         $this->_request_switch[] = array(
             'fixed_args' => 'whatlinks',
