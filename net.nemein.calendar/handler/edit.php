@@ -63,7 +63,9 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
+        $this->_request_data['viewer_instance']->_enter_language();
         $this->_request_data['event'] = new net_nemein_calendar_event_dba($args[0]);
+        $this->_request_data['viewer_instance']->_exit_language();
 
         if ($this->_request_data['event'])
         {
@@ -71,8 +73,8 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
                 && $this->_request_data['event']->node != $this->_request_data['content_topic']->id)
             {
                 debug_pop();
-                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, 'Event not in the event tree');
-                // This will exit
+                return false;
+                // this will 404
             }
 
             debug_pop();

@@ -79,6 +79,7 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
             return false;
         }
 
+        $this->_request_data['viewer_instance']->_enter_language();
         $qb = net_nemein_calendar_event_dba::new_query_builder();
 
         $qb->begin_group();
@@ -106,12 +107,14 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
 
         if ($qb->count() === 0)
         {
+            $this->_request_data['viewer_instance']->_exit_language();
             return false;
         }
 
         $events = $qb->execute();
         $this->_request_data['event'] = $events[0];
 
+        $this->_request_data['viewer_instance']->_exit_language();
         return true;
     }
 
@@ -137,12 +140,14 @@ class net_nemein_calendar_handler_view extends midcom_baseclasses_components_han
             $data['archive_mode'] = false;
         }
 
+        /* This should not be neccessary, anymore
         if (   isset($data['original_language'])
             && $data['event']->lang == $data['original_language'])
         {
             // Re-fetch the article into the new language context
             $data['event'] = new net_nemein_calendar_event_dba($data['event']->guid);
         }
+        */
 
         $node_url = '';
 
