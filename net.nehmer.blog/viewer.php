@@ -328,6 +328,13 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
 
     function _enter_language()
     {
+        if (isset($this->_request_data['original_language']))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            $GLOBALS['midcom_debugger']->print_function_stack('_enter_language called for second time', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return;
+        }
         $lang = $this->_config->get('language');
         if ($lang)
         {
@@ -346,6 +353,13 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         if (isset($this->_request_data['original_language']))
         {
             mgd_set_lang($this->_request_data['original_language']);
+            unset($this->_request_data['original_language']);
+        }
+        else
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            $GLOBALS['midcom_debugger']->print_function_stack('_exit_language called without being in language context', MIDCOM_LOG_ERROR);
+            debug_pop();
         }
     }
 
@@ -358,13 +372,8 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
      */
     function _on_can_handle($handler, $args)
     {
-        $this->_enter_language();
+        $this->_request_data['viewer_instance'] =& $this;
         return true;
-    }
-
-    function _on_can_handled($handler, $args)
-    {
-        $this->_exit_language();
     }
 
     function _on_handle($handler, $args)

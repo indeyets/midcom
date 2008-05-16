@@ -225,6 +225,26 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
     function _handler_edit($handler_id, $args, &$data)
     {
         $this->_article = new midcom_db_article($args[0]);
+        /*
+        $qb = midcom_db_article::new_query_builder();
+        if (mgd_is_guid($args[0]))
+        {
+            $qb->add_constraint('guid', '=', $args[0]);
+        }
+        elseif (is_numeric($args[0]))
+        {
+            $qb->add_constraint('id', '=', $args[0]);
+        }
+        else
+        {
+            return false;
+        }
+        $articles = $qb->execute();
+        if (!empty($articles))
+        {
+            $thius->_article = $articles[0];
+        }
+        */
         if (!$this->_article)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The article with GUID {$args[0]} was not found.");

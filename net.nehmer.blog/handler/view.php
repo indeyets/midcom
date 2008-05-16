@@ -97,6 +97,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
      */
     function _can_handle_view ($handler_id, $args, &$data)
     {
+        $this->_request_data['viewer_instance']->_enter_language();
         $qb = midcom_db_article::new_query_builder();
 
         // Include the article links to the indexes if enabled
@@ -155,10 +156,11 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
 
         if (!$this->_article)
         {
+            $this->_request_data['viewer_instance']->_exit_language();
             return false;
             // This will 404
         }
-
+        $this->_request_data['viewer_instance']->_exit_language();
         return true;
     }
 
@@ -175,15 +177,22 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
         if (!$this->_article)
         {
             return false;
-            // This will 404
+            // This will 500
         }
 
+        if ($handler_id == 'view-raw')
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
+
+        /* This should not be neccessary, anymore
         if (   isset($data['original_language'])
             && $this->_article->lang == $data['original_language'])
         {
             // Re-fetch the article into the new language context
             $this->_article = new midcom_db_article($this->_article->guid);
         }
+        */
 
         $this->_load_datamanager();
 
