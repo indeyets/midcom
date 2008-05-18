@@ -104,7 +104,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
             mkdir($this->purify_config['Cache']['SerializerPath']);
         }
 
-        require_once('HTMLPurifier.php');
+        require_once('HTMLPurifier.includes.php');
         // For some reason we lose this along the way!
         error_reporting(E_ALL);
 
