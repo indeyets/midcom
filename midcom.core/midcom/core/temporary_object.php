@@ -132,5 +132,17 @@ class midcom_core_temporary_object extends __midcom_core_temporary_object
             }
         }
     }
+
+    /**
+     * Autopurge after delete
+     */
+    function _on_deleted()
+    {
+        if (!method_exists($this, 'purge'))
+        {
+            return;
+        }
+        $this->purge();
+    }
 }
 ?>
