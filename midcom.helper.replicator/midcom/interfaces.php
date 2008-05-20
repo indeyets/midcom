@@ -69,12 +69,16 @@ class midcom_helper_replicator_interface extends midcom_baseclasses_components_i
 
     function _on_watched_operation($operation, &$object)
     {
-        $skip_classes = $this->_config->get('watcher_skip_classes');
-        foreach ($skip_classes as $class)
+        $config = $this->get_config_for_topic();
+        $skip_classes = $config->get('watcher_skip_classes');
+        if (is_array($skip_classes))
         {
-            if (is_a($object, $class))
+            foreach ($skip_classes as $class)
             {
-                return;
+                if (is_a($object, $class))
+                {
+                    return;
+                }
             }
         }
         $qmanager =& midcom_helper_replicator_queuemanager::get();
