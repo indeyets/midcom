@@ -533,6 +533,12 @@ $GLOBALS['midcom_config_default']['auto_formatter'] = array();
 $GLOBALS['midcom_config_default']['sessioning_service_enable'] = true;
 $GLOBALS['midcom_config_default']['sessioning_service_always_enable_for_users'] = true;
 
+/**
+ * Trash cleanup, purge deleted objects after X days
+ */
+$GLOBALS['midcom_config_default']['cron_pure_deleted_after'] = 25;
+
+
 /* ----- Include the site config ----- */
 /* This should be replaced by $_MIDGARD constructs */
 if (file_exists(MIDCOM_CONFIG_FILE_BEFORE))

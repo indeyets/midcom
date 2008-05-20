@@ -133,6 +133,11 @@ class midcom_services_cron extends midcom_baseclasses_core_object
             'handler' => 'midcom_cron_loginservice',
             'recurrence' => MIDCOM_CRON_HOUR,
         ),
+        Array
+        (
+            'handler' => 'midcom_cron_purgedeleted',
+            'recurrence' => MIDCOM_CRON_DAY,
+        ),
     );
 
     /**
