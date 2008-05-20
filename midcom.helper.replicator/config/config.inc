@@ -1,5 +1,12 @@
 'queue_root_dir' => '/var/spool/midgard/replicator_queue/',
 'log_filename'   => "{$GLOBALS['midcom_config']['log_filename']}.replicator",
+'watcher_skip_classes' => array // Classes never to replicate via DBA watcher
+(
+    'midcom_helper_replicator_subscription',
+    'midcom_services_at_entry',
+    'midcom_core_login_session_db',
+    'midcom_core_temporary_object_db',
+),
 'exporter_staging2live_check_approvals_for' => array
 (
     'midgard_topic',

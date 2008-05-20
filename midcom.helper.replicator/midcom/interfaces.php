@@ -69,12 +69,13 @@ class midcom_helper_replicator_interface extends midcom_baseclasses_components_i
 
     function _on_watched_operation($operation, &$object)
     {
-        if (   is_a($object, 'midcom_helper_replicator_subscription')
-            || is_a($object, 'midcom_services_at_entry')
-            )
+        $skip_classes = $this->_config->get('watcher_skip_classes');
+        foreach ($skip_classes as $class)
         {
-            // Never DBA queue subscription and AT entry objects
-            return;
+            if (is_a($object, $class))
+            {
+                return;
+            }
         }
         $qmanager =& midcom_helper_replicator_queuemanager::get();
         
