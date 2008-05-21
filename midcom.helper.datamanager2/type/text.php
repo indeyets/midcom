@@ -98,7 +98,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
 
     function purify_content()
     {
-        if (isset($this->purify_config['Cache']['SerializerPath'])
+        if (   isset($this->purify_config['Cache']['SerializerPath']) 
             && !file_exists($this->purify_config['Cache']['SerializerPath']))
         {
             mkdir($this->purify_config['Cache']['SerializerPath']);
@@ -108,17 +108,18 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
         // For some reason we lose this along the way!
         error_reporting(E_ALL);
 
-        $purifier = new HTMLPurifier($this->purify_config);
+        $pufifier_config_object = HTMLPurifier_Config::createDefault();
+        $pufifier_config_object->loadArray($this->purify_config);
 
         // Set local IDPrefix to field name...
-        $purifier->config->set('Attr', 'IDPrefixLocal', "{$this->name}_");
+        $pufifier_config_object->set('Attr', 'IDPrefixLocal', "{$this->name}_");
 
         // Load custom element/attribute definitions
         $config_defs = $this->_config->get('html_purify_HTMLDefinition');
         if (   is_array($config_defs)
             && !empty($config_defs))
         {
-            $def =& $purifier->config->getHTMLDefinition(true);
+            $def =& $pufifier_config_object->getHTMLDefinition(true);
             if (   isset($config_defs['addAttribute'])
                 && is_array($config_defs['addAttribute'])
                 && !empty($config_defs['addAttribute']))
@@ -147,12 +148,15 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
             }
         }
 
+        $purifier = new HTMLPurifier($pufifier_config_object);
+
         /*
         echo "DEBUG: value before\n<pre>\n";
         echo htmlentities($this->value);
         echo "\n</pre>\n";
         */
 
+        // FIXME figure out why this always tries to put something to the default cache dir (it does put stuff to the defined one as well)
         $this->value = $purifier->purify($this->value);
 
         /*

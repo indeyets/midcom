@@ -21,11 +21,10 @@
          * DEVELOPERS: If you change these defaults remember to bump DefinitionRev
          */ 
         'DefinitionID' => 'DM2 Default definition set', 
-        'DefinitionRev' => 1,
+        'DefinitionRev' => 2,
         /* NOTE: You must use transitional doctype if you want to use <a name> (see html_purify_HTMLDefinition below) */
         'Doctype' => 'XHTML 1.0 Transitional',
         'TidyLevel' => 'light',
-        'EnableAttrID' => true,
     ),
     'Attr' => array
     (
@@ -36,17 +35,15 @@
             '_self',
             '_top',
         ),
+        'EnableID' => true,
     ),
     'Cache' => array
     (
         'SerializerPath' => $GLOBALS['midcom_config']['cache_base_directory'] . 'htmlpurifier',
+        /* Disable cache while testing
+        'DefinitionImpl' => null,
+        */
     ),
-    /* do not cache definitions while testing
-    'Core' => array
-    (
-        'DefinitionCache' => null,
-    ),
-    */
 ),
 'html_purify_HTMLDefinition' => array
 (
