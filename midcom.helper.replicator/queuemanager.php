@@ -68,7 +68,9 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         $qb = midcom_helper_replicator_subscription_dba::new_query_builder();
         $qb->add_constraint('status', '=', MIDCOM_REPLICATOR_AUTOMATIC);
         $qb->set_limit(1);
+        $_MIDCOM->auth->request_sudo('midcom.helper.replicator');
         $count = $qb->count();
+        $_MIDCOM->auth->drop_sudo();
         if ($count > 0)
         {
             return true;
@@ -88,6 +90,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
      */
     function add_to_queue(&$object, $rewrite_to_delete = false)
     {
+        $_MIDCOM->auth->request_sudo('midcom.helper.replicator');
         $GLOBALS['midcom_helper_replicator_logger']->push_prefix('Queue Manager');
         debug_push_class(__CLASS__, __FUNCTION__);
         $qb = midcom_helper_replicator_subscription_dba::new_query_builder();
@@ -157,6 +160,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                     debug_add("file {$file} already exists", MIDCOM_LOG_ERROR);
                     debug_pop();
                     $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
+                    $_MIDCOM->auth->drop_sudo();
                     return false;
                 }
                 $fp = fopen($file, 'w');
@@ -167,6 +171,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                     unset($exporter_serializations, $key, $data);
                     debug_pop();
                     $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
+                    $_MIDCOM->auth->drop_sudo();
                     return false;
                 }
                 fwrite($fp, $data, strlen($data));
@@ -234,6 +239,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         debug_add('All automatic subscriptions processed');
         debug_pop();
         $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
+        $_MIDCOM->auth->drop_sudo();
         return true;
     }
 
@@ -698,7 +704,9 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         $GLOBALS['midcom_helper_replicator_logger']->push_prefix('Queue Manager');
         $qb = midcom_helper_replicator_subscription_dba::new_query_builder();
         $qb->add_constraint('status', '<>', MIDCOM_REPLICATOR_DISABLED);
+        $_MIDCOM->auth->request_sudo('midcom.helper.replicator');
         $subscriptions = $qb->execute();
+        $_MIDCOM->auth->drop_sudo();
         foreach ($subscriptions as $subscription)
         {
             if ($this->_process_queue_subscription($subscription) === false)

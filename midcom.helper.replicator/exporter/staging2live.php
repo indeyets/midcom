@@ -55,6 +55,11 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
      */
     function is_exportable(&$object, $check_exported = true)
     {
+        /*
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r('called for', $object);
+        debug_pop();
+        */
         // If we already know the state return early
         if (isset($this->exportability[$object->guid]))
         {
