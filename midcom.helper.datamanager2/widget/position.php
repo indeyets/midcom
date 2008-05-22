@@ -610,8 +610,12 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         $lat = str_replace(",", ".", $lat);
         $lon = str_replace(",", ".", $lon);
 
-        $script = "jQuery('#{$this->_element_id}').dm2_pw_init_current_pos({$lat},{$lon});";
-        $_MIDCOM->add_jquery_state_script($script);
+        if (   !empty($lat)
+            && !empty($lon))
+        {
+            $script = "jQuery('#{$this->_element_id}').dm2_pw_init_current_pos({$lat},{$lon});";
+            $_MIDCOM->add_jquery_state_script($script);
+        }
 
         return Array
         (
