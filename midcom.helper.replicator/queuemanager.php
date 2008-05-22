@@ -700,13 +700,12 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
      */
     function process_queue()
     {
+        $_MIDCOM->auth->request_sudo('midcom.helper.replicator');
         debug_push_class(__CLASS__, __FUNCTION__);
         $GLOBALS['midcom_helper_replicator_logger']->push_prefix('Queue Manager');
         $qb = midcom_helper_replicator_subscription_dba::new_query_builder();
         $qb->add_constraint('status', '<>', MIDCOM_REPLICATOR_DISABLED);
-        $_MIDCOM->auth->request_sudo('midcom.helper.replicator');
         $subscriptions = $qb->execute();
-        $_MIDCOM->auth->drop_sudo();
         foreach ($subscriptions as $subscription)
         {
             if ($this->_process_queue_subscription($subscription) === false)
@@ -715,11 +714,13 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                 debug_add("Processing subscription {$subscription->title} failed fatally", MIDCOM_LOG_ERROR);
                 debug_pop();
                 $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
+                $_MIDCOM->auth->drop_sudo();
                 return false;
             }
         }
         debug_pop();
         $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
+        $_MIDCOM->auth->drop_sudo();
         return true;
     }
 

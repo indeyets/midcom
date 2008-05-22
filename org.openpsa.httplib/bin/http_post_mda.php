@@ -1,4 +1,4 @@
-#!/usr/bin/php4
+#!/usr/bin/php
 <?php
 /**
  * @author Eero af Heurlin
