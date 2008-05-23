@@ -52,12 +52,20 @@ class midcom_helper_datamanager2_widget_tagpicker extends midcom_helper_datamana
     var $size = 40;
 
     /**
-     * whether the input should be shown in the widget, or not.
+     * Whether the input should be shown in the widget, or not.
      *
      * @var boolean
      * @access public
      */
     var $hideinput = false;
+    
+    /**
+     * Whether to allow users to add tags that are not yet in database
+     *
+     * @var boolean
+     * @access public
+     */
+    var $allow_other = false;
     
     var $_taglist_html = '';
     
@@ -124,14 +132,40 @@ class midcom_helper_datamanager2_widget_tagpicker extends midcom_helper_datamana
 
     function sync_type_with_widget($results)
     {
-        $this->_type->value = $results[$this->name];
+        if (   $this->allow_other
+            || empty($results[$this->name]))
+        {
+            // The simple way, just take what is given
+            $this->_type->value = $results[$this->name];
+            return;
+        }
+        
+        // Otherwise, validate the results
+        $tags_in_db = net_nemein_tag_handler::get_tags();
+        
+        $tags_from_user = explode(' ', $results[$this->name]);
+        
+        $tags_to_save = array();
+        
+        foreach ($tags_from_user as $tag)
+        {
+            if (!isset($tags_in_db[$tag])
+            {
+                // We don't have this tag, skip.
+                continue;
+            }
+            
+            $tags_to_save[] = $tag;
+        }
+        
+        $this->_type->value = implode(' ', $tags_to_save);
     }
     
     function _generate_tag_list()
     {
         $html = '';
         $tags = net_nemein_tag_handler::get_tags();
-        $object_tags = explode(" ", $this->_type->value);
+        $object_tags = explode(' ', $this->_type->value);
         
         if (! empty($tags))
         {
