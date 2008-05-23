@@ -87,8 +87,13 @@ class net_nemein_favourites_favourite_dba extends __net_nemein_favourites_favour
         }
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
         $qb->add_constraint('objectGuid', '=', $this->objectGuid);
-        $qb->add_constraint('bury', '=', $this->bury);
-        $qb->add_constraint('metadata.creator', '=', $_MIDCOM->auth->user->guid);
+        
+        if ($this->bury)
+        {
+            $qb->add_constraint('bury', '=', $this->bury);
+        }
+        
+        $qb->add_constraint('metadata.authors', 'LIKE', "%|{$_MIDCOM->auth->user->guid}|%");
         if ($qb->count_unchecked() > 0)
         {
             return false;
