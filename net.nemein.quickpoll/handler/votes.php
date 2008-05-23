@@ -189,6 +189,8 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
         $data['votes_toolbars'] = array();
         $data['votes_controllers'] = array();
         
+        $last_modified = $this->_article->metadata->revised;
+        
         $this->_load_schemadb();
         
         foreach ($data['votes'] as $vote)
@@ -199,6 +201,11 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
             $data['votes_controllers'][$vote->guid]->set_storage($vote);
             $data['votes_controllers'][$vote->guid]->process_ajax();
             
+            if ($vote->metadata->revised > $last_modified)
+            {
+                $last_modified = $vote->metadata->revised;
+            }
+            
             // Populate vote toolbar
             $this->_vote_toolbar($vote);
         }
@@ -206,6 +213,8 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
         // Prevent client / proxy from caching the resulting page
         $_MIDCOM->cache->content->no_cache();
         $_MIDCOM->cache->content->uncached();
+        
+        $_MIDCOM->set_26_request_metadata($last_modified, $this->_article->guid);
                 
         return true;
     }
@@ -278,6 +287,8 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
         // Prevent client / proxy from caching the resulting page
         $_MIDCOM->cache->content->no_cache();
         $_MIDCOM->cache->content->uncached();
+        
+        $_MIDCOM->set_26_request_metadata(time(), $this->_article->guid);
         
         return true;
     }
