@@ -228,6 +228,17 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
      */
     function show($width = 300, $height = 200, $zoom_level = null, $echo_output = true)
     {
+        $callbacks = $this->_config->get('map_onshow_callbacks');
+        if (is_array($callbacks))
+        {
+            $callback_args = array(&$this);
+            foreach ($callbacks as $callback)
+            {
+                call_user_func($callback, $callback_args);
+            }
+            unset($callback, $callback_args);
+        }
+        unset($callbacks);
         $html = '';
         $script = '';
                 
