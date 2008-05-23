@@ -305,8 +305,8 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         $i++;
         
         // Just in case.. cast lat/lon to 'dot' delimited numbers
-        $lat = number_format($marker['coordinates']['latitude'],6);
-        $lon = number_format($marker['coordinates']['longitude'],6);
+        $lat = number_format($marker['coordinates']['latitude'], 6, '.', '');
+        $lon = number_format($marker['coordinates']['longitude'],6, '.', '');
 
         $script .= "var marker_{$i} = new Marker(new LatLonPoint({$lat}, {$lon}))\n";
         
