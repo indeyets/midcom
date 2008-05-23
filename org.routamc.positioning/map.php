@@ -46,6 +46,11 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
     var $markers = array();
 
     /**
+     * Set map zoom level to this value (note: effect of zoom level varies by map provider)
+     */
+    var $zoom_level = false;
+
+    /**
      * Constructor
      *
      * @param string $id    Id string for the map
@@ -226,7 +231,7 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
      * @param integer $height Height of the map in pixels
      * @param integer $zoom_level Zoom level of the map. Leave to NULL for autozoom
      */
-    function show($width = 300, $height = 200, $zoom_level = null, $echo_output = true)
+    function show($width = 300, $height = 200, $echo_output = true)
     {
         $callbacks = $this->_config->get('map_onshow_callbacks');
         if (is_array($callbacks))
@@ -275,13 +280,12 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         }
         $script .= "    mapstraction_{$this->id}.addSmallControls();\n";
         $script .= "    mapstraction_{$this->id}.autoCenterAndZoom();\n";
-        $script .= "}\n";
-        
-        if (!is_null($zoom_level))
+        if ($this->zoom_level !== false)
         {
-            $script .= "    mapstraction_{$this->id}.setZoom({$zoom_level});\n";
+            // FIXME: if this is set do not bother with autozoom
+            $script .= "    mapstraction_{$this->id}.setZoom({$this->zoom_level});\n";
         }
-        
+        $script .= "}\n";        
         if ($echo_output)
         {
             $script .= "</script>\n";
