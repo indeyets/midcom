@@ -74,6 +74,28 @@ class net_nemein_favourites_favourite_dba extends __net_nemein_favourites_favour
         $qb->add_constraint('bury', '=', true);
         return $qb->count_unchecked();
     }
+    
+
+    /**
+     * Safeguard against duplicate favouriting
+     */
+    function _on_creating()
+    {
+        if (!$_MIDGARD['user'])
+        {
+            return parent::_on_creating();
+        }
+        $qb = net_nemein_favourites_favourite_dba::new_query_builder();
+        $qb->add_constraint('objectGuid', '=', $this->objectGuid);
+        $qb->add_constraint('bury', '=', $this->bury);
+        $qb->add_constraint('metadata.creator', '=', $_MIDCOM->auth->user->guid);
+        if ($qb->count_unchecked() > 0)
+        {
+            return false;
+        }
+        
+        return parent::_on_creating();
+    }
 }
 
 ?>
