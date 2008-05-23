@@ -149,7 +149,7 @@ class midcom_helper_datamanager2_widget_tagpicker extends midcom_helper_datamana
         
         foreach ($tags_from_user as $tag)
         {
-            if (!isset($tags_in_db[$tag])
+            if (!isset($tags_in_db[$tag]))
             {
                 // We don't have this tag, skip.
                 continue;
