@@ -7,6 +7,10 @@ Legend:
   not guaranteed to be backwards compatible to previous versions
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
+
+2008-05-27 adrenalin
+  + Allow the fallback language to be chosen instead of forced English
+
 2007-10-13 solt
   + Moved to Asgard plugin
   + Made nicer look

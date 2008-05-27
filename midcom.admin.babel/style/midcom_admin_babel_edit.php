@@ -8,6 +8,7 @@ $languages = $data['l10n']->_language_db;
 $components = array_keys($_MIDCOM->componentloader->manifests);
 asort($components);
 
+$fallback_language = $_MIDCOM->i18n->get_fallback_language();
 $deflang = $languages[$_MIDCOM->i18n->get_fallback_language()]['enname'];
 $editlang = $languages[$data['view_lang']]['enname'];
 ?>
@@ -28,7 +29,7 @@ $editlang = $languages[$data['view_lang']]['enname'];
             <th><?php echo $data['l10n']->get('string-id')?></th>
             <th>&(deflang); (<?php echo $data['l10n']->get('default');?>)</th>
             <?php 
-            if ($data['view_lang'] != 'en') 
+            if ($data['view_lang'] !== $fallback_language)
             { 
                 ?>
                 <th>&(editlang);</th>
@@ -42,9 +43,9 @@ $editlang = $languages[$data['view_lang']]['enname'];
     
         <tr class="newstring">
             <td><?php echo $data['l10n']->get('new string')?><br /><input type="text" name="new_stringid" size="35" /></td>
-            <td><textarea type="text" name="new_en" cols="30" rows="3" wrap="virtual"></textarea></td>
+            <td><textarea type="text" name="new_fallback" cols="30" rows="3" wrap="virtual"></textarea></td>
             <?php 
-            if ($data['view_lang'] != 'en') 
+            if ($data['view_lang'] !== $fallback_language)
             { 
                 ?>
                 <td><textarea type="text" name="new_loc" cols="30" rows="3" wrap="virtual"></textarea></td>
@@ -57,17 +58,25 @@ $editlang = $languages[$data['view_lang']]['enname'];
         $count = 0;
         foreach ($data['view_strings'] as $id => $str) 
         {
-            $en = $str['en'];
+            $fallback = $str[$fallback_language];
             $loc = $str[$data['view_lang']];
-            $row = ($count/2 == floor($count/2))?"even":"odd";
+            
+            if ($count % 2 === 0)
+            {
+                $row = 'even';
+            }
+            else
+            {
+                $row = 'odd';
+            }
             ?>
             <tr class="string-&(row);">
                 <th>&(id);</th>
                 <?php 
-                if ($data['view_lang'] != 'en') 
+                if ($data['view_lang'] !== $fallback_language)
                 { 
                     ?>
-                    <td><span>&(en);</span></td>
+                    <td><span>&(fallback);</span></td>
                     <?php 
                 } 
                 ?>

@@ -16,6 +16,11 @@
             'email' => 'olga@olga.pl',
             'role' => 'lead',
         ),
+        'adrenalin' => array
+        (
+            'name' => 'Arttu Manninen',
+            'role' => 'lead',
+        ),
     ),
     'dependencies' => array
     (
