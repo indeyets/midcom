@@ -198,10 +198,13 @@ class midcom_services__i18n_l10n {
      * 
      * It will write all loaded languages to disk, regardless of changes.
      */
-    function flush() {
+    function flush()
+    {
         foreach ($this->_stringdb as $lang => $table)
         {
-            if (!is_writable("{$this->_library_filename}.{$lang}.txt"))
+            $file = @fopen("{$this->_library_filename}.{$lang}.txt", 'w');
+            
+            if (!$file)
             {
                 $_MIDCOM->uimessages->add("L10N Error", "Failed to open the file '{$this->_library_filename}.{$lang}.txt' for writing.", 'error');
                 debug_push_class(__CLASS__, __FUNCTION__);
@@ -210,7 +213,6 @@ class midcom_services__i18n_l10n {
                 return false;
             }
         
-            $file = fopen("{$this->_library_filename}.{$lang}.txt", 'w');
             
             fwrite($file, "---# MidCOM String Database\n");
             fwrite($file, "---VERSION 2.1.0\n");
