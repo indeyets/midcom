@@ -293,6 +293,8 @@ class fi_hut_loginbroker_handler_index  extends midcom_baseclasses_components_ha
             $data['redirect_to'] .= '=' . rawurlencode("{$_MIDCOM->auth->_auth_backend->session_id}-{$_MIDCOM->auth->_auth_backend->user->id}");
         }
 
+        // Try to prevent keep-alive when redirecting away from the broker
+        header('Connection: close');
         $_MIDCOM->relocate($data['redirect_to']);
         // This should exit
         return true;

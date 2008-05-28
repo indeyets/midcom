@@ -943,6 +943,11 @@ class midcom_application
                         {
                             $redirect_to = '';
                         }
+                        if (   isset($_SERVER['QUERY_STRING'])
+                            && !empty($_SERVER['QUERY_STRING']))
+                        {
+                            $redirect_to .= "?{$_SERVER['QUERY_STRING']}";
+                        }
                         $this->cache->content->no_cache();
                         $this->auth->logout($redirect_to);
                         // This will exit;
@@ -963,6 +968,11 @@ class midcom_application
                         else
                         {
                             $redirect_to = '';
+                        }
+                        if (   isset($_SERVER['QUERY_STRING'])
+                            && !empty($_SERVER['QUERY_STRING']))
+                        {
+                            $redirect_to .= "?{$_SERVER['QUERY_STRING']}";
                         }
                         if ($this->auth->is_valid_user())
                         {
