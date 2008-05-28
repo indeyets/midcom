@@ -116,6 +116,10 @@
  *   'revalidate' is the default which sets 'must-revalidate' and presses the issue by setting Expires to current time<br/>
  *   'public' and 'private' enable caching with the cache-control header of the same name, default expiry timestamps are generated using the cache_module_content_default_lifetime
  * - <b>int cache_module_content_default_lifetime:</b> How many seconds from now to set the default Expires header to, defaults to one minute
+ * - <b>string cache_module_content_caching_strategy:</b> Valid values are<br/>
+ *   'user' the "classic" mode, per user content-cache, default<br/>
+ *   'memberships' cache per group memberships (users that have same memberships share same cache), for many cases this should offer more performance and smaller cache but if you use per-user privileges or other user specific processing this will cause hard-to-debug issues<br/>
+ *   'public' everything goes to single public cache, disabling logins alltogether will likely be safer.
  * - <b>Array cache_module_nap_backend:</b> The configuration of the nap/metadata cache backend.
  *   Check the documentation of midcom_services_cache_backend of what options are available here.
  *   In general, you should use this only to change the backend driver.
@@ -355,6 +359,7 @@ $GLOBALS['midcom_config_default']['cache_module_content_backend'] = Array('drive
 $GLOBALS['midcom_config_default']['cache_module_content_uncached'] = false; /* Temporary until the cache module is back working correctly */
 $GLOBALS['midcom_config_default']['cache_module_content_headers_strategy'] = 'revalidate';
 $GLOBALS['midcom_config_default']['cache_module_content_default_lifetime'] = 60; // Seconds, added to gmdate() for expiry timestamp (in case no other expiry is set)
+$GLOBALS['midcom_config_default']['cache_module_content_caching_strategy'] = 'user'; // Valid options are 'user' (default), 'memberships' and 'public'
 
 // NAP / Metadata Cache
 $GLOBALS['midcom_config_default']['cache_module_nap_backend'] = Array(); /* Auto-Detect */

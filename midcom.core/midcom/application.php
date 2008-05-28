@@ -672,6 +672,16 @@ class midcom_application
      * $_MIDCOM->dynamic_load($view['url2']);
      * </code>
      *
+     * Results of dynamic_loads are cached, by default with the system cache strategy
+     * but you can specify separate cache strategy for the DL in the config array like so
+     * <code>
+     * $GLOBALS['midcom']->dynamic_load("/midcom-substyle-{$substyle}/{$newsticker}", array('cache_module_content_caching_strategy' => 'public'))
+     * </code>
+     *
+     * You can use only less specific strategy than the global strategy, ie basically you're limited to 'memberships' and 'public' as
+     * values if the global strategy is 'user' and to 'public' the global strategy is 'memberships', failure to adhere to this
+     * rule will result to weird cache behaviour.
+     *
      * @param string $url                The URL, relative to the Midgard Page, that is to be requested.
      * @param Array $config              A key=>value array with any configuration overrides.
      * @param int $type                  Request type (by default MIDCOM_REQUEST_CONTENT)

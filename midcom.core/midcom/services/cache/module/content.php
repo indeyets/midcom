@@ -227,7 +227,39 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $identifier_source .= ';LANG=ALL';
         }
 
-        $identifier_source .= ';USER=' . $_MIDGARD['user'];
+        if (!isset($customdata['cache_module_content_caching_strategy']))
+        {
+            $cache_strategy = $GLOBALS['midcom_config']['cache_module_content_caching_strategy'];
+        }
+        else
+        {
+            $cache_strategy = $customdata['cache_module_content_caching_strategy'];
+        }
+
+        switch ($cache_strategy)
+        {
+            case 'memberships':
+                if (empty($_MIDGARD['user']))
+                {
+                    $identifier_source .= ';USER=ANONYMOUS';
+                    break;
+                }
+                $mc = new midgard_collector('midgard_member', 'uid', $_MIDGARD['user']);
+                $mc->set_key_property('gid');
+                $mc->execute();
+                $gids = $mc->list_keys();
+                unset($mc);
+                $identifier_source .= ';GROUPS=' . implode(',', array_keys($gids));
+                unset($gids);
+                break;
+            case 'public':
+                $identifier_source .= ';USER=EVERYONE';
+                break;
+            case 'user':
+            default:
+                $identifier_source .= ';USER=' . $_MIDGARD['user'];
+                break;            
+        }
 
         if (isset($_MIDCOM))
         {
@@ -245,6 +277,13 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
         // TODO: Add browser capability data (mobile, desktop browser etc) from WURFL here
 
+        /**
+         * This can leak data usefull for attacker, OTOH it's very handy for debugging 
+        if ($context === 0)
+        {
+            header("X-MidCOM-request-id-source: {$identifier_source}");
+        }
+         */
         return 'R-' . md5($identifier_source);
     }
 
@@ -709,15 +748,18 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     }
 
     /**
-     * This function currently maps to invalidate_all unconditionally, as there is no
-     * leaf-level invalidation of content cache objects yet.
+     * Looks for list of content and request identifiers paired with the given guid
+     * and removes all of those from the caches.
      */
     function invalidate($guid)
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
         $this->_meta_cache->open();
 
         if (!$this->_meta_cache->exists($guid))
         {
+            debug_add("no entry for {$guid} in meta cache");
+            debug_pop();
             return;
         }
 
@@ -727,14 +769,17 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         {
             if ($this->_meta_cache->exists($content_id))
             {
+                debug_add("Removing key {$content_id} from meta cache");
                 $this->_meta_cache->remove($content_id);
             }
 
             if ($this->_data_cache->exists($content_id))
             {
+                debug_add("Removing key {$content_id} from data cache");
                 $this->_data_cache->remove($content_id);
             }
         }
+        debug_pop();
     }
 
     /**
@@ -925,7 +970,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $this->_meta_cache->close();
 
             // Cache where the object have been
-            $this->store_context_guid_map($context, $content_id);
+            $this->store_context_guid_map($context, $content_id, $request_id);
 
         }
 
@@ -938,7 +983,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         }
     }
 
-    function store_context_guid_map($context, $content_id)
+    function store_context_guid_map($context, $content_id, $request_id)
     {
         $this->_meta_cache->open(true);
         foreach ($this->context_guids[$context] as $guid)
@@ -960,6 +1005,10 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             if (!in_array($content_id, $guidmap))
             {
                 $guidmap[] = $content_id;
+            }
+            if (!in_array($request_id, $guidmap))
+            {
+                $guidmap[] = $request_id;
             }
             $this->_meta_cache->put($guid, $guidmap);
         }
@@ -1021,14 +1070,18 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             return;
         }
         $dl_request_id = 'DL' . $this->generate_request_identifier($context, $dl_config);
-        $dl_content_id = 'DL' . $this->generate_content_identifier($context);
+        /**
+         * See the FIXME in generate_content_identifier on why we use the content hash
+        $dl_content_id = $this->generate_content_identifier($context);
+         */
+        $dl_content_id = 'DLC-' . md5($dl_cache_data);
         $this->_meta_cache->open(true);
         $this->_data_cache->open(true);
         $this->_meta_cache->put($dl_request_id, $dl_content_id);
         debug_add("Writing cache entry for '{$dl_content_id}' in request '{$dl_request_id}'");
         $this->_data_cache->put($dl_content_id, $dl_cache_data);
         // Cache where the object have been
-        $this->store_context_guid_map($context, $dl_content_id);
+        $this->store_context_guid_map($context, $dl_content_id, $dl_request_id);
         unset($guid, $guidmap);
         $this->_meta_cache->close();
         $this->_data_cache->close();

@@ -163,7 +163,11 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
 
     function _remove_all()
     {
-        @$this->_cache->flush();
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Calling \$this->_cache->flush()");
+        $stat = @$this->_cache->flush();
+        debug_add("\$this->_cache->flush() returnder with " . (int)$stat);
+        debug_pop();
     }
 
     /**
