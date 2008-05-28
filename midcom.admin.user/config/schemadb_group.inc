@@ -149,5 +149,18 @@
             'widget'      => 'privilege',
             'storage'     => null,
         ),
+        'break_lock' => array
+        (
+            'title'       => 'enable breaking of the editing lock',
+            'type'        => 'privilege',
+            'type_config' => array
+            (
+                'privilege_name' => 'midcom.helper.datamanager2:break_lock',
+                'assignee'       => 'SELF',
+                'classname'      => 'midcom_helper_datamanager2_controller',
+            ),
+            'widget'      => 'privilege',
+            'storage'     => null,
+        ),
     ),
 ),
