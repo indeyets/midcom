@@ -211,6 +211,10 @@ Kopioi puu
 Luo %s %s:n alle
 ---STRINGEND
 
+---STRING created by
+Luonut
+---STRINGEND
+
 ---STRING created by %s on %s
 Luonut %s %s
 ---STRINGEND
@@ -273,6 +277,10 @@ Muokkaa tekstitiedostoa
 
 ---STRING editor options
 Tekstieditorien ominaisuudet
+---STRINGEND
+
+---STRING enable breaking of the editing lock
+Salli muokkauslukon murtaminen
 ---STRINGEND
 
 ---STRING enable quicklinks
@@ -583,6 +591,10 @@ Käyttöoikeudet
 Poista lopullisesti
 ---STRINGEND
 
+---STRING regular expression for selecting mgdschema types
+Säännöllinen lauseke MgdSchema-tyyppien valintaan
+---STRINGEND
+
 ---STRING require authentication
 Vaadi sisäänkirjautumista
 ---STRINGEND
@@ -761,9 +773,5 @@ Versio %s tietueesta %s
 
 ---STRING xml
 XML
----STRINGEND
-
----STRING regular expression for selecting mgdschema types
-Säännöllinen lauseke MgdSchema-tyyppien valintaan
 ---STRINGEND
 
