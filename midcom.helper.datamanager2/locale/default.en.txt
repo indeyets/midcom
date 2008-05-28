@@ -15,6 +15,10 @@
 You can only upload images here. This file will not be saved.
 ---STRINGEND
 
+---STRING add new file
+Add a new file
+---STRINGEND
+
 ---STRING archived image
 Archived image
 ---STRINGEND
@@ -52,6 +56,10 @@ denotes required field
 Double click to edit
 ---STRINGEND
 
+---STRING drag and drop to sort
+Drag and drop to sort
+---STRINGEND
+
 ---STRING field %s is required
 The field %s is required, please fill it out.
 ---STRINGEND
@@ -72,12 +80,20 @@ Previous
 Save
 ---STRINGEND
 
+---STRING lock will expire on %s
+Lock will expire on %s
+---STRINGEND
+
 ---STRING midcom.helper.datamanager2
 Data management and form rendering library
 ---STRINGEND
 
 ---STRING no file uploaded
 No file uploaded
+---STRINGEND
+
+---STRING object locked
+Object locked
 ---STRINGEND
 
 ---STRING passwords do not match
@@ -100,6 +116,10 @@ Rotate left
 Rotate right
 ---STRINGEND
 
+---STRING this object was locked by %s
+This object was locked by %s
+---STRINGEND
+
 ---STRING type blobs: file size
 File size
 ---STRINGEND
@@ -116,16 +136,16 @@ Available Sizes
 Thumbnail
 ---STRINGEND
 
----STRING type php: parse error in line %s
-Parse Error in line %s
----STRINGEND
-
 ---STRING type number: value must not be larger then %s
 The value of this field may not be larger then %s.
 ---STRINGEND
 
 ---STRING type number: value must not be smaller then %s
 The value of this field may not be smaller then %s.
+---STRINGEND
+
+---STRING type php: parse error in line %s
+Parse Error in line %s
 ---STRINGEND
 
 ---STRING type select: multiselect not allowed
@@ -150,10 +170,6 @@ The value of a text type may not be an array or an object.
 
 ---STRING upload file
 Upload file
----STRINGEND
-
----STRING add new file
-Add a new file
 ---STRINGEND
 
 ---STRING upload image
@@ -220,7 +236,7 @@ Other
 Write the order, lower numbers are placed first
 ---STRINGEND
 
----STRING drag and drop to sort
-Drag and drop to sort
+---STRING break the lock
+Break the lock
 ---STRINGEND
 

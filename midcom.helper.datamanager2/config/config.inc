@@ -125,3 +125,6 @@
     ),
 ),
 'fck_default_config_snippet' => 'file://midcom/helper/datamanager2/config/fckeditor_default.inc',
+
+// Lock timeout, which defines how many seconds the object should be locked
+'lock_timeout' => 1800,

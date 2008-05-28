@@ -22,12 +22,14 @@
 class midcom_helper_datamanager2_controller_simple extends midcom_helper_datamanager2_controller
 {
     /**
-     * Empty default implementation, this calls won't do much.
+     * Check if a schema has been set
      *
      * @return boolean Indicating success.
      */
     function initialize()
     {
+        parent::initialize();
+        
         if (count($this->schemadb) == 0)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
@@ -85,6 +87,18 @@ class midcom_helper_datamanager2_controller_simple extends midcom_helper_dataman
 
         $result = $this->formmanager->process_form();
         
+        // Remove the lock
+        if (   $result === 'save'
+            || $result === 'cancel')
+        {
+            midcom_helper_datamanager2_controller::set_lock($this->datamanager->storage->object, 0);
+        }
+        // or set it, if needed
+        elseif (!midcom_helper_datamanager2_controller::is_locked($this->datamanager->storage->object, $this->lock_timeout))
+        {
+            midcom_helper_datamanager2_controller::set_lock($this->datamanager->storage->object, $this->lock_timeout);
+        }
+        
         // Handle successful save explicitly.
         if (   $result == 'save'
             || $result == 'next')
@@ -130,7 +144,5 @@ class midcom_helper_datamanager2_controller_simple extends midcom_helper_dataman
 
         return $result;
     }
-
 }
-
 ?>

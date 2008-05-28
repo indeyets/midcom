@@ -999,30 +999,26 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      */
     function get_clicked_button()
     {
-        if (array_key_exists('midcom_helper_datamanager2_save', $_REQUEST))
+        switch (true)
         {
-            return 'save';
-        }
-        else if (array_key_exists('midcom_helper_datamanager2_next', $_REQUEST))
-        {
-            return 'next';
-        }
-        else if (array_key_exists('midcom_helper_datamanager2_previous', $_REQUEST))
-        {
-            return 'previous';
-        }
-        else if (array_key_exists('midcom_helper_datamanager2_cancel', $_REQUEST))
-        {
-            return 'cancel';
-        }
-        else if (array_key_exists('midcom_helper_datamanager2_preview', $_REQUEST))
-        {
-            return 'preview';
-        }
-        else
-        {
-            return 'edit';
+            case (array_key_exists('midcom_helper_datamanager2_save', $_REQUEST)):
+                return 'save';
+            
+            case (array_key_exists('midcom_helper_datamanager2_next', $_REQUEST)):
+                return 'next';
+                
+            case (array_key_exists('midcom_helper_datamanager2_previous', $_REQUEST)):
+                return 'previous';
+                
+            case (array_key_exists('midcom_helper_datamanager2_cancel', $_REQUEST)):
+                return 'cancel';
+                
+            case (array_key_exists('midcom_helper_datamanager2_preview', $_REQUEST)):
+                return 'preview';
+                
+            default:
+                return 'edit';
         }
     }
-
 }
+?>

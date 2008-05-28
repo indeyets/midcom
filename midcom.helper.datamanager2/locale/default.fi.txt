@@ -15,6 +15,10 @@
 Voit ainoastaan tuoda kuvia tänne. Tätä tiedostoa ei tallenneta
 ---STRINGEND
 
+---STRING add new file
+
+---STRINGEND
+
 ---STRING archived image
 Arkistoitu kuva
 ---STRINGEND
@@ -51,6 +55,10 @@ Pakollinen kenttä
 Kaksoisklikkaa editoidaksesi
 ---STRINGEND
 
+---STRING drag and drop to sort
+Järjestele hiirellä raahaamalla
+---STRINGEND
+
 ---STRING field %s is required
 Kenttä %s on pakollinen, ole hyvä ja täytä se.
 ---STRINGEND
@@ -71,12 +79,20 @@ Edellinen
 Tallenna
 ---STRINGEND
 
+---STRING lock will expire on %s
+Lukko avautuu ajalla %s
+---STRINGEND
+
 ---STRING midcom.helper.datamanager2
 Tiedonhallinta- ja lomakekirjasto
 ---STRINGEND
 
 ---STRING no file uploaded
 Ei tiedostoa
+---STRINGEND
+
+---STRING object locked
+Kohde lukittu
 ---STRINGEND
 
 ---STRING passwords do not match
@@ -97,6 +113,10 @@ Kierrä vasemmalle
 
 ---STRING rotate right
 Kierrä oikealle
+---STRINGEND
+
+---STRING this object was locked by %s
+Tämän kohteen lukitsi %s
 ---STRINGEND
 
 ---STRING type blobs: file size
@@ -121,6 +141,10 @@ Kentän arvo ei saa olla suurempi kuin %s
 
 ---STRING type number: value must not be smaller then %s
 Kentän arvo ei saa olla pienempi kuin %s
+---STRINGEND
+
+---STRING type php: parse error in line %s
+
 ---STRINGEND
 
 ---STRING type select: multiselect not allowed
@@ -153,6 +177,10 @@ Lisää kuva
 
 ---STRING validation failed: alphanumeric
 Vain alfanumeerisia merkkejä sallitaan
+---STRINGEND
+
+---STRING validation failed: date
+
 ---STRINGEND
 
 ---STRING validation failed: email
@@ -207,7 +235,7 @@ Muu
 Kirjoita järjestys, pienet numerot näytetään ensimmäisenä
 ---STRINGEND
 
----STRING drag and drop to sort
-Järjestele hiirellä raahaamalla
+---STRING break the lock
+Murra lukko
 ---STRINGEND
 
