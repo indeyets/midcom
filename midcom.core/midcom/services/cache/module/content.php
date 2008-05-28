@@ -205,7 +205,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      */
     function generate_request_identifier($context, $customdata = null)
     {
-        $identifier_source = '';
+        $identifier_source = 'CACHE:' . $GLOBALS['midcom_config']['cache_module_content_name'];
 
         if ($this->_multilang)
         {
@@ -220,11 +220,11 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             {
                 $i18n =& $_MIDCOM->i18n;
             }
-            $identifier_source .= 'LANG=' . $i18n->get_current_language();
+            $identifier_source .= ';LANG=' . $i18n->get_current_language();
         }
         else
         {
-            $identifier_source .= 'LANG=ALL';
+            $identifier_source .= ';LANG=ALL';
         }
 
         $identifier_source .= ';USER=' . $_MIDGARD['user'];
@@ -256,9 +256,14 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         if (   !isset($this->context_guids[$context])
             || empty($this->context_guids[$context]))
         {
-            return null;
+            // Error pages and such have no GUIDs in some cases
+            $identifier_source = $this->generate_request_identifier($context);
         }
-        $identifier_source = implode(',', $this->context_guids[$context]);
+        else
+        {
+            // FIXME: These guids should be registered by language...
+            $identifier_source = implode(',', $this->context_guids[$context]);
+        }
         return 'C-' . md5($identifier_source);
     }
 
@@ -287,8 +292,9 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $backend_config['driver'] = 'null';
         }
 
-        $name = $GLOBALS['midcom_config']['cache_module_content_name'];
-        $meta_backend_name = "{$name}";
+        //$name = $GLOBALS['midcom_config']['cache_module_content_name'];
+        $name = 'content';
+        $meta_backend_name = "{$name}_meta";
         $data_backend_name = "{$name}_data";
 
         $backend_config['auto_serialize'] = true;
@@ -408,6 +414,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
                 case "midcom-cache-nocache":
                 case "midcom-cache-stats":
                     // Don't cache these.
+                    header("X-MidCOM-cache: midcom-xxx uncached");
                     debug_pop();
                     return;
             }
@@ -416,6 +423,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         // Check for POST variables, if any is found, go for no_cache.
         if (count($_POST) > 0)
         {
+            header("X-MidCOM-cache: POST uncached");
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('POST variables have been found, setting no_cache and not checking for a hit.');
             $this->no_cache();
@@ -426,6 +434,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         // Check for uncached operation
         if ($this->_uncached)
         {
+            header("X-MidCOM-cache: uncached mode");
             return;
         }
 
@@ -435,16 +444,19 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         $request_id = $this->generate_request_identifier(0);
         if (!$this->_meta_cache->exists($request_id))
         {
+            header("X-MidCOM-meta-cache: MISS {$request_id}");
             // We have no information about content cached for this request
             $this->_meta_cache->close();
             return;
         }
+        header("X-MidCOM-meta-cache: HIT {$request_id}");
 
         // Load metadata for the content identifier connected to current request
         $content_id = $this->_meta_cache->get($request_id);
 
         if (!$this->_meta_cache->exists($content_id))
         {
+            header("X-MidCOM-meta-cache: MISS {$content_id}", false);
             // Content cache data is missing
             $this->_meta_cache->close();
             return;
@@ -454,6 +466,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
         if (!is_null($data['expires']))
         {
+            header("X-MidCOM-meta-cache: EXPIRED {$content_id}", false);
             if ($data['expires'] < time())
             {
                 $this->_meta_cache->close();
@@ -464,6 +477,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             }
         }
         $this->_meta_cache->close();
+        header("X-MidCOM-meta-cache: HIT {$content_id}", false);
 
         // Check If-Modified-Since and If-None-Match, do content output only if
         // we have a not modified match.
@@ -472,12 +486,14 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $this->_data_cache->open();
             if (! $this->_data_cache->exists($content_id))
             {
+                header("X-MidCOM-data-cache: MISS {$content_id}");
                 $this->_data_cache->close();
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Current page is in not in the data cache, (possible ghost read).", MIDCOM_LOG_WARN);
                 debug_pop();
                 return;
             }
+            header("X-MidCOM-data-cache: HIT {$content_id}");
             $content = $this->_data_cache->get($content_id);
             $this->_data_cache->close();
 
@@ -828,7 +844,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         header('HTTP/1.0 304 Not Modified');
         return true;
     }
-
+    
     /**
      * This helper will be called during module shutdown, it completes the output caching,
      * post-processes it and updates the cache databases accordingly.
@@ -887,7 +903,10 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             // Construct cache identifiers
             $context = $_MIDCOM->get_current_context();
             $request_id = $this->generate_request_identifier($context);
-            //$content_id = $this->generate_content_identifier($context);
+            /**
+             * See the FIXME in generate_content_identifier on why we use the content hash
+            $content_id = $this->generate_content_identifier($context);
+             */
             $content_id = 'C-' . $etag;
 
             debug_push_class(__CLASS__, __FUNCTION__);
