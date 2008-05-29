@@ -18,6 +18,21 @@ body div.midcom_helper_imagepopup h1
     height: 10%;
 }
 
+ul
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+ul li
+{
+	height: 59px;
+	margin: 0 0 5px 0;
+	padding: 5px;
+	border-bottom: 1px solid #D7DBD1;
+	
+}
+
 #top_navigation
 {
     margin:0;
@@ -46,7 +61,8 @@ body div.midcom_helper_imagepopup h1
     padding-left: 10px;
     padding-right: 10px;
     display: inline;
-    margin-right: 10px
+    margin-right: 10px;
+    height: auto
 }
 
 #top_navigation ul li.selected
@@ -124,19 +140,4 @@ body div.midcom_helper_imagepopup h1
 .search-form
 {
 	margin: 10px 0 10px 0;
-}
-
-ul
-{
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-}
-ul li
-{
-	height: 59px;
-	margin: 0 0 5px 0;
-	padding: 5px;
-	border-bottom: 1px solid #D7DBD1;
-	
 }

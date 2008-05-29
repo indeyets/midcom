@@ -27,7 +27,8 @@
 					file : tinyMCE.activeEditor.getParam("plugin_imagepopup_popupurl"),
 					width : 800,
 					height : 400,
-					inline : 1
+				        inline : 1,
+				        scrollbars : 'yes',
 				}, {
 					plugin_url : url, // Plugin absolute URL
 					some_custom_arg : 'custom arg' // Custom argument
