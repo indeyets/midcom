@@ -300,6 +300,21 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
         $this->_add_new_upload_row($frozen);
         $this->_add_table_footer($frozen);
     }
+    
+    function _extension_to_mimetype($extension, $mimetype)
+    {
+        switch ($extension)
+        {
+            case 'ai':
+                return 'application/illustrator';
+            case 'eps':
+                return 'application/x-eps';
+            case 'indd':
+                return 'application/x-indesign';
+            default:
+                return $mimetype;
+        }
+    }
 
     /**
      * Checks whether a new file has been uploaded. If yes, it is processed.
@@ -331,6 +346,14 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
             }
 
             $identifier = md5(time() . $filename . $file['tmp_name']);
+            
+            // In some cases we want to tweak the mimetype based on file extension
+            $filename_parts = explode('.', $filename);
+            if (count($filename_parts) > 1)
+            {
+                $extension = $filename_parts[count($filename_parts) - 1];
+                $file['type'] = $this->_extension_to_mimetype($extension, $file['type']);
+            }
 
             if (! $this->_type->add_attachment($identifier, $filename, $title, $file['type'], $file['tmp_name']))
             {
