@@ -494,6 +494,7 @@ $GLOBALS['midcom_config_default']['midcom_services_rcs_enable'] = true;
 // show_unapproved_objects). Disabled by default. Unsafe to Link Prefetching!
 $GLOBALS['midcom_config_default']['metadata_approval'] = false;
 $GLOBALS['midcom_config_default']['metadata_scheduling'] = false;
+$GLOBALS['midcom_config_default']['metadata_lock_timeout'] = 60;    // Time in minutes
 $GLOBALS['midcom_config_default']['staging2live_staging'] = false;
 
 // Set the DM2 schema used by the Metadata Service

@@ -226,7 +226,8 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         
         // HTML generator information
         $_MIDCOM->add_meta_head(
-            array(
+            array
+            (
                 'name' => 'generator',
                 'content' => 'Midgard/' . mgd_version() . ' MidCOM/' . $GLOBALS['midcom_version'] . ' PHP/' . phpversion()
             )
@@ -234,7 +235,8 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         
         // PermaLink into machine-detectable format
         $_MIDCOM->add_link_head(
-            array(
+            array
+            (
                 'rel' => 'bookmark',
                 'href' => $request_metadata['permalink']
             )
@@ -242,7 +244,8 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
 
         // Last revision time for the entire page
         $_MIDCOM->add_meta_head(
-            array(
+            array
+            (
                 'name' => 'lastupdated',
                 'content' => @gmdate('Y-m-d H:i:s\Z', $request_metadata['lastmodified'])
             )

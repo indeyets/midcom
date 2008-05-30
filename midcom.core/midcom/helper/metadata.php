@@ -734,5 +734,96 @@ class midcom_helper_metadata
 
         return $this->_translations;
     }
+    
+    /**
+     * Check if the requested object is locked
+     * 
+     * @static
+     * @access public
+     * @param mixed &$object    MgdSchema object
+     * @return boolean          True if the object is locked, false if it isn't
+     */
+    function is_locked()
+    {
+        // Object hasn't been marked to be edited
+        if ($this->get('locked') === 0)
+        {
+            return false;
+        }
+        
+        if ($this->get('locked') - time() > $GLOBALS['midcom_config']['metadata_lock_timeout'] * 60)
+        {
+            return true;
+        }
+        
+        // Get the person who locked the this
+        // Lock was created by the user, allow unquestionable editing
+        if (   isset($_MIDCOM->auth->user)
+            && isset($_MIDCOM->auth->user->guid)
+            && $this->get('locker') !== $_MIDCOM->auth->user->guid)
+        {
+            return true;
+        }
+        
+        // Locks checked, this isn't locked
+        return false;
+    }
+    
+    
+    /**
+     * Set the object lock
+     * 
+     * @access public
+     * @param int $timeout   Length of the lock timeout
+     * @param String $user   GUID of the midgard_person object
+     * @return boolean       Indicating success
+     */
+    function lock($timeout = null, $user = null)
+    {
+        if (!$timeout)
+        {
+            $timeout = $GLOBALS['midcom_config']['metadata_lock_timeout'];
+        }
+        
+        if (!$user)
+        {
+            $this->set('locker', $_MIDCOM->auth->user->guid);
+        }
+        else
+        {
+            $this->set('locker', $user);
+        }
+        
+        // Update failed, return false
+        if (!$this->set('locked', time() + $timeout * 60))
+        {
+            return false;
+        }
+        
+        return true;
+    }
+
+    /**
+     * Unlock the object
+     * 
+     * @access public
+     * @param boolean    Indicating success
+     */
+    function unlock()
+    {
+        if (!$_MIDCOM->auth->can_user_do('midcom:unlock', null, 'midcom_services_auth', 'midcom'))
+        {
+            return false;
+        }
+        
+        
+        if (   !$this->set('locker', '')
+            || !$this->set('locked', ''))
+        {
+            return false;
+        }
+        
+        return true;
+    }
 }
 ?>

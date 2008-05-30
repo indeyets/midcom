@@ -1016,7 +1016,38 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             case (array_key_exists('midcom_helper_datamanager2_preview', $_REQUEST)):
                 return 'preview';
                 
+            case (array('midcom_helper_datamanager2_remove_lock', $_REQUEST)):
+                if (isset($_REQUEST['midcom_helper_datamanager2_object']))
+                {
+                    $object = $_MIDCOM->dbfactory->get_object_by_guid($_REQUEST['midcom_helper_datamanager2_object']);
+                    
+                    // Failed to get the object
+                    if (   !$object
+                        || !$object->guid)
+                    {
+                        debug_push_class(__CLASS__, __FUNCTION__);
+                        debug_add("Could not get the object that was requested for unlocking, perhaps it doesn't exist anymore.", MIDCOM_LOG_ERROR);
+                        debug_add('Last Midgard error was ' . mgd_errstr(), MIDCOM_LOG_ERROR);
+                        debug_pop();
+                        
+                        $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to get the object for unlocking, see error level log for details');
+                        // This will exit
+                    }
+                    
+                    $metadata = $object->get_metadata();
+                    
+                    // Remove the lock, if permission is granted
+                    if ($_MIDCOM->auth->can_user_do('midcom:unlock', null, 'midcom_services_auth', 'midcom.core'))
+                    {
+                        $metadata->unlock();
+                    }
+                    else
+                    {
+                        $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midcom.helper.datamanager2', 'midcom.helper.datamanager2'), $_MIDCOM->i18n->get_string('permission denied', 'midcom'), 'error');
+                    }
+                }
             default:
+        // Remove the this lock if applicable
                 return 'edit';
         }
     }

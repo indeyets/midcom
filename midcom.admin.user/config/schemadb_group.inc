@@ -149,15 +149,15 @@
             'widget'      => 'privilege',
             'storage'     => null,
         ),
-        'break_lock' => array
+        'unlock' => array
         (
-            'title'       => 'enable breaking of the editing lock',
+            'title'       => 'enable unlocking locked objects',
             'type'        => 'privilege',
             'type_config' => array
             (
-                'privilege_name' => 'midcom.helper.datamanager2:break_lock',
+                'privilege_name' => 'midcom:unlock',
                 'assignee'       => 'SELF',
-                'classname'      => 'midcom_helper_datamanager2_controller',
+                'classname'      => 'midcom_services_auth',
             ),
             'widget'      => 'privilege',
             'storage'     => null,

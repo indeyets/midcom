@@ -253,7 +253,10 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
      */
     function display_form()
     {
-        if (midcom_helper_datamanager2_controller::is_locked($this->datamanager->storage->object, $this->lock_timeout))
+        // Get the metadata object
+        $metadata = $this->datamanager->storage->object->get_metadata();
+        
+        if ($metadata->is_locked())
         {
             $this->show_remove_lock();
             return;
@@ -276,19 +279,16 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
         }
         else
         {
-            $user = $this->datamanager->storage->object->get_parameter('midcom.helper.datamanager2.lock', 'user');
-            $expires = strtotime($this->datamanager->storage->object->get_parameter('midcom.helper.datamanager2.lock', 'expires'));
-            
-            $person = new midcom_db_person($user);
+            $person = new midcom_db_person($this->datamanager->storage->object->metadata->locker);
             ?>
                 <div class="midcom_helper_datamanager2_remove_lock">
                     <h2><?php echo $this->_l10n->get('object locked'); ?></h2>
                     <p>
                         <?php echo sprintf($this->_l10n->get('this object was locked by %s'), $person->name); ?>.
-                        <?php echo sprintf($this->_l10n->get('lock will expire on %s'), strftime('%x %X', $expires)); ?>.
+                        <?php echo sprintf($this->_l10n->get('lock will expire on %s'), strftime('%x %X', $this->datamanager->storage->object->metadata->locked)); ?>.
                     </p>
             <?php
-            if ($_MIDCOM->auth->can_user_do('midcom.helper.datamanager2:break_lock', null, 'midcom_helper_datamanager2_controller', 'midcom.helper.datamanager2'))
+            if ($_MIDCOM->auth->can_user_do('midcom:unlock', null, 'midcom_services_auth', 'midcom.core'))
             {
                 echo "<form method=\"post\">\n";
                 echo "    <p class=\"break_lock\">\n";
@@ -301,103 +301,6 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
                 </div>
             <?php
         }
-    }
-    
-    /**
-     * Check if the object is being edited elsewhere
-     * 
-     * @static
-     * @access public
-     * @param mixed $guid      Object or GUID of the object
-     * @return boolean         True if the object is locked
-     */
-    function is_locked($target, $timeout = 0)
-    {
-        // Remove the object lock if applicable
-        if (   isset($_REQUEST['midcom_helper_datamanager2_remove_lock'])
-            && isset($_REQUEST['midcom_helper_datamanager2_object']))
-        {
-            // Get the object
-            $object = $_MIDCOM->dbfactory->get_object_by_guid($_POST['midcom_helper_datamanager2_object']);
-            
-            // Remove the lock, if permission is granted
-            if ($_MIDCOM->auth->can_user_do('midcom.helper.datamanager2:break_lock', null, 'midcom_helper_datamanager2_controller', 'midcom.helper.datamanager2'))
-            {
-                midcom_helper_datamanager2_controller::set_lock($object, $timeout);
-            }
-            else
-            {
-                $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midcom.helper.datamanager2', 'midcom.helper.datamanager2'), $_MIDCOM->i18n->get_string('permission denied', 'midcom'), 'error');
-            }
-        }
-        
-        // Check that we have an object at disposal
-        if (is_object($target))
-        {
-            $object =& $target;
-        }
-        else
-        {
-            $object = $_MIDCOM->dbfactory->get_object_by_guid($target);
-        }
-        
-        // Couldn't get the object. Different error handling here? Controller should have already alarmed the user, though...
-        if (   !$object
-            || !$object->guid)
-        {
-            return false;
-        }
-        
-        $expires = (int) strtotime($object->get_parameter('midcom.helper.datamanager2.lock', 'expires'));
-        
-        // Object not locked, allow editing
-        if (!$expires)
-        {
-            return false;
-        }
-        
-        // Get the person who locked the object
-        $user = $object->get_parameter('midcom.helper.datamanager2.lock', 'user');
-        
-        // Lock was created by the user, allow unquestionable editing
-        if (   isset($_MIDCOM->auth->user)
-            && isset($_MIDCOM->auth->user->guid)
-            && $user === $_MIDCOM->auth->user->guid)
-        {
-            return false;
-        }
-        
-        // Object lock is no longer valid
-        if (time() > $expires)
-        {
-            return false;
-        }
-        
-        // Lock checked, object locked
-        return true;
-    }
-    
-    /**
-     * Set the object lock
-     * 
-     * @static
-     * @access public
-     * @param mixed $object    Object that should be locked
-     * @param int $timeout     Length of the lock timeout
-     */
-    function set_lock($object, $timeout)
-    {
-        if ((int) $timeout < 1)
-        {
-            $object->set_parameter('midcom.helper.datamanager2.lock', 'user', '');
-            $object->set_parameter('midcom.helper.datamanager2.lock', 'expires', '');
-            return true;
-        }
-        
-        $object->set_parameter('midcom.helper.datamanager2.lock', 'user', $_MIDCOM->auth->user->guid);
-        $object->set_parameter('midcom.helper.datamanager2.lock', 'expires', strftime('%Y-%m-%d %H:%M:%S', time() + $timeout));
-        
-        return true;
     }
 }
 ?>

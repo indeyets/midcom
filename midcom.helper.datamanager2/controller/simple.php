@@ -86,17 +86,18 @@ class midcom_helper_datamanager2_controller_simple extends midcom_helper_dataman
         }
 
         $result = $this->formmanager->process_form();
+        $metadata = $this->datamanager->storage->object->get_metadata();
         
         // Remove the lock
         if (   $result === 'save'
             || $result === 'cancel')
         {
-            midcom_helper_datamanager2_controller::set_lock($this->datamanager->storage->object, 0);
+            $metadata->unlock();
         }
         // or set it, if needed
-        elseif (!midcom_helper_datamanager2_controller::is_locked($this->datamanager->storage->object, $this->lock_timeout))
+        elseif (!$metadata->is_locked())
         {
-            midcom_helper_datamanager2_controller::set_lock($this->datamanager->storage->object, $this->lock_timeout);
+            $metadata->lock();
         }
         
         // Handle successful save explicitly.
