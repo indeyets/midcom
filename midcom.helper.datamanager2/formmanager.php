@@ -1016,7 +1016,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             case (array_key_exists('midcom_helper_datamanager2_preview', $_REQUEST)):
                 return 'preview';
                 
-            case (array('midcom_helper_datamanager2_remove_lock', $_REQUEST)):
+            case (array('midcom_helper_datamanager2_unlock', $_REQUEST)):
                 if (isset($_REQUEST['midcom_helper_datamanager2_object']))
                 {
                     $object = $_MIDCOM->dbfactory->get_object_by_guid($_REQUEST['midcom_helper_datamanager2_object']);

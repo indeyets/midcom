@@ -258,7 +258,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
         
         if ($metadata->is_locked())
         {
-            $this->show_remove_lock();
+            $this->show_unlock();
             return;
         }
         
@@ -270,18 +270,18 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
      * 
      * @access public
      */
-    function show_remove_lock()
+    function show_unlock()
     {
         if (   function_exists('mgd_is_element_loaded')
-            && mgd_is_element_loaded('midcom_helper_datamanager2_remove_lock'))
+            && mgd_is_element_loaded('midcom_helper_datamanager2_unlock'))
         {
-            mgd_show_element('midcom_helper_datamanager2_remove_lock');
+            mgd_show_element('midcom_helper_datamanager2_unlock');
         }
         else
         {
             $person = new midcom_db_person($this->datamanager->storage->object->metadata->locker);
             ?>
-                <div class="midcom_helper_datamanager2_remove_lock">
+                <div class="midcom_helper_datamanager2_unlock">
                     <h2><?php echo $this->_l10n->get('object locked'); ?></h2>
                     <p>
                         <?php echo sprintf($this->_l10n->get('this object was locked by %s'), $person->name); ?>.
@@ -291,9 +291,9 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
             if ($_MIDCOM->auth->can_user_do('midcom:unlock', null, 'midcom_services_auth', 'midcom.core'))
             {
                 echo "<form method=\"post\">\n";
-                echo "    <p class=\"break_lock\">\n";
+                echo "    <p class=\"unlock\">\n";
                 echo "        <input type=\"hidden\" name=\"midcom_helper_datamanager2_object\" value=\"{$this->datamanager->storage->object->guid}\" />\n";
-                echo "        <input type=\"submit\" name=\"midcom_helper_datamanager2_remove_lock\" value=\"" . $this->_l10n->get('break the lock') . "\" class=\"break_lock\" />\n";
+                echo "        <input type=\"submit\" name=\"midcom_helper_datamanager2_unlock\" value=\"" . $this->_l10n->get('unlock') . "\" class=\"unlock\" />\n";
                 echo "    </p>\n";
                 echo "</form>\n";
             }
