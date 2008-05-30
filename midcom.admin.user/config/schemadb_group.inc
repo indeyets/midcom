@@ -74,6 +74,7 @@
                 'master_fieldname' => 'gid',
                 'member_fieldname' => 'uid',
                 'master_is_id' => true,
+                'require_corresponding_option' => false,
                 'option_callback' => 'midcom_helper_datamanager2_callback_select_personlister',
                 'option_callback_arg' => array
                 (
