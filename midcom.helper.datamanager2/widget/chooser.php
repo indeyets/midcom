@@ -1093,13 +1093,13 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         {
             $dialog_id = $this->_element_id . '_creation_dialog';
 
-            $dialog_html = '<div class="chooser_widget_creation_dialog" id="' . $dialog_id . '">';
-            $dialog_html .= '<div class="chooser_widget_creation_dialog_content_holder">';
-            $dialog_html .= '</div>';
-            $dialog_html .= '</div>';
+            $dialog_html = "<div class=\"chooser_widget_creation_dialog\" id=\"{$dialog_id}\">\n";
+            $dialog_html .= "    <div class=\"chooser_widget_creation_dialog_content_holder\">\n";
+            $dialog_html .= "    </div>\n";
+            $dialog_html .= "</div>\n";
 
-            $button_html = '<div class="chooser_widget_create_button" id="' . $this->_element_id . '_create_button" style="display: none;">';
-            $button_html .= '</div>';
+            $button_html = "<div class=\"chooser_widget_create_button\" id=\"{$this->_element_id}_create_button\" style=\"display: none;\">\n";
+            $button_html .= "</div>\n";
 
             $html = $button_html . $dialog_html;
 
@@ -1243,7 +1243,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             return;
         }
         
-        $this->_static_items_html .= "<tr id=\"{$this->_element_id}_existing_item_{$item_id}_row\" class=\"chooser_widget_existing_item_static_row\">\n";
+        $this->_static_items_html .= "    <tr id=\"{$this->_element_id}_existing_item_{$item_id}_row\" class=\"chooser_widget_existing_item_static_row\">\n";
         
         if (   !empty($this->reflector_key)
             && !$this->result_headers)
@@ -1544,7 +1544,9 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         echo "<table class=\"chooser_results\">\n";
         if (count($this->_type->selection) == 0)
         {
-            echo '<tr><td>' . $this->_translate('type select: no selection') . '</td></tr>';
+            echo "    <tr>\n";
+            echo "        <td>" . $this->_translate('type select: no selection') . "</td>\n";
+            echo "    </tr>\n";
         }
         else
         {
@@ -1553,12 +1555,16 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 if (   !$key
                     && count($this->_type->selection) == 1)
                 {
-                    echo '<tr><td>' . $this->_translate('type select: no selection') . '</td></tr>';
+                    echo "    <tr>\n";
+                    echo "        <td>" . $this->_translate('type select: no selection') . "</td>\n";
+                    echo "    </tr>\n";
                     continue;
                 }
 
                 $data = rawurldecode($this->_get_key_data($key, true));
-                echo '<tr><td>' . $data . '</td></tr>';
+                echo "    <tr>\n";
+                echo "        <td>{$data}</td>\n";
+                echo "    </tr>";
             }
         }
         echo "</table>\n";
