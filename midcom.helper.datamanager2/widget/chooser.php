@@ -301,6 +301,13 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     var $creation_default_key = null;
 
     var $js_format_items = array();
+    
+    /**
+     * Should the sorting be enabled
+     * 
+     * @var boolean    True if the sorting should be enabled
+     */
+    var $sortable = false;
 
     /**
      * The initialization event handler post-processes the maxlength setting.
@@ -379,7 +386,16 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 'href' => MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.chooser_widget.css'
             )
         );
-
+        
+        if ($this->sortable)
+        {
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.dimensions-1.1.2.pack.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.mouse.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.draggable.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.droppable.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/ui/ui.sortable.js');
+        }
+        
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.chooser_widget.js');
 
         $this->_element_id = "{$this->_namespace}{$this->name}_chooser_widget";
@@ -938,6 +954,11 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         $this->_js_widget_options['allow_multiple'] = 'true';
         $this->_js_widget_options['id_field'] = "'$this->id_field'";
         $this->_js_widget_options['format_items'] = 'null';
+        
+        if ($this->sortable)
+        {
+            $this->_js_widget_options['sortable'] = 'true';
+        }
 
         if ($this->creation_mode_enabled)
         {
@@ -1571,7 +1592,5 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
         // debug_pop();
     }
-
 }
-
 ?>

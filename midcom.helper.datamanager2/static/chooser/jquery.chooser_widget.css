@@ -136,6 +136,12 @@ input.chooser_widget_search_input
     margin-right: 3px;
 }
 
+ul.chooser_widget_results.ui-sortable .chooser_widget_item_part_status
+{
+    margin-right: 23px;
+    margin-left: -30px;
+}
+
 .chooser_widget_result_item_active
 {
     background-color: #eeeeef !important;
@@ -176,4 +182,24 @@ input.chooser_widget_search_input
 .chooser_widget_result_item_deleted.chooser_widget_result_item_hover .chooser_widget_item_part_status
 {
     background : url('../../stock-icons/16x16/approved_fade_50.png') center center no-repeat;
+}
+
+ul.chooser_widget_results.ui-sortable .chooser_widget_results_item_dragger
+{
+    width: 20px;
+    height: 22px;
+    margin-left: -20px;
+    float: left;
+    cursor: move;
+}
+
+ul.chooser_widget_headers.ui-sortable
+{
+    background : url('../../stock-icons/16x16/topic-score.png') left center no-repeat;
+}
+
+ul.chooser_widget_headers.ui-sortable li,
+ul.chooser_widget_results.ui-sortable li
+{
+    padding-left: 20px;
 }

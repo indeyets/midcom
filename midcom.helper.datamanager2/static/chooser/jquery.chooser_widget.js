@@ -223,7 +223,6 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
      */
     function request(term, success, failure)
     {
-        console.log(success);
         last_term = term;
         
         input_element.removeClass(CLASSES.IDLE);
@@ -264,7 +263,6 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
      */
     function stopLoading(type, expobj)
     {
-        console.log(expobj);
         input_element.removeClass(CLASSES.IDLE);
         input_element.removeClass(CLASSES.FAILED);
         input_element.removeClass(CLASSES.LOADING);
@@ -433,7 +431,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser = function(input, options)
             
             if (last_term != 'undefined')
             {
-                creation_url += '?defaults[' + options.creation_default_key + ']=' + last_term;
+                creation_url += '?defaults[' + options.creation_default_key + '] = ' + last_term;
             }
             
             var iframe = ['<iframe src="' + creation_url + '"'];
@@ -467,6 +465,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.defaults =
     creation_mode: false,
     creation_handler: null,
     creation_default_key: null,
+    sortable: false,
     format_items: null
 };
 
@@ -489,7 +488,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
 
     var headers = jQuery('<ul class="chooser_widget_headers"></ul>').appendTo(element);
     var list = jQuery('<ul class="chooser_widget_results"></ul>').appendTo(element);
-
+    
     var has_content = false,
         list_items = [],
         selected_items = [],
@@ -543,7 +542,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
     
     function dataToDom()
     {
-        for (var i=0; i < data.length; i++)
+        for (var i = 0; i < data.length; i++)
         {
             if (!data[i])
                 continue;
@@ -590,7 +589,7 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         //console.log('data.id: ' + data.id);
         //console.log('data.guid: ' + data.guid);
         
-        var n=null;
+        var n = null;
         
         var item_id = data[options.id_field];
         //console.log('options.id_field: ' + options.id_field);
@@ -622,60 +621,60 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         var input_elem_name = options.widget_id + '_selections[' + item_id + ']';
         
         var li_elem = jQuery('<li>')
-        .attr({ id: options.widget_id + '_result_item_' + item_id })
-        .attr('deleted','false')
-        .attr('keep_on_list','false')
-        .attr('pre_selected','false')
-        .addClass('chooser_widget_result_item')
-        .click(function(event)
-        {
-            var li_element = target(event);
-            jQuery('#' + options.widget_id + '_search_input').focus();
-            var current_keep_status = jQuery(li_element).attr('keep_on_list');
-            var current_delete_status = jQuery(li_element).attr('deleted');
-            var current_presel_status = jQuery(li_element).attr('pre_selected');
-            
-            if (current_keep_status == 'true')
+            .attr({ id: options.widget_id + '_result_item_' + item_id })
+            .attr('deleted','false')
+            .attr('keep_on_list','false')
+            .attr('pre_selected','false')
+            .addClass('chooser_widget_result_item')
+            .click(function(event)
             {
-                if (current_delete_status == 'false')
+                var li_element = target(event);
+                jQuery('#' + options.widget_id + '_search_input').focus();
+                var current_keep_status = jQuery(li_element).attr('keep_on_list');
+                var current_delete_status = jQuery(li_element).attr('deleted');
+                var current_presel_status = jQuery(li_element).attr('pre_selected');
+                
+                if (current_keep_status == 'true')
                 {
-                    jQuery(li_element).removeClass(CLASSES.ACTIVE);
-                    if (current_presel_status == 'true')
+                    if (current_delete_status == 'false')
                     {
-                        remove(item_id);
+                        jQuery(li_element).removeClass(CLASSES.ACTIVE);
+                        if (current_presel_status == 'true')
+                        {
+                            remove(item_id);
+                        }
+                        else
+                        {
+                            inactivate(item_id);
+                        }
                     }
                     else
                     {
-                        inactivate(item_id);
+                        if(options.allow_multiple)
+                        {
+                            restore(item_id);
+                        }
+                        else
+                        {
+                            activate(item_id);
+                        }
                     }
+    
+                    return false;
                 }
                 else
                 {
-                    if(options.allow_multiple)
-                    {
-                        restore(item_id);
-                    }
-                    else
-                    {
-                        activate(item_id);
-                    }
+                    activate(item_id);
                 }
-
-                return false;
-            }
-            else
+            })
+            .mouseover( function(event)
             {
-                activate(item_id);
-            }
-        })
-        .mouseover( function(event)
-        {
-            var jq_elem = jQuery(target(event)).addClass(CLASSES.HOVER);
-        })
-        .mouseout( function(event)
-        {
-            jQuery(target(event)).removeClass(CLASSES.HOVER);
-        });
+                var jq_elem = jQuery(target(event)).addClass(CLASSES.HOVER);
+            })
+            .mouseout( function(event)
+            {
+                jQuery(target(event)).removeClass(CLASSES.HOVER);
+            });
         
         if (data['pre_selected'])
         {
@@ -709,11 +708,25 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             .addClass('dragbar')
             .prependTo(li_elem);
         
-        li_elem.appendTo(list);
+        jQuery('<input type="hidden" />')
+            .attr('name', 'sortable[' + options.widget_id + '][]')
+            .attr('value', item_id);
         
+        li_elem.appendTo(list);
         list_items.push(item_id);
+        
+        if (options.sortable)
+        {
+            jQuery(list).create_sortable();
+        }
     }
 
+    
+    /**
+     * 
+     * 
+     * @param int step
+     */
     function moveSelect(step)
     {
         active += step;
@@ -727,6 +740,9 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         }
     };
     
+    /**
+     * 
+     */
     function wrapSelection()
     {
         if (active < 0)
@@ -739,29 +755,50 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         }
     }
     
+    /**
+     *
+     *
+     * @param String id     ID of the chooser widget
+     */
     function remove(id)
     {
         jQuery('#' + options.widget_id + '_result_item_' + id + '_input', list).attr({ value: 0 });
-        jQuery('#' + options.widget_id + '_result_item_' + id).removeClass(CLASSES.ACTIVE);
-        jQuery('#' + options.widget_id + '_result_item_' + id).removeClass(CLASSES.INACTIVE);
-        jQuery('#' + options.widget_id + '_result_item_' + id).addClass(CLASSES.DELETED);
-        jQuery('#' + options.widget_id + '_result_item_' + id).attr('deleted','true');
-        selected_items = jQuery.grep( selected_items, function(n,i)
+        
+        jQuery('#' + options.widget_id + '_result_item_' + id)
+            .removeClass(CLASSES.ACTIVE)
+            .removeClass(CLASSES.INACTIVE)
+            .addClass(CLASSES.DELETED)
+            .attr('deleted','true');
+        
+        selected_items = jQuery.grep(selected_items, function(n,i)
         {
             return n != id;
         });
     }
     
+    /**
+     * 
+     * 
+     * @param String id     ID of the chooser widget
+     */
     function restore(id)
     {
         jQuery('#' + options.widget_id + '_result_item_' + id + '_input', list).attr({ value: id });
-        jQuery('#' + options.widget_id + '_result_item_' + id).removeClass(CLASSES.DELETED);
-        jQuery('#' + options.widget_id + '_result_item_' + id).removeClass(CLASSES.INACTIVE);
-        jQuery('#' + options.widget_id + '_result_item_' + id).addClass(CLASSES.ACTIVE);
-        jQuery('#' + options.widget_id + '_result_item_' + id).attr('deleted','false');
+        
+        jQuery('#' + options.widget_id + '_result_item_' + id)
+            .removeClass(CLASSES.DELETED)
+            .removeClass(CLASSES.INACTIVE)
+            .addClass(CLASSES.ACTIVE)
+            .attr('deleted','false');
+        
         selected_items.push(id);
     }
 
+    /**
+     * Activate an item
+     * 
+     * @param String id     ID of the chooser widget
+     */
     function activate(id)
     {
         if (!options.allow_multiple)
@@ -771,22 +808,32 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         }
         
         jQuery('#' + options.widget_id + '_result_item_' + id + '_input', list).attr({ value: id });
-        jQuery('#' + options.widget_id + '_result_item_' + id).removeClass(CLASSES.DELETED);
-        jQuery('#' + options.widget_id + '_result_item_' + id).removeClass(CLASSES.INACTIVE);
-        jQuery('#' + options.widget_id + '_result_item_' + id).addClass(CLASSES.ACTIVE);
-        jQuery('#' + options.widget_id + '_result_item_' + id).attr('keep_on_list','true');
-        jQuery('#' + options.widget_id + '_result_item_' + id).attr('deleted','false');
+        
+        jQuery('#' + options.widget_id + '_result_item_' + id)
+            .removeClass(CLASSES.DELETED)
+            .removeClass(CLASSES.INACTIVE)
+            .addClass(CLASSES.ACTIVE)
+            .attr('keep_on_list','true')
+            .attr('deleted','false');
         selected_items.push(id);
     }
     
+    /**
+     * Inactivate an item
+     *
+     * @param String id     ID of the chooser widget
+     */
     function inactivate(id)
     {
         jQuery('#' + options.widget_id + '_result_item_' + id + '_input', list).attr({ value: 0 });
-        jQuery('#' + options.widget_id + '_result_item_' + id).removeClass(CLASSES.DELETED);
-        jQuery('#' + options.widget_id + '_result_item_' + id).removeClass(CLASSES.ACTIVE);
-        jQuery('#' + options.widget_id + '_result_item_' + id).addClass(CLASSES.INACTIVE);
-        jQuery('#' + options.widget_id + '_result_item_' + id).attr('keep_on_list','false');
-        jQuery('#' + options.widget_id + '_result_item_' + id).attr('deleted','false');
+        
+        jQuery('#' + options.widget_id + '_result_item_' + id)
+            .removeClass(CLASSES.DELETED)
+            .removeClass(CLASSES.ACTIVE)
+            .addClass(CLASSES.INACTIVE)
+            .attr('keep_on_list','false')
+            .attr('deleted','false');
+        
         //selected_items.push(id);
         selected_items = jQuery.grep( selected_items, function(n,i)
         {
@@ -794,6 +841,9 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         });
     }
     
+    /**
+     * Delete unselected items from the list
+     */
     function delete_unseleted_from_list()
     {
         list_jq_items = list.find('li');
@@ -815,8 +865,22 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         });
         jQuery('#' + options.widget_id + '_results li.' + CLASSES.HOVER).removeClass(CLASSES.HOVER);
         active = -1;
+        
+        if (   options.sortable
+            && jQuery(list).attr('sortable'))
+        {
+            // Get rid of the cached positions and create the sortable again
+            jQuery(list).sortable('destroy');
+            jQuery(list).create_sortable();
+        }
     }
     
+    /**
+     * 
+     * 
+     * @param Array array
+     * @param String valueToUnset
+     */
     function unset(array, valueToUnset, valueOrIndex, isHash)
     {
         var output = new Array(0);
@@ -828,13 +892,13 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
                 {
                     continue;
                 };
-                if (! isHash)
+                if (!isHash)
                 {
-                    output[++output.length-1]=array[i];
+                    output[++output.length-1] = array[i];
                 }
                 else
                 {
-                    output[i]=array[i];
+                    output[i] = array[i];
                 }
             }
             else
@@ -845,11 +909,11 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
                 };
                 if (! isHash)
                 {
-                    output[++output.length-1]=array[i];
+                    output[++output.length-1] = array[i];
                 }
                 else
                 {
-                    output[i]=array[i];
+                    output[i] = array[i];
                 }
             }
         }
@@ -947,10 +1011,15 @@ jQuery.midcom_helper_datamanager2_widget_chooser.MoveSelection = function(field,
 function midcom_helper_datamanager2_widget_chooser_format_item(item, options, block_width)
 {
     var formatted = '';
-
+    
     var item_parts = jQuery('<div>')
-    .attr({ id: options.widget_id + '_result_item_parts_' + item.id })
-    .addClass('chooser_widget_result_item_parts');
+        .attr({ id: options.widget_id + '_result_item_parts_' + item.id })
+        .addClass('chooser_widget_result_item_parts');
+    
+    var item_dragger = jQuery('<div>')
+        .attr({id: options.widget_id + '_result_item_dragger_' + item.id})
+        .addClass('chooser_widget_results_item_dragger')
+        .appendTo(item_parts);
 
     var item_content = jQuery('<div>')
         .addClass('chooser_widget_item_part')
@@ -985,9 +1054,9 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options, bl
     });
 
     item_content = jQuery('<div>')
-    .addClass('chooser_widget_item_part_status')
-    .html( '&nbsp;' )
-    .appendTo(item_parts);
+        .addClass('chooser_widget_item_part_status')
+        .html( '&nbsp;' )
+        .appendTo(item_parts);
     
     return item_parts;
 }
@@ -1028,4 +1097,34 @@ function midcom_helper_datamanager2_widget_chooser_format_value(format, value)
     }
         
     return formatted;
+}
+
+
+jQuery.fn.create_sortable = function()
+{
+    // Create the sortable list, if there are more than one item in the list
+    if (jQuery(this).find('li').size() <= 1)
+    {
+        if (jQuery(this).attr('sortable'))
+        {
+            jQuery(this).sortable('destroy');
+            jQuery(this).parent().find('ul.chooser_widget_headers').removeClass('ui-sortable');
+        }
+        return;
+    }
+    
+    jQuery(this).sortable('destroy');
+    jQuery(this).sortable(
+    {
+        handle: 'div.chooser_widget_results_item_dragger',
+        containment: jQuery(this)
+    });
+    
+    if (!jQuery(this).attr('sortable'))
+    {
+        jQuery(this).attr('sortable');
+    }
+    
+    // Add the sortable class also to the result headers to maintain consistency
+    jQuery(this).parent().find('ul.chooser_widget_headers').addClass('ui-sortable');
 }
