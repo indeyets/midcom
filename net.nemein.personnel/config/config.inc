@@ -41,6 +41,10 @@
 // supported by this new implementation.
 'enable_alphabetical' => false,
 
+// Force sort the order in sorted views
+'force_sort_key' => false,    // Any property of midcom_db_person (e.g. 'name', 'rname', 'email')
+'force_sort_order' => 'asc',  // 'asc' or 'desc', fallback to 'asc'
+
 // Emailing the user account details
 'email_from' => "WWW-data <www-data@{$_SERVER['SERVER_NAME']}>",
 'email_subject' => "{$_SERVER['SERVER_NAME']}: your user account details",

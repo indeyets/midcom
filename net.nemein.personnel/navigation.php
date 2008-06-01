@@ -34,6 +34,8 @@ class net_nemein_personnel_navigation extends midcom_baseclasses_components_navi
      */
     function get_leaves()
     {
+        $this->_root_group = new midcom_db_group($this->_config->get('group'));
+        
         switch ($this->_config->get('display_in_navigation'))
         {
             case 'personnel':
@@ -59,46 +61,13 @@ class net_nemein_personnel_navigation extends midcom_baseclasses_components_navi
     {
         $leaves = array ();
         
-        if (   !$this->_config->get('group')
-            || !mgd_is_guid($this->_config->get('group')))
+        $qb = midcom_db_group::new_query_builder();
+        $qb->add_constraint('owner', '=', $this->_root_group->id);
+        $qb->add_constraint('metadata.hidden', '<>', 1);
+        $qb->add_order('metadata.score', 'DESC');
+        
+        foreach ($qb->execute() as $group)
         {
-            return $leaves;
-        }
-        
-        // Get the master group
-        $master_group = new midcom_db_group($this->_config->get('group'));
-        
-        if (   !$master_group
-            || !$master_group->id)
-        {
-            return $leaves;
-        }
-        
-        $helper = new net_nemein_personnel_sorted_groups($master_group->guid, true);
-        
-        foreach ($helper->groups as $id => $group)
-        {
-            // Skip the master group
-            if ($group->guid === $master_group->guid)
-            {
-                continue;
-            }
-            
-            if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-            {
-                $created = $group->metadata->created;
-                $creator = $group->metadata->creator;
-                $revised = $group->metadata->revised;
-                $revisor = $group->metadata->revisor;
-            }
-            else
-            {
-                $created = $group->created;
-                $creator = $group->creator;
-                $revised = $group->revised;
-                $revisor = $group->revisor;
-            }
-            
             // Forge the leaf information
             $leaves[$group->guid] = array
             (
@@ -110,10 +79,10 @@ class net_nemein_personnel_navigation extends midcom_baseclasses_components_navi
                 MIDCOM_NAV_ADMIN => null,
                 MIDCOM_NAV_GUID => $group->guid,
                 MIDCOM_NAV_OBJECT => $group,
-                MIDCOM_META_CREATOR => $creator,
-                MIDCOM_META_EDITOR => $revisor,
-                MIDCOM_META_CREATED => $created,
-                MIDCOM_META_EDITED => $revised,
+                MIDCOM_META_CREATOR => $group->metadata->creator,
+                MIDCOM_META_EDITOR => $group->metadata->revisor,
+                MIDCOM_META_CREATED => $group->metadata->created,
+                MIDCOM_META_EDITED => $group->metadata->revised,
             );
         }
         

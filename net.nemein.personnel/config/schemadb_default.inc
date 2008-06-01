@@ -169,6 +169,8 @@
                 (
                     'key_field' => 'id'
                 ),
+                'sortable' => true,
+                'require_corresponding_option' => false,
             ),
             'widget' => 'chooser',
             'widget_config' => array
@@ -186,6 +188,13 @@
                     ),
                 ),
             ),
+        ),
+        'hidden' => array
+        (
+            'title' => 'hide this group from the list',
+            'storage' => 'metadata',
+            'type' => 'boolean',
+            'widget' => 'checkbox',
         ),
     ),
 ),

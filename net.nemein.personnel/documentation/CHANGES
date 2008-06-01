@@ -6,6 +6,10 @@ Legend:
   which might even break existing functionality.
 - All items marked with "+" represent completely new features.
 
+2008-06-01 adrenalin
+  + Using chooser widget to choose the members
+  ! Discarded the old sorting and moved to use new sorting feature of chooser widget.
+
 2007-07-04 adrenalin
   - Fixed some minor inconsistencies in breadcrumb
   - Improved usability by implementing UI messages

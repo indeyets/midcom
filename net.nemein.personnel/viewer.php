@@ -59,18 +59,6 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
-        // Sort the personnel
-        // Match /order
-        if ($this->_config->get('sort_order') === 'sorted and grouped')
-        {
-            // Sorting of the personnel
-            $this->_request_switch['sort_order_grouped'] = array
-            (
-                'handler' => array('net_nemein_personnel_handler_order', 'grouped'),
-                'fixed_args' => array ('order'),
-            );
-        }
-
         // View person in a group
         // Match /group/<group guid>/<person identificator>
         $this->_request_switch['view-grouped-person'] = array
@@ -284,20 +272,6 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
                     MIDCOM_TOOLBAR_URL => "admin/create.html",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('create person'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_person.png',
-                )
-            );
-        }
-
-        if (   $this->_topic->can_do('midgard:update')
-            && strstr($this->_config->get('sort_order'), 'sorted'))
-        {
-            $this->_node_toolbar->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "order/",
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('sort personnel manually'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_people.png',
                 )
             );
         }

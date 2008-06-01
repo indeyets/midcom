@@ -439,8 +439,12 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
         {
             $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "config.html");
         }
-
+        
+        // Get the root group
         $this->_group = new midcom_db_group($this->_config->get('group'));
+        $this->_load_datamanager_for_groups();
+        
+        // Pass the reference for external usage
         $data['group'] =& $this->_group;
 
         if ($this->_config->get('enable_alphabetical'))
@@ -477,29 +481,27 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
         switch ($this->_config->get('sort_order'))
         {
             case 'sorted':
-                $this->_helper = new net_nemein_personnel_sorted_groups($this->_config->get('group'), true);
-                $this->_grouped_persons = $this->_helper->get_sorted_members();
-
-                foreach ($this->_grouped_persons as $group => $persons)
-                {
-                    foreach ($persons as $person)
-                    {
-                        $this->_persons[] = $person;
-                    }
-                }
+                $this->_persons[] = $this->get_group_members($this->_group->id);
                 break;
 
             case 'sorted and grouped':
-                $this->_load_datamanager_for_groups();
-                $this->_helper = new net_nemein_personnel_sorted_groups($this->_config->get('group'), true);
-
-                // Show multiple group memberships for a single person if defined in configuration
-                if ($this->_config->get('allow_multiple_memberships'))
+                $mc = midcom_db_group::new_collector('owner', $this->_group->id);
+                $mc->add_value_property('id');
+                $mc->add_constraint('metadata.hidden', '<>', 1);
+                $mc->add_order('metadata.score', 'DESC');
+                $mc->execute();
+                
+                foreach ($mc->list_keys() as $group => $array)
                 {
-                    $this->_helper->exclusive = false;
+                    $group_id = $mc->get_subkey($group, 'id');
+                    $this->_persons[$group_id] = $this->get_group_members($group_id);
                 }
-
-                $this->_persons = $this->_helper->get_sorted_members();
+                
+                if (!$this->_group->metadata->hidden)
+                {
+                    $this->_persons[$this->_group->id] = $this->get_group_members($this->_group->id);
+                }
+                
                 break;
 
             default:
@@ -527,6 +529,78 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
 
         return true;
     }
+    
+    /**
+     * Get the people belonging to the requested group
+     *
+     * @static
+     * @access public
+     * @param int $id     ID of the requested group
+     * @return Array      Containing the midcom_db_person objects
+     */
+    function get_group_members($id)
+    {
+        $mc = midcom_db_member::new_collector('gid', $id);
+        $mc->add_value_property('uid');
+        $mc->add_constraint('metadata.hidden', '=', 0);
+        $mc->add_order('metadata.score', 'DESC');
+        $mc->execute();
+        
+        // Check if the order is forced
+        if (   ($forced = $this->_config->get('force_sort_key'))
+            && array_key_exists($forced, get_object_vars(new midcom_db_person())))
+        {
+            $temp = array();
+        }
+        else
+        {
+            $forced = false;
+            $temp = false;
+        }
+        
+        $persons = array();
+        
+        // Get the memberships and eventually the persons
+        foreach ($mc->list_keys() as $guid => $array)
+        {
+            $person = new midcom_db_person($mc->get_subkey($guid, 'uid'));
+            if ($person->metadata->hidden)
+            {
+                continue;
+            }
+            
+            if ($forced)
+            {
+                $temp[$person->guid] = $person->$forced;
+                $persons_holder[$person->guid] = $person;
+                continue;
+            }
+            
+            $persons[] = $person;
+        }
+        
+        // Get the force-sorted person objects
+        if ($temp)
+        {
+            // Sort the order
+            if (!preg_match('/desc/i', $this->_config->get('force_sort_order')))
+            {
+                asort($temp);
+            }
+            else
+            {
+                // Reverse sort the order
+                arsort($temp);
+            }
+            
+            foreach ($temp as $guid => $value)
+            {
+                $persons[] = $persons_holder[$guid];
+            }
+        }
+        
+        return $persons;
+    }
 
     /**
      * Show grouped personnel records
@@ -551,23 +625,22 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
 
         midcom_show_style('show-grouped-footer');
     }
-
+    
+    /**
+     * Display groups
+     * 
+     * @access private
+     * @param array $array    Array consisting of midcom_db_group::id => array of midcom_db_person
+     */
     function _display_group($array, &$data)
     {
         $data['row'] = 1;
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-
+        
         foreach ($array as $group_id => $persons)
         {
             if (   $group_id === $this->_group->id
                 && $this->_config->get('show_unsorted') === false)
-            {
-                continue;
-            }
-
-            // Skip empty groups
-            if (    $this->_config->get('hide_empty_groups')
-                && count($persons) === 0)
             {
                 continue;
             }
@@ -725,9 +798,6 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
             // This will exit
         }
 
-        $this->_helper = new net_nemein_personnel_sorted_groups($args[0]);
-        $this->_persons = $this->_helper->get_sorted_members();
-
         $this->_view_toolbar->add_item
         (
             array
@@ -737,6 +807,9 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_people.png',
             )
         );
+        
+        // Get the group members
+        $this->_persons[$this->_group->id] = $this->get_group_members($this->_group->id);
 
         $this->_view_toolbar->bind_to($data['group']);
 
@@ -795,9 +868,10 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
      */
     function _show_group($handler_id, &$data)
     {
-        $this->_dm_group->set_storage($data['group']);
+        $this->_dm_group->set_storage(&$data['group']);
         $data['datamanager'] =& $this->_dm_group;
 
         $this->_display_group($this->_persons, &$data);
     }
 }
+?>
