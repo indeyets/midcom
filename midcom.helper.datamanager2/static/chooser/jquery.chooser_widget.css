@@ -186,11 +186,12 @@ ul.chooser_widget_results.ui-sortable .chooser_widget_item_part_status
 
 ul.chooser_widget_results.ui-sortable .chooser_widget_results_item_dragger
 {
+    background : url('../../stock-icons/16x16/topic-score.png') center center no-repeat;
     width: 20px;
     height: 22px;
     margin-left: -20px;
     float: left;
-    cursor: move;
+    cursor: n-resize;
 }
 
 ul.chooser_widget_headers.ui-sortable

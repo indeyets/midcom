@@ -307,7 +307,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
      * 
      * @var boolean    True if the sorting should be enabled
      */
-    var $sortable = false;
+    var $sortable = null;
 
     /**
      * The initialization event handler post-processes the maxlength setting.
@@ -324,6 +324,13 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 MIDCOM_LOG_WARN);
             debug_pop();
             return false;
+        }
+        
+        // Determine the sortability from the type configuration
+        if (   is_null($this->sortable)
+            && isset($this->_type->sortable))
+        {
+            $this->sortable = $this->_type->sortable;
         }
 
         $this->_callback_class = $this->_type->option_callback;
@@ -1535,6 +1542,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         {
             return;
         }
+        
         $real_results =& $results["{$this->_element_id}_selections"];
         if (is_array($real_results))
         {
@@ -1552,6 +1560,18 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         elseif (!$this->allow_multiple)
         {
             $this->_type->selection[] = $real_results;
+        }
+        
+        if (   $this->sortable
+            && isset($results[$this->_element_id])
+            && isset($results[$this->_element_id]['sortable']))
+        {
+            $this->_type->sorted_order = array();
+            
+            foreach ($results[$this->_element_id]['sortable'] as $i => $id)
+            {
+                $this->_type->sorted_order[$id] = $i;
+            }
         }
 
         // debug_print_r('real_results', $real_results);

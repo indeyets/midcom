@@ -80,6 +80,13 @@ require_once('select.php');
  *   field key instead of its value. This is only useful if the foreign tables referenced
  *   are available at the site of import. This flag is not set by default. Note, that
  *   this does not affect import, which is only available with keys, not values.
+ * - <i>boolean sortable:</i> Switch for determining if the order selected by the widget
+ *   should be stored to the metadata object
+ * - <i>string sortable_sort_order:</i> Direction that metadata.score should go. If this
+ *   is set to `ASC`, lower scores will be displayed first. If this is set to `DESC`, higher
+ *   scores will be displayed first. `DESC` is default, since then new member objects will
+ *   be left at the end of the line rather than appearing first. This field is not case
+ *   sensitive and string can be extended e.g. to `ascend`.
  *
  * (These list is complete, including all allowed options from the base type. Base type
  * options not listed here may not be used.)
@@ -161,6 +168,32 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
      * @access private
      */
     var $_membership_objects = null;
+    
+    /**
+     * Should the sorting feature be enabled. This will affect the way chooser widget will act
+     * and how the results will be presented. If the sorting feature is enabled, 
+     *
+     * @access public
+     * @var boolean
+     */
+    var $sortable = false;
+    
+    /**
+     * Sort order. Which direction should metadata.score force the results. This should be either
+     * `ASC` or `DESC`
+     *
+     * @access public
+     * @var string
+     */
+    var $sortable_sort_order = 'DESC';
+    
+    /**
+     * Sorted order, which is returned by the widget.
+     * 
+     * @access public
+     * @var Array
+     */
+    var $sorted_order = array();
 
     /**
      * Initialize the class, if necessary, create a callback instance, otherwise
@@ -239,6 +272,14 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
     {
         $qb = $_MIDCOM->dbfactory->new_query_builder($this->mapping_class_name);
         $qb->add_constraint($this->master_fieldname, '=', $this->_get_master_foreign_key());
+        
+        if (   $this->sortable
+            && preg_match('/^(ASC|DESC)/i', $this->sortable_sort_order, $regs))
+        {
+            $order = strtoupper($regs[1]);
+            $qb->add_order('metadata.score', $order);
+        }
+        
         if ($this->member_limit_like)
         {
             $qb->add_constraint($this->member_fieldname, 'LIKE', $this->member_limit_like);
@@ -312,7 +353,25 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
             $key = $member->{$this->member_fieldname};
             $existing_members[$key] = $index;
         }
-
+        
+        // Cache the total quantity of items and get the order if the field is supposed to store the member order
+        if (   $this->sortable
+            && isset($this->sorted_order))
+        {
+            $count = count($this->sorted_order);
+            
+            if (preg_match('/ASC/i', $this->sortable_sort_order))
+            {
+                $direction = 'asc';
+            }
+            else
+            {
+                $direction = 'desc';
+            }
+        }
+        
+        $i = 0;
+        
         $new_membership_objects = Array();
         foreach ($this->selection as $key)
         {
@@ -329,6 +388,30 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
             // Do we have this key already? If yes, move it to the new list, otherwise create it.
             if (array_key_exists($key, $existing_members))
             {
+                // Update the existing member
+                if ($this->sortable)
+                {
+                    $index = $existing_members[$key];
+                    
+                    if ($direction === 'asc')
+                    {
+                        $this->_membership_objects[$index]->metadata->score = $i;
+                    }
+                    else
+                    {
+                        $this->_membership_objects[$index]->metadata->score = $count - $i;
+                    }
+                    
+                    if (!$this->_membership_objects[$index]->update())
+                    {
+                        debug_add("Failed to update the member record for key {$key}. Couldn't store the order information", MIDCOM_LOG_ERROR);
+                        debug_add('Last Midgard error was ' . mgd_errstr(), MIDCOM_LOG_ERROR);
+                        debug_print_r('Tried to update this object', $this->_membership_objects[$index]);
+                    }
+                    
+                    $i++;
+                }
+                
                 $index = $existing_members[$key];
                 $new_membership_objects[] = $this->_membership_objects[$index];
                 unset ($this->_membership_objects[$index]);
@@ -339,7 +422,23 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
                 $member = new $this->mapping_class_name();
                 $member->{$this->master_fieldname} = $this->_get_master_foreign_key();
                 $member->{$this->member_fieldname} = $key;
-                if (! $member->create())
+                
+                // Set the score if requested
+                if ($this->sortable)
+                {
+                    if ($direction === 'asc')
+                    {
+                        $member->metadata->score = $i;
+                    }
+                    else
+                    {
+                        $member->metadata->score = $count - $i;
+                    }
+                    
+                    $i++;
+                }
+                
+                if (!$member->create())
                 {
                     debug_add("Failed to create a new member record for key {$key}, skipping it. " .
                         'Last Midgard error was: ' .
@@ -355,7 +454,7 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
         // Delete all remaining objects, then update the membership_objects list
         foreach ($this->_membership_objects as $member)
         {
-            if (! $member->delete())
+            if (!$member->delete())
             {
                 debug_add("Failed to delete a no longer needed member record #{$member->id}, ignoring silently. " .
                     'Last Midgard error was: ' .

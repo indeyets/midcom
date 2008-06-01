@@ -39,6 +39,8 @@
  *   this does not affect import, which is only available with keys, not values.
  * - <i>string multiple_storagemode:</i> Controls how multiple options are stored in
  *   a single field. See below "multiselect storagemodes". Defaults to "serialized".
+ * - <i>boolean sortable:</i> Switch for determining if the order selected by the widget
+ *   should be stored to the metadata object
  *
  * Keys should be alphanumeric only.
  *
@@ -204,6 +206,15 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      */
     var $multiple_separator = '|';
 
+    /**
+     * Should the sorting feature be enabled. This will affect the way chooser widget will act
+     * and how the results will be presented. If the sorting feature is enabled, 
+     *
+     * @access public
+     * @var boolean
+     */
+    var $sortable = false;
+    
     /**
      * Initialize the class, if necessary, create a callback instance, otherwise
      * validate that an option array is present.

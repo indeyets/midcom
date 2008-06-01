@@ -670,10 +670,12 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             .mouseover( function(event)
             {
                 var jq_elem = jQuery(target(event)).addClass(CLASSES.HOVER);
+                jQuery(target(event)).find('div.chooser_widget_results_item_dragger').fadeIn('slow');
             })
             .mouseout( function(event)
             {
                 jQuery(target(event)).removeClass(CLASSES.HOVER);
+                jQuery(target(event)).find('div.chooser_widget_results_item_dragger').fadeOut('fast');
             });
         
         if (data['pre_selected'])
@@ -708,9 +710,13 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             .addClass('dragbar')
             .prependTo(li_elem);
         
-        jQuery('<input type="hidden" />')
-            .attr('name', 'sortable[' + options.widget_id + '][]')
-            .attr('value', item_id);
+        if (options.sortable)
+        {
+            jQuery('<input type="hidden" />')
+                .attr('name', options.widget_id + '[sortable][]')
+                .attr('value', item_id)
+                .appendTo(li_elem);
+        }
         
         li_elem.appendTo(list);
         list_items.push(item_id);
@@ -1019,6 +1025,7 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options, bl
     var item_dragger = jQuery('<div>')
         .attr({id: options.widget_id + '_result_item_dragger_' + item.id})
         .addClass('chooser_widget_results_item_dragger')
+        .fadeOut(0)
         .appendTo(item_parts);
 
     var item_content = jQuery('<div>')
@@ -1027,7 +1034,7 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options, bl
         .css('display', 'none')
         .appendTo(item_parts);
 
-    jQuery.each( options.result_headers, function(i,n)
+    jQuery.each(options.result_headers, function(i,n)
     {
         var value = null;
         
@@ -1040,17 +1047,17 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options, bl
         value = midcom_helper_datamanager2_widget_chooser_format_value('unescape', item[n.name]);
         
         item_content = jQuery('<div>')
-        .addClass('chooser_widget_item_part')
-        .attr(
-        {
-            title: midcom_helper_datamanager2_widget_chooser_format_value('html2text', value)
-        })
-        .css(
-        {
-            width: block_width + '%'
-        })
-        .html( value )
-        .appendTo(item_parts);
+            .addClass('chooser_widget_item_part')
+            .attr(
+            {
+                title: midcom_helper_datamanager2_widget_chooser_format_value('html2text', value)
+            })
+            .css(
+            {
+                width: block_width + '%'
+            })
+            .html( value )
+            .appendTo(item_parts);
     });
 
     item_content = jQuery('<div>')
@@ -1099,10 +1106,12 @@ function midcom_helper_datamanager2_widget_chooser_format_value(format, value)
     return formatted;
 }
 
-
+/**
+ * Create the sortable list
+ */
 jQuery.fn.create_sortable = function()
 {
-    // Create the sortable list, if there are more than one item in the list
+    // If there is less than two items in the list, sortable shouldn't be created
     if (jQuery(this).find('li').size() <= 1)
     {
         if (jQuery(this).attr('sortable'))
@@ -1113,7 +1122,11 @@ jQuery.fn.create_sortable = function()
         return;
     }
     
-    jQuery(this).sortable('destroy');
+    if (jQuery(this).attr('sortable'))
+    {
+        jQuery(this).sortable('destroy');
+    }
+    
     jQuery(this).sortable(
     {
         handle: 'div.chooser_widget_results_item_dragger',
