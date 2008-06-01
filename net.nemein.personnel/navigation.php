@@ -63,7 +63,7 @@ class net_nemein_personnel_navigation extends midcom_baseclasses_components_navi
         
         $qb = midcom_db_group::new_query_builder();
         $qb->add_constraint('owner', '=', $this->_root_group->id);
-        $qb->add_constraint('metadata.hidden', '<>', 1);
+        $qb->add_constraint('metadata.navnoentry', '<>', 1);
         $qb->add_order('metadata.score', 'DESC');
         
         foreach ($qb->execute() as $group)

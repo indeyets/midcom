@@ -487,7 +487,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
             case 'sorted and grouped':
                 $mc = midcom_db_group::new_collector('owner', $this->_group->id);
                 $mc->add_value_property('id');
-                $mc->add_constraint('metadata.hidden', '<>', 1);
+                $mc->add_constraint('metadata.navnoentry', '<>', 1);
                 $mc->add_order('metadata.score', 'DESC');
                 $mc->execute();
                 
@@ -542,7 +542,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
     {
         $mc = midcom_db_member::new_collector('gid', $id);
         $mc->add_value_property('uid');
-        $mc->add_constraint('metadata.hidden', '=', 0);
+        $mc->add_constraint('metadata.navnoentry', '=', 0);
         $mc->add_order('metadata.score', 'DESC');
         $mc->execute();
         
