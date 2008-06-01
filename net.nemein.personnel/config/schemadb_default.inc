@@ -189,7 +189,7 @@
                 ),
             ),
         ),
-        'hidden' => array
+        'navnoentry' => array
         (
             'title' => 'hide this group from the list',
             'storage' => 'metadata',

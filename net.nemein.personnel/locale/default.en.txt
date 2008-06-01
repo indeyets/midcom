@@ -143,6 +143,10 @@ Manually sorted and grouped
 Maximum %s
 ---STRINGEND
 
+---STRING members
+Members
+---STRINGEND
+
 ---STRING net.nemein.personnel
 Personnel
 ---STRINGEND
@@ -303,7 +307,7 @@ Work phone
 Your account has insufficient permissions to access details of this person
 ---STRINGEND
 
----STRING members
-Members
+---STRING hide this group from the list
+Hide this group from the list
 ---STRINGEND
 

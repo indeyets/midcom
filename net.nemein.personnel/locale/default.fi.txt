@@ -143,6 +143,10 @@ Käsin järjestelty ja ryhmitelty
 Maksimi %s
 ---STRINGEND
 
+---STRING members
+Jäsenet
+---STRINGEND
+
 ---STRING net.nemein.personnel
 Henkilöstö
 ---STRINGEND
@@ -303,7 +307,7 @@ Työpuhelin
 Sinun käyttöoikeutesi eivät riitä henkilön tietojen käsittelyyn
 ---STRINGEND
 
----STRING members
-Jäsenet
+---STRING hide this group from the list
+Piilota tämä ryhmä listalta
 ---STRINGEND
 
