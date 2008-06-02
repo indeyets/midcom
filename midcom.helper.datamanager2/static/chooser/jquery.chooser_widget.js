@@ -534,6 +534,33 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
                     width: block_width + '%'
                 })
             var item_content = jQuery('<div>')
+                .addClass(n.name)
+                .attr('search', n.name)
+                .click(function()
+                {
+                    if (!options.sortable)
+                    {
+                        return false;
+                    }
+                    
+                    if (jQuery(this).attr('reverse') == 'reverse')
+                    {
+                        var reverse = true;
+                    }
+                    else
+                    {
+                        var reverse = false;
+                    }
+                    
+                    // Sort the entries
+                    jQuery(this).parents('div.chooser_widget_results_holder').find('ul.chooser_widget_results li div.' + jQuery(this).attr('search')).sort(reverse);
+                    jQuery(this).parents('ul li').find('div[@reverse="reverse"]').attr('reverse', '');
+                    
+                    if (!reverse)
+                    {
+                        jQuery(this).attr('reverse', 'reverse');
+                    }
+                })
                 .html( n.title )
                 .appendTo(li_elem);
             li_elem.appendTo(headers);
@@ -670,12 +697,10 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             .mouseover( function(event)
             {
                 var jq_elem = jQuery(target(event)).addClass(CLASSES.HOVER);
-                jQuery(target(event)).find('div.chooser_widget_results_item_dragger').fadeIn('slow');
             })
             .mouseout( function(event)
             {
                 jQuery(target(event)).removeClass(CLASSES.HOVER);
-                jQuery(target(event)).find('div.chooser_widget_results_item_dragger').fadeOut('fast');
             });
         
         if (data['pre_selected'])
@@ -690,19 +715,22 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
             // PONDER:  How should we really handle the renderer_callback rendering?
             //          We could use custom javascript function, or require the data
             //          object to contain a content field which is already formatted html...
-            var item_content = jQuery('<div>').html(item)
-            .appendTo(li_elem);
-            var input_elem = jQuery("<input type=\"hidden\">")
-            .attr({ name: input_elem_name, value: 0, id: options.widget_id + '_result_item_' + item_id + '_input' })
-            .appendTo(li_elem);
+            var item_content = jQuery('<div>')
+                .html(item)
+                .appendTo(li_elem);
+            
+            var input_elem = jQuery('<input type="hidden" />')
+                .attr({ name: input_elem_name, value: 0, id: options.widget_id + '_result_item_' + item_id + '_input' })
+                .appendTo(li_elem);
         }
         else
         {
             var item_content = midcom_helper_datamanager2_widget_chooser_format_item(data,options,block_width)
-            .appendTo(li_elem);
-            var input_elem = jQuery("<input type=\"hidden\">")
-            .attr({ name: input_elem_name, value: 0, id: options.widget_id + '_result_item_' + item_id + '_input' })
-            .appendTo(li_elem);
+                .appendTo(li_elem);
+            
+            var input_elem = jQuery('<input type="hidden" />')
+                .attr({ name: input_elem_name, value: 0, id: options.widget_id + '_result_item_' + item_id + '_input' })
+                .appendTo(li_elem);
         }
         
         // Add drag bar
@@ -1017,7 +1045,6 @@ jQuery.midcom_helper_datamanager2_widget_chooser.MoveSelection = function(field,
 function midcom_helper_datamanager2_widget_chooser_format_item(item, options, block_width)
 {
     var formatted = '';
-    
     var item_parts = jQuery('<div>')
         .attr({ id: options.widget_id + '_result_item_parts_' + item.id })
         .addClass('chooser_widget_result_item_parts');
@@ -1025,7 +1052,6 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options, bl
     var item_dragger = jQuery('<div>')
         .attr({id: options.widget_id + '_result_item_dragger_' + item.id})
         .addClass('chooser_widget_results_item_dragger')
-        .fadeOut(0)
         .appendTo(item_parts);
 
     var item_content = jQuery('<div>')
@@ -1048,6 +1074,7 @@ function midcom_helper_datamanager2_widget_chooser_format_item(item, options, bl
         
         item_content = jQuery('<div>')
             .addClass('chooser_widget_item_part')
+            .addClass(n.name)
             .attr(
             {
                 title: midcom_helper_datamanager2_widget_chooser_format_value('html2text', value)
@@ -1140,4 +1167,14 @@ jQuery.fn.create_sortable = function()
     
     // Add the sortable class also to the result headers to maintain consistency
     jQuery(this).parent().find('ul.chooser_widget_headers').addClass('ui-sortable');
+}
+
+/**
+ * Sorting function.
+ * 
+ * @param String reversed    Should the direction be reversed
+ */
+jQuery.fn.sort = function(reversed)
+{
+    // This in the future will sort the results
 }
