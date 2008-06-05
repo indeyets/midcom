@@ -461,18 +461,18 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             return false;
         }
 
-	//make sure children of the same type come out on top
-	$i = 0;
-	foreach ($child_classes as $child_class)
-	{
-	    if (is_a($object, $child_class))
-	    {
-		unset($child_classes[$i]);
-		array_unshift($child_classes, $child_class);
-		break;
-	    }
-	    $i++;
-	}
+    //make sure children of the same type come out on top
+    $i = 0;
+    foreach ($child_classes as $child_class)
+    {
+        if (is_a($object, $child_class))
+        {
+            unset($child_classes[$i]);
+            array_unshift($child_classes, $child_class);
+            break;
+        }
+        $i++;
+    }
 
         $child_objects = array();
         foreach ($child_classes as $schema_type)
