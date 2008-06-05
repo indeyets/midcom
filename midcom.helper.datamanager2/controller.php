@@ -253,13 +253,19 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
      */
     function display_form()
     {
-        // Get the metadata object
-        $metadata = $this->datamanager->storage->object->get_metadata();
-        
-        if ($metadata->is_locked())
+        // Prevent temporary objects from failing
+        if (   isset($this->datamanager->storage)
+            && isset($this->datamanager->storage->object)
+            && isset($this->datamanager->storage->object->guid))
         {
-            $this->show_unlock();
-            return;
+            // Get the metadata object
+            $metadata = $this->datamanager->storage->object->get_metadata();
+            
+            if ($metadata->is_locked())
+            {
+                $this->show_unlock();
+                return;
+            }
         }
         
         $this->formmanager->display_form();
