@@ -522,6 +522,13 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function delete_tree(&$object)
     {
+        static $lang_restrict = null;
+        
+        if (is_null($lang_restrict))
+        {
+            $lang_restrict = $_MIDCOM->i18n->get_midgard_language();
+        }
+        
         if (!class_exists('midcom_helper_reflector_tree'))
         {
             $_MIDCOM->componentloader->load('midcom.helper.reflector');
@@ -547,6 +554,16 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                     }
                 }
             }
+        }
+        
+        // Current language is not zero, selective delete to prevent deleting too much of objects.
+        // Object will not be deleted if it doesn't have a language property at all or if its
+        // language property is not the one requested for deletion
+        if (   $lang_restrict !== 0
+            && (   !isset($object->lang)
+                || $object->lang !== $lang_restrict))
+        {
+            return true;
         }
         
         if (!$object->delete())
@@ -1033,10 +1050,10 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             midcom_baseclasses_core_dbobject::_clear_object($object);
             debug_pop();
             return false;
-        }	
-	
+        }
+
         midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
-	
+
         $result = $object->_on_loaded();
         if (! $result)
         {
