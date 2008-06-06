@@ -274,7 +274,15 @@ class midcom_services_i18n
 
         return $this->_current_content_language;
     }
-
+    
+    /**
+     * Convert the language code to its corresponding ID in Midgard database
+     * 
+     * @static
+     * @access public
+     * @param String $code    Two-letter code
+     * @return int            ID field of the database
+     */
     function code_to_id($code)
     {
         $qb = new midgard_query_builder('midgard_language');
