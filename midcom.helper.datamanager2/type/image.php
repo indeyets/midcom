@@ -1011,7 +1011,8 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
     {
         $result = '';
 
-        if (!$this->attachments_info)
+        if (   !$this->attachments_info
+            || !isset($this->attachments_info['main']))
         {
             return $result;
         }
