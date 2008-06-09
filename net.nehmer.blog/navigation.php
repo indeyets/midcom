@@ -110,7 +110,8 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         }
 
         if (   $this->_config->get('show_navigation_pseudo_leaves')
-            && $this->_config->get('archive_years_in_navigation'))
+            && $this->_config->get('archive_years_in_navigation')
+            && $this->_config->get('archive_years_enable'))
         {
             $qb = midcom_db_article::new_query_builder();
             $qb->add_constraint('topic', '=', $this->_content_topic->id);

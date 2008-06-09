@@ -2,11 +2,14 @@
 // Available request keys: total_count, first_post, year_data, year, url, count, month_data
 // month data contains month => url, count pairs.
 
-//$data =& $_MIDCOM->get_custom_context_data('request_data');
-
+$year_string = "{$data['year']} {$data['count']}";
+if ($data['config']->get('archive_years_enable'))
+{
+    $year_string = "<a href=\"{$data['url']}\">{$year_string}</a>";
+}
 ?>
 
-<h2><a href="&(data['url']);">&(data['year']); (&(data['count']);)</a></h2>
+<h2>&(year_string:h);</h2>
 
 <p>
 <?php

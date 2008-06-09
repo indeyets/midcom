@@ -105,6 +105,9 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
         {
             $this->_component_data['active_leaf'] = "{$this->_topic->id}_ARCHIVE";
         }
+        
+        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: " . $this->_l10n->get('archive'));
+        
         $_MIDCOM->set_26_request_metadata(net_nehmer_blog_viewer::get_last_modified($this->_topic, $this->_content_topic), $this->_topic->guid);
         return true;
     }
@@ -371,6 +374,12 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
         switch ($handler_id)
         {
             case 'archive-year-category':
+                if (!$this->_config->get('archive_years_enable'))
+                {
+                    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, 'Year archive not allowed');
+                    // This will exit
+                }
+            
                 $data['category'] = $args[1];
                 $multiple_categories = true;
                 if (   isset($data['schemadb']['default']->fields['categories'])
@@ -388,6 +397,12 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
                     $qb->add_constraint('extra1', '=', (string) $data['category']);
                 }
             case 'archive-year':
+                if (!$this->_config->get('archive_years_enable'))
+                {
+                    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, 'Year archive not allowed');
+                    // This will exit
+                }
+
                 $this->_set_startend_from_year($args[0]);
                 break;
 
@@ -440,6 +455,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
         }
 
         $_MIDCOM->set_26_request_metadata(net_nehmer_blog_viewer::get_last_modified($this->_topic, $this->_content_topic), $this->_topic->guid);
+        $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$start} - {$end}");
 
         return true;
     }

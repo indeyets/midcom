@@ -34,6 +34,7 @@
 'archive_item_order' => 'ASC',
 'archive_in_navigation' => true,
 'archive_years_in_navigation' => false,
+'archive_years_enable' => true,
 
 'comments_enable' => false,
 'comments_topic' => '',
