@@ -122,7 +122,7 @@ class midcom_helper_dm2config_config extends midcom_baseclasses_components_handl
 
         // Require corresponding ACL's
         $this->_topic->require_do('midgard:update');
-        $this->_topic->require_do('midgard:config');
+        $this->_topic->require_do('midcom:component_config');
 
         // Add DM2 link head
         $_MIDCOM->add_link_head
