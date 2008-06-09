@@ -291,8 +291,6 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
      */
     function _handler_product_list($handler_id, $args, &$data)
     {
-        $data['products'] = array();
-
         $qb = org_openpsa_products_product_dba::new_query_builder();
 
         @ini_set('memory_limit', -1);
@@ -330,11 +328,7 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
         $qb->add_order('code');
         $qb->add_order('title');
 
-        $products = $qb->execute();
-        foreach ($products as $product)
-        {
-            $data['products'][] = $product;
-        }
+        $data['products'] = $qb->execute();
 
         return true;
     }
@@ -349,13 +343,6 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
         midcom_show_style('api_product_list_header');
         foreach ($data['products'] as $product)
         {
-            if (!$this->_datamanager->autoset_storage($product))
-            {
-                // This product has something wrong, skip it
-                continue;
-            }
-            $data['datamanager'] =& $this->_datamanager;
-            $data['view_product'] = $this->_datamanager->get_content_html();
             $data['product'] =& $product;
 
             midcom_show_style('api_product_list_item');

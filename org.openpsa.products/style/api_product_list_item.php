@@ -1,10 +1,4 @@
-<?php
-// This is a style element so the XML output can easily be modified to whatever is needed: DOAP, ...
-$mapper = new midcom_helper_xml_objectmapper();
-$label = $data['datamanager']->schema->name;
-if ($label == 'default')
-{
-    $label = 'product';
-}
-echo $mapper->dm2data($data['datamanager'], $label);
-?>
+    <product guid="<?php echo $data['product']->guid; ?>">
+        <code><?php echo $data['product']->code; ?></code>
+        <title><?php echo $data['product']->title; ?></title>
+    </product>
