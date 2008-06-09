@@ -2,7 +2,7 @@
 // Available request keys: total_count, first_post, year_data, year, url, count, month_data
 // month data contains month => url, count pairs.
 
-$year_string = "{$data['year']} {$data['count']}";
+$year_string = "{$data['year']} ({$data['count']})";
 if ($data['config']->get('archive_years_enable'))
 {
     $year_string = "<a href=\"{$data['url']}\">{$year_string}</a>";
