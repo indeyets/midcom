@@ -13,7 +13,10 @@ This method does not require authentication.
 
 ## Example response
 
-TODO
+    <product guid="e183eb6e458111dc9ea783038a2603f903f9">
+        <code>130</code>
+        <title>Chianti Colli Senesi</title>
+    </product>
 
 ## Error Codes
 
