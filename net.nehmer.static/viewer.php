@@ -242,11 +242,16 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
             
         $GLOBALS['net_nehmer_static_schemadbs'] = array();
         $GLOBALS['net_nehmer_static_schemadbs'][] = $this->_l10n_midcom->get('default setting');
-        
-        foreach ($this->_config->get('schemadbs') as $key => $description)
+
+        $config_schemadbs = $this->_config->get('schemadbs');
+        if (is_array($config_schemadbs))
         {
-            $GLOBALS['net_nehmer_static_schemadbs'][$key] = $this->_l10n->get($description);
+            foreach ($config_schemadbs as $key => $description)
+            {
+                $GLOBALS['net_nehmer_static_schemadbs'][$key] = $this->_l10n->get($description);
+            }
         }
+        unset($config_schemadbs);
 
         $this->_populate_node_toolbar();
 
