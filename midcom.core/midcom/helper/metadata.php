@@ -746,7 +746,7 @@ class midcom_helper_metadata
     function is_locked()
     {
         // Object hasn't been marked to be edited
-        if ($this->get('locked') === 0)
+        if ($this->get('locked') == 0)
         {
             return false;
         }
