@@ -34,6 +34,11 @@ class net_nehmer_account_cron_karma extends midcom_baseclasses_components_cron_h
         require_once(MIDCOM_ROOT . '/net/nehmer/account/calculator.php');
         $calculator = new net_nehmer_account_calculator();
 
+        //Disable limits
+        // TODO: Could this be done more safely somehow
+        @ini_set('memory_limit', -1);
+        @ini_set('max_execution_time', 0);
+
         $qb = midcom_db_person::new_query_builder();
         $qb->add_constraint('username', '<>', 'admin');
         $qb->add_order('metadata.score', 'DESC');
