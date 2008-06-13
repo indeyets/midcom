@@ -1580,6 +1580,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             return false;
         }
 
+        // Seek user based on the primary email field
         $qb = new midgard_query_builder('midgard_person');
         $qb->add_constraint('email', '=', $email);
         $results = @$qb->execute();
@@ -1587,7 +1588,31 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         if (   !$results
             || count($results) == 0)
         {
-            return false;
+            // Try finding user based on the other email fields
+            $person_guids = array();
+            $mc = new midgard_collector('midgard_parameter', 'value', $email);
+            $mc->set_key_property('parentguid');
+            $mc->add_constraint('domain', '=', 'org.imc.vcard:email');
+            $mc->execute();
+            $guids = $mc->list_keys();
+            foreach ($guids as $guid => $array)
+            {
+                $person_guids[] = $guid;
+            }
+            
+            if (empty($person_guids))
+            {
+                return false;
+            }
+            
+            $qb = new midgard_query_builder('midgard_person');
+            $qb->add_constraint('guid', 'IN', $person_guids);
+            $results = @$qb->execute();
+            
+            if (empty($results))
+            {
+                return false;
+            }
         }
 
         if (count($results) > 1)
