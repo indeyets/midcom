@@ -360,12 +360,6 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             'fixed_args' => Array('recreate'),
             'variable_args' => 0,
         );
-
-        $this->_request_switch['api-email'] = Array
-        (
-            'handler' => Array('org_routamc_photostream_handler_api_email', 'import'),
-            'fixed_args' => Array('api', 'email'),
-        );
         
         // Handle /sort/<property>/
         $this->_request_switch['sort_by'] = Array
@@ -381,6 +375,13 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             'handler' => Array('org_routamc_photostream_handler_list', 'sort'),
             'fixed_args' => array('sort'),
             'variable_args' => 2,
+        );
+
+        // Handle /api/email
+        $this->_request_switch['api-email'] = Array
+        (
+            'handler' => Array('org_routamc_photostream_handler_api_email', 'import'),
+            'fixed_args' => Array('api', 'email'),
         );
 
         /* not implemented yet
@@ -503,11 +504,29 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
 
             unset($new_id, $new_switch);
         }
+        /*
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r('new $this->_request_switch: ', $this->_request_switch);
+        debug_pop();
+        */
     }
 
     function _sanity_check_switch(&$new_switch)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r('Checking $new_switch: ', $new_switch);
+        if (   (   !isset($new_switch['fixed_args'])
+                || empty($new_switch['fixed_args'])
+            && $new_switch['variable_args'] == 1)
+            )
+        {
+            // Since we do not want to make hugely elaborate can_handle we just disallow feed handler that would trap the /<feedtype> (preventing subfolders etc)
+            debug_add('$new_switch would trap /<anything>, which is bad, rewriting to /feed/index/<anything>', MIDCOM_LOG_INFO);
+            array_unshift($new_switch['fixed_args'], 'feed', 'index');
+            debug_print_r('$new_switch after rewrite: ', $new_switch);
+            debug_pop();
+            return true;
+        }
         foreach ($this->_request_switch as $handler_id => $switch_data)
         {
             debug_add("Comparing with handler '{$handler_id}'");

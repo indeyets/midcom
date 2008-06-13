@@ -62,8 +62,16 @@ class org_routamc_photostream_handler_feed extends org_routamc_photostream_handl
      */
     function _can_handle_dispatcher($handler_id, $args)
     {
-        if (!array_key_exists($args[0], $this->_supported_types))
+        $args_copy = $args;
+        $type = array_pop($args_copy);
+        $type = str_replace('.xml', '', $type); 
+        if (!array_key_exists($type, $this->_supported_types))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("feed type {$type} is not supported", MIDCOM_LOG_WARN);
+            debug_print_r('$args: ', $args);
+            debug_print_r('$this->_supported_types: ', $this->_supported_types);
+            debug_pop();
             return false;
         }
         
