@@ -352,15 +352,14 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
     {
         if (isset($this->_request_data['original_language']))
         {
-            mgd_set_lang($this->_request_data['original_language']);
-            unset($this->_request_data['original_language']);
-        }
-        else
-        {
             debug_push_class(__CLASS__, __FUNCTION__);
-            $GLOBALS['midcom_debugger']->print_function_stack('_exit_language called without being in language context', MIDCOM_LOG_ERROR);
+            $GLOBALS['midcom_debugger']->print_function_stack('_exit_language called without being in language context', MIDCOM_LOG_DEBUG);
             debug_pop();
+            return;
         }
+             
+        mgd_set_lang($this->_request_data['original_language']);
+        unset($this->_request_data['original_language']);
     }
 
     /**
