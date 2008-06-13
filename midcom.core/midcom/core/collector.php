@@ -565,7 +565,16 @@ class midcom_core_collector
 
     function add_value_property($property)
     {
-        return $this->_mc->add_value_property($property);
+        if (!$this->_mc->add_value_property($property))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to execute add_value_property '{$property}' for {$this->_real_class}.", MIDCOM_LOG_ERROR);
+            debug_pop();
+
+            return false;
+        }
+        
+        return true;
     }
 
     /**
