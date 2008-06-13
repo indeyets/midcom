@@ -12,6 +12,7 @@ Use the bin/dump_sites.php to dump a number of sites, it requires a config file 
       'protected_htaccess_file' => '/etc/midgard/default.htaccess', // optional
       'protected_htaccess_suffix' => '_midgard', // optional
       'redirect_htaccess_suffix' => '', // optional, remove key alltogether to disable generation of redirection .htaccess files
+      'redirect_url_prefix' => 'http://%{HTTP_HOST}', // optional, this is prefixed to redirection urls...
       'username' => 'someuser', // optional
       'password' => 'userpass', // optional
       'pre_dump_script => '', // optional, if returns nonzero exit code, dump will be aborted!, the url and dump path are passed as arguments
@@ -27,6 +28,10 @@ Also if you wish to override some of the more basic settings there are the follo
     'lockfile_prefix' => 'fi_hut_staticdumps_',
 
 The command used to execute `wget` is formed from the wget_options internal default concatenated with the `wget_extra_options` (if defined), ditto for `rsync`. `http_timeout` is used when querying for protected/redirection folder list. If you have multiple nodes sharing the load of dumping a ton of sites `lockfile_path` should point to a shared directory they all can write to, `lockfile_prefix` is configurable for completeness sake.
+
+If using shared directory for lockfiles and dumping from multiple nodes the normal PID checking will not work (since each will check the local processes for validity), and we need to specify a timeout for lockfile in stead.
+
+    'lockfile_use_timeout' => 3600*4, // 4 hours
 
 In the VirtualHost directive of your static apache set the following to handle URLs with GET parameters in them nicely:
 

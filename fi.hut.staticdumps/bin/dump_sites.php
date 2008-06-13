@@ -81,14 +81,15 @@ if (!is_readable($conffile))
 }
 $process_site = -1; // all
 if (   isset($argv[2])
-    && !empty($argv[2]))
+    && is_numeric($argv[2]))
 {
     $process_site = (int)$argv[2];
 }
 $pid = posix_getpid();
 $all_ok = true;
 eval('$sites_config = array(' . file_get_contents($conffile) . ');');
-if (   $process_site > 0)
+//echo "DEBUG: \$process_site={$process_site}\n";
+if ($process_site > -1)
 {
     if (!isset($sites_config[$process_site]))
     {
@@ -125,21 +126,42 @@ foreach ($sites_config as $k => $site_config)
     //echo "DEBUG: pid={$pid}, lockfile={$lockfile}\n";
     if (file_exists($lockfile))
     {
-        // File exists, check if the process_id within is valid
-        $check_pid = (int)trim(file_get_contents($lockfile));
-        $parent_pid = posix_getsid($check_pid);
-        if (   !empty($parent_pid)
-            && is_numeric($parent_pid))
+        if (!isset($site_config['lockfile_use_timeout']))
         {
-            //echo "DEBUG: {$lockfile} exists and containts valid PID {$check_pid}, skipping this site\n";
-            continue;
+            // File exists, check if the process_id within is valid
+            $check_pid = (int)trim(file_get_contents($lockfile));
+            $parent_pid = posix_getsid($check_pid);
+            if (   !empty($parent_pid)
+                && is_numeric($parent_pid))
+            {
+                //echo "DEBUG: {$lockfile} exists and containts valid PID {$check_pid}, skipping this site\n";
+                continue;
+            }
+            else
+            {
+                // Lockfile contains invalid PID
+                echo "\nWARN: {$lockfile} exists but contains INVALID PID {$check_pid}, previous run crashed ?\n";
+                echo "      Removing the stale lockfile and continuing\n";
+                unlink($lockfile);
+            }
         }
         else
         {
-            // Lockfile contains invalid PID
-            echo "\nWARN: {$lockfile} exists but contains INVALID PID {$check_pid}, previous run crashed ?\n";
-            echo "      Removing the stale lockfile and continuing\n";
-            unlink($lockfile);
+            // File exists, check staleness based on time
+            $fstat = stat($lockfile);
+            //echo "DEBUG: \$fstat['mtime']={$fstat['mtime']} time()=" . time() . " \$site_config['lockfile_use_timeout']={$site_config['lockfile_use_timeout']}\n";
+            if ($fstat['mtime'] > (time() - $site_config['lockfile_use_timeout']))
+            {
+                //echo "DEBUG: {$lockfile} exists and is considered fresh, skipping this site\n";
+                continue;
+            }
+            else
+            {
+                // Lockfile contains invalid PID
+                echo "\nWARN: {$lockfile} exists but is older than {$site_config['lockfile_use_timeout']} seconds, previous run crashed ?\n";
+                echo "      Removing the stale lockfile and continuing\n";
+                unlink($lockfile);
+            }
         }
     }
     file_put_contents($lockfile, $pid);
@@ -342,12 +364,17 @@ foreach ($sites_config as $k => $site_config)
                 $regex = '%^' . str_replace('.', '\.', $site_config['url']) . '%';
                 $redirect_to = preg_replace($regex, '/', $headers['location']);
                 $redirect_to = str_replace($site_config['url'], '/', $headers['location']);
+                if (   isset($site_config['redirect_url_prefix'])
+                    && is_string($site_config['redirect_url_prefix']))
+                {
+                    $redirect_to = "{$site_config['redirect_url_prefix']}{$redirect_to}";
+                }
                 $file_content = <<<EOD
 RewriteEngine On
 #This would work in global config file
-#RewriteRule ^/{$path}$ {$redirect_to} [R]
+#RewriteRule ^/{$path}$ {$redirect_to} [R,L]
 #We use this in directory local one
-RewriteRule ^$ {$redirect_to} [R]
+RewriteRule ^$ {$redirect_to} [R,L]
 EOD;
                 $file_path = "{$site_config['dump_path']}/{$path}.htaccess{$suffix}";
                 if (!file_exists(dirname($file_path)))
