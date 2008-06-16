@@ -1592,7 +1592,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             $person_guids = array();
             $mc = new midgard_collector('midgard_parameter', 'value', $email);
             $mc->set_key_property('parentguid');
-            $mc->add_constraint('domain', '=', 'midcom.services.auth:additional_emails');
+            $mc->add_constraint('domain', '=', 'org.imc.vcard:email');
             $mc->execute();
             $guids = $mc->list_keys();
             foreach ($guids as $guid => $array)
