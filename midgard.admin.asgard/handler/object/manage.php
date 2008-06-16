@@ -422,7 +422,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
 
                             $components[$manifest->name] = $_MIDCOM->i18n->get_string($manifest->name, $manifest->name) . " ({$manifest->name})";
                         }
-			asort($components);
+                        asort($components);
 
                         $this->_schemadb['object']->append_field
                         (
@@ -747,7 +747,10 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             // This will exit
         }
         $this->_object->require_do('midgard:update');
-
+        
+        // Set the object language
+        $this->_set_object_language($args);
+        
         $this->_load_schemadb();
         $this->_controller = midcom_helper_datamanager2_controller::create('simple');
         $this->_controller->schemadb =& $this->_schemadb;
@@ -1087,6 +1090,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         }
 
         $type = $this->_object->__new_class_name__;
+        
         $relocate_url = $type;
         $class_extends = $this->_config->get('class_extends');
         if (   is_array($class_extends)
@@ -1193,8 +1197,23 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         $data['tree'] = new midgard_admin_asgard_copytree($this->_object, &$data);
         $data['tree']->copy_tree = false;
         $data['tree']->inputs = false;
+        
+        $midgard_language = $_MIDCOM->i18n->get_midgard_language();
+        
+        // Current language is not zero, selective delete to prevent deleting too much of objects.
+        // Object will not be deleted if it doesn't have a language property at all or if its
+        // language property is not the one requested for deletion
+        if (   $midgard_language !== 0
+            && (   !isset($this->_object->lang)
+                || $this->_object->lang !== $midgard_language))
+        {
+            midcom_show_style('midgard_admin_asgard_object_delete_language');
+        }
+        else
+        {
+            midcom_show_style('midgard_admin_asgard_object_delete');
+        }
 
-        midcom_show_style('midgard_admin_asgard_object_delete');
         midcom_show_style('midgard_admin_asgard_footer');
     }
 
@@ -1394,6 +1413,34 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             midcom_show_style('midgard_admin_asgard_object_copy');
         }
         midcom_show_style('midgard_admin_asgard_footer');
+    }
+    
+    /**
+     * Set the object language if applicable
+     * 
+     * @access private
+     */
+    function _set_object_language($args = array())
+    {
+        // Set the language if requested
+        if (!isset($this->_object->lang))
+        {
+            return false;
+        }
+        
+        switch (true)
+        {
+            case (isset($args[1])):
+                $lang = $_MIDCOM->i18n->code_to_id($args[1]);
+                break;
+            case ($_MIDCOM->i18n->get_content_language()):
+                // This doesn't seem to have the wished effect
+                return;
+                $lang = $_MIDCOM->i18n->code_to_id($_MIDCOM->i18n->get_content_language());
+                break;
+        }
+        
+        $this->_object->lang = $lang;
     }
 }
 ?>

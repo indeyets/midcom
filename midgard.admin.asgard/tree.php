@@ -58,6 +58,22 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
     var $page_prefix = '';
     
     /**
+     * Mark untranslated
+     * 
+     * @var boolean
+     * @access public
+     */
+    var $mark_untranslated = true;
+    
+    /**
+     * Language ID of the root object
+     * 
+     * @var int
+     * @access private
+     */
+    var $_root_object_language = 0;
+    
+    /**
      * Constructor, connect to the parent class constructor.
      * 
      * @static
@@ -69,6 +85,9 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
     {
         parent::midgard_admin_asgard_navigation($object, &$request_data);
         $this->page_prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        
+        // Get the root object language
+        $this->_root_object_language = $_MIDCOM->i18n->get_midgard_language();
     }
     
     /**
@@ -141,6 +160,17 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
                     $css_class = $type;
                     $this->_common_css_classes($child, $ref, $css_class);
                     $this->shown_objects[$child->guid] = true;
+                    
+                    // Add the untranslated
+                    if (   $this->mark_untranslated
+                        && $this->_root_object_language)
+                    {
+                        if (   !isset($child->lang)
+                            || $child->lang !== $this->_root_object_language)
+                        {
+                            $css_class .= ' untranslated';
+                        }
+                    }
 
                     echo "{$prefix}    <li class=\"{$css_class}\">\n";
 
@@ -194,7 +224,7 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
                     }
                     
                     // List the child elements
-                    $this->_list_child_elements($child, "{$prefix}        ", $level+1);
+                    $this->_list_child_elements($child, "{$prefix}        ", $level + 1);
 
                     echo "{$prefix}    </li>\n";
                 }

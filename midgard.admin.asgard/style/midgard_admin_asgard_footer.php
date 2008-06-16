@@ -12,6 +12,17 @@
                             $edited = $view_metadata->get('edited');
                             $creator = new midcom_db_person($view_metadata->get('creator'));
                             $created = $view_metadata->get('created');
+                            
+                            if (!is_int($created))
+                            {
+                                $created = strtotime($created);
+                            }
+                            
+                            if (!is_int($edited))
+                            {
+                                $edited = strtotime($edited);
+                            }
+                            
                             echo sprintf($_MIDCOM->i18n->get_string('created by %s on %s', 'midgard.admin.asgard'), "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/view/{$creator->guid}/\">$creator->name</a>", strftime('%c', $created)) . "\n";
                             if ($edited != $created)
                             {

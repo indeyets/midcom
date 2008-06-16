@@ -775,3 +775,7 @@ Version %s of %s
 XML
 ---STRINGEND
 
+---STRING This object has no translation in the current language and cannot be deleted.
+This object has no translation in the current language and cannot be deleted.
+---STRINGEND
+

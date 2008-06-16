@@ -580,7 +580,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/view/{$object->guid}/{$data['language_code']}",
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/view/{$object->guid}/{$data['language_code']}/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('view', 'midcom'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/view.png',
                 )
@@ -607,7 +607,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/edit/{$object->guid}/{$data['language_code']}",
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/edit/{$object->guid}/{$data['language_code']}/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit', 'midcom'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 )

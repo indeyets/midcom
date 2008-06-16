@@ -788,3 +788,9 @@ table.table_widget a img
 {
   border: none;
 }
+
+#midgard_admin_asgard_deletetree ul li.untranslated
+{
+  font-style: Italic;
+  color: #888a85;
+}

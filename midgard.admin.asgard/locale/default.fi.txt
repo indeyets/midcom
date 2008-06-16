@@ -775,3 +775,7 @@ Versio %s tietueesta %s
 XML
 ---STRINGEND
 
+---STRING This object has no translation in the current language and cannot be deleted.
+Tällä kohteella ei ole käännöstä nykyiselle kielelle, eikä sitä voida poistaa.
+---STRINGEND
+
