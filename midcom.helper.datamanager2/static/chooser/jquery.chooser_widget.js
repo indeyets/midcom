@@ -27,8 +27,7 @@ jQuery.fn.extend(
 {
     midcom_helper_datamanager2_widget_chooser_widget: function(url, options)
     {
-        options = jQuery.extend({}, jQuery.midcom_helper_datamanager2_widget_chooser.defaults,
-        {
+        options = jQuery.extend({}, jQuery.midcom_helper_datamanager2_widget_chooser.defaults, {
             url: url || null
         }, options);
         // return this.each(function(){
