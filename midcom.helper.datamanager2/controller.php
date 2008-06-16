@@ -259,7 +259,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
             && isset($this->datamanager->storage->object->guid))
         {
             // Get the metadata object
-            $metadata = $this->datamanager->storage->object->get_metadata();
+            $metadata =& $this->datamanager->storage->object->get_metadata();
             
             if ($metadata->is_locked())
             {
@@ -287,16 +287,17 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
         }
         else
         {
+            $metadata =& $this->datamanager->storage->object->get_metadata();
             $person = new midcom_db_person($this->datamanager->storage->object->metadata->locker);
             ?>
                 <div class="midcom_helper_datamanager2_unlock">
                     <h2><?php echo $this->_l10n->get('object locked'); ?></h2>
                     <p>
                         <?php echo sprintf($this->_l10n->get('this object was locked by %s'), $person->name); ?>.
-                        <?php echo sprintf($this->_l10n->get('lock will expire on %s'), strftime('%x %X', $this->datamanager->storage->object->metadata->locked)); ?>.
+                        <?php echo sprintf($this->_l10n->get('lock will expire on %s'), strftime('%x %X', ($metadata->get('locked') + ($GLOBALS['midcom_config']['metadata_lock_timeout'] * 60)))); ?>.
                     </p>
             <?php
-            if ($_MIDCOM->auth->can_user_do('midcom:unlock', null, 'midcom_services_auth', 'midcom.core'))
+            if ($metadata->can_unlock())
             {
                 echo "<form method=\"post\">\n";
                 echo "    <p class=\"unlock\">\n";

@@ -1037,7 +1037,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
                     $metadata = $object->get_metadata();
                     
                     // Remove the lock, if permission is granted
-                    if ($_MIDCOM->auth->can_user_do('midcom:unlock', null, 'midcom_services_auth', 'midcom.core'))
+                    if ($metadata->can_unlock())
                     {
                         $metadata->unlock();
                     }

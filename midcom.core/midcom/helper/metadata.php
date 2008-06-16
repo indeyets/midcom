@@ -748,28 +748,34 @@ class midcom_helper_metadata
         // Object hasn't been marked to be edited
         if ($this->get('locked') == 0)
         {
+            // Make sure locker is empty too
+            if ($this->get('locker') != '')
+            {
+                $this->set('locker', '');
+            }
             return false;
         }
-        
-        if ($this->get('locked') - time() > $GLOBALS['midcom_config']['metadata_lock_timeout'] * 60)
+
+        if (($this->get('locked') + ($GLOBALS['midcom_config']['metadata_lock_timeout'] * 60)) < time())
         {
-            return true;
+            // lock expired, explicitly clear lock
+            $this->set('locked', 0);
+            $this->set('locker', '');
+            return false;
         }
-        
-        // Get the person who locked the this
-        // Lock was created by the user, allow unquestionable editing
+
+        // Lock was created by the user, return "not locked"
         if (   isset($_MIDCOM->auth->user)
             && isset($_MIDCOM->auth->user->guid)
-            && $this->get('locker') !== $_MIDCOM->auth->user->guid)
+            && $this->get('locker') === $_MIDCOM->auth->user->guid)
         {
-            return true;
+            return false;
         }
-        
-        // Locks checked, this isn't locked
-        return false;
+
+        // Unlocked states checked and none matched, consider locked
+        return true;
     }
-    
-    
+
     /**
      * Set the object lock
      * 
@@ -804,6 +810,22 @@ class midcom_helper_metadata
     }
 
     /**
+     * Check whether current user can unlock the object
+     *
+     * @return boolean indicating privileges
+     * @todo enable specifying user ?
+     */
+    function can_unlock()
+    {
+        if (   !$this->object->can_do('midcom:unlock')
+            && !$_MIDCOM->auth->can_user_do('midcom:unlock', null, 'midcom_services_auth', 'midcom'))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Unlock the object
      * 
      * @access public
@@ -811,18 +833,17 @@ class midcom_helper_metadata
      */
     function unlock()
     {
-        if (!$_MIDCOM->auth->can_user_do('midcom:unlock', null, 'midcom_services_auth', 'midcom'))
+        if (!$this->can_unlock())
         {
             return false;
         }
-        
-        
+
         if (   !$this->set('locker', '')
             || !$this->set('locked', ''))
         {
             return false;
         }
-        
+
         return true;
     }
 }

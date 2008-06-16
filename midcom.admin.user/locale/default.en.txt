@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING User Management
+User Management
+---STRINGEND
+
 ---STRING Your password has been changed. Your new password is __PASSWORD__
 Your password has been changed. Your new password is __PASSWORD__
 ---STRINGEND
@@ -279,7 +283,7 @@ Write the message that will be sent to the recipients
 Your password has been changed
 ---STRINGEND
 
----STRING User Management
-User Management
+---STRING enable unlocking locked objects
+Enable unlocking locked objects
 ---STRINGEND
 

@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING User Management
+Käyttäjien hallinta
+---STRINGEND
+
 ---STRING Your password has been changed. Your new password is __PASSWORD__
 Salasanasi on vaihdettu. Uusi salasanasi on __PASSWORD__
 ---STRINGEND
@@ -279,7 +283,7 @@ Kirjoita viesti, joka lähetetään vastaanottajille
 Salasanasi on vaihdettu
 ---STRINGEND
 
----STRING User Management
-Käyttäjien hallinta
+---STRING enable unlocking locked objects
+Salli lukitusten purkaminen
 ---STRINGEND
 
