@@ -1,5 +1,17 @@
 <?php
-class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
+/**
+ * @package midgard.admin.asgard
+ * @author The Midgard Project, http://www.midgard-project.org
+ * @version $Id: acl_editor.php 5538 2007-03-20 13:22:41Z rambo $
+ * @copyright The Midgard Project, http://www.midgard-project.org
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ */
+
+/**
+ * Copy/delete tree branch viewer
+ * @package midgard.admin.asgard
+ */
+ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
 {
     /**
      * Switch to determine if the whole tree should be copied
@@ -156,6 +168,7 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
 
                     $ref =& $this->_get_reflector(&$child);
 
+                    $span_class = '';
                     $selected = $this->_is_selected($child);
                     $css_class = $type;
                     $this->_common_css_classes($child, $ref, $css_class);
@@ -168,7 +181,7 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
                         if (   !isset($child->lang)
                             || $child->lang !== $this->_root_object_language)
                         {
-                            $css_class .= ' untranslated';
+                            $span_class = ' untranslated';
                         }
                     }
 
@@ -200,7 +213,7 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
                         echo "{$prefix}        <input id=\"item_{$child->guid}\" type=\"{$this->input_type}\" name=\"{$this->input_name}\" value=\"{$child->guid}\"{$checked} />\n";
                     }
                     
-                    echo "{$prefix}            <span class=\"title\">{$icon}{$label}</span>\n";
+                    echo "{$prefix}            <span class=\"title{$span_class}\">{$icon}{$label}</span>\n";
                     
                     // Show the link to the object
                     if ($this->view_link)
