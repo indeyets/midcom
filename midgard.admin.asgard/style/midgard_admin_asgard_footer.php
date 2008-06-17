@@ -49,7 +49,9 @@
                             $lang_qb = midcom_baseclasses_database_language::new_query_builder();
                             $lang_qb->add_order('name');
                             $langs = $lang_qb->execute();
-                            echo "<select class=\"language_chooser\" onchange=\"window.location='{$_MIDGARD['self']}__mfa/asgard/object/view/{$data['object']->guid}/' + this.options[this.selectedIndex].value;\">\n";
+                            $default_mode = midgard_admin_asgard_plugin::get_default_mode(&$data);
+                            
+                            echo "<select class=\"language_chooser\" onchange=\"window.location='{$_MIDGARD['self']}__mfa/asgard/object/{$default_mode}/{$data['object']->guid}/' + this.options[this.selectedIndex].value;\">\n";
                             echo "    <option value=\"\">" . $_MIDCOM->i18n->get_string('default language', 'midgard.admin.asgard') . "</option>\n";
                             foreach ($langs as $lang)
                             {
@@ -81,7 +83,7 @@
                 Copyright &copy; 1998 - <?php echo date('Y'); ?> <a href="http://www.midgard-project.org/">The Midgard Project</a>.
                 Midgard is a <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under
                 <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.<br />
-		&(_SERVER['SERVER_NAME']);: &(_SERVER['SERVER_SOFTWARE']);
+                &(_SERVER['SERVER_NAME']);: &(_SERVER['SERVER_SOFTWARE']);
             </span>
         </div>
     </body>
