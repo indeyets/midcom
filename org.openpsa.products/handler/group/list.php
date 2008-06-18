@@ -129,6 +129,18 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
 
             $data['parent_group'] = $data['group']->id;
             
+            if ($handler_id == 'listall')
+            {
+                $group_up = new org_openpsa_products_product_group_dba($data['group']->up);
+                if (    isset($group_up)
+                    &&  isset($group_up->title)
+                    && !empty($group_up)
+                   )
+                {
+                    $data['group'] = $group_up;
+                }
+            }
+
             if ($this->_config->get('code_in_title'))
             {
                 $data['view_title'] = "{$data['group']->code} {$data['group']->title}";
@@ -138,6 +150,11 @@ class org_openpsa_products_handler_group_list  extends midcom_baseclasses_compon
                 $data['view_title'] = $data['group']->title;
             }
             
+            if ($handler_id == 'listall')
+            {
+                $data['view_title'] = sprintf($this->_l10n_midcom->get('All %s'), $data['view_title']);
+            }
+
             $data['acl_object'] = $data['group'];
         }
 
