@@ -334,8 +334,10 @@ class midcom_helper_datamanager2_type_tagselect extends midcom_helper_datamanage
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        if (   $this->use_tag_library
-            || $this->force_saving_to_tag_library)
+        if (   empty($this->options)
+            && (   $this->use_tag_library
+                || $this->force_saving_to_tag_library)
+            )
         {
             debug_add("use tag lib");
 
