@@ -95,7 +95,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
             // Show the article only if the publishing time has passed or the viewer
             // is the author
             $qb->begin_group('OR');
-                $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
+                $qb->add_constraint('metadata.published', '<', date('Y-m-d H:i:s'));
 
                 if (   $_MIDCOM->auth->user
                     && isset($_MIDCOM->auth->user->guid))

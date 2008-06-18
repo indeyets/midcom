@@ -124,7 +124,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                 // Show the article only if the publishing time has passed or the viewer
                 // is the author
                 $qb->begin_group('OR');
-                    $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
+                    $qb->add_constraint('metadata.published', '<', date('Y-m-d H:i:s'));
 
                     if (   $_MIDCOM->auth->user
                         && isset($_MIDCOM->auth->user->guid))
@@ -183,7 +183,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
             // Show the article only if the publishing time has passed or the viewer
             // is the author
             $qb->begin_group('OR');
-                $qb->add_constraint('metadata.published', '<', date('Y-m-d h:i:s'));
+                $qb->add_constraint('metadata.published', '<', date('Y-m-d H:i:s'));
 
                 if (   $_MIDCOM->auth->user
                     && isset($_MIDCOM->auth->user->guid))
