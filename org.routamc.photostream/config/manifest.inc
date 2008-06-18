@@ -1,7 +1,7 @@
 'name' => 'org.routamc.photostream',
 'icon' => 'stock-icons/16x16/camera.png',
 'purecode' => false,
-'version' => '1.2.0beta1',
+'version' => '1.2.0beta2',
 'state' => 'beta',
 'privileges' => array
 (
