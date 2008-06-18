@@ -340,6 +340,7 @@ class packageMidCOM extends Task
 
         // Release date is today
         // TODO: Get latest modification date from CHANGES
+        date_default_timezone_set('Etc/Zulu');
         $package['date'] = date('Y-m-d');
         $package['time'] = date('H:i:s');
 
