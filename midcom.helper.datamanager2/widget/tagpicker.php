@@ -30,6 +30,8 @@
  *   this usually means that a password HTML element will be used, instead of a regular
  *   text input widget. Defaults to false.
  *
+ * FIXME: Port required supporting javascripts from http://community.ava.nemein.net/community/js/site.js
+ *
  * @package midcom.helper.datamanager2
  */
 class midcom_helper_datamanager2_widget_tagpicker extends midcom_helper_datamanager2_widget
