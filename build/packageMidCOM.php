@@ -259,23 +259,28 @@ class packageMidCOM extends Task
 
                 // Check for potential other file extensions
                 $path_parts = pathinfo($entry);
-                switch ($path_parts['extension'])
+                
+                if(isset($path_parts['extension'])) 
                 {
-                    // binary formats
-                    case 'jpg' :
-                    case 'gif' :
-                    case 'png' :
-                    case 'zip' :
-                    case 'tgz' :
-                        $role = 'data';
-                        break;
-                        // Web formats *not* in static directory
-                    case 'html' :
-                    case 'js' :
-                    case 'htc' :
-                    case 'css' :
-                        $role = 'data';
-                        break;
+                    switch ($path_parts['extension'])
+                    {
+                        // binary formats
+                        case 'jpg' :
+                        case 'gif' :
+                        case 'png' :
+                        case 'zip' :
+                        case 'tgz' :
+                            $role = 'data';
+                            break;
+                            
+                            // Web formats *not* in static directory
+                        case 'html' :
+                        case 'js' :
+                        case 'htc' :
+                        case 'css' :
+                            $role = 'data';
+                            break;
+                    }
                 }
             }
 
@@ -284,7 +289,10 @@ class packageMidCOM extends Task
                 // List the subdirectory
                 $subconfig = $config;
                 $subconfig['path'] = "{$config['path']}/{$entry}";
-                $subconfig['install-as-prefix'] .= "{$entry}/";
+                if(isset($subconfig['install-as-prefix']))
+                {
+                    $subconfig['install-as-prefix'] .= "{$entry}/";
+                }
                 $config['filelist'] = $this->directory_list_contents($subconfig);
             } else
             {
