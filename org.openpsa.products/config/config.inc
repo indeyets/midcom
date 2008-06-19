@@ -51,3 +51,5 @@
 
 // if we have subgroups and products in group, what shall we show. Allowed options 'products' and 'groups'.
 'listing_primary' => 'products',
+
+'import_csv_data_percentage' => 0,

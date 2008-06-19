@@ -21,11 +21,18 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                         echo $data['l10n']->get('csv column');
                         ?>
                     </th>
+                    <?php
+                    if (isset($data['rows'][1]))
+                    {
+                    ?>
                     <th>
                         <?php
                         echo $data['l10n']->get('example');
                         ?>
                     </th>
+                    <?php
+                    }
+                    ?>
                     <th>
                         <?php
                         echo $data['l10n']->get('store to field');
@@ -39,7 +46,10 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 {
                     echo "<tr>\n";
                     echo "    <td><label for=\"org_openpsa_products_import_csv_field_{$key}\">{$cell}</label></td>\n";
-                    echo "    <td>{$data['rows'][1][$key]}</td>\n";
+                    if (isset($data['rows'][1]))
+                    {
+                        echo "    <td>{$data['rows'][1][$key]}</td>\n";
+                    }
                     echo "    <td>\n";
                     echo "        <select name=\"org_openpsa_products_import_csv_field[{$key}]\" id=\"org_openpsa_products_import_csv_field_{$key}\">\n";
                     echo "            <option></option>\n";
@@ -48,6 +58,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                     $schemadb = $data['schemadb'];
                     foreach ($schemadb[$data['schema']]->fields as $field_id => $field)
                     {
+                        $selected = '';
                         if (   array_key_exists('hidden', $field)
                             && $field['hidden'])
                         {
@@ -57,7 +68,11 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                         }
 
                         $field_label = $schemadb[$data['schema']]->translate_schema_string($field['title']);
-                        echo "            <option value=\"{$field_id}\">{$field_label}</option>\n";
+                        if($cell == $field_label)
+                        {
+                            $selected = ' selected';
+                        }
+                        echo "            <option{$selected} value=\"{$field_id}\">{$field_label}</option>\n";
                     }
                     
                     // Show "parent group code" selector

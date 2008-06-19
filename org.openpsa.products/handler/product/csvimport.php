@@ -56,7 +56,14 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
         {
             if (array_key_exists($key, $this->_datamanager->types))
             {
-                $this->_datamanager->types[$key]->value = $value;
+                if (is_a($this->_datamanager->types[$key], 'midcom_helper_datamanager2_type_date'))
+                {
+                    $this->_datamanager->types[$key]->value = new Date($value);
+                }
+                else
+                {
+                    $this->_datamanager->types[$key]->value = $value;
+                }
             }
         }
 
@@ -90,6 +97,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
         {
             $qb = org_openpsa_products_product_dba::new_query_builder();
             $qb->add_constraint('code', '=', (string) $productdata['code']);
+            
             $products = $qb->execute();
             if (count($products) > 0)
             {
@@ -116,10 +124,33 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
         if (isset($productdata['org_openpsa_products_import_parent_group']))
         {
             // Validate and set parent group
-            $qb = org_openpsa_products_product_group_dba::new_query_builder();
-            $qb->add_constraint('code', '=', (string) $productdata['org_openpsa_products_import_parent_group']);
-            $parents = $qb->execute();
-            if (count($parents) == 0)
+            $parent = null;
+            if (is_numeric(trim($productdata['org_openpsa_products_import_parent_group'])))
+            {
+                // Try if the parent identifier is a database ID
+                $parent = new org_openpsa_products_product_group_dba((int) $productdata['org_openpsa_products_import_parent_group']);
+            }
+            
+            if (   !$parent
+                && mgd_is_guid($productdata['org_openpsa_products_import_parent_group']))
+            {
+                // The parent identifier is a GUID
+                $parent = new org_openpsa_products_product_group_dba($productdata['org_openpsa_products_import_parent_group']);
+            }
+            
+            if (!$parent)
+            {
+                // Seek via code
+                $qb = org_openpsa_products_product_group_dba::new_query_builder();
+                $qb->add_constraint('code', '=', (string) $productdata['org_openpsa_products_import_parent_group']);
+                $parents = $qb->execute();
+                if (count($parents) > 0)
+                {
+                    $parent = $parents[0];
+                }
+            }
+            
+            if (!$parent)
             {
                 // Invalid parent, delete
                 if ($new)
@@ -134,8 +165,8 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
                 return false;
             }
 
-            $product->productGroup = $parents[0]->id;
-            $groupdata['productGroup'] = $parents[0]->id;
+            $product->productGroup = $parent->id;
+            $groupdata['productGroup'] = $parent->id;
             $product->update();
         }
 
@@ -242,7 +273,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
                     }
                     $percentage = round(100 / $total_columns * $columns_with_content);
 
-                    if ($percentage >= 20)
+                    if ($percentage >= $this->_config->get('import_csv_data_percentage'))
                     {
                         $data['rows'][] = $csv_line;
                         $read_rows++;
@@ -310,7 +341,8 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
 
         $data['rows'] = array();
         $data['separator'] = $_POST['org_openpsa_products_import_separator'];
-        $data['schema'] = $_POST['org_openpsa_products_import_schema'];        
+        $data['schema'] = $_POST['org_openpsa_products_import_schema']; 
+        $this->_datamanager->set_schema($data['schema']);       
 
         // Start processing the file
         $read_rows = 0;
@@ -335,7 +367,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
             }
             $percentage = round(100 / $total_columns * $columns_with_content);
 
-            if ($percentage >= 20)
+            if ($percentage >= $this->_config->get('import_csv_data_percentage'))
             {
                 $data['rows'][] = $csv_line;
                 $read_rows++;
