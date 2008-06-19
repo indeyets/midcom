@@ -383,25 +383,36 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
      */
     function _create_registration($drop_registrar)
     {
+        /**
+         * FIXME: The whole flow here needs to be seriously re-though for non-sudo usage with unprivileged users
+         * thus we use sudo explicitly to make it work for now.
+         * 
         if (! $_MIDCOM->auth->user)
         {
+        */
             if (! $_MIDCOM->auth->request_sudo())
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     'Your registrations has not been processed: Failed to obtain sudo privileges.');
                 // This will exit.
             }
+        /*
         }
+        */
 
         $this->_registration = new net_nemein_registrations_registration_dba();
         $this->_registration->eid = $this->_event->id;
         $this->_registration->uid = $this->_registrar->id;
         if (! $this->_registration->create())
         {
+            /*
             if (! $_MIDCOM->auth->user)
             {
+            */
                 $_MIDCOM->auth->drop_sudo();
+            /*
             }
+            */
 
             if ($drop_registrar)
             {
@@ -441,10 +452,14 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
         $controller =& $this->_registration->create_simple_controller($registration_schema);
         if ($controller->process_form() != 'save')
         {
+            /*
             if (! $_MIDCOM->auth->user)
             {
+            */
                 $_MIDCOM->auth->drop_sudo();
+            /*
             }
+            */
 
             if ($drop_registrar)
             {
@@ -470,10 +485,14 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
             $this->_send_approval_notification();
         }
 
+        /*
         if (! $_MIDCOM->auth->user)
         {
+        */
             $_MIDCOM->auth->drop_sudo();
+        /*
         }
+        */
     }
 
     /**

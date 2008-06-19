@@ -21,7 +21,7 @@ Use the bin/dump_sites.php to dump a number of sites, it requires a config file 
 
 Also if you wish to override some of the more basic settings there are the following config keys and their default values:
 
-    'wget_options' => '-erobots=off -q -m -nH',
+    'wget_options' => '-erobots=off -q -m -nH --retry-connrefused',
     'rsync_options' => '-a',
     'http_timeout' => 300, // seconds = 5minutes
     'lockfile_path' => '/var/run',

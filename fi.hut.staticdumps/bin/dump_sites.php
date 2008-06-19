@@ -4,7 +4,7 @@ ini_set('error_reporting', E_ALL);
 
 $defaults = array
 (
-    'wget_options' => '-erobots=off -q -m -nH',
+    'wget_options' => '-erobots=off -q -m -nH --retry-connrefused',
     'rsync_options' => '-a',
     'http_timeout' => 300, // seconds = 5minutes
     'lockfile_path' => '/var/run',
