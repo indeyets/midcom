@@ -36,6 +36,13 @@
             'widget'      => 'text',
             'storage'     => 'workphone'
         ),
+        'street' => array
+        (
+            'title'       => 'street',
+            'type'        => 'text',
+            'widget'      => 'text',
+            'storage'     => 'street',
+        ),
         'postcode' => array
         (
             'title'       => 'postcode',
