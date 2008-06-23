@@ -541,6 +541,63 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
         return $ret;
     }
 
+    function filter_callback(&$serializations, &$pluginargs)
+    {
+        foreach($pluginargs as $k => $intanceargs)
+        {
+            unset($intanceargs);
+            $this->_filter_callback_real(&$serializations, &$pluginargs[$k]);
+        }
+    }
+
+    function _filter_callback_real(&$serializations, &$pluginargs)
+    {
+        /*
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r("Called with \$pluginargs", $pluginargs);
+        debug_pop();
+        */
+        if (   !isset($pluginargs['callback'])
+            && empty($pluginargs['callback']))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Plugin subscription #{$this->subscription->id} ({$this->subscription->title}) callback plugin callback not defined", MIDCOM_LOG_WARN);
+            debug_print_r("\$pluginargs", $pluginargs);
+            debug_pop();
+            return false;
+        }
+        if (   !isset($pluginargs['component'])
+            && empty($pluginargs['component']))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Plugin subscription #{$this->subscription->id} ({$this->subscription->title}) callback plugin component not defined", MIDCOM_LOG_WARN);
+            debug_print_r("\$pluginargs", $pluginargs);
+            debug_pop();
+            return false;
+        }
+        if (!$_MIDCOM->componentloader->load_graceful($pluginargs['component']))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Plugin subscription #{$this->subscription->id} ({$this->subscription->title}) callback plugin could not load component {$pluginargs['component']}", MIDCOM_LOG_WARN);
+            debug_pop();
+            return false;
+        }
+        if (!is_callable($pluginargs['callback']))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Plugin subscription #{$this->subscription->id} ({$this->subscription->title}) callback plugin callback is not callable", MIDCOM_LOG_WARN);
+            debug_print_r("\$pluginargs['callback']", $pluginargs['callback']);
+            debug_pop();
+            return false;
+        }
+        if (!isset($pluginargs['callback_extra_arguments']))
+        {
+            $pluginargs['callback_extra_arguments'] = array();
+        }
+        debug_pop();
+        return call_user_func_array($pluginargs['callback'], array(&$serializations, &$pluginargs['callback_extra_arguments']));
+    }
+
     /**
      * This runs the given array of serializations through filters defined for
      * the subscription
