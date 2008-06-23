@@ -11,7 +11,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
         // Show instructions
         echo "<ul>\n";
-        echo "    <li>" . $data['l10n']->get('one line per subscriber') . "</li>\n";
+        echo "    <li>" . $data['l10n']->get('one line per product') . "</li>\n";
         echo "    <li>" . $data['l10n']->get('first row is headers') . "</li>\n";
         echo "    <li>" . $data['l10n']->get('iso-latin-1 encoding') . "</li>\n";
         echo "    <li>" . $data['l10n']->get('fields available for matching are defined in schema') . "</li>\n";
