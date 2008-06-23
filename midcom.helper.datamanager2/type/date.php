@@ -147,7 +147,11 @@ class midcom_helper_datamanager2_type_date extends midcom_helper_datamanager2_ty
      */
     function convert_to_csv()
     {
-        return $this->convert_to_storage();
+        if ($this->is_empty())
+        {
+            return '';
+        }
+        return $this->value->format('%Y-%m-%d %T');
     }
 
     function convert_to_html()
