@@ -24,8 +24,8 @@ class org_openpsa_products_handler_product_csv extends midcom_baseclasses_compon
         $_MIDCOM->skip_page_style = true;
         if(isset($args[0]))
         {
-            $data['filename'] = $args[0] . '_' . date('Y-m-d') . '.csv';
-            $this->_request_data['schemadb_to_use'] = $args[0];
+            $data['schemadb_to_use'] = str_replace('.csv', '', $args[0]);
+            $data['filename'] = $data['schemadb_to_use'] . '_' . date('Y-m-d') . '.csv';
         }
         elseif(    isset($_POST)
                 && array_key_exists('org_openpsa_products_export_schema', $_POST))
@@ -65,6 +65,13 @@ class org_openpsa_products_handler_product_csv extends midcom_baseclasses_compon
         $qb->add_order('title');
         
         $products = array();
+        
+        $root_group_guid = $this->_config->get('root_group');
+        if ($root_group_guid)
+        {
+            $root_group = new org_openpsa_products_product_group_dba($root_group_guid);
+            $qb->add_constraint('productGroup', 'INTREE', $root_group->id);
+        }
 
         $all_products = $qb->execute();
         foreach ($all_products as $product)
