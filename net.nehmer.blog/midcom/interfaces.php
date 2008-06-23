@@ -86,7 +86,7 @@ class net_nehmer_blog_interface extends midcom_baseclasses_components_interface
                         continue;
                     }
 
-                    net_nehmer_static_viewer::index($datamanager, $indexer, $topic);
+                    net_nehmer_blog_viewer::index($datamanager, $indexer, $topic);
                 }
             }
         }
