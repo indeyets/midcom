@@ -38,9 +38,9 @@ class net_nehmer_blog_link_dba extends __net_nehmer_blog_link_dba
             || !$this->article)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Permission denied for creating the link, either $link->topic or $link->article was undefined');
+            debug_add('Cannot create the link, either $link->topic or $link->article is empty', MIDCOM_LOG_WARN);
             debug_pop();
-            
+            mgd_set_errno(MGD_ERR_NOT_EXISTS);
             return false;
         }
         
@@ -59,9 +59,9 @@ class net_nehmer_blog_link_dba extends __net_nehmer_blog_link_dba
             || !$this->article)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Permission denied for creating the link, either $link->topic or $link->article was undefined');
+            debug_add('Cannot update the link, either $link->topic or $link->article is empty', MIDCOM_LOG_WARN);
             debug_pop();
-            
+            mgd_set_errno(MGD_ERR_NOT_EXISTS);
             return false;
         }
         
