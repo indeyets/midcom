@@ -2,15 +2,7 @@
 // Available request data: comments, objectguid, comment, display_datamanager
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['display_datamanager']->get_content_html();
-
-if (version_compare(mgd_version(), '1.8', '>='))
-{
-    $created = $data['comment']->metadata->published;
-}
-else
-{
-    $created = $data['comment']->created;
-}
+$created = $data['comment']->metadata->published;
 
 $published = sprintf(
     $data['l10n']->get('published by %s on %s.'),

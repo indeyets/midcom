@@ -224,14 +224,14 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
         $parent_title = $this->_resolve_object_title($parent_object);
 
         // Resolve commenting user
-        $authors = explode('|', substr($this->_new_comment->metadata->authors, 1, -1));
-        if (empty($authors))
+        $comment_authors = explode('|', substr($this->_new_comment->metadata->authors, 1, -1));
+        if (empty($comment_authors))
         {
             // Fall back to original creator if authors are not set for some reason
-            $authors = array();
-            $authors[] = $this->_new_comment->metadata->creator;
+            $comment_authors = array();
+            $comment_authors[] = $this->_new_comment->metadata->creator;
         }
-        $user =& $_MIDCOM->auth->get_user($authors[0]);
+        $user =& $_MIDCOM->auth->get_user($comment_authors[0]);
         if (   $user
             && $user->guid)
         {
