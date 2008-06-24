@@ -12,6 +12,7 @@ $_MIDCOM->auth->require_admin_user();
 scripts
     <ul>
         <li><a href="approve_topic_tree_reflector.php">approve_topic_tree_reflector.php</a>, forced approval of everything that is child of topic</li>
+        <li><a href="approve_topic_tree_reflector_parts.php">approve_topic_tree_reflector_parts.php</a>, forced as above but use this version for <strong>large</strong> sites, it makes subrequests for each topic to allow the DBA hooks to process in between</li>
         <li><a href="approve_topic_tree_classic.php">approve_topic_tree_classic.php</a>, the classic topic/article approval if not yet approved</li>
         <li><a href="approve_style_tree.php">approve_style_tree.php</a>, forced approval of styles and style_elements</li>
         <li><a href="approve_snippet_tree.php">approve_snippet_tree.php</a>, forced approval of snippetdirs and snippets</li>
