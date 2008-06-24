@@ -14,14 +14,9 @@
  */
 class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
 {
-    var $_config = false;
-
     function __construct($guid = null) 
     {
-        $stat = parent::__construct($guid);
-        $interface =& $_MIDCOM->componentloader->get_interface_class('net.nemein.calendar');
-        $this->_config = $interface->get_config_for_topic();
-        return $stat;
+        return parent::__construct($guid);
     }
 
     /**
@@ -248,7 +243,7 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
     }
 
     /**
-     * Clears the name field if user is not allowed to set it explicitly
+     * Clears the name field if it's not unique (making it go through the title based name generation)
      *
      * But only when in the fallback language
      */
@@ -267,7 +262,7 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
         {
             return;
         }
-        if (!$this->_config->get('allow_name_change'))
+        if (!$this->name_is_unique())
         {
             $this->name = '';
         }
@@ -323,8 +318,7 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
         else
         {
             $GLOBALS['net_nemein_calendar_event_dba__on_created_loop_{$this->guid}'] = true;
-            if (   !$this->_config->get('allow_name_change')
-                || empty($this->name))
+            if (empty($this->name))
             {
                 /*
                 debug_push_class(__CLASS__, __FUNCTION__);
@@ -349,8 +343,7 @@ class net_nemein_calendar_event_dba extends __net_nemein_calendar_event_dba
         else
         {
             $GLOBALS['net_nemein_calendar_event_dba__on_updated_loop_{$this->guid}'] = true;
-            if (   !$this->_config->get('allow_name_change')
-                || empty($this->name))
+            if (empty($this->name))
             {
                 /*
                 debug_push_class(__CLASS__, __FUNCTION__);
