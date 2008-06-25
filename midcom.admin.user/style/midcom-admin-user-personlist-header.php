@@ -22,9 +22,15 @@
 <?php
 if (count($data['persons']) > 0)
 {
+    $action_uri = $_MIDGARD['uri'];
+    if (isset($_REQUEST['midcom_admin_user_search']))
+    {
+        $action_uri .= "?midcom_admin_user_search=" . $_REQUEST['midcom_admin_user_search'];
+    }
+
     $data['enabled'] = 0;
     ?>
-    <form method="post" id="midcom_admin_user_batch_process" action="&(_MIDGARD['uri']);">
+    <form method="post" id="midcom_admin_user_batch_process" action="&(action_uri);">
     <table class="midcom_admin_user_search_results">
         <thead>
             <tr>
