@@ -37,7 +37,8 @@ if ($data['even'])
     <?php
     if ($data['list_type'] != 'paid')
     {
-        if ($_MIDCOM->auth->can_do('midgard:update', $data['invoice']))
+        if ($_MIDCOM->auth->can_do('midgard:update', $data['invoice'])
+	    && isset($data['next_marker']))
         {
             $next_marker_url = $prefix . "invoice/mark_" . $data['next_marker'] . "/" . $data['invoice']->guid . ".html";
             ?>
