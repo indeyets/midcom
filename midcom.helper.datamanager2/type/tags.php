@@ -20,6 +20,11 @@ require_once('text.php');
 class midcom_helper_datamanager2_type_tags extends midcom_helper_datamanager2_type_text
 {
     /**
+     * Automatically use this context for all tags that lack one
+     */
+    var $auto_context = null;
+
+    /**
      * This event handler is called after construction, so passing references to $this to the
      * outside is safe at this point.
      *
@@ -45,7 +50,25 @@ class midcom_helper_datamanager2_type_tags extends midcom_helper_datamanager2_ty
 
     function convert_to_storage()
     {
+    
         $tag_array = net_nemein_tag_handler::string2tag_array($this->value);
+        $this->auto_context = trim($this->auto_context);
+        if (!empty($this->auto_context))
+        {
+            $new_tag_array = array();
+            foreach ($tag_array as $tagname => $url)
+            {
+                $context = net_nemein_tag_handler::resolve_context($tagname);
+                if (empty($context))
+                {
+                    $tagname = "{$this->auto_context}:{$tagname}";
+                }
+                $new_tag_array[$tagname] = $url;
+            }
+            unset($tagname, $url);
+            $tag_array = $new_tag_array;
+            unset($new_tag_array);
+        }
         $status = net_nemein_tag_handler::tag_object($this->storage->object, $tag_array);
         if (!$status)
         {
