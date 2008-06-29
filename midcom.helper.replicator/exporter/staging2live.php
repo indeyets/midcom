@@ -112,8 +112,22 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
          */
         // FIXME: use strtotime when MidCOM stops automagically rewriting these between ISO and Unix timestamps
         $schedule_action = 'ok';
-        $schedulestart_unixtime = $object->metadata->schedulestart;
-        $scheduleend_unixtime = $object->metadata->scheduleend;
+        if (!preg_match('%[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}%', $object->metadata->schedulestart))
+        {
+            $schedulestart_unixtime = strtotime($object->metadata->schedulestart);
+        }
+        else
+        {
+            $schedulestart_unixtime = $object->metadata->schedulestart;
+        }
+        if (!preg_match('%[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}%', $object->metadata->scheduleend))
+        {
+            $scheduleend_unixtime = strtotime($object->metadata->scheduleend);
+        }
+        else
+        {
+            $scheduleend_unixtime = $object->metadata->scheduleend;
+        }
         if ($schedulestart_unixtime)
         {
             $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Has schedulestart set to ' . strftime('%x %X', $schedulestart_unixtime));

@@ -633,7 +633,8 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
             $GLOBALS['midcom_helper_replicator_logger']->log("Got error \"{$transporter->error}\" from transporter for queue \"{$subscription->title}\".", MIDCOM_LOG_ERROR);
             $GLOBALS['midcom_helper_replicator_logger']->log("Saving queue for later retry.", MIDCOM_LOG_ERROR);
             debug_pop();
-            return;
+            // this is not a fatal error, return true
+            return true;
         }
 
         // Remove files transported correctly, quarantine problematic files

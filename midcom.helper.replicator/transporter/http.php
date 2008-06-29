@@ -154,6 +154,7 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
 
     function _real_process(&$items, $retry_count = 0)
     {
+        $orig_items_count = count($items);
         foreach ($items as $key => $data)
         {
             if (!$this->_post_item(&$key, &$items))
@@ -189,6 +190,17 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
             return $this->_real_process($items, $retry_count+1);
         }
 
+        $remaining_items_count = count($items);
+        if (   !empty($remaining_items_count)
+            && $orig_items_count === $remaining_items_count)
+        {
+            // All items failed send (likely unavailable target server), return false to retry in stead of quarantine
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("\$remaining_items_count(={$remaining_items_count}) is the same as \$orig_items_count(={$orig_items_count}), all keys failed, marking for retry in stead on quarantine", MIDCOM_LOG_INFO);
+            debug_pop();
+            $this->error = 'send failed for all keys';
+            return false;
+        }
         return true;
     }
 
