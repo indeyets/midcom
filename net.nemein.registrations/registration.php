@@ -409,7 +409,8 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
             return false;
         }
         
-        return $this->_event->approve_registration($this, false);
+        $event = $this->get_event();
+        return $event->approve_registration($this, false);
     } 
 }
 
