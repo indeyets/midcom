@@ -12,6 +12,7 @@
  */
 class midcom_helper_replicator_queuemanager extends midcom_baseclasses_components_purecode
 {
+    var $max_queues_per_pass = 10;
     var $exporters = array();
     var $transporters = array();
     var $started = 0;
@@ -674,14 +675,33 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         $queues = array();
         while (($queue_name = readdir($dp_queues)) !== false)
         {
+            // limit the amount of queues we process per subscription per request
             $queues[$queue_name] = $queue_name;
         }
         closedir($dp_queues);
-        uksort($queues, array($this, '_process_queue_sort_items'));
-        reset($queues);
+        /*
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r('$queues before sort: ', $queues);
+        */
+        // ksort is enough here
+        ksort($queues);
+        /*
+        debug_print_r('$queues after sort: ', $queues);
+        debug_pop();
+        */
 
+        $i = 0;
         foreach ($queues as $queue_name)
         {
+            // Limit the amount of queues we process per request to avoid leaking memory
+            ++$i;
+            if ($i > $this->max_queues_per_pass)
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Queue limit of {$this->max_queues_per_pass} reached, breaking out of loop.", MIDCOM_LOG_INFO);
+                debug_pop();
+                break;
+            }
             if ($this->_process_queue_queuepath($queue_name, $subscription_path, $subscription) === false)
             {
                 // If the method returns strict boolean false then something failed fatally and we abort
@@ -763,6 +783,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
      */
     function safe_sg_name($sitegroup = null)
     {
+        static $sg_obj_cache = array();
         if (is_null($sitegroup))
         {
             $sitegroup = $_MIDGARD['sitegroup'];
@@ -772,8 +793,11 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         {
             return 'sg0';
         }
-        
-        $sg = mgd_get_sitegroup($sitegroup);
+        if (!isset($sg_obj_cache[$sitegroup]))
+        {
+            $sg_obj_cache[$sitegroup] = mgd_get_sitegroup($sitegroup);
+        }
+        $sg =& $sg_obj_cache[$sitegroup];
         if (   !is_object($sg)
             || empty($sg->name))
         {
