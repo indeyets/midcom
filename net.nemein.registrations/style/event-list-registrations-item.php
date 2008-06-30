@@ -35,7 +35,7 @@ if (!$event_dm->types['auto_approve']->value)
     echo "                <td><input type='checkbox' name='net_nemein_registrations_process[approved][{$registration->guid}]' value=1 ";
     if ($data['approved'])
     {
-        echo "checked=\"checked\" title='{$approved_text}'";
+        echo "checked=\"checked\" title='{$approved_text}' disabled=\"disabled\"";
     }
     echo "/></td>\n";
     /* /approved checkbox */
