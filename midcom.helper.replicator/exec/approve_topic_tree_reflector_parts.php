@@ -74,6 +74,16 @@ function create_token()
 function approve_object_reflectorrecursive($obj)
 {
     $class = get_class($obj);
+    // Touch parameters before appoving (which touches the main object)
+    $params = $obj->list_parameters();
+    foreach ($params as $domain => $domain_params)
+    {
+        foreach ($domain_params as $name => $value)
+        {
+            $obj->set_parameter($domain, $name, $value);
+        }
+    }
+    unset($params, $domain_params, $name, $value);
     $meta =& midcom_helper_metadata::retrieve($obj);
     echo "Approving {$class} #{$obj->id}, ";
     $meta->approve();
