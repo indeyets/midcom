@@ -726,13 +726,27 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
         $bodies = $registration->compose_mail_bodies();
         $subject = $this->_config->get('mail_registration_subject');
         $sender = $this->_config->get('mail_registration_sender');
-        $cc = explode(',', $this->get_notification_email());
+        
+        if (!$send_mail)
+        {
+            // Mail only the registrar
+            $cc = array();
+        }
+        else
+        {
+            $cc = explode(',', $this->get_notification_email());
+        }
+        
         $body = $bodies['accept_text'];
 
         $subject = $registration->expand_keywords($subject);
         $body = $registration->expand_keywords($body);
 
-        $cc[] = $registrar_object->email;
+        if ($registrar_object->email)
+        {
+            $cc[] = $registrar_object->email;
+        }
+        
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_print_r('All recipients: ', $cc);
         foreach ($cc as $email)
@@ -780,19 +794,23 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
      * @param net_nemein_registrations_registration_dba $registration A reference to the registration
      *     to be rejected.
      * @param string $reason The reason entered by the admin when he rejected the registration.
+     * @param boolean $delete Whether to delete the registration object
      * @todo move to the registration class
      */
-    function reject_registration(&$registration, $reason)
+    function reject_registration(&$registration, $reason, $delete = true)
     {
         $_MIDCOM->auth->require_do('midgard:delete', $registration);
 
-        if (! $registration->delete())
+        if ($delete)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to delete the registration record {$registration->id}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_WARN);
-            debug_print_r("Registration record is:", $registration);
-            debug_pop();
-            return false;
+            if (! $registration->delete())
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to delete the registration record {$registration->id}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_WARN);
+                debug_print_r("Registration record is:", $registration);
+                debug_pop();
+                return false;
+            }
         }
 
         $this->request_data['reject_reason'] = $reason;
@@ -807,7 +825,11 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
         $subject = $registration->expand_keywords($subject);
         $body = $registration->expand_keywords($body);
 
-        $cc[] = $registrar_object->email;
+        if ($registrar_object->email)
+        {
+            $cc[] = $registrar_object->email;
+        }
+        
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_print_r('All recipients: ', $cc);
         foreach ($cc as $email)

@@ -35,9 +35,9 @@ if (!$event_dm->types['auto_approve']->value)
     echo "                <td><input type='checkbox' name='net_nemein_registrations_process[approved][{$registration->guid}]' value=1 ";
     if ($data['approved'])
     {
-        echo "checked title='{$approved_text}'";
+        echo "checked=\"checked\" title='{$approved_text}'";
     }
-    echo "disabled/></td>\n";
+    echo "/></td>\n";
     /* /approved checkbox */
 }
 if ($data['config']->get('pricing_plugin'))
@@ -48,7 +48,7 @@ if ($data['config']->get('pricing_plugin'))
     echo "            <td><input type='checkbox' name='net_nemein_registrations_process[paid][{$registration->guid}]' value=1";
     if ($registration->is_paid())
     {
-        echo  ' checked disabled';
+        echo  ' checked="checked" disabled="disabled"';
     }
     echo "/></td>\n";
     /* /paid checkbox */

@@ -367,6 +367,9 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
                 case 'paid':
                     $method = 'mark_paid';
                     break;
+                case 'approved':
+                    $method = 'mark_approved';
+                    break;
                 default:
                     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Invalid action '{$action}' in POST");
                     // This will exit()

@@ -288,6 +288,8 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
         (
             'accept_text' => '',
             'accept_html' => '',
+            'pending_text' => '',
+            'pending_html' => '',
             'reject_text' => '',
             'reject_html' => '',
         );
@@ -394,6 +396,21 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
         }
         return $this->set_parameter('net.nemein.registrations', 'paid', strftime('%Y-%m-%d %T'));
     }
+
+    function mark_approved()
+    {
+        if ($this->is_approved())
+        {
+            return true;
+        }
+        if (!$this->can_do('net.nemein.registrations:manage'))
+        {
+            mgd_set_errno(MGD_ERR_ACCESS_DENIED);
+            return false;
+        }
+        
+        return $this->_event->approve_registration($this, false);
+    } 
 }
 
 ?>

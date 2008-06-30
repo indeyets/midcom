@@ -482,7 +482,14 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
         }
         else
         {
+            // Send message to event administrators about the new registration that waits for approval
             $this->_send_approval_notification();
+            
+            if ($this->_registrar->email)
+            {
+                // Send email to the user also that the event is pending approval
+                $this->_send_pending_notification();
+            }
         }
 
         /*
@@ -496,10 +503,53 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
     }
 
     /**
+     * Sends the notification E-Mail about event pending approval to the registrar's Mail address
+     *
+     * @access private
+     */
+    function _send_pending_notification()
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        $bodies = $registration->compose_mail_bodies();
+
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        $text_event = $this->_l10n->get('event');
+        $text_registrar = $this->_l10n->get('registrar');
+
+        $mail = new org_openpsa_mail();
+        $mail->from = $this->_config->get('mail_registration_sender');
+        $mail->to = $this->_registrar->email;        
+        $mail->subject = $this->_config->get('mail_registration_pending_subject');
+        $mail->subject = $registration->expand_keywords($mail->subject);
+        $mail->body = $bodies['pending_text'];
+        $mail->body = $registration->expand_keywords($mail->body);
+        
+        if (!empty($bodies['pending_html']))
+        {
+            // if we have non-empty html body composed, add it to the mail object, resolving embeds etc
+            $mail->html_body = $registration->expand_keywords($bodies['pending_html']);
+            list ($mail->html_body, $mail->embeds) = $mail->html_get_embeds($this, $mail->html_body, $mail->embeds);
+        }
+
+        if (!$mail->send())
+        {
+            debug_add("Could not send E-Mail to '{$this->_registrar->email}' with subject '{$mail->subject}', got error: " . $mail->get_error_message(), MIDCOM_LOG_ERROR);
+            //debug_print_r('Mail object:', $mail);
+        }
+        else
+        {
+            debug_add("Sent E-Mail to {$this->_registrar->email} with subject '{$mail->subject}'.", MIDCOM_LOG_ERROR);
+            //debug_print_r('Mail object:', $mail);
+        }
+
+        debug_pop();
+
+    }
+
+    /**
      * Sends the approval notification E-Mail to the configured notification Mail address
      *
      * @access private
-     * @todo Rewrite Mail handling to use same system as the other mails.
      */
     function _send_approval_notification()
     {
