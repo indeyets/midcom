@@ -14,6 +14,9 @@
 'mail_registration_ccs' => "webmaster@{$_SERVER['SERVER_NAME']}",
 /* the body is rendered by style element compose-accept_text-mail */
 
+// Pending registration mail template
+'mail_registration_pending_subject' => 'Event registration for __REGEVENT_title__ is pending',
+
 // Registration Rejection Mail template
 'mail_registration_reject_subject' => 'Event registration for __REGEVENT_title__ rejected',
 'mail_registration_reject_sender' => "webmaster@{$_SERVER['SERVER_NAME']}",
