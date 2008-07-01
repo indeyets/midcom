@@ -80,20 +80,23 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
 
     function _post_item(&$key, &$items, $retry_count = 0)
     {
-        $data =& $items[$key];
         $this->_client = new org_openpsa_httplib();
         $client =& $this->_client;
         $client->basicauth['user'] = $this->_username;
         $client->basicauth['password'] = $this->_password;
         $post_vars = array
         (
-            'midcom_helper_replicator_import_xml' => &$data,
+            'midcom_helper_replicator_import_xml' => file_get_contents($items[$key]),
             'midcom_helper_replicator_use_force' => (int)$this->use_force,
         );
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add('Posting ' . strlen($post_vars['midcom_helper_replicator_import_xml']) . ' bytes to ' . $this->url);
+        debug_pop();
         $response = $client->post($this->url, $post_vars);
         if (   $response !== false
             && stristr($response, 'error') === false)
         {
+            unset($post_vars, $response, $client);
             // Key sent OK.
             return true;
         }
@@ -122,6 +125,7 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
         if (   $error_string === 'Malformed response.'
             && $retry_count < 5)
         {
+            unset($post_vars, $response, $client, $reponse_body, $error_string);
             // Likely the remote end segfaulted, recursing to retry up-to 5 times
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Remote returned malformed response, most likely segfault, retry_count={$retry_count}", MIDCOM_LOG_INFO);
@@ -145,8 +149,8 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add($msg, MIDCOM_LOG_WARN);
         debug_print_r('Response body: ', $response_body);
-        unset($response_body);
         debug_pop();
+        unset($post_vars, $response, $client, $reponse_body, $error_string);
         $GLOBALS['midcom_helper_replicator_logger']->log($msg, MIDCOM_LOG_WARN);
         unset($msg);
         return false;
@@ -155,7 +159,7 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
     function _real_process(&$items, $retry_count = 0)
     {
         $orig_items_count = count($items);
-        foreach ($items as $key => $data)
+        foreach ($items as $key => $path)
         {
             if (!$this->_post_item(&$key, &$items))
             {
@@ -172,7 +176,7 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
                 unset($this->item_errors[$key]);
             }
         }
-        unset($key, $data);
+        unset($key, $path);
         
         if (   !empty($items)
             && $retry_count < 3)

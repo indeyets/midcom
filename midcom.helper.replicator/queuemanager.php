@@ -12,7 +12,9 @@
  */
 class midcom_helper_replicator_queuemanager extends midcom_baseclasses_components_purecode
 {
-    var $max_queues_per_pass = 10;
+    var $max_queues_per_pass = 10; // per subscription
+    var $max_items_per_pass = 3500; // per QM instance, not this is checked only *after* queue pass so more might be processed if single queue dirs are very large
+    var $_items_processed = 0;
     var $exporters = array();
     var $transporters = array();
     var $started = 0;
@@ -531,6 +533,9 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         $files = $this->list_path_items($queue_path);
         foreach ($files as $item_path)
         {
+            // reset time limit counter while reading files
+            set_time_limit(30);
+
             $queue_item = basename($item_path);
             if (   !is_readable($item_path)
                 || !is_file($item_path))
@@ -541,13 +546,15 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                 return false;
             }
 
-            // reset time limit counter while reading files
-            set_time_limit(30);
-
             // Separate the indexing prefix from key in item filename
             $item_key = substr($queue_item, 11);
             $items_sort[$item_key] = (int)substr($queue_item, 0, 10);
             // Read item
+            /**
+             * Lets conserve memory and have the transporters read the files on-demand.
+             */
+            $items[$item_key] = $item_path;
+            /*
             $items[$item_key] = file_get_contents($item_path);
             if ($items[$item_key] === false)
             {
@@ -557,6 +564,8 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                 return false;
             }
             //$GLOBALS['midcom_helper_replicator_logger']->log("Read {$item_key} from queue \"{$subscription->title}\" file {$item_path}");
+            */
+            // We need this separate paths array as well even when the main items array has 
             $items_paths[$item_key] = $item_path;
             unset($item_key, $item_path);
         }
@@ -599,6 +608,13 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
      */
     function _process_queue_queuepath(&$queue_name, &$subscription_path, &$subscription)
     {
+        if ($this->_items_processed > $this->max_items_per_pass)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Item limit of {$this->max_items_per_pass} reached, returning early.", MIDCOM_LOG_INFO);
+            debug_pop();
+            return;
+        }
         if (!$this->_process_queue_queuepath_sanitychecks($queue_name, $subscription_path))
         {
             return;
@@ -615,9 +631,6 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
             return;
         }
 
-        /**
-         * TODO: Read only X items to memory at a time ?
-         */
         $items_ret = $this->_process_queue_get_items($queue_path, $subscription);
         if ($items_ret === false)
         {
@@ -628,6 +641,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         $items =& $items_ret[0];
         $items_paths =& $items_ret[1];
 
+        $this->_items_processed += count($items_paths);
         if (!$transporter->process($items))
         {
             // Transporter returned error, skip removal of files
@@ -641,9 +655,6 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         // Remove files transported correctly, quarantine problematic files
         $this->_process_queue_quarantines($items, $items_paths, $subscription);
         unset($items, $items_paths, $items_ret);
-        /**
-         * /TODO: Read only X items to memory at a time ?
-         */
 
         // Check if the queue_dir has any more items left, if not rmdir it
         $this->_rm_empty_dir($queue_path);
@@ -721,6 +732,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
      */
     function process_queue()
     {
+        $this->_items_processed = 0;
         $_MIDCOM->auth->request_sudo('midcom.helper.replicator');
         debug_push_class(__CLASS__, __FUNCTION__);
         $GLOBALS['midcom_helper_replicator_logger']->push_prefix('Queue Manager');

@@ -194,34 +194,19 @@ class midcom_helper_replicator_transporter_archive extends midcom_helper_replica
         {
             return false;
         }
-        foreach ($items as $key => $data)
+        foreach ($items as $key => $path)
         {
+            // Reset time limit while copying keys
+            set_time_limit(30);
             $file = "{$this->_tmp_dir}/" . sprintf('%010d', $this->_file_counter) . ".xml";
-            if (!$this->_put_file_contents($file, $data))
+            if (copy($path, $file))
             {
                 // In this transport any single item failure is fatal
                 return false;
             }
-            unset($items[$key]);
+            unset($items[$key], $path);
             $this->_file_counter++;
         }
-        return true;
-    }
-
-    function _put_file_contents(&$filepath, &$data)
-    {
-        $fp = fopen($filepath, 'w');
-        if (!$fp)
-        {
-            return false;
-        }
-        if (!fwrite($fp, $data, strlen($data)))
-        {
-            fclose($fp);
-            // PONDER: unlink file ?
-            return false;
-        }
-        fclose($fp);
         return true;
     }
 

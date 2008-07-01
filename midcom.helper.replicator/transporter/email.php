@@ -69,25 +69,29 @@ class midcom_helper_replicator_transporter_email extends midcom_helper_replicato
         $mail->to = $this->recipient;
 
         $i = 1;
-        foreach ($items as $key => $data)
+        foreach ($items as $key => $path)
         {
+            // Reset time limit while reading keys
+            set_time_limit(30);
             $att = array
             (
                 'name' => sprintf('%010d', $i) . 'xml',
                 'mimetype' => 'text/xml',
-                'content' => $data,
+                'content' => file_get_contents($path),
             );
             $mail->attachments[] = $att;
             unset($att, $items[$key]);
             $i++;
         }
-        unset($key, $data);
+        unset($key, $path);
 
         if (!$mail->send())
         {
             // TODO: error reporting
+            unset($mail);
             return false;
         }
+        unset($mail);
         return true;
     }
 
