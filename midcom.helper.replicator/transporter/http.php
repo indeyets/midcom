@@ -17,6 +17,9 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
     var $_username = false;
     var $_password = false;
     var $use_force = false;
+    var $http_timeout = 15;
+    var $http_read_timeout = 30;
+    var $keep_alive = false;
 
     function midcom_helper_replicator_transporter_http($subscription)
     {
@@ -82,15 +85,22 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
     {
         $this->_client = new org_openpsa_httplib();
         $client =& $this->_client;
+        $client->http_timeout = $this->http_timeout;
+        $client->http_read_timeout = $this->http_read_timeout;
         $client->basicauth['user'] = $this->_username;
         $client->basicauth['password'] = $this->_password;
+        $headers = array();
+        if ($this->keep_alive)
+        {
+            $headers['connection'] = 'Keep-Alive';
+        }
         $post_vars = array
         (
             'midcom_helper_replicator_import_xml' => file_get_contents($items[$key]),
             'midcom_helper_replicator_use_force' => (int)$this->use_force,
         );
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add('Posting ' . strlen($post_vars['midcom_helper_replicator_import_xml']) . ' bytes to ' . $this->url);
+        debug_add('Posting ' . strlen($post_vars['midcom_helper_replicator_import_xml']) . " bytes to {$this->url} (file {$items[$key]})");
         debug_pop();
         $response = $client->post($this->url, $post_vars);
         if (   $response !== false

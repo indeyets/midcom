@@ -22,6 +22,8 @@ class org_openpsa_httplib extends midcom_baseclasses_components_purecode
         'password' => false,
     );
     var $files = array();
+    var $http_timeout = 15;
+    var $http_read_timeout = 30;
 
     /**
      * Initializes the class
@@ -112,7 +114,12 @@ class org_openpsa_httplib extends midcom_baseclasses_components_purecode
     {
         require_once('HTTP/Request.php');
         debug_push_class(__CLASS__, __FUNCTION__);
-        $this->_client =& new HTTP_Request($uri);
+        $params = array
+        (
+            'timeout' => $this->http_timeout,
+            'readTimeout' => array($this->http_read_timeout, 0),
+        );
+        $this->_client =& new HTTP_Request($uri, $params);
         $c =& $this->_client;
         $c->setMethod(HTTP_REQUEST_METHOD_POST);
         $c->addHeader('User-Agent', $this->_user_agent());
