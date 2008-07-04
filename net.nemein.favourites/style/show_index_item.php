@@ -20,8 +20,8 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         <?php
         if ($data['favourite_object']->can_do('midgard:delete'))
         {
-            echo " <a href=\"{$prefix}delete/{$favourite_object->guid}/\" title=\"{$data['l10n']->get('delete')}\">";
-            echo "<img style=\"border: 0px;\" src=\"/midcom-static/stock-icons/16x16/trash.png\" alt=\"delete\"/>";
+            echo " <a href='{$prefix}delete/{$favourite_object->guid}/' title='" . $data['l10n']->get('delete') . "'>";
+            echo "<img style='border: 0px;' src='/midcom-static/stock-icons/16x16/trash.png' alt='delete'/>";
             echo "</a>";
         }
       ?>
