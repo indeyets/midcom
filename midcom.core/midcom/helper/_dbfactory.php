@@ -329,6 +329,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
      * @todo refactor to smaller methods
      * @todo Add some magic to prevent importing of replication loops (see documentation/TODO for details about the potential problem)
      * @todo Verify support for the special cases of privilege and virtual_group
+     * @todo Make sure older version is not imported over newer one (maybe configurable override ?)
      */
     function import(&$unserialized_object, $use_force = false)
     {
