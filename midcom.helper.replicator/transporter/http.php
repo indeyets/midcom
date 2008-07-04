@@ -204,6 +204,11 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
             return $this->_real_process($items, $retry_count+1);
         }
 
+        /**
+         * FIXME: Make this smarter, check the per-key errors
+         * Make sure we do not retry infinitely or this could block rest
+         * of the queue
+         *
         $remaining_items_count = count($items);
         if (   !empty($remaining_items_count)
             && $orig_items_count === $remaining_items_count)
@@ -215,6 +220,7 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
             $this->error = 'send failed for all keys';
             return false;
         }
+         */
         return true;
     }
 
