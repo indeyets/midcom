@@ -13,12 +13,52 @@
  * Manifests as "Wrong parameter count for serialize()" when you call
  * it (otherwise properly) inside MidCOM application
  *
- * @param midgard_object &$object reference to an object
+ * For now also works around bug #259 if applicaple
+ *
+ * @package midcom.helper.replicator
+ * @param midgard_object $object reference to an object
  * @return string object serialized (or false in case of failure)
  */
 function midcom_helper_replicator_serialize(&$object)
 {
-    return midgard_replicator::serialize($object);
+    //return midgard_replicator::serialize($object);
+    /**
+     * Workaround for bug #259
+     */
+    if (   !isset($object->lang)
+        || $object->lang === 0)
+    {
+        // Non-ML or not in langx does not trigger the bug
+        return midgard_replicator::serialize($object);
+    }
+    $current_language = (int)$_MIDGARD['lang'];
+    $current_default_language = mgd_get_default_lang();
+    mgd_set_lang(0);
+    mgd_set_default_lang(0);
+    $object_class = get_class($object);
+    $object_lang0 = new $object_class($object->guid);
+    if (   !$object_lang0
+        || !isset($object_lang0->guid)
+        || empty($object_lang0->guid))
+    {
+        // Sanity check failed
+        $errno = mgd_errno();
+        mgd_set_default_lang($current_default_language);
+        mgd_set_lang($current_language);
+        mgd_set_errno($errno);
+        unset($object_class, $object_lang0, $current_language, $current_default_language, $errno);
+        return false;
+    }
+    else
+    {
+        $stat = midgard_replicator::serialize($object_lang0);
+    }
+    $errno = mgd_errno();
+    mgd_set_default_lang($current_default_language);
+    mgd_set_lang($current_language);
+    mgd_set_errno($errno);
+    unset($object_class, $object_lang0, $current_language, $current_default_language, $errno);
+    return $stat;
 }
 
 /**
