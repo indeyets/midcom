@@ -72,7 +72,7 @@ function midcom_helper_replicator_serialize(&$object)
 function midcom_helper_replicator_serialize_check_bug244(&$serialized, &$object)
 {
     //debug_push_class('function', __FUNCTION__);
-    if (!preg_match_all('%<.+?lang=.+?>%', $serialized, $matches))
+    if (!preg_match_all('%<[^>]+?lang="[^"]+"[^>]+?>%', $serialized, $matches))
     {
         // not ML or no extra languages present.
         /*

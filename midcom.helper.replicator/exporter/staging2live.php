@@ -113,7 +113,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
         // FIXME: use strtotime when MidCOM stops automagically rewriting these between ISO and Unix timestamps
         $schedule_action = 'ok';
         if (   $object->metadata->schedulestart != 0
-            && !preg_match('%[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}%', $object->metadata->schedulestart))
+            && preg_match('%[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}%', $object->metadata->schedulestart))
         {
             $schedulestart_unixtime = strtotime($object->metadata->schedulestart);
         }
@@ -122,7 +122,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
             $schedulestart_unixtime = $object->metadata->schedulestart;
         }
         if (   $object->metadata->scheduleend != 0
-            && !preg_match('%[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}%', $object->metadata->scheduleend))
+            && preg_match('%[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}%', $object->metadata->scheduleend))
         {
             $scheduleend_unixtime = strtotime($object->metadata->scheduleend);
         }
