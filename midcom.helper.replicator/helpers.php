@@ -13,7 +13,7 @@
  * Manifests as "Wrong parameter count for serialize()" when you call
  * it (otherwise properly) inside MidCOM application
  *
- * For now also works around bug #259 if applicaple
+ * For now also works around bug #259 if applicaple and checks the serialization against bug #244
  *
  * @package midcom.helper.replicator
  * @param midgard_object $object reference to an object
@@ -29,7 +29,8 @@ function midcom_helper_replicator_serialize(&$object)
         || $object->lang === 0)
     {
         // Non-ML or not in langx does not trigger the bug
-        return midgard_replicator::serialize($object);
+        $stat = midgard_replicator::serialize($object);
+        return midcom_helper_replicator_serialize_check_bug244($stat, $object);
     }
     $current_language = (int)$_MIDGARD['lang'];
     $current_default_language = mgd_get_default_lang();
@@ -58,7 +59,61 @@ function midcom_helper_replicator_serialize(&$object)
     mgd_set_lang($current_language);
     mgd_set_errno($errno);
     unset($object_class, $object_lang0, $current_language, $current_default_language, $errno);
-    return $stat;
+    return midcom_helper_replicator_serialize_check_bug244($stat, $object);
+}
+
+/**
+ * Checks if serialization would trigger bug #244, if so returns failure
+ * and raises UI message.
+ *
+ * @param string $serialized reference to serialized object
+ * @return string $serialized or false if triggers bug #244
+ */
+function midcom_helper_replicator_serialize_check_bug244(&$serialized, &$object)
+{
+    //debug_push_class('function', __FUNCTION__);
+    if (!preg_match_all('%<.+?lang=.+?>%', $serialized, $matches))
+    {
+        // not ML or no extra languages present.
+        /*
+        debug_add('no lang matches');
+        debug_pop();
+        */
+        return $serialized;
+    }
+    //debug_print_r('$matches: ', $matches);
+    $langs = count($matches[0]);
+    unset($matches);
+    if ($langs <= 1)
+    {
+        // master + 1 does not trigger bug #244
+        /*
+        debug_add("\$langs <= 1, does not trigger bug #244");
+        debug_pop();
+        */
+        unset($langs);
+        return $serialized;
+    }
+    if ($langs % 2 == 0)
+    {
+        //debug_add("\$langs={$langs}, triggers bug #244");
+        $total_langs = $langs+1;
+        $class = get_class($object);
+        $object_url = $_MIDCOM->get_host_prefix() . "__mfa/asgard/object/view/{$object->guid}/";
+        $msg = "Object <a target='_blank' href='{$object_url}'>{$class} #{$object->id}</a> has {$total_langs} languages, this triggers <a target='_blank' href='http://trac.midgard-project.org/ticket/244'>bug #244</a>.";
+        $msg .= " Object will not be replicated, please go add one more language to the object in <a target='_blank' href='{$object_url}'>Asgard</a>.";
+        $_MIDCOM->uimessages->add('midcom.helper.replicator', $msg, 'error');
+        $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "has {$total_langs} languages, this triggers bug #244, preventing export.", MIDCOM_LOG_ERROR);
+        unset($class, $object_url, $msg, $total_langs, $langs);
+        //debug_pop();
+        return false;
+    }
+    /*
+    debug_add("\$langs % 2 != 0, does not trigger bug #244");
+    debug_pop();
+    */
+    unset($langs);
+    return $serialized;
 }
 
 /**

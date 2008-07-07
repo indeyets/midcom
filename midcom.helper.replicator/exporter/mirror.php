@@ -81,7 +81,7 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
         if ($exported_unixtime >= $revised_unixtime)
         {
             // This has been exported already
-            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "has alrady been exported", MIDCOM_LOG_INFO);
+            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "has already been exported", MIDCOM_LOG_INFO);
             return false;
         }
 
