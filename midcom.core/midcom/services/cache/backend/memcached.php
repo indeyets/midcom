@@ -12,7 +12,7 @@
  *
  * Requires the memcache PECL extension to work, uses persistent connections.
  *
- * <b>Configuration options:</b>
+ * <b>Confiugration options:</b>
  *
  * - <i>string host</i> The host to connect to, defaults to localhost.
  * - <i>int port</i> The port to connect to, defaults to the default port 11211.
@@ -25,11 +25,11 @@
  *   memcache extension does this automatically.
  * - Since this is about performance, (and memcached doesn't allow it in any other way),
  *   the get and exist calls are merged. Get will return false in case that the required
- *   key was not found. This effectively means that you cannot store "false" as a value.
+ *   key was not found. This effectivily means that you cannot store "false" as a value.
  * - The class will automatically add the name of the cache instance to the cache keys.
  *
  * @package midcom.services
- * @link http://www.php.net/manual/en/ref.memcache.php Memcache Documentation
+ * @see http://www.php.net/manual/en/ref.memcache.php
  */
 
 class midcom_services_cache_backend_memcached extends midcom_services_cache_backend
@@ -57,6 +57,16 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
      * @var Memcache
      */
     var $_cache = null;
+    
+    /**
+     * Whether to abort the request if connection to memcached fails
+     */
+    var $_abort_on_fail = false;
+    
+    /**
+     * Whether memcached is working
+     */
+    var $_memcache_operational = true;
 
     /**
      * The constructor is empty yet.
@@ -84,21 +94,32 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
         // Force-disable the php serializer calls, let memcached worry about it.
         $this->_auto_serialize = false;
 
-        // Open the persistent connection.
+        // Open the persistant connection.
         $this->_cache = new Memcache();
         if (! @$this->_cache->pconnect($this->_host, $this->_port))
-        { 
-            /**
-             * We don't have the superglobal initialized yet
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "memcache handler: Failed to connect to {$this->_host}:{$this->_port}.");
-             */
-            header('HTTP/1.0 503 Service Unavailable');
-            header('Retry-After: 60');
-            header('Cache-Control: no-store, no-cache, must-revalidate');
-            header('Cache-Control: post-check=0, pre-check=0', false);
-            header('Pragma: no-cache');
-            die("memcache handler: Failed to connect to {$this->_host}:{$this->_port}.");
-            // This will exit.
+        {
+            // Memcache connection failed
+            if ($this->_abort_on_fail)
+            {
+                // Abort the request
+                /**
+                 * We don't have the superglobal initialized yet
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "memcache handler: Failed to connect to {$this->_host}:{$this->_port}.");
+                 */
+                header('HTTP/1.0 503 Service Unavailable');
+                header('Retry-After: 60');
+                header('Cache-Control: no-store, no-cache, must-revalidate');
+                header('Cache-Control: post-check=0, pre-check=0', false);
+                header('Pragma: no-cache');
+                die("memcache handler: Failed to connect to {$this->_host}:{$this->_port}.");
+                // This will exit.
+            }
+            
+            // Otherwise we just skip caching
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("memcache handler: Failed to connect to {$this->_host}:{$this->_port}. Serving this request without cache.", MIDCOM_LOG_ERROR);
+            debug_pop();
+            $this->_memcache_operational = false;
         }
 
         /*
@@ -109,18 +130,23 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
     }
 
     /**
-     * This method is unused as we use persistent connections, letting memcached take care about synchronization.
+     * This method is unused as we use persistant connections, letting memcached take care about synchronization.
      */
     function _open($write = false) {}
 
     /**
-     * This method is unused as we use persistent connections, letting memcached take care about synchronization.
+     * This method is unused as we use persistant connections, letting memcached take care about synchronization.
      */
     function _close() {}
 
 
     function _get($key)
     {
+        if (!$this->_memcache_operational)
+        {
+            return;
+        }
+        
         $key = "{$this->_name}-{$key}";
         /* TODO: Remove when done
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -132,6 +158,11 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
 
     function _put($key, $data, $timeout=false)
     {
+        if (!$this->_memcache_operational)
+        {
+            return;
+        }
+        
         $key = "{$this->_name}-{$key}";
         if ($timeout !== FALSE)
         {
@@ -153,6 +184,11 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
 
     function _remove($key)
     {
+        if (!$this->_memcache_operational)
+        {
+            return;
+        }
+        
         $key = "{$this->_name}-{$key}";
         /* TODO: Remove when done
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -164,6 +200,11 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
 
     function _remove_all()
     {
+        if (!$this->_memcache_operational)
+        {
+            return;
+        }
+        
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Calling \$this->_cache->flush()");
         $stat = @$this->_cache->flush();
@@ -176,6 +217,11 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
      */
     function _exists($key)
     {
+        if (!$this->_memcache_operational)
+        {
+            return false;
+        }
+        
         /* TODO: Remove when done
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("Returning (@\$this->_get('{$key}') !== false)");
@@ -185,4 +231,3 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
     }
 
 }
-?>
