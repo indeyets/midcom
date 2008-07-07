@@ -531,8 +531,10 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         $items_sort = array();
         $GLOBALS['_process_queue_get_items__items_sort'] =& $items_sort;
         $files = $this->list_path_items($queue_path);
+        debug_add("checking " . count($files) . " files");
         foreach ($files as $item_path)
         {
+            //debug_add("checking {$item_path}");
             // reset time limit counter while reading files
             set_time_limit(30);
 
@@ -548,6 +550,14 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
 
             // Separate the indexing prefix from key in item filename
             $item_key = substr($queue_item, 11);
+            // Sanity-check the key
+            if (isset($items[$item_key]))
+            {
+                debug_add("key {$item_key} already read from queue, removing the old file and overriding the path", MIDCOM_LOG_INFO);
+                unlink($items[$item_key]);
+            }
+
+            //debug_add("\$item_key={$item_key}, \$queue_item={$queue_item}");
             $items_sort[$item_key] = (int)substr($queue_item, 0, 10);
             // Read item
             /**
@@ -572,14 +582,20 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
         unset($queue_item);
         // reset time limit counter to config value
         set_time_limit(ini_get('max_execution_time'));
-
+        /*
+        debug_print_r('$items before: ', $items);
+        debug_print_r('$items_paths before: ', $items_paths);
+        */
         // Sort the arrays, readdir may return the files in "weird" order
+        // PONDER: now we use the get_path_items which should have sorted them correctly so these might not be neccessary
         uksort($items, array($this, '_process_queue_sort_items'));
         uksort($items_paths, array($this, '_process_queue_sort_items'));
-        debug_print_r('items_sort', $items_sort);
-        debug_print_r('items_paths', $items_paths);
         reset($items);
         reset($items_paths);
+        /*
+        debug_print_r('$items after: ', $items);
+        debug_print_r('$items_paths after: ', $items_paths);
+        */
         debug_pop();
         return array($items, $items_paths);
     }

@@ -352,6 +352,10 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
                             && $linked_dba_object->guid)
                         {
                             $linked_serialization = $this->serialize_object($linked_dba_object, true);
+                            if ($linked_serialization === false)
+                            {
+                                continue;
+                            }
                             $serializations = array_merge($serializations, $linked_serialization);
                             unset($linked_serialization);
                             $this->handled_dependencies[$linked_class][$value] = true;
