@@ -1,4 +1,5 @@
 <?php
+$log_max_lines = 100;
 if ($data['object']->metadata->imported == 0)
 {
     $imported = $_MIDCOM->i18n->get_string('never', 'midcom.helper.replicator');
@@ -45,7 +46,7 @@ exec("grep '{$data['object']->guid}' '{$GLOBALS['midcom_helper_replicator_logger
 
 $path_regex = "%{$data['queue_root_dir']}.*?/[0-9a-f]{32,80}(-quarantine)?/[0-9]+/%";
 echo "<ul class=\"midcom_helper_replicator_object\">\n";
-$output = array_reverse($output);
+$output = array_slice(array_reverse($output), 0, $log_max_lines);
 foreach ($output as $line)
 {
     $line_items = array();
