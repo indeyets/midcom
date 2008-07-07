@@ -17,6 +17,10 @@ class midcom_helper_replicator_logger extends midcom_debug
     function midcom_helper_replicator_logger($filename)
     {
         parent::midcom_debug($filename);
+        if (isset($GLOBALS['midcom_config']['replicator_log_level']))
+        {
+            $this->_loglevel = $GLOBALS['midcom_config']['replicator_log_level'];
+        }
     }
 
     function log_object(&$object, $action, $loglevel = MIDCOM_LOG_DEBUG)

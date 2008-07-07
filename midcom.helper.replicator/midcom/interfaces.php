@@ -48,9 +48,14 @@ class midcom_helper_replicator_interface extends midcom_baseclasses_components_i
         define('MIDCOM_REPLICATOR_AUTOMATIC', 1);
         define('MIDCOM_REPLICATOR_MANUAL', 2);
         define('MIDCOM_REPLICATOR_DISABLED', 3);
-    
+
+        if (!isset($GLOBALS['midcom_config']['replicator_log_filename']))
+        {
+            $GLOBALS['midcom_config']['replicator_log_filename'] = "{$GLOBALS['midcom_config']['log_filename']}.replicator";
+        }
+
         // Start the replication logger instance
-        $logfile = $this->_data['config']->get('log_filename');
+        $logfile =& $GLOBALS['midcom_config']['replicator_log_filename'];
         if (!file_exists($logfile))
         {
             touch($logfile);
