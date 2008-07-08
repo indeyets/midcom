@@ -716,13 +716,13 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * @return boolean True if the privilege has been granted, false otherwise.
      */
     function can_do($privilege, &$content_object, $user = null)
-    {	
+    {    
         if (   $privilege != 'midgard:read'
             && $_MIDGARD['sitegroup'] != 0
             && $content_object->sitegroup != $_MIDGARD['sitegroup'])
         {
             return false;
-        }	
+        }    
         return $this->can_do_byguid($privilege, $content_object->guid, get_class($content_object), $user);
     }
 

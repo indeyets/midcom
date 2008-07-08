@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * @package midgard.admin.asgard
  * @author The Midgard Project, http://www.midgard-project.org

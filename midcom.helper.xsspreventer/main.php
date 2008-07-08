@@ -38,11 +38,11 @@ class midcom_helper_xsspreventer extends midcom_baseclasses_components_purecode
     {
         return preg_replace_callback
         (
-        	"%(<\s*)+(/\s*)+{$element}%i", 
+            "%(<\s*)+(/\s*)+{$element}%i", 
             create_function
             (
-            	'$matches',
-            	'return htmlentities($matches[0]);'
+                '$matches',
+                'return htmlentities($matches[0]);'
             ),
             $input
         );
