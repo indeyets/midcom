@@ -33,4 +33,7 @@
 
 'paging' => false, // false == disabled or integer == number of results/page
 
+// GUIDs of moderators to notify
+'moderators' => '',
+
 'show_reported_abuse_as_normal' => true,

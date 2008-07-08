@@ -207,11 +207,10 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
      */
     function confirm_abuse()
     {
-        if ($this->status == NET_NEHMER_COMMENTS_REPORTED_MODERATED)
+        if ($this->status == NET_NEHMER_COMMENTS_MODERATED)
         {
             return false;
         }
-
         // Set the status
         if (   !$this->can_do('net.nehmer.comments:moderation')
             || $this->_sudo_requested)
@@ -234,7 +233,7 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
      */
     function confirm_junk()
     {
-        if ($this->status == NET_NEHMER_COMMENTS_REPORTED_MODERATED)
+        if ($this->status == NET_NEHMER_COMMENTS_MODERATED)
         {
             return false;
         }

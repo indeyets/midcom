@@ -270,11 +270,10 @@ class net_nehmer_comments_handler_admin extends midcom_baseclasses_components_ha
         }
         
         $qb = new org_openpsa_qbpager('net_nehmer_comments_comment', 'net_nehmer_comments_comments');
-        $qb->results_per_page = $this->_config->get('display_comments');
-        $qb->display_pages = $this->_config->get('display_pages');
+        $qb->results_per_page = $this->_config->get('items_to_show');
+        $qb->display_pages = $this->_config->get('paging');
         $qb->add_constraint('status', 'IN', $view_status);
-        //$qb->add_constraint('thread.node', '=', $this->_topic->id);
-        $qb->add_order('metadata.published', 'DESC');
+        $qb->add_order('metadata.revised', 'DESC');
         
         $this->_comments = $qb->execute();
         
