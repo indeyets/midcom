@@ -85,7 +85,10 @@ require_once('image.php');
  *   "thumbnail". This image will be constructed after constructing all explicitly
  *   defined derived images. This option may be null (the default) indicating no
  *   thumbnail.
- * - integer max_count Maximum number of images allowed for a field. Set this
+ * - integer max_count Maximum number of images allowed for a field. Set this to zero
+ *   or false for indefinite number
+ * - boolean sortable Should the attachments list be sortable. True if the sorting should
+ *   be turned on, false if they should be sorted alphabetically by the title
  *
  * <b>Implementation note:</b>
  *
@@ -175,6 +178,14 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
      */
     var $max_count = 0;
 
+    /**
+     * Should the widget offer sorting feature
+     * 
+     * @access public
+     * @var boolean
+     */
+    var $sortable = true;
+    
     function _on_initialize()
     {
         $this->_instance_mode = 'multiple';
@@ -605,6 +616,13 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
     function _sort_attachments()
     {
         parent::_sort_attachments();
+        
+        // Attachments are stored in manually set order
+        if ($this->sortable)
+        {
+            return;
+        }
+        
         uasort($this->images,
             Array('midcom_helper_datamanager2_type_images', '_sort_images_callback'));
     }
@@ -850,5 +868,5 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
             $files[] = $filepath;
         }
     }
-
 }
+?>

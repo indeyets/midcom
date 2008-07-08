@@ -29,6 +29,8 @@
  * - <b>string attachment_server_url:</b> This is the base URL used for attachment serving.
  *   It defaults to the global MidCOM attachment handler at the sites root. When constructing
  *   Attachment Info blocks, this URL is completed using "{$baseurl}{$guid}/{$filename}".
+ * - boolean sortable Should the attachments list be sortable. True if the sorting should
+ *   be turned on, false if they should be sorted alphabetically.
  *
  * @package midcom.helper.datamanager2
  */
@@ -100,6 +102,22 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
     var $max_count = 0;
 
     /**
+     * Should the widget offer sorting feature
+     * 
+     * @access public
+     * @var boolean
+     */
+    var $sortable = false;
+    
+    /**
+     * Sorted attachments list
+     * 
+     * @access public
+     * @var array
+     */
+    var $_sorted_list = array();
+    
+    /**
      * Set the base URL accordingly
      *
      * this requires midcom_config access and is thus not possible using class member initializers.
@@ -128,8 +146,13 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
             return;
         }
 
+        // Midgard 1.8.6 has a very strange bug that prevents it from receiving some parameters
+        // unless list_parameters() is called first.
+        $parameters = $this->storage->object->list_parameters();
+        $temp = $parameters;
+
         $raw_list = $this->storage->object->get_parameter('midcom.helper.datamanager2.type.blobs', "guids_{$this->name}");
-        if (! $raw_list)
+        if (!$raw_list)
         {
             // No attachments found.
             return;
@@ -169,6 +192,12 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
      */
     function _sort_attachments()
     {
+        // Sortable attachments should be already sorted in the correct order
+        if ($this->sortable)
+        {
+            return;
+        }
+        
         uasort($this->attachments,
             Array('midcom_helper_datamanager2_type_blobs', '_sort_attachments_callback'));
         uasort($this->attachments_info,
@@ -314,17 +343,53 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
      */
     function _save_attachment_listing()
     {
-        $data = Array();
+        // Temporary storage for sortable attachments
+        $temp = array();
+        
+        // Data that will be stored
+        $data = array();
+        
         foreach ($this->attachments as $identifier => $attachment)
         {
             if (!mgd_is_guid($attachment->guid))
             {
                 continue;
             }
-
+            
+            // Sorted requested
+            if ($this->sortable)
+            {
+                foreach ($this->_sorted_list as $key => $index)
+                {
+                    // If the key exists, store to a temporary array
+                    if (preg_match("/^{$key}/", $identifier))
+                    {
+                        // Reduce the next loop
+                        unset($this->_sorted_list[$key]);
+                        
+                        $temp["{$identifier}:{$attachment->guid}"] = $index;
+                        continue 2;
+                    }
+                    
+                    // Fall through to store ordinarily as unordered
+                }
+                
+            }
+            
             $data[] = "{$identifier}:{$attachment->guid}";
         }
-
+        
+        // Sort the temporarily stored pairs
+        if (count($temp) > 0)
+        {
+            // Sort the temporary
+            asort($temp);
+            foreach ($temp as $identifier_pair => $index)
+            {
+                $data[] = $identifier_pair;
+            }
+        }
+        
         // We need to be selective when saving, excluding one case: empty list
         // with empty storage object. In that case we store nothing. If we have
         // an object, we set the parameter unconditionally, to get all deletions.

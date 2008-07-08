@@ -87,6 +87,14 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     var $max_count = 0;
 
     /**
+     * Sort index or what is the position in the list
+     * 
+     * @access private
+     * @var integer
+     */
+    var $_sort_index = 1;
+    
+    /**
      * The initialization event handler post-processes the maxlength setting.
      *
      * @return boolean Indicating Success
@@ -109,6 +117,24 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
             $this->max_count = $this->_type->max_count;
         }
 
+        // Create sortable
+        if ($this->_type->sortable)
+        {
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/datamanager2.tablesorter.js');
+            // Configuration options
+            $_MIDCOM->add_jscript("
+                jQuery(document).ready(function()
+                {
+                    jQuery('#{$this->_namespace}{$this->name}')
+                        .create_sortable({
+                            max_count: 0,
+                            sortable: true,
+                            allow_delete: false
+                        });
+                });
+            ");
+        }
+        
         return true;
     }
 
@@ -122,20 +148,33 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     {
         if ($frozen)
         {
-            $html = "<table class='midcom_helper_datamanager2_widget_downloads' id='{$this->_namespace}{$this->name}' >\n" .
-                    "<tr>\n" .
-                    "<th class='filename'>" . $this->_l10n_midcom->get('name') . "</th>\n" .
-                    "<th class='title'>" . $this->_l10n_midcom->get('title') . "</th>\n" .
-                    "</tr>\n";
+            $html = "<table class=\"midcom_helper_datamanager2_widget_downloads\" id=\"{$this->_namespace}{$this->name}\" >\n" .
+                    "    <thead>\n" .
+                    "        <tr>\n" .
+                    "            <th class=\"filename\">" . $this->_l10n_midcom->get('name') . "</th>\n" .
+                    "            <th class=\"title\">" . $this->_l10n_midcom->get('title') . "</th>\n" .
+                    "        </tr>\n" .
+                    "    </thead>\n" .
+                    "    <tbody>\n";
         }
         else
         {
-            $html = "<table class='midcom_helper_datamanager2_widget_downloads' id='{$this->_namespace}{$this->name}' >\n" .
-                    "<tr>\n" .
-                    "<th class='filename'>" . $this->_l10n_midcom->get('name') . "</th>\n" .
-                    "<th class='title'>" . $this->_l10n_midcom->get('title') . "</th>\n" .
-                    "<th class='upload'>" . $this->_l10n_midcom->get('upload') . "</th>\n" .
-                    "</tr>\n";
+            $index = '';
+            if ($this->_type->sortable)
+            {
+                $index = "            <th class=\"index\">" . $this->_l10n->get('index') . "</th>\n";
+            }
+            
+            $html = "<table class=\"midcom_helper_datamanager2_widget_downloads\" id=\"{$this->_namespace}{$this->name}\" >\n" .
+                    "    <thead>\n" .
+                    "        <tr>\n" .
+                    $index .
+                    "            <th class=\"filename\">" . $this->_l10n_midcom->get('name') . "</th>\n" .
+                    "            <th class=\"title\">" . $this->_l10n_midcom->get('title') . "</th>\n" .
+                    "            <th class=\"upload\">" . $this->_l10n_midcom->get('upload') . "</th>\n" .
+                    "        </tr>\n" .
+                    "    </thead>\n" .
+                    "    <tbody>\n";
         }
         $this->_elements['s_header'] =& HTML_QuickForm::createElement('static', 's_header', '', $html);
     }
@@ -155,9 +194,18 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
             return;
         }
         
+        // Initialize the string
+        $sortable = '';
+        
+        if ($this->_type->sortable)
+        {
+            $sortable = "<td class=\"index\"></td>\n";
+        }
+        
         // Filename column
         $html = "<tr>\n" .
-                "<td class='new filename'>";
+                $sortable .
+                "<td class=\"new filename\">";
         $this->_elements['s_new_filename'] =& HTML_QuickForm::createElement('static', 's_new_filename', '', $html);
         $attributes = Array
         (
@@ -168,7 +216,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
 
         // Title Column
         $html = "</td>\n" .
-                "<td class='new title'>";
+                "<td class=\"new title\">";
         $this->_elements['s_new_title'] =& HTML_QuickForm::createElement('static', 's_new_title', '', $html);
         $attributes = Array
         (
@@ -181,7 +229,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
         {
             // Controls Column
             $html = "</td>\n" .
-                    "<td class='new upload'>";
+                    "<td class=\"new upload\">";
             $this->_elements['s_new_upload'] =& HTML_QuickForm::createElement('static', 's_new_upload', '', $html);
             $attributes = Array
             (
@@ -210,15 +258,28 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
      */
     function _add_attachment_row($identifier, $info, $frozen)
     {
+        // Initialize the string
+        $sortable = '';
+        
+        if ($this->_type->sortable)
+        {
+            $sortable  = "            <td class=\"midcom_helper_datamanager2_helper_sortable\">\n";
+            $sortable .= "               <input type=\"text\" class=\"downloads_sortable\" name=\"midcom_helper_datamanager2_sortable[{$this->name}][{$identifier}]\" value=\"{$this->_sort_index}\" />\n";
+            $sortable .="             </td>\n";
+            
+            $this->_sort_index++;
+        }
+
         // Filename column
-        $html = "<tr class='midcom_helper_datamanager2_widget_downloads_download' title='{$info['guid']}'>\n" .
-                "<td class='exist filename' title='{$info['filename']}'>" .
-                "<a href='{$info['url']}' class='download'>{$info['filename']}</a>" .
+        $html = "<tr class=\"midcom_helper_datamanager2_widget_downloads_download\" title=\"{$info['guid']}\">\n" .
+                $sortable .
+                "<td class=\"exist filename\" title=\"{$info['filename']}\">\n" .
+                "<a href=\"{$info['url']}\" class=\"download\">{$info['filename']}</a>\n" .
                 "</td>\n";
         $this->_elements["s_exist_{$identifier}_filename"] =& HTML_QuickForm::createElement('static', "s_exist_{$identifier}_filename", '', $html);
 
         // Title Column, set the value explicitly, as we are sometimes called after the defaults kick in.
-        $html = "<td class='exist title' title='{$info['description']}'>";
+        $html = "<td class=\"exist title\" title=\"{$info['description']}\">";
         $this->_elements["s_exist_{$identifier}_title"] =& HTML_QuickForm::createElement('static', "s_exist_{$identifier}_title", '', $html);
         $attributes = Array
         (
@@ -232,7 +293,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
         {
             // Controls Column
             $html = "</td>\n" .
-                    "<td class='exist upload'>";
+                    "<td class=\"exist upload\">";
             $this->_elements["s_exist_{$identifier}_upload"] =& HTML_QuickForm::createElement('static', "s_exist_{$identifier}_upload", '', $html);
             $attributes = Array
             (
@@ -267,7 +328,8 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
      */
     function _add_table_footer($frozen)
     {
-        $html = "</table>";
+        $html = "</tbody>\n" .
+                "</table>\n";
         $this->_elements['s_footer'] =& HTML_QuickForm::createElement('static', 's_footer', '', $html);
     }
 
@@ -451,7 +513,7 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     }
 
     /**
-     * Freeze the entire group, special handling applies to skipp all elements which cannot be
+     * Freeze the entire group, special handling applies to skip all elements which cannot be
      * frozen.
      */
     function freeze()
@@ -473,9 +535,17 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
     }
 
     /**
-     * Nothing to do here.
+     * Check if the sorted order should be returned to type
      */
-    function sync_type_with_widget($results) {}
+    function sync_type_with_widget($results)
+    {
+        if (   $this->_type->sortable
+            && isset($_REQUEST['midcom_helper_datamanager2_sortable'])
+            && isset($_REQUEST['midcom_helper_datamanager2_sortable'][$this->name]))
+        {
+            $this->_type->_sorted_list = $_REQUEST['midcom_helper_datamanager2_sortable'][$this->name];
+        }
+    }
 
     /**
      * Populates the title fields with their defaults.
@@ -490,5 +560,4 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
         return Array ($this->name => $defaults);
     }
 }
-
 ?>

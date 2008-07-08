@@ -69,6 +69,14 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
     var $lock_timeout = null;
 
     /**
+     * Override the whole locking scheme
+     * 
+     * @access public
+     * @var boolean
+     */
+    var $lock_object = true;
+
+    /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
     function midcom_helper_datamanager2_controller()
@@ -86,7 +94,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
     {
         if (is_null($this->lock_timeout))
         {
-            $this->lock_timeout = (int) $this->_config->get('lock_timeout');
+            $this->lock_timeout = $GLOBALS['midcom_config']['metadata_lock_timeout'];
         }
         
         return true;
@@ -254,7 +262,8 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
     function display_form()
     {
         // Prevent temporary objects from failing
-        if (   isset($this->datamanager->storage)
+        if (   $this->lock_object
+            && isset($this->datamanager->storage)
             && isset($this->datamanager->storage->object)
             && isset($this->datamanager->storage->object->guid))
         {

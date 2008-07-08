@@ -548,7 +548,15 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
     {
         // debug_push_class(__CLASS__, __FUNCTION__);
 
-        $current_user = $_MIDCOM->auth->user->get_storage();
+        if (   isset($_MIDCOM->auth->user)
+            && method_exists('get_storage', $_MIDCOM->auth->user))
+        {
+            $current_user = $_MIDCOM->auth->user->get_storage();
+        }
+        else
+        {
+            $current_user = new midcom_db_person();
+        }
 
         $clever_classes = array
         (

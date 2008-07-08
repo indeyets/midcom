@@ -89,13 +89,16 @@ class midcom_helper_datamanager2_controller_simple extends midcom_helper_dataman
         $metadata = $this->datamanager->storage->object->get_metadata();
         
         // Remove the lock
-        if (   $result === 'save'
-            || $result === 'cancel')
+        if (   $this->lock_timeout
+            && (   $result === 'save'
+                || $result === 'cancel'))
         {
             $metadata->unlock();
         }
         // or set it, if needed
-        elseif (!$metadata->is_locked())
+        elseif ($this->lock_object
+            && !$metadata->is_locked()
+            && $this->lock_timeout)
         {
             $metadata->lock();
         }

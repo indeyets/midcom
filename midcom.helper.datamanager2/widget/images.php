@@ -91,6 +91,14 @@ class midcom_helper_datamanager2_widget_images extends midcom_helper_datamanager
     var $max_count = 0;
 
     /**
+     * Sort index or what is the position in the list
+     * 
+     * @access private
+     * @var integer
+     */
+    var $_sort_index = 1;
+    
+    /**
      * The initialization event handler post-processes the maxlength setting.
      *
      * @return boolean Indicating Success
@@ -113,6 +121,25 @@ class midcom_helper_datamanager2_widget_images extends midcom_helper_datamanager
             $this->max_count = $this->_type->max_count;
         }
 
+        // Create sortable
+        if ($this->_type->sortable)
+        {
+            $_MIDCOM->enable_jquery();
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/datamanager2.tablesorter.js');
+            // Configuration options
+            $_MIDCOM->add_jscript("
+                jQuery(document).ready(function()
+                {
+                    jQuery('#{$this->_namespace}{$this->name}')
+                        .create_sortable({
+                            max_count: 0,
+                            sortable: true,
+                            allow_delete: false
+                        });
+                });
+            ");
+        }
+        
         $_MIDCOM->add_jscript($this->_get_filename_validation_script());
 
         return true;
@@ -148,20 +175,33 @@ END;
     {
         if ($frozen)
         {
-            $html = "<table class='midcom_helper_datamanager2_widget_images' id='{$this->_namespace}{$this->name}' >\n" .
-                    "<tr>\n" .
-                    "<th class='filename'>" . $this->_l10n_midcom->get('name') . "</th>\n" .
-                    "<th class='title'>" . $this->_l10n_midcom->get('title') . "</th>\n" .
-                    "</tr>\n";
+            $html = "<table class=\"midcom_helper_datamanager2_widget_images\" id=\"{$this->_namespace}{$this->name}\" >\n" .
+                    "    <thead>\n" .
+                    "        <tr>\n" .
+                    "            <th class=\"filename\">" . $this->_l10n_midcom->get('name') . "</th>\n" .
+                    "            <th class=\"title\">" . $this->_l10n_midcom->get('title') . "</th>\n" .
+                    "        </tr>\n" .
+                    "    </thead>\n" .
+                    "    <tbody>\n";
         }
         else
         {
-            $html = "<table class='midcom_helper_datamanager2_widget_images' id='{$this->_namespace}{$this->name}' >\n" .
-                    "<tr>\n" .
-                    "<th class='filename'>" . $this->_l10n_midcom->get('name') . "</th>\n" .
-                    "<th class='title'>" . $this->_l10n_midcom->get('title') . "</th>\n" .
-                    "<th class='upload'>" . $this->_l10n_midcom->get('upload') . "</th>\n" .
-                    "</tr>\n";
+            $index = '';
+            if ($this->_type->sortable)
+            {
+                $index = "            <th class=\"index\">" . $this->_l10n->get('index') . "</th>\n";
+            }
+            
+            $html = "<table class=\"midcom_helper_datamanager2_widget_downloads\" id=\"{$this->_namespace}{$this->name}\" >\n" .
+                    "    <thead>\n" .
+                    "        <tr>\n" .
+                    $index .
+                    "            <th class=\"filename\">" . $this->_l10n_midcom->get('name') . "</th>\n" .
+                    "            <th class=\"title\">" . $this->_l10n_midcom->get('title') . "</th>\n" .
+                    "            <th class=\"upload\">" . $this->_l10n_midcom->get('upload') . "</th>\n" .
+                    "        </tr>\n" .
+                    "    </thead>\n" .
+                    "    <tbody>\n";
         }
         $this->_elements['s_header'] =& HTML_QuickForm::createElement('static', 's_header', '', $html);
     }
@@ -180,10 +220,17 @@ END;
         {
             return;
         }
+        
+        $sortable = '';
+        if ($this->_type->sortable)
+        {
+            $sortable = "            <td class=\"sortable_new\"></td>\n";
+        }
 
         // Filename column
-        $html = "<tr >\n" .
-                "<td class='new filename'>";
+        $html = "         <tr >\n" .
+                $sortable .
+                "            <td class=\"new filename\">";
         $this->_elements['s_new_filename'] =& HTML_QuickForm::createElement('static', 's_new_filename', '', $html);
         $attributes = Array
         (
@@ -193,8 +240,8 @@ END;
         $this->_elements['e_new_filename'] =& HTML_QuickForm::createElement('text', 'e_new_filename', '', $attributes);
 
         // Title Column
-        $html = "</td>\n" .
-                "<td class='new title'>";
+        $html = "            </td>\n" .
+                "            <td class=\"new title\">";
         $this->_elements['s_new_title'] =& HTML_QuickForm::createElement('static', 's_new_title', '', $html);
         $attributes = Array
         (
@@ -206,8 +253,8 @@ END;
         if (! $frozen)
         {
             // Controls Column
-            $html = "</td>\n" .
-                    "<td class='new upload'>";
+            $html = "            </td>\n" .
+                    "            <td class=\"new upload\">";
             $this->_elements['s_new_upload'] =& HTML_QuickForm::createElement('static', 's_new_upload', '', $html);
             $attributes = Array
             (
@@ -224,10 +271,11 @@ END;
             $this->_elements['e_new_upload'] =& HTML_QuickForm::createElement('submit', "{$this->name}_e_new_upload", $this->_l10n->get('upload file'), $attributes);
         }
 
-        $html = "</td>\n" .
-                "</tr>\n";
+        $html = "            </td>\n" .
+                "        </tr>\n";
         $this->_elements['s_new_file'] =& HTML_QuickForm::createElement('static', 's_new_file', '', $html);
     }
+
     /**
      * Adds the new upload row to the bottom of the table.
      *
@@ -244,15 +292,15 @@ END;
         }
 
         // Filename column
-        $html = "<tr >\n" .
-                "<td class='new text' colspan='1'>";
+        $html = "        <tr >\n" .
+                "            <td class=\"new text\" colspan=\"1\">";
         $html .= sprintf("%s:", $this->_l10n->get('add new file'));
         $this->_elements['s_new_filename'] =& HTML_QuickForm::createElement('static', 's_new_filename', '', $html);
 
         if (! $frozen)
         {
             // Controls Column
-            $html = "</td><td class='new upload' colspan='2'>";
+            $html = "</td><td class=\"new upload\" colspan=\"2\">";
             $this->_elements['s_new_upload'] =& HTML_QuickForm::createElement('static', 's_new_upload', '', $html);
             $attributes = Array
             (
@@ -268,8 +316,8 @@ END;
             $this->_elements['e_new_upload'] =& HTML_QuickForm::createElement('submit', "{$this->name}_e_new_upload", $this->_l10n->get('upload file'), $attributes);
         }
 
-        $html = "</td>\n" .
-                "</tr>\n";
+        $html = "            </td>\n" .
+                "        </tr>\n";
         $this->_elements['s_new_file'] =& HTML_QuickForm::createElement('static', 's_new_file', '', $html);
     }
 
@@ -317,7 +365,7 @@ END;
         {
             $url = $this->_type->images[$identifier]['thumbnail']['url'];
             $sizeline = $this->_type->images[$identifier]['thumbnail']['size_line'];
-            $preview = "<a href='{$info['url']}' class='download'><img src='{$url}' {$sizeline} /></a>";
+            $preview = "<a href=\"{$info['url']}\" class=\"download\"><img src=\"{$url}\" {$sizeline} /></a>";
         }
         else
         {
@@ -342,8 +390,8 @@ END;
                 }
             }
 
-            $size_line = "width='{$x}' height='{$y}'";
-            $preview = "<a href='{$url}' class='download'><img src='{$url}' {$size_line} /></a>";
+            $size_line = "width=\"{$x}\" height=\"{$y}\"";
+            $preview = "                <a href=\"{$url}\" class=\"download\"><img src=\"{$url}\" {$size_line} /></a>\n";
         }
 
         $img_title = '';
@@ -359,16 +407,27 @@ END;
         {
             $img_title = $this->_type->titles[$identifier];
         }
+        
+        // Initialize the string
+        $sortable = '';
+        
+        if ($this->_type->sortable)
+        {
+            $sortable = "            <td class=\"midcom_helper_datamanager2_helper_sortable\"><input type=\"text\" class=\"image_sortable\" name=\"midcom_helper_datamanager2_sortable[{$this->name}][{$identifier}]\" value=\"{$this->_sort_index}\" /></td>\n";
+            $this->_sort_index++;
+        }
 
         // Filename column
-        $html = "<tr title='{$info['guid']}' class='midcom_helper_datamanager2_widget_images_image'>\n" .
-                "<td class='exist filename' title='{$info['filename']}'>" .
-                "{$preview}<br /><a href='{$info['url']}'>{$info['filename']}</a>" .
-                "</td>\n";
+        $html = "        <tr title=\"{$info['guid']}\" class=\"midcom_helper_datamanager2_widget_images_image\">\n" .
+                $sortable .
+                "            <td class=\"exist filename\" title=\"{$info['filename']}\">\n" .
+                "                {$preview}<br />\n" .
+                "                <a href=\"{$info['url']}\">{$info['filename']}</a>\n" .
+                "            </td>\n";
         $this->_elements["s_exist_{$identifier}_filename"] =& HTML_QuickForm::createElement('static', "s_exist_{$identifier}_filename", '', $html);
 
         // Title Column, set the value explicitly, as we are sometimes called after the defaults kick in.
-        $html = "<td class='exist title' title='{$img_title}'>";
+        $html = "            <td class=\"exist title\" title=\"{$img_title}\">";
         $this->_elements["s_exist_{$identifier}_title"] =& HTML_QuickForm::createElement('static', "s_exist_{$identifier}_title", '', $html);
         $attributes = Array
         (
@@ -381,8 +440,8 @@ END;
         if (! $frozen)
         {
             // Controls Column
-            $html = "</td>\n" .
-                    "<td class='exist upload'>";
+            $html = "            </td>\n" .
+                    "            <td class=\"exist upload\">\n";
             $this->_elements["s_exist_{$identifier}_upload"] =& HTML_QuickForm::createElement('static', "s_exist_{$identifier}_upload", '', $html);
             $attributes = Array
             (
@@ -405,14 +464,14 @@ END;
                 'id'    => "{$this->_namespace}{$this->name}_e_exist_{$identifier}_delete",
             );
             $this->_elements["e_exist_{$identifier}_delete"] =& HTML_QuickForm::createElement('submit', "{$this->name}_e_exist_{$identifier}_delete", $this->_l10n->get('delete file'), $attributes);
-            $html = sprintf("<span id='e_exist_{$identifier}_delete' style='display:none;color:red'>%s</span>",
+            $html = sprintf("<span id=\"e_exist_{$identifier}_delete\" style=\"display:none;color:red\">%s</span>",
                             $this->_l10n_midcom->get('You can only upload images here. This file will not be saved.')
                             );
             $this->_elements["s_exist_{$identifier}_error"] =& HTML_QuickForm::createElement('static', "s_exist_{$identifier}_upload", '', $html);
         }
 
-        $html = "</td>\n" .
-                "</tr>\n";
+        $html = "            </td>\n" .
+                "        </tr>\n";
         $this->_elements["s_exist_{$identifier}_file"] =& HTML_QuickForm::createElement('static', "s_exist_{$identifier}_file", '', $html);
     }
 
@@ -424,7 +483,8 @@ END;
      */
     function _add_table_footer($frozen)
     {
-        $html = "</table>";
+        $html = "    </tbody>\n" .
+                "</table>\n";
         $this->_elements['s_footer'] =& HTML_QuickForm::createElement('static', 's_footer', '', $html);
     }
 
@@ -635,11 +695,18 @@ END;
     }
 
     /**
-     * Nothing to do here.
+     * Prepare for sorting the results
      */
     function sync_type_with_widget($results)
     {
         $values = $results[$this->name];
+        
+        if (   $this->_type->sortable
+            && isset($_REQUEST['midcom_helper_datamanager2_sortable'])
+            && isset($_REQUEST['midcom_helper_datamanager2_sortable'][$this->name]))
+        {
+            $this->_type->_sorted_list = $_REQUEST['midcom_helper_datamanager2_sortable'][$this->name];
+        }
 
         foreach ($this->_type->images as $identifier => $info)
         {
