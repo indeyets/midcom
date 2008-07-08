@@ -717,12 +717,33 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      */
     function can_do($privilege, &$content_object, $user = null)
     {    
-        if (   $privilege != 'midgard:read'
-            && $_MIDGARD['sitegroup'] != 0
-            && $content_object->sitegroup != $_MIDGARD['sitegroup'])
+        if (   $privilege !== 'midgard:read'
+            && $_MIDGARD['sitegroup'] !== 0
+            && $content_object->sitegroup !== $_MIDGARD['sitegroup'])
         {
             return false;
-        }    
+        }
+        
+        // Prevent deleting from outside the language context
+        if ($privilege === 'midgard:delete')
+        {
+            // Check the language context conditions
+            static $midgard_language = null;
+            
+            if (is_null($midgard_language))
+            {
+                $midgard_language = $_MIDCOM->i18n->get_midgard_language();
+            }
+            
+            // Hide the delete folder toolbar item if the language context conditions don't match
+            if (   $midgard_language !== 0
+                && (   !isset($content_object->lang)
+                    || $content_object->lang !== $midgard_language))
+            {
+                return false;
+            }
+        }
+        
         return $this->can_do_byguid($privilege, $content_object->guid, get_class($content_object), $user);
     }
 

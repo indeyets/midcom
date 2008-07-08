@@ -419,12 +419,25 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      **/
     function delete_pre_checks(&$object)
     {
+        $midgard_language = $_MIDCOM->i18n->get_midgard_language();
+        
+        // Current language is not zero, selective delete to prevent deleting too much of objects.
+        // Object will not be deleted if it doesn't have a language property at all or if its
+        // language property is not the one requested for deletion
+        if (   $midgard_language !== 0
+            && (   !isset($object->lang)
+                || $object->lang !== $midgard_language))
+        {
+            return false;
+        }
+        
         if (! $_MIDCOM->auth->can_do('midgard:delete', $object))
         {
             debug_push_class($object, __FUNCTION__);
             debug_add("Failed to delete object, delete privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             // debug_print_r('Object was:', $object);
+            debug_pop();
             mgd_set_errno(MGD_ERR_ACCESS_DENIED);
             return false;
         }

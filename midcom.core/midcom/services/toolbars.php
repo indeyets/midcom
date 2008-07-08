@@ -359,7 +359,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/view/{$topic->guid}",
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/view/{$topic->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('manage object', 'midgard.admin.asgard'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
                     MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin', 'midgard.admin.asgard'),
@@ -457,12 +457,15 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             && $topic->can_do('midgard:delete')
             && $topic->can_do('midcom.admin.folder:topic_management'))
         {
-            $toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "__ais/folder/delete.html",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('delete folder', 'midcom.admin.folder'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
-                // for terminate d is used by everyone to go to the location bar
-            ));
+            $toolbar->add_item(
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__ais/folder/delete.html",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('delete folder', 'midcom.admin.folder'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                    // for terminate d is used by everyone to go to the location bar
+                )
+            );
         }
 
     }
@@ -755,7 +758,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/view/{$object->guid}",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__mfa/asgard/object/view/{$object->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('manage object', 'midgard.admin.asgard'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
                     MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin', 'midgard.admin.asgard'),
