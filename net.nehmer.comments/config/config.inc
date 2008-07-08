@@ -32,3 +32,5 @@
 'item_ordering' => 'ASC', //DESC OR ASC
 
 'paging' => false, // false == disabled or integer == number of results/page
+
+'show_reported_abuse_as_normal' => true,

@@ -354,6 +354,15 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
         {
             $this->_new_comment->ip = $_SERVER['REMOTE_ADDR'];
         }
+        
+        if ($_MIDGARD['user'])
+        {
+            $this->_new_comment->status = NET_NEHMER_COMMENTS_NEW_USER;
+        }
+        else
+        {
+            $this->_new_comment->status = NET_NEHMER_COMMENTS_NEW_ANONYMOUS;
+        }
 
         if (! $this->_new_comment->create())
         {
@@ -393,19 +402,19 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
         if ($handler_id == 'view-comments-nonempty')
         {
             $this->_comments = net_nehmer_comments_comment::list_by_objectguid_filter_anonymous(
-            $this->_objectguid,
-            $this->_config->get('items_to_show'),
-            $this->_config->get('item_ordering'),
-            $this->_config->get('paging')
+                $this->_objectguid,
+                $this->_config->get('items_to_show'),
+                $this->_config->get('item_ordering'),
+                $this->_config->get('paging')
             );
         }
         else
         {
             $this->_comments = net_nehmer_comments_comment::list_by_objectguid(
-            $this->_objectguid,
-            $this->_config->get('items_to_show'),
-            $this->_config->get('item_ordering'),
-            $this->_config->get('paging')
+                $this->_objectguid,
+                $this->_config->get('items_to_show'),
+                $this->_config->get('item_ordering'),
+                $this->_config->get('paging')
             );
         }
 
@@ -477,6 +486,110 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             $_MIDCOM->cache->invalidate($comment->objectguid);
             $this->_relocate_to_self();
         }
+    }
+    
+    function _populate_post_toolbar($comment)
+    {
+        $toolbar = new midcom_helper_toolbar();
+
+        if (   $_MIDCOM->auth->user
+            && $comment->status < NET_NEHMER_COMMENTS_MODERATED)
+        {
+            if (!$comment->can_do('net.nehmer.comments:moderation'))
+            {
+                // Regular users can only report abuse
+                $toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "report/{$comment->guid}.html",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('report abuse'),
+                        MIDCOM_TOOLBAR_HELPTEXT => null,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_help-agent.png',
+//                        MIDCOM_TOOLBAR_ENABLED =>  $comment->can_do('midgard:update'),
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                        (
+                            'mark' => 'abuse',
+                            'return_url' => $_MIDGARD['uri'],
+                        )
+                    )
+                );
+            }
+            else
+            {
+                $toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "report/{$comment->guid}.html",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm abuse'),
+                        MIDCOM_TOOLBAR_HELPTEXT => null,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                        MIDCOM_TOOLBAR_ENABLED => $comment->can_do('net.nehmer.comments:moderation'),
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                        (
+                            'mark' => 'confirm_abuse',
+                            'return_url' => $_MIDGARD['uri'],
+                        )
+                    )
+                );
+                $toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "report/{$comment->guid}.html",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm junk'),
+                        MIDCOM_TOOLBAR_HELPTEXT => null,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                        MIDCOM_TOOLBAR_ENABLED => $comment->can_do('net.nehmer.comments:moderation'),
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                        (
+                            'mark' => 'confirm_junk',
+                            'return_url' => $_MIDGARD['uri'],
+                        )
+                    )
+                );
+                $toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "report/{$comment->guid}.html",
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('not abuse'),
+                        MIDCOM_TOOLBAR_HELPTEXT => null,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
+                        MIDCOM_TOOLBAR_ENABLED => $comment->can_do('net.nehmer.comments:moderation'),
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                        (
+                            'mark' => 'not_abuse',
+                            'return_url' => $_MIDGARD['uri'],
+                        )
+                    )
+                );
+                $toolbar->add_item
+                (
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => $_SERVER['REQUEST_URI'],
+                        MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('delete'),
+                        MIDCOM_TOOLBAR_HELPTEXT => null,
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/editdelete.png',
+                        MIDCOM_TOOLBAR_ENABLED => $comment->can_do('net.nehmer.comments:moderation'),
+                        MIDCOM_TOOLBAR_POST => true,
+                        MIDCOM_TOOLBAR_POST_HIDDENARGS => array
+                        (
+                            'net_nehmer_comment_adminsubmit' => '1',
+                            'guid' => $comment->guid,
+                            'action_delete' => 'action_delete',
+                        )
+                    )
+                );
+            }
+        }
+        return $toolbar;
     }
 
     /**
@@ -593,6 +706,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             {
                 $this->_display_datamanager->autoset_storage($comment);
                 $data['comment'] =& $comment;
+                $data['comment_toolbar'] = $this->_populate_post_toolbar($comment);
                 midcom_show_style('comments-item');
 
                 if (   $_MIDCOM->auth->admin
