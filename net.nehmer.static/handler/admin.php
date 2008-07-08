@@ -175,8 +175,8 @@ class net_nehmer_static_handler_admin extends midcom_baseclasses_components_hand
         {
             $tmp[] = Array
             (
-                MIDCOM_NAV_URL => "{$handler_id}/{$this->_article->guid}.html",
-                MIDCOM_NAV_NAME => $this->_l10n_midcom->get($handler_id),
+                MIDCOM_NAV_URL => "{$this->_article->name}.html",
+                MIDCOM_NAV_NAME => $this->_article->title,
             );
         }
 
