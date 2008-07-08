@@ -255,8 +255,8 @@ class midcom_helper_metadata
      */
     function set ($key, $value)
     {
-        debug_push('midcom.helper.metadata::set');
-        debug_print_r("We have to set {$key} to this value:", $value);
+        // Store the RCS mode
+        $rcs_mode = $this->object->_use_rcs;
 
         switch ($key)
         {
@@ -278,6 +278,10 @@ class midcom_helper_metadata
             case 'locked':
             case 'approver':
             case 'approved':
+                // Prevent lock changes from creating new revisions
+                $this->object->_use_rcs = false;
+                // Fall through
+            
             case 'authors':
             case 'owner':
             case 'published':
@@ -300,6 +304,9 @@ class midcom_helper_metadata
         $this->on_update($key);
         debug_pop();
 
+        // Return the original RCS mode
+        $this->object->_use_rcs = $rcs_mode;
+        
         return $value;
     }
 
