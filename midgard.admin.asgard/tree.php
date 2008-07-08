@@ -11,7 +11,7 @@
  * Copy/delete tree branch viewer
  * @package midgard.admin.asgard
  */
- class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
+class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
 {
     /**
      * Switch to determine if the whole tree should be copied
