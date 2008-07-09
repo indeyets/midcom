@@ -62,6 +62,9 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
         );
     }
     
+    /**
+     * @todo refactor, clean up
+     */
     function _on_watched_dba_create($object, $force_to_list=false)
     {
         // debug_push_class(__CLASS__, __FUNCTION__);
@@ -97,12 +100,13 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
             foreach ($lists as $list_id)
             {
                 $list_id = (int) $list_id;
-                      if ($list_id == 0) {
-                          continue;
-                      }
-                      $topic = new midcom_db_topic($list_id);
-                      
-                $item = new net_nemein_alphabeticalindex_item();            
+                if ($list_id == 0)
+                {
+                    continue;
+                }
+                $topic = new midcom_db_topic($list_id);
+
+                $item = new net_nemein_alphabeticalindex_item();
                 $item->title = $title;
                 $item->url = $object->guid;
                 $item->objectGuid = $object->guid;
@@ -114,13 +118,20 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
                     }
                     
                     $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('item %s has been added to alphabetical index', 'net.nemein.alphabeticalindex'), $item->title), 'ok');
-                }                
+                }
+                else
+                {
+                    $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('failed to add item % to alphabetical index, reason: %s', 'net.nemein.alphabeticalindex'), $item->title, mgd_errstr()), 'ok');
+                }
             }
         }
 
         // debug_pop();
     }
 
+    /**
+     * @todo refactor, clean up
+     */
     function _on_watched_dba_update($object)
     {
         // debug_push_class(__CLASS__, __FUNCTION__);
@@ -155,11 +166,12 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
             foreach ($lists as $list_id)
             {
                 $list_id = (int) $list_id;
-                      if ($list_id == 0) {
-                          continue;
-                      }                      
-                      $topic = new midcom_db_topic($list_id);
-                      
+                if ($list_id == 0)
+                {
+                    continue;
+                }
+                $topic = new midcom_db_topic($list_id);
+
                 $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                 $qb->add_constraint('objectGuid', '=', $object->guid);
                 $qb->add_constraint('node.id', '=', $list_id);
@@ -173,7 +185,11 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
                         $item->title = $title;
                     }
                     $item->node = $list_id;
-                    $item->update();
+                    if (!$item->update())
+                    {
+                        $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('failed to update item % in alphabetical index, reason: %s', 'net.nemein.alphabeticalindex'), $item->title, mgd_errstr()), 'ok');
+                        continue;
+                    }
                     
                     if ($topic) {
                         $topic->update();
@@ -214,6 +230,8 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
     /**
      * The delete handler will drop all entries associated with any record that has been
      * deleted.
+     *
+     * @todo refactor, clean up
      */
     function _on_watched_dba_delete($object, $skip_status=false)
     {
@@ -255,11 +273,12 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
             foreach ($lists as $list_id)
             {
                 $list_id = (int) $list_id;
-                      if ($list_id == 0) {
-                          continue;
-                      }
+                if ($list_id == 0)
+                {
+                    continue;
+                }
                 $topic = new midcom_db_topic($list_id);
-                
+
                 $qb = net_nemein_alphabeticalindex_item::new_query_builder();
                 $qb->add_constraint('objectGuid', '=', $object->guid);
                 if (! $skip_status)
@@ -281,6 +300,10 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
                             }
                                                         
                             $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('item %s has been deleted from alphabetical index', 'net.nemein.alphabeticalindex'), $title), 'ok');
+                        }
+                        else
+                        {
+                            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('net.nemein.alphabeticalindex', 'net.nemein.alphabeticalindex'), sprintf($_MIDCOM->i18n->get_string('failed to delete item % from alphabetical index, reason: %s', 'net.nemein.alphabeticalindex'), $item->title, mgd_errstr()), 'ok');
                         }
                     }
                 }                

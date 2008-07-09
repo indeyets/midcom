@@ -3,26 +3,6 @@
 ---CVS $Id$
 ---LANGUAGE en
 
----STRING net.nemein.alphabeticalindex
-Alphabetical index
----STRINGEND
-
----STRING external item
-External item
----STRINGEND
-
----STRING internal item
-Internal items
----STRINGEND
-
----STRING to top
-To top
----STRINGEND
-
----STRING Show in index
-Show in index
----STRINGEND
-
 ---STRING Alphabetical index has been cleared
 Alphabetical index has been cleared
 ---STRINGEND
@@ -30,3 +10,48 @@ Alphabetical index has been cleared
 ---STRING Clear index
 Clear index
 ---STRINGEND
+
+---STRING Show in index
+Show in index
+---STRINGEND
+
+---STRING external item
+External item
+---STRINGEND
+
+---STRING failed to add item % to alphabetical index, reason: %s
+Failed to add item % to alphabetical index, reason: %s
+---STRINGEND
+
+---STRING failed to delete item % from alphabetical index, reason: %s
+Failed to delete item % from alphabetical index, reason: %s
+---STRINGEND
+
+---STRING failed to update item % in alphabetical index, reason: %s
+Failed to update item % in alphabetical index, reason: %s
+---STRINGEND
+
+---STRING internal item
+Internal items
+---STRINGEND
+
+---STRING item %s has been deleted from alphabetical index
+Item %s has been deleted from alphabetical index
+---STRINGEND
+
+---STRING item %s has been updated in alphabetical index
+Item %s has been updated in alphabetical index
+---STRINGEND
+
+---STRING net.nemein.alphabeticalindex
+Alphabetical index
+---STRINGEND
+
+---STRING to top
+To top
+---STRINGEND
+
+---STRING item %s has been added to alphabetical index
+Item %s has been added to alphabetical index
+---STRINGEND
+
