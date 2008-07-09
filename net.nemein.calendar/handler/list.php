@@ -486,11 +486,32 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
             && class_exists('midgard_query_builder'))
         {
             $this->_request_data['category'] = $_REQUEST['net_nemein_calendar_category'];
+            /**
+             * Broken in 1.8.8 see http://trac.midgard-project.org/ticket/261
+             *
             $qb->begin_group('AND');
                 $qb->add_constraint('parameter.domain', '=', 'net.nemein.calendar');
                 $qb->add_constraint('parameter.name', '=', 'categories');
                 $qb->add_constraint('parameter.value', 'LIKE', "%|{$this->_request_data['category']}|%");
             $qb->end_group();
+             */
+
+            /** 
+             * BEGIN: Workaround http://trac.midgard-project.org/ticket/261
+             */
+            $mc = new midgard_collector('midgard_parameter', 'domain', 'net.nemein.calendar');
+            $mc->set_key_property('parentguid');
+            $mc->add_constraint('name', '=', 'categories');
+            $mc->add_constraint('value', 'LIKE', "%|{$this->_request_data['category']}|%");
+            $mc->execute();
+            $keys = $mc->list_keys();
+            unset($mc);
+            $guids = array_keys($keys);
+            $qb->add_constraint('guid', 'IN', $guids);
+            unset($keys, $guids);
+            /** 
+             * END: Workaround http://trac.midgard-project.org/ticket/261
+             */
 
             if (!$this->_request_data['archive_mode'])
             {
