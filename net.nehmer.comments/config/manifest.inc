@@ -61,6 +61,10 @@
         (
             'default' => 'email',
         ),
+        'report_abuse' => array
+        (
+            'default' => 'email',
+        ),
     ),
 ),
 'state' => 'beta',

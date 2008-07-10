@@ -115,7 +115,7 @@ class net_nehmer_comments_handler_moderate extends midcom_baseclasses_components
                         {
                             continue;
                         }
-                        org_openpsa_notifications::notify('net.nemein.discussion:reported_abuse', $moderator_guid, $message);
+                        org_openpsa_notifications::notify('net.nehmer.comments:report_abuse', $moderator_guid, $message);
                     }
                 }
                 if (isset($_POST['return_url']))
