@@ -9,3 +9,6 @@ CREATE TABLE net_nehmer_accounts_invites_invite (
   KEY net_nehmer_accounts_invites_invite_email_idx (`email`(30)),
   KEY net_nehmer_accounts_invites_invite_buddy_idx (`buddy`(30))
 );
+ALTER TABLE net_nehmer_accounts_invites_invite ADD COLUMN sitegroup int(11) NOT NULL DEFAULT 0;
+CREATE INDEX net_nehmer_accounts_invites_invite_sitegroup_idx on net_nehmer_accounts_invites_invite(sitegroup);
+

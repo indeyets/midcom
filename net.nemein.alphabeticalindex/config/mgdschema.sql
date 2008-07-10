@@ -13,6 +13,8 @@ CREATE TABLE net_nemein_alphabeticalindex_item_db
     INDEX net_nemein_alphabeticalindex_item_object_idx(objectGuid),
     INDEX net_nemein_alphabeticalindex_item_node_idx(node)
 );
+ALTER TABLE net_nemein_alphabeticalindex_item_db ADD COLUMN sitegroup int(11) NOT NULL DEFAULT 0;
+CREATE INDEX net_nemein_alphabeticalindex_item_db_sitegroup_idx on net_nemein_alphabeticalindex_item_db(sitegroup);
 
 ALTER TABLE net_nemein_alphabeticalindex_item_db DROP INDEX net_nemein_alphabeticalindex_item_db_idx;
 ALTER TABLE net_nemein_alphabeticalindex_item_db DROP INDEX net_nemein_alphabeticalindex_item_object_idx;
