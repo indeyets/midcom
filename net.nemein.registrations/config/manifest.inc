@@ -37,6 +37,12 @@
             'role' => 'lead',
             'active' => 'yes',
         ),
+        'netblade' => array
+        (
+            'name' => 'Oskari Kokko',
+            'email' => 'oskari.kokko@iki.fi',
+            'role' => 'lead',
+        ),
     ),
     'dependencies' => array
     (

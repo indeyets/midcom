@@ -801,6 +801,10 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
     {
         $_MIDCOM->auth->require_do('midgard:delete', $registration);
 
+        $registrar_object = new midcom_db_person($registration->uid);
+
+        $registration->set_parameter('net.nemein.registrations', 'reject_reason', $reason);
+
         if ($delete)
         {
             if (! $registration->delete())
@@ -813,7 +817,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
             }
         }
 
-        $this->request_data['reject_reason'] = $reason;
+        $this->_request_data['reject_reason'] = $reason;
 
         // Get base data
         $bodies = $registration->compose_mail_bodies();

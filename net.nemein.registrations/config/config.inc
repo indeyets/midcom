@@ -50,5 +50,4 @@
 'admin_register_loop' => false,
 'admin_register_loop_clear_fields' => array('p_firstname', 'p_lastname', 'p_email'),
 
-
-
+'send_approve_mail' => false,

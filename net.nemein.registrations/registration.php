@@ -410,7 +410,17 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
         }
         
         $event = $this->get_event();
-        return $event->approve_registration($this, false);
+
+        if (isset($this->_config))
+        {
+            $send_mail = $this->_config->get('send_approve_mail');
+        }
+        else
+        {
+            $send_mail = false;
+        }
+
+        return $event->approve_registration($this, $send_mail);
     } 
 }
 
