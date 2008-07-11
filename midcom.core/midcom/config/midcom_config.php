@@ -383,6 +383,7 @@ $GLOBALS['midcom_config_default']['cron_hour_minutes'] = 30;
 
 
 // I18n Subsystem configuration
+$GLOBALS['midcom_config_default']['i18n_language_db_path'] = 'file:/midcom/config/language_db.inc';
 $GLOBALS['midcom_config_default']['i18n_available_languages'] = null;
 $GLOBALS['midcom_config_default']['i18n_fallback_language'] = 'en';
 

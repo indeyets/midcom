@@ -721,7 +721,31 @@ class midcom_services_i18n
      */
     function _load_language_db()
     {
-        $data = file_get_contents(MIDCOM_ROOT . "/midcom/config/language_db.inc");
+        /**
+         * midcom_get_snippet_content user midcom_baseclasses_database_snippet which is not initialized yet
+        $data = midcom_get_snippet_content($GLOBALS['midcom_config']['i18n_language_db_path']);
+        */
+
+        $path = $GLOBALS['midcom_config']['i18n_language_db_path'];
+
+        if (substr($path, 0, 5) == 'file:')
+        {
+            $filename = MIDCOM_ROOT . substr($path, 5);
+            if (! file_exists($filename))
+            {
+                return null;
+            }
+            $data = file_get_contents($filename);
+        }
+        else
+        {
+            if (! mgd_snippet_exists($path))
+            {
+                return null;
+            }
+            $snippet = mgd_get_snippet_by_path ($path);
+            $data = $snippet->code;
+        }
 
         eval ("\$layout = Array(\n{$data}\n);");
         $this->_language_db = $layout;
