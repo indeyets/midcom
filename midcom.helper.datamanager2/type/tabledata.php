@@ -250,7 +250,7 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
                         continue;
                     }
                     
-                    $row = $parts[0];
+                    $row = preg_replace('/^row_/', '', $parts[0]);
                     
                     // Already exists, skip
                     if (in_array($row, $rows))
@@ -566,8 +566,6 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
      */
     function convert_to_storage()
     {
-        $new_indexes = array();
-        
         if ($this->storage_mode === 'parameter')
         {
             foreach ($this->_storage_data as $row => $array)
@@ -579,42 +577,10 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
                 }
                 
                 // Skip the new row placeholder index
-                if ($row === '__new_row__index')
+                if ($row === 'row_index')
                 {
                     unset($this->_storage_data[$row]);
                     continue;
-                }
-                
-                // This is a new row
-                if (preg_match('/^__new_row__([0-9]+)$/', $row, $regs))
-                {
-                    $index = 1;
-                    
-                    while (isset($this->_storage_data["{$index}"]))
-                    {
-                        $index++;
-                        
-                        // Prevent overflooding
-                        if ($index > 100)
-                        {
-                            break;
-                        }
-                    }
-                    
-                    // Remove the existing row and replace it with new
-                    unset($this->_storage_data[$row]);
-                    
-                    $this->_storage_data["{$index}"] = $array;
-                    
-                    if (in_array($row, $this->_row_order))
-                    {
-                        $key = array_search($row, $this->_row_order);
-                        $this->_row_order[$key] = "{$index}";
-                    }
-                    
-                    // Store to new indexes
-                    $new_indexes["{$index}"] = $regs[1];
-                    $row = "{$index}";
                 }
                 
                 // Check that each field gets populated
@@ -664,8 +630,7 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
                 }
                 
                 // Row found in the request list
-                if (   isset($this->_storage_data[$temp[1]])
-                    || isset($new_indexes[$temp[1]]))
+                if (isset($this->_storage_data[$temp[1]]))
                 {
                     continue;
                 }
@@ -692,27 +657,6 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
         // Store the row order if applicable
         if ($this->sortable_rows)
         {
-            // Replace with the new indexes
-            foreach ($new_indexes as $new => $old)
-            {
-                $key = array_search($old, $this->_row_order);
-                
-                if (   $key !== false
-                    && $this->get_row($new))
-                {
-                    $this->_row_order[$key] = "{$new}";
-                }
-            }
-            
-            $new_row = array_search('__new_row__index', $this->_row_order);
-            
-            if ($new_row)
-            {
-                unset($this->_row_order[$new_row]);
-            }
-            
-            ksort($this->_row_order);
-            
             $this->storage->object->set_parameter("{$this->parameter_domain}.type.tabledata.order", "{$this->name}:rows", serialize($this->_row_order));
         }
         
@@ -759,7 +703,7 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
             return '';
         }
         
-        $output .= "<table>\n";
+        $output .= "<table class=\"midcom_helper_datamanager2_widget_tabledata {$this->name}\">\n";
         $output .= "    <thead>\n";
         $output .= "        <tr>\n";
         

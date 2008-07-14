@@ -164,12 +164,12 @@ class midcom_helper_datamanager2_widget_tabledata extends midcom_helper_datamana
         if ($this->_type->allow_new_rows)
         {
             $html .= "    <tfoot>\n";
-            $html .= "        <tr id=\"__new_row__index\">\n";
+            $html .= "        <tr id=\"new_row\">\n";
             $html .= "            <td class=\"new_row midcom_helper_datamanager2_helper_sortable\">\n";
             $html .= "                <img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/list-add.png\" alt=\"" . $this->_l10n->get('add new row') . "\" class=\"add-row\" />\n";
-            $html .= "                <input type=\"text\" class=\"downloads_sortable\" name=\"midcom_helper_datamanager2_sortable[{$this->name}][]\" value=\"__new_row__index\" />\n";
+            $html .= "                <input type=\"text\" class=\"downloads_sortable\" name=\"midcom_helper_datamanager2_sortable[{$this->name}][]\" value=\"index\" />\n";
             $html .= "            </td>\n";
-            $html .= $this->_add_columns('__new_row__index');
+            $html .= $this->_add_columns('index');
             $html .= "        </tr>\n";
             $html .= "    </tfoot>\n";
         }
@@ -335,7 +335,7 @@ class midcom_helper_datamanager2_widget_tabledata extends midcom_helper_datamana
             && (   !$this->_type->row_limit
                 || count($rows) < $this->_type->row_limit))
         {
-            $rows[] = '__new_row__0';
+            $rows[] = time() . microtime();
         }
         
         return $rows;

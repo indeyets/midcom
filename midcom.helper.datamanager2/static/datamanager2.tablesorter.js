@@ -154,27 +154,27 @@ jQuery.fn.create_sortable_rows = function(options)
             var new_row = jQuery(this).parent().clone(true);
             jQuery(new_row).find('img.add-row').remove();
             
-            var size = jQuery(this).parents('table.jquery-enabled').find('tbody tr').size();
+            date = new Date();
+            timestamp = date.getTime();
             
             // Insert the rows
             jQuery(new_row)
                 .addClass('new_row')
                 .attr(
                 {
-                    id: 'row___new_row__' + size
+                    id: 'row_' + timestamp
                 })
                 .appendTo(jQuery(this).parents('table.jquery-enabled').find('tbody'));
             
             jQuery(new_row).find('input, select, textarea').each(function(i)
             {
                 var name = jQuery(this).attr('name');
-                var size = jQuery(this).parents('table.jquery-enabled').find('tbody tr').size() - 1;
                 
                 jQuery(this).parent().removeClass('new_row');
                 
                 if (name)
                 {
-                    name = name.replace(/index/, size);
+                    name = name.replace(/index/, timestamp);
                     jQuery(this).attr('name', name);
                 }
                 
@@ -182,7 +182,7 @@ jQuery.fn.create_sortable_rows = function(options)
                 
                 if (id)
                 {
-                    id = id.replace(/index/, size);
+                    id = id.replace(/index/, 'row_' + timestamp);
                     jQuery(this).attr('id', id);
                 }
                 
@@ -190,12 +190,12 @@ jQuery.fn.create_sortable_rows = function(options)
                 
                 if (value)
                 {
-                    value = value.replace(/__new_row__index/, '__new_row__' + size);
+                    value = value.replace(/index/, timestamp);
                     jQuery(this).attr('value', value);
                 }
             });
             
-            jQuery(new_row).find('td.new_row')
+            jQuery(new_row).find('td')
                 .unbind('click')
                 .removeClass('new_row');
             
@@ -233,6 +233,8 @@ jQuery.fn.move_row = function(direction)
     }
     
     var parent = jQuery(this).parents('tr');
+    
+    jQuery(parent).removeClass('hover');
     
     switch (direction)
     {
