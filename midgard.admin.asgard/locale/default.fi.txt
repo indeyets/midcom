@@ -43,6 +43,10 @@ Tunnistamattomat käyttäjät
 Kaikki
 ---STRINGEND
 
+---STRING This object has no translation in the current language and cannot be deleted.
+Tällä kohteella ei ole käännöstä nykyiselle kielelle, eikä sitä voida poistaa.
+---STRINGEND
+
 ---STRING USERS
 Kaikki tunnistautuneet käyttäjät
 ---STRINGEND
@@ -775,7 +779,7 @@ Versio %s tietueesta %s
 XML
 ---STRINGEND
 
----STRING This object has no translation in the current language and cannot be deleted.
-Tällä kohteella ei ole käännöstä nykyiselle kielelle, eikä sitä voida poistaa.
+---STRING child types of %s
+Tyypin %s alatyypit
 ---STRINGEND
 

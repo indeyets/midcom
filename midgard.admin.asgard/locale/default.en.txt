@@ -43,6 +43,10 @@ Anonymous users
 Everyone
 ---STRINGEND
 
+---STRING This object has no translation in the current language and cannot be deleted.
+This object has no translation in the current language and cannot be deleted.
+---STRINGEND
+
 ---STRING USERS
 All users
 ---STRINGEND
@@ -775,7 +779,7 @@ Version %s of %s
 XML
 ---STRINGEND
 
----STRING This object has no translation in the current language and cannot be deleted.
-This object has no translation in the current language and cannot be deleted.
+---STRING child types of %s
+Child types of %s
 ---STRINGEND
 
