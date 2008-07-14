@@ -1,6 +1,8 @@
+<?php
+$prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+?>
 <h1><?php echo $data['title']; ?></h1>
-
-<form method="post">
+<form method="post" action="&(prefix);__ais/folder/move/<?php echo $data['topic']->guid; ?>.html">
     <div class="midcom_admin_content_folderlist">
         <ul>
         <?php
