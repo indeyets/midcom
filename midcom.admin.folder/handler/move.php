@@ -99,12 +99,15 @@ class midcom_admin_folder_handler_move extends midcom_baseclasses_components_han
 
         if (isset($_POST['move_to']))
         {
-            $move_to_topic = new midcom_db_topic($_POST['move_to']);
-            if (!$move_to_topic)
+            $move_to_topic = new midcom_db_topic((int) $_POST['move_to']);
+            
+            if (   !$move_to_topic
+                || !$move_to_topic->guid)
             {
-                return false;
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to move the topic. Could not get the target topic');
+                // This will exit
             }
-
+            
             $move_to_topic->require_do('midgard:create');
 
             if (is_a($this->_object, 'midcom_baseclasses_database_topic'))
