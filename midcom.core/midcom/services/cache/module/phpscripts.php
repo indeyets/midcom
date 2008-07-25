@@ -150,7 +150,7 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Failed to open the file {$filename} for writing.", MIDCOM_LOG_ERROR);
-            if (is_set($php_errormsg))
+            if (isset($php_errormsg))
             {
                 debug_add($php_errormsg, MIDCOM_LOG_ERROR);
             }
