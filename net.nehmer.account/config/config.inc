@@ -13,7 +13,7 @@
 ),
 'list_entries' => 30,
 
-list_categories' => array
+'list_categories' => array
 (
     'comments',
     'favourites',
