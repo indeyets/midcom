@@ -11,6 +11,19 @@ else
 }
 ?>
         <tr>
-            <td><a href="&(url);"><?php echo $data['user']->rname; ?></a></td>
+            <td>
+                <a href="&(url);">
+                    <?php 
+                    if (in_array('firstname', $data['visible_fields']))
+                    {
+                        echo $data['user']->firstname; 
+                    }
+                    if (in_array('firstname', $data['visible_fields']))
+                    {
+                        echo ' ' . $data['user']->lastname; 
+                    }
+                    ?>
+                    </a>
+                </td>
             <td><?php echo $data['user']->metadata->score; ?></td>
         </tr>

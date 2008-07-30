@@ -2,7 +2,7 @@
 /**
  * @package net.nehmer.account
  * @author The Midgard Project, http://www.midgard-project.org
- * @version $Id$
+ * @version $Id: viewer.php 17002 2008-07-30 08:13:35Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
@@ -162,6 +162,18 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('net_nehmer_account_handler_list', 'list'),
             'fixed_args' => Array('list'),
+        );
+        $this->_request_switch['list_by_category'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_list', 'list_by_category'),
+            'fixed_args' => Array('list', 'category'),
+            'variable_args' => 1,
+        );
+        $this->_request_switch['list_by_alpha'] = Array
+        (
+            'handler' => Array('net_nehmer_account_handler_list', 'list'),
+            'fixed_args' => Array('list', 'alpha'),
+            'variable_args' => 1,
         );
 
         // EDIT LINKS

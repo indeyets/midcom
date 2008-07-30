@@ -22,7 +22,7 @@
         (
             'name' => 'Juhana Hirvilahti',
             'email' => 'juhana@nemein.com',
-            'role' => 'developer',
+            'role' => 'lead',
         ),
         'adrenalin' => array
         (
@@ -34,6 +34,24 @@
         (
             'name' => 'Jerry Jalava',
             'email' => 'jerry.jalava@gmail.com',
+            'role' => 'lead',
+        ),
+        'xfade' => array
+        (
+            'name' => 'Niels Breet',
+            'email' => 'nbreet@gmail.com',
+            'role' => 'lead',
+        ),
+        'netblade' => array
+        (
+            'name' => 'Oskari Kokko',
+            'email' => 'oskari.kokko@nemein.com',
+            'role' => 'lead',
+        ),
+        'neithan' => array
+        (
+            'name' => 'Lauri Manner',
+            'email' => 'lauri.manner@nemein.com',
             'role' => 'developer',
         ),
     ),

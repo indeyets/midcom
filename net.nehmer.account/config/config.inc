@@ -13,6 +13,19 @@
 ),
 'list_entries' => 30,
 
+list_categories' => array
+(
+    'comments',
+    'favourites',
+    'blogs',
+    'products',
+    'discussion',
+    'groups',
+),
+
+'list_categories_number' => 40,
+
+
 // Features
 'allow_register' => true,
 'allow_change_username' => true,
