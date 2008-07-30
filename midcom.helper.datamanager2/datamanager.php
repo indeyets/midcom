@@ -385,6 +385,22 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
     }
 
     /**
+     * Little helper function returning an associative array of all field values converted to email-friendly format
+     * using their default convert_to_email option.
+     *
+     * @return Array All field values in their CSV representation indexed by their name.
+     */
+    function get_content_email()
+    {
+        $result = Array();
+        foreach ($this->schema->field_order as $name)
+        {
+            $result[$name] = $this->types[$name]->convert_to_email();
+        }
+        return $result;
+    }
+
+    /**
      * Little helper function returning an associative array of all field values converted to
      * their raw storage representation..
      *

@@ -933,7 +933,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
             }
 
             $result .= $this->_l10n->get($field['title']) . ":\n";
-            $data = $dm->types[$name]->convert_to_csv();
+            $data = $dm->types[$name]->convert_to_email();
             $result .= "  " . wordwrap ($data, 70, "\n  ");
             $result .= "\n\n";
         }

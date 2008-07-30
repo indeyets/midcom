@@ -215,7 +215,7 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
         $registrar_all = net_nemein_registrations_event::dm_array_to_string($registrar_dm);
 
         $registration_dm =& $this->_request_data['registration_dm'];
-        $registration_data = $registration_dm->get_content_csv();
+        $registration_data = $registration_dm->get_content_email();
         $registration_all = net_nemein_registrations_event::dm_array_to_string($registration_dm);
 
         if (!isset($this->_request_data['reject_reason']))

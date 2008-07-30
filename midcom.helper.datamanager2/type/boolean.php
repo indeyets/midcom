@@ -99,6 +99,18 @@ class midcom_helper_datamanager2_type_boolean extends midcom_helper_datamanager2
         }
     }
 
+    function convert_to_email()
+    {
+        if ($this->value)
+        {
+            return $_MIDCOM->i18n->get_string('yes', 'midcom.helper.datamanager2');
+        }
+        else
+        {
+            return $_MIDCOM->i18n->get_string('no', 'midcom.helper.datamanager2');
+        }
+    }
+
     /**
      * The HTML representation returns either the configured texts or a
      * checked / unchecked icon if left on defaults.

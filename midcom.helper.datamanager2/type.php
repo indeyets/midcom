@@ -211,6 +211,20 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     }
 
     /**
+     * Transforms the current object's state into a email-friendly string representation.
+     * 
+     * Escaping and other encoding is done by the caller, you just return the string.
+     *
+     * If this method is not overwritten, convert_to_csv will be used instead.
+     *
+     * @return mixed The data to store into the object, or null on failure.
+     */
+    function convert_to_email()
+    {
+        return $this->convert_to_csv();
+    }
+
+    /**
      * Transforms the current object's state into HTML representation.
      *
      * This is used for displaying type contents in an automatic fashion.
