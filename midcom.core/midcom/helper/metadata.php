@@ -239,6 +239,52 @@ class midcom_helper_metadata
     }
 
     /**
+     * Frontend for setting a single metadata option
+     *
+     * @param string $key The key to set.
+     * @param mixed $value The value to set.
+     */
+    function set ($key, $value)
+    {
+      $return = false;
+      if ($this->_set_property($key, $value))
+	{
+	  $return = $this->object->update();
+	  // Update the corresponding cache variable
+	  $this->on_update($key);
+	}
+      return $return;
+    }
+
+    /**
+     * Frontend for setting multiple metadata options
+     *
+     * @param Array $properties Array of key => value properties.
+     */
+    function set_multiple ($properties)
+    {
+      $return = false;
+      foreach ($properties as $key => $value)
+	{
+	  if (!$this->_set_property($key, $value))
+	    {
+	      return false;
+	      // this will exit
+	    }
+	}
+      if ($this->object->update())
+	{
+	  $return = true;
+	  // Update the corresponding cache variables
+	  foreach ($properties as $key => $value)
+	    {
+	      $this->on_update($key);
+	    }
+	}
+      return $return;
+    }
+
+    /**
      * Directly set a metadata option.
      *
      * The passed value will be stored using the follow transformations:
@@ -253,7 +299,7 @@ class midcom_helper_metadata
      * @param string $key The key to set.
      * @param mixed $value The value to set.
      */
-    function set ($key, $value)
+    function _set_property ($key, $value)
     {
         // Store the RCS mode
         $rcs_mode = $this->object->_use_rcs;
@@ -291,7 +337,7 @@ class midcom_helper_metadata
             case 'navnoentry':
             case 'score':
                 $this->object->metadata->$key = $value;
-                $value = $this->object->update();
+                $value = true;
                 break;
 
             // Fall-back for non-core properties
@@ -300,8 +346,6 @@ class midcom_helper_metadata
                 break;
         }
 
-        // Update the corresponding cache variable
-        $this->on_update($key);
         debug_pop();
 
         // Return the original RCS mode
@@ -309,6 +353,7 @@ class midcom_helper_metadata
         
         return $value;
     }
+
 
 
     /**
@@ -755,19 +800,13 @@ class midcom_helper_metadata
         // Object hasn't been marked to be edited
         if ($this->get('locked') == 0)
         {
-            // Make sure locker is empty too
-            if ($this->get('locker') != '')
-            {
-                $this->set('locker', '');
-            }
             return false;
         }
 
         if (($this->get('locked') + ($GLOBALS['midcom_config']['metadata_lock_timeout'] * 60)) < time())
         {
             // lock expired, explicitly clear lock
-            $this->set('locked', 0);
-            $this->set('locker', '');
+            $this->set_multiple(Array('locked' => 0, 'locker' => ''));
             return false;
         }
 
@@ -800,20 +839,16 @@ class midcom_helper_metadata
         
         if (!$user)
         {
-            $this->set('locker', $_MIDCOM->auth->user->guid);
+            $user = $_MIDCOM->auth->user->guid;
         }
-        else
-        {
-            $this->set('locker', $user);
-        }
-        
-        // Update failed, return false
-        if (!$this->set('locked', time() + $timeout * 60))
-        {
-            return false;
-        }
-        
-        return true;
+
+	$lock = Array
+	  (
+	   'locker' => $user, 
+	   'locked' => time() + $timeout * 60
+	   );
+
+	return $this->set_multiple($lock);
     }
 
     /**
@@ -836,17 +871,24 @@ class midcom_helper_metadata
      * Unlock the object
      * 
      * @access public
-     * @param boolean    Indicating success
+     * @param boolean $soft_unlock If this is true, the changes are not written to disk
+     * @return boolean    Indicating success
      */
-    function unlock()
+    function unlock($soft_unlock = false)
     {
         if (!$this->can_unlock())
         {
             return false;
         }
+	
+	if ($soft_unlock)
+	  {
+	    $this->object->metadata->locked = 0;
+	    $this->object->metadata->locker = '';
+	    return true;
+	  }
 
-        if (   !$this->set('locker', '')
-            || !$this->set('locked', ''))
+        if (!$this->set_multiple(Array('locked' => 0, 'locker' => '')))
         {
             return false;
         }
