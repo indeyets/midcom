@@ -60,6 +60,24 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         {
             $this->expanded_root_types[] = $this->_request_data['current_type'];
         }
+        else if (isset($this->_object))
+        {
+            $object = $this->_object;
+            if (!empty($this->_object_path))
+            {
+                $object = $_MIDCOM->dbfactory->get_object_by_guid($this->_object_path[0]);
+            }
+            
+            foreach ($this->root_types as $root_type)
+            {
+                if ( (is_a($object, $root_type)
+                      || midcom_helper_reflector::is_same_class($root_type, $object->__midcom_class_name__)))
+                {
+                    $this->expanded_root_types[] = $root_type;
+                    break;
+                }
+            }
+        }
     }
 
     /*
@@ -317,17 +335,15 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         }
     }
 
-    function draw()
+    /**
+     * Helper function that applies visibility restrictions from various sources 
+     * 
+     * Returns an alphabetically sorted list of class => title pairs 
+     *
+     * @return Array
+     */
+    function _process_root_types()
     {
-        $this->_draw_plugins();
-        $this->_request_data['chapter_name'] = $_MIDCOM->i18n->get_string('midgard objects', 'midgard.admin.asgard');
-        midcom_show_style('midgard_admin_asgard_navigation_chapter');
-
-        if (!empty($this->_object_path))
-        {
-            $root_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_object_path[0]);
-        }
-        
         // Included or excluded types
         $types = array();
 
@@ -411,11 +427,22 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         }
         asort($label_mapping);
         
-	$expanded_types = array_intersect(array_keys($label_mapping), $this->expanded_root_types);
+        return $label_mapping;
+    }
+
+    function draw()
+    {
+        $this->_draw_plugins();
+        $this->_request_data['chapter_name'] = $_MIDCOM->i18n->get_string('midgard objects', 'midgard.admin.asgard');
+        midcom_show_style('midgard_admin_asgard_navigation_chapter');
+        
+        $label_mapping = $this->_process_root_types();
+
+        $expanded_types = array_intersect(array_keys($label_mapping), $this->expanded_root_types);
+
         // Use a different method for displaying the navigation if at least one type is expanded
-        if (
-	    sizeof($expanded_types) > 0
-	    && midgard_admin_asgard_plugin::get_preference('navigation_type') === 'dropdown')
+        if ( sizeof($expanded_types) > 0
+             && midgard_admin_asgard_plugin::get_preference('navigation_type') === 'dropdown')
         {
             $this->_draw_select_navigation();
             return;
@@ -424,21 +451,11 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         foreach ($label_mapping as $root_type => $label)
         {
             $ref = $this->_get_reflector($root_type);
-            if (in_array($root_type, $this->expanded_root_types))
-            {
-                $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard/{$root_type}";
-            }
-            else
-            {
-                $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard/{$root_type}";
-            }
+            $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard/{$root_type}";
 
             $this->_request_data['section_name'] = $label;
             midcom_show_style('midgard_admin_asgard_navigation_section_header');
-            if (   isset($root_object)
-                && (   is_a($root_object, $root_type)
-                    || midcom_helper_reflector::is_same_class($root_type,$root_object->__midcom_class_name__))
-                || in_array($root_type, $this->expanded_root_types))
+            if (in_array($root_type, $expanded_types))
             {
                 $root_objects = $ref->get_root_objects();
                 if (count($root_objects) > 0)
