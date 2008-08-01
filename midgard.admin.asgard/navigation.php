@@ -323,13 +323,6 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         $this->_request_data['chapter_name'] = $_MIDCOM->i18n->get_string('midgard objects', 'midgard.admin.asgard');
         midcom_show_style('midgard_admin_asgard_navigation_chapter');
 
-        // Use a different method for displaying the navigation
-        if (midgard_admin_asgard_plugin::get_preference('navigation_type') === 'dropdown')
-        {
-            $this->_draw_select_navigation();
-            return;
-        }
-
         if (!empty($this->_object_path))
         {
             $root_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_object_path[0]);
@@ -418,6 +411,16 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         }
         asort($label_mapping);
         
+	$expanded_types = array_intersect(array_keys($label_mapping), $this->expanded_root_types);
+        // Use a different method for displaying the navigation if at least one type is expanded
+        if (
+	    sizeof($expanded_types) > 0
+	    && midgard_admin_asgard_plugin::get_preference('navigation_type') === 'dropdown')
+        {
+            $this->_draw_select_navigation();
+            return;
+        }
+
         foreach ($label_mapping as $root_type => $label)
         {
             $ref = $this->_get_reflector($root_type);
