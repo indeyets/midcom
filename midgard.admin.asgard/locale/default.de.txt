@@ -115,6 +115,10 @@ Plain text
 XML
 ---STRINGEND
 
+---STRING child types of %s
+Kind-Typen von %s
+---STRINGEND
+
 ---STRING only mine
 Nur eigene
 ---STRINGEND
@@ -359,6 +363,10 @@ Objekt-Verwaltung
 Metadaten von %s "%s"
 ---STRINGEND
 
+---STRING mgdschema type visibility in navigation
+In der Navigation sichtbare MgdSchema-Typen
+---STRINGEND
+
 ---STRING midcom:approve
 Freigeben
 ---STRINGEND
@@ -409,6 +417,10 @@ Lesen
 
 ---STRING midgard:update
 Bearbeiten
+---STRINGEND
+
+---STRING model for selecting navigation types
+Auswahlverfahren für Navigationstypen
 ---STRINGEND
 
 ---STRING navigation type
@@ -487,8 +499,16 @@ Berechtigungen
 Entfernen
 ---STRINGEND
 
+---STRING regular expression for selecting mgdschema types
+Regulärer ausdruck zur Auswahl von MgdSchema-Typen
+---STRINGEND
+
 ---STRING select exactly two choices
 Genau zwei Möglichkeiten zeigen
+---STRINGEND
+
+---STRING select the types
+Typen auswählen
 ---STRINGEND
 
 ---STRING show differences
