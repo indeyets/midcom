@@ -1068,6 +1068,78 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         
         return $preferences[$preference];
     }
+
+    /**
+     * Get last visited object for the current user
+     *
+     * @static
+     * @access public
+     * @param array $last_visited    Array of guid => object pairs
+     */
+    function get_last_visited()
+    {
+        $last_visited_guids = midgard_admin_asgard_plugin::get_preference('last_visited');
+        $last_visited_guids = unserialize($last_visited_guids);
+        
+        $last_visited = Array();
+
+        foreach ($last_visited_guids as $guid)
+        {
+            $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
+            $last_visited[$guid] = $object;
+        }
+
+        return $last_visited;
+    }
+
+    /**
+     * Set last visited parameter for the current user
+     *
+     * @static
+     * @access public
+     * @param string $guid    GUID of the object to add
+     */
+    function set_last_visited($guid)
+    {
+        $last_visited_orig = array_keys(midgard_admin_asgard_plugin::get_last_visited());
+        $last_visited_new = Array();
+
+        if (sizeof($last_visited_orig) > 0)
+        {
+            // remove copies of the same GUID from history
+            if (in_array($guid, $last_visited_orig))
+            {
+                foreach ($last_visited_orig as $orig_guid)
+                {
+                    if ($orig_guid != $guid)
+                    {
+                        $last_visited_new[] = $orig_guid;
+                    }
+                }
+            }
+            else 
+	    {
+		$last_visited_new = $last_visited_orig;
+
+                // remove the oldest entry if maximum size is reached
+		if (sizeof($last_visited_orig) == $this->_config->get('last_visited_size'))
+		{
+		    $remove_candidate = array_pop($last_visited_new);
+		}
+	    }
+        }
+
+        // now, add the new guid
+        array_unshift($last_visited_new, $guid);
+
+	// if something has changed, update accordingly
+        if (serialize($last_visited_orig) != serialize($last_visited_new))
+        {
+            $user = new midcom_db_person($_MIDCOM->auth->user->guid);
+            
+            $user->set_parameter('midgard.admin.asgard:preferences', 'last_visited', serialize($last_visited_new));
+        }
+    }
     
     /**
      * Get the MgdSchema root classes

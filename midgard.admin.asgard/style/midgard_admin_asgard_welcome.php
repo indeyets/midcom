@@ -172,7 +172,7 @@ if (count($data['revised']) > 0)
         echo "        <tr>\n";
         echo "            <td class=\"selection\"><input type=\"checkbox\" name=\"selections[]\" value=\"{$object->guid}\" /></td>\n";
         echo "            <td class=\"icon\">" . $data['reflectors'][$class]->get_object_icon(&$object) . "</td>\n";
-        echo "            <td class=\"title\"><a href=\"{$prefix}__mfa/asgard/object/view/{$object->guid}/\" title=\"{$class}\">" . $title . "</a></td>\n";
+        echo "            <td class=\"title\"><a href=\"{$prefix}__mfa/asgard/object/{$data['default_mode']}/{$object->guid}/\" title=\"{$class}\">" . $title . "</a></td>\n";
 
         if ($data['config']->get('enable_review_dates'))
         {
@@ -220,6 +220,63 @@ if (count($data['revised']) > 0)
 
 <?php
 }
+else
+{
+    $lastvisited = midgard_admin_asgard_plugin::get_last_visited();
+    if (count($lastvisited) > 0)
+    {
+
+        $reflectors = Array();
+        
+        echo "<h2>" . $_MIDCOM->i18n->get_string('most recently visited', 'midgard.admin.asgard') . "</h2>\n";
+        echo "<table class=\"results table_widget\" id =\"last_visited\">\n";
+        echo "    <thead>\n";
+        echo "        <tr>\n";
+        echo "            <th class=\"icon\">&nbsp;</th>\n";
+        echo "            <th class=\"title\">" . $_MIDCOM->i18n->get_string('title', 'midcom') . "</th>\n";
+        
+        echo "            <th class=\"revised\">" . $_MIDCOM->i18n->get_string('revised', 'midcom.admin.folder') . "</th>\n";
+        echo "            <th class=\"revision\">" . $_MIDCOM->i18n->get_string('revision', 'midcom.admin.folder') . "</th>\n";
+        echo "        </tr>\n";
+        echo "    </thead>\n";
+        echo "    <tbody>\n";
+        foreach ($lastvisited as $guid => $object)
+        {
+            if (empty($object->guid))
+            {
+                continue;
+            }
+            
+            $class = get_class($object);
+            if (!array_key_exists($class, $reflectors))
+            {
+                $reflectors[$class] = new midcom_helper_reflector($object);
+            }
+        
+            $title = htmlspecialchars($reflectors[$class]->get_object_label($object));
+            
+            echo "        <tr>\n";
+            echo "            <td class=\"icon\">" . $reflectors[$class]->get_object_icon(&$object) . "</td>\n";
+            echo "            <td class=\"title\"><a href=\"{$prefix}__mfa/asgard/object/{$data['default_mode']}/{$object->guid}/\" title=\"{$class}\">" . $title . "</a></td>\n";
+            
+            
+            echo "            <td class=\"revised\">" . strftime('%x %X', $object->metadata->revised) . "</td>\n";
+            echo "            <td class=\"revision\">{$object->metadata->revision}</td>\n";
+            echo "        </tr>\n";
+	    
+	}
+        echo "    </tbody>\n";
+        echo "</table>\n";
+        echo "<script type=\"text/javascript\">\n";
+        echo "        // <![CDATA[\n";
+        echo "            \$j('#last_visited').tablesorter(\n";
+        echo "            {\n ";
+        echo "                widgets: ['zebra'],\n";
+        echo "            });\n";
+        echo "        // ]]>\n";
+        echo "    </script>\n";
+      }
+  }
 ?>
 
 </div>

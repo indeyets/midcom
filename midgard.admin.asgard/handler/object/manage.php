@@ -689,6 +689,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             // This will exit.
         }
 
+        midgard_admin_asgard_plugin::set_last_visited($this->_object->guid);
+
         $this->_prepare_request_data();
 
         $this->_load_schemadb();
@@ -746,6 +748,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The GUID '{$args[0]}' was not found.");
             // This will exit
         }
+        midgard_admin_asgard_plugin::set_last_visited($this->_object->guid);
+
         $this->_object->require_do('midgard:update');
         
         // Set the object language

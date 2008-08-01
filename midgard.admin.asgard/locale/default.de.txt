@@ -722,3 +722,7 @@ Auswahl umkehren
 ---STRING validation error in field %s: %s
 Validationsfehler im Feld %s: %s
 ---STRINGEND
+
+---STRING most recently visited
+Zuletzt besuchte Objekte
+---STRINGEND

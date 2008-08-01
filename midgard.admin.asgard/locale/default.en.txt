@@ -783,3 +783,6 @@ XML
 Child types of %s
 ---STRINGEND
 
+---STRING most recently visited
+Most recently visited objects
+---STRINGEND

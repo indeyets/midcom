@@ -203,23 +203,23 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
             }
             
             $data['revised'] = $this->_list_revised($data['revised_after'], $data['review_by'], $data['type_filter'], $data['only_mine']);
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.tablesorter.js');
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/jquery.batch_process.js');
-            $_MIDCOM->add_link_head
-            (
-                array
-                (
-                    'rel' => 'stylesheet',
-                    'type' => 'text/css',
-                    'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/tablewidget.css',
-                )
-            );
         }
         // else
         // {
         //     $data['revised_after'] = date('Y-m-d H:i:s\Z', mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')));
         // }
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.tablesorter.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/jquery.batch_process.js');
 
+        $_MIDCOM->add_link_head
+        (
+           array
+           (
+               'rel' => 'stylesheet',
+               'type' => 'text/css',
+               'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/tablewidget.css',
+           )
+        );
         midgard_admin_asgard_plugin::get_common_toolbar($data);
         $data['asgard_toolbar']->add_item
         (
