@@ -213,7 +213,7 @@ class midcom_helper_datamanager2_widget_tabledata extends midcom_helper_datamana
             if ($this->_type->print_row_names)
             {
                 if (   is_array($this->_type->rows)
-                    && in_array($key, $this->_type->rows))
+                    && array_key_exists($key, $this->_type->rows))
                 {
                     $title = $this->_type->rows[$key];
                 }
