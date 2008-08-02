@@ -117,6 +117,12 @@ class midcom_helper_datamanager2_widget_tabledata extends midcom_helper_datamana
             $html .= "                " . $this->_l10n->get('index') . "\n";
             $html .= "            </th>\n";
         }
+        // Extra column if print_row_names is set
+        if ($this->_type->print_row_names)
+        {
+            $html .= "            <th class=\"label_column\">\n";
+            $html .= "            </th>\n";
+        }
         
         // Create the head
         foreach ($this->_type->columns as $key => $column)
@@ -204,7 +210,6 @@ class midcom_helper_datamanager2_widget_tabledata extends midcom_helper_datamana
                 $html .= "                <input type=\"text\" class=\"downloads_sortable\" name=\"midcom_helper_datamanager2_sortable[{$this->name}][]\" value=\"{$key}\" />\n";
                 $html .= "            </td>\n";
             }
-            
             if ($this->_type->print_row_names)
             {
                 if (   is_array($this->_type->rows)
