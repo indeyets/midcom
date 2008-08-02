@@ -9,6 +9,41 @@
 /**
  * Datamanager2 tabledata datatype is for handling easily table data.
  * 
+ * Aside form the regular storage modes, tabledata can also work with m:n relation-type data:
+ * If you have an object connected to multiple objects of another class via an extended 
+ * mapping table, the mapping table entries can be displayed as rows. 
+ *
+ * Example: If a customer in a web shop orders a few items from the catalog, his order
+ * will likely be placed in a mapping table which contains the ordered amount and other data
+ * and links to the user object and the respective product object.
+ *
+ * This code adds a widget to an edit account form which displays the ordered items as
+ * rows and the order information (quantity and so on) as columns:
+ *
+ * 'orders' => Array
+ *       (
+ *          'title' => 'My Orders',
+ *          'description' => '',
+ *          'helptext' => '',
+ *          'type_config' => Array
+ *          (
+ *              'print_row_names' => true,
+ *              'sortable_columns' => false,
+ *              'sortable_rows' => false,
+ *              'storage_mode' => 'link',
+ *              'link_class' => 'orders_dba',
+ *              'link_parent_field' => 'user',
+ *              'link_parent_type' => 'id',
+ *              'link_columns' => Array('quantity', 'shipping', 'notes'),
+ *              'link_row_property' => 'product',
+ *              'link_row_class' => 'product_dba',
+ *              'link_row_title_field' => 'product_title',
+ *          ),
+ *          'type' => 'tabledata',
+ *          'widget' => 'tabledata',
+ *
+ *      ),
+ *
  * <b>Configuration options</b>:
  * 
  * 
@@ -136,6 +171,76 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
     var $parameter_domain = 'midcom.helper.datamanager2.type.tabledata';
     
     /**
+     * DBA class of the link object
+     *
+     * for storage_mode link only
+     * 
+     * @access public
+     * @var String
+     */
+    var $link_class = '';
+
+    /**
+     * The property of the link object which links to the current object
+     *
+     * for storage_mode link only
+     * 
+     * @access public
+     * @var String
+     */
+    var $link_parent_field = '';
+
+    /**
+     * Is the object connected to the link via GUID or ID
+     *
+     * for storage_mode link only
+     * 
+     * @access public
+     * @var String
+     */
+    var $link_parent_type = 'guid';
+
+    /**
+     * Link fields that should be displayed as columns
+     *
+     * for storage_mode link only
+     * 
+     * @access public
+     * @var Array
+     */
+    var $link_columns = 'guid';
+
+    /**
+     * The link field that should be displayed as the row title
+     *
+     * for storage_mode link only
+     * 
+     * @access public
+     * @var Array
+     */
+    var $link_row_property = 'guid';
+
+    /**
+     * The classname of the object used for rows
+     *
+     * for storage_mode link only
+     * 
+     * @access public
+     * @var Array
+     */
+    var $link_row_class = 'guid';
+
+    /**
+     * The title property of the object used for rows
+     *
+     * for storage_mode link only
+     * 
+     * @access public
+     * @var Array
+     */
+    var $link_row_title_field = 'guid';
+
+    /**
      * Storage data or the data that should be stored
      * 
      * @access protected
@@ -261,7 +366,47 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
                     $rows[] = $row;
                 }
                 break;
-            
+        case 'link':
+                if (   !$this->storage->object
+                    || !$this->storage->object->guid)
+                {
+                    break;
+                }
+                
+                // Get the row parameters with collector
+                $mc = new midgard_collector($this->link_class, $this->link_parent_field, $this->storage->object->{$this->link_parent_type});
+                $mc->set_key_property('guid');
+                $mc->add_value_property($this->link_row_property);
+
+                // Add the constraints
+                $mc->add_constraint('metadata.deleted', '=', 0);
+                
+                // Add orders
+                $mc->add_order('metadata.revised', 'DESC');
+                $mc->add_order('metadata.created', 'DESC');
+                
+                $mc->execute();
+                
+                $keys = $mc->list_keys();
+
+                // List the name fields and get the row data
+                foreach ($keys as $guid => $array)
+                {
+                    $row_object_id = $mc->get_subkey($guid, $this->link_row_property);
+                    $row_object = new $this->link_row_class($row_object_id);
+                    $name = $row_object->{$this->link_row_title_field};
+
+
+                    // Already exists, skip
+                    if (in_array($name, $rows))
+                    {
+                        continue;
+                    }
+                    
+                    $this->rows[$row_object_id] = $name;
+                    $rows[$row_object_id] = $row_object_id;
+                }
+                break;
             default:
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Error in type configuration: storage mode cannot be '{$this->storage_mode}'");
                 // This will exit
@@ -309,7 +454,8 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
         }
         
         // Force ascending or descending direction of the rows
-        if (   $this->row_sort_order
+        if (   $this->row_sort_order 
+            && $this->storage_mode != 'link'
             && preg_match('/^(asc|desc)/i', $this->row_sort_order, $regs))
         {
             switch (strtolower($regs[1]))
@@ -336,11 +482,26 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
     {
         if (   !$this->storage
             || !$this->storage->object
-            || !($raw_data = $this->storage->object->get_parameter("{$this->parameter_domain}.type.tabledata.order", "{$this->name}:columns")))
+           )
         {
             return $this->columns;
         }
         
+        if ($this->storage_mode == 'link')
+          {
+              $columns = array();
+              foreach ($this->link_columns as $name)
+              {
+                  $columns[$name] = $name;
+              }
+              $this->columns = $columns;
+              return $this->columns;
+          }
+        else if (!($raw_data = $this->storage->object->get_parameter("{$this->parameter_domain}.type.tabledata.order", "{$this->name}:columns")))
+        {
+            return $this->columns;
+        }
+
         $unserialized = unserialize($raw_data);
         
         if (!$unserialized)
@@ -545,6 +706,30 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
                 
                 $value = $this->storage->object->get_parameter($this->parameter_domain, "{$this->name}{$this->storage_mode_parameter_limiter}{$row}{$this->storage_mode_parameter_limiter}{$column}");
                 return $value;
+            case 'link':
+                $value = '';
+                if (!$this->storage->object || $row == 'index')
+                {
+                    return $value;
+                }
+
+                // Get the row parameters with collector
+                $mc = new midgard_collector($this->link_class, $this->link_parent_field, $this->storage->object->{$this->link_parent_type});
+                $mc->set_key_property($column);
+
+                // Add the constraints
+                $mc->add_constraint('metadata.deleted', '=', 0);
+                $mc->add_constraint($this->link_row_property, '=', $row);
+                $mc->execute();
+                
+                $keys = $mc->list_keys();
+
+                if (sizeof($keys) == 1)
+                {
+                    $value = key($keys);
+                }
+                
+                return $value;
         }
     }
     
@@ -639,6 +824,55 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
                 $this->storage->object->set_parameter($this->parameter_domain, $name, '');
             }
         }
+        else if ($this->storage_mode == 'link')
+        {
+              $ref = new midgard_reflection_property($this->link_class);
+
+              $type_map = Array();
+            
+              foreach ($this->link_columns as $column)
+              {
+                  $type_map[$column] = $ref->get_midgard_type($column); 
+              }
+
+              foreach($this->_storage_data as $link_row_id => $values) 
+              {
+                  $link_object = null;
+                  $needs_update = false;
+                  
+                  $qb = call_user_func( Array($this->link_class, 'new_query_builder'));
+                  $qb->add_constraint($this->link_parent_field, '=', $this->storage->object->{$this->link_parent_type});
+                  $qb->add_constraint($this->link_row_property, '=', $link_row_id);
+                  $results = $qb->execute();
+                  
+                  if (sizeof($results) == 1)
+                  {
+                      $link_object = $results[0];
+                  }
+                  
+                  foreach ($values as $key => $value)
+                  {
+                      switch ($type_map[$key])
+                      {
+                        case MGD_TYPE_INT:
+                          $value = (int) $value;
+                          break;
+                        case MGD_TYPE_FLOAT:
+                          $value = (float) $value;
+                          break;
+                      }
+                      if ($link_object->$key != $value)
+                      {
+                          $needs_update = true;
+                          $link_object->$key = $value;
+                      }
+                  }
+                  if ($needs_update)
+                  {
+                      $link_object->update();
+                  }
+              }
+        }
         
         // Remove the columns that should not be there
         foreach ($this->_storage_data as $row => $array)
@@ -706,7 +940,7 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
         $output .= "<table class=\"midcom_helper_datamanager2_widget_tabledata {$this->name}\">\n";
         $output .= "    <thead>\n";
         $output .= "        <tr>\n";
-        
+
         if ($this->print_row_names)
         {
             $output .= "            <th class=\"label_column\">\n";
@@ -746,10 +980,10 @@ class midcom_helper_datamanager2_type_tabledata extends midcom_helper_datamanage
             if ($this->print_row_names)
             {
                 $row_title = $row;
-                
+
                 if (isset($this->rows[$row]))
                 {
-                    $row_title = $this->rows[$row_title];
+                    $row_title = $this->rows[$row];
                 }
                 
                 $output .= "            <th class=\"label_column\">\n";

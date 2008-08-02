@@ -334,7 +334,6 @@ class midcom_helper_datamanager2_widget_tabledata extends midcom_helper_datamana
         
         // Get the existing rows from the type
         $rows = $this->_type->get_existing_rows();
-        
         // Check if there should be a new row
         if (   $this->_type->allow_new_rows
             && (   !$this->_type->row_limit
