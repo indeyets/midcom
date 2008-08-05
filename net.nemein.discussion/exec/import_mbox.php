@@ -5,6 +5,10 @@ if (!class_exists('net_nemein_discussion_email_importer'))
 }
 $_MIDCOM->auth->require_admin_user();
 
+//Disable limits
+@ini_set('memory_limit', -1);
+@ini_set('max_execution_time', 0);
+
 /*
 echo "DEBUG: _FILES<pre>\n";
 print_r($_FILES);
@@ -24,24 +28,14 @@ if (   !isset($_FILES['mboxfile'])
     Topic to import to: 
     <select name="import_to_topic">
 <?php
-    $dummy_topic = new midcom_db_topic();
     $qb = midcom_db_topic::new_query_builder();
-    if (isset($dummy_topic->component))
-    {
-        // 2.7 way
-        $qb->add_constraint('component', '=', 'net.nemein.discussion');
-    }
-    else
-    {
-        // 2.6 way (1.8 required!)
-        $qb->add_constraint('parameter.domian', '=', 'midcom');
-        $qb->add_constraint('parameter.name', '=', 'component');
-        $qb->add_constraint('parameter.value', '=', 'net.nemein.discussion');
-    }
+    $qb->add_constraint('component', '=', 'net.nemein.discussion');
+    $nap = new midcom_helper_nav();
     $topics = $qb->execute();
     foreach ($topics as $topic)
     {
-        echo "        <option value='{$topic->id}'>{$topic->extra} (TBD: /path/to)</option>\n";
+        $node = $nap->get_node($topic->id);
+        echo "        <option value='{$topic->id}'>{$topic->extra} ({$_MIDGARD['prefix']}/{$node[MIDCOM_NAV_RELATIVEURL]})</option>\n";
     }
 ?>
     </select><br/>
