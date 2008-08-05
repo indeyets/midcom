@@ -85,6 +85,7 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
         }
         
         $mc->add_constraint('metadata.navnoentry', '=', 0);
+        $mc->add_constraint('name', '<>', '');
         
         // Unless in Auto-Index mode or the index article is hidden, we skip the index article.
         if (   !$this->_config->get('autoindex')
