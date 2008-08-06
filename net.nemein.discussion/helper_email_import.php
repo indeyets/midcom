@@ -216,6 +216,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
                 debug_add("Failed to create post, last error: " . mgd_errstr(), MIDCOM_LOG_ERROR);
                 debug_print_r('Object was: ', $post);
                 debug_pop();
+                $thread->delete();
                 return false;
             }
         }
@@ -229,6 +230,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
             {
                 continue;
             }
+
             if (!$post->set_parameter('net.nemein.discussion.mailheaders', $header, $value))
             {
                 debug_add("Could not store header '{$header}' data in parameters", MIDCOM_LOG_WARN);
@@ -244,7 +246,8 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         if (class_exists('net_nemein_tag_handler'))
         {
             $content_tags = net_nemein_tag_handler::separate_machine_tags_in_content($content);
-            if (!empty($content_tags))
+            if (   is_array($content_tags)
+                && !empty($content_tags))
             {
                 net_nemein_tag_handler::tag_object($post, $content_tags);
             }
