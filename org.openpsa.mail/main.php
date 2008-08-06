@@ -599,7 +599,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             && count ($mime->parts)>0)
         {
             // Start with empty body and append all text parts to it
-            $this->body = '';
+            //$this->body = '';
             reset ($mime->parts);
             while (list ($k, $part) = each ($mime->parts))
             {
