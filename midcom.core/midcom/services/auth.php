@@ -490,6 +490,12 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         debug_push_class(__CLASS__, __FUNCTION__);
 
         $this->sessionmgr = new midcom_services_auth_sessionmgr($this);
+        
+        // Midgard 1.9 compatibility: ensure that Midgard's sitegroup ID is always int
+        if (!is_integer($_MIDGARD['sitegroup']))
+        {
+            $_MIDGARD['sitegroup'] = (int) $_MIDGARD['sitegroup'];
+        }
 
         $this->_register_core_privileges();
         $this->_initialize_user_from_midgard();
@@ -721,6 +727,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             && $_MIDGARD['sitegroup'] !== 0
             && $content_object->sitegroup !== $_MIDGARD['sitegroup'])
         {
+        echo "SG boundaries {$_MIDGARD['sitegroup']} {$content_object->sitegroup}";
             return false;
         }
         
@@ -859,7 +866,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     function can_user_do($privilege, $user = null, $class = null, $component = null)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-
         if (is_null($user))
         {
             if ($this->admin)
