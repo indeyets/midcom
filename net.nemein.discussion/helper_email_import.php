@@ -465,16 +465,33 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         {
             return false;
         }
-        $qb = net_nemein_discussion_post_dba::new_query_builder();
-        $qb->add_constraint('parameter.domain', '=', 'net.nemein.discussion.mailheaders');
-        $qb->add_constraint('parameter.name', '=', 'Message-Id');
-        $qb->add_constraint('parameter.value', '=', (string)$message_id);
+        $qb = midgard_parameter::new_query_builder();
+        $qb->add_constraint('domain', '=', 'net.nemein.discussion.mailheaders');
+        $qb->add_constraint('name', '=', 'Message-Id');
+        $qb->add_constraint('value', '=', (string)$message_id);
         $results = $qb->execute();
         if (empty($results))
         {
             return false;
         }
-        return $results[0];
+        
+        foreach ($results as $result)
+        {
+            try
+            {
+                $post = new net_nemein_discussion_post($result->parentguid);
+                if ($post->guid)
+                {
+                    return $post;
+                }
+            }
+            catch (midgard_error_exception $e)
+            {
+                continue;
+            }
+        }
+
+        return false;
     }
 
     /**
