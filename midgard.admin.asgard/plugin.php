@@ -411,6 +411,12 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         $data['view_title'] = $title;
         $data['asgard_toolbar'] = new midcom_helper_toolbar();
         
+        // Preferred language
+        if (($language = midgard_admin_asgard_plugin::get_preference('interface_language')))
+        {
+            $_MIDCOM->i18n->set_language($language);
+        }
+
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->style->prepend_component_styledir('midgard.admin.asgard');
         $_MIDCOM->style->prepend_component_styledir(str_replace('asgard_','',$data['plugin_name']));
