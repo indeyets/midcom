@@ -727,7 +727,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             && $_MIDGARD['sitegroup'] !== 0
             && $content_object->sitegroup !== $_MIDGARD['sitegroup'])
         {
-        echo "SG boundaries {$_MIDGARD['sitegroup']} {$content_object->sitegroup}";
             return false;
         }
         
