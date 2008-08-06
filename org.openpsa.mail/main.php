@@ -358,14 +358,14 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             {
                 default:
                 case "plain": //Always use plaintext body if found
-                    $this->body =& $part->body;
+                    $this->body .= $part->body;
                     $this->__textBodyFound = true;
                     break;
                 case "html":
                     if (!$this->__textBodyFound)
                     {
                         //Try to translate HTML body only if plaintext alternative is not available
-                        $this->body = $this->html2text($part->body);
+                        $this->body .= $this->html2text($part->body);
                     }
                     $this->html_body =& $part->body;
                     $this->__htmlBodyFound = true;
@@ -598,6 +598,8 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
             && is_array($mime->parts)
             && count ($mime->parts)>0)
         {
+            // Start with empty body and append all text parts to it
+            $this->body = '';
             reset ($mime->parts);
             while (list ($k, $part) = each ($mime->parts))
             {
