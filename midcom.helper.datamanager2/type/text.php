@@ -235,6 +235,9 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
             case 'specialchars':
                 return htmlspecialchars($this->value);
 
+            case 'nl2br':
+                return nl2br(htmlentities($this->value));
+
             case 'midgard_f':
                 return mgd_format($this->value, 'f');
 
