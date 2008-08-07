@@ -79,7 +79,7 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
         
         $forum = new midcom_db_topic($this->_data['config']->get('create_thread_from_quickpoll_forum'));
         if (   !$forum
-            || !$forum->component != 'net.nemein.discussion')
+            || $forum->component != 'net.nemein.discussion')
         {
             return;
         }
