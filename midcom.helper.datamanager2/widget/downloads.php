@@ -120,7 +120,12 @@ class midcom_helper_datamanager2_widget_downloads extends midcom_helper_datamana
         // Create sortable
         if ($this->_type->sortable)
         {
+            // Enable jQuery
+            $_MIDCOM->enable_jquery();
+
+            // Add the JavaScript file to aid in sorting, if requested for        
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/datamanager2.tablesorter.js');
+
             // Configuration options
             $_MIDCOM->add_jscript("
                 jQuery(document).ready(function()

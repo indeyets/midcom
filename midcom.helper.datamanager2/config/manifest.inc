@@ -2,10 +2,6 @@
 'version' => '1.1.0beta1',
 'state' => 'beta',
 'purecode' => true,
-'privileges' => array
-(
-    'break_lock' => 'midcom.helper.datamanager2:break_lock',
-),
 'package.xml' => array
 (
     'summary' => 'Data abstraction and form rendering library',

@@ -403,8 +403,9 @@ class midcom_helper_datamanager2_schema extends midcom_baseclasses_components_pu
             {
                 $config['storage'] = Array ( 'location' => $config['storage'] );
             }
-            if ($config['storage']['location'] == 'parameter')
+            if (strtolower($config['storage']['location']) === 'parameter')
             {
+                $config['storage']['location'] = strtolower($config['storage']['location']);
                 if (! array_key_exists('domain', $config['storage']))
                 {
                     $config['storage']['domain'] = 'midcom.helper.datamanager2';

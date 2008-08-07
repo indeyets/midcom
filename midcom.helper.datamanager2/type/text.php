@@ -2,7 +2,7 @@
 /**
  * @package midcom.helper.datamanager2
  * @author The Midgard Project, http://www.midgard-project.org
- * @version $Id$
+ * @version $Id: text.php 16814 2008-07-08 13:45:19Z rambo $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
@@ -24,6 +24,7 @@
  *
  * - 'html': No conversion is done.
  * - 'specialchars': The value is run through htmlspecialchars() (the default).
+ * - 'nl2br': The value is run through htmlspecialchars() and nl2br()
  * - 'midgard_f': Uses the Midgard :f formatter.
  * - 'midgard_F': Uses the Midgard :F formatter.
  * - 'markdown': Uses net.nehmer.markdown.
@@ -56,14 +57,14 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
      * @access private
      */
     var $output_mode = 'specialchars';
-
+    
     /**
      * Runs HTML contents through the HTML Purifier library to ensure safe XHTML compatibility.
      *
      * Note: Applies only when output_mode is 'html'
      */
     var $purify = false;
-
+    
     /**
      * Configuration values for HTML Purifier
      */
@@ -85,7 +86,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
             }
             debug_pop();
         }
-
+        
         $this->purify = $this->_config->get('html_purify');
         $this->purify_config = $this->_config->get('html_purify_config');
     }
@@ -103,23 +104,23 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
         {
             mkdir($this->purify_config['Cache']['SerializerPath']);
         }
-
+    
         require_once('HTMLPurifier.includes.php');
         // For some reason we lose this along the way!
         error_reporting(E_ALL);
 
-        $pufifier_config_object = HTMLPurifier_Config::createDefault();
-        $pufifier_config_object->loadArray($this->purify_config);
+        $purifier_config_object = HTMLPurifier_Config::createDefault();
+        $purifier_config_object->loadArray($this->purify_config);
 
         // Set local IDPrefix to field name...
-        $pufifier_config_object->set('Attr', 'IDPrefixLocal', "{$this->name}_");
+        $purifier_config_object->set('Attr', 'IDPrefixLocal', "{$this->name}_");
 
         // Load custom element/attribute definitions
         $config_defs = $this->_config->get('html_purify_HTMLDefinition');
         if (   is_array($config_defs)
             && !empty($config_defs))
         {
-            $def =& $pufifier_config_object->getHTMLDefinition(true);
+            $def =& $purifier_config_object->getHTMLDefinition(true);
             if (   isset($config_defs['addAttribute'])
                 && is_array($config_defs['addAttribute'])
                 && !empty($config_defs['addAttribute']))
@@ -148,7 +149,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
             }
         }
 
-        $purifier = new HTMLPurifier($pufifier_config_object);
+        $purifier = new HTMLPurifier($purifier_config_object);
 
         /*
         echo "DEBUG: value before\n<pre>\n";
@@ -171,7 +172,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
     {
         // Normalize line breaks to the UNIX format
         $this->value = preg_replace("/\n\r|\r\n|\r/", "\n", $this->value);
-
+                
         if ($this->purify)
         {
             switch ($this->output_mode)
@@ -182,7 +183,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
                     break;
             }
         }
-
+        
         return $this->value;
     }
 
