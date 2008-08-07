@@ -1,5 +1,9 @@
 var ie6 = false;
 
+if (!$j)
+{
+    $j = jQuery.noConflict();
+}
 $j(document).ready(function()
 {
     $j('<div></div>')
