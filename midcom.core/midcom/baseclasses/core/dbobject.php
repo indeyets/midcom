@@ -465,45 +465,57 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function delete(&$object)
     {
-        // Delete all extensions:
-        // Attachments can't have attachments so no need to query those
-        if (!is_a($object, 'midcom_baseclasses_database_attachment'))
+
+        $delete_extensions = true;
+        if (   isset($object->lang)
+            && $object->lang != 0)
         {
-            $list = $object->list_attachments();
-            foreach ($list as $attachment)
+            // Don't delete parameters and attachments if the object is ML and not in lang0
+            $delete_extensions = false;
+        }
+        
+        if ($delete_extensions)
+        {
+            // Delete all extensions:
+            // Attachments can't have attachments so no need to query those
+            if (!is_a($object, 'midcom_baseclasses_database_attachment'))
             {
-                if (!$attachment->delete())
+                $list = $object->list_attachments();
+                foreach ($list as $attachment)
                 {
-                    debug_push_class($object, __FUNCTION__);
-                    debug_add("Failed to delete attachment ID {$attachment->id}", MIDCOM_LOG_ERROR);
-                    // debug_print_r('Full record:', $attachment);
-                    debug_pop();
-                    return false;
+                    if (!$attachment->delete())
+                    {
+                        debug_push_class($object, __FUNCTION__);
+                        debug_add("Failed to delete attachment ID {$attachment->id}", MIDCOM_LOG_ERROR);
+                        // debug_print_r('Full record:', $attachment);
+                        debug_pop();
+                        return false;
+                    }
                 }
             }
-        }
-        $query = new midgard_query_builder('midgard_parameter');
-        $query->add_constraint('parentguid', '=', $object->guid);
-        $result = @$query->execute();
-        if ($result)
-        {
-            foreach ($result as $parameter)
+            $query = new midgard_query_builder('midgard_parameter');
+            $query->add_constraint('parentguid', '=', $object->guid);
+            $result = @$query->execute();
+            if ($result)
             {
-                if (! $parameter->delete())
+                foreach ($result as $parameter)
                 {
-                    debug_push_class($object, __FUNCTION__);
-                    debug_add("Failed to delete parameter ID {$parameter->id}", MIDCOM_LOG_ERROR);
-                    debug_pop();
-                    return false;
+                    if (! $parameter->delete())
+                    {
+                        debug_push_class($object, __FUNCTION__);
+                        debug_add("Failed to delete parameter ID {$parameter->id}", MIDCOM_LOG_ERROR);
+                        debug_pop();
+                        return false;
+                    }
                 }
             }
-        }
-        if (! midcom_baseclasses_core_dbobject::_delete_privileges($object))
-        {
-            debug_push_class($object, __FUNCTION__);
-            debug_add('Failed to delete the object privileges.', MIDCOM_LOG_INFO);
-            debug_pop();
-            return false;
+            if (! midcom_baseclasses_core_dbobject::_delete_privileges($object))
+            {
+                debug_push_class($object, __FUNCTION__);
+                debug_add('Failed to delete the object privileges.', MIDCOM_LOG_INFO);
+                debug_pop();
+                return false;
+            }
         }
 
         // Finally, delete the object itself
