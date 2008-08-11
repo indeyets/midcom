@@ -21,22 +21,7 @@ class org_maemo_socialnews_interface extends midcom_baseclasses_components_inter
     function org_maemo_socialnews_interface()
     {
         parent::midcom_baseclasses_components_interface();
-        $this->_component = 'org.maemo.socialnews';
-
-        // Load all mandatory class files of the component here
-        $this->_autoload_files = array
-        (
-            'viewer.php', 
-            'navigation.php',
-            'score_article.php',
-            'calculator.php',
-        );
-        
-        // Load all libraries used by component here
-        $this->_autoload_libraries = array
-        (
-            'org.openpsa.httplib'
-        );
+        $this->_component = 'org.maemo.socialnews';        
     }
 
     function _on_watched_dba_create($favourite)

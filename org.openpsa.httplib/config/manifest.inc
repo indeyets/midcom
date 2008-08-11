@@ -25,7 +25,6 @@
     ),
     'dependencies' => array
     (
-        'org.openpsa.core' => array(),
         'HTTP_request' => array
         (
             'channel' => 'pear.php.net',

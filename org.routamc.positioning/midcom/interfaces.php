@@ -24,22 +24,7 @@ class org_routamc_positioning_interface extends midcom_baseclasses_components_in
         $this->_component = 'org.routamc.positioning';
         $this->_purecode = true;
         $this->_autoload_files = Array(
-            'importer.php',
-            'object.php',
-            'person.php',
             'utils.php',
-            'aerodrome.php',
-            'country.php',
-            'city.php',
-            'location.php',
-            'log.php',
-            'map.php',
-            'geocoder.php',
-        );
-        $this->_autoload_libraries = array
-        (
-            'org.openpsa.httplib',
-            'net.nemein.rss',
         );
     }
 

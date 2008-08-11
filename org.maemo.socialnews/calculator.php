@@ -24,6 +24,7 @@ class org_maemo_socialnews_calculator extends midcom_baseclasses_components_pure
         $this->_component = 'org.maemo.socialnews';
         parent::midcom_baseclasses_components_purecode();
         
+        $_MIDCOM->load_library('org.openpsa.httplib');
         $this->http_request = new org_openpsa_httplib();
     }
     

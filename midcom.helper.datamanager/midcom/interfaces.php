@@ -9,8 +9,26 @@
 /**
  * @package midcom.helper.datamanager
  */
-class midcom_helper_datamanager_midcom {
+class midcom_helper_datamanager_interface extends midcom_baseclasses_components_interface
+{
+    /**
+     * Constructor.
+     *
+     * Nothing fancy, loads all script files and the datamanager library.
+     */
+    function midcom_helper_datamanager_interface()
+    {
+        parent::midcom_baseclasses_components_interface();
 
+        $this->_component = 'midcom.helper.datamanager';
+        $this->_autoload_files = array
+        (
+            'helpers_select_lists.php',
+        );
+
+    }
+    
+    /*
     function initialize() {
         $prefix = MIDCOM_ROOT . "/midcom/helper/datamanager";
 
@@ -64,7 +82,7 @@ class midcom_helper_datamanager_midcom {
             MIDCOM_PROP_VERSION  => 1,
             MIDCOM_PROP_NAME     => "Datamanager Library"
         );
-    }
+    }*/
 
 }
 

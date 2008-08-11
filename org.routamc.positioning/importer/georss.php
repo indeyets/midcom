@@ -19,6 +19,8 @@ class org_routamc_positioning_importer_georss extends org_routamc_positioning_im
     function org_routamc_positioning_importer_georss()
     {
          parent::org_routamc_positioning_importer();
+         
+         $_MIDCOM->load_library('net.nemein.rss');
     }
 
     /**

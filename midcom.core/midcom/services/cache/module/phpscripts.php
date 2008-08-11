@@ -121,8 +121,7 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
         }
         
         // Execute.
-        require_once($filename);
-        //print_r(array_keys($_MIDCOM->componentloader->manifests));
+        require($filename);
         return true;
     }
     
@@ -173,7 +172,10 @@ class midcom_services_cache_module_phpscripts extends midcom_services_cache_modu
         
         fclose($handle);
         
-        if (!$skip_load) require_once($filename);
+        if (!$skip_load)
+        {
+            require($filename);
+        }
         
         return true;
     }

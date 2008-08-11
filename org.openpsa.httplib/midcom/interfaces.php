@@ -26,15 +26,7 @@ class org_openpsa_httplib_interface extends midcom_baseclasses_components_interf
             'helpers.php',
             'main.php',
             'Snoopy.php',
-        );
-        
-        if (version_compare(phpversion(), '5.0.0', '>=')) 
-        {
-            $this->_autoload_files[] = 'hkit.php';
-        }
-        
-        $this->_autoload_libraries = array(
-            'org.openpsa.core',
+            'hkit.php',
         );
     }
 

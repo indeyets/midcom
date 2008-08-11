@@ -7,12 +7,6 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-// Include required files
-/** Cache Backend base class */
-require_once('cache/backend.php');
-/** Cache Module base class */
-require_once('cache/module.php');
-
 /**
  * This class is the central access point for all registered caching services. Currently
  * this includes the NAP, Metadata and Page cache databases.

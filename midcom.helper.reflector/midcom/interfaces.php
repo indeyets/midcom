@@ -27,8 +27,7 @@ class midcom_helper_reflector_interface extends midcom_baseclasses_components_in
         // Load all mandatory class files of the component here
         $this->_autoload_files = array
         (
-            'reflector.php', 
-            'reflector_tree.php', 
+            'reflector.php',
         );
     }
 }

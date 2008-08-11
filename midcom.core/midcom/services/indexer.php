@@ -7,26 +7,6 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-// First, load dependant base classes:
-/** Backend Base Class */
-require('indexer/backend.php');
-/** Filter Base Class */
-require('indexer/filter.php');
-/** Document base class */
-require('indexer/document.php');
-
-// Load inherited classes
-// TODO: Find some more dynamic way for this.
-/** Date Filter implementation */
-require('indexer/filter/date.php');
-/** MidCOM Document implementation */
-require('indexer/document/midcom.php');
-/** Datamanager Document implementation */
-require('indexer/document/datamanager.php');
-/** Attachment Document implementation */
-require('indexer/document/attachment.php');
-
-
 /**
  * This class is the main access points into the MidCOM Indexer subsystem.
  *
@@ -87,7 +67,6 @@ class midcom_services_indexer
 
         if (is_null($backend))
         {
-            require_once("indexer/backend/{$GLOBALS['midcom_config']['indexer_backend']}.php");
             $class = "midcom_services_indexer_backend_{$GLOBALS['midcom_config']['indexer_backend']}";
             $this->_backend = new $class();
         }
@@ -342,14 +321,12 @@ class midcom_services_indexer
         {
             debug_add('This is a document_datamanager');
             debug_pop();
-            require_once('indexer/document/datamanager.php');
             return new midcom_services_indexer_document_datamanager($object);
         }
         if (is_a($object, 'midcom_helper_datamanager2_datamanager'))
         {
             debug_add('This is a document_datamanager2');
             debug_pop();
-            require_once('indexer/document/datamanager2.php');
             return new midcom_services_indexer_document_datamanager2($object);
         }
 
@@ -358,7 +335,6 @@ class midcom_services_indexer
         {
             debug_add('This is a metadata document, built from a metadata object.');
             debug_pop();
-            require_once('indexer/document/midcom.php');
             return new midcom_services_indexer_document_midcom($object);
         }
 
@@ -369,7 +345,6 @@ class midcom_services_indexer
         {
             debug_add('Successfully fetched a Metadata object for the argument.');
             debug_pop();
-            require_once('indexer/document/midcom.php');
             return new midcom_services_indexer_document_midcom($metadata);
         }
 

@@ -7,9 +7,6 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-/** @ignore */
-require(MIDCOM_ROOT . '/midcom/baseclasses/database/event.php');
-
 /**
  * MidCOM Legacy Database Abstraction Layer
  *

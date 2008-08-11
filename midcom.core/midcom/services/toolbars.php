@@ -89,6 +89,8 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
     function midcom_services_toolbars()
     {
         parent::midcom_baseclasses_core_object();
+        
+        $this->initialize();
     }
 
     /**

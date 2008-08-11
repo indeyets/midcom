@@ -26,8 +26,6 @@ class net_nemein_tag_interface extends midcom_baseclasses_components_interface
         $this->_autoload_files = array
         (
             'handler.php',
-            'tag.php',
-            'tag_link.php',
         );
     }
 

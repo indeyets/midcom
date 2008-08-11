@@ -271,8 +271,6 @@ class midcom_helper__componentloader
             $GLOBALS['midcom_errstr'] = 'No component path given.';
             return false;
         }
-        
-
 
         // Check if this component is already loaded...
         if (array_key_exists($path, $this->_tried_to_load))
@@ -341,22 +339,13 @@ class midcom_helper__componentloader
             $GLOBALS['midcom_errstr'] = 'Missing interfaces class.';
             return false;
         }
-        require("{$directory}/interfaces.php");
+        //require("{$directory}/interfaces.php");
 
         // Load the component interface, try to be backwards-compatible
         $prefix = $this->snippetpath_to_prefix($snippetpath);
 
         $compat = false;
-        if (class_exists("{$prefix}_midcom"))
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Instantiating {$prefix}_midcom(). Compatibility mode activated.");
-            $classname = "{$prefix}_midcom";
-            $this->_midcom_classes[$path] = new $classname();
-            $this->_interface_classes[$path] = null;
-            $compat = true;
-        }
-        else if (class_exists("{$prefix}_interface"))
+        if (class_exists("{$prefix}_interface"))
         {
             $classname = "{$prefix}_interface";
             $this->_interface_classes[$path] = new $classname();
@@ -365,11 +354,23 @@ class midcom_helper__componentloader
         else
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            $GLOBALS['midcom_errstr'] = "Class {$prefix}_midcom or {$prefix}_interface does not exist.";
+            $GLOBALS['midcom_errstr'] = "Class {$prefix}_interface does not exist.";
             debug_add($GLOBALS['midcom_errstr'], MIDCOM_LOG_CRIT);
             debug_pop();
             $GLOBALS['midcom_errstr'] = 'No interface class defined.';
             return false;
+        }
+
+        // Make DBA Classes known, bail out if we encounter an invalid class
+        foreach ($this->manifests[$path]->class_definitions as $file)
+        {
+            if (! $_MIDCOM->dbclassloader->load_classes($this->manifests[$path]->name, $file))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to load the component manifest for {$this->manifests[$path]->name}: The DBA classes failed to load.", MIDCOM_LOG_WARN);
+                debug_pop();
+                return false;
+            }
         }
 
         $comp_init_class =& $this->_midcom_classes[$path];
@@ -383,23 +384,11 @@ class midcom_helper__componentloader
             return false;
         }
 
-        if ($compat)
-        {
-            // Compatibility mode
-            debug_add("Warning, the component {$path} is running in compatibility mode. You should rewrite its interface using the component interface baseclass.",
-                MIDCOM_LOG_WARN);
-            debug_pop();
-            $this->_component_classes[$path] = null;
-            $this->_contentadmin_classes[$path] = null;
-            $this->_nap_classes[$path] = null;
-        }
-        else
-        {
-            // New mode
-            $this->_component_classes[$path] =& $comp_init_class;
-            $this->_contentadmin_classes[$path] =& $comp_init_class;
-            $this->_nap_classes[$path] =& $comp_init_class;
-        }
+        // New mode
+        $this->_component_classes[$path] =& $comp_init_class;
+        $this->_contentadmin_classes[$path] =& $comp_init_class;
+        $this->_nap_classes[$path] =& $comp_init_class;
+
         $this->_loaded[] = $path;
 
         // If this is no pure-code library and a legacy component
@@ -767,19 +756,7 @@ class midcom_helper__componentloader
      */
     function load_manifest($manifest)
     {
-        // Make DBA Classes known, bail out if we encounter an invalid class
-        foreach ($manifest->class_definitions as $file)
-        {
-            if (! $_MIDCOM->dbclassloader->load_classes($manifest->name, $file))
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to load the component manifest for {$manifest->name}: The DBA classes failed to load.", MIDCOM_LOG_WARN);
-                debug_pop();
-                return;
-            }
-        }
-
-    //echo "Load $manifest->name";
+        //echo "Load $manifest->name";
         $this->manifests[$manifest->name] = $manifest;
 
         // Register Privileges

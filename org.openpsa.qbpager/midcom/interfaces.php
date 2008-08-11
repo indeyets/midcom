@@ -25,7 +25,6 @@ class org_openpsa_qbpager_interface extends midcom_baseclasses_components_interf
         $this->_autoload_files = array
         (
             'pager.php',
-            'pager_direct.php'
         );
         $this->_autoload_libraries = array
         (

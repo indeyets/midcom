@@ -261,28 +261,6 @@ class midcom_baseclasses_components_interface
     // END OF CONFOIGURATION VARIABLES
     /**#@-*/
 
-    /**
-     * @deprecated This has been superseded by the component manifest as of 2005-09-08
-     */
-    var $_version = 0;
-
-    /**
-     * @deprecated This has been superseded by the component manifest as of 2005-09-08
-     */
-    var $_autoload_class_definitions = Array();
-
-    /**
-     * @deprecated This has been superseded by the component manifest as of 2005-09-08
-     */
-    var $_acl_privileges = Array();
-
-    /**
-     * @deprecated This has been superseded by the component manifest as of 2005-09-08
-     */
-    var $_purecode = false;
-
-
-
     // START OF COMPONENT STATE VARIABLES
     /**#@+
      * Current object state, useful during initialization and automatically

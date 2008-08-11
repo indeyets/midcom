@@ -24,24 +24,6 @@ class midcom_helper_datamanager2_interface extends midcom_baseclasses_components
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'midcom.helper.datamanager2';
-        $this->_autoload_files = Array
-        (
-            'schema.php',
-            'storage.php',
-            'storage/midgard.php',
-            'storage/null.php',
-            'storage/tmp.php',
-            'type.php',
-            'widget.php',
-            'datamanager.php',
-            'formmanager.php',
-            'controller.php',
-        );
-
-        $this->_autoload_libraries = array
-        (
-            'midcom.helper.reflector'
-        );
 
         // Subclasses are loaded on demand, add this to the above list for syntax checking:
         /*

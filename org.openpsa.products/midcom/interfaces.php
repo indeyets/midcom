@@ -20,15 +20,7 @@ class org_openpsa_products_interface extends midcom_baseclasses_components_inter
     {
         parent::midcom_baseclasses_components_interface();
         $this->_component = 'org.openpsa.products';
-        $this->_autoload_files = Array(
-            'viewer.php',
-            'navigation.php',
-            'product.php',
-            'product_group.php',
-            'product_member.php',
-            'businessarea.php',
-            'businessarea_member.php',
-        );
+
         $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager2',

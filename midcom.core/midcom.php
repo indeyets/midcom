@@ -104,17 +104,60 @@ if (! defined('MIDCOM_XDEBUG'))
 require('midcom/debug.php');
 
 debug_add("Start of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
+
+/**
+ * Automatically load missing class files
+ *
+ * @param string $class_name Name of a missing PHP class
+ */
+function midcom_autoload($class_name)
+{
+    static $autoloaded = 0;
+    
+    if (substr($class_name, 0, 15) == 'midcom_service_')
+    {
+        // Some service classes are named midcom_service_ and not midcom_services_
+        $class_name = str_replace('midcom_service_', 'midcom_services_', $class_name);
+    }
+    
+    $path = MIDCOM_ROOT . '/' . str_replace('_', '/', $class_name) . '.php';
+    $path = str_replace('//', '/_', $path);
+    
+    if (basename($path) == 'dba.php')
+    {
+        // DBA object files are named objectname.php
+        debug_add("Autoloader got '{$path}' which is DBA class, going one above");
+        $path = dirname($path) . ".php";
+    }
+    
+    if (   basename($path) == 'interface.php'
+        && $class_name != 'midcom_baseclasses_components_interface')
+    {
+        // MidCOM component interfaces are named midcom/interface.php
+        debug_add("Autoloader got '{$path}' which is component interface class, getting it from midcom directory");
+        $path = str_replace('/interface.php', '/midcom/interfaces.php', $path);
+
+    }
+    
+    if (file_exists($path))
+    {
+        require($path);
+        $autoloaded++;
+        debug_add("Autoloader got '{$path}', loading file {$autoloaded}");
+        return;
+    }
+    
+    debug_add("Autoloader got '{$path}' which was not found, aborting");
+}
+// Register autoloader so we get all MidCOM classes loaded automatically
+spl_autoload_register('midcom_autoload');
+
 ///////////////////////////////////
 // Load first-level supporting code
 // Note that the cache check hit depends on the i18n and auth code.
 require('midcom/helper/misc.php');
 require('midcom/helper/formatters.php');
-require('midcom/services/i18n.php');
 
-require('midcom/baseclasses/core/object.php');
-require('midcom/core/user.php');
-require('midcom/services/auth.php');
-require('midcom/services/auth/sessionmgr.php');
 $auth = new midcom_services_auth();
 $auth->initialize();
 
@@ -129,55 +172,9 @@ midcom_services_cache_startup();
 ///////////////////////////////////////////////
 // Load all required MidCOM Framework Libraries
 
-// Base classes (keep an eye on the order)
-// Note that the DB classes are spawned in midcom_application as they require the
-// DB class loader to work.
-
-require('midcom/baseclasses/core/dbobject.php');
-require('midcom/baseclasses/components/cron_handler.php');
-require('midcom/baseclasses/components/handler.php');
-require('midcom/baseclasses/components/interface.php');
-require('midcom/baseclasses/components/navigation.php');
-require('midcom/baseclasses/components/purecode.php');
-require('midcom/baseclasses/components/request.php');
-
-// Note, that the legacy MidCOM base classes are loaded at the end of this file,
-// you can't do this here as the referenced baseclases would still be undefined
-// at this point.
-
-// Core classes
-require('midcom/core/group.php');
-require('midcom/core/group_midgard.php');
-require('midcom/core/group_virtual.php');
-require('midcom/core/manifest.php');
-require('midcom/core/privilege.php');
-require('midcom/core/querybuilder.php');
-require('midcom/core/collector.php');
-
 // Helpers and First-Generation services
-require('midcom/helper/_componentloader.php');
-require('midcom/helper/_styleloader.php');
-require('midcom/helper/_basicnav.php');
-require('midcom/helper/_dbfactory.php');
-require('midcom/helper/nav.php');
-require('midcom/helper/metadata.php');
-require('midcom/helper/configuration.php');
-require('midcom/helper/serviceloader.php');
-require('midcom/helper/toolbar.php');
-require('midcom/helper/toolbars.php');
-
 // Services
 require('midcom/services/_i18n_l10n.php');
-require('midcom/services/_sessioning.php');
-require('midcom/services/session.php');
-require('midcom/services/indexer.php'); // Further indexer files are included in indexer.php
-require('midcom/services/dbclassloader.php');
-require('midcom/services/permalinks.php');
-require('midcom/services/tmp.php');
-require('midcom/services/toolbars.php');
-require('midcom/services/uimessages.php');
-require('midcom/services/metadata.php');
-require('midcom/services/rcs.php');
 
 //mgd_debug_start();
 /////////////////////////////////////

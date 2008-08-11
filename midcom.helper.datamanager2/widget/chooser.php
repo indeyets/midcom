@@ -7,10 +7,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-if (! class_exists('midcom_helper_reflector'))
-{
-    $_MIDCOM->load_library('midcom.helper.reflector');
-}
+$_MIDCOM->load_library('midcom.helper.reflector');
 
 /**
  * Datamanager 2 Chooser widget

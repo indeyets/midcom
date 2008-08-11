@@ -176,19 +176,31 @@ class midcom_application
     private $_services = array();
 
     /**
+     * Mapping of service names to classes implementing the service
+     */
+    private $_service_classes = array
+    (
+        'serviceloader' => 'midcom_helper_serviceloader',
+        'i18n' => 'midcom_services_i18n',
+        'componentloader' => 'midcom_helper__componentloader',
+        'dbclassloader' => 'midcom_services_dbclassloader',
+        'dbfactory' => 'midcom_helper__dbfactory',
+        'style' => 'midcom_helper__styleloader',
+        'permalinks' => 'midcom_services_permalinks',
+        'tmp' => 'midcom_services_tmp',
+        'toolbars' => 'midcom_services_toolbars',
+        'uimessages' => 'midcom_services_uimessages',
+        'metadata' => 'midcom_services_metadata',
+        'rcs' => 'midcom_services_rcs',                
+    );
+
+    /**
      * The URL parser.
      *
      * @var midcom_core_service_urlparser
      * @access private
      */
     private $_parser = null;
-
-    /**
-     * The service loader.
-     *
-     * @var midcom_helper_serviceloader
-     */
-    public $serviceloader;
 
     /**
      * Contains the output of get_midgard. You can directly access it here.
@@ -198,88 +210,9 @@ class midcom_application
     protected $midgard = null;
 
     /**
-     * The component loader.
-     *
-     * @var midcom_helper__componentloader
-     */
-    public $componentloader;
-
-    /**
-     * I18n service class
-     *
-     * @var midcom_services_i18n
-     */
-    public $i18n = null;
-
-    /**
-     * Helperclass to handle all style management.
-     *
-     * See class description for further information
-     *
-     * @var midcom_helper__styleloader
-     */
-    public $style = null;
-
-    /**
-     * The main caching Engine which is responsible for the current page output.
-     *
-     * @var midcom_helper__cache
-     */
-    public $cache = null;
-
-    /**
-     * Helper class which provides access to the MgdSchema driven Midgard Database.
-     *
-     * @var midcom_helper__dbfactory
-     */
-    public $dbfactory = null;
-
-    /**
-     * Authentication / Authorization service.
-     *
-     * @var midcom_services_auth
-     */
-    public $auth = null;
-
-    /**
      * JS/CSS merger service
      */
     var $jscss = false;
-
-    /**
-     * Database class loader service.
-     *
-     * @var midcom_services_dbclassloader
-     */
-    public $dbclassloader = null;
-
-    /**
-     * The temporary object service.
-     *
-     * @var midcom_services_tmp
-     */
-    public $tmp = null;
-
-    /**
-     * The toolbars service.
-     *
-     * @var midcom_services_toolbars
-     */
-    public $toolbars = null;
-
-    /**
-     * The UI messages service.
-     *
-     * @var midcom_services_uimessages
-     */
-    public $uimessages = null;
-
-    /**
-     * The metadata service.
-     *
-     * @var midcom_services_metadata
-     */
-    public $metadata = null;
 
     /**
      * Array with all JavaScript declarations for the page's head.
@@ -431,17 +364,16 @@ class midcom_application
 
         $this->_status = MIDCOM_STATUS_PREPARE;
 
-        // Load the services that are always needed, including the serviceloader
-        $this->_load_core_services();
+        // Associate the global cache instance
+        $this->cache = $GLOBALS['midcom_cache'];
 
         // Start-up some of the services
-        $this->toolbars->initialize();
         $this->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
         $this->dbclassloader->load_classes('midcom', 'core_classes.inc');
 
         $this->componentloader->load_all_manifests();
 
-        $this->_load_core_dba_classes();
+        //$this->_load_core_dba_classes();
 
         // Initialize Root Topic
         $root_node = new midcom_db_topic($GLOBALS['midcom_config']['midcom_root_topic_guid']);
@@ -478,28 +410,19 @@ class midcom_application
     }
 
     /**
-     * Load all services MidCOM needs to keep always available
-     *
-     * @todo move those that aren't always needed behind serviceloader
+     * Magic getter for service loading
      */
-    private function _load_core_services()
+    public function __get($key)
     {
-        // These are core functionality
-        $this->serviceloader = new midcom_helper_serviceloader();
-        $this->cache =& $GLOBALS['midcom_cache'];
-        $this->i18n = new midcom_services_i18n();
-        $this->componentloader = new midcom_helper__componentloader();
-        $this->dbclassloader = new midcom_services_dbclassloader();
-        $this->dbfactory = new midcom_helper__dbfactory();
-        $this->style = new midcom_helper__styleloader();
+        if (!isset($this->_service_classes[$key]))
+        {
+            return;
+        }
 
-        // These can be refactored behind serviceloader
-        $this->permalinks = new midcom_services_permalinks();
-        $this->tmp = new midcom_services_tmp();
-        $this->toolbars = new midcom_services_toolbars();
-        $this->uimessages = new midcom_services_uimessages();
-        $this->metadata = new midcom_services_metadata();
-        $this->_services['rcs'] = new midcom_services_rcs($GLOBALS['midcom_config']);
+        $service_class = $this->_service_classes[$key];
+        $this->$key = new $service_class;
+        $this->_services[$key] =& $this->$key;
+        return $this->$key;
     }
 
     /**
@@ -510,31 +433,8 @@ class midcom_application
     private function _load_core_dba_classes()
     {
         // Load DBA legacy classes required for core operation
-        require('db/article.php');
-        require('baseclasses/database/attachment.php');
-        require('db/element.php');
-        require('db/event.php');
-        require('db/eventmember.php');
-        require('db/group.php');
-        require('db/host.php');
-        require('baseclasses/database/language.php');
-        require('db/member.php');
-        require('db/page.php');
-        require('db/pageelement.php');
-        require('baseclasses/database/parameter.php');
-        require('db/person.php');
-        require('baseclasses/database/snippet.php');
-        require('baseclasses/database/snippetdir.php');
-        require('db/style.php');
-        require('db/topic.php');
-        // 2007-03-27 rambo
         require('db/privilege_dba.php');
         require('db/group_virtual_dba.php');
-        /*
-         * sitegroup not defined in MgdSchema.xml
-         *
-        require('db/sitegroup.php');
-         */
     }
 
     /* *************************************************************************
@@ -809,13 +709,6 @@ class midcom_application
 
         // Store any unshown messages
         $this->uimessages->store();
-
-        $this->cache->shutdown();
-
-        debug_add('Flushing...');
-        // This is here to avoid trouble with end-of-processing segfaults. Will block AFAIK
-        flush();
-        debug_pop();
         
         if ($GLOBALS['midcom_config']['enable_included_list'])
         {
@@ -828,6 +721,13 @@ class midcom_application
             }
             echo "</ul>\n";
         }
+
+        $this->cache->shutdown();
+
+        debug_add('Flushing...');
+        // This is here to avoid trouble with end-of-processing segfaults. Will block AFAIK
+        flush();
+        debug_pop();
 
         debug_add("End of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
     }
