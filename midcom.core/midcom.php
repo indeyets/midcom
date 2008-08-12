@@ -139,15 +139,21 @@ function midcom_autoload($class_name)
 
     }
     
-    if (file_exists($path))
+    if (!file_exists($path))
     {
-        require($path);
-        $autoloaded++;
-        debug_add("Autoloader got '{$path}', loading file {$autoloaded}");
-        return;
+        $original_path = $path;
+        $path = str_replace('.php', '/main.php', $path);
+        
+        if (!file_exists($path))
+        {
+            debug_add("Autoloader got '{$original_path}' and tried {$path} but neither was not found, aborting");
+            return;
+        }
     }
     
-    debug_add("Autoloader got '{$path}' which was not found, aborting");
+    require($path);
+    $autoloaded++;
+    debug_add("Autoloader got '{$path}', loading file {$autoloaded}");
 }
 // Register autoloader so we get all MidCOM classes loaded automatically
 spl_autoload_register('midcom_autoload');
