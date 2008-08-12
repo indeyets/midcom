@@ -285,13 +285,21 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     function _execute_and_check_privileges($false_on_empty_mgd_resultset = false)
     {
         // TODO: Remove this silence after all MgdSchemas are fixed
-        $result = @$this->_qb->execute();
+        try
+        {
+            $result = $this->_qb->execute();
+        }
+        catch (Exception $e)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('The querybuilder failed to execute, aborting. Midgard Exception: ' . $e->getMessage(), MIDCOM_LOG_ERROR);
+            debug_pop();
+            return array();
+        }
+
         if (!is_array($result))
         {
             $this->_qb_error_result = $result;
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_print_r('Result was:', $result);
-            debug_add('The querybuilder failed to execute, aborting.', MIDCOM_LOG_ERROR);
             debug_add('Last Midgard error was: ' . mgd_errstr(), MIDCOM_LOG_ERROR);
             if (isset($php_errormsg))
             {
@@ -833,7 +841,17 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     function begin_group($operator = 'OR')
     {
         $this->_groups++;
-        $this->_qb->begin_group($operator);
+        try
+        {
+            $this->_qb->begin_group($operator);
+        }
+        catch (Exception $e)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to execute begin_group {$operator}, Midgard Exception: " . $e->getMessage(), MIDCOM_LOG_ERROR);
+            debug_pop();
+            $this->_groups--;
+        }
     }
 
     /**
@@ -842,6 +860,12 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     function end_group()
     {
         $this->_groups--;
+        
+        if ($this->_groups <= 0)
+        {
+            return;
+        }
+
         $this->_qb->end_group();
     }
 
