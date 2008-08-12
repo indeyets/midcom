@@ -192,6 +192,8 @@ class midcom_application
         'uimessages' => 'midcom_services_uimessages',
         'metadata' => 'midcom_services_metadata',
         'rcs' => 'midcom_services_rcs',                
+        'session' => 'midcom_service__sessioning',
+        'indexer' => 'midcom_services_indexer',
     );
 
     /**
@@ -1941,32 +1943,16 @@ class midcom_application
      */
     function & get_service($name)
     {
-        if ($name == 'i18n')
+        if (   $this->$name
+            || isset($this->_service_classes[$name]))
         {
-            return $this->i18n;
+            return $this->$name;
         }
 
-        if ($name == "session" && ! array_key_exists ($name, $this->_services))
-        {
-            $this->_services[$name] = new midcom_service__sessioning();
-        }
-        if ($name == "indexer" && ! array_key_exists ($name, $this->_services))
-        {
-            $this->_services[$name] = new midcom_services_indexer();
-        }
-
-        if (array_key_exists($name, $this->_services))
-        {
-            return $this->_services[$name];
-        }
-        else
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Requested service '$name' is not available.", MIDCOM_LOG_ERROR);
-            $this->generate_error(MIDCOM_ERRCRIT, "Requested service '$name' is not available.");
-            debug_pop();
-            return false;
-        }
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Requested service '$name' is not available.", MIDCOM_LOG_ERROR);
+        debug_pop();
+        $this->generate_error(MIDCOM_ERRCRIT, "Requested service '$name' is not available.");
     }
 
     /**

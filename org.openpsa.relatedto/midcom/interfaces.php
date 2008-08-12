@@ -21,13 +21,6 @@ class org_openpsa_relatedto_interface extends midcom_baseclasses_components_inte
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'org.openpsa.relatedto';
-        $this->_purecode = true;
-        $this->_autoload_files = Array(
-            'relatedto.php',
-            'main.php',
-            'handler_prototype.php',
-            'suspects.php',
-        );
     }
 
     function _on_initialize()

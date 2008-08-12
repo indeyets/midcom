@@ -23,14 +23,6 @@ class net_nemein_reservations_interface extends midcom_baseclasses_components_in
         parent::midcom_baseclasses_components_interface();
         $this->_component = 'net.nemein.reservations';
 
-        // Load all mandatory class files of the component here
-        $this->_autoload_files = array
-        (
-            'calendar.php',
-            'viewer.php', 
-            'navigation.php',
-        );
-        
         // Load all libraries used by component here
         $this->_autoload_libraries = array
         (
