@@ -53,11 +53,6 @@ class midcom_core_group_midgard extends midcom_core_group
      */
     function _load($id)
     {
-        if ($id == 0)
-        {
-            return false;
-        }
-
         if (   is_string($id)
             && substr($id, 0, 6) == 'group:')
         {
@@ -84,6 +79,10 @@ class midcom_core_group_midgard extends midcom_core_group
         }
         else if (is_numeric($id))
         {
+            if ($id == 0)
+            {
+                return false;
+            }
             $this->_storage = new midgard_group();
             if (! $this->_storage->get_by_id($id))
             {
