@@ -20,35 +20,12 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'org.openpsa.contacts';
-        $this->_autoload_class_definitions = array
-        (
-            'midcom_dba_classes.inc'
-        );
-        $this->_autoload_files = array
-        (
-            'buddy.php',
-            'viewer.php',
-            'group_midcomdba.php',
-            'person_midcomdba.php',
-            'person_handler.php',
-            'group_handler.php',
-            'navigation.php',
-            'duplicates.php',
-            'duplicates_merge.php',
-        );
+
         $this->_autoload_libraries = array
         (
-            'org.openpsa.core',
             'org.openpsa.helpers',
-            'org.openpsa.contactwidget',
-            'org.openpsa.httplib',
-            'net.nemein.rss',
-            'midcom.helper.datamanager',
             'midcom.helper.datamanager2',
-            'midcom.services.at',
             'org.openpsa.qbpager',
-            'org.openpsa.relatedto',
-            'org.routamc.positioning',
         );
     }
 
@@ -313,6 +290,7 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
         $data = array();
 
         // TODO: Error handling
+        $_MIDCOM->load_library('org.openpsa.httplib');
         $client = new org_openpsa_httplib();
         $html = $client->get($url);
 
@@ -331,6 +309,7 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
             $data['rss_url'] = $rss_url[0]['href'];
 
             // We have a feed URL, but we should check if it is GeoRSS as well
+            $_MIDCOM->load_library('net.nemein.rss');
             $rss_content = net_nemein_rss_fetch::raw_fetch($data['rss_url']);
 
             if (   isset($rss_content->items)
@@ -508,6 +487,7 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
                         && (   $longitude < 180
                             && $longitude > -180))
                     {
+                        $_MIDCOM->load_library('org.routamc.positioning');
                         $location = new org_routamc_positioning_location_dba();
                         $location->date = time();
                         $location->latitude = $latitude;

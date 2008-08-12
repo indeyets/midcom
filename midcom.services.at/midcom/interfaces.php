@@ -66,9 +66,6 @@ class midcom_services_at_interface extends midcom_baseclasses_components_interfa
         define ('MIDCOM_SERVICES_AT_STATUS_FAILED', 120);
 
         $this->_component = 'midcom.services.at';
-        $this->_purecode = true;
-        $this->_autoload_class_definitions = array('midcom_dba_classes.inc');
-        $this->_autoload_files = Array('entry.php');
     }
     
     

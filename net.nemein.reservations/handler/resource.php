@@ -371,18 +371,12 @@ class net_nemein_reservations_handler_resource extends midcom_baseclasses_compon
      */
     function _show_view ($handler_id, &$data)
     {
+        $_MIDCOM->load_library('org.openpsa.contactwidget');
+
         // Get the resources list
         $qb = org_openpsa_calendar_resource_dba::new_query_builder();
         $qb->add_order('type');
-        if (version_compare(mgd_version(), '1.8', '>='))
-        {
-            $qb->add_constraint('guid', '<>', $this->_resource->guid);
-        }
-        else
-        {
-            $qb->add_constraint('id', '<>', $this->_resource->id);
-        }
-
+        $qb->add_constraint('guid', '<>', $this->_resource->guid);
         $data['resources'] = array ();
 
         foreach ($qb->execute() as $resource)

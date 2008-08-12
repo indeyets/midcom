@@ -22,11 +22,6 @@ class net_nemein_tag_interface extends midcom_baseclasses_components_interface
     {
         parent::midcom_baseclasses_components_interface();
         $this->_component = 'net.nemein.tag';
-        $this->_purecode = true;
-        $this->_autoload_files = array
-        (
-            'handler.php',
-        );
     }
 
     /**

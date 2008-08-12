@@ -12,10 +12,6 @@ class midcom_helper_xsspreventer_interface extends midcom_baseclasses_components
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'midcom.helper.xsspreventer';
-        $this->_purecode = true;
-        $this->_autoload_files = Array(
-            'main.php',
-        );
     }
 
     function _on_initialize()

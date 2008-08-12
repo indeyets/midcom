@@ -257,6 +257,7 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
             (
                 'person' => $this->guid,
             );
+            $_MIDCOM->load_library('midcom.services.at');
             $atstat = midcom_services_at_interface::register(time() + 60, 'org.openpsa.contacts', 'check_url', $args);
         }
 

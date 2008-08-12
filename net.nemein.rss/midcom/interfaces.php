@@ -24,22 +24,6 @@ class net_nemein_rss_interface extends midcom_baseclasses_components_interface
         parent::midcom_baseclasses_components_interface();
         
         $this->_component = 'net.nemein.rss';
-        $this->_purecode = true;
-        $this->_autoload_files = array
-        (
-            'feed.php', 
-            'fetch.php', 
-            'manage.php',
-            'magpierss/rss_fetch.inc',
-            'magpierss/rss_parse.inc',
-            'magpierss/rss_cache.inc',
-            'magpierss/rss_utils.inc',
-        );
-        $this->_autoload_libraries = array
-        (
-            'org.openpsa.httplib',
-            'net.nemein.tag',
-        );
     }
     
     /**

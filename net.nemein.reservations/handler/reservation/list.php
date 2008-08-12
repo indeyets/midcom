@@ -182,6 +182,9 @@ class net_nemein_reservations_handler_reservation_list extends midcom_baseclasse
             debug_pop();
             return;
         }
+        
+        $_MIDCOM->load_library('org.openpsa.contactwidget');
+
         midcom_show_style('view-datereservations-header');
         $data['prefix'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         foreach ($data['events'] as $event)

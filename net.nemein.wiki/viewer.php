@@ -131,6 +131,7 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
         );
 
         //Add common relatedto request switches
+        $_MIDCOM->load_library('org.openpsa.relatedto');
         org_openpsa_relatedto_handler::common_request_switches($this->_request_switch, 'net.nemein.wiki');
         //If you need any custom switches add them here
     }

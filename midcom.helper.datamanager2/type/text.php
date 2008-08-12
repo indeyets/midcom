@@ -249,10 +249,7 @@ class midcom_helper_datamanager2_type_text extends midcom_helper_datamanager2_ty
                 static $markdown = null;
                 if (! $markdown)
                 {
-                    if (! class_exists('net_nehmer_markdown_markdown'))
-                    {
-                        $_MIDCOM->componentloader->load('net.nehmer.markdown');
-                    }
+                    $_MIDCOM->load_library('net.nehmer.markdown');
                     $markdown = new net_nehmer_markdown_markdown();
                 }
                 return $markdown->render($this->value);

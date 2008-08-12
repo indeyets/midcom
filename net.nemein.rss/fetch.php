@@ -7,6 +7,11 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+require('magpierss/rss_fetch.inc');
+require('magpierss/rss_parse.inc');
+require('magpierss/rss_cache.inc');
+require('magpierss/rss_utils.inc');
+
 /**
  * RSS and Atom feed fetching class. Caches the fetched items as articles
  * in net.nehmer.blog or events in net.nemein.calendar
@@ -58,6 +63,8 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         $this->_node = new midcom_db_topic($this->_feed->node);
 
         $this->_component = 'net.nemein.rss';
+        
+        $_MIDCOM->load_library('org.openpsa.httplib');
 
         if ($this->_node->component)
         {
@@ -820,6 +827,8 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
                 $tag = strtolower(strip_tags($html_tag['value']));
                 $tags[$tag] = $html_tag['href'];
             }
+            
+            $_MIDCOM->load_library('net.nemein.tag');
 
             return net_nemein_tag_handler::tag_object($article, $tags);
         }

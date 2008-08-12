@@ -19,7 +19,6 @@
     ),
     'dependencies' => array
     (
-        'org.openpsa.helpers' => array(),
         'Mail' => array
         (
             'channel' => 'pear.php.net',

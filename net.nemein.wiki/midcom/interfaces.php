@@ -24,23 +24,9 @@ class net_nemein_wiki_interface extends midcom_baseclasses_components_interface
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'net.nemein.wiki';
-        $this->_autoload_files = array
-        (
-            'wikipage.php',
-            'link.php',
-            'viewer.php',
-            'navigation.php',
-            'notes.php',
-        );
         $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager2',
-            'de.bitfolge.feedcreator',
-            'net.nehmer.markdown',
-            'org.openpsa.contactwidget',
-            'org.openpsa.relatedto',
-            'org.openpsa.notifications',
-            'net.nemein.tag',
         );
     }
     

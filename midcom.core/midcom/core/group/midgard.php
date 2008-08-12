@@ -53,6 +53,11 @@ class midcom_core_group_midgard extends midcom_core_group
      */
     function _load($id)
     {
+        if ($id == 0)
+        {
+            return false;
+        }
+
         if (   is_string($id)
             && substr($id, 0, 6) == 'group:')
         {

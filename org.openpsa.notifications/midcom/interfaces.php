@@ -24,15 +24,6 @@ class org_openpsa_notifications_interface extends midcom_baseclasses_components_
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'org.openpsa.notifications';
-        $this->_purecode = true;
-        $this->_autoload_files = Array(
-            'main.php',
-            'notifier.php',
-        );
-        $this->_autoload_libraries = array
-        (
-            'org.openpsa.mail',
-        );
     }
 }
 ?>

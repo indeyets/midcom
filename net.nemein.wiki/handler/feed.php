@@ -27,6 +27,8 @@ class net_nemein_wiki_handler_feed extends midcom_baseclasses_components_handler
      */
     function _handler_rss($handler_id, $args, &$data)
     {
+        $_MIDCOM->load_library('de.bitfolge.feedcreator');
+
         $data['nap'] = new midcom_helper_nav();
         $data['node'] = $data['nap']->get_node($this->_topic->id);
 
@@ -51,6 +53,8 @@ class net_nemein_wiki_handler_feed extends midcom_baseclasses_components_handler
      */
     function _show_rss($handler_id, &$data)
     {
+        $_MIDCOM->load_library('net.nehmer.markdown');
+        
         $qb = net_nemein_wiki_wikipage::new_query_builder();
         $qb->add_constraint('topic.component', '=', $_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT));
         $qb->add_constraint('topic.id', 'INTREE', $this->_topic->id);

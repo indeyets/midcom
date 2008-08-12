@@ -53,6 +53,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
         $this->_request_data['config'] =& $this->_config;
 
         // Load datamanagers for main classes
+        $_MIDCOM->load_library('midcom_helper_datamanager');
         $this->_initialize_datamanager('group', $this->_config->get('schemadb_group'));
         $this->_initialize_datamanager('person', $this->_config->get('schemadb_person'));
         $this->_initialize_datamanager('acl', $this->_config->get('schemadb_acl'));
@@ -236,6 +237,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
             );
 
             //Add common relatedto request switches
+            $_MIDCOM->load_library('org.openpsa.relatedto');
             org_openpsa_relatedto_handler::common_request_switches($this->_request_switch, 'org.openpsa.contacts');
             //If you need any custom switches add them here
 

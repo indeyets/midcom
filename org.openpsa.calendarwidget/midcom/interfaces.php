@@ -22,14 +22,6 @@ class org_openpsa_calendarwidget_interface extends midcom_baseclasses_components
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'org.openpsa.calendarwidget';
-        $this->_purecode = true;
-        $this->_autoload_files = array
-        (
-            'main.php',
-            'month.php',
-            'event.php',
-            'styled_month.php',
-        );
     }
 
     function _on_initialize()

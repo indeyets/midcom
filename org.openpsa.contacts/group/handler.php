@@ -588,6 +588,7 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
             midcom_show_style("show-group-persons-header");
             if (count($results) > 0)
             {
+                $_MIDCOM->load_library('org.openpsa.contactwidget');
                 foreach ($results as $member)
                 {
                     $this->_request_data['member'] = $member;

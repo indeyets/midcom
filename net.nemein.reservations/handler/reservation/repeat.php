@@ -36,6 +36,8 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
     function net_nemein_reservations_handler_reservation_repeat()
     {
         parent::midcom_baseclasses_components_handler();
+
+        $_MIDCOM->load_library('net.nemein.repeathandler');
     }
     
     /**
@@ -183,6 +185,8 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
      */
     function _show_repeat($handler_id, &$data)
     {
+        $_MIDCOM->load_library('org.openpsa.contactwidget');
+
         $this->_request_data['view_reservation'] = $this->_datamanager->get_content_html();
         $this->_request_data['duplicate_reservations'] = $this->_duplicate_reservations;
         

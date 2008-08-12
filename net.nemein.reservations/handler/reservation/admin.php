@@ -395,6 +395,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
      */
     function _show_delete ($handler_id, &$data)
     {
+        $_MIDCOM->load_library('org.openpsa.contactwidget');
         $data['view_reservation'] = $this->_datamanager->get_content_html();
         midcom_show_style('view-reservation-delete');
     }

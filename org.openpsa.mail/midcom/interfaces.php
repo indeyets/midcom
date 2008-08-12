@@ -20,17 +20,6 @@ class org_openpsa_mail_interface extends midcom_baseclasses_components_interface
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'org.openpsa.mail';
-        $this->_purecode = true;
-        $this->_autoload_files = Array(
-            'main.php',
-            'backends/mail.php',
-            'backends/mail_smtp.php',
-            'backends/mail_sendmail.php',
-            'backends/bouncer.php',
-        );
-        $this->_autoload_libraries = array(
-            'org.openpsa.helpers',
-        );
     }
 
     function _on_initialize()

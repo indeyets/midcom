@@ -147,6 +147,8 @@ class net_nemein_reservations_handler_reservation_view extends midcom_baseclasse
      */
     function _show_view ($handler_id, &$data)
     {
+        $_MIDCOM->load_library('org.openpsa.contactwidget');
+
         $this->_request_data['view_reservation'] = $this->_datamanager->get_content_html();
 
         midcom_show_style('view-reservation');

@@ -30,7 +30,7 @@ if (!isset($_REQUEST['search']))
 }
 $search = str_replace('*', '%', $_REQUEST['search']);
 
-$qb = net_nemein_tag_dba::new_query_builder();
+$qb = net_nemein_tag_tag_dba::new_query_builder();
 $qb->add_constraint('tag', 'like', $search);
 $qb->add_order('tag', 'ASC');
 

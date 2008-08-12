@@ -117,6 +117,7 @@ class org_openpsa_contacts_group extends midcom_org_openpsa_organization
             (
                 'group' => $this->guid,
             );
+            $_MIDCOM->load_library('midcom.services.at');
             $atstat = midcom_services_at_interface::register(time() + 60, 'org.openpsa.contacts', 'check_url', $args);
         }
 

@@ -11,7 +11,7 @@
  *
  * @package net.nemein.tag
  */
-class net_nemein_tag_dba extends __net_nemein_tag_dba
+class net_nemein_tag_tag_dba extends __net_nemein_tag_tag_dba
 {
     function __construct($id = null)
     {
@@ -30,7 +30,7 @@ class net_nemein_tag_dba extends __net_nemein_tag_dba
         {
             return false;
         }
-        $qb = net_nemein_tag_dba::new_query_builder();
+        $qb = net_nemein_tag_tag_dba::new_query_builder();
         $qb->add_constraint('tag', '=', $tag);
         $results = $qb->execute();
         if (   is_array($results)
@@ -107,7 +107,7 @@ class net_nemein_tag_dba extends __net_nemein_tag_dba
 
     function _check_duplicates()
     {
-        $qb = net_nemein_tag_dba::new_query_builder();
+        $qb = net_nemein_tag_tag_dba::new_query_builder();
         if ($this->id)
         {
             $qb->add_constraint('id', '<>', $this->id);

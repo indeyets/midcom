@@ -43,7 +43,10 @@ class net_nehmer_markdown_interface extends midcom_baseclasses_components_interf
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'net.nehmer.markdown';
-        $this->_autoload_files = Array('lib/markdown.php', 'markdown.php');
+        $this->_autoload_files = array
+        (
+            'lib/markdown.php'
+        );
     }
 
 }

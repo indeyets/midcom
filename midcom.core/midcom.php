@@ -123,7 +123,8 @@ function midcom_autoload($class_name)
     $path = MIDCOM_ROOT . '/' . str_replace('_', '/', $class_name) . '.php';
     $path = str_replace('//', '/_', $path);
     
-    if (basename($path) == 'dba.php')
+    if (   basename($path) == 'dba.php'
+        || basename($path) == 'db.php')
     {
         // DBA object files are named objectname.php
         debug_add("Autoloader got '{$path}' which is DBA class, going one above");

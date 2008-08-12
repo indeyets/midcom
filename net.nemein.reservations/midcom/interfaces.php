@@ -36,8 +36,6 @@ class net_nemein_reservations_interface extends midcom_baseclasses_components_in
         (
             'midcom.helper.datamanager2',
             'org.openpsa.calendarwidget',
-            'org.openpsa.contactwidget',
-            'net.nemein.repeathandler',
         );
     }
 

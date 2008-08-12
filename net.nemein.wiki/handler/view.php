@@ -309,6 +309,8 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
      */
     function _show_view($handler_id, &$data)
     {
+        $_MIDCOM->load_library('net.nemein.tag');
+
         $data['wikipage_view'] = $this->_controller->get_content_html();
         $data['wikipage'] =& $this->_page;
         $data['autogenerate_toc'] = $this->_config->get('autogenerate_toc');

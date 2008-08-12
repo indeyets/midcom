@@ -784,6 +784,7 @@ class org_openpsa_contacts_person_handler
         {
             if ($displayOutput)
             {
+                $_MIDCOM->load_library('org.openpsa.contactwidget');
                 midcom_show_style('search-persons-header');
                 foreach($results as $person)
                 {

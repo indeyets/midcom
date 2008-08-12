@@ -180,6 +180,12 @@ class net_nemein_wiki_wikipage extends midcom_db_article
     function _update_watchers()
     {
         $watchers = $this->list_watchers();
+        if (empty($watchers))
+        {
+            return;
+        }
+        
+        $_MIDCOM->load_library('org.openpsa.notifications');
         
         // Construct the message
         $message = array();
@@ -430,8 +436,7 @@ class net_nemein_wiki_wikipage extends midcom_db_article
      */
     function _replace_wikiwords_macro_tagged($macro_content, $fulltag, $after)
     {
-        $_MIDCOM->componentloader->load_graceful('net.nemein.tag');
-        if (!class_exists('net_nemein_tag_handler'))
+        if (!$_MIDCOM->load_library('net.nemein.tag'))
         {
             // TODO: do something to explain that we can't load n.n.tag...
             return $fulltag;

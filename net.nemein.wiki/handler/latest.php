@@ -137,6 +137,7 @@ class net_nemein_wiki_handler_latest extends midcom_baseclasses_components_handl
      */
     function _show_latest($handler_id, &$data)
     {
+        $_MIDCOM->load_library('org.openpsa.contactwidget');
         $data['wikiname'] = $this->_topic->extra;
         if (count($data['latest_pages']) > 0)
         {

@@ -69,6 +69,8 @@ class org_openpsa_notifications_notifier extends midcom_baseclasses_components_p
      */
     function send_email($message)
     {
+        $_MIDCOM->load_library('org.openpsa.mail');
+        
         if (   !$this->recipient
             || empty($this->recipient->email))
         {
@@ -189,13 +191,6 @@ class org_openpsa_notifications_notifier extends midcom_baseclasses_components_p
      */
     function send_nabaztag($message)
     {
-        if (version_compare(phpversion(), '5.0.0', '<'))
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Nabaztag service requires PHP 5", MIDCOM_LOG_DEBUG);
-            debug_pop();
-            return false;
-        }
         require_once('api/nabaztag.php');
         $sender = new org_openpsa_notifications_notifier_api_nabaztag($this->recipient->id);
         return $sender->send_nabaztag($message);
