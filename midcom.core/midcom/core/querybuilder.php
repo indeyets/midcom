@@ -285,17 +285,17 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     function _execute_and_check_privileges($false_on_empty_mgd_resultset = false)
     {
         // TODO: Remove this silence after all MgdSchemas are fixed
-        try
-        {
+        //try
+        //{
             $result = $this->_qb->execute();
-        }
+        /*}
         catch (Exception $e)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('The querybuilder failed to execute, aborting. Midgard Exception: ' . $e->getMessage(), MIDCOM_LOG_ERROR);
             debug_pop();
             return array();
-        }
+        }*/
 
         if (!is_array($result))
         {
@@ -843,7 +843,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         $this->_groups++;
         try
         {
-            $this->_qb->begin_group($operator);
+            @$this->_qb->begin_group($operator);
         }
         catch (Exception $e)
         {
@@ -860,13 +860,17 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     function end_group()
     {
         $this->_groups--;
-        
-        if ($this->_groups <= 0)
-        {
-            return;
-        }
 
-        $this->_qb->end_group();
+        try
+        {
+            @$this->_qb->end_group();
+        }
+        catch (Exception $e)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to execute end_group, Midgard Exception: " . $e->getMessage(), MIDCOM_LOG_ERROR);
+            debug_pop();
+        }
     }
 
     /**

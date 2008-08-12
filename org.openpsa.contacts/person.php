@@ -140,6 +140,7 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
      */
     function _verify_privileges()
     {
+        return false;
         debug_push_class(__CLASS__, __FUNCTION__);
         if (!$this->id)
         {

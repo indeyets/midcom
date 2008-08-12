@@ -540,6 +540,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
 
         if (count($result) > 1)
         {
+            $_MIDCOM->auth->request_sudo('midcom.core');
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('A DB inconsistency has been detected. There is more then one record for privilege specified. Deleting all excess records after the first one!',
                 MIDCOM_LOG_ERROR);
@@ -551,6 +552,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
                 $privilege = array_pop($result);
                 $privilege->delete();
             }
+            $_MIDCOM->auth->drop_sudo();
         }
         else if (count($result) == 0)
         {
