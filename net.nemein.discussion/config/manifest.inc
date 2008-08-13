@@ -38,7 +38,7 @@
         (
             'name' => 'Oskari Kokko',
             'email' => 'oskari.kokko@iki.fi',
-            'role' => 'developper',
+            'role' => 'developer',
         ),
     ),
     'dependencies' => array
