@@ -199,7 +199,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             $object->created = time();
         }
         
-        if (!is_null($_MIDCOM->auth->user))
+        if (   !is_null($_MIDCOM->auth->user)
+            && is_object($object->metadata))
         {
             // Default the authors to current user
             if (!$object->metadata->authors)
