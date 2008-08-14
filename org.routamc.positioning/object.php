@@ -80,15 +80,23 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
         }
         elseif (is_null($person))
         {
-            if (isset($this->_object->metadata->author))
+            if (   isset($this->_object->metadata->authors)
+                && $this->_object->metadata->authors)
             {
-                $person_guid = $this->_object->metadata->author;
+                $authors = explode('|', substr($this->_object->metadata->authors, 1, -1));
+                if (!$authors)
+                {
+                    return null;
+                }
+                $person_guid = $authors[0];
             }
-            elseif (isset($this->_object->metadata->creator))
+            elseif (   isset($this->_object->metadata->creator)
+                    && $this->_object->metadata->creator)
             {
                 $person_guid = $this->_object->metadata->creator;
             }
-            elseif (isset($this->_object->author))
+            elseif (   isset($this->_object->author)
+                    && $this->_object->author)
             {
                 $person_guid = $this->_object->author;
             }
@@ -102,12 +110,21 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
             $person_guid = $person->guid;
         }
 
+        if (!$person_guid)
+        {
+            return null;
+        }
+
         if (is_null($time))
         {
             $time = $this->_object->metadata->published;
         }
 
         $person = new midcom_db_person($person_guid);
+        if (!$person->id)
+        {
+            return null;
+        }
 
         $qb = org_routamc_positioning_log_dba::new_query_builder();
         $qb->add_constraint('person', '=', $person->id);

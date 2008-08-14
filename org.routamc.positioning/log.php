@@ -29,7 +29,8 @@ class org_routamc_positioning_log_dba extends __org_routamc_positioning_log_dba
         if ($this->person)
         {
             $parent = new midcom_db_person($this->person);
-            if (! $parent)
+            if (   !$parent
+                || !$parent->guid)
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Could not load Person ID {$this->person} from the database, aborting.",
@@ -80,6 +81,10 @@ class org_routamc_positioning_log_dba extends __org_routamc_positioning_log_dba
      */
     function get_previous()
     {
+        if (!$this->person)
+        {
+            return null;
+        }
         $qb = org_routamc_positioning_log_dba::new_query_builder();
         $qb->add_constraint('person', '=', $this->person);
         $qb->add_constraint('date', '<=', $this->date);
@@ -100,6 +105,10 @@ class org_routamc_positioning_log_dba extends __org_routamc_positioning_log_dba
      */
     function get_next()
     {
+        if (!$this->person)
+        {
+            return null;
+        }
         $qb = org_routamc_positioning_log_dba::new_query_builder();
         $qb->add_constraint('person', '=', $this->person);
         $qb->add_constraint('date', '>', $this->date);
