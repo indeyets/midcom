@@ -23,7 +23,10 @@ Query pager
 previous
 ---STRINGEND
 
----STRING page %s
-Page %s
+---STRING newer
+newer
 ---STRINGEND
 
+---STRING older
+older
+---STRINGEND
