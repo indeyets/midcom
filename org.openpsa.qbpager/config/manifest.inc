@@ -2,8 +2,8 @@
 'purecode' => true,
 'privileges' => array(),
 'class_definitions' => array(),
-'version' => '1.1.0beta1',
-'state' => 'beta',
+'version' => '1.2.0',
+'state' => 'stable',
 'package.xml' => array
 (
     'summary' => 'Paged Query-Builder library',
@@ -15,6 +15,12 @@
             'name' => 'Eero af Heurlin',
             'email' => 'eero.afheurlin@iki.fi',
             'role' => 'lead',
+        ),
+        'neithan' => array
+        (
+            'name' => 'Lauri Manner',
+            'email' => 'neithan@nemein.com',
+            'role' => 'developer',
         ),
     ),
     'dependencies' => array
