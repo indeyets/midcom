@@ -25,5 +25,20 @@ else
                     ?>
                     </a>
                 </td>
+            <?php
+            if (isset($data['category']))
+            {
+                ?>
+                <td>
+                    <?php
+                    if (isset($data['karma_map'][$data['user']->id]))
+                    {
+                        echo $data['karma_map'][$data['user']->id];
+                    }
+                    ?>
+                </td>
+                <?php
+            }
+            ?>
             <td><?php echo $data['user']->metadata->score; ?></td>
         </tr>

@@ -163,40 +163,31 @@ class net_nehmer_account_handler_list extends midcom_baseclasses_components_hand
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "List {$data['category']} not found");
             // This will exit
         }
-     
-        $mc = new midgard_collector('midgard_parameter', 'domain', 'net.nehmer.account:karma');
-        $mc->set_key_property('parentguid');
-        $mc->add_constraint('name', '=', $args[0]);
-        $mc->add_order('value', 'DESC');
+
+        $person_ids = array();
+        $data['karma_map'] = array();
+        $mc = net_nehmer_account_karma_dba::new_collector('module', $data['category']);
+        $mc->add_value_property('karma');
+        $mc->add_value_property('person');
+        $mc->add_order('karma', 'DESC');
+        $mc->add_order('person.metadata.score', 'DESC');
         $mc->set_limit($this->_config->get('list_categories_number'));
         $mc->execute();
         $keys = $mc->list_keys();
-        unset($mc);
-        $guids = array_keys($keys);
-        unset($keys);
-
-        $qb = midcom_db_person::new_query_builder();
-        $qb->add_constraint('guid', 'in', $guids);
-        unset($guids);
-
-        $data['qb_users'] = $qb->execute();
-
-
-        // we loop through the qb results to save the needed karma value to the qb results
-        $data['karma_map'] = array();
-        foreach($data['qb_users'] as $key => $user)
+        foreach ($keys as $key => $values)
         {
-            $data['karma_map'][$key] = $user->get_parameter('net.nehmer.account:karma', $args[0]);
+            $person_id = $mc->get_subkey($key, 'person');
+            $person_ids[] = $person_id;
+            $data['karma_map'][$person_id] = $mc->get_subkey($key, 'karma');
         }
-
-        arsort($data['karma_map']);
+        unset($mc);
 
         $data['users'] = array();
-        foreach($data['karma_map'] as $key => $values)
+        foreach ($person_ids as $id)
         {
-            array_push($data['users'], $data['qb_users'][$key]);
-            //$data['users'][$key] = $data['qb_users'][$key];
+            $data['users'][] = new midcom_db_person($id);
         }
+        unset($person_ids);
 
        // At this point our $data['users'] array is ordered by the desired karma-category
 

@@ -2,5 +2,9 @@
 </table>
 
 <?php
-echo $data['qb']->show_pages();
+if (isset($data['qb']))
+{
+    // Category lists are not paged
+    echo $data['qb']->show_pages();
+}
 ?>

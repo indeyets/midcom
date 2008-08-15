@@ -304,8 +304,28 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
                     continue;
                 }
                 
-                // Karma per source goes to params
-                $person->parameter('net.nehmer.account:karma', $source, $karma);
+                // Karma per source goes to its own DBA class
+                $qb = net_nehmer_account_karma_dba::new_query_builder();
+                $qb->add_constraint('person', '=', $person->id);
+                $qb->add_constraint('module', '=', $source);
+                $karmas = $qb->execute();
+                if (count($karmas) == 0)
+                {
+                    $karma_item = new net_nehmer_account_karma_dba();
+                    $karma_item->person = $person->id;
+                    $karma_item->module = $source;
+                    $karma_item->create();
+                }
+                else
+                {
+                    $karma_item = $karmas[0];
+                }
+                
+                if ($karma_item->karma != $karma)
+                {
+                    $karma_item->karma = $karma;
+                    $karma_item->update();
+                }
             }
             
             $person->parameter('net.nehmer.account', 'karma_calculated', gmdate('Y-m-d H:i:s'));
