@@ -32,7 +32,13 @@ class org_openpsa_calendar_event_resource_dba extends __org_openpsa_calendar_eve
         return "member #{$this->id}";
     }
 
-    function _verify_can_reserve()
+    /**
+     * Function to check whether we can reserve the resource we are trying to
+     *
+     * @return boolean indicating state
+     * @todo cache results
+     */
+    function verify_can_reserve()
     {
         if (empty($this->resource))
         {
@@ -65,7 +71,14 @@ class org_openpsa_calendar_event_resource_dba extends __org_openpsa_calendar_eve
 
     function _on_creating()
     {
-        if (!$this->_verify_can_reserve())
+        if (   $_MIDGARD['sitegroup']
+            && $this->sitegroup !== $_MIDGARD['sitegroup']
+            && !$_MIDGARD['admin'])
+        {
+            // Prevent shooting to the foot...
+            $this->sitegroup = $_MIDGARD['sitegroup'];
+        }
+        if (!$this->verify_can_reserve())
         {
             mgd_set_errno(MGD_ERR_ACCESS_DENIED);
             return false;
@@ -75,7 +88,7 @@ class org_openpsa_calendar_event_resource_dba extends __org_openpsa_calendar_eve
 
     function _on_updating()
     {
-        if (!$this->_verify_can_reserve())
+        if (!$this->verify_can_reserve())
         {
             mgd_set_errno(MGD_ERR_ACCESS_DENIED);
             return false;

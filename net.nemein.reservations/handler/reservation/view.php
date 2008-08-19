@@ -65,10 +65,13 @@ class net_nemein_reservations_handler_reservation_view extends midcom_baseclasse
     function _handler_view($handler_id, $args, &$data)
     {
         $this->_event = new org_openpsa_calendar_event($args[0]);
-        if (   !$this->_event
-            || count($this->_event->resources) < 1)
+        if (   !is_object($this->_event)
+            || !isset($this->_event->guid)
+            || empty($this->_event->guid)
+            || count($this->_event->resources) < 1
+            )
         {
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Could not instantiate event {$args[0]}");
             // This will 404
         }
 

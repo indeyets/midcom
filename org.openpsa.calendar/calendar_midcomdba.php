@@ -326,6 +326,28 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
             $this->orgOpenpsaObjtype = ORG_OPENPSA_OBTYPE_EVENT;
         }*/
 
+        // Make sure we can actually reserve the resources we need
+        foreach ($this->resources as $id => $bool)
+        {
+            if (!$bool)
+            {
+                continue;
+            }
+            $checker = new org_openpsa_calendar_event_resource_dba();
+            $checker->resource = $id;
+            if (!$checker->verify_can_reserve())
+            {
+                $msg = "Cannot reserve resource #{$id}, returning false";
+                $this->errstr = $msg;
+                debug_add($msg, MIDCOM_LOG_ERROR);
+                debug_pop();
+                mgd_set_errno(MGD_ERR_ACCESS_DENIED);
+                unset ($id, $checker, $msg);
+                return false;
+            }
+            unset ($id, $checker);
+        }
+
         //Force types
         $this->start = (int)$this->start;
         $this->end = (int)$this->end;
@@ -372,7 +394,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         if (!$this->up)
         {
             debug_add('Event up not set, aborting');
-            $this->errstr='Event UP not set';
+            $this->errstr = 'Event UP not set';
             debug_pop();
             return false; //Calendar events must always be under some other event
         }
@@ -420,6 +442,13 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     //TODO: Move these options elsewhere
     function _on_creating($ignorebusy_em = false, $rob_tentantive = false, $repeat_handler='this')
     {
+        if (   $_MIDGARD['sitegroup']
+            && $this->sitegroup !== $_MIDGARD['sitegroup']
+            && !$_MIDGARD['admin'])
+        {
+            // Prevent shooting to the foot...
+            $this->sitegroup = $_MIDGARD['sitegroup'];
+        }
         debug_push_class(__CLASS__, __FUNCTION__);
         if (!$this->_prepare_save($ignorebusy_em, $rob_tentantive, $repeat_handler))
         {
@@ -436,7 +465,10 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     {
         $this->_get_em('old_');
         //TODO: handle the repeats somehow (if set)
+        // When anonymous creation is allowed creating the members can be problematic, this works around that
+        $_MIDCOM->auth->request_sudo('org.openpsa.calendar');
         $this->_update_em();
+        $_MIDCOM->auth->drop_sudo();
         if ($this->search_relatedtos)
         {
             //TODO: add check for failed additions

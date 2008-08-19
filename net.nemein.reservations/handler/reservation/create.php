@@ -301,12 +301,16 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
             {
                 // Could not get sudo
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Could not get sudo to handle anonymous reservations", MIDCOM_LOG_ERROR);
+                $msg = "Could not get sudo to handle anonymous reservations";
+                debug_add($msg, MIDCOM_LOG_ERROR);
                 debug_pop();
-                return false;
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not get sudo to handle anonymous reservations");
+                // This will exit
             }
         }
+        /* This should **not** be here
         $_MIDCOM->auth->request_sudo();
+        */
         switch ($this->_controller->process_form())
         {
             case 'save':
