@@ -30,6 +30,11 @@ function convert_metadata(&$object)
         return;
     }
     $params = $object->list_parameters('midcom.helper.metadata');
+    if (empty($params))
+    {
+        // In fact we should never hit this but let's abort early anyway if we have nothing to do
+        return;
+    }
     $multivalue = array();
     foreach ($params as $name => $value)
     {
@@ -56,6 +61,11 @@ function convert_metadata(&$object)
         $multivalue[$new_name] = $value;
         // Clear old values to do this only once
         $object->delete_parameter('midcom.helper.metadata', $name);
+    }
+    if (empty($multivalue))
+    {
+        // Nothing to do, skip
+        return;
     }
     if (!$meta->set_multiple($multivalue))
     {
