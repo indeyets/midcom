@@ -66,8 +66,9 @@ $_MIDCOM->auth->require_valid_user();
                 echo "            <td>Space used</td><td>" . midcom_helper_filesize_to_string($usage) . "</td>\n";
                 echo "        </tr>\n";
 
-                // FIXME: For some reason not all 1.7 installs have midgard_quota defined                
-                if (   $_MIDGARD['config']['quota']
+                // FIXME: For some reason not all 1.7 and 1.9 installs have midgard_quota defined                
+                if (   isset($_MIDGARD['config']['quota'])
+                    && $_MIDGARD['config']['quota']
                     && class_exists('midgard_quota'))
                 {
                     $qb = new midgard_query_builder('midgard_quota');
