@@ -250,6 +250,15 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
             // This is a new item
             $article = new midcom_db_article();
         }
+        // Sanity check
+        if (!is_a($article, 'midgard_article'))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('$article is not an instance of midgard_article (or subclass), see debug level logs for object dump', MIDCOM_LOG_ERROR);
+            debug_print_r('$article: ', $article);
+            debug_pop();
+            return false;
+        }
 
         $updated = false;
 
