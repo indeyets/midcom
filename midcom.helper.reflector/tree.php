@@ -850,6 +850,8 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
              *
              */
 
+            /*
+            FIXME: Re-enable when we can ensure the component providing the class is loaded
             if (class_exists("{$schema_type}_dba"))
             {
                 $test_class_name= "{$schema_type}_dba";
@@ -862,6 +864,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
                     continue;
                 }
             }
+            */
 
             $root_classes[] = $schema_type;
         }
