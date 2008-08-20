@@ -3,8 +3,20 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING available urls
+Available URLs in this folder
+---STRINGEND
+
+---STRING component help
+Component documentation
+---STRINGEND
+
 ---STRING help
-Online help
+Help
+---STRINGEND
+
+---STRING help for %s
+Online help for %s
 ---STRINGEND
 
 ---STRING help for %s in %s
@@ -13,5 +25,17 @@ Online help for %s in %s
 
 ---STRING midcom.admin.help
 Online help
+---STRINGEND
+
+---STRING online documentation
+Online documentation
+---STRINGEND
+
+---STRING user forum
+User discussion forum
+---STRINGEND
+
+---STRING about midgard
+About Midgard
 ---STRINGEND
 

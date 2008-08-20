@@ -35,6 +35,11 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
                 'handler' => Array('midcom_admin_help_help', 'display'),
                 'variable_args' => 1,
             ),
+            // Handle / help index for current component
+            'component' => Array
+            (
+                'handler' => Array('midcom_admin_help_help', 'component'),
+            ),
         );
     }
 
@@ -196,6 +201,78 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
         }
 
         return $marker->render($text);
+    }
+
+    /**
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array &$data The local request data.
+     * @return boolean Indicating success.
+     */
+    function _handler_component($handler_id, $args, &$data)
+    {
+        $_MIDCOM->auth->require_valid_user();
+        
+        $component = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT);
+        // List documentation files
+        $data['help_files'] = $this->list_files($component);
+
+        $data['request_switch_info'] = array();
+        
+        $_MIDCOM->skip_page_style = true;
+        $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('help for %s', 'midcom.admin.help'), $_MIDCOM->i18n->get_string($component, $component));
+        $_MIDCOM->set_pagetitle($data['view_title']);
+
+        // TODO: We're using "private" members here, better expose them through a method
+        $handler =& $_MIDCOM->componentloader->get_interface_class($component);
+        $request =& $handler->_context_data[$_MIDCOM->get_current_context()]['handler'];
+        if (!isset($request->_request_switch))
+        {
+            // No request switch available, skip loading it
+            return true;
+        }
+            
+        foreach ($request->_request_switch as $request_handler_id => $request_data)
+        {
+            $data['request_switch_info'][$request_handler_id] = array();
+            
+            // Build the dynamic_loadable URI, starting from topic path
+            $data['request_switch_info'][$request_handler_id]['route'] = str_replace($_MIDGARD['prefix'], '', $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
+            // Add fixed arguments
+            $data['request_switch_info'][$request_handler_id]['route'] .= implode('/', $request_data['fixed_args']);
+            // Add variable_arguments
+            $i = 0;
+            while ($i <= $request_data['variable_args'])
+            {
+                if (substr($data['request_switch_info'][$request_handler_id]['route'], strlen($data['request_switch_info'][$request_handler_id]['route']) - 1) != '/')
+                {
+                    $data['request_switch_info'][$request_handler_id]['route'] .= '/';
+                }
+                $data['request_switch_info'][$request_handler_id]['route'] .= '{$args[' . $i . ']}';
+                $i++;
+            }
+            
+            if (is_array($request_data['handler']))
+            {
+                $data['request_switch_info'][$request_handler_id]['controller'] = $request_data['handler'][0];
+                
+                if (is_object($data['request_switch_info'][$request_handler_id]['controller']))
+                {
+                    $data['request_switch_info'][$request_handler_id]['controller'] = get_class($data['request_switch_info'][$request_handler_id]['controller']);
+                }
+                
+                $data['request_switch_info'][$request_handler_id]['action'] = $request_data['handler'][1];
+            }
+        }
+        
+        return true;
+    }
+
+    function _show_component()
+    {
+        midcom_show_style('midcom_admin_help_header');
+        midcom_show_style('midcom_admin_help_component');
+        midcom_show_style('midcom_admin_help_footer');
     }
 
     /**

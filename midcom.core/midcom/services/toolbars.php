@@ -579,70 +579,55 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         }
 
         $calling_componentname = $_MIDCOM->get_context_data($context_id, MIDCOM_CONTEXT_COMPONENT);
-        $has_documentation_file = true;
-        if ($has_documentation_file)
-        {
-            $toolbar->add_item
-            (
-                 array
-                 (
-                     MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-exec-midcom/showhelp.php?c=$calling_componentname",
-                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('Show help page', 'midcom'),
-                     MIDCOM_TOOLBAR_ACCESSKEY => 'h',
-                     MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
-                 )
-            );
-        }
-        else
-        {
-            $toolbar->add_item
-            (
-                 array
-                 (
-                     MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-exec-midcom/showhelp.php?c=$calling_componentname",
-                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('Create help page', 'midcom'),
-                     MIDCOM_TOOLBAR_ACCESSKEY => 'h',
-                     MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
-                 )
-            );
-        }
-
-
-
         $toolbar->add_item
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "http://www.midgard-project.org/discussion/user-forum/",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('User forum', 'midcom'),
+                MIDCOM_TOOLBAR_URL => '__ais/help/',
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('component help', 'midcom.admin.help'),
+                MIDCOM_TOOLBAR_ACCESSKEY => 'h',
                 MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
-            )
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_help-agent.png',
+             )
         );
         $toolbar->add_item
         (
             array
             (
                 MIDCOM_TOOLBAR_URL => "http://www.midgard-project.org/documentation/",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('Online docs', 'midcom'),
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('online documentation', 'midcom.admin.help'),
                 MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_internet.png',
             )
         );
         $toolbar->add_item
         (
             array
             (
+                MIDCOM_TOOLBAR_URL => "http://www.midgard-project.org/discussion/user-forum/",
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('user forum', 'midcom.admin.help'),
+                MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock-discussion.png',
+            )
+        );
+        /*$toolbar->add_item
+        (
+            array
+            (
                 MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-exec-midcom/about-component.php?c=$calling_componentname",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('About component', 'midcom'),
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('about component', 'midcom.help'),
                 MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
             )
         );
+        */
         $toolbar->add_item
         (
             array
             (
                 MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-exec-midcom/about.php",
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('About Midgard', 'midcom'),
+                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('about midgard', 'midcom.admin.help'),
                 MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/start-here.png',
             )
         );
     }
@@ -1001,7 +986,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         echo $this->render_host_toolbar();
         echo "        </div>\n";
         echo "        <div id=\"midcom_services_toolbars_topic-help\" class=\"item\">\n";
-        echo "            <span class=\"midcom_services_toolbars_topic_title help\">". $_MIDCOM->i18n->get_string('Help', 'midcom') . "</span>\n";
+        echo "            <span class=\"midcom_services_toolbars_topic_title help\">". $_MIDCOM->i18n->get_string('help', 'midcom.admin.help') . "</span>\n";
         echo $this->render_help_toolbar();
         echo "        </div>\n";
         echo "    </div>\n";

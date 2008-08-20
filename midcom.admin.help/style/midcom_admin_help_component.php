@@ -3,7 +3,7 @@ echo "<h1>{$data['view_title']}</h1>\n";
 
 if (count($data['help_files']) > 0)
 {
-    echo "<h2>" . $data['l10n']->get('documentation') . "</h2>\n";
+    echo "<h2>" . $_MIDCOM->i18n->get_string('help', 'midcom.admin.help') . "</h2>\n";
     
     echo "<ul>\n";
     foreach ($data['help_files'] as $file_info)
@@ -18,7 +18,7 @@ if (count($data['help_files']) > 0)
 
 if (count($data['request_switch_info']) > 0)
 {
-    echo "<h2>" . $data['l10n']->get('available urls') . "</h2>\n";
+    echo "<h2>" . $_MIDCOM->i18n->get_string('available urls', 'midcom.admin.help') . "</h2>\n";
     
     echo "<dl>\n";
     foreach ($data['request_switch_info'] as $request_id => $request_info)
