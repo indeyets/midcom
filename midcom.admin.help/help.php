@@ -242,7 +242,7 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
             $data['request_switch_info'][$request_handler_id]['route'] .= implode('/', $request_data['fixed_args']);
             // Add variable_arguments
             $i = 0;
-            while ($i <= $request_data['variable_args'])
+            while ($i < $request_data['variable_args'])
             {
                 if (substr($data['request_switch_info'][$request_handler_id]['route'], strlen($data['request_switch_info'][$request_handler_id]['route']) - 1) != '/')
                 {
