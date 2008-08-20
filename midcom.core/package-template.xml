@@ -4,7 +4,7 @@ http://pear.php.net/dtd/tasks-1.0.xsd
 http://pear.php.net/dtd/package-2.0
 http://pear.php.net/dtd/package-2.0.xsd">
     <name>midcom</name>
-    <channel>pear19.midgard-project.org</channel>
+    <channel>ragnaroek.pear.midgard-project.org</channel>
     <summary>Component Framework for Midgard and PHP</summary>
     <description>
         MidCOM is component framework for PHP running on top of the Midgard framework. MidCOM provides a full content management system based on a series of components. MidCOM users can build their websites by &quot;clicking together&quot; a directory hierarchy, each folder being managed by the appropriate component.
@@ -27,7 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <email>henri.bergius@iki.fi</email>
         <active>yes</active>
     </developer>
-    <date>2008-05-05</date>
+    <date>2008-05-20</date>
     <time>17:56:41</time>
     <version>
         <release>2.9.0beta2</release>
@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     </stability>
     <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
     <notes>
+     Packaged for ragnaroek channel.
      Se the releasenotes for more info. 
     </notes>
     <contents>
@@ -59,11 +60,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
             </package>
             <package>
                 <name>Role_Mgdschema</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
             </package>
             <package>
                 <name>Role_Midgardsql</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
             </package>
             <package>
                 <name>Role_Web</name>
@@ -71,52 +72,52 @@ http://pear.php.net/dtd/package-2.0.xsd">
             </package>
             <package>
                 <name>Javascript_protoToolkit</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
             </package>      
             <package>
                 <name>midcom_admin_babel</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
             </package>      
             <package>
                 <name>midcom_admin_folder</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
             </package>
             <package>
                 <name>midcom_admin_help</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
             </package>
             <package>
                 <name>midcom_admin_settings</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
             </package>
             <package>
                 <name>midcom_helper_xml</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
             </package>
             <package>
                 <name>midgard_admin_acl</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
             </package>
             <package>
                 <name>midgard_admin_sitegroup</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
                 <min>0.1.0</min>
             </package>
             <package>
                 <name>midcom_admin_styleeditor</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
             </package>
             <package>
                 <name>net_nemein_tag</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
             </package>
             <package>
                 <name>no_bergfald_rcs</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
             </package>
             <package>
                 <name>stock_icons</name>
-                <channel>pear19.midgard-project.org</channel>
+                <channel>ragnaroek.pear.midgard-project.org</channel>
             </package>      
             <extension>
                 <name>midgard</name>
@@ -127,7 +128,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <usesrole>
         <role>mgdschema</role>
         <package>Role_Mgdschema</package>
-        <channel>pear19.midgard-project.org</channel>
+        <channel>ragnaroek.pear.midgard-project.org</channel>
     </usesrole>
     <phprelease />
 </package>
