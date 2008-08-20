@@ -13,7 +13,7 @@
         (
             'name' => 'Arttu Manninen',
             'email' => 'arttu@kaktus.cc',
-            'role' => 'developer',
+            'role' => 'lead',
         ),
     ),
     'dependencies' => array
