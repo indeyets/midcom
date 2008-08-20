@@ -234,6 +234,12 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
             
         foreach ($request->_request_switch as $request_handler_id => $request_data)
         {
+            if (substr($request_handler_id, 0, 12) == '____ais-help')
+            {
+                // Skip self
+                continue;
+            }
+
             $data['request_switch_info'][$request_handler_id] = array();
             
             // Build the dynamic_loadable URI, starting from topic path
