@@ -273,6 +273,14 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     {
         debug_push_class($object, __FUNCTION__);
 
+        if (   $_MIDGARD['sitegroup']
+            && $object->sitegroup !== $_MIDGARD['sitegroup']
+            && !$_MIDGARD['admin'])
+        {
+            // Workaround http://trac.midgard-project.org/ticket/275
+            $object->sitegroup = $_MIDGARD['sitegroup'];
+        }
+
         $parent = $object->get_parent();
         if (! is_null($parent))
         {
