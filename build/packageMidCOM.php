@@ -40,7 +40,7 @@ class packageMidCOM extends Task
      * The PEAR name of the package.
      */
     protected $package_name;
-    protected $channel = "pear19.midgard-project.org";
+    protected $channel = "ragnaroek.pear.midgard-project.org";
 
     protected $returnProperty; // name of property to set to return value
 
