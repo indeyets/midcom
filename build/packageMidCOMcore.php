@@ -15,6 +15,8 @@ function wfile($obj, $f) {
  * @package midcom.admin.aegir
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
+ *
+ * Package midcom core as a pear package
  * 
  */
 require_once "phing/Task.php";
@@ -32,11 +34,11 @@ class packageMidCOMcore extends Task
      */
     protected $package_name;
     /* pear channel */
-    protected $channel = "pear.midcom-project.org";
+    protected $channel = "ragnaroek.pear.midgard-project.org";
     // package stability
     protected $stability = 'beta';
     // minimal phpversion
-    protected $phpversion = '4.3.0'; // for 2.8
+    protected $phpversion = '5.2.0'; // for 2.9
 
     protected $returnProperty; // name of property to set to return value
     protected $version;
@@ -134,8 +136,6 @@ class packageMidCOMcore extends Task
         $package->addRole('sql','midgardsql');
         $package->addRole('xml', 'mgdschema');
 
-        var_dump($this->version);
-
         $package->generateContents();
 
         $this->addStatic($package);
@@ -155,8 +155,7 @@ class packageMidCOMcore extends Task
      * This method builds the list of files in the static dir and adds them to the 
      */
     protected function addStatic($package) 
-    {
-
+    { 
         $this->staticFiles = array();
         $this->getDirFilesRecursive($this->path . "/static");
         foreach ($this->staticFiles as $path => $files ) 
@@ -176,6 +175,7 @@ class packageMidCOMcore extends Task
     }
 
     protected function getDirFilesRecursive($path) {
+        
         $list = dir($path);
         while (($file = $list->read()) !== FALSE) {
             if ($file{0} == '.') continue; // skipp .svn , . and ..

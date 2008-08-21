@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Created on 10/09/2006
  * @author tarjei huse
@@ -40,7 +38,7 @@ class packageMidCOM extends Task
      * The PEAR name of the package.
      */
     protected $package_name;
-    protected $channel = "ragnaroek.pear.midgard-project.org";
+    protected $channel = "pear.midcom-project.org";
 
     protected $returnProperty; // name of property to set to return value
 
@@ -191,7 +189,7 @@ class packageMidCOM extends Task
 
     /**
      * Generate the filelist
-     * @param array $config File listing configuration
+     *@param array $config File listing configuration
      * @return string File XML list
      */
     function directory_list_contents($config, $directory_name_override = null)
@@ -259,28 +257,23 @@ class packageMidCOM extends Task
 
                 // Check for potential other file extensions
                 $path_parts = pathinfo($entry);
-                
-                if(isset($path_parts['extension'])) 
+                switch ($path_parts['extension'])
                 {
-                    switch ($path_parts['extension'])
-                    {
-                        // binary formats
-                        case 'jpg' :
-                        case 'gif' :
-                        case 'png' :
-                        case 'zip' :
-                        case 'tgz' :
-                            $role = 'data';
-                            break;
-                            
-                            // Web formats *not* in static directory
-                        case 'html' :
-                        case 'js' :
-                        case 'htc' :
-                        case 'css' :
-                            $role = 'data';
-                            break;
-                    }
+                    // binary formats
+                    case 'jpg' :
+                    case 'gif' :
+                    case 'png' :
+                    case 'zip' :
+                    case 'tgz' :
+                        $role = 'data';
+                        break;
+                        // Web formats *not* in static directory
+                    case 'html' :
+                    case 'js' :
+                    case 'htc' :
+                    case 'css' :
+                        $role = 'data';
+                        break;
                 }
             }
 
@@ -289,10 +282,7 @@ class packageMidCOM extends Task
                 // List the subdirectory
                 $subconfig = $config;
                 $subconfig['path'] = "{$config['path']}/{$entry}";
-                if(isset($subconfig['install-as-prefix']))
-                {
-                    $subconfig['install-as-prefix'] .= "{$entry}/";
-                }
+                $subconfig['install-as-prefix'] .= "{$entry}/";
                 $config['filelist'] = $this->directory_list_contents($subconfig);
             } else
             {
@@ -340,7 +330,6 @@ class packageMidCOM extends Task
 
         // Release date is today
         // TODO: Get latest modification date from CHANGES
-        date_default_timezone_set('Etc/Zulu');
         $package['date'] = date('Y-m-d');
         $package['time'] = date('H:i:s');
 
@@ -414,8 +403,7 @@ class packageMidCOM extends Task
 
         // Generate dependencies, if any
         $package['dependencies'] = '';
-        if (   array_key_exists('dependencies', $this->manifest['package.xml']) 
-            && is_array($this->manifest['package.xml']['dependencies']))
+        if (array_key_exists('dependencies', $this->manifest['package.xml']) && is_array($this->manifest['package.xml']['dependencies']))
         {
             foreach ($this->manifest['package.xml']['dependencies'] as $requirement => $dependency)
             {
@@ -586,7 +574,7 @@ class packageMidCOM extends Task
                     <dependencies>
                         <required>
                             <php>
-                                <min>5.2.0</min>
+                                <min>4.3.0</min>
                             </php>
                             <pearinstaller>
                                 <min>1.4.0</min>
@@ -594,7 +582,7 @@ class packageMidCOM extends Task
                             {$package['dependencies']}  
                             <extension>
                                 <name>midgard</name>
-                                <min>1.9.0alpha1</min>
+                                <min>1.8.6</min>
                             </extension>
                         </required>
                     </dependencies>
