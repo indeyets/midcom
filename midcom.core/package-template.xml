@@ -10,10 +10,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
         MidCOM is component framework for PHP running on top of the Midgard framework. MidCOM provides a full content management system based on a series of components. MidCOM users can build their websites by &quot;clicking together&quot; a directory hierarchy, each folder being managed by the appropriate component.
     </description>
     <lead>
+        <name>Henri Bergius</name>
+        <user>bergie</user>
+        <email>henri.bergius@iki.fi</email>
+        <active>yes</active>
+    </lead>
+    <lead>
         <name>Tarjei Huse</name>
         <user>tarjei</user>
         <email>tarjei@nu.no</email>
-        <active>yes</active>
+        <active>no</active>
     </lead>
     <lead>
         <name>Torben Nehmer</name>
@@ -22,9 +28,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <active>no</active>
     </lead>
     <developer>
-        <name>Henri Bergius</name>
-        <user>bergie</user>
-        <email>henri.bergius@iki.fi</email>
+        <name>Eero af Heurlin</name>
+        <user>rambo</user>
+        <email>eero.afheurlin@iki.fi</email>
         <active>yes</active>
     </developer>
     <developer>
@@ -36,8 +42,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <date>2008-08-20</date>
     <time>16:27:00</time>
     <version>
-        <release>2.8.17</release>
-        <api>2.8.0</api>
+        <release>2.9.0</release>
+        <api>2.9.0</api>
     </version>
     <stability>
         <release>stable</release>
@@ -54,7 +60,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <dependencies>
         <required>
             <php>
-                <min>4.3.0</min>
+                <min>5.2.0</min>
             </php>
             <pearinstaller>
                 <min>1.4.0</min>
@@ -94,11 +100,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
             <package>
                 <name>midgard_admin_asgard</name>
                 <channel>ragnaroek.pear.midgard-project.org</channel>
-            </package>
-            <package>
-                <name>midgard_admin_sitegroup</name>
-                <channel>ragnaroek.pear.midgard-project.org</channel>
-                <min>0.1.0</min>
             </package>
             <package>
                 <name>midcom_admin_styleeditor</name>
