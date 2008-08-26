@@ -1071,7 +1071,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
             $rob_tentative = false;
         }
         //We need sudo to see busys in events we normally don't see and to rob resources from tentative events
-        $_MIDCOM->auth->request_sudo();
+        $_MIDCOM->auth->request_sudo('org.openpsa.calendar');
 
         //Storage for events that have been modified due the course of this method
         $modified_events = array();
@@ -1160,6 +1160,14 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
             $processed_events_participants[$member->eid][$member->uid] = true;
 
             $event = new org_openpsa_calendar_event($member->eid);
+            if (   !is_object($event)
+                || !isset($event->guid)
+                || empty($event->guid))
+            {
+                debug_add("eventmember #{$member->id} links ot bogus event #{$member->eid}, skipping and removing", MIDCOM_LOG_WARN);
+                $member->delete();
+                continue;
+            }
             debug_add("overlap found in event {$event->title} (#{$event->id})");
 
             if (   $event->tentative
@@ -1232,6 +1240,14 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
             {
                 $event = new org_openpsa_calendar_event($member->event);
                 $set_as_modified = true;
+            }
+            if (   !is_object($event)
+                || !isset($event->guid)
+                || empty($event->guid))
+            {
+                debug_add("event_resource #{$member->id} links ot bogus event #{$member->event}, skipping and removing", MIDCOM_LOG_WARN);
+                $member->delete();
+                continue;
             }
             debug_add("overlap found in event {$event->title} (#{$event->id})");
 
@@ -1471,7 +1487,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         }
 
         // Make sure we can read the carried objects
-        $_MIDCOM->auth->request_sudo();
+        $_MIDCOM->auth->request_sudo('org.openpsa.calendar');
         foreach ($carried_resources as $resourceId => $bool)
         {
             $resObj = $this->_get_member_by_resourceid($resourceId);
@@ -1511,7 +1527,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         }
 
         // Make sure we can read the carried objects
-        $_MIDCOM->auth->request_sudo();
+        $_MIDCOM->auth->request_sudo('org.openpsa.calendar');
         foreach ($carried_participants as $participantId => $bool)
         {
             $partObj = $this->_get_member_by_personid($participantId);
