@@ -258,8 +258,12 @@ class net_nemein_calendar_handler_archive extends midcom_baseclasses_components_
     function _compute_events_count_between($start, $end)
     {
         $qb = $this->_get_events_qb();
+        /*
         $qb->add_constraint('start', '<', gmdate('Y-m-d H:i:s', $end));
         $qb->add_constraint('end', '>', gmdate('Y-m-d H:i:s', $start));
+        */
+        $qb->add_constraint('start', '<', date('Y-m-d H:i:s', $end));
+        $qb->add_constraint('end', '>', date('Y-m-d H:i:s', $start));
         return $qb->count_unchecked();
     }
 

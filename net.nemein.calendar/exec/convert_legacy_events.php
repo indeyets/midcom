@@ -44,9 +44,13 @@ foreach ($topics as $topic)
         $newevent->title = $event->title;
         $newevent->description = $event->description;
         //$newevent->location = $event->location;
-                
+
+        /* The grand plan of storing events times in UTC never actually materialized 
         $newevent->start = gmdate('Y-m-d H:i:s', $event->start);
         $newevent->end = gmdate('Y-m-d H:i:s', $event->end);
+        */
+        $newevent->start = date('Y-m-d H:i:s', $event->start);
+        $newevent->end = date('Y-m-d H:i:s', $event->end);
         //$newevent->openregistration = gmdate('Y-m-d H:i:s', $event->openregistration);
         //$newevent->closeregistration = gmdate('Y-m-d H:i:s', $event->closeregistration);
         
