@@ -761,6 +761,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     function _on_deleting($repeat_handler='this')
     {
         //Remove participants
+        $_MIDCOM->auth->request_sudo('org.openpsa.calendar');
         reset ($this->participants);
         while (list ($id, $bool) = each ($this->participants))
         {
@@ -794,6 +795,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
 
         //Remove event parameters
         mgd_delete_extensions($this);
+        $_MIDCOM->auth->drop_sudo();
 
         return true;
     }
