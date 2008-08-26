@@ -305,13 +305,17 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         // Email is a good match to start with
         if (isset($person_info['email']))
         {
-            $person_qb = midcom_db_person::new_query_builder();
-            $person_qb->add_constraint('email', '=', trim($person_info['email']));
-            $persons = $person_qb->execute();
-            if (   is_array($persons)
-                && count($persons) > 0)
+            $user = $_MIDCOM->auth->get_user_by_email(trim($person_info['email']));
+            if (is_array($user))
             {
-                return $persons[0];
+                // Multiple matches, use first
+                $person = $user[0]->get_storage();
+                return $person;
+            }
+            elseif ($user)
+            {
+                $person = $user->get_storage();
+                return $person;
             }
         }
 
