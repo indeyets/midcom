@@ -272,7 +272,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         // check_dl_hit needs to take config changes into account...
         if (is_null($customdata))
         {
-            $identifier_source .= serialize($customdata);
+            $identifier_source .= ';' . serialize($customdata);
         }
 
         // TODO: Add browser capability data (mobile, desktop browser etc) from WURFL here
@@ -283,7 +283,11 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         {
             header("X-MidCOM-request-id-source: {$identifier_source}");
         }
-         */
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Generating context {$context} request-identifier from: {$identifier_source}");
+        debug_print_r('$customdata was: ', $customdata);
+        debug_pop();
+        */
         return 'R-' . md5($identifier_source);
     }
 
@@ -505,10 +509,10 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
         if (!is_null($data['expires']))
         {
-            header("X-MidCOM-meta-cache: EXPIRED {$content_id}", false);
             if ($data['expires'] < time())
             {
-                $this->_meta_cache->close();
+                header("X-MidCOM-meta-cache: EXPIRED {$content_id}", false);
+                $this->_meta_cache->close();            
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Current page is in cache, but has expired.", MIDCOM_LOG_INFO);
                 debug_pop();
@@ -955,10 +959,18 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $content_id = 'C-' . $etag;
 
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Creating cache entry for {$content_id}", MIDCOM_LOG_INFO);
+            debug_add("Creating cache entry for {$content_id} as {$request_id}", MIDCOM_LOG_INFO);
             debug_pop();
 
-            $entry_data['expires'] = $this->_expires;
+            if (!is_null($this->_expires))
+            {
+                $entry_data['expires'] = $this->_expires;
+            }
+            else
+            {
+                // Use default expiry for cache entry, most components don't bother calling expires() properly
+                $entry_data['expires'] = time() + $this->_default_lifetime;
+            }
             $entry_data['etag'] = $etag;
             $entry_data['last_modified'] = $this->_last_modified;
             $entry_data['sent_headers'] = $this->_sent_headers;
