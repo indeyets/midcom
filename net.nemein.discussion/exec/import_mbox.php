@@ -59,7 +59,7 @@ if (   !isset($_FILES['mboxfile'])
 // Get mbox data (normalize newlines while at it)
 $mbox_data = preg_replace("/\n\r|\r\n|\r/", "\n", file_get_contents($_FILES['mboxfile']['tmp_name']));
 // Split at markers
-$mails = preg_split("/\n?From.*?[0-9]{2}:[0-9]{2}:[0-9]{2}\s+[0-9]{4}\n/", $mbox_data);
+$mails = preg_split("/(^|\n{2})From \w+@\w+.*?[0-9]{2}:[0-9]{2}:[0-9]{2}\s+[0-9]{4}\n/", $mbox_data);
 // go through the bodies found
 foreach($mails as $key => $mailbody)
 {

@@ -42,7 +42,10 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         // o.o.mail autosets these, unset to keep them from confusing us later
         unset($mail->headers['User-Agent'], $mail->headers['X-Originating-Ip']);
         $mail->body =& $body;
-        $mail->mime_decode();
+        if ($mail->mime_decode() === false)
+        {
+            return false;
+        }
         // TODO: determine decode status somehow ?
         if (!$this->_rewrite($mail))
         {
