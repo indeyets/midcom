@@ -42,10 +42,14 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         // o.o.mail autosets these, unset to keep them from confusing us later
         unset($mail->headers['User-Agent'], $mail->headers['X-Originating-Ip']);
         $mail->body =& $body;
-        if ($mail->mime_decode() === false)
+
+        if (!$mail->mime_decode())
         {
+            debug_add("mime_decode returned failure, aborting parse", MIDCOM_LOG_ERROR);
+            debug_pop();
             return false;
         }
+
         // TODO: determine decode status somehow ?
         if (!$this->_rewrite($mail))
         {
@@ -159,7 +163,14 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         if (!is_object($author_person))
         {
             // Could not find person, settle for what we have
-            $post->sendername = $author_info['fullname'];
+            if (isset($author_info['fullname']))
+            {
+                $post->sendername = $author_info['fullname'];                
+            }
+            else
+            {
+                $post->sendername = str_replace('@', ' at ', $author_info['email']);
+            }
             $post->senderemail = $author_info['email'];
             $post->status = $this->_config->get('new_message_status_anon');
         }
@@ -232,6 +243,11 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
             if (empty($value))
             {
                 continue;
+            }
+            
+            if (!is_string($value))
+            {
+                $value = serialize($value);
             }
 
             if (!$post->set_parameter('net.nemein.discussion.mailheaders', $header, $value))
@@ -323,7 +339,10 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         }
 
         // Normalize the fullname (no start/end whitespace, inline whitespace normalized to single spaces)
-        $person_info['fullname'] = trim(preg_replace('/\s+/', ' ', $person_info['fullname']));
+        if (isset($person_info['fullname']))
+        {
+            $person_info['fullname'] = trim(preg_replace('/\s+/', ' ', $person_info['fullname']));
+        }
 
         // Use fullname as username if not specifically set
         if (   !isset($person_info['username'])
@@ -472,7 +491,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         {
             return false;
         }
-        $qb = midgard_parameter::new_query_builder();
+        $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=', 'net.nemein.discussion.mailheaders');
         $qb->add_constraint('name', '=', 'Message-Id');
         $qb->add_constraint('value', '=', (string)$message_id);
