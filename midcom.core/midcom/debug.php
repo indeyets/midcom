@@ -153,7 +153,7 @@ class midcom_debug
         if (count ($this->_prefixes) > 1000)
         {
             debug_print_r("DEBUGGER ALERT: Prefix stack has exceeded 1000, current entries:", $this->_prefixes);
-            die ("DEBUGGER ALERT: The number of prefixes on the stack exceeded 1000, the prefix list has been dumped to the debug log.");
+            die ("DEBUGGER ALERT: The number of prefixes on the stack exceeded 1000, the prefix list has been dumped to the debug log. Last one was {$prefix}.");
         }
 
         // Enable this if you want to trace the code paths as elaboratly as possible.
