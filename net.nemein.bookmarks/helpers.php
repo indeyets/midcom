@@ -46,17 +46,21 @@ function net_nemein_bookmarks_helper_list_tags_of_bookmark($bookmark)
 function net_nemein_bookmarks_helper_list_bookmarks_by_tag($topic_id, $tag)
 {
     $tag_bookmarks = array();
-    $bookmarks = mgd_list_topic_articles($topic_id);
+    $qb = midcom_db_article::new_query_builder();
+    $qb->add_constraint('topic', '=', $topic_id);
+    $qb->begin_group('OR');
+        $qb->add_constraint('content', '=', $tag);
+        $qb->add_constraint('content', 'LIKE', $tag . " %");
+        $qb->add_constraint('content', 'LIKE', "% " . $tag);
+        $qb->add_constraint('content', 'LIKE', "% " . $tag . " %");
+    $qb->end_group();
+    $bookmarks = $qb->execute();
     if ($bookmarks)
     {
-        while ($bookmarks->fetch())
+        foreach ($bookmarks as $bookmark)
         {
-            $bookmark_tags = explode(" ",$bookmarks->content);
-            if (in_array($tag,$bookmark_tags))
-            {
                 // Return all bookmarks matching the tag
-                $tag_bookmarks[$bookmarks->url] = $bookmarks;
-            }
+                $tag_bookmarks[$bookmark->url] = $bookmark;
         }
     }
     return $tag_bookmarks;
