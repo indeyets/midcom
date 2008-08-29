@@ -98,15 +98,28 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
      */
     function initialize()
     {
+        static $still_initializing = null;
+        if (is_null($still_initializing))
+        {
+            $still_initializing = true;
+        }
+        else if ($still_initializing)
+        {
+            // This is auth service looping because it instantiates classes for magick privileges!
+            return;
+        }
+        
         if (!$_MIDCOM->auth->user)
         {
             // Centralized toolbar is only for registered users
+            $still_initializing = false;
             return;
         }
 
         if (   !$GLOBALS['midcom_config']['toolbars_enable_centralized']
             || !$_MIDCOM->auth->can_user_do('midcom:centralized_toolbar', null, 'midcom_services_toolbars'))
         {
+            $still_initializing = false;
             return;
         }
 
@@ -152,6 +165,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             $this->type = 'normal';
         }
 
+        $still_initializing = false;
         // We've included CSS and JS, path is clear for centralized mode
         $this->_enable_centralized = true;
     }
