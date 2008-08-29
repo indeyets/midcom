@@ -864,13 +864,11 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      */
     function can_user_do($privilege, $user = null, $class = null, $component = null)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         if (is_null($user))
         {
             if ($this->admin)
             {
                 // Administrators always have access.
-                debug_pop();
                 return true;
             }
             $user =& $this->user;
@@ -884,11 +882,14 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
         if (!is_null($user))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Querying privilege {$privilege} for user {$user->id} to class {$class}", MIDCOM_LOG_DEBUG);
+            debug_pop();
         }
 
         if ($this->_internal_sudo)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('INTERNAL SUDO mode is enabled. Generic Read-Only mode set.', MIDCOM_LOG_DEBUG);
             debug_pop();
             return $this->_can_do_internal_sudo($privilege);
@@ -896,7 +897,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
         if ($this->_component_sudo)
         {
-            debug_pop();
             return true;
         }
 
@@ -910,6 +910,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 if (   is_null($component)
                     || !$_MIDCOM->componentloader->load_graceful($component))
                 {
+                    debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("can_user_do check to undefined class '{$class}'.", MIDCOM_LOG_ERROR);
                     debug_pop();
                     return false;
@@ -993,6 +994,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
         if (! array_key_exists($privilege, $full_privileges))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Warning, the privilege {$privilege} is unknown at this point. Assuming not granted privilege.");
             debug_pop();
             return false;
@@ -1039,11 +1041,11 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         $_empty_array = array();
 
         /* No idea if there should be some special log message written */
-        if($object_guid == '' || !isset($object_guid)
-            || $object_class == '' || !isset($object_class))
-            {
-                return $_empty_array;
-            }
+        if (   empty($object_guid)
+            || empty($object_class))
+        {
+            return $_empty_array;
+        }
 
         // TODO: Clean if/else shorthands, make sure this works correctly for magic assignees as well
         if (is_null($user))
