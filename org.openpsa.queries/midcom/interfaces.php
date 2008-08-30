@@ -23,7 +23,7 @@ class org_openpsa_queries_interface extends midcom_baseclasses_components_interf
         $this->_component = 'org.openpsa.queries';
         $this->_purecode = true;
         $this->_autoload_class_definitions = array('midcom_dba_classes.inc');
-        $this->_autoload_files = Array('query.php');
+        $this->_autoload_files = Array();
     }
 }
 
