@@ -25,7 +25,7 @@ class org_openpsa_contactwidget_interface extends midcom_baseclasses_components_
 
         $this->_component = 'org.openpsa.contactwidget';
         $this->_purecode = true;
-        $this->_autoload_files = Array('main.php');
+        $this->_autoload_files = Array();
     }
 
     /**

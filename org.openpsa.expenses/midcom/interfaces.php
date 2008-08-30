@@ -24,11 +24,7 @@ class org_openpsa_expenses_interface extends midcom_baseclasses_components_inter
         $this->_component = 'org.openpsa.expenses';
 
         // Load all mandatory class files of the component here
-        $this->_autoload_files = array
-        (
-            'viewer.php', 
-            'navigation.php'
-        );
+        $this->_autoload_files = array();
         
         // Load all libraries used by component here
         $this->_autoload_libraries = array

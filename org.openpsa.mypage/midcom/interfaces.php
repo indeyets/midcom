@@ -19,10 +19,7 @@ class org_openpsa_mypage_interface extends midcom_baseclasses_components_interfa
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'org.openpsa.mypage';
-        $this->_autoload_files = array(
-            'viewer.php',
-            'navigation.php'
-        );
+        $this->_autoload_files = array();
         $this->_autoload_libraries = array(
             'org.openpsa.core',
             'org.openpsa.helpers',

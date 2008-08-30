@@ -22,10 +22,6 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         $this->_autoload_class_definitions = array('midcom_dba_classes.inc');
         $this->_autoload_files = array
         (
-            'viewer.php',
-            'navigation.php',
-            'task_midcomdba.php',
-            'project_midcomdba.php',
             'resource_midcomdba.php',
             'hour_report_midcomdba.php',
             'expense_midcomdba.php',
@@ -37,9 +33,6 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             'deliverables/plugin_noop.php',
             'task_status_midcomdba.php',
             'workflow_handler.php',
-            'workingon.php',
-            // TODO: Only load this file when needed.
-            'projectbroker.php',
         );
         $this->_autoload_libraries = Array
         (

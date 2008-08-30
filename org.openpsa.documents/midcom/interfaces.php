@@ -21,10 +21,6 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
         $this->_component = 'org.openpsa.documents';
         $this->_autoload_class_definitions = array('midcom_dba_classes.inc');
         $this->_autoload_files = array(
-            'document_midcomdba.php',
-            'directory_midcomdba.php',
-            'viewer.php',
-            'navigation.php',
             'directory_handler.php',
             'metadata_handler.php',
         );
