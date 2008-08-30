@@ -9,19 +9,24 @@
 function net_nemein_bookmarks_helper_list_tags($topic_id)
 {
     $tags = array();
-    $bookmarks = mgd_list_topic_articles($topic_id);
+
+    $qb = midcom_db_article::new_query_builder();
+    $qb->add_constraint('topic', '=', $topic_id);
+
+    $bookmarks = $qb->execute();
     if ($bookmarks)
     {
-        while ($bookmarks->fetch())
+        foreach ($bookmarks as $bookmark)
         {
-            $bookmark_tags = explode(" ",$bookmarks->content);
+            $bookmark_tags = explode(" ", $bookmark->content);
             foreach ($bookmark_tags as $tag)
             {
                 // Store reference to the bookmark per each tag
-                $tags[$tag][$bookmarks->url] = $bookmarks;
+                $tags[$tag][$bookmark->url] = $bookmark;
             }
         }
     }
+
     ksort($tags);
     reset($tags);
     return $tags;
