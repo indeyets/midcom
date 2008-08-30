@@ -1283,7 +1283,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 }
                 else
                 {
-                    $object->metadata->$timestamp = gmstrftime('%Y-%m-%d %T', $object->metadata->$timestamp);
+                    $object->metadata->$timestamp = gmstrftime('%Y-%m-%d %T', strtotime($object->metadata->$timestamp));
                 }
             }
         }
