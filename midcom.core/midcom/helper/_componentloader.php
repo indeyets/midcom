@@ -476,7 +476,7 @@ class midcom_helper__componentloader
         {
             if (!$this->_load($path))
             {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to load component: {$GLOBALS['midcom_errstr']}");
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to load component {$path}: {$GLOBALS['midcom_errstr']}");
             }
         }
 
