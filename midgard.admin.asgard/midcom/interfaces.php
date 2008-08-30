@@ -25,7 +25,6 @@ class midgard_admin_asgard_interface extends midcom_baseclasses_components_inter
         $this->_purecode = true;
         $this->_autoload_files = array
         (
-            'navigation.php',
             'plugin.php',
             'tree.php',
         );

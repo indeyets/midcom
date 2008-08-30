@@ -38,8 +38,6 @@ class net_nehmer_blog_interface extends midcom_baseclasses_components_interface
         $this->_component = 'net.nehmer.blog';
         $this->_autoload_files = array
         (
-            'viewer.php',
-            'navigation.php',
             'article_link.php',
         );
 

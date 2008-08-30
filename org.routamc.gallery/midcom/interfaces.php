@@ -22,11 +22,7 @@ class org_routamc_gallery_interface extends midcom_baseclasses_components_interf
         $this->_component = 'org.routamc.gallery';
         $this->_autoload_files = Array
         (
-            'viewer.php',
-            'navigation.php',
-            'photolink.php',
             'gallery_helper.php',
-            'organizer.php',
         );
         $this->_autoload_libraries = Array
         (
