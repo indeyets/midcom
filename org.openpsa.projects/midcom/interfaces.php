@@ -22,15 +22,15 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         $this->_autoload_class_definitions = array('midcom_dba_classes.inc');
         $this->_autoload_files = array
         (
-            'resource_midcomdba.php',
             'hour_report_midcomdba.php',
-            'expense_midcomdba.php',
-            'mileage_midcomdba.php',
-            'hours_widget.php',
+            /* 
+             * @todo The code using this is commented out (handler/task/view.php)
+             * 
             'deliverables/deliverable_midcomdba.php',
             'deliverables/interface.php',
             'deliverables/plugin_base.php',
             'deliverables/plugin_noop.php',
+            */
             'task_status_midcomdba.php',
             'workflow_handler.php',
         );

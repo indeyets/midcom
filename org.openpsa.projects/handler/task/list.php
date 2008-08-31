@@ -27,6 +27,9 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         $this->_datamanagers =& $this->_request_data['datamanagers'];
     }
 
+    /**
+     * @todo this function doesn't seem to be called from anywhere
+     */
     function _initialize_hours_widget(&$task)
     {
         $nap = new midcom_helper_nav();
