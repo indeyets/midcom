@@ -24,17 +24,11 @@ class org_routamc_photostream_interface extends midcom_baseclasses_components_in
         $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager2',
-            'midcom.helper.dm2config',
-            'org.openpsa.qbpager',
-            'net.nemein.tag',
         );
     }
 
     function _on_initialize()
     {
-        // Load needed data classes
-        $_MIDCOM->componentloader->load_graceful('net.nehmer.buddylist');
-        
         // Define constants
         define('ORG_ROUTAMC_PHOTOSTREAM_STATUS_UNMODERATED', 0);
         define('ORG_ROUTAMC_PHOTOSTREAM_STATUS_ACCEPTED', 1);

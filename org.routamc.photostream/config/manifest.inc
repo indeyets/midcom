@@ -42,7 +42,6 @@
         'midcom.helper.dm2config' => array(),
         'net.nemein.tag' => array(),
         'org.openpsa.qbpager' => array(),
-        'net.nehmer.buddylist' => array(),
         'midcom' => array(),
     ),
 ),

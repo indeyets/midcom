@@ -20,15 +20,10 @@ class org_routamc_gallery_interface extends midcom_baseclasses_components_interf
     {
         parent::midcom_baseclasses_components_interface();
         $this->_component = 'org.routamc.gallery';
-        $this->_autoload_files = Array
-        (
-            'gallery_helper.php',
-        );
+        $this->_autoload_files = Array();
         $this->_autoload_libraries = Array
         (
             'midcom.helper.datamanager2',
-            'net.nemein.tag',
-            'org.openpsa.qbpager',
         );
     }
 
