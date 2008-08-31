@@ -126,11 +126,8 @@ else
     // debug_add("Using component: {$component}");
     // debug_add("Using class: {$class}");
     
-    // Load component if required
-    if (!class_exists($class))
-    {
-        $_MIDCOM->componentloader->load_graceful($component);
-    }
+    $_MIDCOM->componentloader->load_graceful($component);
+
     // Could not get required class defined, abort
     if (!class_exists($class))
     {
