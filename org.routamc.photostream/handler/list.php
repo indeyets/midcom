@@ -359,6 +359,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _handler_photostream_tags($handler_id, $args, &$data)
     {
+        $_MIDCOM->load_library('net.nemein.tag');
+        
         if (   $handler_id === 'photostream_tag'
             || $handler_id === 'photostream_tags')
         {
@@ -406,6 +408,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _handler_photostream_tag($handler_id, $args, &$data)
     {
+        $_MIDCOM->load_library('net.nemein.tag');
+
         if ($handler_id == 'photostream_tag')
         {
             $data['tag'] = $args[1];
