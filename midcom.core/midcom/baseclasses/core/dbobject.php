@@ -646,6 +646,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      * @param Array $guids
      * @param string $type
      * @return boolean Indicating success
+     * @todo We should only undelete parameters & attachments deleted inside some small window of the main objects delete
      */
     function undelete($guids, $type)
     {
@@ -687,6 +688,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 }
             }
             
+            // FIXME: We should only undelete parameters & attachments deleted inside some small window of the main objects delete
             midcom_baseclasses_core_dbobject::undelete_parameters($guid);
             midcom_baseclasses_core_dbobject::undelete_attachments($guid);
 
@@ -720,6 +722,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      * @access public
      * @param string $guid
      * @return boolean Indicating success
+     * @todo We should only undelete parameters & attachments deleted inside some small window of the main objects delete
      */
     function undelete_parameters($guid)
     {
@@ -761,6 +764,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      * @access public
      * @param string $guid
      * @return boolean Indicating success
+     * @todo We should only undelete parameters & attachments deleted inside some small window of the main objects delete
      */
     function undelete_attachments($guid)
     {
@@ -783,7 +787,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             }
             else
             {
-                if ($att->undelete())
+                if ($att->undelete($att->guid))
                 {
                     $undeleted = true;
                 }
@@ -796,7 +800,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             {
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('attachment %s undeleted'), $att->name, mgd_errstr()), 'ok');
                 $undeleted_size += $att->metadata->size;
-                $this->_undelete_parameters($att->guid);
+                midcom_baseclasses_core_dbobject::undelete_parameters($att->guid);
             }
         }
     }
