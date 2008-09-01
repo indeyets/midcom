@@ -13,7 +13,7 @@ money_mouth:"Boca de diner",
 sealed:"Segellada",
 smile:"Somriure",
 surprised:"Sorpresa",
-tongue_out:"Llengota",
+tongue_out:"Treu la llengua",
 undecided:"Indecisa",
 wink:"Pica l'ullet",
 yell:"Crit"
