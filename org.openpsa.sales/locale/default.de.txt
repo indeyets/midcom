@@ -84,7 +84,7 @@ Verkaufsprojekt anlegen
 ---STRINGEND
 
 ---STRING create task
-Task anlegen
+Aufgabe anlegen
 ---STRINGEND
 
 ---STRING customer
@@ -316,7 +316,7 @@ Projekt "%s" wurde angelegt
 ---STRINGEND
 
 ---STRING created task "%s"
-Task "%s" wurde angelegt
+Aufgabe "%s" wurde angelegt
 ---STRINGEND
 
 ---STRING marked deliverable "%s" delivered

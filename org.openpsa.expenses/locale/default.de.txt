@@ -11,7 +11,7 @@ Nicht abrechenbar
 ---STRINGEND
 
 ---STRING task
-Task
+Aufgabe
 ---STRINGEND
 
 ---STRING reporter
@@ -27,7 +27,7 @@ Ausgaben-Verwaltung
 ---STRINGEND
 
 ---STRING list_hours_task
-Liste der Arbeitsstunden pro Task
+Liste der Arbeitsstunden pro Aufgabe
 ---STRINGEND
 
 ---STRING date

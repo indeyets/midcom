@@ -16,7 +16,7 @@ Person erstellen
 ---STRINGEND
 
 ---STRING create task
-Task erstellen
+Aufgabe erstellen
 ---STRINGEND
 
 ---STRING my summary

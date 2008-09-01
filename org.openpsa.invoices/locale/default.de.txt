@@ -24,7 +24,7 @@ Rechnung erstellen
 ---STRINGEND
 
 ---STRING created "%s" task to %s
-Task "%s" für %s erstellt
+Aufgabe "%s" für %s erstellt
 ---STRINGEND
 
 ---STRING customer
@@ -80,7 +80,7 @@ Rechnung "%s" wurde als verschickt markiert
 ---STRINGEND
 
 ---STRING marked task "%s" finished
-Task "%s" wurde als beendet markiert
+Aufgabe "%s" wurde als fertiggestellt markiert
 ---STRINGEND
 
 ---STRING no customer
