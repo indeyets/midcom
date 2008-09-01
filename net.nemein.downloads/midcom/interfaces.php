@@ -24,11 +24,7 @@ class net_nemein_downloads_interface extends midcom_baseclasses_components_inter
         parent::midcom_baseclasses_components_interface();
 
         $this->_component = 'net.nemein.downloads';
-        $this->_autoload_files = array
-        (
-            'viewer.php',
-            'navigation.php',
-        );
+        $this->_autoload_files = array();
         $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager2',
