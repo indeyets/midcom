@@ -39,6 +39,9 @@ if (   !preg_match('%\?|/$|midcom-.+-|/.+\..+$%', $_SERVER['REQUEST_URI'])
 }
 /** */
 
+// Advertise the fact that this is a Midgard server
+header('X-Powered-By: Midgard/' . mgd_version());
+
 ///////////////////////////////////////////////////////////
 // Ease debugging and make sure the code actually works(tm)
 error_reporting(E_ALL);
