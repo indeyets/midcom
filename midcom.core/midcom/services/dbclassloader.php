@@ -1148,10 +1148,55 @@ EOF;
     function is_mgdschema_object(&$object)
     {
         $classname = get_class($object);
+        
         foreach ($this->_loaded_classes as $class_definition)
         {
             if (is_a($object, $class_definition['new_class_name']))
             {
+                return true;
+            }
+        }
+
+        // We might not have the class loaded, try to load it
+        $this->load_component_for_class($classname);
+        foreach ($this->_loaded_classes as $class_definition)
+        {
+            if (is_a($object, $class_definition['new_class_name']))
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
+     * Load a component associated with a class name to get its DBA classes defined
+     *
+     * @param string $classname Class name to load a component for
+     * @return boolean true if a component was found for the class, false otherwise
+     */
+    function load_component_for_class($classname)
+    {
+        $class_parts = explode('_', $classname);
+        $component = '';
+        foreach ($class_parts as $part)
+        {
+            if (empty($component))
+            {
+                $component = $part;
+            }
+            else
+            {
+                $component .= ".{$part}";
+            }
+            
+            if (isset($_MIDCOM->componentloader->manifests[$component]))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Loading component {$component} to get DBA class {$classname}.", MIDCOM_LOG_INFO);
+                $_MIDCOM->componentloader->load_graceful($component);
+                debug_pop();
                 return true;
             }
         }
@@ -1174,6 +1219,19 @@ EOF;
                 return $class_definition['midcom_class_name'];
             }
         }
+        
+        // We don't have the class loaded, try to load it
+        if ($this->load_component_for_class($classname))
+        {
+            foreach ($this->_loaded_classes as $class_definition)
+            {
+                if (is_a($object, $class_definition['new_class_name']))
+                {
+                    return $class_definition['midcom_class_name'];
+                }
+            }
+        }
+        
         return false;
     }
 
