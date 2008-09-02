@@ -221,10 +221,17 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * @param string $classname The classname which should be queried.
      * @todo remove baseclass resolution, Midgard core can handle extended classnames correctly nowadays
      */
-    function midcom_core_querybuilder($classname)
+    function __construct($classname)
     {
         $this->classname = $classname;
-        static $_class_mapping_cache = Array();
+        static $_class_mapping_cache = array();
+        
+        if (!class_exists($classname))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                "Cannot create a midcom_core_querybuilder instance for the type {$classname}: Class does not exist.");
+            // This will exit.
+        }
 
         if (array_key_exists($classname, $_class_mapping_cache))
         {
@@ -233,7 +240,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         else
         {
             // Validate the class, we check for a single callback representatively only
-            if (! in_array('_on_prepare_new_query_builder', get_class_methods($classname)))
+            if (!in_array('_on_prepare_new_query_builder', get_class_methods($classname)))
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Cannot create a midcom_core_querybuilder instance for the type {$classname}: Does not seem to be a DBA class name.");

@@ -72,6 +72,11 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
 
     function _on_retrieve_vgroup_members($groupname)
     {
+        if (!class_exists('org_openpsa_projects_task_resource'))
+        {
+            return null;
+        }
+
         debug_push_class(__CLASS__, __FUNCTION__);
         $type = 'resources';
         if (substr($groupname, strlen($groupname)-11) == 'subscribers')
