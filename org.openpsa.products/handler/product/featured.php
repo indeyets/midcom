@@ -27,8 +27,9 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
 
     function _list_products($show_products = 1,$product_group = '')
     {
-        $product_qb = org_openpsa_products_product_dba::new_query_builder();
-        $product_qb->set_limit($show_products);
+        $product_qb = new org_openpsa_qbpager('org_openpsa_products_product_dba', 'featured_products');
+        $this->_request_data['product_qb'] =& $product_qb;
+        $product_qb->results_per_page = $show_products;
 
         $product_qb->add_constraint('parameter.name', '=', 'featured_application_date');
         $product_qb->add_constraint('parameter.value', '<', time());
