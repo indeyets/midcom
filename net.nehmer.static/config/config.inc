@@ -31,7 +31,7 @@
 'simple_name_handling' => true,
 
 // Set this to true if you want to enable on-site AJAX editing
-'enable_ajax_editing' => false,
+'enable_ajax_editing' => true,
 
 // Page linking system
 'enable_article_links' => true,
