@@ -33,7 +33,15 @@ foreach($_MIDCOM->componentloader->manifests as $name => $manifest)
         foreach ($maintainers as $person => $details)
         {
             $developers[$person]['name'] = $details['name'];
-            $developers[$person]['email'] = $details['email'];
+            
+            if (!isset($details['email']))
+            {
+                $developers[$person]['email'] = '';
+            }
+            else
+            {
+                $developers[$person]['email'] = $details['email'];
+            }
             
             if (   array_key_exists('active', $details)
                 && $details['active'] == 'no')

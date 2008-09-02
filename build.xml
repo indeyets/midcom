@@ -212,7 +212,7 @@ To unpack javascripts inside given folder and its subfolders:
 To create a pear package of a module: 
     phing package -Dmodule=com.example.module [-DwithDoc=true]
 To create a pear package of the midcom core: 
-    phing packageCore [-DwithDoc=true]
+    phing packageCore -DcoreVersion=8.09.0beta1 -DcoreStability=beta [-DwithDoc=true]
 
 Note: -DwithDoc=true needs phpdocumentor installed. When set it will generate phpdocs
 in the modules documentation directory. 

@@ -39,11 +39,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <email>jerry.jalava@gmail.com</email>
         <active>yes</active>
     </developer>
-    <date>2008-08-20</date>
+    <date>2008-09-02</date>
     <time>16:27:00</time>
     <version>
-        <release>2.9.0</release>
-        <api>2.9.0</api>
+        <release>8.09.0</release>
+        <api>8.09.0</api>
     </version>
     <stability>
         <release>stable</release>
@@ -51,7 +51,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     </stability>
     <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
     <notes>
-        Included stock-icons, Javascript_protoToolkit and jQuery static directories.
+        Changes to DBA class loading to ensure classes' components get loaded.
     </notes>
     <contents>
         <dir name="/">

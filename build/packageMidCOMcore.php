@@ -198,6 +198,7 @@ class packageMidCOMcore extends Task
         //$package = new PEAR_PackageFileManager2();
         $package = PEAR_PackageFileManager2::importOptions($this->template, $options);
         $package->setPackageType('php');
+        $package->setReleaseStability($this->stability);
         $package->setAPIStability($this->stability);
         $package->setPhpDep($this->phpversion);
         $package->setReleaseVersion($this->version);
