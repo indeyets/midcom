@@ -189,7 +189,7 @@ class org_openpsa_directmarketing_handler_message_create extends midcom_baseclas
 
         if ($this->_message != null)
         {
-            $_MIDCOM->set_26_request_metadata($this->_message->revised, $this->_message->guid);
+            $_MIDCOM->set_26_request_metadata($this->_message->metadata->revised, $this->_message->guid);
         }
         $data['view_title'] = sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($this->_schemadb[$this->_schema]->description));
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");

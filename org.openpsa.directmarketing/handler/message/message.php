@@ -167,7 +167,7 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
         $_MIDCOM->bind_view_to_object($this->_message, $this->_datamanager->schema->name);
-        $_MIDCOM->set_26_request_metadata($this->_message->revised, $this->_message->guid);
+        $_MIDCOM->set_26_request_metadata($this->_message->metadata->revised, $this->_message->guid);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_message->title}");
 
         return true;

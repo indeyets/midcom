@@ -9,15 +9,8 @@ alter table repligard modify realm varchar(255) NOT NULL default '';
 CREATE TABLE org_openpsa_campaign (
   id int(11) NOT NULL auto_increment,
   title varchar(255) NOT NULL default '',
-  created datetime NOT NULL default '0000-00-00 00:00:00',
-  creator int(11) NOT NULL default '0',
-  revisor int(11) NOT NULL default '0',
-  revised datetime NOT NULL default '0000-00-00 00:00:00',
-  revision int(11) NOT NULL default '0',
   description text NOT NULL default '',
-
   archived int(11) NOT NULL default '0',
-
   orgOpenpsaObtype int(11) NOT NULL default '0',
   orgOpenpsaWgtype int(11) NOT NULL default '0',
   orgOpenpsaAccesstype int(11) NOT NULL default '0',
@@ -47,16 +40,9 @@ CREATE TABLE org_openpsa_campaign_message (
   id int(11) NOT NULL auto_increment,
   campaign int(11) NOT NULL default '0',
   title varchar(255) NOT NULL default '',
-  created datetime NOT NULL default '0000-00-00 00:00:00',
-  creator int(11) NOT NULL default '0',
-  revisor int(11) NOT NULL default '0',
-  revised datetime NOT NULL default '0000-00-00 00:00:00',
-  revision int(11) NOT NULL default '0',
   description text NOT NULL default '',
-
   sendStarted int(11) NOT NULL default '0',
   sendCompleted int(11) NOT NULL default '0',
-
   orgOpenpsaObtype int(11) NOT NULL default '0',
   orgOpenpsaAccesstype int(11) NOT NULL default '0',
   orgOpenpsaOwnerWg VARCHAR(255) NOT NULL default '',
@@ -96,40 +82,9 @@ CREATE TABLE org_openpsa_link_log (
   PRIMARY KEY (id),
   KEY org_openpsa_link_log_sitegroup_idx(sitegroup)
 );
-ALTER TABLE org_openpsa_link_log ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
-ALTER TABLE org_openpsa_link_log ADD COLUMN creator int(11) NOT NULL default '0';
-ALTER TABLE org_openpsa_link_log ADD COLUMN revisor int(11) NOT NULL default '0';
-ALTER TABLE org_openpsa_link_log ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
-ALTER TABLE org_openpsa_link_log ADD COLUMN revision int(11) NOT NULL default '0';
 ALTER TABLE org_openpsa_link_log ADD COLUMN message int(11) NOT NULL default '0';
 create index org_openpsa_link_log_person_idx on org_openpsa_link_log(person);
 create index org_openpsa_link_log_message_idx on org_openpsa_link_log(message);
 create index org_openpsa_link_log_token_idx on org_openpsa_link_log(token);
 create index org_openpsa_link_log_timestamp_idx on org_openpsa_link_log(timestamp);
 create index org_openpsa_link_log_orgOpenpsaObtype_idx on org_openpsa_link_log(orgOpenpsaObtype);
-
-# 1.7 metadata
-ALTER TABLE org_openpsa_campaign ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
-ALTER TABLE org_openpsa_campaign ADD COLUMN creator int(11) NOT NULL default '0';
-ALTER TABLE org_openpsa_campaign ADD COLUMN revisor int(11) NOT NULL default '0';
-ALTER TABLE org_openpsa_campaign ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
-ALTER TABLE org_openpsa_campaign ADD COLUMN revision int(11) NOT NULL default '0';
-#
-ALTER TABLE org_openpsa_campaign_member ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
-ALTER TABLE org_openpsa_campaign_member ADD COLUMN creator int(11) NOT NULL default '0';
-ALTER TABLE org_openpsa_campaign_member ADD COLUMN revisor int(11) NOT NULL default '0';
-ALTER TABLE org_openpsa_campaign_member ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
-ALTER TABLE org_openpsa_campaign_member ADD COLUMN revision int(11) NOT NULL default '0';
-#
-ALTER TABLE org_openpsa_campaign_message ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
-ALTER TABLE org_openpsa_campaign_message ADD COLUMN creator int(11) NOT NULL default '0';
-ALTER TABLE org_openpsa_campaign_message ADD COLUMN revisor int(11) NOT NULL default '0';
-ALTER TABLE org_openpsa_campaign_message ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
-ALTER TABLE org_openpsa_campaign_message ADD COLUMN revision int(11) NOT NULL default '0';
-#
-ALTER TABLE org_openpsa_campaign_message_receipt ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
-ALTER TABLE org_openpsa_campaign_message_receipt ADD COLUMN creator int(11) NOT NULL default '0';
-ALTER TABLE org_openpsa_campaign_message_receipt ADD COLUMN revisor int(11) NOT NULL default '0';
-ALTER TABLE org_openpsa_campaign_message_receipt ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
-ALTER TABLE org_openpsa_campaign_message_receipt ADD COLUMN revision int(11) NOT NULL default '0';
-

@@ -94,7 +94,7 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
         $qb_unsub = org_openpsa_directmarketing_campaign_member::new_query_builder();
         $qb_unsub->add_constraint('campaign', '=', $this->_request_data['message']->campaign);
         $qb_unsub->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER_UNSUBSCRIBED);
-        $qb_unsub->add_constraint('revised', '>', date('Y-m-d H:i:s', $receipt_data['first_send']));
+        $qb_unsub->add_constraint('metadata.revised', '>', date('Y-m-d H:i:s', $receipt_data['first_send']));
         $campaign_data['next_message'] = false;
         // Find "next message" and if present use its sendStarted as constraint for this query
         $qb_messages = org_openpsa_directmarketing_campaign_message::new_query_builder();
@@ -108,7 +108,7 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
             && isset($messages[0]))
         {
             $campaign_data['next_message'] = $messages[0];
-            $qb_unsub->add_constraint('revised', '<', date('Y-m-d H:i:s', $messages[0]->sendStarted));
+            $qb_unsub->add_constraint('metadata.revised', '<', date('Y-m-d H:i:s', $messages[0]->sendStarted));
         }
         $campaign_data['unsubscribed'] = $qb_unsub->count_unchecked();
 

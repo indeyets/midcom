@@ -80,7 +80,7 @@ class org_openpsa_directmarketing_handler_message_list extends midcom_baseclasse
         //$qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_directmarketing_campaign_message');
         $qb = new org_openpsa_qbpager('org_openpsa_directmarketing_campaign_message', 'campaign_messages');
         $qb->results_per_page = 10;
-        $qb->add_order('created', 'DESC');
+        $qb->add_order('metadata.created', 'DESC');
         $qb->add_constraint('campaign', '=', $this->_campaign->id);
 
         debug_add("Executing Query Builder");

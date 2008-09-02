@@ -49,10 +49,10 @@ class org_openpsa_directmarketing_navigation extends midcom_baseclasses_componen
                     MIDCOM_NAV_NAME => $campaign->title
                 ),
                 MIDCOM_NAV_GUID => $campaign->guid,
-                MIDCOM_META_CREATOR => $campaign->creator,
-                MIDCOM_META_EDITOR => $campaign->revisor,
-                MIDCOM_META_CREATED => $campaign->created,
-                MIDCOM_META_EDITED => $campaign->revised
+                MIDCOM_META_CREATOR => $campaign->metadata->creator,
+                MIDCOM_META_EDITOR => $campaign->metadata->revisor,
+                MIDCOM_META_CREATED => $campaign->metadata->created,
+                MIDCOM_META_EDITED => $campaign->metadata->revised
             );
         }
         return $leaves;
