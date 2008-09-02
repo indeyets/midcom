@@ -868,7 +868,7 @@ dm2AjaxEditor.prototype = {
                 tinyMCE.settings['width'] = dimensions.width;
             }
             //tinyMCE.settings['theme'] = 'simple';
-            tinyMCE.addMCEControl(tinyFields[i], tinyFields[i].getAttribute('id'));
+            tinyMCE.execCommand('mceAddControl',false, tinyFields[i].getAttribute('id'));
 
             if (!this.windowMode)
             {
@@ -890,7 +890,10 @@ dm2AjaxEditor.prototype = {
         tinyFields = document.getElementsByClassName('tinymce');
         for (i = 0; i < tinyFields.length; i++) 
         {
-            tinyMCE.removeMCEControl(tinyMCE.getEditorId(tinyFields[i].getAttribute('id')));
+            if (tinyMCE.get(tinyFields[i].getAttribute('id')))
+            {
+                tinyMCE.execCommand('mceRemoveControl', true, tinyFields[i].getAttribute('id'));
+            }
         }
     }
 };
