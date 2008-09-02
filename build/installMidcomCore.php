@@ -140,12 +140,15 @@ class installMidcomCore extends Task
         /**
          * Make symlinks for the static files
          */
-        $dirs = $this->get_module_dirs($this->from . "/static");
+        $dirs = $this->get_module_dirs(dirname($this->from) . "/static");
         
         foreach ($dirs as $dir => $value) {
-            $from =  "{$this->from}/static/$dir";
-            $to   =  "{$this->static_dir}/$dir";   
-            $this->make_symlink($from, $to);
+            $from =  dirname($this->from) . "/static/{$dir}";
+            $to   =  "{$this->static_dir}/{$dir}";
+            if (is_dir($from))
+            {
+                $this->make_symlink($from, $to);
+            }
         }
         
         /***
