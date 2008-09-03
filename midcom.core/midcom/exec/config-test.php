@@ -3,6 +3,7 @@ if (! exec ('which which'))
 {
     die("The 'which' utility cannot be found. It is required for configuration-testing. Aborting.");
 }
+$_MIDCOM->auth->require_admin_user();
 ?>
 <html>
 <head><title>MidCOM Configuration Test</title></head>
@@ -161,7 +162,7 @@ else
 // Available Memory for PHP
 
 $cur_limit = ini_get_filesize('memory_limit');
-if ($cur_limit >= (20 * 1024 * 1024))
+if ($cur_limit >= (60 * 1024 * 1024))
 {
     println('PHP Setting: memory_limit', OK);
 }
@@ -253,6 +254,16 @@ if (! function_exists('iconv'))
 else
 {
     println('iconv', OK);
+}
+
+// memcached is recommended
+if (! class_exists('Memcache'))
+{
+    println('Memcache', WARNING, 'The PHP Memcache module is recommended for efficient MidCOM operation.');
+}
+else
+{
+    println('Memcache', OK);
 }
 
 // dba with db[234] is recommended.

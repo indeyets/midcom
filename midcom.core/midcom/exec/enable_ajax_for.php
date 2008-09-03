@@ -9,11 +9,14 @@ if (! empty($_GET['group']))
     $is_group = true;
     $guid = $_GET['group'];
 }
-else
+elseif (!empty($_GET['person']))
 {
     $guid = $_GET['person'];
 }
-
+else
+{
+    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Specify either group or person GUID in GET params");
+}
 
 $priv = new midcom_core_privilege_db();
 $priv->objectguid = $guid;
