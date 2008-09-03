@@ -61,7 +61,7 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
 
     function _on_initialize()
     {
-        $this->_config_storage = new midcom_db_page($_MIDGARD['page']);
+        $this->_config_storage = new midcom_db_page((int) $_MIDGARD['page']);
 
         require_once MIDCOM_ROOT . '/midcom/helper/hostconfig.php';
         require_once MIDCOM_ROOT . '/midcom/admin/folder/folder_management.php';
