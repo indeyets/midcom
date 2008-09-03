@@ -86,10 +86,21 @@
     vertical-align: middle;
 }
 
+#content div.midgard_admin_asgard_components_component
+{
+    min-width: 500px;
+}
+
 #content div.midgard_admin_asgard_components_component div.maintainers
 {
     width: 200px;
     float: right;
+}
+
+#content div.midgard_admin_asgard_components_component div.maintainers h3
+{
+    margin-top: 0px;
+    padding-top: 0px;
 }
 
 #content div.midgard_admin_asgard_components_component div.maintainers ul,

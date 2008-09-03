@@ -35,7 +35,9 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
     <h2><img src="<?php echo MIDCOM_STATIC_URL; ?>/&(component['icon']);" alt="" /> &(component['name']);</h2>
 
     <div class="meta">
-        <p class="version">&(component['version']);</p>
+        <p class="version">
+            <?php echo "<a href=\"http://{$GLOBALS['midcom_config']['pear_channel']}/index.php?package=" . str_replace('.', '_', $data['component']) . "&release={$component['version']}&downloads\">{$component['version']}</a>"; ?>
+        </p>
 
         <p class="description">&(component['title']);</p>
     </div>

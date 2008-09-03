@@ -532,6 +532,8 @@ $GLOBALS['midcom_config_default']['jquery_no_conflict'] = true;
 
 $GLOBALS['midcom_config_default']['auto_formatter'] = array();
 
+$GLOBALS['midcom_config_default']['pear_channel'] = 'ragnaroek.pear.midgard-project.org';
+
 /**
  * Sessioning service, disabling the service will help with external caches.
  * The second option is to allow logged in users to benefit from the service
