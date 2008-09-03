@@ -248,11 +248,11 @@ class midcom_helper_metadata
     {
       $return = false;
       if ($this->_set_property($key, $value))
-	{
-	  $return = $this->object->update();
-	  // Update the corresponding cache variable
-	  $this->on_update($key);
-	}
+    {
+      $return = $this->object->update();
+      // Update the corresponding cache variable
+      $this->on_update($key);
+    }
       return $return;
     }
 
@@ -265,22 +265,22 @@ class midcom_helper_metadata
     {
       $return = false;
       foreach ($properties as $key => $value)
-	{
-	  if (!$this->_set_property($key, $value))
-	    {
-	      return false;
-	      // this will exit
-	    }
-	}
+    {
+      if (!$this->_set_property($key, $value))
+        {
+          return false;
+          // this will exit
+        }
+    }
       if ($this->object->update())
-	{
-	  $return = true;
-	  // Update the corresponding cache variables
-	  foreach ($properties as $key => $value)
-	    {
-	      $this->on_update($key);
-	    }
-	}
+    {
+      $return = true;
+      // Update the corresponding cache variables
+      foreach ($properties as $key => $value)
+        {
+          $this->on_update($key);
+        }
+    }
       return $return;
     }
 
@@ -841,14 +841,25 @@ class midcom_helper_metadata
         {
             $user = $_MIDCOM->auth->user->guid;
         }
+        
+        if (   is_object($this->object)
+            && method_exists($this->object, 'lock'))
+        {
+            // This is the Midgard 8.09+ way for locking
+            return $this->object->lock();
+        }
+        
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Using legacy update() method for locking object, please update to Midgard 8.09", MIDCOM_LOG_WARN);
+        debug_pop();
 
-	$lock = Array
-	  (
-	   'locker' => $user, 
-	   'locked' => time() + $timeout * 60
-	   );
+        $lock = Array
+        (
+            'locker' => $user, 
+            'locked' => time() + $timeout * 60
+        );
 
-	return $this->set_multiple($lock);
+        return $this->set_multiple($lock);
     }
 
     /**
@@ -880,13 +891,25 @@ class midcom_helper_metadata
         {
             return false;
         }
-	
-	if ($soft_unlock)
-	  {
-	    $this->object->metadata->locked = 0;
-	    $this->object->metadata->locker = '';
-	    return true;
-	  }
+
+        if (   is_object($this->object)
+            && method_exists($this->object, 'unlock'))
+        {
+            // This is the Midgard 8.09+ way for locking
+            // TODO: Should we support soft unlock somehow?
+            return $this->object->unlock();
+        }
+        
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Using legacy update() method for unlocking object, please update to Midgard 8.09", MIDCOM_LOG_WARN);
+        debug_pop();
+
+        if ($soft_unlock)
+        {
+            $this->object->metadata->locked = 0;
+            $this->object->metadata->locker = '';
+            return true;
+        }
 
         if (!$this->set_multiple(Array('locked' => 0, 'locker' => '')))
         {
