@@ -27,26 +27,38 @@ require_once 'HTTP/Request.php';
  */
 class midcom_services_indexer_backend_solr extends midcom_services_indexer_backend
 {
+    /**
+     * The "index" to use (Solr has single index but we add this as query constraint as neccessary
+     */
+    var $_index_name = null;
 
     /**
      * The xml factory class
      * @var midcom_services_indexer_solrDocumentFactory
      */
     private $factory = null;
+
     /**
      * The http_request wrapper
      * @var midcom_services_indexer_solrRequest
      */
     private $request = null;
+
     /**
      * Constructor is empty at this time.
      */
-    function __construct()
+    function __construct($index_name = null)
     {
         parent::midcom_services_indexer_backend();
-        // Nothing to do yet.
-        //
-        $this->factory = new midcom_services_indexer_solrDocumentFactory;
+        if (is_null($index_name))
+        {
+            $this->_index_name = $GLOBALS['midcom_config']['indexer_index_name'];
+        }
+        else
+        {
+            $this->_index_name = $index_name;
+        }
+        $this->factory = new midcom_services_indexer_solrDocumentFactory($this->_index_name);
         $this->request = new midcom_services_indexer_solrRequest($this->factory);
     }
 
@@ -99,7 +111,7 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
     function delete_all()
     {
         $this->factory->delete_all();
-        return $this->request->execute();
+        return $this->request->execute(true);
     }
 
     /**
@@ -132,6 +144,10 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
         // FIXME: Make this configurable, even better: adapt the whole indexer system to fetching enable querying for counts and slices
         $maxrows = 1000;
         $url = "http://{$GLOBALS['midcom_config']['indexer_xmltcp_host']}:{$GLOBALS['midcom_config']['indexer_xmltcp_port']}/solr/select?q= " . urlencode($query) . "&fl=*,score&rows={$maxrows}";
+        if (!empty($this->_index_name))
+        {
+            $url .= '&fq=__INDEX_NAME:"' . rawurlencode($this->_index_name) . '"';
+        }
         if (isset($_REQUEST['debug'])) var_dump($url);
 
         $options = array();
@@ -143,8 +159,14 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
 
         $err = $request->sendRequest(true);
         $this->code = $request->getResponseCode();
-        if ($this->code != 200 || PEAR :: isError($err)) {
-            $msg = (is_object($err)) ? $err->getMessage() : "";
+        if (   $this->code != 200
+            || PEAR::isError($err))
+        {
+            $msg = '';
+            if (is_object($err))
+            {
+                $msg = $err->getMessage();
+            }
             debug_add("Failed to execute Request {$url}:{$this->code} {$msg}", MIDCOM_LOG_WARN);
             debug_pop();
             return false;
@@ -196,15 +218,28 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
  * @package midcom.services
  * @see midcom_services_indexer
  */
-class midcom_services_indexer_solrDocumentFactory {
+class midcom_services_indexer_solrDocumentFactory
+{
+    /**
+     * The "index" to use (Solr has single index but we add this as query constraint as neccessary
+     */
+    var $index_name = null;
 
     /**
      * The xml document to post.
      */
     var $document = null;
 
-    public function __construct()
+    public function __construct($index_name = null)
     {
+        if (is_null($index_name))
+        {
+            $this->index_name = $GLOBALS['midcom_config']['indexer_index_name'];
+        }
+        else
+        {
+            $this->index_name = $index_name;
+        }
         $this->xml = new DomDocument('1.0', 'UTF-8');
     }
 
@@ -224,11 +259,19 @@ class midcom_services_indexer_solrDocumentFactory {
         $element = $this->xml->createElement('doc');
         $this->xml->documentElement->appendChild($element);
         $field = $this->xml->createElement('field');
-        $field->setAttribute('name','RI');
+        $field->setAttribute('name', 'RI');
         $field->nodeValue = $document->RI;
         $element->appendChild($field);
+        if (!empty($this->index_name))
+        {
+            $field = $this->xml->createElement('field');
+            $field->setAttribute('name', '__INDEX_NAME');
+            $field->nodeValue = htmlspecialchars($this->index_name);
+            $element->appendChild($field);
+        }
 
-        foreach ($document->list_fields() as $field_name)  {
+        foreach ($document->list_fields() as $field_name)
+        {
             $field_record = $document->get_field_record($field_name);
             $field = $this->xml->createElement('field');
             $field->setAttribute('name', $field_record['name']);
@@ -268,6 +311,10 @@ class midcom_services_indexer_solrDocumentFactory {
         $query = $this->xml->createElement('delete');
         $element->appendChild($query);
         $query->nodeValue = "id:[ *TO* ]";
+        if (!empty($this->index_name))
+        {
+            $query->nodeValue .= ' AND __INDEX_NAME:"' . htmlspecialchars($this->_index_name) . '"';
+        }
     }
 
     /**
@@ -292,8 +339,8 @@ class midcom_services_indexer_solrDocumentFactory {
  *
  * @package midcom.services
  */
-class midcom_services_indexer_solrRequest {
-
+class midcom_services_indexer_solrRequest
+{
     /**
      * the HTTP_Request object
      */
@@ -304,19 +351,21 @@ class midcom_services_indexer_solrRequest {
      */
     var $factory = null;
 
-    function __construct ($factory) {
+    function __construct ($factory, $index_name = null)
+    {
         $this->factory = $factory;
     }
 
-    function execute() {
-        return $this->do_post($this->factory->to_xml());
-
+    function execute($optimize = false)
+    {
+        return $this->do_post($this->factory->to_xml(), $optimize);
     }
+
     
     /**
      * posts the xml to the suggested url using HTTP_Request.
      */
-    function do_post($xml)
+    function do_post($xml, $optimize = false)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $options = array();
@@ -343,7 +392,7 @@ class midcom_services_indexer_solrRequest {
             {
                 $errstr = $err->getMessage();
             }
-            debug_add("Failed to execute Request {$url}:{$this->code} {$errstr}", MIDCOM_LOG_WARN);
+            debug_add("Failed to execute request {$url}:{$this->code} {$errstr}", MIDCOM_LOG_WARN); 
             debug_add("Request content: \n$xml", MIDCOM_LOG_DEBUG);
             debug_pop();
             return false;
@@ -353,13 +402,42 @@ class midcom_services_indexer_solrRequest {
         $this->request->addHeader('Content-type', 'text/xml; charset=utf-8');
         $err = $this->request->sendRequest(true);
 
-        if ($this->request->getResponseCode() != 200 || PEAR :: isError($err))
+        if (   $this->request->getResponseCode() != 200
+            || PEAR::isError($err))
         {
-            debug_add("Failed to execute Request {$url}: {$err->getMessage()}", MIDCOM_LOG_WARN);
-            debug_add("Request content: \n$xml", MIDCOM_LOG_INFO);
+            $errstr = '';
+            if (is_a($err, 'PEAR_Error'))
+            {
+                $errstr = $err->getMessage();
+            }
+            debug_add("Failed to execute commit request {$url}: {$errstr}", MIDCOM_LOG_WARN); 
+            debug_add("Request content: \n$xml", MIDCOM_LOG_INFO); 
             debug_pop();
             return false;
         }
+
+        if ($optimize)
+        {
+            $this->request->addRawPostData('<optimize/>');
+            $this->request->addHeader('Accept-Charset', 'UTF-8');
+            $this->request->addHeader('Content-type', 'text/xml; charset=utf-8');
+            $err = $this->request->sendRequest(true);
+    
+            if (   $this->request->getResponseCode() != 200
+                || PEAR::isError($err))
+            {
+                $errstr = '';
+                if (is_a($err, 'PEAR_Error'))
+                {
+                    $errstr = $err->getMessage();
+                }
+                debug_add("Failed to execute optimize request {$url}: {$errstr}", MIDCOM_LOG_WARN); 
+                debug_add("Request content: \n$xml", MIDCOM_LOG_INFO); 
+                debug_pop();
+                return false;
+            }
+        }
+
         debug_add('POST ok');
         debug_pop();
         return true;
