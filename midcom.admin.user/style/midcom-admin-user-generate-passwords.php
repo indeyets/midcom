@@ -82,12 +82,12 @@ if (!isset($_GET['ajax-form']))
 ?>
 <script type="text/javascript">
     // <![CDATA[
-        $j('#midcom_admin_user_generated_passwords_form').submit(function()
+        jQuery('#midcom_admin_user_generated_passwords_form').submit(function()
         {
-            $j('#midcom_admin_user_generated_passwords_form').ajaxSubmit
+            jQuery('#midcom_admin_user_generated_passwords_form').ajaxSubmit
             (
                 {
-                    target : $j('#midcom_admin_user_generated_passwords_random')
+                    target : jQuery('#midcom_admin_user_generated_passwords_random')
                 }
             );
             return false;

@@ -1,36 +1,36 @@
 var ie6 = false;
 
-if (!$j)
+if (!jQuery)
 {
-    $j = jQuery.noConflict();
+    jQuery = jQuery.noConflict();
 }
-$j(document).ready(function()
+jQuery(document).ready(function()
 {
-    $j('<div></div>')
+    jQuery('<div></div>')
         .attr('id', 'midgard_admin_asgard_resizer')
-        .css('left', $j('#content').css('margin-left'))
+        .css('left', jQuery('#content').css('margin-left'))
         .mouseover(function()
         {
-            $j(this).addClass('hover');
+            jQuery(this).addClass('hover');
         })
         .mouseout(function()
         {
-            $j(this).removeClass('hover');
+            jQuery(this).removeClass('hover');
         })
         .appendTo('#container-wrapper');
     
-    $j('#midgard_admin_asgard_resizer').draggable({
+    jQuery('#midgard_admin_asgard_resizer').draggable({
         axis: 'axis-x',
         containment: '#container-wrapper',
         stop: function()
         {
-            var offset = $j(this).offset();
+            var offset = jQuery(this).offset();
             
             var navigation_width = offset.left - 36;
             var content_margin_left = offset.left + 6;
             
-            $j('#navigation').css('width', navigation_width + 'px');
-            $j('#content').css('margin-left', content_margin_left + 'px');
+            jQuery('#navigation').css('width', navigation_width + 'px');
+            jQuery('#content').css('margin-left', content_margin_left + 'px');
             
             
             jQuery.post(MIDGARD_ROOT + '__mfa/asgard/preferences/ajax/', {offset: offset.left});

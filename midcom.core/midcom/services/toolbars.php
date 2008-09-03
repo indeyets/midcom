@@ -314,15 +314,23 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             $topic = $_MIDCOM->get_context_data($context_id, MIDCOM_CONTEXT_CONTENTTOPIC);
         }
 
-        if (!$topic)
+        if (   !$topic
+            || !$topic->guid)
         {
             return false;
         }
 
-        if (! is_a($topic, 'midcom_baseclasses_database_topic'))
+        if (!is_a($topic, 'midcom_baseclasses_database_topic'))
         {
             // Force-Cast to DBA object
             $topic = new midcom_db_topic($topic->id);
+        }
+
+        // Bullet-proof
+        if (   !$topic
+            || !$topic->guid)
+        {
+            return false;
         }
 
         if (   $topic->can_do('midgard:update')
@@ -350,15 +358,19 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             );
             // TEMPORARY CODE END
 
-            $toolbar->add_item
-            (
-                array
+            // Allow to move other than root folder
+            if ($topic->guid !== $GLOBALS['midcom_config']['midcom_root_topic_guid'])
+            {
+                $toolbar->add_item
                 (
-                    MIDCOM_TOOLBAR_URL => "__ais/folder/move/{$topic->guid}.html",
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('move', 'midcom.admin.folder'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/save-as.png',
-                )
-            );
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => "__ais/folder/move/{$topic->guid}.html",
+                        MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('move', 'midcom.admin.folder'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/save-as.png',
+                    )
+                );
+            }
 
             $toolbar->add_item
             (
@@ -469,7 +481,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 )
             );
         }
-        if (   $topic->guid != $GLOBALS['midcom_config']['midcom_root_topic_guid']
+        if (   $topic->guid !== $GLOBALS['midcom_config']['midcom_root_topic_guid']
             && $topic->can_do('midgard:delete')
             && $topic->can_do('midcom.admin.folder:topic_management'))
         {

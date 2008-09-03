@@ -13,18 +13,18 @@
         var image_down = "arrow-down.gif";
         var image_none = "arrow-none.gif";
         
-        $j(document).ready(function()
+        jQuery(document).ready(function()
         {
-            $j('#net_nehmer_account_pending_table').tablesorter(
+            jQuery('#net_nehmer_account_pending_table').tablesorter(
             {
                 headers: {0: {sorter: false}},
                 widgets: ['column_highlight'],
                 sortList: [[1,0]]
             });
 
-            $j("#net_nehmer_account_pending_table tbody input[@type='checkbox']").each(function(i)
+            jQuery("#net_nehmer_account_pending_table tbody input[@type='checkbox']").each(function(i)
             {
-                $j(this).change(function()
+                jQuery(this).change(function()
                 {
                     var object = this.parentNode;
                     var n = 0;
@@ -40,13 +40,13 @@
                         }
                     }
                     
-                    if ($j(this).attr('checked'))
+                    if (jQuery(this).attr('checked'))
                     {
-                        $j(object).addClass('row_selected');
+                        jQuery(object).addClass('row_selected');
                     }
                     else
                     {
-                        $j(object).removeClass('row_selected');
+                        jQuery(object).removeClass('row_selected');
                     }
                 });
             });

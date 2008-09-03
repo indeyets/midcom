@@ -1,63 +1,63 @@
 jQuery.fn.check_all = function(target)
 {
-    var checked = $j(this).attr('checked') ? true : false;
+    var checked = jQuery(this).attr('checked') ? true : false;
     
-    $j(target).find("input[@type='checkbox']").each(function(i)
+    jQuery(target).find("input[@type='checkbox']").each(function(i)
     {
         // Skip the write protected
-        if ($j(this).attr('disabled'))
+        if (jQuery(this).attr('disabled'))
         {
             return;
         }
         
         if (checked)
         {
-            $j(this).attr('checked', 'checked');
+            jQuery(this).attr('checked', 'checked');
         }
         else
         {
-            $j(this).attr('checked', '');
+            jQuery(this).attr('checked', '');
         }
         
         // Trigger the onChange event of the input
-        $j(this).change();
+        jQuery(this).change();
     });
 }
 
 jQuery.fn.invert_selection = function(target)
 {
-    $j(target).find("input[@type='checkbox']").each(function(i)
+    jQuery(target).find("input[@type='checkbox']").each(function(i)
     {
         // Skip the write protected
-        if ($j(this).attr('disabled'))
+        if (jQuery(this).attr('disabled'))
         {
             return;
         }
         
-        if ($j(this).attr('checked'))
+        if (jQuery(this).attr('checked'))
         {
-            $j(this).attr('checked', '');
+            jQuery(this).attr('checked', '');
         }
         else
         {
-            $j(this).attr('checked', 'checked');
+            jQuery(this).attr('checked', 'checked');
         }
         
         // Trigger the onChange event of the input
-        $j(this).change();
+        jQuery(this).change();
     });
     
-    $j(this).attr('checked', '');
+    jQuery(this).attr('checked', '');
 }
 
-$j(document).ready(function()
+jQuery(document).ready(function()
 {
-    $j('#batch_process tbody tr').find('td:first').addClass('first');
-    $j('#batch_process tbody tr').find('td:last').addClass('last');
+    jQuery('#batch_process tbody tr').find('td:first').addClass('first');
+    jQuery('#batch_process tbody tr').find('td:last').addClass('last');
     
-    $j("#batch_process tbody input[@type='checkbox']").each(function(i)
+    jQuery("#batch_process tbody input[@type='checkbox']").each(function(i)
     {
-        $j(this).change(function()
+        jQuery(this).change(function()
         {
             var object = this.parentNode;
             var n = 0;
@@ -73,13 +73,13 @@ $j(document).ready(function()
                 }
             }
             
-            if ($j(this).attr('checked'))
+            if (jQuery(this).attr('checked'))
             {
-                $j(object).addClass('row_selected');
+                jQuery(object).addClass('row_selected');
             }
             else
             {
-                $j(object).removeClass('row_selected');
+                jQuery(object).removeClass('row_selected');
             }
         });
     });

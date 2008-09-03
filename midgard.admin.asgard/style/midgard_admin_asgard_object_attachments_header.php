@@ -75,7 +75,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             echo "</form>\n";
             echo "<script type=\"text/javascript\">\n";
             echo "// <![CDATA[\n";
-            echo "\$j('#attachment_table').tablesorter(\n";
+            echo "\jQuery('#attachment_table').tablesorter(\n";
             echo "  {\n";
             echo "      widgets: ['zebra'],\n";
             echo "      sortList: [[0,0]]\n";

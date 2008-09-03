@@ -21,7 +21,7 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
      *
      * @access public
      */
-    public function midcom_admin_folder_handler_order ()
+    function midcom_admin_folder_handler_order ()
     {
         parent::midcom_baseclasses_components_handler();
     }
@@ -157,7 +157,9 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
      */
     function _handler_order($handler_id, $args, &$data)
     {
-        // Include Scriptaculous JavaScript libraries to headers
+        // jQuery sorting
+        $_MIDCOM->enable_jquery();
+        
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/jquery.dimensions-1.1.2.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/jquery.form-1.0.3.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/ui/ui.mouse.js');
@@ -350,7 +352,7 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
      * @param int $int    Integer
      * @return string     String filled with leading zeros
      */
-    private function _get_score($int)
+    function _get_score($int)
     {
         $string = (string) $int;
 

@@ -23,9 +23,9 @@ foreach ($data['label_mapping'] as $type => $label)
 </form>
 <script type="text/javascript">
     // <![CDATA[
-        $j('#midgard_admin_asgard_navigation_form input[@type="submit"]').css({display:'none'});
+        jQuery('#midgard_admin_asgard_navigation_form input[@type="submit"]').css({display:'none'});
         
-        $j('#midgard_admin_asgard_navigation_chooser').change(function()
+        jQuery('#midgard_admin_asgard_navigation_chooser').change(function()
         {
             if (!this.value)
             {
@@ -33,7 +33,7 @@ foreach ($data['label_mapping'] as $type => $label)
             }
             else
             {
-                window.location = '<?php echo "{$_MIDGARD['self']}__mfa/asgard/"; ?>' + $j(this).attr('value') + '/';
+                window.location = '<?php echo "{$_MIDGARD['self']}__mfa/asgard/"; ?>' + jQuery(this).attr('value') + '/';
             }
         });
     // ]]>

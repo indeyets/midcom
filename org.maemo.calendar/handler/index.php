@@ -121,22 +121,22 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
                 $this->_request_data['maemo_calender']->cell_height = $this->_config->get('week_row_height');
                 $this->_request_data['maemo_calender']->cell_height_unit = $this->_config->get('week_row_unit');
                 $this->_request_data['maemo_calender']->calendar_slot_length = $this->_config->get('week_slot_length') * 60;
-                $script = '$j("div.calendar-timeline-holder")[0].scrollTop = calendar_config["start_hour_x"];' ."\n";
-                $script .= '$j("body").attr("class", "week");' ."\n";
+                $script = 'jQuery("div.calendar-timeline-holder")[0].scrollTop = calendar_config["start_hour_x"];' ."\n";
+                $script .= 'jQuery("body").attr("class", "week");' ."\n";
                 $_MIDCOM->add_jquery_state_script($script);
             break;
             case ORG_MAEMO_CALENDARWIDGET_DAY:
                 $this->_request_data['maemo_calender']->cell_height = $this->_config->get('week_row_height');
                 $this->_request_data['maemo_calender']->cell_height_unit = $this->_config->get('week_row_unit');
                 $this->_request_data['maemo_calender']->calendar_slot_length = $this->_config->get('week_slot_length') * 60;
-                $script = '$j("div.calendar-timeline-holder")[0].scrollTop = calendar_config["start_hour_x"];' ."\n";
-                $script .= '$j("body").attr("class", "day");' ."\n";
+                $script = 'jQuery("div.calendar-timeline-holder")[0].scrollTop = calendar_config["start_hour_x"];' ."\n";
+                $script .= 'jQuery("body").attr("class", "day");' ."\n";
                 $_MIDCOM->add_jquery_state_script($script);
             break;
             case ORG_MAEMO_CALENDARWIDGET_MONTH:
                 $this->_request_data['maemo_calender']->calendar_slot_length = $this->_config->get('month_slot_length') * 60;
                 $this->_request_data['maemo_calender']->column_width = $this->_config->get('month_column_width');
-                $script = '$j("body").attr("class", "month");' ."\n";
+                $script = 'jQuery("body").attr("class", "month");' ."\n";
                 $_MIDCOM->add_jquery_state_script($script);
             break;
         }

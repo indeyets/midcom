@@ -93,11 +93,11 @@ if ($position === 'absolute')
 ?>
 <script type="text/javascript">
     // <![CDATA[
-        $j('#toolbar')
+        jQuery('#toolbar')
             .draggable({
                 stop: function()
                 {
-                    var offset = $j('#toolbar').offset();
+                    var offset = jQuery('#toolbar').offset();
                     jQuery.post(MIDCOM_PAGE_PREFIX + '__mfa/asgard/preferences/ajax/',
                     {
                         toolbar_x: offset.left,

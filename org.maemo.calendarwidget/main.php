@@ -965,7 +965,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
                 $create_date = mktime($hour, $minutes, 0, date('m',$current_day), date('d',$current_day), date('Y',$current_day));
                 $next_day = mktime(0, 0, 0, date('m',$current_day), date('d',$current_day) + 1, date('Y',$current_day));
 
-                // $onclick = '$j(\'#calendar-modal-window\').jqm({ajax: \'/event/create/' . $create_date . '\', modal: true, ';
+                // $onclick = 'jQuery(\'#calendar-modal-window\').jqm({ajax: \'/event/create/' . $create_date . '\', modal: true, ';
                 // $onclick .= 'onHide: function(h){h.o.remove();h.w.fadeOut(888);finishCalendarLoad(\'calendar-holder\')}, overlay: 0, ';
                 // $onclick .= 'onLoad: function(h){$j.ajaxSetup({global: false})} });
                 // } });';
@@ -976,7 +976,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
 
                 // $this->_jscripts .= '$j' . "('#calendar-loading').jqm({ajax: '/event/create/" . $create_date . "'});\n";
 
-                // $this->_jscripts .= 'var jqmod = $j("#calendar-loading").jqm();';
+                // $this->_jscripts .= 'var jqmod = jQuery("#calendar-loading").jqm();';
                 // $this->_jscripts .= 'console.log("jqmod: "+jqmod);';
 
                 $class_name = '';       
@@ -1505,7 +1505,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
                                     
             $menu_items_str = implode(",",$menu_items);
             
-            $this->_jscripts .= '$j("#calendar-layer-' . $layer_tag . ' #' . $event_element_id . '").eventToolbar({' . $toolbar_config . '},['.$menu_items_str.']);'."\n";
+            $this->_jscripts .= 'jQuery("#calendar-layer-' . $layer_tag . ' #' . $event_element_id . '").eventToolbar({' . $toolbar_config . '},['.$menu_items_str.']);'."\n";
         }
         else
         {

@@ -32,7 +32,7 @@ echo "</h2>";
 </table>
 <script type="text/javascript">
      // <![CDATA[
-        $j('#deleted').tablesorter(
+        jQuery('#deleted').tablesorter(
         {
             widgets: ['zebra'],
             sortList: [[0,0]]

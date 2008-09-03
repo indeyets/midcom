@@ -11,12 +11,12 @@ if ($data['handler_id'] === '____mfa-asgard_midcom.admin.user-user_edit_password
 </div>
 <script type="text/javascript">
     // <![CDATA[
-        $j('#midcom_admin_user_passwords a')
+        jQuery('#midcom_admin_user_passwords a')
             .attr('href', '#')
             .attr('target', '_self')
             .click(function()
             {
-                $j(this.parentNode).load('&(prefix);__mfa/asgard_midcom.admin.user/password/?ajax&timestamp=<?php echo time(); ?>');
+                jQuery(this.parentNode).load('&(prefix);__mfa/asgard_midcom.admin.user/password/?ajax&timestamp=<?php echo time(); ?>');
             });
     // ]]>
 </script>

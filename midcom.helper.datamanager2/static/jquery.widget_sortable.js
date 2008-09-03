@@ -1,26 +1,26 @@
 jQuery.fn.create_sortable = function()
 {
     // Hide the inputs
-    $j(this).find('input[@type="text"]').css({display: 'none'});
+    jQuery(this).find('input[@type="text"]').css({display: 'none'});
     
-    $j(this).each(function(i)
+    jQuery(this).each(function(i)
     {
-        $j(this).sortable({
+        jQuery(this).sortable({
             containment: 'parent',
             change: function(e, ui)
             {
                 // Update all the text inputs to keep track on the changes
-                $j(this.parentNode).find('input[@type="text"]').each(function(i)
+                jQuery(this.parentNode).find('input[@type="text"]').each(function(i)
                 {
-                    $j(this).attr('value', i + 1);
+                    jQuery(this).attr('value', i + 1);
                 });
             }
         });
     });
 }
 
-$j(document).ready(function()
+jQuery(document).ready(function()
 {
-    $j('body p.sortable-help').css({display: 'none !important'});
-    $j('body p.sortable-help-jquery').css({display: 'block !important'});
+    jQuery('body p.sortable-help').css({display: 'none !important'});
+    jQuery('body p.sortable-help-jquery').css({display: 'block !important'});
 });

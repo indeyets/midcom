@@ -17,10 +17,10 @@ if (count($data['persons']) > 0)
             <tr>
                 <td colspan="<?php echo count($data['list_fields']) + 1; ?>">
                     <label for="select_all">
-                        <input type="checkbox" name="select_all" id="select_all" value="" onclick="$j(this).check_all('#midcom_admin_user_batch_process table tbody');" /> <?php echo $_MIDCOM->i18n->get_string('select all', 'midcom.admin.user');; ?>
+                        <input type="checkbox" name="select_all" id="select_all" value="" onclick="jQuery(this).check_all('#midcom_admin_user_batch_process table tbody');" /> <?php echo $_MIDCOM->i18n->get_string('select all', 'midcom.admin.user');; ?>
                     </label>
                     <label for="invert_selection">
-                        <input type="checkbox" name="invert_selection" id="invert_selection" value="" onclick="$j(this).invert_selection('#midcom_admin_user_batch_process table tbody');" /> <?php echo $_MIDCOM->i18n->get_string('invert selection', 'midcom.admin.user');; ?>
+                        <input type="checkbox" name="invert_selection" id="invert_selection" value="" onclick="jQuery(this).invert_selection('#midcom_admin_user_batch_process table tbody');" /> <?php echo $_MIDCOM->i18n->get_string('invert selection', 'midcom.admin.user');; ?>
                     </label>
                 </td>
             </tr>
@@ -61,41 +61,41 @@ if (count($data['persons']) > 0)
     <script type="text/javascript">
         // <![CDATA[
             var active = null;
-            $j('#midcom_admin_user_action').change(function()
+            jQuery('#midcom_admin_user_action').change(function()
             {
                 if (active)
                 {
-                    $j(active).css({display: 'none'});
+                    jQuery(active).css({display: 'none'});
                 }
 
-                $j(this).attr('value');
-                switch ($j(this).attr('value'))
+                jQuery(this).attr('value');
+                switch (jQuery(this).attr('value'))
                 {
                     case 'passwords':
                         active = '#midcom_admin_user_action_passwords';
 
                         if (document.getElementById('midcom_admin_user_action_passwords'))
                         {
-                            $j('#midcom_admin_user_action_passwords').css({display:'block'});
+                            jQuery('#midcom_admin_user_action_passwords').css({display:'block'});
                             break;
                         }
 
-                        $j('<div></div>')
+                        jQuery('<div></div>')
                             .attr('id', 'midcom_admin_user_action_passwords')
                             .appendTo('#midcom_admin_user_batch_process');
 
                         // Load the form for outputting the style
-                        $j('#midcom_admin_user_action_passwords').load('&(prefix);__mfa/asgard_midcom.admin.user/password/batch/?ajax&timestamp=<?php echo time(); ?>');
+                        jQuery('#midcom_admin_user_action_passwords').load('&(prefix);__mfa/asgard_midcom.admin.user/password/batch/?ajax&timestamp=<?php echo time(); ?>');
 
-                        $j('#midcom_admin_user_batch_process').submit(function()
+                        jQuery('#midcom_admin_user_batch_process').submit(function()
                         {
                             var action = '&(prefix);__mfa/asgard_midcom.admin.user/password/batch/?ajax';
-                            $j(this).attr('action', action);
+                            jQuery(this).attr('action', action);
                         });
                         break;
 
                     case 'groupadd':
-                        $j('#midcom_admin_user_group').css({display: 'inline'});
+                        jQuery('#midcom_admin_user_group').css({display: 'inline'});
                         active = '#midcom_admin_user_group';
                         break;
 
@@ -103,16 +103,16 @@ if (count($data['persons']) > 0)
                         active = null;
 
                         // Return the original submit functionality
-                        $j('#midcom_admin_user_batch_process').submit(function()
+                        jQuery('#midcom_admin_user_batch_process').submit(function()
                         {
                             var action = '&(prefix);__mfa/asgard_midcom.admin.user/';
-                            $j(this).attr('action', action);
+                            jQuery(this).attr('action', action);
 
                             return true;
                         });
                 }
             });
-            $j('#midcom_admin_user_batch_process table').tablesorter(
+            jQuery('#midcom_admin_user_batch_process table').tablesorter(
             {
                 headers: {0: {sorter: false}},
                 widgets: ['zebra'],

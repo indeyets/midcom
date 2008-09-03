@@ -40,8 +40,8 @@ class org_maemo_calendarpanel extends midcom_baseclasses_components_purecode
         // Load required Javascript files
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.maemo.calendarpanel/js/panel.js');
 
-        //$script = '$j(\'#main-panel-content\').animate({ height: \'toggle\' }, \'fast\');';
-        $script = '$j(\'#main-panel-content\').toggle();';
+        //$script = 'jQuery(\'#main-panel-content\').animate({ height: \'toggle\' }, \'fast\');';
+        $script = 'jQuery(\'#main-panel-content\').toggle();';
         $_MIDCOM->add_jquery_state_script($script);
     }
     
@@ -55,9 +55,9 @@ class org_maemo_calendarpanel extends midcom_baseclasses_components_purecode
         
         echo '<div id="main-panel" class="panel" style="' . $style . '">'."\n";
         
-        //$onclick_action = '$j(\'#main-panel-content\').BlindToggleVertically(300, null, \'bounceout\');return false;';
-        //$onclick_action = '$j(\'#main-panel-content\').animate({ height: \'toggle\' }, \'fast\');';
-        $onclick_action = '$j(\'#main-panel-content\').toggle();';
+        //$onclick_action = 'jQuery(\'#main-panel-content\').BlindToggleVertically(300, null, \'bounceout\');return false;';
+        //$onclick_action = 'jQuery(\'#main-panel-content\').animate({ height: \'toggle\' }, \'fast\');';
+        $onclick_action = 'jQuery(\'#main-panel-content\').toggle();';
         echo '   <div id="main-panel-header" class="panel-header" onclick="' . $onclick_action . '">'."\n";
         echo '      <span>' . $this->_l10n->get('toggle panel') . '</span>'."\n";
         echo '   </div>'."\n";

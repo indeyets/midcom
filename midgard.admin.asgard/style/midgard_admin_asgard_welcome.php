@@ -139,10 +139,10 @@ if (count($data['revised']) > 0)
     echo "            <tr>\n";
     echo "            <td colspan=\"5\">\n";
     echo "                <label for=\"select_all\">\n";
-    echo "                    <input type=\"checkbox\" name=\"select_all\" id=\"select_all\" value=\"\" onclick=\"\$j(this).check_all('#batch_process tbody');\" />" . $_MIDCOM->i18n->get_string('select all', 'midgard.admin.asgard');
+    echo "                    <input type=\"checkbox\" name=\"select_all\" id=\"select_all\" value=\"\" onclick=\"\jQuery(this).check_all('#batch_process tbody');\" />" . $_MIDCOM->i18n->get_string('select all', 'midgard.admin.asgard');
     echo "                </label>\n";
     echo "                <label for=\"invert_selection\">\n";
-    echo "                    <input type=\"checkbox\" name=\"invert_selection\" id=\"invert_selection\" value=\"\" onclick=\"\$j(this).invert_selection('#batch_process tbody');\" />" . $_MIDCOM->i18n->get_string('invert selection', 'midgard.admin.asgard');
+    echo "                    <input type=\"checkbox\" name=\"invert_selection\" id=\"invert_selection\" value=\"\" onclick=\"\jQuery(this).invert_selection('#batch_process tbody');\" />" . $_MIDCOM->i18n->get_string('invert selection', 'midgard.admin.asgard');
     echo "                </label>\n";
     echo "            </td>\n";
     echo "        </tr>\n";
@@ -198,7 +198,7 @@ if (count($data['revised']) > 0)
     echo "</table>\n";
     echo "<script type=\"text/javascript\">\n";
     echo "        // <![CDATA[\n";
-    echo "            \$j('#batch_process').tablesorter(\n";
+    echo "            \jQuery('#batch_process').tablesorter(\n";
     echo "            {\n ";
     echo "                widgets: ['zebra'],\n";
     echo "                sortList: [[1,0]]\n";
@@ -269,7 +269,7 @@ else
         echo "</table>\n";
         echo "<script type=\"text/javascript\">\n";
         echo "        // <![CDATA[\n";
-        echo "            \$j('#last_visited').tablesorter(\n";
+        echo "            \jQuery('#last_visited').tablesorter(\n";
         echo "            {\n ";
         echo "                widgets: ['zebra'],\n";
         echo "            });\n";
