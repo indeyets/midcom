@@ -659,7 +659,24 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
         }
         $ref = $this->get($schema_type);
         $qb->add_order('sitegroup', 'DESC');
-        $qb->add_order($ref->get_label_property());
+        
+        $label_property = $ref->get_label_property();
+        if (   is_string($label_property)
+            && property_exists($schema_type, $label_property))
+        {
+            $qb->add_order($label_property);
+        }
+        elseif (is_array($label_property))
+        {
+            foreach ($label_property as $prop)
+            {
+                if (!property_exists($schema_type, $prop))
+                {
+                    continue;
+                }
+                $qb->add_order($prop);
+            }
+        }
         $objects = $qb->execute();
 
         return $objects;
