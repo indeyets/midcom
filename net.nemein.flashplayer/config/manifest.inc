@@ -10,7 +10,7 @@
     'description' => 'Player and playlist for flash videos and photos',
     'maintainers' => array
     (
-        'bergie' => array
+        'w_i' => array
         (
             'name' => 'Jerry Jalava',
             'email' => 'jerry.jalava@gmail.com',

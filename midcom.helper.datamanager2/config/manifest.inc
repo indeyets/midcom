@@ -1,5 +1,5 @@
 'name' => 'midcom.helper.datamanager2',
-'version' => '1.1.0beta1',
+'version' => '1.1.0beta2',
 'state' => 'beta',
 'purecode' => true,
 'package.xml' => array
