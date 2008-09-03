@@ -15,7 +15,7 @@ class net_nemein_ping_interface extends midcom_baseclasses_components_interface
     
     function net_nemein_ping_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'net.nemein.ping';
         $this->_purecode = true;

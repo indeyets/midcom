@@ -16,7 +16,7 @@ class no_odindata_quickform_interface extends midcom_baseclasses_components_inte
 {
     function no_odindata_quickform_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'no.odindata.quickform';
         $this->_autoload_files = array

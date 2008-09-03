@@ -21,7 +21,7 @@ class org_openpsa_notifications_interface extends midcom_baseclasses_components_
      */
     function __construct()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'org.openpsa.notifications';
     }

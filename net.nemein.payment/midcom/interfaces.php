@@ -20,7 +20,7 @@ class net_nemein_payment_interface extends midcom_baseclasses_components_interfa
     
     function net_nemein_payment_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'net.nemein.payment';
         $this->_purecode = true;

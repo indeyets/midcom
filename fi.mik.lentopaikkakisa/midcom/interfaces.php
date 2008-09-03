@@ -22,7 +22,7 @@ class fi_mik_lentopaikkakisa_interface extends midcom_baseclasses_components_int
      */
     function fi_mik_lentopaikkakisa_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'fi.mik.lentopaikkakisa';
         $this->_autoload_files = Array

@@ -20,7 +20,7 @@ class net_nemein_netmon_interface extends midcom_baseclasses_components_interfac
      */
     function net_nemein_netmon_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'net.nemein.netmon';
 
         // We need classes from here to extend from, thus we need to load it here and now

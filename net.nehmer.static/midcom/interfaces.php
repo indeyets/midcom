@@ -31,7 +31,7 @@ class net_nehmer_static_interface extends midcom_baseclasses_components_interfac
      */
     function net_nehmer_static_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'net.nehmer.static';
         $this->_autoload_libraries = Array

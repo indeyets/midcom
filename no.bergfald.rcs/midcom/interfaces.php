@@ -14,7 +14,7 @@ class no_bergfald_rcs_interface extends midcom_baseclasses_components_interface
 
     function no_bergfald_rcs_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'no.bergfald.rcs';
         $this->_purecode = true;

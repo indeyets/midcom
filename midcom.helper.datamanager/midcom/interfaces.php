@@ -18,7 +18,7 @@ class midcom_helper_datamanager_interface extends midcom_baseclasses_components_
      */
     function midcom_helper_datamanager_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'midcom.helper.datamanager';
         $this->_autoload_files = array

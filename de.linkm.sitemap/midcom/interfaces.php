@@ -22,7 +22,7 @@ class de_linkm_sitemap_interface extends midcom_baseclasses_components_interface
      */
     function de_linkm_sitemap_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'de.linkm.sitemap';
         $this->_autoload_files = array

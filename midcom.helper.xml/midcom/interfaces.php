@@ -19,7 +19,7 @@ class midcom_helper_xml_interface extends midcom_baseclasses_components_interfac
      */
     function midcom_helper_xml_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'midcom.helper.xml';
         $this->_autoload_files = Array

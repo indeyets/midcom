@@ -18,7 +18,7 @@ class org_openpsa_qbpager_interface extends midcom_baseclasses_components_interf
 
     function __construct()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'org.openpsa.qbpager';
         $this->_purecode = true;

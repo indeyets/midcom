@@ -34,7 +34,7 @@ class net_nehmer_buddylist_interface extends midcom_baseclasses_components_inter
      */
     function net_nehmer_buddylist_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         define ('NET_NEHMER_BUDDYLIST_LEAFID_PENDING', 1);
 

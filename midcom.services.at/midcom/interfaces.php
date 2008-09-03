@@ -59,7 +59,7 @@ class midcom_services_at_interface extends midcom_baseclasses_components_interfa
      */
     function midcom_services_at_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         define ('MIDCOM_SERVICES_AT_STATUS_SCHEDULED', 100);
         define ('MIDCOM_SERVICES_AT_STATUS_RUNNING', 110);

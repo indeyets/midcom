@@ -24,7 +24,7 @@ class midcom_helper_search_interface extends midcom_baseclasses_components_inter
      */
     function midcom_helper_search_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'midcom.helper.search';
         $this->_autoload_files = Array('viewer.php', 'navigation.php');

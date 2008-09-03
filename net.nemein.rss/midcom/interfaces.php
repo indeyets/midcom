@@ -21,7 +21,7 @@ class net_nemein_rss_interface extends midcom_baseclasses_components_interface
      */
     function net_nemein_rss_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'net.nemein.rss';
     }

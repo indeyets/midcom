@@ -19,7 +19,7 @@ class midgard_admin_sitegroup_interface extends midcom_baseclasses_components_in
      */
     function midgard_admin_sitegroup_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'midgard.admin.sitegroup';
         $this->_autoload_files = Array

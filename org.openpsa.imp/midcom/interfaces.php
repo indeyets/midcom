@@ -16,7 +16,7 @@ class org_openpsa_imp_interface extends midcom_baseclasses_components_interface
 
     function org_openpsa_imp_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'org.openpsa.imp';
         $this->_autoload_files = array(

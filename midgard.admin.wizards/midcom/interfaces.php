@@ -20,7 +20,7 @@ class midgard_admin_wizards_interface extends midcom_baseclasses_components_inte
      */
     function midgard_admin_wizards_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'midgard.admin.wizards';
 
         // Load all mandatory class files of the component here

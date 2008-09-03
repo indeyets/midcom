@@ -20,7 +20,7 @@ class midgard_webdav_styles_interface extends midcom_baseclasses_components_inte
      */
     function midgard_webdav_styles_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'midgard.webdav.styles';
 
         // Load all mandatory class files of the component here

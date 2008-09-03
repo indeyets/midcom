@@ -16,7 +16,7 @@ class net_nemein_bannedwords_interface extends midcom_baseclasses_components_int
     */
     function net_nemein_bannedwords_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'net.nemein.bannedwords';
         $this->_autoload_files = array

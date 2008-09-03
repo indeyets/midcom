@@ -21,7 +21,7 @@ class net_nemein_supportview_interface extends midcom_baseclasses_components_int
      */
     function net_nemein_supportview_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'net.nemein.supportview';
         $this->_autoload_files = Array('viewer.php', 'navigation.php');

@@ -21,7 +21,7 @@ class net_nemein_bookmarks_interface extends midcom_baseclasses_components_inter
      */
     function net_nemein_bookmarks_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'net.nemein.bookmarks';
         $this->_autoload_files = Array('viewer.php', 'navigation.php', 'helpers.php');

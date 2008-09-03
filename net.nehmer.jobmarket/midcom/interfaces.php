@@ -44,7 +44,7 @@ class net_nehmer_jobmarket_interface extends midcom_baseclasses_components_inter
      */
     function net_nehmer_jobmarket_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         define ('NET_NEHMER_JOBMARKET_LEAFID_SUBMIT', 1);
         define ('NET_NEHMER_JOBMARKET_LEAFID_SELF_OFFERS', 2);

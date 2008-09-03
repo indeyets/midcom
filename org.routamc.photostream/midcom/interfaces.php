@@ -18,7 +18,7 @@ class org_routamc_photostream_interface extends midcom_baseclasses_components_in
      */
     function org_routamc_photostream_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'org.routamc.photostream';
         $this->_autoload_files = array();
         $this->_autoload_libraries = array

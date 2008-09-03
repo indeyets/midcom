@@ -20,7 +20,7 @@ class fi_hut_htmlimport_interface extends midcom_baseclasses_components_interfac
      */
     function fi_hut_htmlimport_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'fi.hut.htmlimport';
         $this->_purecode = true;
         $this->_autoload_files = array

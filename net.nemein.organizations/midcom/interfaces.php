@@ -21,7 +21,7 @@ class net_nemein_organizations_interface extends midcom_baseclasses_components_i
      */
     function net_nemein_organizations_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'net.nemein.organizations';
         $this->_autoload_files = array

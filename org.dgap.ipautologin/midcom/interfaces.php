@@ -20,7 +20,7 @@ class org_dgap_ipautologin_interface extends midcom_baseclasses_components_inter
      */
     function org_dgap_ipautologin_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'org.dgap.ipautologin';
         $this->_purecode = true;
         $this->_autoload_files = array

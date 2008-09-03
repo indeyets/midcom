@@ -20,7 +20,7 @@ class midgard_admin_asgard_interface extends midcom_baseclasses_components_inter
      */
     function midgard_admin_asgard_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'midgard.admin.asgard';
         $this->_purecode = true;
         $this->_autoload_files = array

@@ -16,7 +16,7 @@ class de_bitfolge_feedcreator_interface extends midcom_baseclasses_components_in
     
     function de_bitfolge_feedcreator_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'de.bitfolge.feedcreator';
         $this->_purecode = true;

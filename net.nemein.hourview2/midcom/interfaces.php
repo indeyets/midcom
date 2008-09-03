@@ -24,7 +24,7 @@ class net_nemein_hourview2_interface extends midcom_baseclasses_components_inter
      */
     function net_nemein_hourview2_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'net.nemein.hourview2';
         $this->_autoload_files = Array

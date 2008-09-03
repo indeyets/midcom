@@ -20,7 +20,7 @@ class fi_hut_staticdumps_interface extends midcom_baseclasses_components_interfa
      */
     function fi_hut_staticdumps_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'fi.hut.staticdumps';
         $this->_purecode = true;
         $this->_autoload_files = array

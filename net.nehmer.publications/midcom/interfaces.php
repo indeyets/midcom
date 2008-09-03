@@ -22,7 +22,7 @@ class net_nehmer_publications_interface extends midcom_baseclasses_components_in
      */
     function net_nehmer_publications_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         define('NET_NEHMER_PUBLICATIONS_LEAFID_ARCHIVE', 1);
         define('NET_NEHMER_PUBLICATIONS_LEAFID_FEEDS', 2);

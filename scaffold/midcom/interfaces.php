@@ -20,7 +20,7 @@ class ${module_class}_interface extends midcom_baseclasses_components_interface
      */
     function ${module_class}_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = '${module}';
 
         // Load all mandatory class files of the component here

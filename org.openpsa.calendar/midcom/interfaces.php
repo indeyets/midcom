@@ -17,7 +17,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
 
     function __construct()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'org.openpsa.calendar';
         $this->_autoload_class_definitions = array('midcom_dba_classes.inc');

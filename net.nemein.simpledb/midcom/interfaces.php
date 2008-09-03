@@ -21,7 +21,7 @@ class net_nemein_simpledb_interface extends midcom_baseclasses_components_interf
      */
     function net_nemein_simpledb_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'net.nemein.simpledb';
         $this->_autoload_files = Array('viewer.php', 'navigation.php');

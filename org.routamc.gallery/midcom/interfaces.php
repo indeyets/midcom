@@ -18,7 +18,7 @@ class org_routamc_gallery_interface extends midcom_baseclasses_components_interf
      */
     function org_routamc_gallery_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'org.routamc.gallery';
         $this->_autoload_files = Array();
         $this->_autoload_libraries = Array

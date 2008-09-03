@@ -21,7 +21,7 @@ class org_openpsa_invoices_interface extends midcom_baseclasses_components_inter
      */
     function org_openpsa_invoices_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'org.openpsa.invoices';
         $this->_autoload_files = Array('invoice_hour.php');

@@ -20,7 +20,7 @@ class net_nemein_reservations_interface extends midcom_baseclasses_components_in
      */
     function net_nemein_reservations_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'net.nemein.reservations';
 
         // Load all libraries used by component here

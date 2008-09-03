@@ -16,7 +16,7 @@ class midcom_admin_styleeditor_interface extends midcom_baseclasses_components_i
 {
     function midcom_admin_styleeditor_interface() 
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'midcom.admin.styleeditor';
         $this->_purecode = true;

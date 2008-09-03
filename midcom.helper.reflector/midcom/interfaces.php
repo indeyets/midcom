@@ -20,7 +20,7 @@ class midcom_helper_reflector_interface extends midcom_baseclasses_components_in
      */
     function midcom_helper_reflector_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'midcom.helper.reflector';
         $this->_purecode = true;
 

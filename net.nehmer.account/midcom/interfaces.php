@@ -40,7 +40,7 @@ class net_nehmer_account_interface extends midcom_baseclasses_components_interfa
      */
     function net_nehmer_account_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         define ('NET_NEHMER_ACCOUNT_LEAFID_EDIT', 0);
         define ('NET_NEHMER_ACCOUNT_LEAFID_PUBLISH', 1);

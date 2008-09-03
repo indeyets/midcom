@@ -20,7 +20,7 @@ class fi_hut_loginbroker_interface extends midcom_baseclasses_components_interfa
      */
     function fi_hut_loginbroker_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'fi.hut.loginbroker';
         $this->_purecode = false;
         $this->_autoload_files = array

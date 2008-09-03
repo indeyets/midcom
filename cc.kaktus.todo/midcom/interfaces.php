@@ -24,7 +24,7 @@ class cc_kaktus_todo_interface extends midcom_baseclasses_components_interface
      */
     function cc_kaktus_todo_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'cc.kaktus.todo';
 

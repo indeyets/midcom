@@ -20,7 +20,7 @@ class midcom_helper_schemaapi_interface extends midcom_baseclasses_components_in
      */
     function midcom_helper_schemaapi_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'midcom.helper.schemaapi';
 
         // Load all mandatory class files of the component here

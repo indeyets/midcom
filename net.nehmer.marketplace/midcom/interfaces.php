@@ -34,7 +34,7 @@ class net_nehmer_marketplace_interface extends midcom_baseclasses_components_int
      */
     function net_nehmer_marketplace_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         define ('NET_NEHMER_MARKETPLACE_LEAFID_SUBMIT', 1);
         define ('NET_NEHMER_MARKETPLACE_LEAFID_SELF_ASKS', 2);

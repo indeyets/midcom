@@ -19,7 +19,7 @@ class org_openpsa_calendarwidget_interface extends midcom_baseclasses_components
 
     function __construct()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'org.openpsa.calendarwidget';
     }

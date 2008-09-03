@@ -31,7 +31,7 @@ class pl_olga_mnogosearch_interface extends midcom_baseclasses_components_interf
      */
     function pl_olga_mnogosearch_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'pl.olga.mnogosearch';
         $this->_autoload_files = Array

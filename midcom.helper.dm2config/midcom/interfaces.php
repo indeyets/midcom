@@ -21,7 +21,7 @@ class midcom_helper_dm2config_interface extends midcom_baseclasses_components_in
      */
     function midcom_helper_dm2config_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'midcom.helper.dm2config';
     }
 }

@@ -23,7 +23,7 @@ class midgard_admin_acl_interface extends midcom_baseclasses_components_interfac
      */
     function midgard_admin_acl_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'midgard.admin.acl';
         $this->_purecode = true;

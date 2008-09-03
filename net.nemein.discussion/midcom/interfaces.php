@@ -25,7 +25,7 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
      */
     function net_nemein_discussion_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'net.nemein.discussion';
         $this->_autoload_files = Array

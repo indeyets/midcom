@@ -12,7 +12,7 @@ class org_openpsa_smslib_interface extends midcom_baseclasses_components_interfa
 {
     function org_openpsa_smslib_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'org.openpsa.smslib';
         $this->_purecode = true;

@@ -18,7 +18,7 @@ class net_nemein_flashplayer_interface extends midcom_baseclasses_components_int
      */
     function net_nemein_flashplayer_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'net.nemein.flashplayer';
         $this->_purecode = true;

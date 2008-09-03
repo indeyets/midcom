@@ -67,7 +67,7 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
      */
     function net_nemein_registrations_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'net.nemein.registrations';
         $this->_autoload_files = Array

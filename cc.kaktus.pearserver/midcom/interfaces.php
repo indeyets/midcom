@@ -20,7 +20,7 @@ class cc_kaktus_pearserver_interface extends midcom_baseclasses_components_inter
      */
     function cc_kaktus_pearserver_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'cc.kaktus.pearserver';
         $this->_autoload_files = Array

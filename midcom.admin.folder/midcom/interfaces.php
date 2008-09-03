@@ -19,7 +19,7 @@ class midcom_admin_folder_interface extends midcom_baseclasses_components_interf
      */
     function midcom_admin_folder_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'midcom.admin.folder';
         $this->_purecode = true;

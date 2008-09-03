@@ -20,7 +20,7 @@ class org_maemo_calendarwidget_interface extends midcom_baseclasses_components_i
      */
     function org_maemo_calendarwidget_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'org.maemo.calendarwidget';
         $this->_purecode = true;

@@ -10,7 +10,7 @@ class midcom_admin_settings_interface extends midcom_baseclasses_components_inte
 {
     function midcom_admin_settings_interface ()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'midcom.admin.settings';
         $this->_purecode = true;

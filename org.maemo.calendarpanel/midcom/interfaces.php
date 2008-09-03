@@ -20,7 +20,7 @@ class org_maemo_calendarpanel_interface extends midcom_baseclasses_components_in
      */
     function org_maemo_calendarpanel_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'org.maemo.calendarpanel';
         $this->_purecode = true;

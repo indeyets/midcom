@@ -23,7 +23,7 @@ class net_nemein_internalorders_interface extends midcom_baseclasses_components_
      */
     function net_nemein_internalorders_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
 //        $this->_on_initialize();
         

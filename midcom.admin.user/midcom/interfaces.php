@@ -16,7 +16,7 @@ class midcom_admin_user_interface extends midcom_baseclasses_components_interfac
 {
     function midcom_admin_user_interface() 
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'midcom.admin.user';
         $this->_purecode = true;

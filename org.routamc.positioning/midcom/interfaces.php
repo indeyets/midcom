@@ -19,7 +19,7 @@ class org_routamc_positioning_interface extends midcom_baseclasses_components_in
 
     function org_routamc_positioning_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'org.routamc.positioning';
         $this->_purecode = true;

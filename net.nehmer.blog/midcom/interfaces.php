@@ -30,7 +30,7 @@ class net_nehmer_blog_interface extends midcom_baseclasses_components_interface
      */
     function net_nehmer_blog_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         //define('NET_NEHMER_BLOG_LEAFID_ARCHIVE', 1);
         define('NET_NEHMER_BLOG_LEAFID_FEEDS', 2);

@@ -19,7 +19,7 @@ class pl_olga_tellafriend_interface extends midcom_baseclasses_components_interf
      */
     function pl_olga_tellafriend_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
     $this->purecode = true;
         $this->_component = 'pl.olga.tellafriend';

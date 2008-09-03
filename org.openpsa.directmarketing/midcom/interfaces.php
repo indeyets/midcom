@@ -16,7 +16,7 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
 
     function org_openpsa_directmarketing_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'org.openpsa.directmarketing';
         $this->_autoload_class_definitions = array('midcom_dba_classes.inc');

@@ -20,7 +20,7 @@ class net_nemein_quickpoll_interface extends midcom_baseclasses_components_inter
      */
     function net_nemein_quickpoll_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         define('NET_NEMEIN_QUICKPOLL_LEAFID_ARCHIVE', 1);
 

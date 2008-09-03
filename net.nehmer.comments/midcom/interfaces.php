@@ -53,7 +53,7 @@ class net_nehmer_comments_interface extends midcom_baseclasses_components_interf
      */
     function net_nehmer_comments_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'net.nehmer.comments';
         $this->_autoload_libraries = array

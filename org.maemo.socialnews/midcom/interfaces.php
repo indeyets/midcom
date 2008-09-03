@@ -20,7 +20,7 @@ class org_maemo_socialnews_interface extends midcom_baseclasses_components_inter
      */
     function org_maemo_socialnews_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'org.maemo.socialnews';        
     }
 

@@ -21,7 +21,7 @@ class net_nemein_beaexporter_interface extends midcom_baseclasses_components_int
      */
     function net_nemein_beaexporter_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         
         $this->_component = 'net.nemein.beaexporter';
         $this->_purecode = true;

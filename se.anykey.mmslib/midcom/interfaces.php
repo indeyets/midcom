@@ -17,7 +17,7 @@ class se_anykey_mmslib_interface extends midcom_baseclasses_components_interface
 
     function se_anykey_mmslib_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'se.anykey.mmslib';
         $this->_purecode = true;

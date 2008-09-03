@@ -16,7 +16,7 @@ class net_nemein_favourites_interface extends midcom_baseclasses_components_inte
     */
     function net_nemein_favourites_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'net.nemein.favourites';
     }

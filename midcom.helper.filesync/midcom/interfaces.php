@@ -20,7 +20,7 @@ class midcom_helper_filesync_interface extends midcom_baseclasses_components_int
      */
     function midcom_helper_filesync_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'midcom.helper.filesync';
 
         // Load all mandatory class files of the component here

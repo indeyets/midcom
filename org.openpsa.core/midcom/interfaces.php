@@ -17,7 +17,7 @@ class org_openpsa_core_interface extends midcom_baseclasses_components_interface
 
     function __construct()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'org.openpsa.core';
         $this->_autoload_files = array

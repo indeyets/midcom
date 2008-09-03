@@ -21,7 +21,7 @@ class de_linkm_fontrenderer_interface extends midcom_baseclasses_components_inte
      */
     function de_linkm_fontrenderer_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'de.linkm.fontrenderer';
         $this->_autoload_files = Array('main.php');

@@ -20,7 +20,7 @@ class org_maemo_gforgeprofileupdater_interface extends midcom_baseclasses_compon
      */
     function org_maemo_gforgeprofileupdater_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'org.maemo.gforgeprofileupdater';
         $this->_purecode = true;
         $this->_autoload_files = Array

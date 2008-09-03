@@ -23,7 +23,7 @@ class net_nehmer_mail_interface extends midcom_baseclasses_components_interface
      */
     function net_nehmer_mail_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         // NAP Leaf IDs
         define ('NET_NEHMER_MAIL_LEAFID_NEW', 0);

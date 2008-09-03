@@ -17,7 +17,7 @@ class se_anykey_activecalendar_interface extends midcom_baseclasses_components_i
 
     function se_anykey_activecalendar_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'se.anykey.activecalendar';
         $this->_purecode = true;

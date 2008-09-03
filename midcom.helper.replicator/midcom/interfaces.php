@@ -20,7 +20,7 @@ class midcom_helper_replicator_interface extends midcom_baseclasses_components_i
      */
     function midcom_helper_replicator_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
         $this->_component = 'midcom.helper.replicator';
         
         $this->_purecode = true;

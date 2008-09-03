@@ -17,7 +17,7 @@ class org_openpsa_mail_interface extends midcom_baseclasses_components_interface
 
     function org_openpsa_mail_interface()
     {
-        parent::midcom_baseclasses_components_interface();
+        parent::__construct();
 
         $this->_component = 'org.openpsa.mail';
     }
