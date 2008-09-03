@@ -1116,6 +1116,19 @@ EOF;
                 return $class_definition['midcom_class_name'];
             }
         }
+        
+        // We don't have the class loaded, try to load it
+        if ($this->load_component_for_class($classname))
+        {
+            foreach ($this->_loaded_classes as $class_definition)
+            {
+                if ($classname == $class_definition['new_class_name'])
+                {
+                    return $class_definition['midcom_class_name'];
+                }
+            }
+        }
+
         return false;
     }
 
@@ -1135,6 +1148,19 @@ EOF;
                 return $class_definition['midcom_class_name'];
             }
         }
+        
+        // We don't have the class loaded, try to load it
+        if ($this->load_component_for_class($classname))
+        {
+            foreach ($this->_loaded_classes as $class_definition)
+            {
+                if (is_a($object, $class_definition['old_class_name']))
+                {
+                    return $class_definition['midcom_class_name'];
+                }
+            }
+        }
+
         return false;
     }
 
@@ -1261,6 +1287,14 @@ EOF;
      */
     function load_mgdschema_class_handler($classname)
     {
+        if (!is_string($classname))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Requested to load the classhandler for class name which is not a string.", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+
         if (! array_key_exists($classname, $this->_mgdschema_class_handler))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
