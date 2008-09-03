@@ -31,7 +31,7 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
 
     function midcom_helper_imagepopup_handler_list()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

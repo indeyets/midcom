@@ -21,7 +21,7 @@ class net_nemein_organizations_handler_select extends midcom_baseclasses_compone
      */
     function net_nemein_organizations_handler_select()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

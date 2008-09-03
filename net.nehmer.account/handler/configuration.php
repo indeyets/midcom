@@ -32,7 +32,7 @@ class net_nehmer_account_handler_configuration extends midcom_baseclasses_compon
 
     function net_nehmer_account_handler_configuration()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

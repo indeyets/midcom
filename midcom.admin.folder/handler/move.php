@@ -31,7 +31,7 @@ class midcom_admin_folder_handler_move extends midcom_baseclasses_components_han
      */
     function midcom_admin_folder_handler_move()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

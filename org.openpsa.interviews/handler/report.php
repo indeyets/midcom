@@ -16,7 +16,7 @@ class org_openpsa_interviews_handler_report extends midcom_baseclasses_component
 {
     function org_openpsa_interviews_handler_campaign()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _prepare_toolbar()

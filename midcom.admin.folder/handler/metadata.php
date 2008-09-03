@@ -47,7 +47,7 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
      */
     function midcom_admin_folder_handler_metadata()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

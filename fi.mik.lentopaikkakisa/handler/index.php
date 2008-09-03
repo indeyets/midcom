@@ -20,7 +20,7 @@ class fi_mik_lentopaikkakisa_handler_index extends midcom_baseclasses_components
      */
     function fi_mik_lentopaikkakisa_handler_index()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

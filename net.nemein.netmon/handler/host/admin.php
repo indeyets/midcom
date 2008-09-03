@@ -82,7 +82,7 @@ class net_nemein_netmon_handler_host_admin extends midcom_baseclasses_components
      */
     function net_nemein_netmon_handler_host_admin()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

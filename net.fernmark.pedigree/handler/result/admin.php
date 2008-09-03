@@ -89,7 +89,7 @@ class net_fernmark_pedigree_handler_result_admin extends midcom_baseclasses_comp
      */
     function net_fernmark_pedigree_handler_result_admin()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

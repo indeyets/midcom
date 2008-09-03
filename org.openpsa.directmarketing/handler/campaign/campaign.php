@@ -27,7 +27,7 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
      */
     function org_openpsa_directmarketing_handler_campaign_campaign()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

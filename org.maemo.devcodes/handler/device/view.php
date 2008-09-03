@@ -93,7 +93,7 @@ class org_maemo_devcodes_handler_device_view extends midcom_baseclasses_componen
      */
     function org_maemo_devcodes_handler_device_view()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

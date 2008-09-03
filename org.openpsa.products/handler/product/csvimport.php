@@ -17,7 +17,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
 
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _prepare_handler($args)

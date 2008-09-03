@@ -41,7 +41,7 @@ class net_nehmer_buddylist_handler_request extends midcom_baseclasses_components
 
     function net_nehmer_buddylist_handler_request()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

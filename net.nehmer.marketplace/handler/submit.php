@@ -90,7 +90,7 @@ class net_nehmer_marketplace_handler_submit extends midcom_baseclasses_component
 
     function net_nehmer_marketplace_handler_submit()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
 
         $this->_category_lister = new net_nehmer_marketplace_callbacks_categorylister();
     }

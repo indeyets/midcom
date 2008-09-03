@@ -18,7 +18,7 @@ class org_openpsa_invoices_handler_delete extends midcom_baseclasses_components_
 
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
         $this->_request_data['datamanager'] =& $this->_datamanager;
     }
 

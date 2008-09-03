@@ -16,7 +16,7 @@ class midcom_admin_help_help extends midcom_baseclasses_components_handler
 {
     function midcom_admin_help_help()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function get_plugin_handlers()

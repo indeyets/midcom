@@ -19,7 +19,7 @@ class midgard_admin_sitewizard_handler_host extends midcom_baseclasses_component
      */
     function midgard_admin_sitewizard_handler_host()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

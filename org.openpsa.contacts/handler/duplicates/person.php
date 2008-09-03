@@ -16,7 +16,7 @@ class org_openpsa_contacts_handler_duplicates_person extends midcom_baseclasses_
 {
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

@@ -91,7 +91,7 @@ class net_nehmer_marketplace_handler_category extends midcom_baseclasses_compone
 
     function net_nehmer_marketplace_handler_category()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

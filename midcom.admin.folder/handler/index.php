@@ -23,7 +23,7 @@ class midcom_admin_folder_handler_index  extends midcom_baseclasses_components_h
      */
     function midcom_admin_folder_handler_index()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
     /**
      * _on_initialize is called by midcom on creation of the handler.

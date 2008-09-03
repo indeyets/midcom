@@ -92,7 +92,7 @@ class net_nehmer_static_handler_admin extends midcom_baseclasses_components_hand
      */
     function net_nehmer_static_handler_admin()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

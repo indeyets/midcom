@@ -25,7 +25,7 @@ class org_maemo_calendar_handler_buddylist_admin extends midcom_baseclasses_comp
      */
     function org_maemo_calendar_handler_buddylist_admin()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
         $_MIDCOM->cache->content->no_cache();
     }
 

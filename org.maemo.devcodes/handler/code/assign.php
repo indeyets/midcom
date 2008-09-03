@@ -49,7 +49,7 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
      */
     function org_maemo_devcodes_handler_code_assign()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

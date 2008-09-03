@@ -27,7 +27,7 @@ class org_openpsa_products_handler_group_edit extends midcom_baseclasses_compone
      */
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

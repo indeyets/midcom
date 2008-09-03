@@ -16,7 +16,7 @@ class org_openpsa_interviews_handler_index extends midcom_baseclasses_components
 {
     function org_openpsa_interviews_handler_index()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

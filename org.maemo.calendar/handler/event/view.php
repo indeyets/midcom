@@ -41,7 +41,7 @@ class org_maemo_calendar_handler_event_view  extends midcom_baseclasses_componen
      */
     function org_maemo_calendar_handler_event_view()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _prepare_request_data()

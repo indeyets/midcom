@@ -22,7 +22,7 @@ class net_nemein_shoppingcart_handler_checkout_redirect  extends midcom_baseclas
      */
     function net_nemein_shoppingcart_handler_checkout_redirect()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

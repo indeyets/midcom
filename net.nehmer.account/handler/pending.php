@@ -15,7 +15,7 @@ class net_nehmer_account_handler_pending extends midcom_baseclasses_components_h
 {
     function net_nehmer_account_handler_view()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

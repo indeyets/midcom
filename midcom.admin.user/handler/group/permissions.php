@@ -24,7 +24,7 @@ class midcom_admin_user_handler_group_permissions extends midcom_baseclasses_com
     function midcom_admin_user_handler_group_permissions()
     {
         $this->_component = 'midcom.admin.user';
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
      }
 
     function _on_initialize()

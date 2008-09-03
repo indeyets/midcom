@@ -22,7 +22,7 @@ class org_openpsa_expenses_handler_index  extends midcom_baseclasses_components_
      */
     function org_openpsa_expenses_handler_index()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

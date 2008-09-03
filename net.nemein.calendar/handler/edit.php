@@ -28,7 +28,7 @@ class net_nemein_calendar_handler_edit extends midcom_baseclasses_components_han
      */
     function net_nemein_calendar_handler_edit()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

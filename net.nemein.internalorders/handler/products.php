@@ -26,7 +26,7 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
 
     function net_nemein_internalorders_handler_products()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

@@ -27,7 +27,7 @@ class net_nemein_featured_handler_featured extends midcom_baseclasses_components
      */
     function net_nemein_featured_handler_featured()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

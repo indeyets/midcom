@@ -65,7 +65,7 @@ class pl_olga_windguru_handler_create extends midcom_baseclasses_components_hand
      */
     function pl_olga_windguru_handler_create()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

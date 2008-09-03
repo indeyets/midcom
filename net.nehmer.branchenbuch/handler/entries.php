@@ -123,7 +123,7 @@ class net_nehmer_branchenbuch_handler_entries extends midcom_baseclasses_compone
 
     function net_nehmer_branchenbuch_handler_entries()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

@@ -74,7 +74,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
      */
     function net_nehmer_blog_handler_view()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

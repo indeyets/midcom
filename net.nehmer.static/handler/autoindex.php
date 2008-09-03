@@ -28,7 +28,7 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
      */
     function net_nehmer_static_handler_autoindex()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

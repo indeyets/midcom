@@ -61,7 +61,7 @@ class org_openpsa_sales_handler_deliverable_admin extends midcom_baseclasses_com
      */
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

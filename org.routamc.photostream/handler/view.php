@@ -34,7 +34,7 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
      */
     function org_routamc_photostream_handler_view()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

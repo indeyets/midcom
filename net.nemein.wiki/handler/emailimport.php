@@ -17,7 +17,7 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
 
     function net_nemein_wiki_handler_emailimport()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

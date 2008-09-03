@@ -18,7 +18,7 @@ class create_tkk_website extends midcom_baseclasses_components_handler
     */
     function create_tkk_website()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

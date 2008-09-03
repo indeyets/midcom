@@ -26,7 +26,7 @@ class net_nemein_internalorders_handler_search extends midcom_baseclasses_compon
 
     function net_nemein_internalorders_handler_search()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

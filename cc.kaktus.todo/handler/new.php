@@ -48,7 +48,7 @@ class cc_kaktus_todo_handler_new extends midcom_baseclasses_components_handler
      */
     function cc_kaktus_todo_handler_new()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

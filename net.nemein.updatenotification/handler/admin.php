@@ -18,7 +18,7 @@ class net_nemein_updatenotification_handler_admin  extends midcom_baseclasses_co
      */
     function net_nemein_updatenotification_handler_admin()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

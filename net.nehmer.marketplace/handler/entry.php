@@ -60,7 +60,7 @@ class net_nehmer_marketplace_handler_entry extends midcom_baseclasses_components
 
     function net_nehmer_marketplace_handler_entry()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

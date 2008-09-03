@@ -87,7 +87,7 @@ class net_nehmer_jobmarket_handler_entry extends midcom_baseclasses_components_h
 
     function net_nehmer_jobmarket_handler_entry()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

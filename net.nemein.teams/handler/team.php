@@ -51,7 +51,7 @@ class net_nemein_teams_handler_team  extends midcom_baseclasses_components_handl
      */
     function net_nemein_teams_handler_team()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

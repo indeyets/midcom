@@ -22,7 +22,7 @@ class org_openpsa_products_handler_businessarea_list  extends midcom_baseclasses
      */
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

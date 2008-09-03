@@ -49,7 +49,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
      */
     function net_nemein_quickpoll_handler_index()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

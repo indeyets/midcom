@@ -18,7 +18,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
 
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
 /*

@@ -50,7 +50,7 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
      */
     function net_nemein_simpledb_handler_search()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

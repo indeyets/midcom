@@ -35,7 +35,7 @@ class org_openpsa_contacts_handler_person_view extends midcom_baseclasses_compon
      */
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

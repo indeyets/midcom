@@ -46,7 +46,7 @@ class net_nemein_feedcollector_handler_create  extends midcom_baseclasses_compon
      */
     function net_nemein_feedcollector_handler_create()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

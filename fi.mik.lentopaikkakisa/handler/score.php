@@ -17,7 +17,7 @@ class fi_mik_lentopaikkakisa_handler_score extends midcom_baseclasses_components
 {
     function fi_mik_lentopaikkakisa_handler_score()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

@@ -22,7 +22,7 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
      */
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _list_products($show_products = 1,$product_group = '')

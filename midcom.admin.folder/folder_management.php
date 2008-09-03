@@ -27,7 +27,7 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
      */
     function midcom_admin_folder_folder_management()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

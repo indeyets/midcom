@@ -31,7 +31,7 @@ class net_nehmer_account_handler_edit extends midcom_baseclasses_components_hand
 {
     function net_nehmer_account_handler_edit()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

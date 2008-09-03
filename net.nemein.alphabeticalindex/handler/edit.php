@@ -65,7 +65,7 @@ class net_nemein_alphabeticalindex_handler_edit extends midcom_baseclasses_compo
     
     function net_nemein_alphabeticalindex_handler_edit()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
     
     function _on_initialize()

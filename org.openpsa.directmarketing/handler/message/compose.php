@@ -29,7 +29,7 @@ class org_openpsa_directmarketing_handler_message_compose extends midcom_basecla
      */
     function org_openpsa_directmarketing_handler_message_compose()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

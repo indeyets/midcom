@@ -69,7 +69,7 @@ class org_openpsa_directmarketing_handler_campaign_create extends midcom_basecla
      */
     function org_openpsa_directmarketing_handler_create()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

@@ -24,7 +24,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
     function midgard_admin_asgard_handler_component_configuration()
     {
         $this->_component = 'midgard.admin.asgard';
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

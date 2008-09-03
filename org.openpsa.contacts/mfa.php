@@ -89,7 +89,7 @@ class org_openpsa_contacts_mfa extends midcom_baseclasses_components_handler
      */
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
         $this->queryRoot = array( 'id' => '', 'name' => '', 'type' => '' );
         $this->rootItem = new fi_incognito_protustree_item(0,"Groups root","group",array());
         $this->active_depth = 0;

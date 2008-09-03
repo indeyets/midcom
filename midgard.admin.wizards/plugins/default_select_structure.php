@@ -14,7 +14,7 @@ class default_select_structure extends midcom_baseclasses_components_handler
     */
     function default_select_structure()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

@@ -40,7 +40,7 @@ class org_routamc_photostream_handler_api_metaweblog extends midcom_baseclasses_
 
     function org_routamc_photostream_handler_api_metaweblog()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

@@ -70,7 +70,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
 
     function midcom_helper_replicator_manager()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function get_plugin_handlers()

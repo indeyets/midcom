@@ -36,7 +36,7 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
      */
     function net_nemein_quickpoll_handler_vote()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

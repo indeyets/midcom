@@ -29,7 +29,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
 {
     function net_nehmer_account_handler_maintain()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

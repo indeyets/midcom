@@ -69,7 +69,7 @@ class net_nehmer_marketplace_handler_welcome extends midcom_baseclasses_componen
 
     function net_nehmer_marketplace_handler_welcome()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

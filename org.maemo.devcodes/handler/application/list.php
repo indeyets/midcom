@@ -46,7 +46,7 @@ class org_maemo_devcodes_handler_application_list extends midcom_baseclasses_com
      */
     function org_maemo_devcodes_handler_application_list()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

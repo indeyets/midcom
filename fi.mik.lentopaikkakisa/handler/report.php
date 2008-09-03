@@ -20,7 +20,7 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
      */
     function fi_mik_lentopaikkakisa_handler_report()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _seek_aerodrome($icao)

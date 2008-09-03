@@ -27,7 +27,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
     function midcom_admin_babel_handler_process()
     {
 //        $this->_component = 'midcom.admin.babel';
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

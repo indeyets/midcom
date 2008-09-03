@@ -58,7 +58,7 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
 
     function no_bergfald_rcs_handler()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

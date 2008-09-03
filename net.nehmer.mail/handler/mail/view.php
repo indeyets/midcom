@@ -60,7 +60,7 @@ class net_nehmer_mail_handler_mail_view extends midcom_baseclasses_components_ha
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_pop();
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

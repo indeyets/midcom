@@ -38,7 +38,7 @@ class org_maemo_socialnews_handler_feed extends midcom_baseclasses_components_ha
      */
     function org_maemo_socialnews_handler_feed()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

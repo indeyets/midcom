@@ -16,7 +16,7 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
 {
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

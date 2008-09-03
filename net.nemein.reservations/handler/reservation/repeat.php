@@ -35,7 +35,7 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
      */
     function net_nemein_reservations_handler_reservation_repeat()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
 
         $_MIDCOM->load_library('net.nemein.repeathandler');
     }

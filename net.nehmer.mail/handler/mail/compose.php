@@ -69,7 +69,7 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
      */
     function net_nehmer_mail_handler_mail_compose()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

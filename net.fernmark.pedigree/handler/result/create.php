@@ -77,7 +77,7 @@ class net_fernmark_pedigree_handler_result_create extends midcom_baseclasses_com
      */
     function net_fernmark_pedigree_handler_result_create()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

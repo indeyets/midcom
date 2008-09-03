@@ -21,7 +21,7 @@ class midcom_admin_folder_handler_delete extends midcom_baseclasses_components_h
      */
     function midcom_admin_folder_handler_delete ()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

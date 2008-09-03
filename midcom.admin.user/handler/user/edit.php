@@ -24,7 +24,7 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
     function midcom_admin_user_handler_user_edit()
     {
         $this->_component = 'midcom.admin.user';
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
      }
 
     function _on_initialize()

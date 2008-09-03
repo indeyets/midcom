@@ -51,7 +51,7 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
      */
     function de_linkm_sitemap_handler_sitemap()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

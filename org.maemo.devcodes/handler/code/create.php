@@ -69,7 +69,7 @@ class org_maemo_devcodes_handler_code_create extends midcom_baseclasses_componen
      */
     function org_maemo_devcodes_handler_code_create()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

@@ -15,7 +15,7 @@ class no_odindata_quickform_handler_reports extends midcom_baseclasses_component
 {
     function no_odindata_quickform_handler_reports()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

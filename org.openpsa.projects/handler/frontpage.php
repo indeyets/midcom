@@ -16,7 +16,7 @@ class org_openpsa_projects_handler_frontpage extends midcom_baseclasses_componen
 {
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

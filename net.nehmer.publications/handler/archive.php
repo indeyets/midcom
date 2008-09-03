@@ -64,7 +64,7 @@ class net_nehmer_publications_handler_archive extends midcom_baseclasses_compone
      */
     function net_nehmer_publications_handler_archive()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

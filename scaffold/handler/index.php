@@ -22,7 +22,7 @@ class ${module_class}_handler_index  extends midcom_baseclasses_components_handl
      */
     function ${module_class}_handler_index()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

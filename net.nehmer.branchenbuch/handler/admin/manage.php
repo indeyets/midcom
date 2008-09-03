@@ -33,7 +33,7 @@ class net_nehmer_branchenbuch_handler_admin_manage extends midcom_baseclasses_co
 
     function net_nehmer_branchenbuch_handler_admin_manage()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

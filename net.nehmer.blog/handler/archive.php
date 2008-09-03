@@ -63,7 +63,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
      */
     function net_nehmer_blog_handler_archive()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

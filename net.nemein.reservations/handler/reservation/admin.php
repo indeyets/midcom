@@ -69,7 +69,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
      */
     function net_nemein_reservations_handler_reservation_admin()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

@@ -19,7 +19,7 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
      */
     function pl_olga_windguru_handler_list()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

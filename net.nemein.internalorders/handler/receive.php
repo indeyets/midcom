@@ -26,7 +26,7 @@ class net_nemein_internalorders_handler_receive extends midcom_baseclasses_compo
 
     function net_nemein_internalorders_handler_receive()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

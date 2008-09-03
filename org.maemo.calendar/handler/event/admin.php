@@ -69,7 +69,7 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
      */
     function org_maemo_calendar_handler_event_admin()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

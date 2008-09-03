@@ -81,7 +81,7 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
 {
     function midcom_core_handler_configdm()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

@@ -18,7 +18,7 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
 
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

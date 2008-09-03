@@ -56,7 +56,7 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
      */
     function midcom_admin_settings_editor()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

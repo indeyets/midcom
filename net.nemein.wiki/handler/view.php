@@ -32,7 +32,7 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
 
     function net_nemein_wiki_handler_view()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
 
         $this->_request_data['page'] =& $this->_page;
     }

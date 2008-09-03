@@ -29,7 +29,7 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
      */
     function org_routamc_gallery_handler_index()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _prepare_ajax_controllers()

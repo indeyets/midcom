@@ -35,7 +35,7 @@ class net_nemein_reservations_handler_reservation_view extends midcom_baseclasse
      */
     function net_nemein_reservations_handler_reservation_view()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

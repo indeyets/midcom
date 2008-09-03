@@ -71,7 +71,7 @@ class net_nemein_reservations_handler_create extends midcom_baseclasses_componen
      */
     function net_nemein_reservations_handler_create()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

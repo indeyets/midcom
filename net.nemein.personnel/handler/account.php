@@ -34,7 +34,7 @@ class net_nemein_personnel_handler_account extends midcom_baseclasses_components
      */
     function net_nemein_personnel_handler_account()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

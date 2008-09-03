@@ -16,7 +16,7 @@ class cc_kaktus_pearserver_handler_process extends midcom_baseclasses_components
 {
     function cc_kaktus_pearserver_handler_release()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _process_attachment($attachment)

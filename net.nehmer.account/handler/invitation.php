@@ -25,7 +25,7 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
 
     function net_nehmer_account_handler_invitation()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

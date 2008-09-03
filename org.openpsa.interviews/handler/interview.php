@@ -48,7 +48,7 @@ class org_openpsa_interviews_handler_interview extends midcom_baseclasses_compon
 
     function org_openpsa_interviews_handler_edit()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

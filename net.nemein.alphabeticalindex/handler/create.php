@@ -85,7 +85,7 @@ class net_nemein_alphabeticalindex_handler_create  extends midcom_baseclasses_co
      */
     function net_nemein_alphabeticalindex_handler_create()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

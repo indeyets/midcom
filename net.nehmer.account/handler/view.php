@@ -52,7 +52,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
 {
     function net_nehmer_account_handler_view()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

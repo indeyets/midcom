@@ -41,7 +41,7 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
      */
     function org_routamc_photostream_handler_view()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

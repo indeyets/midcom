@@ -182,7 +182,7 @@
  *     {
  *         // just call the base class constructor, avoid
  *         // additional code at this point.
- *         parent::midcom_baseclasses_components_handler();
+ *         parent::__construct();
  *     }
  *
  *     function _on_initialize()

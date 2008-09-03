@@ -19,7 +19,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
      */
     function net_nemein_discussion_handler_thread()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

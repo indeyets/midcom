@@ -53,7 +53,7 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
      */
     function net_nemein_registrations_handler_welcome()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

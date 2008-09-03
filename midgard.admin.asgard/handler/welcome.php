@@ -28,7 +28,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
     function midgard_admin_asgard_handler_welcome()
     {
         $this->_component = 'midgard.admin.asgard';
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

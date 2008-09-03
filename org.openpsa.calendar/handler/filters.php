@@ -16,7 +16,7 @@ class org_openpsa_calendar_handler_filters extends midcom_baseclasses_components
 {
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _handle_ajax()

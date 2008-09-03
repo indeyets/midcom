@@ -92,7 +92,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
      */
     function net_nemein_discussion_handler_post()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

@@ -34,7 +34,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
     */
     function midgard_admin_sitewizard_plugin()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

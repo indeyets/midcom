@@ -45,7 +45,7 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
     function midcom_admin_folder_handler_edit()
     {
         $this->_component = 'midcom.admin.folder';
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

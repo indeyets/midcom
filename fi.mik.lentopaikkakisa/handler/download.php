@@ -17,7 +17,7 @@ class fi_mik_lentopaikkakisa_handler_download extends midcom_baseclasses_compone
 {
     function fi_mik_lentopaikkakisa_handler_download()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

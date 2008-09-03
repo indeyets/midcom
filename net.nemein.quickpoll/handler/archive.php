@@ -74,7 +74,7 @@ class net_nemein_quickpoll_handler_archive extends midcom_baseclasses_components
      */
     function net_nemein_quickpoll_handler_archive()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

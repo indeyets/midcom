@@ -59,7 +59,7 @@ class net_nehmer_buddylist_handler_pending extends midcom_baseclasses_components
 
     function net_nehmer_buddylist_handler_pending()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

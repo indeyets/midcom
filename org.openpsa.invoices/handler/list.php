@@ -16,7 +16,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
 {
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _process_invoice_list($invoices)

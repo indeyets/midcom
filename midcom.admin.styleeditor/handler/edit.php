@@ -31,7 +31,7 @@ class midcom_admin_styleeditor_handler_edit extends midcom_baseclasses_component
      */
     function midcom_admin_styleeditor_handler_edit()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
         
         // Add style sheets
         $_MIDCOM->add_link_head

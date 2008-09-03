@@ -21,7 +21,7 @@ class midgard_admin_sitewizard_handler_sitegroup extends midcom_baseclasses_comp
      */
     function midgard_admin_sitewizard_handler_sitegroup()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

@@ -15,7 +15,7 @@ class no_odindata_quickform_handler_aftersubmits extends midcom_baseclasses_comp
 {
     function no_odindata_quickform_handler_aftersubmits()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

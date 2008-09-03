@@ -34,7 +34,7 @@ class net_nemein_alphabeticalindex_handler_admin extends midcom_baseclasses_comp
      */
     function net_nemein_alphabeticalindex_handler_admin()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

@@ -21,7 +21,7 @@ class org_openpsa_products_handler_product_latest extends midcom_baseclasses_com
      */
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _list_products($limit = 5, $product_group = '')

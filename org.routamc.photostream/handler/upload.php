@@ -51,7 +51,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
      */
     function org_routamc_photostream_handler_upload()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

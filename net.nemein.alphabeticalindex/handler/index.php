@@ -31,7 +31,7 @@ class net_nemein_alphabeticalindex_handler_index extends midcom_baseclasses_comp
      */
     function net_nemein_alphabeticalindex_handler_index()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

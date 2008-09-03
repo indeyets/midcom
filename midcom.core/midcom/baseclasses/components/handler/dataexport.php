@@ -28,7 +28,7 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
     
     function midcom_baseclasses_components_handler_dataexport()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
     
     /**

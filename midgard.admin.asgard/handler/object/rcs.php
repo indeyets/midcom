@@ -60,7 +60,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
     function midgard_admin_asgard_handler_object_rcs()
     {
         $this->_component = 'midgard.admin.asgard';
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

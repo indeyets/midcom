@@ -26,7 +26,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
      */
     function net_nemein_teams_handler_admin()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

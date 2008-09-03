@@ -39,7 +39,7 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
 
     function org_openpsa_directmarketing_handler_import()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _prepare_handler($args)

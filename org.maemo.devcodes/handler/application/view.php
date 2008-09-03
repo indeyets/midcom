@@ -65,7 +65,7 @@ class org_maemo_devcodes_handler_application_view extends midcom_baseclasses_com
      */
     function org_maemo_devcodes_handler_application_view()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

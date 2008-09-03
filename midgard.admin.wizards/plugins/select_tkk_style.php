@@ -18,7 +18,7 @@ class select_tkk_style extends midcom_baseclasses_components_handler
     */
     function select_tkk_style()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

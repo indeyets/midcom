@@ -22,7 +22,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
      */
     function net_nemein_shoppingcart_handler_cart()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

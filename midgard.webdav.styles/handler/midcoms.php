@@ -22,7 +22,7 @@ class midgard_webdav_styles_handler_midcoms  extends midgard_webdav_styles_handl
      */
     function midgard_webdav_styles_handler_midcoms()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
 

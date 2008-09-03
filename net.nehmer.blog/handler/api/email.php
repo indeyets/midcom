@@ -44,7 +44,7 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
 
     function net_nehmer_blog_handler_api_email()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

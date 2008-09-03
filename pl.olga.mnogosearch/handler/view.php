@@ -36,7 +36,7 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
      */
     function pl_olga_mnogosearch_handler_view()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

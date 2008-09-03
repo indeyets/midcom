@@ -167,7 +167,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
      */
     function net_nemein_registrations_handler_registration()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

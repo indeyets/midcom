@@ -83,7 +83,7 @@ class net_nehmer_publications_handler_admin extends midcom_baseclasses_component
      */
     function net_nehmer_publications_handler_admin()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

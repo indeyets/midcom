@@ -72,7 +72,7 @@ class net_nemein_netmon_handler_host_view extends midcom_baseclasses_components_
      */
     function net_nemein_netmon_handler_host_view()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

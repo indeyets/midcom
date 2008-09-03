@@ -23,7 +23,7 @@ class midcom_admin_libconfig_handler_edit extends midcom_baseclasses_components_
      */
     function midcom_admin_libconfig_handler_edit()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

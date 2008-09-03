@@ -33,7 +33,7 @@ class org_routamc_photostream_handler_api_email extends midcom_baseclasses_compo
 
     function org_routamc_photostream_handler_api_email()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

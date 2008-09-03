@@ -27,7 +27,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
 
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
         $this->_request_data['datamanagers'] =& $this->_datamanagers;
     }
 

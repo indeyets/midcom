@@ -82,7 +82,7 @@ class net_nehmer_jobmarket_handler_ticker extends midcom_baseclasses_components_
 
     function net_nehmer_jobmarket_handler_ticker()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

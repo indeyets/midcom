@@ -28,7 +28,7 @@ class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses
      */
     function net_nemein_shoppingcart_handler_checkout_email()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

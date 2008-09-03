@@ -24,7 +24,7 @@ class midcom_admin_user_handler_group_create extends midcom_baseclasses_componen
     function midcom_admin_user_handler_group_create()
     {
         $this->_component = 'midcom.admin.user';
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

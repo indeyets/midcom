@@ -20,7 +20,7 @@ class create_tkk_host extends midcom_baseclasses_components_handler
     */
     function create_tkk_host()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

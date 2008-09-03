@@ -21,7 +21,7 @@ class cc_kaktus_pearserver_handler_config extends midcom_baseclasses_components_
      */
     function cc_kaktus_pearserver_handler_config()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
         $this->_root_group =& $this->_request_data['root_group'];
     }
 

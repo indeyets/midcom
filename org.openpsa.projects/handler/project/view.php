@@ -33,7 +33,7 @@ class org_openpsa_projects_handler_project_view extends midcom_baseclasses_compo
 
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

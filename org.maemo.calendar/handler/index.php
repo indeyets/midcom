@@ -39,7 +39,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
      */
     function org_maemo_calendar_handler_index()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
 
         $this->_selected_time = time();
 

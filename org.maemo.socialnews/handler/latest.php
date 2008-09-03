@@ -23,7 +23,7 @@ class org_maemo_socialnews_handler_latest  extends midcom_baseclasses_components
      */
     function org_maemo_socialnews_handler_lates()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     private function get_node($node_id)

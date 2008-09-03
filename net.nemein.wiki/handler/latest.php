@@ -19,7 +19,7 @@ class net_nemein_wiki_handler_latest extends midcom_baseclasses_components_handl
 
     function net_nemein_wiki_handler_latest()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /*

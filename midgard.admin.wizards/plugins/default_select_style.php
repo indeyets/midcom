@@ -18,7 +18,7 @@ class default_select_style extends midcom_baseclasses_components_handler
     */
     function default_select_style()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     function _on_initialize()

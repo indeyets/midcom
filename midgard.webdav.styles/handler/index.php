@@ -22,7 +22,7 @@ class midgard_webdav_styles_handler_index  extends midgard_webdav_styles_handler
      */
     function midgard_webdav_styles_handler_index()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
 
     }
 

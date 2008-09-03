@@ -77,7 +77,7 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
      */
     function net_nemein_organizations_handler_admin()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

@@ -40,7 +40,7 @@ class net_nehmer_blog_handler_api_metaweblog extends midcom_baseclasses_componen
 
     function net_nehmer_blog_handler_api_metaweblog()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

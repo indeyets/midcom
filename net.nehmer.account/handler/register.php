@@ -42,7 +42,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      */
     function net_nehmer_account_handler_register()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     var $_sent_invites = null;

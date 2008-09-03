@@ -18,7 +18,7 @@ class org_routamc_statusmessage_handler_list extends midcom_baseclasses_componen
      */
     function org_routamc_statusmessage_handler_list()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**

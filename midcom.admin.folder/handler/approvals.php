@@ -21,7 +21,7 @@ class midcom_admin_folder_handler_approvals extends midcom_baseclasses_component
      */
     function midcom_admin_folder_handler_approvals ()
     {
-        parent::midcom_baseclasses_components_handler();
+        parent::__construct();
     }
 
     /**
