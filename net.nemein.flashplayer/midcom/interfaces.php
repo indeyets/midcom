@@ -16,7 +16,7 @@ class net_nemein_flashplayer_interface extends midcom_baseclasses_components_int
     /**
      * Constructor.
      */
-    function net_nemein_flashplayer_interface()
+    function __construct()
     {
         parent::__construct();
 

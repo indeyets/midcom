@@ -14,7 +14,7 @@
 class de_bitfolge_feedcreator_interface extends midcom_baseclasses_components_interface
 {
     
-    function de_bitfolge_feedcreator_interface()
+    function __construct()
     {
         parent::__construct();
         

@@ -18,7 +18,7 @@ class midcom_helper_replicator_interface extends midcom_baseclasses_components_i
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function midcom_helper_replicator_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'midcom.helper.replicator';

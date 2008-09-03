@@ -18,7 +18,7 @@ class midgard_webdav_styles_interface extends midcom_baseclasses_components_inte
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function midgard_webdav_styles_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'midgard.webdav.styles';

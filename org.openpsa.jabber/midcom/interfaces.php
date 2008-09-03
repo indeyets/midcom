@@ -14,7 +14,7 @@
 class org_openpsa_jabber_interface extends midcom_baseclasses_components_interface
 {
 
-    function org_openpsa_jabber_interface()
+    function __construct()
     {
         parent::__construct();
 

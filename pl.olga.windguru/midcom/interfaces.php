@@ -24,7 +24,7 @@ class pl_olga_windguru_interface extends midcom_baseclasses_components_interface
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function pl_olga_windguru_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'pl.olga.windguru';

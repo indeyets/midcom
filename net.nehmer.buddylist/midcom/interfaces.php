@@ -32,7 +32,7 @@ class net_nehmer_buddylist_interface extends midcom_baseclasses_components_inter
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function net_nehmer_buddylist_interface()
+    function __construct()
     {
         parent::__construct();
 

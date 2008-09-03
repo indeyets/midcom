@@ -19,7 +19,7 @@ class net_nemein_beaexporter_interface extends midcom_baseclasses_components_int
     /**
      * Constructor.
      */
-    function net_nemein_beaexporter_interface()
+    function __construct()
     {
         parent::__construct();
         

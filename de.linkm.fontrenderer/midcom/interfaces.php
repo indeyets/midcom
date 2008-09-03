@@ -19,7 +19,7 @@ class de_linkm_fontrenderer_interface extends midcom_baseclasses_components_inte
      *
      * Nothing fancy, loads all script files.
      */
-    function de_linkm_fontrenderer_interface()
+    function __construct()
     {
         parent::__construct();
 

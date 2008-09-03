@@ -18,7 +18,7 @@ class org_maemo_devcodes_interface extends midcom_baseclasses_components_interfa
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function org_maemo_devcodes_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'org.maemo.devcodes';

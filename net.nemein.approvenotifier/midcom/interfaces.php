@@ -16,7 +16,7 @@ class net_nemein_approvenotifier_interface extends midcom_baseclasses_components
      *
      * Nothing fancy, loads all script files and the notifications library.
      */
-    function net_nemein_approvenotifier_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'net.nemein.approvenotifier';

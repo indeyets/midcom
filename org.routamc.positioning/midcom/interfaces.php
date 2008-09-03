@@ -17,7 +17,7 @@
 class org_routamc_positioning_interface extends midcom_baseclasses_components_interface
 {
 
-    function org_routamc_positioning_interface()
+    function __construct()
     {
         parent::__construct();
 

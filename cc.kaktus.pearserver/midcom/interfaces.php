@@ -18,7 +18,7 @@ class cc_kaktus_pearserver_interface extends midcom_baseclasses_components_inter
     /**
      * Constructor.
      */
-    function cc_kaktus_pearserver_interface()
+    function __construct()
     {
         parent::__construct();
 

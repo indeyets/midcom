@@ -42,7 +42,7 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function net_nemein_alphabeticalindex_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'net.nemein.alphabeticalindex';

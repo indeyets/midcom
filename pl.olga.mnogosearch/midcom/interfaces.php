@@ -29,7 +29,7 @@ class pl_olga_mnogosearch_interface extends midcom_baseclasses_components_interf
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function pl_olga_mnogosearch_interface()
+    function __construct()
     {
         parent::__construct();
 

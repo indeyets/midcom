@@ -19,7 +19,7 @@ class net_nemein_repeathandler_interface extends midcom_baseclasses_components_i
     /**
      * Initializes the library and loads needed files
      */
-    function net_nemein_repeathandler_interface()
+    function __construct()
     {
         parent::__construct();
         

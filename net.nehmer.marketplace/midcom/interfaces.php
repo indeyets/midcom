@@ -32,7 +32,7 @@ class net_nehmer_marketplace_interface extends midcom_baseclasses_components_int
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function net_nehmer_marketplace_interface()
+    function __construct()
     {
         parent::__construct();
 

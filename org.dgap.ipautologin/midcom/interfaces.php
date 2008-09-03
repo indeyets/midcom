@@ -18,7 +18,7 @@ class org_dgap_ipautologin_interface extends midcom_baseclasses_components_inter
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function org_dgap_ipautologin_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'org.dgap.ipautologin';

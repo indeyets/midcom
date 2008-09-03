@@ -14,7 +14,7 @@
 class org_openpsa_directmarketing_interface extends midcom_baseclasses_components_interface
 {
 
-    function org_openpsa_directmarketing_interface()
+    function __construct()
     {
         parent::__construct();
 

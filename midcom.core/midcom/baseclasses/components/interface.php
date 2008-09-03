@@ -126,7 +126,7 @@
  * <code>
  * class net_nehmer_static_interface extends midcom_baseclasses_components_interface
  * {
- *     function net_nehmer_static_interface()
+ *     function __construct()
  *     {
  *         parent::__construct();
  *
@@ -307,7 +307,7 @@ class midcom_baseclasses_components_interface
     /**
      * Initialize the class, nothing to do yet.
      */
-    public function midcom_baseclasses_components_interface()
+    public function __construct()
     {
         // Nothing to do yet.
     }

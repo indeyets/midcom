@@ -19,7 +19,7 @@ class net_nemein_rss_interface extends midcom_baseclasses_components_interface
      * 
      * Nothing fancy, loads all script files.
      */
-    function net_nemein_rss_interface()
+    function __construct()
     {
         parent::__construct();
         

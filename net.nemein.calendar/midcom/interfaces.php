@@ -21,7 +21,7 @@ class net_nemein_calendar_interface extends midcom_baseclasses_components_interf
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function net_nemein_calendar_interface()
+    function __construct()
     {
         parent::__construct();
 

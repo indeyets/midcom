@@ -23,7 +23,7 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function net_nemein_discussion_interface()
+    function __construct()
     {
         parent::__construct();
 

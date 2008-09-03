@@ -19,7 +19,7 @@ class net_nemein_supportview_interface extends midcom_baseclasses_components_int
      * 
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function net_nemein_supportview_interface()
+    function __construct()
     {
         parent::__construct();
         

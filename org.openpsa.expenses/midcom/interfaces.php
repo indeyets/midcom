@@ -18,7 +18,7 @@ class org_openpsa_expenses_interface extends midcom_baseclasses_components_inter
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function org_openpsa_expenses_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'org.openpsa.expenses';

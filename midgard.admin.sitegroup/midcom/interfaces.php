@@ -17,7 +17,7 @@ class midgard_admin_sitegroup_interface extends midcom_baseclasses_components_in
     /**
      * Constructor.
      */
-    function midgard_admin_sitegroup_interface()
+    function __construct()
     {
         parent::__construct();
         

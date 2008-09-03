@@ -16,7 +16,7 @@ class org_routamc_photostream_interface extends midcom_baseclasses_components_in
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function org_routamc_photostream_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'org.routamc.photostream';

@@ -38,7 +38,7 @@ class net_nehmer_account_interface extends midcom_baseclasses_components_interfa
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function net_nehmer_account_interface()
+    function __construct()
     {
         parent::__construct();
 

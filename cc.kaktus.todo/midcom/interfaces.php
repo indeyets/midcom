@@ -22,7 +22,7 @@ class cc_kaktus_todo_interface extends midcom_baseclasses_components_interface
      *
      * @access public
      */
-    function cc_kaktus_todo_interface()
+    function __construct()
     {
         parent::__construct();
 

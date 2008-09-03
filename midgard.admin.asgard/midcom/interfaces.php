@@ -18,7 +18,7 @@ class midgard_admin_asgard_interface extends midcom_baseclasses_components_inter
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function midgard_admin_asgard_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'midgard.admin.asgard';

@@ -19,7 +19,7 @@ class net_nemein_organizations_interface extends midcom_baseclasses_components_i
      * 
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function net_nemein_organizations_interface()
+    function __construct()
     {
         parent::__construct();
         

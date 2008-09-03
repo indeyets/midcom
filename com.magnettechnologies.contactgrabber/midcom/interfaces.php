@@ -18,7 +18,7 @@ class com_magnettechnologies_contactgrabber_interface extends midcom_baseclasses
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function com_magnettechnologies_contactgrabber_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'com.magnettechnologies.contactgrabber';

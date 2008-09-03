@@ -7,7 +7,7 @@
 class midcom_helper_xsspreventer_interface extends midcom_baseclasses_components_interface
 {
 
-    function midcom_helper_xsspreventer_interface()
+    function __construct()
     {
         parent::__construct();
 

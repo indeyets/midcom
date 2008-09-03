@@ -14,7 +14,7 @@
  */
 class no_odindata_quickform_interface extends midcom_baseclasses_components_interface
 {
-    function no_odindata_quickform_interface()
+    function __construct()
     {
         parent::__construct();
         

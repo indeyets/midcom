@@ -18,7 +18,7 @@ class fi_hut_staticdumps_interface extends midcom_baseclasses_components_interfa
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function fi_hut_staticdumps_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'fi.hut.staticdumps';

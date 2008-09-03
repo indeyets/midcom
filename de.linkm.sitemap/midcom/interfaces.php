@@ -20,7 +20,7 @@ class de_linkm_sitemap_interface extends midcom_baseclasses_components_interface
      * 
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function de_linkm_sitemap_interface()
+    function __construct()
     {
         parent::__construct();
         

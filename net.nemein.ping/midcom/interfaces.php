@@ -13,7 +13,7 @@
 class net_nemein_ping_interface extends midcom_baseclasses_components_interface
 {
     
-    function net_nemein_ping_interface()
+    function __construct()
     {
         parent::__construct();
         

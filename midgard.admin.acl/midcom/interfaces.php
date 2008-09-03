@@ -21,7 +21,7 @@ class midgard_admin_acl_interface extends midcom_baseclasses_components_interfac
     /**
      * Initializes the library and loads needed files
      */
-    function midgard_admin_acl_interface()
+    function __construct()
     {
         parent::__construct();
 

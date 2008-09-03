@@ -18,7 +18,7 @@ class org_maemo_calendarpanel_interface extends midcom_baseclasses_components_in
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function org_maemo_calendarpanel_interface()
+    function __construct()
     {
         parent::__construct();
 

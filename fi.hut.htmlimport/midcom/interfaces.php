@@ -18,7 +18,7 @@ class fi_hut_htmlimport_interface extends midcom_baseclasses_components_interfac
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function fi_hut_htmlimport_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'fi.hut.htmlimport';

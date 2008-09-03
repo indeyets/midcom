@@ -15,7 +15,7 @@
 class se_anykey_activecalendar_interface extends midcom_baseclasses_components_interface
 {
 
-    function se_anykey_activecalendar_interface()
+    function __construct()
     {
         parent::__construct();
 

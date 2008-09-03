@@ -18,7 +18,7 @@ class net_nemein_updatenotification_interface extends midcom_baseclasses_compone
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function net_nemein_updatenotification_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'net.nemein.updatenotification';

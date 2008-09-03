@@ -18,7 +18,7 @@ class midcom_helper_reflector_interface extends midcom_baseclasses_components_in
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function midcom_helper_reflector_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'midcom.helper.reflector';

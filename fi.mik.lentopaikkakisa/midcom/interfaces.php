@@ -20,7 +20,7 @@ class fi_mik_lentopaikkakisa_interface extends midcom_baseclasses_components_int
      * 
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function fi_mik_lentopaikkakisa_interface()
+    function __construct()
     {
         parent::__construct();
         

@@ -65,7 +65,7 @@ class net_nemein_registrations_interface extends midcom_baseclasses_components_i
     /**
      * Standard-Constructor.
      */
-    function net_nemein_registrations_interface()
+    function __construct()
     {
         parent::__construct();
 

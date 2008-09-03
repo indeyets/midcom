@@ -25,7 +25,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
 class se_anykey_activecalendar_interface extends midcom_baseclasses_components_interface
 {
     
-    function se_anykey_activecalendar_interface()
+    function __construct()
     {   
         ";
         $class = new SmartLoader();

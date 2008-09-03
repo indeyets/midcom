@@ -12,7 +12,7 @@
 class no_bergfald_rcs_interface extends midcom_baseclasses_components_interface
 {
 
-    function no_bergfald_rcs_interface()
+    function __construct()
     {
         parent::__construct();
 
