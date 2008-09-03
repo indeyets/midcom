@@ -109,7 +109,7 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
     {
         $this->_topic->require_do('midcom.admin.styleeditor:template_management');
         
-        $data['view_title'] = $_MIDCOM->i18n->get_string('edit style', 'midcom.admin.styleeditor');
+        $data['view_title'] = $_MIDCOM->i18n->get_string('edit layout template', 'midcom.admin.styleeditor');
         $_MIDCOM->set_pagetitle($data['view_title']);
         
         $data['asgard_toolbar'] = new midcom_helper_toolbar();

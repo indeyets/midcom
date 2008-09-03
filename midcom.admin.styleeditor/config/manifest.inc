@@ -35,7 +35,7 @@
     (
         'class' => 'midcom_admin_styleeditor_viewer',
         'src' => 'file:/midcom/admin/styleeditor/viewer.php',
-        'name' => 'Style Editor',
+        'name' => 'midcom.admin.styleeditor',
         'config' => '',
     ),
 ),
