@@ -78,7 +78,7 @@
         </div>
         <div id="siteinfo">
             <span class="copyrights">
-                <img src="<?php echo MIDCOM_STATIC_URL; ?>/Javascript_protoToolkit/images/midgard-logo.png" alt="M" />
+                <img src="<?php echo MIDCOM_STATIC_URL; ?>/midcom.services.toolbars/images/midgard-logo.png" alt="(M)" />
                 <strong>Asgard for Midgard <?php echo substr(mgd_version(), 0, 3); ?></strong>.
                 Copyright &copy; 1998 - <?php echo date('Y'); ?> <a href="http://www.midgard-project.org/">The Midgard Project</a>.
                 Midgard is a <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under

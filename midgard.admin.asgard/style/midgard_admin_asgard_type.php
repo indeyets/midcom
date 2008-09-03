@@ -20,7 +20,7 @@ if ($data['component'] == 'midgard')
 }
 else
 {
-    echo "<p>" . sprintf($_MIDCOM->i18n->get_string('this type belongs to %s component', 'midgard.admin.asgard'), $data['component']) . "</p>\n";
+    echo "<p>" . sprintf($_MIDCOM->i18n->get_string('this type belongs to %s component', 'midgard.admin.asgard'), "<a href=\"{$prefix}__mfa/asgard/components/{$data['component']}/\">{$data['component']}</a>") . "</p>\n";
 }
 ?>
 
