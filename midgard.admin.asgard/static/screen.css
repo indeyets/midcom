@@ -490,7 +490,8 @@ p
 }
 
 #container #toolbar ul li a,
-#container #toolbar ul li abbr
+#container #toolbar ul li abbr,
+#container #toolbar ul li button
 {
   display: inline-block;
   -moz-border-radius: 6px;
@@ -502,7 +503,7 @@ p
 
 #container #toolbar ul li abbr
 {
-  background-color:#D3D7CF;
+  background-color: #D3D7CF;
   border: none;
 }
 
@@ -513,11 +514,22 @@ p
     margin-bottom: 3px;
 }
 
+#container #toolbar ul li button
+{
+    border: none;
+    background-color: transparent;
+    color: #204a87;
+    font-size: 10pt;
+}
+
 #container #toolbar ul li:hover,
 #container #toolbar ul li:hover a,
+#container #toolbar ul li:hover button,
 #container #toolbar ul li a:hover,
 #container #toolbar ul li.selected,
 #container #toolbar ul li.selected a
+#container #toolbar ul li button:hover,
+#container #toolbar ul li.selected button,
 {
   background-color: white;
 }
