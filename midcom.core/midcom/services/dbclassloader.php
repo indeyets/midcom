@@ -1218,9 +1218,18 @@ EOF;
             }
             
             // Fix for incorrectly named class
-            if ($component == 'net.nehmer.accounts')
+            switch ($component)
             {
-                $component = 'net.nehmer.account';
+                case 'net.nehmer.accounts':
+                    $component = 'net.nehmer.account';
+                    break;
+                case 'org.openpsa.campaign':
+                case 'org.openpsa.link':
+                    $component = 'org.openpsa.directmarketing';
+                    break;
+                case 'org.openpsa.document':
+                    $component = 'org.openpsa.documents';
+                    break;
             }
             
             if (   !empty($component)

@@ -821,6 +821,11 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
         $root_classes = array();
         foreach ($_MIDGARD['schema']['types'] as $schema_type => $dummy)
         {
+            if (substr($schema_type, 0, 2) == '__')
+            {
+                continue;
+            }
+
             if (in_array($schema_type, $root_exceptions_notroot))
             {
                 // Explicitly specified to not be root class, skip all heuristics
