@@ -22,7 +22,7 @@ class org_openpsa_products_handler_product_api extends midcom_baseclasses_compon
      */
     var $_product;
 
-    function org_openpsa_products_handler_product_api()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

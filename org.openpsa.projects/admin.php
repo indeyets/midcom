@@ -23,7 +23,7 @@ class org_openpsa_projects_admin extends midcom_baseclasses_components_request_a
      *
      * Nothing fancy, defines the request switch to activate the component configuration.
      */
-    function org_openpsa_projects_admin($topic, $config)
+    function __construct($topic, $config)
     {
         parent::midcom_baseclasses_components_request_admin($topic, $config);
 

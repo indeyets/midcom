@@ -18,7 +18,7 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
     var $module = false;
 
 
-    function org_openpsa_reports_handler_reports_base()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

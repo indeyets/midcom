@@ -25,7 +25,7 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
     /**
      * Simple default constructor.
      */
-    function org_openpsa_products_handler_product_view()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

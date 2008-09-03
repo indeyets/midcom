@@ -18,7 +18,7 @@ class org_openpsa_contacts_person_handler
     var $_request_data;
     var $_toolbars;
 
-    function org_openpsa_contacts_person_handler(&$datamanagers, &$request_data)
+    function __construct(&$datamanagers, &$request_data)
     {
         $this->_datamanagers =& $datamanagers;
         $this->_request_data =& $request_data;

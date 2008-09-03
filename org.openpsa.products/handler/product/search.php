@@ -17,7 +17,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
     /**
      * Simple default constructor.
      */
-    function org_openpsa_products_handler_product_search()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

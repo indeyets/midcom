@@ -43,7 +43,7 @@ class org_openpsa_projects_workingon
      *
      *�@param midcom_db_person $person Person to handle "now working on" for. By default current user
      */
-    function org_openpsa_projects_workingon($person = null)
+    function __construct($person = null)
     {
         if (is_null($person))
         {

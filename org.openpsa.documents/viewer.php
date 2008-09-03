@@ -24,7 +24,7 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
     /**
      * Constructor.
      */
-    function org_openpsa_documents_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
 

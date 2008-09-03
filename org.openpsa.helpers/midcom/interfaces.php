@@ -13,7 +13,7 @@
 class org_openpsa_helpers_interface extends midcom_baseclasses_components_interface
 {
 
-    function org_openpsa_helpers_interface()
+    function __construct()
     {
         parent::midcom_baseclasses_components_interface();
 

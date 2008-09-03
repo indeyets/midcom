@@ -19,7 +19,7 @@ class org_openpsa_products_handler_product_latest extends midcom_baseclasses_com
     /**
      * Simple default constructor.
      */
-    function org_openpsa_products_handler_product_latest()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

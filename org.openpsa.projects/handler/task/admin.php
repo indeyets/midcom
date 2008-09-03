@@ -59,7 +59,7 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
     /**
      * Simple default constructor.
      */
-    function org_openpsa_projects_handler_task_view()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

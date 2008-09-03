@@ -16,7 +16,7 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
 {
     var $_datamanagers;
 
-    function org_openpsa_projects_handler_task_view()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

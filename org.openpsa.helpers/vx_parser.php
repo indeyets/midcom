@@ -34,7 +34,7 @@ class org_openpsa_helpers_vxparser
      */
     var $_parsed = false;
 
-    function org_openpsa_helpers_vxparser($input = false)
+    function __construct($input = false)
     {
         // Compatibility defaults, need to be adjusted for various states of client b0rkedness
         $this->compatibility['data'] = array();

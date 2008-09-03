@@ -49,7 +49,7 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
      */
     var $_params_cache = false;
 
-    function org_openpsa_qbpager($classname, $pager_id)
+    function __construct($classname, $pager_id)
     {
         $this->_component = 'org.openpsa.qbpager';
         parent::midcom_baseclasses_components_purecode();

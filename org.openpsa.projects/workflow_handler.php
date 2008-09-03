@@ -17,7 +17,7 @@ class org_openpsa_projects_workflow_handler
     var $_datamanagers;
     var $_request_data;
 
-    function org_openpsa_projects_workflow_handler(&$datamanagers, &$request_data)
+    function __construct(&$datamanagers, &$request_data)
     {
         $this->_datamanagers = &$datamanagers;
         $this->_request_data = &$request_data;

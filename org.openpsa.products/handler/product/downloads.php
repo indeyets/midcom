@@ -20,7 +20,7 @@ class org_openpsa_products_handler_product_downloads extends midcom_baseclasses_
     /**
      * Simple default constructor.
      */
-    function org_openpsa_products_handler_product_downloads()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

@@ -14,7 +14,7 @@
  */
 class org_openpsa_notifications_notifier_api_nabaztag extends org_openpsa_notifications_notifier
 {
-    function org_openpsa_notifications_notifier_api_nabaztag($recipient)
+    function __construct($recipient)
     {
         parent::org_openpsa_notifications_notifier($recipient);
     }

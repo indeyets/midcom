@@ -22,7 +22,7 @@ class org_openpsa_projects_hours_widget
     var $_request_data;
     var $_form_prefix = '';
 
-    function org_openpsa_projects_hours_widget(&$task, &$datamanager, $hours_url, &$request_data)
+    function __construct(&$task, &$datamanager, $hours_url, &$request_data)
     {
         $this->_datamanager = $datamanager;
         $this->_hours_url = $hours_url;

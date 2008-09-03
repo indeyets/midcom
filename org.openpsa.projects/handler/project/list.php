@@ -16,7 +16,7 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
 {
     var $_datamanagers;
 
-    function org_openpsa_projects_handler_project_list()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

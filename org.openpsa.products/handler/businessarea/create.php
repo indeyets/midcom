@@ -70,7 +70,7 @@ class org_openpsa_products_handler_businessarea_create extends midcom_baseclasse
     /**
      * Simple default constructor.
      */
-    function org_openpsa_products_handler_businessarea_create()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

@@ -13,7 +13,7 @@
  */
 class org_openpsa_products_viewer extends midcom_baseclasses_components_request
 {
-    function org_openpsa_products_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
     }

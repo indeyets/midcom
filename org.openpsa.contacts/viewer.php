@@ -42,7 +42,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
      * - Third parameter defines current view/action
      * - Additional parameters are defined by the action concerned
      */
-    function org_openpsa_contacts_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
 

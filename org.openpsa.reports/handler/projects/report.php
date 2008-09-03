@@ -23,7 +23,7 @@ class org_openpsa_reports_handler_projects_report extends org_openpsa_reports_ha
     /**
      * Simple default constructor.
      */
-    function org_openpsa_reports_handler_projects_report()
+    function __construct()
     {
         parent::org_openpsa_reports_handler_reports_base();
     }

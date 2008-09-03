@@ -31,7 +31,7 @@ class org_openpsa_projects_handler_project_view extends midcom_baseclasses_compo
     var $_datamanager = null;
 
 
-    function org_openpsa_projects_handler_project_view()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

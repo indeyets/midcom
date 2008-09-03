@@ -16,7 +16,7 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
 {
     var $user = null;
 
-    function org_openpsa_mypage_handler_today()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

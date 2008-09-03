@@ -82,7 +82,7 @@ class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
      *
      * @param mixed $person Person to display either as MidgardPerson or Datamanager array
      */
-    function org_openpsa_contactwidget($person = null)
+    function __construct($person = null)
     {
         $this->_component = 'org.openpsa.contactwidget';
 

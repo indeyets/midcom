@@ -16,7 +16,7 @@ class org_openpsa_projects_handler_project_action extends midcom_baseclasses_com
 {
     var $_datamanagers;
 
-    function org_openpsa_projects_handler_project_action()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

@@ -25,7 +25,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
      */
     var $_controllers = array();
 
-    function org_openpsa_sales_handler_edit()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
         $this->_request_data['datamanagers'] =& $this->_datamanagers;

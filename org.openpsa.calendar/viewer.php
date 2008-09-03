@@ -24,7 +24,7 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
      *
      * @todo OpenPSA Calendar handles its URL space how?
      */
-    function org_openpsa_calendar_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::midcom_baseclasses_components_request($topic, $config);
 

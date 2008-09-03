@@ -17,7 +17,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
     /**
      * Simple default constructor.
      */
-    function org_openpsa_sales_handler_deliverable_report()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

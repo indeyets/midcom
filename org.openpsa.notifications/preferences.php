@@ -19,7 +19,7 @@ class org_openpsa_notifications_preferences extends midcom_baseclasses_component
     /**
      * Simple constructor, which only initializes the parent constructor.
      */
-    function org_openpsa_notifications_preferences()
+    function __construct()
     {
         $this->_component = 'org.openpsa.notifications';
         parent::midcom_baseclasses_components_handler();

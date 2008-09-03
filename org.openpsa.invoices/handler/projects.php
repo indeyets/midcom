@@ -14,7 +14,7 @@
  */
 class org_openpsa_invoices_handler_projects extends midcom_baseclasses_components_handler
 {
-    function org_openpsa_invoices_handler_projects()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

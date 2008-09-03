@@ -17,7 +17,7 @@ class org_openpsa_projects_projectbroker
     var $_owner_grp = false;
     var $membership_filter = array();
 
-    function org_openpsa_projects_projectbroker()
+    function __construct()
     {
         $this->_owner_grp = $GLOBALS['org.openpsa.core:owner_organization_obj'];
         if (!$this->_owner_grp)

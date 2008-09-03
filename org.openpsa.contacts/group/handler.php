@@ -35,7 +35,7 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
      */
     var $_view_toolbar = null;
 
-    function org_openpsa_contacts_group_handler(&$datamanagers, &$request_data)
+    function __construct(&$datamanagers, &$request_data)
     {
         $this->_datamanagers = &$datamanagers;
         $this->_request_data = &$request_data;

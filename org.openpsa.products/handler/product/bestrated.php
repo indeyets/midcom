@@ -20,7 +20,7 @@ class org_openpsa_products_handler_product_bestrated extends midcom_baseclasses_
     /**
      * Simple default constructor.
      */
-    function org_openpsa_products_handler_product_bestrated()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

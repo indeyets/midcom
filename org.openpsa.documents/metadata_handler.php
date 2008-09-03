@@ -18,7 +18,7 @@ class org_openpsa_documents_metadata_handler
     var $_datamanagers;
     var $_request_data;
 
-    function org_openpsa_documents_metadata_handler(&$datamanagers, &$request_data)
+    function __construct(&$datamanagers, &$request_data)
     {
         $this->_datamanagers =& $datamanagers;
         $this->_request_data =& $request_data;

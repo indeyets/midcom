@@ -22,7 +22,7 @@ class fi_incognito_protustree_item {
      * @param string $type
      * @param mixed $children Array or Boolean
      */
-    function fi_incognito_protustree_item($id="",$name="",$type="group",$children="load_later",$options=array()) {
+    function __construct($id="",$name="",$type="group",$children="load_later",$options=array()) {
         // print("\nfi_incognito_protustree_item:".$name."\n");
         $this->id = $id;
         $this->name = $name;
@@ -87,7 +87,7 @@ class org_openpsa_contacts_mfa extends midcom_baseclasses_components_handler
     /**
      * Simple constructor, which only initializes the parent constructor.
      */
-    function org_openpsa_contacts_mfa()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
         $this->queryRoot = array( 'id' => '', 'name' => '', 'type' => '' );

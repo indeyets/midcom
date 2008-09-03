@@ -14,7 +14,7 @@ require_once(MIDCOM_ROOT.'/midcom/baseclasses/components/handler/dataexport.php'
  */
 class org_openpsa_products_handler_product_csv extends midcom_baseclasses_components_handler_dataexport
 {
-    function org_openpsa_products_handler_product_csv()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler_dataexport();
     }

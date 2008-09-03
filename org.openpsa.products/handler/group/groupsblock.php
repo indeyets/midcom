@@ -20,7 +20,7 @@ class org_openpsa_products_handler_group_groupsblock  extends midcom_baseclasses
     /**
      * Simple default constructor.
      */
-    function org_openpsa_products_handler_group_groupsblock()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

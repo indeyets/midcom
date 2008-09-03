@@ -41,7 +41,7 @@ class org_openpsa_sales_handler_deliverable_process extends midcom_baseclasses_c
     /**
      * Simple default constructor.
      */
-    function org_openpsa_sales_handler_deliverable_process()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

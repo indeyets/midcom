@@ -20,7 +20,7 @@ class org_openpsa_helpers_uimessages extends midcom_baseclasses_components_purec
      * Initializes the class and sets the following strings into the list of allowed classes:
      * normal, ok, warning and error
      */
-    function org_openpsa_helpers_uimessages()
+    function __construct()
     {
         parent::midcom_baseclasses_components_purecode();
     }

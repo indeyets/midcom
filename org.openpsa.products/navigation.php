@@ -22,7 +22,7 @@ class org_openpsa_products_navigation extends midcom_baseclasses_components_navi
     /**
      * Simple constructor, calls base class.
      */
-    function org_openpsa_products_navigation()
+    function __construct()
     {
         parent::midcom_baseclasses_components_navigation();
     }

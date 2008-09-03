@@ -15,7 +15,7 @@ class org_openpsa_products_handler_product_csvimport extends midcom_baseclasses_
     var $_datamanager = null;
     var $_products_processed = array();
 
-    function org_openpsa_products_handler_product_csvimport()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

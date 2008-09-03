@@ -15,7 +15,7 @@
 class org_openpsa_core_acl_synchronizer
 {
 
-    function org_openpsa_core_acl_synchronizer()
+    function __construct()
     {
 
     }

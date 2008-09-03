@@ -16,7 +16,7 @@ class org_openpsa_projects_handler_hours_list extends midcom_baseclasses_compone
 {
     var $_datamanagers;
 
-    function org_openpsa_projects_handler_hours_list()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

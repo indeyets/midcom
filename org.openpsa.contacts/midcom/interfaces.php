@@ -15,7 +15,7 @@
 class org_openpsa_contacts_interface extends midcom_baseclasses_components_interface
 {
 
-    function org_openpsa_contacts_interface()
+    function __construct()
     {
         parent::midcom_baseclasses_components_interface();
 
