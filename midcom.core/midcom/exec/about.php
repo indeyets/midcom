@@ -49,7 +49,7 @@ $_MIDCOM->auth->require_valid_user();
                     <a href="http://www.midgard-project.org/">Midgard</a> is a Content management Toolkit. It is Free Software that can be used to construct interactive web applications. <a href="http://www.midgard-project.org/midgard/">Learn more &raquo;</a>
             </p>
             <p>
-                    Copyright&copy;1999-<?php echo date('Y'); ?> <a href="http://www.midgard-project.org/community/">The Midgard Project</a>. <a href="">Some rights reserved</a>.
+                    Copyright&copy;1999-<?php echo date('Y'); ?> <a href="http://www.midgard-project.org/community/">The Midgard Project</a>. <a href="http://www.gnu.org/licenses/lgpl.html">Free software</a>.
             </p>            
             <?php
             if (   $_MIDGARD['admin']
