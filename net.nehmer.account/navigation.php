@@ -18,7 +18,7 @@ class net_nehmer_account_navigation extends midcom_baseclasses_components_naviga
     /**
      * Simple constructor, calls base class.
      */
-    function net_nehmer_account_navigation()
+    function __construct()
     {
         parent::__construct();
     }

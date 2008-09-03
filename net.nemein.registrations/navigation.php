@@ -29,7 +29,7 @@ class net_nemein_registrations_navigation extends midcom_baseclasses_components_
     /**
      * Simple constructor, calls base class.
      */
-    function net_nemein_registrations_navigation()
+    function __construct()
     {
         parent::__construct();
     }

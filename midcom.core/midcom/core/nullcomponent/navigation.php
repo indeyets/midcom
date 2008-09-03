@@ -19,7 +19,7 @@ class midcom_core_nullcomponent_navigation extends midcom_baseclasses_components
     /**
      * Simple constructor, calls base class.
      */
-    function midcom_core_nullcomponent_navigation()
+    function __construct()
     {
         parent::__construct();
     }

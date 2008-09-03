@@ -22,7 +22,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
      *
      * Nothing fancy, defines the request switch.
      */
-    function midcom_helper_search_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
 

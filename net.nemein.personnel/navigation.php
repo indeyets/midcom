@@ -21,7 +21,7 @@ class net_nemein_personnel_navigation extends midcom_baseclasses_components_navi
      * 
      * @access public
      */
-    function net_nemein_personnel_navigation() 
+    function __construct() 
     {
         parent::__construct();
     }

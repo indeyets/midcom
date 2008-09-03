@@ -19,7 +19,7 @@ class net_nemein_updatenotification_navigation extends midcom_baseclasses_compon
     /**
      * Simple constructor, calls base class.
      */
-    function net_nemein_updatenotification_navigation()
+    function __construct()
     {
         parent::__construct();
     }

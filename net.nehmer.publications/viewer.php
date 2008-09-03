@@ -27,7 +27,7 @@ class net_nehmer_publications_viewer extends midcom_baseclasses_components_reque
      */
     var $_topic = null;
 
-    function net_nehmer_publications_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
     }

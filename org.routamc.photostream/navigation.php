@@ -23,7 +23,7 @@ class org_routamc_photostream_navigation extends midcom_baseclasses_components_n
     /**
      * Simple constructor, calls base class.
      */
-    function org_routamc_photostream_navigation()
+    function __construct()
     {
         parent::__construct();
     }

@@ -20,7 +20,7 @@ class midcom_admin_styleeditor_viewer extends midcom_baseclasses_components_requ
      * 
      * @access public
      */
-    function midcom_admin_styleeditor_viewer()
+    function __construct()
     {
         parent::__construct();
     }

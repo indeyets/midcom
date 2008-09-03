@@ -25,7 +25,7 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
     /**
      * Constructor.
      */
-    function org_openpsa_imp_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         parent::__construct($topic, $config);

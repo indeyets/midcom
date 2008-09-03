@@ -23,7 +23,7 @@ class net_nemein_internalorders_viewer extends midcom_baseclasses_components_req
      */
     var $_root_event = null;
 
-    function net_nemein_internalorders_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
     }

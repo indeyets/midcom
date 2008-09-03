@@ -26,7 +26,7 @@ class net_nemein_supportview_viewer {
     var $form_prefix;
     var $view;
 
-    function net_nemein_supportview_viewer($topic, $config) {
+    function __construct($topic, $config) {
 
         $this->_argv = array();
         $this->_config = $config;

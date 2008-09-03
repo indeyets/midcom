@@ -19,7 +19,7 @@ class org_maemo_calendar_navigation extends midcom_baseclasses_components_naviga
     /**
      * Simple constructor, calls base class.
      */
-    function org_maemo_calendar_navigation()
+    function __construct()
     {
         parent::__construct();
     }

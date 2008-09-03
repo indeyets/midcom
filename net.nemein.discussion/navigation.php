@@ -16,7 +16,7 @@
 
 class net_nemein_discussion_navigation extends midcom_baseclasses_components_navigation
 {
-    function net_nemein_discussion_navigation() 
+    function __construct() 
     {
         parent::__construct();
     }

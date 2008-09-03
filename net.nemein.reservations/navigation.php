@@ -19,7 +19,7 @@ class net_nemein_reservations_navigation extends midcom_baseclasses_components_n
     /**
      * Simple constructor, calls base class.
      */
-    function net_nemein_reservations_navigation()
+    function __construct()
     {
         parent::__construct();
     }

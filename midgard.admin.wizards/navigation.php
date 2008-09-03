@@ -19,7 +19,7 @@ class midgard_admin_wizards_navigation extends midcom_baseclasses_components_nav
     /**
      * Simple constructor, calls base class.
      */
-    function midgard_admin_wizards_navigation()
+    function __construct()
     {
         parent::__construct();
     }

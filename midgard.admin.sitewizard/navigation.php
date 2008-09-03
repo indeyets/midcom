@@ -16,7 +16,7 @@
 
 class midgard_admin_sitewizard_navigation extends midcom_baseclasses_components_navigation
 {
-    function midgard_admin_sitewizard_navigation() 
+    function __construct() 
     {
         parent::__construct();
     }

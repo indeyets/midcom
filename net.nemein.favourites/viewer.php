@@ -12,7 +12,7 @@ class net_nemein_favourites_viewer extends midcom_baseclasses_components_request
 {
     var $_content_topic = null;
 
-    function net_nemein_favourites_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
     }

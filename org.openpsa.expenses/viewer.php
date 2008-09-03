@@ -13,7 +13,7 @@
  */
 class org_openpsa_expenses_viewer extends midcom_baseclasses_components_request
 {
-    function org_openpsa_expenses_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
     }

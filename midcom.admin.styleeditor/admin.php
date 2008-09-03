@@ -27,7 +27,7 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
     var $_schemadb = Array();
     
 
-    function midcom_admin_styleeditor_viewer($topic, $config) 
+    function __construct($topic, $config) 
     {
         //$page = mgd_get_object_by_guid($config->get("root_page"));
         parent::__construct($topic, $config);

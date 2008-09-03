@@ -43,7 +43,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
     var $expanded_root_types = array();
     var $shown_objects = array();
 
-    function midgard_admin_asgard_navigation($object, &$request_data)
+    function __construct($object, &$request_data)
     {
         $this->_component = 'midgard.admin.asgard';
         parent::__construct();

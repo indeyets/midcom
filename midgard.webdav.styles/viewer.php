@@ -13,7 +13,7 @@
  */
 class midgard_webdav_styles_viewer extends midcom_baseclasses_components_request
 {
-    function midgard_webdav_styles_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
     }

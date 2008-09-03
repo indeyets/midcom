@@ -21,7 +21,7 @@ class net_nemein_bookmarks_navigation
     var $_latest_time;
     var $_latest_revisor;
 
-    function net_nemein_bookmarks_navigation()
+    function __construct()
     {
         $this->_topic = null;
         $this->_config_topic = null;

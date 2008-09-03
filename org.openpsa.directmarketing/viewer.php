@@ -22,7 +22,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
     var $_logger_handler = null;
     var $_toolbars;
 
-    function org_openpsa_directmarketing_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
 

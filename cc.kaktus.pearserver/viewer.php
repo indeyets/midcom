@@ -14,7 +14,7 @@
  */
 class cc_kaktus_pearserver_viewer extends midcom_baseclasses_components_request
 {
-    function cc_kaktus_pearserver_viewer($object, $config)
+    function __construct($object, $config)
     {
         parent::__construct($object, $config);
         $this->_current_node = null;

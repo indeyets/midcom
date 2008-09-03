@@ -29,7 +29,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
     /**
      * Simple constructor, calls base class.
      */
-    function net_nehmer_blog_navigation()
+    function __construct()
     {
         parent::__construct();
     }

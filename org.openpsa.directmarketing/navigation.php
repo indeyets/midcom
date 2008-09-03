@@ -18,7 +18,7 @@ class org_openpsa_directmarketing_navigation extends midcom_baseclasses_componen
     /**
      * Simple constructor, calls base class.
      */
-    function org_openpsa_directmarketing_navigation()
+    function __construct()
     {
         parent::__construct();
     }

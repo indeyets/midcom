@@ -18,7 +18,7 @@ class de_linkm_sitemap_viewer extends midcom_baseclasses_components_request
     var $_current_node;   // ID of current node we're in
     var $_root_node_id;   // ID of the root node to use
 
-    function de_linkm_sitemap_viewer($object, $config)
+    function __construct($object, $config)
     {
         parent::__construct($object, $config);
         $this->_current_node = null;

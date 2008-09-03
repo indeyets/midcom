@@ -20,7 +20,7 @@ class cc_kaktus_todo_navigation extends midcom_baseclasses_components_navigation
      * 
      * @access public
      */
-    function cc_kaktus_todo_navigation()
+    function __construct()
     {
         parent::__construct();
     }

@@ -16,7 +16,7 @@
 
 class fi_mik_lentopaikkakisa_navigation extends midcom_baseclasses_components_navigation
 {
-    function fi_mik_lentopaikkakisa_navigation() 
+    function __construct() 
     {
         parent::__construct();
     }

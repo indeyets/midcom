@@ -18,7 +18,7 @@ class net_nemein_supportview_navigation {
     var $_l10n;
     var $_l10n_midcom;
 
-    function net_nemein_supportview_navigation() {
+    function __construct() {
         $this->_object = null;
         $i18n =& $_MIDCOM->get_service("i18n");
         $this->_l10n = $i18n->get_l10n("net.nemein.supportview");

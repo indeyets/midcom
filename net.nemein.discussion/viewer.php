@@ -15,7 +15,7 @@
 class net_nemein_discussion_viewer extends midcom_baseclasses_components_request
 {
 
-    function net_nemein_discussion_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
 

@@ -14,7 +14,7 @@ class pl_olga_windguru_navigation extends midcom_baseclasses_components_navigati
     /**
      * Simple constructor, calls base class.
      */
-    function pl_olga_windguru_navigation()
+    function __construct()
     {
         parent::__construct();
     }

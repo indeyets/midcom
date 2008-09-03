@@ -19,7 +19,7 @@ class net_nemein_alphabeticalindex_navigation extends midcom_baseclasses_compone
     /**
      * Simple constructor, calls base class.
      */
-    function net_nemein_alphabeticalindex_navigation()
+    function __construct()
     {
         parent::__construct();
     }

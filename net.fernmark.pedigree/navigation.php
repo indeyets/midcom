@@ -19,7 +19,7 @@ class net_fernmark_pedigree_navigation extends midcom_baseclasses_components_nav
     /**
      * Simple constructor, calls base class.
      */
-    function net_fernmark_pedigree_navigation()
+    function __construct()
     {
         parent::__construct();
     }

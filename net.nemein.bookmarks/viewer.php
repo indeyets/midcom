@@ -25,7 +25,7 @@ class net_nemein_bookmarks_viewer
     var $_bookmarks;        // List of bookmarks matching URL criteria
     var $_bookmark;         // Selected single bookmark
 
-    function net_nemein_bookmarks_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         $this->_debug_prefix = "bookmarks viewer::";
         $this->_config = $config;

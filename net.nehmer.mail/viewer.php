@@ -15,7 +15,7 @@
  */
 class net_nehmer_mail_viewer extends midcom_baseclasses_components_request
 {
-    function net_nehmer_mail_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
     }

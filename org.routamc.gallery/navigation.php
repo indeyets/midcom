@@ -30,7 +30,7 @@ class org_routamc_gallery_navigation extends midcom_baseclasses_components_navig
     /**
      * Simple constructor, calls base class.
      */
-    function org_routamc_gallery_navigation()
+    function __construct()
     {
         parent::__construct();
     }

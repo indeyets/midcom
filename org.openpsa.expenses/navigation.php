@@ -19,7 +19,7 @@ class org_openpsa_expenses_navigation extends midcom_baseclasses_components_navi
     /**
      * Simple constructor, calls base class.
      */
-    function org_openpsa_expenses_navigation()
+    function __construct()
     {
         parent::__construct();
     }

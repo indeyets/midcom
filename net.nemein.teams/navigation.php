@@ -19,7 +19,7 @@ class net_nemein_teams_navigation extends midcom_baseclasses_components_navigati
     /**
      * Simple constructor, calls base class.
      */
-    function net_nemein_teams_navigation()
+    function __construct()
     {
         parent::__construct();
     }

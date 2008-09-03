@@ -17,7 +17,7 @@ class no_odindata_quickform_navigation extends midcom_baseclasses_components_nav
     /**
      * Simple constructor, calls base class.
      */
-    function no_odindata_quickform_navigation()
+    function __construct()
     {
         parent::__construct();
     }

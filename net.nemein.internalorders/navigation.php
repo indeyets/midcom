@@ -14,7 +14,7 @@
  */
 class net_nemein_internalorders_navigation extends midcom_baseclasses_components_navigation
 {
-    function net_nemein_internalorders_navigation()
+    function __construct()
     {
     parent::__construct();
     }

@@ -13,7 +13,7 @@
  */
 class fi_hut_loginbroker_viewer extends midcom_baseclasses_components_request
 {
-    function fi_hut_loginbroker_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
     }

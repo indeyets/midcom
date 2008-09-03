@@ -14,7 +14,7 @@
  */
 class net_nemein_redirector_viewer extends midcom_baseclasses_components_request
 {
-    function net_nemein_redirector_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
 

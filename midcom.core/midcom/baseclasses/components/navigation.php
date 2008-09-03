@@ -85,7 +85,7 @@ class midcom_baseclasses_components_navigation
      * Create the navigation instance, the constructor doesn't do anything
      * yet, startup is handled by initialize().
      */
-    public function midcom_baseclasses_components_navigation()
+    public function __construct()
     {
         // Nothing to do
     }

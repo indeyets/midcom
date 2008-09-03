@@ -29,7 +29,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
      *
      * @access public
      */
-    function net_nemein_calendar_viewer($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
     }
