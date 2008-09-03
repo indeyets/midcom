@@ -830,19 +830,22 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
             // first kill your children
             $children_types = $ref->get_child_objects($object, true);
-
-            foreach ($children_types as $type => $children)
+            
+            if (is_array($children_types))
             {
-                $child_guids = array();
-                foreach ($children as $child)
+                foreach ($children_types as $type => $children)
                 {
-                    if (!$child->metadata->deleted)
+                    $child_guids = array();
+                    foreach ($children as $child)
                     {
-                        $child->delete();
+                        if (!$child->metadata->deleted)
+                        {
+                            $child->delete();
+                        }
+                        $child_guids[] = $child->guid;
                     }
-                    $child_guids[] = $child->guid;
+                    midcom_baseclasses_core_dbobject::purge($child_guids, $type);
                 }
-                midcom_baseclasses_core_dbobject::purge($child_guids, $type);
             }
 
             // then shoot your dogs
