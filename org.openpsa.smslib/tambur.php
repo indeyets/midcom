@@ -15,7 +15,7 @@ class org_openpsa_smslib_tambur extends org_openpsa_smslib
 
     function org_openpsa_smslib_tambur()
     {
-        parent::org_openpsa_smslib();
+        parent::__construct();
         $this->location = &$this->uri;
         return true;
     }

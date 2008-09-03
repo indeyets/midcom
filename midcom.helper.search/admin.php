@@ -22,7 +22,7 @@ class midcom_helper_search_admin extends midcom_baseclasses_components_request_a
      * 
      * Nothing fancy, defines the request switch to activate the component configuration.
      */
-    function midcom_helper_search_admin($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
         

@@ -18,7 +18,7 @@ class fi_hut_loginbroker_callbacks_affiliations extends fi_hut_loginbroker_callb
 
     function fi_hut_loginbroker_callbacks_affiliations()
     {
-        parent::fi_hut_loginbroker_callbacks_prototype_base();
+        parent::__construct();
         $this->_local_config = $this->_config->get('fi_hut_loginbroker_callbacks_affiliations_config');
         $this->_local_data['created_members'] = array();
         $this->_local_data['deleted_members'] = array();

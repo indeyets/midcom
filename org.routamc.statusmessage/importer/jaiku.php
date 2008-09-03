@@ -18,7 +18,7 @@ class org_routamc_statusmessage_importer_jaiku extends org_routamc_statusmessage
      */
     function org_routamc_statusmessage_importer_jaiku()
     {
-         parent::org_routamc_statusmessage_importer();
+         parent::__construct();
     }
 
     /**

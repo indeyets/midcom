@@ -30,7 +30,7 @@ class no_odindata_quickform_admin extends midcom_baseclasses_components_request_
     var $_topic_toolbar;
     */
 
-    function no_odindata_quickform_admin($topic, $config) {
+    function __construct($topic, $config) {
         parent::__construct($topic, $config);
      }
 

@@ -50,7 +50,7 @@ class midcom_services_indexer_filter_date extends midcom_services_indexer_filter
      */
     function midcom_services_indexer_filter_date($field, $start, $end)
     {
-        parent::midcom_services_indexer_filter($field);
+        parent::__construct($field);
         
         if ($start == 0 && $end == 0)
         {

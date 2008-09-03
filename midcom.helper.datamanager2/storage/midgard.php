@@ -36,7 +36,7 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
      */
     function midcom_helper_datamanager2_storage_midgard(&$schema, &$object)
     {
-        parent::midcom_helper_datamanager2_storage($schema);
+        parent::__construct($schema);
         if (! $_MIDCOM->dbclassloader->is_mgdschema_object($object))
         {
             debug_push_class(__CLASS__, __FUNCTION__);

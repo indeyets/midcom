@@ -34,7 +34,7 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
      */
     function midcom_helper_datamanager2_formmanager_ajax(&$schema, &$types)
     {
-        parent::midcom_helper_datamanager2_formmanager($schema, $types);
+        parent::__construct($schema, $types);
     }
 
     /**

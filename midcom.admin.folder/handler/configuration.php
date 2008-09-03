@@ -22,7 +22,7 @@ class midcom_admin_folder_handler_configuration extends midcom_core_handler_conf
 {
     function midcom_admin_folder_handler_configuration()
     {
-        parent::midcom_core_handler_configdm();
+        parent::__construct();
     }
 
     /**

@@ -29,7 +29,7 @@ class net_nemein_bookmarks_admin
     var $_tag;
     var $schemadb_index;
 
-    function net_nemein_bookmarks_admin($topic, $config)
+    function __construct($topic, $config)
     {
         $this->_debug_prefix = "net.nemein.bookmarks admin::";
         $this->_config = $config;

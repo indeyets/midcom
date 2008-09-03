@@ -190,7 +190,7 @@ class net_nemein_payment_handler_nordea extends net_nemein_payment_handler
      */
     function net_nemein_payment_handler_nordea($config)
     {
-        parent::net_nemein_payment_handler($config);
+        parent::__construct($config);
         
         if (array_key_exists('SOLOPMT_RCV_ACCOUNT', $config))
         {

@@ -46,7 +46,7 @@ class midcom_helper_datamanager2_storage_null extends midcom_helper_datamanager2
      */
     function midcom_helper_datamanager2_storage_null(&$schema, $defaults = Array())
     {
-        parent::midcom_helper_datamanager2_storage($schema);
+        parent::__construct($schema);
         $this->_defaults = $defaults;
     }
 

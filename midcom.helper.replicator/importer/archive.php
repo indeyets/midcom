@@ -20,7 +20,7 @@ class midcom_helper_replicator_importer_archive extends midcom_helper_replicator
      */
     function midcom_helper_replicator_importer_archive()
     {
-        parent::midcom_helper_replicator_importer();
+        parent::__construct();
     }
  
      /**

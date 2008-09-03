@@ -22,7 +22,7 @@ class no_bergfald_rcs_aegir extends midcom_admin_aegir_module {
 
     function no_bergfald_rcs_aegir ()
     { 
-        parent::midcom_admin_aegir_interface();
+        parent::__construct();
     }
     
     /**

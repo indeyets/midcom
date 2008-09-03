@@ -23,7 +23,7 @@ class midcom_helper_replicator_transporter_archive_serial extends midcom_helper_
      */
     function midcom_helper_replicator_transporter_archive_serial($subscription)
     {
-         $ret = parent::midcom_helper_replicator_transporter_archive($subscription);
+         $ret = parent::__construct($subscription);
          if (!$this->_create_tmp_dir())
          {
             $x = false;

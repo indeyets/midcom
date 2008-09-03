@@ -22,7 +22,7 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
 
     function midcom_helper_replicator_exporter_mirror($subscription)
     {
-        parent::midcom_helper_replicator_exporter($subscription);
+        parent::__construct($subscription);
     }
 
     /**

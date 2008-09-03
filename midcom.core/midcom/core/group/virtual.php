@@ -52,7 +52,7 @@ class midcom_core_group_virtual extends midcom_core_group
      */
     function midcom_core_group_virtual($id = null)
     {
-        parent::midcom_core_group($id);
+        parent::__construct($id);
     }
 
     /**

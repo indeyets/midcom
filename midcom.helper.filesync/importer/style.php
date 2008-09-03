@@ -18,7 +18,7 @@ class midcom_helper_filesync_importer_style extends midcom_helper_filesync_impor
 
     function midcom_helper_filesync_importer_style()
     {
-        parent::midcom_helper_filesync_importer();
+        parent::__construct();
 
         $this->root_dir = midcom_helper_filesync_interface::prepare_dir('style');
     }

@@ -29,7 +29,7 @@ class midcom_helper_datamanager2_formmanager_paged extends midcom_helper_dataman
      */
     function midcom_helper_datamanager2_formmanager_paged(&$schema, &$types)
     {
-        parent::midcom_helper_datamanager2_formmanager($schema, $types);
+        parent::__construct($schema, $types);
     }
 
     /**

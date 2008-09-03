@@ -22,7 +22,7 @@ class net_nemein_attention_importer_delicious extends net_nemein_attention_impor
      */
     function net_nemein_attention_importer_delicious()
     {
-         parent::net_nemein_attention_importer_apml();
+         parent::__construct();
     }
 
     function seek_delicious_users()

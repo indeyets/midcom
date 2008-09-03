@@ -24,7 +24,7 @@ class org_maemo_calendarpanel_calendar_leaf extends org_maemo_calendarpanel_leaf
      */
     function org_maemo_calendarpanel_calendar_leaf(&$calendarwidget)
     {
-        parent::org_maemo_calendarpanel_leaf();
+        parent::__construct();
         
         $this->name = 'calendar';
         $this->title = $this->_l10n->get($this->name);

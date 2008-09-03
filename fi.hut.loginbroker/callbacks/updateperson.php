@@ -16,7 +16,7 @@ class fi_hut_loginbroker_callbacks_updateperson extends fi_hut_loginbroker_callb
 {
     function fi_hut_loginbroker_callbacks_updateperson()
     {
-        parent::fi_hut_loginbroker_callbacks_prototype_update();
+        parent::__construct();
     }
 
     /**

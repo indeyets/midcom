@@ -21,7 +21,7 @@ class org_routamc_positioning_geocoder_geonames extends org_routamc_positioning_
     {
          $this->_component = 'org.routamc.positioning';
          $_MIDCOM->load_library('org.openpsa.httplib');
-         parent::org_routamc_positioning_geocoder();
+         parent::__construct();
     }
 
     /**

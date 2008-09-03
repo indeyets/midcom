@@ -18,7 +18,7 @@ class org_routamc_positioning_importer_fireeagle extends org_routamc_positioning
      */
     function org_routamc_positioning_importer_fireeagle()
     {
-         parent::org_routamc_positioning_importer();
+         parent::__construct();
     }
 
     /**

@@ -16,7 +16,7 @@
 
 class net_nemein_internalorders_admin extends midcom_baseclasses_components_request_admin
 {
-    function net_nemein_internalorders_admin($topic, $config) 
+    function __construct($topic, $config) 
     {
         parent::__construct($topic, $config);
     }

@@ -74,7 +74,7 @@ class midcom_services_js_css_merger extends midcom_baseclasses_core_object
      */
     function midcom_services_js_css_merger()
     {
-        parent::midcom_baseclasses_core_object();
+        parent::__construct();
         $this->documentroot = @getenv('DOCUMENT_ROOT');
         // We check this key later
         $_MIDCOM->cache->memcache->put('jscss_merged', 'is_up', true);

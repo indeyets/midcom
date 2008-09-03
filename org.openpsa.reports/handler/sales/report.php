@@ -19,7 +19,7 @@ class org_openpsa_reports_handler_sales_report extends org_openpsa_reports_handl
      */
     function __construct()
     {
-        parent::org_openpsa_reports_handler_reports_base();
+        parent::__construct();
     }
 
     function _on_initialize()

@@ -25,7 +25,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
     function midcom_helper_reflector_tree($src)
     {
         $this->sg_context = $_MIDGARD['sitegroup'];
-        parent::midcom_helper_reflector($src);
+        parent::__construct($src);
     }
 
     function &get($src)

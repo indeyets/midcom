@@ -23,7 +23,7 @@ class midcom_services_auth_frontend_form extends midcom_services_auth_frontend
      */
     function midcom_services_auth_frontend_form ()
     {
-        return parent::midcom_services_auth_frontend();
+        return parent::__construct();
     }
 
     /**

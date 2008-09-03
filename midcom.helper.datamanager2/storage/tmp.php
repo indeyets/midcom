@@ -34,7 +34,7 @@ class midcom_helper_datamanager2_storage_tmp extends midcom_helper_datamanager2_
      */
     function midcom_helper_datamanager2_storage_tmp(&$schema, $defaults = Array(), $object)
     {
-        parent::midcom_helper_datamanager2_storage_null($schema, $defaults);
+        parent::__construct($schema, $defaults);
         $this->object =& $object;
     }
 }

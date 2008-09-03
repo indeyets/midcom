@@ -88,7 +88,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
      */
     function midcom_services_uimessages()
     {
-        parent::midcom_baseclasses_core_object();
+        parent::__construct();
 
         // Set the list of allowed message types
         $this->_allowed_types[] = 'info';

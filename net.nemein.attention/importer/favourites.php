@@ -24,7 +24,7 @@ class net_nemein_attention_importer_favourites extends net_nemein_attention_impo
         $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
         $_MIDCOM->load_library('net.nemein.tag');
         $_MIDCOM->load_library('net.nemein.rss');
-        parent::net_nemein_attention_importer();
+        parent::__construct();
         
         $this->get_feed_categories();
     }

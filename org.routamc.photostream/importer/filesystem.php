@@ -21,7 +21,7 @@ class org_routamc_photostream_importer_filesystem extends org_routamc_photostrea
     function org_routamc_photostream_importer_filesystem($photostream)
     {
         $folder = $_GET['import_folder'];
-        parent::org_routamc_photostream_importer($photostream);
+        parent::__construct($photostream);
         if(!is_dir($folder))
         {
             return false;

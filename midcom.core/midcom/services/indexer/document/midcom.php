@@ -51,7 +51,7 @@ class midcom_services_indexer_document_midcom extends midcom_services_indexer_do
      */
     function midcom_services_indexer_document_midcom($object)
     {
-        parent::midcom_services_indexer_document();
+        parent::__construct();
         
         $this->_set_type('midcom');
         

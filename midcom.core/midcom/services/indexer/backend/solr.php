@@ -49,7 +49,7 @@ class midcom_services_indexer_backend_solr extends midcom_services_indexer_backe
      */
     function __construct($index_name = null)
     {
-        parent::midcom_services_indexer_backend();
+        parent::__construct();
         if (is_null($index_name))
         {
             $this->_index_name = $GLOBALS['midcom_config']['indexer_index_name'];

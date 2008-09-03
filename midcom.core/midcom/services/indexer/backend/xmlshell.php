@@ -50,7 +50,7 @@ class midcom_services_indexer_backend_xmlshell extends midcom_services_indexer_b
      */
     function midcom_services_indexer_backend_xmlshell ()
     {
-        parent::midcom_services_indexer_backend();
+        parent::__construct();
         // Nothing to do yet.
     }
     

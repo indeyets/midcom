@@ -33,7 +33,7 @@ class org_routamc_photostream_handler_feed extends org_routamc_photostream_handl
      */
     function org_routamc_photostream_handler_feed()
     {
-        parent::org_routamc_photostream_handler_list();
+        parent::__construct();
     }
 
     /**

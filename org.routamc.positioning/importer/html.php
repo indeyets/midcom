@@ -18,7 +18,7 @@ class org_routamc_positioning_importer_html extends org_routamc_positioning_impo
      */
     function org_routamc_positioning_importer_html()
     {
-         parent::org_routamc_positioning_importer();
+         parent::__construct();
         $_MIDCOM->load_library('org.openpsa.httplib');
     }
 

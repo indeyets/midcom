@@ -220,7 +220,7 @@ class net_nemein_payment_handler_paypal extends net_nemein_payment_handler
      */
     function net_nemein_payment_handler_paypal($config)
     {
-        parent::net_nemein_payment_handler($config);
+        parent::__construct($config);
 
         if (! array_key_exists('account', $config))
         {

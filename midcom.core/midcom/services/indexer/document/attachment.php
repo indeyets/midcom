@@ -51,7 +51,7 @@ class midcom_services_indexer_document_attachment extends midcom_services_indexe
      */
     function midcom_services_indexer_document_attachment($attachment, $source)
     {
-        parent::midcom_services_indexer_document();
+        parent::__construct();
         
         $this->_set_type('midcom_attachment');
         

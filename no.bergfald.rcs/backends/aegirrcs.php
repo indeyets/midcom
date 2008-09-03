@@ -20,7 +20,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
     function no_bergfald_rcs_aegirrcs($guid)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        parent::no_bergfald_rcs($guid);
+        parent::__construct($guid);
         $this->_probe_nemein_rcs();
 
         if (   $_MIDGARD['config']['prefix'] == '/usr'

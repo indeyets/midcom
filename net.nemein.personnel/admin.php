@@ -40,7 +40,7 @@ class net_nemein_personnel_admin extends midcom_baseclasses_components_request_a
     var $_local_toolbar;
     var $_topic_toolbar;
 
-    function net_nemein_personnel_admin($topic, $config) {
+    function __construct($topic, $config) {
         global $midgard;
 
         $this->_debug_prefix = "net.nemein.personnel admin::";

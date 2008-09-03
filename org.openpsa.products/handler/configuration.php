@@ -22,7 +22,7 @@ class org_openpsa_products_handler_configuration extends midcom_core_handler_con
 {
     function __construct()
     {
-        parent::midcom_core_handler_configdm();
+        parent::__construct();
     }
 
 }

@@ -25,7 +25,7 @@ class net_nemein_reservations_calendar extends org_openpsa_calendarwidget_month
     function net_nemein_reservations_calendar($day_prefix = null)
     {
         $this->day_prefix = $day_prefix;
-        parent::org_openpsa_calendarwidget_month();
+        parent::__construct();
     }
 
     /**

@@ -27,7 +27,7 @@ class org_maemo_calendarpanel_profile_leaf extends org_maemo_calendarpanel_leaf
      */
     function org_maemo_calendarpanel_profile_leaf()
     {
-        parent::org_maemo_calendarpanel_leaf();
+        parent::__construct();
         
         $this->name = 'profile';
         $this->title = $this->_l10n->get($this->name);

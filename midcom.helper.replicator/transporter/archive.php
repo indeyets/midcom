@@ -25,7 +25,7 @@ class midcom_helper_replicator_transporter_archive extends midcom_helper_replica
         $this->program_paths['tar'] = $GLOBALS['midcom_config']['utility_tar'];
         $this->program_paths['bzip2'] = '/usr/bin/bzip2';
     
-         $ret = parent::midcom_helper_replicator_transporter($subscription);
+         $ret = parent::__construct($subscription);
          if (!$this->_read_configuration_data())
          {
             $x = false;

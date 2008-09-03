@@ -16,7 +16,7 @@ class org_openpsa_products_handler_product_csv extends midcom_baseclasses_compon
 {
     function __construct()
     {
-        parent::midcom_baseclasses_components_handler_dataexport();
+        parent::__construct();
     }
 
     function _load_schemadb($handler_id, &$args, &$data)

@@ -15,7 +15,7 @@ class org_openpsa_smslib_messto extends org_openpsa_smslib
 
     function org_openpsa_smslib_messto()
     {
-        parent::org_openpsa_smslib();
+        parent::__construct();
         $this->location = &$this->uri;
         return true;
     }

@@ -24,7 +24,7 @@ class midcom_helper_replicator_exporter_fulldump extends midcom_helper_replicato
     {
         // We need serial transporter...
         $subscription->transporter = 'archive_serial';
-        parent::midcom_helper_replicator_exporter($subscription);
+        parent::__construct($subscription);
         $this->transporter =& midcom_helper_replicator_transporter::create($subscription);
         if (!is_a($this->transporter, 'midcom_helper_replicator_transporter_archive_serial'))
         {

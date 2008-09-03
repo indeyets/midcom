@@ -328,8 +328,8 @@ class midcom_services_indexer_XMLComm_ResponseReader extends XML_Parser
         // Initialize as event parser, the parse method will change that.
         // See this Bug Report for details:
         // http://pear.php.net/bugs/bug.php?id=3555
-        // parent::XML_Parser(null, 'event', 'UTF-8');
-        parent::XML_Parser(null, 'event');
+        // parent::__construct(null, 'event', 'UTF-8');
+        parent::__construct(null, 'event');
     }
 
 

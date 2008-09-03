@@ -197,7 +197,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      */
     function midcom_services_cache_module_content()
     {
-        parent::midcom_services_cache_module();
+        parent::__construct();
     }
 
     /**

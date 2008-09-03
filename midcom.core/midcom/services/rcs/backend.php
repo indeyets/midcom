@@ -94,7 +94,7 @@ class midcom_services_rcs_backend_null extends midcom_services_rcs_backend
      */
     function midcom_services_rcs_null($object, &$config)
     {
-        parent::midcom_services_rcs_backend($config);
+        parent::__construct($config);
     }
 
     function update(&$object, $comment)

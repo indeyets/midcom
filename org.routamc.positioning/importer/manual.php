@@ -19,7 +19,7 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
      */
     function org_routamc_positioning_importer_manual()
     {
-         parent:: org_routamc_positioning_importer();
+         parent::__construct();
     }
 
     /**

@@ -25,7 +25,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
     function midcom_services_rcs_backend_rcs(&$object, &$config)
     {
         $this->_guid = $object->guid;
-        parent::midcom_services_rcs_backend($object, $config);
+        parent::__construct($object, $config);
     }
 
     function _generate_rcs_filename($object)

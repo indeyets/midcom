@@ -50,7 +50,7 @@ class midcom_services_rcs extends midcom_baseclasses_core_object
      */
     function midcom_services_rcs($config = null)
     {
-        parent::midcom_baseclasses_core_object();
+        parent::__construct();
         
         if (is_null($config))
         {

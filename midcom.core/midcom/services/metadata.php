@@ -44,7 +44,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
      */
     function midcom_services_metadata()
     {
-        parent::midcom_baseclasses_core_object();
+        parent::__construct();
     }
 
     /**

@@ -20,7 +20,7 @@ class org_openpsa_projects_deliverables_interface_plugin_noop extends org_openps
         $this->name = 'projects.noop';
         //TODO: Localization ?
         $this->description = 'No-Op deliverable for deliverables outside the scope of OpenPsa';
-        return parent::org_openpsa_projects_deliverables_interface_plugin($identifier);
+        return parent::__construct($identifier);
     }
 
     /**

@@ -12,7 +12,7 @@ class net_nemein_featured_admin extends midcom_baseclasses_components_request_ad
 {
     var $_content_topic = null;
 
-    function net_nemein_featured_admin($topic, $config)
+    function __construct($topic, $config)
     {
          parent::__construct($topic, $config);
     }

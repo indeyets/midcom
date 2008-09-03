@@ -23,7 +23,7 @@ class org_openpsa_directmarketing_admin extends midcom_baseclasses_components_re
      *
      * Nothing fancy, defines the request switch to activate the component configuration.
      */
-    function org_openpsa_directmarketing_admin($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
 

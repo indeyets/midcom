@@ -14,7 +14,7 @@
  */
 class net_nemein_downloads_admin extends midcom_baseclasses_components_request_admin
 {
-    function net_nemein_downloads_admin($topic, $config) 
+    function __construct($topic, $config) 
     {
         parent::__construct($topic, $config);
     }

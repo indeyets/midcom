@@ -28,7 +28,7 @@ class net_nemein_payment_handler_invoice extends net_nemein_payment_handler
      */
     function net_nemein_payment_handler_invoice($config)
     {
-        parent::net_nemein_payment_handler($config);
+        parent::__construct($config);
     }
     
     /**

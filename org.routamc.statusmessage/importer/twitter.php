@@ -18,7 +18,7 @@ class org_routamc_statusmessage_importer_twitter extends org_routamc_statusmessa
      */
     function org_routamc_statusmessage_importer_twitter()
     {
-         parent::org_routamc_statusmessage_importer();
+         parent::__construct();
     }
 
     /**

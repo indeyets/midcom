@@ -15,7 +15,7 @@
  */
 class midgard_admin_sitewizard_admin extends midcom_baseclasses_components_request_admin
 {
-    function midgard_admin_sitewizard_admin($topic, $config) 
+    function __construct($topic, $config) 
     {
          parent::__construct($topic, $config);
     }

@@ -21,7 +21,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
      */
     function midcom_helper__dbfactory()
     {
-        parent::midcom_baseclasses_core_object();
+        parent::__construct();
     }
 
     /**

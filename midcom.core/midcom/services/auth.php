@@ -472,7 +472,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
     function midcom_services_auth()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        parent::midcom_baseclasses_core_object();
+        parent::__construct();
         debug_pop();
     }
 

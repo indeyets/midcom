@@ -35,7 +35,7 @@ class midcom_services_cache_backend_flatfile extends midcom_services_cache_backe
      */
     function midcom_services_cache_backend_flatfile()
     {
-        parent::midcom_services_cache_backend();
+        parent::__construct();
         // Nothing to do.
     }
     

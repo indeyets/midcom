@@ -186,7 +186,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
     function midcom_core_user($id = null)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        parent::midcom_baseclasses_core_object();
+        parent::__construct();
 
         if (is_null($id))
         {

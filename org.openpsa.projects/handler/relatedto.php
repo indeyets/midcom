@@ -16,7 +16,7 @@ class org_openpsa_projects_handler_relatedto extends org_openpsa_relatedto_handl
 {
     function __construct()
     {
-        parent::org_openpsa_relatedto_handler_relatedto();
+        parent::__construct();
         $this->realcomponent = 'org.openpsa.projects';
     }
 

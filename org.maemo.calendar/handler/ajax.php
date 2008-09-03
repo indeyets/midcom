@@ -28,7 +28,7 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
      */
     function org_maemo_calendar_handler_ajax()
     {
-        parent::org_maemo_calendar_handler_index();
+        parent::__construct();
 
         $this->_selected_time = time();
 

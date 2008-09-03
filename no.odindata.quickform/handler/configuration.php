@@ -18,7 +18,7 @@ class no_odindata_quickform_handler_configuration extends midcom_core_handler_co
 {
     function no_odindata_quickform_handler_configuration()
     {
-        parent::midcom_core_handler_configdm();
+        parent::__construct();
     }
 
     /**

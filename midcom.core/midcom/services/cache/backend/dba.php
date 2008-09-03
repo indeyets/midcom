@@ -52,7 +52,7 @@ class midcom_services_cache_backend_dba extends midcom_services_cache_backend
      */
     function midcom_services_cache_backend_dba()
     {
-        parent::midcom_services_cache_backend();
+        parent::__construct();
         // Nothing to do.
     }
     

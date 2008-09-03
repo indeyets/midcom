@@ -22,7 +22,7 @@ class org_maemo_calendarpanel_shelf_leaf extends org_maemo_calendarpanel_leaf
      */
     function org_maemo_calendarpanel_shelf_leaf()
     {
-        parent::org_maemo_calendarpanel_leaf();
+        parent::__construct();
         
         $this->name = 'shelf';
         $this->title = $this->_l10n->get($this->name);

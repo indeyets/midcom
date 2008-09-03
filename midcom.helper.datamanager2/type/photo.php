@@ -29,7 +29,7 @@ class midcom_helper_datamanager2_type_photo extends midcom_helper_datamanager2_t
      */
     function midcom_helper_datamanager2_type_photo()
     {
-        return parent::midcom_helper_datamanager2_type_image();
+        return parent::__construct();
     }
 
     /**

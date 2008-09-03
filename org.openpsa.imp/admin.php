@@ -24,7 +24,7 @@ class org_openpsa_imp_admin extends midcom_baseclasses_components_request_admin
      *
      * Nothing fancy, defines the request switch to activate the component configuration.
      */
-    function org_openpsa_imp_admin($topic, $config)
+    function __construct($topic, $config)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         parent::__construct($topic, $config);

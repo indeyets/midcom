@@ -49,7 +49,7 @@ class midcom_services_tmp extends midcom_baseclasses_core_object
      */
     function midcom_services_tmp()
     {
-        parent::midcom_baseclasses_core_object();
+        parent::__construct();
     }
 
     /**

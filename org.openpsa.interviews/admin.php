@@ -15,7 +15,7 @@
 class org_openpsa_interviews_admin extends midcom_baseclasses_components_request_admin
 {
 
-    function org_openpsa_interviews_admin($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
     }

@@ -41,7 +41,7 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
     {
         $this->_cookie_id .= $GLOBALS['midcom_config']['auth_backend_simple_cookie_id'];
 
-        return parent::midcom_services_auth_backend($auth);
+        return parent::__construct($auth);
     }
 
     function read_login_session()

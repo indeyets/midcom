@@ -21,7 +21,7 @@ class net_nemein_attention_importer_apml extends net_nemein_attention_importer
      */
     function net_nemein_attention_importer_apml()
     {
-         parent::net_nemein_attention_importer();
+         parent::__construct();
     }
     
     /**

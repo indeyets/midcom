@@ -167,7 +167,7 @@ class org_openpsa_calendarwidget_styled_month extends org_openpsa_calendarwidget
      */
     function __construct()
     {
-        parent::org_openpsa_calendarwidget_month();
+        parent::__construct();
         
         // Ensure we get the correct styles
         $_MIDCOM->style->prepend_component_styledir('org.openpsa.calendarwidget');

@@ -19,7 +19,7 @@ class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2
 {
     function midcom_helper_datamanager2_widget_photo()
     {
-        return parent::midcom_helper_datamanager2_widget_image();
+        return parent::__construct();
     }
 
     /**

@@ -56,7 +56,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
     function midcom_services_auth_sessionmgr($auth)
     {
         $this->auth = $auth;
-        parent::midcom_baseclasses_core_object();
+        parent::__construct();
     }
 
     /**

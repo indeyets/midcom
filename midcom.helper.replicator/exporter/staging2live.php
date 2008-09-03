@@ -36,7 +36,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
 
     function midcom_helper_replicator_exporter_staging2live($subscription)
     {
-        parent::midcom_helper_replicator_exporter_mirror($subscription);
+        parent::__construct($subscription);
         $this->check_approvals_for = $this->_config->get('exporter_staging2live_check_approvals_for');
         if (!is_array($this->check_approvals_for))
         {

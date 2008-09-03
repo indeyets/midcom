@@ -25,7 +25,7 @@ class org_maemo_calendarpanel_buddylist_leaf extends org_maemo_calendarpanel_lea
      */
     function org_maemo_calendarpanel_buddylist_leaf()
     {
-        parent::org_maemo_calendarpanel_leaf();
+        parent::__construct();
         
         $this->name = 'buddylist';
         $this->title = $this->_l10n->get($this->name);

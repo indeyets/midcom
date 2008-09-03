@@ -21,7 +21,7 @@ if (class_exists('NemeinCalendar_event'))
         var $__table__ = 'event';    
         function net_nemein_calendar_event($guid = null) 
         {
-            return @parent::NemeinCalendar_event($guid);
+            return @parent::__construct($guid);
         }
         
         function update()

@@ -22,7 +22,7 @@ class net_nehmer_blog_handler_configuration extends midcom_core_handler_configdm
 {
     function net_nehmer_blog_handler_configuration()
     {
-        parent::midcom_core_handler_configdm();
+        parent::__construct();
     }
 
     /**

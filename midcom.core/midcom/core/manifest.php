@@ -300,7 +300,7 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
      */
     function midcom_core_manifest($filename,$values)
     {
-        //parent::midcom_baseclasses_core_object();
+        //parent::__construct();
         $this->filename = $filename;
         $this->_load_manifest($values);
 

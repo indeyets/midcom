@@ -47,7 +47,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
      */
     function midcom_services_permalinks()
     {
-        parent::midcom_baseclasses_core_object();
+        parent::__construct();
     }
 
     /**

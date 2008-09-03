@@ -11,7 +11,7 @@ class org_openpsa_smslib_email2sms extends org_openpsa_smslib
 {
     function org_openpsa_smslib_email2sms()
     {
-        parent::org_openpsa_smslib();
+        parent::__construct();
 
         return true;
     }

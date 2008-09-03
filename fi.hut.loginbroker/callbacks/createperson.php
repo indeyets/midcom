@@ -16,7 +16,7 @@ class fi_hut_loginbroker_callbacks_createperson extends fi_hut_loginbroker_callb
 {
     function fi_hut_loginbroker_callbacks_createperson()
     {
-        parent::fi_hut_loginbroker_callbacks_prototype_create();
+        parent::__construct();
     }
 
     /**

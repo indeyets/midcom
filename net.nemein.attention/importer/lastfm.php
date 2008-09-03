@@ -22,7 +22,7 @@ class net_nemein_attention_importer_lastfm extends net_nemein_attention_importer
      */
     function net_nemein_attention_importer_lastfm()
     {
-         parent::net_nemein_attention_importer_apml();
+         parent::__construct();
     }
 
     function seek_lastfm_users()

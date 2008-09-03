@@ -79,7 +79,7 @@ class midcom_core_group extends midcom_baseclasses_core_object
     function midcom_core_group($id = null)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        parent::midcom_baseclasses_core_object();
+        parent::__construct();
 
         if (is_null($id))
         {

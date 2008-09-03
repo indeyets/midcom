@@ -18,7 +18,7 @@ class midcom_helper_replicator_transporter_email extends midcom_helper_replicato
 
     function midcom_helper_replicator_transporter_email($subscription)
     {
-         $ret = parent::midcom_helper_replicator_transporter($subscription);
+         $ret = parent::__construct($subscription);
          if (!$this->_read_configuration_data())
          {
             $x = false;

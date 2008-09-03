@@ -37,7 +37,7 @@ class midcom_services_cache_backend_sqlite extends midcom_services_cache_backend
      */
     function midcom_services_cache_backend_sqlite()
     {
-        parent::midcom_services_cache_backend();
+        parent::__construct();
         // Nothing to do.
     }
 

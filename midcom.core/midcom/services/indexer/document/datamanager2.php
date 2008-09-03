@@ -127,7 +127,7 @@ class midcom_services_indexer_document_datamanager2 extends midcom_services_inde
      */
     function midcom_services_indexer_document_datamanager2(&$datamanager)
     {
-        parent::midcom_services_indexer_document_midcom($datamanager->storage->object);
+        parent::__construct($datamanager->storage->object);
 
         $this->_set_type('datamanager2');
 

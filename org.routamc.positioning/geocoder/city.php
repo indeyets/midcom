@@ -20,7 +20,7 @@ class org_routamc_positioning_geocoder_city extends org_routamc_positioning_geoc
     function org_routamc_positioning_geocoder_city()
     {
          $this->_component = 'org.routamc.positioning';
-         parent::org_routamc_positioning_geocoder();
+         parent::__construct();
     }
 
     /**

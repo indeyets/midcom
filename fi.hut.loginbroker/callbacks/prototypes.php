@@ -153,7 +153,7 @@ class fi_hut_loginbroker_callbacks_prototype_create extends fi_hut_loginbroker_c
 {
     function fi_hut_loginbroker_callbacks_prototype_create()
     {
-        parent::fi_hut_loginbroker_callbacks_prototype_base();
+        parent::__construct();
     }
 
     /**
@@ -186,7 +186,7 @@ class fi_hut_loginbroker_callbacks_prototype_update extends fi_hut_loginbroker_c
 {
     function fi_hut_loginbroker_callbacks_prototype_update()
     {
-        parent::fi_hut_loginbroker_callbacks_prototype_base();
+        parent::__construct();
     }
 
     /**
@@ -216,7 +216,7 @@ class fi_hut_loginbroker_callbacks_prototype_resetpasswd extends fi_hut_loginbro
 {
     function fi_hut_loginbroker_callbacks_prototype_resetpasswd()
     {
-        parent::fi_hut_loginbroker_callbacks_prototype_base();
+        parent::__construct();
     }
 
     /**

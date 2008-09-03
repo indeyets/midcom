@@ -18,7 +18,7 @@ class midcom_helper_filesync_importer_snippet extends midcom_helper_filesync_imp
 
     function midcom_helper_filesync_importer_snippet()
     {
-        parent::midcom_helper_filesync_importer();
+        parent::__construct();
 
         $this->root_dir = midcom_helper_filesync_interface::prepare_dir('snippets');
     }

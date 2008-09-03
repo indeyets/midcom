@@ -23,7 +23,7 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
 
     function midcom_helper_replicator_transporter_http($subscription)
     {
-         $ret = parent::midcom_helper_replicator_transporter($subscription);
+         $ret = parent::__construct($subscription);
          $_MIDCOM->componentloader->load_graceful('org.openpsa.httplib');
          if (   !class_exists('org_openpsa_httplib')
              || !$this->_read_configuration_data())

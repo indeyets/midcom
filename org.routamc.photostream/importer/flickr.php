@@ -21,7 +21,7 @@ class org_routamc_photostream_importer_flickr extends org_routamc_photostream_im
      */
     function org_routamc_photostream_importer_flickr($photostream)
     {
-        parent::org_routamc_photostream_importer($photostream);
+        parent::__construct($photostream);
         
         $this->api_key = $this->_config->get('flickr_api_key');
              

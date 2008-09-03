@@ -19,7 +19,7 @@ class net_nemein_attention_exporter_cloud extends net_nemein_attention_exporter
      */
     function net_nemein_attention_exporter_cloud()
     {
-         parent::net_nemein_attention_exporter();
+         parent::__construct();
     }
 
     function prepare_cloud($user_id, $profile = null)

@@ -28,7 +28,7 @@ class net_nemein_supportview_admin {
     var $_local_toolbar;
     var $_topic_toolbar;
     
-    function net_nemein_supportview_admin($topic, $config) {
+    function __construct($topic, $config) {
 
         $this->_debug_prefix = "net.nemein.supportview admin::";
         

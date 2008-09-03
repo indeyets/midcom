@@ -27,7 +27,7 @@ class midcom_services_auth_frontend extends midcom_baseclasses_core_object
      */
     function midcom_services_auth_frontend ()
     {
-        return parent::midcom_baseclasses_core_object();
+        return parent::__construct();
     }
     
     /**

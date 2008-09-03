@@ -19,7 +19,7 @@ class net_nemein_attention_exporter_apml extends net_nemein_attention_exporter
      */
     function net_nemein_attention_exporter_apml()
     {
-         parent::net_nemein_attention_exporter();
+         parent::__construct();
     }
 
     function prepare_data_element($apml, $profile, $explicit = false)

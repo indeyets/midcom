@@ -47,7 +47,7 @@ class midcom_services_auth_backend extends midcom_baseclasses_core_object
     function midcom_services_auth_backend($auth)
     {
         $this->auth = $auth;
-        return parent::midcom_baseclasses_core_object();
+        return parent::__construct();
     }
 
     /**
