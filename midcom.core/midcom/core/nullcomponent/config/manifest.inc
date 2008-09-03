@@ -16,7 +16,7 @@
     (
         'tarjei' => array
         (
-            'name' => 'Tarjei Huse  ',
+            'name' => 'Tarjei Huse',
             'email' => 'tarjei@nu.no',
             'role' => 'lead',
         ),

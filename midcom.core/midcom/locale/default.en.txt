@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING %s of packages of type %s
+%s of packages of type %s
+---STRINGEND
+
 ---STRING Edit this page
 Edit this page
 ---STRINGEND
@@ -211,6 +215,10 @@ Delete
 Description
 ---STRINGEND
 
+---STRING developer
+Developer
+---STRINGEND
+
 ---STRING discussion in %s
 Discussion in %s
 ---STRINGEND
@@ -311,6 +319,14 @@ Keywords
 Last modified
 ---STRINGEND
 
+---STRING lead
+Lead developer
+---STRINGEND
+
+---STRING library
+Library
+---STRINGEND
+
 ---STRING login
 Login
 ---STRINGEND
@@ -385,6 +401,10 @@ Next page
 
 ---STRING no
 No
+---STRINGEND
+
+---STRING not active %s
+Not active %s
 ---STRINGEND
 
 ---STRING not hidden
@@ -715,6 +735,10 @@ Upload
 Upload image
 ---STRINGEND
 
+---STRING url
+Url
+---STRINGEND
+
 ---STRING url name
 URL name (internal)
 ---STRINGEND
@@ -755,10 +779,7 @@ Write mail
 Yes
 ---STRINGEND
 
----STRING country
-Country
+---STRING get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
+Get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
 ---STRINGEND
 
----STRING url
-Url
----STRINGEND

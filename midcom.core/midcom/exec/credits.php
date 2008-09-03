@@ -13,6 +13,8 @@ $title = 'MidCOM Developers';
 
 $_MIDCOM->auth->require_valid_user();
 
+$developers = array();
+
 foreach($_MIDCOM->componentloader->manifests as $name => $manifest)
 {
     if (!array_key_exists('package.xml', $manifest->_raw_data))
@@ -32,24 +34,28 @@ foreach($_MIDCOM->componentloader->manifests as $name => $manifest)
     {
         foreach ($maintainers as $person => $details)
         {
-            $developers[$person]['name'] = $details['name'];
+            $name_parts = explode(' ', trim($details['name']));
+            $lastname = $name_parts[count($name_parts) - 1];
+            $identifier = "{$lastname} {$person}";
+            $developers[$identifier]['username'] = $person;
+            $developers[$identifier]['name'] = $details['name'];
             
             if (!isset($details['email']))
             {
-                $developers[$person]['email'] = '';
+                $developers[$identifier]['email'] = '';
             }
             else
             {
-                $developers[$person]['email'] = $details['email'];
+                $developers[$identifier]['email'] = $details['email'];
             }
             
             if (   array_key_exists('active', $details)
                 && $details['active'] == 'no')
             {
-                $details['role'] = "not active {$details['role']}";
+                $details['role'] = sprintf($_MIDCOM->i18n->get_string('not active %s', 'midcom'), $_MIDCOM->i18n->get_string($details['role'], 'midcom'));
             }
 
-            $developers[$person]['roles'][$details['role']][$package_type][$name] = $manifest->get_name_translated($name);
+            $developers[$identifier]['roles'][$details['role']][$package_type][$name] = $manifest->get_name_translated($name);
         }
     }
 }
@@ -140,7 +146,7 @@ reset($developers);
                     foreach($developers as $name => $details)
                     {
                         $person_label  = "<div class=\"vcard\">\n";
-                        $person_label .= "    <h2><a href=\"http://www.midgard-project.org/community/whoswho/{$name}.html\" class=\"url fn\">{$details['name']}</a></h2>\n";
+                        $person_label .= "    <h2><a href=\"http://www.midgard-project.org/community/account/view/{$details['username']}/\" class=\"url fn\">{$details['name']}</a></h2>\n";
                         // TODO: Replace gravatar with photo from Midgard site as soon as we have a URL method for it
                         $gravatar_url = "http://www.gravatar.com/avatar.php?gravatar_id=" . md5($details['email']) . "&amp;size=60";
                         $person_label .= "    <div><img class=\"photo\" src=\"{$gravatar_url}\" /></div>\n";
@@ -161,13 +167,13 @@ reset($developers);
                                         ?>
                                         <dt>
                                             <?php 
-                                            echo sprintf($_MIDCOM->i18n->get_string('%s in %s', 'midcom'), $role, $package_type); 
+                                            echo sprintf($_MIDCOM->i18n->get_string('%s of packages of type %s', 'midcom'), $_MIDCOM->i18n->get_string($role, 'midcom'), $_MIDCOM->i18n->get_string($package_type, 'midcom')); 
                                             ?>
                                         </dt>
                                         <?php
                                         foreach ($components as $component => $component_name)
                                         {
-                                            $component_label = "<a href=\"http://pear.midcom-project.org/index.php?package=" . str_replace('.', '_', $component) . "\">{$component_name}</a>";
+                                            $component_label = "<a href=\"" . $_MIDCOM->get_host_prefix() . "__mfa/asgard/components/{$component}/\">{$component_name}</a>";
                                             ?>
                                             <dd>
                                                 <?php 
@@ -187,6 +193,9 @@ reset($developers);
                     ?>
                 </tbody>
             </table>
+            
+            <p><?php echo sprintf($_MIDCOM->i18n->get_string('get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>', 'midcom'), $GLOBALS['midcom_config']['pear_channel'], $GLOBALS['midcom_config']['pear_channel']); ?>.</p>
+            
             </div>
             <div id="bottom">
                 <div id="version">version <?php echo mgd_version(); ?></div>

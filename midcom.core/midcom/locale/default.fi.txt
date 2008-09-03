@@ -7,6 +7,10 @@
 %s kansiossa %s
 ---STRINGEND
 
+---STRING %s of packages of type %s
+%s paketeille tyyppiä %s
+---STRINGEND
+
 ---STRING Edit this page
 Muokkaa sivua
 ---STRINGEND
@@ -81,6 +85,10 @@ tunnistamaton
 
 ---STRING approval
 Hyväksyntä
+---STRINGEND
+
+---STRING approvals
+
 ---STRINGEND
 
 ---STRING approve
@@ -211,6 +219,10 @@ Poista
 Kuvaus
 ---STRINGEND
 
+---STRING developer
+Kehittäjä
+---STRINGEND
+
 ---STRING discussion in %s
 keskustelu kansiossa %s
 ---STRINGEND
@@ -311,6 +323,14 @@ Avainsanat
 Viimeksi muokattu
 ---STRINGEND
 
+---STRING lead
+Pääkehittäjä
+---STRINGEND
+
+---STRING library
+Kirjasto
+---STRINGEND
+
 ---STRING login
 Kirjaudu
 ---STRINGEND
@@ -385,6 +405,10 @@ Seuraava
 
 ---STRING no
 Ei
+---STRINGEND
+
+---STRING not active %s
+Ei-aktiivinen %s
 ---STRINGEND
 
 ---STRING not hidden
@@ -715,6 +739,10 @@ Lataa
 Lataa kuva
 ---STRINGEND
 
+---STRING url
+URL-Osoite
+---STRINGEND
+
 ---STRING url name
 Tiedostonimi (pienet kirjaimet, ei erikoismerkkejä, välejä tai ääkkösiä)
 ---STRINGEND
@@ -755,14 +783,7 @@ Kirjoita sähköposti
 Kyllä
 ---STRINGEND
 
----STRING parameters
-Parametrit
+---STRING get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
+Saat lisää komponentteja <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a>-kanavalta <a href="http://%s/">%s</a>
 ---STRINGEND
 
----STRING country
-Maa
----STRINGEND
-
----STRING url
-URL-Osoite
----STRINGEND
