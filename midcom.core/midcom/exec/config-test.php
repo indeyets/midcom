@@ -149,10 +149,19 @@ function check_rcs()
 // Some helpers
 $i18n =& $_MIDCOM->get_service('i18n');
 
-$version = phpversion();
-if (version_compare($version, '5.1.0', '<'))
+if (version_compare(mgd_version(), '8.09.0beta1', '<'))
 {
-    println('PHP Version', ERROR, 'PHP 5.1.0 or greater is required for MidCOM, 4.3.0 or greater is recommended.');
+    println('Midgard Version', ERROR, 'Midgard 8.09.0beta1 or greater is required for MidCOM.');
+}
+else
+{
+    println('Midgad Version', OK);
+}
+
+$version = phpversion();
+if (version_compare($version, '5.2.0', '<'))
+{
+    println('PHP Version', ERROR, 'PHP 5.2.0 or greater is required for MidCOM.');
 }
 else
 {
