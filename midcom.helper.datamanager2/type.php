@@ -87,7 +87,7 @@ class midcom_helper_datamanager2_type extends midcom_baseclasses_components_pure
     function midcom_helper_datamanager2_type()
     {
         $this->_component = 'midcom.helper.datamanager2';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

@@ -18,7 +18,7 @@ class net_nehmer_jobmarket_viewer extends midcom_baseclasses_components_request
 {
     function net_nehmer_jobmarket_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     function _on_initialize()

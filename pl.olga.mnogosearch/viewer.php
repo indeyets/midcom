@@ -29,7 +29,7 @@ class pl_olga_mnogosearch_viewer extends midcom_baseclasses_components_request
 
     function pl_olga_mnogosearch_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     /**

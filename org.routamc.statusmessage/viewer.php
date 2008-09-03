@@ -15,7 +15,7 @@ class org_routamc_statusmessage_viewer extends midcom_baseclasses_components_req
 {
     function org_routamc_statusmessage_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     /**

@@ -51,7 +51,7 @@ class org_routamc_positioning_person extends midcom_baseclasses_components_purec
 
         $this->_person = $person;
 
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

@@ -30,7 +30,7 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
     function midcom_admin_styleeditor_viewer($topic, $config) 
     {
         //$page = mgd_get_object_by_guid($config->get("root_page"));
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
         
         $this->msg = "";
 

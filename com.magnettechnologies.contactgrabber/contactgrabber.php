@@ -42,7 +42,7 @@ class com_magnettechnologies_contactgrabber extends midcom_baseclasses_component
     function com_magnettechnologies_contactgrabber()
     {
         $this->_component = 'com.magnettechnologies.contactgrabber';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $_MIDCOM->style->append_component_styledir('com.magnettechnologies.contactgrabber');
 

@@ -24,7 +24,7 @@ class org_maemo_calendarpanel extends midcom_baseclasses_components_purecode
     function org_maemo_calendarpanel()
     {
         $this->_component = 'org.maemo.calendarpanel';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         // Make the calendar pretty
         $_MIDCOM->add_link_head

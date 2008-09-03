@@ -20,7 +20,7 @@ class midcom_helper_filesync_exporter extends midcom_baseclasses_components_pure
     function midcom_helper_filesync_exporter()
     {
          $this->_component = 'midcom.helper.filesync';
-         parent::midcom_baseclasses_components_purecode();
+         parent::__construct();
     }
     
     /**

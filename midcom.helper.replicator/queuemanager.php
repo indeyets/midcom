@@ -31,7 +31,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
     function midcom_helper_replicator_queuemanager()
     {
          $this->_component = 'midcom.helper.replicator';
-         parent::midcom_baseclasses_components_purecode();
+         parent::__construct();
          $this->started = date('YmdHis');
     }
 

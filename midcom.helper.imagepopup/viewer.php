@@ -17,7 +17,7 @@ class midcom_helper_imagepopup_viewer extends midcom_baseclasses_components_requ
 
     function midcom_helper_imagepopup_viewer() 
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
     }
     
     function get_plugin_handlers()

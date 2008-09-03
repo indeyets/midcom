@@ -49,7 +49,7 @@ class net_nehmer_branchenbuch_callbacks_categorylister extends midcom_baseclasse
                 'Cannot create a categorylister instance without a base category selection.');
             // This will exit.
         }
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     function set_type(&$type)

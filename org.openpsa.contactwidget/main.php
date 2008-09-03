@@ -86,7 +86,7 @@ class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
     {
         $this->_component = 'org.openpsa.contactwidget';
 
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         // Hack to make $contacts_node static
         static $contacts_node_local;

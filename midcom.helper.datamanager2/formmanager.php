@@ -128,7 +128,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
     function midcom_helper_datamanager2_formmanager(&$schema, &$types)
     {
         $this->_component = 'midcom.helper.datamanager2';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         if (! is_a($schema, 'midcom_helper_datamanager2_schema'))
         {

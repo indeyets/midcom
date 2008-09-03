@@ -7,7 +7,7 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
 
     function midcom_admin_babel_plugin()
     {
-        parent::midcom_baseclasses_components_request();
+        parent::__construct();
     }
 
     function get_plugin_handlers()

@@ -22,7 +22,7 @@ class midcom_admin_styleeditor_viewer extends midcom_baseclasses_components_requ
      */
     function midcom_admin_styleeditor_viewer()
     {
-        parent::midcom_baseclasses_components_request();
+        parent::__construct();
     }
     
     /**

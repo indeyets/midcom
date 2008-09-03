@@ -20,7 +20,7 @@ class net_nemein_bannedwords_handler extends midcom_baseclasses_components_purec
     {
         $this->_sitegroup = $_MIDGARD['sitegroup'];
         $this->_component = 'net.nemein.bannedwords';
-    parent::midcom_baseclasses_components_purecode();
+    parent::__construct();
     $this->_populate_word_list();
     }
 

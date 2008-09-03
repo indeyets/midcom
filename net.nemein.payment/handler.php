@@ -170,7 +170,7 @@ class net_nemein_payment_handler extends midcom_baseclasses_components_purecode
     function net_nemein_payment_handler ($config)
     {
          $this->_component = 'net.nemein.payment';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $this->_handler_config = $config;
     }

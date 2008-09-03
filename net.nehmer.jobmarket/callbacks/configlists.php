@@ -43,7 +43,7 @@ class net_nehmer_jobmarket_callbacks_configlists extends midcom_baseclasses_comp
         $this->_component = 'net.nehmer.jobmarket';
         $this->_mode = $mode;
 
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $data =& $_MIDCOM->get_custom_context_data('request_data');
         $this->_data = $data['config']->get("{$mode}_list");

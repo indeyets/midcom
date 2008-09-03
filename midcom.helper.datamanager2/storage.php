@@ -55,7 +55,7 @@ class midcom_helper_datamanager2_storage extends midcom_baseclasses_components_p
      */
     function midcom_helper_datamanager2_storage(&$schema)
     {
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $this->_schema =& $schema;
     }

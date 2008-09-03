@@ -40,7 +40,7 @@ class net_nemein_payment_factory extends midcom_baseclasses_components_purecode
     function net_nemein_payment_factory ()
     {
         $this->_component = 'net.nemein.payment';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

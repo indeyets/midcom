@@ -29,7 +29,7 @@ class net_nehmer_publications_viewer extends midcom_baseclasses_components_reque
 
     function net_nehmer_publications_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     /**

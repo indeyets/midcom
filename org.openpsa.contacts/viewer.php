@@ -44,7 +44,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
      */
     function __construct($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
 
         // Always run in uncached mode
         $_MIDCOM->cache->content->no_cache();

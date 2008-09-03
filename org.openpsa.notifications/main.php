@@ -37,7 +37,7 @@ class org_openpsa_notifications extends midcom_baseclasses_components_purecode
     {
         $this->_component = 'org.openpsa.notifications';
 
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

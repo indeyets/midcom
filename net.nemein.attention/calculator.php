@@ -38,7 +38,7 @@ class net_nemein_attention_calculator extends midcom_baseclasses_components_pure
     function net_nemein_attention_calculator($user = null, $profile = null)
     {
         $this->_component = 'net.nemein.attention';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
          
         if (   $user
             && is_object($user)

@@ -19,7 +19,7 @@ class fi_mik_lentopaikkakisa_viewer extends midcom_baseclasses_components_reques
 
     function fi_mik_lentopaikkakisa_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
         
         // Match /
         $this->_request_switch['index'] = array

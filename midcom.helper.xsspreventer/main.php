@@ -11,7 +11,7 @@ class midcom_helper_xsspreventer extends midcom_baseclasses_components_purecode
     function midcom_helper_xsspreventer()
     {
         $this->_component = 'midcom.helper.xsspreventer';
-        return parent::midcom_baseclasses_components_purecode();
+        return parent::__construct();
     }
 
     /**

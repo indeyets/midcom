@@ -25,7 +25,7 @@ class net_nehmer_markdown_markdown extends midcom_baseclasses_components_purecod
     {
         $this->_component = 'net.nehmer.markdown';
 
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

@@ -27,7 +27,7 @@ class org_openpsa_helpers_ajax extends midcom_baseclasses_components_purecode
      */
     function __construct()
     {
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
         $this->_component='org.openpsa.helpers';
     }
 

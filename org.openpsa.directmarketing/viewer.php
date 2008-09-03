@@ -24,7 +24,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
 
     function org_openpsa_directmarketing_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
 
         $this->_toolbars =& midcom_helper_toolbars::get_instance();
 

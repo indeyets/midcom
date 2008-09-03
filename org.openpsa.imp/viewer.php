@@ -28,7 +28,7 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
     function org_openpsa_imp_viewer($topic, $config)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
 
         $this->_toolbars =& midcom_helper_toolbars::get_instance();
 

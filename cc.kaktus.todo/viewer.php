@@ -21,7 +21,7 @@ class cc_kaktus_todo_viewer extends midcom_baseclasses_components_request
      */
     function cc_kaktus_todo_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
 
         // Match /
         $this->_request_switch['list_all'] = array

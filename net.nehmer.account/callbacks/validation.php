@@ -22,7 +22,7 @@ class net_nehmer_account_callbacks_validation extends midcom_baseclasses_compone
     function net_nehmer_account_callbacks_validation()
     {
         $this->_component = 'net.nehmer.account';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

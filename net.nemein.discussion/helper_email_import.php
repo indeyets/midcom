@@ -25,7 +25,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
     function net_nemein_discussion_email_importer()
     {
         $this->_component = 'net.nemein.discussion';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
         $_MIDCOM->load_library('org.openpsa.mail');
     }
 

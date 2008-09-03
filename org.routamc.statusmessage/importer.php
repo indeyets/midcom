@@ -34,7 +34,7 @@ class org_routamc_statusmessage_importer extends midcom_baseclasses_components_p
     function org_routamc_statusmessage_importer()
     {
          $this->_component = 'org.routamc.statusmessage';
-         parent::midcom_baseclasses_components_purecode();
+         parent::__construct();
     }
 
     /**

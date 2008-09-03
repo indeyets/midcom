@@ -224,7 +224,7 @@ class org_maemo_calendarwidget extends midcom_baseclasses_components_purecode
     function org_maemo_calendarwidget($year = null, $month = null, $day = null)
     {
         $this->_component = 'org.maemo.calendarwidget';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
         
         // Default time shown is current
         if ($year)

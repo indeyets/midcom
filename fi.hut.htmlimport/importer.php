@@ -29,7 +29,7 @@ class fi_hut_htmlimport_importer extends midcom_baseclasses_components_purecode
     function __construct()
     {
         $this->_component = 'fi.hut.htmlimport';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $purifier_common_config = array
         (

@@ -37,7 +37,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
 
          $this->subscription = $subscription;
 
-         parent::midcom_baseclasses_components_purecode();
+         parent::__construct();
     }
 
     /**

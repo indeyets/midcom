@@ -83,7 +83,7 @@ class net_nehmer_publications_callbacks_categorylister extends midcom_baseclasse
     {
         $this->_component = 'net.nehmer.publications';
 
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $this->_group = $group;
         $this->_group_prefix_length = strlen($this->_group) + 1;

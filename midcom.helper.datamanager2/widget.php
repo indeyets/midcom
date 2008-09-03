@@ -118,7 +118,7 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     function midcom_helper_datamanager2_widget()
     {
         $this->_component = 'midcom.helper.datamanager2';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

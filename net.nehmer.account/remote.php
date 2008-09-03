@@ -58,7 +58,7 @@ class net_nehmer_account_remote extends midcom_baseclasses_components_purecode
     function net_nehmer_account_remote($guid)
     {
         $this->_component = 'net.nehmer.account';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $this->_topic = new midcom_db_topic($guid);
         if (! $this->_topic)

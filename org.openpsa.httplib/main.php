@@ -31,7 +31,7 @@ class org_openpsa_httplib extends midcom_baseclasses_components_purecode
     function __construct()
     {
          $this->_component = 'org.openpsa.httplib';
-         parent::midcom_baseclasses_components_purecode();
+         parent::__construct();
     }
 
     /**

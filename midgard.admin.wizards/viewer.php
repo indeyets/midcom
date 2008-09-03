@@ -15,7 +15,7 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
 {
     function midgard_admin_wizards_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     /**

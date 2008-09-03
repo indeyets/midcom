@@ -16,7 +16,7 @@ class org_openpsa_invoices_viewer extends midcom_baseclasses_components_request
 {
     function __construct($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
 
         // Match /
         $this->_request_switch['list_open'] = array(

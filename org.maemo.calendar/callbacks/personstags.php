@@ -45,7 +45,7 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
         debug_push_class(__CLASS__, __FUNCTION__);
 
         $this->_component = 'org.maemo.calendar';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $_MIDCOM->auth->require_valid_user();
 

@@ -29,7 +29,7 @@ class fi_hut_loginbroker_callbacks_prototype_base extends midcom_baseclasses_com
     function fi_hut_loginbroker_callbacks_prototype_base()
     {
         $this->_component = 'fi.hut.loginbroker';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

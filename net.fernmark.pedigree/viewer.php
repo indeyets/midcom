@@ -15,7 +15,7 @@ class net_fernmark_pedigree_viewer extends midcom_baseclasses_components_request
 {
     function net_fernmark_pedigree_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     /**

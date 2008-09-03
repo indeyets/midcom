@@ -35,7 +35,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
         {
             $this->mgd_api = '1.8';
         }
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $this->_dump_dir = $this->_config->get('dump_directory');
         $this->_metadata_suffix = $this->_config->get('metadata_suffix');

@@ -51,7 +51,7 @@ class net_nemein_openid_consumer extends midcom_baseclasses_components_purecode
         
         $this->_component = 'net.nemein.openid';
         
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
         
         $this->initialize();
     }

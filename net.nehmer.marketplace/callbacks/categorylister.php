@@ -33,7 +33,7 @@ class net_nehmer_marketplace_callbacks_categorylister extends midcom_baseclasses
     {
         $this->_component = 'net.nehmer.marketplace';
 
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $data =& $_MIDCOM->get_custom_context_data('request_data');
         $this->_data = $data['config']->get('categories');

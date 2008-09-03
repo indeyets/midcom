@@ -32,7 +32,7 @@ class midcom_helper_replicator_importer extends midcom_baseclasses_components_pu
     {
          $this->_component = 'midcom.helper.replicator';
          
-         parent::midcom_baseclasses_components_purecode();
+         parent::__construct();
     }
     
     /**

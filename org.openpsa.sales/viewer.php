@@ -19,7 +19,7 @@ class org_openpsa_sales_viewer extends midcom_baseclasses_components_request
 
     function __construct($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
 
         $this->_toolbars =& midcom_helper_toolbars::get_instance();
         $this->_request_data['toolbars'] =& $this->_toolbars;

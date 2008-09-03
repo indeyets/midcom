@@ -24,7 +24,7 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
 
     function net_nemein_quickpoll_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     /**

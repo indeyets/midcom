@@ -96,7 +96,7 @@ class midcom_helper_datamanager2_datamanager extends midcom_baseclasses_componen
     function midcom_helper_datamanager2_datamanager(&$schemadb)
     {
          $this->_component = 'midcom.helper.datamanager2';
-         parent::midcom_baseclasses_components_purecode();
+         parent::__construct();
          $this->_schemadb =& $schemadb;
     }
 

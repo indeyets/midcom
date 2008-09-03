@@ -16,7 +16,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
 {
     function net_nemein_tag_handler()
     {
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

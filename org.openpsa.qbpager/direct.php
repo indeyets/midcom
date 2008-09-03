@@ -11,7 +11,7 @@ class org_openpsa_qbpager_direct extends org_openpsa_qbpager
 {
     function __construct($classname, $pager_id)
     {
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
         $this->_component = 'org.openpsa.qbpager';
 
         $this->_limit =& $this->results_per_page;

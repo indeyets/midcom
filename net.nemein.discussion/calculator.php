@@ -17,7 +17,7 @@ class net_nemein_discussion_calculator extends midcom_baseclasses_components_pur
     public function __construct()
     {
         $this->_component = 'net.nemein.discussion';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
         
         //Disable limits
         // TODO: Could this be done more safely somehow

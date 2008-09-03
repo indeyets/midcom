@@ -25,7 +25,7 @@ class net_nemein_wiki_notes extends midcom_baseclasses_components_purecode
 
     function net_nemein_wiki_notes($target_node, $target_object, $new_wikipage = null)
     {
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
         
         $this->target_node = $target_node;
         

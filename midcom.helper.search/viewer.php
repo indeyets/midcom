@@ -24,7 +24,7 @@ class midcom_helper_search_viewer extends midcom_baseclasses_components_request
      */
     function midcom_helper_search_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
 
         // Default search form, no args, Basic search from
         $this->_request_switch['basic'] = array

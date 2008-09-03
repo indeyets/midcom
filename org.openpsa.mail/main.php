@@ -43,7 +43,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
     function org_openpsa_mail()
     {
         $this->_component = 'org.openpsa.mail';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
         $this->_initialize_pear();
 
         $this->attachments = array();

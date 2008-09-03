@@ -41,7 +41,7 @@ class org_maemo_calendar_callbacks_timezones extends midcom_baseclasses_componen
         
         $this->_component = 'org.maemo.calendar';
 
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $this->_data = Array();
         

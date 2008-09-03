@@ -26,7 +26,7 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
      */
     function __construct($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
 
         $this->_selected_time = time();
 

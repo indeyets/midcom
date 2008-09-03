@@ -88,7 +88,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
      */
     function midcom_baseclasses_components_request_admin ($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
 
         $toolbars = & midcom_helper_toolbars::get_instance();
         // Get the toolbars

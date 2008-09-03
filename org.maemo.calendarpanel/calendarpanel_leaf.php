@@ -24,7 +24,7 @@ class org_maemo_calendarpanel_leaf extends midcom_baseclasses_components_purecod
     function org_maemo_calendarpanel_leaf()
     {
         $this->_component = 'org.maemo.calendarpanel';        
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

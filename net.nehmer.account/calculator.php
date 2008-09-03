@@ -19,7 +19,7 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
     public function __construct()
     {
         $this->_component = 'net.nehmer.account';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
         
         //Disable limits
         // TODO: Could this be done more safely somehow

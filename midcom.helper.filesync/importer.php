@@ -21,7 +21,7 @@ class midcom_helper_filesync_importer extends midcom_baseclasses_components_pure
     {
          $this->_component = 'midcom.helper.filesync';
          $this->config =& $this->_config;
-         parent::midcom_baseclasses_components_purecode();
+         parent::__construct();
     }
 
     /**

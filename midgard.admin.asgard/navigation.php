@@ -46,7 +46,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
     function midgard_admin_asgard_navigation($object, &$request_data)
     {
         $this->_component = 'midgard.admin.asgard';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $this->_object = $object;
         $this->_object_path = $this->get_object_path();

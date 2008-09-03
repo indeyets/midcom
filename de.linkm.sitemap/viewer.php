@@ -20,7 +20,7 @@ class de_linkm_sitemap_viewer extends midcom_baseclasses_components_request
 
     function de_linkm_sitemap_viewer($object, $config)
     {
-        parent::midcom_baseclasses_components_request($object, $config);
+        parent::__construct($object, $config);
         $this->_current_node = null;
     }
 

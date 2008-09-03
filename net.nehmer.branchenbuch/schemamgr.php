@@ -45,7 +45,7 @@ class net_nehmer_branchenbuch_schemamgr extends midcom_baseclasses_components_pu
     function net_nehmer_branchenbuch_schemamgr($topic)
     {
         $this->_component = 'net.nehmer.branchenbuch';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $this->_topic = $topic;
         $this->_load_topic_configuration($this->_topic);

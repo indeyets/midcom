@@ -41,7 +41,7 @@ class net_nemein_approvenotifier extends midcom_baseclasses_components_purecode
         {
             $this->mgd_api = '1.8';
         }
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
         
         $this->debug_mode = $debug_mode;
         

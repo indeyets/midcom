@@ -52,7 +52,7 @@ class pl_olga_tellafriend  extends midcom_baseclasses_components_purecode
     function pl_olga_tellafriend ()
     {
         $this->_component = "pl.olga.tellafriend";
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
 

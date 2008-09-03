@@ -79,7 +79,7 @@ class net_nehmer_branchenbuch_callbacks_searchbase extends midcom_baseclasses_co
     function net_nehmer_branchenbuch_callbacks_searchbase()
     {
         $this->_component = 'net.nehmer.branchenbuch';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

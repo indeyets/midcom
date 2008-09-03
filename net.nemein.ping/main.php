@@ -55,7 +55,7 @@ class net_nemein_ping_pinger extends midcom_baseclasses_components_purecode
 
         $this->object = $object;
 
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

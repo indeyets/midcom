@@ -15,7 +15,7 @@ class ${module_class}_viewer extends midcom_baseclasses_components_request
 {
     function ${module_class}_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     /**

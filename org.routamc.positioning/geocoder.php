@@ -27,7 +27,7 @@ class org_routamc_positioning_geocoder extends midcom_baseclasses_components_pur
     function org_routamc_positioning_geocoder()
     {
          $this->_component = 'org.routamc.positioning';
-         parent::midcom_baseclasses_components_purecode();
+         parent::__construct();
     }
 
     /**

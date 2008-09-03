@@ -48,7 +48,7 @@ class net_nemein_registrations_aqcallback extends midcom_baseclasses_components_
     function net_nemein_registrations_aqcallback()
     {
         $this->_component = 'net.nemein.registrations';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $this->_request_data =& $_MIDCOM->get_custom_context_data('request_data');
         // Overwrite the local configuration data with one from the request data,

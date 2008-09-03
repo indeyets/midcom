@@ -23,7 +23,7 @@ class org_openpsa_notifications_notifier extends midcom_baseclasses_components_p
 
         $this->recipient = new midcom_db_person($recipient);
 
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

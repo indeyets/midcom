@@ -154,7 +154,7 @@ class org_openpsa_calendarwidget extends midcom_baseclasses_components_purecode
      */
     function __construct($year = null, $month = null, $day = null)
     {
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         // Default time shown is current
         if ($year)

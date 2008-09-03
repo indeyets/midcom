@@ -58,7 +58,7 @@ class org_routamc_photostream_importer extends midcom_baseclasses_components_pur
          $this->photostream = $photostream;
              
          $this->_component = 'org.routamc.photostream';
-         parent::midcom_baseclasses_components_purecode();
+         parent::__construct();
          
          $this->schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
          $this->datamanager = new midcom_helper_datamanager2_datamanager($this->schemadb);

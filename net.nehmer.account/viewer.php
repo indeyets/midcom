@@ -2,7 +2,7 @@
 /**
  * @package net.nehmer.account
  * @author The Midgard Project, http://www.midgard-project.org
- * @version $Id: viewer.php 17002 2008-07-30 08:13:35Z bergie $
+ * @version $Id:viewer.php 17006 2008-07-30 12:14:37Z bergie $
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
@@ -99,7 +99,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
 {
     function net_nehmer_account_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     function _on_initialize()

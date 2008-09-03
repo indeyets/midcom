@@ -41,7 +41,7 @@ class org_routamc_positioning_importer extends midcom_baseclasses_components_pur
     function org_routamc_positioning_importer()
     {
          $this->_component = 'org.routamc.positioning';
-         parent::midcom_baseclasses_components_purecode();
+         parent::__construct();
     }
 
     /**

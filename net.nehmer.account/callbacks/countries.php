@@ -44,7 +44,7 @@ class net_nehmer_account_callbacks_countries extends midcom_baseclasses_componen
     function net_nehmer_account_callbacks_countries($args)
     {
         $this->_component = 'net.nehmer.account';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $this->_data = array
         (

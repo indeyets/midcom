@@ -33,7 +33,7 @@ class org_maemo_gforgeprofileupdater extends midcom_baseclasses_components_purec
     function org_maemo_gforgeprofileupdater()
     {
         $this->_component = 'org.maemo.gforgeprofileupdater';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         $this->soap_wdsl = $this->_config->get('soap_wdsl');
         $this->soap_username = $this->_config->get('soap_username');

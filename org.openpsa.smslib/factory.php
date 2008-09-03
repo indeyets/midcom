@@ -20,7 +20,7 @@ class org_openpsa_smslib extends midcom_baseclasses_components_purecode
 
     function org_openpsa_smslib()
     {
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
         $this->_component='org.openpsa.smslib';
 
         return true;

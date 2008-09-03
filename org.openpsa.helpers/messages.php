@@ -22,7 +22,7 @@ class org_openpsa_helpers_uimessages extends midcom_baseclasses_components_purec
      */
     function __construct()
     {
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

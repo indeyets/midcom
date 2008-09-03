@@ -19,7 +19,7 @@ class net_nehmer_marketplace_viewer extends midcom_baseclasses_components_reques
 {
     function net_nehmer_marketplace_viewer($topic, $config)
     {
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     function _on_initialize()

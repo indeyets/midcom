@@ -47,7 +47,7 @@ class no_odindata_quickform_viewer extends midcom_baseclasses_components_request
     function no_odindata_quickform_viewer($topic, $config)
     {
         $this->msg = '';
-        parent::midcom_baseclasses_components_request($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     function _on_initialize()

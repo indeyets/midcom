@@ -17,7 +17,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
     function __construct()
     {
         $this->_component = 'org.openpsa.relatedto';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
     }
 
     /**

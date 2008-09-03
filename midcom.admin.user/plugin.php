@@ -22,7 +22,7 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
      */
     function midcom_admin_user_plugin()
     {
-        parent::midcom_baseclasses_components_request();
+        parent::__construct();
     }
 
     /**

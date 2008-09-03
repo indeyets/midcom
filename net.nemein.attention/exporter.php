@@ -20,7 +20,7 @@ class net_nemein_attention_exporter extends midcom_baseclasses_components_pureco
     function net_nemein_attention_exporter()
     {
          $this->_component = 'net.nemein.attention';
-         parent::midcom_baseclasses_components_purecode();
+         parent::__construct();
     }
 
     /**

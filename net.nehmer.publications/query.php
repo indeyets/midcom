@@ -112,7 +112,7 @@ class net_nehmer_publications_query extends midcom_baseclasses_components_pureco
     function net_nehmer_publications_query($autofilter = true)
     {
         $this->_component = 'net.nehmer.publications';
-        parent::midcom_baseclasses_components_purecode();
+        parent::__construct();
 
         if ($autofilter)
         {
