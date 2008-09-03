@@ -1,6 +1,6 @@
 'name' => 'midcom.helper.reflector',
 'purecode' => true,
-'version' => '0.2.0beta1',
+'version' => '0.2.0beta2',
 'state' => 'beta',
 'privileges' => array(),
 'class_definitions' => array(),
