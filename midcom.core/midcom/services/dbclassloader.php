@@ -1191,7 +1191,14 @@ EOF;
                 $component .= ".{$part}";
             }
             
-            if (isset($_MIDCOM->componentloader->manifests[$component]))
+            // Fix for incorrectly named class
+            if ($component == 'net.nehmer.accounts')
+            {
+                $component = 'net.nehmer.account';
+            }
+            
+            if (   !empty($component)
+                && isset($_MIDCOM->componentloader->manifests[$component]))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Loading component {$component} to get DBA class {$classname}.", MIDCOM_LOG_INFO);

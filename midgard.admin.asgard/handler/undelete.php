@@ -70,6 +70,10 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         $data['types'] = array();
         foreach ($_MIDGARD['schema']['types'] as $type => $int)
         {
+            if (substr($type, 0, 2) == '__')
+            {
+                continue;
+            }
             $qb = new midgard_query_builder($type);
             $qb->include_deleted();
             $qb->add_constraint('metadata.deleted', '=', true);
