@@ -846,6 +846,10 @@ class midcom_helper_metadata
             && method_exists($this->object, 'lock'))
         {
             // This is the Midgard 8.09+ way for locking
+            if ($this->object->is_locked())
+            {
+                return true;
+            }
             return $this->object->lock();
         }
         
@@ -897,6 +901,11 @@ class midcom_helper_metadata
         {
             // This is the Midgard 8.09+ way for locking
             // TODO: Should we support soft unlock somehow?
+            if (!$this->object->is_locked())
+            {
+                return true;
+            }
+            
             return $this->object->unlock();
         }
         
