@@ -131,6 +131,14 @@ function midcom_autoload($class_name)
     {
         // DBA object files are named objectname.php
         debug_add("Autoloader got '{$path}' which is DBA class, going one above");
+        
+        // Ensure we have the component loaded
+        $_MIDCOM->dbclassloader->load_component_for_class($class_name);
+        if (class_exists($class_name))
+        {
+            return;
+        }
+        
         $path = dirname($path) . ".php";
     }
     
