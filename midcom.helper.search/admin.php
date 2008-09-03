@@ -24,7 +24,7 @@ class midcom_helper_search_admin extends midcom_baseclasses_components_request_a
      */
     function midcom_helper_search_admin($topic, $config)
     {
-        parent::midcom_baseclasses_components_request_admin($topic, $config);
+        parent::__construct($topic, $config);
         
         $this->_request_switch[] = Array 
         ( 

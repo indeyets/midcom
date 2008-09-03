@@ -26,7 +26,7 @@ class org_openpsa_mypage_admin extends midcom_baseclasses_components_request_adm
      */
     function __construct($topic, $config)
     {
-        parent::midcom_baseclasses_components_request_admin($topic, $config);
+        parent::__construct($topic, $config);
 
         $this->_request_switch[] = Array
         (

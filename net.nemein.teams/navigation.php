@@ -21,7 +21,7 @@ class net_nemein_teams_navigation extends midcom_baseclasses_components_navigati
      */
     function net_nemein_teams_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 }
 

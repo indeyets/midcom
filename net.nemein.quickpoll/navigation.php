@@ -21,7 +21,7 @@ class net_nemein_quickpoll_navigation extends midcom_baseclasses_components_navi
      */
     function net_nemein_quickpoll_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
     /**
      * Returns a static leaf list with access to the archive.

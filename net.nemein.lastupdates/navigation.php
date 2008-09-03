@@ -21,7 +21,7 @@ class net_nemein_lastupdates_navigation extends midcom_baseclasses_components_na
      */
     function net_nemein_lastupdates_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 }
 

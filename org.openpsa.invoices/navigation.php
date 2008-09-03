@@ -20,7 +20,7 @@ class org_openpsa_invoices_navigation extends midcom_baseclasses_components_navi
      */
     function __construct()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
     /**

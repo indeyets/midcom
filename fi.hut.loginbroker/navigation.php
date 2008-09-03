@@ -22,7 +22,7 @@ class fi_hut_loginbroker_navigation extends midcom_baseclasses_components_naviga
      */
     function fi_hut_loginbroker_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
     function get_leaves()

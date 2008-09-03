@@ -17,7 +17,7 @@ class org_openpsa_invoices_admin extends midcom_baseclasses_components_request_a
 
     function __construct($topic, $config)
     {
-        parent::midcom_baseclasses_components_request_admin($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     function _on_initialize()

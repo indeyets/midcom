@@ -19,7 +19,7 @@ class no_odindata_quickform_navigation extends midcom_baseclasses_components_nav
      */
     function no_odindata_quickform_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
     
 } // navigation

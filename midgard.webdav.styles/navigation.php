@@ -21,7 +21,7 @@ class midgard_webdav_styles_navigation extends midcom_baseclasses_components_nav
      */
     function midgard_webdav_styles_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 }
 

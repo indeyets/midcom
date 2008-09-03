@@ -16,7 +16,7 @@ class net_nemein_simpledb_navigation extends midcom_baseclasses_components_navig
 {
     function net_nemein_simpledb_navigation() 
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
 }

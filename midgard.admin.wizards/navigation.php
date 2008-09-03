@@ -21,7 +21,7 @@ class midgard_admin_wizards_navigation extends midcom_baseclasses_components_nav
      */
     function midgard_admin_wizards_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 }
 

@@ -21,7 +21,7 @@ class net_nehmer_mail_navigation extends midcom_baseclasses_components_navigatio
      */
     function net_nehmer_mail_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
     /**

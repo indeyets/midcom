@@ -16,7 +16,7 @@ class fi_mik_lentopaikkakisa_admin extends midcom_baseclasses_components_request
 {
     function fi_mik_lentopaikkakisa_admin($topic, $config)
     {
-         parent::midcom_baseclasses_components_request_admin($topic, $config);
+         parent::__construct($topic, $config);
     }
 }
 ?>

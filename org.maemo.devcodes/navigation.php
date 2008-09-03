@@ -21,7 +21,7 @@ class org_maemo_devcodes_navigation extends midcom_baseclasses_components_naviga
      */
     function org_maemo_devcodes_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
     function get_leaves()

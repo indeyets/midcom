@@ -17,7 +17,7 @@ class net_nehmer_branchenbuch_admin extends midcom_baseclasses_components_reques
 {
     function net_nehmer_branchenbuch_admin($topic, $config)
     {
-        parent::midcom_baseclasses_components_request_admin($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     /**

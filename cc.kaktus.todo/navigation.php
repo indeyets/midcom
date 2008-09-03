@@ -22,7 +22,7 @@ class cc_kaktus_todo_navigation extends midcom_baseclasses_components_navigation
      */
     function cc_kaktus_todo_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
     
     /**

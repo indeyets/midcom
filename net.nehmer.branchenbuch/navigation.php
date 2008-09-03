@@ -20,7 +20,7 @@ class net_nehmer_branchenbuch_navigation extends midcom_baseclasses_components_n
      */
     function net_nehmer_branchenbuch_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
     function get_leaves()

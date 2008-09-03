@@ -16,7 +16,7 @@ class pl_olga_windguru_navigation extends midcom_baseclasses_components_navigati
      */
     function pl_olga_windguru_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
     function get_leaves()

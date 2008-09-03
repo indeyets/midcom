@@ -15,7 +15,7 @@ class net_nemein_reservations_admin extends midcom_baseclasses_components_reques
 {
     function net_nemein_reservations_admin($topic, $config) 
     {
-        parent::midcom_baseclasses_components_request_admin($topic, $config);
+        parent::__construct($topic, $config);
     }
 } 
 ?>

@@ -27,7 +27,7 @@ class org_openpsa_imp_admin extends midcom_baseclasses_components_request_admin
     function org_openpsa_imp_admin($topic, $config)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        parent::midcom_baseclasses_components_request_admin($topic, $config);
+        parent::__construct($topic, $config);
         debug_pop();
         return true;
     }

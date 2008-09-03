@@ -21,7 +21,7 @@ class net_nehmer_account_admin extends midcom_baseclasses_components_request_adm
 {
     function net_nehmer_account_admin($topic, $config)
     {
-        parent::midcom_baseclasses_components_request_admin($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     /**

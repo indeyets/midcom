@@ -21,7 +21,7 @@ class org_routamc_statusmessage_navigation extends midcom_baseclasses_components
      */
     function org_routamc_statusmessage_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 }
 

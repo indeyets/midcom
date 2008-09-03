@@ -21,7 +21,7 @@ class ${module_class}_navigation extends midcom_baseclasses_components_navigatio
      */
     function ${module_class}_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 }
 

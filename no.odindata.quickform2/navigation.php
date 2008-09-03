@@ -21,7 +21,7 @@ class no_odindata_quickform2_navigation extends midcom_baseclasses_components_na
      */
     function no_odindata_quickform2_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 }
 

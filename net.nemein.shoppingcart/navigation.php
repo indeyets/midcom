@@ -21,7 +21,7 @@ class net_nemein_shoppingcart_navigation extends midcom_baseclasses_components_n
      */
     function net_nemein_shoppingcart_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 }
 

@@ -19,7 +19,7 @@ class cc_kaktus_pearserver_navigation extends midcom_baseclasses_components_navi
      */
     function cc_kaktus_pearserver_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
     /**

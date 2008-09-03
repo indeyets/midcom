@@ -21,7 +21,7 @@ class net_nemein_netmon_navigation extends midcom_baseclasses_components_navigat
      */
     function net_nemein_netmon_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 }
 

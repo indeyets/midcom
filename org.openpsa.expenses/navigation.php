@@ -21,7 +21,7 @@ class org_openpsa_expenses_navigation extends midcom_baseclasses_components_navi
      */
     function org_openpsa_expenses_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 }
 

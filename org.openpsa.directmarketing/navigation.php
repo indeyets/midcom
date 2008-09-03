@@ -20,7 +20,7 @@ class org_openpsa_directmarketing_navigation extends midcom_baseclasses_componen
      */
     function org_openpsa_directmarketing_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
     function get_leaves()

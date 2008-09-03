@@ -21,7 +21,7 @@ class net_fernmark_pedigree_navigation extends midcom_baseclasses_components_nav
      */
     function net_fernmark_pedigree_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 }
 

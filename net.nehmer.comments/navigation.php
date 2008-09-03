@@ -22,7 +22,7 @@ class net_nehmer_comments_navigation extends midcom_baseclasses_components_navig
      */
     function net_nehmer_comments_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
 }

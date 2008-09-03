@@ -26,7 +26,7 @@ class net_nemein_hourview2_admin extends midcom_baseclasses_components_request_a
      */
     function net_nemein_hourview2_admin($topic, $config)
     {
-        parent::midcom_baseclasses_components_request_admin($topic, $config);
+        parent::__construct($topic, $config);
 
         $this->_request_switch[] = Array
         (

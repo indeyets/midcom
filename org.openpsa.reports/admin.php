@@ -27,7 +27,7 @@ class org_openpsa_reports_admin extends midcom_baseclasses_components_request_ad
     function __construct($topic, $config)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        parent::midcom_baseclasses_components_request_admin($topic, $config);
+        parent::__construct($topic, $config);
 
         $this->_request_switch[] = Array
         (

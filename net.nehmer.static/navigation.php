@@ -34,7 +34,7 @@ class net_nehmer_static_navigation extends midcom_baseclasses_components_navigat
      */
     public function __construct()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
     /**

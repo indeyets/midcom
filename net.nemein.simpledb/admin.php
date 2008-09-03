@@ -17,7 +17,7 @@ class net_nemein_simpledb_admin extends midcom_baseclasses_components_request_ad
 {
     function net_nemein_simpledb_admin($topic, $config) 
     {
-         parent::midcom_baseclasses_components_request_admin($topic, $config);
+         parent::__construct($topic, $config);
     }
 }
 ?>

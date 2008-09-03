@@ -31,7 +31,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
      */
     function net_nehmer_blog_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
     /**

@@ -21,7 +21,7 @@ class org_maemo_socialnews_navigation extends midcom_baseclasses_components_navi
      */
     function org_maemo_socialnews_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
     
     /**

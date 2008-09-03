@@ -17,7 +17,7 @@ class net_nemein_registrations_admin extends midcom_baseclasses_components_reque
 {
     function net_nemein_registrations_admin($topic, $config)
     {
-        parent::midcom_baseclasses_components_request_admin($topic, $config);
+        parent::__construct($topic, $config);
     }
 
     /**

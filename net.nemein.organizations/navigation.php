@@ -18,7 +18,7 @@ class net_nemein_organizations_navigation extends midcom_baseclasses_components_
 {
     function net_nemein_organizations_navigation() 
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
 }

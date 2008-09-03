@@ -32,7 +32,7 @@ class org_routamc_gallery_navigation extends midcom_baseclasses_components_navig
      */
     function org_routamc_gallery_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
     /**

@@ -20,7 +20,7 @@ class net_nehmer_jobmarket_navigation extends midcom_baseclasses_components_navi
      */
     function net_nehmer_jobmarket_navigation()
     {
-        parent::midcom_baseclasses_components_navigation();
+        parent::__construct();
     }
 
     function get_leaves()
