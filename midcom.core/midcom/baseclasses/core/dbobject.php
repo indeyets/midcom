@@ -2169,7 +2169,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         {
             $assignee = $assignee->id;
         }
-
         $obj = midcom_core_privilege::get_privilege($object, $privilege, $assignee, $classname);
 
         return $obj;

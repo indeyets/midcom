@@ -219,7 +219,8 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_permissions'));
 
         // Populate additional assignee selector
-        $additional_assignees = Array(
+        $additional_assignees = array
+        (
             '' => '',
         );
 
@@ -251,7 +252,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
             $additional_assignees["group:{$group->guid}"] = $label;
         }
 
-        $assignees = Array();
+        $assignees = array();
 
         // Populate all resources having existing privileges
         $existing_privileges = $this->_object->get_privileges();

@@ -431,7 +431,9 @@ class midcom_core_privilege extends midcom_core_privilege_db
         }
         else
         {
-            $return = $_MIDCOM->cache->memcache->get('ACL', $guid);
+            // FIXME: Re-enable once unserialize works again with MgdSchema objects
+            //$return = $_MIDCOM->cache->memcache->get('ACL', $guid);
+            $return = null;
             if (! is_array($return))
             {
                 $return = midcom_core_privilege::_query_all_privileges($guid);

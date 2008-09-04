@@ -429,7 +429,8 @@ class midcom_services_cache_backend
         {
             try
             {
-                return unserialize($result);
+                // FIXME: The @ is here because Midgard causes Warnings on object constructor not being called on unserialize
+                return @unserialize($result);
             }
             catch (Exception $e)
             {
