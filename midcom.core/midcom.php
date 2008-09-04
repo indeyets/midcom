@@ -146,9 +146,9 @@ function midcom_autoload($class_name)
         && $class_name != 'midcom_baseclasses_components_interface')
     {
         // MidCOM component interfaces are named midcom/interface.php
-        debug_add("Autoloader got '{$path}' which is component interface class, getting it from midcom directory");
-        $path = str_replace('/interface.php', '/midcom/interfaces.php', $path);
-
+        debug_add("Autoloader got '{$path}' which is component interface class, loading the component instead");
+        $_MIDCOM->dbclassloader->load_component_for_class($class_name);
+        return;
     }
     
     if (!file_exists($path))

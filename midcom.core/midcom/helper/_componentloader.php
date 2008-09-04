@@ -339,7 +339,7 @@ class midcom_helper__componentloader
             $GLOBALS['midcom_errstr'] = 'Missing interfaces class.';
             return false;
         }
-        //require("{$directory}/interfaces.php");
+        require("{$directory}/interfaces.php");
 
         // Load the component interface, try to be backwards-compatible
         $prefix = $this->snippetpath_to_prefix($snippetpath);
