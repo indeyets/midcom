@@ -82,8 +82,7 @@
                 <strong>Asgard for Midgard <?php echo substr(mgd_version(), 0, 4); ?></strong>.
                 Copyright &copy; 1998 - <?php echo date('Y'); ?> <a href="http://www.midgard-project.org/">The Midgard Project</a>.
                 Midgard is a <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under
-                <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.<br />
-                &(_SERVER['SERVER_NAME']);: &(_SERVER['SERVER_SOFTWARE']);
+                <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.<br />&nbsp;
             </span>
         </div>
     </body>

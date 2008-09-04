@@ -47,6 +47,8 @@
 .midcom_services_toolbars_fancy.type_palette .logos img
 {
     border: none;
+    margin-top: 2px;
+    margin-bottom: -2px;
 }
 .midcom_services_toolbars_fancy.type_palette .items
 {
