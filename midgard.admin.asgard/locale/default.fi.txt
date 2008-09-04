@@ -131,6 +131,10 @@ Version %s muutokset tietueeseen %s
 Muutokset versiosta %s
 ---STRINGEND
 
+---STRING child types of %s
+Tyypin %s alatyypit
+---STRINGEND
+
 ---STRING choose action
 Valitse toiminto
 ---STRINGEND
@@ -779,7 +783,11 @@ Versio %s tietueesta %s
 XML
 ---STRINGEND
 
----STRING child types of %s
-Tyypin %s alatyypit
+---STRING most recently visited
+
+---STRINGEND
+
+---STRING core_components
+MidCOMin pääkomponentit
 ---STRINGEND
 

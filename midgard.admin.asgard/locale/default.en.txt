@@ -131,6 +131,10 @@ Changes done in revision %s to %s
 Changes from version %s
 ---STRINGEND
 
+---STRING child types of %s
+Child types of %s
+---STRINGEND
+
 ---STRING choose action
 Choose action
 ---STRINGEND
@@ -491,6 +495,10 @@ MIME type
 Model for selecting navigation types
 ---STRINGEND
 
+---STRING most recently visited
+Most recently visited objects
+---STRINGEND
+
 ---STRING navigation options
 Navigation options
 ---STRINGEND
@@ -779,10 +787,7 @@ Version %s of %s
 XML
 ---STRINGEND
 
----STRING child types of %s
-Child types of %s
+---STRING core_components
+Main MidCOM components
 ---STRINGEND
 
----STRING most recently visited
-Most recently visited objects
----STRINGEND
