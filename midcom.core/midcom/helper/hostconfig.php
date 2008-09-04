@@ -66,15 +66,15 @@ class midcom_helper_hostconfig
     function get_configuration()
     {
 
-        $params = $this->page->listparameters($this->setting_parameter_domain);
+        $params = $this->page->list_parameters($this->setting_parameter_domain);
 
-        if ($params)
+        if (!empty($params))
         {
             $configuration_keys_handled = array();
-            while ($params->fetch())
+            foreach ($params as $name=>$value)
             {
-                $this->config[$params->name] = $params->value;
-                $configuration_keys_handled[$params->name] = true;
+                $this->config[$name] = $value;
+                $configuration_keys_handled[$name] = true;
             }
 
         }
@@ -157,26 +157,26 @@ class midcom_helper_hostconfig
         $template = '$GLOBALS[\'midcom_config_local\'][\'{__NAME__}\'] = \'{__VALUE__}\';';
         $configuration = array();
 
-        $params = $this->page->listparameters($this->setting_parameter_domain);
+        $params = $this->page->list_parameters($this->setting_parameter_domain);
 
-        if ($params)
+        if (!empty($params))
         {
             $configuration_keys_handled = array();
-            while ($params->fetch())
+            foreach ($params as $name=>$value)
             {
-                if (   !array_key_exists($params->name, $this->values_to_skip)
-                    && !array_key_exists($params->name, $configuration_keys_handled)
-                    && $params->value != '')
+                if (   !array_key_exists($name, $this->values_to_skip)
+                    && !array_key_exists($name, $configuration_keys_handled)
+                    && $value != '')
                 {
                     $txt = $template;
-                    $txt = str_replace('{__NAME__}', $params->name, $txt);
-                    $txt = str_replace('{__VALUE__}', $params->value, $txt);
+                    $txt = str_replace('{__NAME__}', $name, $txt);
+                    $txt = str_replace('{__VALUE__}', $value, $txt);
                     $configuration[] = $txt;
                 }
-                $this->config[$params->name] = $params->value;
+                $this->config[$name] = $value;
 
                 // Safeguard against duplicate values
-                $configuration_keys_handled[$params->name] = true;
+                $configuration_keys_handled[$name] = true;
             }
         }
 
