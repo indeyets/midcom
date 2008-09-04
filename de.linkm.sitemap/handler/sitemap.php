@@ -252,7 +252,7 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
             ));
         }
 
-		$tmp = array();
+        $tmp = array();
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
         return true;
