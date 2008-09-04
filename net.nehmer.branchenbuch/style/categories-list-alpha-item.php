@@ -1,1 +1,0 @@
-<?php midcom_show_style('categories-list-item'); ?>
