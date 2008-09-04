@@ -1,6 +1,0 @@
-'name' => 'se.anykey.activecalendar',
-'purecode' => true,
-'version' => '1.1.0beta1',
-'privileges' => array(),
-'class_definitions' => array(),
-'state' => 'beta',
