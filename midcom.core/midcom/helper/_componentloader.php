@@ -1051,9 +1051,9 @@ class midcom_helper__componentloader
 
         // Gather dependencies too
         $dependencies = array();
-        foreach ($core_components as $component)
+        foreach ($core_components as $core_component)
         {
-            $component_dependencies = $this->get_component_dependencies($component);
+            $component_dependencies = $this->get_component_dependencies($core_component);
             $dependencies = array_merge($dependencies, $component_dependencies);
         }
         $core_components = array_unique(array_merge($core_components, $dependencies));
