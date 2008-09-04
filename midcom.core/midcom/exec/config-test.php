@@ -155,7 +155,7 @@ if (version_compare(mgd_version(), '8.09.0beta1', '<'))
 }
 else
 {
-    println('Midgad Version', OK);
+    println('Midgard Version', OK);
 }
 
 $version = phpversion();
