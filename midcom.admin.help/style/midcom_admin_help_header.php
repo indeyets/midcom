@@ -6,6 +6,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><?php echo $_MIDCOM->get_context_data(MIDCOM_CONTEXT_PAGETITLE); ?></title>
+        <link rel="shortcut icon" href="<?php echo MIDCOM_STATIC_URL; ?>/stock-icons/logos/favicon.ico" />
          <style type="text/css">
           <!--
            BODY 
@@ -13,8 +14,8 @@
              font-family: "Verdana", "Arial", "Helvetica", sans-serif;
              padding-left: 180px;
              padding-right: 10%;
-             background-image: url("<?php echo MIDCOM_STATIC_URL; ?>/stock-icons/logos/midgard-project.gif");
-             background-position: 40px 30px;
+             background-image: url("<?php echo MIDCOM_STATIC_URL; ?>/stock-icons/logos/midgard-150x150.png");
+             background-position: 35px 20px;
              background-attachment: fixed;
              background-repeat: no-repeat;
            }
