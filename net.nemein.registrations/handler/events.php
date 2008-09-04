@@ -226,6 +226,11 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
         // Create a fresh storage object. We need sudo for this.
         $this->_event = new net_nemein_registrations_event();
         $this->_event->node = $this->_content_topic->id;
+
+        // FIXME read via formmanager
+        $this->_event->start = $_POST['start'];
+        $this->_event->end = $_POST['end'];
+
         if ($this->_config->get('event_type') !== null)
         {
             $this->_event->type = $this->_config->get('event_type');
