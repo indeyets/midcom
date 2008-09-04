@@ -91,6 +91,12 @@
     min-width: 500px;
 }
 
+#content div.midgard_admin_asgard_components_component a img
+{
+    border: none;
+    vertical-align: middle;
+}
+
 #content div.midgard_admin_asgard_components_component div.maintainers
 {
     width: 200px;

@@ -335,6 +335,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         foreach ($data['components_core'] as $component => $string_counts)
         {
             $data['component'] = $component;
+            $data['icon'] = $_MIDCOM->componentloader->get_component_icon($component);
             $data['string_counts'] = $string_counts;
             midcom_show_style('midcom_admin_babel_status_item');
         }
@@ -347,6 +348,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         foreach ($data['components_other'] as $component => $string_counts)
         {
             $data['component'] = $component;
+            $data['icon'] = $_MIDCOM->componentloader->get_component_icon($component);
             $data['string_counts'] = $string_counts;
             midcom_show_style('midcom_admin_babel_status_item');
         }

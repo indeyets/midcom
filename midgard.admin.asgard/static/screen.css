@@ -81,6 +81,19 @@ p
   margin: 0;
 }
 
+#navigation ul li
+{
+    position: relative;
+}
+
+#navigation ul li .metadata
+{
+    position: absolute;
+    right: 0px;
+    font-size: smaller;
+    color: #000000;
+}
+
 #navigation div.chapter h3
 {
   background-color: #d3d7cf;

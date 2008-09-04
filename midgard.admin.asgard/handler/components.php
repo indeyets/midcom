@@ -49,15 +49,7 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
         $component_array['name'] = $name;
         $component_array['title'] = $_MIDCOM->i18n->get_string($name, $name);
         $component_array['purecode'] = $manifest->purecode;
-
-        if (isset($manifest->_raw_data['icon']))
-        {
-            $component_array['icon'] = $manifest->_raw_data['icon'];
-        }
-        else
-        {
-            $component_array['icon'] = 'stock-icons/16x16/package.png';
-        }
+        $component_array['icon'] = $_MIDCOM->componentloader->get_component_icon($name);
 
         if (isset($manifest->_raw_data['package.xml']['description']))
         {
@@ -81,25 +73,30 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "__mfa/asgard/components/configuration/{$name}",
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard/components/configuration/{$name}/",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
             )
         );
-        /*$component_array['toolbar']->add_item
-        (
-            array
+        
+        if (isset($_MIDCOM->componentloader->manifests['midcom.admin.babel']))
+        {
+            $component_array['toolbar']->add_item
             (
-                MIDCOM_TOOLBAR_URL => 'tmp',
-                MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('localization', 'midcom'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/locale.png',
-            )
-        );*/
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.babel/edit/{$name}/en/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('midcom.admin.babel', 'midcom.admin.babel'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/locale.png',
+                )
+            );
+        }
         return $component_array;
     }
 
     function _list_components()
     {
+        $this->_request_data['core_components'] = array();
         $this->_request_data['components'] = array();
         $this->_request_data['libraries'] = array();
 
@@ -115,6 +112,10 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
             if ($manifest->purecode)
             {
                 $type = 'libraries';
+            }
+            elseif ($_MIDCOM->componentloader->is_core_component($name))
+            {
+                $type = 'core_components';
             }
 
             $component_array = $this->_load_component_data($name, $manifest);
@@ -169,6 +170,15 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
     {
         midgard_admin_asgard_plugin::asgard_header();
 
+        $data['list_type'] = 'core_components';
+        midcom_show_style('midgard_admin_asgard_components_header');
+        foreach ($data['core_components'] as $component => $component_data)
+        {
+            $data['component_data'] = $component_data;
+            midcom_show_style('midgard_admin_asgard_components_item');
+        }
+        midcom_show_style('midgard_admin_asgard_components_footer');
+
         $data['list_type'] = 'components';
         midcom_show_style('midgard_admin_asgard_components_header');
         foreach ($data['components'] as $component => $component_data)
@@ -208,6 +218,7 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
         }
 
         $data['component_data'] = $this->_load_component_data($data['component'], $_MIDCOM->componentloader->manifests[$data['component']]);
+        $data['component_dependencies'] = $_MIDCOM->componentloader->get_component_dependencies($data['component']);
 
         $data['view_title'] = $data['component_data']['title'];
         $_MIDCOM->set_pagetitle($data['view_title']);
@@ -224,6 +235,19 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
             )
         );
+        
+        if (isset($_MIDCOM->componentloader->manifests['midcom.admin.babel']))
+        {
+            $data['asgard_toolbar']->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.babel/edit/{$data['component']}/en/",
+                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('midcom.admin.babel', 'midcom.admin.babel'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/locale.png',
+                )
+            );
+        }
 
         // Set the breadcrumb data
         $tmp = array();

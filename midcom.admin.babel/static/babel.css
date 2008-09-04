@@ -32,6 +32,13 @@ table.midcom_admin_babel_languages tr th.component
     font-weight: bold;
 }
 
+table.midcom_admin_babel_languages tr th.component img
+{
+    border: none;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
 table.midcom_admin_babel_languages tr.header th
 {
   background-color: #dddddf;

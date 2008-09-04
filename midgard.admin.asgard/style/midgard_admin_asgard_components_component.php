@@ -40,6 +40,19 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         </p>
 
         <p class="description">&(component['title']);</p>
+        
+        <?php
+        if (count($data['component_dependencies']) > 0)
+        {
+            echo "<h2>" . $_MIDCOM->i18n->get_string('component depends on', 'midcom') . "</h2>\n";
+            echo "<ul>\n";
+            foreach ($data['component_dependencies'] as $dependency)
+            {
+                echo "<li><a href=\"{$prefix}__mfa/asgard/components/{$dependency}/\"><img src=\"" . MIDCOM_STATIC_URL . "/" . $_MIDCOM->componentloader->get_component_icon($dependency) . "\" alt=\"\" /> {$dependency}</a></li>\n";
+            }
+            echo "</ul>\n";
+        }
+        ?>
     </div>
 
     <div class="help">

@@ -27,7 +27,7 @@ foreach($_MIDCOM->componentloader->manifests as $name => $manifest)
     if ($manifest->purecode)
     {
         $package_type = 'library';
-    }    
+    }
     
     $maintainers = $manifest->_raw_data['package.xml']['maintainers'];
     if (is_array($maintainers)) 

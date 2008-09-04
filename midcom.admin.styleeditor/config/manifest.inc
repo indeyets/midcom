@@ -1,5 +1,6 @@
 'name' => 'midcom.admin.styleeditor',
 'description' => 'Style editor for Midgard style templates',
+'icon' => 'stock-icons/16x16/text-x-generic-template.png',
 'purecode' => true,
 'version' => '0.3.0',
 'privileges' => array(),

@@ -25,7 +25,7 @@ else
 }
 
 echo "<tr class=\"{$status}\">\n";
-echo "    <th class=\"component\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.babel/edit/{$data['component']}/{$data['language']}/\">{$data['component']}</a></th>\n";
+echo "    <th class=\"component\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.babel/edit/{$data['component']}/{$data['language']}/\"><img src=\"". MIDCOM_STATIC_URL . "/{$data['icon']}\" alt=\"\" />{$data['component']}</a></th>\n";
 echo "    <td>{$data['string_counts']['translated']}</td>\n";
 echo "    <td>{$data['string_counts']['total']}</td>\n";
 if ($data['string_counts']['total'] > 0)

@@ -80,7 +80,7 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
         {
             $component_l10n = $_MIDCOM->i18n->get_l10n($component);
 
-            if (midcom_admin_babel_plugin::is_core_component($component))
+            if ($_MIDCOM->componentloader->is_core_component($component))
             {
                 $string_array = 'components_core';
             }
@@ -114,7 +114,7 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
                     $status[$string_array][$component]['translated']++;
                     $status['strings_all']['translated']++;
 
-                    if (midcom_admin_babel_plugin::is_core_component($component))
+                    if ($_MIDCOM->componentloader->is_core_component($component))
                     {
                         $status['strings_core']['translated']++;
                     }
@@ -127,52 +127,6 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
         }
 
         return $status;
-    }
-
-    /**
-     * Checks if component is a part of the default MidCOM distribution
-     * or an external component
-     *
-     * @param string $component Component to check
-     */
-    function is_core_component($component)
-    {
-        // TODO: Put this into a centralized location
-        $core_components = array
-        (
-            'midcom',
-            // From midcom dependencies
-            'midcom.admin.babel',
-            'midcom.admin.folder',
-            'midcom.admin.help',
-            'midcom.admin.settings',
-            'midcom.admin.styleeditor',
-            'midcom.admin.user',
-            'midgard.admin.asgard',
-            'no.bergfald.rcs',
-            // From task_midgardcms dependencies
-            'net.nehmer.blog',
-            'net.nemein.calendar',
-            'midcom.helper.imagepopup',
-            'midcom.helper.search',
-            'de.linkm.sitemap',
-            'midgard.admin.sitewizard',
-            'net.nehmer.static',
-            // Other dependencies
-            'midcom.helper.datamanager',
-            'midcom.helper.datamanager2',
-            'midcom.helper.xml',
-            'net.nehmer.markdown',
-            'net.nemein.tag',
-            'net.nemein.rss',
-            'org.openpsa.calendarwidget',
-        );
-
-        if (in_array($component, $core_components))
-        {
-            return true;
-        }
-        return false;
     }
 
     function navigation()
@@ -205,7 +159,7 @@ class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
                 $status = 'bad';
             }
 
-            echo "            <li class=\"status\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.babel/status/{$language}/\">{$language_name}</a></li>\n";
+            echo "            <li class=\"status\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.babel/status/{$language}/\">{$language_name} <span class=\"metadata\">({$percentage}%/{$percentage_other}%)</span></a></li>\n";
         }
 
         echo "</ul>\n";

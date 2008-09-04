@@ -275,6 +275,10 @@ Folder
 Get help
 ---STRINGEND
 
+---STRING get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
+Get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
+---STRINGEND
+
 ---STRING hidden
 Hidden
 ---STRINGEND
@@ -779,7 +783,7 @@ Write mail
 Yes
 ---STRINGEND
 
----STRING get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
-Get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
+---STRING component depends on
+Component depends on
 ---STRINGEND
 

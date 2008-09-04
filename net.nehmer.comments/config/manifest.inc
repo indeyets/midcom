@@ -1,5 +1,6 @@
 'name' => 'net.nehmer.comments',
 'version' => '1.1.0beta1',
+'icon' => 'stock-icons/16x16/stock-discussion.png',
 'class_definitions' => array
 (
     'midcomdba.inc',

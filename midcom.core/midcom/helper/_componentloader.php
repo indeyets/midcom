@@ -951,6 +951,140 @@ class midcom_helper__componentloader
         return $result;
     }
 
+    /**
+     * Get list of component and its dependencies depend on
+     *
+     * @param string $component Name of a component
+     * @return array List of dependencies
+     */
+    public function get_component_dependencies($component)
+    {
+        static $checked = null;
+        if (is_null($checked))
+        {
+            $checked = array();
+        }
+        if (isset($checked[$component]))
+        {
+            return array();
+        }
+        $checked[$component] = true;
+
+        if (!isset($this->manifests[$component]))
+        {
+            return array();
+        }
+
+        $dependencies = array();
+
+        if (   !isset($this->manifests[$component]->_raw_data['package.xml'])
+            || !isset($this->manifests[$component]->_raw_data['package.xml']['dependencies']))
+        {
+            return $dependencies;
+        }
+
+        foreach ($this->manifests[$component]->_raw_data['package.xml']['dependencies'] as $dependency => $dependency_data)
+        {
+            if (   isset($dependency_data['channel'])
+                && $dependency_data['channel'] != $GLOBALS['midcom_config']['pear_channel'])
+            {
+                // We can ignore non-component dependencies
+                continue;
+            }
+            
+            if ($dependency == 'midcom')
+            {
+                // Ignore
+                continue;
+            }
+            
+            $dependencies[] = $dependency;
+            $subdependencies = $this->get_component_dependencies($dependency);
+            $dependencies = array_merge($dependencies, $subdependencies);
+        }
+
+        return array_unique($dependencies);
+    }
+
+    /**
+     * Checks if component is a part of the default MidCOM distribution
+     * or an external component
+     *
+     * @param string $component Component to check
+     */
+    public function is_core_component($component)
+    {
+        static $core_components = null;
+        if (is_array($core_components))
+        {
+            if (in_array($component, $core_components))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        // TODO: Put this into a centralized location
+        $core_components = array
+        (
+            'midcom',
+            'midcom.core.nullcomponent',
+            // From midcom dependencies
+            'midcom.admin.babel',
+            'midcom.admin.folder',
+            'midcom.admin.help',
+            'midcom.admin.settings',
+            'midcom.admin.styleeditor',
+            'midcom.admin.user',
+            'midgard.admin.asgard',
+            'no.bergfald.rcs',
+            // From task_midgardcms dependencies
+            'net.nehmer.blog',
+            'net.nemein.calendar',
+            'net.nemein.personnel',
+            'midcom.helper.imagepopup',
+            'midcom.helper.search',
+            'de.linkm.sitemap',
+            'net.nehmer.static',
+            'fi.protie.navigation',
+        );
+
+        // Gather dependencies too
+        $dependencies = array();
+        foreach ($core_components as $component)
+        {
+            $component_dependencies = $this->get_component_dependencies($component);
+            $dependencies = array_merge($dependencies, $component_dependencies);
+        }
+        $core_components = array_unique(array_merge($core_components, $dependencies));
+
+        if (in_array($component, $core_components))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function get_component_icon($component)
+    {
+        if ($component == 'midcom')
+        {
+            return 'stock-icons/logos/midgard-16x16.png';
+        }
+
+        if (!isset($this->manifests[$component]))
+        {
+            return null;
+        }
+
+        if (isset($this->manifests[$component]->_raw_data['icon']))
+        {
+            return $this->manifests[$component]->_raw_data['icon'];
+        }
+
+        return 'stock-icons/16x16/package.png';
+    }
 }
 
 ?>
