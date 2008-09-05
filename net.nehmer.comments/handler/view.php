@@ -318,7 +318,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
     {
         $this->_load_schemadb();
 
-        $defaults = Array();
+        $defaults = array();
         if ($_MIDCOM->auth->user)
         {
             $defaults['author'] = $_MIDCOM->auth->user->name;
@@ -344,6 +344,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
     {
         $this->_new_comment = new net_nehmer_comments_comment();
         $this->_new_comment->objectguid = $this->_objectguid;
+        
         //Proxy check
         if (   isset($_SERVER["HTTP_X_FORWARDED_FOR"])
             && !empty($_SERVER["HTTP_X_FORWARDED_FOR"]))
@@ -355,9 +356,10 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             $this->_new_comment->ip = $_SERVER['REMOTE_ADDR'];
         }
         
-        if ($_MIDGARD['user'])
+        if ($_MIDCOM->auth->user)
         {
             $this->_new_comment->status = NET_NEHMER_COMMENTS_NEW_USER;
+            $this->_new_comment->author = $_MIDCOM->auth->user->name;
         }
         else
         {
