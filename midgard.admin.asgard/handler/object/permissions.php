@@ -496,7 +496,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                     // This will exit.
                 }
             case 'cancel':
-                 $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}");
+                $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}");
                 // This will exit.
         }
 

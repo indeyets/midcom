@@ -1047,10 +1047,11 @@ class midcom_core_privilege extends midcom_core_privilege_db
      */
     function drop()
     {
-        if (! $this->guid)
+        if (   !$this->guid
+            && !$this->id)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('We are not stored, ID is zero. Ignoring silently.');
+            debug_add('We are not stored, ID and GUID are empty. Ignoring silently.');
             debug_pop();
             return true;
         }
@@ -1064,7 +1065,17 @@ class midcom_core_privilege extends midcom_core_privilege_db
             return false;
         }
 
-        $privilege = new midcom_core_privilege_db($this->guid);
+        if ($this->guid)
+        {
+            $privilege = new midcom_core_privilege_db($this->guid);
+        }
+        else
+        {
+            // Unserialized objects have only ID in 8.09
+            $privilege = new midcom_core_privilege_db();
+            $privilege->get_by_id($this->id);
+        }
+
         if (!$privilege->delete())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
