@@ -17,12 +17,14 @@
             'name' => 'Torben Nehmer',
             'email' => 'torben@nehmer.net',
             'role' => 'lead',
+            'active' => 'no',
         ),
         'juhana' => array
         (
             'name' => 'Juhana Hirvilahti',
             'email' => 'juhana@nemein.com',
             'role' => 'lead',
+            'active' => 'no',
         ),
         'adrenalin' => array
         (

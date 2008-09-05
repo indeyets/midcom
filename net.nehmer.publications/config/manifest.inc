@@ -16,6 +16,7 @@
             'name' => 'Torben Nehmer',
             'email' => 'torben@nehmer.net',
             'role' => 'lead',
+            'active' => 'no',
         ),
     ),
     'dependencies' => array

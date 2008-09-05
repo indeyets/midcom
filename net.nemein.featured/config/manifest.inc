@@ -20,6 +20,7 @@
             'name' => 'Juhana Hirvilahti',
             'email' => 'juhana@nemein.com',
             'role' => 'lead',
+            'active' => 'no',
         ),
     ),
 ),

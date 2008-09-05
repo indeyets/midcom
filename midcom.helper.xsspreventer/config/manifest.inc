@@ -16,10 +16,10 @@
             'email' => 'eero.afheurlin@iki.fi',
             'role' => 'lead',
         ),
-        'tepheik' => array
+        'tepheikk' => array
         (
             'name' => 'Tero Heikkinen',
-            'email' => 'tero.heikkinen@rohea.fi',
+            'email' => 'tero.heikkinen@gubit.fi',
             'role' => 'lead',
         ),
     ),
