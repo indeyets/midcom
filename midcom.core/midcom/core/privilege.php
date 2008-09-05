@@ -944,7 +944,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
 
         if ($this->value == MIDCOM_PRIVILEGE_INHERIT)
         {
-            if ($this->guid)
+            if (   $this->guid
+                || $this->id)
             {
                 // Already a persistent record, drop it.
                 if (! $this->drop())
@@ -976,9 +977,18 @@ class midcom_core_privilege extends midcom_core_privilege_db
             }
         }
 
-        if ($this->guid)
+        if (   $this->guid
+            || $this->id)
         {
-            $privilege = new midcom_core_privilege_db($this->guid);
+            if ($this->guid)
+            {
+                $privilege = new midcom_core_privilege_db($this->guid);
+            }
+            else
+            {
+                $privilege = new midcom_core_privilege_db();
+                $privilege->get_by_id($this->id);
+            }
             $this->_copy_to_object($privilege);
             if (!$privilege->update())
             {
