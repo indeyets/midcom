@@ -304,7 +304,7 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
             $data['plugin_config']['sitewizard_path'] = '__INSTALL_PREFIX__/share/midgard/setup/php/midgard_admin_sitewizard.php';
         }
         
-        $data['plugin_config']['sitewizard_path'] = str_replace('__INSTALL_PREFIX__', $_MIDGARD['config']['prefix'], $data['plugin_config']['sitewizard_path'])
+        $data['plugin_config']['sitewizard_path'] = str_replace('__INSTALL_PREFIX__', $_MIDGARD['config']['prefix'], $data['plugin_config']['sitewizard_path']);
         
         if (!file_exists($data['plugin_config']['sitewizard_path']))
         {
