@@ -27,20 +27,7 @@ class configure_tkk_structure extends midcom_baseclasses_components_handler
 
     function _on_initialize()
     {
-        if (   isset($this->_request_data['plugin_config']['sitewizard_path'])
-            && !empty($this->_request_data['plugin_config']['sitewizard_path']))
-        {
-            require_once($this->_request_data['plugin_config']['sitewizard_path']);
-        }
-        else
-        {
-            $_MIDCOM->uimessages->add(
-                $this->_l10n->get('midcom.admin.wizards'),
-                $this->_l10n->get('sitewizard was not found')
-            );
-            $_MIDCOM->relocate('');
-        }
-
+        midgard_admin_wizards_viewer::load_sitewizard_class(&$this->_request_data);
         parent::_on_initialize();
 
       }

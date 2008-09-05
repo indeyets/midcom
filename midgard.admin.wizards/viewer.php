@@ -293,6 +293,27 @@ class midgard_admin_wizards_viewer extends midcom_baseclasses_components_request
         return true;
     }
 
+    /**
+     * Load the site wizard class that ships with Midgard 8.09 onwards.
+     */
+    public static function load_sitewizard_class(&$data)
+    {
+        if (   !isset($data['plugin_config']['sitewizard_path'])
+            || empty($data['plugin_config']['sitewizard_path']))
+        {
+            $data['plugin_config']['sitewizard_path'] = '__INSTALL_PREFIX__/share/midgard/setup/php/midgard_admin_sitewizard.php';
+        }
+        
+        $data['plugin_config']['sitewizard_path'] = str_replace('__INSTALL_PREFIX__', $_MIDGARD['config']['prefix'], $data['plugin_config']['sitewizard_path'])
+        
+        if (!file_exists($data['plugin_config']['sitewizard_path']))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Site wizard classes not found from {$data['plugin_config']['sitewizard_path']}");
+            // This will exit
+        }
+        
+        require_once($data['plugin_config']['sitewizard_path']);
+    }
 }
 
 ?>

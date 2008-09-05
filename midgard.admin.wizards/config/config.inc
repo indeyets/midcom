@@ -22,7 +22,7 @@
                 'name' => 'Sitegroup creation',    
                 'config' => array
                 (
-                    'sitewizard_path' => '/usr/share/midgard/svn/midgard/trunk/midgard-data/midgard_admin_sitewizard.php',
+                    'sitewizard_path' => '__INSTALL_PREFIX__/share/midgard/setup/php/midgard_admin_sitewizard.php',
                 ),        
             ),
             'create_host' => array
@@ -32,7 +32,7 @@
                 'name' => 'Host Creation',
                 'config' => array
                 (
-                    'sitewizard_path' => '/usr/share/midgard/svn/midgard/trunk/midgard-data/midgard_admin_sitewizard.php',
+                    'sitewizard_path' => '__INSTALL_PREFIX__/share/midgard/setup/php/midgard_admin_sitewizard.php',
                     'copy_host_port' => 8080,
                     'copy_host_name' => 'www.tky.fi',
                 ),            
@@ -44,7 +44,7 @@
                 'name' => 'Style Selection',
                 'config' => array
                 (
-                    'sitewizard_path' => '/usr/share/midgard/svn/midgard/trunk/midgard-data/midgard_admin_sitewizard.php',
+                    'sitewizard_path' => '__INSTALL_PREFIX__/share/midgard/setup/php/midgard_admin_sitewizard.php',
                     /*'show_style_templates' => array
                     (
                         'template_SimpleGray',
@@ -59,8 +59,8 @@
                 'name' => 'Structure Selection',
                 'config' => array
                 (
-                    'sitewizard_path' => '/usr/share/midgard/svn/midgard/trunk/midgard-data/midgard_admin_sitewizard.php',
-                    'structure_config_path' => '/usr/share/pear/midcom/lib/midgard/admin/wizards/config/templates/',
+                    'sitewizard_path' => '__INSTALL_PREFIX__/share/midgard/setup/php/midgard_admin_sitewizard.php',
+                    'structure_config_path' => 'file:/midgard/admin/wizards/config/templates/',
                 ),            
             ),
             /*'configure_structure' => array
@@ -70,7 +70,7 @@
                 'name' => 'Structure Configuration',
                 'config' => array
                 (
-                    'sitewizard_path' => '/usr/share/midgard/svn/midgard/trunk/midgard-data/midgard_admin_sitewizard.php',
+                    'sitewizard_path' => '__INSTALL_PREFIX__/share/midgard/setup/php/midgard_admin_sitewizard.php',
                 ),            
             ),*/
             'create_website' => Array
@@ -80,9 +80,9 @@
                 'name' => 'Website Creation',
                 'config' => Array
                 (
-                    'sitewizard_path' => '/usr/share/midgard/svn/midgard/trunk/midgard-data/midgard_admin_sitewizard.php',
+                    'sitewizard_path' => '__INSTALL_PREFIX__/share/midgard/setup/php/midgard_admin_sitewizard.php',
                     'verbose' => false,
-                    'structure_config_path' => '/usr/share/pear/midcom/lib/midgard/admin/wizards/config/templates/',
+                    'structure_config_path' => 'file:/midgard/admin/wizards/config/templates/',
                     'vhost_save_path' => '/etc/midgard/apache/vhosts/sitewizard/',
                     'notification_email' => 'henri.bergius@nemein.com',
                     'host_ip' => '82.130.62.227',
