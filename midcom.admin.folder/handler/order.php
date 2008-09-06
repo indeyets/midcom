@@ -64,24 +64,25 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
             // Total number of the entries
             $count = count($array);
 
-            foreach ($array as $guid => $i)
+            foreach ($array as $identificator => $i)
             {
                 // Set the score reversed: the higher the value, the higher the rank
                 $score = $count - $i;
 
                 // Use the DB Factory to resolve the class and to get the object
-                $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
-
-                // Skip the pages that cannot be ordered
+                $object = $_MIDCOM->dbfactory->get_object_by_guid($identificator);
+                
+                // This is probably a pseudo leaf, store the score to the current node
                 if (   !$object
-                    || !isset($object->guid)
-                    || $object->guid !== $guid)
+                    || !$object->id
+                    || !$object->guid)
                 {
+                    $this->_topic->set_parameter('midcom.helper.nav.score', $identificator, $score);
                     continue;
                 }
 
                 // Get the original approval status
-                $metadata =& midcom_helper_metadata::retrieve($guid);
+                $metadata =& midcom_helper_metadata::retrieve($identificator);
                 $approval_status = false;
 
                 // Get the approval status if metadata object is available
@@ -132,7 +133,7 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
                 if (   $approval_status
                     && $object->can_do('midgard:approve'))
                 {
-                    $metadata =& midcom_helper_metadata::retrieve($guid);
+                    $metadata =& midcom_helper_metadata::retrieve($identificator);
                     $metadata->approve();
                 }
             }
@@ -160,12 +161,10 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
         // jQuery sorting
         $_MIDCOM->enable_jquery();
         
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/jquery.dimensions-1.1.2.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/jquery.form-1.0.3.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/ui/ui.mouse.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/ui/ui.draggable.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/ui/ui.droppable.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/ui/ui.sortable.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/jQuery/jquery.form-2.12.min.js');
+        $_MIDCOM->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/ui.core.js');
+        $_MIDCOM->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/ui.sortable.js');
+        
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/midcom.admin.folder/jquery-postfix.js');
 
         // These pages need no caching
