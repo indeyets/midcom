@@ -104,23 +104,31 @@ class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanag
             return $state;
         }
 
-        // Add the required JavaScript
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js");
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/midcom.helper.datamanager2/ajax.js");
+        $_MIDCOM->enable_jquery();
+        
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/jquery.dm2_ajax_editor.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.dimensions-1.1.2.js.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.metadata.js');
+        
+        $mode = 'inline';
+        $creation_mode_enabled = 'true';
         
         if ($this->wide_mode)
         {
-            $_MIDCOM->add_jsonload("var dm2AjaxEditor_{$this->form_identifier} = new dm2AjaxEditor('{$this->form_identifier}', false, false, true);");
+            $mode = 'wide';
         }
         elseif ($this->window_mode)
         {
-            $_MIDCOM->add_jsonload("var dm2AjaxEditor_{$this->form_identifier} = new dm2AjaxEditor('{$this->form_identifier}', false, true);");
+            $mode = 'window';
         }
-        else
-        {
-            $_MIDCOM->add_jsonload("var dm2AjaxEditor_{$this->form_identifier} = new dm2AjaxEditor('{$this->form_identifier}');");
+        
+        if ($mode != 'inline') {
+            $creation_mode_enabled = 'false';
         }
+        
+        $config = "{mode: '{$mode}', allow_creation: {$creation_mode_enabled}}";
+        $script = "jQuery.dm2.ajax_editor.init('{$this->form_identifier}', {$config});";
+        $_MIDCOM->add_jquery_state_script($script);
 
         $_MIDCOM->add_link_head(
             array
@@ -128,9 +136,9 @@ class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanag
                 'rel'   => 'stylesheet',
                 'type'  => 'text/css',
                 'media' => 'screen',
-                'href'  => MIDCOM_STATIC_URL."/midcom.helper.datamanager2/ajax.css",
+                'href'  => MIDCOM_STATIC_URL."/midcom.helper.datamanager2/dm2_ajax_editor.css",
             )
-        );    
+        );
 
         // Clearer structure than an almost endless chain of if...elseif
         switch (true)
