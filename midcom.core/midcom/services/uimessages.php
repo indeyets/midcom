@@ -82,6 +82,14 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
      * @access private
      */
     var $_latest_message_id = 0;
+    
+    /**
+     * DOM path of the UI message holder object
+     * 
+     * @var String
+     * @access public
+     */
+    var $uimessage_holder = 'body';
 
     /**
      * Simple constructor, calls base class.
@@ -108,7 +116,9 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
         {
             $_MIDCOM->enable_jquery();
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/jquery.midcom_services_uimessages.js');
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/metadata.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.timers.src.js');
+            $_MIDCOM->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/effects.core.js');
+            $_MIDCOM->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/effects.pulsate.js');
             
             $_MIDCOM->add_link_head(
                 array
@@ -119,10 +129,6 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
                     'href'  => MIDCOM_STATIC_URL . '/midcom.services.uimessages/growl.css',
                 )
             );
-            
-            $config = "{}";
-            $script = "jQuery.midcom_services_uimessages({$config}, false);";
-            $_MIDCOM->add_jquery_state_script($script);
             
             // $_MIDCOM->enable_jquery();
             // 
@@ -268,26 +274,58 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
     /**
      * Show the message stack via javascript calls or simple html
      */
-    function show($show_simple_also=true)
+    function show($show_simple_also = true)
     {
         if (count($this->_message_stack) > 0)
         {
             if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
             {
                 echo "<script type=\"text/javascript\">\n";
+                echo "    // <!--\n";
+                echo "        if (jQuery('#midcom_services_uimessages_wrapper').size() == 0)\n";
+                echo "        {\n";
+                echo "            jQuery('<div></div>')\n";
+                echo "                .attr({\n";
+                echo "                    id: 'midcom_services_uimessages_wrapper'\n";
+                echo "                })\n";
+                echo "                .appendTo('{$this->uimessage_holder}');\n";
+                echo "        }\n";
+                
+                echo "        jQuery(document).ready(function()\n";
+                echo "        {\n";
+                
+                foreach ($this->_message_stack as $id => $message)
+                {
+                    $options  = "{";
+                    
+                    foreach ($message as $key => $value)
+                    {
+                        $options .= "{$key}: '{$value}', ";
+                    }
+                    
+                    $options = preg_replace('/, $/', '', $options) . "}";
+                    
+                    echo "            jQuery('#midcom_services_uimessages_wrapper').midcom_services_uimessage({$options})\n";
+                }
+                
+                echo "        })\n";
+                echo "    // -->\n";
+                echo "</script>\n";
+                /*
+                echo "<script type=\"text/javascript\">\n";
                 //echo '<div class="midcom_services_uimessages_holder">';
                 foreach ($this->_message_stack as $id => $message)
                 {
                     // TODO: Use our own JS call for this
-                    // $options = "{
-                    //     type: '{$message['type']}'
-                    // }";
-                    // $data = "{
-                    //     title: '{$message['title']}',
-                    //     message: '{$message['message']}'
-                    // }";
-                    //echo "    jQuery('<div>').midcom_services_uimessage({$options}, {$data});";
-                    echo "    new protoGrowl({type: '{$message['type']}', title: '{$message['title']}', message: '{$message['message']}'});\n";
+                    $options = "{
+                         type: '{$message['type']}'
+                    }";
+                    $data = "{
+                        title: '{$message['title']}',
+                        message: '{$message['message']}'
+                    }";
+                    echo "    jQuery('div.midcom_services_uimessages_message').midcom_services_uimessages({$options}, {$data});";
+                    //echo "    new protoGrowl({type: '{$message['type']}', title: '{$message['title']}', message: '{$message['message']}'});\n";
 
                     //$this->_render_message($message);
 
@@ -296,6 +334,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
                 }
                 echo "</script>\n";
                 //echo '</div>';
+                */
             }
             else
             {

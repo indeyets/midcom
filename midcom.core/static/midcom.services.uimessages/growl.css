@@ -2,46 +2,39 @@
  * Styles for ui messages with javascript
 **/
 
-div.midcom_services_uimessages_holder
+#midcom_services_uimessages_wrapper
 {
     margin: 15px;
     padding: 5px;
     font-family: "Verdana, Arial, Helvetica, sans-serif";
-    font-color: #000;
-    font-size: 10px;
+    font-color: #000000;
+    font-size: 12px;
     font-weight: normal;
     text-align: left;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
-div.midcom_services_uimessages_message
+#midcom_services_uimessages_wrapper div.midcom_services_uimessages
 {
+    background-image: url('images/bg.gif');
+    background-repeat: no-repeat;
+    background-position: top left;    
     width: 312px;
     height: 108px;
     padding: 3px;
     margin: 10px 0 10px 0;
-    background-repeat: no-repeat;
-    background-position: top left;    
-    background-image: url('images/bg.gif');
 }
 
-div.midcom_services_uimessages_message.info {}
-div.midcom_services_uimessages_message.ok {}
-div.midcom_services_uimessages_message.warning {}
-div.midcom_services_uimessages_message.error {}
-div.midcom_services_uimessages_message.debug {}
+#midcom_services_uimessages_wrapper > div.midcom_services_uimessages
+{
+    background-image: url('images/bg.png');
+}
 
-div.midcom_services_uimessages_message_type
+#midcom_services_uimessages_wrapper img.close
 {
-    display: none;
-}
-div.midcom_services_uimessages_message_title
-{
-    margin: 5px 0 3px 6px;
-    font-size: 12px;
-    font-weight: bold;
-}
-div.midcom_services_uimessages_message_msg
-{
-    padding-left: 5px;
-    padding-top: 5px;
+  float: right;
+  margin-right: 16px;
+  cursor: pointer;
 }
