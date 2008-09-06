@@ -106,35 +106,35 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
     {
         if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
         {
-            // $_MIDCOM->enable_jquery();
-            // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/jquery.midcom_services_uimessages.js');
-            // $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/metadata.js');
-            //
-            // $_MIDCOM->add_link_head(
-            //     array
-            //     (
-            //         'rel'   => 'stylesheet',
-            //         'type'  => 'text/css',
-            //         'media' => 'screen',
-            //         'href'  => MIDCOM_STATIC_URL . '/midcom.services.uimessages/growl.css',
-            //     )
-            // );
-            //
-            // $config = "{}";
-            // $script = "jQuery.midcom_services_uimessages({$config}, false);";
-            // $_MIDCOM->add_jquery_state_script($script);
-            
             $_MIDCOM->enable_jquery();
-
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/jquery.midcom_services_uimessages.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/metadata.js');
+            
             $_MIDCOM->add_link_head(
                 array
                 (
                     'rel'   => 'stylesheet',
                     'type'  => 'text/css',
                     'media' => 'screen',
-                    'href'  => MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.css',
+                    'href'  => MIDCOM_STATIC_URL . '/midcom.services.uimessages/growl.css',
                 )
             );
+            
+            $config = "{}";
+            $script = "jQuery.midcom_services_uimessages({$config}, false);";
+            $_MIDCOM->add_jquery_state_script($script);
+            
+            // $_MIDCOM->enable_jquery();
+            // 
+            // $_MIDCOM->add_link_head(
+            //     array
+            //     (
+            //         'rel'   => 'stylesheet',
+            //         'type'  => 'text/css',
+            //         'media' => 'screen',
+            //         'href'  => MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.css',
+            //     )
+            // );
         }
         else
         {
