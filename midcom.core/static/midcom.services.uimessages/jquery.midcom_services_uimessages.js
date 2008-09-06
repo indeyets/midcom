@@ -104,7 +104,7 @@ jQuery.fn.midcom_services_uimessage = function(options)
         case MIDCOM_SERVICES_UIMESSAGES_TYPE_ERROR:
             if (MIDCOM_SERVICES_UIMESSAGES_ERROR_HIGHLIGHT)
             {
-                jQuery('#' + id).everyTime(5000, id + '_shake', function()
+                jQuery('#' + id).everyTime(7000, id + '_shake', function()
                 {
                     jQuery(this).effect('pulsate', { times: 1}, 500);
                 });
