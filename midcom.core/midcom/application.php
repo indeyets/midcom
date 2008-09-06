@@ -2826,17 +2826,27 @@ class midcom_application
      * This method adds jQuery support to the page
      *
      */
-    function enable_jquery($version="1.2.1")
+    function enable_jquery($version = null)
     {
         if ($this->_jquery_enabled)
         {
             return;
         }
+        
+        if (!$version)
+        {
+            $version = $GLOBALS['midcom_config']['jquery_version'];
+        }
 
         $url = MIDCOM_STATIC_URL . "/jQuery/jquery-{$version}.js";
-        $this->_jquery_init_scripts = '<script type="text/javascript" src="' . $url . '"></script>' . "\n";
+        $this->_jquery_init_scripts = "<script type=\"text/javascript\" src=\"{$url}\"></script>\n";
 
-        $script = 'var $j = jQuery.noConflict();'."\n";
+        if (!defined('MIDCOM_JQUERY_UI_URL'))
+        {
+            define('MIDCOM_JQUERY_UI_URL', MIDCOM_STATIC_URL . "/jQuery/jquery.ui-{$GLOBALS['midcom_config']['jquery_ui_version']}");
+        }
+        
+        $script = "var \$j = jQuery.noConflict();\n";
         $script .= "var MIDCOM_STATIC_URL = '" . MIDCOM_STATIC_URL . "';\n";
         $script .= "var MIDCOM_PAGE_PREFIX = '" . $_MIDCOM->get_page_prefix() . "';\n";
 
@@ -2872,7 +2882,7 @@ class midcom_application
             $status_parts = explode('.',$status);
             $status_target = $status_parts[0];
             $status_method = $status_parts[1];
-            echo "\n" . 'jQuery(' . $status_target . ').' . $status_method . '(function() {'."\n";
+            echo "\njQuery({$status_target}).{$status_method}(function() {\n";
             echo $scripts;
             echo "\n" . '});' . "\n";
         }

@@ -529,6 +529,8 @@ $GLOBALS['midcom_config_default']['wrap_style_show_with_name'] = false;
 $GLOBALS['midcom_config_default']['enable_prototype'] = true;
 $GLOBALS['midcom_config_default']['enable_scriptaculous'] = true;
 $GLOBALS['midcom_config_default']['jquery_no_conflict'] = true;
+$GLOBALS['midcom_config_default']['jquery_version'] = '1.2.6';
+$GLOBALS['midcom_config_default']['jquery_ui_version'] = '1.5.2';
 
 $GLOBALS['midcom_config_default']['auto_formatter'] = array();
 
