@@ -42,10 +42,6 @@
         (
             'min' => '0.8.16',
         ),
-        'JavaScript_Prototype' => array
-        (
-            'channel' => 'pearified.com',
-        ),
         'midcom' => array(),
     ),
 ),
