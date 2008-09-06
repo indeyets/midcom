@@ -7,7 +7,11 @@
         class_prefix: 'dm2_ajax_editor',
         config: {
             mode: 'inline',
-            allow_creation: true
+            allow_creation: true,
+            save_btn_value: 'Save',
+            edit_btn_value: 'Edit',
+            cancel_btn_value: 'Cancel',
+            preview_btn_value: 'Preview'
         },
         instances: null
     };
@@ -33,7 +37,7 @@
             if (typeof($.dm2.ajax_editor.instances[identifier]) != 'undefined') {
                 return $.dm2.ajax_editor.instances[identifier];
             } else {
-                return false;
+                return {};
             }
         },
         set_class_prefix: function(prefix) {
@@ -54,7 +58,11 @@
     $.dm2.ajax_editor.base = {
         config: {            
             allow_creation: true,
-            render_target_only: false
+            render_target_only: false,
+            save_btn_value: 'Save',
+            edit_btn_value: 'Edit',
+            cancel_btn_value: 'Cancel',
+            preview_btn_value: 'Preview'
         },
         identifier: 'midcom_helper_datamanager2_controller_ajax',
         className: 'base',
@@ -63,8 +71,12 @@
             previous: 'view'
         },
         in_creation_mode: false,
+        toolbar: null,
+        buttons: null,
         form: null,
         fields: null,
+        first_field_id: null,
+        last_field_id: null,
         form_fields: null,
         dimensions: {
             fields: null,
@@ -83,11 +95,52 @@
             this.fields = {};
             this.form_fields = {};
 
-            this.prepare_fields();
-            
+            this._prepare_fields();
+            this.form = $.dm2.ajax_editor.form.init(this.identifier, this.fields);
+                        
             this.initialize();
+            
+            return this;
         },
-        prepare_fields: function() {
+        _fields_to_form: function() {
+            var self = this;
+            
+            this.form.set_state(this.state.current);
+            
+            $.each($('.'+this.identifier), function(i){
+                var field = $(this);
+                var id = field.attr('id');
+                var name = id.replace(self.identifier+'_', '');
+                
+                var input_id = self.identifier + '_qf_' + name;
+                
+                var input = $('#'+input_id);
+                if (! input) {
+                    return;
+                }
+                
+                var input_class = input.attr('class');
+                
+                var value = '';
+                
+                switch(input_class)
+                {
+                    case 'tinymce':
+                        tinyMCE.triggerSave(true,true);
+                        value = input.val();
+                    break;
+                    case 'shorttext':
+                        value = input.val();
+                    break;
+                }
+                
+                self.form.set_value(name, value);
+            });
+        },
+        _fields_from_form: function() {
+            
+        },
+        _prepare_fields: function() {
             
             if (this.dimensions.fields === null) {
                 this.dimensions.fields = {};
@@ -101,6 +154,11 @@
                 var field = $(this);
                 var id = field.attr('id');
                 var name = id.replace(self.identifier+'_', '');
+                
+                if (i == 0) {
+                    self.first_field_id = id;
+                }
+                self.last_field_id = id;
                 
                 field.unbind();
                 if (   self.state.current == 'view'
@@ -133,6 +191,7 @@
             });
             
             if (self.state.current == 'edit') {
+                this._build_toolbar();
                 this._enable_wysiwygs();
             }
         },
@@ -168,8 +227,9 @@
             }
             
             $.ajax({
+                global: false,
                 type: "GET",
-                url: location.href,
+                url: location.href,                
                 dataType: "xml",
                 data: send_data,
                 success: function(data) {                    
@@ -182,7 +242,6 @@
             });
         },
         _parse_fetch_fields_response: function(data) {
-            
             this.parsed_data = {
                 identifier: $('form',data).attr('id'),
                 new_identifier: $('form',data).attr('new_identifier'),
@@ -213,7 +272,7 @@
             $.dm2.ajax_editor.debug(this.form_fields);
             
             this.fetch_fields_parsed();
-            this.prepare_fields();
+            this._prepare_fields();
         },
         _enable_wysiwygs: function() {
             var self = this;
@@ -233,9 +292,70 @@
                 });
             });
         },
+        _build_toolbar: function() {
+            this.buttons = {};
+            
+            var self = this;
+            
+            if (this.state.current == 'view') {
+                this.buttons['edit'] = {
+                    name: this.identifier + '_edit',
+                    value: this.config.edit_btn_value,
+                    elem: null
+                };
+            }
 
+            if (   this.state.current == 'edit'
+                || this.state.current == 'preview')
+            {
+                this.buttons['save'] = {
+                    name: this.identifier + '_save',
+                    value: this.config.save_btn_value,
+                    elem: null
+                };
+            }
+            
+            if (this.state.current == 'edit') {
+                this.buttons['preview'] = {
+                    name: this.identifier + '_preview',
+                    value: this.config.preview_btn_value,
+                    elem: null
+                };
+            }
+            
+            this.buttons['cancel'] = {
+                name: this.identifier + '_cancel',
+                value: this.config.cancel_btn_value,
+                elem: null
+            };
+            
+            this.render_toolbar();
+        },
+        _execute_action: function(action, event) {
+            $.dm2.ajax_editor.debug("execute action "+action);
+            
+            this.state.current = action;
+            
+            switch(action)
+            {
+                case 'edit':
+                    $.dm2.ajax_editor.debug("edit form");
+                break;
+                case 'preview':
+                    $.dm2.ajax_editor.debug("generate preview");
+                break;
+                case 'save':
+                    this._fields_to_form();
+                    this.form.submit();
+                break;
+                case 'cancel':
+                default:
+                    $.dm2.ajax_editor.debug("cancel editing");
+            }
+        },
 
-        fetch_fields_parsed: function() {},        
+        render_toolbar: function() {},
+        fetch_fields_parsed: function() {},
         initialize: function() {}
     });
     
@@ -262,10 +382,113 @@
                     }
                     
                     field.elem.html(self.form_fields[field.name]);
-                });                
+                });
+            }
+            
+            if (   this.state.current == 'view'
+                || this.state.current == 'preview')
+            {
+                var unreplaced_fields = [];
+                $.each(this.fields, function(i, field){
+                    if (typeof(self.form_fields[field.name]) == 'undefined') {
+                        unreplaced_fields.push(field.name);
+                        return;
+                    }
+                    
+                    field.elem.html(self.form_fields[field.name]);
+                });
             }
         },
+        render_toolbar: function() {
+            var toolbar_class = $.dm2.ajax_editor.generate_classname('toolbar');
+            
+            this.toolbar = $('<div />').attr({
+                className: toolbar_class
+            });
+            
+            var self = this;
+            
+            $.each(this.buttons, function(action_name, button){
+                var element = $('<input type="submit" name="' + button.name + '" value="' + button.value + '" />');
+                element.appendTo(self.toolbar);
+                
+                element.bind('click', function(e){
+                    self._execute_action(action_name, e);
+                });
+                
+                self.buttons[action_name].elem = element;
+            });
+            
+            this.toolbar.insertBefore(this.fields[this.first_field_id].elem);
+        }
         
+    });
+    
+    $.dm2.ajax_editor.form = {
+        identifier: null,
+        fields: null,
+        values: null
+    };
+    $.extend($.dm2.ajax_editor.form, {
+        init: function(identifier, fields) {
+            this.identifier = identifier;
+            this.fields = fields || {};
+            this.values = {};
+            
+            this._set_defaults();
+            
+            return this;
+        },
+        _set_defaults: function() {
+            this.values['_qf__' + this.identifier + '_qf'] = 1;
+        },
+        set_state: function(state) {
+            var editor = $.dm2.ajax_editor.get_instance(this.identifier);
+            
+            if (editor.state.current != state)
+            {
+                delete this.formValues[editor.identifier + '_' + editor.state.current];
+                delete this.formValues['midcom_helper_datamanager2_' + editor.state.current];
+            }
+            
+            this.values[editor.identifier + '_' + state] = 1;
+            this.values['midcom_helper_datamanager2_' + state] = 1;
+        },
+        set_value: function(field_name, value) {            
+            //console.log("set value for "+field_name+": "+value);
+            
+            //this.values['midcom_helper_datamanager2_' + field_name] = value;
+            this.values[field_name] = value;
+        },
+        get_value: function(field_name) {
+            return this.values[field_name];
+            //return this.values['midcom_helper_datamanager2_' + field_name];
+        },
+        submit: function(next_state) {
+            if (typeof(next_state) == 'undefined') {
+                var next_state = 'view';
+            }
+            
+            var self = this;
+            var editor = $.dm2.ajax_editor.get_instance(this.identifier);
+            $.ajax({
+                global: false,
+                type: 'POST',
+                url: location.href,
+                dataType: 'xml',
+                contentType: 'application/x-www-form-urlencoded',
+                data: this.values,
+                success: function(data) {
+                    editor.state.previous = editor.state.current;
+                    editor.state.current = next_state;
+                    editor._parse_fetch_fields_response(data);
+                },
+                error: function(xhr, err, e) {
+                    $.dm2.ajax_editor.debug("Error saving form!");
+                    $.dm2.ajax_editor.debug(err);
+                }
+            });
+        }
     });
     
     $.dm2.ajax_editor.wysiwygs = {

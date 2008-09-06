@@ -1,10 +1,10 @@
-span.dm2_ajax_editor_editable_area
+.dm2_ajax_editor_editable_area
 {
 
 }
 
-span.dm2_ajax_editor_editable_area:hover,
-span.dm2_ajax_editor_editable_area_hover
+.dm2_ajax_editor_editable_area:hover,
+.dm2_ajax_editor_editable_area_hover
 {
     background-color: #ffff99;
     cursor: text;
