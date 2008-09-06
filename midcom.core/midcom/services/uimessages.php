@@ -57,7 +57,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
      * @var Array
      * @access private
      */
-    var $_message_stack = Array();
+    var $_message_stack = array();
 
     /**
      * List of allowed message types
@@ -65,7 +65,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
      * @var Array
      * @access private
      */
-    var $_allowed_types = Array();
+    var $_allowed_types = array();
 
     /**
      * List of messages retrieved from session to avoid storing them again
@@ -73,7 +73,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
      * @var Array
      * @access private
      */
-    var $_messages_from_session = Array();
+    var $_messages_from_session = array();
 
     /**
      * ID of the latest UI message added so we can auto-increment
@@ -129,18 +129,6 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
                     'href'  => MIDCOM_STATIC_URL . '/midcom.services.uimessages/growl.css',
                 )
             );
-            
-            // $_MIDCOM->enable_jquery();
-            // 
-            // $_MIDCOM->add_link_head(
-            //     array
-            //     (
-            //         'rel'   => 'stylesheet',
-            //         'type'  => 'text/css',
-            //         'media' => 'screen',
-            //         'href'  => MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.css',
-            //     )
-            // );
         }
         else
         {
@@ -213,7 +201,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
 
         // We have to be careful what messages to store to session to prevent them
         // from accumulating
-        $messages_to_store = Array();
+        $messages_to_store = array();
         foreach ($this->_message_stack as $id => $message)
         {
             // Check that the messages were not coming from earlier session
@@ -237,16 +225,17 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             $messages_to_store = array_merge($old_stack, $messages_to_store);
         }
         $session->set('midcom_services_uimessages_stack', $messages_to_store);
-        $this->_message_stack = Array();
+        $this->_message_stack = array();
     }
 
     /**
      * Add a message to be shown to the user.
+     * 
      * @param string $title Message title
      * @param string $message Message contents, may contain HTML
      * @param string $type Type of the message
      */
-    function add($title, $message, $type='info')
+    function add($title, $message, $type = 'info')
     {
         // Make sure the given class is allowed
         if (!in_array($type, $this->_allowed_types))
@@ -263,7 +252,8 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
         $this->_latest_message_id++;
 
         // Append to message stack
-        $this->_message_stack[$this->_latest_message_id] = Array(
+        $this->_message_stack[$this->_latest_message_id] = array
+        (
             'title'   => $title,
             'message' => $message,
             'type'    => $type,
@@ -273,83 +263,66 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
 
     /**
      * Show the message stack via javascript calls or simple html
+     * 
+     * @param boolean $show Show simple HTML
      */
-    function show($show_simple_also = true)
+    function show($show_simple_also = false)
     {
+        if ($show_simple_also)
+        {
+            $this->show_simple();
+        }
+        
+        // No privileges for showing the AJAX user interface messages
+        if (!$_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
+        {
+            return;
+        }
+        
+        echo "<script type=\"text/javascript\">\n";
+        echo "    // <!--\n";
+        echo "        if (jQuery('#midcom_services_uimessages_wrapper').size() == 0)\n";
+        echo "        {\n";
+        echo "            jQuery('<div></div>')\n";
+        echo "                .attr({\n";
+        echo "                    id: 'midcom_services_uimessages_wrapper'\n";
+        echo "                })\n";
+        echo "                .appendTo('{$this->uimessage_holder}');\n";
+        echo "        }\n";
+        
+        echo "        jQuery(document).ready(function()\n";
+        echo "        {\n";
+        
         if (count($this->_message_stack) > 0)
         {
-            if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
+            foreach ($this->_message_stack as $id => $message)
             {
-                echo "<script type=\"text/javascript\">\n";
-                echo "    // <!--\n";
-                echo "        if (jQuery('#midcom_services_uimessages_wrapper').size() == 0)\n";
-                echo "        {\n";
-                echo "            jQuery('<div></div>')\n";
-                echo "                .attr({\n";
-                echo "                    id: 'midcom_services_uimessages_wrapper'\n";
-                echo "                })\n";
-                echo "                .appendTo('{$this->uimessage_holder}');\n";
-                echo "        }\n";
+                $options  = "{";
                 
-                echo "        jQuery(document).ready(function()\n";
-                echo "        {\n";
-                
-                foreach ($this->_message_stack as $id => $message)
+                foreach ($message as $key => $value)
                 {
-                    $options  = "{";
-                    
-                    foreach ($message as $key => $value)
-                    {
-                        $options .= "{$key}: '{$value}', ";
-                    }
-                    
-                    $options = preg_replace('/, $/', '', $options) . "}";
-                    
-                    echo "            jQuery('#midcom_services_uimessages_wrapper').midcom_services_uimessage({$options})\n";
+                    $options .= "{$key}: '{$value}', ";
                 }
                 
-                echo "        })\n";
-                echo "    // -->\n";
-                echo "</script>\n";
-                /*
-                echo "<script type=\"text/javascript\">\n";
-                //echo '<div class="midcom_services_uimessages_holder">';
-                foreach ($this->_message_stack as $id => $message)
-                {
-                    // TODO: Use our own JS call for this
-                    $options = "{
-                         type: '{$message['type']}'
-                    }";
-                    $data = "{
-                        title: '{$message['title']}',
-                        message: '{$message['message']}'
-                    }";
-                    echo "    jQuery('div.midcom_services_uimessages_message').midcom_services_uimessages({$options}, {$data});";
-                    //echo "    new protoGrowl({type: '{$message['type']}', title: '{$message['title']}', message: '{$message['message']}'});\n";
+                $options = preg_replace('/, $/', '', $options) . "}";
+                
+                echo "            jQuery('#midcom_services_uimessages_wrapper').midcom_services_uimessage({$options})\n";
 
-                    //$this->_render_message($message);
-
-                    // Remove the message from stack
-                    unset($this->_message_stack[$id]);
-                }
-                echo "</script>\n";
-                //echo '</div>';
-                */
-            }
-            else
-            {
-                if ($show_simple_also)
-                {
-                    $this->show_simple();
-                }
+                // Remove the message from stack
+                unset($this->_message_stack[$id]);
             }
         }
+                
+        echo "        })\n";
+        echo "    // -->\n";
+        
+        echo "</script>\n";
     }
 
     /**
      * Show the message stack via simple html only
      */
-    function show_simple($prefer_fancy=false)
+    function show_simple($prefer_fancy = false)
     {
         if (   $prefer_fancy
             && $_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_uimessages'))
@@ -359,14 +332,11 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
 
         if (count($this->_message_stack) > 0)
         {
-            echo "<div class=\"midcom_services_uimessages_holder\">\n";
+            echo "<div id=\"midcom_services_uimessages_wrapper\">\n";
 
             foreach ($this->_message_stack as $id => $message)
             {
                 $this->_render_message($message);
-
-                // Remove the message from stack
-                unset($this->_message_stack[$id]);
             }
 
             echo "</div>\n";
