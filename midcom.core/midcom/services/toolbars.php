@@ -129,7 +129,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.toolbars/jquery.midcom_services_toolbars.js');
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.flydom-3.0.6.js');
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.dimensions-1.1.2.pack.js');
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.easydrag-1.3.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.easydrag-1.4.src.js');
             //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/tags/jquery.bgiframe.min.js');
 
 

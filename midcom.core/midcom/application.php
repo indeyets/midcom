@@ -2846,8 +2846,7 @@ class midcom_application
             define('MIDCOM_JQUERY_UI_URL', MIDCOM_STATIC_URL . "/jQuery/jquery.ui-{$GLOBALS['midcom_config']['jquery_ui_version']}");
         }
         
-        $script = "var \$j = jQuery.noConflict();\n";
-        $script .= "var MIDCOM_STATIC_URL = '" . MIDCOM_STATIC_URL . "';\n";
+        $script  = "var MIDCOM_STATIC_URL = '" . MIDCOM_STATIC_URL . "';\n";
         $script .= "var MIDCOM_PAGE_PREFIX = '" . $_MIDCOM->get_page_prefix() . "';\n";
 
         $this->_jquery_init_scripts .= "<script type=\"text/javascript\">\n";

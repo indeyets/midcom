@@ -123,10 +123,8 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             // $config = "{}";
             // $script = "jQuery.midcom_services_uimessages({$config}, false);";
             // $_MIDCOM->add_jquery_state_script($script);
-
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Prototype/prototype.js');
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Scriptaculous/scriptaculous.js');
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.js');
+            
+            $_MIDCOM->enable_jquery();
 
             $_MIDCOM->add_link_head(
                 array
