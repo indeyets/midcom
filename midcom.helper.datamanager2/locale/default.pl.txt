@@ -11,6 +11,14 @@
 (powtórz)
 ---STRINGEND
 
+---STRING You can only upload images here. This file will not be saved.
+Tylko obrazy. Inne pliki nie zostaną zapisane.
+---STRINGEND
+
+---STRING archived image
+Zapisany obraz
+---STRINGEND
+
 ---STRING captcha image alt text
 To jest Captcha (http://en.wikipedia.org/wiki/Captcha), musisz mieć przeglądarkę wyświetlającą grafikę.
 ---STRINGEND
@@ -21,6 +29,10 @@ To jest <a target='_new' href="http://en.wikipedia.org/wiki/Captcha">Captcha.</a
 
 ---STRING captcha validation failed
 Wpisano niepoprawne znaki.
+---STRINGEND
+
+---STRING could not figure out which image to show, listing files
+Nie wiem, który obraz pokazać - wyświetlam listę.
 ---STRINGEND
 
 ---STRING delete file
@@ -79,8 +91,20 @@ Zamień plik
 Zamień obraz
 ---STRINGEND
 
+---STRING rotate left
+Obróć w lewo
+---STRINGEND
+
+---STRING rotate right
+Obróć w prawo
+---STRINGEND
+
 ---STRING type blobs: file size
 Rozmiar pliku
+---STRINGEND
+
+---STRING type image: actions
+Operacje
 ---STRINGEND
 
 ---STRING type image: available sizes
@@ -179,27 +203,39 @@ Nie ustawione (dziedziczone)
 Inne
 ---STRINGEND
 
----STRING You can only upload images here. This file will not be saved.
-Tylko obrazy. Inne pliki nie zostaną zapisane.
+---STRING add new file
+Dodaj plik
 ---STRINGEND
 
----STRING archived image
-Zapisany obraz
+---STRING break the lock
+Usuń blokadę edycji
 ---STRINGEND
 
----STRING could not figure out which image to show, listing files
-Nie wiem, który obraz pokazać - wyświetlam listę.
+---STRING drag and drop to sort
+'Przeciągnij i upuść' aby posortować elementy
 ---STRINGEND
 
----STRING rotate left
-Obróć w lewo
+---STRING lock will expire on %s
+Blokada wygaśnie %s
 ---STRINGEND
 
----STRING rotate right
-Obróć w prawo
+---STRING object locked
+Obiekt zablokowany
 ---STRINGEND
 
----STRING type image: actions
-Operacje
+---STRING this object was locked by %s
+Obiekt zablokowany przez %s
+---STRINGEND
+
+---STRING type php: parse error in line %s
+Błąd składni w linii %s
+---STRINGEND
+
+---STRING validation failed: date
+Niepoprawna data
+---STRINGEND
+
+---STRING write the order, lower numbers are placed first
+Podaj kolejność. Mniejsze wartości umieszczane są najpierw
 ---STRINGEND
 

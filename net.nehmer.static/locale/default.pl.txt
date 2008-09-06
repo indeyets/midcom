@@ -7,14 +7,6 @@
 Pokaż tylko zatwierdzone artykuły
 ---STRINGEND
 
----STRING autoindex
-Automatycznie twórz artykuł indeksowy.
----STRINGEND
-
----STRING enable_ajax_editing
-Włącz edycję poprzez AJAX
----STRINGEND
-
 ---STRING approve
 Zatwierdź
 ---STRINGEND
@@ -23,8 +15,20 @@ Zatwierdź
 Artykuł
 ---STRINGEND
 
+---STRING article %s deleted
+Artykuł "%s" został usunięty
+---STRINGEND
+
+---STRING article link deleted
+Link do artykułu został usunięty
+---STRINGEND
+
 ---STRING auto_approve
 Automatycznie zatwierdzaj nowe artykuły
+---STRINGEND
+
+---STRING autoindex
+Automatycznie twórz artykuł indeksowy.
 ---STRINGEND
 
 ---STRING autoindex-notes
@@ -51,6 +55,22 @@ Domyślny schemat artykułu
 Usuń artykuł
 ---STRINGEND
 
+---STRING delete article link
+Usuń link
+---STRINGEND
+
+---STRING delete cancelled
+Usuwanie anulowano
+---STRINGEND
+
+---STRING delete link
+Usuń link
+---STRINGEND
+
+---STRING delete_link
+Usuń link
+---STRINGEND
+
 ---STRING directory index for %s
 Zawartość folderu %s
 ---STRINGEND
@@ -61,6 +81,14 @@ Konfiguracja wyświetlania artykułów
 
 ---STRING edit article
 Edytuj artykuł
+---STRINGEND
+
+---STRING enable_ajax_editing
+Włącz edycję poprzez AJAX
+---STRINGEND
+
+---STRING failed to delete the article link, contact the site administrator
+Błąd usuwania linku.
 ---STRINGEND
 
 ---STRING file lastmodified
@@ -81,6 +109,14 @@ Rozmiar pliku
 
 ---STRING filetype
 Typ pliku
+---STRINGEND
+
+---STRING from
+Z
+---STRINGEND
+
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+Jeśli chcesz usunąć artykuł oryginalny <a href="%s">kliknij tu</a>.
 ---STRINGEND
 
 ---STRING indexinnav
@@ -135,6 +171,10 @@ Nie wybrano folderu
 Treść statyczna
 ---STRINGEND
 
+---STRING this article has been linked from <a href="%s">%s</a> and confirming will delete only the link
+Ten artykuł jest linkiem do <a href="%s">%s</a> usunięty zostanie tylko link.
+---STRINGEND
+
 ---STRING unapprove
 Odtwierdź
 ---STRINGEND
@@ -147,43 +187,39 @@ Pokaż artykuł
 Folder jest widoczny
 ---STRINGEND
 
----STRING article %s deleted
-Artykuł "%s" został usunięty
+---STRING activate autoindex
+Włącz Autoindex
 ---STRINGEND
 
----STRING article link deleted
-Link do artykułu został usunięty
+---STRING ajax_enable
+Włącz AJAX
 ---STRINGEND
 
----STRING delete article link
-Usuń link
+---STRING callback_function
+Funkcja zwrotna uruchamiana po utworzeniu artykułu.
 ---STRINGEND
 
----STRING delete cancelled
-Usuwanie anulowano
+---STRING callback_snippet
+Skrypt zawierający kod funkcji zwrotnej.
 ---STRINGEND
 
----STRING delete link
-Usuń link
+---STRING enable_article_links
+Linkowanie stron
 ---STRINGEND
 
----STRING delete_link
-Usuń link
+---STRING hide_navigation
+Ukryj artykuły w nawigacji
 ---STRINGEND
 
----STRING failed to delete the article link, contact the site administrator
-Błąd usuwania linku.
+---STRING show blobs in autoindex
+Pokazuj załączniki w indeksie
 ---STRINGEND
 
----STRING from
-Z
+---STRING show_blobs_in_autoindex
+Pokazuj załączniki w indeksie
 ---STRINGEND
 
----STRING if you want to delete the original article, <a href="%s">click here</a>
-Jeśli chcesz usunąć artykuł oryginalny <a href="%s">kliknij tu</a>.
----STRINGEND
-
----STRING this article has been linked from <a href="%s">%s</a> and confirming will delete only the link
-Ten artykuł jest linkiem do <a href="%s">%s</a> usunięty zostanie tylko link.
+---STRING sort_order
+Kolejność
 ---STRINGEND
 

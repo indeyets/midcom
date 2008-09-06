@@ -12,7 +12,7 @@ Folder '%s' już istnieje
 ---STRINGEND
 
 ---STRING all descendants will be deleted
-Cała zawartosc folderu zostanie usunięta:
+Cała zawartość folderu zostanie usunięta:
 ---STRINGEND
 
 ---STRING all style elements
@@ -24,7 +24,7 @@ Alfa
 ---STRINGEND
 
 ---STRING are you sure you want to delete this folder
-Na pewno usunąc ten folder?
+Na pewno usunąć ten folder?
 ---STRINGEND
 
 ---STRING author
@@ -43,6 +43,10 @@ Beta
 Sortowanie ręczne
 ---STRINGEND
 
+---STRING cancelled
+Anulowano
+---STRINGEND
+
 ---STRING change component
 Zmień moduł
 ---STRINGEND
@@ -53,6 +57,10 @@ Domyślnie dla modułu
 
 ---STRING copy to editor
 Kopiuj do edytora
+---STRINGEND
+
+---STRING could not save folder: %s
+Nie mogę zapisać folderu. Powód:
 ---STRINGEND
 
 ---STRING create folder
@@ -108,7 +116,7 @@ Edytuj folder "%s"
 ---STRINGEND
 
 ---STRING edit folder metadata
-Edytuj metadane folderu "%s"
+Edytuj metadane folderu
 ---STRINGEND
 
 ---STRING edit layout template
@@ -133,6 +141,18 @@ Eksportowano
 
 ---STRING failed to create a new style template
 Błąd dodania stylu
+---STRINGEND
+
+---STRING folder created
+Folder utworzono
+---STRINGEND
+
+---STRING folder page class
+Styl CSS
+---STRINGEND
+
+---STRING folder saved
+Folder zapisano
 ---STRINGEND
 
 ---STRING folder type
@@ -189,6 +209,10 @@ Kolejność nawigacji
 
 ---STRING new layout template
 [Nowy styl]
+---STRINGEND
+
+---STRING new style created
+Utworzono nowy styl
 ---STRINGEND
 
 ---STRING no sortable elements found
@@ -299,6 +323,10 @@ Lista elementów
 Elementy stylu %s
 ---STRINGEND
 
+---STRING style template
+Szablon stylu
+---STRINGEND
+
 ---STRING submitting the form
 wysyłanie formularza
 ---STRINGEND
@@ -313,25 +341,5 @@ Tytuł jest pusty!
 
 ---STRING warning, might result in data loss
 Uwaga! Możliwa utrata danych!
----STRINGEND
-
----STRING cancelled
-Anulowano
----STRINGEND
-
----STRING could not save folder: %s
-Nie mogę zapisać folderu. Powód:
----STRINGEND
-
----STRING folder created
-Folder utworzono
----STRINGEND
-
----STRING folder saved
-Folder zapisano
----STRINGEND
-
----STRING new style created
-Utworzono nowy styl
 ---STRINGEND
 

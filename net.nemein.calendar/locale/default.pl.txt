@@ -3,6 +3,22 @@
 ---CVS $Id$
 ---LANGUAGE pl
 
+---STRING archive
+Archiwum
+---STRINGEND
+
+---STRING back to archive.
+Powrót do archiwum.
+---STRINGEND
+
+---STRING calendar widget
+Kontrolka kalendarza
+---STRINGEND
+
+---STRING categories
+Kategorie
+---STRINGEND
+
 ---STRING create event
 Dodaj wydarzenie
 ---STRINGEND
@@ -19,12 +35,32 @@ Data
 Opis
 ---STRINGEND
 
+---STRING display settings
+Ustawienia wyświetlania
+---STRINGEND
+
+---STRING edit event
+Edytuj wydarzenie
+---STRINGEND
+
+---STRING enable get filters
+Włącz filtry
+---STRINGEND
+
+---STRING enable rss subscription
+Włącz subskrybcję RSS
+---STRINGEND
+
 ---STRING end
 Koniec
 ---STRINGEND
 
 ---STRING event
 Wydarzenie
+---STRINGEND
+
+---STRING first event started on %s.
+Pierwsze wydarzenie rozpoczyna się %s.
 ---STRINGEND
 
 ---STRING from date
@@ -35,12 +71,32 @@ Od
 Kalendarz grupowy
 ---STRINGEND
 
+---STRING index count
+Liczba wydarzeń na stronie głównej.
+---STRINGEND
+
 ---STRING interval
 Interwał
 ---STRINGEND
 
+---STRING language
+Język
+---STRINGEND
+
+---STRING list events from folders
+Lista wydarzeń
+---STRINGEND
+
+---STRING list events from master event
+Pokaż wszystkie wydarzenia.
+---STRINGEND
+
 ---STRING location
 Lokalizacja
+---STRINGEND
+
+---STRING master event guid
+GUID głównego wydarzenia
 ---STRINGEND
 
 ---STRING monthly
@@ -67,6 +123,10 @@ Kalendarz
 Brak uczestników
 ---STRINGEND
 
+---STRING numbers in parantheses show ongoing events.
+Liczby w nawiasach oznaczają ilość nadchodzących wydarzeń.
+---STRINGEND
+
 ---STRING participants
 Uczestnicy
 ---STRINGEND
@@ -87,6 +147,18 @@ Ilość powtórzeń
 Typ powtórzeń
 ---STRINGEND
 
+---STRING root event guid
+GUID głównego wydarzenia
+---STRINGEND
+
+---STRING rss item count
+Ilość elementów
+---STRINGEND
+
+---STRING rss subscriptions
+Subskrypcja RSS
+---STRINGEND
+
 ---STRING set repeat
 Ustaw powtórzenia
 ---STRINGEND
@@ -99,6 +171,10 @@ Ustaw powtórzenia dla %s
 Pokaż
 ---STRINGEND
 
+---STRING show events locally
+Pokazuj wszystkie wydarzenia
+---STRINGEND
+
 ---STRING start
 Start
 ---STRINGEND
@@ -107,72 +183,8 @@ Start
 Wydarzenia zapisane - kliknij by wypisać
 ---STRINGEND
 
----STRING title
-Tytuł
----STRINGEND
-
----STRING type
-Typ
----STRINGEND
-
----STRING unsubscribed - click
-Niezapisane wydarzenia - kliknij by zapisać
----STRINGEND
-
----STRING until date
-Do
----STRINGEND
-
----STRING weekly
-Tygodniowo
----STRINGEND
-
----STRING archive
-Archiwum
----STRINGEND
-
----STRING back to archive.
-Powrót do archiwum.
----STRINGEND
-
----STRING display settings
-Ustawienia wyświetlania
----STRINGEND
-
----STRING edit event
-Edytuj wydarzenie
----STRINGEND
-
----STRING enable get filters
-Włącz filtry
----STRINGEND
-
----STRING first event started on %s.
-Pierwsze wydarzenie rozpoczyna się %s.
----STRINGEND
-
----STRING index count
-Liczba wydarzeń na stronie głównej.
----STRINGEND
-
----STRING list events from master event
-Pokaż wszystkie wydarzenia.
----STRINGEND
-
----STRING master event guid
-GUID głównego wydarzenia
----STRINGEND
-
----STRING numbers in parantheses show ongoing events.
-Liczby w nawiasach oznaczają ilość nadchodzących wydarzeń.
----STRINGEND
-
----STRING root event guid
-GUID głównego wydarzenia
----STRINGEND
-
----STRING show events locally
-Pokazuj wszystkie wydarzenia
+---STRING symlink topic
+Link symboliczny
 ---STRINGEND
 
 ---STRING syndicated
@@ -183,11 +195,39 @@ Dostępne w RSS
 Wydarzenia: %d
 ---STRINGEND
 
+---STRING title
+Tytuł
+---STRINGEND
+
+---STRING type
+Typ
+---STRINGEND
+
 ---STRING type filter for upcoming
 Filtr typu listy wydarzeń
 ---STRINGEND
 
+---STRING unsubscribed - click
+Niezapisane wydarzenia - kliknij by zapisać
+---STRINGEND
+
+---STRING until date
+Do
+---STRINGEND
+
+---STRING use javascript to emulate hovering effect
+Użyj efektów JavaScript
+---STRINGEND
+
 ---STRING week %1$s of year %2$s
 Tydzień %1$s roku %2$s
+---STRINGEND
+
+---STRING weekly
+Tygodniowo
+---STRINGEND
+
+---STRING archive year order
+Kolejność lat w archiwum
 ---STRINGEND
 

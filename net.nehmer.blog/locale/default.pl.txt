@@ -16,7 +16,7 @@ Zaawansowane
 ---STRINGEND
 
 ---STRING ajax_enable
-Włącz obsługę AJAX
+Włącz edycję przez AJAX
 ---STRINGEND
 
 ---STRING archive
@@ -33,6 +33,10 @@ Włącz wyświetlanie archiwum
 
 ---STRING article
 Artykuł
+---STRINGEND
+
+---STRING article %s deleted
+Artykuł "%s" został usunięty
 ---STRINGEND
 
 ---STRING ascending
@@ -55,8 +59,12 @@ Dostępne są następujące wsady
 Powrót
 ---STRINGEND
 
+---STRING blog link deleted
+Link do newsa usunięto.
+---STRINGEND
+
 ---STRING blog settings
-Ustawnienia bloga
+Ustawienia bloga
 ---STRINGEND
 
 ---STRING categories
@@ -76,7 +84,7 @@ Dodaj artykuł
 ---STRINGEND
 
 ---STRING create name from title
-Generuj URL'e na podstawie tytulów
+Generuj URL'e na podstawie tytułów
 ---STRINGEND
 
 ---STRING create news article
@@ -85,6 +93,18 @@ Dodaj news
 
 ---STRING delete article
 Usuń
+---STRINGEND
+
+---STRING delete article link
+Usuń link
+---STRINGEND
+
+---STRING delete cancelled
+Usuwanie anulowane
+---STRINGEND
+
+---STRING delete link
+Usuń link
 ---STRINGEND
 
 ---STRING descending
@@ -104,7 +124,7 @@ Włącz zdalną edycje poprzez MetaWebLog
 ---STRINGEND
 
 ---STRING enable date filters get
-Włącz filtry daty jako paramatry GET
+Włącz filtry daty jako parametry GET
 ---STRINGEND
 
 ---STRING enable date filters path
@@ -120,7 +140,7 @@ Włącz filtry pola (jako parametry GET)
 ---STRINGEND
 
 ---STRING enable public posting
-Włącz publikacje anonimowe ("Książka gosci")
+Włącz publikacje anonimowe ("Książka gości")
 ---STRINGEND
 
 ---STRING enable subdirectories
@@ -131,8 +151,20 @@ Dołącz podkategorie do Indeksu oraz RSS
 Zaawansowane
 ---STRINGEND
 
+---STRING failed to delete the blog link, contact the site administrator
+Błąd usuwania linku.
+---STRINGEND
+
 ---STRING first post was made on %s.
 Pierwszy post: %s
+---STRINGEND
+
+---STRING from
+Z
+---STRINGEND
+
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+Jeśli chcesz usunąć artykuł oryginalny <a href="%s">kliknij tu</a>
 ---STRINGEND
 
 ---STRING index count
@@ -203,6 +235,10 @@ Schemat danych w trybie "Książki gości"
 Użytkownik Midgarda w trybie "Książki gości"
 ---STRINGEND
 
+---STRING related stories
+Artykuły powiązane
+---STRINGEND
+
 ---STRING rss 0.91 feed
 RSS 0.91
 ---STRINGEND
@@ -248,7 +284,7 @@ Dodawaj newsy ze zdalnych wsadów RSS i ATOM
 ---STRINGEND
 
 ---STRING rss_title
-Tytul RSS (puste - tytuł kategorii)
+Tytuł RSS (puste - tytuł kategorii)
 ---STRINGEND
 
 ---STRING rss_webmaster
@@ -307,6 +343,10 @@ Nie wybrano kategorii
 %d postów.
 ---STRINGEND
 
+---STRING this blog entry has been linked from <a href="%s">%s</a> and confirming will delete only the link
+Ten news jest linkiem do <a href="%s">%s</a> i tylko ten link zostanie usunięty.
+---STRINGEND
+
 ---STRING use view prefix in url
 Używaj elementu 'view' w URLach
 ---STRINGEND
@@ -315,43 +355,11 @@ Używaj elementu 'view' w URLach
 Widoczny?
 ---STRINGEND
 
----STRING article %s deleted
-Artykuł "%s" został usunięty
+---STRING enable scheduled publishing
+Włącz planowanie publikacji
 ---STRINGEND
 
----STRING blog link deleted
-Link do newsa usunięto.
----STRINGEND
-
----STRING delete article link
-Usuń link
----STRINGEND
-
----STRING delete cancelled
-Usuwanie anulowane
----STRINGEND
-
----STRING delete link
-Usuń link
----STRINGEND
-
----STRING failed to delete the blog link, contact the site administrator
-Błąd usuwania linku.
----STRINGEND
-
----STRING from
-Z
----STRINGEND
-
----STRING if you want to delete the original article, <a href="%s">click here</a>
-Jeśli chesz usunąć artykuł oryginalny <a href="%s">kliknij tu</a>
----STRINGEND
-
----STRING related stories
-Artykuły powiązane
----STRINGEND
-
----STRING this blog entry has been linked from <a href="%s">%s</a> and confirming will delete only the link
-Ten news jest linkiem do <a href="%s">%s</a> i tylko ten link zostanie usunięty.
+---STRING language
+Język
 ---STRINGEND
 

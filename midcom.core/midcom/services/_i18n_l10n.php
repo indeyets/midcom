@@ -202,8 +202,7 @@ class midcom_services__i18n_l10n {
     {
         foreach ($this->_stringdb as $lang => $table)
         {
-            $file = @fopen("{$this->_library_filename}.{$lang}.txt", 'w');
-            
+            $file = fopen("{$this->_library_filename}.{$lang}.txt", 'w');
             if (!$file)
             {
                 $_MIDCOM->uimessages->add("L10N Error", "Failed to open the file '{$this->_library_filename}.{$lang}.txt' for writing.", 'error');
@@ -212,7 +211,7 @@ class midcom_services__i18n_l10n {
                 debug_pop();
                 return false;
             }
-        
+
             
             fwrite($file, "---# MidCOM String Database\n");
             fwrite($file, "---VERSION 2.1.0\n");

@@ -103,6 +103,10 @@ Replikacja zatwierdzonych zmian rozpocznie się za minutę.
 Zatwierdził
 ---STRINGEND
 
+---STRING arrangement score
+Pozycja
+---STRINGEND
+
 ---STRING back
 Wstecz
 ---STRINGEND
@@ -743,7 +747,43 @@ Napisz maila
 Tak
 ---STRINGEND
 
----STRING arrangement score
-Pozycja
+---STRING %s of packages of type %s
+%s pakietów typu %s
+---STRINGEND
+
+---STRING approvals
+Zatwierdzenia
+---STRINGEND
+
+---STRING country
+Kraj
+---STRINGEND
+
+---STRING developer
+Programista
+---STRINGEND
+
+---STRING edit %s
+Edytuj %s
+---STRINGEND
+
+---STRING get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
+Get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
+---STRINGEND
+
+---STRING lead
+Główny programista
+---STRINGEND
+
+---STRING library
+Biblioteka
+---STRINGEND
+
+---STRING not active %s
+Nieaktywny %s
+---STRINGEND
+
+---STRING url
+Url
 ---STRINGEND
 

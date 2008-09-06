@@ -39,8 +39,32 @@ Edytuj konto
 Email
 ---STRINGEND
 
+---STRING enable ajax in toolbar
+Włącz toolbar w AJAXie
+---STRINGEND
+
+---STRING enable ajax in uimessages
+Włącz powiadomienia
+---STRINGEND
+
+---STRING enable asgard
+Dostęp do Asgarda
+---STRINGEND
+
+---STRING enable centralized toolbar
+Włącz toolbar
+---STRINGEND
+
 ---STRING firstname
 Imię
+---STRINGEND
+
+---STRING folders
+Foldery
+---STRINGEND
+
+---STRING folders of %s
+Foldery należące do "%s"
 ---STRINGEND
 
 ---STRING go
@@ -111,27 +135,152 @@ Użytkownik
 Telefon służbowy
 ---STRINGEND
 
----STRING enable ajax in toolbar
-Włącz tollbar w AJAXie
+---STRING User Management
+Zarządzanie użytkownikami
 ---STRINGEND
 
----STRING enable ajax in uimessages
-Włącz powiadomienia
+---STRING Your password has been changed. Your new password is __PASSWORD__
+Twoje hasło zostało zmienione.
+Twoje nowa hasło to: __PASSWORD__
 ---STRINGEND
 
----STRING enable asgard
-Dostęp do Asgarda
+---STRING amount
+Ilość
 ---STRINGEND
 
----STRING enable centralized toolbar
-Włącz toolbar
+---STRING batch generate passwords
+Masowe generowanie haseł
 ---STRINGEND
 
----STRING folders
-Foldery
+---STRING change passwords
+Zmień hasła
 ---STRINGEND
 
----STRING folders of %s
-Foldery należące do "%s"
+---STRING current time (%s)
+Bieżący czas (%s)
+---STRINGEND
+
+---STRING empty selection
+Pusty wybór
+---STRINGEND
+
+---STRING enable unlocking locked objects
+Włącz obejście blokady edycji
+---STRINGEND
+
+---STRING failed to send the message to %s
+Wysłanie wiadomości do %s nieudane
+---STRINGEND
+
+---STRING failed to update the password for %s
+Zmiana hasła %s nieudana
+---STRINGEND
+
+---STRING generate
+Generuj
+---STRINGEND
+
+---STRING generate new passwords
+Generuj nowe hasła
+---STRINGEND
+
+---STRING generate passwords
+Generuj hasła
+---STRINGEND
+
+---STRING invert selection
+Odwróć zaznaczenie
+---STRINGEND
+
+---STRING long dateformat
+Format długi
+---STRINGEND
+
+---STRING long dateformat (%s)
+Format długi (%s)
+---STRINGEND
+
+---STRING maximum %s
+Maksymalnie %s
+---STRINGEND
+
+---STRING message
+Wiadomość
+---STRINGEND
+
+---STRING move %s
+Przenieś %s
+---STRINGEND
+
+---STRING move group
+Przenieś grupę
+---STRINGEND
+
+---STRING no email address defined for %s
+Brak adresu email dla %s
+---STRINGEND
+
+---STRING password
+Hasło
+---STRINGEND
+
+---STRING password length
+Długość
+---STRINGEND
+
+---STRING passwords
+Hasła
+---STRINGEND
+
+---STRING passwords updated and mail sent
+Hasła zmieniono i wysłano powiadomienia
+---STRINGEND
+
+---STRING passwords will be sent to the following users
+Hasła zostaną wysłane do następujących użytkowników
+---STRINGEND
+
+---STRING prevent repeating character
+Unikaj powtórzeń znaków
+---STRINGEND
+
+---STRING prevent repeating characters
+Unikaj powtórzeń znaków
+---STRINGEND
+
+---STRING prevent similar characters
+Unikaj podobnych znaków
+---STRINGEND
+
+---STRING select all
+Zaznacz wszystko
+---STRINGEND
+
+---STRING sender
+Nadawca
+---STRINGEND
+
+---STRING short dateformat (%s)
+Krótki format (%s)
+---STRINGEND
+
+---STRING string
+Napis
+---STRINGEND
+
+---STRING subject
+Temat
+---STRINGEND
+
+---STRING variable
+Zmienna
+---STRINGEND
+
+---STRING write the message that will be sent to the recipients
+Wiadomość do wszystkich użytkowników
+---STRINGEND
+
+---STRING your password has been changed
+Twoje hasło zostało zmienione
 ---STRINGEND
 

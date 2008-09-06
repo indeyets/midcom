@@ -7,14 +7,6 @@
 Mapa serwisu
 ---STRINGEND
 
----STRING select root to show
-Wybierz początek mapy
----STRINGEND
-
----STRING show levels
-Pokaż poziomy
----STRINGEND
-
 ---STRING display leaves first
 Pokaż strony przed folderami
 ---STRINGEND
@@ -35,11 +27,23 @@ Początek mapy
 Wybierz początek mapy
 ---STRINGEND
 
+---STRING select root to show
+Wybierz początek mapy
+---STRINGEND
+
+---STRING show levels
+Pokaż poziomy
+---STRINGEND
+
 ---STRING skip topics
 Wybierz foldery do ukrycia
 ---STRINGEND
 
 ---STRING use google sitemap mode
 Włącz Google Sitemaps
+---STRINGEND
+
+---STRING show
+Pokaż
 ---STRINGEND
 

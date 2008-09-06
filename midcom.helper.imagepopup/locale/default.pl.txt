@@ -24,5 +24,14 @@ Załączniki strony
 ---STRINGEND
 
 ---STRING unified search
-Unified search
+Wyszukiwanie
 ---STRINGEND
+
+---STRING query
+Zapytanie
+---STRINGEND
+
+---STRING search
+Szukaj
+---STRINGEND
+

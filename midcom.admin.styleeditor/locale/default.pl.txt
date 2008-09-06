@@ -19,12 +19,28 @@ Style CSS
 Domyślnie dla modułu
 ---STRINGEND
 
+---STRING confirm delete of file %s
+Potwierdź usunięcie pliku %s
+---STRINGEND
+
 ---STRING copy to editor
 Kopiuj do edytora
 ---STRINGEND
 
+---STRING create a new element
+Utwórz nowy element
+---STRINGEND
+
 ---STRING create new element
 Dodaj nowy element
+---STRINGEND
+
+---STRING delete cancelled
+Usunięcie anulowane
+---STRINGEND
+
+---STRING delete file %s
+Usuń plik '%s'
 ---STRINGEND
 
 ---STRING edit element %s
@@ -57,6 +73,10 @@ Nazwa
 
 ---STRING element name required
 Nazwa jest wymagana
+---STRINGEND
+
+---STRING file %s deleted
+Plik '%s' usunięty
 ---STRINGEND
 
 ---STRING file contents
@@ -107,6 +127,14 @@ Załączniki
 Edytor szablonów
 ---STRINGEND
 
+---STRING style element %s created
+Element '%s' utworzony
+---STRINGEND
+
+---STRING style element %s updated
+Element '%s' zaktualizowany
+---STRINGEND
+
 ---STRING style element list
 Lista elementów
 ---STRINGEND
@@ -127,31 +155,7 @@ URL
 XML
 ---STRINGEND
 
----STRING confirm delete of file %s
-Potwierdź usunięcie pliku %s
----STRINGEND
-
----STRING create a new element
-Utwórz nowy element
----STRINGEND
-
----STRING delete cancelled
-Usunięcie anulowane
----STRINGEND
-
----STRING delete file %s
-Usuń plik '%s'
----STRINGEND
-
----STRING file %s deleted
-Plik '%s' usunięty
----STRINGEND
-
----STRING style element %s created
-Element '%s' utworzony
----STRINGEND
-
----STRING style element %s updated
-Element '%s' zaktualizowany
+---STRING no files
+Brak plików
 ---STRINGEND
 
