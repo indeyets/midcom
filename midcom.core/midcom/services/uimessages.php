@@ -108,7 +108,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
         {
             $_MIDCOM->enable_jquery();
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/jquery.midcom_services_uimessages.js');
-            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/metadata.js');
+            $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/metadata.js');
             
             $_MIDCOM->add_link_head(
                 array

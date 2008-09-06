@@ -448,8 +448,6 @@ class midcom_helper__basicnav
             debug_pop();
             return null;
         }
-//debug_print_r("Nodedata: ",$nodedata, MIDCOM_LOG_ERROR);
-
         // Now complete the node data structure, we need a metadata object for this:
         $metadata =& midcom_helper_metadata::retrieve($topic);
 
@@ -458,7 +456,7 @@ class midcom_helper__basicnav
         $nodedata[MIDCOM_NAV_GUID] = $topic->guid;
         $nodedata[MIDCOM_NAV_ID] = $topic->id;
         $nodedata[MIDCOM_NAV_TYPE] = 'node';
-        $nodedata[MIDCOM_NAV_SCORE] = $topic->score;
+        $nodedata[MIDCOM_NAV_SCORE] = $topic->metadata->score;
         $nodedata[MIDCOM_NAV_COMPONENT] = $path;
 
         if (!array_key_exists(MIDCOM_NAV_ICON, $nodedata))
@@ -714,16 +712,21 @@ class midcom_helper__basicnav
             {
                 $leaf[MIDCOM_NAV_OBJECT] = $_MIDCOM->dbfactory->get_object_by_guid($leaf[MIDCOM_NAV_GUID]);
             }
-
+            
+            // Get the pseudo leaf score from the topic
+            if (($score = $topic->get_parameter('midcom.helper.nav.score', "{$topic->id}-{$id}")))
+            {
+                $leaf[MIDCOM_NAV_SCORE] = $score;
+            }
             // Now complete the actual leaf information
-
+            
             // Score
-            if (! array_key_exists(MIDCOM_NAV_SCORE, $leaf))
+            if (!array_key_exists(MIDCOM_NAV_SCORE, $leaf))
             {
                 if (   $leaf[MIDCOM_NAV_OBJECT]
-                    && array_key_exists('score', $leaf[MIDCOM_NAV_OBJECT]))
+                    && isset($leaf[MIDCOM_NAV_OBJECT]->metadata->score))
                 {
-                    $leaf[MIDCOM_NAV_SCORE] = $leaf[MIDCOM_NAV_OBJECT]->score;
+                    $leaf[MIDCOM_NAV_SCORE] = $leaf[MIDCOM_NAV_OBJECT]->metadata->score;
                 }
                 else
                 {
