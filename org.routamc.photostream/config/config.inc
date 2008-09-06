@@ -22,7 +22,7 @@
 'flickr_import_size' => 'Large', // In some cases you want Original
 
 // Use AJAX for editing
-'enable_ajax_editing' => true,
+'enable_ajax_editing' => $GLOBALS['midcom_config']['enable_ajax_editing'],
 
 // Stick to the context in photo navigation (e.g. show the next and previous only from the selected user or tag group)
 'navigate_with_context' => true,

@@ -15,4 +15,4 @@
 'index_order' => array('metadata.score reverse', 'photo.taken reverse'),
 
 // Use AJAX for editing
-'enable_ajax_editing' => true,
+'enable_ajax_editing' => $GLOBALS['midcom_config']['enable_ajax_editing'],
