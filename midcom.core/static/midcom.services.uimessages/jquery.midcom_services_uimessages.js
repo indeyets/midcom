@@ -4,24 +4,24 @@ var MIDCOM_SERVICES_UIMESSAGES_TYPE_WARNING = 'warning';
 var MIDCOM_SERVICES_UIMESSAGES_TYPE_ERROR = 'error';
 var MIDCOM_SERVICES_UIMESSAGES_TYPE_DEBUG = 'ok';
 
-(function($) {
+(function(jQuery) {
     
-    $.midcom_services_uimessages = function(options, root) {
-        $.midcom_services_uimessages.core.start(root, options);
+    jQuery.midcom_services_uimessages = function(options, root) {
+        jQuery.midcom_services_uimessages.core.start(root, options);
     };
-    $.midcom_services_uimessages.debug = {
+    jQuery.midcom_services_uimessages.debug = {
         add: function(msg, type)
         {
-            $.midcom_services_uimessages.core.debug(msg, type);
+            jQuery.midcom_services_uimessages.core.debug(msg, type);
         }
     };
         
-    $.midcom_services_uimessages_read_contents = function()
+    jQuery.midcom_services_uimessages_read_contents = function()
     {
-        $.midcom_services_uimessages.core.read_contents();
+        jQuery.midcom_services_uimessages.core.read_contents();
     }
 
-    $.midcom_services_uimessages.defaults = {
+    jQuery.midcom_services_uimessages.defaults = {
         root_parent: null,
         debug: true,
         class_name: 'midcom_services_uimessages',
@@ -34,9 +34,9 @@ var MIDCOM_SERVICES_UIMESSAGES_TYPE_DEBUG = 'ok';
         read_content: true        
     };
     
-    $.midcom_services_uimessages.core = {
+    jQuery.midcom_services_uimessages.core = {
         
-        settings: $.midcom_services_uimessages.defaults,
+        settings: jQuery.midcom_services_uimessages.defaults,
         root_element: null,
         initialized: false,
         
@@ -142,7 +142,7 @@ var MIDCOM_SERVICES_UIMESSAGES_TYPE_DEBUG = 'ok';
         }
     };
 
-    $.midcom_services_uimessages.pool = {
+    jQuery.midcom_services_uimessages.pool = {
         items: Array(),
         active_items: Array(),
         next_id: 1,
