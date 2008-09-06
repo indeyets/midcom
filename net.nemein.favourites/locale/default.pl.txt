@@ -1,0 +1,57 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE pl
+
+---STRING add
+Dodaj
+---STRINGEND
+
+---STRING add to favourites
+Dodaj do ulubionych
+---STRINGEND
+
+---STRING buried
+Zakopany
+---STRINGEND
+
+---STRING bury
+Zakop
+---STRINGEND
+
+---STRING bury item
+Zakop element
+---STRINGEND
+
+---STRING deleting favourite %s failed: %s
+Usuwanie "%s" nieudane: %s
+---STRINGEND
+
+---STRING favourite
+Ulubiony
+---STRINGEND
+
+---STRING favouriting %s failed: %s
+Zapisanie "%s" nieudane: %s
+---STRINGEND
+
+---STRING net.nemein.favourites
+Ulubione
+---STRINGEND
+
+---STRING return and dont add
+Wróć i nie dodawaj
+---STRINGEND
+
+---STRING you are adding the following item to buries list
+Zakopujesz następujący element. Kliknij "Dodaj" aby potwierdzić
+---STRINGEND
+
+---STRING you are adding the following item to favourites
+Dodajesz następujący element do ulubionych. Kliknij "Dodaj" by zapisać.
+---STRINGEND
+
+---STRING you have already favourited the item
+Ten element już jest w ulubionych
+---STRINGEND
+
