@@ -357,7 +357,9 @@ $GLOBALS['midcom_config_default']['cache_module_content_backend'] = Array('drive
 // $GLOBALS['midcom_config_default']['cache_module_content_multilang'] = true;
 $GLOBALS['midcom_config_default']['cache_module_content_uncached'] = false;
 $GLOBALS['midcom_config_default']['cache_module_content_headers_strategy'] = 'revalidate';
+$GLOBALS['midcom_config_default']['cache_module_content_headers_strategy_authenticated'] = 'private';
 $GLOBALS['midcom_config_default']['cache_module_content_default_lifetime'] = 60; // Seconds, added to gmdate() for expiry timestamp (in case no other expiry is set)
+$GLOBALS['midcom_config_default']['cache_module_content_default_lifetime_authenticated'] = 0; // as above but concerns only authenticated state
 $GLOBALS['midcom_config_default']['cache_module_content_caching_strategy'] = 'user'; // Valid options are 'user' (default), 'memberships' and 'public'
 
 // NAP / Metadata Cache

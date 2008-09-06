@@ -163,12 +163,29 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     var $_headers_strategy = 'revalidate';
 
     /**
+     * controls cache headers strategy for authenticated users, needed because some proxies store cookies too
+     * making a horrible mess when used by mix of authenticated and non-authenticated users
+     *
+     * @see $_headers_strategy
+     * @var string
+     */
+    var $_headers_strategy_authenticated = 'private';
+
+    /**
      * Default lifetime of page for public/private headers strategy
      * When generating default expires header this is added to time().
      *
      * @var int
      */
     var $_default_lifetime = 0;
+
+    /**
+     * Default lifetime of page for public/private headers strategy for authenticated users
+     *
+     * @see $_default_lifetime
+     * @var int
+     */
+    var $_default_lifetime_authenticated = 0;
 
     /**#@-*/
 
@@ -358,9 +375,17 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         {
             $this->_headers_strategy = strtolower($GLOBALS['midcom_config']['cache_module_content_headers_strategy']);
         }
+        if (array_key_exists('cache_module_content_headers_strategy_authenticated', $GLOBALS['midcom_config']))
+        {
+            $this->_headers_strategy_authenticated = strtolower($GLOBALS['midcom_config']['cache_module_content_headers_strategy_authenticated']);
+        }
         if (array_key_exists('cache_module_content_default_lifetime', $GLOBALS['midcom_config']))
         {
             $this->_default_lifetime = (int)$GLOBALS['midcom_config']['cache_module_content_default_lifetime'];
+        }
+        if (array_key_exists('cache_module_content_default_lifetime_authenticated', $GLOBALS['midcom_config']))
+        {
+            $this->_default_lifetime_authenticated = (int)$GLOBALS['midcom_config']['cache_module_content_default_lifetime_authenticated'];
         }
         switch ($this->_headers_strategy)
         {
@@ -1207,6 +1232,10 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         $this->cache_control_headers();
     }
 
+    function _use_auth_headers()
+    {
+    }
+
     function cache_control_headers()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
@@ -1217,8 +1246,23 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         // Just to be sure not to mess the headers sent by no_cache in case it was called
         if (!$this->_no_cache)
         {
-            switch($this->_headers_strategy)
+            $strategy = $this->_headers_strategy;
+            $default_lifetime = $this->_default_lifetime;
+            if (   (   isset($_MIDCOM->auth)
+                    && is_a($_MIDCOM->auth, 'midcom_services_auth')
+                    && $_MIDCOM->auth->is_valid_user())
+                || !empty($_MIDGARD['user'])
+                )
             {
+                $strategy = $this->_headers_strategy_authenticated;
+                $default_lifetime = $this->_default_lifetime_authenticated;
+            }
+            switch($strategy)
+            {
+                // included in case _headers_strategy_authenticated sets this
+                case 'no-cache':
+                    $this->no_cache();
+                    break;
                 case 'revalidate':
                     // Currently, we *force* a cache client to revalidate the copy every time.
                     // I hope that this fixes most of the problems outlined in #297 for the time being.
@@ -1236,18 +1280,15 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
                     }
                     else
                     {
-                        $expires = time() + $this->_default_lifetime;
-                        $max_age = $this->_default_lifetime;
+                        $expires = time() + $default_lifetime;
+                        $max_age = $default_lifetime;
                     }
-                    if ($max_age > 0)
+                    $cache_control = "{$strategy} max-age={$max_age}";
+                    if ($max_age == 0)
                     {
-                        $cache_control = "{$this->_headers_strategy} max-age={$max_age}";
+                        $cache_control .= ' must-revalidate';
                     }
-                    else
-                    {
-                        $cache_control = $this->_headers_strategy;
-                    }
-                    $pragma =& $this->_headers_strategy;
+                    $pragma =& $strategy;
                     break;
             }
         }
