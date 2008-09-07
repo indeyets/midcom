@@ -1,5 +1,5 @@
 'name' => 'pl.olga.mnogosearch',
-'version' => '1.1.0beta1',
+'version' => '1.1.0beta2',
 'state' => 'beta',
 'package.xml' => array
 (
