@@ -49,6 +49,24 @@
         generate_classname: function(suffix) {
             return $.dm2.ajax_editor.class_prefix + '_' + suffix;
         },
+        show_message: function(message, title, type) {
+            if (typeof ($.midcom_services_uimessage_add) != 'function') {
+                return;
+            }
+            
+            if (typeof(type) == 'undefined') {
+                var type = MIDCOM_SERVICES_UIMESSAGES_TYPE_OK;
+            }
+            if (typeof(title) == 'undefined') {
+                var title = 'Datamanager';
+            }
+            
+            $.midcom_services_uimessage_add({
+                type: type,
+                title: title,
+                message: message
+            });
+        },
         debug: function(msg) {
             if ($.dm2.ajax_editor.debug_enabled) {
                 console.log(msg);
@@ -253,7 +271,9 @@
                 };
             });
             
-            this._build_toolbar();
+            if (this.first_field_id !== null) {
+                this._build_toolbar();
+            }
             
             if (self.state.previous == 'preview') {
                 this._fields_from_form();
@@ -315,7 +335,7 @@
                 identifier: $('form',data).attr('id'),
                 new_identifier: $('form',data).attr('new_identifier'),
                 is_editable: $('form',data).attr('editable'),
-                exit_status: $('form',data).attr('exitstatus'),
+                exit_code: $('form',data).attr('exitcode'),
             };
             
             this.errors = $('form',data).find('error');
@@ -324,6 +344,10 @@
                 console.log("errors: ");
                 console.log(this.errors);
                 this._change_state('edit');
+            } else {
+                if (this.parsed_data.exit_code == 'save') {
+                    $.dm2.ajax_editor.show_message('Form saved successfully');
+                }
             }
             
             var xml_fields = $('form',data).find('field');
