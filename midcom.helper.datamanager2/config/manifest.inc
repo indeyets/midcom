@@ -40,6 +40,12 @@
             'email' => 'jerry.jalava@gmail.com',
             'role' => 'lead',
         ),
+        'solt' => array
+        (
+            'name' => 'Marcin Sołtysiak',
+            'email' => 'olga@olga.pl',
+            'role' => 'developer',
+        ),
     ),
     'dependencies' => array
     (
