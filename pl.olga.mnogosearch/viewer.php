@@ -43,11 +43,10 @@ class pl_olga_mnogosearch_viewer extends midcom_baseclasses_components_request
         $this->_request_data['content_topic'] =& $this->_topic;
 
         // *** Prepare the request switch ***
-
-        $this->_request_switch['config'] = Array
+        $this->_request_switch['config'] = array
         (
-            'handler' => Array('pl_olga_mnogosearch_handler_config', 'config'),
-	        'fixed_args' => array('config'),
+            'handler' => array ('midcom_helper_dm2config_config', 'config'),
+            'fixed_args' => array ('config'),
         );
 
         $this->_request_switch['view'] = Array
