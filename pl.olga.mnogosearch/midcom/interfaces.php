@@ -11,14 +11,6 @@
 /**
  * p.o.mnogosearch MidCOM interface class.
  *
- * Compatibility Notes:
- *
- * This component is a complete refactoring of de.linkm.taviewer. It specifically drops
- * a good number of legacies in the old component and thus does not guarantee 100%
- * data compatibility. Specifically:
- *
- * 1. Datamanager2 is used
- * 2. Aegir Symlink Article tool
  *
  * @package pl.olga.mnogosearch
  */
@@ -42,6 +34,7 @@ class pl_olga_mnogosearch_interface extends midcom_baseclasses_components_interf
         $this->_autoload_libraries = Array
         (
             'midcom.helper.datamanager2',
+            'midcom.helper.dm2config',
         );
     }
 

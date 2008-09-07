@@ -16,7 +16,7 @@ Crosswords?
 ---STRINGEND
 
 ---STRING database uri
-URI Bazy danych
+URI Bazy danych (np. mysql://midgard:midgard@localhost/mnogosearch/?dbmode=multi)
 ---STRINGEND
 
 ---STRING date format

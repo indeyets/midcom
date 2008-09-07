@@ -192,6 +192,7 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
                 $to = $stats['found'];
             }
 
+            $stats['isnext'] = "";
             if (($from + $this->pageresults) < $stats['found'])
             {
                 $stats['isnext'] = 1;
@@ -304,7 +305,7 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
             if ($this->_stats['found'])
             {
                 midcom_show_style('results');
-                midcom_show_style('navi');
+                midcom_show_style('search-navi');
                 midcom_show_style('result-start');
 
                 foreach($this->_docs as $doc)
@@ -313,7 +314,7 @@ class pl_olga_mnogosearch_handler_view extends midcom_baseclasses_components_han
                     midcom_show_style('result-item');
                 }
                 midcom_show_style('result-end');
-                midcom_show_style('navi');
+                midcom_show_style('search-navi');
             }
             else
             {

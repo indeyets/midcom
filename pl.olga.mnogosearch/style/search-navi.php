@@ -3,14 +3,16 @@ $data =& $_MIDCOM->get_custom_context_data('request_data');
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX,0);
 
 $results =& $data['stats'];
-
+$nav_left="";
+$nav_right="";
+$nav_bar=array();
 $np = $results['pagenumber'];
 $ps = $results['pageresults'];
 $isnext = $results['isnext'];
 $found = $results['found'];
 $q = urlencode($data['query']);
-$m = $_GET['m'];
-$wm = $_GET['wm'];
+$m = (array_key_exists('m',$_GET))?$_GET['m']:"";
+$wm =(array_key_exists('wm',$_GET))? $_GET['wm']:"";
 
 $tp=ceil($found/$ps);
 
@@ -30,6 +32,7 @@ if($isnext==1)
     $nextp=$np+1;
     $next_href="?q=$q&np=$nextp&m=$m&ps=$ps";
     $nav_right="<a href='{$next_href}'>".$data['l10n']->get('next')."</a>";
+
 }
 else if($tp > 1)
 {
