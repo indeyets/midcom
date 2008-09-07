@@ -88,7 +88,7 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
                     $this->object->set_parameter
                     (
                         $this->_schema->fields[$name]['storage']['domain'],
-                        $this->_schema->fields[$name]['storage']['name'],
+                        $this->_schema->fields[$name]['storage']['name'] . '_' . $_MIDCOM->i18n->get_content_language(),
                         $data
                     );
                 }
@@ -97,7 +97,7 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
                     $this->object->set_parameter
                     (
                         $this->_schema->fields[$name]['storage']['domain'],
-                        $this->_schema->fields[$name]['storage']['name'] . '_' . $_MIDCOM->i18n->get_content_language(),
+                        $this->_schema->fields[$name]['storage']['name'],
                         $data
                     );
                 }
@@ -167,6 +167,7 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
                     }
                     // Otherwise fall back to the lang0 version
                 }
+
                 return $this->object->get_parameter
                 (
                     $this->_schema->fields[$name]['storage']['domain'],
