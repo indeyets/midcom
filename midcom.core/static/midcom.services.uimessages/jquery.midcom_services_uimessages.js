@@ -34,6 +34,10 @@ jQuery(document).ready(function()
     }
 });
 
+jQuery.midcom_services_uimessage_add = function(options) {
+    jQuery('#midcom_services_uimessages_wrapper').midcom_services_uimessage(options);
+}
+
 jQuery.fn.midcom_services_uimessage = function(options)
 {
     var id = 'midcom_services_uimessages_' + MIDCOM_SERVICES_UIMESSAGES_INDEX;
