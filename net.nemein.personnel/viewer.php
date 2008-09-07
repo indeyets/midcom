@@ -28,11 +28,10 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
         // Match /config/
         $this->_request_switch['config'] = array
         (
-            'handler' => array('midcom_core_handler_configdm', 'configdm'),
-            'schemadb' => 'file:/net/nemein/personnel/config/schemadb_config.inc',
-            'schema' => 'config',
-            'fixed_args' => array('config'),
+            'handler' => array ('midcom_helper_dm2config_config', 'config'),
+            'fixed_args' => array ('config'),
         );
+
         // Show list of the persons
         $this->_request_switch['view-index'] = array
         (

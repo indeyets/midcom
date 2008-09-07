@@ -1,4 +1,5 @@
 'schema' => 'person',
+'schemadb_config' => 'file:/net/nemein/personnel/config/schemadb_config.inc',
 'schemadb' => 'file:/net/nemein/personnel/config/schemadb_default.inc',
 'schemadbs' => array (
     'file:/net/nemein/personnel/config/schemadb_default.inc' => 'Personnel Default Schema Database',

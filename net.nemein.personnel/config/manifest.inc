@@ -38,6 +38,13 @@
             'role' => 'lead',
             'active' => 'yes',
         ),
+        'solt' => array
+        (
+            'name' => 'Marcin Sołtysiak',
+            'email' => 'olga@olga.pl',
+            'role' => 'developer',
+            'active' => 'yes',
+        ),
     ),
     'dependencies' => array
     (
@@ -49,5 +56,6 @@
         (
             'min' => '2.8.9',
         ),
+        'midcom.helper.dm2config' => array(),
     ),
 ),
