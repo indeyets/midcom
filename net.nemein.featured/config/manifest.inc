@@ -18,7 +18,7 @@
         'juhana' => array
         (
             'name' => 'Juhana Hirvilahti',
-            'email' => 'juhana@nemein.com',
+            'email' => 'ihirvila@cc.hut.fi',
             'role' => 'lead',
             'active' => 'no',
         ),
