@@ -3,7 +3,8 @@
     $.dm2 = $.dm2 || {};
     
     $.dm2.ajax_editor = {
-        debug_enabled: true,
+        debug_enabled: false,
+        possible_states: ['view', 'edit', 'preview', 'save', 'cancel'],
         class_prefix: 'dm2_ajax_editor',
         config: {
             mode: 'inline',
@@ -102,6 +103,12 @@
             
             return this;
         },
+        _change_state: function(new_state) {
+            this.state.previous = this.state.current;
+            this.state.current = new_state;
+            
+            this.state_changed();
+        },
         _fields_to_form: function() {
             var self = this;
             
@@ -112,33 +119,83 @@
                 var id = field.attr('id');
                 var name = id.replace(self.identifier+'_', '');
                 
+                var value = self._get_field_input_value(field);
+                
+                if (value !== null) {
+                    self.form.set_value(name, value);
+                }
+            });
+            
+            this._disable_wysiwygs();
+        },
+        _get_field_input_value: function(field) {            
+            var self = this;
+            
+            var id = field.attr('id');
+            var name = id.replace(self.identifier+'_', '');
+            
+            var input_id = self.identifier + '_qf_' + name;
+            
+            var input = $('#'+input_id);
+            if (! input) {
+                return null;
+            }
+            
+            var input_class = input.attr('class');
+            
+            var value = null;
+            
+            $.each($.dm2.ajax_editor.wysiwygs.configs, function(wysiwyg_name, config){
+                if (typeof(config.className) == 'undefined') {
+                    return;
+                }
+                if (typeof($.dm2.ajax_editor.wysiwygs[wysiwyg_name]) == 'undefined') {
+                    return;
+                }
+                
+                if (config.className == input_class) {
+                    value = $.dm2.ajax_editor.wysiwygs[wysiwyg_name].get_value(field, input);
+                }                    
+            });
+            
+            if (value === null) {
+                value = input.val();
+            }
+            
+            return value;
+        },
+        _fields_from_form: function() {
+            $.dm2.ajax_editor.debug("fields from form");
+            
+            var self = this;
+            
+            $.each($('.'+this.identifier), function(i){
+                var field = $(this);
+                var id = field.attr('id');
+                var name = id.replace(self.identifier+'_', '');
+                
+                var value = self.form.get_value(name);
+
                 var input_id = self.identifier + '_qf_' + name;
                 
                 var input = $('#'+input_id);
+                
                 if (! input) {
                     return;
                 }
                 
                 var input_class = input.attr('class');
                 
-                var value = '';
-                
                 switch(input_class)
                 {
                     case 'tinymce':
-                        tinyMCE.triggerSave(true,true);
-                        value = input.val();
+                        input.val(value);
                     break;
                     case 'shorttext':
-                        value = input.val();
+                        input.val(value);
                     break;
                 }
-                
-                self.form.set_value(name, value);
-            });
-        },
-        _fields_from_form: function() {
-            
+            });            
         },
         _prepare_fields: function() {
             
@@ -160,11 +217,14 @@
                 }
                 self.last_field_id = id;
                 
+                $(this).removeClass($.dm2.ajax_editor.generate_classname('editable_area'));
+                $(this).removeClass($.dm2.ajax_editor.generate_classname('editable_area_hover'));
+                $(this).removeClass($.dm2.ajax_editor.generate_classname('editing_area'));
+                $(this).removeClass($.dm2.ajax_editor.generate_classname('preview_area'));
+                
                 field.unbind();
-                if (   self.state.current == 'view'
-                    || self.state.current == 'preview')
-                {
-                    $(this).removeClass($.dm2.ajax_editor.generate_classname('editing_area'));
+                if (self.state.current == 'view')
+                {                    
                     $(this).addClass($.dm2.ajax_editor.generate_classname('editable_area'));
                 
                     var hover_class = $.dm2.ajax_editor.generate_classname('editable_area_hover');
@@ -176,9 +236,12 @@
                         self._fetch_fields(true);
                     });                    
                 }
+                else if (self.state.current == 'preview')
+                {                    
+                    $(this).addClass($.dm2.ajax_editor.generate_classname('preview_area'));
+                }
                 else if (self.state.current == 'edit')
                 {
-                    $(this).removeClass($.dm2.ajax_editor.generate_classname('editable_area'));
                     $(this).addClass($.dm2.ajax_editor.generate_classname('editing_area'));
                 }
                 
@@ -190,8 +253,12 @@
                 };
             });
             
+            this._build_toolbar();
+            
+            if (self.state.previous == 'preview') {
+                this._fields_from_form();
+            }
             if (self.state.current == 'edit') {
-                this._build_toolbar();
                 this._enable_wysiwygs();
             }
         },
@@ -224,6 +291,8 @@
                 this.state.current = 'edit';
                 
                 send_data[self.identifier+'_edit'] = 1;
+            } else {
+                send_data[self.identifier+'_'+this.state.current] = 1;
             }
             
             $.ajax({
@@ -233,7 +302,7 @@
                 dataType: "xml",
                 data: send_data,
                 success: function(data) {                    
-                    self._parse_fetch_fields_response(data);
+                    self._parse_response(data);
                 },
                 error: function(xhr,err,e){
                     $.dm2.ajax_editor.debug("Error loading fields!");
@@ -241,7 +310,7 @@
                 }
             });
         },
-        _parse_fetch_fields_response: function(data) {
+        _parse_response: function(data) {
             this.parsed_data = {
                 identifier: $('form',data).attr('id'),
                 new_identifier: $('form',data).attr('new_identifier'),
@@ -254,7 +323,7 @@
             if (this.errors.length > 0) {
                 console.log("errors: ");
                 console.log(this.errors);
-                return;
+                this._change_state('edit');
             }
             
             var xml_fields = $('form',data).find('field');
@@ -268,13 +337,17 @@
                 self.form_fields[name] = content;
             });
             
-            $.dm2.ajax_editor.debug(this.fields);
-            $.dm2.ajax_editor.debug(this.form_fields);
+            // $.dm2.ajax_editor.debug("this.fields:");
+            // $.dm2.ajax_editor.debug(this.fields);
+            // $.dm2.ajax_editor.debug("this.form_fields:");
+            // $.dm2.ajax_editor.debug(this.form_fields);
             
-            this.fetch_fields_parsed();
+            this.results_parsed();
             this._prepare_fields();
         },
         _enable_wysiwygs: function() {
+            $.dm2.ajax_editor.debug("Enable wysiwygs");
+            
             var self = this;
             
             $.each(this.fields, function(i, field){                
@@ -292,12 +365,32 @@
                 });
             });
         },
+        _disable_wysiwygs: function() {
+            $.dm2.ajax_editor.debug("Disable wysiwygs");
+            
+            var self = this;
+            
+            $.each(this.fields, function(i, field){                
+                $.each($.dm2.ajax_editor.wysiwygs.configs, function(wysiwyg_name, config){
+                    if (typeof(config.className) == 'undefined') {
+                        return;
+                    }
+                    if (typeof($.dm2.ajax_editor.wysiwygs[wysiwyg_name]) == 'undefined') {
+                        return;
+                    }
+                    
+                    if ($(self.form_fields[field.name]).hasClass(config.className)) {
+                        $.dm2.ajax_editor.wysiwygs[wysiwyg_name].disable($(self.form_fields[field.name]));
+                    }                    
+                });
+            });
+        },
         _build_toolbar: function() {
             this.buttons = {};
             
             var self = this;
             
-            if (this.state.current == 'view') {
+            if (this.state.current == 'preview') {
                 this.buttons['edit'] = {
                     name: this.identifier + '_edit',
                     value: this.config.edit_btn_value,
@@ -305,16 +398,6 @@
                 };
             }
 
-            if (   this.state.current == 'edit'
-                || this.state.current == 'preview')
-            {
-                this.buttons['save'] = {
-                    name: this.identifier + '_save',
-                    value: this.config.save_btn_value,
-                    elem: null
-                };
-            }
-            
             if (this.state.current == 'edit') {
                 this.buttons['preview'] = {
                     name: this.identifier + '_preview',
@@ -323,52 +406,74 @@
                 };
             }
             
-            this.buttons['cancel'] = {
-                name: this.identifier + '_cancel',
-                value: this.config.cancel_btn_value,
-                elem: null
-            };
+            if (   this.state.current == 'edit'
+                || this.state.current == 'preview')
+            {
+                this.buttons['save'] = {
+                    name: this.identifier + '_save',
+                    value: this.config.save_btn_value,
+                    elem: null
+                };
+
+                this.buttons['cancel'] = {
+                    name: this.identifier + '_cancel',
+                    value: this.config.cancel_btn_value,
+                    elem: null
+                };
+            }
             
             this.render_toolbar();
         },
         _execute_action: function(action, event) {
             $.dm2.ajax_editor.debug("execute action "+action);
             
-            this.state.current = action;
+            this._change_state(action);
             
             switch(action)
             {
                 case 'edit':
                     $.dm2.ajax_editor.debug("edit form");
+                    this._disable_wysiwygs();
+                    this._fetch_fields();
                 break;
                 case 'preview':
                     $.dm2.ajax_editor.debug("generate preview");
+                    this._fields_to_form();
+                    this.form.submit('preview');
                 break;
                 case 'save':
-                    this._fields_to_form();
+                    $.dm2.ajax_editor.debug("save form");
+                    
+                    if (this.state.previous == 'preview') {
+                        $.dm2.ajax_editor.debug("from preview");
+                        this.form.set_state(this.state.current);
+                    } else {
+                        this._fields_to_form();
+                    }
+                    
                     this.form.submit();
                 break;
                 case 'cancel':
-                default:
+                default:                
                     $.dm2.ajax_editor.debug("cancel editing");
+                    this._disable_wysiwygs();
+                    this._fetch_fields();
+                    this._change_state('view');
             }
         },
-
+        
+        state_changed: function() {},
         render_toolbar: function() {},
-        fetch_fields_parsed: function() {},
+        results_parsed: function() {},
         initialize: function() {}
     });
     
     $.dm2.ajax_editor.inline = $.extend({}, $.dm2.ajax_editor.base, {
-        className: 'inline',
-        
+        className: 'inline',        
         initialize: function() {
             $.dm2.ajax_editor.debug("Initialize inline editor!");
-            //$.dm2.ajax_editor.generate_classname(this.className);
-            
-            //$.dm2.ajax_editor.debug(this.dimensions);
         },
-        fetch_fields_parsed: function() {            
+        results_parsed: function() {            
             var self = this;
             
             if (   this.parsed_data.is_editable
@@ -385,8 +490,7 @@
                 });
             }
             
-            if (   this.state.current == 'view'
-                || this.state.current == 'preview')
+            if (this.state.current != 'edit')
             {
                 var unreplaced_fields = [];
                 $.each(this.fields, function(i, field){
@@ -402,9 +506,15 @@
         render_toolbar: function() {
             var toolbar_class = $.dm2.ajax_editor.generate_classname('toolbar');
             
-            this.toolbar = $('<div />').attr({
-                className: toolbar_class
-            });
+            if (this.toolbar === null) {
+                this.toolbar = $('<div />').attr({
+                    className: toolbar_class
+                }).hide();
+                
+                this.toolbar.insertBefore(this.fields[this.first_field_id].elem);
+            }
+            
+            this.toolbar.html('');
             
             var self = this;
             
@@ -419,7 +529,11 @@
                 self.buttons[action_name].elem = element;
             });
             
-            this.toolbar.insertBefore(this.fields[this.first_field_id].elem);
+            if (   this.state.current != 'view'
+                && this.state.current != 'cancel')
+            {
+                this.toolbar.show();
+            }
         }
         
     });
@@ -445,11 +559,15 @@
         set_state: function(state) {
             var editor = $.dm2.ajax_editor.get_instance(this.identifier);
             
-            if (editor.state.current != state)
-            {
-                delete this.formValues[editor.identifier + '_' + editor.state.current];
-                delete this.formValues['midcom_helper_datamanager2_' + editor.state.current];
-            }
+            var self = this;
+            $.each($.dm2.ajax_editor.possible_states, function(i,state){
+                if (typeof(self.values[editor.identifier + '_' + state]) != 'undefined') {
+                    delete self.values[editor.identifier + '_' + state];
+                }
+                if (typeof(self.values['midcom_helper_datamanager2_' + state]) != 'undefined') {
+                    delete self.values['midcom_helper_datamanager2_' + state];
+                }
+            });
             
             this.values[editor.identifier + '_' + state] = 1;
             this.values['midcom_helper_datamanager2_' + state] = 1;
@@ -481,7 +599,7 @@
                 success: function(data) {
                     editor.state.previous = editor.state.current;
                     editor.state.current = next_state;
-                    editor._parse_fetch_fields_response(data);
+                    editor._parse_response(data);
                 },
                 error: function(xhr, err, e) {
                     $.dm2.ajax_editor.debug("Error saving form!");
@@ -501,82 +619,37 @@
 
     $.dm2.ajax_editor.wysiwygs.tinymce = {};
     $.extend($.dm2.ajax_editor.wysiwygs.tinymce, {
-        enable: function(field) {
+        enable: function(field) {            
             var id = field.attr('id');
-            //var field_dimensions = this.dimensions.fields[id];
+            $.dm2.ajax_editor.debug("Enable tinymce for "+id);
             
-            tinyMCE.execCommand('mceAddControl',false, id);
+            //var field_dimensions = this.dimensions.fields[id];
+            tinyMCE.execCommand('mceAddControl', false, id);
         },
         disable: function(field) {
             var id = field.attr('id');
+            $.dm2.ajax_editor.debug("Disable tinymce for "+id);
             
             if (tinyMCE.get(id)) {
                 tinyMCE.execCommand('mceRemoveControl', true, id);
             }
+        },
+        get_value: function(field, input) {
+            if (typeof(input) == 'undefined') {
+                var id = field.attr('id');
+                var name = id.replace(self.identifier+'_', '');
+                
+                var input_id = self.identifier + '_qf_' + name;
+                
+                var input = $('#'+input_id);
+                if (! input) {
+                    return '';
+                }
+            }
+            
+            tinyMCE.triggerSave(true, true);
+            return input.val();
         }
     });
-    
-    $.dm2.helpers = $.dm2.helpers || {};
-    
-    $.dm2.helpers.events = {};
-    $.dm2.helpers.events.signals = {
-        _listeners: null,
-        trigger: function(signal, data) {   
-            if (   $.dm2.helpers.events.signals._listeners === null
-                || typeof $.dm2.helpers.events.signals._listeners[signal] == 'undefined')
-            {
-                return;
-            }
-            
-            if (   typeof data == 'undefined'
-                || typeof data != 'object')
-            {
-                var data = [];
-            }
-            
-            $.each($.dm2.helpers.events.signals._listeners[signal], function(i,listener){
-                if (typeof listener != 'object') {
-                    return;
-                }
-                
-                if (typeof listener.func == 'function') {
-                    var args = data;
-                    if (   typeof listener.args != 'undefined'
-                        && listener.args != null)
-                    {
-                        $.each(listener.args, function(i,a){
-                            args.push(a);
-                        });                        
-                    }
-                    
-                    listener.func.apply(listener.func, args);
-                    
-                    if (! listener.keep) {
-                        $.dm2.helpers.events.signals._listeners[signal][i] = null;
-                    }
-                }
-            });
-        },
-        listen: function(signal, listener, data, keep) {
-            if ($.dm2.helpers.events.signals._listeners === null) {
-                $.dm2.helpers.events.signals._listeners = {};
-            }
-            if (typeof $.dm2.helpers.events.signals._listeners[signal] == 'undefined') {
-                $.dm2.helpers.events.signals._listeners[signal] = [];
-            }
-            
-            if (typeof keep == 'undefined') {
-                var keep = true;
-            }
-            
-            var lstnr = {
-                func: listener,
-                args: data,
-                keep: keep
-            };
-            
-            $.dm2.helpers.events.signals._listeners[signal].push(lstnr);
-        }
-    };
     
 })(jQuery);
