@@ -50,6 +50,118 @@
             (
                 'title' => 'list settings',
             ),
+        ),
+
+        'preferred_person' => array
+        (
+            'title' => 'preferred person',
+            'helptext' => 'this person will be displayed first',
+            'type' => 'select',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.personnel',
+                'name' => 'preferred_person',
+            ),
+            'widget' => 'select',
+            'type_config' => array
+            (
+                'options' => $GLOBALS['net_nemein_personnel_members'],
+            ),
+        ),
+
+        'persons_in_row' => array
+        (
+            'title' => 'how many persons should be displayed in a row',
+            'type' => 'text',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.personnel',
+                'name' => 'persons_in_row',
+            ),
+            'widget' => 'text',
+            'end_fieldgroup' => '',
+
+        ),
+        'sort_order' => array
+        (
+            'start_fieldgroup' => array
+            (
+                'title' => 'sorting order',
+            ),
+            'title' => 'sorting order',
+            'type' => 'select',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.personnel',
+                'name' => 'sort_order',
+            ),
+            'widget' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    'alphabetic' => 'alphabetic',
+                    'sorted' => 'manually sorted',
+                    'sorted and grouped' => 'manually sorted and grouped',
+                ),
+            ),
+        ),
+
+        'enable_alphabetical' => array
+        (
+            'title' => 'enable alphabetical ordering',
+            'type' => 'select',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.personnel',
+                'name' => 'enable_alphabetical',
+            ),
+            'widget' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    '' => 'default setting',
+                    '1' => 'yes',
+                    '0' => 'no',
+                ),
+            ),
+            'end_fieldgroup' => '',
+        ),
+
+
+
+        'display_in_navigation' => array
+        (
+            'start_fieldgroup' => array
+            (
+                'title' => 'accessibility',
+            ),
+
+            'title' => 'display in navigation',
+            'type' => 'select',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'net.nemein.personnel',
+                'name' => 'display_in_navigation',
+            ),
+            'widget' => 'select',
+            'type_config' => array
+            (
+                'options' => array
+                (
+                    ''          => 'default setting',
+                    'empty'     => 'display nothing',
+                    'personnel' => 'personnel',
+                    'groups'    => 'groups',
+                ),
+            ),
             'end_fieldgroup' => '',
         ),
 
@@ -71,37 +183,12 @@
             (
                 'location' => 'configuration',
                 'domain' => 'net.nemein.personnel',
-                'name' => 'group',
+                'name' => 'schemadb',
             ),
 
         ),
 
         
-        'sort_order' => array
-        (
-            'start_fieldgroup' => array
-            (
-                'title' => 'sorting order',
-            ),
-            'title' => 'sorting order',
-            'type' => 'select',
-            'storage' => array
-            (
-                'location' => 'configuration',
-                'domain' => 'net.nemein.personnel',
-                'name' => 'group',
-            ),
-            'widget' => 'radiocheckselect',
-            'type_config' => array
-            (
-                'options' => array
-                (
-                    '' => 'default setting',
-                    'alphabetic' => 'alphabetic',
-                    'sorted' => 'manually sorted',
-                    'sorted and grouped' => 'manually sorted and grouped',
-                ),
-            ),
-        ),
+
     ),
 ),
