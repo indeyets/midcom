@@ -1,4 +1,5 @@
 'name' => 'org.openpsa.documents',
+'icon' => 'stock-icons/16x16/folder.png',
 'purecode' => false,
 'privileges' => array(),
 'class_definitions' => array

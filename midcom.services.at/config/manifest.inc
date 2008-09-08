@@ -1,4 +1,5 @@
 'name' => 'midcom.services.at',
+'icon' => 'stock-icons/16x16/stock_new-event.png',
 'purecode' => true,
 'privileges' => array(),
 'class_definitions' => array

@@ -1,4 +1,5 @@
 'name' => 'org.openpsa.jabber',
+'icon' => 'stock-icons/16x16/im-jabber.png',
 'purecode' => false,
 'privileges' => array(),
 'class_definitions' => array(),

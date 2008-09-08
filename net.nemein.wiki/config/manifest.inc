@@ -1,4 +1,5 @@
 'name' => 'net.nemein.wiki',
+'icon' => 'net.nemein.wiki/wiki.png',
 'purecode' => false,
 'version' => '2.3.0beta1',
 'state' => 'beta',

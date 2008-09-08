@@ -167,6 +167,10 @@ Component configuration
 Click this menu to configure the component settings specific to this folder.
 ---STRINGEND
 
+---STRING component depends on
+Component depends on
+---STRINGEND
+
 ---STRING copy
 Copy
 ---STRINGEND
@@ -312,7 +316,7 @@ Internal Metadata
 ---STRINGEND
 
 ---STRING invalidate cache
-Invalidate MidCOM's cache
+Invalidate Midgard's cache
 ---STRINGEND
 
 ---STRING keywords
@@ -783,7 +787,7 @@ Write mail
 Yes
 ---STRINGEND
 
----STRING component depends on
-Component depends on
+---STRING %s in %s
+
 ---STRINGEND
 

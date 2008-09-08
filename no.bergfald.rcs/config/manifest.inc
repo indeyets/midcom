@@ -1,4 +1,5 @@
 'name' => 'no.bergfald.rcs',
+'icon' => 'stock-icons/16x16/history.png',
 'description' => 'Front and backend for a versioning library',
 'purecode' => true,
 'version' => '1.1.0beta1',

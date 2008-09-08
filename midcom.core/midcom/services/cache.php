@@ -132,6 +132,9 @@ class midcom_services_cache
             debug_add("Invalidating the cache module {$name} completely.");
             $this->_modules[$name]->invalidate_all();
         }
+        
+        // Invalidate Midgard cache too
+        mgd_cache_invalidate();
 
         debug_pop();
     }

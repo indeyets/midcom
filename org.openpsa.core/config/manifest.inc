@@ -1,4 +1,5 @@
 'name' => 'org.openpsa.core',
+'icon' => 'org.openpsa.core/openpsa-16x16.png',
 'purecode' => true,
 'privileges' => array(),
 'class_definitions' => array(),

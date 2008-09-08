@@ -1,4 +1,5 @@
 'name' => 'midcom.helper.filesync',
+'icon' => 'stock-icons/16x16/stock_refresh.png',
 'purecode' => true,
 'version' => '0.1.0beta1',
 'state' => 'beta',

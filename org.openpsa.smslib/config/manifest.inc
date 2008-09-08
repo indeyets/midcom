@@ -1,4 +1,5 @@
 'name' => 'org.openpsa.smslib',
+'icon' => 'stock-icons/16x16/stock_cell-phone.png',
 'purecode' => true,
 'privileges' => array(),
 'class_definitions' => array(),

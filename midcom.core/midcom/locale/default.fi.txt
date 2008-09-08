@@ -171,6 +171,10 @@ Komponentin asetukset
 Klikkaa valikkoa muokataksesi komponentin tämän kansion kohtaisia asetuksia.
 ---STRINGEND
 
+---STRING component depends on
+Komponentin vaatimat kirjastot
+---STRINGEND
+
 ---STRING copy
 Kopioi
 ---STRINGEND
@@ -316,7 +320,7 @@ Sisäinen metadata
 ---STRINGEND
 
 ---STRING invalidate cache
-Tyhjennä MidCOMin välimuisti
+Tyhjennä Midgardin välimuisti
 ---STRINGEND
 
 ---STRING keywords
@@ -785,9 +789,5 @@ Kirjoita sähköposti
 
 ---STRING yes
 Kyllä
----STRINGEND
-
----STRING component depends on
-Komponentin vaatimat kirjastot
 ---STRINGEND
 

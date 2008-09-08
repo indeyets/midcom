@@ -164,6 +164,21 @@ class net_nemein_wiki_handler_view extends midcom_baseclasses_components_handler
             }
         }
 
+        if ($this->_page->can_do('midgard:update'))
+        {
+            $_MIDCOM->add_link_head
+            (
+                array
+                (
+                    'rel' => 'alternate',
+                    'type' => 'application/x-wiki',
+                    'title' => $this->_request_data['l10n_midcom']->get('edit'),
+                    'href' => $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "edit/{$this->_page->name}/",
+                )
+            );        
+            
+        }
+        
         $_MIDCOM->bind_view_to_object($this->_page, $this->_controller->datamanager->schema->name);
     }
 

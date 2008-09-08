@@ -103,6 +103,10 @@ reset($developers);
                 padding-bottom:10px;
                 /*border-bottom:1px solid #333333;*/
             }
+            td.role dd img
+            {
+                border: none;
+            }
             #content
             {
                 font-size: 1.2em;
@@ -170,18 +174,18 @@ reset($developers);
                                             echo sprintf($_MIDCOM->i18n->get_string('%s of packages of type %s', 'midcom'), $_MIDCOM->i18n->get_string($role, 'midcom'), $_MIDCOM->i18n->get_string($package_type, 'midcom')); 
                                             ?>
                                         </dt>
+                                        <dd>                                        
                                         <?php
                                         foreach ($components as $component => $component_name)
                                         {
-                                            $component_label = "<a href=\"" . $_MIDCOM->get_host_prefix() . "__mfa/asgard/components/{$component}/\">{$component_name}</a>";
-                                            ?>
-                                            <dd>
-                                                <?php 
-                                                echo "<strong>{$component_label}</strong> ({$component})"; 
-                                                ?>
-                                            </dd>
-                                            <?php
+                                            $icon = $_MIDCOM->componentloader->get_component_icon($component);
+                                            echo "<a href=\"" . $_MIDCOM->get_host_prefix() . "__mfa/asgard/components/{$component}/\">";
+                                            echo "<img src=\"" . MIDCOM_STATIC_URL . "/{$icon}\" alt=\"{$component_name} ({$component})\" title=\"{$component_name} ({$component})\" />";
+                                            echo "</a>\n";
                                         }
+                                        ?>
+                                        </dd>
+                                        <?php
                                     }
                                 }
                                 ?>

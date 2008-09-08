@@ -1,4 +1,5 @@
 'name' => 'midcom.helper.xsspreventer',
+'icon' => 'midcom.helper.xsspreventer/xsspreventer.png',
 'purecode' => true,
 'privileges' => array(),
 'class_definitions' => array(),

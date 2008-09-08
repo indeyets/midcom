@@ -1,4 +1,5 @@
 'name' => 'fi.mik.lentopaikkakisa',
+'icon' => 'fi.mik.lentopaikkakisa/lentopaikkakisa.png',
 'purecode' => false,
 'version' => '0.3.0beta1',
 'state' => 'beta',
