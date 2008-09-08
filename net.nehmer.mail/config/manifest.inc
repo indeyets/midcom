@@ -1,4 +1,5 @@
 'name' => 'net.nehmer.mail',
+'icon' => 'stock-icons/16x16/mail-reply-all.png',
 'version' => '1.9.0beta1',
 'state' => 'beta',
 'package.xml' => array

@@ -1,4 +1,5 @@
 'name' => 'pl.olga.windguru',
+'icon' => 'pl.olga.windguru/weather.png',
 'purecode' => false,
 'version' => '0.1.0beta1',
 'state' => 'beta',

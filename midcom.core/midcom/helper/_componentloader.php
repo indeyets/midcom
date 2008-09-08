@@ -1066,7 +1066,7 @@ class midcom_helper__componentloader
         return false;
     }
 
-    public function get_component_icon($component)
+    public function get_component_icon($component, $provide_fallback = true)
     {
         if ($component == 'midcom')
         {
@@ -1081,6 +1081,11 @@ class midcom_helper__componentloader
         if (isset($this->manifests[$component]->_raw_data['icon']))
         {
             return $this->manifests[$component]->_raw_data['icon'];
+        }
+        
+        if (!$provide_fallback)
+        {
+            return null;
         }
 
         return 'stock-icons/16x16/package.png';

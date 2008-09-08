@@ -1,4 +1,5 @@
 'name' => 'org.openpsa.products',
+'icon' => 'stock-icons/16x16/package.png',
 'purecode' => false,
 'version' => '1.2.0beta1',
 'state' => 'beta',

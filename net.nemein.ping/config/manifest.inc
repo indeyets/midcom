@@ -1,4 +1,5 @@
 'name' => 'net.nemein.ping',
+'icon' => 'net.nemein.ping/ping.png',
 'purecode' => true,
 'version' => '1.1.0beta1',
 'state' => 'beta',

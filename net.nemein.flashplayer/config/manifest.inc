@@ -1,4 +1,5 @@
 'name' => 'net.nemein.flashplayer',
+'icon' => 'stock-icons/16x16/media-playback-start.png',
 'purecode' => true,
 'version' => '1.1.0beta1',
 'state' => 'beta',

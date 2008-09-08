@@ -1,4 +1,5 @@
 'name' => 'net.nehmer.markdown',
+'icon' => 'stock-icons/16x16/document-text.png',
 'version' => '1.1.0beta1',
 'state' => 'beta',
 'purecode' => true,

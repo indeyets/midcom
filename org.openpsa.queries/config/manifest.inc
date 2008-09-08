@@ -1,4 +1,5 @@
 'name' => 'org.openpsa.queries',
+'icon' => 'org.openpsa.queries/folder-saved-search.png',
 'purecode' => true,
 'privileges' => array(),
 'class_definitions' => array
