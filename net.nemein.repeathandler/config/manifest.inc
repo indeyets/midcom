@@ -1,4 +1,5 @@
 'name' => 'net.nemein.repeathandler',
+'icon' => 'stock-icons/16x16/stock_task-recurring.png',
 'purecode' => true,
 'version' => '1.1.0beta1',
 'privileges' => array(),

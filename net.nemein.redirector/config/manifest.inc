@@ -1,4 +1,5 @@
 'name' => 'net.nemein.redirector',
+'icon' => 'stock-icons/16x16/forward.png',
 'purecode' => false,
 'version' => '1.1.0beta1',
 'privileges' => array(),

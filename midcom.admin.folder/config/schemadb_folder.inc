@@ -33,7 +33,7 @@
             (
                 'options' => midcom_admin_folder_folder_management::list_components($_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT)),
             ),
-            'widget' => 'select',
+            'widget' => 'selectcomponent',
         ),
         'style' => array
         (
