@@ -15,12 +15,6 @@
             'email' => 'eero.afheurlin@iki.fi',
             'role' => 'lead',
         ),
-        'bergie' => array
-        (
-            'name' => 'Henri Bergius',
-            'email' => 'henri.bergius@iki.fi',
-            'role' => 'lead',
-        ),
     ),
     'dependencies' => array
     (

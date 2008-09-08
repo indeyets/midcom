@@ -24,6 +24,7 @@
             'name' => 'Henri Bergius',
             'email' => 'henri.bergius@iki.fi',
             'role' => 'developer',
+            'active' => 'no',
         ),
     ),
     'dependencies' => array

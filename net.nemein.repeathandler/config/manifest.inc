@@ -16,13 +16,13 @@
             'name' => 'Henri Bergius',
             'email' => 'henri.bergius@iki.fi',
             'role' => 'lead',
-            'active' => 'yes',
+            'active' => 'no',
         ),
         'adrenalin' => array
         (
             'name' => 'Arttu Manninen',
             'email' => 'arttu.manninen@protie.fi',
-            'role' => 'developer',
+            'role' => 'lead',
             'active' => 'yes',
         ),
     ),

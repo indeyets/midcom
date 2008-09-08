@@ -15,7 +15,7 @@
             'name' => 'Henri Bergius',
             'email' => 'henri.bergius@iki.fi',
             'role' => 'lead',
-            'active' => 'yes',
+            'active' => 'no',
         ),
         'torben' => array
         (

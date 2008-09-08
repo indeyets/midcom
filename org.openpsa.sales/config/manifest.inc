@@ -19,6 +19,7 @@
             'name' => 'Henri Bergius',
             'email' => 'henri.bergius@iki.fi',
             'role' => 'lead',
+            'active' => 'no',
         ),
         'rambo' => array
         (

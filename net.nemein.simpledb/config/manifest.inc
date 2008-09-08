@@ -1,4 +1,5 @@
 'name' => 'net.nemein.simpledb',
+'icon' => 'stock-icons/16x16/stock_data-edit-table.png',
 'purecode' => false,
 'version' => '2.1.0beta1',
 'state' => 'beta',
@@ -15,6 +16,7 @@
             'name' => 'Henri Bergius',
             'email' => 'henri.bergius@iki.fi',
             'role' => 'lead',
+            'active' => 'no',
         ),
         'rambo' => array
         (

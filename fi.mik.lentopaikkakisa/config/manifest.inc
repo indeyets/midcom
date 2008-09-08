@@ -22,12 +22,14 @@
             'name' => 'Henri Bergius',
             'email' => 'henri.bergius@iki.fi',
             'role' => 'lead',
+            'active' => 'no',
         ),
         'tigert' => array
         (
             'name' => 'Tuomas Kuosmanen',
             'email' => 'tigert@gmail.com',
             'role' => 'developer',
+            'active' => 'no',
         ),
     ),
     'dependencies' => array
