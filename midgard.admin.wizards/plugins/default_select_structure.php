@@ -33,7 +33,7 @@ class default_select_structure extends midcom_baseclasses_components_handler
             if (substr($this->_request_data['plugin_config']['structure_config_path'], 0, 5) == 'file:')
             {
                 // Expand the path
-                $this->_request_data['plugin_config']['structure_config_path'] = MIDCOM_ROOT . substr($plugin_config['src'], 5);
+                $this->_request_data['plugin_config']['structure_config_path'] = MIDCOM_ROOT . substr($this->_request_data['plugin_config']['structure_config_path'], 5);
             }
         }
 
