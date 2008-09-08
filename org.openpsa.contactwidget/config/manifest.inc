@@ -1,4 +1,5 @@
 'name' => 'org.openpsa.contactwidget',
+'icon' => 'org.openpsa.contactwidget/contact-widget-renderer.png',
 'purecode' => true,
 'privileges' => array(),
 'class_definitions' => array(),

@@ -1,4 +1,5 @@
 'name' => 'org.openpsa.notifications',
+'icon' => 'org.openpsa.notifications/notification-system.png',
 'purecode' => true,
 'privileges' => array(),
 'version' => '0.1.0beta1',

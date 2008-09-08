@@ -1,5 +1,6 @@
 'name' => 'midcom.admin.user',
 'description' => 'User management tool',
+'icon' => 'midcom.admin.user/user-manager.png',
 'purecode' => true,
 'version' => '1.1.0beta1',
 'privileges' => array(),

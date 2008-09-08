@@ -1,4 +1,5 @@
 'name' => 'org.openpsa.calendarwidget',
+'icon' => 'org.openpsa.calendarwidget/calendar-widget-renderer.png',
 'purecode' => true,
 'privileges' => array(),
 'class_definitions' => array(),

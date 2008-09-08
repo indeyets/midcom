@@ -1,4 +1,5 @@
 'name' => 'net.nehmer.blog',
+'icon' => 'net.nehmer.blog/news-listing.png',
 'version' => '1.6.1',
 'state' => 'beta',
 'class_definitions' => array

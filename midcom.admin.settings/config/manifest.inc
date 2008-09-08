@@ -1,4 +1,5 @@
 'name' => 'midcom.admin.settings',
+'icon' => 'stock-icons/16x16/configuration.png',
 'description' => 'This module handles MidCOM local configuration.',
 'purecode' => true,
 'version' => '0.3.0beta1',
