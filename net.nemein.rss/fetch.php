@@ -220,6 +220,14 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
      */
     private function import_article($item)
     {
+        if (   (   empty($item['title'])
+                || trim($item['title']) == '...')
+            && empty($item['guid']))
+        {
+            // Something wrong with this entry, skip it
+            return false;
+        }
+
         $guid_property = $this->_guid_property;
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_feed->node);
