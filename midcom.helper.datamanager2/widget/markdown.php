@@ -72,19 +72,29 @@ class midcom_helper_datamanager2_widget_markdown extends midcom_helper_datamanag
             debug_pop();
             return false;
         }
-        
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/Pearified/JavaScript/Prototype/prototype.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/control.textarea.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/control.textarea.markdown.js');
+
+        $_MIDCOM->enable_jquery();
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/markitup/jquery.markitup.pack.js');
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/markitup/sets/markdown/set.js');
         $_MIDCOM->add_link_head
         (
             array
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/control.textarea.markdown.css',
+                'href' => MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/markitup/skins/markitup/style.css',
             )
         );
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/markitup/sets/markdown/style.css',
+            )
+        );
+        
         return true;
     }
 
@@ -110,7 +120,7 @@ class midcom_helper_datamanager2_widget_markdown extends midcom_helper_datamanag
         $elements[] =& $textarea;
         $this->_form->applyFilter($this->name, 'trim');
         
-        $toolbar =& HTML_QuickForm::createElement('static', "{$this->name}_toolbar", '', "<script>{$this->name}_markdown_toolbar = new Control.TextArea.ToolBar.Markdown('{$this->_namespace}{$this->name}');\n</script>");
+        $toolbar =& HTML_QUICKFORM::createElement('static', "{$this->name}_toolbar", '', "<script> jQuery('#{$this->_namespace}{$this->name}').markItUp(mySettings);\n</script>");
         $elements[] =& $toolbar;
         
         // Load help text

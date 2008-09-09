@@ -46,6 +46,12 @@
             'email' => 'olga@olga.pl',
             'role' => 'developer',
         ),
+        'jbergius' => array
+        (
+            'name' => 'Joonas Bergius',
+            'email' => 'joonas.bergius@gmail.com',
+            'role' => 'developer',
+        ),
     ),
     'dependencies' => array
     (
