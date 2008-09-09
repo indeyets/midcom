@@ -31,6 +31,12 @@ foreach ($data['navigation_items'] as $i => $item)
     // Get the icon from corresponding reflector class
     $icon = midcom_helper_reflector::get_object_icon($item[MIDCOM_NAV_OBJECT], true);
     
+    if (   isset($item[MIDCOM_NAV_COMPONENT])
+        && ($tmp = $_MIDCOM->componentloader->get_component_icon($item[MIDCOM_NAV_COMPONENT], false)))
+    {
+        $icon = MIDCOM_STATIC_URL . "/{$tmp}";
+    }
+    
     if ($icon)
     {
         $icon = " style=\"background-image: url('{$icon}');\"";
