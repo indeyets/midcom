@@ -261,10 +261,10 @@ class midcom_helper_nav
         $parent_topic = new midcom_db_topic($parent_node_id);
         if (! $parent_topic)
         {
-            return FALSE;
+            return false;
         }
 
-        $navorder = $parent_topic->parameter('midcom.helper.nav', 'navorder');
+        $navorder = (int) $parent_topic->get_parameter('midcom.helper.nav', 'navorder');
 
         switch ($navorder)
         {
@@ -288,10 +288,10 @@ class midcom_helper_nav
                 $navorder = 'topicsfirst';
                 break;
         }
-
+        
         $nav_object = midcom_helper_itemlist::factory($navorder, $this, $parent_topic);
         $result = $nav_object->get_sorted_list();
-
+        
         return $result;
     }
 

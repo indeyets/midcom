@@ -17,7 +17,7 @@
  * 
  * @package midcom
  */
-class midcom_helper_itemlist 
+abstract class midcom_helper_itemlist 
 {
    /** 
     * A reference to the NAP instance we belong to.
@@ -70,14 +70,10 @@ class midcom_helper_itemlist
     *
     * @return Array An array of all objects. 
     */
-    function get_sorted_list () 
-    {
-        die ('This function has to be overridden.');
-    }
-
+    abstract function get_sorted_list();
     
    /**
-    * get style. If the elements should use a special style, return that here. 
+    * Get style. If the elements should use a special style, return that here. 
     * if not. use default.
     * 
     * 
@@ -113,7 +109,7 @@ class midcom_helper_itemlist
      * @return midcom_helper_itemlist sortobject
      */
     /** @ignore */
-    function factory ($sorting, &$_basicnav ,&$parent_topic) 
+    static public function factory ($sorting, &$_basicnav ,&$parent_topic) 
     {
         if (! is_a($parent_topic, 'midgard_topic' )) 
         {

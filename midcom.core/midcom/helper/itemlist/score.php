@@ -14,7 +14,6 @@
  */
 class midcom_helper_itemlist_score extends midcom_helper_itemlist
 {
-  
     /**
      * get_sorted_list  - get a list objects ready for showing. 
      * 
