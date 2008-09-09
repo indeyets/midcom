@@ -40,6 +40,12 @@
             'role' => 'developer',
             'active' => 'yes',
         ),
+        'jbergius' => array
+        (
+            'name' => 'Joonas Bergius',
+            'email' => 'joonas.bergius@gmail.com',
+            'role' => 'developer',
+        ),
     ),
     'dependencies' => array
     (

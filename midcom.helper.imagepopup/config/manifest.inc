@@ -36,6 +36,12 @@
             'email' => 'jerry.jalava@nemein.com',
             'role' => 'developer',
         ),
+        'jbergius' => array
+        (
+            'name' => 'Joonas Bergius',
+            'email' => 'joonas.bergius@gmail.com',
+            'role' => 'developer',
+        ),
     ),
     'dependencies' => array
     (
