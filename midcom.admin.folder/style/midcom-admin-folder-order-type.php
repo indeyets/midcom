@@ -5,6 +5,12 @@ $count = count($data['navigation_items']);
 
 foreach ($data['navigation_items'] as $i => $item)
 {
+    if (   isset($item[MIDCOM_NAV_SORTABLE])
+        && !$item[MIDCOM_NAV_SORTABLE])
+    {
+        continue;
+    }
+    
     if ($item[MIDCOM_NAV_GUID])
     {
         $identificator = $item[MIDCOM_NAV_GUID];
@@ -22,7 +28,24 @@ foreach ($data['navigation_items'] as $i => $item)
         $style = ' style="display: none;"';
     }
     
-    echo "        <li class=\"sortable {$item[MIDCOM_NAV_TYPE]}\">\n";
+    // Get the icon from corresponding reflector class
+    $icon = midcom_helper_reflector::get_object_icon($item[MIDCOM_NAV_OBJECT], true);
+    
+    if ($icon)
+    {
+        $icon = " style=\"background-image: url('{$icon}');\"";
+    }
+    else
+    {
+        $icon = '';
+    }
+    
+    if (!$item[MIDCOM_NAV_GUID])
+    {
+        $icon = " style=\"background-image: url('" . MIDCOM_STATIC_URL . "/stock-icons/16x16/script.png');\"";
+    }
+    
+    echo "        <li class=\"sortable {$item[MIDCOM_NAV_TYPE]}\"{$icon}>\n";
     echo "            <input type=\"text\" name=\"sortable[{$item[MIDCOM_NAV_TYPE]}][{$identificator}]\" value=\"{$index}\"{$style} />\n";
     echo "            {$item[MIDCOM_NAV_NAME]}\n";
     echo "        <li>\n";

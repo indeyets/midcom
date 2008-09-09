@@ -29,7 +29,7 @@ class midcom_admin_folder_handler_move extends midcom_baseclasses_components_han
      *
      * @access public
      */
-    function midcom_admin_folder_handler_move()
+    function __construct()
     {
         parent::__construct();
     }

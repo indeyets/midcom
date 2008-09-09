@@ -21,9 +21,10 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
      *
      * @access public
      */
-    function midcom_admin_folder_handler_order ()
+    function __construct()
     {
         parent::__construct();
+        $_MIDCOM->componentloader->load('midcom.helper.reflector');
     }
 
     /**
@@ -36,7 +37,7 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
     {
         if (isset($_POST['f_navorder']))
         {
-            $this->_topic->set_parameter('midcom.helper.nav', 'nav_order', $_POST['f_navorder']);
+            $this->_topic->set_parameter('midcom.helper.nav', 'navorder', $_POST['f_navorder']);
         }
 
         // Form has been handled if cancel has been pressed
@@ -44,7 +45,6 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
         {
             $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midcom.admin.folder'), $_MIDCOM->i18n->get_string('cancelled'));
             $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_topic->guid));
-            exit;
             // This will exit
         }
 
@@ -53,7 +53,7 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
         {
             return false;
         }
-
+        
         // Success tells whether the update was successful or not. On default everything goes fine,
         // but when any errors are encountered, there will be a uimessage that will be shown.
         $success = true;
@@ -138,12 +138,11 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
                 }
             }
         }
-
+        
         if ($success)
         {
             $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('midcom.admin.folder'), $_MIDCOM->i18n->get_string('order saved'));
             $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_topic->guid));
-            exit;
             // This will exit
         }
     }
@@ -229,7 +228,7 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
     function _show_order($handler_id, &$data)
     {
         $data['navigation'] = array();
-        $data['navorder'] = $this->_topic->get_parameter('midcom.helper.nav', 'nav_order');
+        $data['navorder'] = $this->_topic->get_parameter('midcom.helper.nav', 'navorder');
 
         // Navorder list for the selection
         $data['navorder_list'] = array
@@ -248,7 +247,7 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
         // Initialize the midcom_helper_nav or navigation access point
         $nap = new midcom_helper_nav();
 
-        switch ((int) $this->_topic->get_parameter('midcom.helper.nav', 'nav_order'))
+        switch ((int) $this->_topic->get_parameter('midcom.helper.nav', 'navorder'))
         {
             case MIDCOM_NAVORDER_DEFAULT:
                 $data['navigation']['nodes'] = array();

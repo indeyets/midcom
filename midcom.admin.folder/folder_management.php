@@ -25,7 +25,7 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
     /**
      * Simple constructor, which only initializes the parent constructor.
      */
-    function midcom_admin_folder_folder_management()
+    function __construct()
     {
         parent::__construct();
     }

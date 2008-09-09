@@ -19,7 +19,7 @@ class midcom_admin_folder_handler_approvals extends midcom_baseclasses_component
      *
      * @access public
      */
-    function midcom_admin_folder_handler_approvals ()
+    function __construct ()
     {
         parent::__construct();
     }

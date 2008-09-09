@@ -19,7 +19,7 @@ class midcom_admin_folder_handler_delete extends midcom_baseclasses_components_h
      *
      * @access public
      */
-    function midcom_admin_folder_handler_delete ()
+    function __construct ()
     {
         parent::__construct();
     }

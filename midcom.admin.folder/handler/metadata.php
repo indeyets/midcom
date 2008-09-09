@@ -45,7 +45,7 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
      *
      * @access public
      */
-    function midcom_admin_folder_handler_metadata()
+    function __construct()
     {
         parent::__construct();
     }
