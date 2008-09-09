@@ -25,7 +25,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      *
      * @param string/midgard_object $src classname or object
      */
-    function midcom_helper_reflector($src)
+    function __construct($src)
     {
         $this->_component = 'midcom.helper.reflector';
         parent::__construct();
@@ -159,7 +159,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      * @access public
      * @return string Class label
      */
-    function get_class_label()
+    public function get_class_label()
     {
 
         static $component_l10n = false;
@@ -364,12 +364,20 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      * @param string $type  Name of the type
      * @return string       URL name of the image
      */
-    function get_create_icon($type)
+    static public function get_create_icon($type)
     {
+        static $config = null;
         static $config_icon_map = array();
+        
+        // Get the component configuration
+        if (is_null($config))
+        {
+            $config =& $GLOBALS['midcom_component_data']['midcom.helper.reflector']['config'];
+        }
+        
         if (empty($config_icon_map))
         {
-            $icons2classes = $this->_config->get('create_type_magic');
+            $icons2classes = $config->get('create_type_magic');
             //sanity
             if (!is_array($icons2classes))
             {
@@ -433,21 +441,30 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      * 
      * @static
      * @access public
-     * @param mixed $obj    MgdSchema object
-     * @return string       URL name of the image
+     * @param mixed $obj          MgdSchema object
+     * @param boolean $url_only   Get only the URL location instead of full <img /> tag
+     * @return string             URL name of the image
      */
-    function get_object_icon(&$obj)
+    static public function get_object_icon(&$obj, $url_only = false)
     {
+        static $config = null;
         static $config_icon_map = array();
+        
+        // Get the component configuration
+        if (is_null($config))
+        {
+            $config =& $GLOBALS['midcom_component_data']['midcom.helper.reflector']['config'];
+        }
+        
         if (empty($config_icon_map))
         {
-            $icons2classes = $this->_config->get('object_icon_magic');
+            $icons2classes = $config->get('object_icon_magic');
             //sanity
             if (!is_array($icons2classes))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add('Config key "object_icon_magic" is not an array', MIDCOM_LOG_ERROR);
-                debug_print_r("\$this->_config->get('object_icon_magic')", $icons2classes, MIDCOM_LOG_INFO);
+                debug_print_r("\$config->get('object_icon_magic')", $icons2classes, MIDCOM_LOG_INFO);
                 debug_pop();
                 unset($icons2classes);
             }
@@ -513,7 +530,15 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         }
 
         // TODO: What if the icon is not in stock-icons/16x16 ?? especially the ->get_icon should probably be able to specify components static path
-        $icon = "<img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/{$icon}\" align=\"absmiddle\" border=\"0\" alt=\"{$object_class}\" /> ";
+        if ($url_only)
+        {
+            $icon = MIDCOM_STATIC_URL . "/stock-icons/16x16/{$icon}";
+        }
+        else
+        {
+            $icon = "<img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/{$icon}\" align=\"absmiddle\" border=\"0\" alt=\"{$object_class}\" /> ";
+        }
+        
         debug_pop();
         return $icon;
     }
@@ -524,7 +549,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      * @access public
      * @return array
      */
-    function get_result_headers()
+    public function get_result_headers()
     {
         $headers = array();
         $properties = $this->get_search_properties();
@@ -544,7 +569,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      *
      * @return array of property names
      */
-    function get_search_properties()
+    public function get_search_properties()
     {
         // Check against static calling
         if (   !isset($this->mgdschema_class)
@@ -666,7 +691,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      *
      * @return array multidimensional array keyed by property, values are arrays with link info (or false in case of failure)
      */
-    function get_link_properties()
+    public function get_link_properties()
     {
         // Check against static calling
         if (   !isset($this->mgdschema_class)
@@ -830,7 +855,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      * @param string $type    MgdSchema type
      * @return mixed          MgdSchema object
      */
-    function get_object($guid, $type)
+    static public function get_object($guid, $type)
     {
         static $objects = array();
 
@@ -1136,7 +1161,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
      * @param mixed $object     MgdSchema object or MidCOM db object
      * @return array            id, parent property, class and label of the object
      */
-    function get_target_properties($object)
+    static public function get_target_properties($object)
     {
         $mgdschema_class = midcom_helper_reflector::resolve_baseclass(get_class($object));
         $mgdschema_object = new $mgdschema_class($object->guid);
