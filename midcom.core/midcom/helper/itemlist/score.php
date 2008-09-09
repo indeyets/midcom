@@ -80,10 +80,10 @@ class midcom_helper_itemlist_score extends midcom_helper_itemlist
         // set. 
         if ($a[MIDCOM_NAV_SCORE] === $b[MIDCOM_NAV_SCORE])
         {
-             return strcmp($a[MIDCOM_NAV_NAME],$b[MIDCOM_NAV_NAME]);
+             return strcmp($a[MIDCOM_NAV_NAME], $b[MIDCOM_NAV_NAME]);
         }
         
-        return (integer) (($a[MIDCOM_NAV_SCORE] > $b[MIDCOM_NAV_SCORE]) ? 1 : -1);
+        return (integer) (($a[MIDCOM_NAV_SCORE] < $b[MIDCOM_NAV_SCORE]) ? 1 : -1);
     }
 }
 ?>

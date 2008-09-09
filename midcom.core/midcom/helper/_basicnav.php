@@ -62,6 +62,7 @@
  * - MIDCOM_META_EDITOR  => Last modifier of the element (MidgardPerson)
  * - MIDCOM_META_EDITED  => Last modification date (UNIX Timestamp)
  * - MIDCOM_NAV_GUID     => Optional argument denoting the GUID of the referred element
+ * - MIDCOM_NAV_SORTABLE => Optional argument denoting whether the element is sortable
  * - MIDCOM_NAV_TOOLBAR  => Toolbar data (see below)
  *
  * Both MIDCOM_NAV_SITE and MIDCOM_NAV_ADMIN are both deprecated. MIDCOM_NAV_ADMIN
@@ -458,6 +459,7 @@ class midcom_helper__basicnav
         $nodedata[MIDCOM_NAV_TYPE] = 'node';
         $nodedata[MIDCOM_NAV_SCORE] = $topic->metadata->score;
         $nodedata[MIDCOM_NAV_COMPONENT] = $path;
+        $nodedata[MIDCOM_NAV_SORTABLE] = true;
 
         if (!array_key_exists(MIDCOM_NAV_ICON, $nodedata))
         {
@@ -584,6 +586,7 @@ class midcom_helper__basicnav
         {
             $leaves[$id][MIDCOM_NAV_FULLURL] = $fullprefix . $leaves[$id][MIDCOM_NAV_RELATIVEURL];
             $leaves[$id][MIDCOM_NAV_ABSOLUTEURL] = $absoluteprefix . $leaves[$id][MIDCOM_NAV_RELATIVEURL];
+            
             if (is_null($leaves[$id][MIDCOM_NAV_GUID]))
             {
                 $leaves[$id][MIDCOM_NAV_PERMALINK] = $leaves[$id][MIDCOM_NAV_FULLURL];
@@ -711,6 +714,11 @@ class midcom_helper__basicnav
             else if (! array_key_exists(MIDCOM_NAV_OBJECT, $leaf))
             {
                 $leaf[MIDCOM_NAV_OBJECT] = $_MIDCOM->dbfactory->get_object_by_guid($leaf[MIDCOM_NAV_GUID]);
+            }
+            
+            if (!isset($leaf[MIDCOM_NAV_SORTABLE]))
+            {
+                $leaf[MIDCOM_NAV_SORTABLE] = true;
             }
             
             // Get the pseudo leaf score from the topic

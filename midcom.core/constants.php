@@ -56,11 +56,12 @@ define ('MIDCOM_NAV_RELATIVEURL', 17);
 define ('MIDCOM_NAV_ABSOLUTEURL', 18);
 //define ('MIDCOM_NAV_SUBNODES', 19); /* Yet unused. */
 //define ('MIDCOM_NAV_LEAVES', 20);
-//define ('MIDCOM_NAV_VIEWERGROUPS', 21);
+//define ('MIDCOM_NAV_VIEWERGROUPS', 21); // Deprecated, using ACL instead
 define ('MIDCOM_NAV_ACL', 22);
 define ('MIDCOM_NAV_ICON', 23);
 define ('MIDCOM_NAV_CONFIGURATION', 24);
-define ('MIDCOM_NAV_LEAFID',25);
+define ('MIDCOM_NAV_LEAFID', 25);
+define ('MIDCOM_NAV_SORTABLE', 26);
 
 define ('MIDCOM_META_CREATOR',100); /* DEPRECATED AS OF 2.4.0 */
 define ('MIDCOM_META_CREATED',101); /* DEPRECATED AS OF 2.4.0 */
