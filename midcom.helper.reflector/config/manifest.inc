@@ -17,5 +17,11 @@
             'email' => 'rambo@nemein.com',
             'role' => 'lead',
         ),
+        'adrenalin' => array
+        (
+            'name' => 'Arttu Manninen',
+            'email' => 'arttu@kaktus.cc',
+            'role' => 'developer',
+        ),
     ),
 ),
