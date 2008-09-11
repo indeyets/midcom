@@ -115,7 +115,9 @@
  *   'no-cache' activates no-cache mode that actively tries to circumvent all caching<br/>
  *   'revalidate' is the default which sets 'must-revalidate' and presses the issue by setting Expires to current time<br/>
  *   'public' and 'private' enable caching with the cache-control header of the same name, default expiry timestamps are generated using the cache_module_content_default_lifetime
- * - <b>int cache_module_content_default_lifetime:</b> How many seconds from now to set the default Expires header to, defaults to one minute
+ * - <b>int cache_module_content_default_lifetime:</b> How many seconds from now to set the default Expires header to, defaults to 15 minutes. Also used as default expiry time for content-cache entries that have no expiry set.
+ * - <b>string cache_module_content_headers_strategy_authenticated:</b> Defaults to 'private', this is equivalent to cache_module_content_headers_strategy but applies when we have authenticated user.
+ * - <b>int cache_module_content_default_lifetime_authenticated:</b> defaults to 0, equivalent to cache_module_content_default_lifetime but applies to authenticated users (except this does not set content-cache expiry). These two options are added to combat braindead proxies.
  * - <b>string cache_module_content_caching_strategy:</b> Valid values are<br/>
  *   'user' the "classic" mode, per user content-cache, default<br/>
  *   'memberships' cache per group memberships (users that have same memberships share same cache), for many cases this should offer more performance and smaller cache but if you use per-user privileges or other user specific processing this will cause hard-to-debug issues<br/>
@@ -358,7 +360,7 @@ $GLOBALS['midcom_config_default']['cache_module_content_backend'] = Array('drive
 $GLOBALS['midcom_config_default']['cache_module_content_uncached'] = false;
 $GLOBALS['midcom_config_default']['cache_module_content_headers_strategy'] = 'revalidate';
 $GLOBALS['midcom_config_default']['cache_module_content_headers_strategy_authenticated'] = 'private';
-$GLOBALS['midcom_config_default']['cache_module_content_default_lifetime'] = 60; // Seconds, added to gmdate() for expiry timestamp (in case no other expiry is set)
+$GLOBALS['midcom_config_default']['cache_module_content_default_lifetime'] = 900; // Seconds, added to gmdate() for expiry timestamp (in case no other expiry is set), also used as default expiry for content-cache entries that have no expiry set
 $GLOBALS['midcom_config_default']['cache_module_content_default_lifetime_authenticated'] = 0; // as above but concerns only authenticated state
 $GLOBALS['midcom_config_default']['cache_module_content_caching_strategy'] = 'user'; // Valid options are 'user' (default), 'memberships' and 'public'
 
@@ -452,6 +454,10 @@ $GLOBALS['midcom_config_default']['attachment_cache_enabled'] = false;
 $GLOBALS['midcom_config_default']['attachment_cache_root'] = '/var/lib/midgard/vhosts/example.net/80/midcom-static/blobs';
 $GLOBALS['midcom_config_default']['attachment_cache_url'] = '/midcom-static/blobs';
 // $GLOBALS['midcom_config_default']['attachment_cache_blobdir'] = '/var/lib/midgard/blobs/midgard';
+
+//X-sendfile support
+$GLOBALS['midcom_config_default']['attachment_xsendfile_blobdir'] = null; // Try '/var/lib/midgard/blobs/midgard'
+
 
 // Utilities
 $GLOBALS['midcom_config_default']['utility_imagemagick_base'] = '';

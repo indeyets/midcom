@@ -296,6 +296,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
         /**
          * This can leak data usefull for attacker, OTOH it's very handy for debugging 
+         *
         if ($context === 0)
         {
             header("X-MidCOM-request-id-source: {$identifier_source}");
@@ -304,7 +305,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         debug_add("Generating context {$context} request-identifier from: {$identifier_source}");
         debug_print_r('$customdata was: ', $customdata);
         debug_pop();
-        */
+        /* */
         return 'R-' . md5($identifier_source);
     }
 
@@ -932,7 +933,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      * has been called, the cache file will not be written, but the header stuff will be added like
      * usual to allow for browser-side caching.
      */
-    function _finish_caching()
+    function _finish_caching($etag=null)
     {
         if (   $this->_no_cache
             || $this->_live_mode)
@@ -974,41 +975,13 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         }
         else
         {
-            // Construct cache identifiers
-            $context = $_MIDCOM->get_current_context();
-            $request_id = $this->generate_request_identifier($context);
             /**
              * See the FIXME in generate_content_identifier on why we use the content hash
             $content_id = $this->generate_content_identifier($context);
              */
             $content_id = 'C-' . $etag;
-
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Creating cache entry for {$content_id} as {$request_id}", MIDCOM_LOG_INFO);
-            debug_pop();
-
-            if (!is_null($this->_expires))
-            {
-                $entry_data['expires'] = $this->_expires;
-            }
-            else
-            {
-                // Use default expiry for cache entry, most components don't bother calling expires() properly
-                $entry_data['expires'] = time() + $this->_default_lifetime;
-            }
-            $entry_data['etag'] = $etag;
-            $entry_data['last_modified'] = $this->_last_modified;
-            $entry_data['sent_headers'] = $this->_sent_headers;
-
-            $this->_meta_cache->open(true);
-            $this->_meta_cache->put($content_id, $entry_data);
+            $this->write_meta_cache($content_id, $etag);
             $this->_data_cache->put($content_id, $cache_data);
-            $this->_meta_cache->put($request_id, $content_id);
-            $this->_meta_cache->close();
-
-            // Cache where the object have been
-            $this->store_context_guid_map($context, $content_id, $request_id);
-
         }
 
         // Finish caching.
@@ -1019,6 +992,54 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $this->_obrunning = false;
         }
     }
+
+    /**
+     * Writes meta-cache entry from context data using given content id
+     * Used to be part of _finish_caching, but needed by serve-attachment method in midcom_application as well
+     */
+    function write_meta_cache($content_id, $etag)
+    {
+        // Construct cache identifiers
+        $context = $_MIDCOM->get_current_context();
+        $request_id = $this->generate_request_identifier($context);
+        
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Creating cache entry for {$content_id} as {$request_id}", MIDCOM_LOG_INFO);
+        debug_pop();
+
+        if (!is_null($this->_expires))
+        {
+            $entry_data['expires'] = $this->_expires;
+        }
+        else
+        {
+            // Use default expiry for cache entry, most components don't bother calling expires() properly
+            /*
+            debug_push_class(__CLASS__, __FUNCTION__);        
+            debug_add("explicit expires is not set, using \$this->_default_lifetime: {$this->_default_lifetime}");
+            debug_pop();
+            */
+            $entry_data['expires'] = time() + $this->_default_lifetime;
+        }
+        $entry_data['etag'] = $etag;
+        $entry_data['last_modified'] = $this->_last_modified;
+        $entry_data['sent_headers'] = $this->_sent_headers;
+        /**
+         * Remove comment to debug cache
+         */
+        debug_push_class(__CLASS__, __FUNCTION__);        
+        debug_print_r("Writing meta-cache entry {$content_id}", $entry_data);
+        debug_pop();
+        /* */
+        $this->_meta_cache->open(true);
+        $this->_meta_cache->put($content_id, $entry_data);
+        $this->_meta_cache->put($request_id, $content_id);
+        $this->_meta_cache->close();
+
+        // Cache where the object have been
+        $this->store_context_guid_map($context, $content_id, $request_id);
+    }
+
 
     function store_context_guid_map($context, $content_id, $request_id)
     {
@@ -1246,16 +1267,18 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         // Just to be sure not to mess the headers sent by no_cache in case it was called
         if (!$this->_no_cache)
         {
-            $strategy = $this->_headers_strategy;
-            $default_lifetime = $this->_default_lifetime;
+            // Typecast to make copy in stead of reference
+            $strategy = (string)$this->_headers_strategy;
+            $default_lifetime = (int)$this->_default_lifetime;
             if (   (   isset($_MIDCOM->auth)
                     && is_a($_MIDCOM->auth, 'midcom_services_auth')
                     && $_MIDCOM->auth->is_valid_user())
                 || !empty($_MIDGARD['user'])
                 )
             {
-                $strategy = $this->_headers_strategy_authenticated;
-                $default_lifetime = $this->_default_lifetime_authenticated;
+                // Typecast to make copy in stead of reference
+                $strategy = (string)$this->_headers_strategy_authenticated;
+                $default_lifetime = (int)$this->_default_lifetime_authenticated;
             }
             switch($strategy)
             {

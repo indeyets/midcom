@@ -2269,15 +2269,19 @@ class midcom_application
                 $this->relocate("{$GLOBALS['midcom_config']['attachment_cache_url']}/{$subdir}/{$attachment->guid}_{$attachment->name}", 301);
             }
         }
-        
+
+        debug_push("midcom_application::serve_attachment");
+
         // Sanity check expires
         if (   !is_int($expires)
             || $expires < -1)
         {
-            $this->generate_error(MIDCOM_ERRCRIT, "\$expires has to be a positive integer or -1.");
+            $this->generate_error(MIDCOM_ERRCRIT, "\$expires has to be a positive integer or zero or -1.");
             // This will exit()
         }
 
+        // Doublecheck that this is registered
+        $this->cache->content->register($attachment->guid);
         $stats = $attachment->stat();
         $last_modified =& $stats[9];
 
@@ -2315,14 +2319,14 @@ class midcom_application
         }
         
         $this->header("ETag: {$etag}");
-        $this->cache->content->register_sent_header("ETag: {$etag}");
+        //$this->cache->content->register_sent_header("ETag: {$etag}");
         $this->cache->content->content_type($attachment->mimetype);
-        $this->header("Content-Type: {$attachment->mimetype}");
+        //$this->header("Content-Type: {$attachment->mimetype}");
         $this->cache->content->register_sent_header("Content-Type: {$attachment->mimetype}");
         $this->header("Last-Modified: " . gmdate("D, d M Y H:i:s", $last_modified) . ' GMT');
-        $this->cache->content->register_sent_header("Last-Modified: " . gmdate("D, d M Y H:i:s", $last_modified) . ' GMT');
+        //$this->cache->content->register_sent_header("Last-Modified: " . gmdate("D, d M Y H:i:s", $last_modified) . ' GMT');
         $this->header("Content-Length: " . $stats[7]);
-        $this->cache->content->register_sent_header("Content-Length: " . $stats[7]);
+        //$this->cache->content->register_sent_header("Content-Length: " . $stats[7]);
         //$this->header("Content-Disposition: attachment; filename={$attachment->name}");
         //$this->cache->content->register_sent_header("Content-Disposition: attachment; filename={$attachment->name}");
         $this->header("Content-Description: {$attachment->title}");
@@ -2330,7 +2334,7 @@ class midcom_application
         
         // PONDER: Support ranges ("continue download") somehow ?
         $this->header("Accept-Ranges: none");
-        $this->cache->content->register_sent_header("Accept-Ranges: none");
+        //$this->cache->content->register_sent_header("Accept-Ranges: none");
 
         if ($expires > 0)
         {
@@ -2343,13 +2347,49 @@ class midcom_application
             $this->cache->content->no_cache();
         }
         // TODO: Check metadata service for the real expiry timestamp ?
-        
+
         $this->cache->content->cache_control_headers();
+        /* live mode automatically enters no_cache, so we disable buffers ourself
+        $this->cache->content->enable_live_mode();
+        */
+
+        $send_att_body = true;
+        if (isset($GLOBALS['midcom_config']['attachment_xsendfile_blobdir']))
+        {
+            $att_local_path = "{$GLOBALS['midcom_config']['attachment_xsendfile_blobdir']}/{$attachment->location}";
+            debug_add("Checking is_readable({$att_local_path})");
+            if (is_readable($att_local_path))
+            {
+                $this->header("X-Sendfile: {$att_local_path}");
+                $send_att_body = false;
+            }
+        }
+
+        // Store metadata in cache so _check_hit() can help us
+        if (   !$this->cache->content->_uncached
+            && !$this->cache->content->_no_cache)
+        {
+            $this->cache->content->write_meta_cache('A-' . $etag, $etag);
+        }
 
         while(@ob_end_flush());
+
+        if (!$send_att_body)
+        {
+            debug_add('NOT sending file (X-Sendfile will take care of that, exit()ing so nothing has a chance the mess things up anymore');
+            debug_pop();
+            exit();
+        }
+
+        $f = $attachment->open('r');
+        if (! $f)
+        {
+            debug_pop();
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to open attachment for reading: ' . mgd_errstr());
+            // This will exit()
+        }
         fpassthru($f);
         $attachment->close();
-
         debug_add('file sent, exit()ing so nothing has a chance the mess things up anymore');
         debug_pop();
         exit();
