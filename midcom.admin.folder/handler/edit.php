@@ -234,7 +234,7 @@ class midcom_admin_folder_handler_edit extends midcom_baseclasses_components_han
                     }
 
                     // Get the relocation url
-                    $url = "{$prefix}/{$this->_new_topic->name}/";
+                    $url = "{$prefix}{$this->_new_topic->name}/";
                 }
 
                 $_MIDCOM->relocate($url);
