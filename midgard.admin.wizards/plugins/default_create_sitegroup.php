@@ -13,8 +13,6 @@
  */
 class default_create_sitegroup extends midcom_baseclasses_components_handler
 {
-
-
    /**
     * Simple constructor, which only initializes the parent constructor.
     */
@@ -63,8 +61,11 @@ class default_create_sitegroup extends midcom_baseclasses_components_handler
                 $sitegroup_creator->set_sitegroup_admin_username($_POST['default_sitewizard_adminuser']);
                 $sitegroup_creator->set_sitegroup_admin_password($_POST['default_sitewizard_adminpass']);
 
+                $structure_creator = new midgard_admin_sitewizard_creator_structure();
+                $structure_creator->add_link($sitegroup_creator);
+                $structure_creator->set_sitegroup_creator($sitegroup_creator);
                 $session = new midcom_service_session();
-                $session->set("midgard_admin_wizards_{$this->_request_data['session_id']}", $sitegroup_creator);
+                $session->set("midgard_admin_wizards_{$this->_request_data['session_id']}", $structure_creator);
 
                 $_MIDCOM->relocate($this->_request_data['next_plugin_full_path']);
             }

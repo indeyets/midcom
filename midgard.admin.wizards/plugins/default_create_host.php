@@ -54,8 +54,10 @@ class default_create_host extends midcom_baseclasses_components_handler
             try
             {
                 $session = new midcom_service_session();
-                $sitegroup_creator = $session->get("midgard_admin_wizards_{$this->_request_data['session_id']}");
-                $host_creator = $sitegroup_creator->next_link();
+                $structure_creator = $session->get("midgard_admin_wizards_{$this->_request_data['session_id']}");
+
+                $setup_config = new midgard_setup_config("midcom", null, null);
+                $host_creator = new midgard_admin_sitewizard_creator_host(&$setup_config);
 
                 $host_creator->set_page_title($_POST['default_sitewizard_sitename']);
                 $host_creator->set_host_url($_POST['default_sitewizard_host']);
@@ -66,14 +68,22 @@ class default_create_host extends midcom_baseclasses_components_handler
                     $host_creator->set_host_prefix($_POST['default_sitewizard_prefix']);
                 }
 
-                $host_creator->set_host_port(80);
+                $host_creator->set_host_port($_POST['default_sitewizard_port']);
 
                 $host_creator->set_make_host_copy(true);
-                $host_creator->set_copy_host_url($_POST['tkk_sitewizard_host']);
+                
+                if(isset($_POST['tkk_sitewizard_host']))
+                {
+                    $host_creator->set_copy_host_url($_POST['tkk_sitewizard_host']);
+                }
+                
                 $host_creator->set_copy_host_port($this->_request_data['plugin_config']['copy_host_port']);
 
-                $session->set("midgard_admin_wizards_{$this->_request_data['session_id']}", $host_creator);
+                $structure_creator->set_host_creator($host_creator);
+                $structure_creator->add_link($host_creator);
 
+                $session->set("midgard_admin_wizards_{$this->_request_data['session_id']}", $structure_creator);
+ 
                 $_MIDCOM->relocate($this->_request_data['next_plugin_full_path']);
             }
             catch (midgard_admin_sitewizard_exception $e)

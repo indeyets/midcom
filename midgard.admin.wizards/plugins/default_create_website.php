@@ -62,6 +62,8 @@ class default_create_website extends midcom_baseclasses_components_handler
             }
             else
             {
+                $text = $this->_request_data['session_id']; 
+                $_MIDCOM->uimessages->add("Midgard Setup", $text, 'warning'); 
                 $structure_creator = $session->get("midgard_admin_wizards_{$this->_request_data['session_id']}");
             }
 

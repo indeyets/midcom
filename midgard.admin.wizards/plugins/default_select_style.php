@@ -55,18 +55,19 @@ class default_select_style extends midcom_baseclasses_components_handler
 
             if (!$session->exists("midgard_admin_wizards_{$this->_request_data['session_id']}"))
             {
-
+                /* TODO , add error handling ? */
             }
             else
             {
-                $host_creator = $session->get("midgard_admin_wizards_{$this->_request_data['session_id']}");
+                $structure_creator = $session->get("midgard_admin_wizards_{$this->_request_data['session_id']}");
+                $host_creator = $structure_creator->get_host_creator();
             }
 
             try
             {
                 $host_creator->set_host_style($_POST[sitewizard_style_select_template]);
 
-                $session->set("midgard_admin_wizards_{$this->_request_data['session_id']}", $host_creator);
+                $session->set("midgard_admin_wizards_{$this->_request_data['session_id']}", $structure_creator);
 
                 $_MIDCOM->relocate($this->_request_data['next_plugin_full_path']);
             }
