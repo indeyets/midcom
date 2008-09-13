@@ -1,6 +1,1 @@
-Description
-string ucfirst ( string $str )
-
-Returns a string with the first character of str capitalized, if that character is alphabetic.
-
-Note that 'alphabetic' is determined by the current locale. For instance, in the default "C" locale characters such as umlaut-a (ä) will not be converted. 
+Topic, zwany także folderem stanowi podstawowy kontener treści w MidCOMie serii 2.x.
