@@ -85,7 +85,7 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.babel/edit/{$name}/en/",
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.babel/edit/{$name}/" . $_MIDCOM->i18n->get_current_language() . "/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('midcom.admin.babel', 'midcom.admin.babel'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/locale.png',
                 )
@@ -242,7 +242,7 @@ class midgard_admin_asgard_handler_components extends midcom_baseclasses_compone
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.babel/edit/{$data['component']}/en/",
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard_midcom.admin.babel/edit/{$data['component']}/" . $_MIDCOM->i18n->get_current_language() . "/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('midcom.admin.babel', 'midcom.admin.babel'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/locale.png',
                 )
