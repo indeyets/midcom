@@ -337,7 +337,7 @@ p
     padding: 3px 10px;
 }
 
-*html #content .object_view .value
+* html #content .object_view .value
 {
     height: 1.6em;
     display: inline-block;
@@ -540,9 +540,9 @@ p
 #container #toolbar ul li:hover button,
 #container #toolbar ul li a:hover,
 #container #toolbar ul li.selected,
-#container #toolbar ul li.selected a
+#container #toolbar ul li.selected a,
 #container #toolbar ul li button:hover,
-#container #toolbar ul li.selected button,
+#container #toolbar ul li.selected button
 {
   background-color: white;
 }
