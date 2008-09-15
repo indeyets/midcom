@@ -27,7 +27,7 @@ if (!isset($_REQUEST['search']))
     $_MIDCOM->finish();
     exit();
 }
-// Convert tradiotional wildcard to SQL wildcard
+// Convert traditional wildcard to SQL wildcard
 $search = str_replace('*', '%', $_REQUEST['search']);
 // Make sure we don't have multiple successive wildcards (performance killer)
 $search = preg_replace('/%+/', '%', $search);
@@ -109,11 +109,17 @@ if (   !empty($auto_wildcards)
             break;
     }
 }
-// Load component if required
-if (!class_exists($class))
-{
-    $_MIDCOM->componentloader->load_graceful($component);
-}
+
+/* 
+ * Load component if possible. This is a workaround for cases where 
+ * autoloader cannot fails to load the component, i.e. when the class name
+ * doesn't end with _db or _dba. 
+ * 
+ * Should be removed once autoloader is smarter or all DBA classes follow the 
+ * naming convention
+ */
+$_MIDCOM->componentloader->load_graceful($component);
+
 // Could not get required class defined, abort
 if (!class_exists($class))
 {
