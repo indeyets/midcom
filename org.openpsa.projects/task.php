@@ -286,7 +286,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
     /**
      * Populates contacts as resources lists
      */
-    function get_members($old=false)
+    function get_members($old = false)
     {
         if (!$this->id)
         {
@@ -295,11 +295,11 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
 
         if ($old)
         {
-            $prefix='old_';
+            $prefix = 'old_';
         }
         else
         {
-            $prefix='';
+            $prefix = '';
         }
 
         $qb = new midgard_query_builder('org_openpsa_task_resource');
@@ -314,12 +314,12 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
                 switch ($resource->orgOpenpsaObtype)
                 {
                     case ORG_OPENPSA_OBTYPE_PROJECTCONTACT:
-                        $varName=$prefix.'contacts';
+                        $varName = $prefix . 'contacts';
                         break;
                     default:
                         //fall-trough intentional
                     case ORG_OPENPSA_OBTYPE_PROJECTRESOURCE:
-                        $varName=$prefix.'resources';
+                        $varName = $prefix . 'resources';
                         break;
                 }
                 $property = &$this->$varName;
@@ -364,16 +364,33 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         debug_add("\$this->contacts2 before: \n===\n" . sprint_r($this->contacts2) . "===\n");
         debug_add("\$this->resources2 before: \n===\n" . sprint_r($this->resources2) . "===\n");
         debug_pop();
-        $this->contacts = array();
-        foreach ($this->contacts2 as $contact)
+        
+        if(!is_array($this->contacts))
         {
-            $this->contacts[$contact] = true;
+                $this->contacts = array();
         }
-        $this->resources = array();
-        foreach ($this->resources2 as $resource)
+        else
         {
-            $this->resources[$resource] = true;
+                $this->contacts2 = $this->contacts;
         }
+        foreach ($this->contacts2 as $contact => $boolean)
+        {
+            $this->contacts[$contact] = $boolean;
+        }
+
+        if(!is_array($this->resources))
+        {
+                $this->resources = array();
+        }
+        else
+        {
+                $this->resources2 = $this->resources;
+        }
+        foreach ($this->resources2 as $resource => $boolean)
+        {
+            $this->resources[$resource] = $boolean;
+        }
+
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("\$this->contacts after: \n===\n" . sprint_r($this->contacts) . "===\n");
         debug_add("\$this->resources after: \n===\n" . sprint_r($this->resources) . "===\n");
