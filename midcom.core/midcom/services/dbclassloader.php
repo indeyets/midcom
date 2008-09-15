@@ -1217,7 +1217,7 @@ EOF;
                 $component .= ".{$part}";
             }
             
-            // Fix for incorrectly named class
+            // Fix for incorrectly named classes
             switch ($component)
             {
                 case 'net.nehmer.accounts':
@@ -1229,6 +1229,9 @@ EOF;
                     break;
                 case 'org.openpsa.document':
                     $component = 'org.openpsa.documents';
+                    break;
+                case 'org.openpsa.task':
+                    $component = 'org.openpsa.projects';
                     break;
             }
             
