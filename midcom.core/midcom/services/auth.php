@@ -2197,7 +2197,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
             <div id="footer">
                 <div class="midgard">
-                    Copyright &copy; 1998-2006 <a href="http://www.midgard-project.org/">The Midgard Project</a>. Midgard is <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.
+                    Copyright &copy; 1998-2008 <a href="http://www.midgard-project.org/">The Midgard Project</a>. Midgard is <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.
                 </div>
             </div>
     </body>
@@ -2326,7 +2326,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
             <div id="footer">
                 <div class="midgard">
-                    Copyright &copy; 1998-2006 <a href="http://www.midgard-project.org/">The Midgard Project</a>. Midgard is <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.
+                    Copyright &copy; 1998-2008 <a href="http://www.midgard-project.org/">The Midgard Project</a>. Midgard is <a href="http://en.wikipedia.org/wiki/Free_software">free software</a> available under <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.
                 </div>
             </div>
     </body>
