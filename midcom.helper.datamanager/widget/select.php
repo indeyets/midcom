@@ -138,7 +138,7 @@ class midcom_helper_datamanager_widget_select extends midcom_helper_datamanager_
             {
                 $value = "{$key}: {$value}";
             }
-            $selected = ($key == $this->_value) ? ' selected' : '';
+            $selected = ($key == $this->_value) ? ' selected="selected"' : '';
             echo "  <option value='{$key}'{$selected}>{$value}</option>\n";
         }
 

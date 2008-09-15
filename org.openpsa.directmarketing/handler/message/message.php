@@ -156,7 +156,7 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
                 // TODO: Use some othe privilege ?? (and check that on send handler too)
                 MIDCOM_TOOLBAR_ENABLED => $this->_message->can_do('midgard:update'),
                 MIDCOM_TOOLBAR_OPTIONS => array(
-                        'onClick' => "return confirm('" . $this->_request_data['l10n']->get("are you sure you wish to send this to the whole campaign ?") . "')",
+                        'onclick' => "return confirm('" . $this->_request_data['l10n']->get("are you sure you wish to send this to the whole campaign ?") . "')",
                     ),
             )
         );

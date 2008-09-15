@@ -288,7 +288,7 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
                     MIDCOM_TOOLBAR_ENABLED => true,
                     MIDCOM_TOOLBAR_OPTIONS  => Array(
                         'rel' => 'directlink',
-                        'onClick' => org_openpsa_calendar_interface::calendar_newevent_js($this_node),
+                        'onclick' => org_openpsa_calendar_interface::calendar_newevent_js($this_node),
                     ),
                 )
             );
@@ -394,7 +394,7 @@ function openPsaShowMonthSelector()
                 MIDCOM_TOOLBAR_ENABLED => true,
                 MIDCOM_TOOLBAR_OPTIONS  => Array(
                     'rel' => 'directlink',
-                    'onClick' => "javascript:openPsaShowMonthSelector();",
+                    'onclick' => "javascript:openPsaShowMonthSelector();",
                 ),
             )
         );

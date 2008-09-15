@@ -295,7 +295,7 @@ class org_openpsa_contacts_person_handler
                         MIDCOM_TOOLBAR_ENABLED => true,
                         MIDCOM_TOOLBAR_OPTIONS  => Array(
                             'rel' => 'directlink',
-                            'onClick' => org_openpsa_calendar_interface::calendar_newevent_js($cal_node, false, $this->_request_data['person']->guid),
+                            'onclick' => org_openpsa_calendar_interface::calendar_newevent_js($cal_node, false, $this->_request_data['person']->guid),
                         ),
                     )
                 );

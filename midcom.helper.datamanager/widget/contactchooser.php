@@ -164,8 +164,8 @@ class midcom_helper_datamanager_widget_contactchooser extends midcom_helper_data
     }
 
     function draw_widget () {
-        echo '<script type="text/javascript" type="text/javascript" src="'.MIDCOM_STATIC_URL . '/org.openpsa.helpers/ajaxutils.js"></script>';
-        //echo '<script type="text/javascript" language="type/javascript">';
+        echo '<script type="text/javascript" src="'.MIDCOM_STATIC_URL . '/org.openpsa.helpers/ajaxutils.js"></script>';
+        //echo '<script type="text/javascript">';
         //include(MIDCOM_STATIC_ROOT . '/org.openpsa.helpers/ajaxutils.js');
         //echo '</script>';
         echo '<div class="widget_contactchooser">';
