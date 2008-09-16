@@ -707,7 +707,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
                     // Fall through
 
                 case 'user':
-                    if ($limiters['user'] !== 'all')
+                    if ($limiters['user'] !== 'all' && !empty($limiters['user']))
                     {
                         $mc_person = midcom_db_person::new_collector('username', $limiters['user']);
                         $mc_person->add_value_property('id');
