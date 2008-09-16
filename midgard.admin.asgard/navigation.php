@@ -208,6 +208,13 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                     $selected = $this->_is_selected($child);
                     $css_class = $type;
                     $this->_common_css_classes($child, $ref, $css_class);
+
+                    $mode = $this->_request_data['default_mode'];
+                    if (strpos($css_class, 'readonly'))
+                    {
+                        $mode = 'view';
+                    }
+
                     $this->shown_objects[$child->guid] = true;
 
                     echo "{$prefix}    <li class=\"{$css_class}\">";
@@ -219,7 +226,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                         $label = "#{$child->id}";
                     }
 
-                    echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/{$this->_request_data['default_mode']}/{$child->guid}/\" title=\"GUID: {$child->guid}, ID: {$child->id}\">{$icon}{$label}</a>\n";
+                    echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/{$mode}/{$child->guid}/\" title=\"GUID: {$child->guid}, ID: {$child->id}\">{$icon}{$label}</a>\n";
 
 
                     if ($selected)
@@ -250,6 +257,13 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
             $selected = $this->_is_selected($object);
             $css_class = get_class($object);
             $this->_common_css_classes($object, $ref, $css_class);
+                     
+            $mode = $this->_request_data['default_mode'];
+            if (strpos($css_class, 'readonly'))
+            {
+                $mode = 'view';
+            }
+            
             $this->shown_objects[$object->guid] = true;
 
             echo "    <li class=\"{$css_class}\">";
@@ -262,7 +276,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                 $label = "#oid_{$object->id}";
             }
 
-            echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/{$this->_request_data['default_mode']}/{$object->guid}/\" title=\"GUID: {$object->guid}, ID: {$object->id}\">{$icon}{$label}</a>\n";
+            echo "<a href=\"{$_MIDGARD['self']}__mfa/asgard/object/{$mode}/{$object->guid}/\" title=\"GUID: {$object->guid}, ID: {$object->id}\">{$icon}{$label}</a>\n";
 
             // If there is exactly one root object, show its children, since this is what the user most likely wants to reach
             if ($selected || sizeof($root_objects) == 1)
