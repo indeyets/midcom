@@ -16,7 +16,7 @@ class default_select_style extends midcom_baseclasses_components_handler
    /**
     * Simple constructor, which only initializes the parent constructor.
     */
-    function default_select_style()
+    function __construct()
     {
         parent::__construct();
     }

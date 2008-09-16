@@ -72,7 +72,7 @@ if (!class_exists('midcom_helper_configuration'))
     {
         var $options = array();
 
-        function midcom_helper_configuration()
+        function __construct()
         {
             $data = file_get_contents(MIDCOM_ROOT . '/lib/org/openpsa/mail/config/config.inc');
             $code = "\$tmparray = array(\n$data\n);";

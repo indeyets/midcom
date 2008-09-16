@@ -16,7 +16,7 @@ class default_create_website extends midcom_baseclasses_components_handler
    /**
     * Simple constructor, which only initializes the parent constructor.
     */
-    function default_create_website()
+    function __construct()
     {
         parent::__construct();
     }

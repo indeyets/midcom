@@ -48,7 +48,7 @@ class midcom_services_rcs extends midcom_baseclasses_core_object
      * @param array $config the midcom_config
      * @param midcom_application $midcom midcom_application reference.
      */
-    function midcom_services_rcs($config = null)
+    function __construct($config = null)
     {
         parent::__construct();
         

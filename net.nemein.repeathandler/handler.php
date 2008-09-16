@@ -27,7 +27,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
      */
     var $master_event = null;
 
-    function net_nemein_repeathandler(&$master_event)
+    function __construct(&$master_event)
     {
         $this->master_event = &$master_event;
 

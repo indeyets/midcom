@@ -28,7 +28,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
     var $_metadata_helper = false;
     var $_check_approves = false;
 
-    function net_nemein_beaexporter()
+    function __construct()
     {
         $this->_component = 'net.nemein.beaexporter';
         if (version_compare(mgd_version(), '1.8.0alpha1', '>='))

@@ -47,7 +47,7 @@ class midcom_services_tmp extends midcom_baseclasses_core_object
     /**
      * Simple constructor, calls base class.
      */
-    function midcom_services_tmp()
+    function __construct()
     {
         parent::__construct();
     }

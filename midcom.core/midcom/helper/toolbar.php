@@ -190,7 +190,7 @@ class midcom_helper_toolbar
      * @param string $class_style The class style tag for the UL.
      * @param string $id_style The id style tag for the UL.
      */
-    function midcom_helper_toolbar($class_style = 'midcom_toolbar', $id_style = null)
+    function __construct($class_style = 'midcom_toolbar', $id_style = null)
     {
         $this->id_style = $id_style;
         $this->class_style = $class_style;

@@ -125,7 +125,7 @@ class midcom_services_cache_backend
      * The constructor just initializes the empty object. The actual initialization
      * is done by the initialize() event which does the actual configuration.
      */
-    function midcom_services_cache_backend()
+    function __construct()
     {
         // Nothing to do yet.
     }

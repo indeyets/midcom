@@ -94,7 +94,7 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
     /**
      * Simple constructor, calls base class.
      */
-    function midcom_services_uimessages()
+    function __construct()
     {
         parent::__construct();
 

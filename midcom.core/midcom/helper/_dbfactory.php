@@ -19,7 +19,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
     /**
      * Calls parent constructor only.
      */
-    function midcom_helper__dbfactory()
+    function __construct()
     {
         parent::__construct();
     }

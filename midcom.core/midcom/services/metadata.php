@@ -42,7 +42,7 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
     /**
      * Simple constructor, calls base class.
      */
-    function midcom_services_metadata()
+    function __construct()
     {
         parent::__construct();
     }

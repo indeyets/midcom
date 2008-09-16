@@ -55,7 +55,7 @@ class midcom_services_cache
      */
     var $_unload_queue = Array();
 
-    function midcom_services_cache()
+    function __construct()
     {
         // Nothing to do yet.
     }

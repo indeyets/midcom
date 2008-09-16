@@ -86,7 +86,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
     /**
      * Simple constructor, calls base class.
      */
-    function midcom_services_toolbars()
+    function __construct()
     {
         parent::__construct();
         

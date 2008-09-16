@@ -81,7 +81,7 @@ class midcom_helper_toolbars
      * @param string $class_style The class style tag for the UL.
      * @param string $id_style The id style tag for the UL.
      */
-    function midcom_helper_toolbars($class_style = 'midcom_toolbar', $id_style = null)
+    function __construct($class_style = 'midcom_toolbar', $id_style = null)
     {
         /*
         $GLOBALS['midcom_admin_content_toolbar_main'] = new midcom_admin_content_toolbar(false, 'midcom_toolbar midcom_toolbar_ais_main', null);

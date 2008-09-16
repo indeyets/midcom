@@ -80,7 +80,7 @@ class midcom_service_session {
      * 
      * @param mixed $context    Either null or a context ID (uses the context's component) or an explicit domain.
      */
-    function midcom_service_session($context = null) {
+    function __construct($context = null) {
         if (is_null($context))
             $this->_domain = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_COMPONENT);
         else if (is_numeric($context) || is_int($context))

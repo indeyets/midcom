@@ -469,7 +469,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * Simple constructor, calls base class and initializes the data members where applicable.
      * The real initialization work is done in initialize.
      */
-    function midcom_services_auth()
+    function __construct()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         parent::__construct();

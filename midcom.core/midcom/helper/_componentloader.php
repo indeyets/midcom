@@ -218,7 +218,7 @@ class midcom_helper__componentloader
      * done here. The real initialization is done in initialize() so that
      * we already have a reference to ourselves.
      */
-    function midcom_helper__componentloader()
+    function __construct()
     {
         // Empty.
     }

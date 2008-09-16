@@ -183,7 +183,7 @@ class midcom_core_user extends midcom_baseclasses_core_object
      * @param mixed $id This is either a Midgard Person ID or GUID, a midcom_user ID or an already instantiated midgard_person.
      * @access protected
      */
-    function midcom_core_user($id = null)
+    function __construct($id = null)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         parent::__construct();

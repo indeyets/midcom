@@ -122,7 +122,7 @@ class midcom_core_collector
      *
      * @param string $classname The classname which should be queried.
      */
-    function midcom_core_collector($classname, $domain, $value)
+    function __construct($classname, $domain, $value)
     {
         static $_class_mapping_cache = Array();
 

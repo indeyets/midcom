@@ -21,7 +21,7 @@
  */
 class net_nehmer_mail_callbacks_mailboxowners extends midcom_baseclasses_components_purecode
 {
-    function net_nehmer_mail()
+    function __construct()
     {
         $this->_component = 'net.nehmer.mail';
         parent::__construct();

@@ -45,7 +45,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
     /**
      * Empty default constructor. Calls parent.
      */
-    function midcom_services_permalinks()
+    function __construct()
     {
         parent::__construct();
     }

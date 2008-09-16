@@ -52,7 +52,7 @@ class midcom_helper_hostconfig
         'midcom_helper_datamanager2_save' => true,
     );
 
-    function midcom_helper_hostconfig(&$page)
+    function __construct(&$page)
     {
         $this->page = $page;
         $this->get_configuration();

@@ -158,7 +158,7 @@ class midcom_services_i18n
      * The fallback language is read from the MidCOM configuration directive
      * <i>i18n_fallback_language</i>.
      */
-    function midcom_services_i18n()
+    function __construct()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 

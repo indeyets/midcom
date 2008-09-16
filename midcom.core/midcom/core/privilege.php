@@ -106,7 +106,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      *
      * @param midcom_core_privilege_db $src Object to copy from.
      */
-    function midcom_core_privilege($src = null)
+    function __construct($src = null)
     {
         if (! is_null($src))
         {

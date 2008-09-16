@@ -76,7 +76,7 @@ class midcom_core_group extends midcom_baseclasses_core_object
      *     a database ID or GUID for Midgard Groups or a valid complete MidCOM group identifier, which
      *     will work for all subclasses.
      */
-    function midcom_core_group($id = null)
+    function __construct($id = null)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         parent::__construct();

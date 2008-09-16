@@ -34,7 +34,7 @@ class net_nemein_approvenotifier extends midcom_baseclasses_components_purecode
     /**
      * Constructor. Figure out the Midgard API in use
      */
-    function net_nemein_approvenotifier($debug_mode = false)
+    function __construct($debug_mode = false)
     {
         $this->_component = 'net.nemein.approvenotifier';
         if (version_compare(mgd_version(), '1.8.0alpha1', '>='))

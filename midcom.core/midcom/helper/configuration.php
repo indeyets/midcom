@@ -85,7 +85,7 @@ class midcom_helper_configuration
      * @param mixed $param1        Either an associative array or a reference to a Midgard object.
      * @param mixed $param2        Either null or the name of a Parameter domain.
      */
-    function midcom_helper_configuration($param1 = null, $param2 = null)
+    function __construct($param1 = null, $param2 = null)
     {
         if (! is_null($param2))
         {

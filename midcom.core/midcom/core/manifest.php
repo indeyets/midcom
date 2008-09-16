@@ -298,7 +298,7 @@ class midcom_core_manifest extends midcom_baseclasses_core_object
      * @param string $filename The name of the manifest file to load.
      * @param array $values the values the manifest uses.
      */
-    function midcom_core_manifest($filename,$values)
+    function __construct($filename,$values)
     {
         //parent::__construct();
         $this->filename = $filename;

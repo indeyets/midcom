@@ -149,7 +149,7 @@ class midcom_helper__styleloader {
     /**
      * Simple initialization
      */
-    function midcom_helper__styleloader()
+    function __construct()
     {
         $this->_debug_prefix = "midcom_helper__styleloader::";
 
