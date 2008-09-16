@@ -695,7 +695,8 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
             return true;
         }
         $project = $this->get_parent();
-        if ($project->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
+        if (isset($project->orgOpenpsaObtype)
+            && $project->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
         {
             //Make sure the parent is initialized in correct class
             if (!is_a($project, 'org_openpsa_projects_project'))
