@@ -158,7 +158,7 @@ p
 {
     font-weight: normal;
 }
-#navigation div.section ul.midgard_admin_asgard_navigation li.readonly a
+#navigation div.section ul.midgard_admin_asgard_navigation li.readonly > a
 {
     color: #444444;
 }
