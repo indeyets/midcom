@@ -33,6 +33,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             */
             'task.php',
             'expense.php',
+            'resource.php',
             'task_status_midcomdba.php',
             'workflow_handler.php',
         );

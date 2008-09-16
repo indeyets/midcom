@@ -84,7 +84,7 @@ class org_openpsa_projects_handler_task_action extends midcom_baseclasses_compon
                 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $_MIDCOM->relocate("{$prefix}task/{$this->_request_data['task']->guid}/");
                 // This will exit()
-
+            // @todo There is a dedicated edit handler. Is this still needed?
             case 'edit':
                 $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['task']);
 
