@@ -25,7 +25,7 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
     /**
      * Simple default constructor.
      */
-    function org_openpsa_directmarketing_handler_campaign_campaign()
+    function __construct()
     {
         parent::__construct();
     }

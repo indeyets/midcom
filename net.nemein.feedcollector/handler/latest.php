@@ -21,7 +21,7 @@ class net_nemein_feedcollector_handler_latest  extends midcom_baseclasses_compon
     /**
      * Simple default constructor.
      */
-    function net_nemein_feedcollector_handler_latest()
+    function __construct()
     {
         parent::__construct();
     }

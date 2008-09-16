@@ -130,7 +130,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
     /**
      * Simple default constructor.
      */
-    function net_nemein_registrations_handler_event()
+    function __construct()
     {
         parent::__construct();
     }

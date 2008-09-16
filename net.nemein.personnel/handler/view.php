@@ -61,7 +61,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
     /**
      * Simple default constructor.
      */
-    function net_nemein_personnel_handler_view()
+    function __construct()
     {
         parent::__construct();
     }

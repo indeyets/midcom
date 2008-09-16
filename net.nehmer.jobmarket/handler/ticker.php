@@ -80,7 +80,7 @@ class net_nehmer_jobmarket_handler_ticker extends midcom_baseclasses_components_
      */
     var $_total_pages = null;
 
-    function net_nehmer_jobmarket_handler_ticker()
+    function __construct()
     {
         parent::__construct();
     }

@@ -51,7 +51,7 @@ class net_nemein_calendar_handler_feed extends midcom_baseclasses_components_han
     /**
      * Simple default constructor.
      */
-    function net_nemein_calendar_handler_feed()
+    function __construct()
     {
         parent::__construct();
     }

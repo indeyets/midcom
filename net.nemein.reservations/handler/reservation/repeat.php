@@ -33,7 +33,7 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
     /**
      * Simple default constructor.
      */
-    function net_nemein_reservations_handler_reservation_repeat()
+    function __construct()
     {
         parent::__construct();
 

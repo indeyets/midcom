@@ -38,7 +38,7 @@ class net_nehmer_blog_handler_api_metaweblog extends midcom_baseclasses_componen
 
     var $_positioning = false;
 
-    function net_nehmer_blog_handler_api_metaweblog()
+    function __construct()
     {
         parent::__construct();
     }

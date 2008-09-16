@@ -91,7 +91,7 @@ class org_maemo_devcodes_handler_device_view extends midcom_baseclasses_componen
     /**
      * Simple default constructor.
      */
-    function org_maemo_devcodes_handler_device_view()
+    function __construct()
     {
         parent::__construct();
     }

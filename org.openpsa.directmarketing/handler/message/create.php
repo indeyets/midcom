@@ -67,7 +67,7 @@ class org_openpsa_directmarketing_handler_message_create extends midcom_baseclas
     /**
      * Simple default constructor.
      */
-    function org_openpsa_directmarketing_handler_create()
+    function __construct()
     {
         parent::__construct();
     }

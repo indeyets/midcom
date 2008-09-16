@@ -44,7 +44,7 @@ class net_nemein_feedcollector_handler_manage extends midcom_baseclasses_compone
     /**
      * Simple default constructor.
      */
-    function net_nemein_feedcollector_handler_manage()
+    function __construct()
     {
         parent::__construct();
     }

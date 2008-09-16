@@ -13,7 +13,7 @@
  */
 class org_openpsa_directmarketing_handler_logger extends midcom_baseclasses_components_handler
 {
-    function org_openpsa_directmarketing_handler_logger()
+    function __construct()
     {
         parent::__construct();
     }

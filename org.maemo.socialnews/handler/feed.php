@@ -36,7 +36,7 @@ class org_maemo_socialnews_handler_feed extends midcom_baseclasses_components_ha
     /**
      * Simple default constructor.
      */
-    function org_maemo_socialnews_handler_feed()
+    function __construct()
     {
         parent::__construct();
     }

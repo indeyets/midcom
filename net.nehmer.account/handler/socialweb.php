@@ -29,7 +29,7 @@
 
 class net_nehmer_account_handler_socialweb extends midcom_baseclasses_components_handler
 {
-    function net_nehmer_account_handler_socialweb()
+    function __construct()
     {
         parent::__construct();
     }

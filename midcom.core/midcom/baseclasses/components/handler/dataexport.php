@@ -26,7 +26,7 @@ class midcom_baseclasses_components_handler_dataexport extends midcom_baseclasse
     
     var $_objects = array();
     
-    function midcom_baseclasses_components_handler_dataexport()
+    function __construct()
     {
         parent::__construct();
     }

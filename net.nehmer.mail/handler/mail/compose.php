@@ -67,7 +67,7 @@ class net_nehmer_mail_handler_mail_compose extends midcom_baseclasses_components
     /**
      * Simple default constructor.
      */
-    function net_nehmer_mail_handler_mail_compose()
+    function __construct()
     {
         parent::__construct();
     }

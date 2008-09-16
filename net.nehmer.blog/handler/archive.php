@@ -61,7 +61,7 @@ class net_nehmer_blog_handler_archive extends midcom_baseclasses_components_hand
     /**
      * Simple default constructor.
      */
-    function net_nehmer_blog_handler_archive()
+    function __construct()
     {
         parent::__construct();
     }

@@ -17,7 +17,7 @@ class net_nemein_discussion_handler_latest extends midcom_baseclasses_components
     /**
      * Simple default constructor.
      */
-    function net_nemein_discussion_handler_latest()
+    function __construct()
     {
         parent::__construct();
     }

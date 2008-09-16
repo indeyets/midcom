@@ -29,7 +29,7 @@ class net_nemein_alphabeticalindex_handler_index extends midcom_baseclasses_comp
     /**
      * Simple default constructor.
      */
-    function net_nemein_alphabeticalindex_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

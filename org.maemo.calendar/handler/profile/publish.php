@@ -45,7 +45,7 @@ class org_maemo_calendar_handler_profile_publish extends net_nehmer_account_hand
     /**
      * Simple default constructor.
      */
-    function org_maemo_calendar_handler_profile_publish()
+    function __construct()
     {
         parent::__construct();
     }

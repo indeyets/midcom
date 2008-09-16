@@ -94,7 +94,7 @@ class net_nehmer_jobmarket_handler_submit extends midcom_baseclasses_components_
      */
     var $_entry = null;
 
-    function net_nehmer_jobmarket_handler_submit()
+    function __construct()
     {
         parent::__construct();
     }

@@ -24,7 +24,7 @@ class net_nemein_internalorders_handler_edit extends midcom_baseclasses_componen
      */
     var $_root_event = null;
 
-    function net_nemein_internalorders_handler_edit()
+    function __construct()
     {
         parent::__construct();
     }

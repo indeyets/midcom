@@ -24,7 +24,7 @@ class net_nemein_internalorders_handler_products extends midcom_baseclasses_comp
      */
     var $_root_event = null;
 
-    function net_nemein_internalorders_handler_products()
+    function __construct()
     {
         parent::__construct();
     }

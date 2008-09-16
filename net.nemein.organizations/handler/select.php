@@ -19,7 +19,7 @@ class net_nemein_organizations_handler_select extends midcom_baseclasses_compone
     /**
      * Simple default constructor.
      */
-    function net_nemein_organizations_handler_select()
+    function __construct()
     {
         parent::__construct();
     }

@@ -23,7 +23,7 @@ class net_nemein_internalorders_handler_reports extends midcom_baseclasses_compo
      * @access private
      */
 
-    function net_nemein_internalorders_handler_reports()
+    function __construct()
     {
         parent::__construct();
     }

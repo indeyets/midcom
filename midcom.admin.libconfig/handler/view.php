@@ -21,7 +21,7 @@ class midcom_admin_libconfig_handler_view extends midcom_baseclasses_components_
      *
      * @access public
      */
-    function midcom_admin_libconfig_handler_view()
+    function __construct()
     {
         parent::__construct();
     }

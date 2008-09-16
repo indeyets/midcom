@@ -54,7 +54,7 @@ class net_nehmer_mail_handler_mailbox_view extends midcom_baseclasses_components
     /**
      * Simple default constructor.
      */
-    function net_nehmer_mail_handler_mailbox_view()
+    function __construct()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_pop();

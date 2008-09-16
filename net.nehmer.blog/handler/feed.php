@@ -51,7 +51,7 @@ class net_nehmer_blog_handler_feed extends midcom_baseclasses_components_handler
     /**
      * Simple default constructor.
      */
-    function net_nehmer_blog_handler_feed()
+    function __construct()
     {
         parent::__construct();
     }

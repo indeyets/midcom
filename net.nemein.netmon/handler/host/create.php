@@ -75,7 +75,7 @@ class net_nemein_netmon_handler_host_create extends midcom_baseclasses_component
     /**
      * Simple default constructor.
      */
-    function net_nemein_netmon_handler_host_create()
+    function __construct()
     {
         parent::__construct();
     }

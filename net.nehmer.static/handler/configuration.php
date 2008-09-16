@@ -17,7 +17,7 @@
  */
 class net_nehmer_static_handler_configuration extends midcom_core_handler_configdm
 {
-    function net_nehmer_static_handler_configuration()
+    function __construct()
     {
         parent::__construct();
     }

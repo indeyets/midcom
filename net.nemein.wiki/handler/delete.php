@@ -30,7 +30,7 @@ class net_nemein_wiki_handler_delete extends midcom_baseclasses_components_handl
      */
     var $_datamanager = null;
 
-    function net_nemein_wiki_handler_delete()
+    function __construct()
     {
         parent::__construct();
     }

@@ -42,7 +42,7 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
      */
     var $_decoder;
 
-    function net_nehmer_blog_handler_api_email()
+    function __construct()
     {
         parent::__construct();
     }

@@ -20,7 +20,7 @@ class net_fernmark_pedigree_handler_index  extends midcom_baseclasses_components
     /**
      * Simple default constructor.
      */
-    function net_fernmark_pedigree_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

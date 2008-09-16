@@ -31,7 +31,7 @@
  */
 class net_nehmer_account_handler_publish extends midcom_baseclasses_components_handler
 {
-    function net_nehmer_account_handler_publish()
+    function __construct()
     {
         parent::__construct();
     }

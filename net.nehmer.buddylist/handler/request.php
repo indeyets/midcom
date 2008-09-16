@@ -39,7 +39,7 @@ class net_nehmer_buddylist_handler_request extends midcom_baseclasses_components
      */
     var $_processing_msg_raw = null;
 
-    function net_nehmer_buddylist_handler_request()
+    function __construct()
     {
         parent::__construct();
     }

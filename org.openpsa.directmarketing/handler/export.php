@@ -41,7 +41,7 @@ class org_openpsa_directmarketing_handler_export extends midcom_baseclasses_comp
      */
     var $membership_mode = false;
 
-    function org_openpsa_directmarketing_handler_import()
+    function __construct()
     {
         parent::__construct();
     }

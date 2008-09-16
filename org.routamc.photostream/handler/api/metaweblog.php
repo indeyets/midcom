@@ -38,7 +38,7 @@ class org_routamc_photostream_handler_api_metaweblog extends midcom_baseclasses_
 
     var $_positioning = false;
 
-    function org_routamc_photostream_handler_api_metaweblog()
+    function __construct()
     {
         parent::__construct();
     }

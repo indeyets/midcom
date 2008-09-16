@@ -20,7 +20,7 @@ class midcom_core_nullcomponent_handler_index  extends midcom_baseclasses_compon
     /**
      * Simple default constructor.
      */
-    function midcom_core_nullcomponent_handler_index()
+    function __construct()
     {
         $this->_component = 'midcom.core.nullcomponent';
         parent::__construct();

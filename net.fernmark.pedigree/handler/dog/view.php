@@ -77,7 +77,7 @@ class net_fernmark_pedigree_handler_dog_view extends midcom_baseclasses_componen
     /**
      * Simple default constructor.
      */
-    function net_fernmark_pedigree_handler_dog_view()
+    function __construct()
     {
         parent::__construct();
     }

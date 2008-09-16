@@ -30,7 +30,7 @@ class net_nehmer_account_handler_configuration extends midcom_baseclasses_compon
      */
     var $_schemadb = null;
 
-    function net_nehmer_account_handler_configuration()
+    function __construct()
     {
         parent::__construct();
     }

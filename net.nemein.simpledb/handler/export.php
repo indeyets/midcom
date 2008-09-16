@@ -41,7 +41,7 @@ class net_nemein_simpledb_handler_export extends midcom_baseclasses_components_h
     /**
      * Simple default constructor.
      */
-    function net_nemein_simpledb_handler_export()
+    function __construct()
     {
         parent::__construct();
     }

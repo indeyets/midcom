@@ -35,7 +35,7 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
      * 
      * @access public
      */
-    function midcom_admin_styleeditor_handler_list()
+    function __construct()
     {
         parent::__construct();
         

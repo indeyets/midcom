@@ -43,7 +43,7 @@ class midcom_admin_styleeditor_handler_file extends midcom_baseclasses_component
      * 
      * @access public
      */
-    function midcom_admin_styleeditor_handler_file()
+    function __construct()
     {
         //$this->_component = 'midcom.admin.styleeditor';
         parent::__construct();

@@ -46,7 +46,7 @@ class org_openpsa_interviews_handler_interview extends midcom_baseclasses_compon
      */
     var $_schemadb = null;
 
-    function org_openpsa_interviews_handler_edit()
+    function __construct()
     {
         parent::__construct();
     }

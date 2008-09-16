@@ -80,7 +80,7 @@ class org_maemo_devcodes_handler_application_admin extends midcom_baseclasses_co
     /**
      * Simple default constructor.
      */
-    function org_maemo_devcodes_handler_application_admin()
+    function __construct()
     {
         parent::__construct();
     }

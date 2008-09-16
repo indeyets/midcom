@@ -23,7 +23,7 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
     var $_user_defined_message = "";
     var $_contactgrabber = null;
 
-    function net_nehmer_account_handler_invitation()
+    function __construct()
     {
         parent::__construct();
     }

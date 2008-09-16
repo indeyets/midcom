@@ -14,7 +14,7 @@
  */
 class net_nemein_wiki_handler_relatedto extends org_openpsa_relatedto_handler_relatedto
 {
-    function net_nemein_wiki_handler_relatedto()
+    function __construct()
     {
         parent::__construct();
         $this->realcomponent = 'net.nemein.wiki';

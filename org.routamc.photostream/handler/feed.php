@@ -31,7 +31,7 @@ class org_routamc_photostream_handler_feed extends org_routamc_photostream_handl
     /**
      * Simple default constructor.
      */
-    function org_routamc_photostream_handler_feed()
+    function __construct()
     {
         parent::__construct();
     }

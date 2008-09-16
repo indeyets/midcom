@@ -17,7 +17,7 @@ class net_nemein_discussion_handler_thread extends midcom_baseclasses_components
     /**
      * Simple default constructor.
      */
-    function net_nemein_discussion_handler_thread()
+    function __construct()
     {
         parent::__construct();
     }

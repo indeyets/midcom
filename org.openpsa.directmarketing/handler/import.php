@@ -37,7 +37,7 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
      */
     var $_merged_fields = array();
 
-    function org_openpsa_directmarketing_handler_import()
+    function __construct()
     {
         parent::__construct();
     }

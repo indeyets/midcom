@@ -43,7 +43,7 @@ class org_maemo_calendar_handler_profile_view extends net_nehmer_account_handler
     /**
      * Simple default constructor.
      */
-    function org_maemo_calendar_handler_profile_view()
+    function __construct()
     {
         parent::__construct();
     }

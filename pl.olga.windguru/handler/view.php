@@ -17,7 +17,7 @@ class pl_olga_windguru_handler_view extends midcom_baseclasses_components_handle
     /**
      * Simple default constructor.
      */
-    function pl_olga_windguru_handler_list()
+    function __construct()
     {
         parent::__construct();
     }

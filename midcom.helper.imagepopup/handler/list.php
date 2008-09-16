@@ -29,7 +29,7 @@ class midcom_helper_imagepopup_handler_list extends midcom_baseclasses_component
      */
     var $_search_results = array();
 
-    function midcom_helper_imagepopup_handler_list()
+    function __construct()
     {
         parent::__construct();
     }

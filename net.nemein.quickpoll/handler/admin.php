@@ -90,7 +90,7 @@ class net_nemein_quickpoll_handler_admin extends midcom_baseclasses_components_h
     /**
      * Simple default constructor.
      */
-    function net_nemein_quickpoll_handler_admin()
+    function __construct()
     {
         parent::__construct();
     }

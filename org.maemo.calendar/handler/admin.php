@@ -12,6 +12,7 @@
  */
 class org_maemo_calendar_handler_admin  extends midcom_baseclasses_components_handler
 {
+    /**
      * The root event (taken from the request data area)
      *
      * @var org_openpsa_calendar_event
@@ -47,7 +48,7 @@ class org_maemo_calendar_handler_admin  extends midcom_baseclasses_components_ha
     /**
      * Simple default constructor.
      */
-    function org_maemo_calendar_handler_admin()
+    function __construct()
     {
         parent::__construct();
     }

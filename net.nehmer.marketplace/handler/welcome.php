@@ -67,7 +67,7 @@ class net_nehmer_marketplace_handler_welcome extends midcom_baseclasses_componen
      */
     var $_datamanager = null;
 
-    function net_nehmer_marketplace_handler_welcome()
+    function __construct()
     {
         parent::__construct();
     }

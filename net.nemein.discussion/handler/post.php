@@ -90,7 +90,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
     /**
      * Simple default constructor.
      */
-    function net_nemein_discussion_handler_post()
+    function __construct()
     {
         parent::__construct();
     }

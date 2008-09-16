@@ -26,7 +26,7 @@ class net_nemein_shoppingcart_handler_checkout_null  extends midcom_baseclasses_
     /**
      * Simple default constructor.
      */
-    function net_nemein_shoppingcart_handler_checkout_null()
+    function __construct()
     {
         parent::__construct();
     }

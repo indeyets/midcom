@@ -17,7 +17,7 @@ class org_routamc_photostream_handler_index extends midcom_baseclasses_component
     /**
      * Simple default constructor.
      */
-    function org_routamc_photostream_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

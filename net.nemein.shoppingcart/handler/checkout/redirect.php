@@ -20,7 +20,7 @@ class net_nemein_shoppingcart_handler_checkout_redirect  extends midcom_baseclas
     /**
      * Simple default constructor.
      */
-    function net_nemein_shoppingcart_handler_checkout_redirect()
+    function __construct()
     {
         parent::__construct();
     }

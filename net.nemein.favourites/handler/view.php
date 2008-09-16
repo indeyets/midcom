@@ -15,7 +15,7 @@ class net_nemein_favourites_handler_view extends midcom_baseclasses_components_h
     /**
     * Simple default constructor.
     */
-    function net_nemein_favourites_handler_view()
+    function __construct()
     {
         parent::__construct();
     }

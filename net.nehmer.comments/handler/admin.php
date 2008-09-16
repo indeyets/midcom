@@ -15,7 +15,7 @@
 
 class net_nehmer_comments_handler_admin extends midcom_baseclasses_components_handler
 {
-    function net_nehmer_comments_handler_admin()
+    function __construct()
     {
         parent::__construct();
     }

@@ -20,7 +20,7 @@ class midgard_webdav_styles_handler_allstyles  extends midgard_webdav_styles_han
     /**
      * Simple default constructor.
      */
-    function midgard_webdav_styles_handler_allstyles()
+    function __construct()
     {
         parent::__construct();
     }

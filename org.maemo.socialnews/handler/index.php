@@ -25,7 +25,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
     /**
      * Simple default constructor.
      */
-    function org_maemo_socialnews_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

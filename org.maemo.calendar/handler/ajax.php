@@ -26,7 +26,7 @@ class org_maemo_calendar_handler_ajax extends org_maemo_calendar_handler_index
     /**
      * Simple default constructor.
      */
-    function org_maemo_calendar_handler_ajax()
+    function __construct()
     {
         parent::__construct();
 

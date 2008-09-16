@@ -46,7 +46,7 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
     /**
      * Simple default constructor.
      */
-    function org_maemo_socialnews_handler_archive()
+    function __construct()
     {
         parent::__construct();
     }

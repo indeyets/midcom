@@ -18,7 +18,7 @@ class fi_mik_lentopaikkakisa_handler_index extends midcom_baseclasses_components
     /**
      * Simple default constructor.
      */
-    function fi_mik_lentopaikkakisa_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

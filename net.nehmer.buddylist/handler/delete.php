@@ -17,7 +17,7 @@
 
 class net_nehmer_buddylist_handler_delete extends midcom_baseclasses_components_handler
 {
-    function net_nehmer_buddylist_handler_delete()
+    function __construct()
     {
         parent::__construct();
     }

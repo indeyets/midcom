@@ -58,7 +58,7 @@ class net_nehmer_marketplace_handler_entry extends midcom_baseclasses_components
     var $_category_list = null;
 
 
-    function net_nehmer_marketplace_handler_entry()
+    function __construct()
     {
         parent::__construct();
     }

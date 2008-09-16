@@ -49,7 +49,7 @@ class de_linkm_sitemap_handler_sitemap extends midcom_baseclasses_components_han
      *
      * @access public
      */
-    function de_linkm_sitemap_handler_sitemap()
+    function __construct()
     {
         parent::__construct();
     }

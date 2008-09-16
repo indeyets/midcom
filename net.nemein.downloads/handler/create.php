@@ -57,7 +57,7 @@ class net_nemein_downloads_handler_create extends midcom_baseclasses_components_
     /**
      * Simple default constructor.
      */
-    function net_nemein_downloads_handler_create()
+    function __construct()
     {
         parent::__construct();
     }

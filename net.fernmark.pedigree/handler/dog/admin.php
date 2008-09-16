@@ -80,7 +80,7 @@ class net_fernmark_pedigree_handler_dog_admin extends midcom_baseclasses_compone
     /**
      * Simple default constructor.
      */
-    function net_fernmark_pedigree_handler_dog_admin()
+    function __construct()
     {
         parent::__construct();
     }

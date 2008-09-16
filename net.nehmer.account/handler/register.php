@@ -40,7 +40,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      *
      * @access public
      */
-    function net_nehmer_account_handler_register()
+    function __construct()
     {
         parent::__construct();
     }

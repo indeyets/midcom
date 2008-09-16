@@ -105,7 +105,7 @@ class net_nehmer_publications_handler_welcome extends midcom_baseclasses_compone
     /**
      * Simple default constructor.
      */
-    function net_nehmer_publications_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

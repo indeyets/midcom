@@ -20,7 +20,7 @@ class midgard_admin_wizards_handler_index  extends midcom_baseclasses_components
     /**
      * Simple default constructor.
      */
-    function midgard_admin_wizards_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

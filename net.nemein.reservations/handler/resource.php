@@ -49,7 +49,7 @@ class net_nemein_reservations_handler_resource extends midcom_baseclasses_compon
     /**
      * Simple default constructor.
      */
-    function net_nemein_reservations_handler_resource()
+    function __construct()
     {
         parent::__construct();
     }

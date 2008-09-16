@@ -27,7 +27,7 @@ class midcom_admin_user_handler_group_list extends midcom_baseclasses_components
      *
      * @access public
      */
-    function midcom_admin_user_handler_group_list()
+    function __construct()
     {
         $this->_component = 'midcom.admin.user';
         parent::__construct();

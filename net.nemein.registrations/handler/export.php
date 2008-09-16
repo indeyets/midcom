@@ -44,7 +44,7 @@ class net_nemein_registrations_handler_export extends midcom_baseclasses_compone
     var $_datamanager_registrar = false;
     var $_datamanager_event = false;
 
-    function net_nemein_registrations_handler_export()
+    function __construct()
     {
         parent::__construct();
     }

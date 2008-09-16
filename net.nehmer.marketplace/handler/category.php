@@ -89,7 +89,7 @@ class net_nehmer_marketplace_handler_category extends midcom_baseclasses_compone
      */
     var $_total_pages = null;
 
-    function net_nehmer_marketplace_handler_category()
+    function __construct()
     {
         parent::__construct();
     }

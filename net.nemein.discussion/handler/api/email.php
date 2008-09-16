@@ -50,7 +50,7 @@ class net_nemein_discussion_handler_api_email extends midcom_baseclasses_compone
 
     var $importer = false;
 
-    function net_nemein_discussion_handler_api_email()
+    function __construct()
     {
         parent::__construct();
     }

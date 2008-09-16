@@ -70,7 +70,7 @@ class org_maemo_devcodes_handler_application_create extends midcom_baseclasses_c
     /**
      * Simple default constructor.
      */
-    function org_maemo_devcodes_handler_application_create()
+    function __construct()
     {
         parent::__construct();
     }

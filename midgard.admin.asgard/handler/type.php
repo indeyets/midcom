@@ -20,7 +20,7 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
     /**
      * Simple default constructor.
      */
-    function midgard_admin_asgard_handler_type()
+    function __construct()
     {
         $this->_component = 'midgard.admin.asgard';
         parent::__construct();

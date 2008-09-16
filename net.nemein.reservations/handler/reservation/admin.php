@@ -67,7 +67,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
     /**
      * Simple default constructor.
      */
-    function net_nemein_reservations_handler_reservation_admin()
+    function __construct()
     {
         parent::__construct();
     }

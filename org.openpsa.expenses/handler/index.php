@@ -20,7 +20,7 @@ class org_openpsa_expenses_handler_index  extends midcom_baseclasses_components_
     /**
      * Simple default constructor.
      */
-    function org_openpsa_expenses_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

@@ -45,7 +45,7 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
     /**
      * Simple default constructor.
      */
-    function net_nemein_discussion_handler_moderate()
+    function __construct()
     {
         parent::__construct();
     }

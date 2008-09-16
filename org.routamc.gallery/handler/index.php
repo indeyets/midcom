@@ -27,7 +27,7 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
     /**
      * Simple default constructor.
      */
-    function org_routamc_gallery_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

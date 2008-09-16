@@ -44,7 +44,7 @@ class org_maemo_devcodes_handler_code_import extends midcom_baseclasses_componen
     /**
      * Simple default constructor.
      */
-    function org_maemo_devcodes_handler_code_import()
+    function __construct()
     {
         parent::__construct();
     }

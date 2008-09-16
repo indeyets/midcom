@@ -26,7 +26,7 @@ class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses
     /**
      * Simple default constructor.
      */
-    function net_nemein_shoppingcart_handler_checkout_email()
+    function __construct()
     {
         parent::__construct();
     }

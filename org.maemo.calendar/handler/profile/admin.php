@@ -52,7 +52,7 @@ class org_maemo_calendar_handler_profile_admin extends midcom_baseclasses_compon
     /**
      * Simple default constructor.
      */
-    function org_maemo_calendar_handler_profile_admin()
+    function __construct()
     {
         parent::__construct();
     }

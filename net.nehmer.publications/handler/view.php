@@ -64,7 +64,7 @@ class net_nehmer_publications_handler_view extends midcom_baseclasses_components
     /**
      * Simple default constructor.
      */
-    function net_nehmer_publications_handler_view()
+    function __construct()
     {
         parent::__construct();
     }

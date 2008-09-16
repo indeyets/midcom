@@ -49,7 +49,7 @@ class net_nemein_personnel_handler_search extends midcom_baseclasses_components_
     /**
      * Simple default constructor.
      */
-    function net_nemein_personnel_handler_search()
+    function __construct()
     {
         parent::__construct();
     }

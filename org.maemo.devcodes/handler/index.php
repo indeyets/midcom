@@ -21,7 +21,7 @@ class org_maemo_devcodes_handler_index  extends midcom_baseclasses_components_ha
     /**
      * Simple default constructor.
      */
-    function org_maemo_devcodes_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

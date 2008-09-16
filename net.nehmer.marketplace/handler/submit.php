@@ -88,7 +88,7 @@ class net_nehmer_marketplace_handler_submit extends midcom_baseclasses_component
      */
     var $_entry = null;
 
-    function net_nehmer_marketplace_handler_submit()
+    function __construct()
     {
         parent::__construct();
 

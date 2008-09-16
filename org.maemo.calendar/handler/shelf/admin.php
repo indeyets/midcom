@@ -18,7 +18,7 @@ class org_maemo_calendar_handler_shelf_admin  extends midcom_baseclasses_compone
     /**
      * Simple default constructor.
      */
-    function org_maemo_calendar_handler_shelf_admin()
+    function __construct()
     {
         parent::__construct();
     }

@@ -89,7 +89,7 @@ class pl_olga_windguru_handler_admin extends midcom_baseclasses_components_handl
     /**
      * Simple default constructor.
      */
-    function pl_olga_windguru_handler_admin()
+    function __construct()
     {
         parent::__construct();
     }

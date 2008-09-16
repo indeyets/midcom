@@ -16,7 +16,7 @@ require_once(MIDCOM_ROOT . '/midcom/core/handler/configdm.php');
  */
 class no_odindata_quickform_handler_configuration extends midcom_core_handler_configdm
 {
-    function no_odindata_quickform_handler_configuration()
+    function __construct()
     {
         parent::__construct();
     }

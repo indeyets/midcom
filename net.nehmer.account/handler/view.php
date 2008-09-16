@@ -50,7 +50,7 @@ require_once('Date.php');
 
 class net_nehmer_account_handler_view extends midcom_baseclasses_components_handler
 {
-    function net_nehmer_account_handler_view()
+    function __construct()
     {
         parent::__construct();
     }

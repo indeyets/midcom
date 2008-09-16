@@ -20,7 +20,7 @@ class midgard_webdav_styles_handler_index  extends midgard_webdav_styles_handler
     /**
      * Simple default constructor.
      */
-    function midgard_webdav_styles_handler_index()
+    function __construct()
     {
         parent::__construct();
 

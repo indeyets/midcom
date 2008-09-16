@@ -39,7 +39,7 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
     /**
      * Simple default constructor.
      */
-    function org_routamc_photostream_handler_view()
+    function __construct()
     {
         parent::__construct();
     }

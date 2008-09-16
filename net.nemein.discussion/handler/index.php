@@ -19,7 +19,7 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
     /**
      * Simple default constructor.
      */
-    function net_nemein_discussion_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

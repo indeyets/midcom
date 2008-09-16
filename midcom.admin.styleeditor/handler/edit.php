@@ -29,7 +29,7 @@ class midcom_admin_styleeditor_handler_edit extends midcom_baseclasses_component
      * 
      * @access public
      */
-    function midcom_admin_styleeditor_handler_edit()
+    function __construct()
     {
         parent::__construct();
         

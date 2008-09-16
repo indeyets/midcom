@@ -82,7 +82,7 @@ class net_nehmer_jobmarket_handler_welcome extends midcom_baseclasses_components
      */
     var $_datamanager = null;
 
-    function net_nehmer_jobmarket_handler_welcome()
+    function __construct()
     {
         parent::__construct();
     }

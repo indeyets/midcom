@@ -80,7 +80,7 @@ class org_maemo_devcodes_handler_device_admin extends midcom_baseclasses_compone
     /**
      * Simple default constructor.
      */
-    function org_maemo_devcodes_handler_device_admin()
+    function __construct()
     {
         parent::__construct();
     }

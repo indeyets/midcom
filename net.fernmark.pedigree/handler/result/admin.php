@@ -87,7 +87,7 @@ class net_fernmark_pedigree_handler_result_admin extends midcom_baseclasses_comp
     /**
      * Simple default constructor.
      */
-    function net_fernmark_pedigree_handler_result_admin()
+    function __construct()
     {
         parent::__construct();
     }

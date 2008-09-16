@@ -24,7 +24,7 @@ class net_nemein_internalorders_handler_own extends midcom_baseclasses_component
      */
     var $_root_event = null;
 
-    function net_nemein_internalorders_handler_own()
+    function __construct()
     {
         parent::__construct();
     }

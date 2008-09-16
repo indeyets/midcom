@@ -51,7 +51,7 @@ class midgard_admin_asgard_handler_preferences extends midcom_baseclasses_compon
      *
      * @access public
      */
-    function midgard_admin_asgard_handler_preferences()
+    function __construct()
     {
         $this->_component = 'midgard.admin.asgard';
         parent::__construct();

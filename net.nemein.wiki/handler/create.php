@@ -60,7 +60,7 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
      */
     var $_defaults = Array();
 
-    function net_nemein_wiki_handler_create()
+    function __construct()
     {
         parent::__construct();
         $_MIDCOM->load_library('org.openpsa.relatedto');

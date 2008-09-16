@@ -30,7 +30,7 @@ class org_routamc_gallery_handler_configuration extends midcom_baseclasses_compo
      */
     var $_schemadb = null;
 
-    function org_routamc_gallery_handler_configuration()
+    function __construct()
     {
         parent::__construct();
     }

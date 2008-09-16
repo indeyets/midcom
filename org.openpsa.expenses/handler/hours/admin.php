@@ -57,7 +57,7 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
     /**
      * Simple default constructor.
      */
-    function org_openpsa_expenses_handler_hours_admin()
+    function __construct()
     {
         parent::__construct();
     }

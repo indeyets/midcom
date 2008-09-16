@@ -89,7 +89,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
     /**
      * Simple default constructor.
      */
-    function midgard_admin_asgard_handler_object_permissions()
+    function __construct()
     {
         $this->_component = 'midgard.admin.asgard';
         parent::__construct();

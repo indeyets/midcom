@@ -31,7 +31,7 @@ class fi_mik_lentopaikkakisa_handler_manage extends midcom_baseclasses_component
      */
     var $_schemadb = null;
 
-    function fi_mik_lentopaikkakisa_handler_manage()
+    function __construct()
     {
         parent::__construct();
     }

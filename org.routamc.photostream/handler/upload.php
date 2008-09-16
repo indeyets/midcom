@@ -49,7 +49,7 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
     /**
      * Simple default constructor.
      */
-    function org_routamc_photostream_handler_upload()
+    function __construct()
     {
         parent::__construct();
     }

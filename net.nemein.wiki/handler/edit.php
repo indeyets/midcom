@@ -48,7 +48,7 @@ class net_nemein_wiki_handler_edit extends midcom_baseclasses_components_handler
 
     var $_preview = false;
 
-    function net_nemein_wiki_handler_edit()
+    function __construct()
     {
         parent::__construct();
     }

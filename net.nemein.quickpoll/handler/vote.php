@@ -34,7 +34,7 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
     /**
      * Simple default constructor.
      */
-    function net_nemein_quickpoll_handler_vote()
+    function __construct()
     {
         parent::__construct();
     }

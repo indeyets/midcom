@@ -20,7 +20,7 @@ class net_nemein_shoppingcart_handler_cart  extends midcom_baseclasses_component
     /**
      * Simple default constructor.
      */
-    function net_nemein_shoppingcart_handler_cart()
+    function __construct()
     {
         parent::__construct();
     }

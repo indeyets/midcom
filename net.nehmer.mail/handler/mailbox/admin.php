@@ -52,7 +52,7 @@ class net_nehmer_mail_handler_mailbox_admin extends midcom_baseclasses_component
     /**
      * Simple default constructor.
      */
-    function net_nehmer_mail_handler_mailbox_admin()
+    function __construct()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_pop();

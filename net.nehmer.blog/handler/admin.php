@@ -90,7 +90,7 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
     /**
      * Simple default constructor.
      */
-    function net_nehmer_blog_handler_admin()
+    function __construct()
     {
         parent::__construct();
     }

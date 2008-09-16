@@ -33,7 +33,7 @@ class net_nemein_reservations_handler_reservation_view extends midcom_baseclasse
     /**
      * Simple default constructor.
      */
-    function net_nemein_reservations_handler_reservation_view()
+    function __construct()
     {
         parent::__construct();
     }

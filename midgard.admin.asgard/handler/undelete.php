@@ -21,7 +21,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
     /**
      * Simple default constructor.
      */
-    function midgard_admin_asgard_handler_undelete()
+    function __construct()
     {
         $this->_component = 'midgard.admin.asgard';
         parent::__construct();

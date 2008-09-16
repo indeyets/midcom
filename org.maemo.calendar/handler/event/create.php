@@ -72,7 +72,7 @@ class org_maemo_calendar_handler_event_create  extends midcom_baseclasses_compon
     /**
      * Simple default constructor.
      */
-    function org_maemo_calendar_handler_event_create()
+    function __construct()
     {
         parent::__construct();
 

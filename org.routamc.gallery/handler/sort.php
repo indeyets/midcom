@@ -51,7 +51,7 @@ class org_routamc_gallery_handler_sort extends midcom_baseclasses_components_han
      *
      * @access public
      */
-    function org_routamc_gallery_handler_sort()
+    function __construct()
     {
         parent::__construct();
     }

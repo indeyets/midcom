@@ -51,7 +51,7 @@ class net_nehmer_publications_handler_feed extends midcom_baseclasses_components
     /**
      * Simple default constructor.
      */
-    function net_nehmer_publications_handler_feed()
+    function __construct()
     {
         parent::__construct();
     }

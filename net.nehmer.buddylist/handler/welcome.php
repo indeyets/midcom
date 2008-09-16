@@ -38,7 +38,7 @@ class net_nehmer_buddylist_handler_welcome extends midcom_baseclasses_components
      */
     var $_buddies_meta = null;
 
-    function net_nehmer_buddylist_handler_welcome()
+    function __construct()
     {
         parent::__construct();
     }

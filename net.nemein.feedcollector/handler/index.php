@@ -20,7 +20,7 @@ class net_nemein_feedcollector_handler_index  extends midcom_baseclasses_compone
     /**
      * Simple default constructor.
      */
-    function net_nemein_feedcollector_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

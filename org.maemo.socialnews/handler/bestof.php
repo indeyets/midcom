@@ -24,7 +24,7 @@ class org_maemo_socialnews_handler_bestof extends midcom_baseclasses_components_
     /**
      * Simple default constructor.
      */
-    function org_maemo_socialnews_handler_bestof()
+    function __construct()
     {
         parent::__construct();
     }

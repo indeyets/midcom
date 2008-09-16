@@ -105,7 +105,7 @@ class net_nehmer_jobmarket_handler_search extends midcom_baseclasses_components_
      */
     var $_search_data = null;
 
-    function net_nehmer_jobmarket_handler_search()
+    function __construct()
     {
         parent::__construct();
     }

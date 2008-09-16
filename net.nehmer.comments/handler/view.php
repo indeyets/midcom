@@ -20,7 +20,7 @@
 
 class net_nehmer_comments_handler_view extends midcom_baseclasses_components_handler
 {
-    function net_nehmer_comments_handler_view()
+    function __construct()
     {
         parent::__construct();
     }

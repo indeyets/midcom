@@ -25,7 +25,7 @@ class fi_hut_loginbroker_handler_index  extends midcom_baseclasses_components_ha
     /**
      * Simple default constructor.
      */
-    function fi_hut_loginbroker_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

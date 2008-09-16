@@ -63,7 +63,7 @@ class org_maemo_devcodes_handler_code_view extends midcom_baseclasses_components
     /**
      * Simple default constructor.
      */
-    function org_maemo_devcodes_handler_code_view()
+    function __construct()
     {
         parent::__construct();
     }

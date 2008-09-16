@@ -49,7 +49,7 @@ class midgard_admin_asgard_handler_object_parameters extends midcom_baseclasses_
     /**
      * Simple default constructor.
      */
-    function midgard_admin_asgard_handler_object_parameters()
+    function __construct()
     {
         $this->_component = 'midgard.admin.asgard';
         parent::__construct();
