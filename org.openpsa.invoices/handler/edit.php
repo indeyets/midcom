@@ -8,7 +8,7 @@
  */
 
 /**
- * invoice edit/view handler
+ * Invoice edit/view handler
  *
  * @package org.openpsa.invoices
  */
@@ -286,7 +286,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
         $this->_view_toolbar->add_item(
             Array(
-                MIDCOM_TOOLBAR_URL => "invoice/edit/{$this->_request_data['invoice']->guid}.html",
+                MIDCOM_TOOLBAR_URL => "invoice/edit/{$this->_request_data['invoice']->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -323,7 +323,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
         $this->_view_toolbar->add_item(
             Array(
-                MIDCOM_TOOLBAR_URL => "invoice/delete/{$this->_request_data['invoice']->guid}.html",
+                MIDCOM_TOOLBAR_URL => "invoice/delete/{$this->_request_data['invoice']->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $data['l10n_midcom']->get('delete'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -333,6 +333,13 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
         $this->_view_toolbar->bind_to($data['invoice']);
 
+        $_MIDCOM->add_link_head(array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager/columned..css",
+            )
+        );
         return true;
     }
 

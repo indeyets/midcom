@@ -8,7 +8,7 @@
  */
 
 /**
- * invoice delete handler
+ * Invoice delete handler
  *
  * @package org.openpsa.invoices
  */
@@ -98,6 +98,14 @@ class org_openpsa_invoices_handler_delete extends midcom_baseclasses_components_
         }
 
         $this->_view_toolbar->bind_to($this->_request_data['invoice']);
+
+        $_MIDCOM->add_link_head(array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL."/midcom.helper.datamanager/columned.css",
+            )
+        );
 
         return true;
     }
