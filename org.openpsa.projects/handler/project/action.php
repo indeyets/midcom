@@ -237,35 +237,54 @@ class org_openpsa_projects_handler_project_action extends midcom_baseclasses_com
                     // This will exit
                 }
 
-            case 'edit':
-                $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['project']);
-
-                switch ($this->_datamanagers['project']->process_form()) {
-                    case MIDCOM_DATAMGR_EDITING:
-                        $this->_view = "edit";
-
-                        // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
-
-                        return true;
-
-                    case MIDCOM_DATAMGR_SAVED:
-                    case MIDCOM_DATAMGR_CANCELLED:
-                        $this->_view = "default";
-                        $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                            . "project/" . $this->_request_data["project"]->guid);
-                        // This will exit()
-
-                    case MIDCOM_DATAMGR_FAILED:
-                        $this->errstr = "Datamanager: " . $GLOBALS["midcom_errstr"];
-                        $this->errcode = MIDCOM_ERRCRIT;
-                        return false;
-                }
-                return true;
             default:
                 return false;
         }
     }
+
+    /**
+     * The edit handler
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array &$data The local request data.
+     * @return boolean Indicating success.
+     */
+    function _handler_edit($handler_id, $args, &$data)
+    {
+        $_MIDCOM->auth->require_valid_user();
+
+        $this->_request_data['project'] = $this->_load_project($args[0]);
+        if (!$this->_request_data['project'])
+        {
+            return false;
+        }
+        $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['project']);
+
+        switch ($this->_datamanagers['project']->process_form()) {
+            case MIDCOM_DATAMGR_EDITING:
+                $this->_view = "edit";
+
+                // Add toolbar items
+                org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+
+                return true;
+
+            case MIDCOM_DATAMGR_SAVED:
+            case MIDCOM_DATAMGR_CANCELLED:
+                $this->_view = "default";
+                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
+                    . "project/" . $this->_request_data["project"]->guid);
+                // This will exit()
+
+            case MIDCOM_DATAMGR_FAILED:
+                $this->errstr = "Datamanager: " . $GLOBALS["midcom_errstr"];
+                $this->errcode = MIDCOM_ERRCRIT;
+                return false;
+        }
+        return true;
+    }
+    
 
     /**
      *
@@ -274,11 +293,19 @@ class org_openpsa_projects_handler_project_action extends midcom_baseclasses_com
      */
     function _show_action($handler_id, &$data)
     {
-        if ($this->_view == "edit")
-        {
-            $this->_request_data['project_dm']  = $this->_datamanagers['project'];
-            midcom_show_style("show-project-edit");
-        }
     }
+    
+    /**
+     * The edit show phase
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
+    function _show_edit($handler_id, &$data)
+    {
+        $this->_request_data['project_dm'] =& $this->_datamanagers['project'];
+        midcom_show_style("show-project-edit");
+    }
+    
 }
 ?>

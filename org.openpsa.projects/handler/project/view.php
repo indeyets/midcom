@@ -86,7 +86,7 @@ class org_openpsa_projects_handler_project_view extends midcom_baseclasses_compo
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "project/{$this->_project->guid}/edit.html",
+                MIDCOM_TOOLBAR_URL => "project/edit/{$this->_project->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',

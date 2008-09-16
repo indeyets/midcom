@@ -49,6 +49,12 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
             'handler' => Array('org_openpsa_projects_handler_project_list', 'list'),
         );
 
+        // Match /project/GUID/edit
+        $this->_request_switch[] = array(
+            'fixed_args' => array('project', 'edit'),
+            'variable_args' => 1,
+            'handler' => Array('org_openpsa_projects_handler_project_action', 'edit'),
+        );
         // Match /project/GUID/action
         $this->_request_switch[] = array(
             'fixed_args' => 'project',
