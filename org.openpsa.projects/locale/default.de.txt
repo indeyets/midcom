@@ -151,6 +151,10 @@ Bearbeiten
 Aufgabe %s bearbeiten
 ---STRINGEND
 
+---STRING edit project %s
+Projekt %s bearbeiten
+---STRINGEND
+
 ---STRING end
 Ende
 ---STRINGEND

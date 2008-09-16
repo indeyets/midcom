@@ -265,6 +265,8 @@ class org_openpsa_projects_handler_project_action extends midcom_baseclasses_com
             case MIDCOM_DATAMGR_EDITING:
                 $this->_view = "edit";
 
+                $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit project %s'), $this->_request_data['project']->title));
+
                 // Add toolbar items
                 org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
 
@@ -274,7 +276,7 @@ class org_openpsa_projects_handler_project_action extends midcom_baseclasses_com
             case MIDCOM_DATAMGR_CANCELLED:
                 $this->_view = "default";
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                    . "project/" . $this->_request_data["project"]->guid);
+                    . "project/" . $this->_request_data["project"]->guid . "/");
                 // This will exit()
 
             case MIDCOM_DATAMGR_FAILED:

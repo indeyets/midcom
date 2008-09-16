@@ -151,6 +151,10 @@ Edit
 Edit task %s
 ---STRINGEND
 
+---STRING edit project %s
+Edit project %s
+---STRINGEND
+
 ---STRING end
 End
 ---STRINGEND
