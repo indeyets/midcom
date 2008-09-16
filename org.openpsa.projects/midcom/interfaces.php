@@ -80,6 +80,8 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             return null;
         }
 
+        static $vgroup_members = Array();
+
         debug_push_class(__CLASS__, __FUNCTION__);
         $type = 'resources';
         if (substr($groupname, strlen($groupname)-11) == 'subscribers')
@@ -88,6 +90,12 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             $groupname = substr($groupname, 0, strlen($groupname)-11);
             $type = 'contacts';
         }
+        
+        if (isset($vgroup_members[$groupname]))
+        {
+            return $vgroup_members[$groupname];
+        }
+      
         $members = array();
         $project = new org_openpsa_projects_project($groupname);
         if (   !$project
@@ -95,6 +103,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         {
             debug_add("\"{$groupname}\" cannot be loaded as project, returning empty array", MIDCOM_LOG_WARN);
             //PONDER: Should we fail with more vigor here ??
+            $vgroup_members[$groupname] = $members;
             return $members;
         }
 
@@ -122,6 +131,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             }
         }
         debug_pop();
+        $vgroup_members[$groupname] = $members;
         return $members;
     }
 
