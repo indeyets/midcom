@@ -271,11 +271,6 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
             )
         );
 
-        // Load datamanagers for main classes
-        $this->_initialize_datamanager('project', $this->_config->get('schemadb_project'));
-        $this->_initialize_datamanager('task', $this->_config->get('schemadb_task'));
-        $this->_initialize_datamanager('hours', $this->_config->get('schemadb_hours'));
-
         // Load DM2 schemas
         $this->_request_data['schemadb_task_dm2'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_task_dm2'));
         $this->_request_data['schemadb_project_dm2'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_project_dm2'));
@@ -303,21 +298,6 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
     function _show_debug($handler_id, &$data)
     {
         midcom_show_style("show-debug");
-    }
-
-    function _initialize_datamanager($type, $schemadb_snippet)
-    {
-        // Load schema database snippet or file
-        debug_add("Loading Schema Database", MIDCOM_LOG_DEBUG);
-        $schemadb_contents = midcom_get_snippet_content($schemadb_snippet);
-        eval("\$schemadb = Array ( {$schemadb_contents} );");
-        // Initialize the datamanager with the schema
-        $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb);
-
-        if (!$this->_datamanagers[$type]) {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantiated.");
-            // This will exit.
-        }
     }
 
     function _hack_dm_for_ajax_hours()

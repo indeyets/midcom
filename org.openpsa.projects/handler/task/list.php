@@ -24,7 +24,6 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
 
     function _on_initialize()
     {
-        $this->_datamanagers =& $this->_request_data['datamanagers'];
     }
 
     /**
@@ -36,7 +35,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         $node = $nap->get_node($nap->get_current_node());
         $this->_request_data['hours_widget'][$task->guid] = new org_openpsa_projects_hours_widget(&$task, $this->_datamanagers['hours'], "{$node[MIDCOM_NAV_FULLURL]}hours/task/{$task->id}/", $this->_request_data);
     }
-
+    
     /**
      * Add a task to a requested task list view
      * @param integer $task_id ID of an org_openpsa_projects_task object

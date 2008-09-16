@@ -23,7 +23,10 @@ class org_openpsa_projects_handler_project_new extends midcom_baseclasses_compon
 
     function _on_initialize()
     {
-        $this->_datamanagers =& $this->_request_data['datamanagers'];
+        $this->_datamanagers = array
+        (
+            'project' => new midcom_helper_datamanager($this->_config->get('schemadb_project'))
+        );
     }
 
     function _creation_dm_callback(&$datamanager)

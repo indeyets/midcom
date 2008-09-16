@@ -23,7 +23,10 @@ class org_openpsa_projects_handler_hours_action extends midcom_baseclasses_compo
 
     function _on_initialize()
     {
-        $this->_datamanagers =& $this->_request_data['datamanagers'];
+        $this->_datamanagers = array
+        (
+            'hours' => new midcom_helper_datamanager($this->_config->get('schemadb_hours'))
+        );
     }
 
     function _initialize_datamanager($type, $schemadb_snippet)
