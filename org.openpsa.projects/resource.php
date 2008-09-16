@@ -149,6 +149,10 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
         $qb = org_openpsa_projects_task_resource::new_query_builder();
         $qb->add_constraint('person', '=', $_MIDGARD['user']);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
+        if (!$list_finished)
+        {
+            $qb->add_constraint( 'task.status', '<', ORG_OPENPSA_TASKSTATUS_COMPLETED);
+        }
         $resources = $qb->execute();
         foreach ($resources as $resource)
         {
@@ -167,13 +171,6 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
             if ($task->start >= time())
             {
                 // This is not a current task yet. Skip
-                continue;
-            }
-
-            if (   $task->status >= ORG_OPENPSA_TASKSTATUS_COMPLETED
-                && !$list_finished)
-            {
-                // This task has been closed already. Skip
                 continue;
             }
 
