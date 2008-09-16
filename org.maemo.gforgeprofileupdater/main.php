@@ -30,7 +30,7 @@ class org_maemo_gforgeprofileupdater extends midcom_baseclasses_components_purec
         'email',
     );
 
-    function org_maemo_gforgeprofileupdater()
+    function __construct()
     {
         $this->_component = 'org.maemo.gforgeprofileupdater';
         parent::__construct();

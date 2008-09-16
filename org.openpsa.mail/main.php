@@ -40,7 +40,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
     var $__textBodyFound; //boolean, used in part_decode
     var $__htmlBodyFound; // --''--
 
-    function org_openpsa_mail()
+    function __construct()
     {
         $this->_component = 'org.openpsa.mail';
         parent::__construct();
