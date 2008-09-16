@@ -27,7 +27,7 @@ class midcom_core_temporary_object extends __midcom_core_temporary_object
      */
     function __construct($id = null)
     {
-        parent::__midcom_core_temporary_object($id);
+        parent::__construct($id);
     }
 
     /**

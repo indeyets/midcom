@@ -15,7 +15,7 @@ class org_openpsa_directmarketing_query extends org_openpsa_queries_query
 {
     function __construct($id = null)
     {
-        $stat = parent::__midcom_org_openpsa_query($id);
+        $stat = parent::__construct($id);
         if (!$this->component)
         {
             $this->component = 'org.openpsa.directmarketing';

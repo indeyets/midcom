@@ -105,7 +105,7 @@
  * {
  *     function midcom_baseclasses_database_article($id = null)
  *     {
- *         parent::__midcom_baseclasses_database_article($id);
+ *         parent::__construct($id);
  *     }
  *
  *     // ...

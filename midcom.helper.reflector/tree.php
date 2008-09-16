@@ -865,7 +865,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
              *     var $noasgard = true;
              *
              *     function __construct($id = null)    {
-             *         return parent::__pl_olga_test_dba($id);
+             *         return parent::__construct($id);
              *     }
              *
              * }
