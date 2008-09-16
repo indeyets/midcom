@@ -77,7 +77,7 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
         );
         $this->_request_switch['config'] = Array
         (
-            'handler' => array ('midcom_helper_dm2config_config', 'config'),
+            'handler' => array ('midcom_core_handler_configdm2', 'config'),
             'fixed_args' => array ('config'),
         );
 
@@ -241,7 +241,7 @@ class net_nehmer_static_viewer extends midcom_baseclasses_components_request
             midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb'));
             
         $GLOBALS['net_nehmer_static_schemadbs'] = array();
-        $GLOBALS['net_nehmer_static_schemadbs'][] = $this->_l10n_midcom->get('default setting');
+        $GLOBALS['net_nehmer_static_schemadbs'][''] = $this->_l10n_midcom->get('default setting');
 
         $config_schemadbs = $this->_config->get('schemadbs');
         if (is_array($config_schemadbs))
