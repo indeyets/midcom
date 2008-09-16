@@ -108,19 +108,18 @@ class default_select_structure extends midcom_baseclasses_components_handler
             && !empty($_POST['sitewizard_structure_select_template']))
         {    
             $session = new midcom_service_session();
-            
+                
             if (!$session->exists("midgard_admin_wizards_{$this->_request_data['session_id']}"))
             {
                 echo "HERE";
             }
             else
             {
-                $host_creator = $session->get("midgard_admin_wizards_{$this->_request_data['session_id']}");
+                $structure_creator = $session->get("midgard_admin_wizards_{$this->_request_data['session_id']}");
             }
             
             try
             {
-                $structure_creator = $host_creator->next_link();
                 $structure_creator->set_verbose(true);
             
                 if ($_POST['sitewizard_structure_select_template'] == 'none')

@@ -61,11 +61,19 @@ class default_create_sitegroup extends midcom_baseclasses_components_handler
                 $sitegroup_creator->set_sitegroup_admin_username($_POST['default_sitewizard_adminuser']);
                 $sitegroup_creator->set_sitegroup_admin_password($_POST['default_sitewizard_adminpass']);
 
-                $structure_creator = new midgard_admin_sitewizard_creator_structure();
+                /* Initialize structure creator with 'midcom' config, so messages, logs and erros will be 
+                 * handled correct way in web environment. */
+                $setup_config = new midgard_setup_config("midcom", null, null);
+                $structure_creator = new midgard_admin_sitewizard_creator_structure($setup_config);
                 $structure_creator->add_link($sitegroup_creator);
                 $structure_creator->set_sitegroup_creator($sitegroup_creator);
                 $session = new midcom_service_session();
                 $session->set("midgard_admin_wizards_{$this->_request_data['session_id']}", $structure_creator);
+
+                /* TODO */ 
+                /* 1. Add possibility to select existing sitegroup
+                   2. Check if sitegroup exists
+                   3. Relocate to itself if sitegroup must be created and name akeady exists */
 
                 $_MIDCOM->relocate($this->_request_data['next_plugin_full_path']);
             }

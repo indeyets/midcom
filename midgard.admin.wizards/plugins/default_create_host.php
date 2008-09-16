@@ -83,7 +83,11 @@ class default_create_host extends midcom_baseclasses_components_handler
                 $structure_creator->add_link($host_creator);
 
                 $session->set("midgard_admin_wizards_{$this->_request_data['session_id']}", $structure_creator);
- 
+
+                /* TODO 
+                 1. Check if host exists
+                 2. Relocate to itself if host with name already exists  */
+
                 $_MIDCOM->relocate($this->_request_data['next_plugin_full_path']);
             }
             catch (midgard_admin_sitewizard_exception $e)
