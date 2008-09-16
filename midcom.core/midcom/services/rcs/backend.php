@@ -19,7 +19,7 @@ class midcom_services_rcs_backend
      */
     var $config = null;
 
-    function midcom_services_rcs_backend(&$object, &$config)
+    function __construct(&$object, &$config)
     {
         $this->config = $config;
     }
@@ -92,7 +92,7 @@ class midcom_services_rcs_backend_null extends midcom_services_rcs_backend
     /**
      * Empty constructor
      */
-    function midcom_services_rcs_null($object, &$config)
+    function __construct($object, &$config)
     {
         parent::__construct($config);
     }

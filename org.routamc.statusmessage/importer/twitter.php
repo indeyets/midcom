@@ -16,7 +16,7 @@ class org_routamc_statusmessage_importer_twitter extends org_routamc_statusmessa
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function org_routamc_statusmessage_importer_twitter()
+    function __construct()
     {
          parent::__construct();
     }

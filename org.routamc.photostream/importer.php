@@ -53,7 +53,7 @@ class org_routamc_photostream_importer extends midcom_baseclasses_components_pur
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function org_routamc_photostream_importer($photostream)
+    function __construct($photostream)
     {
          $this->photostream = $photostream;
              

@@ -17,7 +17,7 @@ class net_nemein_attention_exporter_cloud extends net_nemein_attention_exporter
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function net_nemein_attention_exporter_cloud()
+    function __construct()
     {
          parent::__construct();
     }

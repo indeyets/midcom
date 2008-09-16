@@ -15,7 +15,7 @@ class org_openpsa_mail_backend_mail_smtp
     var $error = false;
     var $_mail = null;
 
-    function org_openpsa_mail_backend_mail_smtp()
+    function __construct()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add('constructor called');

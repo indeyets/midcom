@@ -20,7 +20,7 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
 {
     var $already_serialized = array();
 
-    function midcom_helper_replicator_exporter_mirror($subscription)
+    function __construct($subscription)
     {
         parent::__construct($subscription);
     }

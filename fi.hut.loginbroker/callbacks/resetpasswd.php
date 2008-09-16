@@ -14,7 +14,7 @@
  */
 class fi_hut_loginbroker_callbacks_resetpasswd extends fi_hut_loginbroker_callbacks_prototype_resetpasswd
 {
-    function fi_hut_loginbroker_callbacks_resetpasswd()
+    function __construct()
     {
         parent::__construct();
     }

@@ -16,7 +16,7 @@ class org_routamc_positioning_importer_fireeagle extends org_routamc_positioning
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function org_routamc_positioning_importer_fireeagle()
+    function __construct()
     {
          parent::__construct();
     }

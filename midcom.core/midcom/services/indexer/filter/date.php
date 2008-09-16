@@ -48,7 +48,7 @@ class midcom_services_indexer_filter_date extends midcom_services_indexer_filter
      * @param string $start Start of filter range (or 0 for no start filter)
      * @param string $end End of filter range (or 0 for no end filter)
      */
-    function midcom_services_indexer_filter_date($field, $start, $end)
+    function __construct($field, $start, $end)
     {
         parent::__construct($field);
         

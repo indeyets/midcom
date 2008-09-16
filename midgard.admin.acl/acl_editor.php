@@ -57,7 +57,7 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
     var $_row_labels = array();
     var $_rendered_row_labels = array();
 
-    function midgard_admin_acl_editor_plugin()
+    function __construct()
     {
         parent::__construct();
 

@@ -35,7 +35,7 @@ class org_maemo_calendar_callbacks_timezones extends midcom_baseclasses_componen
      * postprocessing to move the configuration syntax to the rendering one.
      *
      */
-    function org_maemo_calendar_callbacks_timezones($args)
+    function __construct($args)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         

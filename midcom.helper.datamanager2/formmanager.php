@@ -125,7 +125,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
      * @param Array &$types A list of types matching the passed schema, used as a basis for the
      *     form types. This variable is taken by reference.
      */
-    function midcom_helper_datamanager2_formmanager(&$schema, &$types)
+    function __construct(&$schema, &$types)
     {
         $this->_component = 'midcom.helper.datamanager2';
         parent::__construct();

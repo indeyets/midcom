@@ -14,7 +14,7 @@
  */
 class midcom_org_openpsa_deliverable extends __midcom_org_openpsa_deliverable
 {
-    function midcom_org_openpsa_deliverable($id = null)
+    function __construct($id = null)
     {
         return parent::__midcom_org_openpsa_deliverable($id);
     }
@@ -28,7 +28,7 @@ class midcom_org_openpsa_deliverable extends __midcom_org_openpsa_deliverable
 class org_openpsa_projects_deliverable extends midcom_org_openpsa_deliverable
 {
 
-    function org_openpsa_projects_deliverable($identifier=NULL)
+    function __construct($identifier=NULL)
     {
         return parent::__midcom_org_openpsa_deliverable($identifier);
     }

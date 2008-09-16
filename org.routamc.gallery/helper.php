@@ -22,7 +22,7 @@ class org_routamc_gallery_helper
      * Constructor, determines the operation mode based on node
      * @param object midcom_db_topic object of the gallery node
      */
-    function org_routamc_gallery_helper($node)
+    function __construct($node)
     {
         if (!is_object($node))
         {

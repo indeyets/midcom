@@ -31,7 +31,7 @@ class org_routamc_statusmessage_importer extends midcom_baseclasses_components_p
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function org_routamc_statusmessage_importer()
+    function __construct()
     {
          $this->_component = 'org.routamc.statusmessage';
          parent::__construct();

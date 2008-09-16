@@ -20,7 +20,7 @@ class midcom_helper_replicator_transporter_archive extends midcom_helper_replica
     var $program_paths = array();
     var $_file_counter = 1;
     
-    function midcom_helper_replicator_transporter_archive($subscription)
+    function __construct($subscription)
     {
         $this->program_paths['tar'] = $GLOBALS['midcom_config']['utility_tar'];
         $this->program_paths['bzip2'] = '/usr/bin/bzip2';

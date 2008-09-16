@@ -86,7 +86,7 @@ class midcom_baseclasses_components_request_admin extends midcom_baseclasses_com
     /**
      * Initialize the toolbar references after constructing the base class.
      */
-    function midcom_baseclasses_components_request_admin ($topic, $config)
+    function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
 

@@ -22,7 +22,7 @@ class net_nemein_bannedwords_edit_handler extends midcom_baseclasses_components_
 
     var $_content_topic = null;
 
-    function net_nemein_bannedwords_edit_handler()
+    function __construct()
     {
         $_MIDCOM->load_library('net.nemein.bannedwords');
     $_MIDCOM->load_library('midcom.helper.datamanager2');

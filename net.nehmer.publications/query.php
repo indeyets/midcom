@@ -109,7 +109,7 @@ class net_nehmer_publications_query extends midcom_baseclasses_components_pureco
      *     construction. Since this is enabled by default, most standard cases should be already
      *     covered.
      */
-    function net_nehmer_publications_query($autofilter = true)
+    function __construct($autofilter = true)
     {
         $this->_component = 'net.nehmer.publications';
         parent::__construct();

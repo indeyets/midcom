@@ -39,7 +39,7 @@ class midcom_helper_datamanager2_callback_select_countries extends midcom_basecl
      */
     var $_callback = null;
 
-    function midcom_helper_datamanager2_callback_select_countries($args)
+    function __construct($args)
     {
         $this->_component = 'net.nehmer.account';
         parent::__construct();

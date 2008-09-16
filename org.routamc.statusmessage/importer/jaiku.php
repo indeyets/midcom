@@ -16,7 +16,7 @@ class org_routamc_statusmessage_importer_jaiku extends org_routamc_statusmessage
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function org_routamc_statusmessage_importer_jaiku()
+    function __construct()
     {
          parent::__construct();
     }

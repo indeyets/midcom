@@ -79,7 +79,7 @@ class net_nehmer_publications_callbacks_categorylister extends midcom_baseclasse
      * @param boolean $sitelisting The callback is used to display the onsite listing instead of
      *     the standard DM2 interface
      */
-    function net_nehmer_publications_callbacks_categorylister($group, $sitelisting = false)
+    function __construct($group, $sitelisting = false)
     {
         $this->_component = 'net.nehmer.publications';
 

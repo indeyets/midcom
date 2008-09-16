@@ -31,7 +31,7 @@ class midcom_helper_datamanager_datatype_unixdate extends midcom_helper_datamana
      */
     var $_store_as_iso_timestamp;
 
-    function midcom_helper_datamanager_datatype_unixdate (&$datamanager, &$storage, $field)
+    function __construct(&$datamanager, &$storage, $field)
     {
         if (!array_key_exists("location", $field))
         {

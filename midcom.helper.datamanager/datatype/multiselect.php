@@ -15,7 +15,7 @@ class midcom_helper_datamanager_datatype_multiselect extends midcom_helper_datam
     var $_selection_list;
     var $_current_selection;
 
-    function midcom_helper_datamanager_datatype_multiselect (&$datamanager, &$storage, $field)
+    function __construct(&$datamanager, &$storage, $field)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 

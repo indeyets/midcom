@@ -40,7 +40,7 @@ class org_maemo_calendar_callbacks_personstags extends midcom_baseclasses_compon
      *
      * @param int $user The user who's tags to show.
      */
-    function org_maemo_calendar_callbacks_personstags($options)
+    function __construct($options)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 

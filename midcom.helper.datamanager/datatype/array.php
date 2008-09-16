@@ -14,7 +14,7 @@ class midcom_helper_datamanager_datatype_array extends midcom_helper_datamanager
 
     var $_current_selection;
 
-    function midcom_helper_datamanager_datatype_array (&$datamanager, &$storage, $field)
+    function __construct(&$datamanager, &$storage, $field)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 

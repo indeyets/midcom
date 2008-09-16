@@ -71,7 +71,7 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
     /**
      * The constructor is empty yet.
      */
-    function midcom_services_cache_backend_memcached()
+    function __construct()
     {
         parent::__construct();
         // Nothing to do.

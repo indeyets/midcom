@@ -222,7 +222,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
         $this->HTML_QuickForm_Renderer();
     } // end constructor
     */
-    function midcom_helper_datamanager2_renderer_simple()
+    function __construct()
     {
         $this->_groupTemplate = $this->_orig_group_template;
         $this->HTML_QuickForm_Renderer();

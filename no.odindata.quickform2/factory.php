@@ -43,7 +43,7 @@ class no_odindata_quickform2_factory
      */
     var $schema_name = 'default';
 
-    function no_odindata_quickform2_factory( $schema, $config )
+    function __construct( $schema, $config )
     {
         $this->schema = $schema;
         $this->config = $config;

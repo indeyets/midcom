@@ -20,7 +20,7 @@ class org_maemo_calendar_eventparticipant
     var $name = null;
     var $id = null;
         
-    function org_maemo_calendar_eventparticipant($id = null)
+    function __construct($id = null)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         

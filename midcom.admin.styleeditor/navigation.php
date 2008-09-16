@@ -8,7 +8,7 @@
 class midcom_admin_styleeditor_navigation extends midcom_baseclasses_components_navigation {
 /* hey that's all I do too !' */
 
-    function midcom_admin_styleeditor_navigation () {
+    function __construct() {
         parent::__construct();
     }
 }

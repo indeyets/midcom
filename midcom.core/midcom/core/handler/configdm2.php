@@ -54,7 +54,7 @@ class midcom_core_handler_configdm2 extends midcom_baseclasses_components_handle
      * 
      * @access public
      */
-    function midcom_core_handler_configdm2()
+    function __construct()
     {
         parent::midcom_baseclasses_components_handler();
     }

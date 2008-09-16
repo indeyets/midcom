@@ -14,7 +14,7 @@
  */
 class midcom_admin_help_help extends midcom_baseclasses_components_handler
 {
-    function midcom_admin_help_help()
+    function __construct()
     {
         parent::__construct();
     }

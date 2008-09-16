@@ -20,7 +20,7 @@ class midcom_admin_user_plugin extends midcom_baseclasses_components_request
      *
      * @access public
      */
-    function midcom_admin_user_plugin()
+    function __construct()
     {
         parent::__construct();
     }

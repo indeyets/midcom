@@ -50,7 +50,7 @@ class midcom_core_group_virtual extends midcom_core_group
      * @param mixed $id This is either a valid full identifier (without the vgroup: prefix)
      *        for a VGroup or a VGroup database record.
      */
-    function midcom_core_group_virtual($id = null)
+    function __construct($id = null)
     {
         parent::__construct($id);
     }

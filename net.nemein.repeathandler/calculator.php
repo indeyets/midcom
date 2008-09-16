@@ -23,7 +23,7 @@ class net_nemein_repeathandler_calculator extends midcom_baseclasses_components_
      */
     var $master_event = null;
     
-    function net_nemein_repeathandler_calculator(&$master_event, $repeat_rule)
+    function __construct(&$master_event, $repeat_rule)
     {
         $this->master_event = &$master_event;
         $this->rule = $repeat_rule;

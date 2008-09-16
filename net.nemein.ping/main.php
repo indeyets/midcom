@@ -49,7 +49,7 @@ class net_nemein_ping_pinger extends midcom_baseclasses_components_purecode
      *
      * @param midcom_dba_object $object Object to ping
      */
-    function net_nemein_ping_pinger($object)
+    function __construct($object)
     {
         $this->_component = 'net.nemein.ping';
 

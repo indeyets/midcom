@@ -22,7 +22,7 @@ class org_maemo_calendarpanel_calendar_leaf extends org_maemo_calendarpanel_leaf
      * Initializes the class
      *
      */
-    function org_maemo_calendarpanel_calendar_leaf(&$calendarwidget)
+    function __construct(&$calendarwidget)
     {
         parent::__construct();
         

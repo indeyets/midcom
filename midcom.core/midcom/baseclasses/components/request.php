@@ -442,7 +442,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      * @param MidgardTopic $topic The topic we are working on
      * @param midcom_helper_configuration $config The currently active configuration.
      */
-    public function midcom_baseclasses_components_request($topic, $config)
+    public function __construct($topic, $config)
     {
         if (! $_MIDCOM->dbclassloader->is_midcom_db_object($topic))
         {

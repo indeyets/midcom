@@ -18,7 +18,7 @@ class midcom_helper_datamanager_datatype_account extends midcom_helper_datamanag
     var $_verify_password;
     var $_password_was_empty;
 
-    function midcom_helper_datamanager_datatype_account (&$datamanager, &$storage, $field)
+    function __construct(&$datamanager, &$storage, $field)
     {
         if (!array_key_exists("location", $field))
         {

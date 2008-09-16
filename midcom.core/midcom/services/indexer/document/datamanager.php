@@ -128,7 +128,7 @@ class midcom_services_indexer_document_datamanager extends midcom_services_index
      *
      * @param midcom_helper_datamanager $datamanager The fully initialized datamanager instance to use
      */
-    function midcom_services_indexer_document_datamanager(&$datamanager)
+    function __construct(&$datamanager)
     {
         parent::__construct($datamanager->_storage);
 

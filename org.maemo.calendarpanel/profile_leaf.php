@@ -25,7 +25,7 @@ class org_maemo_calendarpanel_profile_leaf extends org_maemo_calendarpanel_leaf
      * Initializes the class
      *
      */
-    function org_maemo_calendarpanel_profile_leaf()
+    function __construct()
     {
         parent::__construct();
         

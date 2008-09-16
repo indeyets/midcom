@@ -14,7 +14,7 @@ class org_openpsa_smslib_clickatell extends org_openpsa_smslib
     var $api_id = ''; //reference to client_id
     var $features = 'FEAT_8BIT FEAT_UDH FEAT_CONCAT FEAT_ALPHA FEAT_NUMER'; //req_feat list
 
-    function org_openpsa_smslib_clickatell()
+    function __construct()
     {
         parent::__construct();
         $this->location = &$this->uri;

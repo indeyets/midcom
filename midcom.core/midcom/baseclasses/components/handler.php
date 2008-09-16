@@ -134,7 +134,7 @@ class midcom_baseclasses_components_handler
      * Main constructor does not do much yet, it shouldn't be overridden though,
      * use the _on_initilize event handler instead.
      */
-    function midcom_baseclasses_components_handler()
+    function __construct()
     {
     }
 

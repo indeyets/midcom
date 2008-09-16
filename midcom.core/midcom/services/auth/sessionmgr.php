@@ -53,7 +53,7 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
     /**
      * Simple, currently empty default constructor.
      */
-    function midcom_services_auth_sessionmgr($auth)
+    function __construct($auth)
     {
         $this->auth = $auth;
         parent::__construct();

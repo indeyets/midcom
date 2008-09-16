@@ -59,7 +59,7 @@ class no_odindata_quickform2_emailgenerator
      */
     var $add_recipient_data;
 
-    function no_odindata_quickform2_emailgenerator ($mail, $recipient)
+    function __construct($mail, $recipient)
     {
         $this->mail = $mail;
         $this->recipient = $recipient;

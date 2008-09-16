@@ -18,7 +18,7 @@ class midcom_helper_datamanager_datatype_privilege extends midcom_helper_dataman
     var $_classname = null;
     var $_privilege_object = null;
 
-    function midcom_helper_datamanager_datatype_privilege (&$datamanager, &$storage, $field)
+    function __construct(&$datamanager, &$storage, $field)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         if (!array_key_exists('privilege_object', $field))

@@ -21,7 +21,7 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
     var $http_read_timeout = 30;
     var $keep_alive = false;
 
-    function midcom_helper_replicator_transporter_http($subscription)
+    function __construct($subscription)
     {
          $ret = parent::__construct($subscription);
          $_MIDCOM->componentloader->load_graceful('org.openpsa.httplib');

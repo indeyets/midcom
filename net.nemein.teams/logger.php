@@ -12,7 +12,7 @@
 class net_nemein_teams_logger
 {
 
-    function net_nemein_teams_logger()
+    function __construct()
     {
 
     }

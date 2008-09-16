@@ -20,7 +20,7 @@ class midcom_admin_libconfig_plugin extends midcom_baseclasses_components_reques
      * 
      * @access public
      */
-    public function midcom_admin_libconfig_plugin()
+    public function __construct()
     {
         parent::__construct();
     }

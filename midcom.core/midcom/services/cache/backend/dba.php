@@ -50,7 +50,7 @@ class midcom_services_cache_backend_dba extends midcom_services_cache_backend
     /**
      * The constructor is empty yet.
      */
-    function midcom_services_cache_backend_dba()
+    function __construct()
     {
         parent::__construct();
         // Nothing to do.

@@ -14,7 +14,7 @@
  */
 class midcom_admin_help_interface extends midcom_baseclasses_components_interface 
 {
-    function midcom_admin_help_interface () 
+    function __construct() 
     {
         parent::__construct();
 

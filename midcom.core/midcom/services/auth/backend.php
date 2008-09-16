@@ -44,7 +44,7 @@ class midcom_services_auth_backend extends midcom_baseclasses_core_object
     /**
      * The constructor should do only basic initialization.
      */
-    function midcom_services_auth_backend($auth)
+    function __construct($auth)
     {
         $this->auth = $auth;
         return parent::__construct();

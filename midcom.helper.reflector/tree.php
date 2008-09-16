@@ -22,7 +22,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
     var $show_sg0_objects = true;
     var $sg_context = false;
 
-    function midcom_helper_reflector_tree($src)
+    function __construct($src)
     {
         $this->sg_context = $_MIDGARD['sitegroup'];
         parent::__construct($src);
@@ -864,7 +864,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
              *
              *     var $noasgard = true;
              *
-             *     function pl_olga_test_dba($id = null)    {
+             *     function __construct($id = null)    {
              *         return parent::__pl_olga_test_dba($id);
              *     }
              *

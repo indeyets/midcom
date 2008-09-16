@@ -21,7 +21,7 @@ class midcom_helper_replicator_transporter_archive_serial extends midcom_helper_
     /**
      * @todo figure out a way make do without the subscription (from which configurations are read ATM)
      */
-    function midcom_helper_replicator_transporter_archive_serial($subscription)
+    function __construct($subscription)
     {
          $ret = parent::__construct($subscription);
          if (!$this->_create_tmp_dir())

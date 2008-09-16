@@ -58,7 +58,7 @@ class midcom_helper_datamanager2_csv extends midcom_baseclasses_components_purec
      * @param midcom_helper_datamanager2_datamanager The DM instance to work with. This instance must
      *     already be schema-initialized, but should not have any storage object loaded yet.
      */
-    function midcom_helper_datamanager2_csv(&$datamanager)
+    function __construct(&$datamanager)
     {
          $this->_component = 'midcom.helper.datamanager2';
          $this->datamanager =& $datamanager;

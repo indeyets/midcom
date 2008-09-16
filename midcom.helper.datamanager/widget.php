@@ -130,7 +130,7 @@ class midcom_helper_datamanager_widget {
      * @param mixed $defaultvalue The value to initialize the snippet with (used if no HTTP POST is available).
      * @see midcom_helper_datamanager_widget::_constructor()
      */
-    function midcom_helper_datamanager_widget (&$datamanager, $field, $defaultvalue)
+    function __construct(&$datamanager, $field, $defaultvalue)
     {
         $this->required = false;
         $this->missingrequired = false;

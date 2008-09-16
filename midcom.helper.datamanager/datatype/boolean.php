@@ -12,7 +12,7 @@
 class midcom_helper_datamanager_datatype_boolean extends midcom_helper_datamanager_datatype
 {
 
-    function midcom_helper_datamanager_datatype_boolean(&$datamanager, &$storage, $field)
+    function __construct(&$datamanager, &$storage, $field)
     {
         if (!array_key_exists("location", $field))
         {

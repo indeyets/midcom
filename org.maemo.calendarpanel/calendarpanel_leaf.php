@@ -21,7 +21,7 @@ class org_maemo_calendarpanel_leaf extends midcom_baseclasses_components_purecod
      * Initializes the class
      *
      */
-    function org_maemo_calendarpanel_leaf()
+    function __construct()
     {
         $this->_component = 'org.maemo.calendarpanel';        
         parent::__construct();

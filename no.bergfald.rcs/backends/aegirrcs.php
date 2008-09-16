@@ -17,7 +17,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
      */
     var $rcsroot = '';
 
-    function no_bergfald_rcs_aegirrcs($guid)
+    function __construct($guid)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         parent::__construct($guid);

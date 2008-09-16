@@ -19,7 +19,7 @@ class net_nemein_attention_importer_favourites extends net_nemein_attention_impo
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function net_nemein_attention_importer_favourites()
+    function __construct()
     {
         $_MIDCOM->componentloader->load_graceful('net.nemein.favourites');
         $_MIDCOM->load_library('net.nemein.tag');

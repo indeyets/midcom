@@ -18,7 +18,7 @@ class midcom_helper_replicator_importer_archive extends midcom_helper_replicator
     /**
      * Initializes the class.
      */
-    function midcom_helper_replicator_importer_archive()
+    function __construct()
     {
         parent::__construct();
     }

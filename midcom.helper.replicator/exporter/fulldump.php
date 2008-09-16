@@ -20,7 +20,7 @@ class midcom_helper_replicator_exporter_fulldump extends midcom_helper_replicato
     /**
      * @todo figure out a way to work this without the subscription
      */
-    function midcom_helper_replicator_exporter_fulldump($subscription)
+    function __construct($subscription)
     {
         // We need serial transporter...
         $subscription->transporter = 'archive_serial';

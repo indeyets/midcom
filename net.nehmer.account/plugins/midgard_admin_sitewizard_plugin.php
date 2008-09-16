@@ -29,7 +29,7 @@ class midgard_admin_sitewizard_plugin extends midcom_baseclasses_components_hand
    /**
     * Simple constructor, which only initializes the parent constructor.
     */
-    function midgard_admin_sitewizard_plugin()
+    function __construct()
     {
         parent::__construct();
 

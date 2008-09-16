@@ -24,7 +24,7 @@ class midcom_services_cache_backend_null extends midcom_services_cache_backend
     /**
      * The constructor is empty yet.
      */
-    function midcom_services_cache_backend_null()
+    function __construct()
     {
         parent::__construct();
         // Nothing to do.

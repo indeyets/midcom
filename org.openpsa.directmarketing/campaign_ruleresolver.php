@@ -74,7 +74,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
     var $_rules = null; //Copy of rules as received
     var $_seek =  array(); //index for quickly finding out which persons are found via which classes
 
-    function org_openpsa_directmarketing_campaign_ruleresolver($rules = false)
+    function __construct($rules = false)
     {
         // Make sure all supported classes are loaded
         $_MIDCOM->componentloader->load_graceful('org.maemo.devcodes');

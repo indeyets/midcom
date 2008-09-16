@@ -45,7 +45,7 @@ if (!class_exists('midcom_baseclasses_components_purecode'))
         var $_config = null;
         var $_i18n = null;
 
-        function midcom_baseclasses_components_purecode()
+        function __construct()
         {
             $this->_config = new midcom_helper_configuration();
             $this->_i18n = new midcom_helper_i18n();

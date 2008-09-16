@@ -5,7 +5,7 @@
 class midcom_admin_babel_plugin extends midcom_baseclasses_components_request
 {
 
-    function midcom_admin_babel_plugin()
+    function __construct()
     {
         parent::__construct();
     }

@@ -15,7 +15,7 @@ class midcom_helper_replicator_importer_xml extends midcom_helper_replicator_imp
     /**
      * Initializes the class.
      */
-    function midcom_helper_replicator_importer_xml()
+    function __construct()
     {
         parent::__construct();
     }

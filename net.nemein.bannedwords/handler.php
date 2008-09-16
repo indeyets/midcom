@@ -16,7 +16,7 @@ class net_nemein_bannedwords_handler extends midcom_baseclasses_components_purec
 
     var $_language = "en";
 
-    function net_nemein_bannedwords_handler()
+    function __construct()
     {
         $this->_sitegroup = $_MIDGARD['sitegroup'];
         $this->_component = 'net.nemein.bannedwords';

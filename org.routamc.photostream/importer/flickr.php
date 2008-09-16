@@ -19,7 +19,7 @@ class org_routamc_photostream_importer_flickr extends org_routamc_photostream_im
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function org_routamc_photostream_importer_flickr($photostream)
+    function __construct($photostream)
     {
         parent::__construct($photostream);
         

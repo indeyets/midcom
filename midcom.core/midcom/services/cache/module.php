@@ -42,7 +42,7 @@ class midcom_services_cache_module
     /**
      * Class initialization, nothing to do yet.
      */
-    function midcom_services_cache_module()
+    function __construct()
     {
     }
     

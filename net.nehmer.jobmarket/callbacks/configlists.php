@@ -38,7 +38,7 @@ class net_nehmer_jobmarket_callbacks_configlists extends midcom_baseclasses_comp
      *
      * @param string $mode The config key to bind to, without the _list suffix.
      */
-    function net_nehmer_jobmarket_callbacks_configlists($mode)
+    function __construct($mode)
     {
         $this->_component = 'net.nehmer.jobmarket';
         $this->_mode = $mode;

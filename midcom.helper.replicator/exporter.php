@@ -31,7 +31,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
      *
      * @param midcom_helper_replicator_subscription_dba $subscription Subscription
      */
-    function midcom_helper_replicator_exporter($subscription)
+    function __construct($subscription)
     {
          $this->_component = 'midcom.helper.replicator';
 

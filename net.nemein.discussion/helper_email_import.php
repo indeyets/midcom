@@ -22,7 +22,7 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
     var $controller = false;
     var $midcom_topic = false;
 
-    function net_nemein_discussion_email_importer()
+    function __construct()
     {
         $this->_component = 'net.nemein.discussion';
         parent::__construct();

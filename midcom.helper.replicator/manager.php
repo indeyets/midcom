@@ -68,7 +68,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
      */
     var $_defaults = Array();
 
-    function midcom_helper_replicator_manager()
+    function __construct()
     {
         parent::__construct();
     }

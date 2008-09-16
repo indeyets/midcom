@@ -95,7 +95,7 @@ class midcom_helper_datamanager2_callback_select_grouplister
      * The default constructor reads in the configuration. See above for allowed
      * options.
      */
-    function midcom_helper_datamanager2_callback_select_grouplister($options)
+    function __construct($options)
     {
         if ($options)
         {

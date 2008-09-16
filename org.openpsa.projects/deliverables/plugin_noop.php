@@ -15,7 +15,7 @@
  */
 class org_openpsa_projects_deliverables_interface_plugin_noop extends org_openpsa_projects_deliverables_interface_plugin
 {
-    function org_openpsa_projects_deliverables_interface_plugin_noop($identifier=NULL)
+    function __construct($identifier=NULL)
     {
         $this->name = 'projects.noop';
         //TODO: Localization ?

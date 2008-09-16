@@ -54,7 +54,7 @@ class midcom_helper_dm2config_config extends midcom_baseclasses_components_handl
      *
      * @access public
      */
-    function midcom_helper_dm2config_config()
+    function __construct()
     {
         parent::__construct();
     }

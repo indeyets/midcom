@@ -28,7 +28,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
      *
      * @param midcom_helper_replicator_subscription_dba $subscription Subscription
      */
-    function midcom_helper_replicator_queuemanager()
+    function __construct()
     {
          $this->_component = 'midcom.helper.replicator';
          parent::__construct();

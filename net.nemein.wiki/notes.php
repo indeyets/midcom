@@ -23,7 +23,7 @@ class net_nemein_wiki_notes extends midcom_baseclasses_components_purecode
     var $new_wikipage = null;
     var $_paged_qb = null;
 
-    function net_nemein_wiki_notes($target_node, $target_object, $new_wikipage = null)
+    function __construct($target_node, $target_object, $new_wikipage = null)
     {
         parent::__construct();
         

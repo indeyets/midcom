@@ -10,7 +10,7 @@
  * @package midcom.helper.imagepopup
  */
 class midcom_helper_imagepopup_interface extends midcom_baseclasses_components_interface {
-    function midcom_helper_imagepopup_interface () {
+    function __construct() {
         parent::__construct();
 
         $this->_component = 'midcom.helper.imagepopup';

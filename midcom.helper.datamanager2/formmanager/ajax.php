@@ -32,7 +32,7 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
      * @param Array &$types A list of types matching the passed schema, used as a basis for the
      *     form types. This variable is taken by reference.
      */
-    function midcom_helper_datamanager2_formmanager_ajax(&$schema, &$types)
+    function __construct(&$schema, &$types)
     {
         parent::__construct($schema, $types);
     }

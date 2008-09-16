@@ -17,7 +17,7 @@ class net_nemein_attention_exporter_apml extends net_nemein_attention_exporter
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function net_nemein_attention_exporter_apml()
+    function __construct()
     {
          parent::__construct();
     }

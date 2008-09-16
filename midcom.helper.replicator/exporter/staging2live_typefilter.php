@@ -38,7 +38,7 @@ class midcom_helper_replicator_exporter_staging2live_typefilter extends midcom_h
      */
     var $check_types_for = array();
 
-    function midcom_helper_replicator_exporter_staging2live_typefilter($subscription)
+    function __construct($subscription)
     {
         parent::__construct($subscription);
         $this->pass_types = $this->_config->get('exporter_staging2live_typefilter_pass_types');

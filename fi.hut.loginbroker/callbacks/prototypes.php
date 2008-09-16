@@ -26,7 +26,7 @@ class fi_hut_loginbroker_callbacks_prototype_base extends midcom_baseclasses_com
      */
     var $_local_data = array();
 
-    function fi_hut_loginbroker_callbacks_prototype_base()
+    function __construct()
     {
         $this->_component = 'fi.hut.loginbroker';
         parent::__construct();
@@ -151,7 +151,7 @@ class fi_hut_loginbroker_callbacks_prototype_base extends midcom_baseclasses_com
  */
 class fi_hut_loginbroker_callbacks_prototype_create extends fi_hut_loginbroker_callbacks_prototype_base
 {
-    function fi_hut_loginbroker_callbacks_prototype_create()
+    function __construct()
     {
         parent::__construct();
     }
@@ -184,7 +184,7 @@ class fi_hut_loginbroker_callbacks_prototype_create extends fi_hut_loginbroker_c
  */
 class fi_hut_loginbroker_callbacks_prototype_update extends fi_hut_loginbroker_callbacks_prototype_base
 {
-    function fi_hut_loginbroker_callbacks_prototype_update()
+    function __construct()
     {
         parent::__construct();
     }
@@ -214,7 +214,7 @@ class fi_hut_loginbroker_callbacks_prototype_update extends fi_hut_loginbroker_c
  */
 class fi_hut_loginbroker_callbacks_prototype_resetpasswd extends fi_hut_loginbroker_callbacks_prototype_base
 {
-    function fi_hut_loginbroker_callbacks_prototype_resetpasswd()
+    function __construct()
     {
         parent::__construct();
     }

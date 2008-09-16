@@ -212,7 +212,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
     /**
      * Module constructor, relay to base class.
      */
-    function midcom_services_cache_module_content()
+    function __construct()
     {
         parent::__construct();
     }

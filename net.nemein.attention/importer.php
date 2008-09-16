@@ -17,7 +17,7 @@ class net_nemein_attention_importer extends midcom_baseclasses_components_pureco
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function net_nemein_attention_importer()
+    function __construct()
     {
          $this->_component = 'net.nemein.attention';
          parent::__construct();

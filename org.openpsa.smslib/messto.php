@@ -13,7 +13,7 @@ class org_openpsa_smslib_messto extends org_openpsa_smslib
 {
     var $uri = ''; //URL for messto gateway (reference to location)
 
-    function org_openpsa_smslib_messto()
+    function __construct()
     {
         parent::__construct();
         $this->location = &$this->uri;

@@ -17,7 +17,7 @@ class org_routamc_positioning_importer_manual extends org_routamc_positioning_im
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function org_routamc_positioning_importer_manual()
+    function __construct()
     {
          parent::__construct();
     }

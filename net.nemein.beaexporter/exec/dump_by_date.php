@@ -14,7 +14,7 @@ class net_nemein_beaexporter_dummyobject
     var $abstract = 'dummy abstract';
     var $author = false;
     
-    function net_nemein_beaexporter_dummyobject()
+    function __construct()
     {
         $this->revised = time();
         $this->created = time();

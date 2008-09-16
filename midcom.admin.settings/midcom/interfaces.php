@@ -8,7 +8,7 @@
  */
 class midcom_admin_settings_interface extends midcom_baseclasses_components_interface
 {
-    function midcom_admin_settings_interface ()
+    function __construct()
     {
         parent::__construct();
 

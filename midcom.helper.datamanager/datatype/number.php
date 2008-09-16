@@ -42,7 +42,7 @@ class midcom_helper_datamanager_datatype_number extends midcom_helper_datamanage
     /**
      * Constructor with default configuration.
      */
-    function midcom_helper_datamanager_datatype_number (&$datamanager, &$storage, $field)
+    function __construct(&$datamanager, &$storage, $field)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 

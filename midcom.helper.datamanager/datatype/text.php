@@ -28,7 +28,7 @@ class midcom_helper_datamanager_datatype_text extends midcom_helper_datamanager_
     /**
      * Constructor with default configuration.
      */
-    function midcom_helper_datamanager_datatype_text (&$datamanager, &$storage, $field)
+    function __construct(&$datamanager, &$storage, $field)
     {
         if (!array_key_exists("location", $field))
         {

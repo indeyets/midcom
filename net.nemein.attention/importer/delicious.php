@@ -20,7 +20,7 @@ class net_nemein_attention_importer_delicious extends net_nemein_attention_impor
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function net_nemein_attention_importer_delicious()
+    function __construct()
     {
          parent::__construct();
     }

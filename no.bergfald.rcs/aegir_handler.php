@@ -20,7 +20,7 @@ $_MIDCOM->componentloader->load('midcom.admin.aegir');
 class no_bergfald_rcs_aegir extends midcom_admin_aegir_module {
 
 
-    function no_bergfald_rcs_aegir ()
+    function __construct()
     { 
         parent::__construct();
     }

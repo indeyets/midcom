@@ -18,7 +18,7 @@ class org_openpsa_projects_deliverables_interface_plugin
     var $name; //Name of the plugin
     var $description; //Description of the plugin
 
-    function org_openpsa_projects_deliverables_interface_plugin($identifier=NULL)
+    function __construct($identifier=NULL)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         if (is_a($identifier, 'org_openpsa_projects_deliverable'))

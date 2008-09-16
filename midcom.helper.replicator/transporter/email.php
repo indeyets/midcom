@@ -16,7 +16,7 @@ class midcom_helper_replicator_transporter_email extends midcom_helper_replicato
     var $subject = 'From midcom_helper_replicator_transporter_email::process()';
     var $message = "See the XML files attached\n\n/midcom.helper.replicator";
 
-    function midcom_helper_replicator_transporter_email($subscription)
+    function __construct($subscription)
     {
          $ret = parent::__construct($subscription);
          if (!$this->_read_configuration_data())

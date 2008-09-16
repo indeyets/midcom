@@ -115,7 +115,7 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
      *
      * Nothing fancy, the actual startup work is done by the initialize call.
      */
-    function midcom_helper_datamanager2_widget()
+    function __construct()
     {
         $this->_component = 'midcom.helper.datamanager2';
         parent::__construct();

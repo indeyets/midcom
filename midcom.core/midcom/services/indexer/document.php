@@ -278,7 +278,7 @@ class midcom_services_indexer_document
     /**
      * Initialize the object, nothing fancy here.
      */
-    function midcom_services_indexer_document()
+    function __construct()
     {
         $this->_i18n =& $_MIDCOM->get_service('i18n');
     }

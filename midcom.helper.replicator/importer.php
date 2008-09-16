@@ -28,7 +28,7 @@ class midcom_helper_replicator_importer extends midcom_baseclasses_components_pu
     /**
      * Initializes the class.
      */
-    function midcom_helper_replicator_importer()
+    function __construct()
     {
          $this->_component = 'midcom.helper.replicator';
          

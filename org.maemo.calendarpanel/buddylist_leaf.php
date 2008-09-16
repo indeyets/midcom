@@ -23,7 +23,7 @@ class org_maemo_calendarpanel_buddylist_leaf extends org_maemo_calendarpanel_lea
      * Initializes the class
      *
      */
-    function org_maemo_calendarpanel_buddylist_leaf()
+    function __construct()
     {
         parent::__construct();
         

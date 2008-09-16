@@ -22,7 +22,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
      */
     var $_history;
 
-    function midcom_services_rcs_backend_rcs(&$object, &$config)
+    function __construct(&$object, &$config)
     {
         $this->_guid = $object->guid;
         parent::__construct($object, $config);

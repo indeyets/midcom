@@ -25,7 +25,7 @@ class midcom_core_temporary_object extends __midcom_core_temporary_object
      *
      * @param mixed $id A valid object ID or GUID, omit for an empty object.
      */
-    function midcom_core_temporary_object($id = null)
+    function __construct($id = null)
     {
         parent::__midcom_core_temporary_object($id);
     }

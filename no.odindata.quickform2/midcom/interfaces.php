@@ -18,7 +18,7 @@ class no_odindata_quickform2_interface extends midcom_baseclasses_components_int
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function no_odindata_quickform2_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'no.odindata.quickform2';

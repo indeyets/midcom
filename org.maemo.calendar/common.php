@@ -11,7 +11,7 @@
  */
 class org_maemo_calendar_common
 {   
-    function org_maemo_calendar_common()
+    function __construct()
     {
     }
     

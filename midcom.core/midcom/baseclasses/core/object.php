@@ -24,7 +24,7 @@
  */
 class midcom_baseclasses_core_object
 {
-    function midcom_baseclasses_core_object() {}
+    function __construct() {}
     
     function get_class_magic_default_privileges()
     {

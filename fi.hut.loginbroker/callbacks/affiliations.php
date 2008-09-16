@@ -16,7 +16,7 @@ class fi_hut_loginbroker_callbacks_affiliations extends fi_hut_loginbroker_callb
 {
     var $_local_config = array();
 
-    function fi_hut_loginbroker_callbacks_affiliations()
+    function __construct()
     {
         parent::__construct();
         $this->_local_config = $this->_config->get('fi_hut_loginbroker_callbacks_affiliations_config');

@@ -95,7 +95,7 @@ class midcom_helper_datamanager2_callback_select_personlister
      * The default constructor reads in the configuration. See above for allowed
      * options.
      */
-    function midcom_helper_datamanager2_callback_select_personlister($options)
+    function __construct($options)
     {
         if ($options)
         {

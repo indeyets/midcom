@@ -79,7 +79,7 @@ class net_nemein_wiki_moinmoin_importer
     var $import_revisions = true;
     var $resolver = false;
 
-    function net_nemein_wiki_moinmoin_importer($schemadb_path = 'file:/net/nemein/wiki/config/schemadb_default.inc')
+    function __construct($schemadb_path = 'file:/net/nemein/wiki/config/schemadb_default.inc')
     {
         $this->resolver = new net_nemein_wiki_wikipage();
         $this->_schemadb['default'] = new midcom_helper_datamanager2_schema($schemadb_path, 'default');

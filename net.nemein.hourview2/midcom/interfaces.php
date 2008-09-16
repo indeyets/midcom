@@ -22,7 +22,7 @@ class net_nemein_hourview2_interface extends midcom_baseclasses_components_inter
      * 
      * Load all component files/snippets.
      */
-    function net_nemein_hourview2_interface()
+    function __construct()
     {
         parent::__construct();
         

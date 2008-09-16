@@ -29,7 +29,7 @@
     /**
      * Constructor
      */
-    function midcom_services_rcs_config($config_array)
+    function __construct($config_array)
     {
         $this->config = $config_array;
     }

@@ -17,7 +17,7 @@ class midcom_helper_filesync_importer extends midcom_baseclasses_components_pure
      *
      * @param midcom_helper_replication_type_dba $type type
      */
-    function midcom_helper_filesync_importer()
+    function __construct()
     {
          $this->_component = 'midcom.helper.filesync';
          $this->config =& $this->_config;

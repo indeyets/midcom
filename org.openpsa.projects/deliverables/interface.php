@@ -20,7 +20,7 @@ class org_openpsa_projects_deliverables_interface
 {
     var $_plugins = array(); //List of plugins available
 
-    function org_openpsa_projects_deliverables_interface()
+    function __construct()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $this->_find_plugins();

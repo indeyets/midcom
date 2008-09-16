@@ -14,7 +14,7 @@
  */
 class net_nemein_rss_manage extends midcom_baseclasses_components_handler
 {
-    function midcom_admin_folder_folder_management()
+    function __construct()
     {
         parent::__construct();
     }

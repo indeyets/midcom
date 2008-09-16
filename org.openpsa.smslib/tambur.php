@@ -13,7 +13,7 @@ class org_openpsa_smslib_tambur extends org_openpsa_smslib
 {
     var $uri = ''; //URL for tambur gateway (reference to location)
 
-    function org_openpsa_smslib_tambur()
+    function __construct()
     {
         parent::__construct();
         $this->location = &$this->uri;

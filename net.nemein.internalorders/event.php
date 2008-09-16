@@ -19,7 +19,7 @@ if (class_exists('NemeinCalendar_event'))
     class net_nemein_calendar_event extends NemeinCalendar_event
     {
         var $__table__ = 'event';    
-        function net_nemein_calendar_event($guid = null) 
+        function __construct($guid = null) 
         {
             return @parent::__construct($guid);
         }

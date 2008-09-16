@@ -137,7 +137,7 @@ class midcom_helper_datamanager_datatype {
      * @param Array $field The field definition to construct a datatype from.
      * @see midcom_helper_datamanager_datatype::_constructor()
      */
-    function midcom_helper_datamanager_datatype (&$datamanager, &$storage, $field)
+    function __construct(&$datamanager, &$storage, $field)
     {
         return $this->_constructor ($datamanager, $storage, $field);
     }

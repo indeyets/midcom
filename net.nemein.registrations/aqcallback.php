@@ -45,7 +45,7 @@ class net_nemein_registrations_aqcallback extends midcom_baseclasses_components_
     /**
      * The constructor loads the current request configuration and prepares the option listing.
      */
-    function net_nemein_registrations_aqcallback()
+    function __construct()
     {
         $this->_component = 'net.nemein.registrations';
         parent::__construct();

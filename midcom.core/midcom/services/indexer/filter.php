@@ -43,7 +43,7 @@ class midcom_services_indexer_filter
      * 
      * @param string $field The name of the field that should be filtered.
      */
-    function midcom_services_indexer_filter($field)
+    function __construct($field)
     {
         $this->_field = $field;
     }

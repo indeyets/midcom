@@ -49,7 +49,7 @@ class midcom_services_indexer_document_attachment extends midcom_services_indexe
      * @param MidgardAttachment $attachment The Attachment to index.
      * @param MidgardObject $source The source objece to which the attachment is bound.
      */
-    function midcom_services_indexer_document_attachment($attachment, $source)
+    function __construct($attachment, $source)
     {
         parent::__construct();
         

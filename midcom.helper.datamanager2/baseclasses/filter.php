@@ -51,7 +51,7 @@ class midcom_helper_datamanager2_baseclasses_filter extends midcom_baseclasses_c
      * @param midcom_helper_datamanager2_formmanager &$formmanager The formmanager we are bound to.
      * @param mixed $config The configuration we are operating on.
      */
-    function midcom_helper_datamanager2_baseclasses_filter (&$formmanager, $config)
+    function __construct(&$formmanager, $config)
     {
         $this->_formmanager =& $formmanager;
         $this->_config =& $config;

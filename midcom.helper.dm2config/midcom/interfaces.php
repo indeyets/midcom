@@ -19,7 +19,7 @@ class midcom_helper_dm2config_interface extends midcom_baseclasses_components_in
      *
      * Nothing needs to be done, besides connecting to the parent class constructor.
      */
-    function midcom_helper_dm2config_interface()
+    function __construct()
     {
         parent::__construct();
         $this->_component = 'midcom.helper.dm2config';

@@ -32,7 +32,7 @@ class midcom_core_group_midgard extends midcom_core_group
      *     a database ID or GUID for Midgard Groups or a valid complete MidCOM group identifier, which
      *     will work for all subclasses.
      */
-    function midcom_core_group_midgard($id = null)
+    function __construct($id = null)
     {
         parent::__construct($id);
     }

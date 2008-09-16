@@ -81,7 +81,7 @@ class midcom_baseclasses_components_purecode
      * Initialize all member variables, remember to set $_component before calling
      * this constructor from your derived classes.
      */
-    public function midcom_baseclasses_components_purecode()
+    public function __construct()
     {
         $this->_component_data =& $GLOBALS['midcom_component_data'][$this->_component];
         $this->_i18n =& $_MIDCOM->get_service('i18n');

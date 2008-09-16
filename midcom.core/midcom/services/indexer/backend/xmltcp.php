@@ -48,7 +48,7 @@ class midcom_services_indexer_backend_xmltcp extends midcom_services_indexer_bac
     /**
      * Constructor is empty at this time.
      */
-    function midcom_services_indexer_backend_xmltcp ()
+    function __construct()
     {
         parent::__construct();
         // Nothing to do yet.

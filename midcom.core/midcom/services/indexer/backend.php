@@ -22,7 +22,7 @@
 class midcom_services_indexer_backend
 {
     
-    function midcom_services_indexer_backend()
+    function __construct()
     {
         // empty yet.
     }

@@ -59,7 +59,7 @@ class org_routamc_gallery_organizer
      * 
      * @access public
      */
-    function org_routamc_gallery_organizer($sort_string = null)
+    function __construct($sort_string = null)
     {
         if ($sort_string)
         {

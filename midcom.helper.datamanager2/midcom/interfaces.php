@@ -19,7 +19,7 @@ class midcom_helper_datamanager2_interface extends midcom_baseclasses_components
      *
      * Nothing fancy, loads all core script files
      */
-    function midcom_helper_datamanager2_interface()
+    function __construct()
     {
         parent::__construct();
 

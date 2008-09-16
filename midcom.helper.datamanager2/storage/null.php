@@ -44,7 +44,7 @@ class midcom_helper_datamanager2_storage_null extends midcom_helper_datamanager2
      * @param Array $defaults The defaults to use as "artificial" storage. This can be omitted
      *     safely.
      */
-    function midcom_helper_datamanager2_storage_null(&$schema, $defaults = Array())
+    function __construct(&$schema, $defaults = Array())
     {
         parent::__construct($schema);
         $this->_defaults = $defaults;

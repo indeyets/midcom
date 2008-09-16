@@ -45,7 +45,7 @@ class midcom_services_indexer_XMLComm_RequestWriter
      *
      * @param string $index_name The name of the Index to be used. If not specified, the midcom config key 'indexer_index_name' is used.
      */
-    function midcom_services_indexer_XMLComm_RequestWriter($index_name = null)
+    function __construct($index_name = null)
     {
         // Nothing to do yet.
         if (is_null($index_name))
@@ -323,7 +323,7 @@ class midcom_services_indexer_XMLComm_ResponseReader extends XML_Parser
     /**
      * Initialize the XML Parser.
      */
-    function midcom_services_indexer_XMLComm_ResponseReader ()
+    function __construct()
     {
         // Initialize as event parser, the parse method will change that.
         // See this Bug Report for details:

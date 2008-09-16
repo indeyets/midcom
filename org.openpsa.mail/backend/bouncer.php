@@ -18,7 +18,7 @@ class org_openpsa_mail_backend_bouncer
     var $_try_backends = array('mail_smtp', 'mail_sendmail'); //Backends that properly set the ENVELOPE address from "Return-Path" header
     var $_backend = null;
 
-    function org_openpsa_mail_backend_bouncer()
+    function __construct()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         foreach ($this->_try_backends as $backend)

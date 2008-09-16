@@ -24,7 +24,7 @@ class no_odindata_quickform2_email
      * @param midcom_helper_config handler $config configuration
      * @param no_odindata_quickform2_factory $factory
      */
-    function no_odindata_quickform2_email ($config, $factory)
+    function __construct($config, $factory)
     {
         $this->_config = $config;
         $this->_factory = $factory;

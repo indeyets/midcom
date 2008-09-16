@@ -22,7 +22,7 @@ class midcom_helper_datamanager_datatype_mailtemplate extends midcom_helper_data
      */
     var $_i18n = null;
 
-    function midcom_helper_datamanager_datatype_mailtemplate (&$datamanager, &$storage, $field)
+    function __construct(&$datamanager, &$storage, $field)
     {
         $field["location"] = "attachment";
         $field["widget"] = "mailtemplate";

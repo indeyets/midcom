@@ -33,7 +33,7 @@ class net_nemein_hourview2_handler_view extends midcom_baseclasses_components_ha
       * 
       * @access public
       */
-     function net_nemein_hourview2_handler_view()
+     function __construct()
      {
          parent::__construct();
      }

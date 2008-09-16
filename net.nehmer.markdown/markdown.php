@@ -21,7 +21,7 @@ class net_nehmer_markdown_markdown extends midcom_baseclasses_components_purecod
      *
      * Nothing fancy, loads all script files and the datamanager library.
      */
-    function net_nehmer_markdown_markdown()
+    function __construct()
     {
         $this->_component = 'net.nehmer.markdown';
 

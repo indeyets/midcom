@@ -72,7 +72,7 @@ class midcom_services_js_css_merger extends midcom_baseclasses_core_object
     /**
      * Constructor, sets default value and test memcached
      */
-    function midcom_services_js_css_merger()
+    function __construct()
     {
         parent::__construct();
         $this->documentroot = @getenv('DOCUMENT_ROOT');

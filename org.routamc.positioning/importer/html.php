@@ -16,7 +16,7 @@ class org_routamc_positioning_importer_html extends org_routamc_positioning_impo
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function org_routamc_positioning_importer_html()
+    function __construct()
     {
          parent::__construct();
         $_MIDCOM->load_library('org.openpsa.httplib');

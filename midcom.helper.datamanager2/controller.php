@@ -79,7 +79,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
     /**
      * Initializes the class. The real startup is done by the initialize() call.
      */
-    function midcom_helper_datamanager2_controller()
+    function __construct()
     {
          $this->_component = 'midcom.helper.datamanager2';
          parent::__construct();

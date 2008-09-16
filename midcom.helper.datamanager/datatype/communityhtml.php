@@ -16,7 +16,7 @@ class midcom_helper_datamanager_datatype_communityhtml extends midcom_helper_dat
     var $_colors;
     var $_sizes;
 
-    function midcom_helper_datamanager_datatype_communityhtml (&$datamanager, &$storage, $field)
+    function __construct(&$datamanager, &$storage, $field)
     {
         if (!array_key_exists("location", $field))
         {

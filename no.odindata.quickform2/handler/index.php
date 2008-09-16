@@ -35,7 +35,7 @@ class no_odindata_quickform2_handler_index  extends midcom_baseclasses_component
     /**
      * Simple default constructor.
      */
-    function no_odindata_quickform2_handler_index()
+    function __construct()
     {
         parent::__construct();
     }

@@ -73,7 +73,7 @@ class midcom_baseclasses_components_cron_handler
     /**
      * Empty constructor yet, just calls the base class.
      */
-    public function midcom_baseclasses_components_cron_handler()
+    public function __construct()
     {
     }
 

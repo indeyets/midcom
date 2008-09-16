@@ -32,7 +32,7 @@ class net_nemein_alphabeticalindex_callback_availableindexes extends midcom_base
      */
     var $_callback = null;
     
-    function net_nemein_alphabeticalindex_callback_availableindexes($args)
+    function __construct($args)
     {
         $this->_component = 'net.nemein.alphabeticalindex';
         parent::__construct();

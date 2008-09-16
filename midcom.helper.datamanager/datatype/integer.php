@@ -25,7 +25,7 @@ class midcom_helper_datamanager_datatype_integer extends midcom_helper_datamanag
     /**
      * Constructor with default configuration.
      */
-    function midcom_helper_datamanager_datatype_integer (&$datamanager, &$storage, $field) 
+    function __construct(&$datamanager, &$storage, $field) 
     {
         if (!array_key_exists("location", $field))
         {

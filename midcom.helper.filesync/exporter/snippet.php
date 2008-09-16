@@ -16,7 +16,7 @@ class midcom_helper_filesync_exporter_snippet extends midcom_helper_filesync_exp
 {
     var $root_dir = '';
 
-    function midcom_helper_filesync_exporter_snippet()
+    function __construct()
     {
         parent::__construct();
 

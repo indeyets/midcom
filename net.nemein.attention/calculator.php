@@ -35,7 +35,7 @@ class net_nemein_attention_calculator extends midcom_baseclasses_components_pure
      * @param object $user     Midgard Person object to query attention for
      * @param string $profile  Attention profile to use
      */
-    function net_nemein_attention_calculator($user = null, $profile = null)
+    function __construct($user = null, $profile = null)
     {
         $this->_component = 'net.nemein.attention';
         parent::__construct();

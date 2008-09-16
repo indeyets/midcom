@@ -14,7 +14,7 @@ $_MIDCOM->load_library('midcom.helper.reflector');
  */
 class midcom_helper_replicator_logger extends midcom_debug 
 {
-    function midcom_helper_replicator_logger($filename)
+    function __construct($filename)
     {
         parent::__construct($filename);
         if (isset($GLOBALS['midcom_config']['replicator_log_level']))
