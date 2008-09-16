@@ -37,229 +37,203 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
         // Load handler classes
         $this->_workflow_handler = new org_openpsa_projects_workflow_handler(&$this->_datamanagers, &$this->_request_data);
 
+
         // Match /project/list/<status>
-        $this->_request_switch[] = array(
-            'fixed_args' => array('project','list'),
+        $this->_request_switch['project-list-status'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_project_list', 'list'),
+            'fixed_args' => array('project', 'list'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_projects_handler_project_list', 'list'),
         );
         // Match /project/list
-        $this->_request_switch[] = array(
-            'fixed_args' => array('project','list'),
-            'handler' => Array('org_openpsa_projects_handler_project_list', 'list'),
+        $this->_request_switch['project-list'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_project_list', 'list'),
+            'fixed_args' => array('project', 'list'),
         );
 
-        // Match /project/GUID/edit
-        $this->_request_switch[] = array(
+        // Match /project/edit/<GUID>
+        $this->_request_switch['project-edit'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_project_action', 'edit'),
             'fixed_args' => array('project', 'edit'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_projects_handler_project_action', 'edit'),
         );
-        // Match /project/GUID/action
-        $this->_request_switch[] = array(
+        // Match /project/<GUID>/<action>
+        $this->_request_switch['project-action'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_project_action', 'action'),
             'fixed_args' => 'project',
             'variable_args' => 2,
-            'handler' => Array('org_openpsa_projects_handler_project_action', 'action'),
         );
         // Match /project/new
-        $this->_request_switch[] = array(
-            'fixed_args' => array('project','new'),
-            'handler' => Array('org_openpsa_projects_handler_project_new', 'new'),
+        $this->_request_switch['project-new'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_project_new', 'new'),
+            'fixed_args' => array('project', 'new'),
         );
-        // Match /project/GUID
-        $this->_request_switch[] = array(
+        // Match /project/<GUID>
+        $this->_request_switch['project'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_project_view', 'view'),
             'fixed_args' => 'project',
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_projects_handler_project_view', 'view'),
         );
+
         // Match /task/list/<mode>/<param>/<param2>
-        $this->_request_switch[] = array(
-            'fixed_args' => array('task','list'),
+        $this->_request_switch['task-list-3'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_task_list', 'list'),
+            'fixed_args' => array('task', 'list'),
             'variable_args' => 3,
-            'handler' => Array('org_openpsa_projects_handler_task_list', 'list'),
         );
         // Match /task/list/<mode>/<param>
-        $this->_request_switch[] = array(
-            'fixed_args' => array('task','list'),
+        $this->_request_switch['task-list-2'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_task_list', 'list'),
+            'fixed_args' => array('task', 'list'),
             'variable_args' => 2,
-            'handler' => Array('org_openpsa_projects_handler_task_list', 'list'),
         );
         // Match /task/list/<mode>
-        $this->_request_switch[] = array(
-            'fixed_args' => array('task','list'),
+        $this->_request_switch['task-list-1'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_task_list', 'list'),
+            'fixed_args' => array('task', 'list'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_projects_handler_task_list', 'list'),
         );
         // Match /task/list/
-        $this->_request_switch[] = array(
-            'fixed_args' => array('task','list'),
-            'handler' => Array('org_openpsa_projects_handler_task_list', 'list'),
+        $this->_request_switch['task-list'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_task_list', 'list'),
+            'fixed_args' => array('task', 'list'),
         );
 
-        // Match /task/related/GUID
-        $this->_request_switch['task_view_related'] = array(
-            'fixed_args' => Array('task', 'related'),
+        // Match /task/related/<GUID>
+        $this->_request_switch['task_view_related'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_task_view', 'view'),
+            'fixed_args' => array('task', 'related'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_projects_handler_task_view', 'view'),
         );
-        // Match /task/edit/GUID
+        // Match /task/edit/<GUID>
         $this->_request_switch['task_edit'] = array
         (
-            'fixed_args' => array
-            (
-                'task',
-                'edit',
-            ),
+            'handler' => array('org_openpsa_projects_handler_task_admin', 'edit'),
+            'fixed_args' => array('task', 'edit'),
             'variable_args' => 1,
-            'handler' => array
-            (
-                'org_openpsa_projects_handler_task_admin', 'edit'
-            ),
         );
-        // Match /task/delete/GUID
+        // Match /task/delete/<GUID>
         $this->_request_switch['task_delete'] = array
         (
-            'fixed_args' => array
-            (
-                'task',
-                'delete',
-            ),
+            'handler' => array('org_openpsa_projects_handler_task_admin', 'delete'),
+            'fixed_args' => array('task', 'delete'),
             'variable_args' => 1,
-            'handler' => array
-            (
-                'org_openpsa_projects_handler_task_admin', 'delete'
-            ),
         );
 
-        // Match /task/resourcing/GUID
+        // Match /task/resourcing/<GUID>
         $this->_request_switch['task_resourcing'] = array
         (
-            'fixed_args' => array
-            (
-                'task',
-                'resourcing',
-            ),
+            'handler' => array('org_openpsa_projects_handler_task_resourcing', 'resourcing'),
+            'fixed_args' => array('task', 'resourcing'),
             'variable_args' => 1,
-            'handler' => array
-            (
-                'org_openpsa_projects_handler_task_resourcing', 'resourcing'
-            ),
         );
-        // Match /task/resourcing/prospects/GUID
+        // Match /task/resourcing/prospects/<GUID>
         $this->_request_switch['task_resourcing_prospects'] = array
         (
-            'fixed_args' => array
-            (
-                'task',
-                'resourcing',
-                'prospects',
-            ),
+            'handler' => array('org_openpsa_projects_handler_task_resourcing', 'list_prospects'),
+            'fixed_args' => array('task', 'resourcing', 'prospects'),
             'variable_args' => 1,
-            'handler' => array
-            (
-                'org_openpsa_projects_handler_task_resourcing', 'list_prospects'
-            ),
         );
-        // Match /task/resourcing/prospect/GUID
+        // Match /task/resourcing/prospect/<GUID>
         $this->_request_switch['task_resourcing_prospect_slots'] = array
         (
-            'fixed_args' => array
-            (
-                'task',
-                'resourcing',
-                'prospect',
-            ),
+            'handler' => array('org_openpsa_projects_handler_task_resourcing', 'prospect_slots'),
+            'fixed_args' => array('task', 'resourcing', 'prospect'),
             'variable_args' => 1,
-            'handler' => array
-            (
-                'org_openpsa_projects_handler_task_resourcing', 'prospect_slots'
-            ),
         );
 
-        // Match /task/GUID/action
-        $this->_request_switch[] = array(
+        // Match /task/<GUID>/<action>
+        $this->_request_switch['task-action'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_task_action', 'action'),
             'fixed_args' => 'task',
             'variable_args' => 2,
-            'handler' => Array('org_openpsa_projects_handler_task_action', 'action'),
         );
         // Match /task/new
-        $this->_request_switch[] = array(
-            'fixed_args' => array('task','new'),
-            'handler' => Array('org_openpsa_projects_handler_task_new', 'new'),
+        $this->_request_switch['task-new'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_task_new', 'new'),
+            'fixed_args' => array('task', 'new'),
         );
         // Match /task/new/<Target type>/<Target GUID>
-        $this->_request_switch[] = array(
-            'fixed_args' => array('task','new'),
+        $this->_request_switch['task-new-2'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_task_new', 'new'),
+            'fixed_args' => array('task', 'new'),
             'variable_args' => 2,
-            'handler' => Array('org_openpsa_projects_handler_task_new', 'new'),
         );
-        // Match /task/GUID
-        $this->_request_switch['task_view'] = array(
+        // Match /task/<GUID>
+        $this->_request_switch['task_view'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_task_view', 'view'),
             'fixed_args' => 'task',
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_projects_handler_task_view', 'view'),
         );
 
         // Match /hours/<listtype>/<GUID>
-        $this->_request_switch[] = array(
+        $this->_request_switch['hours-listtype'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_hours_list', 'list'),
             'fixed_args' => 'hours',
             'variable_args' => 2,
-            'handler' => Array('org_openpsa_projects_handler_hours_list', 'list'),
         );
-        // Match /hours/<listtype>/<GUID>/action
-        $this->_request_switch[] = array(
+        // Match /hours/<listtype>/<GUID>/<action>
+        $this->_request_switch['hours-listtype-action'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_hours_action', 'action'),
             'fixed_args' => 'hours',
             'variable_args' => 3,
-            'handler' => Array('org_openpsa_projects_handler_hours_action', 'action'),
         );
-        // Match /workflow/GUID/ACTION
-        $this->_request_switch[] = array(
+
+        // Match /workflow/<GUID>/<action>
+        $this->_request_switch['workflow-action'] = array
+        (
+            'handler' => array(&$this->_workflow_handler, 'action'),
             'fixed_args' => 'workflow',
             'variable_args' => 2,
-            'handler' => array(&$this->_workflow_handler,'action'),
         );
-        // Match /workflow/GUID
-        $this->_request_switch[] = array(
+        // Match /workflow/<GUID>
+        $this->_request_switch['workflow'] = array
+        (
+            'handler' => array(&$this->_workflow_handler, 'post'),
             'fixed_args' => 'workflow',
             'variable_args' => 1,
-            'handler' => array(&$this->_workflow_handler,'post'),
         );
 
         // Match /workingon/set
         $this->_request_switch['workingon_set'] = array
         (
-            'fixed_args' => array
-            (
-                'workingon',
-                'set',
-            ),
-            'handler' => array
-            (
-                'org_openpsa_projects_handler_workingon',
-                'set'
-            ),
+            'handler' => array('org_openpsa_projects_handler_workingon', 'set'),
+            'fixed_args' => array('workingon', 'set' ),
         );
+        // Match /workingon/check
         $this->_request_switch['workingon_check'] = array
         (
-            'fixed_args' => array
-            (
-                'workingon',
-                'check',
-            ),
-            'handler' => array
-            (
-                'org_openpsa_projects_handler_workingon',
-                'check'
-            ),
+            'handler' => array('org_openpsa_projects_handler_workingon', 'check'),
+            'fixed_args' => array('workingon', 'check'),
         );
 
-        $this->_request_switch[] = array(
+        // Match /debug
+        $this->_request_switch['debug'] = array
+        (
+            'handler' => 'debug',
             'fixed_args' => 'debug',
-            'handler' => 'debug'
         );
+
         // Match /
-        $this->_request_switch[] = array(
-            'handler' => Array('org_openpsa_projects_handler_frontpage', 'frontpage'),
+        $this->_request_switch['frontpage'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_frontpage', 'frontpage'),
         );
 
         //Add common relatedto request switches
@@ -267,7 +241,7 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
         //If you need any custom switches add them here
 
         // This component uses Ajax, include the handler javascripts
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajaxutils.js");
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/org.openpsa.helpers/ajaxutils.js");
         $this->_request_data['view'] = 'default';
         $this->_request_data['config'] = $this->_config;
 
@@ -283,7 +257,7 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/org.openpsa.projects/projects.css",
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.projects/projects.css",
             )
         );
 
@@ -293,7 +267,7 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/org.openpsa.core/ui-elements.css",
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.core/ui-elements.css",
             )
         );
 
