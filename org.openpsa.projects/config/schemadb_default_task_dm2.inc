@@ -167,7 +167,7 @@
         'resources' => array
         (
             'title'   => 'resources',
-            'storage' => null,
+            'storage' => 'resources2',
             'type' => 'select',
             'type_config' => array
             (
@@ -208,7 +208,7 @@
         'contacts' => array
         (
             'title'   => 'contacts',
-            'storage' => null,
+            'storage' => 'contacts2',
             'type' => 'select',
             'type_config' => array
             (

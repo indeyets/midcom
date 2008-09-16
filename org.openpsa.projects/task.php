@@ -365,30 +365,15 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         debug_add("\$this->resources2 before: \n===\n" . sprint_r($this->resources2) . "===\n");
         debug_pop();
         
-        if(!is_array($this->contacts))
+        $this->contacts = array();
+        foreach ($this->contacts2 as $contact)
         {
-                $this->contacts = array();
+            $this->contacts[$contact] = true;
         }
-        else
+        $this->resources = array();
+        foreach ($this->resources2 as $resource)
         {
-                $this->contacts2 = $this->contacts;
-        }
-        foreach ($this->contacts2 as $contact => $boolean)
-        {
-            $this->contacts[$contact] = $boolean;
-        }
-
-        if(!is_array($this->resources))
-        {
-                $this->resources = array();
-        }
-        else
-        {
-                $this->resources2 = $this->resources;
-        }
-        foreach ($this->resources2 as $resource => $boolean)
-        {
-            $this->resources[$resource] = $boolean;
+            $this->resources[$resource] = true;
         }
 
         debug_push_class(__CLASS__, __FUNCTION__);
