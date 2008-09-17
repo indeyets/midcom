@@ -108,7 +108,8 @@ class org_openpsa_core_acl_synchronizer
 
                 // Process a possible subscribers group
                 $subscriber_group = $_MIDCOM->auth->get_group($owner_id.'subscribers');
-                if ($subscriber_group)
+                if ($subscriber_group
+                    && !empty($subscriber_group->id))
                 {
                     // Allow them to read the object
                     $object->set_privilege('midgard:read', $subscriber_group->id, MIDCOM_PRIVILEGE_ALLOW);
