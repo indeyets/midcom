@@ -173,7 +173,8 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         }
 
         // Preserve vCal GUIDs once set
-        if (isset($this->externalGuid)) {
+        if (isset($this->externalGuid)) 
+        {
             $this->old_externalGuid = $this->externalGuid;
         }
 
@@ -223,7 +224,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     /**
      * Check whether given user is participant in event
      */
-    function is_participant($user=false)
+    function is_participant($user = false)
     {
         if (!$user)
         {
@@ -427,7 +428,8 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         $this->owner = 0;
 
         //Preserve vCal GUIDs once set
-        if (isset($this->old_externalGuid)) {
+        if (isset($this->old_externalGuid)) 
+        {
             $this->externalGuid=$this->old_externalGuid;
         }
 
@@ -758,7 +760,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
 
 
     //TODO: move this option elsewhere
-    function _on_deleting($repeat_handler='this')
+    function _on_deleting($repeat_handler = 'this')
     {
         //Remove participants
         $_MIDCOM->auth->request_sudo('org.openpsa.calendar');
@@ -825,135 +827,173 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     }
 
       //TODO: Rewrite for QB
-      function _search_person($uid, $param) { //Search persons.
-                //Make sure we have our list and cache available
-                if (!is_object($GLOBALS['org_openpsa_calendar_perListCache'])) {
-                    $GLOBALS['org_openpsa_calendar_perListCache']=mgd_list_persons();
-                    $GLOBALS['org_openpsa_calendar_perListCache_walked']=FALSE;
-                }
-                $lst=&$GLOBALS['org_openpsa_calendar_perListCache'];
+      function _search_person($uid, $param) 
+      {
+          //Search persons.
+          //Make sure we have our list and cache available
+          if (!is_object($GLOBALS['org_openpsa_calendar_perListCache'])) 
+          {
+              $GLOBALS['org_openpsa_calendar_perListCache'] = mgd_list_persons();
+              $GLOBALS['org_openpsa_calendar_perListCache_walked'] = FALSE;
+          }
+          $lst = &$GLOBALS['org_openpsa_calendar_perListCache'];
 
-                if (!is_array($GLOBALS['org_openpsa_calendar_perCache'])) {
-                    $GLOBALS['org_openpsa_calendar_perCache']=array();
-                }
-                $cache=&$GLOBALS['org_openpsa_calendar_perCache'];
+          if (!is_array($GLOBALS['org_openpsa_calendar_perCache'])) 
+          {
+              $GLOBALS['org_openpsa_calendar_perCache'] = array();
+          }
+          $cache = &$GLOBALS['org_openpsa_calendar_perCache'];
 
-                //Really quick cache check
-                if (isset($cache['uid'][$uid])) return $cache['uid'][$uid];
+          //Really quick cache check
+          if (isset($cache['uid'][$uid]))
+          {
+              return $cache['uid'][$uid];
+          }
+                
+          list ($uid_type, $uid_value) = explode (":", $uid, 2);
+          $uid_type = strtolower($uid_type);
 
-                list ($uid_type, $uid_value) = explode (":", $uid, 2);
-                $uid_type=strtolower($uid_type);
+          //Cache uid_type check.
+          if (isset($cache[$uid_type][$uid_value])) 
+          {
+              $cache['uid'][$uid] = &$cache[$uid_type][$uid_value];
+              return $cache['uid'][$uid];
+          }
 
-                //Cache uid_type check.
-                if (isset($cache[$uid_type][$uid_value])) {
-                    $cahce['uid'][$uid]=&$cache[$uid_type][$uid_value];
-                    return $cahce['uid'][$uid];
-                }
+          //Slow seek in persons list
+          if (!$GLOBALS['org_openpsa_calendar_perListCache_walked'] && is_object($lst)) 
+          {
+              $brokenLoop = FALSE;
+              while ($lst->fetch()) 
+              {
+                  if (!is_object($GLOBALS['NNCAL_PERSONSCACHE'][$lst->id])) 
+                  {
+                      $GLOBALS['NNCAL_PERSONSCACHE'][$lst->id] = mgd_get_person($lst->id);
+                  }
+                  $person = $GLOBALS['NNCAL_PERSONSCACHE'][$lst->id];
+                  switch($uid_type) 
+                  {
+                      default:
+                      case 'mailto':
+                        //echo "DEBUG-_search_person: person->email=$person->email, uid=$uid, uid_value=$uid_value <br>\n";
+                        //Check email match
+                          if ($person->email) 
+                          {
+                              $person->email = strtolower($person->email);
+                              if ($person->email === strtolower($uid_value)) 
+                              {
+                                  //We have strong email match
+                                  $cache['uid'][$uid] = $person->id;
+                                  $cache['mailto'][$person->email] =& $cache['uid'][$uid];
+                                  return $cache['uid'][$uid];
+                              }
+                          }
+                          else if (!$person->email && $person->name) 
+                          {
+                              $person->email = preg_replace('/[^0-9_\x61-\x7a]/i', '_', strtolower($person->name)) . '_is_not@openpsa.org';
+                              //OpenPSA generated email "address" match, this is strong as well.
+                              if ($uid_value === $person->email) 
+                              {
+                                  $cache['uid'][$uid] = $person->id;
+                                  $cache['mailto'][$uid_value] =& $cache['uid'][$uid];
+                                  return $cache['uid'][$uid];
+                              }
+                          }
+                          break;
+                  }
+                  //For further use pass email to cache
+                  if ($person->email) 
+                  {
+                      $cache['mailto'][$person->email] = $person->id;
+                  }
 
-                //Slow seek in persons list
-                if (!$GLOBALS['org_openpsa_calendar_perListCache_walked'] && is_object($lst)) {
-                    $brokenLoop=FALSE;
-                    while ($lst->fetch()) {
-                            if (!is_object($GLOBALS['NNCAL_PERSONSCACHE'][$lst->id])) {
-                               $GLOBALS['NNCAL_PERSONSCACHE'][$lst->id]=mgd_get_person($lst->id);
-                            }
-                            $person=$GLOBALS['NNCAL_PERSONSCACHE'][$lst->id];
-                            switch($uid_type) {
-                                default:
-                                case 'mailto':
-                                    //echo "DEBUG-_search_person: person->email=$person->email, uid=$uid, uid_value=$uid_value <br>\n";
-                                    //Check email match
-                                    if ($person->email) {
-                                        $person->email=strtolower($person->email);
-                                        if ($person->email===strtolower($uid_value)) {
-                                            //We have strong email match
-                                            $cache['uid'][$uid]=$person->id;
-                                            $cache['mailto'][$person->email]=&$cache['uid'][$uid];
-                                            return $cache['uid'][$uid];
-                                        }
-                                     } else if (!$person->email && $person->name) {
-                                        $person->email=preg_replace('/[^0-9_\x61-\x7a]/i','_',strtolower($person->name)).'_is_not@openpsa.org';
-                                        //OpenPSA generated email "address" match, this is strong as well.
-                                        if ($uid_value===$person->email) {
-                                            $cache['uid'][$uid]=$person->id;
-                                            $cache['mailto'][$uid_value]=&$cache['uid'][$uid];
-                                            return $cache['uid'][$uid];
-                                        }
-                                    }
-                                break;
-                            }
-                            //For further use pass email to cache
-                            if ($person->email) {
-                                $cache['mailto'][$person->email]=$person->id;
-                            }
+                  //Uid type checks inconclusive, check CN
+                  if (isset($param['CN'])) 
+                  {
+                      //This has a problem with people that have same names...
+                      if ($param['CN'] === $person->name || $param['CN'] === $person->rname) 
+                      {
+                          $cache['cn'][$param['CN']] = $person->id;
+                          return $cache['cn'][$param['CN']];
+                      }
+                  }
 
-                            //Uid type checks inconclusive, check CN
-                            if (isset($param['CN'])) {
-                                //This has a problem with people that have same names...
-                                if ($param['CN']===$person->name || $param['CN']===$person->rname) {
-                                    $cache['cn'][$param['CN']]=$person->id;
-                                    return $cache['cn'][$param['CN']];
-                                }
-                            }
+                  //Put name to cache for further use.
+                  if ($person->rname)
+                  {
+                      $cache['cn'][$person->rname]=$person->id;
+                  }
+                  if ($person->name)
+                  {
+                      $cache['cn'][$person->name]=&$cache['cn'][$person->rname];
+                  }
+              }
+              if (!$brokenLoop) 
+              {
+                  $GLOBALS['org_openpsa_calendar_perListCache_walked'] = TRUE;
+              }
+          }
 
-                            //Put name to cache for further use.
-                            if ($person->rname) $cache['cn'][$person->rname]=$person->id;
-                            if ($person->name) $cache['cn'][$person->name]=&$cache['cn'][$person->rname];
-                    }
-                    if (!$brokenLoop) {
-                        $GLOBALS['org_openpsa_calendar_perListCache_walked']=TRUE;
-                    }
-                }
-
-                //We have checked the whole list for stronger CN/email matches, now we just have to check CN cache (not very reliable)
-                if (isset($param['CN']) && isset($cache['cn'][$param['CN']])) {
-                    return $cache['cn'][$param['CN']];
-                }
+          //We have checked the whole list for stronger CN/email matches, now we just have to check CN cache (not very reliable)
+          if (isset($param['CN']) && isset($cache['cn'][$param['CN']])) 
+          {
+              return $cache['cn'][$param['CN']];
+          }
 
         return FALSE;
       }
 
       //TODO: Rewrite for MgdSchema
-      function _person_status($id) {
-                global $midgard, $nemein_net;
-                //Returns 'PARTICIPANT', 'RESOURCE' or 'CRM'
-                if (mgd_is_member($nemein_net['group'], $id)) {
-                    //Members of __Nemein_Net User must be participants
-                    return 'PARTICIPANT';
-                }
+      function _person_status($id) 
+      {
+          global $midgard, $nemein_net;
+          //Returns 'PARTICIPANT', 'RESOURCE' or 'CRM'
+          if (mgd_is_member($nemein_net['group'], $id)) 
+          {
+                //Members of __Nemein_Net User must be participants
+                return 'PARTICIPANT';
+          }
 
-                if (!is_array($GLOBALS['org_openpsa_calendar_grpCache'])) {
-                    $GLOBALS['org_openpsa_calendar_grpCache']=array();
-                }
-                $cache=&$GLOBALS['org_openpsa_calendar_grpCache'];
+          if (!is_array($GLOBALS['org_openpsa_calendar_grpCache'])) 
+          {
+              $GLOBALS['org_openpsa_calendar_grpCache'] = array();
+          }
+          $cache = &$GLOBALS['org_openpsa_calendar_grpCache'];
 
-                $memLst=mgd_list_memberships($id);
-                if ($memLst) {
-                    while ($memLst->fetch()) {
-                        if (!is_object($cache[$memLst->gid])) {
-                            $cache[$memLst->gid]=mgd_get_group($memLst->gid);
-                        }
-                        $grp=&$cache[$memLst->gid];
-                        while ($grp->up!==0) {
-                            if ($grp->name==='__CRM') {
-                                //While walking back the group tree found CRM root group
-                                return 'CRM';
-                            }
-                            if ($grp->name==='__Calendar Resources') {
-                                //While walking back the group tree found Calendar resources root group.
-                                return 'RESOURCE';
-                            }
+          $memLst = mgd_list_memberships($id);
+          if ($memLst) 
+          {
+              while ($memLst->fetch()) 
+              {
+                  if (!is_object($cache[$memLst->gid])) 
+                  {
+                      $cache[$memLst->gid] = mgd_get_group($memLst->gid);
+                  }
+                  $grp = &$cache[$memLst->gid];
+                  while ($grp->up !== 0) 
+                  {
+                      if ($grp->name === '__CRM') 
+                      {
+                            //While walking back the group tree found CRM root group
+                            return 'CRM';
+                      }
+                      if ($grp->name === '__Calendar Resources') 
+                      {
+                            //While walking back the group tree found Calendar resources root group.
+                            return 'RESOURCE';
+                      }
 
-                            if ($grp->up && !is_object($cache[$grp->up])) {
-                                $cache[$grp->up]=mgd_get_group($grp->up);
-                            }
-                            $grp=&$cache[$grp->up];
-                        }
-
-                    }
-                }
-
-        return FALSE;
+                      if ($grp->up && !is_object($cache[$grp->up])) 
+                      {
+                          $cache[$grp->up] = mgd_get_group($grp->up);
+                      }
+                      $grp =& $cache[$grp->up];
+                  }
+                  
+              }
+          }
+          
+          return FALSE;
       }
 
 /* still here to remind me of repeats
@@ -1056,11 +1096,12 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
      * Also allows normal events to "rob" resources from tentative ones.
      * NOTE: return false for *no* (or resolved automatically) conflicts and true for unresolvable conflicts
      */
-    function busy_em($rob_tentative=false)
+    function busy_em($rob_tentative = false)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         //If we're not busy it's not worth checking
-        if (!$this->busy) {
+        if (!$this->busy) 
+        {
             debug_add('we allow overlapping, so there is no point in checking others');
             debug_pop();
             return false;
@@ -1625,7 +1666,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         }
         $str = '';
         reset($array);
-        $cnt = count ($array)-1;
+        $cnt = count($array) - 1;
         $i = 0;
         foreach($array as $pid => $bool)
         {
