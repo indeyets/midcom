@@ -263,8 +263,8 @@ else
             echo "            <td class=\"revised\">" . strftime('%x %X', $object->metadata->revised) . "</td>\n";
             echo "            <td class=\"revision\">{$object->metadata->revision}</td>\n";
             echo "        </tr>\n";
-	    
-	}
+        
+    }
         echo "    </tbody>\n";
         echo "</table>\n";
         echo "<script type=\"text/javascript\">\n";

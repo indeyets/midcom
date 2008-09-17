@@ -53,7 +53,7 @@ class pl_olga_mnogosearch_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('pl_olga_mnogosearch_handler_view', 'view'),
         );
-	    debug_pop();
+        debug_pop();
     }
 
 
