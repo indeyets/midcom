@@ -271,10 +271,6 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
             )
         );
 
-        // Load DM2 schemas
-        $this->_request_data['schemadb_task_dm2'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_task_dm2'));
-        $this->_request_data['schemadb_project_dm2'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_project_dm2'));
-
         $this->_request_data['datamanagers'] =& $this->_datamanagers;
     }
 
