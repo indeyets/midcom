@@ -19,7 +19,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
     var $old_resources = array(); // --''--
     var $contacts2 = array(); // Shorthand access for contact members in DM2
     var $resources2 = array(); // Shorthand access for resource members in DM2
-    var $_locale_backup = '';
+    private $_locale_backup = '';
     var $_skip_acl_refresh = false;
     var $_skip_parent_refresh = false;
     var $status_comment = ''; //Shorthand access for the comment of last status
@@ -330,7 +330,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         return true;
     }
 
-    function _sync_to_dm2()
+    private function _sync_to_dm2()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("\$this->contacts before: \n===\n" . sprint_r($this->contacts) . "===\n");
@@ -356,7 +356,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         debug_pop();
     }
 
-    function _sync_from_dm2()
+    private function _sync_from_dm2()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("\$this->contacts before: \n===\n" . sprint_r($this->contacts) . "===\n");
@@ -384,7 +384,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         debug_pop();
     }
 
-    function _update_members()
+    private function _update_members()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("\$this->contacts: \n===\n" . sprint_r($this->contacts) . "===\n");
@@ -474,7 +474,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         return $ret;
     }
 
-    function _get_member_by_personid($id, $type=false)
+    private function _get_member_by_personid($id, $type=false)
     {
         //Find the correct eventmember by person ID
         //$qb = org_openpsa_task_resource::new_query_builder('org_openpsa_task_resource');
@@ -554,13 +554,13 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         return true;
     }
 
-    function _locale_set()
+    private function _locale_set()
     {
         $this->_locale_backup = setlocale(LC_NUMERIC, '0');
         setlocale(LC_NUMERIC, 'C');
     }
 
-    function _locale_restore()
+    private function _locale_restore()
     {
         setlocale(LC_NUMERIC, $this->_locale_backup);
     }
@@ -708,7 +708,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         return true;
     }
 
-    function _pid_to_obj($pid)
+    private function _pid_to_obj($pid)
     {
         return $_MIDCOM->auth->get_user($pid);
     }
@@ -823,7 +823,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         return $main_ret[0]->type;
     }
 
-    function _propose_to_resources()
+    private function _propose_to_resources()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $propose_to = $this->resources;
@@ -1047,7 +1047,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
     /**
      * Drops tasks status to started
      */
-    function _drop_to_started($comment = '')
+    private function _drop_to_started($comment = '')
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         if ($this->status <= ORG_OPENPSA_TASKSTATUS_STARTED)
@@ -1321,7 +1321,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
     /**
      * Analyses current status and changes, then handles proposals etc
      */
-    function _workflow_checks($mode)
+    private function _workflow_checks($mode)
     {
         $main_ret = Array();
         debug_push_class(__CLASS__, __FUNCTION__);
