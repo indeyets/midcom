@@ -133,6 +133,11 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
 
         if ($qb->count() == 0)
         {
+            //last load returned ACCESS DENIED, no sense to dig deeper
+            if (mgd_errno() == MGD_ERR_ACCESS_DENIED)
+            {
+                return false;
+            }
             // No topics matching path, check for attachments
             $att_qb =  midcom_baseclasses_database_attachment::new_query_builder();
             $att_qb->add_constraint('name', '=', $this->argv[0]);

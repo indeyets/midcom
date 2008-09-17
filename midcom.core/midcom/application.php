@@ -979,8 +979,8 @@ class midcom_application
 
         if (! $success)
         {
-            // We couldn't fetch a node due to access restrictions.
-            if (mgd_errno() == MGD_ERR_ACCESS_DENIED)
+            // We couldn't fetch a node due to access restrictions. Fall only for real pages. Ignore dynamic loads.
+            if (mgd_errno() == MGD_ERR_ACCESS_DENIED && $this->get_current_context() == 0)
             {
                 $this->generate_error(MIDCOM_ERRFORBIDDEN, $this->i18n->get_string('access denied', 'midcom'));
                 // This will exit.
