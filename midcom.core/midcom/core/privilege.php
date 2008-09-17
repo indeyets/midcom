@@ -1001,7 +1001,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
         {
             $object = $this->get_object();
             $privilege = $this->get_privilege($object, $this->name, $this->assignee, $this->classname);
-            if (!empty($privilege->guid))
+            if (!empty($privilege->guid)
+                || !empty($privilege->id))
             {
                 $privilege->value = $this->value;
                 if (! $privilege->store())
