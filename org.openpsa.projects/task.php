@@ -42,27 +42,6 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         return $privileges;
     }
 
-    function get_parent_guid_uncached()
-    {
-        // FIXME: Midgard Core should do this
-        if ($this->up != 0)
-        {
-            $parent = new org_openpsa_projects_task($this->up);
-
-            if ($parent->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
-            {
-                // The parent is a project instead
-                $parent = new org_openpsa_projects_project($this->up);
-            }
-
-            return $parent;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
     function _on_creating()
     {
         $this->_locale_set();

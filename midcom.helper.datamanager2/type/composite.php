@@ -394,7 +394,8 @@ class midcom_helper_datamanager2_type_composite extends midcom_helper_datamanage
         ob_start();
         
         $item_total = count($this->objects);
-        $request_data = Array(
+        $request_data = Array
+        (
             'item_total' => $item_total,
         );
         

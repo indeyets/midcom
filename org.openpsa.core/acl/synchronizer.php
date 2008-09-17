@@ -44,7 +44,8 @@ class org_openpsa_core_acl_synchronizer
         }
 
         $owner_object =& $_MIDCOM->auth->get_assignee($owner_id);
-        if (!$owner_object)
+        if (!$owner_object
+            || empty($owner_object->id))
         {
             debug_add('Given owner was invalid, aborting');
             debug_pop();
