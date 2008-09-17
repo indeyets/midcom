@@ -114,7 +114,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         return false;
     }
 
-    function _handle_resource_seek()
+    private function _handle_resource_seek()
     {
         // act on seek type
         switch($this->resource_seek_type)
@@ -1352,7 +1352,10 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         return true;
     }
 
-    function get_task_resources()
+    /**
+     * This function is called from the DM2 schema
+     */
+    static function get_task_resources()
     {
         $resource_array = array();
         $view_data =& $_MIDCOM->get_custom_context_data('request_data');
