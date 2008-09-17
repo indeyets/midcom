@@ -55,8 +55,10 @@ class midcom_helper_replicator_exporter_fulldump extends midcom_helper_replicato
         ini_set('memory_limit', -1);
         foreach($_MIDGARD['schema']['types'] as $mgdschema_class => $dummy)
         {
-            if (empty($mgdschema_class))
+            if (   empty($mgdschema_class)
+                || $mgdschema_class == 'midgard_parameter')
             {
+                // Empty keys are bug, parameters are dumped via their respective objects
                 continue;
             }
             if (!$this->dump_type($mgdschema_class))

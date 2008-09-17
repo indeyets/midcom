@@ -196,13 +196,41 @@ class midcom_helper_replicator_transporter_archive extends midcom_helper_replica
         }
         foreach ($items as $key => $path)
         {
+            $was_data = false;
+            if (!is_file($path))
+            {
+                $was_data = true;
+                // Item is data in stead of path
+                $new_path = tempnam($this->_tmp_dir, 'mhreplicator_');
+                $fp = fopen($new_path, 'w');
+                if (!$fp)
+                {
+                    // PANIC: Can't open file for writing
+                    debug_push_class(__CLASS__, __FUNCTION__);
+                    debug_add("can't open file {$new_path} for writing", MIDCOM_LOG_ERROR);
+                    debug_pop();
+                    return false;
+                }
+                fwrite($fp, $path, strlen($path));
+                fclose($fp);
+                unset($path, $fp);
+                $path = $new_path;
+                unset($new_path);
+            }
             // Reset time limit while copying keys
             set_time_limit(30);
             $file = "{$this->_tmp_dir}/" . sprintf('%010d', $this->_file_counter) . ".xml";
-            if (copy($path, $file))
+            if (!copy($path, $file))
             {
                 // In this transport any single item failure is fatal
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("can't copy file {$path} to {$file}", MIDCOM_LOG_ERROR);
+                debug_pop();
                 return false;
+            }
+            if ($was_data)
+            {
+                unlink($path);
             }
             unset($items[$key], $path);
             $this->_file_counter++;
