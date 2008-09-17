@@ -95,12 +95,12 @@ class org_maemo_devcodes_handler_code_list extends midcom_baseclasses_components
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "device/{$this->_device->guid}",
+            MIDCOM_NAV_URL => "device/{$this->_device->guid}/",
             MIDCOM_NAV_NAME => $this->_device->title,
         );
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "code/list/{$this->_device->guid}",
+            MIDCOM_NAV_URL => "code/list/{$this->_device->guid}/",
             MIDCOM_NAV_NAME => $data['title'],
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

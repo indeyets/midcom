@@ -106,7 +106,7 @@ class net_nemein_netmon_handler_hostgroup_view extends midcom_baseclasses_compon
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "hostgroup/{$this->_hostgroup->guid}",
+            MIDCOM_NAV_URL => "hostgroup/{$this->_hostgroup->guid}/",
             MIDCOM_NAV_NAME => $this->_hostgroup->title,
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

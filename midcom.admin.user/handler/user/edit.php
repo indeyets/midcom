@@ -57,7 +57,7 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
         );
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/edit/{$this->_person->guid}",
+            MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/edit/{$this->_person->guid}/",
             MIDCOM_NAV_NAME => $this->_request_data['view_title'],
         );
 
@@ -65,7 +65,7 @@ class midcom_admin_user_handler_user_edit extends midcom_baseclasses_components_
         {
             $tmp[] = Array
             (
-                MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/password/{$this->_person->guid}",
+                MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/password/{$this->_person->guid}/",
                 MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('edit account', 'midcom.admin.user'),
             );
         }

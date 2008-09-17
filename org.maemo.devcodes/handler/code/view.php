@@ -120,12 +120,12 @@ class org_maemo_devcodes_handler_code_view extends midcom_baseclasses_components
         {
             $tmp[] = Array
             (
-                MIDCOM_NAV_URL => "device/{$this->_device->guid}",
+                MIDCOM_NAV_URL => "device/{$this->_device->guid}/",
                 MIDCOM_NAV_NAME => $this->_device->title,
             );
             $tmp[] = Array
             (
-                MIDCOM_NAV_URL => "code/list/{$this->_device->guid}",
+                MIDCOM_NAV_URL => "code/list/{$this->_device->guid}/",
                 MIDCOM_NAV_NAME => $data['title'],
             );
         }
@@ -133,7 +133,7 @@ class org_maemo_devcodes_handler_code_view extends midcom_baseclasses_components
         {
             $tmp[] = Array
             (
-                MIDCOM_NAV_URL => "code/{$this->_code->guid}",
+                MIDCOM_NAV_URL => "code/{$this->_code->guid}/",
                 MIDCOM_NAV_NAME =>  $data['title'],
             );
         }

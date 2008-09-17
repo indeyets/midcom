@@ -57,7 +57,7 @@ class net_nehmer_mail_navigation extends midcom_baseclasses_components_navigatio
             ),
             MIDCOM_NAV_ADMIN => Array
             (
-                MIDCOM_NAV_URL => "mailbox/edit/{$mailbox->guid}",
+                MIDCOM_NAV_URL => "mailbox/edit/{$mailbox->guid}/",
                 MIDCOM_NAV_NAME => $name
             ),
             MIDCOM_NAV_GUID => $mailbox->guid,

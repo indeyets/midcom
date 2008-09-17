@@ -153,7 +153,7 @@ class net_nemein_teams_handler_admin  extends midcom_baseclasses_components_hand
         );
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "manage/delete/{$data['team']->guid}",
+            MIDCOM_NAV_URL => "manage/delete/{$data['team']->guid}/",
             MIDCOM_NAV_NAME => $data['title'],
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

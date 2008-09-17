@@ -57,7 +57,7 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
         {        
             $tmp[] = Array
             (
-                MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/group/edit/{$grp->guid}",
+                MIDCOM_NAV_URL => "__mfa/asgard_midcom.admin.user/group/edit/{$grp->guid}/",
                 MIDCOM_NAV_NAME => $grp->official,
             );
             $grp = $grp->get_parent();

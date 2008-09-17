@@ -164,7 +164,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "feeds/edit/{$feed->guid}",
+                        MIDCOM_TOOLBAR_URL => "feeds/edit/{$feed->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                     )
@@ -177,7 +177,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "feeds/fetch/{$feed->guid}",
+                        MIDCOM_TOOLBAR_URL => "feeds/fetch/{$feed->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('refresh feed', 'net.nemein.rss'),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_refresh.png',
                     )
@@ -190,7 +190,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "feeds/delete/{$feed->guid}",
+                        MIDCOM_TOOLBAR_URL => "feeds/delete/{$feed->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('delete feed', 'net.nemein.rss'),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                     )

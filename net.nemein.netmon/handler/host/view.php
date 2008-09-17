@@ -113,7 +113,7 @@ class net_nemein_netmon_handler_host_view extends midcom_baseclasses_components_
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "host/{$this->_host->guid}",
+            MIDCOM_NAV_URL => "host/{$this->_host->guid}/",
             MIDCOM_NAV_NAME => $this->_host->title,
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

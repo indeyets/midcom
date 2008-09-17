@@ -107,7 +107,7 @@ class org_maemo_devcodes_handler_application_view extends midcom_baseclasses_com
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "application/{$this->_application->guid}",
+            MIDCOM_NAV_URL => "application/{$this->_application->guid}/",
             MIDCOM_NAV_NAME => $this->_application->title,
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

@@ -125,7 +125,7 @@ class net_fernmark_pedigree_handler_result_view extends midcom_baseclasses_compo
         );
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "result/{$this->_result->guid}",
+            MIDCOM_NAV_URL => "result/{$this->_result->guid}/",
             MIDCOM_NAV_NAME => $this->_result->eventname,
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

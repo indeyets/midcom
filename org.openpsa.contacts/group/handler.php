@@ -321,7 +321,7 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
                 //TODO: Check for privileges somehow
                 $this->_view_toolbar->add_item(
                     Array(
-                        MIDCOM_TOOLBAR_URL => $invoices_node[MIDCOM_NAV_FULLURL] . "list/customer/all/{$this->_request_data['group']->guid}",
+                        MIDCOM_TOOLBAR_URL => $invoices_node[MIDCOM_NAV_FULLURL] . "list/customer/all/{$this->_request_data['group']->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('customers invoices'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-open.png',

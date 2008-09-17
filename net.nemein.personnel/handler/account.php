@@ -203,7 +203,7 @@ class net_nemein_personnel_handler_account extends midcom_baseclasses_components
         );
         $tmp[] = array
         (
-            MIDCOM_NAV_URL => "account/{$this->_person->guid}",
+            MIDCOM_NAV_URL => "account/{$this->_person->guid}/",
             MIDCOM_NAV_NAME => $this->_l10n->get('user account'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

@@ -40,12 +40,12 @@ class org_openpsa_directmarketing_navigation extends midcom_baseclasses_componen
             (
                 MIDCOM_NAV_SITE => array
                 (
-                    MIDCOM_NAV_URL => "campaign/{$campaign->guid}",
+                    MIDCOM_NAV_URL => "campaign/{$campaign->guid}/",
                     MIDCOM_NAV_NAME => $campaign->title
                 ),
                 MIDCOM_NAV_ADMIN => array
                 (
-                    MIDCOM_NAV_URL => "campaign/{$campaign->guid}",
+                    MIDCOM_NAV_URL => "campaign/{$campaign->guid}/",
                     MIDCOM_NAV_NAME => $campaign->title
                 ),
                 MIDCOM_NAV_GUID => $campaign->guid,

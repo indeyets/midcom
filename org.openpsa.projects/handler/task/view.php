@@ -71,7 +71,7 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
             //$this->_initialize_hours_widget(&$this->_request_data['task']);
             $this->_view_toolbar->add_item(
                 Array(
-                    MIDCOM_TOOLBAR_URL => "task/edit/{$data['task']->guid}",
+                    MIDCOM_TOOLBAR_URL => "task/edit/{$data['task']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('edit'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                     MIDCOM_TOOLBAR_ENABLED => true,
@@ -85,7 +85,7 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "task/delete/{$data['task']->guid}",
+                        MIDCOM_TOOLBAR_URL => "task/delete/{$data['task']->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                         MIDCOM_TOOLBAR_ENABLED => $data['task']->can_do('midgard:delete'),

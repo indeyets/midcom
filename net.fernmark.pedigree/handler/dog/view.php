@@ -120,7 +120,7 @@ class net_fernmark_pedigree_handler_dog_view extends midcom_baseclasses_componen
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "dog/{$this->_dog->guid}",
+            MIDCOM_NAV_URL => "dog/{$this->_dog->guid}/",
             MIDCOM_NAV_NAME => $this->_dog->name_with_kennel,
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
