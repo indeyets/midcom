@@ -65,12 +65,8 @@
         (
             'title'   => 'task',
             'storage' => 'task',
-            'type' => 'select',
-            'type_config' => array
-            (
-                 'options' => org_openpsa_projects_task_resource::get_resource_tasks('id', true),
-            ),
-            'widget' => 'select',
+            'type' => 'number',
+            'widget' => 'text',
         ),
         'description' => Array
         (
