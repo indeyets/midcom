@@ -97,12 +97,24 @@ class default_create_website extends midcom_baseclasses_components_handler
                 
                 $pieces = explode('.', $host->name);
                 $alias = '';
+                $i = 0;
                
-                if(!empty($pieces))
+                /* Check if there is at least: www.site.com or sub.site.com */
+                if(count($pieces) > 2)
                 {
-                    if ($pieces[0] == 'www')
+                    foreach($pieces as $token)
                     {
-                        $alias = $pieces[1] . "." . $pieces[2];
+                        if($token == 'www')
+                        {
+                            continue;
+                        }
+
+                        if($i > 1)
+                        {
+                            $alias .= ".";
+                        }
+                        
+                        $alias .= $token;
                     }
                 } 
                 else {
