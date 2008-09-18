@@ -55,7 +55,7 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
         // Match /project/edit/<GUID>
         $this->_request_switch['project-edit'] = array
         (
-            'handler' => array('org_openpsa_projects_handler_project_action', 'edit'),
+            'handler' => array('org_openpsa_projects_handler_project_admin', 'edit'),
             'fixed_args' => array('project', 'edit'),
             'variable_args' => 1,
         );

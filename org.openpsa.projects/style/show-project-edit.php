@@ -1,13 +1,13 @@
 <?php
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
-$view = $data['project_dm'];
+
 $project =& $data['project'];
 $nap = new midcom_helper_nav();
 $node = $nap->get_node($nap->get_current_node());
 ?>
 <div class="main">
     <h1><?php echo sprintf($data['l10n']->get('edit project %s'), $project->title); ?></h1>
-    <?php $view->display_form(); ?>
+    <?php $data['controller']->display_form(); ?>
 </div>
 <div class="sidebar">
     <?php

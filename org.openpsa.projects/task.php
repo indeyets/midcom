@@ -744,7 +744,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         //mgd_debug_stop();
         debug_add("got main_ret\n===\n" . sprint_r($main_ret) . "===\n");
         if (   !is_array($main_ret)
-            || count($main_ret)==0)
+            || count($main_ret) == 0)
         {
             //Failure to get status object
             if (!$this->status)

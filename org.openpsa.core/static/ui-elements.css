@@ -212,10 +212,12 @@ input.ajax_editable, select.ajax_editable {
 select.ajax_editable option {
     background-color: #ffffff;
 }
-input.ajax_editable:hover, form.datamanager input, form.datamanager textarea, form.datamanager select {
+input.ajax_editable:hover, form.datamanager input, form.datamanager textarea, form.datamanager select,
+form.datamanager2 input, form.datamanager2 textarea, form.datamanager2 select {
     border: 1px #B39169 solid;
 }
-input.ajax_focused, form.datamanager input:focus, form.datamanager textarea:focus, form.datamanager select:focus {
+input.ajax_focused, form.datamanager input:focus, form.datamanager textarea:focus, form.datamanager select:focus,
+form.datamanager2 input:focus, form.datamanager2 textarea:focus, form.datamanager2 select:focus {
     border: 1px #B39169 solid;
     background: #EFE0CD;
     color: #000000;

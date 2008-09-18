@@ -138,7 +138,7 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
         return $_MIDCOM->auth->get_user($pid);
     }
 
-    function get_resource_tasks($key = 'id', $list_finished = false)
+    static function get_resource_tasks($key = 'id', $list_finished = false)
     {
         $task_array = array();
         if (!$_MIDCOM->auth->user)
@@ -178,11 +178,12 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
 
 /**
  * Another wrap level to get to component namespace
+ * 
  * @package org.openpsa.projects
  */
 class org_openpsa_projects_task_resource extends midcom_org_openpsa_task_resource
 {
-    function __construct($identifier=NULL)
+    function __construct($identifier = NULL)
     {
         return parent::__construct($identifier);
     }
