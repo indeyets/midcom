@@ -83,7 +83,11 @@ class default_create_website extends midcom_baseclasses_components_handler
                 $host = $structure_creator->get_host();
                 $root_topic = $structure_creator->get_creation_root_topic();
                 $root_group = $structure_creator->get_creation_root_group();
-                $root_page = $structure_creator->get_root_page();
+
+                /* Get host and its root page */
+                $host_creator = $structure_creator->get_host_creator();
+                $host = $host_creator->get_host();
+                $root_page = $host_creator->get_root_page();
 
                 $this->_request_data['report']['hostname'] = $host->name;
                 $this->_request_data['report']['prefix'] = $host->prefix;
@@ -93,10 +97,16 @@ class default_create_website extends midcom_baseclasses_components_handler
                 
                 $pieces = explode('.', $host->name);
                 $alias = '';
-                
-                if ($pieces[0] = 'www')
+               
+                if(!empty($pieces))
                 {
-                    $alias = $pieces[1] . "." . $pieces[2];
+                    if ($pieces[0] == 'www')
+                    {
+                        $alias = $pieces[1] . "." . $pieces[2];
+                    }
+                } 
+                else {
+                    $alias = $host->name;
                 }
                 
                 $this->_request_data['report']['alias'] = $alias;
