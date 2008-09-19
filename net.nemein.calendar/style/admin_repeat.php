@@ -54,7 +54,7 @@ while ($days >= 0)
   <?php echo $data['l10n']->get('repeat type'); ?>
 </div>
 <div class="form_field">
-  <select name="&(form_prefix);Repeat_rule[type]" id="&(form_prefix);Repeat_rule_type" onChange="&(form_prefix);checkRepeatType();">
+  <select name="&(form_prefix);Repeat_rule[type]" id="&(form_prefix);Repeat_rule_type" onchange="&(form_prefix);checkRepeatType();">
     <option value="daily"<?php if ($rule['type']=="daily") echo " selected"; ?>><?php echo $data['l10n']->get("daily"); ?></option>
     <option value="weekly_by_day"<?php if ($rule['type']=="weekly_by_day") echo " selected"; ?>><?php echo $data['l10n']->get("weekly"); ?></option>    
     <option value="monthly_by_dom"<?php if ($rule['type']=="monthly_by_dom") echo " selected"; ?>><?php echo $data['l10n']->get("monthly"); ?></option>

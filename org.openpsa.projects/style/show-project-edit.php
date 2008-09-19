@@ -11,7 +11,7 @@ $node = $nap->get_node($nap->get_current_node());
 </div>
 <div class="sidebar">
     <?php
-    $_MIDCOM->dynamic_load($node[MIDCOM_NAV_RELATIVEURL]."task/list/project/{$data['project']->guid}/");
+    $_MIDCOM->dynamic_load($node[MIDCOM_NAV_RELATIVEURL] . "task/list/project/{$data['project']->guid}/");
 
     if ($data['project']->newsTopic)
     {

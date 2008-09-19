@@ -32,7 +32,7 @@ switch($data['task']->status)
 //NOTE: The hidden input is there on purpose, if we remove a check from checkbox, it will not get posted at all...
 ?>
         <input type="hidden" name="org_openpsa_projects_workflow_action[&(action);]" value="true" />
-        <input type="checkbox"&(checked:h); name="org_openpsa_projects_workflow_dummy" value="true" onChange="this.form.submit()" class="completion" /><a class="&(status_class);" href="<?php echo $node[MIDCOM_NAV_FULLURL]; ?>task/<?php echo $data['task']->guid; ?>/"><?php echo $data['task']->title; ?></a>
+        <input type="checkbox"&(checked:h); name="org_openpsa_projects_workflow_dummy" value="true" onchange="this.form.submit()" class="completion" /><a class="&(status_class);" href="<?php echo $node[MIDCOM_NAV_FULLURL]; ?>task/<?php echo $data['task']->guid; ?>/"><?php echo $data['task']->title; ?></a>
         <?php
         if ($data['task']->up)
         {

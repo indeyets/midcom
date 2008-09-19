@@ -20,7 +20,7 @@ echo "<dt>{$user->firstname} {$user->lastname}</dt>\n";
 echo "<dd>\n";
 echo "    <ul>\n";
 echo "<input id=\"org_openpsa_mypage_workgroups_ajaxUrl\" type=\"hidden\" value=\"{$node[MIDCOM_NAV_FULLURL]}savefilter.html\">\n";
-echo "<select id=\"org_openpsa_mypage_workgroups\" name=\"org_openpsa_workgroup_filter\" class=\"ajax_editable\" onChange=\"ooAjaxSelect(this);\">\n";
+echo "<select id=\"org_openpsa_mypage_workgroups\" name=\"org_openpsa_workgroup_filter\" class=\"ajax_editable\" onchange=\"ooAjaxSelect(this);\">\n";
 foreach ($data['virtual_groups'] as $key => $vgroup)
 {
     if (is_object($vgroup))
