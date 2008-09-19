@@ -337,7 +337,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager/columned..css",
+                'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager/columned.css",
             )
         );
         return true;

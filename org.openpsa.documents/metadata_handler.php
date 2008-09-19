@@ -397,6 +397,15 @@ class org_openpsa_documents_metadata_handler
         }
 
         $GLOBALS['midcom_component_data']['org.openpsa.documents']['active_leaf'] = $this->_request_data['metadata']->id;
+
+        $_MIDCOM->add_link_head(array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager/columned..css",
+            )
+        );
+
         debug_pop();
         return true;
     }
