@@ -69,7 +69,7 @@ class org_openpsa_projects_handler_frontpage extends midcom_baseclasses_componen
         $project_qb = org_openpsa_projects_project::new_query_builder();
         $project_qb->add_constraint('status', '<', ORG_OPENPSA_TASKSTATUS_CLOSED);
         $project_qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECT);
-        $project_qb->add_order('customer');
+        $project_qb->add_order('customer.official');
         $project_qb->add_order('end');
         $projects = $project_qb->execute();
         foreach ($projects as $project)
