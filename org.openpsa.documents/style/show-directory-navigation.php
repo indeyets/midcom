@@ -95,7 +95,7 @@ if (class_exists('HTML_TreeMenu'))
     // Chose a generator. You can generate DHTML or a Listbox
     $tree = new HTML_TreeMenu_DHTML($menu,
         Array(
-            'images' => MIDCOM_STATIC_URL.'/stock-icons/16x16/'
+            'images' => MIDCOM_STATIC_URL . '/stock-icons/16x16'
         )
     );
     echo $tree->toHTML();

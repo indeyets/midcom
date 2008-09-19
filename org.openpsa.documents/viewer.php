@@ -98,12 +98,12 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
 
         // Match /
         $this->_request_switch[] = array(
-            'handler' => array(&$this->_directory_handler,'directory'),
+            'handler' => array(&$this->_directory_handler, 'directory'),
         );
 
         // This component uses the PEAR HTML_TreeMenu package, include the handler javascripts
         // TODO: State this AIS dependency somehow?
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/midcom.admin.content/TreeMenu.js");
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/org.openpsa.core/TreeMenu.js");
 
     }
 

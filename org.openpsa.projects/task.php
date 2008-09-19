@@ -731,7 +731,7 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
             //Only get proposed status objects here if are not over that phase
             $qb->add_constraint('type', '<>', ORG_OPENPSA_TASKSTATUS_PROPOSED);
         }
-        if (count($this->resources)>0)
+        if (count($this->resources) > 0)
         {
             //Do not ever set status to declined if we still have resources left
             $qb->add_constraint('type', '<>', ORG_OPENPSA_TASKSTATUS_DECLINED);
