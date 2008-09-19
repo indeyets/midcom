@@ -46,8 +46,8 @@
  */
 class midcom_core_privilege extends midcom_core_privilege_db
 {
-    var $guid = '';
-    var $id = 0;
+    protected $__guid = '';
+    protected $__id = 0;
 
     /**
      * The GUID of the content object this privilege is valid for.
@@ -111,8 +111,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
         if (! is_null($src))
         {
             // Explicity manual listing for performance reasons.
-            $this->guid = $src['guid'];
-            $this->id = $src['id'];
+            $this->__guid = $src['guid'];
+            $this->__id = $src['id'];
             $this->objectguid = $src['objectguid'];
             $this->name = $src['name'];
             $this->assignee = $src['assignee'];
@@ -330,7 +330,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
             || ! $_MIDCOM->auth->can_do('midgard:privileges', $object))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Insufficient privileges on the content object with the GUID '{$this->guid}', midgard:update and midgard:privileges required.",
+            debug_add("Insufficient privileges on the content object with the GUID '{$this->__guid}', midgard:update and midgard:privileges required.",
                 MIDCOM_LOG_INFO);
             debug_pop();
             return false;
@@ -944,8 +944,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
 
         if ($this->value == MIDCOM_PRIVILEGE_INHERIT)
         {
-            if (   $this->guid
-                || $this->id)
+            if (   $this->__guid
+                || $this->__id)
             {
                 // Already a persistent record, drop it.
                 if (! $this->drop())
@@ -977,17 +977,17 @@ class midcom_core_privilege extends midcom_core_privilege_db
             }
         }
 
-        if (   $this->guid
-            || $this->id)
+        if (   $this->__guid
+            || $this->__id)
         {
-            if ($this->guid)
+            if ($this->__guid)
             {
-                $privilege = new midcom_core_privilege_db($this->guid);
+                $privilege = new midcom_core_privilege_db($this->__guid);
             }
             else
             {
                 $privilege = new midcom_core_privilege_db();
-                $privilege->get_by_id($this->id);
+                $privilege->get_by_id($this->__id);
             }
             $this->_copy_to_object($privilege);
             if (!$privilege->update())
@@ -1012,8 +1012,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
                     debug_pop();
                     return false;
                 }
-                $this->guid = $privilege->guid;
-                $this->id = $privilege->id;
+                $this->__guid = $privilege->guid;
+                $this->__id = $privilege->id;
                 $this->objectguid = $privilege->objectguid;
                 $this->name = $privilege->name;
                 $this->assignee = $privilege->assignee;
@@ -1058,8 +1058,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
      */
     function drop()
     {
-        if (   !$this->guid
-            && !$this->id)
+        if (   !$this->__guid
+            && !$this->__id)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('We are not stored, ID and GUID are empty. Ignoring silently.');
@@ -1076,15 +1076,15 @@ class midcom_core_privilege extends midcom_core_privilege_db
             return false;
         }
 
-        if ($this->guid)
+        if ($this->__guid)
         {
-            $privilege = new midcom_core_privilege_db($this->guid);
+            $privilege = new midcom_core_privilege_db($this->__guid);
         }
         else
         {
             // Unserialized objects have only ID in 8.09
             $privilege = new midcom_core_privilege_db();
-            $privilege->get_by_id($this->id);
+            $privilege->get_by_id($this->__id);
         }
 
         if (!$privilege->delete())
