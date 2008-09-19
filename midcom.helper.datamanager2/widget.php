@@ -88,6 +88,14 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
     var $_form = null;
 
     /**
+     * The QuickForm renderer we are using.
+     *
+     * @var HTML_QuickForm_Renderer
+     * @access protected
+     */
+    var $_renderer = null;
+
+    /**
      * This is the Namespace to use for all HTML/CSS/JS elements.
      *
      * It is deduced by the formmanager and tries to be as smart as possible to work safely with
@@ -115,9 +123,10 @@ class midcom_helper_datamanager2_widget extends midcom_baseclasses_components_pu
      *
      * Nothing fancy, the actual startup work is done by the initialize call.
      */
-    function __construct()
+    function __construct(&$renderer)
     {
         $this->_component = 'midcom.helper.datamanager2';
+        $this->_renderer =& $renderer;
         parent::__construct();
     }
 

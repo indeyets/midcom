@@ -160,7 +160,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
         $classname = "midcom_helper_datamanager2_widget_{$config['widget']}";
         require_once($filename);
 
-        $this->widgets[$name] = new $classname();
+        $this->widgets[$name] = new $classname($this->renderer);
         if (! $this->widgets[$name]->initialize($name, $config['widget_config'], $this->_schema, $this->_types[$name], $this->namespace))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
