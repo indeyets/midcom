@@ -247,7 +247,7 @@ class midcom_helper_datamanager2_controller_ajax extends midcom_helper_datamanag
                     // Have an identifier people can actually click and edit
                     $html_contents = "&lt;{$name}&gt;";
                 }
-                $result[$name] = "<span class=\"{$this->form_identifier}\" title=\"".$this->_l10n->get('double click to edit')."\" id=\"{$this->form_identifier}_{$name}\">{$html_contents}</span>\n";
+                $result[$name] = "<div class=\"ajax_editable {$this->form_identifier}\" title=\"".$this->_l10n->get('double click to edit')."\" id=\"{$this->form_identifier}_{$name}\">{$html_contents}</div>\n";
             }
         }
         return $result;

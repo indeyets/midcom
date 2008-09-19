@@ -1,9 +1,9 @@
-span.ajax_editable
+div.ajax_editable
 {
-
+	display: inline
 }
 
-span.ajax_editable:hover
+div.ajax_editable:hover
 {
     background-color: #ffff99;
     cursor: text;
