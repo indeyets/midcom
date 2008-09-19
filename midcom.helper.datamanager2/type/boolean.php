@@ -126,7 +126,7 @@ class midcom_helper_datamanager2_type_boolean extends midcom_helper_datamanager2
             else
             {
                 $src = MIDCOM_STATIC_URL . '/stock-icons/16x16/stock_mark.png';
-                $result = "<img src='{$src}'/>";
+                $result = "<img src='{$src}' alt='selected' />";
             }
         }
         else
@@ -138,7 +138,7 @@ class midcom_helper_datamanager2_type_boolean extends midcom_helper_datamanager2
             else
             {
                 $src = MIDCOM_STATIC_URL . '/stock-icons/16x16/cancel.png';
-                $result = "<img src='{$src}'/>";
+                $result = "<img src='{$src}' alt='not selected' />";
             }
         }
         return $result;
