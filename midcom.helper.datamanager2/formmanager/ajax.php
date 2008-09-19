@@ -53,7 +53,7 @@ class midcom_helper_datamanager2_formmanager_ajax extends midcom_helper_datamana
         $classname = "midcom_helper_datamanager2_widget_{$config['widget']}";
         require_once($filename);
 
-        $this->widgets[$name] = new $classname();
+        $this->widgets[$name] = new $classname($this->renderer);
         if (! $this->widgets[$name]->initialize($name, $config['widget_config'], $this->_schema, $this->_types[$name], $this->namespace, true))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
