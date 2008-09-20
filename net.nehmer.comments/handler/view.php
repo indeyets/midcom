@@ -103,6 +103,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             $comments = net_nehmer_comments_comment::list_by_objectguid($this->_objectguid);
             $ratings_total = 0;
             $rating_comments = 0;
+            $value = 0;
             foreach ($comments as $comment)
             {
                 if (   isset($comment->rating)
@@ -120,7 +121,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             {
                 $value = $ratings_total;
             }
-            else
+            elseif ($rating_comments != 0)
             {
                 $value = $ratings_total / $rating_comments;
             }
@@ -344,7 +345,6 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
     {
         $this->_new_comment = new net_nehmer_comments_comment();
         $this->_new_comment->objectguid = $this->_objectguid;
-        
         //Proxy check
         if (   isset($_SERVER["HTTP_X_FORWARDED_FOR"])
             && !empty($_SERVER["HTTP_X_FORWARDED_FOR"]))
@@ -355,7 +355,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
         {
             $this->_new_comment->ip = $_SERVER['REMOTE_ADDR'];
         }
-        
+
         if ($_MIDCOM->auth->user)
         {
             $this->_new_comment->status = NET_NEHMER_COMMENTS_NEW_USER;
