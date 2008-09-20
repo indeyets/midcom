@@ -82,6 +82,22 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             ),
             'variable_args' => 1,
         );
+        // Handle /latest/all/raw/<n>
+        $this->_request_switch['photostream_latest_all_raw'] = array
+        (
+            'handler' => array
+            (
+                'org_routamc_photostream_handler_list',
+                'photostream_latest'
+            ),
+            'fixed_args' => array
+            (
+                'latest',
+                'all',
+                'raw',
+            ),
+            'variable_args' => 1,
+        );
 
         // Handle /latest/<username>/<n>
         $this->_request_switch['photostream_latest'] = array
@@ -144,6 +160,56 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             ),
             'variable_args' => 1,
         );
+        
+        // Handle /tag/all/raw/<tag>
+        $this->_request_switch['photostream_tag_all_raw'] = array
+        (
+            'handler' => array
+            (
+                'org_routamc_photostream_handler_list',
+                'photostream_tag'
+            ),
+            'fixed_args' => array
+            (
+                'tag',
+                'all',
+                'raw',
+            ),
+            'variable_args' => 1,
+        );
+
+        // Handle /tag/all/<tag>/<count>
+        $this->_request_switch['photostream_tag_all_count'] = array
+        (
+            'handler' => array
+            (
+                'org_routamc_photostream_handler_list',
+                'photostream_tag'
+            ),
+            'fixed_args' => array
+            (
+                'tag',
+                'all',
+            ),
+            'variable_args' => 2,
+        );
+        // Handle /tag/all/raw/<tag>/<count>
+        $this->_request_switch['photostream_tag_all_count_raw'] = array
+        (
+            'handler' => array
+            (
+                'org_routamc_photostream_handler_list',
+                'photostream_tag'
+            ),
+            'fixed_args' => array
+            (
+                'tag',
+                'all',
+                'raw',
+            ),
+            'variable_args' => 2,
+        );
+        
 
         // Handle /tag/<username>/<tag>
         $this->_request_switch['photostream_tag'] = array

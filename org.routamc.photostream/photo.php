@@ -403,9 +403,12 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             debug_pop();
             return false;
         }
-
-        // Read photo taken time
-        $this->_read_exif_data_taken($data, $overwrite);
+        if (   isset($this->_config)
+            && !$this->_config->get('use_created_in_taken'))
+        {
+            // Read photo taken time
+            $this->_read_exif_data_taken($data, $overwrite);
+        }
 
         // Try to identify the camera
         $this->_read_exif_data_camera($data, $overwrite);
@@ -677,6 +680,10 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             $mc->add_constraint('taken', '>', $photo->taken);
             $mc->add_order('taken');
         }
+
+        $mc->add_constraint('id', '<>', $photo->id);
+
+        $mc->add_constraint('node', '=', $photo->node);
 
         $mc->set_limit($limiters['limit']);
 

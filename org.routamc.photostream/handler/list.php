@@ -110,6 +110,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $_MIDCOM->skip_page_style = true;
             $data['output_for_nnf_playlist'] = true;
         }
+        
+        if (strstr($handler_id, 'raw'))
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
 
         if ($handler_id == 'photostream_list')
         {
@@ -152,7 +157,57 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         }
         else
         {
-            $qb->add_order('taken', 'DESC');
+            // Prevent errors
+            if (is_array($this->_config->get('index_order')))
+            {
+                $order = $this->_config->get('index_order');
+            }
+            else
+            {
+                $order = array
+                (
+                    $this->_config->get('index_order'),
+                );
+            }
+            
+            // Set the orders
+            foreach ($order as $ordering)
+            {
+                if (preg_match('/\s*reversed?\s*/', $ordering))
+                {
+                    $reversed = true;
+                    $ordering = preg_replace('/\s*reversed?\s*/', '', $ordering);
+                }
+                else
+                {
+                    $reversed = false;
+                }
+                
+                if ($ordering === 'metadata.score')
+                {
+                    if (version_compare(mgd_version(), '1.8.2', '<'))
+                    {
+                        $ordering = 'score';
+                        $reversed = false;
+                    }
+                }
+                
+                if (   strpos($ordering, '.')
+                    && !class_exists('midgard_query_builder'))
+                {
+                    debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
+                    continue;
+                }
+                
+                if ($reversed)
+                {
+                    $qb->add_order($ordering, 'DESC');
+                }
+                else
+                {
+                    $qb->add_order($ordering);
+                }
+            }
         }
 
         $data['photos'] = $qb->execute();
@@ -187,6 +242,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _handler_photostream_latest($handler_id, $args, &$data)
     {
+        if (strstr($handler_id, 'raw'))
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
+
         if ($handler_id == 'photostream_latest')
         {
             $data['user'] = $this->_resolve_user($args[0]);
@@ -226,7 +286,73 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $qb->add_constraint('photographer', '=', $data['user']->id);
         }
 
-        $qb->add_order('taken', 'DESC');
+        if (isset($_REQUEST['org_routamc_photostream_order_by']))
+        {
+            $order_by = $_REQUEST['org_routamc_photostream_order_by'];
+
+            if (   isset($_REQUEST['org_routamc_photostream_order'])
+                && !empty($_REQUEST['org_routamc_photostream_order']))
+            {
+                $order = $_REQUEST['org_routamc_photostream_order'];
+            }
+
+            $qb->add_order($order_by, $order);
+        }
+        else
+        {
+            // Prevent errors
+            if (is_array($this->_config->get('index_order')))
+            {
+                $order = $this->_config->get('index_order');
+            }
+            else
+            {
+                $order = array
+                (
+                    $this->_config->get('index_order'),
+                );
+            }
+            
+            // Set the orders
+            foreach ($order as $ordering)
+            {
+                if (preg_match('/\s*reversed?\s*/', $ordering))
+                {
+                    $reversed = true;
+                    $ordering = preg_replace('/\s*reversed?\s*/', '', $ordering);
+                }
+                else
+                {
+                    $reversed = false;
+                }
+                
+                if ($ordering === 'metadata.score')
+                {
+                    if (version_compare(mgd_version(), '1.8.2', '<'))
+                    {
+                        $ordering = 'score';
+                        $reversed = false;
+                    }
+                }
+                
+                if (   strpos($ordering, '.')
+                    && !class_exists('midgard_query_builder'))
+                {
+                    debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
+                    continue;
+                }
+                
+                if ($reversed)
+                {
+                    $qb->add_order($ordering, 'DESC');
+                }
+                else
+                {
+                    $qb->add_order($ordering);
+                }
+            }
+        }
+
         $qb->set_limit($data['limit']);
 
         $data['photos'] = $qb->execute();
@@ -359,8 +485,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _handler_photostream_tags($handler_id, $args, &$data)
     {
-        $_MIDCOM->load_library('net.nemein.tag');
-        
+        if (strstr($handler_id, 'raw'))
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
+
         if (   $handler_id === 'photostream_tag'
             || $handler_id === 'photostream_tags')
         {
@@ -408,7 +537,10 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _handler_photostream_tag($handler_id, $args, &$data)
     {
-        $_MIDCOM->load_library('net.nemein.tag');
+        if (strstr($handler_id, 'raw'))
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
 
         if ($handler_id == 'photostream_tag')
         {
@@ -421,6 +553,20 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
 
             $data['view_title'] = sprintf($this->_l10n->get('photos of %s tagged with %s'), $data['user']->name, $data['tag']);
             $data['user_url'] = $args[0];
+        }
+        elseif ($handler_id == 'photostream_tag_all_count')
+        {
+            $data['tag'] = $args[0];
+            $data['count'] = $args[1];
+            $data['view_title'] = sprintf($this->_l10n->get('photos tagged with %s'), $data['tag']);
+            $data['user_url'] = 'all';
+        }
+        elseif ($handler_id == 'photostream_tag_all_count_raw')
+        {
+            $data['tag'] = $args[0];
+            $data['count'] = $args[1];
+            $data['view_title'] = sprintf($this->_l10n->get('photos tagged with %s'), $data['tag']);
+            $data['user_url'] = 'all';
         }
         else
         {
@@ -464,8 +610,81 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                 // Limit list of photos to the user
                 $qb->add_constraint('photographer', '=', $data['user']->id);
             }
+            
+            if (   $handler_id == 'photostream_tag_all_count'
+                || $handler_id == 'photostream_tag_all_count_raw')
+            {
+                // Limit list of photos to the user
+                $qb->results_per_page = $data['count'];
+            }
 
-            $qb->add_order('taken', 'DESC');
+            if (isset($_REQUEST['org_routamc_photostream_order_by']))
+            {
+                $order_by = $_REQUEST['org_routamc_photostream_order_by'];
+    
+                if (   isset($_REQUEST['org_routamc_photostream_order'])
+                    && !empty($_REQUEST['org_routamc_photostream_order']))
+                {
+                    $order = $_REQUEST['org_routamc_photostream_order'];
+                }
+    
+                $qb->add_order($order_by, $order);
+            }
+            else
+            {
+                // Prevent errors
+                if (is_array($this->_config->get('index_order')))
+                {
+                    $order = $this->_config->get('index_order');
+                }
+                else
+                {
+                    $order = array
+                    (
+                        $this->_config->get('index_order'),
+                    );
+                }
+                
+                // Set the orders
+                foreach ($order as $ordering)
+                {
+                    if (preg_match('/\s*reversed?\s*/', $ordering))
+                    {
+                        $reversed = true;
+                        $ordering = preg_replace('/\s*reversed?\s*/', '', $ordering);
+                    }
+                    else
+                    {
+                        $reversed = false;
+                    }
+                    
+                    if ($ordering === 'metadata.score')
+                    {
+                        if (version_compare(mgd_version(), '1.8.2', '<'))
+                        {
+                            $ordering = 'score';
+                            $reversed = false;
+                        }
+                    }
+                    
+                    if (   strpos($ordering, '.')
+                        && !class_exists('midgard_query_builder'))
+                    {
+                        debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
+                        continue;
+                    }
+                    
+                    if ($reversed)
+                    {
+                        $qb->add_order($ordering, 'DESC');
+                    }
+                    else
+                    {
+                        $qb->add_order($ordering);
+                    }
+                }
+            }
+
             $data['photos'] = $qb->execute();
         }
 
@@ -534,7 +753,73 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $qb->add_constraint('photographer', '=', $data['user']->id);
         }
 
-        $qb->add_order('taken', 'DESC');
+        if (isset($_REQUEST['org_routamc_photostream_order_by']))
+        {
+            $order_by = $_REQUEST['org_routamc_photostream_order_by'];
+
+            if (   isset($_REQUEST['org_routamc_photostream_order'])
+                && !empty($_REQUEST['org_routamc_photostream_order']))
+            {
+                $order = $_REQUEST['org_routamc_photostream_order'];
+            }
+
+            $qb->add_order($order_by, $order);
+        }
+        else
+        {
+            // Prevent errors
+            if (is_array($this->_config->get('index_order')))
+            {
+                $order = $this->_config->get('index_order');
+            }
+            else
+            {
+                $order = array
+                (
+                    $this->_config->get('index_order'),
+                );
+            }
+            
+            // Set the orders
+            foreach ($order as $ordering)
+            {
+                if (preg_match('/\s*reversed?\s*/', $ordering))
+                {
+                    $reversed = true;
+                    $ordering = preg_replace('/\s*reversed?\s*/', '', $ordering);
+                }
+                else
+                {
+                    $reversed = false;
+                }
+                
+                if ($ordering === 'metadata.score')
+                {
+                    if (version_compare(mgd_version(), '1.8.2', '<'))
+                    {
+                        $ordering = 'score';
+                        $reversed = false;
+                    }
+                }
+                
+                if (   strpos($ordering, '.')
+                    && !class_exists('midgard_query_builder'))
+                {
+                    debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
+                    continue;
+                }
+                
+                if ($reversed)
+                {
+                    $qb->add_order($ordering, 'DESC');
+                }
+                else
+                {
+                    $qb->add_order($ordering);
+                }
+            }
+        }
+
         $data['photos'] = $qb->execute();
 
         // Make photos AJAX-editable
@@ -733,6 +1018,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                 $this->_alternate_links("{$prefix}tag/{$this->_request_data['user_url']}");
                 break;
             case 'photostream_tag_all':
+            case 'photostream_tag_all_raw':
             case 'photostream_tag':
                 $tmp[] = Array
                 (

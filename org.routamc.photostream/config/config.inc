@@ -78,3 +78,9 @@
 
 // Symlink topic
 'symlink_topic' => null,
+
+// Default listing order
+'index_order' => array('metadata.score reverse', 'taken reverse'),
+
+// Use created time in taken
+'use_created_in_taken' => false,
