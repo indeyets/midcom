@@ -25,16 +25,6 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
     function _on_initialize()
     {
     }
-
-    /**
-     * @todo this function doesn't seem to be called from anywhere
-     */
-    function _initialize_hours_widget(&$task)
-    {
-        $nap = new midcom_helper_nav();
-        $node = $nap->get_node($nap->get_current_node());
-        $this->_request_data['hours_widget'][$task->guid] = new org_openpsa_projects_hours_widget(&$task, $this->_datamanagers['hours'], "{$node[MIDCOM_NAV_FULLURL]}hours/task/{$task->id}/", $this->_request_data);
-    }
     
     /**
      * Add a task to a requested task list view
