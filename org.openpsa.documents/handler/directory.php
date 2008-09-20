@@ -19,13 +19,13 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
 
     function __construct()
     {
-    parent::__construct();
+        parent::__construct();
     }
 
     function _on_initialize()
     {
-    $this->_datamanagers['directory'] = new midcom_helper_datamanager($this->_config->get('schemadb_directory'));
-    $this->_datamanagers['metadata'] = new midcom_helper_datamanager($this->_config->get('schemadb_metadata'));
+        $this->_datamanagers['directory'] = new midcom_helper_datamanager($this->_config->get('schemadb_directory'));
+        $this->_datamanagers['metadata'] = new midcom_helper_datamanager($this->_config->get('schemadb_metadata'));
     }
 
 
@@ -250,6 +250,8 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
                 )
             );
         }
+        
+        $this->_request_data['prefix'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
         return true;
     }
