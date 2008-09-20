@@ -1,9 +1,10 @@
 <?php
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
-$nap = new midcom_helper_nav();
-$node = $nap->get_node($nap->get_current_node());
 
-$task_url =  "{$node[MIDCOM_NAV_FULLURL]}task/{$data['task']->guid}/";
+$contacts_node =& $data['contacts_node'];
+$sales_node =& $data['sales_node'];
+
+$task_url = $data['prefix'] . "task/{$data['task']->guid}/";
 $task =& $data['task'];
 
 $class = $data['task']->status_type;
@@ -23,11 +24,11 @@ if ($data['even'])
                 $parent = $data['task']->get_parent();
                 if ($parent->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
                 {
-                    $parent_url = "{$node[MIDCOM_NAV_FULLURL]}project/{$parent->guid}/";
+                    $parent_url = $data['prefix'] . "project/{$parent->guid}/";
                 }
                 else
                 {
-                    $parent_url = "{$node[MIDCOM_NAV_FULLURL]}task/{$parent->guid}/";
+                    $parent_url = $data['prefix'] . "task/{$parent->guid}/";
                 }
                 echo "<a href=\"{$parent_url}\">{$parent->title}</a>";
             }
@@ -42,7 +43,6 @@ if ($data['even'])
                 if ($task->customer)
                 {
                     $customer = new org_openpsa_contacts_group($task->customer);
-                    $contacts_node = midcom_helper_find_node_by_component('org.openpsa.contacts');
                     $customer_url = "{$contacts_node[MIDCOM_NAV_FULLURL]}group/{$customer->guid}";
                     echo "<a href='{$customer_url}'>{$customer->official}</a>";
                 }
@@ -58,7 +58,6 @@ if ($data['even'])
                 {
                     $agreement = new org_openpsa_sales_salesproject_deliverable($task->agreement);
                     $salesproject = new org_openpsa_sales_salesproject($agreement->salesproject);
-                    $sales_node = midcom_helper_find_node_by_component('org.openpsa.sales');
                     $agreement_url = "{$sales_node[MIDCOM_NAV_FULLURL]}salesproject/{$salesproject->guid}";
                     echo "<a href='{$agreement_url}'>{$agreement->title}</a>";
                 }

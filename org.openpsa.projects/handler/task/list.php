@@ -77,6 +77,10 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         $_MIDCOM->auth->require_valid_user();
         $this->_request_data['tasks'] = Array();
 
+        $this->_request_data['contacts_node'] = midcom_helper_find_node_by_component('org.openpsa.contacts');
+        $this->_request_data['sales_node'] = midcom_helper_find_node_by_component('org.openpsa.sales');
+        $this->_request_data['prefix'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+
         if (count($args) > 0)
         {
             switch ($args[0])
