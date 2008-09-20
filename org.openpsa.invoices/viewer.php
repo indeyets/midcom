@@ -113,7 +113,7 @@ class org_openpsa_invoices_viewer extends midcom_baseclasses_components_request
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/org.openpsa.invoices/invoices.css",
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.invoices/invoices.css",
             )
         );
     }

@@ -19,6 +19,12 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         parent::__construct();
     }
 
+    function _on_initialize()
+    {
+      // Locate Contacts node for linking
+      $this->_request_data['contacts_node'] = midcom_helper_find_node_by_component('org.openpsa.contacts');
+    }
+
     function _process_invoice_list($invoices)
     {
         $this->_request_data['invoices'] = Array();
@@ -339,9 +345,6 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
     {
         if (count($this->_request_data['invoices']) > 0)
         {
-            // Locate Contacts node for linking
-            $this->_request_data['contacts_node'] = midcom_helper_find_node_by_component('org.openpsa.contacts');
-
             midcom_show_style('show-list-header');
             $this->_request_data['even'] = false;
             foreach ($this->_request_data['invoices'] as $invoice)
