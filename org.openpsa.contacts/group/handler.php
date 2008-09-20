@@ -334,6 +334,15 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
         $GLOBALS['midcom_component_data']['org.openpsa.contacts']['active_leaf'] = $this->_request_data['group']->id;
 
         $_MIDCOM->bind_view_to_object($this->_request_data['group']);
+        
+        $_MIDCOM->add_link_head(array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager/columned.css",
+            )
+        );
+        
         return true;
     }
 
