@@ -106,7 +106,10 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
         $qb = midcom_db_group::new_query_builder();
 
         $parent = new midcom_db_group($this->_config->get('group'));
-        $qb->add_constraint('owner', '=', $parent->id);
+        if ($this->_config->get('show_only_groups_under_root_group'))
+        {
+            $qb->add_constraint('owner', '=', $parent->id);
+        }
         $qb->begin_group('OR');
             $qb->add_constraint('name', '=', $args[0]);
             $qb->add_constraint('guid', '=', $args[0]);
@@ -181,6 +184,11 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
      */
     function _handler_group($handler_id, $args, &$data)
     {
+        if ($handler_id == 'view-group-raw')
+        {
+            $_MIDCOM->skip_page_style = true;
+        }
+
         $this->_load_datamanager();
         $this->_datamanager->set_storage($this->_group);
 

@@ -33,3 +33,5 @@
 // Note that the original alphabetic index pages using GET parameters are not
 // supported by this new implementation.
 'enable_alphabetical' => false,
+
+'show_only_groups_under_root_group' => true,

@@ -68,6 +68,14 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
             'variable_args' => 1,
         );
 
+        // AJAX version of view, which skips style.
+        $this->_request_switch['view-group-raw'] = Array
+        (
+            'handler' => Array('net_nemein_organizations_handler_view', 'group'),
+            'variable_args' => 1,
+            'fixed_args' => Array('raw'),
+        );
+
         /*
          * not yet implemented
          *
@@ -148,7 +156,11 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
      */
     function _populate_node_toolbar()
     {
-        if ($_MIDCOM->auth->admin)
+        // We get the parent group to check if the user has privileges to create
+        $parent_group = new midcom_db_group($this->_config->get('group'));
+        if (   $_MIDCOM->auth->admin
+            || (   $parent_group
+                && $parent_group->can_do('midgard:create')))
         {
             $this->_node_toolbar->add_item(Array(
                 MIDCOM_TOOLBAR_URL => "admin/create.html",

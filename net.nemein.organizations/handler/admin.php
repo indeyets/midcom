@@ -371,8 +371,17 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
      */
     function _handler_create($handler_id, $args, &$data)
     {
-        // FIXME: Check the real ACL instead of this
-        $_MIDCOM->auth->require_admin_user();
+        // We get the parent group to check if the user has privileges to create
+        $parent_group = new midcom_db_group($this->_config->get('group'));
+        if (! $parent_group)
+        {
+            $_MIDCOM->auth->require_admin_user();
+        }
+        
+        if (!$parent_group->can_do('midgard:create'))
+        {
+            $_MIDCOM->auth->require_admin_user();
+        }
 
         $this->_load_create_controller();
 
