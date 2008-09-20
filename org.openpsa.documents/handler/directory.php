@@ -264,11 +264,12 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
     function _show_directory($handler_id, &$data)
     {
         debug_push('_show_directory');
+        
         midcom_show_style("show-directory-header");
-        $documents = new org_openpsa_document();
-        $documents->topic = $this->_request_data['directory']->id;
+    
         debug_add("Instantiating Query Builder for creating directory index");
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_documents_document');
+        
+        $qb = org_openpsa_documents_document::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_request_data['directory']->id);
         $qb->add_constraint('nextVersion', '=', 0);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_DOCUMENT);
@@ -280,26 +281,19 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
             $qb->add_constraint('orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
         }
         debug_add("Executing Query Builder");
-        $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $ret = $qb->execute();
         if (   is_array($ret)
             && count($ret) > 0)
         {
             midcom_show_style("show-directory-index-header");
             foreach ($ret as $document)
             {
-                //if ($document)
-                //{
-                    $this->_request_data['metadata'] = new org_openpsa_documents_document($document->id);
-                    if ($this->_datamanagers['metadata']->init($this->_request_data['metadata']))
-                    {
-                        $this->_request_data['metadata_dm'] = $this->_datamanagers['metadata']->get_array();
-                        midcom_show_style("show-directory-index-item");
-                    }
-                //}
-                //else
-                //{
-                //    debug_add("Query Builder returned empty objects");
-                //}
+                $this->_request_data['metadata'] = $document;
+                if ($this->_datamanagers['metadata']->init($this->_request_data['metadata']))
+                {
+                    $this->_request_data['metadata_dm'] = $this->_datamanagers['metadata']->get_array();
+                    midcom_show_style("show-directory-index-item");
+                }
             }
             midcom_show_style("show-directory-index-footer");
         }
