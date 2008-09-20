@@ -79,7 +79,7 @@ class net_nemein_redirector_viewer extends midcom_baseclasses_components_request
                         $qb->add_constraint('id', '=', $content_language);
                         $lang = $qb->execute();
 
-                        $default_lang_code = 'en';
+                        $default_lang_code = $this->_config->get('default_lang_code');
                         $hosts = $_MIDCOM->i18n->get_language_hosts();
                         foreach($hosts as $k => $host)
                         {
