@@ -38,6 +38,13 @@
             'storage'  => 'parameter',
             'required' => true,
         ),
+        'reply-to' => array
+        (
+            'title'    => 'reply to address',
+            'type'     => 'text',
+            'widget'   => 'text',
+            'storage'  => 'parameter',
+        ),
         'content' => array
         (
             'title'    => 'content',
@@ -101,6 +108,13 @@
             'widget'   => 'text',
             'storage'  => 'parameter',
             'required' => true,
+        ),
+        'reply-to' => array
+        (
+            'title'    => 'reply to address',
+            'type'     => 'text',
+            'widget'   => 'text',
+            'storage'  => 'parameter',
         ),
         'content' => array
         (
@@ -189,6 +203,13 @@
             'storage'  => 'parameter',
             'required' => true,
         ),
+        'reply-to' => array
+        (
+            'title'    => 'reply to address',
+            'type'     => 'text',
+            'widget'   => 'text',
+            'storage'  => 'parameter',
+        ),
         'content' => array
         (
             'title'    => 'content',
@@ -265,6 +286,13 @@
             'widget'   => 'text',
             'storage'  => 'parameter',
             'required' => true,
+        ),
+        'reply-to' => array
+        (
+            'title'    => 'reply to address',
+            'type'     => 'text',
+            'widget'   => 'text',
+            'storage'  => 'parameter',
         ),
         'content' => array
         (
