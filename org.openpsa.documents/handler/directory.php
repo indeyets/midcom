@@ -13,16 +13,21 @@
  * @package org.openpsa.documents
  *
  */
-class org_openpsa_documents_directory_handler
+class org_openpsa_documents_handler_directory extends midcom_baseclasses_components_handler
 {
-    var $_datamanagers;
-    var $_request_data;
+    var $_datamanagers = array();
 
-    function __construct(&$datamanagers, &$request_data)
+    function __construct()
     {
-        $this->_datamanagers =& $datamanagers;
-        $this->_request_data =& $request_data;
+    parent::__construct();
     }
+
+    function _on_initialize()
+    {
+    $this->_datamanagers['directory'] = new midcom_helper_datamanager($this->_config->get('schemadb_directory'));
+    $this->_datamanagers['metadata'] = new midcom_helper_datamanager($this->_config->get('schemadb_metadata'));
+    }
+
 
     function _creation_dm_callback(&$datamanager)
     {

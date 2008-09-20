@@ -17,9 +17,7 @@
 class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
 {
 
-    var $_datamanagers = array();
-    var $_directory_handler = null;
-    var $_metadata_handler = null;
+    var $_datamanagers = null;
 
     /**
      * Constructor.
@@ -28,63 +26,62 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
     {
         parent::__construct($topic, $config);
 
-        // Load datamanagers for main classes
-        $this->_initialize_datamanager('directory', $this->_config->get('schemadb_directory'));
-        $this->_initialize_datamanager('metadata', $this->_config->get('schemadb_metadata'));
-
         // Pass topic to handlers
         $this->_request_data['directory'] = new org_openpsa_documents_directory($this->_topic->id);
         $this->_request_data['enable_versioning'] = $this->_config->get('enable_versioning');
-
-        // Load handler classes
-        $this->_metadata_handler = new org_openpsa_documents_metadata_handler(&$this->_datamanagers, &$this->_request_data);
-        $this->_directory_handler = new org_openpsa_documents_directory_handler(&$this->_datamanagers, &$this->_request_data);
 
         // Always run in uncached mode
         $_MIDCOM->cache->content->no_cache();
 
         // Match /document_metadata/new/choosefolder
-        $this->_request_switch['metadata_new_choosefolder'] = array(
-            'fixed_args' => Array('document_metadata','new','choosefolder'),
-            'handler' => array(&$this->_metadata_handler,'metadata_new'),
+        $this->_request_switch['metadata_new_choosefolder'] = array
+    (
+        'handler' => array('org_openpsa_documents_handler_metadata', 'metadata_new'),
+            'fixed_args' => Array('document_metadata', 'new', 'choosefolder'),
         );
 
         // Match /document_metadata/<document GUID>/action
-        $this->_request_switch['metadata_action'] = array(
+        $this->_request_switch['metadata_action'] = array
+        (
+        'handler' => array('org_openpsa_documents_handler_metadata', 'metadata_action'),
             'fixed_args' => 'document_metadata',
             'variable_args' => 2,
-            'handler' => array(&$this->_metadata_handler,'metadata_action'),
         );
 
         // Match /document_metadata/new
-        $this->_request_switch['metadata_new'] = array(
-            'fixed_args' => Array('document_metadata','new'),
-            'handler' => array(&$this->_metadata_handler,'metadata_new'),
+        $this->_request_switch['metadata_new'] = array
+    (
+        'handler' => array('org_openpsa_documents_handler_metadata', 'metadata_new'),
+            'fixed_args' => Array('document_metadata', 'new'),
         );
 
         // Match /document_metadata/<document GUID>
-        $this->_request_switch[] = array(
+        $this->_request_switch[] = array
+    (
+        'handler' => array('org_openpsa_documents_handler_metadata', 'metadata'),
             'fixed_args' => 'document_metadata',
             'variable_args' => 1,
-            'handler' => array(&$this->_metadata_handler,'metadata'),
         );
 
         // Match /edit
-        $this->_request_switch[] = array(
+        $this->_request_switch[] = array
+    (
+        'handler' => array('org_openpsa_documents_handler_directory', 'directory_edit'),
             'fixed_args' => 'edit',
-            'handler' => array(&$this->_directory_handler,'directory_edit'),
         );
 
         // Match /new
-        $this->_request_switch[] = array(
+        $this->_request_switch[] = array
+    (
+        'handler' => array('org_openpsa_documents_handler_directory', 'directory_new'),
             'fixed_args' => 'new',
-            'handler' => array(&$this->_directory_handler,'directory_new'),
         );
 
         // Match /search
-        $this->_request_switch[] = array(
+        $this->_request_switch[] = array
+    (
+        'handler' => array('org_openpsa_documents_handler_search', 'search'),
             'fixed_args' => 'search',
-            'handler' => 'search'
         );
 
         /**
@@ -98,28 +95,12 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
 
         // Match /
         $this->_request_switch[] = array(
-            'handler' => array(&$this->_directory_handler, 'directory'),
+        'handler' => array('org_openpsa_documents_handler_directory', 'directory'),
         );
 
         // This component uses the PEAR HTML_TreeMenu package, include the handler javascripts
-        // TODO: State this AIS dependency somehow?
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/org.openpsa.core/TreeMenu.js");
 
-    }
-
-    function _initialize_datamanager($type, $schemadb_snippet)
-    {
-        // Load schema database snippet or file
-        debug_add("Loading Schema Database", MIDCOM_LOG_DEBUG);
-        $schemadb_contents = midcom_get_snippet_content($schemadb_snippet);
-        eval("\$schemadb = Array ( {$schemadb_contents} );");
-        // Initialize the datamanager with the schema
-        $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb);
-
-        if (!$this->_datamanagers[$type]) {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantiated.");
-            // This will exit.
-        }
     }
 
     /**
@@ -132,70 +113,6 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
     {
         // This hook is for direct PUT and GET of files
         return false;
-    }
-
-    /**
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
-     */
-    function _handler_search($handler_id, $args, &$data)
-    {
-        $this->_request_data['results'] = array();
-        if (array_key_exists('search', $_GET))
-        {
-            // Figure out where we are
-            $nap = new midcom_helper_nav();
-            $node = $nap->get_node($nap->get_current_node());
-
-            // Instantiate indexer
-            $indexer =& $_MIDCOM->get_service('indexer');
-
-            // Add the search parameters
-            $query = $_GET['search'];
-            $query .= " AND __TOPIC_URL:\"{$node[MIDCOM_NAV_FULLURL]}*\"";
-            $query .= " AND __COMPONENT:org.openpsa.documents";
-            // TODO: Metadata support
-
-            // Run the search
-            $this->_request_data['results'] = $indexer->query($query, null);
-        }
-        return true;
-    }
-
-    /**
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
-     */
-    function _show_search($handler_id, &$data)
-    {
-        $displayed = 0;
-        midcom_show_style('show-search-header');
-        if (count($this->_request_data['results']))
-        {
-            midcom_show_style('show-search-results-header');
-            foreach ($this->_request_data['results'] as $document)
-            {
-                // $obj->RI will contain either document or attachment GUID depending on match, ->source will always contain the document GUID
-                $this->_request_data['metadata'] = $this->_metadata_handler->_load_metadata($document->source);
-                if ($this->_request_data['metadata'])
-                {
-                    $this->_datamanagers['metadata']->init($this->_request_data['metadata']);
-                    $this->_request_data['metadata_dm'] = $this->_datamanagers['metadata']->get_array();
-                    $this->_request_data['metadata_search'] = $document;
-                    midcom_show_style('show-search-results-item');
-                    $displayed++;
-                }
-            }
-            midcom_show_style('show-search-results-footer');
-        }
-        if ($displayed == 0)
-        {
-            midcom_show_style('show-search-noresults');
-        }
-        midcom_show_style('show-search-footer');
     }
 
 }

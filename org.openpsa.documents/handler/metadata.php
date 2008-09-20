@@ -13,15 +13,18 @@
  * @package org.openpsa.documents
  *
  */
-class org_openpsa_documents_metadata_handler
+class org_openpsa_documents_handler_metadata extends midcom_baseclasses_components_handler
 {
     var $_datamanagers;
-    var $_request_data;
 
-    function __construct(&$datamanagers, &$request_data)
+    function __construct()
     {
-        $this->_datamanagers =& $datamanagers;
-        $this->_request_data =& $request_data;
+        parent::__construct();
+    }
+
+    function _on_initialize()
+    {
+    $this->_datamanagers['metadata'] = new midcom_helper_datamanager($this->_config->get('schemadb_metadata'));
     }
 
     function _load_metadata($guid)
