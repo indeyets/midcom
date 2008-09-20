@@ -14,14 +14,9 @@
  */
 class org_openpsa_documents_directory extends midcom_baseclasses_database_topic
 {
-    function __construct($identifier=NULL)
+    function __construct($identifier = NULL)
     {
         return parent::__construct($identifier);
-    }
-
-    function _on_created()
-    {
-        $this->parameter('midcom', 'component', 'org.openpsa.documents');
     }
 
     function _on_updated()
