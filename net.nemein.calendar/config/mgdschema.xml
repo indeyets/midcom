@@ -2,7 +2,7 @@
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
 
   <type name="net_nemein_calendar_event" table="net_nemein_calendar_event" parent="midgard_topic" upfield="up" parentfield="node">
-    <property name="id"       type="integer" primaryfield="id"/>
+    <property name="id"       type="unsigned integer" primaryfield="id"/>
     <property name="start"    type="datetime"/>
     <property name="end"      type="datetime"/>
     <property name="name"     type="string"/>

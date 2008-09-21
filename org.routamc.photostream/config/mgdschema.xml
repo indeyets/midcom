@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
     <type name="org_routamc_photostream_photo" table="org_routamc_photostream_photo" parent="midgard_topic" parentfield="node">
-        <property name="id" type="integer" primaryfield="id"/>
+        <property name="id" type="unsigned integer" primaryfield="id"/>
         <property name="node" link="midgard_topic:id" reverse="no" type="integer" parentfield="node"/>
         
         <!-- External IDs can be used to store identifier of the image in some external service, like Flickr -->

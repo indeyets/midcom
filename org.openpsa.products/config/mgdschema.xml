@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
     <type name="org_openpsa_products_product" table="org_openpsa_products_product" parent="org_openpsa_products_product_group" parentfield="productGroup">
-        <property name="id" type="integer" primaryfield="id"/>
+        <property name="id" type="unsigned integer" primaryfield="id"/>
         <property name="productGroup" link="org_openpsa_products_product_group:id" reverse="no" type="integer" parentfield="productGroup"/>
 
         <property name="code" type="string"/>
@@ -45,7 +45,7 @@
     </type>
 
     <type name="org_openpsa_products_product_group" table="org_openpsa_products_product_group" upfield="up">
-        <property name="id" type="integer" primaryfield="id"/>
+        <property name="id" type="unsigned integer" primaryfield="id"/>
 
         <property name="up" upfield="up" link="org_openpsa_products_product_group:id" reverse="no" type="integer"/>
 
@@ -73,7 +73,7 @@
     </type>
 
     <type name="org_openpsa_products_product_member" table="org_openpsa_products_product_member" parent="org_openpsa_products_product" parentfield="product">
-        <property name="id" type="integer" primaryfield="id"/>
+        <property name="id" type="unsigned integer" primaryfield="id"/>
 
         <property name="product" link="org_openpsa_products_product:id" reverse="no" type="integer" parentfield="product"/>
         <property name="componentGroup" link="org_openpsa_products_product_group:id" reverse="no" type="integer"/>
@@ -100,7 +100,7 @@
     </type>
 
     <type name="org_openpsa_products_businessarea" table="org_openpsa_products_businessarea" parent="org_openpsa_products_businessarea" parentfield="up">
-        <property name="id" type="integer" primaryfield="id"/>
+        <property name="id" type="unsigned integer" primaryfield="id"/>
 
         <property name="up" link="org_openpsa_products_businessarea:id" reverse="no" parentfield="up" type="integer"/>
 
@@ -131,7 +131,7 @@
     </type>
     
     <type name="org_openpsa_products_businessarea_member" table="org_openpsa_products_businessarea_member" parent="org_openpsa_products_businessarea" parentfield="businessarea">
-        <property name="id" type="integer" primaryfield="id"/>
+        <property name="id" type="unsigned integer" primaryfield="id"/>
 
         <property name="businessarea" link="org_openpsa_products_businessarea:id" reverse="no" parentfield="businessarea" type="integer"/>
         <property name="grp" link="org_openpsa_products_product_group:id" reverse="no" type="integer"/>

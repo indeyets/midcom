@@ -2,14 +2,14 @@
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
 
   <type name="midcom_core_group_virtual_db" table="midcom_group_virtual">
-    <property name="id" type="integer" primaryfield="id" />
+    <property name="id" type="unsigned integer" primaryfield="id" />
     <property name="component" type="string" />
     <property name="identifier" type="string" />
     <property name="name" type="string" />
   </type>
 
   <type name="midcom_core_privilege_db" table="midcom_core_privilege">
-    <property name="id" type="integer" primaryfield="id" />
+    <property name="id" type="unsigned integer" primaryfield="id" />
     <property name="objectguid" type="string" />
     <property name="name" type="string" />
     <property name="assignee" type="string" />
@@ -18,7 +18,7 @@
   </type>
 
   <type name="midcom_core_login_session_db" table="midcom_core_login_session">
-    <property name="id" type="integer" primaryfield="id" />
+    <property name="id" type="unsigned integer" primaryfield="id" />
     <property name="userid" type="string" />
     <property name="username" type="string" />
     <property name="password" type="string" />
@@ -27,7 +27,7 @@
   </type>
 
   <type name="midcom_core_temporary_object_db" table="midcom_core_temporary_object_db">
-    <property name="id" type="integer" primaryfield="id" />
+    <property name="id" type="unsigned integer" primaryfield="id" />
     <property name="timestamp" type="integer" />
 
     <property name="name" type="text" />
