@@ -200,7 +200,41 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
 
     function has_root_objects()
     {
-        // TODO implement
+        // Check against static calling
+        if (   !isset($this->mgdschema_class)
+            || empty($this->mgdschema_class))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('May not be called statically', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        // PONDER: Check for some generic user privilege instead  ??
+        if (   $deleted
+            && !$_MIDGARD['admin'])
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Non-admins are not allowed to list deleted objects', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+
+        $qb = $this->_root_objects_qb($deleted);
+        if (!$qb)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Could not get QB instance', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        $qb->set_limit(1);
+        if ($qb->count())
+        {
+            unset($qb);
+            return true;
+        }
+        unset($qb);
+        return false;
     }
 
     /**
@@ -256,9 +290,53 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
         return $objects;
     }
 
-    function has_child_objects()
+    /**
+     * Statically callable method to determine if given object has children
+     *
+     * @param midgard_object &$object object to get children for
+     * @param boolean $deleted whether to count (only) deleted or not-deleted objects
+     * @return array multidimensional array (keyed by classname) of objects or false on failure
+     */
+    function has_child_objects(&$object, $deleted = false)
     {
         // TODO: implement
+        // PONDER: Check for some generic user privilege instead  ??
+        if (   $deleted
+            && !$_MIDGARD['admin'])
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Non-admins are not allowed to list deleted objects', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        $resolver = new midcom_helper_reflector_tree($object);
+        if (!$resolver)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Could not instantiate midcom_helper_reflector_tree from \$object", MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        $child_classes = $resolver->get_child_classes();
+        if (!$child_classes)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('resolver returned false (critical failure) from get_child_classes()', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
+        foreach ($child_classes as $schema_type)
+        {
+            $qb = $resolver->_child_objects_type_qb($schema_type, $object, $deleted);
+            $qb->set_limit(1);
+            if ($qb->count())
+            {
+                unset($child_classes, $schema_type, $qb, $resolver);
+                return true;
+            }
+        }
+        unset($child_classes, $schema_type, $qb, $resolver);
+        return false;
     }
 
     /**
@@ -299,7 +377,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
         $child_counts = array();
         foreach ($child_classes as $schema_type)
         {
-            $child_counts[$schema_type] = $this->_count_child_objects_type($schema_type, $object, $deleted);
+            $child_counts[$schema_type] = $resolver->_count_child_objects_type($schema_type, $object, $deleted);
         }
         return $child_counts;
     }
