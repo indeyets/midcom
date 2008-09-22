@@ -186,7 +186,7 @@
                 'title' => 'notes',
                 'css_group' => 'area notes',
             ),
-            'end_fieldgroup' => '',
+            'end_fieldgroup' => 2,
         ),
 
 
