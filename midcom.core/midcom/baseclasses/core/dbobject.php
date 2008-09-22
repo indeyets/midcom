@@ -193,24 +193,29 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 $object->creator = $_MIDCOM->auth->user->_storage->id;
             }
         }
-        
+
         if (array_key_exists('created', $object))
         {
             $object->created = time();
         }
-        
-        if (   !is_null($_MIDCOM->auth->user)
-            && is_object($object->metadata))
+
+        /*
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r('$object->metadata before magick', $object->metadata);
+        debug_pop();
+        */
+
+        if (!is_null($_MIDCOM->auth->user))
         {
             // Default the authors to current user
-            if (!$object->metadata->authors)
+            if (empty($object->metadata->authors))
             {
                 $creator = $_MIDCOM->auth->user->_storage->id;
                 $object->metadata->authors = "|{$_MIDCOM->auth->user->_storage->guid}|";
             }
         
             // Default the owner to first group of current user
-            if (!$object->metadata->owner)
+            if (empty($object->metadata->owner))
             {
                 $groups = $_MIDCOM->auth->user->list_all_memberships();
                 if (count($groups) > 0)
@@ -220,12 +225,18 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 }
             }      
         }
-             
+
         // Default the publication time to current date/time
-        if (!$object->metadata->published)
+        if (empty($object->metadata->published))
         {
             $object->metadata->published = time();
         }
+
+        /*
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r('$object->metadata after magick', $object->metadata);
+        debug_pop();
+        */
     }
 
     /**
