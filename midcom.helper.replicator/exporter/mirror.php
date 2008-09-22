@@ -22,6 +22,7 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
 
     function __construct($subscription)
     {
+        $_MIDCOM->load_library('midcom.helper.reflector');
         parent::__construct($subscription);
     }
 
@@ -176,7 +177,21 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
     function serialize_children(&$object)
     {
         $serializations = array();
-        
+
+        if (   $object->metadata->deleted
+            || (   isset($this->_serialize_rewrite_to_delete[$object->guid])
+                && $this->_serialize_rewrite_to_delete[$object->guid]))
+        {
+            // Object is deleted (either for real or just simulated), return early
+            debug_push_class(__CLASS__, __FUNCTION__);
+            $object_class = get_class($object);
+            debug_add("Object {$object_class} {$object->guid} is deleted, skipping child export", MIDCOM_LOG_INFO);
+            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "object is deleted, do not try to find child objects, setting exportability explicitly to true", MIDCOM_LOG_INFO);
+            $this->exportability[$object->guid] = true;
+            debug_pop();
+            return $serializations;
+        }
+
         // In case of a topic we have to check for possible extra dependencies
         if (is_a($object, 'midgard_topic'))
         {
@@ -184,7 +199,36 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
             $serializations = array_merge($serializations, $dependency_serializations);
             unset($dependency_serializations);
         }
-        
+
+        // Then use reflector to check for normally linked children
+        $children = midcom_helper_reflector_tree::get_child_objects($object);
+        if (is_array($children))
+        {
+            foreach ($children as $child_class => $child_objects)
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add('Serializing ' . count($child_objects) . " {$child_class} objects");
+                debug_pop();
+                foreach ($child_objects as $k => $child_object)
+                {
+                    $child_serializations = $this->serialize(&$child_object);
+                    if ($child_serializations == false)
+                    {
+                        debug_push_class(__CLASS__, __FUNCTION__);
+                        debug_add("Failed to serialize child {$child_object->guid}", MIDCOM_LOG_WARN);
+                        debug_pop();
+                    }
+                    else
+                    {
+                        $serializations = array_merge($serializations, $child_serializations);
+                    }
+                    unset($child_serializations, $child_objects[$k], $child_object);
+                }
+                unset($child_objects, $children[$child_class]);
+            }
+        }
+        unset($children);
+
         return $serializations;
     }
     

@@ -328,42 +328,5 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
         }
         debug_pop();
     }
-
-
-    /**
-     * Export some children of the object
-     *
-     * @param midgard_object &$object The Object to export parameters of
-     * @return array Array of exported objects as XML indexed by GUID
-     * @todo rethink child/parent handling
-     */
-    function serialize_children(&$object)
-    {
-        //$GLOBALS['midcom_helper_replicator_logger']->log_object($object, "serialize_children called");
-        $serializations = array();
-        if (   $object->metadata->deleted
-            || (   isset($this->_serialize_rewrite_to_delete[$object->guid])
-                && $this->_serialize_rewrite_to_delete[$object->guid]))
-        {
-            // Object is deleted (either for real or just simulated), return early
-            debug_push_class(__CLASS__, __FUNCTION__);
-            $object_class = get_class($object);
-            debug_add("Object {$object_class} {$object->guid} is deleted, skipping child export", MIDCOM_LOG_INFO);
-            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "object is deleted, do not try to find child objects, setting exportability explicitly to true", MIDCOM_LOG_INFO);
-            $this->exportability[$object->guid] = true;
-            debug_pop();
-            return $serializations;
-        }
-
-        // In case of a topic we have to check for possible extra dependencies
-        if (is_a($object, 'midgard_topic'))
-        {
-            $dependency_serializations = $this->serialize_component_dependencies(&$object);
-            $serializations = array_merge($serializations, $dependency_serializations);
-            unset($dependency_serializations);
-        }
-
-        return $serializations;
-    }
 }
 ?>
