@@ -501,7 +501,7 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
         $group =& $this->_form->addGroup($this->elements, $this->name, $this->_translate($this->_field['title']), "<br />");
         /* PONDER: Why if the ones in elements2 are put to elements they all get value set to '2' ?? */
         $group2 =& $this->_form->addGroup($this->elements2, $this->name . '_universalchooser_' . $idsuffix, '', '', array('class' => 'universalchooser_searchinput'));
-        $this->_renderer->setElementTemplate('<div id="' . $this->name .'_search_label">{element}</div>', $this->name . '_universalchooser_' . $idsuffix);
+        $this->_renderer->setElementTemplate('<div id="' . $this->name . '_universalchooser_' . $idsuffix . '_label">{element}</div>', $this->name . '_universalchooser_' . $idsuffix);
         $group2->setAttributes(Array('class' => 'midcom_helper_datamanager2_widget_universalchooser'));
 
         if ($this->_type->allow_multiple)
