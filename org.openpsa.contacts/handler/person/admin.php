@@ -121,7 +121,7 @@ class org_openpsa_contacts_handler_person_admin extends midcom_baseclasses_compo
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/midcom.helper.datamanager2/legacy.css",
+                'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager2/legacy.css",
             )
         );
     }

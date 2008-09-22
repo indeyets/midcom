@@ -12,17 +12,25 @@
  *
  * @package org.openpsa.contacts
  */
-class org_openpsa_contacts_person_handler
+class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_handler
 {
     var $_datamanagers;
     var $_request_data;
     var $_toolbars;
 
-    function __construct(&$datamanagers, &$request_data)
+    function __construct()
     {
-        $this->_datamanagers =& $datamanagers;
-        $this->_request_data =& $request_data;
         $this->_toolbars =& midcom_helper_toolbars::get_instance();
+        parent::__construct();
+    }
+
+    function _on_initialize()
+    {
+        $this->_datamanagers = array
+        (
+            'person' => new midcom_helper_datamanager($this->_config->get('schemadb_person')),
+            'acl' => new midcom_helper_datamanager($this->_config->get('schemadb_acl'))
+        );
     }
 
     function _load_person($identifier)
@@ -110,7 +118,7 @@ class org_openpsa_contacts_person_handler
         if (count($args) > 0)
         {
             // Get the organization
-            $this->_request_data['group'] = $this->_request_data['group_handler']->_load($args[0]);
+            $this->_request_data['group'] = $this->_load_group($args[0]);
 
             if (!$this->_request_data['group'])
             {
@@ -199,6 +207,34 @@ class org_openpsa_contacts_person_handler
         debug_pop();
         return true;
 
+    }
+
+    private function _load_group($identifier)
+    {
+        $group = new org_openpsa_contacts_group($identifier);
+
+        //$parent = $group->get_parent_guid_uncached();
+        //$parent = new org_openpsa_contacts_group($parent);
+        //die("can edit parent: ".$parent->can_do('midgard:update').", can edit group: ".$group->can_do('midgard:update'));
+
+        if (!$group)
+        {
+            return false;
+        }
+
+    if (!isset($this->_datamanagers['group']))
+      {
+        $this->_datamanagers['group'] = new midcom_helper_datamanager($this->_config->get('schemadb_group'));
+      }
+    // Load the group to datamanager
+    if (!$this->_datamanagers['group']->init($group))
+      {
+        return false;
+      }
+
+        $_MIDCOM->set_pagetitle($group->official);
+
+        return $group;
     }
 
     /**
@@ -735,78 +771,6 @@ class org_openpsa_contacts_person_handler
             // Default view, display the selected action
             $GLOBALS["view"] = $this->_datamanagers['person'];
             midcom_show_style("show-person-{$data['person_action']}");
-        }
-    }
-
-    /**
-     * Does a QB query for persons, returns false or number of matched entries
-     *
-     * Displays style element 'search-persons-empty' only if $displayEmpty is
-     * set to true.
-     */
-    function _search_qb_persons($search, $displayEmpty=false, $displayOutput=true, $limit=false, $offset=false)
-    {
-        if ($search == NULL)
-        {
-            return false;
-        }
-
-        $search = str_replace('*', '%', $search);
-
-        $qb_org = org_openpsa_contacts_person::new_query_builder();
-        $qb_org->begin_group('OR');
-
-        // Search using only the fields defined in config
-        $person_fields = explode(',', $this->_request_data['config']->get('person_search_fields'));
-        if (   !is_array($person_fields)
-            || count($person_fields) == 0)
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Invalid person search configuration');
-        }
-
-        foreach ($person_fields as $field)
-        {
-            if (empty($field))
-            {
-                continue;
-            }
-            $qb_org->add_constraint($field, 'LIKE', $search);
-        }
-
-        $qb_org->end_group();
-        //Skip accounts in other sitegroups (sitegroup constraint is no longer dropped ?)
-        $qb_org->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
-        //mgd_debug_start();
-        $results = $qb_org->execute();
-        //mgd_debug_stop();
-        if (   is_array($results)
-            && count($results)>0)
-        {
-            if ($displayOutput)
-            {
-                $_MIDCOM->load_library('org.openpsa.contactwidget');
-                midcom_show_style('search-persons-header');
-                foreach($results as $person)
-                {
-                    $GLOBALS['view_person'] = $person;
-                    midcom_show_style('search-persons-item');
-                }
-                midcom_show_style('search-persons-footer');
-                return count($results);
-            }
-            else
-            {
-                return $results;
-            }
-        }
-        else
-        {
-            //No group results
-            if ($displayEmpty && $displayOutput)
-            {
-                midcom_show_style('search-persons-empty');
-            }
-            return false;
         }
     }
 

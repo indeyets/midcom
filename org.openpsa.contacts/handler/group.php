@@ -12,7 +12,7 @@
  *
  * @package org.openpsa.contacts
  */
-class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
+class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_handler
 {
     var $_datamanagers;
     var $_request_data;
@@ -35,12 +35,19 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
      */
     var $_view_toolbar = null;
 
-    function __construct(&$datamanagers, &$request_data)
+    function __construct()
     {
-        $this->_datamanagers = &$datamanagers;
-        $this->_request_data = &$request_data;
-
         parent::__construct();
+    }
+
+    function _on_initialize()
+    {
+        $this->_datamanagers = array
+        (
+        'group' => new midcom_helper_datamanager($this->_config->get('schemadb_group')),
+        'notifications' => new midcom_helper_datamanager($this->_config->get('schemadb_notifications')),
+            'acl' => new midcom_helper_datamanager($this->_config->get('schemadb_acl'))
+        );
     }
 
     function _load($identifier, $initialize_datamanager = true)
@@ -321,7 +328,7 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
                 //TODO: Check for privileges somehow
                 $this->_view_toolbar->add_item(
                     Array(
-                        MIDCOM_TOOLBAR_URL => $invoices_node[MIDCOM_NAV_FULLURL] . "list/customer/all/{$this->_request_data['group']->guid}/",
+                        MIDCOM_TOOLBAR_URL => $invoices_node[MIDCOM_NAV_FULLURL] . "list/customer/all/{$this->_request_data['group']->guid}",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('customers invoices'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-open.png',
@@ -334,7 +341,7 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
         $GLOBALS['midcom_component_data']['org.openpsa.contacts']['active_leaf'] = $this->_request_data['group']->id;
 
         $_MIDCOM->bind_view_to_object($this->_request_data['group']);
-        
+
         $_MIDCOM->add_link_head(array
             (
                 'rel' => 'stylesheet',
@@ -342,7 +349,7 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
                 'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager/columned.css",
             )
         );
-        
+
         return true;
     }
 
@@ -665,69 +672,6 @@ class org_openpsa_contacts_group_handler extends midcom_baseclasses_core_object
         }
     }
 
-    /**
-     * Does a QB query for groups, returns false or number of matched entries
-     *
-     * Displays style element 'search-groups-empty' only if $displayEmpty is
-     * set to true.
-     */
-    function _search_qb_groups($search, $displayEmpty=false, $displayOutput=true, $limit=false, $offset=false)
-    {
-        if ($search == NULL)
-        {
-            return false;
-        }
-
-        $qb_org = org_openpsa_contacts_group::new_query_builder();
-        //$qb_org = new MidgardQuerybuilder('org_openpsa_organization');
-        $qb_org->begin_group('OR');
-
-        // Search using only the fields defined in config
-        $org_fields = explode(',', $this->_request_data['config']->get('organization_search_fields'));
-        if (   !is_array($org_fields)
-            || count($org_fields) == 0)
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Invalid organization search configuration');
-        }
-
-        foreach ($org_fields as $field)
-        {
-            if (empty($field))
-            {
-                continue;
-            }
-            $qb_org->add_constraint($field, 'LIKE', '%'.$search.'%');
-        }
-
-        $qb_org->end_group();
-
-        //Skip groups in other sitegroups (sitegroup constraint is no longer dropped ?)
-        $qb_org->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
-        $results = $qb_org->execute();
-        if (   is_array($results)
-            && count($results) > 0)
-        {
-            midcom_show_style('search-groups-header');
-            foreach($results as $group)
-            {
-                //TODO: When we actually use MgdSchema objects just use $group
-                //$GLOBALS['view_group'] = new org_openpsa_contacts_group($group->id);
-                $GLOBALS['view_group'] = $group;
-                midcom_show_style('search-groups-item');
-            }
-            midcom_show_style('search-groups-footer');
-            return count($results);
-        }
-        else
-        {
-            //No group results
-            if ($displayEmpty==true)
-            {
-                midcom_show_style('search-groups-empty');
-            }
-            return false;
-        }
-    }
 
 }
 ?>
