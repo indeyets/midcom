@@ -27,8 +27,6 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 
     var $_view = "default";
 
-    var $_person_handler = null;
-    var $_group_handler = null;
     var $_toolbars = null;
 
     //var $_node = null;
@@ -45,192 +43,172 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
     function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
-
         // Always run in uncached mode
         $_MIDCOM->cache->content->no_cache();
 
         $this->_request_data['enable_dbe'] = $this->_config->get('enable_dbe');
         $this->_request_data['config'] =& $this->_config;
 
-        // Load datamanagers for main classes
-        $_MIDCOM->load_library('midcom_helper_datamanager');
-        $this->_initialize_datamanager('group', $this->_config->get('schemadb_group'));
-        $this->_initialize_datamanager('person', $this->_config->get('schemadb_person'));
-        $this->_initialize_datamanager('acl', $this->_config->get('schemadb_acl'));
-        $this->_initialize_datamanager('notifications', $this->_config->get('schemadb_notifications'));
-
         $this->_toolbars =& midcom_helper_toolbars::get_instance();
-
-        $this->_group_handler = new org_openpsa_contacts_group_handler(&$this->_datamanagers, &$this->_request_data);
-        $this->_request_data['group_handler'] = &$this->_group_handler;
-        $this->_person_handler = new org_openpsa_contacts_person_handler(&$this->_datamanagers, &$this->_request_data);
 
         if (!$this->_is_initialized())
         {
             // Match /
-            $this->_request_switch[] = array(
+            $this->_request_switch[] = array
+        (
                 'handler' => 'notinitialized'
             );
         }
         else
         {
             // Match /duplicates/person
-            $this->_request_switch[] = array(
+            $this->_request_switch[] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_duplicates_person', 'sidebyside'),
                 'fixed_args' => array('duplicates', 'person'),
-                'handler' => Array('org_openpsa_contacts_handler_duplicates_person', 'sidebyside'),
             );
 
             // Match /buddylist/
-            $this->_request_switch[] = array(
+            $this->_request_switch[] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_buddy_list', 'list'),
                 'fixed_args' => 'buddylist',
-                'handler' => Array('org_openpsa_contacts_handler_buddy_list', 'list'),
             );
 
             // Match /buddylist/xml
-            $this->_request_switch['buddylist_xml'] = array(
+            $this->_request_switch['buddylist_xml'] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_buddy_list', 'list'),
                 'fixed_args' => array('buddylist', 'xml'),
-                'handler' => Array('org_openpsa_contacts_handler_buddy_list', 'list'),
             );
 
             // Match /buddylist/add/<person guid>
-            $this->_request_switch[] = array(
-                'fixed_args' => Array('buddylist', 'add'),
+            $this->_request_switch[] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_buddy_list', 'add'),
+                'fixed_args' => array('buddylist', 'add'),
                 'variable_args' => 1,
-                'handler' => Array('org_openpsa_contacts_handler_buddy_list', 'add'),
             );
 
             // Match /buddylist/remove/<person guid>
-            $this->_request_switch[] = array(
-                'fixed_args' => Array('buddylist', 'remove'),
+            $this->_request_switch[] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_buddy_list', 'remove'),
+                'fixed_args' => array('buddylist', 'remove'),
                 'variable_args' => 1,
-                'handler' => Array('org_openpsa_contacts_handler_buddy_list', 'remove'),
             );
 
             // Match /search/<type>
-            $this->_request_switch[] = array(
+            $this->_request_switch[] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_search', 'search_type'),
                 'fixed_args' => 'search',
                 'variable_args' => 1,
-                'handler' => 'search_type',
             );
             // Match /search/
-            $this->_request_switch[] = array(
+            $this->_request_switch[] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_search', 'search'),
                 'fixed_args' => 'search',
-                'handler' => 'search',
             );
             // Match /group/new/<GUID>
-            $this->_request_switch[] = array(
+            $this->_request_switch[] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_group', 'new'),
                 'fixed_args' => array('group','new'),
                 'variable_args' => 1,
-                'handler' => array(&$this->_group_handler,'new'),
             );
             // Match /group/<GUID>/<action>
-            $this->_request_switch[] = array(
+            $this->_request_switch[] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_group', 'action'),
                 'fixed_args' => 'group',
                 'variable_args' => 2,
-                'handler' => array(&$this->_group_handler,'action'),
             );
             // Match /group/new
-            $this->_request_switch[] = array(
-                'fixed_args' => array('group','new'),
-                'handler' => array(&$this->_group_handler,'new'),
+            $this->_request_switch[] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_group', 'new'),
+                'fixed_args' => array('group', 'new'),
             );
             // Match /group/<GUID>
-            $this->_request_switch[] = array(
+            $this->_request_switch[] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_group', 'view'),
                 'fixed_args' => 'group',
                 'variable_args' => 1,
-                'handler' => array(&$this->_group_handler,'view'),
             );
             // Match /person/new/GroupGUID
-            $this->_request_switch[] = array(
-                'fixed_args' => array('person','new'),
+            $this->_request_switch[] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_person', 'person_new'),
+                'fixed_args' => array('person', 'new'),
                 'variable_args' => 1,
-                'handler' => array(&$this->_person_handler,'person_new'),
             );
 
             // Match /person/new
-            $this->_request_switch[] = array(
+            $this->_request_switch[] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_person', 'person_new'),
                 'fixed_args' => array('person','new'),
-                'handler' => array(&$this->_person_handler,'person_new'),
             );
 
             // Match /person/GUID
             $this->_request_switch['person_view'] = array
             (
+                'handler' => array('org_openpsa_contacts_handler_person_view', 'view'),
                 'fixed_args' => 'person',
                 'variable_args' => 1,
-                'handler' => array
-                (
-                    'org_openpsa_contacts_handler_person_view',
-                    'view'
-                ),
             );
 
             // Match /person/edit/GUID
             $this->_request_switch['person_edit'] = array
             (
-                'fixed_args' => array
-                (
-                    'person',
-                    'edit',
-                ),
+                'handler' => array('org_openpsa_contacts_handler_person_admin', 'edit'),
+                'fixed_args' => array('person', 'edit'),
                 'variable_args' => 1,
-                'handler' => array
-                (
-                    'org_openpsa_contacts_handler_person_admin',
-                    'edit'
-                ),
             );
 
             // Match /person/edit/GUID
             $this->_request_switch['person_delete'] = array
             (
-                'fixed_args' => array
-                (
-                    'person',
-                    'delete',
-                ),
+                'handler' => array('org_openpsa_contacts_handler_person_admin', 'delete'),
+                'fixed_args' => array('person', 'delete'),
                 'variable_args' => 1,
-                'handler' => array
-                (
-                    'org_openpsa_contacts_handler_person_admin',
-                    'delete'
-                ),
             );
 
             // Match /person/related/GUID
-            $this->_request_switch['person_related'] = array(
+            $this->_request_switch['person_related'] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_person', 'person'),
                 'fixed_args' => array('person', 'related'),
                 'variable_args' => 1,
-                'handler' => array(&$this->_person_handler,'person'),
             );
 
             // Match /person/GUID/action
-            $this->_request_switch[] = array(
+            $this->_request_switch[] = array
+        (
+                'handler' => array('org_openpsa_contacts_handler_person', 'person_action'),
                 'fixed_args' => 'person',
                 'variable_args' => 2,
-                'handler' => array(&$this->_person_handler,'person_action'),
             );
 
-
             // Match /debug
-            $this->_request_switch[] = array(
-                'fixed_args' => 'debug',
-                'handler' => 'debug'
+            $this->_request_switch[] = array
+        (
+            'handler' => 'debug',
+                'fixed_args' => 'debug'
             );
             // Match /
             $this->_request_switch['frontpage'] = array
             (
-                'handler' => array
-                (
-                    'org_openpsa_contacts_handler_frontpage',
-                    'frontpage'
-                ),
+                'handler' => array('org_openpsa_contacts_handler_frontpage', 'frontpage'),
             );
 
             // Match /config/
-            $this->_request_switch['config'] = Array
+            $this->_request_switch['config'] = array
             (
-                'handler' => Array('midcom_core_handler_configdm', 'configdm'),
+                'handler' => array('midcom_core_handler_configdm', 'configdm'),
                 'schemadb' => 'file:/org/openpsa/contacts/config/schemadb_config.inc',
                 'schema' => 'config',
                 'fixed_args' => 'config',
@@ -243,7 +221,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 
         }
         // This component uses Ajax, include the handler javascripts
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajaxutils.js");
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/org.openpsa.helpers/ajaxutils.js");
 
         $_MIDCOM->add_link_head
         (
@@ -251,7 +229,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/org.openpsa.core/ui-elements.css",
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.core/ui-elements.css",
             )
         );
     }
@@ -309,22 +287,6 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
     function _show_notinitialized($handler_id, &$data)
     {
         midcom_show_style('show-not-initialized');
-    }
-
-    function _initialize_datamanager($type, $schemadb_snippet)
-    {
-        // Load schema database snippet or file
-        debug_add("Loading Schema Database", MIDCOM_LOG_DEBUG);
-        $schemadb_contents = midcom_get_snippet_content($schemadb_snippet);
-        eval("\$schemadb = Array ( {$schemadb_contents} );");
-
-        // Initialize the datamanager with the schema
-        $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb);
-
-        if (!$this->_datamanagers[$type]) {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantiated.");
-            // This will exit.
-        }
     }
 
     /**
