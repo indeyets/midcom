@@ -961,7 +961,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
                 // exit silently, as this is the desired final state.
                 $object = $this->get_object();
                 $privilege = $this->get_privilege($object, $this->name, $this->assignee, $this->classname);
-                if (!empty($privilege->guid))
+                if (!empty($privilege->__guid))
                 {
                     if (! $privilege->drop())
                     {
@@ -1001,8 +1001,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
         {
             $object = $this->get_object();
             $privilege = $this->get_privilege($object, $this->name, $this->assignee, $this->classname);
-            if (!empty($privilege->guid)
-                || $privilege->id != 0)
+            if (!empty($privilege->__guid)
+                || $privilege->__id != 0)
             {
                 $privilege->value = $this->value;
                 if (! $privilege->store())
@@ -1012,8 +1012,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
                     debug_pop();
                     return false;
                 }
-                $this->__guid = $privilege->guid;
-                $this->__id = $privilege->id;
+                $this->__guid = $privilege->__guid;
+                $this->__id = $privilege->__id;
                 $this->objectguid = $privilege->objectguid;
                 $this->name = $privilege->name;
                 $this->assignee = $privilege->assignee;
