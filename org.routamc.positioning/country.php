@@ -33,12 +33,13 @@ class org_routamc_positioning_country_dba extends __org_routamc_positioning_coun
     function _on_creating()
     {
         $qb = org_routamc_positioning_country_dba::new_query_builder();
-        $qb->add_constraint('name', '=', $this->name);
+        $qb->add_constraint('name', '=', (string)$this->name);
         $qb->set_limit(1);
         $matches = $qb->execute_unchecked();
         if (count($matches) > 0)
         {
             // We don't need to save duplicate entries
+            mgd_set_errno(MGD_ERR_DUPLICATE);
             return false;
         }
         return parent::_on_creating();

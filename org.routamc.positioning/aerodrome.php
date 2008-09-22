@@ -73,14 +73,18 @@ class org_routamc_positioning_aerodrome_dba extends __org_routamc_positioning_ae
             }
         }
 
-        $qb = org_routamc_positioning_aerodrome_dba::new_query_builder();
-        $qb->add_constraint('icao', '=', $this->icao);
-        $qb->set_limit(1);
-        $matches = $qb->execute_unchecked();
-        if (count($matches) > 0)
+        if (!empty($this->icao))
         {
-            // We don't need to save duplicate entries
-            return false;
+            $qb = org_routamc_positioning_aerodrome_dba::new_query_builder();
+            $qb->add_constraint('icao', '=', $this->icao);
+            $qb->set_limit(1);
+            $matches = $qb->execute_unchecked();
+            if (count($matches) > 0)
+            {
+                // We don't need to save duplicate entries
+                mgd_set_errno(MGD_ERR_DUPLICATE);
+                return false;
+            }
         }
         return parent::_on_creating();
     }

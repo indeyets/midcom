@@ -22,7 +22,7 @@ if (   !is_object($object)
     $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Could not find object with GUID {$_GET['guid']}");
     // this will exit
 }
-$reflector = new midcom_helper_reflector($object);
+$reflector =& midcom_helper_reflector::get($object);
 
 echo "Got " . $reflector->get_class_label() . ' "' . $reflector->get_object_label($object) . "\", dump<pre>\n";
 var_dump($object);

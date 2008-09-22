@@ -50,8 +50,8 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
         $account = new midcom_db_person($account);
         $qb = org_openpsa_contacts_buddy::new_query_builder();
         $user = $_MIDCOM->auth->user->get_storage();
-        $qb->add_constraint('account', '=', $account->guid);
-        $qb->add_constraint('buddy', '=', $this->_personobject->guid);
+        $qb->add_constraint('account', '=', (string)$account->guid);
+        $qb->add_constraint('buddy', '=', (string)$this->_personobject->guid);
         $qb->add_constraint('blacklisted', '=', false);
         $buddies = $qb->execute();
 
@@ -69,13 +69,13 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
     function _find_duplicates()
     {
         $qb = org_openpsa_projects_task_resource::new_query_builder();
-        $qb->add_constraint('person', '=', $this->person);
-        $qb->add_constraint('task', '=', $this->task);
-        $qb->add_constraint('orgOpenpsaObtype', '=', $this->orgOpenpsaObtype);
+        $qb->add_constraint('person', '=', (int)$this->person);
+        $qb->add_constraint('task', '=', (int)$this->task);
+        $qb->add_constraint('orgOpenpsaObtype', '=', (int)$this->orgOpenpsaObtype);
 
         if ($this->id)
         {
-            $qb->add_constraint('id', '<>', $this->id);
+            $qb->add_constraint('id', '<>', (int)$this->id);
         }
 
         $dupes = $qb->execute();
@@ -111,9 +111,9 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
 
             // Add resource to other resources' buddy lists
             $qb = org_openpsa_projects_task_resource::new_query_builder();
-            $qb->add_constraint('task', '=', $this->task);
+            $qb->add_constraint('task', '=', (int)$this->task);
             $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
-            $qb->add_constraint('id', '<>', $this->id);
+            $qb->add_constraint('id', '<>', (int)$this->id);
             $resources = $qb->execute();
             foreach ($resources as $resource)
             {
@@ -147,7 +147,7 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
         }
 
         $qb = org_openpsa_projects_task_resource::new_query_builder();
-        $qb->add_constraint('person', '=', $_MIDGARD['user']);
+        $qb->add_constraint('person', '=', (int)$_MIDGARD['user']);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
         $qb->add_constraint('task.orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_PROJECT);
 

@@ -127,6 +127,12 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
      */
     function _run_pricing_plugin()
     {
+        if (   !isset($this->_config)
+            || !is_object($this->_config))
+        {
+            // Could not read config
+            return false;
+        }
         // The plugin is likely to update us (perhaps many times if it sets parameters...), thus causing loops unless we take care
         $flag = "net_nemein_registrations_registration_dba__run_pricing_plugin_{$this->guid}";
         if (isset($GLOBALS[$flag]))

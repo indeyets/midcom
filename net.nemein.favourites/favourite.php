@@ -32,7 +32,11 @@ class net_nemein_favourites_favourite_dba extends __net_nemein_favourites_favour
      */
     function get_parent_guid_uncached()
     {
-        return $this->metadata->creator;
+        if (   isset($this->metadata)
+            && isset($this->metadata->creator))
+        {
+            return $this->metadata->creator;
+        }
     }
     
     /**
@@ -86,7 +90,7 @@ class net_nemein_favourites_favourite_dba extends __net_nemein_favourites_favour
             return parent::_on_creating();
         }
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
-        $qb->add_constraint('objectGuid', '=', $this->objectGuid);
+        $qb->add_constraint('objectGuid', '=', (string)$this->objectGuid);
         
         if ($this->bury)
         {

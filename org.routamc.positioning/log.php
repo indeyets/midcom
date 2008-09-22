@@ -69,6 +69,7 @@ class org_routamc_positioning_log_dba extends __org_routamc_positioning_log_dba
             debug_add("Not saving log, previous log \"{$previous->guid}\" on same day is in same place.",
                     MIDCOM_LOG_WARN);
             debug_pop();
+            mgd_set_errno(MGD_ERR_DUPLICATE);
             return false;
         }
         return parent::_on_creating();
@@ -86,8 +87,8 @@ class org_routamc_positioning_log_dba extends __org_routamc_positioning_log_dba
             return null;
         }
         $qb = org_routamc_positioning_log_dba::new_query_builder();
-        $qb->add_constraint('person', '=', $this->person);
-        $qb->add_constraint('date', '<=', $this->date);
+        $qb->add_constraint('person', '=', (int)$this->person);
+        $qb->add_constraint('date', '<=', (int)$this->date);
         $qb->add_order('date', 'DESC');
         $qb->set_limit(1);
         $matches = $qb->execute_unchecked();
@@ -110,8 +111,8 @@ class org_routamc_positioning_log_dba extends __org_routamc_positioning_log_dba
             return null;
         }
         $qb = org_routamc_positioning_log_dba::new_query_builder();
-        $qb->add_constraint('person', '=', $this->person);
-        $qb->add_constraint('date', '>', $this->date);
+        $qb->add_constraint('person', '=', (int)$this->person);
+        $qb->add_constraint('date', '>', (int)$this->date);
         $qb->add_order('date', 'ASC');
         $qb->set_limit(1);
         $matches = $qb->execute_unchecked();
