@@ -54,7 +54,7 @@ class org_openpsa_contacts_handler_search extends midcom_baseclasses_components_
     {
         if ($this->_view == 'foaf')
         {
-            $pres = $this->_person_handler->_search_qb_persons($_GET['search'], false, false);
+            $pres = $this->_search_qb_persons($_GET['search'], false, false);
             if ($pres)
             {
                 midcom_show_style('foaf-header');
