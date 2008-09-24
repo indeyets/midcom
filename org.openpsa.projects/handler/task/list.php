@@ -448,6 +448,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
                     $data['total_hours']['reported'] += $data['hours']['reported'];
                     $data['total_hours']['planned'] += $data['task']->plannedHours;
 
+                    $data['cells'] = $this->_get_table_row_data($task, $data);
                     midcom_show_style("show-task_table-item");
 
                     if ($data['even'])
@@ -488,6 +489,85 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
                 }
                 break;
         }
+    }
+    
+    /**
+     * Helper to get the relevant data for cells in table view
+     */
+    private function _get_table_row_data(&$task, &$data)
+    {
+        $ret = array();
+        
+        static $row_cache = array
+        (
+            'parent' => array(),
+            'customer' => array(),
+            'agreement' => array(),
+            'manager' => array(),
+        );
+        
+        // Get parent object
+        if (!array_key_exists($task->up, $row_cache['parent']))
+        {
+            $html = "&nbsp;";
+            if ($task->up)
+            {
+                $parent = $task->get_parent();
+                if ($parent->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
+                {
+                    $parent_url = $data['prefix'] . "project/{$parent->guid}/";
+                }
+                else
+                {
+                    $parent_url = $data['prefix'] . "task/{$parent->guid}/";
+                }
+                $html = "<a href=\"{$parent_url}\">{$parent->title}</a>";
+            }
+            $row_cache['parent'][$task->up] = $html;
+        }
+        $ret['parent'] =& $row_cache['parent'][$task->up];
+
+        // Get task manager
+        if (!array_key_exists($task->manager, $row_cache['manager']))
+        {
+            $manager = new org_openpsa_contacts_person($task->manager);
+            $widget = new org_openpsa_contactwidget($manager);
+            $row_cache['manager'][$task->manager] = $widget->show_inline();
+        }
+        $ret['manager'] =& $row_cache['manager'][$task->manager];
+
+        // Get agreement and customer (if applicable)        
+        if ($data['view_identifier'] != 'agreement')
+        {
+            if (!array_key_exists($task->customer, $row_cache['customer']))
+            {
+                $html = "&nbsp;";
+                if ($task->customer)
+                {
+                    $customer = new org_openpsa_contacts_group($task->customer);
+                    $customer_url = "{$data['contacts_node'][MIDCOM_NAV_FULLURL]}group/{$customer->guid}";
+                    $html = "<a href='{$customer_url}'>{$customer->official}</a>";
+                }
+                $row_cache['customer'][$task->customer] = $html;
+            }
+            $ret['customer'] =& $row_cache['customer'][$task->customer];
+            
+            if (!array_key_exists($task->agreement, $row_cache['agreement']))
+            {
+                $html = "&nbsp;";
+                if ($task->agreement)
+                {
+                    $agreement = new org_openpsa_sales_salesproject_deliverable($task->agreement);
+                    $salesproject = new org_openpsa_sales_salesproject($agreement->salesproject);
+                    $agreement_url = "{$data['sales_node'][MIDCOM_NAV_FULLURL]}salesproject/{$salesproject->guid}";
+                    $html = "<a href='{$agreement_url}'>{$agreement->title}</a>";
+                }
+                $row_cache['agreement'][$task->agreement] = $html;
+            }
+            $ret['agreement'] =& $row_cache['agreement'][$task->agreement];            
+        }
+        
+        return $ret;
     }
 }
 ?>

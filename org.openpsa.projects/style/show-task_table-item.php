@@ -4,6 +4,8 @@
 $contacts_node =& $data['contacts_node'];
 $sales_node =& $data['sales_node'];
 
+$cells =& $data['cells'];
+
 $task_url = $data['prefix'] . "task/{$data['task']->guid}/";
 $task =& $data['task'];
 
@@ -18,64 +20,23 @@ if ($data['even'])
             <a href="&(task_url);"><?php echo $data['task']->title; ?></a>
         </td>
         <td>
-            <?php
-            if ($data['task']->up)
-            {
-                $parent = $data['task']->get_parent();
-                if ($parent->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
-                {
-                    $parent_url = $data['prefix'] . "project/{$parent->guid}/";
-                }
-                else
-                {
-                    $parent_url = $data['prefix'] . "task/{$parent->guid}/";
-                }
-                echo "<a href=\"{$parent_url}\">{$parent->title}</a>";
-            }
-            ?>
+            &(cells['parent']:h);
         </td>
         <?php
         if ($data['view_identifier'] != 'agreement')
         {
             ?>
             <td>
-                <?php
-                if ($task->customer)
-                {
-                    $customer = new org_openpsa_contacts_group($task->customer);
-                    $customer_url = "{$contacts_node[MIDCOM_NAV_FULLURL]}group/{$customer->guid}";
-                    echo "<a href='{$customer_url}'>{$customer->official}</a>";
-                }
-                else
-                {
-                    echo "&nbsp;";
-                }
-                ?>
+                &(cells['customer']:h);
             </td>
             <td>
-                <?php
-                if ($task->agreement)
-                {
-                    $agreement = new org_openpsa_sales_salesproject_deliverable($task->agreement);
-                    $salesproject = new org_openpsa_sales_salesproject($agreement->salesproject);
-                    $agreement_url = "{$sales_node[MIDCOM_NAV_FULLURL]}salesproject/{$salesproject->guid}";
-                    echo "<a href='{$agreement_url}'>{$agreement->title}</a>";
-                }
-                else
-                {
-                    echo "&nbsp;";
-                }
-                ?>
+                &(cells['agreement']:h);
             </td>
             <?php
         }
         ?>
         <td>
-            <?php
-            $manager = new org_openpsa_contacts_person($task->manager);
-            $widget = new org_openpsa_contactwidget($manager);
-            echo $widget->show_inline();
-            ?>
+             &(cells['manager']:h);
         </td>
         <td>
             <?php echo strftime('%x', $task->start) . ' - ' . strftime('%x', $task->end); ?>
