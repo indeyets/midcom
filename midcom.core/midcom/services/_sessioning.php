@@ -79,6 +79,7 @@ class midcom_service__sessioning
             return true;
         }
 
+
         if (   !$GLOBALS['midcom_config']['sessioning_service_enable']
             && !(   $GLOBALS['midcom_config']['sessioning_service_always_enable_for_users']
                  && $_MIDGARD['user']
@@ -95,7 +96,21 @@ class midcom_service__sessioning
             return false;
         }
 
+        $track_state = ini_get('track_errors');
+        ini_set('track_errors', true);
         @session_start();
+        $session_err = (string)$php_errormsg;
+        ini_set('track_errors', $track_state);
+        unset($track_state);
+        if (!isset($_SESSION))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("\$_SESSION is not set, error message was: {$session_err}", MIDCOM_LOG_ERROR);
+            debug_pop();
+            unset($session_err, $php_errormsg);
+            return false;
+        }
+        unset($session_err);
 
         /* Cache disabling made conditional based on domain/key existence */
 
