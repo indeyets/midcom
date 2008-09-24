@@ -438,6 +438,22 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         }
         else
         {
+            // This is a new item
+            $node = new midcom_db_topic($this->_feed->node);
+            $node_lang_code = $node->get_parameter('net.nehmer.blog', 'language');
+            if ($node->get_parameter('net.nehmer.blog', 'symlink_topic') != '')
+            {
+                $symlink_topic = new midcom_db_topic($node->get_parameter('net.nehmer.blog', 'symlink_topic'));
+                if ($symlink_topic)
+                {
+                    $article->topic = $symlink_topic->id;
+                }
+            }
+            if ($node_lang_code != '')
+            {
+                $lang_id = $_MIDCOM->i18n->code_to_id($node_lang_code);
+                $article->lang = $lang_id;
+            }
             if ($article->create())
             {
                 $article->metadata->published = $article_date;
@@ -537,12 +553,27 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         }
         else
         {
+            $node = new midcom_db_topic($this->_feed->node);
+            $node_lang_code = $node->get_parameter('net.nemein.calendar', 'language');
             // This is a new item
             $event = new net_nemein_calendar_event_dba();
             $event->start = $start;
             $event->end = $end;
             $event->extra = md5($item['guid']);
             $event->node = $this->_feed->node;
+            if ($node->get_parameter('net.nemein.calendar', 'symlink_topic') != '')
+            {
+                $symlink_topic = new midcom_db_topic($node->get_parameter('net.nemein.calendar', 'symlink_topic'));
+                if ($symlink_topic)
+                {
+                    $event->node = $symlink_topic->id;
+                }
+            }
+            if ($node_lang_code != '')
+            {
+                $lang_id = $_MIDCOM->i18n->code_to_id($node_lang_code);
+                $event->lang = $lang_id;
+            }
             if (!$event->create())
             {
                 return false;
