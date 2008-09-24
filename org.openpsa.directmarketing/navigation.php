@@ -29,6 +29,7 @@ class org_openpsa_directmarketing_navigation extends midcom_baseclasses_componen
         //TODO: Add visible campaigns to leaves
         $qb = org_openpsa_directmarketing_campaign::new_query_builder();
         $qb->add_constraint('archived', '=', 0);
+        $qb->add_order('metadata.created', $this->_config->get('navi_order'));
         $campaigns = $qb->execute();
         if (empty($campaigns))
         {

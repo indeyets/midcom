@@ -11,3 +11,5 @@
 'csv_export_decimal' => '.', // NOTE: Must *not* be same as csv_export_separator (ie comma on both is forbidden)
 'csv_export_newline' => "\n",
 'csv_export_content_type' => 'appplication/csv',
+'navi_order' => 'ASC',
+'campaign_list_order' => 'DESC',

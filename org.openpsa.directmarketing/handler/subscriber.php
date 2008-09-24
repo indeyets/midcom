@@ -116,6 +116,7 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
             // List active campaigns for the "add to campaign" selector
             $qb_all = org_openpsa_directmarketing_campaign::new_query_builder();
             $qb_all->add_constraint('archived', '=', 0);
+            $qb_all->add_order('metadata.created', $this->_config->get('campaign_list_order'));
             $campaigns_all = $qb_all->execute();
 
             if ($campaigns_all)
@@ -137,6 +138,7 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
 
             $qb = org_openpsa_directmarketing_campaign::new_query_builder();
             $qb->add_constraint('archived', '=', 0);
+            $qb_all->add_order('metadata.created', $this->_config->get('campaign_list_order'));
 
             // Workgroup filtering
             if ($GLOBALS['org_openpsa_core_workgroup_filter'] != 'all')
