@@ -67,7 +67,8 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
             foreach ($array as $identificator => $i)
             {
                 // Set the score reversed: the higher the value, the higher the rank
-                $score = $count - $i;
+                $score = (int)$i;
+                $score_r = (int)($count - $i);
 
                 // Use the DB Factory to resolve the class and to get the object
                 $object = $_MIDCOM->dbfactory->get_object_by_guid($identificator);
@@ -81,49 +82,43 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
                     continue;
                 }
 
-                // Get the original approval status
-                $metadata =& midcom_helper_metadata::retrieve($identificator);
-                $approval_status = false;
+                // Get the original approval status and update metadata reference
+                $metadata =& midcom_helper_metadata::retrieve($object);
+                if (!is_object($metadata))
+                {
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Couild not fetch metadata for object {$guid}");
+                    // This will exit
+                }
+                // Make sure this is reference to correct direction (from our point of view)
+                $metadata->object =& $object;
 
                 // Get the approval status if metadata object is available
-                if (   is_object($metadata)
-                    && $metadata->is_approved())
+                $approval_status = false;
+                if ($metadata->is_approved())
                 {
                     $approval_status = true;
                 }
 
+                /** 
+                 * WARNING: Score handling is different from branch-28, we carefull when backporting
+                 */
                 // Store the old-fashioned score as well
                 if (isset($object->score))
                 {
-                    $object->score = $score;
+                    $object->score = $score_r;
                 }
+                $object->metadata->score = $score_r;
 
-                $object->metadata->score = $score;
-
-                // Show an error message on an update failure
+                /*
                 if (!$object->update())
+                $metadata->set() calls update *AND* updates the metadata cache correctly, thus we use that in stead of raw update
+                */
+                if (!$metadata->set('score', $object->metadata->score))
                 {
-                    // Some heuristics for the update logging
-                    if (   isset($object->title)
-                        && $object->title)
-                    {
-                        $title = $object->title;
-                    }
-                    elseif (isset($object->extra)
-                        && $object->extra)
-                    {
-                        $title = $object->extra;
-                    }
-                    elseif (isset($object->name)
-                        && $object->name)
-                    {
-                        $title = $object->name;
-                    }
-                    else
-                    {
-                        $title = sprintf("{$object->guid} %s", get_class($object));
-                    }
-
+                    // Show an error message on an update failure
+                    $_MIDCOM->load_library('midcom.helper.reflector');
+                    $reflector =& midcom_helper_reflector::get($object);
+                    $title = $reflector->get_class_label() . ' ' . $reflector->get_object_label($object);
                     $_MIDCOM->uimessages->add($this->_l10n->get('midcom.admin.folder'), sprintf($this->_l10n->get('failed to update %s due to: %s'), $title, mgd_errstr()), 'error');
                     $success = false;
                     continue;
