@@ -70,6 +70,7 @@
  *
  * <b>Authentication Backend configuration: "simple"</b>
  *
+ * - <b>auth_backend_simple_cookie_secure:</b> Set the "secure" flag on cookie, defaults to true, applies only when actually using SSL/TLS
  * - <b>auth_backend_simple_cookie_id:</b> The ID appended to the cookie prefix, separating
  *   auth cookies for different sites. Defaults to the GUID of the current host.
  * - <b>auth_backend_simple_cookie_path:</b> Controls the valid path of the cookie,
@@ -343,6 +344,7 @@ $GLOBALS['midcom_config_default']['auth_openid_enable'] = false;
 $GLOBALS['midcom_config_default']['auth_backend_simple_cookie_id'] = $host->guid;
 $GLOBALS['midcom_config_default']['auth_backend_simple_cookie_path'] = $_MIDGARD['self'];
 $GLOBALS['midcom_config_default']['auth_backend_simple_cookie_domain'] = null;
+$GLOBALS['midcom_config_default']['auth_backend_simple_cookie_secure'] = true; // set secure flag on cookie (applies only when using SSL)
 
 // Where to redirect the user after a successful login
 $GLOBALS['midcom_config_default']['login_redirect_url'] = $_MIDGARD['self'];

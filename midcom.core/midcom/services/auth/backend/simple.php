@@ -129,27 +129,22 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
      */
     function _set_cookie()
     {
-        if ($GLOBALS['midcom_config']['auth_backend_simple_cookie_domain'])
+        $secure_cookie = false;
+        if (   isset($_SERVER['HTTPS'])
+            && !empty($_SERVER['HTTPS'])
+            && $GLOBALS['midcom_config']['auth_backend_simple_cookie_secure'])
         {
-            setcookie
-            (
-                $this->_cookie_id,
-                "{$this->session_id}-{$this->user->id}",
-                0,
-                $GLOBALS['midcom_config']['auth_backend_simple_cookie_path'],
-                $GLOBALS['midcom_config']['auth_backend_simple_cookie_domain']
-            );
+            $secure_cookie = true;
         }
-        else
-        {
-            setcookie
-            (
-                $this->_cookie_id,
-                "{$this->session_id}-{$this->user->id}",
-                0,
-                $GLOBALS['midcom_config']['auth_backend_simple_cookie_path']
-            );
-        }
+        setcookie
+        (
+            $this->_cookie_id,
+            "{$this->session_id}-{$this->user->id}",
+            0,
+            $GLOBALS['midcom_config']['auth_backend_simple_cookie_path'],
+            $GLOBALS['midcom_config']['auth_backend_simple_cookie_domain'],
+            $secure_cookie
+        );
     }
 
     /**
@@ -158,27 +153,14 @@ class midcom_services_auth_backend_simple extends midcom_services_auth_backend
      */
     function _delete_cookie()
     {
-        if ($GLOBALS['midcom_config']['auth_backend_simple_cookie_domain'])
-        {
-            setcookie
-            (
-                $this->_cookie_id,
-                false,
-                0,
-                $GLOBALS['midcom_config']['auth_backend_simple_cookie_path'],
-                $GLOBALS['midcom_config']['auth_backend_simple_cookie_domain']
-            );
-        }
-        else
-        {
-            setcookie
-            (
-                $this->_cookie_id,
-                false,
-                0,
-                $GLOBALS['midcom_config']['auth_backend_simple_cookie_path']
-            );
-        }
+        setcookie
+        (
+            $this->_cookie_id,
+            false,
+            0,
+            $GLOBALS['midcom_config']['auth_backend_simple_cookie_path'],
+            $GLOBALS['midcom_config']['auth_backend_simple_cookie_domain']
+        );
     }
 
     function _on_login_session_created()
