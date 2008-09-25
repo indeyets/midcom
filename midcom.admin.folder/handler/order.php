@@ -78,7 +78,7 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
                     || !$object->id
                     || !$object->guid)
                 {
-                    $this->_topic->set_parameter('midcom.helper.nav.score', $identificator, $score);
+                    $this->_topic->set_parameter('midcom.helper.nav.score', $identificator, $score_r);
                     continue;
                 }
 
