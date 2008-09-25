@@ -1143,10 +1143,13 @@ class midcom_helper__basicnav
         // Use the midgard_collector to get the subnodes
         $collector = midcom_db_topic::new_collector('up', $parent_node);
         $collector->add_value_property('id');
-        $collector->add_constraint('up', '=', $parent_node);
         $collector->add_constraint('component', '<>', '');
         $collector->add_constraint('name', '<>', '');
-        $collector->add_constraint('metadata.navnoentry', '=', 0);
+        if (!$show_noentry)
+        {
+            // Hide "noentry" items
+            $collector->add_constraint('metadata.navnoentry', '=', 0);
+        }
 
         // FIXME: This is a workaround for some MultiLang bugs
         $collector->add_order('lang', 'ASC');
