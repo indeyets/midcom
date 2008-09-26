@@ -1,0 +1,53 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE en
+
+---STRING cancelled
+Cancelled
+---STRINGEND
+
+---STRING create a new host
+Create a new host
+---STRINGEND
+
+---STRING create host
+Create host
+---STRINGEND
+
+---STRING delete host %s
+Delete host '%s'
+---STRINGEND
+
+---STRING edit %s
+Edit %s
+---STRINGEND
+
+---STRING edit host %s
+Edit host '%s'
+---STRINGEND
+
+---STRING fi.protie.host
+Host interface
+---STRINGEND
+
+---STRING host deleted
+Host deleted
+---STRINGEND
+
+---STRING hosts
+Hosts
+---STRINGEND
+
+---STRING prefix
+Prefix
+---STRINGEND
+
+---STRING root page
+Root page
+---STRINGEND
+
+---STRING confirm
+Confirm
+---STRINGEND
+
