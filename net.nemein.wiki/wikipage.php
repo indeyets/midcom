@@ -587,7 +587,7 @@ EOF;
             if (   $type == 'redirect'
                 && $wikipage->can_do('midgard:update'))
             {
-                $after = " <a href=\"{$prefix}edit/{$match->name}.html\" class=\"edit\"><img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/edit.png\" alt=\"" . $_MIDCOM->i18n->get_string('edit', 'midcom') . "\" title=\"" . $_MIDCOM->i18n->get_string('edit', 'midcom') . "\" /></a>{$after}";
+                $after = " <a href=\"{$prefix}edit/{$match->name}/\" class=\"edit\"><img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/edit.png\" alt=\"" . $_MIDCOM->i18n->get_string('edit', 'midcom') . "\" title=\"" . $_MIDCOM->i18n->get_string('edit', 'midcom') . "\" /></a>{$after}";
             }
             */
 

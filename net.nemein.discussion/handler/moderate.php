@@ -147,7 +147,7 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
                     // This will exit.
                 }
                 
-                $_MIDCOM->relocate("read/{$this->_post->guid}.html");
+                $_MIDCOM->relocate("read/{$this->_post->guid}/");
                 // This will exit
         }
 
@@ -274,7 +274,7 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                MIDCOM_TOOLBAR_URL => "report/{$post->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm abuse'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -291,7 +291,7 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                MIDCOM_TOOLBAR_URL => "report/{$post->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm junk'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -308,7 +308,7 @@ class net_nemein_discussion_handler_moderate extends midcom_baseclasses_componen
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "report/{$post->guid}.html",
+                MIDCOM_TOOLBAR_URL => "report/{$post->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('not abuse'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',

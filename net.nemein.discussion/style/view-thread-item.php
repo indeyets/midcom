@@ -12,7 +12,7 @@ $posttime = $post->metadata->published;
     <?php
     if ($post->subject)
     {
-        echo "<h2 class=\"subject\"><a class=\"url\" href=\"{$prefix}read/{$post->guid}.html\">{$view['subject']}</a></h2>\n";
+        echo "<h2 class=\"subject\"><a class=\"url\" href=\"{$prefix}read/{$post->guid}/\">{$view['subject']}</a></h2>\n";
     }
     echo "<span class=\"commenter\">{$view['sendername']}</span>\n";
     echo "<abbr class=\"dtcommented\" title=\"".gmdate('Y-m-d\TH:i:s\Z', $posttime). "\">".strftime('%x %X', $posttime)."</abbr>\n";

@@ -158,7 +158,7 @@ class net_nehmer_comments_handler_moderate extends midcom_baseclasses_components
                     // This will exit.
                 }
                 
-                $_MIDCOM->relocate("read/{$this->_comment->guid}.html");
+                $_MIDCOM->relocate("read/{$this->_comment->guid}/");
                 // This will exit
         }
         if ($this->_comment->_sudo_requested)

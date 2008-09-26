@@ -252,7 +252,7 @@ class net_nemein_discussion_handler_latest extends midcom_baseclasses_components
 
                 $thread = new net_nemein_discussion_thread_dba($post->thread);
                 $forum = $nap->get_node($thread->node);
-                $item->link = "{$forum[MIDCOM_NAV_FULLURL]}read/{$post->guid}.html";
+                $item->link = "{$forum[MIDCOM_NAV_FULLURL]}read/{$post->guid}/";
                 $rss->addItem($item);
             }
         }

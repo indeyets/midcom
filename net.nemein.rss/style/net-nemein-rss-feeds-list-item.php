@@ -5,7 +5,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 echo "<li><a href=\"{$data['feed']->url}\"><img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.rss/feed-icon-14x14.png\" alt=\"{$data['feed']->url}\" title=\"{$data['feed']->url}\" /></a>";
 if ($data['feed']->can_do('midgard:update'))
 {
-    echo "<a href=\"{$prefix}feeds/edit/{$data['feed']->guid}.html\">{$data['feed']->title}</a>\n";
+    echo "<a href=\"{$prefix}feeds/edit/{$data['feed']->guid}/\">{$data['feed']->title}</a>\n";
 }
 else
 {

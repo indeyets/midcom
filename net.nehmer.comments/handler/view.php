@@ -504,7 +504,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "report/{$comment->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "report/{$comment->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('report abuse'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_help-agent.png',
@@ -524,7 +524,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "report/{$comment->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "report/{$comment->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm abuse'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -541,7 +541,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "report/{$comment->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "report/{$comment->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('confirm junk'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -558,7 +558,7 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "report/{$comment->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "report/{$comment->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('not abuse'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
