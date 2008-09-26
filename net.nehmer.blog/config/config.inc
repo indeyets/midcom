@@ -10,7 +10,7 @@
 // Do not overwrite this except on a per-topic level!!!
 'symlink_topic' => null,
 
-'view_in_url' => true,
+'view_in_url' => false,
 'enable_scheduled_publishing' => false,
 
 // Specifies how many entries should be shown in the index page.
