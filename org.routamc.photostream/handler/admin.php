@@ -62,7 +62,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         if ($this->_photo->can_do('midgard:update'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "edit/{$this->_photo->guid}.html",
+                MIDCOM_TOOLBAR_URL => "edit/{$this->_photo->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -72,7 +72,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         if ($this->_photo->can_do('midgard:delete'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "delete/{$this->_photo->guid}.html",
+                MIDCOM_TOOLBAR_URL => "delete/{$this->_photo->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
@@ -169,7 +169,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         );
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "{$handler_id}/{$this->_photo->guid}.html",
+            MIDCOM_NAV_URL => "{$handler_id}/{$this->_photo->guid}/",
             MIDCOM_NAV_NAME => $this->_l10n_midcom->get($handler_id),
         );
 
@@ -373,7 +373,7 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "recreate.html",
+            MIDCOM_NAV_URL => "recreate/",
             MIDCOM_NAV_NAME => $this->_l10n->get('recreate derived images'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

@@ -722,7 +722,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => 'upload.html',
+                MIDCOM_TOOLBAR_URL => 'upload/',
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('upload photos'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/images.png',
@@ -734,7 +734,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => 'recreate.html',
+                MIDCOM_TOOLBAR_URL => 'recreate/',
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('recreate derived images'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 // TODO: better icon
@@ -765,7 +765,7 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_URL => 'config/',
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',

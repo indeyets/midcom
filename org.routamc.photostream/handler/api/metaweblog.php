@@ -295,11 +295,11 @@ class org_routamc_photostream_handler_api_metaweblog extends midcom_baseclasses_
         $arg = $photo->name ? $photo->name : $photo->guid;
         if ($this->_config->get('view_in_url'))
         {
-            $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "view/{$arg}.html";
+            $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "view/{$arg}/";
         }
         else
         {
-            $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}.html";
+            $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}/";
         }
 
         if (array_key_exists('categories', $this->_datamanager->types))
@@ -485,11 +485,11 @@ class org_routamc_photostream_handler_api_metaweblog extends midcom_baseclasses_
             $arg = $photo->name ? $photo->name : $photo->guid;
             if ($this->_config->get('view_in_url'))
             {
-                $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "view/{$arg}.html";
+                $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "view/{$arg}/";
             }
             else
             {
-                $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}.html";
+                $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}/";
             }
 
             if (array_key_exists('categories', $this->_datamanager->types))
