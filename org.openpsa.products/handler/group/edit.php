@@ -105,13 +105,13 @@ class org_openpsa_products_handler_group_edit extends midcom_baseclasses_compone
 
         $tmp[] = array
         (
-            MIDCOM_NAV_URL => "{$this->_group->guid}.html",
+            MIDCOM_NAV_URL => "{$this->_group->guid}/",
             MIDCOM_NAV_NAME => $this->_group->title,
         );
 
         $tmp[] = array
         (
-            MIDCOM_NAV_URL => "edit/{$this->_group->guid}.html",
+            MIDCOM_NAV_URL => "edit/{$this->_group->guid}/",
             MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
         );
 
@@ -156,7 +156,7 @@ class org_openpsa_products_handler_group_edit extends midcom_baseclasses_compone
                     org_openpsa_products_viewer::index($this->_request_data['controller']->datamanager, $indexer, $this->_topic);
                 }
             case 'cancel':
-                $_MIDCOM->relocate("{$this->_group->guid}.html");
+                $_MIDCOM->relocate("{$this->_group->guid}/");
                 // This will exit.
         }
 

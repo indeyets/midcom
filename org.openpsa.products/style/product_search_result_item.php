@@ -5,5 +5,5 @@ $view = $data['datamanager']->get_content_html();
 $product = $data['product'];
 ?>
 <li>
-    <a href="&(prefix);product/&(product.guid);.html">&(view['code']); &(view['title']);</a>
+    <a href="&(prefix);product/&(product.guid);/">&(view['code']); &(view['title']);</a>
 </li>

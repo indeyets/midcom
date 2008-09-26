@@ -48,7 +48,7 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "product/edit/{$this->_product->guid}.html",
+                MIDCOM_TOOLBAR_URL => "product/edit/{$this->_product->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -93,7 +93,7 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
         if ($this->_product->can_do('midgard:update'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "product/edit/{$this->_product->guid}.html",
+                MIDCOM_TOOLBAR_URL => "product/edit/{$this->_product->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
             ));
@@ -102,7 +102,7 @@ class org_openpsa_products_handler_product_view extends midcom_baseclasses_compo
         if ($this->_product->can_do('midgard:delete'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "product/delete/{$this->_product->guid}.html",
+                MIDCOM_TOOLBAR_URL => "product/delete/{$this->_product->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
             ));

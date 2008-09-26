@@ -115,14 +115,14 @@ class org_openpsa_products_handler_product_edit extends midcom_baseclasses_compo
                 $_MIDCOM->cache->invalidate($this->_product->guid);
                 // *** FALL-THROUGH ***
             case 'cancel':
-                $_MIDCOM->relocate("product/{$this->_product->guid}.html");
+                $_MIDCOM->relocate("product/{$this->_product->guid}/");
                 // This will exit.
         }
 
         $breadcrumb = org_openpsa_products_viewer::update_breadcrumb_line($this->_product);
         $breadcrumb[] = array
         (
-            MIDCOM_NAV_URL => "product/edit/{$this->_product->guid}.html",
+            MIDCOM_NAV_URL => "product/edit/{$this->_product->guid}/",
             MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);

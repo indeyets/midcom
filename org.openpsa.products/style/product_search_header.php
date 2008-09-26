@@ -13,7 +13,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         {
             $selected = ' class="selected"';
         }
-        echo "<li><a href=\"{$prefix}search/{$name}.html\"{$selected}>" . $data['l10n']->get($data['schemadb_product'][$name]->description) . "</a></li>\n";
+        echo "<li><a href=\"{$prefix}search/{$name}/\"{$selected}>" . $data['l10n']->get($data['schemadb_product'][$name]->description) . "</a></li>\n";
     }
     ?>
 </ul>

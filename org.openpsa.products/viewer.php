@@ -467,7 +467,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "businessarea/create/0/{$name}.html",
+                    MIDCOM_TOOLBAR_URL => "businessarea/create/0/{$name}/",
                     MIDCOM_TOOLBAR_LABEL => sprintf
                     (
                         $this->_l10n_midcom->get('create %s'),
@@ -509,7 +509,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_URL => 'config/',
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',

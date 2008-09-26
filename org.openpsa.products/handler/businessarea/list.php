@@ -130,7 +130,7 @@ class org_openpsa_products_handler_businessarea_list  extends midcom_baseclasses
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "businessarea/create/{$data['parent_businessarea']}/{$name}.html",
+                        MIDCOM_TOOLBAR_URL => "businessarea/create/{$data['parent_businessarea']}/{$name}/",
                         MIDCOM_TOOLBAR_LABEL => sprintf
                         (
                             $this->_l10n_midcom->get('create %s'),

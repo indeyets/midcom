@@ -33,7 +33,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
     {
         foreach ($data['schemadb_product'] as $name => $schema)
         {
-            $_MIDCOM->relocate("search/{$name}.html");
+            $_MIDCOM->relocate("search/{$name}/");
             // This will exit
         }
     }
@@ -837,7 +837,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "create/{$data['root_group']}.html",
+                    MIDCOM_TOOLBAR_URL => "create/{$data['root_group']}/",
                     MIDCOM_TOOLBAR_LABEL => sprintf
                     (
                         $this->_l10n_midcom->get('create %s'),
@@ -853,7 +853,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "product/create/{$data['root_group']}/{$name}.html",
+                        MIDCOM_TOOLBAR_URL => "product/create/{$data['root_group']}/{$name}/",
                         MIDCOM_TOOLBAR_LABEL => sprintf
                         (
                             $this->_l10n_midcom->get('create %s'),
