@@ -48,13 +48,13 @@ echo $data['alphabets_nav'];
 
                 if ($enable_update)
                 {
-                    echo "<a href=\"{$prefix}edit/{$item->guid}.html\">";
+                    echo "<a href=\"{$prefix}edit/{$item->guid}/\">";
                     echo "<img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/properties.png\" alt=\"" . $data['l10n_midcom']->get('edit') . "\" border=\"0\"/>";
                     echo "</a>";
                 }
                 if ($enable_delete)
                 {
-                    echo "<a href=\"{$prefix}delete/{$item->guid}.html\">";
+                    echo "<a href=\"{$prefix}delete/{$item->guid}/\">";
                     echo "<img src=\"" . MIDCOM_STATIC_URL . "/stock-icons/16x16/trash.png\" alt=\"" . $data['l10n_midcom']->get('delete') . "\" border=\"0\"/>";
                     echo "</a>";
                 }
