@@ -16,7 +16,7 @@ if ($data['config']->get('enable_alphabetical'))
 ?>
   &(char);
 <?php } else { ?>
-  <a href="&(prefix);&(char);.html">&(char);</a>
+  <a href="&(prefix);&(char);/">&(char);</a>
 <?php } } ?>
 </p>
 <?php } ?>

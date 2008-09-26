@@ -163,7 +163,7 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
                 && $parent_group->can_do('midgard:create')))
         {
             $this->_node_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "admin/create.html",
+                MIDCOM_TOOLBAR_URL => "admin/create/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('create group'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_people.png',
             ));
@@ -173,7 +173,7 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
             && $this->_topic->can_do('midcom:component_config'))
         {
             $this->_node_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => 'config.html',
+                MIDCOM_TOOLBAR_URL => 'config/',
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
                 MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
@@ -182,8 +182,8 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
     }
 
     /**
-     * Simple helper, gives the base URL for a group (either username.html or
-     * guid.html, depending on the username).
+     * Simple helper, gives the base URL for a group (either name/ or
+     * guid/, depending on the group name).
      *
      * All 1 argument handlers are filtered here.
      *
@@ -196,11 +196,11 @@ class net_nemein_organizations_viewer extends midcom_baseclasses_components_requ
             && $group->name != 'vcard.vcf'
             && $group->name != 'foaf.rdf')
         {
-            return "{$group->name}.html";
+            return "{$group->name}/";
         }
         else
         {
-            return "{$group->guid}.html";
+            return "{$group->guid}/";
         }
     }
 

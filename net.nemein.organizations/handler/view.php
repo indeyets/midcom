@@ -195,7 +195,7 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
         if ($this->_group->can_do('midgard:update'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "admin/edit/{$this->_group->guid}.html",
+                MIDCOM_TOOLBAR_URL => "admin/edit/{$this->_group->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -204,7 +204,7 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
         if ($this->_group->can_do('midgard:delete'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "admin/delete/{$this->_group->guid}.html",
+                MIDCOM_TOOLBAR_URL => "admin/delete/{$this->_group->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
@@ -225,7 +225,7 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
             $this->_alpha_filter = $this->_group->official[0];
             $tmp[] = Array
             (
-                MIDCOM_NAV_URL => "alpha/{$this->_alpha_filter}.html",
+                MIDCOM_NAV_URL => "alpha/{$this->_alpha_filter}/",
                 MIDCOM_NAV_NAME => $this->_alpha_filter,
             );
         }
@@ -325,7 +325,7 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
     {
         if (!$this->_config->get('group'))
         {
-            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "config.html");
+            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "config/");
         }
 
         if ($this->_config->get('enable_alphabetical'))
@@ -352,7 +352,7 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
             $tmp = Array();
             $tmp[] = Array
             (
-                MIDCOM_NAV_URL => "alpha/{$this->_alpha_filter}.html",
+                MIDCOM_NAV_URL => "alpha/{$this->_alpha_filter}/",
                 MIDCOM_NAV_NAME => $this->_alpha_filter,
             );
             $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
@@ -444,7 +444,7 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
     {
         if (!$this->_config->get('group'))
         {
-            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "config.html");
+            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "config/");
             // This will exit
         }
         

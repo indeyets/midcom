@@ -169,7 +169,7 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
         //for ($year = $first_year; $year <= $last_year; $year++)
         for ($year = $last_year; $year >= $first_year; $year--)
         {
-            $year_url = "{$prefix}year/{$year}.html";
+            $year_url = "{$prefix}year/{$year}/";
             $year_count = 0;
             $month_data = Array();
 
@@ -214,7 +214,7 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
                     $end_time->setMonth($month + 1);
                 }
 
-                $month_url = "{$prefix}month/{$year}/{$month}.html";
+                $month_url = "{$prefix}month/{$year}/{$month}/";
                 $month_count = $this->_compute_welcome_posting_count($start_time, $end_time);
                 $year_count += $month_count;
                 $total_count += $month_count;
@@ -339,7 +339,7 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
         $end = $this->_end->format($this->_l10n_midcom->get('short date'));
         $breadcrumb[] = Array
         (
-            MIDCOM_NAV_URL => "archive/year/{$args[0]}.html",
+            MIDCOM_NAV_URL => "archive/year/{$args[0]}/",
             MIDCOM_NAV_NAME => "{$start} - {$end}",
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $breadcrumb);
@@ -465,11 +465,11 @@ class org_maemo_socialnews_handler_archive extends midcom_baseclasses_components
                 {
                     if ($this->_config->get('view_in_url'))
                     {
-                        $data['view_url'] = "{$prefix}view/{$arg}.html";
+                        $data['view_url'] = "{$prefix}view/{$arg}/";
                     }
                     else
                     {
-                        $data['view_url'] = "{$prefix}{$arg}.html";
+                        $data['view_url'] = "{$prefix}{$arg}/";
                     }
                 }
 

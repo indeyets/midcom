@@ -195,11 +195,11 @@ class org_maemo_socialnews_calculator extends midcom_baseclasses_components_pure
             {
                 if ($node[MIDCOM_NAV_CONFIGURATION]->get('view_in_url'))
                 {
-                    $article->url = "{$node[MIDCOM_NAV_FULLURL]}view/{$article->name}.html";
+                    $article->url = "{$node[MIDCOM_NAV_FULLURL]}view/{$article->name}/";
                 }
                 else
                 {
-                    $article->url = "{$node[MIDCOM_NAV_FULLURL]}{$article->name}.html";
+                    $article->url = "{$node[MIDCOM_NAV_FULLURL]}{$article->name}/";
                 }
             }
         }

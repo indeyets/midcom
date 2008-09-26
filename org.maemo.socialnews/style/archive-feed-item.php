@@ -9,7 +9,7 @@ $item->description = $data['issue']->content;
 $item->description = preg_replace(',<(a|link|img|script|form|input)([^>]+)(href|src|action)="/([^>"\s]+)",ie', '"<\1\2\3=\"' . $_MIDCOM->get_host_name() . '/\4\""', $item->description);
 
 $item->date = $data['issue']->metadata->published;
-$item->link = "{$prefix}archive/month/" . date('Y/m', $data['issue']->metadata->published) . ".html#{$data['issue']->guid}";
-$item->guid = "{$prefix}archive/month/" . date('Y/m', $data['issue']->metadata->published) . ".html#{$data['issue']->guid}";
+$item->link = "{$prefix}archive/month/" . date('Y/m', $data['issue']->metadata->published) . "/#{$data['issue']->guid}";
+$item->guid = "{$prefix}archive/month/" . date('Y/m', $data['issue']->metadata->published) . "/#{$data['issue']->guid}";
 $data['feedcreator']->addItem($item);
 ?>
