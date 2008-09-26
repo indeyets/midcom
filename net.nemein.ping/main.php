@@ -224,15 +224,19 @@ class net_nemein_ping_pinger extends midcom_baseclasses_components_purecode
         }
 
         // Handle different article URLs of different components
-        $article_url = "{$this->node[MIDCOM_NAV_FULLURL]}{$this->object->name}.html";
+        $article_url = "{$this->node[MIDCOM_NAV_FULLURL]}{$this->object->name}/";
         $rss_url = "{$this->node[MIDCOM_NAV_FULLURL]}rss.xml";
         switch ($this->node[MIDCOM_NAV_COMPONENT])
         {
             case 'net.nehmer.blog':
-                $article_url = "{$this->node[MIDCOM_NAV_FULLURL]}view/{$this->object->name}.html";
-                break;
-            case 'net.nemein.wiki':
-                $article_url = "{$this->node[MIDCOM_NAV_FULLURL]}{$this->object->name}/";
+                if ($this->node[MIDCOM_NAV_CONFIGURATION]->get('view_in_url'))
+                {
+                    $article_url = "{$node[MIDCOM_NAV_FULLURL]}view/{$this->object->name}/";
+                }
+                else
+                {
+                    $article_url = "{$node[MIDCOM_NAV_FULLURL]}{$this->object->name}/";
+                }
                 break;
         }
 
