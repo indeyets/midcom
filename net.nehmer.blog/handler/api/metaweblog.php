@@ -245,7 +245,7 @@ class net_nehmer_blog_handler_api_metaweblog extends midcom_baseclasses_componen
 
                                     break;
                             }
-                            // TODO: Handle different relationshiptags as per http://georss.org/simple.html
+                            // TODO: Handle different relationshiptags as per http://georss.org/simple/
                         }
                     }
                     break;
@@ -297,11 +297,11 @@ class net_nehmer_blog_handler_api_metaweblog extends midcom_baseclasses_componen
         $arg = $article->name ? $article->name : $article->guid;
         if ($this->_config->get('view_in_url'))
         {
-            $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "view/{$arg}.html";
+            $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "view/{$arg}/";
         }
         else
         {
-            $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}.html";
+            $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}/";
         }
 
         if (array_key_exists('categories', $this->_datamanager->types))
@@ -426,7 +426,7 @@ class net_nehmer_blog_handler_api_metaweblog extends midcom_baseclasses_componen
 
                                     break;
                             }
-                            // TODO: Handle different relationshiptags as per http://georss.org/simple.html
+                            // TODO: Handle different relationshiptags as per http://georss.org/simple/
                         }
                     }
                     break;
@@ -487,11 +487,11 @@ class net_nehmer_blog_handler_api_metaweblog extends midcom_baseclasses_componen
             $arg = $article->name ? $article->name : $article->guid;
             if ($this->_config->get('view_in_url'))
             {
-                $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "view/{$arg}.html";
+                $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "view/{$arg}/";
             }
             else
             {
-                $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}.html";
+                $link = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "{$arg}/";
             }
 
             if (array_key_exists('categories', $this->_datamanager->types))

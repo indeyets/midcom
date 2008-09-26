@@ -317,11 +317,11 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
                 {
                     if ($this->_config->get('view_in_url'))
                     {
-                        $data['view_url'] = "{$prefix}view/{$arg}.html";
+                        $data['view_url'] = "{$prefix}view/{$arg}/";
                     }
                     else
                     {
-                        $data['view_url'] = "{$prefix}{$arg}.html";
+                        $data['view_url'] = "{$prefix}{$arg}/";
                     }
                 }
 

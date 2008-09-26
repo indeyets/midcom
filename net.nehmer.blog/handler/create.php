@@ -238,7 +238,7 @@ class net_nehmer_blog_handler_create extends midcom_baseclasses_components_handl
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "create/{$this->_schema}.html",
+            MIDCOM_NAV_URL => "create/{$this->_schema}/",
             MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('create %s'), $this->_schemadb[$this->_schema]->description),
         );
 

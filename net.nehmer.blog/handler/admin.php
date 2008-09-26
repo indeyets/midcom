@@ -69,7 +69,7 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
         if ($this->_article->can_do('midgard:update'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}.html",
+                MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -79,7 +79,7 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
         if ($this->_article->can_do('midgard:delete'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}.html",
+                MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
@@ -175,11 +175,11 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
 
         if ($this->_config->get('view_in_url'))
         {
-            $view_url = "view/{$arg}.html";
+            $view_url = "view/{$arg}/";
         }
         else
         {
-            $view_url = "{$arg}.html";
+            $view_url = "{$arg}/";
         }
 
         $tmp[] = Array
@@ -193,7 +193,7 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
             case 'delete_link':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "delete/link/{$this->_article->guid}.html",
+                    MIDCOM_NAV_URL => "delete/link/{$this->_article->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('delete link'),
                 );
                 break;
@@ -201,7 +201,7 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
             default:
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "{$handler_id}/{$this->_article->guid}.html",
+                    MIDCOM_NAV_URL => "{$handler_id}/{$this->_article->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get($handler_id),
                 );
         }
@@ -241,7 +241,7 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
             if (   $node
                 && isset($node[MIDCOM_NAV_FULLURL]))
             {
-                $_MIDCOM->relocate($node[MIDCOM_NAV_FULLURL] . "edit/{$args[0]}.html");
+                $_MIDCOM->relocate($node[MIDCOM_NAV_FULLURL] . "edit/{$args[0]}/");
                 // This will exit
             }
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The article with GUID {$args[0]} was not found.");
@@ -264,11 +264,11 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
             case 'cancel':
                 if ($this->_config->get('view_in_url'))
                 {
-                    $_MIDCOM->relocate("view/{$this->_article->name}.html");
+                    $_MIDCOM->relocate("view/{$this->_article->name}/");
                 }
                 else
                 {
-                    $_MIDCOM->relocate("{$this->_article->name}.html");
+                    $_MIDCOM->relocate("{$this->_article->name}/");
                 }
 
                 // This will exit.
@@ -355,11 +355,11 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
             // Redirect to view page.
             if ($this->_config->get('view_in_url'))
             {
-                $_MIDCOM->relocate("view/{$this->_article->name}.html");
+                $_MIDCOM->relocate("view/{$this->_article->name}/");
             }
             else
             {
-                $_MIDCOM->relocate("{$this->_article->name}.html");
+                $_MIDCOM->relocate("{$this->_article->name}/");
             }
             // This will exit
         }
@@ -396,7 +396,7 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
 
         $data['topic_url'] = $node[MIDCOM_NAV_FULLURL];
         $data['topic_name'] = $node[MIDCOM_NAV_NAME];
-        $data['delete_url'] = "{$node[MIDCOM_NAV_FULLURL]}delete/{$this->_article->guid}.html";
+        $data['delete_url'] = "{$node[MIDCOM_NAV_FULLURL]}delete/{$this->_article->guid}/";
 
         midcom_show_style('admin-delete-link');
     }
@@ -428,7 +428,7 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
         // Relocate to delete the link instead of the article itself
         if ($this->_article->topic !== $this->_content_topic->id)
         {
-            $_MIDCOM->relocate("delete/link/{$args[0]}.html");
+            $_MIDCOM->relocate("delete/link/{$args[0]}/");
             // This will exit
         }
         $this->_article->require_do('midgard:delete');
@@ -478,11 +478,11 @@ class net_nehmer_blog_handler_admin extends midcom_baseclasses_components_handle
             // Redirect to view page.
             if ($this->_config->get('view_in_url'))
             {
-                $_MIDCOM->relocate("view/{$this->_article->name}.html");
+                $_MIDCOM->relocate("view/{$this->_article->name}/");
             }
             else
             {
-                $_MIDCOM->relocate("{$this->_article->name}.html");
+                $_MIDCOM->relocate("{$this->_article->name}/");
             }
             // This will exit
         }

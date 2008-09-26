@@ -51,7 +51,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
         if ($this->_article->can_do('midgard:update'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}.html",
+                MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -61,7 +61,7 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
         if ($this->_article->can_do('midgard:delete'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}.html",
+                MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
@@ -208,11 +208,11 @@ class net_nehmer_blog_handler_view extends midcom_baseclasses_components_handler
         $arg = $this->_article->name ? $this->_article->name : $this->_article->guid;
         if ($this->_config->get('view_in_url'))
         {
-            $view_url = "view/{$arg}.html";
+            $view_url = "view/{$arg}/";
         }
         else
         {
-            $view_url = "{$arg}.html";
+            $view_url = "{$arg}/";
         }
 
         $tmp[] = Array

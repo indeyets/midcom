@@ -132,11 +132,11 @@ class net_nehmer_blog_interface extends midcom_baseclasses_components_interface
 
         if ($config->get('view_in_url'))
         {
-            return "view/{$arg}.html";
+            return "view/{$arg}/";
         }
         else
         {
-            return "{$arg}.html";
+            return "{$arg}/";
         }
     }
 }
