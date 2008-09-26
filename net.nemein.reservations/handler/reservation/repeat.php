@@ -69,7 +69,7 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
     {
         if (isset($_POST['f_cancel']))
         {
-            $_MIDCOM->relocate("reservation/{$args[0]}.html");
+            $_MIDCOM->relocate("reservation/{$args[0]}/");
             // This will exit
         }
         
@@ -136,7 +136,7 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "reservation/edit/{$this->_event->guid}.html",
+                MIDCOM_TOOLBAR_URL => "reservation/edit/{$this->_event->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -147,7 +147,7 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "reservation/delete/{$this->_event->guid}.html",
+                MIDCOM_TOOLBAR_URL => "reservation/delete/{$this->_event->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
@@ -159,7 +159,7 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "reservation/repeat/{$this->_event->guid}.html",
+                MIDCOM_TOOLBAR_URL => "reservation/repeat/{$this->_event->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('repeating'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-master-document.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_event->can_do('midgard:update'),

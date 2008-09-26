@@ -68,11 +68,11 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         // Compute a few URLs
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
-        $this->_request_data['view_url'] = "{$prefix}event/view/{$this->_event->guid}.html";
+        $this->_request_data['view_url'] = "{$prefix}event/view/{$this->_event->guid}/";
 
         if ($this->_event->can_do('net.nemein.registrations:manage'))
         {
-            $this->_request_data['list_registrations_url'] = "{$prefix}event/list_registrations/{$this->_event->guid}.html";
+            $this->_request_data['list_registrations_url'] = "{$prefix}event/list_registrations/{$this->_event->guid}/";
             $this->_request_data['export_csv_url'] = "{$prefix}event/export/csv/{$this->_event->guid}/" . midcom_generate_urlname_from_string($this->_event->title) . date('_Y-m-d') . '.csv';
             $this->_request_data['admin_register_url'] = "{$prefix}admin/register/{$this->_event->guid}/";
         }
@@ -85,15 +85,15 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
         if ($this->_event->can_do('midgard:update'))
         {
-            $this->_request_data['edit_url'] = "{$prefix}event/edit/{$this->_event->guid}.html";
+            $this->_request_data['edit_url'] = "{$prefix}event/edit/{$this->_event->guid}/";
             if ($this->_event->is_open())
             {
-                $this->_request_data['close_url'] = "{$prefix}event/close/{$this->_event->guid}.html";
+                $this->_request_data['close_url'] = "{$prefix}event/close/{$this->_event->guid}/";
                 $this->_request_data['open_url'] = null;
             }
             else
             {
-                $this->_request_data['open_url'] = "{$prefix}event/open/{$this->_event->guid}.html";
+                $this->_request_data['open_url'] = "{$prefix}event/open/{$this->_event->guid}/";
                 $this->_request_data['close_url'] = null;
             }
         }
@@ -106,7 +106,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
         if ($this->_event->can_do('midgard:delete'))
         {
-            $this->_request_data['delete_url'] = "{$prefix}event/delete/{$this->_event->guid}.html";
+            $this->_request_data['delete_url'] = "{$prefix}event/delete/{$this->_event->guid}/";
         }
         else
         {
@@ -119,7 +119,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         if ($this->_event->is_registered())
         {
             $registration = $this->_event->get_registration();
-            $this->_request_data['registration_url'] = "{$prefix}registration/view/{$registration->guid}.html";
+            $this->_request_data['registration_url'] = "{$prefix}registration/view/{$registration->guid}/";
         }
         else
         {
@@ -232,7 +232,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "event/view/{$this->_event->guid}.html",
+            MIDCOM_NAV_URL => "event/view/{$this->_event->guid}/",
             MIDCOM_NAV_NAME => $this->_event->title,
         );
 
@@ -241,7 +241,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
             case 'event-edit':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "event/edit/{$this->_event->guid}.html",
+                    MIDCOM_NAV_URL => "event/edit/{$this->_event->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
                 );
                 break;
@@ -249,7 +249,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
             case 'event-delete':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "event/delete/{$this->_event->guid}.html",
+                    MIDCOM_NAV_URL => "event/delete/{$this->_event->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('delete'),
                 );
                 break;
@@ -257,7 +257,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
             case 'event-list_registrations':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "event/list_registrations/{$this->_event->guid}.html",
+                    MIDCOM_NAV_URL => "event/list_registrations/{$this->_event->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('registrations'),
                 );
                 break;
@@ -324,7 +324,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
 
             case 'cancel':
                 // If we have a save or cancel event, we relocate back to the view.
-                $_MIDCOM->relocate("event/view/{$this->_event->guid}.html");
+                $_MIDCOM->relocate("event/view/{$this->_event->guid}/");
                 // This will exit.
         }
 
@@ -439,7 +439,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
             {
                 $data['registration'] =& $data['registrations'][$id];
                 $data['registrar'] = $data['registration']->get_registrar();
-                $data['registration_url'] = "{$prefix}registration/view/{$data['registration']->guid}.html";
+                $data['registration_url'] = "{$prefix}registration/view/{$data['registration']->guid}/";
                 $data['approved'] = $data['registration']->is_approved();
                 midcom_show_style('event-list-registrations-item');
             }
@@ -488,7 +488,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         if (array_key_exists('net_nemein_registrations_deletecancel', $_REQUEST))
         {
             // Delete cancelled, relocating to view.
-            $_MIDCOM->relocate("event/view/{$this->_event->guid}.html");
+            $_MIDCOM->relocate("event/view/{$this->_event->guid}/");
             // This will exit.
         }
 
@@ -532,7 +532,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
             $this->_event->open_registration();
         }
 
-        $_MIDCOM->relocate("event/view/{$this->_event->guid}.html");
+        $_MIDCOM->relocate("event/view/{$this->_event->guid}/");
     }
 
 
@@ -556,7 +556,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
             $this->_event->close_registration();
         }
 
-        $_MIDCOM->relocate("event/view/{$this->_event->guid}.html");
+        $_MIDCOM->relocate("event/view/{$this->_event->guid}/");
     }
 
 }

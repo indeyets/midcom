@@ -441,7 +441,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
             $this->_view_toolbar->add_item(
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/rcs/diff/{$this->_guid}/{$first}/{$second}.html",
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/rcs/diff/{$this->_guid}/{$first}/{$second}/",
                     MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_get('view %s differences with previous (%s)'), $second, $first),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
@@ -453,7 +453,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         $this->_view_toolbar->add_item(
             array
             (
-                MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/rcs/preview/{$this->_guid}/{$revision}.html",
+                MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/rcs/preview/{$this->_guid}/{$revision}/",
                 MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_get('view this revision (%s)'), $revision),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/search.png',
@@ -467,7 +467,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
             $this->_view_toolbar->add_item(
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/rcs/restore/{$this->_guid}/{$revision}.html",
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/rcs/restore/{$this->_guid}/{$revision}/",
                     MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_get('restore this revision (%s)'), $revision),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/editpaste.png',
@@ -478,7 +478,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
             $this->_view_toolbar->add_item(
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/rcs/diff/{$this->_guid}/{$revision}/{$after}.html",
+                    MIDCOM_TOOLBAR_URL => "__mfa/asgard/object/rcs/diff/{$this->_guid}/{$revision}/{$after}/",
                     MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n_get('view %s differences with next (%s)'), $revision, $after),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_right.png',
@@ -701,7 +701,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         $this->_prepare_toolbars($revision);
         $this->_request_data['preview'] = $this->_backend->get_revision($revision);
 
-        $this->_view_toolbar->hide_item("__mfa/asgard/object/rcs/preview/{$this->_guid}/{$revision}.html");
+        $this->_view_toolbar->hide_item("__mfa/asgard/object/rcs/preview/{$this->_guid}/{$revision}/");
 
         $this->_request_data['view_title'] = sprintf($this->_l10n->get('viewing version %s of %s'), $revision, $this->_resolve_object_title());
         $_MIDCOM->set_pagetitle($this->_request_data['view_title']);

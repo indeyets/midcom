@@ -91,7 +91,7 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
             (
                 Array
                 (
-                    MIDCOM_TOOLBAR_URL => "events/create.html",
+                    MIDCOM_TOOLBAR_URL => "events/create/",
                     MIDCOM_TOOLBAR_LABEL => $data['l10n']->get('create an event'),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_new.png',
@@ -106,7 +106,7 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
             (
                 Array
                 (
-                    MIDCOM_TOOLBAR_URL => "events/list_all.html",
+                    MIDCOM_TOOLBAR_URL => "events/list_all/",
                     MIDCOM_TOOLBAR_LABEL => $data['l10n']->get('list all events'),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/search.png',
@@ -142,13 +142,13 @@ class net_nemein_registrations_handler_welcome extends midcom_baseclasses_compon
             if ($event->is_registered())
             {
                 $registration = $event->get_registration();
-                $data['registration_url'] = "{$prefix}registration/view/{$registration->guid}.html";
+                $data['registration_url'] = "{$prefix}registration/view/{$registration->guid}/";
             }
             else
             {
                 $data['registration_url'] = null;
             }
-            $data['view_url'] = "{$prefix}event/view/{$event->guid}.html";
+            $data['view_url'] = "{$prefix}event/view/{$event->guid}/";
             $data['event'] =& $event;
 
             midcom_show_style('welcome-item');

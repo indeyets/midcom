@@ -132,7 +132,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "{$prefix}{$name}.html",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}{$name}/",
                     MIDCOM_TOOLBAR_LABEL => sprintf
                     (
                         $this->_l10n_midcom->get('create %s'),
@@ -165,7 +165,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
             case '____mfa-asgard_midcom.helper.replicator-create':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "__mfa/asgard_midcom.helper.replicator/create/{$this->_schema}.html",
+                    MIDCOM_NAV_URL => "__mfa/asgard_midcom.helper.replicator/create/{$this->_schema}/",
                     MIDCOM_NAV_NAME => $this->_request_data['view_title'],
                 );
                 break;

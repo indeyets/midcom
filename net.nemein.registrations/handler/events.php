@@ -96,14 +96,14 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
             case 'events-create':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "events/create.html",
+                    MIDCOM_NAV_URL => "events/create/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('create an event'),
                 );
                 break;
             default:
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "events/list_all.html",
+                    MIDCOM_NAV_URL => "events/list_all/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('list all events'),
                 );
                 break;
@@ -152,7 +152,7 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
             foreach (array_keys($this->_events) as $id)
             {
                 $data['event'] =& $this->_events[$id];
-                $data['view_url'] = "{$prefix}event/view/{$data['event']->guid}.html";
+                $data['view_url'] = "{$prefix}event/view/{$data['event']->guid}/";
                 midcom_show_style('events-list_all-item');
             }
         }
@@ -212,7 +212,7 @@ class net_nemein_registrations_handler_events extends midcom_baseclasses_compone
                 $indexer =& $_MIDCOM->get_service('indexer');
                 net_nemein_registrations_event::index($this->_controller->datamanager, $indexer, $this->_topic);
 
-                $_MIDCOM->relocate("event/view/{$this->_event->guid}.html");
+                $_MIDCOM->relocate("event/view/{$this->_event->guid}/");
                 // This will exit.
         }
     }

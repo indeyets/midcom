@@ -68,7 +68,7 @@ class net_nemein_registrations_navigation extends midcom_baseclasses_components_
                      MIDCOM_NAV_ADMIN => null,
                      MIDCOM_NAV_SITE => Array
                      (
-                         MIDCOM_NAV_URL => "event/view/{$event->guid}.html",
+                         MIDCOM_NAV_URL => "event/view/{$event->guid}/",
                          MIDCOM_NAV_NAME => $event->title
                      ),
                      MIDCOM_NAV_GUID => $event->guid,

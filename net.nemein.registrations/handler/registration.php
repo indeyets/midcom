@@ -125,7 +125,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
 
         if ($_MIDCOM->auth->can_do('midgard:update', $this->_registration))
         {
-            $this->_request_data['edit_url'] = "{$prefix}registration/edit/{$this->_registration->guid}.html";
+            $this->_request_data['edit_url'] = "{$prefix}registration/edit/{$this->_registration->guid}/";
         }
         else
         {
@@ -134,7 +134,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
 
         if ($_MIDCOM->auth->can_do('midgard:delete', $this->_registration))
         {
-            $this->_request_data['delete_url'] = "{$prefix}registration/delete/{$this->_registration->guid}.html";
+            $this->_request_data['delete_url'] = "{$prefix}registration/delete/{$this->_registration->guid}/";
         }
         else
         {
@@ -146,7 +146,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
             && $_MIDCOM->auth->can_do('net.nemein.registrations:manage', $this->_registration)
             && ! $this->_request_data['is_approved'])
         {
-            $this->_request_data['manage_form_url'] = "{$prefix}registration/manage/{$this->_registration->guid}.html";
+            $this->_request_data['manage_form_url'] = "{$prefix}registration/manage/{$this->_registration->guid}/";
             $this->_request_data['approve_action'] = $this->_approve_action;
             $this->_request_data['reject_action'] = $this->_reject_action;
             $this->_request_data['rejectdelete_action'] = $this->_rejectdelete_action;
@@ -190,7 +190,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "registration/view/{$this->_registration->guid}.html",
+            MIDCOM_NAV_URL => "registration/view/{$this->_registration->guid}/",
             MIDCOM_NAV_NAME => sprintf($this->_l10n->get('registration for %s'), $this->_event->title),
         );
 
@@ -199,7 +199,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
             case 'registration-edit':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "registration/edit/{$this->_registration->guid}.html",
+                    MIDCOM_NAV_URL => "registration/edit/{$this->_registration->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
                 );
                 break;
@@ -207,7 +207,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
             case 'registration-delete':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "registration/delete/{$this->_registration->guid}.html",
+                    MIDCOM_NAV_URL => "registration/delete/{$this->_registration->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('delete'),
                 );
                 break;
@@ -279,7 +279,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
 
         if ($this->_controller->process_form() != 'edit')
         {
-            $_MIDCOM->relocate("registration/view/{$this->_registration->guid}.html");
+            $_MIDCOM->relocate("registration/view/{$this->_registration->guid}/");
             // This will exit.
         }
 
@@ -335,7 +335,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
         if (array_key_exists('net_nemein_registrations_deletecancel', $_REQUEST))
         {
             // Delete cancelled, relocating to view.
-            $_MIDCOM->relocate("registration/view/{$this->_registration->guid}.html");
+            $_MIDCOM->relocate("registration/view/{$this->_registration->guid}/");
             // This will exit.
         }
 
@@ -392,7 +392,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to approve the registration {$args[0]}, see the debug level log for details.");
                 // This will exit.
             }
-            $_MIDCOM->relocate("event/list_registrations/{$this->_event->guid}.html");
+            $_MIDCOM->relocate("event/list_registrations/{$this->_event->guid}/");
             // This will exit.
         }
         else if (array_key_exists($this->_reject_action, $_REQUEST))
@@ -410,7 +410,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
                 $_MIDCOM->generate_error("Failed to reject the registration {$args[0]}, see the debug level log for details.");
                 // This will exit.
             }
-            $_MIDCOM->relocate("event/list_registrations/{$this->_event->guid}.html");
+            $_MIDCOM->relocate("event/list_registrations/{$this->_event->guid}/");
             // This will exit.
         }
         else if (array_key_exists($this->_rejectdelete_action, $_REQUEST))
@@ -428,7 +428,7 @@ class net_nemein_registrations_handler_registration extends midcom_baseclasses_c
                 $_MIDCOM->generate_error("Failed to reject the registration {$args[0]}, see the debug level log for details.");
                 // This will exit.
             }
-            $_MIDCOM->relocate("event/list_registrations/{$this->_event->guid}.html");
+            $_MIDCOM->relocate("event/list_registrations/{$this->_event->guid}/");
             // This will exit.
         }
 

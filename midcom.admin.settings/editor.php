@@ -239,10 +239,10 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
                                                 'error');
                 }
 
-                $_MIDCOM->relocate('__mfa/asgard_midcom.admin.settings/'.$host->guid.'.html');
+                $_MIDCOM->relocate('__mfa/asgard_midcom.admin.settings/'.$host->guid.'/');
 
             case 'cancel':
-                $_MIDCOM->relocate('__mfa/asgard_midcom.admin.settings/'.$host->guid.'.html');
+                $_MIDCOM->relocate('__mfa/asgard_midcom.admin.settings/'.$host->guid.'/');
                 // This will exit.
         }
 
@@ -372,7 +372,7 @@ class midcom_admin_settings_editor extends midcom_baseclasses_components_handler
         {
             if ($host->can_do("midgard::update"))
             {
-                echo "            <li class=\"status\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.settings/{$host->guid}.html\">{$host->name}{$host->prefix}/</a></li>";
+                echo "            <li class=\"status\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.settings/{$host->guid}/\">{$host->name}{$host->prefix}/</a></li>";
             }
         }
 

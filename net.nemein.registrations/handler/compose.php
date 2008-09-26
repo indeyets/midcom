@@ -77,12 +77,12 @@ class net_nemein_registrations_handler_compose extends midcom_baseclasses_compon
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "event/view/{$this->_event->guid}.html",
+            MIDCOM_NAV_URL => "event/view/{$this->_event->guid}/",
             MIDCOM_NAV_NAME => $this->_event->title,
         );
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "registration/view/{$this->_registration->guid}.html",
+            MIDCOM_NAV_URL => "registration/view/{$this->_registration->guid}/",
             MIDCOM_NAV_NAME => sprintf($this->_l10n->get('registration for %s'), $this->_event->title),
         );
 

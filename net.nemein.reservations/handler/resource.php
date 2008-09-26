@@ -242,7 +242,7 @@ class net_nemein_reservations_handler_resource extends midcom_baseclasses_compon
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "edit/{$this->_resource->guid}.html",
+                MIDCOM_TOOLBAR_URL => "edit/{$this->_resource->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -253,7 +253,7 @@ class net_nemein_reservations_handler_resource extends midcom_baseclasses_compon
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "delete/{$this->_resource->guid}.html",
+                MIDCOM_TOOLBAR_URL => "delete/{$this->_resource->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',

@@ -158,7 +158,7 @@ class net_nemein_reservations_viewer extends midcom_baseclasses_components_reque
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "create/{$name}.html",
+                        MIDCOM_TOOLBAR_URL => "create/{$name}/",
                         MIDCOM_TOOLBAR_LABEL => sprintf
                         (
                             $this->_l10n_midcom->get('create %s'),
@@ -177,7 +177,7 @@ class net_nemein_reservations_viewer extends midcom_baseclasses_components_reque
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_URL => 'config/',
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
@@ -190,7 +190,7 @@ class net_nemein_reservations_viewer extends midcom_baseclasses_components_reque
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__ais/acl/edit/{$GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "__ais/acl/edit/{$GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('root event privileges'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('root event privileges helptext'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',

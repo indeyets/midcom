@@ -86,7 +86,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "edit/{$this->_event->guid}.html",
+                MIDCOM_TOOLBAR_URL => "edit/{$this->_event->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -99,7 +99,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "delete/{$this->_event->guid}.html",
+                MIDCOM_TOOLBAR_URL => "delete/{$this->_event->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_event->can_do('midgard:delete'),
@@ -110,10 +110,10 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
         switch ($handler_id)
         {
             case 'edit_reservation':
-                $this->_view_toolbar->disable_item("edit/{$this->_event->guid}.html");
+                $this->_view_toolbar->disable_item("edit/{$this->_event->guid}/");
                 break;
             case 'delete_reservation':
-                $this->_view_toolbar->disable_item("delete/{$this->_event->guid}.html");
+                $this->_view_toolbar->disable_item("delete/{$this->_event->guid}/");
                 break;
         }
     }
@@ -196,14 +196,14 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
             case 'edit_reservation':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "edit/{$this->_event->guid}.html",
+                    MIDCOM_NAV_URL => "edit/{$this->_event->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
                 );
                 break;
             case 'delete_reservation':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "delete/{$this->_event->guid}.html",
+                    MIDCOM_NAV_URL => "delete/{$this->_event->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('delete'),
                 );
                 break;

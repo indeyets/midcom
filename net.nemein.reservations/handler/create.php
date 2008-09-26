@@ -226,7 +226,7 @@ class net_nemein_reservations_handler_create extends midcom_baseclasses_componen
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "create/{$this->_schema}.html",
+            MIDCOM_NAV_URL => "create/{$this->_schema}/",
             MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($this->_schemadb[$this->_schema]->description)),
         );
 

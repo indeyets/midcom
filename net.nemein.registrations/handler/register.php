@@ -155,7 +155,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
         {
             // In case we are already registered, we relocate to the view registration page.
             $registration = $this->_event->get_registration();
-            $_MIDCOM->relocate("registration/view/{$registration->guid}.html");
+            $_MIDCOM->relocate("registration/view/{$registration->guid}/");
             // This will exit.
         }
 
@@ -319,7 +319,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
                     $session->set('registration_id', $this->_registration->id);
                     debug_pop();
                     // TODO: redirect elsewhere in admin mode ?
-                    $_MIDCOM->relocate('register/success.html');
+                    $_MIDCOM->relocate('register/success/');
                 }
                 // First, update/create the person
                 // Then, create the registration.
@@ -360,7 +360,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
                     $_MIDCOM->relocate("admin/register/{$this->_event->guid}/");
                     // This will exit()
                 }
-                $_MIDCOM->relocate('register/success.html');
+                $_MIDCOM->relocate('register/success/');
                 // This will exit()
                 break;
         }
@@ -565,7 +565,7 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
 
 {$text_event}: {$this->_event->title}
 {$text_registrar}: {$this->_registrar->name}
-URL: {$prefix}registration/view/{$this->_registration->guid}.html
+URL: {$prefix}registration/view/{$this->_registration->guid}/
 EOF;
 
         $headers = "From: {$sender}\r\nReply-To: {$sender}\r\nX-Mailer: PHP/" . phpversion();

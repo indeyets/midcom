@@ -135,7 +135,7 @@ class net_nemein_reservations_handler_reservation_list extends midcom_baseclasse
         (
             array
             (
-                MIDCOM_NAV_URL => 'reservation/list/' . date('Y-m-d', $data['show_date']) . '.html',
+                MIDCOM_NAV_URL => 'reservation/list/' . date('Y-m-d', $data['show_date']) . '/',
                 MIDCOM_NAV_NAME => $data['page_title'],
             ),
         );
@@ -144,7 +144,7 @@ class net_nemein_reservations_handler_reservation_list extends midcom_baseclasse
         $previous_day = date('Y-m-d', $day_start - 100);
         $this->_view_toolbar->add_item(
             Array(
-                MIDCOM_TOOLBAR_URL => 'reservation/list/' . $previous_day . '.html',
+                MIDCOM_TOOLBAR_URL => 'reservation/list/' . $previous_day . '/',
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('previous day'),
                 MIDCOM_TOOLBAR_HELPTEXT => strftime('%x', $day_start - 100),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/up.png',
@@ -154,7 +154,7 @@ class net_nemein_reservations_handler_reservation_list extends midcom_baseclasse
         $next_day = date('Y-m-d', $day_end + 100);
         $this->_view_toolbar->add_item(
             Array(
-                MIDCOM_TOOLBAR_URL => 'reservation/list/' . $next_day . '.html',
+                MIDCOM_TOOLBAR_URL => 'reservation/list/' . $next_day . '/',
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('next day'),
                 MIDCOM_TOOLBAR_HELPTEXT => strftime('%x', $day_end + 100),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/down.png',
@@ -196,7 +196,7 @@ class net_nemein_reservations_handler_reservation_list extends midcom_baseclasse
                 debug_add("Could not initialize DM2 for event #{$event->id}", MIDCOM_LOG_ERROR);
                 continue;
             }
-            $data['event_url'] = "{$data['prefix']}reservation/{$event->guid}.html";
+            $data['event_url'] = "{$data['prefix']}reservation/{$event->guid}/";
             $data['view_reservation'] = $this->_datamanager->get_content_html();
             midcom_show_style('view-datereservations-item');
         }

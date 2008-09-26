@@ -78,7 +78,7 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "edit/{$this->_resource->guid}.html",
+                MIDCOM_TOOLBAR_URL => "edit/{$this->_resource->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -91,7 +91,7 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "delete/{$this->_resource->guid}.html",
+                MIDCOM_TOOLBAR_URL => "delete/{$this->_resource->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_resource->can_do('midgard:delete'),
@@ -102,10 +102,10 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
         switch ($handler_id)
         {
             case 'edit_resource':
-                $this->_view_toolbar->disable_item("edit/{$this->_resource->guid}.html");
+                $this->_view_toolbar->disable_item("edit/{$this->_resource->guid}/");
                 break;
             case 'delete_resource':
-                $this->_view_toolbar->disable_item("delete/{$this->_resource->guid}.html");
+                $this->_view_toolbar->disable_item("delete/{$this->_resource->guid}/");
                 break;
         }
     }
@@ -183,14 +183,14 @@ class net_nemein_reservations_handler_admin extends midcom_baseclasses_component
             case 'edit_resource':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "edit/{$this->_resource->guid}.html",
+                    MIDCOM_NAV_URL => "edit/{$this->_resource->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
                 );
                 break;
             case 'delete_resource':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "delete/{$this->_resource->guid}.html",
+                    MIDCOM_NAV_URL => "delete/{$this->_resource->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('delete'),
                 );
                 break;

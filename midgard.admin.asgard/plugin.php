@@ -682,7 +682,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     && $metadata->is_approved())
                 {
                     $toolbar->add_item(Array(
-                        MIDCOM_TOOLBAR_URL => "__ais/folder/unapprove.html",
+                        MIDCOM_TOOLBAR_URL => "__ais/folder/unapprove/",
                         MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('unapprove', 'midcom'),
                         MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('approved', 'midcom'),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
@@ -699,7 +699,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 else
                 {
                     $toolbar->add_item(Array(
-                        MIDCOM_TOOLBAR_URL => "__ais/folder/approve.html",
+                        MIDCOM_TOOLBAR_URL => "__ais/folder/approve/",
                         MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('approve', 'midcom'),
                         MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('unapproved', 'midcom'),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/not_approved.png',

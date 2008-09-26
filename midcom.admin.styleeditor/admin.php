@@ -81,7 +81,7 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
     {
         $toolbar = &midcom_helper_toolbars::get_instance();
         $toolbar->top->add_item(Array(
-            MIDCOM_TOOLBAR_URL => 'config.html',
+            MIDCOM_TOOLBAR_URL => 'config/',
             MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
             MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
             MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
@@ -99,7 +99,7 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
             $toolbar->top->add_item(
                 Array 
                 (
-                    MIDCOM_TOOLBAR_URL => "create/{$name}.html", 
+                    MIDCOM_TOOLBAR_URL => "create/{$name}/", 
                     MIDCOM_TOOLBAR_LABEL => $text,
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_new.png',
@@ -190,7 +190,7 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
             if ($meta->is_approved())
             {
                 $toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "{$prefix}/unapprove.html",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}/unapprove/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('unapprove'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('approved'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
@@ -200,7 +200,7 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
             else
             {
                 $toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "{$prefix}/approve.html",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}/approve/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('approve'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('unapproved'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/not_approved.png',
@@ -211,7 +211,7 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
             if ($meta->get('hide'))
             {
                 $toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "{$prefix}/unhide.html",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}/unhide/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('unhide'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('hidden'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/hidden.png',
@@ -221,7 +221,7 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
             else
             {
                 $toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "{$prefix}/hide.html",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}/hide/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('hide'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('not hidden'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/not_hidden.png',
@@ -230,7 +230,7 @@ class midcom_admin_styleeditor_admin  extends midcom_baseclasses_components_requ
             }
             
             $toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "{$prefix}/edit.html",
+                MIDCOM_TOOLBAR_URL => "{$prefix}/edit/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('edit metadata'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',

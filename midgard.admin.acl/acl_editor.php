@@ -359,10 +359,10 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         {
             $tmp[] = Array
             (
-                MIDCOM_NAV_URL => "__ais/acl/edit/{$this->_object->guid}.html",
+                MIDCOM_NAV_URL => "__ais/acl/edit/{$this->_object->guid}/",
                 MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('topic privileges', 'midgard.admin.acl'),
             );
-            $this->_node_toolbar->hide_item("__ais/acl/edit/{$this->_object->guid}.html");
+            $this->_node_toolbar->hide_item("__ais/acl/edit/{$this->_object->guid}/");
         }
         else
         {
@@ -373,10 +373,10 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
             );
             $tmp[] = Array
             (
-                MIDCOM_NAV_URL => "__ais/acl/edit/{$this->_object->guid}.html",
+                MIDCOM_NAV_URL => "__ais/acl/edit/{$this->_object->guid}/",
                 MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('privileges', 'midgard.admin.acl'),
             );
-            $this->_view_toolbar->hide_item("__ais/acl/edit/{$this->_object->guid}.html");
+            $this->_view_toolbar->hide_item("__ais/acl/edit/{$this->_object->guid}/");
         }
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 

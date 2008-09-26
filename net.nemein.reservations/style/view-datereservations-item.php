@@ -15,7 +15,7 @@ $view =& $data['view_reservation'];
             foreach ($data['event']->resources as $id => $bool)
             {
                 $resource =& $data['resources_by_id'][$id];
-                $resource_url = "{$data['prefix']}view/{$resource->name}.html";
+                $resource_url = "{$data['prefix']}view/{$resource->name}/";
 ?>
                     <li class="&(resource.type);"><a href="&(resource_url);">&(resource.title);</a></li>
 <?php

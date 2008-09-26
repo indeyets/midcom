@@ -492,7 +492,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
         if (! $_MIDCOM->auth->user)
         {
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-            return "{$prefix}register/{$this->guid}.html";
+            return "{$prefix}register/{$this->guid}/";
         }
         if (! $this->_content_topic->can_do('midgard:create'))
         {
@@ -502,7 +502,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
             && ! $this->is_registered())
         {
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-            return "{$prefix}register/{$this->guid}.html";
+            return "{$prefix}register/{$this->guid}/";
         }
         else
         {
