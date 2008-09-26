@@ -185,7 +185,6 @@ require('midcom/helper/formatters.php');
 $auth = new midcom_services_auth();
 $auth->initialize();
 
-//require('autoload.php');
 //////////////////////////////////////
 // Load and start up the cache system,
 // this might already end the request
