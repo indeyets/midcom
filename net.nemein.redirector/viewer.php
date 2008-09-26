@@ -45,7 +45,7 @@ class net_nemein_redirector_viewer extends midcom_baseclasses_components_request
         if (is_null($this->_config->get('redirection_type')))
         {
             // No type set, redirect to config
-            $_MIDCOM->relocate("{$prefix}config.html");
+            $_MIDCOM->relocate("{$prefix}config/");
             // This will exit
         }
 
@@ -56,7 +56,7 @@ class net_nemein_redirector_viewer extends midcom_baseclasses_components_request
                 $nodes = $nap->list_nodes($nap->get_current_node());
                 if (count($nodes) == 0)
                 {
-                    $_MIDCOM->relocate("{$prefix}config.html");
+                    $_MIDCOM->relocate("{$prefix}config/");
                     // This will exit
                 }
 
@@ -110,7 +110,7 @@ class net_nemein_redirector_viewer extends midcom_baseclasses_components_request
                 }
                 // Otherwise fall-through to config
             default:
-                $_MIDCOM->relocate("{$prefix}config.html", $this->_config->get('redirection_code'));
+                $_MIDCOM->relocate("{$prefix}config/", $this->_config->get('redirection_code'));
                 // This will exit
         }
 
