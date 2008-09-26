@@ -81,11 +81,12 @@
             'type_config' => Array
             (
                 'filter_chain'   => 'exifrotate()',
-                'auto_thumbnail' => array(200,200),
                 'derived_images' => array
                 (
                     // Intentionally this way, so that portraits can be taller
-                    'view' => 'resize(500,600)',
+                    'view' => 'exifrotate();resize(500,600)',
+                    // Use specific thumbnail rule to allow for exifrotate
+                    'thumbnail' => 'exifrotate();resize(200,200)',
                 ),
             ),
             'widget' => 'photo',
@@ -144,11 +145,12 @@
             'type_config' => Array
             (
                 'filter_chain'   => 'exifrotate()',
-                'auto_thumbnail' => array(200,200),
                 'derived_images' => array
                 (
                     // Intentionally this way, so that portraits can be taller
-                    'view' => 'resize(500,600)',
+                    'view' => 'exifrotate();resize(500,600)',
+                    // Use specific thumbnail rule to allow for exifrotate
+                    'thumbnail' => 'exifrotate();resize(200,200)',
                 ),
             ),
             'widget' => 'photo',
