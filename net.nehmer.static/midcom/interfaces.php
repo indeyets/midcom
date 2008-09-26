@@ -124,7 +124,7 @@ class net_nehmer_static_interface extends midcom_baseclasses_components_interfac
             return '';
         }
 
-        return "{$article->name}.html";
+        return "{$article->name}/";
     }
 
 

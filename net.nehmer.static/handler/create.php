@@ -224,8 +224,12 @@ class net_nehmer_static_handler_create extends midcom_baseclasses_components_han
                 // Index the article
                 $indexer =& $_MIDCOM->get_service('indexer');
                 net_nehmer_static_viewer::index($this->_controller->datamanager, $indexer, $this->_content_topic);
-
-                $_MIDCOM->relocate("{$this->_article->name}.html");
+                if ($this->_article->name === 'index')
+                {
+                    $_MIDCOM->relocate('');
+                    // This will exit.
+                }
+                $_MIDCOM->relocate("{$this->_article->name}/");
                 // This will exit.
 
             case 'cancel':
@@ -253,7 +257,7 @@ class net_nehmer_static_handler_create extends midcom_baseclasses_components_han
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "create/{$this->_schema}.html",
+            MIDCOM_NAV_URL => "create/{$this->_schema}/",
             MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('create %s'), $this->_schemadb[$this->_schema]->description),
         );
 

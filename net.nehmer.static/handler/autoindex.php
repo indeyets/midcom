@@ -209,7 +209,7 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
     function _process_datamanager (&$datamanager, &$article, &$view)
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        $filename = "{$article->name}.html";
+        $filename = "{$article->name}/";
 
         $view[$filename]['article'] = $article;
         $view[$filename]['name'] = $filename;
@@ -233,7 +233,7 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
                 if ($datamanager->types[$name]->attachments_info)
                 {
                     $data = $datamanager->types[$name]->attachments_info['main'];
-                    $filename = "{$article->name}.html/{$data['filename']}";
+                    $filename = "{$article->name}//{$data['filename']}";
                     $view[$filename]['name'] = $filename;
                     $view[$filename]['url'] = $data['url'];
                     $view[$filename]['size'] = $data['formattedsize'];
@@ -246,7 +246,7 @@ class net_nehmer_static_handler_autoindex extends midcom_baseclasses_components_
             {
                 foreach ($datamanager->types[$name]->attachments_info as $identifier => $data)
                 {
-                    $filename = "{$article->name}.html/{$data['filename']}";
+                    $filename = "{$article->name}//{$data['filename']}";
                     $view[$filename]['name'] = $filename;
                     $view[$filename]['url'] = $data['url'];
                     $view[$filename]['size'] = $data['formattedsize'];

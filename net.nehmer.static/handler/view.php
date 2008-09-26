@@ -52,7 +52,7 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
         if ($this->_article->can_do('midgard:update'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}.html",
+                MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -61,7 +61,7 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
         if ($this->_article->can_do('midgard:delete'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}.html",
+                MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
@@ -210,7 +210,7 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
                 if ($this->_content_topic->can_do('midgard:create'))
                 {
                     $schemas = array_keys($this->_request_data['schemadb']);
-                    $_MIDCOM->relocate("createindex/{$schemas[0]}.html");
+                    $_MIDCOM->relocate("createindex/{$schemas[0]}/");
                     // This will exit.
                 }
                 else
