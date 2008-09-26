@@ -119,7 +119,7 @@ class net_nemein_downloads_viewer extends midcom_baseclasses_components_request
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "create/{$name}.html",
+                        MIDCOM_TOOLBAR_URL => "create/{$name}/",
                         MIDCOM_TOOLBAR_LABEL => sprintf
                         (
                             $this->_l10n_midcom->get('create %s'),
@@ -139,7 +139,7 @@ class net_nemein_downloads_viewer extends midcom_baseclasses_components_request
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_URL => 'config/',
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',

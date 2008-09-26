@@ -81,7 +81,7 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "edit/{$this->_downloadpage->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "edit/{$this->_downloadpage->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -95,7 +95,7 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "delete/{$this->_downloadpage->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "delete/{$this->_downloadpage->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'd',
@@ -166,12 +166,12 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "{$this->_downloadpage->name}.html",
+            MIDCOM_NAV_URL => "{$this->_downloadpage->name}/",
             MIDCOM_NAV_NAME => $this->_downloadpage->title,
         );
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "{$handler_id}/{$this->_downloadpage->guid}.html",
+            MIDCOM_NAV_URL => "{$handler_id}/{$this->_downloadpage->guid}/",
             MIDCOM_NAV_NAME => $this->_l10n_midcom->get($handler_id),
         );
 
@@ -214,7 +214,7 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
                 // *** FALL-THROUGH ***
 
             case 'cancel':
-                $_MIDCOM->relocate("{$this->_downloadpage->name}.html");
+                $_MIDCOM->relocate("{$this->_downloadpage->name}/");
                 // This will exit.
         }
 
@@ -294,7 +294,7 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
         if (array_key_exists('net_nemein_downloads_deletecancel', $_REQUEST))
         {
             // Redirect to view page.
-            $_MIDCOM->relocate("{$this->_downloadpage->name}.html");
+            $_MIDCOM->relocate("{$this->_downloadpage->name}/");
             // This will exit()
         }
 

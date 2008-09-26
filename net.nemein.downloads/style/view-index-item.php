@@ -3,4 +3,4 @@
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 $view = $data['view_downloadpage'];
 ?>
-<li><a href="&(prefix);&(view['name']);.html">&(view['release']:h);</a></li>
+<li><a href="&(prefix);&(view['name']);/">&(view['release']:h);</a></li>

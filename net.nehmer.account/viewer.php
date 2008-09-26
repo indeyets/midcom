@@ -67,7 +67,7 @@
  * This is a little fact important to understand for plugin developers: When you design your
  * plugin, you *always* operate in the namespace assigned to you by the administrator. Your
  * plugin name is only deduced during runtime, not ahead of it. So, for our motto component,
- * the above "index" handler will actually listen to .../account/plugin/motto.html.
+ * the above "index" handler will actually listen to .../account/plugin/motto/.
  *
  * Each plugin should implement that root page always, as at a later time the plugin system
  * will add the plugins to the NAP leaf information.

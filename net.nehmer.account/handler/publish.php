@@ -347,7 +347,7 @@ class net_nehmer_account_handler_publish extends midcom_baseclasses_components_h
         $this->_request_data['processing_msg'] = $this->_processing_msg;
         $this->_request_data['processing_msg_raw'] = $this->_processing_msg_raw;
         $this->_request_data['profile_url'] = $prefix;
-        $this->_request_data['edit_url'] = "{$prefix}edit.html";
+        $this->_request_data['edit_url'] = "{$prefix}edit/";
 
         $this->_request_data['account_revised'] = $this->_account->metadata->revised;
         $this->_request_data['account_published'] = $this->_account->metadata->published;

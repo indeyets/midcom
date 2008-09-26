@@ -63,7 +63,7 @@ class net_nemein_simpledb_handler_view extends midcom_baseclasses_components_han
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "edit/{$data['entry']->guid}.html",
+                MIDCOM_TOOLBAR_URL => "edit/{$data['entry']->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $data['l10n_midcom']->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -75,7 +75,7 @@ class net_nemein_simpledb_handler_view extends midcom_baseclasses_components_han
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "delete/{$data['entry']->guid}.html",
+                MIDCOM_TOOLBAR_URL => "delete/{$data['entry']->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $data['l10n_midcom']->get('delete'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -88,7 +88,7 @@ class net_nemein_simpledb_handler_view extends midcom_baseclasses_components_han
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "view/{$data['entry']->guid}.html",
+            MIDCOM_NAV_URL => "view/{$data['entry']->guid}/",
             MIDCOM_NAV_NAME => $data['view_title'],
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

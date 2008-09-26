@@ -52,7 +52,7 @@ class net_nemein_quickpoll_interface extends midcom_baseclasses_components_inter
             return null;
         }
 
-        return "{$article->guid}.html";
+        return "{$article->guid}/";
     }
 }
 ?>

@@ -69,7 +69,7 @@ class net_nehmer_account_admin extends midcom_baseclasses_components_request_adm
     {
         echo "<h2>{$this->_topic->extra}</h2>\n";
         echo "<ul>\n";
-        echo '<li><a href="config.html">' . $this->_l10n_midcom->get('component configuration') . "</a></li>\n";
+        echo '<li><a href="config/">' . $this->_l10n_midcom->get('component configuration') . "</a></li>\n";
         $plugins = $this->_config->get('admin_plugins');
         if ($plugins)
         {

@@ -69,7 +69,7 @@ class net_nemein_quickpoll_handler_admin extends midcom_baseclasses_components_h
         if ($this->_article->can_do('midgard:update'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}.html",
+                MIDCOM_TOOLBAR_URL => "edit/{$this->_article->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -78,7 +78,7 @@ class net_nemein_quickpoll_handler_admin extends midcom_baseclasses_components_h
         if ($this->_article->can_do('midgard:delete'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}.html",
+                MIDCOM_TOOLBAR_URL => "delete/{$this->_article->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
@@ -173,7 +173,7 @@ class net_nemein_quickpoll_handler_admin extends midcom_baseclasses_components_h
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "{$handler_id}/{$this->_article->guid}.html",
+            MIDCOM_NAV_URL => "{$handler_id}/{$this->_article->guid}/",
             MIDCOM_NAV_NAME => $this->_l10n_midcom->get($handler_id),
         );
 

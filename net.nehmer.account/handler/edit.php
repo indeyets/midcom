@@ -78,7 +78,7 @@ class net_nehmer_account_handler_edit extends midcom_baseclasses_components_hand
                     . mgd_errstr());
             }
             net_nehmer_account_viewer::verify_person_privileges($this->_account);
-            $return_url = "view/{$this->_account->guid}.html";
+            $return_url = "view/{$this->_account->guid}/";
         }
         else
         {

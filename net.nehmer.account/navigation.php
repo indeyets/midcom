@@ -35,7 +35,7 @@ class net_nehmer_account_navigation extends midcom_baseclasses_components_naviga
                 (
                     MIDCOM_NAV_SITE => Array
                     (
-                        MIDCOM_NAV_URL => "register.html",
+                        MIDCOM_NAV_URL => "register/",
                         MIDCOM_NAV_NAME => $this->_l10n->get('account registration'),
                     ),
                     MIDCOM_NAV_ADMIN => null,
@@ -51,7 +51,7 @@ class net_nehmer_account_navigation extends midcom_baseclasses_components_naviga
                 (
                     MIDCOM_NAV_SITE => Array
                     (
-                        MIDCOM_NAV_URL => "lostpassword.html",
+                        MIDCOM_NAV_URL => "lostpassword/",
                         MIDCOM_NAV_NAME => $this->_l10n->get('lost password'),
                     ),
                     MIDCOM_NAV_ADMIN => null,
@@ -70,7 +70,7 @@ class net_nehmer_account_navigation extends midcom_baseclasses_components_naviga
                 (
                     MIDCOM_NAV_SITE => Array
                     (
-                        MIDCOM_NAV_URL => "password.html",
+                        MIDCOM_NAV_URL => "password/",
                         MIDCOM_NAV_NAME => $this->_l10n->get('change password'),
                     ),
                     MIDCOM_NAV_ADMIN => null,

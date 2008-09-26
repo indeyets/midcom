@@ -102,7 +102,7 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__ais/folder/unapprove.html",
+                    MIDCOM_TOOLBAR_URL => "__ais/folder/unapprove/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('unapprove', 'midcom'),
                     MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('approved', 'midcom'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
@@ -122,7 +122,7 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__ais/folder/approve.html",
+                    MIDCOM_TOOLBAR_URL => "__ais/folder/approve/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('approve', 'midcom'),
                     MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('unapproved', 'midcom'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/not_approved.png',

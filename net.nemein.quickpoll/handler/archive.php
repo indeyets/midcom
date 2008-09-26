@@ -155,7 +155,7 @@ class net_nemein_quickpoll_handler_archive extends midcom_baseclasses_components
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "{$handler_id}/{$this->_article->name}.html",
+            MIDCOM_NAV_URL => "{$handler_id}/{$this->_article->name}/",
             MIDCOM_NAV_NAME => $this->_l10n_midcom->get($handler_id),
         );
 

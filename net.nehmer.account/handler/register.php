@@ -15,11 +15,11 @@
  *
  * URLs in use:
  *
- * register.html: The main registration page, it shows the list of available account
+ * register/: The main registration page, it shows the list of available account
  *     types, or redirects to the approriate page if only one account type is set
  *     in the schema.
  *
- * register/$type.html: The actual registration code, using DM2 to input all necessary
+ * register/$type/: The actual registration code, using DM2 to input all necessary
  *     information.
  *
  * If you want the system to relocate to a specific page after account activation, you
@@ -155,7 +155,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
             if (   ! $open_types
                 || in_array($name, $open_types))
             {
-                $this->_request_data['types']["{$prefix}register/{$name}.html"] = $schema->description;
+                $this->_request_data['types']["{$prefix}register/{$name}/"] = $schema->description;
             }
         }
 
@@ -237,7 +237,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
             $session->set('invite_hash', $hash);
 
             $schema_name = $this->_config->get('invreg_schema');
-            $dest = "{$prefix}register/{$schema_name}.html";
+            $dest = "{$prefix}register/{$schema_name}/";
 
             $_MIDCOM->relocate($dest);
 
@@ -368,7 +368,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
                 $tmp = array();
                 $tmp[] = array
                 (
-                    MIDCOM_NAV_URL => "register/account.html",
+                    MIDCOM_NAV_URL => "register/account/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('confirm account details'),
                 );
 
@@ -381,7 +381,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
                 $tmp = array();
                 $tmp[] = array
                 (
-                    MIDCOM_NAV_URL => "register/account.html",
+                    MIDCOM_NAV_URL => "register/account/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('registration finished'),
                 );
 
@@ -415,7 +415,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
                 // *** FALL THROUGH ***
             case 'cancel':
                 // Return to the account type selection
-                $_MIDCOM->relocate('register.html');
+                $_MIDCOM->relocate('register/');
                 // This will exit.
         }
 
@@ -482,7 +482,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         // expensive creation process.
         if (midcom_helper_datamanager2_formmanager::get_clicked_button() == 'cancel')
         {
-            $_MIDCOM->relocate('register.html');
+            $_MIDCOM->relocate('register/');
             // This will exit.
         }
 
@@ -727,7 +727,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
                 $tmp = array();
                 $tmp[] = array
                 (
-                    MIDCOM_NAV_URL => "register/account.html",
+                    MIDCOM_NAV_URL => "register/account/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('registration finished'),
                 );
 
@@ -772,7 +772,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
         );
 
         // Generate the actication link
-        $activation_link = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "register/activate/{$this->_person->guid}/{$activation_hash}.html";
+        $activation_link = substr($_MIDCOM->get_host_prefix(), 0, -1) . $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "register/activate/{$this->_person->guid}/{$activation_hash}/";
 
         //$activation_link = str_replace("//","/", $activation_link);
 

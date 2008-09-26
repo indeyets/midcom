@@ -54,7 +54,7 @@ class net_nemein_downloads_handler_view extends midcom_baseclasses_components_ha
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "edit/{$this->_downloadpage->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "edit/{$this->_downloadpage->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -67,7 +67,7 @@ class net_nemein_downloads_handler_view extends midcom_baseclasses_components_ha
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "delete/{$this->_downloadpage->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "delete/{$this->_downloadpage->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'd',
@@ -154,7 +154,7 @@ class net_nemein_downloads_handler_view extends midcom_baseclasses_components_ha
         $arg = $this->_downloadpage->name ? $this->_downloadpage->name : $this->_downloadpage->guid;
         $tmp[] = array
         (
-            MIDCOM_NAV_URL => "{$arg}.html",
+            MIDCOM_NAV_URL => "{$arg}/",
             MIDCOM_NAV_NAME => $this->_downloadpage->title,
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

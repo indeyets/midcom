@@ -566,7 +566,7 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
                 }
 
                 $data['entry'] = $result;
-                $data['view_name'] = "view/{$result->name}.html";
+                $data['view_name'] = "view/{$result->name}/";
                 midcom_show_style('view-index-item');
                 $entries_shown++;
             }
@@ -639,7 +639,7 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
             }
 
             $data['entry'] = $result;
-            $data['view_name'] = "view/{$result->name}.html";
+            $data['view_name'] = "view/{$result->name}/";
             midcom_show_style('view-index-item');
             $entries_shown++;
         }

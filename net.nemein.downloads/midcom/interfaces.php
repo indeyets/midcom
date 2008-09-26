@@ -39,7 +39,7 @@ class net_nemein_downloads_interface extends midcom_baseclasses_components_inter
         {
             return null;
         }
-        return "{$article->name}.html";
+        return "{$article->name}/";
     }
 }
 

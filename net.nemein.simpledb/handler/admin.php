@@ -127,7 +127,7 @@ class net_nemein_simpledb_handler_admin extends midcom_baseclasses_components_ha
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "edit/{$this->_request_data['entry']->guid}.html",
+                MIDCOM_TOOLBAR_URL => "edit/{$this->_request_data['entry']->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -139,7 +139,7 @@ class net_nemein_simpledb_handler_admin extends midcom_baseclasses_components_ha
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "delete/{$this->_request_data['entry']->guid}.html",
+                MIDCOM_TOOLBAR_URL => "delete/{$this->_request_data['entry']->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('delete'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -247,7 +247,7 @@ class net_nemein_simpledb_handler_admin extends midcom_baseclasses_components_ha
                     $metadata->approve();
                 }
 
-                $_MIDCOM->relocate("view/{$this->_request_data['entry']->guid}.html");
+                $_MIDCOM->relocate("view/{$this->_request_data['entry']->guid}/");
                 // This will exit
 
 
@@ -364,12 +364,12 @@ class net_nemein_simpledb_handler_admin extends midcom_baseclasses_components_ha
                 $indexer->index($data['datamanager']);
 
                 // Redirect to view page.
-                $_MIDCOM->relocate("view/{$data['entry']->guid}.html");
+                $_MIDCOM->relocate("view/{$data['entry']->guid}/");
                 // This will exit()
 
             case MIDCOM_DATAMGR_CANCELLED:
                 // Redirect to view page.
-                $_MIDCOM->relocate("view/{$data['entry']->guid}.html");
+                $_MIDCOM->relocate("view/{$data['entry']->guid}/");
                 // This will exit()
 
             case MIDCOM_DATAMGR_FAILED:
@@ -382,16 +382,16 @@ class net_nemein_simpledb_handler_admin extends midcom_baseclasses_components_ha
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
 
         $this->_populate_toolbar();
-        $this->_view_toolbar->hide_item("edit/{$data['entry']->guid}.html");
+        $this->_view_toolbar->hide_item("edit/{$data['entry']->guid}/");
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "view/{$data['entry']->guid}.html",
+            MIDCOM_NAV_URL => "view/{$data['entry']->guid}/",
             MIDCOM_NAV_NAME => $data['entry']->title,
         );
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "edit/{$data['entry']->guid}.html",
+            MIDCOM_NAV_URL => "edit/{$data['entry']->guid}/",
             MIDCOM_NAV_NAME => $data['l10n_midcom']->get('edit'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
@@ -450,16 +450,16 @@ class net_nemein_simpledb_handler_admin extends midcom_baseclasses_components_ha
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
 
         $this->_populate_toolbar();
-        $this->_view_toolbar->hide_item("delete/{$data['entry']->guid}.html");
+        $this->_view_toolbar->hide_item("delete/{$data['entry']->guid}/");
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "view/{$data['entry']->guid}.html",
+            MIDCOM_NAV_URL => "view/{$data['entry']->guid}/",
             MIDCOM_NAV_NAME => $data['entry']->title,
         );
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "delete/{$data['entry']->guid}.html",
+            MIDCOM_NAV_URL => "delete/{$data['entry']->guid}/",
             MIDCOM_NAV_NAME => $data['l10n_midcom']->get('delete'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

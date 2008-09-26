@@ -76,7 +76,7 @@ class net_nehmer_account_handler_configuration extends midcom_baseclasses_compon
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "config.html",
+            MIDCOM_NAV_URL => "config/",
             MIDCOM_NAV_NAME => $this->_l10n_midcom->get('component configuration', 'midcom'),
         );
 

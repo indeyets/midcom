@@ -50,7 +50,7 @@ class net_nemein_downloads_navigation extends midcom_baseclasses_components_navi
             (
                 MIDCOM_NAV_SITE => Array
                 (
-                    MIDCOM_NAV_URL => "{$article->name}.html",
+                    MIDCOM_NAV_URL => "{$article->name}/",
                     MIDCOM_NAV_NAME => ($article->title != '') ? $article->title : $article->name
                 ),
                 MIDCOM_NAV_ADMIN => null,
