@@ -30,7 +30,11 @@ if (   array_key_exists('HTTP_X_MOZ', $_SERVER)
  * 2008-09-26: Now also rewrites urls ending in .html to end with trailing slash.
  */
 $redirect_test_uri = (string)$_SERVER['REQUEST_URI'];
-$redirect_test_uri = preg_replace('/\.html$/', '', $redirect_test_uri);
+if (   !isset($_SERVER['MIDCOM_COMPAT_REDIR'])
+    || (bool)$_SERVER['MIDCOM_COMPAT_REDIR'] !== false)
+{
+    $redirect_test_uri = preg_replace('/\.html$/', '', $redirect_test_uri);
+}
 if (   !preg_match('%\?|/$|midcom-.+-|/.+\..+$%', $redirect_test_uri)
     && (   !isset($_POST)
         || empty($_POST))
