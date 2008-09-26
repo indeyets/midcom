@@ -654,7 +654,7 @@ class midcom_helper_nav
      * (
      *     Array
      *     (
-     *         MIDCOM_NAV_URL => "list/{$this->_category}/{$this->_mode}/1.html",
+     *         MIDCOM_NAV_URL => "list/{$this->_category}/{$this->_mode}/1/",
      *         MIDCOM_NAV_NAME => $this->_category_name,
      *     ),
      * );

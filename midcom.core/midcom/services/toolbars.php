@@ -339,7 +339,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             $toolbar->add_item(
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__ais/folder/edit.html",
+                    MIDCOM_TOOLBAR_URL => "__ais/folder/edit/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit folder', 'midcom.admin.folder'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'g',
@@ -351,7 +351,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__ais/folder/metadata/{$topic->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "__ais/folder/metadata/{$topic->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('edit folder metadata', 'midcom.admin.folder'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/metadata.png',
                 )
@@ -365,7 +365,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "__ais/folder/move/{$topic->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "__ais/folder/move/{$topic->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('move', 'midcom.admin.folder'),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/save-as.png',
                     )
@@ -376,7 +376,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__ais/folder/order.html",
+                    MIDCOM_TOOLBAR_URL => "__ais/folder/order/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('order navigation', 'midcom.admin.folder'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/topic-score.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'o',
@@ -408,7 +408,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "__ais/folder/unapprove.html",
+                        MIDCOM_TOOLBAR_URL => "__ais/folder/unapprove/",
                         MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('unapprove topic', 'midcom'),
                         MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('approved', 'midcom'),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
@@ -427,7 +427,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "__ais/folder/approve.html",
+                        MIDCOM_TOOLBAR_URL => "__ais/folder/approve/",
                         MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('approve topic', 'midcom'),
                         MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('unapproved', 'midcom'),
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/not_approved.png',
@@ -474,7 +474,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__ais/folder/create.html",
+                    MIDCOM_TOOLBAR_URL => "__ais/folder/create/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create subfolder', 'midcom.admin.folder'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-dir.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'f',
@@ -488,7 +488,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             $toolbar->add_item(
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "__ais/folder/delete.html",
+                    MIDCOM_TOOLBAR_URL => "__ais/folder/delete/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('delete folder', 'midcom.admin.folder'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                     // for terminate d is used by everyone to go to the location bar
@@ -709,7 +709,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 && $metadata->is_approved())
             {
                 $toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/unapprove.html",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/unapprove/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('unapprove', 'midcom'),
                     MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('approved', 'midcom'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
@@ -725,7 +725,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
             else
             {
                 $toolbar->add_item(Array(
-                    MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/approve.html",
+                    MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/approve/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('approve', 'midcom'),
                     MIDCOM_TOOLBAR_HELPTEXT => $_MIDCOM->i18n->get_string('unapproved', 'midcom'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/not_approved.png',

@@ -208,11 +208,11 @@ class midcom_helper_toolbar
     {
         if (is_null($component))
         {
-            $uri = "__ais/help/{$help_id}.html";
+            $uri = "__ais/help/{$help_id}/";
         }
         else
         {
-            $uri = "__ais/help/{$component}/{$help_id}.html";
+            $uri = "__ais/help/{$component}/{$help_id}/";
         }
 
         if (is_null($label))

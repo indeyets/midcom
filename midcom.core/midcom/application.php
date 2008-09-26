@@ -543,7 +543,7 @@ class midcom_application
      * to the loaded one:
      *
      * <code>
-     * $blog = '/blog/latest/3.html';
+     * $blog = '/blog/latest/3/';
      * $substyle = 'homepage';
      * $_MIDCOM->dynamic_load("/midcom-substyle-{$substyle}/{$blog}");
      * </code>

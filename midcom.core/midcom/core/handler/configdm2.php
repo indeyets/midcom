@@ -190,7 +190,7 @@ class midcom_core_handler_configdm2 extends midcom_baseclasses_components_handle
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "config.html",
+            MIDCOM_NAV_URL => "config/",
             MIDCOM_NAV_NAME => $this->_l10n_midcom->get('component configuration'),
         );
 

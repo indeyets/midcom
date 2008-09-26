@@ -48,7 +48,7 @@
  * // ...
  *
  * $this->_node_toolbar->add_item(Array(
- *     MIDCOM_TOOLBAR_URL => 'config.html',
+ *     MIDCOM_TOOLBAR_URL => 'config/',
  *     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
  *     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
  *     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
@@ -216,14 +216,14 @@ class midcom_core_handler_configdm extends midcom_baseclasses_components_handler
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => 'config.html',
+            MIDCOM_NAV_URL => 'config/',
             MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('component configuration', 'midcom'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
         // Hide the button in toolbar
         // TODO: Figure out the real URL of the config editor
-        // $this->_node_toolbar->hide_item('config.html');
+        // $this->_node_toolbar->hide_item('config/');
 
         // Set page title
         $data['topic'] = $this->_topic;

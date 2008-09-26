@@ -135,14 +135,14 @@ class midcom_baseclasses_components_navigation
      *
      *  while ($articles->fetch ()) {
      *      // Match the toolbar to the correct URL.
-     *      $toolbar[50][MIDCOM_TOOLBAR_URL] = "edit/{$articles->id}.html";
-     *      $toolbar[51][MIDCOM_TOOLBAR_URL] = "delete/{$articles->id}.html";
+     *      $toolbar[50][MIDCOM_TOOLBAR_URL] = "edit/{$articles->id}/";
+     *      $toolbar[51][MIDCOM_TOOLBAR_URL] = "delete/{$articles->id}/";
      *
      *      $leaves[$articles->id] = array
      *      (
      *          MIDCOM_NAV_SITE => Array
      *          (
-     *              MIDCOM_NAV_URL => $articles->name . ".html",
+     *              MIDCOM_NAV_URL => $articles->name . "/",
      *              MIDCOM_NAV_NAME => ($articles->title != "") ? $articles->title : $articles->name
      *          ),
      *          MIDCOM_NAV_ADMIN => Array
@@ -183,7 +183,7 @@ class midcom_baseclasses_components_navigation
      *  $toolbar = Array();
      *  $toolbar[100] = Array
      *  (
-     *      MIDCOM_TOOLBAR_URL => 'config.html',
+     *      MIDCOM_TOOLBAR_URL => 'config/',
      *      MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
      *      MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
      *      MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
