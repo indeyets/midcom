@@ -115,7 +115,7 @@ class org_routamc_gallery_viewer extends midcom_baseclasses_components_request
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "{$this->_request_data['photostream'][MIDCOM_NAV_FULLURL]}upload.html?to_gallery={$this->_topic->id}",
+                    MIDCOM_TOOLBAR_URL => "{$this->_request_data['photostream'][MIDCOM_NAV_FULLURL]}upload/?to_gallery={$this->_topic->id}",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('upload photos', 'org.routamc.photostream'),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/images.png',
@@ -144,7 +144,7 @@ class org_routamc_gallery_viewer extends midcom_baseclasses_components_request
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_URL => 'config/',
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('gallery settings'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n->get('gallery settings helptext'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',

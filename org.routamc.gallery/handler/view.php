@@ -279,7 +279,7 @@ class org_routamc_gallery_handler_view extends midcom_baseclasses_components_han
 
         $tmp[] = array
         (
-            MIDCOM_NAV_URL => $this->_request_data['gallery_node'][MIDCOM_NAV_FULLURL] . "{$this->_request_data['photo']->guid}.html",
+            MIDCOM_NAV_URL => $this->_request_data['gallery_node'][MIDCOM_NAV_FULLURL] . "{$this->_request_data['photo']->guid}/",
             MIDCOM_NAV_NAME => $this->_request_data['view_title'],
         );
         // TODO: How can we present the correct gallery page in breacrumb ?

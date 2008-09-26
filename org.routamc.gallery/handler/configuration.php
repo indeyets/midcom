@@ -76,7 +76,7 @@ class org_routamc_gallery_handler_configuration extends midcom_baseclasses_compo
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "config.html",
+            MIDCOM_NAV_URL => "config/",
             MIDCOM_NAV_NAME => $this->_l10n->get('gallery settings'),
         );
 

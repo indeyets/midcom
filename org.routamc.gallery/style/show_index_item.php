@@ -7,7 +7,7 @@ if (isset($data['datamanager']->types['photo']->attachments_info['thumbnail']))
 {
     $thumbnail = $data['datamanager']->types['photo']->attachments_info['thumbnail'];
 }
-$photo_url = "{$prefix}photo/{$data['photo']->guid}.html";
+$photo_url = "{$prefix}photo/{$data['photo']->guid}/";
 ?>
 <li class="photo">
     <?php

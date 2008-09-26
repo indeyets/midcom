@@ -58,7 +58,7 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
         if (!$this->_config->get('gallery_type'))
         {
             // No type yet set, relocate to config screen
-            $_MIDCOM->relocate('config.html');
+            $_MIDCOM->relocate('config/');
             // This will exit
         }
         debug_push_class(__CLASS__, __FUNCTION__);

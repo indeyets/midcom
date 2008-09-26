@@ -62,7 +62,7 @@ class org_routamc_gallery_navigation extends midcom_baseclasses_components_navig
         {
             $leaves[$photo->guid] = array
             (
-                MIDCOM_NAV_URL => "photo/{$photo->guid}.html",
+                MIDCOM_NAV_URL => "photo/{$photo->guid}/",
                 MIDCOM_NAV_NAME => $photo->title,
                 MIDCOM_NAV_ADMIN => null,
                 MIDCOM_NAV_GUID => $photo->guid,
