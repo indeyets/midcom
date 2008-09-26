@@ -198,7 +198,7 @@ class net_nemein_personnel_handler_account extends midcom_baseclasses_components
         $tmp = array();
         $tmp[] = array
         (
-            MIDCOM_NAV_URL => "{$this->_person->guid}.html",
+            MIDCOM_NAV_URL => "{$this->_person->guid}/",
             MIDCOM_NAV_NAME => $this->_person->name,
         );
         $tmp[] = array

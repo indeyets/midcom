@@ -36,7 +36,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 <li style="clear: both";>
     <div class="net_nemein_feedcollector_management_topic">
         <div class="net_nemein_feedcollector_management_topic_buttons" style="float:right;">
-            <a href="&(prefix);__ais/folder/metadata/&(feedtopic_guid);.html" title="<? echo $data['l10n']->get('edit metadata'); ?>" alt="<? echo $data['l10n']->get('edit metadata'); ?>"><img src="&(static_url);/stock-icons/16x16/metadata.png" alt="<? echo $data['l10n']->get('edit metadata'); ?>" border="0"></a>
+            <a href="&(prefix);__ais/folder/metadata/&(feedtopic_guid);/" title="<? echo $data['l10n']->get('edit metadata'); ?>" alt="<? echo $data['l10n']->get('edit metadata'); ?>"><img src="&(static_url);/stock-icons/16x16/metadata.png" alt="<? echo $data['l10n']->get('edit metadata'); ?>" border="0"></a>
             <a href="&(prefix);manage/edit/&(feedtopic_guid);" title="<? echo $data['l10n']->get('edit'); ?>" alt="<? echo $data['l10n']->get('edit'); ?>"><img src="&(static_url);/stock-icons/16x16/edit.png" alt="<? echo $data['l10n']->get('edit'); ?>" border="0"></a>
             <a href="&(prefix);manage/delete/&(feedtopic_guid);" title="<? echo $data['l10n']->get('remove'); ?>" alt="<? echo $data['l10n']->get('remove'); ?>"><img src="&(static_url);/stock-icons/16x16/cancel.png" alt="<? echo $data['l10n']->get('remove'); ?>" border="0"></a>
         </div>

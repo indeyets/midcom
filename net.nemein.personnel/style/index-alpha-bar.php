@@ -9,6 +9,7 @@ if ($data['config']->get('enable_alphabetical'))
     ?>
 <p>
 <?php
+    //FIXME: Should probably handle scandinavian characters too ?
     for ($char = 'A', $i = 0; $i < 26; $i++, $char++)
     {
         if ($char == $data['alpha_filter'])
@@ -16,7 +17,7 @@ if ($data['config']->get('enable_alphabetical'))
 ?>
   &(char);
 <?php } else { ?>
-  <a href="&(prefix);&(char);.html">&(char);</a>
+  <a href="&(prefix);&(char);/">&(char);</a>
 <?php } } ?>
 </p>
 <?php } ?>

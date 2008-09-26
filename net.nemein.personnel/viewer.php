@@ -268,7 +268,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "admin/create.html",
+                    MIDCOM_TOOLBAR_URL => "admin/create/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('create person'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_person.png',
                 )
@@ -279,7 +279,7 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             && $this->_topic->can_do('midcom:component_config'))
         {
             $this->_node_toolbar->add_item(array(
-                MIDCOM_TOOLBAR_URL => 'config.html',
+                MIDCOM_TOOLBAR_URL => 'config/',
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
                 MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
@@ -288,8 +288,8 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
     }
 
     /**
-     * Simple helper, gives the base URL for a person (either username.html or
-     * guid.html, depending on the username).
+     * Simple helper, gives the base URL for a person (either username/ or
+     * guid/, depending on the username).
      *
      * All 1 argument handlers are filtered here.
      *
@@ -308,11 +308,11 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
             && $person->username != 'vcard.vcf'
             && $person->username != 'foaf.rdf')
         {
-            return "{$prefix}{$person->username}.html";
+            return "{$prefix}{$person->username}/";
         }
         else
         {
-            return "{$prefix}{$person->guid}.html";
+            return "{$prefix}{$person->guid}/";
         }
     }
 

@@ -254,7 +254,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "admin/edit/{$this->_person->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "admin/edit/{$this->_person->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -267,7 +267,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "admin/delete/{$this->_person->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "admin/delete/{$this->_person->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                     MIDCOM_TOOLBAR_ACCESSKEY => 'd',
@@ -279,7 +279,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "account/{$this->_person->guid}.html",
+                MIDCOM_TOOLBAR_URL => "account/{$this->_person->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('user account'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'a',
@@ -301,7 +301,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
             $this->_alpha_filter = $this->_person->lastname[0];
             $tmp[] = array
             (
-                MIDCOM_NAV_URL => "alpha/{$this->_alpha_filter}.html",
+                MIDCOM_NAV_URL => "alpha/{$this->_alpha_filter}/",
                 MIDCOM_NAV_NAME => $this->_alpha_filter,
             );
         }
@@ -437,7 +437,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
     {
         if (!$this->_config->get('group'))
         {
-            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "config.html");
+            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "config/");
         }
         
         // Get the root group
@@ -471,7 +471,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
             $tmp = array();
             $tmp[] = array
             (
-                MIDCOM_NAV_URL => "alpha/{$this->_alpha_filter}.html",
+                MIDCOM_NAV_URL => "alpha/{$this->_alpha_filter}/",
                 MIDCOM_NAV_NAME => $this->_alpha_filter,
             );
             $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

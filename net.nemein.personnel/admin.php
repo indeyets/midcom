@@ -182,7 +182,7 @@ class net_nemein_personnel_admin extends midcom_baseclasses_components_request_a
 
       // Add the toolbar items
       $this->_local_toolbar->add_item(Array(
-          MIDCOM_TOOLBAR_URL => "edit/{$id}.html",
+          MIDCOM_TOOLBAR_URL => "edit/{$id}/",
           MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
           MIDCOM_TOOLBAR_HELPTEXT => null,
           MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -212,7 +212,7 @@ class net_nemein_personnel_admin extends midcom_baseclasses_components_request_a
       if (mgd_is_person_owner($this->_person->id))
       {
           $this->_owner = true;
-          $this->_local_toolbar->enable_item("edit/{$id}.html");
+          $this->_local_toolbar->enable_item("edit/{$id}/");
       }
 
       $this->_view = "view";
@@ -228,7 +228,7 @@ class net_nemein_personnel_admin extends midcom_baseclasses_components_request_a
         }
 
         $this->_topic_toolbar->disable_item('');
-        $this->_local_toolbar->disable_item("edit/{$id}.html");
+        $this->_local_toolbar->disable_item("edit/{$id}/");
         $this->_local_toolbar->disable_view_page();
 
         // Go to datamanager's form processing loop only if permissions are correct
@@ -246,7 +246,7 @@ class net_nemein_personnel_admin extends midcom_baseclasses_components_request_a
 
             case MIDCOM_DATAMGR_CANCELLED:
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                    . "view/{$id}.html");
+                    . "view/{$id}/");
                 // This will exit()
 
             case MIDCOM_DATAMGR_FAILED:

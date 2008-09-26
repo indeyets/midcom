@@ -106,9 +106,9 @@ class net_nemein_personnel_interface extends midcom_baseclasses_components_inter
         
         if ($person->username)
         {
-            return "{$person->username}.html";
+            return "{$person->username}/";
         }
-        return "{$person->guid}.html";
+        return "{$person->guid}/";
     }    
 }
 

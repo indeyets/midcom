@@ -10,7 +10,7 @@
  * Callbacks baseclass for storing common helper methods
  *
  * The midcom_baseclasses_components_purecode class defines a bunch of helper vars
- * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_purecode.html
+ * See: http://www.midgard-project.org/api-docs/midcom/dev/midcom.baseclasses/midcom_baseclasses_components_purecode/
  * 
  * @package fi.hut.loginbroker
  */
