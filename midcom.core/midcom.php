@@ -26,17 +26,23 @@ if (   array_key_exists('HTTP_X_MOZ', $_SERVER)
  * have trailing slash or some extension in the "filename".
  *
  * This makes life much, much better when making static copies for whatever reason
+ *
+ * 2008-09-26: Now also rewrites urls ending in .html to end with trailing slash.
  */
-if (   !preg_match('%\?|/$|midcom-.+-|/.+\..+$%', $_SERVER['REQUEST_URI'])
+$redirect_test_uri = (string)$_SERVER['REQUEST_URI'];
+$redirect_test_uri = preg_replace('/\.html$/', '', $redirect_test_uri);
+if (   !preg_match('%\?|/$|midcom-.+-|/.+\..+$%', $redirect_test_uri)
     && (   !isset($_POST)
         || empty($_POST))
     )
 {
     header('HTTP/1.0 301 Moved Permanently');
-    header("Location: {$_SERVER['REQUEST_URI']}/");
-    echo "301: new location <a href='{$_SERVER['REQUEST_URI']}/'>{$_SERVER['REQUEST_URI']}/</a>";
+    header("Location: {$redirect_test_uri}/");
+    echo "301: new location <a href='{$redirect_test_uri}/'>{$redirect_test_uri}/</a>";
     exit();
 }
+unset($redirect_test_uri);
+
 /** */
 
 // Advertise the fact that this is a Midgard server
