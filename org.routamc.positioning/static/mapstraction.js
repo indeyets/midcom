@@ -4617,4 +4617,4 @@ window.mxn = {
 };
 
 })();
-/*mxn.activatePolluteMode();*/
+mxn.activatePolluteMode();
