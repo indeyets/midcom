@@ -98,8 +98,8 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
      */
     function _to_gallery_defaults()
     {
-        if (   !isset($_REQUEST['to_gallery'])
-            || empty($_REQUEST['to_gallery']))
+        if (   !isset($_REQUEST['to_gallery']['org_routamc_photostream_to_gallery_chooser_widget_search_input'])
+            || empty($_REQUEST['to_gallery']['org_routamc_photostream_to_gallery_chooser_widget_search_input']))
         {
             // No need to do anything
             return;
