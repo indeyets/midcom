@@ -136,15 +136,17 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         {
             return;
         }
-        // Detect 1.8 vs 1.7 by presence of this writing of QB
-        if (class_exists('midgard_query_builder'))
+     
+        try 
         {
             $att = new midgard_attachment($this->thumb);
         }
-        else
+        catch(midgard_error_exception $e)
         {
-            $att = mgd_get_attachment($this->thumb);
+            /* return silently */
+            return;
         }
+      
         if (   !is_object($att)
             || !$att->id)
         {
