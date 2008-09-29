@@ -335,3 +335,11 @@ Der Titel ist leer!
 Warnung! Kann zu Datenverlust führen!
 ---STRINGEND
 
+---STRING objects with no navigation entry are still accessible on-site if the url is known
+Objekte ohne Navigationseintrag sind weiterhin verfügbar, insofern die URL bekannt ist
+---STRINGEND
+
+---STRING submitting the form
+Formular wird abgeschickt
+---STRINGEND
+

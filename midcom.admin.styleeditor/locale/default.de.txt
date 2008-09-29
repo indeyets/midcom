@@ -103,6 +103,10 @@ Style-Editor
 Dateityp
 ---STRINGEND
 
+---STRING no files
+keine Dateien vorhanden
+---STRINGEND
+
 ---STRING plain text
 Einfacher Text
 ---STRINGEND
@@ -143,6 +147,15 @@ URL
 XML
 ---STRINGEND
 
----STRING no files
-keine Dateien vorhanden
+---STRING create new element
+Neues Element erstellen
 ---STRINGEND
+
+---STRING list of %s folders using the same style template path
+Liste der %s-Ordner, die den gleichen Stilvorlagen-Pfad benutzen
+---STRINGEND
+
+---STRING new layout template
+Neue Stilvorlage
+---STRINGEND
+

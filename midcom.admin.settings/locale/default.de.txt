@@ -307,3 +307,59 @@ Pfad der unrtf-Anwendung
 Pfad der unzip-Anwendung
 ---STRINGEND
 
+---STRING allowed components (leave empty to allow all)
+Zugelassene Kompontenten (freilassen, um alle zuzulassen)
+---STRINGEND
+
+---STRING auth configuration
+Authentifizierungs-Konfiguration
+---STRINGEND
+
+---STRING auth_openid_enable
+OpenID-Plugin aktivieren
+---STRINGEND
+
+---STRING cache configuration
+Cache-Konfiguration
+---STRINGEND
+
+---STRING cache_module_content_uncached
+Content-Cacheing deaktivieren
+---STRINGEND
+
+---STRING core configuration
+Core-Konfiguration
+---STRINGEND
+
+---STRING excluded components (leave empty to allow all)
+Nicht zugelassene Komponenten (freilassen, um alle zuzulassen)
+---STRINGEND
+
+---STRING failed to create settings
+Einstellungen konnten nicht gespeichert werden
+---STRINGEND
+
+---STRING host "%s" not found. try using menu.
+Host "%s" konnte nicht gefunden werden. Versuchen Sie es über das Menü.
+---STRINGEND
+
+---STRING indexer configuration
+Indexer-Konfiguration
+---STRINGEND
+
+---STRING logging configuration
+Logging-Konfiguration
+---STRINGEND
+
+---STRING metadata configuration
+Metadaten-Konfiguration
+---STRINGEND
+
+---STRING nap settings
+NAP-Einstellungen
+---STRINGEND
+
+---STRING utilities
+Dienstprogramme
+---STRINGEND
+

@@ -83,6 +83,10 @@ Enable Asgard usage
 Enable centralized toolbar
 ---STRINGEND
 
+---STRING enable unlocking locked objects
+Enable unlocking locked objects
+---STRINGEND
+
 ---STRING failed to send the message to %s
 Failed to send the message to %s
 ---STRINGEND
@@ -281,9 +285,5 @@ Write the message that will be sent to the recipients
 
 ---STRING your password has been changed
 Your password has been changed
----STRINGEND
-
----STRING enable unlocking locked objects
-Enable unlocking locked objects
 ---STRINGEND
 

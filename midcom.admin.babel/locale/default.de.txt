@@ -1,6 +1,6 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
----CVS $Id: default.de.txt 367 2005-01-18 08:20:22Z torben $
+---CVS $Id$
 ---LANGUAGE de
 
 ---STRING component
@@ -9,6 +9,10 @@ Komponente
 
 ---STRING core component status
 Status (Haupt-Komponenten)
+---STRINGEND
+
+---STRING core components
+Core-Komponenten
 ---STRINGEND
 
 ---STRING default
@@ -27,8 +31,20 @@ Sprache
 MidCOM-Übersetzungswerkzeug
 ---STRINGEND
 
+---STRING new string
+Neuer String
+---STRINGEND
+
 ---STRING other component status
 Status (andere)
+---STRINGEND
+
+---STRING other components
+Andere Komponenten
+---STRINGEND
+
+---STRING percentage
+Prozentsatz
 ---STRINGEND
 
 ---STRING perm-denied text
@@ -50,6 +66,14 @@ Wählen Sie die zu übersetzende Sprache
 
 ---STRING string-id
 String-ID
+---STRINGEND
+
+---STRING strings total
+Gesamtzahl Strings
+---STRINGEND
+
+---STRING translated strings
+Übersetzte Strings
 ---STRINGEND
 
 ---STRING translation status for language %s

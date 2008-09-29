@@ -103,6 +103,10 @@ Style editor
 File type
 ---STRINGEND
 
+---STRING no files
+No files
+---STRINGEND
+
 ---STRING plain text
 Plain text
 ---STRINGEND
@@ -143,6 +147,3 @@ URL
 XML
 ---STRINGEND
 
----STRING no files
-No files
----STRINGEND

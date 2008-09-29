@@ -7,6 +7,10 @@
 %s gelöschte Objekte
 ---STRINGEND
 
+---STRING %s purged
+%s entfernt
+---STRINGEND
+
 ---STRING %s trash
 %s-Papierkorb
 ---STRINGEND
@@ -39,8 +43,28 @@ Jeder
 Alle angemeldeten Benutzer
 ---STRINGEND
 
+---STRING actions
+Aktionen
+---STRINGEND
+
 ---STRING add assignee
 Gruppe zur Rechtevergabe hinzufügen
+---STRINGEND
+
+---STRING add text file
+Text-Datei hinzufügen
+---STRINGEND
+
+---STRING all of the following items will be deleted
+Alle nachfolgenden Objekte werden gelöscht
+---STRINGEND
+
+---STRING always display in top frame
+Immer im obersten Frame anzeigen
+---STRINGEND
+
+---STRING any
+Alle
 ---STRINGEND
 
 ---STRING apply to selected
@@ -59,12 +83,12 @@ Asgard-Startseite
 Asgard-Plugins
 ---STRINGEND
 
----STRING attachment %s undeleted
-Datei %s wiederhergestellt
----STRINGEND
-
 ---STRING attachment
 Dateianhang
+---STRINGEND
+
+---STRING attachment %s undeleted
+Datei %s wiederhergestellt
 ---STRINGEND
 
 ---STRING attachments
@@ -75,104 +99,64 @@ Dateianhänge
 Dateianhänge von %s "%s"
 ---STRINGEND
 
----STRING no files
-Keine Dateien vorhanden
+---STRING back to %s
+zurück zu "%s"
 ---STRINGEND
 
----STRING upload file
-Datei hochladen
----STRINGEND
-
----STRING add text file
-Text-Datei hinzufügen
----STRINGEND
-
----STRING filename
-Dateiname
----STRINGEND
-
----STRING mimetype
-MIME-Typ
----STRINGEND
-
----STRING navigation options
-Navigationseinstellungen
+---STRING back to site
+zurück zur Website
 ---STRINGEND
 
 ---STRING cascading style sheet
 Cascading Style Sheet
 ---STRINGEND
 
----STRING javascript
-JavaScript
+---STRING changes done in revision %s to %s
+Änderungen in Revision %s von "%s"
 ---STRINGEND
 
----STRING plain text
-Plain text
----STRINGEND
-
----STRING xml
-XML
+---STRING changes from version %s
+Änderungen seit Version %s
 ---STRINGEND
 
 ---STRING child types of %s
 Kind-Typen von %s
 ---STRINGEND
 
----STRING only mine
-Nur eigene
+---STRING choose action
+Aktion auswählen
 ---STRINGEND
 
----STRING html
-HTML
+---STRING choose the target
+Ziel auswählen
 ---STRINGEND
 
----STRING edit configuration for %s
-Konfiguration von Komponente %s bearbeiten
+---STRING code
+Code
 ---STRINGEND
 
----STRING edit configuration for %s folder %s
-Konfiguration von Komponente %s im Ordner %s bearbeiten
+---STRING compare
+Vergleichen
 ---STRINGEND
 
----STRING global value
-Globale Einstellung
+---STRING component
+Komponente
 ---STRINGEND
 
----STRING edit file %s
-Datei %s bearbeiten
+---STRING components
+Komponenten
 ---STRINGEND
 
----STRING edit text file
-Text-Datei bearbeiten
+---STRING configuration for %s
+Konfiguration für Komponente %s
 ---STRINGEND
 
----STRING editor options
-Editor-Optionen
+---STRING configuration save failed: %s
+Sichern der Konfiguration fehlgeschlagen: %s
 ---STRINGEND
 
----STRING enable quicklinks
-Quicklinks aktivieren
----STRINGEND
-
----STRING file %s deleted
-Datei '%s' gelöscht
----STRINGEND
-
----STRING file contents
-Datei-Inhalt
----STRINGEND
-
----STRING file information
-Datei-Übersicht
----STRINGEND
-
----STRING url
-URL
----STRINGEND
-
----STRING back to site
-zurück zur Website
+---STRING configuration saved successfully
+Konfiguration erfolgreich gespeichert
 ---STRINGEND
 
 ---STRING content
@@ -215,20 +199,20 @@ Objektbaum kopieren
 %s unter %s anlegen
 ---STRINGEND
 
+---STRING created by
+Erstellt von
+---STRINGEND
+
 ---STRING created by %s on %s
 Erstellt von %s am %s
 ---STRINGEND
 
----STRING revised by
-Bearbeitet von
+---STRING created on
+Erstellt am
 ---STRINGEND
 
----STRING revised on
-Bearbeitet am
----STRINGEND
-
----STRING actions
-Aktionen
+---STRING date
+Datum
 ---STRINGEND
 
 ---STRING default language
@@ -247,18 +231,6 @@ Gelöscht von
 Gelöscht am
 ---STRINGEND
 
----STRING created by
-Erstellt von
----STRINGEND
-
----STRING created on
-Erstellt am
----STRINGEND
-
----STRING all of the following items will be deleted
-Alle nachfolgenden Objekte werden gelöscht
----STRINGEND
-
 ---STRING differences between %s and %s
 Unterschiede zwischen %s und %s
 ---STRINGEND
@@ -275,12 +247,32 @@ Dropdown-Liste
 %s "%s" bearbeiten
 ---STRINGEND
 
----STRING expanded list
-Aufgeklappte Liste
+---STRING edit configuration for %s
+Konfiguration von Komponente %s bearbeiten
 ---STRINGEND
 
----STRING %s purged
-%s entfernt
+---STRING edit configuration for %s folder %s
+Konfiguration von Komponente %s im Ordner %s bearbeiten
+---STRINGEND
+
+---STRING edit file %s
+Datei %s bearbeiten
+---STRINGEND
+
+---STRING edit text file
+Text-Datei bearbeiten
+---STRINGEND
+
+---STRING editor options
+Editor-Optionen
+---STRINGEND
+
+---STRING enable quicklinks
+Quicklinks aktivieren
+---STRINGEND
+
+---STRING expanded list
+Aufgeklappte Liste
 ---STRINGEND
 
 ---STRING failed purging %s, reason %s
@@ -299,16 +291,24 @@ Attachment %s => %s konnte nicht entfernt werden, Ursache: %s
 Attachment %s konnte nicht wiederhergestellt werden, Ursache: %s
 ---STRINGEND
 
+---STRING file %s deleted
+Datei '%s' gelöscht
+---STRINGEND
+
+---STRING file contents
+Datei-Inhalt
+---STRINGEND
+
+---STRING file information
+Datei-Übersicht
+---STRINGEND
+
+---STRING filename
+Dateiname
+---STRINGEND
+
 ---STRING filter
 Filtern
----STRINGEND
-
----STRING choose action
-Aktion auswählen
----STRINGEND
-
----STRING choose the target
-Ziel auswählen
 ---STRINGEND
 
 ---STRING floating freely
@@ -319,12 +319,24 @@ Freischwebend
 Ordner
 ---STRINGEND
 
+---STRING global
+Global
+---STRINGEND
+
+---STRING global value
+Globale Einstellung
+---STRINGEND
+
 ---STRING group %s
 Gruppe %s
 ---STRINGEND
 
 ---STRING guid
 Eindeutiger Bezeichner
+---STRINGEND
+
+---STRING html
+HTML
 ---STRINGEND
 
 ---STRING in %s
@@ -351,12 +363,44 @@ Information
 Interface-Sprache
 ---STRINGEND
 
+---STRING invert selection
+Auswahl umkehren
+---STRINGEND
+
+---STRING items in trash
+Objekte im Papierkorb
+---STRINGEND
+
+---STRING javascript
+JavaScript
+---STRINGEND
+
 ---STRING last edited by %s on %s (revision %s)
 Zuletzt bearbeitet von %s am %s (Revision %s)
 ---STRINGEND
 
+---STRING libraries
+Bibliotheken
+---STRINGEND
+
+---STRING lines
+Zeilen
+---STRINGEND
+
+---STRING local
+Lokal
+---STRINGEND
+
+---STRING localisation settings
+Spracheinstellungen
+---STRINGEND
+
 ---STRING manage object
 Objekt-Verwaltung
+---STRINGEND
+
+---STRING message
+Nachricht
 ---STRINGEND
 
 ---STRING metadata of %s %s
@@ -373,18 +417,6 @@ Freigeben
 
 ---STRING midcom:component_config
 Konfiguration
----STRINGEND
-
----STRING global
-Global
----STRINGEND
-
----STRING local
-Lokal
----STRINGEND
-
----STRING localisation settings
-Spracheinstellungen
 ---STRINGEND
 
 ---STRING midgard objects
@@ -419,8 +451,20 @@ Lesen
 Bearbeiten
 ---STRINGEND
 
+---STRING mimetype
+MIME-Typ
+---STRINGEND
+
 ---STRING model for selecting navigation types
 Auswahlverfahren für Navigationstypen
+---STRINGEND
+
+---STRING most recently visited
+Zuletzt besuchte Objekte
+---STRINGEND
+
+---STRING navigation options
+Navigationseinstellungen
 ---STRINGEND
 
 ---STRING navigation type
@@ -439,8 +483,16 @@ Navigationsbreite (in Pixeln)
 Keine Änderungen im Inhalt
 ---STRINGEND
 
+---STRING no files
+Keine Dateien vorhanden
+---STRINGEND
+
 ---STRING no title
 Kein Titel
+---STRINGEND
+
+---STRING no.bergfald.rcs
+Revisionskontrolle
 ---STRINGEND
 
 ---STRING not approved
@@ -448,11 +500,11 @@ Nicht freigegeben
 ---STRINGEND
 
 ---STRING object %s approved
-Objekt %s freigegeben
+Objekt "%s" freigegeben
 ---STRINGEND
 
 ---STRING object %s removed
-Objekt %s gelöscht
+Objekt "%s" gelöscht
 ---STRINGEND
 
 ---STRING objects expiring within
@@ -460,11 +512,15 @@ Objekte mit Ablaufdatum innerhalb
 ---STRINGEND
 
 ---STRING objects revised within
-Objekte mit Änderungen seit 
+Objekte mit Änderungen seit
 ---STRINGEND
 
 ---STRING on top of the content area
 Am Kopfende des Inhaltsbereichs
+---STRINGEND
+
+---STRING only mine
+Nur eigene
 ---STRINGEND
 
 ---STRING owner
@@ -481,6 +537,10 @@ Parameter von %s "%s"
 
 ---STRING permissions for %s %s
 Berechtigungen für %s "%s"
+---STRINGEND
+
+---STRING plain text
+Plain text
 ---STRINGEND
 
 ---STRING preferences saved
@@ -503,6 +563,50 @@ Entfernen
 Regulärer ausdruck zur Auswahl von MgdSchema-Typen
 ---STRINGEND
 
+---STRING restore this revision (%s)
+Diese Revision wiederherstellen
+---STRINGEND
+
+---STRING restore to version %s failed, reason %s
+Die Wiederherstellung der Revision %s ist fehlgeschlagen, Ursache: %s
+---STRINGEND
+
+---STRING restore to version %s successful
+Die Wiederherstellung der Version %s war erfolgreich
+---STRINGEND
+
+---STRING restore version %s
+Version %s wiederherstellen
+---STRINGEND
+
+---STRING review date
+Review-Datum
+---STRINGEND
+
+---STRING revised by
+Bearbeitet von
+---STRINGEND
+
+---STRING revised on
+Bearbeitet am
+---STRINGEND
+
+---STRING revision
+Revision
+---STRINGEND
+
+---STRING revision history of %s
+Revisionsgeschichte von %s
+---STRINGEND
+
+---STRING search
+Suche
+---STRINGEND
+
+---STRING select all
+Alle auswählen
+---STRINGEND
+
 ---STRING select exactly two choices
 Genau zwei Möglichkeiten zeigen
 ---STRINGEND
@@ -513,6 +617,14 @@ Typen auswählen
 
 ---STRING show differences
 Unterschiede anzeigen
+---STRINGEND
+
+---STRING show history
+Revisionsgeschichte
+---STRINGEND
+
+---STRING show sg0 objects in navigation
+Objekte der Sitegroup 0 in der Navigation anzeigen
 ---STRINGEND
 
 ---STRING size
@@ -533,14 +645,6 @@ Titel
 
 ---STRING toolbar mode
 Toolbar-Modus
----STRINGEND
-
----STRING always display in top frame
-Immer im obersten Frame anzeigen
----STRINGEND
-
----STRING any
-Alle
 ---STRINGEND
 
 ---STRING topic privileges
@@ -567,6 +671,14 @@ Wiederherstellen
 Unter %s
 ---STRINGEND
 
+---STRING upload file
+Datei hochladen
+---STRINGEND
+
+---STRING url
+URL
+---STRINGEND
+
 ---STRING use codepress editor for editing code snippets
 CodePress-Editor zum Bearbeiten von Quellcode verwenden
 ---STRINGEND
@@ -575,112 +687,16 @@ CodePress-Editor zum Bearbeiten von Quellcode verwenden
 TinyMCE-Editor zum Bearbeiten von Inhalten verwenden
 ---STRINGEND
 
+---STRING user
+Benutzer
+---STRINGEND
+
 ---STRING user preferences
 Benutzer-Einstellungen
 ---STRINGEND
 
----STRING view on site
-Auf der Site anzeigen
----STRINGEND
-
----STRING items in trash
-Objekte im Papierkorb
----STRINGEND
-
----STRING back to %s
-zurück zu "%s"
----STRINGEND
-
----STRING changes done in revision %s to %s
-Änderungen in Revision %s von "%s"
----STRINGEND
-
----STRING changes from version %s
-Änderungen seit Version %s
----STRINGEND
-
----STRING code
-Code
----STRINGEND
-
----STRING compare
-Vergleichen
----STRINGEND
-
----STRING component
-Komponente
----STRINGEND
-
----STRING components
-Komponenten
----STRINGEND
-
----STRING configuration for %s
-Konfiguration für Komponente %s
----STRINGEND
-
----STRING configuration save failed: %s
-Sichern der Konfiguration fehlgeschlagen: %s
----STRINGEND
-
----STRING configuration saved successfully
-Konfiguration erfolgreich gespeichert
----STRINGEND
-
----STRING date
-Datum
----STRINGEND
-
----STRING lines
-Zeilen
----STRINGEND
-
----STRING libraries
-Bibliotheken
----STRINGEND
-
----STRING message
-Nachricht
----STRINGEND
-
----STRING no.bergfald.rcs
-Revisionskontrolle
----STRINGEND
-
----STRING restore this revision (%s)
-Diese Revision wiederherstellen
----STRINGEND
-
----STRING restore to version %s failed, reason %s
-Die Wiederherstellung der Revision %s ist fehlgeschlagen, Ursache: %s
----STRINGEND
-
----STRING restore to version %s successful
-Die Wiederherstellung der Version %s war erfolgreich
----STRINGEND
-
----STRING restore version %s
-Version %s wiederherstellen
----STRINGEND
-
----STRING review date
-Review-Datum
----STRINGEND
-
----STRING revision
-Revision
----STRINGEND
-
----STRING revision history of %s
-Revisionsgeschichte von %s
----STRINGEND
-
----STRING show history
-Revisionsgeschichte
----STRINGEND
-
----STRING user
-Benutzer
+---STRING validation error in field %s: %s
+Validationsfehler im Feld %s: %s
 ---STRINGEND
 
 ---STRING version %s
@@ -695,6 +711,10 @@ Unterschiede zwischen Version %s und der folgenden (%s) anzeigen
 Unterschiede zwischen Version %s und der vorherigen (%s) anzeigen
 ---STRINGEND
 
+---STRING view on site
+Auf der Site anzeigen
+---STRINGEND
+
 ---STRING view this revision (%s)
 Diese Revision (%s) anzeigen
 ---STRINGEND
@@ -703,26 +723,71 @@ Diese Revision (%s) anzeigen
 Version %s von %s
 ---STRINGEND
 
----STRING show sg0 objects in navigation
-Objekte der Sitegroup 0 in der Navigation anzeigen
+---STRING xml
+XML
 ---STRINGEND
 
----STRING search
-Suche
+---STRING %s (%s)
+%s (%s)
 ---STRINGEND
 
----STRING select all
-Alle auswählen
+---STRING This object has no translation in the current language and cannot be deleted.
+Dieses Objekt hat keine Übersetzung in der aktuellen Sprache und kann nicht gelöscht werden
 ---STRINGEND
 
----STRING invert selection
-Auswahl umkehren
+---STRING active url parsing
+Aktives URL-Parsing
 ---STRINGEND
 
----STRING validation error in field %s: %s
-Validationsfehler im Feld %s: %s
+---STRING copy %s
+%s kopieren
 ---STRINGEND
 
----STRING most recently visited
-Zuletzt besuchte Objekte
+---STRING copy attachments
+Dateianhänge kopieren
 ---STRINGEND
+
+---STRING core_components
+MidCOM-Hauptkomponenten
+---STRINGEND
+
+---STRING enable breaking of the editing lock
+Aufheben der Bearbeitungssperre zulassen
+---STRINGEND
+
+---STRING exclude
+Ausschließen
+---STRINGEND
+
+---STRING include
+Einschließen
+---STRINGEND
+
+---STRING inherited
+Vererbt
+---STRINGEND
+
+---STRING not inherited
+Nicht vererbt
+---STRINGEND
+
+---STRING object %s
+Objekt "%s"
+---STRINGEND
+
+---STRING require authentication
+Authentifizierung verlangen
+---STRINGEND
+
+---STRING style
+Layout-Vorlage
+---STRINGEND
+
+---STRING use edit mode instead of view mode as the primary object management page
+Bearbeitungsmodus anstelle des Ansichtsmodus als Startseite der Objektverwaltung verwenden
+---STRINGEND
+
+---STRING value
+Wert
+---STRINGEND
+

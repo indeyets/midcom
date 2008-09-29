@@ -143,6 +143,10 @@ Default (%s)
 Excluded components (leave empty to allow all)
 ---STRINGEND
 
+---STRING failed to create settings
+Failed to create settings
+---STRINGEND
+
 ---STRING failed to save settings, reason %s
 Failed to save settings, reason %s
 ---STRINGEND
@@ -357,9 +361,5 @@ Path to unrtf application
 
 ---STRING utility_unzip
 Path to unzip application
----STRINGEND
-
----STRING failed to create settings
-Failed to create settings
 ---STRINGEND
 

@@ -3,6 +3,14 @@
 ---CVS $Id$
 ---LANGUAGE de
 
+---STRING %s in %s
+%s in %s
+---STRINGEND
+
+---STRING %s of packages of type %s
+%s der Pakete des Typs %s
+---STRINGEND
+
 ---STRING Edit this page
 Diese Seite bearbeiten
 ---STRINGEND
@@ -44,11 +52,11 @@ Zugriff verweigert: Sie haben keinen Schreibzugriff.
 ---STRINGEND
 
 ---STRING access denied: you must be logged in
-Zugriff verweigert. Sie müssen am System angemeldet sein.
+Zugriff verweigert: Sie müssen am System angemeldet sein.
 ---STRINGEND
 
 ---STRING access type
-Zugriffsart 
+Zugriffsart
 ---STRINGEND
 
 ---STRING advanced schema and data settings
@@ -95,8 +103,16 @@ Ordner freigeben
 Freigegeben
 ---STRINGEND
 
+---STRING approved changes will be replicated within next minute
+Die freigegebenen Änderungen werden innerhalb der nächsten Minute überspielt
+---STRINGEND
+
 ---STRING approver
 Freigegeben von
+---STRINGEND
+
+---STRING arrangement score
+Score für Sortierung
 ---STRINGEND
 
 ---STRING back
@@ -155,8 +171,16 @@ Komponente konfigurieren
 Mit Hilfe dieses Menüs können Sie die spezifischen Einstellungen der Komponente für diese Rubrik ändern.
 ---STRINGEND
 
+---STRING component depends on
+Die Komponente benötigt
+---STRINGEND
+
 ---STRING copy
 Kopieren
+---STRINGEND
+
+---STRING country
+Land
 ---STRINGEND
 
 ---STRING create
@@ -199,12 +223,16 @@ Löschen
 Beschreibung
 ---STRINGEND
 
+---STRING developer
+Entwickler
+---STRINGEND
+
 ---STRING discussion in %s
 Diskussion in %s
 ---STRINGEND
 
 ---STRING down
-runter
+nach unten
 ---STRINGEND
 
 ---STRING download %s
@@ -255,6 +283,10 @@ Ordner
 Hilfe
 ---STRINGEND
 
+---STRING get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
+Laden Sie weitere Komponenten aus dem <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
+---STRINGEND
+
 ---STRING hidden
 Versteckt
 ---STRINGEND
@@ -287,12 +319,24 @@ Vom übergeordneten Element übernommen
 Interne Metadaten
 ---STRINGEND
 
+---STRING invalidate cache
+MidCOM-Cache leeren
+---STRINGEND
+
 ---STRING keywords
 Stichworte
 ---STRINGEND
 
 ---STRING last modified
 Letzte Änderung
+---STRINGEND
+
+---STRING lead
+Hauptentwickler
+---STRINGEND
+
+---STRING library
+Bibliothek
 ---STRINGEND
 
 ---STRING login
@@ -369,6 +413,10 @@ Nächste Seite
 
 ---STRING no
 Nein
+---STRINGEND
+
+---STRING not active %s
+Inaktiver %s
 ---STRINGEND
 
 ---STRING not hidden
@@ -467,8 +515,12 @@ nach Score (umgekehrt)
 Auf die Standardeinstellung zurücksetzen
 ---STRINGEND
 
+---STRING revised
+nach letztem Änderungsdatum
+---STRINGEND
+
 ---STRING robots
-Suchmaschinen kontrollieren
+Externe Indizierung steuern
 ---STRINGEND
 
 ---STRING robots-follow
@@ -489,6 +541,10 @@ Indizierung verbieten
 
 ---STRING robots-not-specified
 Keine Angabe, benutzt robots.txt
+---STRINGEND
+
+---STRING run replication
+Replikation durchführen
 ---STRINGEND
 
 ---STRING save
@@ -603,12 +659,20 @@ Wie sollen Leaves sortiert werden?
 Position in Sortierreihenfolge
 ---STRINGEND
 
+---STRING stagin2live
+Staging2live-System
+---STRINGEND
+
 ---STRING start date
 Startdatum
 ---STRINGEND
 
 ---STRING stats
 Website Statistiken
+---STRINGEND
+
+---STRING tags
+Tags
 ---STRINGEND
 
 ---STRING test settings
@@ -656,7 +720,7 @@ Unbekannt
 ---STRINGEND
 
 ---STRING up
-hoch
+nach oben
 ---STRINGEND
 
 ---STRING update
@@ -681,6 +745,10 @@ Upload
 
 ---STRING upload image
 Bild hochladen
+---STRINGEND
+
+---STRING url
+URL
 ---STRINGEND
 
 ---STRING url name
@@ -723,34 +791,3 @@ Nachricht schreiben
 Ja
 ---STRINGEND
 
----STRING approved changes will be replicated within next minute
-Die freigegebenen Änderungen werden innerhalb der nächsten Minute überspielt
----STRINGEND
-
----STRING arrangement score
-Score für Sortierung
----STRINGEND
-
----STRING invalidate cache
-MidCOM-Cache leeren
----STRINGEND
-
----STRING run replication
-Replikation durchführen
----STRINGEND
-
----STRING stagin2live
-Staging2live-System
----STRINGEND
-
----STRING tags
-Tags
----STRINGEND
-
----STRING country
-Land
----STRINGEND
-
----STRING url
-URL
----STRINGEND

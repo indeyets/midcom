@@ -15,6 +15,18 @@ Soll für diese Rubrik automatisch eine Index-Seite erstellt werden?
 Freigeben
 ---STRINGEND
 
+---STRING article
+Artikel
+---STRINGEND
+
+---STRING article %s deleted
+Artikel "%s" wurde gelöscht
+---STRINGEND
+
+---STRING article link deleted
+Artikel-Link gelöscht
+---STRINGEND
+
 ---STRING auto_approve
 Neue Artikel standardmäßig freigegeben
 ---STRINGEND
@@ -25,6 +37,18 @@ Die automatische Index-Seite ersetzt den Artikel mit dem URL-Namen index und bes
 
 ---STRING back to overview
 Zurück zur Übersicht
+---STRINGEND
+
+---STRING callback_function
+Callback-Funktion, die nach Erstellung ausgeführt wird, um z.B. ein Interface zum Seitenverlinkungssystem bereitzustellen
+---STRINGEND
+
+---STRING callback_snippet
+Callback-Snippet für site-spezifische Funktion bei Erstellung
+---STRINGEND
+
+---STRING content
+Inhalt
 ---STRINGEND
 
 ---STRING create article
@@ -51,6 +75,14 @@ Konfiguration der Anzeige
 Artikel bearbeiten
 ---STRINGEND
 
+---STRING enable_ajax_editing
+AJAX-basierte on-site-Bearbeitung aktivieren
+---STRINGEND
+
+---STRING enable_article_links
+Seitenverlinkungs-System
+---STRINGEND
+
 ---STRING file lastmodified
 Letzte Änderung
 ---STRINGEND
@@ -69,6 +101,10 @@ Dateigröße
 
 ---STRING filetype
 Dateityp
+---STRINGEND
+
+---STRING hide_navigation
+Artikel in der Navigation verstecken
 ---STRINGEND
 
 ---STRING indexinnav
@@ -115,6 +151,10 @@ Dateianhänge im automatischen Index anzeigen
 Soll die URL des Artikels automatisch generiert werden?
 ---STRINGEND
 
+---STRING sort_order
+Sortierreihenfolge
+---STRINGEND
+
 ---STRING symlink_topic
 Daten aus einem anderen Ordner nehmen ("Symlink")
 ---STRINGEND
@@ -139,34 +179,43 @@ Artikel anzeigen
 Ordner-Sichtbarkeit
 ---STRINGEND
 
----STRING enable_ajax_editing
-AJAX-basierte on-site-Bearbeitung aktivieren
+---STRING autoindex
+Soll für diese Rubrik automatisch eine Index-Seite erstellt werden?
 ---STRINGEND
 
----STRING article
-Artikel
+---STRING delete article link
+Artikel-Link löschen
 ---STRINGEND
 
----STRING content
-Inhalt
+---STRING delete cancelled
+Löschen abgebrochen
 ---STRINGEND
 
----STRING hide_navigation
-Artikel in der Navigation verstecken
+---STRING delete link
+Link löschen
 ---STRINGEND
 
----STRING sort_order
-Sortierreihenfolge
+---STRING delete_link
+Link löschen
 ---STRINGEND
 
----STRING enable_article_links
-Seitenverlinkungs-System
+---STRING failed to delete the article link, contact the site administrator
+Artikel-Link konnte nicht gelöscht werden, verständigen Sie den Site-Administrator
 ---STRINGEND
 
----STRING callback_snippet
-Callback-Snippet für site-spezifische Funktion bei Erstellung
+---STRING from
+Von
 ---STRINGEND
 
----STRING callback_function
-Callback-Funktion, die nach Erstellung ausgeführt wird, um z.B. ein Interface zum Seitenverlinkungssystem bereitzustellen
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+<a href="%s">Klicken Sie hier</a>, um den Original-Artikel zu löschen
 ---STRINGEND
+
+---STRING show_blobs_in_autoindex
+Blobs im automatischen Index anzeigen
+---STRINGEND
+
+---STRING this article has been linked from <a href="%s">%s</a> and confirming will delete only the link
+Dieser Artikel wurde von <a href="%s">%s</a> verlinkt, Bestätigen löscht ausschließlich den Link.
+---STRINGEND
+

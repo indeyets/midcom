@@ -11,6 +11,22 @@
 (wiederholen)
 ---STRINGEND
 
+---STRING You can only upload images here. This file will not be saved.
+hier können Sie nur Bilder hochladen. Diese Datei wird nicht gespeichert
+---STRINGEND
+
+---STRING add new file
+Neue Datei hinzufügen
+---STRINGEND
+
+---STRING archived image
+Archiv-Bild
+---STRINGEND
+
+---STRING break the lock
+Sperre brechen
+---STRINGEND
+
 ---STRING captcha image alt text
 Dies ist ein Captcha (http://de.wikipedia.org/wiki/Captcha), Sie benötigen einen graphischen Browser zur Anzeige.
 ---STRINGEND
@@ -24,6 +40,10 @@ dargestellten Buchstaben <em>unter Berücksichtigung der Gross- und Kleinschreib
 Die eingegebene Zeichenfolge stimmt nicht mit dem Bild überein.
 ---STRINGEND
 
+---STRING could not figure out which image to show, listing files
+Konnte nicht feststellen, welches Bild gezeigt werden soll, zeige stattdessen Dateien
+---STRINGEND
+
 ---STRING delete file
 Datei löschen
 ---STRINGEND
@@ -34,6 +54,14 @@ Bild löschen
 
 ---STRING denotes required field
 notwendige Eingabe
+---STRINGEND
+
+---STRING double click to edit
+Zum Bearbeiten doppelklicken
+---STRINGEND
+
+---STRING drag and drop to sort
+Sortieren per Drag and Drop
 ---STRINGEND
 
 ---STRING field %s is required
@@ -56,12 +84,20 @@ Zurück
 Speichern
 ---STRINGEND
 
+---STRING lock will expire on %s
+Die Sperre läuft am %s ab
+---STRINGEND
+
 ---STRING midcom.helper.datamanager2
 Bibliothek zur Datenverwaltung und Formulargenerierung
 ---STRINGEND
 
 ---STRING no file uploaded
 Keine Datei hochgeladen.
+---STRINGEND
+
+---STRING object locked
+Objekt gesperrt
 ---STRINGEND
 
 ---STRING passwords do not match
@@ -76,8 +112,24 @@ Datei ersetzen
 Bild ersetzen
 ---STRINGEND
 
+---STRING rotate left
+Nach links drehen
+---STRINGEND
+
+---STRING rotate right
+Nach rechts drehen
+---STRINGEND
+
+---STRING this object was locked by %s
+Dieses Objekt wurde von %s gesperrt
+---STRINGEND
+
 ---STRING type blobs: file size
 Grösse
+---STRINGEND
+
+---STRING type image: actions
+Bild-Aktionen
 ---STRINGEND
 
 ---STRING type image: available sizes
@@ -88,16 +140,16 @@ Verfügbare Größen
 Vorschau
 ---STRINGEND
 
----STRING type php: parse error in line %s
-Parse Error in Zeile %s
----STRINGEND
-
 ---STRING type number: value must not be larger then %s
 Der Wert dieses Feldes darf nicht größer als %s sein.
 ---STRINGEND
 
 ---STRING type number: value must not be smaller then %s
 Der Wert dieses Feldes darf nicht kleiner als %s sein.
+---STRINGEND
+
+---STRING type php: parse error in line %s
+Parse Error in Zeile %s
 ---STRINGEND
 
 ---STRING type select: multiselect not allowed
@@ -122,10 +174,6 @@ Der Wert eines Text-Typs darf kein Array oder Objekt sein.
 
 ---STRING upload file
 Datei hochladen
----STRINGEND
-
----STRING add new file
-Neue Datei hinzufügen
 ---STRINGEND
 
 ---STRING upload image
@@ -188,31 +236,7 @@ Nicht gesetzt (vererbt)
 Andere Eingabe
 ---STRINGEND
 
----STRING You can only upload images here. This file will not be saved.
-hier können Sie nur Bilder hochladen. Diese Datei wird nicht gespeichert
----STRINGEND
-
----STRING archived image
-Archiv-Bild
----STRINGEND
-
----STRING could not figure out which image to show, listing files
-Konte nicht feststellen, welches Bild gezeigt werden soll, zeige stattdessen Dateien
----STRINGEND
-
----STRING double click to edit
-Zum Bearbeiten doppelklicken
----STRINGEND
-
----STRING rotate left
-Nach links drehen
----STRINGEND
-
----STRING rotate right
-Nach rechts drehen
----STRINGEND
-
----STRING type image: actions
-Bild-Aktionen
+---STRING write the order, lower numbers are placed first
+Reihenfolge speichern, niedrige Nummern erscheinen zuerst
 ---STRINGEND
 

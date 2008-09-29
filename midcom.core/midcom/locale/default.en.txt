@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING %s in %s
+
+---STRINGEND
+
 ---STRING %s of packages of type %s
 %s of packages of type %s
 ---STRINGEND
@@ -785,9 +789,5 @@ Write mail
 
 ---STRING yes
 Yes
----STRINGEND
-
----STRING %s in %s
-
 ---STRINGEND
 

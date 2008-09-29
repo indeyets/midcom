@@ -215,6 +215,10 @@ Copy successful, you have been relocated to the root of the new object tree.
 Copy tree
 ---STRINGEND
 
+---STRING core_components
+Main MidCOM components
+---STRINGEND
+
 ---STRING create %s under %s
 Create %s under %s
 ---STRINGEND
@@ -785,9 +789,5 @@ Version %s of %s
 
 ---STRING xml
 XML
----STRINGEND
-
----STRING core_components
-Main MidCOM components
 ---STRINGEND
 

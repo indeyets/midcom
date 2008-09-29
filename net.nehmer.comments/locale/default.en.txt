@@ -11,6 +11,14 @@ Allow commenting by anonymous users
 Name
 ---STRINGEND
 
+---STRING comment_count_cache_to_object
+Cache comment count to object being commented
+---STRINGEND
+
+---STRING comment_count_cache_to_object_property
+Cache comment count in object property
+---STRINGEND
+
 ---STRING comments
 Comments
 ---STRINGEND
@@ -63,18 +71,11 @@ Cache ratings score to object being commented
 Cache ratings in object property
 ---STRINGEND
 
----STRING ratings_enable
-Enable ratings support
----STRINGEND
-
 ---STRING ratings_cache_total
 Save total instead of average to object
 ---STRINGEND
 
----STRING comment_count_cache_to_object
-Cache comment count to object being commented
+---STRING ratings_enable
+Enable ratings support
 ---STRINGEND
 
----STRING comment_count_cache_to_object_property
-Cache comment count in object property
----STRINGEND

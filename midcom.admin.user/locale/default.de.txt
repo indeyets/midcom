@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE de
 
+---STRING User Management
+Benutzer-Verwaltung
+---STRINGEND
+
 ---STRING Your password has been changed. Your new password is __PASSWORD__
 Ihr Passwort wurde geändert. Ihr neues Passwort lautet __PASSWORD__
 ---STRINGEND
@@ -196,7 +200,7 @@ Die Passwörter werden an folgende User verschickt
 ---STRINGEND
 
 ---STRING person %s saved
-Benutzer %s gespeichert 
+Benutzer %s gespeichert
 ---STRINGEND
 
 ---STRING personalized equal
@@ -279,7 +283,7 @@ Verfassen Sie die Nachricht, die dem Empfänger zugestellt wird
 Ihr Passwort wurde geändert
 ---STRINGEND
 
----STRING User Management
-Benutzer-Verwaltung
+---STRING enable unlocking locked objects
+Entsperren gesperrter Objekte aktivieren
 ---STRINGEND
 

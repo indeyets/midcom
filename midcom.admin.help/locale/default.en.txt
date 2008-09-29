@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING about midgard
+About Midgard
+---STRINGEND
+
 ---STRING available urls
 Available URLs in this folder
 ---STRINGEND
@@ -33,9 +37,5 @@ Online documentation
 
 ---STRING user forum
 User discussion forum
----STRINGEND
-
----STRING about midgard
-About Midgard
 ---STRINGEND
 

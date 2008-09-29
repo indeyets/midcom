@@ -79,3 +79,23 @@ Diese Revision (%s) anzeigen
 Version %s von %s
 ---STRINGEND
 
+---STRING differences between %s and %s
+Unterschiede zwischen %s und %s
+---STRINGEND
+
+---STRING differences between versions %s and %s
+Unterschiede zwischen den Versionen %s und %s
+---STRINGEND
+
+---STRING no changes in content
+Keine Änderungen im Inhalt
+---STRINGEND
+
+---STRING show differences
+Unterschiede anzeigen
+---STRINGEND
+
+---STRING title
+Titel
+---STRINGEND
+

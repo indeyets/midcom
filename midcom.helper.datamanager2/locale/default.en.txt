@@ -23,6 +23,10 @@ Add a new file
 Archived image
 ---STRINGEND
 
+---STRING break the lock
+Break the lock
+---STRINGEND
+
 ---STRING captcha image alt text
 This is a Captcha (http://en.wikipedia.org/wiki/Captcha), you need a graphical browser to display it.
 ---STRINGEND
@@ -234,9 +238,5 @@ Other
 
 ---STRING write the order, lower numbers are placed first
 Write the order, lower numbers are placed first
----STRINGEND
-
----STRING break the lock
-Break the lock
 ---STRINGEND
 
