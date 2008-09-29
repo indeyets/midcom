@@ -51,10 +51,6 @@ Kartan kehittäjäavain
 Karttapalvelu
 ---STRINGEND
 
----STRING org.routamc.org
-Paikkatiedon käsittelykirjasto
----STRINGEND
-
 ---STRING org.routamc.positioning
 Paikkatiedon käsittelykirjasto
 ---STRINGEND
