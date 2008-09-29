@@ -327,10 +327,6 @@ Avsändar address för boknings berkäftelse (E-post meddelanden))
 Ämne för boknings bekräftelse (E-post meddelande)
 ---STRINGEND
 
----STRING this email address is already registered
-Ett konto har redans skapats med den här e-post addressen.
----STRINGEND
-
 ---STRING username
 Användanamn
 ---STRINGEND

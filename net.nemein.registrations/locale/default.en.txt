@@ -459,10 +459,6 @@ Subject for account creation E-Mails
 Subject for registration notification E-Mails
 ---STRINGEND
 
----STRING this email adress is already registered
-An account has already been created using this E-Mail address.
----STRINGEND
-
 ---STRING upcoming events
 Upcoming events
 ---STRINGEND

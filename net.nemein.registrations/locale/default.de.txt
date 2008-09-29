@@ -403,10 +403,6 @@ Betreff für Benachrichtigungen über neue Benutzerkonten
 Betreff für Registrierungs-Benachrichtigungen
 ---STRINGEND
 
----STRING this email address is already registered
-Zu dieser E-Mail Adresse existiert bereits ein Benutzerkonto.
----STRINGEND
-
 ---STRING upcoming events
 Termine
 ---STRINGEND
