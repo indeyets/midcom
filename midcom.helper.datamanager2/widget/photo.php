@@ -17,9 +17,9 @@ require_once('image.php');
  */
 class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2_widget_image
 {
-    function __construct()
+    function __construct(&$renderer)
     {
-        return parent::__construct();
+        return parent::__construct($renderer);
     }
 
     /**
