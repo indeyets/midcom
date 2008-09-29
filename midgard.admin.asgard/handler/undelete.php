@@ -144,7 +144,8 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         $data['reflector'] = midcom_helper_reflector::get($data['type']);
         $data['label_property'] = $data['reflector']->get_label_property();
 
-        if (   isset($_POST['undelete']) && !isset($_POST['purge'])
+        if (   isset($_POST['undelete'])
+            && !isset($_POST['purge'])
             && is_array($_POST['undelete']))
         {
             static $undeleted_size = 0;
