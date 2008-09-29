@@ -90,8 +90,8 @@ $editlang = $languages[$data['view_lang']]['enname'];
 </table>
 <br />
 <div class="form_toolbar">
-  <input type="submit" name="f_submit" accesskey="s" value="<?php echo $data['l10n_midcom']->get('save');?>" class="save" />
-  <input type="submit" name="f_cancel" accesskey="c" value="<?php echo $data['l10n_midcom']->get('cancel');?>" class="cancel" />
+  <input type="submit" name="f_submit" value="<?php echo $data['l10n_midcom']->get('save');?>" class="save" />
+  <input type="submit" name="f_cancel" value="<?php echo $data['l10n_midcom']->get('cancel');?>" class="cancel" />
 </div>
 
 </form>
