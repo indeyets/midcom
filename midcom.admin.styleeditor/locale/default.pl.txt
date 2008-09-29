@@ -31,10 +31,6 @@ Kopiuj do edytora
 Utwórz nowy element
 ---STRINGEND
 
----STRING create new element
-Dodaj nowy element
----STRINGEND
-
 ---STRING delete cancelled
 Usunięcie anulowane
 ---STRINGEND
@@ -109,10 +105,6 @@ Edytor szablonów
 
 ---STRING mimetype
 Typ pliku
----STRINGEND
-
----STRING new layout template
-[Nowy styl]
 ---STRINGEND
 
 ---STRING plain text
