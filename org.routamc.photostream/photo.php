@@ -85,8 +85,11 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
                 {
                     continue;
                 }
-                $att = mgd_get_attachment($this->$prop);
-                if (!$att)
+                try 
+                {
+                    $att = new midgard_attachment($this->prop);
+                }
+                catch(midgard_error_exception $e)
                 {
                     continue;
                 }
@@ -228,16 +231,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         $atts_by_identifier = array();
         foreach ($atts as $k => $att)
         {
-            // Reload attachment to get parameters working properly
-            // Detect 1.8 vs 1.7 by presence of this writing of QB
-            if (class_exists('midgard_query_builder'))
-            {
-                $atts[$k] = new midgard_attachment($att->id);
-            }
-            else
-            {
-                $atts[$k] = mgd_get_attachment($att->id);
-            }
+            $atts[$k] = new midgard_attachment($att->id);
             $att = $atts[$k];
             //mgd_debug_start();
             $identifier = $att->parameter('midcom.helper.datamanager2.type.blobs', 'identifier');
@@ -336,7 +330,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             debug_pop();
             return false;
         }
-        $att_obj = mgd_get_attachment($att);
+        
         $tmpname = tempnam('/tmp', 'orp_');
         unlink($tmpname);
         $tmpname .= '_' . $att_obj->name;
