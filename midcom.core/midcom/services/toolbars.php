@@ -653,7 +653,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                 MIDCOM_TOOLBAR_URL => "{$_MIDGARD['self']}midcom-exec-midcom/about.php",
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('about midgard', 'midcom.admin.help'),
                 MIDCOM_TOOLBAR_OPTIONS => array('target' => '_blank'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/start-here.png',
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/logos/midgard-16x16.png',
             )
         );
     }
