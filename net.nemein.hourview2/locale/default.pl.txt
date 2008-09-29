@@ -15,7 +15,7 @@ Komentarze
 Godziny
 ---STRINGEND
 
----STRING net.nemein.hourview
+---STRING net.nemein.hourview2
 Raport godzinowy
 ---STRINGEND
 

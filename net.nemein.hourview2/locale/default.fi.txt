@@ -35,10 +35,6 @@ Tuntia
 Viesti lähetetty käyttäjälle %s <%s>
 ---STRINGEND
 
----STRING net.nemein.hourview
-Tuntiraporttien hyväksyntä
----STRINGEND
-
 ---STRING net.nemein.hourview2
 Tuntiraporttien hyväksyntä
 ---STRINGEND
