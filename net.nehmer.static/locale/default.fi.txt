@@ -11,10 +11,6 @@ Näytä vain hyväksytyt artikkelit
 Luo automaattinen sisällysluettelo kansiolle?
 ---STRINGEND
 
----STRING ajax_enable
-Salli sisällön muokkaaminen AJAXilla suoraan sivulla
----STRINGEND
-
 ---STRING approve
 Hyväksy
 ---STRINGEND

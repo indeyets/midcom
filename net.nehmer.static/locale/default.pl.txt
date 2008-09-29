@@ -191,10 +191,6 @@ Folder jest widoczny
 Włącz Autoindex
 ---STRINGEND
 
----STRING ajax_enable
-Włącz AJAX
----STRINGEND
-
 ---STRING callback_function
 Funkcja zwrotna uruchamiana po utworzeniu artykułu.
 ---STRINGEND
