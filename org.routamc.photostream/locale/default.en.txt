@@ -82,15 +82,15 @@ Done recreating derived images
 Edit photo
 ---STRINGEND
 
----STRING email api default tags to apply to photos
+---STRING email API default tags to apply to photos
 Email API default tags to apply to photos
 ---STRINGEND
 
----STRING email api enable
+---STRING email API enable
 Enable email API
 ---STRINGEND
 
----STRING email api schema
+---STRING email API schema
 Schema for the email API
 ---STRINGEND
 
