@@ -55,10 +55,6 @@ Publikation bearbeiten
 Experten-Einstellungen
 ---STRINGEND
 
----STRING first publication was made on %s.
-Die erste Publikation wurde am %s veröffentlicht.
----STRINGEND
-
 ---STRING index count
 Anzahl Artikel in der Übersicht der aktuellsten Publikationen
 ---STRINGEND

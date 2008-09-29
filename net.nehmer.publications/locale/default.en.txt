@@ -59,10 +59,6 @@ Edit Publication
 Expert settings
 ---STRINGEND
 
----STRING first post was made on %s.
-The first publication was published on %s.
----STRINGEND
-
 ---STRING index count
 Latest article count
 ---STRINGEND
