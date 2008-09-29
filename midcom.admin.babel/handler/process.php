@@ -230,7 +230,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
                         $changes = true;
                     }
                 }
-                else if (!$loc)
+                else if ($loc)
                 {
                     debug_add("    Creating '{$id}' -> '{$loc}'", MIDCOM_LOG_DEBUG);
                     $this->_component_l10n->create($id, $this->_lang, $loc);
