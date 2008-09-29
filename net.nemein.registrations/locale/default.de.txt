@@ -155,10 +155,6 @@ Anmeldung löschen
 Anmeldung bearbeiten
 ---STRINGEND
 
----STRING email address invalid
-Bitte geben Sie eine gültige E-Mail Adresse ein.
----STRINGEND
-
 ---STRING email with password sent to %s<br>please login to activate your account.
 Eine E-Mail mit Ihrem Passwort wurde an %s versendet. Bitte geben Sie dieses Passwort hier ein um Ihr Benutzerkonto zu aktivieren.
 ---STRINGEND

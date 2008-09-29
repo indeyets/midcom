@@ -167,15 +167,11 @@ poista ilmoittautuminen
 muokkaa ilmoittautumista
 ---STRINGEND
 
----STRING email adress invalid
-Ole hyvä ja syötä oikea sähköpostiosoite.
----STRINGEND
-
 ---STRING email with password sent to %s<br>please login to activate your account.
 Salasanan sisältävä sähköpostiosoite on lähetetty osoitteeseen %s.<br /> Ole hyvä ja syötä salasana alle aktivoidaksesi käyttäjätunnuksesi.
 ---STRINGEND
 
----STRING emailadress
+---STRING emailaddress
 Sähköposti
 ---STRINGEND
 
@@ -411,7 +407,7 @@ Tapahtuman rekisteröintien asetukset
 Ilmoittautuminen tapahtumaan %s
 ---STRINGEND
 
----STRING registration is beeing processed, you will get a mail
+---STRING registration is being processed, you will get a mail
 Sinun ilmoittautumistasi käsitellään. Tulet saamaan varmistusviestin sähköpostitse.
 ---STRINGEND
 

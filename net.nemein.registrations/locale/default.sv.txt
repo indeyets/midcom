@@ -139,10 +139,6 @@ radera bokningen
 ändra bokningen
 ---STRINGEND
 
----STRING email address invalid
-Var god fyll i en giltig E-post address
----STRINGEND
-
 ---STRING email with password sent to %s<br>please login to activate your account.
 Ett E-post medelande som innehåller ditt lösenord har skickats till %s. <br> Var god fyll i lösenordet nedan för att aktivera ditt konto.
 ---STRINGEND

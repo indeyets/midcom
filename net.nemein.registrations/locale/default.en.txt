@@ -167,15 +167,11 @@ delete the registration
 edit the registration
 ---STRINGEND
 
----STRING email adress invalid
-Please enter a valid E-Mail address.
----STRINGEND
-
 ---STRING email with password sent to %s<br>please login to activate your account.
 An E-Mail containing your password has been sent to %s.<br>Please enter this password below to activate your account.
 ---STRINGEND
 
----STRING emailadress
+---STRING emailaddress
 E-Mail address
 ---STRINGEND
 
@@ -411,7 +407,7 @@ Registration-Configuration for the event
 Registration for %s
 ---STRINGEND
 
----STRING registration is beeing processed, you will get a mail
+---STRING registration is being processed, you will get a mail
 Your registration is being processed, you will receive a confirmation via E-Mail shortly.
 ---STRINGEND
 
