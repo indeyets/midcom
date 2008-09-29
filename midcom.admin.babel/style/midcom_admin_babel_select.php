@@ -40,7 +40,7 @@ $curlang = $_MIDCOM->i18n->get_current_language();
             }        
             
             echo "        <tr class=\"{$status}\">\n";
-            echo "            <th class=\"component\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.babel/status/{$language}/\">{$language_name}</a></td>\n";
+            echo "            <th class=\"component\"><a href=\"{$prefix}__mfa/asgard_midcom.admin.babel/status/{$language}/\">{$language_name}</a></th>\n";
             echo "            <td title=\"{$state['strings_core']['translated']} / {$state['strings_core']['total']}\">{$percentage}%</td>\n";
             echo "            <td title=\"{$state['strings_other']['translated']} / {$state['strings_other']['total']}\">{$percentage_other}%</td>\n";
             echo "        </tr>\n";
