@@ -127,7 +127,7 @@ Transport-Typ
 Import von Änderungen erzwingen
 ---STRINGEND
 
----STRING XML filters
+---STRING xml filters
 XML-Filter (für fortgeschrittene Benutzer)
 ---STRINGEND
 
