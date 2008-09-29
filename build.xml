@@ -256,7 +256,7 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
     </target>
     -->
     <target name="install_static_packages">
-        <resolvePath propertyName="static_path" file="${project.basedir}/static"/>
+        <resolvePath propertyName="static_path" file="${project.basedir}/midcom.core/static"/>
         <resolvePath propertyName="template_path" file="${project.basedir}/../templates"/>
         <exec
             command="ln -s ${static_path}/stock-icons ${static_dir}/stock-icons"
