@@ -28,7 +28,7 @@ function midcom_helper_replicator_serialize(&$object)
     if (   !isset($object->lang)
         || $object->lang === 0)
     {
-        // Non-ML or not in langx does not trigger the bug
+        // Non-ML or not in langx does not trigger bug #259
         $stat = midgard_replicator::serialize($object);
         return midcom_helper_replicator_serialize_check_bug244($stat, $object);
     }
@@ -104,8 +104,11 @@ function midcom_helper_replicator_serialize_check_bug244(&$serialized, &$object)
         $msg .= " Object will not be replicated, please go add one more language to the object in <a target='_blank' href='{$object_url}'>Asgard</a>.";
         $_MIDCOM->uimessages->add('midcom.helper.replicator', $msg, 'error');
         $GLOBALS['midcom_helper_replicator_logger']->log_object($object, "has {$total_langs} languages, this triggers bug #244, preventing export.", MIDCOM_LOG_ERROR);
+        debug_push_class('function', __FUNCTION__);
+        debug_add("Object {$class} #{$object->id} has {$total_langs} languages, this triggers bug #244, preventing export", MIDCOM_LOG_WARN);
+        debug_pop();
         unset($class, $object_url, $msg, $total_langs, $langs);
-        //debug_pop();
+        mgd_set_errno(MGD_ERR_ERROR);
         return false;
     }
     /*

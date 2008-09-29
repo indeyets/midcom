@@ -110,7 +110,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
             if ($privilege_serialized === false)
             {
                 unset($privileges, $privilege, $qb);
-                debug_add("midcom_helper_replicator_serialize returned false for privilege {$privilege->guid}", MIDCOM_LOG_ERROR);
+                debug_add("midcom_helper_replicator_serialize returned false for privilege {$privilege->guid}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
                 debug_pop();
                 return false;
             }
@@ -140,7 +140,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
         $attachment_serialized = midcom_helper_replicator_serialize($attachment);
         if ($attachment_serialized === false)
         {
-            debug_add("midcom_helper_replicator_serialize returned false for attachment {$attachment->guid}", MIDCOM_LOG_ERROR);
+            debug_add("midcom_helper_replicator_serialize returned false for attachment {$attachment->guid}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
@@ -150,7 +150,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
         if ($attachment_blob_serialized === false)
         {
             unset($attachment_serialized);
-            debug_add("midcom_helper_replicator_serialize_blob returned false for attachment {$attachment->guid}", MIDCOM_LOG_ERROR);
+            debug_add("midcom_helper_replicator_serialize_blob returned false for attachment {$attachment->guid}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
@@ -275,7 +275,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
             if ($parameter_serialized === false)
             {
                 unset($parameters, $parameter, $qb);
-                debug_add("midcom_helper_replicator_serialize returned false for parameter {$parameter->guid}", MIDCOM_LOG_ERROR);
+                debug_add("midcom_helper_replicator_serialize returned false for parameter {$parameter->guid}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
                 debug_pop();
                 return false;
             }
@@ -370,7 +370,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
         if ($object_serialized === false)
         {
              $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
-            debug_add("midcom_helper_replicator_serialize returned false for object {$object->guid}", MIDCOM_LOG_ERROR);
+            debug_add("midcom_helper_replicator_serialize returned false for object {$object->guid}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
