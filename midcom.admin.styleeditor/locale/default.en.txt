@@ -147,3 +147,7 @@ URL
 XML
 ---STRINGEND
 
+---STRING list of %s folders using the same style template path
+List of %s folders using the same style template path
+---STRINGEND
+

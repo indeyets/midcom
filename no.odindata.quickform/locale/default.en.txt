@@ -83,6 +83,10 @@ Form email settings
 Form settings
 ---STRINGEND
 
+---STRING form temporarily disabled
+<h2>form temporarily disabled</h2>
+---STRINGEND
+
 ---STRING from address of the email
 From-address of the email
 ---STRINGEND
@@ -163,7 +167,7 @@ This message is displayed after the user has submitted the form.
 Use this field to add a simple text above the form to help the user fill in the form.
 ---STRINGEND
 
----STRING form temporarily disabled
-<h2>form temporarily disabled</h2>
+---STRING end_message
+Message to show to the user after the form has been submitted
 ---STRINGEND
 
