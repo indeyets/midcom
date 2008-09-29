@@ -316,7 +316,20 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
     function create_working_copy($att, $size = -1)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $src = mgd_open_attachment($att, 'r');
+        
+        try
+        {
+            $att_obj = new midgard_attachment($att);
+        }
+        catch(midgard_error_exception $e)
+        {
+            /* TODO, Throw error or warning */
+            return false;
+        }
+    
+        $blob = new midgard_blob($att_obj);
+        $src = $blob->get_handler();
+
         if (!$src)
         {
             debug_add("Could not open attachment #{$att} for reading, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
