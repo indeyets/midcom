@@ -3,14 +3,6 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
----STRING This is the index
-Tämä on luettelo
----STRINGEND
-
----STRING You can change this to something else :-)
-Voit muuttaa tämän joksikin muuksi :-)
----STRINGEND
-
 ---STRING breadcrumb text
 Leivänmurupolun teksti
 ---STRINGEND
