@@ -7,6 +7,10 @@
 Only show approved articles
 ---STRINGEND
 
+---STRING activate autoindex
+Automatically create an index page for this topic?
+---STRINGEND
+
 ---STRING approve
 Approve
 ---STRINGEND
@@ -123,6 +127,10 @@ File Size
 File Type
 ---STRINGEND
 
+---STRING folder_in_title
+Show folder name in page title
+---STRINGEND
+
 ---STRING from
 From
 ---STRINGEND
@@ -169,6 +177,10 @@ Select Schema
 
 ---STRING settings
 Settings
+---STRINGEND
+
+---STRING show blobs in autoindex
+Show blobs in autoindex
 ---STRINGEND
 
 ---STRING show_blobs_in_autoindex

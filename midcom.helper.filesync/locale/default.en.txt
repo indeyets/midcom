@@ -1,7 +1,9 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
+---CVS $Id$
 ---LANGUAGE en
 
 ---STRING midcom.helper.filesync
 Site filesystem synchronizer
 ---STRINGEND
+

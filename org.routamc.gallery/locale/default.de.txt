@@ -3,6 +3,22 @@
 ---CVS $Id$
 ---LANGUAGE de
 
+---STRING approve automatically
+Automatisch freigeben
+---STRINGEND
+
+---STRING by score
+nach Score
+---STRINGEND
+
+---STRING create
+Anlegen
+---STRINGEND
+
+---STRING create a new sub gallery
+Sub-Galerie anlegen
+---STRINGEND
+
 ---STRING gallery settings
 Galerie-Einstellungen
 ---STRINGEND
@@ -11,44 +27,12 @@ Galerie-Einstellungen
 Legen Sie fest, wie Fotos in dieser Galerie ausgewählt und angezeigt werden
 ---STRINGEND
 
----STRING org.routamc.gallery
-Foto-Galerie
----STRINGEND
-
----STRING photo selection method
-Auswahlmethode für Fotos
----STRINGEND
-
----STRING photos with tags
-Fotos mit übereinstimmenden Tags
----STRINGEND
-
 ---STRING hand picked photos
 Von Hand gewählte Fotos
 ---STRINGEND
 
----STRING sort photos
-Fotos anordnen
----STRINGEND
-
----STRING sort photos by dragging and dropping
-Fotos per Drag'n'Drop anordnen
----STRINGEND
-
----STRING you can also create sub galleries for the current gallery
-In dieser Galerie können Sie auch Sub-Galerien anlegen
----STRINGEND
-
----STRING approve automatically
-Automatisch freigeben
----STRINGEND
-
----STRING create a new sub gallery
-Sub-Galerie anlegen
----STRINGEND
-
----STRING create
-Anlegen
+---STRING hide items from navigation
+Elemente in der Navigation nicht anzeigen
 ---STRINGEND
 
 ---STRING hide thumbnails
@@ -59,30 +43,59 @@ Vorschaubilder verstecken
 Anzahl der Navigationselemente
 ---STRINGEND
 
----STRING sort order
-Sortierreihenfolge
+---STRING org.routamc.gallery
+Foto-Galerie
 ---STRINGEND
 
----STRING hide items from navigation
-Elemente in der Navigation nicht anzeigen
+---STRING photo selection method
+Auswahlmethode für Fotos
 ---STRINGEND
 
----STRING by score
-nach Score
+---STRING photos per page
+Fotos pro Seite
 ---STRINGEND
 
----STRING taken
-nach Aufnahmezeitpunkt
----STRINGEND
-
----STRING reverse taken
-nach Aufnahmezeitpunkt (rückwärts)
+---STRING photos with tags
+Fotos mit übereinstimmenden Tags
 ---STRINGEND
 
 ---STRING reverse edited
 nach Bearbeitungszeitpunkt (rückwärts)
 ---STRINGEND
 
----STRING photos per page
-Fotos pro Seite
+---STRING reverse taken
+nach Aufnahmezeitpunkt (rückwärts)
 ---STRINGEND
+
+---STRING sort order
+Sortierreihenfolge
+---STRINGEND
+
+---STRING sort photos
+Fotos anordnen
+---STRINGEND
+
+---STRING sort photos by dragging and dropping
+Fotos per Drag'n'Drop anordnen
+---STRINGEND
+
+---STRING taken
+nach Aufnahmezeitpunkt
+---STRINGEND
+
+---STRING you can also create sub galleries for the current gallery
+In dieser Galerie können Sie auch Sub-Galerien anlegen
+---STRINGEND
+
+---STRING enable ajax editing
+Onsite-Bearbeitung per AJAX aktivieren
+---STRINGEND
+
+---STRING order saved
+Reihenfolge gespeichert
+---STRINGEND
+
+---STRING photo
+Foto
+---STRINGEND
+

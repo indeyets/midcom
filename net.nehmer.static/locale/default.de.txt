@@ -31,6 +31,10 @@ Artikel-Link gelöscht
 Neue Artikel standardmäßig freigegeben
 ---STRINGEND
 
+---STRING autoindex
+Soll für diese Rubrik automatisch eine Index-Seite erstellt werden?
+---STRINGEND
+
 ---STRING autoindex-notes
 Die automatische Index-Seite ersetzt den Artikel mit dem URL-Namen index und besteht aus einer Liste aller Artikel und Dateianhängen der aktuellen Rubrik.
 ---STRINGEND
@@ -63,6 +67,22 @@ Default
 Artikel löschen
 ---STRINGEND
 
+---STRING delete article link
+Artikel-Link löschen
+---STRINGEND
+
+---STRING delete cancelled
+Löschen abgebrochen
+---STRINGEND
+
+---STRING delete link
+Link löschen
+---STRINGEND
+
+---STRING delete_link
+Link löschen
+---STRINGEND
+
 ---STRING directory index for %s
 Verzeichnis-Index für %s
 ---STRINGEND
@@ -81,6 +101,10 @@ AJAX-basierte on-site-Bearbeitung aktivieren
 
 ---STRING enable_article_links
 Seitenverlinkungs-System
+---STRINGEND
+
+---STRING failed to delete the article link, contact the site administrator
+Artikel-Link konnte nicht gelöscht werden, verständigen Sie den Site-Administrator
 ---STRINGEND
 
 ---STRING file lastmodified
@@ -103,8 +127,16 @@ Dateigröße
 Dateityp
 ---STRINGEND
 
+---STRING from
+Von
+---STRINGEND
+
 ---STRING hide_navigation
 Artikel in der Navigation verstecken
+---STRINGEND
+
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+<a href="%s">Klicken Sie hier</a>, um den Original-Artikel zu löschen
 ---STRINGEND
 
 ---STRING indexinnav
@@ -147,6 +179,10 @@ Einstellungen
 Dateianhänge im automatischen Index anzeigen
 ---STRINGEND
 
+---STRING show_blobs_in_autoindex
+Blobs im automatischen Index anzeigen
+---STRINGEND
+
 ---STRING simple_name_handling
 Soll die URL des Artikels automatisch generiert werden?
 ---STRINGEND
@@ -167,6 +203,10 @@ Kein Ordner ausgewählt
 Statische Inhalte
 ---STRINGEND
 
+---STRING this article has been linked from <a href="%s">%s</a> and confirming will delete only the link
+Dieser Artikel wurde von <a href="%s">%s</a> verlinkt, Bestätigen löscht ausschließlich den Link.
+---STRINGEND
+
 ---STRING unapprove
 Freigabe zurücknehmen
 ---STRINGEND
@@ -179,43 +219,7 @@ Artikel anzeigen
 Ordner-Sichtbarkeit
 ---STRINGEND
 
----STRING autoindex
-Soll für diese Rubrik automatisch eine Index-Seite erstellt werden?
----STRINGEND
-
----STRING delete article link
-Artikel-Link löschen
----STRINGEND
-
----STRING delete cancelled
-Löschen abgebrochen
----STRINGEND
-
----STRING delete link
-Link löschen
----STRINGEND
-
----STRING delete_link
-Link löschen
----STRINGEND
-
----STRING failed to delete the article link, contact the site administrator
-Artikel-Link konnte nicht gelöscht werden, verständigen Sie den Site-Administrator
----STRINGEND
-
----STRING from
-Von
----STRINGEND
-
----STRING if you want to delete the original article, <a href="%s">click here</a>
-<a href="%s">Klicken Sie hier</a>, um den Original-Artikel zu löschen
----STRINGEND
-
----STRING show_blobs_in_autoindex
-Blobs im automatischen Index anzeigen
----STRINGEND
-
----STRING this article has been linked from <a href="%s">%s</a> and confirming will delete only the link
-Dieser Artikel wurde von <a href="%s">%s</a> verlinkt, Bestätigen löscht ausschließlich den Link.
+---STRING folder_in_title
+Ordnername im Seitentitel anzeigen
 ---STRINGEND
 

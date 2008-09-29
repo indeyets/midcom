@@ -56,7 +56,7 @@
                 (
                     array
                     (
-                        'title' => 'Kuva',
+                        'title' => 'photo',
                         'name' => 'thumbnail_html',
                     ),
                 ),

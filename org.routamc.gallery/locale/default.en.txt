@@ -3,6 +3,26 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING approve automatically
+Approve automatically
+---STRINGEND
+
+---STRING by score
+By score
+---STRINGEND
+
+---STRING create
+Create
+---STRINGEND
+
+---STRING create a new sub gallery
+Create a new sub gallery
+---STRINGEND
+
+---STRING enable ajax editing
+Enable AJAX onsite editing
+---STRINGEND
+
 ---STRING gallery settings
 Gallery settings
 ---STRINGEND
@@ -11,44 +31,12 @@ Gallery settings
 Manage how photos are selected and displayed in this gallery
 ---STRINGEND
 
----STRING org.routamc.gallery
-Photo gallery
----STRINGEND
-
----STRING photo selection method
-Photo selection method
----STRINGEND
-
----STRING photos with tags
-Photos with matching tags
----STRINGEND
-
 ---STRING hand picked photos
 Hand-picked photos
 ---STRINGEND
 
----STRING sort photos
-Sort photos
----STRINGEND
-
----STRING sort photos by dragging and dropping
-Sort photos by dragging and dropping
----STRINGEND
-
----STRING you can also create sub galleries for the current gallery
-You can also create sub galleries for the current gallery
----STRINGEND
-
----STRING approve automatically
-Approve automatically
----STRINGEND
-
----STRING create a new sub gallery
-Create a new sub gallery
----STRINGEND
-
----STRING create
-Create
+---STRING hide items from navigation
+Hide items from navigation
 ---STRINGEND
 
 ---STRING hide thumbnails
@@ -59,38 +47,55 @@ Hide thumbnails
 Number of navigation items
 ---STRINGEND
 
----STRING sort order
-Sort order
+---STRING order saved
+Order saved
 ---STRINGEND
 
----STRING hide items from navigation
-Hide items from navigation
+---STRING org.routamc.gallery
+Photo gallery
 ---STRINGEND
 
----STRING by score
-By score
----STRINGEND
-
----STRING taken
-By date taken
----STRINGEND
-
----STRING reverse taken
-Reverse date taken
----STRINGEND
-
----STRING reverse edited
-Reverse edited on
+---STRING photo selection method
+Photo selection method
 ---STRINGEND
 
 ---STRING photos per page
 Photos shown per page
 ---STRINGEND
 
----STRING enable ajax editing
-Enable AJAX onsite editing
+---STRING photos with tags
+Photos with matching tags
 ---STRINGEND
 
----STRING order saved
-Order saved
+---STRING reverse edited
+Reverse edited on
 ---STRINGEND
+
+---STRING reverse taken
+Reverse date taken
+---STRINGEND
+
+---STRING sort order
+Sort order
+---STRINGEND
+
+---STRING sort photos
+Sort photos
+---STRINGEND
+
+---STRING sort photos by dragging and dropping
+Sort photos by dragging and dropping
+---STRINGEND
+
+---STRING taken
+By date taken
+---STRINGEND
+
+---STRING you can also create sub galleries for the current gallery
+You can also create sub galleries for the current gallery
+---STRINGEND
+
+---STRING photo
+Photo
+---STRINGEND
+
