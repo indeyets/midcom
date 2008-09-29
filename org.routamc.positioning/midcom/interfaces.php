@@ -23,7 +23,8 @@ class org_routamc_positioning_interface extends midcom_baseclasses_components_in
 
         $this->_component = 'org.routamc.positioning';
         $this->_purecode = true;
-        $this->_autoload_files = Array(
+        $this->_autoload_files = array
+        (
             'utils.php',
         );
     }
