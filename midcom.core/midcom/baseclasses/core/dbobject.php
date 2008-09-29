@@ -668,6 +668,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function undelete($guids, $type)
     {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r("called type '{$type}' for \$guids:", $guids);
+        debug_pop();
         static $undeleted_size = 0;
         
         $ref = midcom_helper_reflector_tree::get($type);
@@ -679,13 +682,17 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 $guids,
             );
         }
-        
+
+        $stats = array();
         foreach ($guids as $guid)
         {
             $object = midcom_helper_reflector::get_object($guid, $type);
             if (is_null($object))
             {
                 // Purged, skip
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Object identified with GUID {$guid} is purged, cannot undelete", MIDCOM_LOG_INFO);
+                debug_pop();
                 continue;
             }
             $label = $ref->get_label_property();
@@ -705,17 +712,30 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                     $undeleted = true;
                 }
             }
+            if (!$undeleted)
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to undelete object with GUID {$guid} errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                debug_pop();
+            }
+            $stats[$guid] = $undeleted;
             
             // FIXME: We should only undelete parameters & attachments deleted inside some small window of the main objects delete
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Calling midcom_baseclasses_core_dbobject::undelete_parameters({$guid});");
+            debug_pop();
             midcom_baseclasses_core_dbobject::undelete_parameters($guid);
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Calling midcom_baseclasses_core_dbobject::undelete_attachments({$guid});");
+            debug_pop();
             midcom_baseclasses_core_dbobject::undelete_attachments($guid);
 
             // List all deleted children
             $children_types = $ref->get_child_objects($object, true);
             
-            if (!$children_types)
+            if (empty($children_types))
             {
-                return true;
+                continue;
             }
 
             foreach ($children_types as $type => $children)
@@ -731,6 +751,14 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 midcom_baseclasses_core_dbobject::undelete($child_guids, $type);
             }
         }
+        foreach ($stats as $guid => $bool)
+        {
+            if (!$bool)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -773,6 +801,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 $undeleted_size += $param->metadata->size;
             }
         }
+        return true;
     }
 
     /**
@@ -821,6 +850,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 midcom_baseclasses_core_dbobject::undelete_parameters($att->guid);
             }
         }
+        return true;
     }
 
     /**
