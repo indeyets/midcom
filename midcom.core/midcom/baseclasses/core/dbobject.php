@@ -485,6 +485,13 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function delete(&$object)
     {
+        if (!midcom_baseclasses_core_dbobject::delete_pre_checks($object))
+        {
+            debug_push_class($object, __FUNCTION__);
+            debug_add('Pre-flight check returned false', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return false;
+        }
 
         $delete_extensions = true;
         if (   isset($object->lang)
