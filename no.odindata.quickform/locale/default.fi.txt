@@ -27,10 +27,6 @@ Järjestele sarakkeen mukaan
 Listaa sarakkeiden mukaan
 ---STRINGEND
 
----STRING Message to send to user
-Käyttäjälle lähetettävä viesti
----STRINGEND
-
 ---STRING Reports
 Raportit
 ---STRINGEND
@@ -117,10 +113,6 @@ Viesti
 
 ---STRING message of the mail sent to user
 Viesti, joka liitetään käyttäjälle lähetetyn viestin yläosaan
----STRINGEND
-
----STRING message to send to user
-Viesti, joka lähetetään käyttäjälle
 ---STRINGEND
 
 ---STRING message to show user after the form has been submitted

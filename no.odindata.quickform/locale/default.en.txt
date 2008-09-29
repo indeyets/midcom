@@ -27,10 +27,6 @@ List by key
 List responces by key
 ---STRINGEND
 
----STRING Message to send to user
-Message to send to user
----STRINGEND
-
 ---STRING Reports
 Reports
 ---STRINGEND

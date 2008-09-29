@@ -3,10 +3,6 @@
 ---CVS $Id$
 ---LANGUAGE sv
 
----STRING Message to send to user
-Medelande att visa i epost meddlandets sidhuvud
----STRINGEND
-
 ---STRING Send mail to submitter
 Ska en kopia skickas till avsändaren o formuläret?
 ---STRINGEND
