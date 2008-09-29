@@ -124,21 +124,32 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
             case 0:
                 $mode = 'default';
                 $this->_open_write_mode = true;
-                
-                if (!function_exists('mgd_open_attachment'))
+               
+                try 
                 {
-                    // Legacy API disabled, use the modern method
-                    $handle = MidgardAttachment::open($this->id);
-                    break;
+                    $att_obj = new midgard_attachment($this->id);
+                }
+                catch(midgard_error_exception $e) 
+                {
+                    /* FIXME, throw error */
                 }
                 
-                $handle = mgd_open_attachment($this->id);
+                $blob = new midgard_blob($att_obj);
+
+                if(!$blob)
+                {
+                    /* FIXME, throw error */
+                }
+
+                $handle = $blob->get_handler();
                 break;
 
             case 1:
                 $mode = func_get_arg(0);
                 $this->_open_write_mode = ($mode{0} != 'r');
 
+                /* WARNING, read mode not supported by midgard_blob! */
+                /* FIXME */
                 if (!function_exists('mgd_open_attachment'))
                 {
                     // Legacy API disabled, use the modern method
