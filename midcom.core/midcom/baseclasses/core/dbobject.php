@@ -231,7 +231,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         {
             $object->metadata->published = time();
         }
-
         /*
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_print_r('$object->metadata after magick', $object->metadata);
@@ -1280,14 +1279,14 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _rewrite_timestamps_to_isodate(&$object)
     {
-        $timestamps = array
+        static $timestamps = array
         (
             'revised', 
             'created', 
             'locked', 
             'approved'
         );
-        $metadata_timestamps = array
+        static $metadata_timestamps = array
         (
             'created', 
             'revised', 
@@ -1299,6 +1298,11 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             'schedulestart',
             'scheduleend',
         );
+        /*
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r('$object->metadata before rewrites', $object->metadata);
+        debug_pop();
+        */
 
         foreach ($timestamps as $timestamp)
         {
@@ -1319,11 +1323,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             }
         }
         
-        // Pre 1.8 doe not have the metadata property.
-        if (!isset($object->metadata))
-        {
-            return;
-        }
         foreach ($metadata_timestamps as $timestamp)
         {
             if (array_key_exists($timestamp, $object->metadata))
@@ -1332,16 +1331,26 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 {
                     $object->metadata->$timestamp = 0;
                 }
+                else
+                {
+                    // typecast just to be sure.
+                    $object->metadata->$timestamp = (int)$object->metadata->$timestamp;
+                }
                 if ($object->metadata->$timestamp == 0)
                 {
                     $object->metadata->$timestamp = '0000-00-00 00:00:00';
                 }
                 else
                 {
-                    $object->metadata->$timestamp = gmstrftime('%Y-%m-%d %T', strtotime($object->metadata->$timestamp));
+                    $object->metadata->$timestamp = gmstrftime('%Y-%m-%d %T', $object->metadata->$timestamp);
                 }
             }
         }
+        /*
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_print_r('$object->metadata after rewrites', $object->metadata);
+        debug_pop();
+        */
     }
     
     /**
