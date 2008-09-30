@@ -34,8 +34,7 @@ class org_openpsa_reports_navigation extends midcom_baseclasses_components_navig
                 MIDCOM_NAV_SITE => Array
                 (
                     MIDCOM_NAV_URL => "{$last}/",
-                    /* TODO: better localization source ?? */
-                    MIDCOM_NAV_NAME => $this->_l10n->get('generator:' . $component),
+                    MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string($component, $component),
                 ),
                 MIDCOM_NAV_ADMIN => null,
                 MIDCOM_META_CREATOR => $this->_topic->creator,
