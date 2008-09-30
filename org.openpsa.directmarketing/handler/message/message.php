@@ -29,7 +29,7 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
     {
         parent::__construct();
     }
-
+    
     /**
      * Internal helper, loads the datamanager for the current message. Any error triggers a 500.
      *
@@ -47,12 +47,7 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
     }
 
     /**
-     * Looks up a message to display.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * Looks up an message to display.
      */
     function _handler_view ($handler_id, $args, &$data)
     {
@@ -63,14 +58,14 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
             // This will 404
         }
         $this->_campaign = new org_openpsa_directmarketing_campaign($this->_message->campaign);
-
-        $this->_component_data['active_leaf'] = "campaign_{$this->_campaign->id}";
+        
+        $this->_component_data['active_leaf'] = "campaign_{$this->_campaign->id}";  
 
         $this->_load_datamanager();
         $this->_datamanager->autoset_storage($this->_message);
 
-        $tmp = Array();
-        $tmp[] = Array
+        $tmp = array();
+        $tmp[] = array
         (
             MIDCOM_NAV_URL => "message/{$this->_message->guid}/",
             MIDCOM_NAV_NAME => $this->_message->title,
@@ -127,7 +122,8 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
         );
         $this->_view_toolbar->add_item
         (
-            Array(
+            array
+            (
                 MIDCOM_TOOLBAR_URL => "message/report/{$this->_request_data['message']->guid}.html",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get("message report"),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
@@ -138,7 +134,8 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
         );
         $this->_view_toolbar->add_item
         (
-            Array(
+            array
+            (
                 MIDCOM_TOOLBAR_URL => "message/send_test/{$this->_request_data['message']->guid}.html",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get("send message to testers"),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
@@ -148,21 +145,23 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
         );
         $this->_view_toolbar->add_item
         (
-            Array(
+            array
+            (
                 MIDCOM_TOOLBAR_URL => "message/send/{$this->_request_data['message']->guid}.html",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get("send message to whole campaign"),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-send.png',
                 // TODO: Use some othe privilege ?? (and check that on send handler too)
                 MIDCOM_TOOLBAR_ENABLED => $this->_message->can_do('midgard:update'),
-                MIDCOM_TOOLBAR_OPTIONS => array(
+                MIDCOM_TOOLBAR_OPTIONS => array
+                    (
                         'onclick' => "return confirm('" . $this->_request_data['l10n']->get("are you sure you wish to send this to the whole campaign ?") . "')",
                     ),
             )
         );
 
 
-
+        
         // Populate calendar events for the message
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
@@ -175,9 +174,6 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
 
     /**
      * Shows the loaded message.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_view ($handler_id, &$data)
     {

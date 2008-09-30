@@ -20,7 +20,8 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
 
         $this->_component = 'org.openpsa.directmarketing';
         $this->_autoload_class_definitions = array('midcom_dba_classes.inc');
-        $this->_autoload_files = array(
+        $this->_autoload_files = array
+        (
             'query.php',
             'campaign.php',
             'campaign_ruleresolver.php',
@@ -413,7 +414,8 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
         }
 
         // Transfer metadata dependencies from classes that we drive
-        $classes = array(
+        $classes = array
+        (
             'org_openpsa_directmarketing_campaign',
             'org_openpsa_directmarketing_campaign_member',
             'org_openpsa_directmarketing_campaign_message',
@@ -427,7 +429,8 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
                 switch($class)
                 {
                     default:
-                        $metadata_fields = array(
+                        $metadata_fields = array
+                        (
                             'creator' => 'id',
                             'revisor' => 'id' // Though this will probably get touched on update we need to check it anyways to avoid invalid links
                         );

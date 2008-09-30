@@ -30,6 +30,11 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
 
     function _sync_to_dm2()
     {
+        if (!is_array($this->testers))
+        {
+            $this->testers = array();
+        }
+        
         foreach ($this->testers as $tester => $selected)
         {
             $this->testers2[] = $tester;
@@ -38,6 +43,16 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
 
     function _sync_from_dm2()
     {
+        if (!is_array($this->testers))
+        {
+            $this->testers = array();
+        }
+        
+        if (!is_array($this->testers2))
+        {
+            $this->testers2 = array();
+        }
+        
         foreach ($this->testers as $tester => $included)
         {
             if (!in_array($tester, $this->testers2))

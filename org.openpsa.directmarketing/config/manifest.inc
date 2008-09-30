@@ -1,7 +1,6 @@
 'name' => 'org.openpsa.directmarketing',
 'icon' => 'stock-icons/16x16/stock_mail.png',
 'purecode' => false,
-'privileges' => array(),
 'class_definitions' => array
 (
     'midcom_dba_classes.inc',

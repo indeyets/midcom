@@ -36,51 +36,58 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
         $_MIDCOM->cache->content->no_cache();
 
         // Match /campaign/import/<guid>
-        $this->_request_switch[] = array(
-            'fixed_args' => Array('campaign', 'import'),
+        $this->_request_switch['import_main'] = array
+        (
+            'fixed_args' => array('campaign', 'import'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_directmarketing_handler_import', 'index'),
+            'handler' => array('org_openpsa_directmarketing_handler_import', 'index'),
         );
 
         // Match /campaign/import/simpleemails/<guid>
-        $this->_request_switch[] = array(
-            'fixed_args' => Array('campaign', 'import', 'simpleemails'),
+        $this->_request_switch['import_simpleemails'] = array
+        (
+            'fixed_args' => array('campaign', 'import', 'simpleemails'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_directmarketing_handler_import', 'simpleemails'),
+            'handler' => array('org_openpsa_directmarketing_handler_import', 'simpleemails'),
         );
 
         // Match /campaign/import/csv/<guid>
-        $this->_request_switch[] = array(
-            'fixed_args' => Array('campaign', 'import', 'csv'),
+        $this->_request_switch['import_csv_file_select'] = array
+        (
+            'fixed_args' => array('campaign', 'import', 'csv'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_directmarketing_handler_import', 'csv_select'),
+            'handler' => array('org_openpsa_directmarketing_handler_import', 'csv_select'),
         );
 
         // Match /campaign/import/csv2/<guid>
-        $this->_request_switch[] = array(
-            'fixed_args' => Array('campaign', 'import', 'csv2'),
+        $this->_request_switch['import_csv_field_select'] = array
+        (
+            'fixed_args' => array('campaign', 'import', 'csv2'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_directmarketing_handler_import', 'csv'),
+            'handler' => array('org_openpsa_directmarketing_handler_import', 'csv'),
         );
 
         // Match /campaign/import/vcards/<guid>
-        $this->_request_switch[] = array(
-            'fixed_args' => Array('campaign', 'import', 'vcards'),
+        $this->_request_switch['import_vcards'] = array
+        (
+            'fixed_args' => array('campaign', 'import', 'vcards'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_directmarketing_handler_import', 'vcards'),
+            'handler' => array('org_openpsa_directmarketing_handler_import', 'vcards'),
         );
 
         // Match /campaign/export/csv/<guid>/<filename>
-        $this->_request_switch[] = array(
-            'fixed_args' => Array('campaign', 'export', 'csv'),
+        $this->_request_switch['export_csv1'] = array
+        (
+            'fixed_args' => array('campaign', 'export', 'csv'),
             'variable_args' => 2,
-            'handler' => Array('org_openpsa_directmarketing_handler_export', 'csv'),
+            'handler' => array('org_openpsa_directmarketing_handler_export', 'csv'),
         );
         // Match /campaign/export/csv/<guid>/
-        $this->_request_switch[] = array(
-            'fixed_args' => Array('campaign', 'export', 'csv'),
+        $this->_request_switch['export_csv2'] = array
+        (
+            'fixed_args' => array('campaign', 'export', 'csv'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_directmarketing_handler_export', 'csv'),
+            'handler' => array('org_openpsa_directmarketing_handler_export', 'csv'),
         );
 
         // Handle /message/create/<campaign guid>/<schema>
@@ -92,91 +99,104 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
         );
 
         // Match /message/new/<campaign guid>/<schema>
-        $this->_request_switch['create_message_old'] = array(
-            'fixed_args' => Array('message','new'),
+        $this->_request_switch['create_message_old'] = array
+        (
+            'fixed_args' => array('message','new'),
             'variable_args' => 2,
             'handler' => array('org_openpsa_directmarketing_handler_message_create', 'create'),
         );
 
         // Match /message/list/<type>/<guid>
-        $this->_request_switch['message_list_dynamic_type'] = array(
-            'fixed_args' => Array('message','list'),
+        $this->_request_switch['message_list_dynamic_type'] = array
+        (
+            'fixed_args' => array('message','list'),
             'variable_args' => 2,
             'handler' => array('org_openpsa_directmarketing_handler_message_list', 'list'),
         );
 
         // Match /message/compose/<message_guid>/<person_guid>
-        $this->_request_switch['compose4person'] = array(
+        $this->_request_switch['compose4person'] = array
+        (
             'fixed_args' => array('message', 'compose'),
             'variable_args' => 2,
             'handler' => array('org_openpsa_directmarketing_handler_message_compose', 'compose'),
         );
 
         // Match /message/compose/<message_guid>
-        $this->_request_switch['compose'] = array(
+        $this->_request_switch['compose'] = array
+        (
             'fixed_args' => array('message', 'compose'),
             'variable_args' => 1,
             'handler' => array('org_openpsa_directmarketing_handler_message_compose', 'compose'),
         );
 
         // Match /message/send_bg/<message GUID>/<batch number>/<job guid>
-        $this->_request_switch['background_send_message'] = array(
+        $this->_request_switch['background_send_message'] = array
+        (
             'fixed_args' => array('message', 'send_bg'),
             'variable_args' => 3,
             'handler' => array('org_openpsa_directmarketing_handler_message_send', 'send_bg'),
         );
 
         // Match /message/send_delayed/<message GUID>/<time>/
-        $this->_request_switch['delayed_send_message'] = array(
+        $this->_request_switch['delayed_send_message'] = array
+        (
             'fixed_args' => array('message', 'send_test'),
             'variable_args' => 2,
             'handler' => array('org_openpsa_directmarketing_handler_message_send', 'send'),
         );
 
         // Match /message/send/<message GUID>
-        $this->_request_switch['send_message'] = array(
+        $this->_request_switch['send_message'] = array
+        (
             'fixed_args' => array('message', 'send'),
             'variable_args' => 1,
             'handler' => array('org_openpsa_directmarketing_handler_message_send', 'send'),
         );
 
         // Match /message/send_test/<message GUID>
-        $this->_request_switch['test_send_message'] = array(
+        $this->_request_switch['test_send_message'] = array
+        (
             'fixed_args' => array('message', 'send_test'),
             'variable_args' => 1,
             'handler' => array('org_openpsa_directmarketing_handler_message_send', 'send'),
         );
 
         // Match /message/send_status/<message GUID>
-        $this->_request_switch['message_send_status'] = array(
+        $this->_request_switch['message_send_status'] = array
+        (
             'fixed_args' => array('message', 'send_status'),
             'variable_args' => 1,
             'handler' => array('org_openpsa_directmarketing_handler_message_report', 'status'),
         );
 
         // Match /message/report/<message GUID>
-        $this->_request_switch['message_report'] = array(
+        $this->_request_switch['message_report'] = array
+        (
             'fixed_args' => array('message', 'report'),
             'variable_args' => 1,
             'handler' => array('org_openpsa_directmarketing_handler_message_report', 'report'),
         );
 
         // Match /message/<message GUID>
-        $this->_request_switch['message_view'] = array(
+        $this->_request_switch['message_view'] = array
+        (
             'fixed_args' => 'message',
             'variable_args' => 1,
             'handler' => array('org_openpsa_directmarketing_handler_message_message', 'view'),
         );
 
         // Match /message/edit/<message GUID>
-        $this->_request_switch['message_edit'] = array(
+        $this->_request_switch['message_edit'] = array
+        (
             'fixed_args' => array('message', 'edit'),
             'variable_args' => 1,
             'handler' => array('org_openpsa_directmarketing_handler_message_admin', 'edit'),
         );
 
         // Match /message/delete/<message GUID>
-        $this->_request_switch['message_delete'] = array(
+        $this->_request_switch['message_delete'] = array
+        (
             'fixed_args' => array('message', 'delete'),
             'variable_args' => 1,
             'handler' => array('org_openpsa_directmarketing_handler_message_admin', 'delete'),
@@ -191,35 +211,40 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
         );
 
         // Match /campaign/list
-        $this->_request_switch['list_campaign'] = array(
-            'fixed_args' => Array('campaign','list'),
+        $this->_request_switch['list_campaign'] = array
+        (
+            'fixed_args' => array('campaign','list'),
             'handler' => array('org_openpsa_directmarketing_handler_subscriber', 'list'),
         );
 
         // Match /campaign/list/<person GUID>
-        $this->_request_switch['list_campaign_person'] = array(
-            'fixed_args' => Array('campaign','list'),
+        $this->_request_switch['list_campaign_person'] = array
+        (
+            'fixed_args' => array('campaign','list'),
             'handler' => array('org_openpsa_directmarketing_handler_subscriber', 'list'),
             'variable_args' => 1,
         );
 
         // Match /campaign/unsubscribe/<member GUID>
-        $this->_request_switch['subscriber_unsubscribe'] = array(
-            'fixed_args' => Array('campaign','unsubscribe'),
+        $this->_request_switch['subscriber_unsubscribe'] = array
+        (
+            'fixed_args' => array('campaign','unsubscribe'),
             'handler' => array('org_openpsa_directmarketing_handler_subscriber', 'unsubscribe'),
             'variable_args' => 1,
         );
 
         // Match /campaign/unsubscribe/ajax/<membership GUID>
-        $this->_request_switch['subscriber_unsubscribe_ajax'] = array(
-            'fixed_args' => Array('campaign','unsubscribe', 'ajax'),
+        $this->_request_switch['subscriber_unsubscribe_ajax'] = array
+        (
+            'fixed_args' => array('campaign','unsubscribe', 'ajax'),
             'handler' => array('org_openpsa_directmarketing_handler_subscriber', 'unsubscribe_ajax'),
             'variable_args' => 1,
         );
 
         // Match /campaign/unsubscribe_all/<person GUID>
-        $this->_request_switch['subscriber_unsubscribe_all'] = array(
-            'fixed_args' => Array('campaign','unsubscribe_all'),
+        $this->_request_switch['subscriber_unsubscribe_all'] = array
+        (
+            'fixed_args' => array('campaign','unsubscribe_all'),
             'handler' => array('org_openpsa_directmarketing_handler_subscriber', 'unsubscribe_all'),
             'variable_args' => 1,
         );
@@ -265,47 +290,53 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
         );
 
         // Match /logger/bounce
-        $this->_request_switch['log_bounce'] = array(
+        $this->_request_switch['log_bounce'] = array
+        (
             'fixed_args' => array ('logger', 'bounce'),
             'handler' => array('org_openpsa_directmarketing_handler_logger', 'bounce'),
         );
 
         // Match /logger/link
-        $this->_request_switch['log_link'] = array(
+        $this->_request_switch['log_link'] = array
+        (
             'fixed_args' => array ('logger', 'link'),
             'handler' => array('org_openpsa_directmarketing_handler_logger', 'link'),
         );
 
         // Match /logger/redirect/<TOKEN>/<URL>
-        $this->_request_switch['log_redirect_byurl'] = array(
+        $this->_request_switch['log_redirect_byurl'] = array
+        (
             'fixed_args' => array ('logger', 'redirect'),
             'variable_args' => 2,
             'handler' => array('org_openpsa_directmarketing_handler_logger', 'redirect'),
         );
 
         // Match /logger/redirect/<TOKEN>
-        $this->_request_switch['log_redirect'] = array(
+        $this->_request_switch['log_redirect'] = array
+        (
             'fixed_args' => array ('logger', 'redirect'),
             'variable_args' => 1,
             'handler' => array('org_openpsa_directmarketing_handler_logger', 'redirect'),
         );
 
-        $this->_request_switch['config'] = Array
+        $this->_request_switch['config'] = array
         (
-            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
+            'handler' => array('midcom_core_handler_configdm', 'configdm'),
             'schemadb' => 'file:/org/openpsa/directmarketing/config/schemadb_config.inc',
             'schema' => 'config',
-            'fixed_args' => Array('config'),
+            'fixed_args' => array('config'),
         );
 
         // Match /debug
-        $this->_request_switch['debugger'] = array(
+        $this->_request_switch['debugger'] = array
+        (
             'fixed_args' => 'debug',
             'handler' => 'debug',
         );
 
         // Match /
-        $this->_request_switch['frontpage'] = array(
+        $this->_request_switch['frontpage'] = array
+        (
             'handler' => 'frontpage'
         );
 
@@ -330,7 +361,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
         // Load schema database snippet or file
         debug_add("Loading Schema Database", MIDCOM_LOG_DEBUG);
         $schemadb_contents = midcom_get_snippet_content($schemadb_snippet);
-        eval("\$schemadb = Array ( {$schemadb_contents} );");
+        eval("\$schemadb = array ( {$schemadb_contents} );");
         // Initialize the datamanager with the schema
         $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb);
 
@@ -400,8 +431,8 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
 
     /**
      * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
+     * @param array $args The argument list.
+     * @param array &$data The local request data.
      * @return boolean Indicating success.
      */
     function _handler_frontpage($handler_id, $args, &$data)
@@ -434,8 +465,8 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
 
     /**
      * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
+     * @param array $args The argument list.
+     * @param array &$data The local request data.
      * @return boolean Indicating success.
      */
     function _handler_debug($handler_id, $args, &$data)

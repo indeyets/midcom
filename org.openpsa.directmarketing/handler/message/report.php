@@ -402,8 +402,8 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
 
     /**
      * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
+     * @param array $args The argument list.
+     * @param array &$data The local request data.
      * @return boolean Indicating success.
      */
     function _handler_report($handler_id, $args, &$data)
@@ -434,18 +434,18 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
         {
             $this->_create_campaign_from_link();
         }
-        $tmp = Array();
-        $tmp[] = Array
+        $tmp = array();
+        $tmp[] = array
         (
             MIDCOM_NAV_URL => "campaign/{$this->_campaign->guid}/",
             MIDCOM_NAV_NAME => $this->_campaign->title,
         );
-        $tmp[] = Array
+        $tmp[] = array
         (
             MIDCOM_NAV_URL => "message/{$this->_message->guid}/",
             MIDCOM_NAV_NAME => $this->_message->title,
         );
-        $tmp[] = Array
+        $tmp[] = array
         (
             MIDCOM_NAV_URL => "message/report/{$this->_message->guid}.html",
             MIDCOM_NAV_NAME => $this->_l10n->get('message report'),
@@ -455,7 +455,8 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
 
         $this->_view_toolbar->add_item
         (
-            Array(
+            array
+            (
                 MIDCOM_TOOLBAR_URL => "message/{$this->_request_data['message']->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get("back"),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
@@ -499,8 +500,8 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
 
     /**
      * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
+     * @param array $args The argument list.
+     * @param array &$data The local request data.
      * @return boolean Indicating success.
      */
     function _handler_status($handler_id, $args, &$data)

@@ -307,7 +307,8 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         if ($reg_next)
         {
             //register next batch
-            $args = array(
+            $args = array
+            (
                 'batch' => $batch+1,
                 'url_base' => $url_base,
             );

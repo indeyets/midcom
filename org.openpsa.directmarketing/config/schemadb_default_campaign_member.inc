@@ -19,7 +19,8 @@
             'widget'   => 'text',
             'hidden'   => true,
         ),
-        'member_type' => array(
+        'member_type' => array
+        (
             'title'    => 'membership status',
             'storage'  => 'orgOpenpsaObtype',
             'type'     => 'select',
@@ -33,6 +34,7 @@
                     ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER_BOUNCED => 'bounced',
                 ),
             ),
+            'widget' => 'select',
             'hidden'   => true,
         )
     )

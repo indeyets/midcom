@@ -48,8 +48,8 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
 
     /**
      * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
+     * @param array $args The argument list.
+     * @param array &$data The local request data.
      * @return boolean Indicating success.
      */
     function _handler_send_bg($handler_id, $args, &$data)
@@ -218,8 +218,8 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
 
     /**
      * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
+     * @param array $args The argument list.
+     * @param array &$data The local request data.
      * @return boolean Indicating success.
      */
     function _handler_send($handler_id, $args, &$data)
@@ -231,13 +231,13 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
         $data['campaign'] = new org_openpsa_directmarketing_campaign($data['message']->campaign);
         $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";
 
-        $tmp = Array();
-        $tmp[] = Array
+        $tmp = array();
+        $tmp[] = array
         (
             MIDCOM_NAV_URL => "message/{$data['message']->guid}/",
             MIDCOM_NAV_NAME => $data['message']->title,
         );
-        $tmp[] = Array
+        $tmp[] = array
         (
             MIDCOM_NAV_URL => "send_test/{$data['message']->guid}/",
             MIDCOM_NAV_NAME => $this->_l10n->get('send'),
@@ -309,7 +309,8 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
             default:
                 // Schedule background send
                 debug_add('Registering background send job to start on: ' . date('Y-m-d H:i:s', $data['send_start']));
-                $at_handler_arguments = array(
+                $at_handler_arguments = array
+                (
                     'batch' => 1,
                     'url_base' => $data['batch_url_base_full'],
                 );
@@ -318,6 +319,5 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
                 break;
         }
     }
-
 }
 ?>

@@ -43,7 +43,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
     /**
      * The schema database in use, available only while a datamanager is loaded.
      *
-     * @var Array
+     * @var array
      * @access private
      */
     var $_schemadb = null;
@@ -163,45 +163,45 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrumb line towards the current
+     * Helper, updates the context so that we get a complete breadcrum line towards the current
      * location.
      *
      * @param string $handler_id
      */
     function _update_breadcrumb_line($handler_id)
     {
-        $tmp = Array();
+        $tmp = array();
 
         switch ($handler_id)
         {
             case 'edit_campaign':
-                $tmp[] = Array
+                $tmp[] = array
                 (
                     MIDCOM_NAV_URL => "campaign/edit/{$this->_campaign->guid}.html",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
                 );
                 break;
             case 'delete_campaign':
-                $tmp[] = Array
+                $tmp[] = array
                 (
                     MIDCOM_NAV_URL => "campaign/delete/{$this->_campaign->guid}.html",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('delete'),
                 );
                 break;
             case 'edit_campaign_query':
-                $tmp[] = Array
+                $tmp[] = array
                 (
                     MIDCOM_NAV_URL => "campaign/edit_query/{$this->_campaign->guid}.html",
                     MIDCOM_NAV_NAME => $this->_l10n->get('edit rules'),
                 );
                 break;
             case 'edit_campaign_query_advanced':
-                $tmp[] = Array
+                $tmp[] = array
                 (
                     MIDCOM_NAV_URL => "campaign/edit_query/{$this->_campaign->guid}.html",
                     MIDCOM_NAV_NAME => $this->_l10n->get('edit rules'),
                 );
-                $tmp[] = Array
+                $tmp[] = array
                 (
                     MIDCOM_NAV_URL => "campaign/edit_query_advanced/{$this->_campaign->guid}.html",
                     MIDCOM_NAV_NAME => $this->_l10n->get('advanced rule editor'),
@@ -448,17 +448,12 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
     }
 
     /**
-     * Displays a campaign edit view.
+     * Displays an campaign edit view.
      *
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation campaign
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * If create privileges apply, we relocate to the index creation campaign,
      */
     function _handler_edit_query($handler_id, $args, &$data)
     {
@@ -500,21 +495,24 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/org.openpsa.directmarketing/edit_query.js');
         $_MIDCOM->add_link_head(
-            array(
+            array
+            (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
                 'href' => MIDCOM_STATIC_URL . '/org.openpsa.directmarketing/edit_query.css'
             )
         );
         $_MIDCOM->add_link_head(
-            array(
+            array
+            (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
                 'href' => MIDCOM_STATIC_URL . '/midcom.services.uimessages/protoGrowl.css'
             )
         );
         $_MIDCOM->add_link_head(
-            array(
+            array
+            (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
                 'href' => MIDCOM_STATIC_URL . '/midcom.helper.datamanagers/datamanager.css'
@@ -608,9 +606,6 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
 
     /**
      * Shows the loaded campaign.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_edit_query($handler_id, &$data)
     {
@@ -618,17 +613,12 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
     }
 
     /**
-     * Displays a campaign edit view.
+     * Displays an campaign edit view.
      *
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation campaign
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * If create privileges apply, we relocate to the index creation campaign,
      */
     function _handler_edit_query_advanced($handler_id, $args, &$data)
     {
@@ -695,7 +685,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
             {
                 //Save failed
                 $_MIDCOM->uimessages->add('org.openpsa.directmarketing', sprintf($this->_request_data['l10n']->get('error when saving rule, errstr: %s'), mgd_errstr()), 'error');
-                break;
+                return;
             }
 
             //Schedule background members refresh
@@ -719,9 +709,6 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
 
     /**
      * Shows the loaded campaign.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_edit_query_advanced($handler_id, &$data)
     {
@@ -729,17 +716,12 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
     }
 
     /**
-     * Displays a campaign edit view.
+     * Displays an campaign edit view.
      *
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation campaign
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * If create privileges apply, we relocate to the index creation campaign,
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -780,9 +762,6 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
 
     /**
      * Shows the loaded campaign.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_edit ($handler_id, &$data)
     {
@@ -790,17 +769,12 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
     }
 
     /**
-     * Displays a campaign delete confirmation view.
+     * Displays an campaign delete confirmation view.
      *
      * Note, that the campaign for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation campaign
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * If create privileges apply, we relocate to the index creation campaign,
      */
     function _handler_delete($handler_id, $args, &$data)
     {
@@ -853,9 +827,6 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
 
     /**
      * Shows the loaded campaign.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_delete ($handler_id, &$data)
     {

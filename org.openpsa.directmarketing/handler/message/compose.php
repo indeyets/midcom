@@ -22,6 +22,12 @@ class org_openpsa_directmarketing_handler_message_compose extends midcom_basecla
      */
     var $_message = null;
 
+    /**
+     * MidCOM helper Datamanager2 class
+     * 
+     * @access private
+     * @var midcom_helper_datamanager2_datamanager
+     */
     var $_datamanager = false;
 
     /**
@@ -49,10 +55,13 @@ class org_openpsa_directmarketing_handler_message_compose extends midcom_basecla
     }
 
     /**
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * Phase for composing a message
+     * 
+     * @access public
+     * @param String $handler_id    Name of the request handler
+     * @param array $args           Variable arguments
+     * @param array &$data          Public request data, passed by reference
+     * @return boolean              Indicating success
      */
     function _handler_compose($handler_id, $args, &$data)
     {
@@ -136,9 +145,12 @@ class org_openpsa_directmarketing_handler_message_compose extends midcom_basecla
     }
 
     /**
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
+     * Compose the message and send it for post-formatting
+     * 
+     * @access public
+     * @param String $handler_id    Name of the request handler
+     * @param array &$data          Public request data, passed by reference
+     * @return String               Composed message
      */
     function _show_compose($handler_id, &$data)
     {

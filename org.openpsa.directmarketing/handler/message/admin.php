@@ -43,11 +43,11 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
     /**
      * The schema database in use, available only while a datamanager is loaded.
      *
-     * @var Array
+     * @var array
      * @access private
      */
     var $_schemadb = null;
-
+    
     /**
      * Schema to use for message display
      *
@@ -55,7 +55,7 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
      * @access private
      */
     var $_schema = null;
-
+    
     /**
      * Simple default constructor.
      */
@@ -73,7 +73,7 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
         $this->_request_data['message'] =& $this->_message;
         $this->_request_data['datamanager'] =& $this->_datamanager;
         $this->_request_data['controller'] =& $this->_controller;
-
+        
         $this->_view_toolbar->add_item
         (
             array
@@ -98,7 +98,7 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
             )
         );
-
+    
         switch ($handler_id)
         {
             case 'edit_message':
@@ -163,32 +163,32 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrumb line towards the current
+     * Helper, updates the context so that we get a complete breadcrum line towards the current
      * location.
      *
      * @param string $handler_id
      */
     function _update_breadcrumb_line($handler_id)
     {
-        $tmp = Array();
+        $tmp = array();
 
-        $tmp[] = Array
+        $tmp[] = array
         (
             MIDCOM_NAV_URL => "message/{$this->_message->guid}/",
             MIDCOM_NAV_NAME => $this->_message->title,
         );
-
+        
         switch ($handler_id)
         {
             case 'message_edit':
-                $tmp[] = Array
+                $tmp[] = array
                 (
                     MIDCOM_NAV_URL => "message/edit/{$this->_message->guid}.html",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
                 );
                 break;
             case 'message_delete':
-                $tmp[] = Array
+                $tmp[] = array
                 (
                     MIDCOM_NAV_URL => "message/delete/{$this->_message->guid}.html",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('delete'),
@@ -200,17 +200,12 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
     }
 
     /**
-     * Displays a message edit view.
+     * Displays an message edit view.
      *
      * Note, that the message for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation message
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * If create privileges apply, we relocate to the index creation message,
      */
     function _handler_edit($handler_id, $args, &$data)
     {
@@ -220,11 +215,11 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The message {$args[0]} was not found.");
             // This will exit.
         }
-
+        
         $this->_message->require_do('midgard:update');
-
+        
         $data['campaign'] = new org_openpsa_directmarketing_campaign($this->_message->campaign);
-        $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";
+        $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";       
 
         $this->_load_controller();
         $data['message_dm'] =& $this->_controller;
@@ -254,9 +249,6 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
 
     /**
      * Shows the loaded message.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_edit ($handler_id, &$data)
     {
@@ -264,17 +256,12 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
     }
 
     /**
-     * Displays a message delete confirmation view.
+     * Displays an message delete confirmation view.
      *
      * Note, that the message for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation message
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * If create privileges apply, we relocate to the index creation message,
      */
     function _handler_delete($handler_id, $args, &$data)
     {
@@ -284,11 +271,11 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The message {$args[0]} was not found.");
             // This will exit.
         }
-
+        
         $this->_message->require_do('midgard:delete');
-
+        
         $data['campaign'] = new org_openpsa_directmarketing_campaign($this->_message->campaign);
-        $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";
+        $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";        
 
         $this->_load_datamanager();
 
@@ -328,14 +315,11 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
 
     /**
      * Shows the loaded message.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_delete ($handler_id, &$data)
     {
         $data['view_message'] = $this->_datamanager->get_content_html();
-
+        
         midcom_show_style('show-message-delete');
     }
 }

@@ -19,10 +19,13 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
     }
 
     /**
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * Phase for showing the list of campaigns
+     * 
+     * @access public
+     * @param String $handler_id    Name of the request handler
+     * @param array $args           Variable arguments
+     * @param array &$data          Public request data, passed by reference
+     * @return boolean              Indicating success
      */
     function _handler_list($handler_id, $args, &$data)
     {
@@ -82,13 +85,17 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
     }
 
     /**
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
+     * Show the list of existing campaigns
+     * 
+     * @access public
+     * @param String $handler_id    Name of the request handler
+     * @param array &$data          Public request data, passed by reference
      */
     function _show_list($handler_id, &$data)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
+        $qb_all = org_openpsa_directmarketing_campaign::new_query_builder();
+        $campaigns = array();
 
         midcom_show_style("show-campaign-list-header");
         $this->_request_data['campaigns_all'] = array();
@@ -103,7 +110,6 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
             $memberships = $qb->execute();
 
             $campaign_membership_map = array();
-            $campaigns = array();
             if ($memberships)
             {
                 foreach ($memberships as $membership)
@@ -114,7 +120,6 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
             }
 
             // List active campaigns for the "add to campaign" selector
-            $qb_all = org_openpsa_directmarketing_campaign::new_query_builder();
             $qb_all->add_constraint('archived', '=', 0);
             $qb_all->add_order('metadata.created', $this->_config->get('campaign_list_order'));
             $campaigns_all = $qb_all->execute();
@@ -149,6 +154,7 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
 
             $campaigns = $qb->execute();
         }
+        
         if (   is_array($campaigns)
             && count($campaigns) > 0)
         {
@@ -171,10 +177,13 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
     }
 
     /**
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * Handle the unsubscribe phase
+     * 
+     * @access public
+     * @param String $handler_id    Name of the request handler
+     * @param array $args           Variable arguments
+     * @param array &$data          Public request data, passed by reference
+     * @return boolean              Indicating success
      */
     function _handler_unsubscribe($handler_id, $args, &$data)
     {
@@ -207,9 +216,11 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
     }
 
     /**
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
+     * Show the unsubscribe action
+     * 
+     * @access public
+     * @param String $handler_id    Name of the request handler
+     * @param array &$data          Public request data, passed by reference
      */
     function _show_unsubscribe($handler_id, &$data)
     {
@@ -226,10 +237,13 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
     }
 
     /**
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * Support the AJAX request for unsubscribing from a campaign
+     * 
+     * @access public
+     * @param String $handler_id    Name of the request handler
+     * @param array $args           Variable arguments
+     * @param array &$data          Public request data, passed by reference
+     * @return boolean              Indicating success
      */
     function _handler_unsubscribe_ajax($handler_id, $args, &$data)
     {
@@ -267,17 +281,22 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
     }
 
     /**
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
+     * Show the empty style of AJAX unsubscribing
+     * 
+     * @access public
+     * @param String $handler_id    Name of the request handler
+     * @param array &$data          Public request data, passed by reference
      */
     function _show_unsubscribe_ajax($handler_id, &$data)  { }
 
     /**
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * Handle the request for unsubscribing all subscribers from a campaign
+     * 
+     * @access public
+     * @param String $handler_id    Name of the request handler
+     * @param array $args           Variable arguments
+     * @param array &$data          Public request data, passed by reference
+     * @return boolean              Indicating success
      */
     function _handler_unsubscribe_all($handler_id, $args, &$data)
     {
@@ -306,7 +325,7 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
         $memberships = $qb->execute();
         if ($memberships === false)
         {
-            //Some error occurred with QB
+            //Some error occured with QB
             $_MIDCOM->auth->drop_sudo();
             debug_pop();
             return false;
@@ -331,9 +350,11 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
     }
 
     /**
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
+     * Show the unsubscribe status for unsubscribe all
+     * 
+     * @access public
+     * @param String $handler_id    Name of the request handler
+     * @param array &$data          Public request data, passed by reference
      */
     function _show_unsubscribe_all($handler_id, &$data)
     {

@@ -15,18 +15,6 @@
 %d jäsentä
 ---STRINGEND
 
----STRING comma
-pilkku
----STRINGEND
-
----STRING newline
-rivinvaihto
----STRINGEND
-
----STRING semicolon
-puolipiste
----STRINGEND
-
 ---STRING add
 Lisää
 ---STRINGEND
@@ -53,6 +41,10 @@ Kaikki segmentissä "%s" jotka ovat klikanneet linkkiä "%s" viestistä #%d ja e
 
 ---STRING all persons who have clicked on link "%s" in message #%d and have not unsubscribed from campaign #%d
 Kaikki jotka ovat klikanneet linkkiä "%s" viestistä #%d ja eivät ole peruuttaneet kampanjaa #%d
+---STRINGEND
+
+---STRING already_subscribed
+Ennestään kampanjassa
 ---STRINGEND
 
 ---STRING archival
@@ -99,6 +91,10 @@ Henkilön ominaisuus
 Henkilön parametri
 ---STRINGEND
 
+---STRING comma
+pilkku
+---STRINGEND
+
 ---STRING contains
 sisältää
 ---STRINGEND
@@ -119,6 +115,10 @@ Luo kampanja linkistä
 Luotu %s
 ---STRINGEND
 
+---STRING csv
+CSV
+---STRINGEND
+
 ---STRING csv column
 CSV-kenttä
 ---STRINGEND
@@ -129,6 +129,10 @@ ei sisällä
 
 ---STRING edit rules
 Muokkaa sääntöjä
+---STRINGEND
+
+---STRING email addresses
+Sähköpostiosoitteet
 ---STRINGEND
 
 ---STRING email message
@@ -151,16 +155,32 @@ Esimerkki
 Tee tilaajista CSV-tiedosto
 ---STRINGEND
 
+---STRING failed_add
+Kampanjaan liittäminen epäonnistui
+---STRINGEND
+
+---STRING failed_create
+Luonti epäonnistunut
+---STRINGEND
+
 ---STRING field separator
 Kenttäerotin
 ---STRINGEND
 
+---STRING fields available for matching are defined in schema
+Tietokantakuvauksessa (schema) määritellään käytettävissä olevat kentät
+---STRINGEND
+
 ---STRING file to import
-Tuotava tiedosto
+Sisään tuotava tiedosto
 ---STRINGEND
 
 ---STRING first message sent on
 Ensimmäinen lähetys
+---STRINGEND
+
+---STRING first row is headers
+Ensimmäiselle riville tulee otsikkotiedot
 ---STRINGEND
 
 ---STRING from address
@@ -211,12 +231,20 @@ Lisää tilaajia tiedostona
 Tuo henkilöitä kampanjaan "%s"
 ---STRINGEND
 
+---STRING import subscribers to %s
+Tuo sisään tilaajia kampanjalle %s
+---STRINGEND
+
 ---STRING import vcards
 Tuo vCard-tiedostosta
 ---STRINGEND
 
 ---STRING in domain
 domainissa
+---STRINGEND
+
+---STRING iso-latin-1 encoding
+ISO-Latin-1 merkistökoodaus
 ---STRINGEND
 
 ---STRING last message sent on
@@ -275,6 +303,10 @@ Viesti
 Viestiraportti
 ---STRINGEND
 
+---STRING message sent
+Viesti lähetetty
+---STRINGEND
+
 ---STRING message statistics
 Viestistatistiikka
 ---STRINGEND
@@ -287,12 +319,24 @@ Viestit
 Viestejä lähetetty
 ---STRINGEND
 
+---STRING new %s
+Uusi %s
+---STRINGEND
+
 ---STRING new message
 Uusi viesti
 ---STRINGEND
 
+---STRING newline
+rivinvaihto
+---STRINGEND
+
 ---STRING no rule given
 Ei sääntöä
+---STRINGEND
+
+---STRING no segment
+Ei segmenttiä
 ---STRINGEND
 
 ---STRING normal campaign
@@ -309,6 +353,10 @@ Ei-peruuttanut -säännöt
 
 ---STRING nothing sent yet
 Mitään ei ole vielä lähetetty
+---STRINGEND
+
+---STRING one line per subscriber
+Yksi rivi kutakin tilaajaa kohtaan
 ---STRINGEND
 
 ---STRING org.openpsa.directmarketing
@@ -483,6 +531,14 @@ Linkkistatistiikka segmentille "%s"
 Segmenttisäännöt
 ---STRINGEND
 
+---STRING semicolon
+puolipiste
+---STRINGEND
+
+---STRING send
+Lähetä
+---STRINGEND
+
 ---STRING send message
 Lähetä viesti
 ---STRINGEND
@@ -515,6 +571,14 @@ Tallenna kenttään
 Aihe
 ---STRINGEND
 
+---STRING subscribed_existing
+Ennestään tilauksia, liitetty kampanjaan
+---STRINGEND
+
+---STRING subscribed_new
+Uusis tilauksia
+---STRINGEND
+
 ---STRING testers
 Koeryhmä
 ---STRINGEND
@@ -543,12 +607,36 @@ Peruuttaneita välillä %s - %s
 Peruuttaneita %s lähtien
 ---STRINGEND
 
+---STRING unsubscribing failed
+Tilauksen peruuttaminen epäonnistui
+---STRINGEND
+
+---STRING unsubscribing registered
+Tilauksen peruttaminen rekisteröity
+---STRINGEND
+
+---STRING vcards
+Vcard-kortit
+---STRINGEND
+
 ---STRING with %s Midgard we can only support "%s" matching for multiple parameters
 Midgard %s:n kanssa voimme käyttää vain "%s" täsmäystä parametrien kanssa
 ---STRINGEND
 
 ---STRING with name
 nimellä
+---STRINGEND
+
+---STRING write email addresses
+Kirjoita sähköpostiosoitteet
+---STRINGEND
+
+---STRING you can also write the addresses to the text field
+Voit myös kirjoittaa sähköpostiosoitteet tekstikenttään
+---STRINGEND
+
+---STRING you can import csv files here
+Voit tuoda CSV-tiedostoja täältä
 ---STRINGEND
 
 ---STRING you can import simple lists of email addresses here
@@ -563,27 +651,11 @@ Voit lisätä täällä henkilöitä kampanjaan vCard-muodossa
 Sinun täytyy valita "%s" tai "%s" täsmäykseksi
 ---STRINGEND
 
----STRING no segment
-Ei segmenttiä
+---STRING you can also write the addresses to the text field, each address on its own row
+Voit myös kirjoittaa sähköpostiosoitteet tekstikenttään, kukin osoite omalle rivilleen
 ---STRINGEND
 
----STRING already_subscribed
-Ennestään kampanjassa
----STRINGEND
-
----STRING subscribed_new
-Uusis tilauksia
----STRINGEND
-
----STRING subscribed_existing
-Ennestään tilauksia, liitetty kampanjaan
----STRINGEND
-
----STRING failed_create
-Luonti epäonnistunut
----STRINGEND
-
----STRING failed_add
-Kampanjaan liittäminen epäonnistui
+---STRING reply to address
+Vastausosoite
 ---STRINGEND
 

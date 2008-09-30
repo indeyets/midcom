@@ -33,7 +33,7 @@ class org_openpsa_directmarketing_handler_message_create extends midcom_baseclas
     /**
      * The schema database in use, available only while a datamanager is loaded.
      *
-     * @var Array
+     * @var array
      * @access private
      */
     var $_schemadb = null;
@@ -49,10 +49,10 @@ class org_openpsa_directmarketing_handler_message_create extends midcom_baseclas
     /**
      * The defaults to use for the new message.
      *
-     * @var Array
+     * @var array
      * @access private
      */
-    var $_defaults = Array();
+    var $_defaults = array();
 
     /**
      * Simple helper which references all important members to the request data listing
@@ -82,7 +82,7 @@ class org_openpsa_directmarketing_handler_message_create extends midcom_baseclas
     /**
      * Loads and prepares the schema database.
      *
-     * Special treatment is done for the name field, which is set readonly for non-creates
+     * Special treatement is done for the name field, which is set readonly for non-creates
      * if the simple_name_handling config option is set. (using an auto-generated urlname based
      * on the title, if it is missing.)
      *
@@ -137,17 +137,12 @@ class org_openpsa_directmarketing_handler_message_create extends midcom_baseclas
     }
 
     /**
-     * Displays a message edit view.
+     * Displays an message edit view.
      *
      * Note, that the message for non-index mode operation is automatically determined in the can_handle
      * phase.
      *
-     * If create privileges apply, we relocate to the index creation message
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * If create privileges apply, we relocate to the index creation message,
      */
     function _handler_create($handler_id, $args, &$data)
     {
@@ -160,10 +155,10 @@ class org_openpsa_directmarketing_handler_message_create extends midcom_baseclas
         }
         $_MIDCOM->auth->require_do('midgard:create', $data['campaign']);
 
-        $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";
+        $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";  
 
         $this->_schema = $args[1];
-
+        
         if (!array_key_exists($this->_schema, $this->_request_data['schemadb_message']))
         {
             // This message type isn't available for our schema, return error
@@ -172,7 +167,7 @@ class org_openpsa_directmarketing_handler_message_create extends midcom_baseclas
 
         $this->_load_controller();
         $this->_prepare_request_data();
-
+        
         switch ($this->_controller->process_form())
         {
             case 'save':
@@ -187,7 +182,7 @@ class org_openpsa_directmarketing_handler_message_create extends midcom_baseclas
                 // This will exit.
         }
 
-        if ($this->_message != null)
+        if ($this->_message != null) 
         {
             $_MIDCOM->set_26_request_metadata($this->_message->metadata->revised, $this->_message->guid);
         }
@@ -199,15 +194,15 @@ class org_openpsa_directmarketing_handler_message_create extends midcom_baseclas
     }
 
     /**
-     * Helper, updates the context so that we get a complete breadcrumb line towards the current
+     * Helper, updates the context so that we get a complete breadcrum line towards the current
      * location.
      *
      */
     function _update_breadcrumb_line()
     {
-        $tmp = Array();
+        $tmp = array();
 
-        $tmp[] = Array
+        $tmp[] = array
         (
             MIDCOM_NAV_URL => "create/{$this->_schema}.html",
             MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($this->_schemadb[$this->_schema]->description)),
@@ -218,9 +213,6 @@ class org_openpsa_directmarketing_handler_message_create extends midcom_baseclas
 
     /**
      * Shows the loaded message.
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
      */
     function _show_create ($handler_id, &$data)
     {

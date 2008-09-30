@@ -15,18 +15,6 @@
 %d members
 ---STRINGEND
 
----STRING comma
-comma
----STRINGEND
-
----STRING newline
-newline
----STRINGEND
-
----STRING semicolon
-semicolon
----STRINGEND
-
 ---STRING add
 Add
 ---STRINGEND
@@ -53,6 +41,10 @@ All persons in market segment "%s" who have clicked on link "%s" in message #%d 
 
 ---STRING all persons who have clicked on link "%s" in message #%d and have not unsubscribed from campaign #%d
 All persons who have clicked on link "%s" in message #%d and have not unsubscribed from campaign #%d
+---STRINGEND
+
+---STRING already_subscribed
+Already subscribed
 ---STRINGEND
 
 ---STRING archival
@@ -99,6 +91,10 @@ Persons property
 Persons parameter
 ---STRINGEND
 
+---STRING comma
+comma
+---STRINGEND
+
 ---STRING contains
 contains
 ---STRINGEND
@@ -119,6 +115,10 @@ Create campaign from link
 Created on %s
 ---STRINGEND
 
+---STRING csv
+CSV
+---STRINGEND
+
 ---STRING csv column
 CSV column
 ---STRINGEND
@@ -129,6 +129,10 @@ does not contain
 
 ---STRING edit rules
 Edit rules
+---STRINGEND
+
+---STRING email addresses
+Email addresses
 ---STRINGEND
 
 ---STRING email message
@@ -151,8 +155,20 @@ Example
 Export subscribers as CSV
 ---STRINGEND
 
+---STRING failed_add
+Failed to add
+---STRINGEND
+
+---STRING failed_create
+Failed to create
+---STRINGEND
+
 ---STRING field separator
 Field separator
+---STRINGEND
+
+---STRING fields available for matching are defined in schema
+Fields available for matching are defined in schema
 ---STRINGEND
 
 ---STRING file to import
@@ -163,8 +179,12 @@ File to import
 First message sent on
 ---STRINGEND
 
+---STRING first row is headers
+First row is headers
+---STRINGEND
+
 ---STRING from address
-From -address
+From address
 ---STRINGEND
 
 ---STRING from link "%s"
@@ -211,12 +231,20 @@ Import subscribers
 Import subscribers to "%s"
 ---STRINGEND
 
+---STRING import subscribers to %s
+Import subscribers to %s
+---STRINGEND
+
 ---STRING import vcards
 Import vCards
 ---STRINGEND
 
 ---STRING in domain
 in domain
+---STRINGEND
+
+---STRING iso-latin-1 encoding
+ISO-Latin-1 encoding
 ---STRINGEND
 
 ---STRING last message sent on
@@ -275,6 +303,10 @@ Message
 Message report
 ---STRINGEND
 
+---STRING message sent
+Message sent
+---STRINGEND
+
 ---STRING message statistics
 Message statistics
 ---STRINGEND
@@ -287,12 +319,24 @@ Messages
 Messages sent
 ---STRINGEND
 
+---STRING new %s
+New %s
+---STRINGEND
+
 ---STRING new message
 New message
 ---STRINGEND
 
+---STRING newline
+newline
+---STRINGEND
+
 ---STRING no rule given
 No rule given
+---STRINGEND
+
+---STRING no segment
+No segment
 ---STRINGEND
 
 ---STRING normal campaign
@@ -309,6 +353,10 @@ Not-unsubscribed -limits
 
 ---STRING nothing sent yet
 Nothing sent yet
+---STRINGEND
+
+---STRING one line per subscriber
+One line per subscriber
 ---STRINGEND
 
 ---STRING org.openpsa.directmarketing
@@ -483,6 +531,14 @@ Segment "%s" link statistics
 Segment limits
 ---STRINGEND
 
+---STRING semicolon
+semicolon
+---STRINGEND
+
+---STRING send
+Send
+---STRINGEND
+
 ---STRING send message
 Send message
 ---STRINGEND
@@ -515,6 +571,14 @@ Store to field
 Subject
 ---STRINGEND
 
+---STRING subscribed_existing
+Subscribed existing
+---STRINGEND
+
+---STRING subscribed_new
+Subscribed new
+---STRINGEND
+
 ---STRING testers
 Testers
 ---STRINGEND
@@ -543,12 +607,36 @@ Unsubscribed between %s - %s
 Unsubscribed since %s
 ---STRINGEND
 
+---STRING unsubscribing failed
+Unsubscribing failed
+---STRINGEND
+
+---STRING unsubscribing registered
+Unsubscribing registered
+---STRINGEND
+
+---STRING vcards
+vCards
+---STRINGEND
+
 ---STRING with %s Midgard we can only support "%s" matching for multiple parameters
 With %s Midgard we can only support "%s" matching for multiple parameters
 ---STRINGEND
 
 ---STRING with name
 with name
+---STRINGEND
+
+---STRING write email addresses
+Write email addresses
+---STRINGEND
+
+---STRING you can also write the addresses to the text field
+You can also write the addresses to the text field
+---STRINGEND
+
+---STRING you can import csv files here
+You can import CSV files here
 ---STRINGEND
 
 ---STRING you can import simple lists of email addresses here
@@ -563,27 +651,7 @@ Here you can import vCards to the campaign
 You must select "%s" or "%s" for matching
 ---STRINGEND
 
----STRING no segment
-No segment
----STRINGEND
-
----STRING already_subscribed
-Already subscribed
----STRINGEND
-
----STRING subscribed_new
-Subscribed new
----STRINGEND
-
----STRING subscribed_existing
-Subscribed existing
----STRINGEND
-
----STRING failed_create
-Failed to create
----STRINGEND
-
----STRING failed_add
-Failed to add
+---STRING reply to address
+Reply to address
 ---STRINGEND
 

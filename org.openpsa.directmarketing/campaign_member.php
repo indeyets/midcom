@@ -231,5 +231,4 @@ class org_openpsa_directmarketing_campaign_member extends midcom_org_openpsa_cam
         return parent::__construct($id);
     }
 }
-
 ?>
