@@ -113,10 +113,10 @@ if ($data['trash'])
     echo "            <tr>\n";
     echo "            <td colspan=\"5\">\n";
     echo "                <label for=\"select_all\">\n";
-    echo "                    <input type=\"checkbox\" name=\"select_all\" id=\"select_all\" value=\"\" onclick=\"\jQuery(this).check_all('#batch_process tbody');\" />" . $_MIDCOM->i18n->get_string('select all', 'midgard.admin.asgard');
+    echo "                    <input type=\"checkbox\" name=\"select_all\" id=\"select_all\" value=\"\" onclick=\"jQuery(this).check_all('#batch_process tbody');\" />" . $_MIDCOM->i18n->get_string('select all', 'midgard.admin.asgard');
     echo "                </label>\n";
     echo "                <label for=\"invert_selection\">\n";
-    echo "                    <input type=\"checkbox\" name=\"invert_selection\" id=\"invert_selection\" value=\"\" onclick=\"\jQuery(this).invert_selection('#batch_process tbody');\" />" . $_MIDCOM->i18n->get_string('invert selection', 'midgard.admin.asgard');
+    echo "                    <input type=\"checkbox\" name=\"invert_selection\" id=\"invert_selection\" value=\"\" onclick=\"jQuery(this).invert_selection('#batch_process tbody');\" />" . $_MIDCOM->i18n->get_string('invert selection', 'midgard.admin.asgard');
     echo "                </label>\n";
     echo "            </td>\n";
     echo "        </tr>\n";
@@ -139,7 +139,7 @@ if ($data['trash'])
     echo "</form>\n";
     echo "<script type=\"text/javascript\">\n";
     echo "// <![CDATA[\n";
-    echo "\jQuery('#batch_process').tablesorter(\n";
+    echo "jQuery('#batch_process').tablesorter(\n";
     echo "  {\n";
     echo "      widgets: ['zebra'],\n";
     echo "      sortList: [[1,0]]\n";

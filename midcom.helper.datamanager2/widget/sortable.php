@@ -214,7 +214,7 @@ class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanag
         {
             $html = "<script type=\"text/javascript\">\n";
             $html .= "    // <![CDATA[\n";
-            $html .= "        \jQuery('#{$this->name}_sortable').create_sortable();\n";
+            $html .= "        jQuery('#{$this->name}_sortable').create_sortable();\n";
             $html .= "    // ]]>\n";
             $html .= "</script>\n";
 

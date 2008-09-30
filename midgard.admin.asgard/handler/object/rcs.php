@@ -551,9 +551,9 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
 
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/rcs.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.tablesorter.pack.js');
-        $_MIDCOM->add_jscript("\jQuery(document).ready(function()
+        $_MIDCOM->add_jscript("jQuery(document).ready(function()
         {
-            \jQuery('#midgard_admin_asgard_rcs_version_compare table').tablesorter({
+            jQuery('#midgard_admin_asgard_rcs_version_compare table').tablesorter({
                 headers:
                 {
                     0: {sorter: false},
