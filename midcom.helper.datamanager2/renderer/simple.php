@@ -236,7 +236,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     function toHtml()
     {
         return $this->_html;
-    } // end func toHtml
+    }
 
    /**
     * Called when visiting a form, before processing any form elements
@@ -277,6 +277,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
             $this->_html .= $this->_hiddenHtml;
         }
         $this->_html = str_replace('{content}', $this->_html, $html);
+        
         // add a validation script
         if ('' != ($script = $form->getValidationScript()))
         {
@@ -294,7 +295,8 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     function renderHeader(&$header)
     {
         $name = $header->getName();
-        if (!empty($name) && isset($this->_templates[$name]))
+        if (!empty($name) 
+            && isset($this->_templates[$name]))
         {
             $this->_html .= str_replace('{header}', $header->toHtml(), $this->_templates[$name]);
         }
@@ -312,7 +314,7 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     * @param    boolean        Whether an element is required
     * @param    string      Error message associated with the element
     * @param    string      Element type (optional)
-    * @access   privateâ¤
+    * @access   privateï¿½
     * @see      renderElement()
     * @return   string      Html for element
     */
@@ -368,8 +370,6 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
         }
         else
         {
-            //$html = preg_replace("/([ \t\n\r]*)?<!-- BEGIN error -->.*?<!-- END error -->([ \t\n\r]*)?/is", '', $html);
-
             $html = preg_replace("/([ \t\n\r]*)?<!-- BEGIN error -->.*?<!-- END error -->([ \t\n\r]*)?/is", '', $html);
         }
 
@@ -409,12 +409,9 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
         {
             $html = $this->_prepareTemplate($element->getName(), $element->getLabel(), $required, $error, $element->getType());
             $this->_html .= str_replace('{element}', $element->toHtml(), $html);
-
-
         }
         else if (!empty($this->_groupElementTemplate))
         {
-
             $html = str_replace('{label}', $element->getLabel(), $this->_groupElementTemplate);
             if ($required)
             {
@@ -426,7 +423,6 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
                 $html = preg_replace("/([ \t\n\r]*)?<!-- BEGIN required -->(\s|\S)*<!-- END required -->([ \t\n\r]*)?/i", '', $html);
             }
             $this->_groupElements[] = str_replace('{element}', $element->toHtml(), $html);
-
         }
         else
         {
@@ -477,7 +473,6 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
             // the rest of the variables are set in the other groups run of the startGroup function.
             //$this->_currentGroupTemplates[$this->_currentGroupName]['_groupElements'] = $this->_groupElements;
         }
-
 
         $this->_currentGroupTemplates[$name] = array
         (
@@ -548,7 +543,6 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
         $currentGroupId = count($this->_currentGroups) - 1;
         if ($currentGroupId > -1 )
         {
-
             $this->_currentGroupName = $this->_currentGroups[$currentGroupId];
             $this->_currentGroupTemplates[$this->_currentGroupName]['_groupElements'][] = $html;
             $this->_setGroupTemplates($this->_currentGroupName);
