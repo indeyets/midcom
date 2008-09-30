@@ -11,6 +11,18 @@ First sub-folder of this folder
 Redirection folder
 ---STRINGEND
 
+---STRING redirect administrators
+Redirect administrators
+---STRINGEND
+
+---STRING redirection http code
+HTTP return code used for redirect
+---STRINGEND
+
+---STRING redirection node
+Redirection node
+---STRINGEND
+
 ---STRING redirection settings
 Redirection settings
 ---STRINGEND
@@ -27,7 +39,7 @@ Redirection URL
 URL entered below
 ---STRINGEND
 
----STRING redirection http code
-HTTP return code used for redirect
+---STRING selected node
+Selected node
 ---STRINGEND
 

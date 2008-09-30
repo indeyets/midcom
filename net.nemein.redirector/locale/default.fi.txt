@@ -11,6 +11,18 @@ Ensimmäinen tämän kansion alapuolinen kansio
 Uudelleenohjauskansio
 ---STRINGEND
 
+---STRING redirect administrators
+Uudelleenohjaa pääkäyttäjät
+---STRINGEND
+
+---STRING redirection http code
+Uudelleenohjaukseen käytetty HTTP-vastaus
+---STRINGEND
+
+---STRING redirection node
+Kansio, johon ohjataan
+---STRINGEND
+
 ---STRING redirection settings
 Uudelleenohjauksen asetukset
 ---STRINGEND
@@ -27,7 +39,7 @@ URL-osoite johon ohjataan
 Alle kirjoitettu URL-osoite
 ---STRINGEND
 
----STRING redirection http code
-Uudelleenohjaukseen käytetty HTTP-vastaus
+---STRING selected node
+Valittu kansio
 ---STRINGEND
 

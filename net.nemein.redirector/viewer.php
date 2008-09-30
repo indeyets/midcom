@@ -19,21 +19,30 @@ class net_nemein_redirector_viewer extends midcom_baseclasses_components_request
         parent::__construct($topic, $config);
 
         // Match /
-        $this->_request_switch[] = array(
+        $this->_request_switch[] = array
+        (
             'handler' => 'redirect'
         );
 
         // Match /config/
-        $this->_request_switch['config'] = Array
+        $this->_request_switch['config'] = array
         (
-            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
+            'handler' => array
+            (
+                'midcom_core_handler_configdm2',
+                'config',
+            ),
             'schemadb' => 'file:/net/nemein/redirector/config/schemadb_config.inc',
-            'schema' => 'config',
-            'fixed_args' => Array('config'),
+            'fixed_args' => array
+            (
+                'config',
+            ),
         );
     }
 
     /**
+     * Process the redirect request
+     * 
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
@@ -42,22 +51,54 @@ class net_nemein_redirector_viewer extends midcom_baseclasses_components_request
     function _handler_redirect($handler_id, $args, &$data)
     {
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        if (is_null($this->_config->get('redirection_type')))
+        
+        if (   is_null($this->_config->get('redirection_type'))
+            || (   $_MIDCOM->auth->admin
+                && !$this->_config->get('admin_redirection')))
         {
             // No type set, redirect to config
             $_MIDCOM->relocate("{$prefix}config/");
             // This will exit
         }
-
+        
         switch ($this->_config->get('redirection_type'))
         {
+            case 'node':
+                $nap = new midcom_helper_nav();
+                $id = $this->_config->get('redirection_node');
+                
+                if (is_string($id))
+                {
+                    $topic = new midcom_db_topic($id);
+                    
+                    if (   !$topic
+                        || !$topic->guid)
+                    {
+                        break;
+                    }
+                    
+                    $id = $topic->id;
+                }
+                
+                $node = $nap->get_node($id);
+                
+                // Node not found, fall through to configuration
+                if (!$node)
+                {
+                    break;
+                }
+                
+                $_MIDCOM->relocate($node[MIDCOM_NAV_FULLURL], $this->_config->get('redirection_code'));
+                // This will exit
+                
             case 'subnode':
                 $nap = new midcom_helper_nav();
                 $nodes = $nap->list_nodes($nap->get_current_node());
+                
+                // Subnodes not found, fall through to configuration
                 if (count($nodes) == 0)
                 {
-                    $_MIDCOM->relocate("{$prefix}config/");
-                    // This will exit
+                    break;
                 }
 
                 // Redirect to first node
@@ -109,11 +150,9 @@ class net_nemein_redirector_viewer extends midcom_baseclasses_components_request
                     // This will exit
                 }
                 // Otherwise fall-through to config
-            default:
-                $_MIDCOM->relocate("{$prefix}config/", $this->_config->get('redirection_code'));
-                // This will exit
         }
 
-        return true;
+        $_MIDCOM->relocate("{$prefix}config/", $this->_config->get('redirection_code'));
     }
 }
+?>
