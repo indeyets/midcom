@@ -96,6 +96,7 @@ class midcom_helper_replicator_interface extends midcom_baseclasses_components_i
              * that cannot be fixed because that might break things that unwittingly
              * depend on the wrong behaviour
              */
+            // FIXME: This should be copy/clone not reference, but clone() complains about uncloneable objects...
             $copy = $object;
             $fresh_object = false;
             if (   class_exists('midgard_query_builder')

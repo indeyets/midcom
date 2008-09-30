@@ -15,13 +15,27 @@
  *
  * For now also works around bug #259 if applicaple and checks the serialization against bug #244
  *
+ * Also catches and handles the metadata rewriting that caused bug #302
+ *
  * @package midcom.helper.replicator
  * @param midgard_object $object reference to an object
  * @return string object serialized (or false in case of failure)
  */
-function midcom_helper_replicator_serialize(&$object)
+function midcom_helper_replicator_serialize(&$given_object)
 {
-    //return midgard_replicator::serialize($object);
+    /**
+     * Workaround for bug #302
+     */
+    if ((int)$given_object->metadata->created == $given_object->metadata->created)
+    {
+        // FIXME: This should be copy/clone not reference, but clone() complains about uncloneable objects...
+        $object = $given_object;
+        midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_isodate($object);
+    }
+    else
+    {
+        $object =& $given_object;
+    }
     /**
      * Workaround for bug #259
      */

@@ -1,5 +1,14 @@
 <?php
 $log_max_lines = 100;
+
+/**
+ * Workaround for timestamp rewrite issues
+ */
+if (preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/', $data['object']->metadata->created))
+{
+    midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($data['object']);
+}
+
 if ($data['object']->metadata->imported == 0)
 {
     $imported = $_MIDCOM->i18n->get_string('never', 'midcom.helper.replicator');
