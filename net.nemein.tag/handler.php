@@ -300,17 +300,17 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
         switch (true)
         {
             /* Tag with context and value and we want contexts */
-            case (   !empty($link->value)
-                  && !empty($link->context)
+            case (   !empty($link->value) && strlen($link->value)>0
+                  && !empty($link->context) && strlen($link->context)>0
                   && !empty($include_context)):
                 $tagname = "{$link->context}:{$tag->tag}={$link->value}";
                 break;
             /* Tag with value (or value and context but we don't want contexts) */
-            case (!empty($link->value)):
+            case (!empty($link->value) && strlen($link->value)>0):
                 $tagname = "{$tag->tag}={$link->value}";
                 break;
             /* Tag with context (no value) and we want contexts */
-            case (   !empty($link->context)
+            case (   !empty($link->context) && strlen($link->context)>0
                   && !empty($include_context)):
                 $tagname = "{$link->context}:{$tag->tag}";
                 break;
