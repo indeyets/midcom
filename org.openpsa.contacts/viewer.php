@@ -63,28 +63,28 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
         {
             // Match /duplicates/person
             $this->_request_switch[] = array
-        (
+           (
                 'handler' => array('org_openpsa_contacts_handler_duplicates_person', 'sidebyside'),
                 'fixed_args' => array('duplicates', 'person'),
             );
 
             // Match /buddylist/
             $this->_request_switch[] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_buddy_list', 'list'),
                 'fixed_args' => 'buddylist',
             );
 
             // Match /buddylist/xml
             $this->_request_switch['buddylist_xml'] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_buddy_list', 'list'),
                 'fixed_args' => array('buddylist', 'xml'),
             );
 
             // Match /buddylist/add/<person guid>
             $this->_request_switch[] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_buddy_list', 'add'),
                 'fixed_args' => array('buddylist', 'add'),
                 'variable_args' => 1,
@@ -92,7 +92,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 
             // Match /buddylist/remove/<person guid>
             $this->_request_switch[] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_buddy_list', 'remove'),
                 'fixed_args' => array('buddylist', 'remove'),
                 'variable_args' => 1,
@@ -100,47 +100,47 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 
             // Match /search/<type>
             $this->_request_switch[] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_search', 'search_type'),
                 'fixed_args' => 'search',
                 'variable_args' => 1,
             );
             // Match /search/
             $this->_request_switch[] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_search', 'search'),
                 'fixed_args' => 'search',
             );
             // Match /group/new/<GUID>
             $this->_request_switch[] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_group', 'new'),
                 'fixed_args' => array('group','new'),
                 'variable_args' => 1,
             );
             // Match /group/<GUID>/<action>
             $this->_request_switch[] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_group', 'action'),
                 'fixed_args' => 'group',
                 'variable_args' => 2,
             );
             // Match /group/new
             $this->_request_switch[] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_group', 'new'),
                 'fixed_args' => array('group', 'new'),
             );
             // Match /group/<GUID>
             $this->_request_switch[] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_group', 'view'),
                 'fixed_args' => 'group',
                 'variable_args' => 1,
             );
             // Match /person/new/GroupGUID
             $this->_request_switch[] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_person', 'person_new'),
                 'fixed_args' => array('person', 'new'),
                 'variable_args' => 1,
@@ -148,7 +148,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 
             // Match /person/new
             $this->_request_switch[] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_person', 'person_new'),
                 'fixed_args' => array('person','new'),
             );
@@ -179,7 +179,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 
             // Match /person/related/GUID
             $this->_request_switch['person_related'] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_person', 'person'),
                 'fixed_args' => array('person', 'related'),
                 'variable_args' => 1,
@@ -187,7 +187,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 
             // Match /person/GUID/action
             $this->_request_switch[] = array
-        (
+            (
                 'handler' => array('org_openpsa_contacts_handler_person', 'person_action'),
                 'fixed_args' => 'person',
                 'variable_args' => 2,
@@ -195,7 +195,7 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
 
             // Match /debug
             $this->_request_switch[] = array
-        (
+            (
             'handler' => 'debug',
                 'fixed_args' => 'debug'
             );
