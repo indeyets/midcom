@@ -192,7 +192,19 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
             $this->allow_create = false;
         }
 
-        $key_snippet = mgd_get_snippet_by_path('/sitegroup-config/midcom.helper.datamanager2/widget_universalchooser_key');
+        try
+        {
+            $key_snippet = mgd_get_snippet_by_path('/sitegroup-config/midcom.helper.datamanager2/widget_universalchooser_key');
+        }
+        catch (midgard_error_exception $e)
+        {
+            //FIXME: Make sure this is actually the correct code (and midgard-php sets the code)
+            if ($e->getCode() !== 0)
+            {
+                throw $e;
+            }
+            $key_snippet = null;
+        }
         if (   !is_object($key_snippet)
             || empty($key_snippet->doc))
         {
