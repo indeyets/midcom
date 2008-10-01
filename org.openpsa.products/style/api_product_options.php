@@ -24,7 +24,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             </select>
         </label>
         <div class="form_toolbar">
-            <input type="submit" class="save" value="<?php echo $data['l10n']->get('import'); ?>" />
+            <input type="submit" class="save" value="<?php echo $data['l10n']->get('export'); ?>" />
         </div>
     </form>
 </div>

@@ -1,26 +1,26 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE de
 
 ---STRING %s includes
-%s includes
+%s enthält
 ---STRINGEND
 
 ---STRING %s is
-%s is
+%s ist
 ---STRINGEND
 
 ---STRING %s is at least
-%s is at least
+%s ist mindestens
 ---STRINGEND
 
 ---STRING %s is at most
-%s is at most
+%s ist höchstens
 ---STRINGEND
 
 ---STRING business area schema database
-Business area schema database
+Schema-Datenbank für Geschäftsbereiche
 ---STRINGEND
 
 ---STRING code
@@ -28,67 +28,71 @@ Code
 ---STRINGEND
 
 ---STRING component
-Component
+Komponente
 ---STRINGEND
 
 ---STRING component group
-Component group
+Komponenten-Gruppe
 ---STRINGEND
 
 ---STRING cost
-Cost
+Kosten
 ---STRINGEND
 
 ---STRING cost type
-Cost type
+Kostenart
 ---STRINGEND
 
 ---STRING day
-day
+Tag
 ---STRINGEND
 
 ---STRING delivery type
-Delivery type
+Auslieferungsart
 ---STRINGEND
 
 ---STRING display search on front page
-Display search on the front page
+Suche auf der Startseite anzeigen
 ---STRINGEND
 
 ---STRING display settings
-Display Settings
+Anzeigeeinstellungen
+---STRINGEND
+
+---STRING export
+Export
 ---STRINGEND
 
 ---STRING export products
-Export products
+Produkte exportieren
 ---STRINGEND
 
 ---STRING field separator
-Field separator
+Feldtrenner
 ---STRINGEND
 
 ---STRING fields available for matching are defined in schema
-Fields available for matching are defined in schema
+Verfügbare Vergleichs-Felder sind im Schema definiert
 ---STRINGEND
 
 ---STRING file to import
-File to import
+Zu importierende Datei
 ---STRINGEND
 
 ---STRING first row is headers
-First row is headers
+Die erste Zeile enthält Überschriften
 ---STRINGEND
 
 ---STRING groups
-Product groups
+Produktgruppen
 ---STRINGEND
 
 ---STRING hour
-hour
+Stunde
 ---STRINGEND
 
 ---STRING if we have subgroups and products in group, what shall we show
-If we have subgroups and products in a group, what shall we show?
+Was soll angezeigt werden, wenn in einer Gruppe Produkte und Untergruppen enthalten sind?
 ---STRINGEND
 
 ---STRING import
@@ -96,99 +100,99 @@ Import
 ---STRINGEND
 
 ---STRING import products
-Import products
+Produkte importieren
 ---STRINGEND
 
 ---STRING index order for products when browsing groups
-Index order for products when browsing groups
+Sortierreihenfolge für Produkte beim Browsen von Gruppen
 ---STRINGEND
 
 ---STRING iso-latin-1 encoding
-ISO-Latin-1 encoding
+ISO-Latin-1-Kodierung
 ---STRINGEND
 
 ---STRING list group products
-List group products
+Produktgruppen auflisten
 ---STRINGEND
 
 ---STRING material goods
-Material goods
+materielle Güter
 ---STRINGEND
 
 ---STRING month
-month
+Monat
 ---STRINGEND
 
 ---STRING number of items in feed
-Number of items in feed
+Anzahl der Einträge im Feed
 ---STRINGEND
 
 ---STRING one line per product
-One line per product
+Eine Zeile pro Produkt
 ---STRINGEND
 
 ---STRING org.openpsa.products
-Product database
+Produkt-Datenbank
 ---STRINGEND
 
 ---STRING parent group
-Parent group
+Übergeordnete Gruppe
 ---STRINGEND
 
 ---STRING per unit
-per unit
+pro Einheit
 ---STRINGEND
 
 ---STRING piece
-piece
+Teil
 ---STRINGEND
 
 ---STRING pieces
-Pieces
+Teile
 ---STRINGEND
 
 ---STRING price
-Price
+Preis
 ---STRINGEND
 
 ---STRING product
-Product
+Produkt
 ---STRINGEND
 
 ---STRING product components
-Product components
+Produktkomponenten
 ---STRINGEND
 
 ---STRING product database
-Product database
+Podukt-Datenbank
 ---STRINGEND
 
 ---STRING product group
-Product group
+Produktgruppe
 ---STRINGEND
 
 ---STRING product group schema database
-Product group schema database
+Schema-Datenbank für Produktgruppen
 ---STRINGEND
 
 ---STRING product schema database
-Product schema database
+Schema-Datenbank für Produkte
 ---STRINGEND
 
 ---STRING products
-Products
+Produkte
 ---STRINGEND
 
 ---STRING products per page
-Products per page
+Produkte pro Seite
 ---STRINGEND
 
 ---STRING quarter
-quarter
+Quartal
 ---STRINGEND
 
 ---STRING root product group
-Root product group
+Oberste Produktgruppe
 ---STRINGEND
 
 ---STRING schema
@@ -196,23 +200,23 @@ Schema
 ---STRINGEND
 
 ---STRING search
-Product search
+Produktsuche
 ---STRINGEND
 
 ---STRING search all items on default
-Search all items on default
+Stadardmässig alle Einträge durchsuchen
 ---STRINGEND
 
 ---STRING search index order
-Search index order
+Reihenfolge für den Suchindex
 ---STRINGEND
 
 ---STRING service
-Service
+Dienstleistung
 ---STRINGEND
 
 ---STRING single delivery
-Single delivery
+einmalige Lieferung
 ---STRINGEND
 
 ---STRING solution
@@ -220,50 +224,46 @@ Solution
 ---STRINGEND
 
 ---STRING subscription
-Subscription
+Abonnement
 ---STRINGEND
 
 ---STRING supplier
-Supplier
+Lieferant
 ---STRINGEND
 
 ---STRING toplevel
-Top level
+Oberste Ebene
 ---STRINGEND
 
 ---STRING type
-Type
+Typ
 ---STRINGEND
 
 ---STRING unit
-Unit
+Einheit
 ---STRINGEND
 
 ---STRING updated %s
-updated %s
+Aktualisiert am %S
 ---STRINGEND
 
 ---STRING updated products
-Updated products
+Aktualisierte Produkte
 ---STRINGEND
 
 ---STRING whether to enable adding subcomponents to products
-Whether to enable adding subcomponents to products
+Soll das Hinzufügen von Subkomponenten zu Produkten aktiviert werden?
 ---STRINGEND
 
 ---STRING year
-year
+Jahr
 ---STRINGEND
 
 ---STRING you can export csv files here
-You can export csv files here
+Hier können Sie CSV-Dateien exportieren
 ---STRINGEND
 
 ---STRING you can import csv files here
-You can import csv files here
----STRINGEND
-
----STRING export
-Export
+Hier können Sie CSV-Dateien importieren
 ---STRINGEND
 

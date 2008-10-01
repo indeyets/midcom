@@ -486,8 +486,8 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
                 array
                 (
                     MIDCOM_TOOLBAR_URL => 'api/product/',
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('export products'),
-                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('export products'),
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('export products'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n->get('export products'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/editshred.png',
                 )
             );
@@ -496,8 +496,8 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
                 array
                 (
                     MIDCOM_TOOLBAR_URL => 'import/product/csv/',
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('import products'),
-                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('import products from csv-file'),
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('import products'),
+                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n->get('import products from csv-file'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/editshred.png',
                 )
             );
