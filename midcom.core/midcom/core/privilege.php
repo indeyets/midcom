@@ -636,7 +636,13 @@ class midcom_core_privilege extends midcom_core_privilege_db
         else if (is_object($arg))
         {
             $object =& $arg;
-            if (mgd_is_guid($object->guid))
+            if (   isset($object->__guid)
+                && mgd_is_guid($object->__guid)
+                && !$object->guid)
+            {
+                $guid = $object->__guid;
+            }
+            elseif (mgd_is_guid($object->guid))
             {
                 $guid = $object->guid;
             }
@@ -674,7 +680,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
             if ($object)
             {
                 $parent_class = $object->get_dba_parent_class();
-                $parent_guid = $_MIDCOM->dbfactory->get_parent_guid($object->guid, get_class($object));
+                $parent_guid = $_MIDCOM->dbfactory->get_parent_guid($guid, get_class($object));
             }
             else
             {

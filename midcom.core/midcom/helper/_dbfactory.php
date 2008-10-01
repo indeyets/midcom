@@ -245,6 +245,11 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
             {
                 $object_guid = null;
             }
+            elseif (   isset($object->__guid)
+                    && !$object->guid)
+            {
+                $object_guid = $object->__guid;
+            }
             else
             {
                 $object_guid = $object->guid;

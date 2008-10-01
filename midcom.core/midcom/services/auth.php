@@ -1138,7 +1138,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
                 $user_per_class_privileges = Array();
             }
             $this->_load_class_magic_privileges($dummy_object);
-            $dummy_object->guid = $object_guid;
+            $dummy_object->__guid = $object_guid;
 
             // Remember to sync this merging chain with can_user_do.
             if ($cache_user_id == 'EVERYONE')
