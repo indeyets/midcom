@@ -28,7 +28,7 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
     function __construct($topic, $config)
     {
         parent::__construct($topic, $config);
-
+	
         $this->_toolbars =& midcom_helper_toolbars::get_instance();
     }
 

@@ -1,51 +1,57 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
+---CVS $Id$
 ---LANGUAGE de
-
----STRING invoiceable
-Abrechenbar
----STRINGEND
-
----STRING uninvoiceable
-Nicht abrechenbar
----STRINGEND
-
----STRING task
-Aufgabe
----STRINGEND
-
----STRING reporter
-Meldender
----STRINGEND
-
----STRING hour report
-Stundenbericht
----STRINGEND
-
----STRING org.openpsa.expenses
-Ausgaben-Verwaltung
----STRINGEND
-
----STRING list_hours_task
-Liste der Arbeitsstunden pro Aufgabe
----STRINGEND
 
 ---STRING date
 Datum
----STRINGEND
-
----STRING hours
-Arbeitsstunden
----STRINGEND
-
----STRING person
-Person
 ---STRINGEND
 
 ---STRING description
 Beschreibung
 ---STRINGEND
 
+---STRING hour report
+Stundenbericht
+---STRINGEND
+
+---STRING hours
+Arbeitsstunden
+---STRINGEND
+
+---STRING invoiceable
+Abrechenbar
+---STRINGEND
+
+---STRING list_hours_task
+Liste der Arbeitsstunden pro Aufgabe
+---STRINGEND
+
+---STRING org.openpsa.expenses
+Ausgaben-Verwaltung
+---STRINGEND
+
+---STRING person
+Person
+---STRINGEND
+
+---STRING reporter
+Meldender
+---STRINGEND
+
+---STRING task
+Aufgabe
+---STRINGEND
+
 ---STRING total
 Summe
 ---STRINGEND
+
+---STRING uninvoiceable
+Nicht abrechenbar
+---STRINGEND
+
+---STRING report hours
+Arbeitsstunden melden
+---STRINGEND
+

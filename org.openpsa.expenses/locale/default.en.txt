@@ -1,51 +1,57 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
+---CVS $Id$
 ---LANGUAGE en
-
----STRING invoiceable
-Invoiceable
----STRINGEND
-
----STRING uninvoiceable
-Not invoiceable
----STRINGEND
-
----STRING task
-Task
----STRINGEND
-
----STRING reporter
-Reporter
----STRINGEND
-
----STRING hour report
-Hour report
----STRINGEND
-
----STRING org.openpsa.expenses
-Expense tracking
----STRINGEND
-
----STRING list_hours_task
-List of Hours by Task
----STRINGEND
 
 ---STRING date
 Date
----STRINGEND
-
----STRING hours
-Hours
----STRINGEND
-
----STRING person
-Person
 ---STRINGEND
 
 ---STRING description
 Description
 ---STRINGEND
 
+---STRING hour report
+Hour report
+---STRINGEND
+
+---STRING hours
+Hours
+---STRINGEND
+
+---STRING invoiceable
+Invoiceable
+---STRINGEND
+
+---STRING list_hours_task
+List of Hours by Task
+---STRINGEND
+
+---STRING org.openpsa.expenses
+Expense tracking
+---STRINGEND
+
+---STRING person
+Person
+---STRINGEND
+
+---STRING reporter
+Reporter
+---STRINGEND
+
+---STRING task
+Task
+---STRINGEND
+
 ---STRING total
 Total
 ---STRINGEND
+
+---STRING uninvoiceable
+Not invoiceable
+---STRINGEND
+
+---STRING report hours
+Report hours
+---STRINGEND
+
