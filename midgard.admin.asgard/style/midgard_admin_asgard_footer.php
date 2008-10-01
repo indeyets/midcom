@@ -9,9 +9,9 @@
                         if ($view_metadata)
                         {
                             $editor = new midcom_db_person($view_metadata->get('editor'));
-                            $edited = $view_metadata->get('edited');
+                            $edited = (int) $view_metadata->get('edited');
                             $creator = new midcom_db_person($view_metadata->get('creator'));
-                            $created = $view_metadata->get('created');
+                            $created = (int) $view_metadata->get('created');
                             
                             if (!is_int($created))
                             {
