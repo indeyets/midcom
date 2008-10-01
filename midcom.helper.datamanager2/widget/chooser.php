@@ -1227,15 +1227,14 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 if ($data)
                 {
                     // debug_add("Got data: {$data}");
-                    $ee_script .= "jQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item({$data});\n";
+                    $ee_script .= "\njQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item({$data});\n";
 
                     $this->_add_existing_item_as_static($key);
                 }
             }
         }
-        
-        $this->_jscript .= $ee_script;
 
+        $this->_jscript .= $ee_script;
         $this->_jscript .= '});';
         $this->_jscript .= '</script>';
 

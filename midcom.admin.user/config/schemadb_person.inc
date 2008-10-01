@@ -68,6 +68,7 @@
                 'master_fieldname' => 'uid',
                 'member_fieldname' => 'gid',
                 'master_is_id' => true,
+                'require_corresponding_option' => false,
                 'option_callback' => 'midcom_helper_datamanager2_callback_select_grouplister',
                 'option_callback_arg' => array
                 (
