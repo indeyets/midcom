@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE de
 
+---STRING %d closed projects
+%d abgeschlosse Projekte
+---STRINGEND
+
 ---STRING %s of %s planned hours booked
 %s von %s geplanten Arbeitsstunden sind im Kalender gebucht
 ---STRINGEND
@@ -12,11 +16,11 @@
 ---STRINGEND
 
 ---STRING accept
-Akzeptieren
+Annehmen
 ---STRINGEND
 
 ---STRING accepted by %s
-Akzeptiert von %s
+Angenommen von %s
 ---STRINGEND
 
 ---STRING agreement
@@ -40,7 +44,7 @@ Genehmigt von %s
 ---STRINGEND
 
 ---STRING automatic resource search
-Automatische Ressourcen-Suche 
+Automatische Ressourcen-Suche
 ---STRINGEND
 
 ---STRING back to task
@@ -59,24 +63,12 @@ Gebuchte Zeiten
 Abgeschlossen
 ---STRINGEND
 
----STRING %d closed projects
-%d abgeschlosse Projekte
----STRINGEND
-
 ---STRING closed by %s
 Abgeschlossen von %s
 ---STRINGEND
 
 ---STRING closed tasks
 Erledigte Aufgaben
----STRINGEND
-
----STRING ongoing tasks
-Aktuelle Aufgaben
----STRINGEND
-
----STRING not_started tasks
-Noch nicht begonnene Aufgaben
 ---STRINGEND
 
 ---STRING completed
@@ -105,10 +97,6 @@ Aktuelle Aufgaben
 
 ---STRING customer
 Kunde
----STRINGEND
-
----STRING no customer
-Kein Kunde
 ---STRINGEND
 
 ---STRING date
@@ -147,12 +135,12 @@ Dauer
 Bearbeiten
 ---STRINGEND
 
----STRING edit task %s
-Aufgabe %s bearbeiten
----STRINGEND
-
 ---STRING edit project %s
 Projekt %s bearbeiten
+---STRINGEND
+
+---STRING edit task %s
+Aufgabe %s bearbeiten
 ---STRINGEND
 
 ---STRING end
@@ -199,8 +187,16 @@ Manager
 Als fertiggestellt kennzeichnen
 ---STRINGEND
 
+---STRING marked %s hours as invoiced in task "%s"
+%s Arbeitsstunden in Aufgabe "%s" als abgerechnet markiert
+---STRINGEND
+
 ---STRING marked as completed by %s
 Als fertiggestellt gekennzeichnet von %s
+---STRINGEND
+
+---STRING marked task "%s" closed
+Aufgabe "%s" als abgeschlossen markiert
 ---STRINGEND
 
 ---STRING minimum time slot needed for task bookings
@@ -227,6 +223,10 @@ Neue Aufgabe
 Neue Aufgabe zu Projekt %s
 ---STRINGEND
 
+---STRING no customer
+Kein Kunde
+---STRINGEND
+
 ---STRING no search
 Keine Suche
 ---STRINGEND
@@ -239,6 +239,10 @@ Sie arbeiten nicht an einer Aufgabe
 Nicht begonnen
 ---STRINGEND
 
+---STRING not_started tasks
+Noch nicht begonnene Aufgaben
+---STRINGEND
+
 ---STRING notes for task %s on %s
 Notizen von Aufgabe "%s" zu %s
 ---STRINGEND
@@ -247,12 +251,12 @@ Notizen von Aufgabe "%s" zu %s
 Sie arbeiten an
 ---STRINGEND
 
----STRING work for task %s
-Arbeit an Aufgabe %s
----STRINGEND
-
 ---STRING ongoing
 In Bearbeitung
+---STRINGEND
+
+---STRING ongoing tasks
+Aktuelle Aufgaben
 ---STRINGEND
 
 ---STRING open tasks
@@ -279,16 +283,16 @@ Geplante Arbeitsstunden
 Projekt
 ---STRINGEND
 
----STRING projects
-Projekte
----STRINGEND
-
 ---STRING project status
 Projekt-Status
 ---STRINGEND
 
 ---STRING project_tasks
 Aufgaben in diesem Projekt
+---STRINGEND
+
+---STRING projects
+Projekte
 ---STRINGEND
 
 ---STRING proposed tasks
@@ -327,6 +331,10 @@ Gemeldet
 Berichterstatter
 ---STRINGEND
 
+---STRING reporting %d hours to task %s failed, reason %s
+Melden von %d Arbeitsstunden für Aufgabe "%s" ist fehlgeschlagen, Ursache: %s
+---STRINGEND
+
 ---STRING resources
 Ressourcen
 ---STRINGEND
@@ -363,6 +371,10 @@ Status-Verlauf
 Abonnieren
 ---STRINGEND
 
+---STRING successfully reported %d hours to task %s
+%d Arbeitsstunden für Aufgabe "%s" erfolgreich gemeldet
+---STRINGEND
+
 ---STRING synchronization
 Synchronisation
 ---STRINGEND
@@ -383,16 +395,20 @@ Aufgabe
 Aufgabe %s
 ---STRINGEND
 
+---STRING task deletion now allowed because of hour reports
+Die Aufgabe kann aufgrund von Stundenberichten nicht gelöscht werden
+---STRINGEND
+
 ---STRING task in
 Aufgabe von
 ---STRINGEND
 
----STRING tasks
-Aufgaben
----STRINGEND
-
 ---STRING task status
 Aufgaben-Status
+---STRINGEND
+
+---STRING tasks
+Aufgaben
 ---STRINGEND
 
 ---STRING tasks pending acceptance
@@ -401,6 +417,10 @@ Aufgaben, die auf Annahme warten
 
 ---STRING tasks pending approval
 Aufgaben, die auf Genehmigung warten
+---STRINGEND
+
+---STRING totals
+Gesamtsummen
 ---STRINGEND
 
 ---STRING type
@@ -423,6 +443,10 @@ Aus dem gesamten OpenPSA-System
 Aus dem gesamten DBE-Netzwerk
 ---STRINGEND
 
+---STRING work for task %s
+Arbeit an Aufgabe %s
+---STRINGEND
+
 ---STRING work started by %s
 Arbeit begonnen von %s
 ---STRINGEND
@@ -439,22 +463,3 @@ Sie sind Projektteilehmer
 Sie haben das Projekt abonniert
 ---STRINGEND
 
----STRING marked %s hours as invoiced in task "%s"
-%s Arbeitsstunden in Aufgabe "%s" als abgerechnet markiert
----STRINGEND
-
----STRING reporting %d hours to task %s failed, reason %s
-Melden von %d Arbeitsstunden für Aufgabe "%s" ist fehlgeschlagen, Ursache: %s
----STRINGEND
-
----STRING successfully reported %d hours to task %s
-%d Arbeitsstunden für Aufgabe "%s" erfolgreich gemeldet
----STRINGEND
-
----STRING task deletion now allowed because of hour reports
-Die Aufgabe kann aufgrund von Stundenberichten nicht gelöscht werden
----STRINGEND
-
----STRING marked task "%s" closed
-Aufgabe "%s" als abgeschlossen markiert
----STRINGEND
