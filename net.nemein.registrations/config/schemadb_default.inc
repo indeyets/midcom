@@ -118,7 +118,7 @@
 
 'person' => Array
 (
-    'description' => 'Registred Person Record',
+    'description' => 'Registered Person Record',
     'operations'  => array
     (
         'cancel' => 'cancel',

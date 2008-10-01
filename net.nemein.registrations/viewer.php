@@ -311,6 +311,11 @@ class net_nemein_registrations_viewer extends midcom_baseclasses_components_requ
         }
 
         $preferred_order = $this->_config->get('merged_schema_field_order');
+        if (!is_array($preferred_order))
+        {
+            return $merged_schema;
+        }
+
         // Add any fields in schema missing from the preferred_order array
         foreach ($merged_schema->field_order as $fieldname)
         {
