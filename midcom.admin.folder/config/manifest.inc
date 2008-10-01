@@ -1,7 +1,7 @@
 'name' => 'midcom.admin.folder',
 'icon' => 'stock-icons/16x16/folder.png',
 'purecode' => true,
-'version' => '1.3.0beta1',
+'version' => '1.3.0beta2',
 'state' => 'beta',
 'privileges' => array
 (
