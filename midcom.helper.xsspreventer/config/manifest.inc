@@ -3,7 +3,7 @@
 'purecode' => true,
 'privileges' => array(),
 'class_definitions' => array(),
-'version' => '1.0.0',
+'version' => '1.0.1',
 'state' => 'stable',
 'package.xml' => array
 (
