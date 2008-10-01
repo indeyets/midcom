@@ -229,10 +229,14 @@ class midcom_core_user extends midcom_baseclasses_core_object
         else if (mgd_is_guid($id))
         {
             $this->_storage = new midgard_person();
-            if (! $this->_storage->get_by_guid($id))
+            try
+            {
+                $this->_storage->get_by_guid($id);
+            }
+            catch (midgard_error_exception $e)
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Failed to retrieve the person GUID {$id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
+                debug_add("Failed to retrieve the person GUID {$id}: " . $e->getMessage(), MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }
