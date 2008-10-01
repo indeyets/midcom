@@ -223,7 +223,7 @@
             if (this.dimensions.form === null) {
                 this.dimensions.form = {};
             }
-            
+
             var self = this;
             $.each($('.'+this.identifier), function(i){
                 var field = $(this);
@@ -530,7 +530,7 @@
         render_toolbar: function() {
             var toolbar_class = $.dm2.ajax_editor.generate_classname('toolbar');
             
-            if (this.toolbar === null) {
+            if (!this.toolbar) {
                 this.toolbar = $('<div />').attr({
                     className: toolbar_class
                 }).hide();
