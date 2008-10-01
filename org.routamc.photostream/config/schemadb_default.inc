@@ -33,6 +33,9 @@
             (
                 'clever_class' => 'person',
                 'id_field' => 'id',
+                'creation_mode_enabled' => true,
+                'creation_handler' => "{$_MIDGARD['self']}__mfa/asgard/object/create/chooser/midgard_person/",
+                'creation_default_key' => 'lastname',
             ),
         ),
         'taken' => Array
@@ -183,6 +186,9 @@
             (
                 'clever_class' => 'person',
                 'id_field' => 'id',
+                'creation_mode_enabled' => true,
+                'creation_handler' => "{$_MIDGARD['self']}__mfa/asgard/object/create/chooser/midgard_person/",
+                'creation_default_key' => 'lastname',
             ),
             'required' => true,
         ),
