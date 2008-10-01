@@ -1872,7 +1872,7 @@ class midcom_application
      * @return int The ID of the newly created component.
      * @access private
      */
-    private function _create_context($id = null, $node = null)
+    public function _create_context($id = null, $node = null)
     {
         if (is_null($id))
         {
