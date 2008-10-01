@@ -52,7 +52,9 @@ class midcom_admin_styleeditor_handler_edit extends midcom_baseclasses_component
                 'href' => MIDCOM_STATIC_URL . '/midcom.admin.styleeditor/style-editor.css',
             )
         );
-        
+
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js");
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/midcom.admin.styleeditor/twisty.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/midcom.admin.styleeditor/midcom_admin_folder_styleeditor.js');
     }

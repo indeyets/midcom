@@ -80,7 +80,9 @@ class midcom_admin_styleeditor_handler_list extends midcom_baseclasses_component
                 'media' => 'screen',
             )
         );
-        
+
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js");
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL.'/midcom.admin.styleeditor/twisty.js');
     }
     

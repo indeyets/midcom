@@ -2,7 +2,7 @@
 'description' => 'Style editor for Midgard style templates',
 'icon' => 'stock-icons/16x16/text-x-generic-template.png',
 'purecode' => true,
-'version' => '0.3.0',
+'version' => '1.0.0',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array
@@ -27,6 +27,10 @@
     (
         'midcom.admin.help' => array(),
         'midcom' => array(),
+        'JavaScript_Scriptaculous' => array
+        (
+            'channel' => 'pearified.com',
+        ),
     ),
 ),
 'state' => 'stable',
