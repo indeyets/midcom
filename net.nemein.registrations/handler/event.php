@@ -285,7 +285,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         $title = $this->_event->title;
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
         $this->_update_breadcrumb_line($handler_id);
-        
+        $_MIDCOM->bind_view_to_object($this->_event);
         $this->_populate_toolbar($data);
 
         return true;
@@ -333,7 +333,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         $title = $this->_event->title;
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
         $this->_update_breadcrumb_line($handler_id);
-
+        $_MIDCOM->bind_view_to_object($this->_event);
         $this->_populate_toolbar($data);
 
         return true;
@@ -419,7 +419,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         $title = sprintf($this->_l10n->get('list registrations of %s'), $this->_event->title);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
         $this->_update_breadcrumb_line($handler_id);
-
+        $_MIDCOM->bind_view_to_object($this->_event);
         return true;
     }
 
@@ -497,7 +497,7 @@ class net_nemein_registrations_handler_event extends midcom_baseclasses_componen
         $title = $this->_event->title;
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$title}");
         $this->_update_breadcrumb_line($handler_id);
-
+        $_MIDCOM->bind_view_to_object($this->_event);
         return true;
     }
 

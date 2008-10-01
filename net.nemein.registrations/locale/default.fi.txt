@@ -132,7 +132,7 @@ Ole hyvä ja kirjoita sähköpostiosoitteesi. Tulet vastaanottamaan salasanan il
 ---STRINGEND
 
 ---STRING csv export
-Tee ilmoittautumisista <abbr title="Comma-Separated Value, MS Excel yhteensopiva tiedostomuoto">CSV</abbr>-tiedosto
+Tee ilmoittautumisista CSV-tiedosto
 ---STRINGEND
 
 ---STRING csv field separator
@@ -365,6 +365,10 @@ Ilmoittautumisten hallinta
 
 ---STRING reference
 Viite
+---STRINGEND
+
+---STRING register
+Ilmoittaudu
 ---STRINGEND
 
 ---STRING register for %s

@@ -431,7 +431,11 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
         $this->_registration->unset_all_privileges();
         $user =& $_MIDCOM->auth->get_user($this->_registrar->guid);
         $this->_registration->set_privilege('midgard:owner', $user);
-        $this->_registration->set_privilege('midgard:read', 'EVERYONE', MIDCOM_PRIVILEGE_DENY);
+        
+        if (!$this->_config->get('allow_read'))
+        {
+            $this->_registration->set_privilege('midgard:read', 'EVERYONE', MIDCOM_PRIVILEGE_DENY);
+        }
 
         // Prepare other required objects now
         $event_dm =& $this->_event->get_datamanager();

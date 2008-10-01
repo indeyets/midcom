@@ -1,6 +1,6 @@
 'name' => 'net.nemein.registrations',
 'purecode' => false,
-'version' => '2.1.0beta1',
+'version' => '2.1.0beta2',
 'state' => 'beta',
 'privileges' => array
 (

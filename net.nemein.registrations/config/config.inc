@@ -7,6 +7,7 @@
 'account_grp' => null,
 'display_leaves' => false,
 'allow_multiple' => false, // Allow registering to multiple events in single go (use 'events' key in person schema)
+'allow_read' => true,
 
 // Registration Mail template
 'mail_registration_subject' => 'Event registration for __REGEVENT_title__',

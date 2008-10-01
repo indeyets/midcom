@@ -132,7 +132,7 @@ Please enter your E-Mail address. You will receive a password via email which yo
 ---STRINGEND
 
 ---STRING csv export
-Export registrations to a comma separated value (<abbr title="Comma-Separated Value, MS Excel compatible format">CSV</abbr>) file
+Export registrations to a comma separated value (CSV) file
 ---STRINGEND
 
 ---STRING csv field separator
@@ -365,6 +365,10 @@ Registration management
 
 ---STRING reference
 Reference
+---STRINGEND
+
+---STRING register
+Register
 ---STRINGEND
 
 ---STRING register for %s
