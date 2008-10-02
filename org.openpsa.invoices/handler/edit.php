@@ -225,10 +225,17 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             }
 
         }
-
-        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        $_MIDCOM->relocate("{$prefix}invoice/{$this->_request_data['invoice']->guid}.html");
-        // This will exit
+        if (isset($_GET['org_openpsa_invoices_redirect']))
+        {
+            $_MIDCOM->relocate($_GET['org_openpsa_invoices_redirect']);
+            // This will exit    	   
+        }
+        else
+        {
+            $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+            $_MIDCOM->relocate("{$prefix}invoice/{$this->_request_data['invoice']->guid}.html");
+            // This will exit
+        }
     }
 
     /**
@@ -261,9 +268,17 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.invoices'), sprintf($this->_request_data['l10n']->get('marked invoice "%s" paid'), $this->_request_data['invoice']->invoiceNumber), 'ok');
         }
 
-        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-        $_MIDCOM->relocate("{$prefix}invoice/{$this->_request_data['invoice']->guid}.html");
-        // This will exit
+        if (isset($_GET['org_openpsa_invoices_redirect']))
+        {
+            $_MIDCOM->relocate($_GET['org_openpsa_invoices_redirect']);
+            // This will exit          
+        }
+        else
+        {
+            $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+            $_MIDCOM->relocate("{$prefix}invoice/{$this->_request_data['invoice']->guid}.html");
+            // This will exit
+        }
     }
 
     /**
