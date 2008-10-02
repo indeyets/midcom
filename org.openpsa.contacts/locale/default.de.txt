@@ -172,7 +172,7 @@ Darf Verkaufsprojekte anlegen
 ---STRINGEND
 
 ---STRING failed to create user account, reason
-Benutzerkonto konnte nicht erstellt werden. Ursache: 
+Benutzerkonto konnte nicht erstellt werden. Ursache:
 ---STRINGEND
 
 ---STRING fax
@@ -397,5 +397,9 @@ Wöchentliche Arbeitsstunden
 
 ---STRING work phone
 Telefon (geschäftlich)
+---STRINGEND
+
+---STRING child group of
+Untergruppe von
 ---STRINGEND
 
