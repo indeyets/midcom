@@ -255,7 +255,7 @@ class net_nehmer_static_handler_admin extends midcom_baseclasses_components_hand
                 // *** FALL-THROUGH ***
 
             case 'cancel':
-                if ($this->_article->name === 'index')
+                if ($this->_article->name == 'index')
                 {
                     $_MIDCOM->relocate('');
                 }
