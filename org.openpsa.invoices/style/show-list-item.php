@@ -5,6 +5,12 @@ $data['invoice_url'] = "{$prefix}invoice/{$data['invoice']->guid}/";
 
 $customer_contact = new midcom_db_person($data['invoice']->customerContact);
 $customer_card = new org_openpsa_contactwidget($customer_contact);
+
+$number = $data['invoice']->invoiceNumber;
+if ($number == "")
+{
+    $number = "n/a";
+}
 $class = 'odd';
 if ($data['even'])
 {
@@ -12,7 +18,7 @@ if ($data['even'])
 }
 ?>
 <tr class="&(class);">
-    <td class="id"><?php echo "<a href=\"{$data['invoice_url']}\">{$data['invoice']->invoiceNumber}</a>"; ?></td>
+    <td class="id"><?php echo "<a href=\"{$data['invoice_url']}\">{$number}</a>"; ?></td>
     <td><?php
     if ($data['customer'])
     {
