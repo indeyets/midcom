@@ -1,7 +1,7 @@
 'name' => 'midcom.helper.replicator',
 'icon' => 'midcom.helper.replicator/replicate-server-16.png',
 'purecode' => true,
-'version' => '0.1.0beta1',
+'version' => '1.1.0beta1',
 'state' => 'beta',
 'privileges' => array
 (
