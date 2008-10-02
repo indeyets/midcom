@@ -60,6 +60,13 @@ class midcom_helper_datamanager2_widget_jsdate extends midcom_helper_datamanager
     var $maxyear = 9999;
 
     /**
+     * Used date format
+     * 
+     * @var String
+     */
+    var $format = '%Y-%m-%d %H:%M:%S';
+
+    /**
      * Adapts the min/maxyear defaults if the base date is set to UNIXDATE storage.
      */
     function _on_configuring()
@@ -257,13 +264,89 @@ EOT;
         }
         if ($this->show_time)
         {
-            $format = '%Y-%m-%d %H:%M:%S';
+            $this->format = '%Y-%m-%d %H:%M:%S';
         }
         else
         {
-            $format = '%Y-%m-%d';
+            $this->format = '%Y-%m-%d';
         }
-        return $this->_type->value->format($format);
+        return $this->_type->value->format($this->format);
+    }
+
+    /**
+     * Check against partially missing user input
+     * 
+     * Be liberal with input, strict with output
+     *
+     * @access public
+     * @param mixed $input  User input
+     * @return String       Formatted date
+     */
+    function check_user_input($input)
+    {
+        $input = trim($input);
+        
+        static $valid_date_format = '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/';
+        static $valid_datetime_format = '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/';
+        
+        // Input is strict ISO date with time
+        if (preg_match($valid_datetime_format, $input))
+        {
+            return $input;
+        }
+        
+        // Input is strict ISO date
+        if (preg_match($valid_date_format, $input))
+        {
+            return "{$input} 00:00:00";
+        }
+        
+        // Value is numeric, expecting UNIXTIME
+        if (is_numeric($input))
+        {
+            return strftime($this->format, $input);
+        }
+        
+        $date = null;
+        $time = null;
+        
+        // Check against missing leading zeros from years, months, and days
+        if (preg_match('/^([0-9]{2,4})-([0-9]{1,2})-([0-9]{1,2})/', $input, $regs))
+        {
+            $date = str_pad($regs[1], 4, date('Y')) . '-' . str_pad($regs[2], 2, '0') . '-' . str_pad($regs[3], 2, 0);
+        }
+        
+        // Check against missing leading zeros from minutes and seconds
+        if (preg_match('/^[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}\s*(.*)$/', $input, $regs))
+        {
+            // Fill in the leading zeros to hours
+            if (!preg_match('/^[0-9]{2}/', $regs[1]))
+            {
+                $regs[1] = str_pad($regs[1], 2, '0');
+            }
+            
+            // The rest should be all about filling in the missing end of the timestamp
+            $time = $regs[1] . substr('00:00:00', strlen($regs[1]));
+        }
+        
+        // Both date and time found, convert the input to hopefully full-fletched ISO datetime
+        if (   $date
+            && $time)
+        {
+            $input = "{$date} {$time}";
+        }
+        
+        // Try to convert the input string to date
+        $timestamp = strtotime($input);
+        
+        // Expected output is higher than zero with strtotime
+        if ($timestamp > 0)
+        {
+            return strftime($this->format, $timestamp);
+        }
+        
+        // Could not determine the datetime, give an empty date
+        return '0000-00-00 00:00:00';
     }
 
     /**
@@ -271,7 +354,10 @@ EOT;
      */
     function sync_type_with_widget($results)
     {
-        $this->_type->value = new Date($results[$this->name]);
+        // Try to fix the incorrect input
+        $date = $this->check_user_input($results[$this->name]);
+        
+        $this->_type->value = new Date($date);
     }
 
     /**
@@ -289,7 +375,5 @@ EOT;
         }
         echo $this->_type->value->format($format);
     }
-
 }
-
 ?>
