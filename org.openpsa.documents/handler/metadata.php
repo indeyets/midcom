@@ -73,15 +73,12 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
     {
         $qb = midcom_db_topic::new_query_builder();
         $qb->add_constraint('up', '=', $topic_id);
+        $qb->add_constraint('component', '=', 'org.openpsa.documents');
         $topics = $qb->execute();
         foreach ($topics as $topic)
         {
-            if ($topic->parameter('midcom', 'component') == 'org.openpsa.documents')
-            {
-                $this->_request_data['folders'][$topic->id] = "{$prefix}{$topic->extra}";
-
-                $this->_find_document_nodes($topic->id, "{$prefix}&nbsp;&nbsp;");
-            }
+            $this->_request_data['folders'][$topic->id] = "{$prefix}{$topic->extra}";
+            $this->_find_document_nodes($topic->id, "{$prefix}&nbsp;&nbsp;");
         }
     }
 

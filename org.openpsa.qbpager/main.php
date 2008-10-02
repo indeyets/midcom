@@ -26,7 +26,7 @@ class org_openpsa_qbpager extends midcom_baseclasses_components_purecode
     
 
     /**
-     * parameter listening enabled
+     * Parameter listening enabled
      *
      * @access private
      * @var boolean
