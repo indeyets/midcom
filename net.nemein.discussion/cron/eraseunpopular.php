@@ -40,7 +40,6 @@ class net_nemein_discussion_cron_eraseunpopular extends midcom_baseclasses_compo
         }
 
         $qb = net_nemein_discussion_thread_dba::new_query_builder();
-        echo gmdate('Y-m-d H:i:s', time() - 3600 * 24 * 30) . "<br />\n";
         $qb->add_constraint('metadata.created', '<', gmdate('Y-m-d H:i:s', time() - 3600 * 24 * 30));
         $qb->add_constraint('posts', '<=', 1);
         $threads = $qb->execute();
