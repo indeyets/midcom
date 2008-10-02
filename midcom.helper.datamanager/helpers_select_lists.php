@@ -35,27 +35,26 @@ function midcom_helper_datamanager_urlname_field($location="name", $required=fal
  * @ignore
  */
  /* helper for the recursive part of midcom_helper_datamanager_selectlist_allgroups */
-function midcom_helper_datamanager__selectlist_allgroups_recursor($up, $spacer, &$data, $sitegroup) {
-    if (is_null ($up))
+function midcom_helper_datamanager__selectlist_allgroups_recursor($up, $spacer, &$data, $sitegroup) 
+{
+    $qb = midcom_db_group::new_query_builder();
+    if (!is_null($up))
     {
-        $groups = mgd_list_groups();
+        $qb->add_constraint('owner', '=', (int) $up);
     }
-    else
-    {
-        $groups = mgd_list_groups($up);
-    }
+    $groups = $qb->execute();
     if ($groups)
     {
-        while ($groups->fetch())
+        foreach ($groups as $group)
         {
-            if ($groups->sitegroup != $sitegroup)
+            if ($group->sitegroup != $sitegroup)
             {
                 continue;
             }
 
             // Don't show groups deeper in hierarchy as toplevel
-            $group = mgd_get_group($groups->id);
-            if (is_null($up) && $group->owner != 0)
+            if (   is_null($up) 
+                && $group->owner != 0)
             {
                 continue;
             }
@@ -68,7 +67,7 @@ function midcom_helper_datamanager__selectlist_allgroups_recursor($up, $spacer, 
             {
                 $name = "ID {$group->id}";
             }
-            $data[$group->guid()] = $spacer . $group->name;
+            $data[$group->guid] = $spacer . $group->name;
             midcom_helper_datamanager__selectlist_allgroups_recursor($groups->id,
                                                                      $spacer . "&nbsp;&nbsp;&nbsp;&nbsp;",
                                                                      $data,
