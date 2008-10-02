@@ -42,7 +42,7 @@
         }
         
         $('a', jq_item).attr({
-            href: 'javascript:$j.datamanager2.imagepopup.InsertItem("' + converted_object.guid.toString() + '");',
+            href: 'javascript:jQuery.datamanager2.imagepopup.InsertItem("' + converted_object.guid.toString() + '");',
             title: 'Click to insert',
             target: ''
         });

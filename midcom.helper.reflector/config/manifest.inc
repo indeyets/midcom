@@ -1,6 +1,6 @@
 'name' => 'midcom.helper.reflector',
 'purecode' => true,
-'version' => '0.2.0beta2',
+'version' => '0.2.0beta3',
 'icon' => 'stock-icons/16x16/stock_folder-properties.png',
 'state' => 'beta',
 'privileges' => array(),
