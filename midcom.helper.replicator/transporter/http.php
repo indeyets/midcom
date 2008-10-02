@@ -179,7 +179,7 @@ class midcom_helper_replicator_transporter_http extends midcom_helper_replicator
                  */
                  continue;
             }
-            $GLOBALS['midcom_helper_replicator_logger']->log("Succesfully sent key {$key}", MIDCOM_LOG_DEBUG);
+            $GLOBALS['midcom_helper_replicator_logger']->log("Succesfully sent key {$key}", MIDCOM_LOG_INFO);
             unset($items[$key]);
             if (isset($this->item_errors[$key]))
             {
