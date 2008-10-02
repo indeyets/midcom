@@ -526,6 +526,8 @@ jQuery.midcom_helper_datamanager2_widget_chooser.ResultsHolder = function(option
         
         jQuery.each( options.result_headers, function(i,n)
         {
+            n.name = n.name.replace(/\./, '_');
+            
             var li_elem = jQuery('<li>')
                 .addClass('chooser_widget_header_item')
                 .css(

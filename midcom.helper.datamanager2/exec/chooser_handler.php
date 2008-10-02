@@ -49,7 +49,9 @@ $map = array
     'reflector_key'
 );
 $extra_params = unserialize(base64_decode($_REQUEST['extra_params']));
+
 debug_print_r('extra params', $extra_params);
+
 foreach ($map as $map_key)
 {
     // debug_add("map extras :: checking map_key {$map_key}");
@@ -126,8 +128,11 @@ else
     // debug_add("Using component: {$component}");
     // debug_add("Using class: {$class}");
     
-    $_MIDCOM->componentloader->load_graceful($component);
-
+    // Load component if required
+    if (!class_exists($class))
+    {
+        $_MIDCOM->componentloader->load_graceful($component);
+    }
     // Could not get required class defined, abort
     if (!class_exists($class))
     {
@@ -205,6 +210,7 @@ else
             }
         }
     }
+    
     $results = $qb->execute();
     if ($results === false)
     {
@@ -287,8 +293,45 @@ foreach ($results as $object)
         foreach ($result_headers as $header_item)
         {
             $item_name = $header_item['name'];
-            $value = @$object->$item_name;
-
+            
+            if (preg_match('/^metadata\.(.+)$/', $item_name, $regs))
+            {
+                $metadata_property = $regs[1];
+                $value = @$object->metadata->$metadata_property;
+                
+                switch ($metadata_property)
+                {
+                    case 'created':
+                    case 'revised':
+                    case 'published':
+                    case 'schedulestart':
+                    case 'scheduleend':
+                    case 'imported':
+                    case 'exported':
+                    case 'approved':
+                        if ($value)
+                        {
+                            $value = strftime('%x %X', $value);
+                        }
+                        break;
+                    
+                    case 'creator':
+                    case 'revisor':
+                    case 'approver':
+                    case 'locker':
+                        if ($value)
+                        {
+                            $person = new midcom_db_person($value);
+                            $value = $person->name;
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                $value = @$object->$item_name;
+            }
+            
             if (   $generate_path_for == $item_name
                 || (   $class == 'midcom_db_topic'
                     && $item_name == 'extra')
@@ -297,6 +340,8 @@ foreach ($results as $object)
             {
                 $value = resolve_path($object->id, $class, $value);
             }
+            
+            $item_name = str_replace('.', '_', $item_name);
 
             debug_add("adding header item: name={$item_name} value={$value}");
             echo "          <{$item_name}><![CDATA[{$value}]]></{$item_name}>\n";
@@ -323,73 +368,97 @@ function resolve_path($object_id, $class, $title)
     
     $result_components = array();
     
-    if ($class == 'midcom_db_topic')
+    switch ($class)
     {
-        $id = $object_id;
-        $last_name = '';
-        while ($id != 0)
-        {
-            $mc = midcom_db_topic::new_collector('id', $id);
-            $mc->add_value_property('extra');
-            $mc->add_value_property('up');
-            $mc->add_value_property('name');
-            $mc->execute();
-            $topics = $mc->list_keys();
-
-            if (! $topics)
-            {
-                $id = 0;
-                $rc_count = count($result_components);
-                $result_components[$rc_count-1] = $last_name;
-                break;
-            }
-
-            foreach ($topics as $topic_guid => $value)
-            {
-                $id = $mc->get_subkey($topic_guid, 'up');
-                $last_name = $mc->get_subkey($topic_guid, 'name');
-                
-                if ($id == 0)
-                {
-                    $result_components[] = $last_name;
-                }
-                else
-                {
-                    $result_components[] = $mc->get_subkey($topic_guid, 'extra');
-                }
-            }
-        }        
-    }
-    else if (   $class == 'midcom_db_group'
-             || $class == 'midcom_baseclasses_database_group')
-    {
-        $result_components[] = $title;
-        
-        $id = $object_id;
-        while ($id != 0)
-        {
-            $mc = midcom_db_group::new_collector('id', $id);
-            $mc->add_value_property('name');
-            $mc->add_value_property('owner');
-            $mc->execute();
-            $groups = $mc->list_keys();
+        case 'midcom_db_article':
+        case 'midcom_baseclaases_database_article':
+            $result_components[] = $title;
             
-            if (! $groups)
+            // Get the owner topic
+            $mc = midcom_db_article::new_collector('id', $object_id);
+            $mc->add_value_property('topic');
+            $mc->execute();
+            $keys = $mc->list_keys();
+            
+            foreach ($keys as $guid => $array)
             {
-                $id = 0;
-                break;
+                $id = $mc->get_subkey($guid, 'topic');
             }
-
-            foreach ($groups as $group_guid => $value)
+            
+            // Fall through
+            
+        case 'midcom_db_topic':
+            if (!isset($id))
             {
-                if ($object_id != $id)
+                $id = $object_id;
+            }
+            
+            $last_name = '';
+            while ($id != 0)
+            {
+                $mc = midcom_db_topic::new_collector('id', $id);
+                $mc->add_value_property('extra');
+                $mc->add_value_property('up');
+                $mc->add_value_property('name');
+                $mc->execute();
+                $topics = $mc->list_keys();
+    
+                if (! $topics)
                 {
-                    $result_components[] = $mc->get_subkey($group_guid, 'name');
+                    $id = 0;
+                    $rc_count = count($result_components);
+                    $result_components[$rc_count-1] = $last_name;
+                    break;
                 }
-                $id = $mc->get_subkey($group_guid, 'owner');
+    
+                foreach ($topics as $topic_guid => $value)
+                {
+                    $id = $mc->get_subkey($topic_guid, 'up');
+                    $last_name = $mc->get_subkey($topic_guid, 'name');
+                    
+                    if ($id == 0)
+                    {
+                        $result_components[] = $last_name;
+                    }
+                    else
+                    {
+                        $result_components[] = $mc->get_subkey($topic_guid, 'extra');
+                    }
+                }
             }
-        }
+            break;
+        
+        case 'midcom_db_group':
+        case 'midcom_baseclasses_database_group':
+            $result_components[] = $title;
+            
+            $id = $object_id;
+            while ($id != 0)
+            {
+                $mc = midcom_db_group::new_collector('id', $id);
+                $mc->add_value_property('name');
+                $mc->add_value_property('owner');
+                $mc->execute();
+                $groups = $mc->list_keys();
+                
+                if (! $groups)
+                {
+                    $id = 0;
+                    break;
+                }
+    
+                foreach ($groups as $group_guid => $value)
+                {
+                    if ($object_id != $id)
+                    {
+                        $result_components[] = $mc->get_subkey($group_guid, 'name');
+                    }
+                    $id = $mc->get_subkey($group_guid, 'owner');
+                }
+            }
+            break;
     }
+    
     
     if (empty($result_components))
     {

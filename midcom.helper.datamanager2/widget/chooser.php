@@ -7,7 +7,10 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-$_MIDCOM->load_library('midcom.helper.reflector');
+if (! class_exists('midcom_helper_reflector'))
+{
+    $_MIDCOM->load_library('midcom.helper.reflector');
+}
 
 /**
  * Datamanager 2 Chooser widget
@@ -30,7 +33,7 @@ $_MIDCOM->load_library('midcom.helper.reflector');
  *     'type' => 'select',
  *     'type_config' => array
  *     (
- *           'require_corresponding_option' => false,
+ *          'require_corresponding_option' => false,
  *          'allow_multiple' => true,
  *          'multiple_storagemode' => 'array',
  *     ),
@@ -130,8 +133,10 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
      *
      * Example:
      * <code>
-     *     'constraints' => array (
-     *         array(
+     *     'constraints' => array
+     *     (
+     *         array
+     *         (
      *             'field' => 'username',
      *             'op' => '<>',
      *             'value' => '',
@@ -172,7 +177,13 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
      *
      * Example:
      * <code>
-     *      'searchfields' => array('firstname', 'lastname', 'email', 'username'),
+     *      'searchfields' => array
+     *      (
+     *          'firstname',
+     *          'lastname',
+     *          'email',
+     *          'username'
+     *      ),
      * </code>
      *
      * @var array
@@ -184,7 +195,17 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
      *
      * Example:
      * <code>
-     *     'orders' => array(array('lastname' => 'ASC'), array('firstname' => 'ASC')),
+     *     'orders' => array
+     *     (
+     *         array
+     *         (
+     *             'lastname' => 'ASC',
+     *         ),
+     *         array
+     *         (
+     *             'firstname' => 'ASC',
+     *         )
+     *     ),
      * </code>
      *
      * @var array
@@ -383,8 +404,10 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
         $_MIDCOM->enable_jquery();
 
-        $_MIDCOM->add_link_head(
-            array(
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
                 'href' => MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/chooser/jquery.chooser_widget.css'
@@ -967,6 +990,11 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         $this->_js_widget_options['id_field'] = "'$this->id_field'";
         $this->_js_widget_options['format_items'] = 'null';
         
+        if ($this->generate_path_for)
+        {
+            $this->_js_widget_options['generate_path_for'] = "'{$this->generate_path_for}'";
+        }
+        
         if ($this->sortable)
         {
             $this->_js_widget_options['sortable'] = 'true';
@@ -1055,7 +1083,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             '_callback_class', '_callback_args',
             '_renderer_callback_class', '_renderer_callback_args',
             'constraints', 'searchfields', 'orders',
-            'result_headers',
+            'result_headers', 'generate_path_for',
             'auto_wildcards',
             'reflector_key'
         );
@@ -1068,6 +1096,35 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         }
 
         $this->_js_widget_options['extra_params'] = "'" . base64_encode(serialize($params)) . "'";
+    }
+
+    /**
+     * Internal helper for parsing the $_REQUEST data for including the elements requested via GET or POST
+     *
+     * @access private
+     * @return Array
+     */
+    function _get_request_elements()
+    {
+        $results = array();
+        
+        // No results available
+        if (!isset($_REQUEST["{$this->_element_id}_selections"]))
+        {
+            return $results;
+        }
+        
+        foreach ($_REQUEST["{$this->_element_id}_selections"] as $guid => $value)
+        {
+            if (!$value)
+            {
+                continue;
+            }
+            
+            $results[$guid] = $value;
+        }
+        
+        return $results;
     }
 
     /**
@@ -1169,35 +1226,41 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         // Add existing and static selections
         $existing_elements = $this->_type->selection;
 
+        // Add to existing elements the ones requested (POST/GET) to this page
+        $new_elements = $this->_get_request_elements();
+
         //debug_print_r('existing_elements',$existing_elements);
 
         // debug_print_r('static_options',$this->static_options);
 
-        $elements = array_merge($this->static_options, $existing_elements);
+        $elements = array_merge($this->static_options, $existing_elements, $new_elements);
         // debug_print_r('all elements to be added',$elements);
         // debug_pop();
 
         // $this->_static_items_html = "<noscript>\n";        
-        $this->_static_items_html .= "<table class=\"widget_chooser_static_items_table\">\n<thead><tr>\n";
+        $this->_static_items_html .= "<table class=\"widget_chooser_static_items_table\">\n";
+        $this->_static_items_html .= "    <thead>\n";
+        $this->_static_items_html .= "        <tr>\n";
         
         if (   !empty($this->reflector_key)
             && !$this->result_headers)
         {
             $title = $_MIDCOM->i18n->get_string('Label', 'midcom');
-            $this->_static_items_html .= "    <th class=\"label\">{$title}&nbsp;</th>\n";
+            $this->_static_items_html .= "            <th class=\"label\">{$title}&nbsp;</th>\n";
         }
         else
         {
             foreach ($this->result_headers as $header_item)
             {
-                $this->_static_items_html .= "    <th class=\"{$header_item['name']}\">{$header_item['title']}&nbsp;</th>\n";
+                $this->_static_items_html .= "            <th class=\"{$header_item['name']}\">{$header_item['title']}&nbsp;</th>\n";
             }            
         }
         
         $title = $_MIDCOM->i18n->get_string('Selected', 'midcom.helper.datamanager2');
-        $this->_static_items_html .= "    <th class=\"selected\">{$title}&nbsp;</th>\n";
-        
-        $this->_static_items_html .= "</tr></thead>\n<tbody>\n";
+        $this->_static_items_html .= "            <th class=\"selected\">{$title}&nbsp;</th>\n";
+        $this->_static_items_html .= "        </tr>\n";
+        $this->_static_items_html .= "    </thead>\n";
+        $this->_static_items_html .= "    <tbody>\n";
         
         $ee_script = '';
         if ($this->_renderer_callback)
@@ -1227,7 +1290,12 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 if ($data)
                 {
                     // debug_add("Got data: {$data}");
-                    $ee_script .= "\njQuery('#{$this->_element_id}_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item({$data});\n";
+                    $ee_script .= "\n";
+                    $ee_script .= "jQuery('#{$this->_element_id}_search_input')\n";
+                    $ee_script .= ".midcom_helper_datamanager2_widget_chooser_add_result_item(\n";
+                    $ee_script .= "    {$data},\n";
+                    $ee_script .= "    this\n";
+                    $ee_script .= ");\n";
 
                     $this->_add_existing_item_as_static($key);
                 }
@@ -1236,9 +1304,13 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
         $this->_jscript .= $ee_script;
         $this->_jscript .= '});';
+        
+        $this->_jscript .= "\nclose_dialog = function(widget_id){jQuery('#' + widget_id + '_creation_dialog').hide();};";
+        $this->_jscript .= "\nadd_item = function(data, widget_id){jQuery('#' + widget_id + '_search_input').midcom_helper_datamanager2_widget_chooser_add_result_item(data);};";
+        
         $this->_jscript .= '</script>';
 
-        $this->_static_items_html .= "</tbody>\n";
+        $this->_static_items_html .= "    </tbody>\n";
         $this->_static_items_html .= "</table>\n";
         // $this->_static_items_html .= "</noscript>\n";
 
@@ -1384,7 +1456,10 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 $value = @$object->$item_name;
                 $value = rawurlencode(utf8_decode($value));
                 // debug_add("adding header item: name={$item_name} value={$value}");
-                $jsdata .= "{$item_name}: '{$value}'";
+                
+                $tmp = str_replace('.', '_', $item_name);
+                
+                $jsdata .= "{$tmp}: '{$value}'";
 
                 if ($i < $hi_count)
                 {
