@@ -8,9 +8,9 @@ $_MIDCOM->auth->require_admin_user();
 ?>
 <h1>Grand unified approver</h1>
 <p>
-    The reflection based system is not done yet, meanwhile look at the following
-scripts
+    Take a look at the following scripts
     <ul>
+        <li><a href="requeue_topic_tree_reflector.php">requeue_topic_tree_reflector.php</a>, forced re-queue (but not approval) of everything that is child of topic</li>
         <li><a href="approve_topic_tree_reflector.php">approve_topic_tree_reflector.php</a>, forced approval of everything that is child of topic</li>
         <li><a href="approve_topic_tree_reflector_parts.php">approve_topic_tree_reflector_parts.php</a>, forced as above but use this version for <strong>large</strong> sites, it makes subrequests for each topic to allow the DBA hooks to process in between</li>
         <li><a href="approve_topic_tree_classic.php">approve_topic_tree_classic.php</a>, the classic topic/article approval if not yet approved</li>
