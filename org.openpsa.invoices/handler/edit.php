@@ -190,8 +190,8 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
         $_MIDCOM->auth->require_valid_user();
 
-        $this->_request_data['invoice'] = $this->_load_invoice($args[0]);
-        if (!$this->_request_data['invoice'])
+        $this->_request_data['invoice'] = new org_openpsa_invoices_invoice($args[0]);
+        if ($this->_request_data['invoice']->guid == "")
         {
             return false;
         }
@@ -252,8 +252,8 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
         $_MIDCOM->auth->require_valid_user();
 
-        $this->_request_data['invoice'] = $this->_load_invoice($args[0]);
-        if (!$this->_request_data['invoice'])
+        $this->_request_data['invoice'] = new org_openpsa_invoices_invoice($args[0]);
+        if ($this->_request_data['invoice']->guid == "")
         {
             return false;
         }
