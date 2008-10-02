@@ -181,7 +181,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
                 fclose($fp);
                 
                 $msg = "Queued {$key} as {$file}";
-                $GLOBALS['midcom_helper_replicator_logger']->log($msg);
+                $GLOBALS['midcom_helper_replicator_logger']->log($msg, MIDCOM_LOG_INFO);
                 debug_add($msg);
 
                 // TODO: How to call midgard_replicator::export() for all the objects exported ?? (and is this the correct place for that ?)

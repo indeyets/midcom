@@ -61,12 +61,23 @@ class midcom_admin_folder_handler_approvals extends midcom_baseclasses_component
             // This will exit.
         }
 
+        /** 
+         * This flag is used to make it possible to explicitly recognize user intent
+         * to for example do speacial operations in midcom.helper.replicator
+         */
+        if (   !isset($GLOBALS['midcom_admin_folder_handler_approvals'])
+            || !is_array($GLOBALS['midcom_admin_folder_handler_approvals']))
+        {
+            $GLOBALS['midcom_admin_folder_handler_approvals'] = array();
+        }
         if ($handler_id == '____ais-folder-approve')
         {
+            $GLOBALS['midcom_admin_folder_handler_approvals'][$object->guid] = 'approve';
             $metadata->approve();
         }
         else
         {
+            $GLOBALS['midcom_admin_folder_handler_approvals'][$object->guid] = 'unapprove';
             $metadata->unapprove();
         }
 

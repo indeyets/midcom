@@ -55,6 +55,23 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
      */
     function is_exportable(&$object, $check_exported = true)
     {
+        /**
+         * First check of them all:
+         *  In case we have explicit un-approve AND we have configured to do
+         *  so, serialize the object as deletion to the live server
+         */
+        if (   isset($GLOBALS['midcom_admin_folder_handler_approvals'])
+            && isset($GLOBALS['midcom_admin_folder_handler_approvals'][$object->guid])
+            && $GLOBALS['midcom_admin_folder_handler_approvals'][$object->guid] == 'unapprove'
+            && $this->_config->get('exporter_staging2live_delete_unapproved'))
+        {
+            $GLOBALS['midcom_helper_replicator_logger']->push_prefix('exporter');
+            $GLOBALS['midcom_helper_replicator_logger']->log_object($object, 'Explicit un-approve detected, rewriting as deletion to live', MIDCOM_LOG_WARN);
+            $GLOBALS['midcom_helper_replicator_logger']->pop_prefix();
+            $this->exportability[$object->guid] = true;
+            $this->_serialize_rewrite_to_delete[$object->guid] = true;
+            return $this->exportability[$object->guid];
+        }
         /*
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_print_r('called for', $object);

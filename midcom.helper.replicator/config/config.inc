@@ -6,6 +6,7 @@
     'midcom_core_login_session_db',
     'midcom_core_temporary_object_db',
 ),
+'exporter_staging2live_delete_unapproved' => false, // Upon explicit un-approve, do we wish to delete from live ??
 'exporter_staging2live_check_approvals_for' => array
 (
     'midgard_topic',
