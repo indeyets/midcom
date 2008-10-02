@@ -8,6 +8,7 @@
 */
 
 $_MIDCOM->auth->require_valid_user();
+@ini_set('memory_limit', -1);
 echo "<p>Starting</p>";
 $qm =& midcom_helper_replicator_queuemanager::get();
 // Ponder: add some progress indicator to the process method ??

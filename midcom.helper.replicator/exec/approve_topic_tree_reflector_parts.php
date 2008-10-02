@@ -149,7 +149,7 @@ if (   !isset($_REQUEST['root_id'])
 <h1>Approve topic tree</h1>
 <p>Enter id of topic to start from, current root_topic is <?php echo $default_id; ?>.</p>
 <form method="post">
-    Root style id: <input name="root_id" type="text" size=5 value="<?php echo $default_id; ?>" />
+    Root topic id: <input name="root_id" type="text" size=5 value="<?php echo $default_id; ?>" />
     <input type="submit" value="approve" />
 </form>
 <?php

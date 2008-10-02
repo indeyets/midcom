@@ -2,28 +2,12 @@
 $_MIDCOM->auth->require_admin_user();
 $_MIDCOM->load_library('midcom.helper.reflector');
 
-//Disable limits
-// TODO: Could this be done more safely somehow
-@ini_set('memory_limit', -1);
-@ini_set('max_execution_time', 0);
-
-function approve_object_reflectorrecursive($obj)
+function reqeue_object_reflectorrecursive(&$obj, &$qm)
 {
     $class = get_class($obj);
-    // Touch parameters before appoving (which touches the main object)
-    $params = $obj->list_parameters();
-    foreach ($params as $domain => $domain_params)
-    {
-        foreach ($domain_params as $name => $value)
-        {
-            $obj->set_parameter($domain, $name, $value);
-        }
-    }
-    unset($params, $domain_params, $name, $value);
-    $meta =& midcom_helper_metadata::retrieve($obj);
-    echo "Approving {$class} #{$obj->id}, ";
-    $meta->approve();
-    echo mgd_errstr() . "<br/>\n";
+    echo "Re-Queuing {$class} #{$obj->id}, ";
+    $stat = $qm->add_to_queue($obj);
+    echo (int)$stat . "<br>\n";
     flush();
     $children = midcom_helper_reflector_tree::get_child_objects($obj);
     if (empty($children))
@@ -34,7 +18,7 @@ function approve_object_reflectorrecursive($obj)
     {
         foreach ($child_objects as $k => $child)
         {
-            approve_object_reflectorrecursive($child);
+            reqeue_object_reflectorrecursive($child, $qm);
             unset($child_objects[$k], $children[$child_class][$k], $child);
         }
         unset($children[$child_class], $child_objects);
@@ -53,17 +37,16 @@ if (   !isset($_REQUEST['root_id'])
         $default_id = '';
     }
 ?>
-<h1>Approve topic tree</h1>
+<h1>Re-qeue topic tree</h1>
 <p>Enter id of topic to start from, current root_topic is <?php echo $default_id; ?>.</p>
 <form method="post">
     Root topic id: <input name="root_id" type="text" size=5 value="<?php echo $default_id; ?>" />
-    <input type="submit" value="approve" />
+    <input type="submit" value="reqeue" />
 </form>
 <?php
 }
 else
 {
-    while(@ob_end_flush());
 
     $root = (int)$_REQUEST['root_id'];
     $root_topic = new midcom_db_topic($root);
@@ -73,7 +56,17 @@ else
         // This will exit();
     }
 
-    approve_object_reflectorrecursive($root_topic);
+    $GLOBALS['midcom_helper_replicator_exporter_retry_mode'] = true;
+    $qm =& midcom_helper_replicator_queuemanager::get();
+    while(@ob_end_flush());
+    //Disable limits
+    // TODO: Could this be done more safely somehow
+    @ini_set('memory_limit', -1);
+    @ini_set('max_execution_time', 0);
+
+    echo "Starting<br>\n"; flush();
+    reqeue_object_reflectorrecursive($root_topic, $qm);
+    echo "Done<br>\n"; flush();
 
     ob_start();
 }
