@@ -193,7 +193,8 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
     function _handler_edit($handler_id, $args, &$data)
     {
         $this->_photo = new org_routamc_photostream_photo_dba($args[0]);
-        if (! $this->_photo)
+        if (   !$this->_photo
+            || empty($this->_photo->guid))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The photo {$args[0]} was not found.");
             // This will exit.
@@ -253,7 +254,8 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
     function _handler_delete($handler_id, $args, &$data)
     {
         $this->_photo = new org_routamc_photostream_photo_dba($args[0]);
-        if (! $this->_photo)
+        if (   !$this->_photo
+            || empty($this->_photo->guid))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The photo {$args[0]} was not found.");
             // This will exit.
@@ -265,9 +267,13 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         if (array_key_exists('org_routamc_photostream_deleteok', $_REQUEST))
         {
             // Deletion confirmed.
-            if (! $this->_photo->delete())
+            try
             {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete photo {$args[0]}, last Midgard error was: " . mgd_errstr());
+                $this->_photo->delete();
+            }
+            catch (midgard_error_exception $e)
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete photo {$args[0]}, last Midgard error was: " . $e->getMessage());
                 // This will exit.
             }
 

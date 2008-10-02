@@ -616,7 +616,7 @@ EOF;
         {
             parent::__construct(\$_id);
         }
-        catch(midgard_error_exception \$e)
+        catch (midgard_error_exception \$e)
         {
             \$x =& \$this; 
             \$x = false; 

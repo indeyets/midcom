@@ -1043,6 +1043,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     function load(&$object, $id)
     {
         $object->id = 0;
+
         if (is_object($id))
         {
             if (!midcom_baseclasses_core_dbobject::cast_object($object, $id))

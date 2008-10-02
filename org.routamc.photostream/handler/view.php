@@ -49,9 +49,10 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
     {
         $data =& $this->_request_data;
         $photo = new org_routamc_photostream_photo_dba($id);
-        if (!is_object($photo))
+        if (   !is_object($photo)
+            || empty($photo->guid))
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not load photo {$id}");
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Could not load photo {$id}");
             // This will exit
         }
         $data['photo'] = $photo;
