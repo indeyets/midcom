@@ -174,7 +174,7 @@ class midcom_helper_metadata
      * <b>must</b> call the on_update() method of this class. This is
      * very important or backwards compatibility will be broken.
      *
-     * @return midcom_helper_datamanager A initialized Datamanager instance for the selected object.
+     * @return midcom_helper_datamanager2 A initialized Datamanager instance for the selected object.
      * @see midcom_helper_metadata::on_update()
      */
     function & get_datamanager()

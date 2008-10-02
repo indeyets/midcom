@@ -454,7 +454,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
     /**
      * Start a fieldset and set the styles accordingly. Fieldsets can be initialized either
      * by key `start_fieldset` or `start_fieldgroup` to provide backwards compatibility to
-     * @see midcom_helper_datamanager_schema
+     * @see midcom_helper_datamanager2_schema
      *
      * @access private
      * @param string $name

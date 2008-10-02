@@ -23,8 +23,8 @@ $node = $nap->get_node($nap->get_current_node());
         <?php
     }
     ?>
-    <?php $_MIDCOM->dynamic_load($node[MIDCOM_NAV_RELATIVEURL]."group/".$data['group']->guid."/members/"); ?>
-    <?php $_MIDCOM->dynamic_load($node[MIDCOM_NAV_RELATIVEURL]."group/".$data['group']->guid."/subgroups/"); ?>
+    <?php $_MIDCOM->dynamic_load($node[MIDCOM_NAV_RELATIVEURL] . "group/".$data['group']->guid . "/members/"); ?>
+    <?php $_MIDCOM->dynamic_load($node[MIDCOM_NAV_RELATIVEURL] . "group/".$data['group']->guid . "/subgroups/"); ?>
 
     <!-- TODO: Add salesprojects here -->
     <!-- TODO: Projects list, Add project button -->
