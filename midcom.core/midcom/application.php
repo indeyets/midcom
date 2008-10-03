@@ -2302,7 +2302,7 @@ class midcom_application
         $last_modified =& $stats[9];
 
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Serving Attachment {$attachment->name} (parent: {$attachment->parentguid})", MIDCOM_LOG_INFO);
+        //debug_add("Serving Attachment {$attachment->name} (parent: {$attachment->parentguid})", MIDCOM_LOG_INFO);
 
         $etag = md5("{$last_modified}{$attachment->name}{$attachment->mimetype}{$attachment->guid}");
 
@@ -2322,7 +2322,8 @@ class midcom_application
             }
             while(@ob_end_flush());
             //debug_add('headers sent, exit()ing so nothing has a chance the mess things up anymore');
-            //debug_pop();
+            debug_pop();
+            debug_add("End of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
             exit();
         }
 
@@ -2406,8 +2407,9 @@ class midcom_application
         }
         fpassthru($f);
         $attachment->close();
-        debug_add('file sent, exit()ing so nothing has a chance the mess things up anymore');
+        //debug_add('file sent, exit()ing so nothing has a chance the mess things up anymore');
         debug_pop();
+        debug_add("End of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
         exit();
     }
 

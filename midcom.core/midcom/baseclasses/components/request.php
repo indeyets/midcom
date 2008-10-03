@@ -544,9 +544,9 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         $result = $this->_on_can_handle($argc, $argv);
         if (! $result)
         {
-            debug_push_class($this, 'can_handle');
-            debug_add('The _on_can_handle event handler returned false, aborting.');
-            debug_pop();
+            //debug_push_class(__CLASS__, __FUNCTION__);
+            //debug_add('The _on_can_handle event handler returned false, aborting.');
+            //debug_pop();
             return false;
         }
 
@@ -557,7 +557,7 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         {
             $namespace = $argv[0];
             $plugin = $argv[1];
-            debug_push_class($this, 'can_handle');
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Loading the plugin {$namespace}/{$plugin}");
             debug_pop();
             $this->_load_plugin($namespace, $plugin);
@@ -605,9 +605,9 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
                 }
                 else
                 {
-                    debug_push_class($this, 'can_handle');
-                    debug_add("Handler method {$method} returned FALSE, we cannot handle this therefore.");
-                    debug_pop();
+                    //debug_push_class(__CLASS__, __FUNCTION__);
+                    //debug_add("Handler method {$method} returned FALSE, we cannot handle this therefore.");
+                    //debug_pop();
                     return false;
                 }
             }
@@ -617,9 +617,9 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
             }
         }
         // No match
-        debug_push_class($this, 'can_handle');
-        debug_add('No matching handler could be found, we cannot handle this therefore.');
-        debug_pop();
+        //debug_push_class(__CLASS__, __FUNCTION__);
+        //debug_add('No matching handler could be found, we cannot handle this therefore.');
+        //debug_pop();
         return false;
     }
 
@@ -664,9 +664,9 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         $result = $this->_on_handle($this->_handler['id'], $this->_handler['args']);
         if (! $result)
         {
-            debug_push_class($this, 'handle');
-            debug_add('The _on_handle event handler returned false, aborting.');
-            debug_pop();
+            //debug_push_class($this, 'handle');
+            //debug_add('The _on_handle event handler returned false, aborting.');
+            //debug_pop();
             return false;
         }
 
@@ -774,12 +774,11 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
      */
     public function show()
     {
-         debug_push_class($this, 'show');
-
         // Call the event handler
         $result = $this->_on_show($this->_handler['id']);
         if (! $result)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('The _on_show event handler returned false, aborting.');
             debug_pop();
             return;
@@ -797,8 +796,6 @@ class midcom_baseclasses_components_request extends midcom_baseclasses_core_obje
         $handler->$method($this->_handler['id'], $this->_request_data);
 
         $this->_on_shown($this->_handler['id']);
-
-        debug_pop();
     }
 
 

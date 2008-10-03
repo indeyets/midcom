@@ -102,10 +102,9 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
      */
     function open()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         if (! $this->id)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Cannot open a non-persistent attachment..', MIDCOM_LOG_WARN);
             debug_print_r('Object state:', $this);
             debug_pop();
@@ -114,7 +113,9 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
 
         if ($this->_open_handle !== null)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Warning, the Attachment {$this->id} already had an open file handle, we close it impliciltly.", MIDCOM_LOG_WARN);
+            debug_pop();
             fclose($this->_open_handle);
             $this->_open_handle = null;
         }
@@ -167,12 +168,13 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
 
         if (! $handle)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Failed to open attachment with mode {$mode}, last Midgard error was:" . mgd_errstr(), MIDCOM_LOG_WARN);
+            debug_pop();
         }
 
         $this->_open_handle = $handle;
 
-        debug_pop();
         return $handle;
     }
 

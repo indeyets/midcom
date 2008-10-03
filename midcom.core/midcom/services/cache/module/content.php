@@ -1020,9 +1020,9 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         $context = $_MIDCOM->get_current_context();
         $request_id = $this->generate_request_identifier($context);
         
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Creating cache entry for {$content_id} as {$request_id}", MIDCOM_LOG_INFO);
-        debug_pop();
+        //debug_push_class(__CLASS__, __FUNCTION__);
+        //debug_add("Creating cache entry for {$content_id} as {$request_id}", MIDCOM_LOG_INFO);
+        //debug_pop();
 
         if (!is_null($this->_expires))
         {
@@ -1041,13 +1041,14 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         $entry_data['etag'] = $etag;
         $entry_data['last_modified'] = $this->_last_modified;
         $entry_data['sent_headers'] = $this->_sent_headers;
+
         /**
          * Remove comment to debug cache
-         */
         debug_push_class(__CLASS__, __FUNCTION__);        
         debug_print_r("Writing meta-cache entry {$content_id}", $entry_data);
         debug_pop();
-        /* */
+        */
+
         $this->_meta_cache->open(true);
         $this->_meta_cache->put($content_id, $entry_data);
         $this->_meta_cache->put($request_id, $content_id);

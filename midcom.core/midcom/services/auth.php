@@ -514,8 +514,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      */
     function _check_for_new_login_session()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         $credentials = $this->_auth_frontend->read_authentication_data();
 
         if (! $credentials)
@@ -528,6 +526,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         // Try to start up a new session, this will authenticate as well.
         if (! $this->_auth_backend->create_login_session($credentials['username'], $credentials['password']))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('The login information passed to the system was invalid.', MIDCOM_LOG_ERROR);
             debug_add("Username was {$credentials['username']}");
             // No password logging for security reasons.
@@ -535,7 +534,9 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             return false;
         }
 
+        debug_push_class(__CLASS__, __FUNCTION__);
         debug_add('Authentication was successful, we have a new login session now. Updating timestamps');
+        debug_pop();
 
         $this->_sync_user_with_backend();
         $this->user->_storage->parameter('midcom', 'last_login', time());
@@ -558,8 +559,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             }
             // This will exit.
         }
-
-        debug_pop();
         return true;
     }
 

@@ -1863,10 +1863,10 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
         if (count($result) == 0)
         {
-            debug_push_class($object, __FUNCTION__);
-            debug_add("Cannot retrieve the parameter {$domain} for {$object->__table__} ID {$object->id}; query execution failed, this is most probably an empty resultset.",
-                MIDCOM_LOG_INFO);
-            debug_pop();
+            //debug_push_class($object, __FUNCTION__);
+            //debug_add("Cannot retrieve the parameter {$domain} for {$object->__table__} ID {$object->id}; query execution failed, this is most probably an empty resultset.",
+            //    MIDCOM_LOG_INFO);
+            //debug_pop();
             return Array();
         }
         $return = Array();
