@@ -171,13 +171,13 @@ else
 // Available Memory for PHP
 
 $cur_limit = ini_get_filesize('memory_limit');
-if ($cur_limit >= (60 * 1024 * 1024))
+if ($cur_limit >= (40 * 1024 * 1024))
 {
     println('PHP Setting: memory_limit', OK);
 }
 else
 {
-    println('PHP Setting: memory_limit', ERROR, "MidCOM requires a minimum memory limit of 20 MB to operate correctly. Smaller amounts will lead to PHP Errors. Detected limit was {$cur_limit}.");
+    println('PHP Setting: memory_limit', ERROR, "MidCOM requires a minimum memory limit of 40 MB to operate correctly. Smaller amounts will lead to PHP Errors. Detected limit was {$cur_limit}.");
 }
 
 // Register Globals
