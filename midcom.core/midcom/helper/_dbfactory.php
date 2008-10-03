@@ -572,9 +572,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
         }
 
         $acl_object->_on_imported();
-        /* Do we need this ?? The action relevant handlers and watches are triggered in any case
         $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_IMPORT, $object);
-        */
         debug_pop();
         return true;
     }
@@ -632,6 +630,8 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
         }
         // Trigger parent updated
         midcom_baseclasses_core_dbobject::update_post_ops($acl_object);
+        // And also imported
+        $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_IMPORT, $acl_object);
 
         debug_pop();
         return true;

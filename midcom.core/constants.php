@@ -390,9 +390,14 @@ define ('MIDCOM_OPERATION_DBA_UPDATE', 0x2);
 define ('MIDCOM_OPERATION_DBA_DELETE', 0x4);
 
 /**
+ * DBA object import. This includes parameters & attachments.
+ */
+define ('MIDCOM_OPERATION_DBA_IMPORT', 0x8);
+
+/**
  * All known DBA operations.
  */
-define ('MIDCOM_OPERATION_DBA_ALL', 0x7);
+define ('MIDCOM_OPERATION_DBA_ALL', 0xF);
 
 /**#@-*/
 
