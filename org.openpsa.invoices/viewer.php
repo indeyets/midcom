@@ -112,12 +112,10 @@ class org_openpsa_invoices_viewer extends midcom_baseclasses_components_request
         );
 
         // Match /config/
-        $this->_request_switch['config'] = Array
+        $this->_request_switch['config'] = array
         (
-            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
-            'schemadb' => 'file:/org/openpsa/invoices/config/schemadb_config.inc',
-            'schema' => 'config',
-            'fixed_args' => Array('config'),
+            'handler' => array ('midcom_core_handler_configdm2', 'config'),
+            'fixed_args' => array ('config'),
         );
 
         $_MIDCOM->add_link_head

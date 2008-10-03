@@ -8,56 +8,108 @@
         /* invoice settings */
         'default_due_days' => array
         (
-            'description'   => 'default due days',
-            'datatype'      => 'text',
-            'location'      => 'config',
-            'config_domain' => 'org.openpsa.invoices',
-            'config_key'    => 'default_due_days',
-            'start_fieldgroup' => array
+            'title'   => 'default due days',
+            'type'      => 'number',
+	    'storage' => array
+	    (
+	        'location'      => 'configuration',
+		'domain' => 'org.openpsa.invoices',
+		'name'    => 'default_due_days',
+	     ),
+	    'widget' => 'text',
+            'start_fieldset' => array
             (
                 'title' => 'invoice',
             ),
         ),
         'vat_percentages' => array
         (
-            'description'   => 'vat percentages',
-            'datatype'      => 'text',
-            'location'      => 'config',
-            'config_domain' => 'org.openpsa.invoices',
-            'config_key'    => 'vat_percentages',
+            'title'   => 'vat percentages',
+            'type'      => 'text',
+	    'storage' => array
+	    (
+	        'location'      => 'configuration',
+		'domain' => 'org.openpsa.invoices',
+		'name'    => 'vat_percentages',
+	     ),
+	    'widget' => 'text',
         ),
         'invoice_sender' => array
         (
-            'description'   => 'invoice sender',
-            'datatype'      => 'text',
-            'location'      => 'config',
-            'widget'        => 'contactchooser',
-            'config_domain' => 'org.openpsa.invoices',
-            'config_key'    => 'invoice_sender',
+            'title'   => 'invoice sender',
+            'type'      => 'select',
+            'type_config' => array
+            (
+                 'require_corresponding_option' => false,
+                 'options' => array(),
+            ),
+	    'storage' => array
+	    (
+	        'location'      => 'configuration',
+		'domain' => 'org.openpsa.invoices',
+		'name'    => 'invoice_sender',
+	     ),
+            'widget' => 'universalchooser',
+            'widget_config' => array
+            (
+                'class'       => 'org_openpsa_contacts_person',
+                'component'   => 'org.openpsa.contacts',
+                'titlefield'  => 'name',
+                'idfield'     => 'id',
+                'constraints' => array
+                (
+                    array
+                    (
+                        'field' => 'username',
+                        'op'    => '<>',
+                        'value' => '',
+                    ),
+                ),
+                'searchfields'  => array
+                (
+                    'firstname',
+                    'lastname',
+                    'username',
+                ),
+                'orders'        => array
+                (
+                    array('lastname'    => 'ASC'),
+                    array('firstname'    => 'ASC'),
+
+                ),
+            ),
         ),
         'default_hourly_price' => array
         (
-            'description'   => 'default hourly price',
-            'datatype'      => 'text',
-            'location'      => 'config',
-            'config_domain' => 'org.openpsa.invoices',
-            'config_key'    => 'default_hourly_price',
-            'end_fieldgroup' => '',
+            'title'   => 'default hourly price',
+            'type'      => 'number',
+	    'storage' => array
+	    (
+	        'location'      => 'configuration',
+		'domain' => 'org.openpsa.invoices',
+		'name'    => 'default_hourly_price',
+	     ),
+	    'widget' => 'text',
+            'end_fieldset' => '',
         ),        
         
         /* Schema settings */
         'schemadb' => array
         (
-            'description' => 'schema database',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.openpsa.invoices',
-            'config_key' => 'schemadb',
-            'start_fieldgroup' => array
+            'title' => 'schema database',
+            'type' => 'text',
+	    'storage' => array
+	    (
+	        'location' => 'configuration',
+		'domain' => 'org.openpsa.invoices',
+		'name' => 'schemadb',
+	     ),
+	    'widget' => 'text',
+            'start_fieldset' => array
             ( 
                 'title' => 'advanced schema and data settings',
             ),
-            'end_fieldgroup' => '',
+            'end_fieldset' => '',
         ),
 
     ),
