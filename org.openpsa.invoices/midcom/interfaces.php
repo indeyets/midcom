@@ -28,7 +28,6 @@ class org_openpsa_invoices_interface extends midcom_baseclasses_components_inter
         $this->_autoload_libraries = Array(
             'midcom.helper.datamanager',
             'org.openpsa.contactwidget',
-            'org.openpsa.relatedto',
         );
     }
 

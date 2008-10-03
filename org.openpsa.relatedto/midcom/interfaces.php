@@ -19,7 +19,6 @@ class org_openpsa_relatedto_interface extends midcom_baseclasses_components_inte
     function __construct()
     {
         parent::__construct();
-
         $this->_component = 'org.openpsa.relatedto';
     }
 
@@ -30,10 +29,10 @@ class org_openpsa_relatedto_interface extends midcom_baseclasses_components_inte
         define('ORG_OPENPSA_RELATEDTO_STATUS_NOTRELATED', 130);
 
         // This component uses AHAH, include the handler javascripts
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Prototype/prototype.js");
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/Pearified/JavaScript/Scriptaculous/scriptaculous.js");
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajaxutils.js");
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.relatedto/related_to.js");
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/Pearified/JavaScript/Prototype/prototype.js");
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/Pearified/JavaScript/Scriptaculous/scriptaculous.js");
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/org.openpsa.helpers/ajaxutils.js");
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/org.openpsa.relatedto/related_to.js");
 
         $_MIDCOM->add_link_head(array
             (

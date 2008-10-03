@@ -12,7 +12,7 @@
  *
  * @package org.openpsa.relatedto
  */
-class midcom_org_openpsa_relatedto extends __midcom_org_openpsa_relatedto
+class org_openpsa_relatedto_relatedto_dba extends __org_openpsa_relatedto_relatedto_dba
 {
     function __construct($id = null)
     {
@@ -89,16 +89,4 @@ class midcom_org_openpsa_relatedto extends __midcom_org_openpsa_relatedto
     }
 }
 
-/**
- * Wrap the midcom class to component namespace
- *
- * @package org.openpsa.relatedto
- */
-class org_openpsa_relatedto_relatedto extends midcom_org_openpsa_relatedto
-{
-    function __construct($identifier=NULL)
-    {
-        return parent::__construct($identifier);
-    }
-}
 ?>

@@ -31,7 +31,6 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
             'org.openpsa.mail',
             'org.openpsa.helpers',
             'org.openpsa.calendarwidget',
-            'org.openpsa.relatedto',
             'org.openpsa.notifications',
         );
 
