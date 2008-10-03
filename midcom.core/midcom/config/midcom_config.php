@@ -355,7 +355,22 @@ $GLOBALS['midcom_config_default']['cache_autoload_queue'] = Array('content', /*'
 
 // Content Cache
 $GLOBALS['midcom_config_default']['cache_module_content_name'] = $unique_host_name;
-$GLOBALS['midcom_config_default']['cache_module_content_backend'] = Array('driver' => 'flatfile');
+
+if (class_exists('Memcache'))
+{
+    $GLOBALS['midcom_config_default']['cache_module_content_backend'] = array('driver' => 'memcached');
+    $GLOBALS['midcom_config_default']['cache_module_memcache_backend'] = 'memcached';
+}
+else
+{
+    $GLOBALS['midcom_config_default']['cache_module_content_backend'] = array('driver' => 'flatfile');
+    $GLOBALS['midcom_config_default']['cache_module_memcache_backend'] = 'flatfile';
+}
+
+//Memory Caching Daemon
+$GLOBALS['midcom_config_default']['cache_module_memcache_backend_config'] = Array();
+$GLOBALS['midcom_config_default']['cache_module_memcache_data_groups'] = Array('ACL', 'PARENT'/*, 'jscss_merged'*/);
+
 // Defaults:
 // $GLOBALS['midcom_config_default']['cache_module_content_backend'] = Array ('directory' => 'content/', 'driver' => 'dba');
 // $GLOBALS['midcom_config_default']['cache_module_content_multilang'] = true;
@@ -371,11 +386,6 @@ $GLOBALS['midcom_config_default']['cache_module_nap_backend'] = Array(); /* Auto
 $GLOBALS['midcom_config_default']['cache_module_nap_metadata_cachesize'] = 75;
 // Defaults:
 // $GLOBALS['midcom_config_default']['cache_module_nap_backend'] =  Array ('directory' => 'nap/', 'driver' => 'dba');
-
-//Memory Caching Daemon
-$GLOBALS['midcom_config_default']['cache_module_memcache_backend'] = 'flatfile';
-$GLOBALS['midcom_config_default']['cache_module_memcache_backend_config'] = Array();
-$GLOBALS['midcom_config_default']['cache_module_memcache_data_groups'] = Array('ACL', 'PARENT', 'jscss_merged');
 
 // Generated class cache directory
 $GLOBALS['midcom_config_default']['cache_module_phpscripts_directory'] = 'phpscripts/';
