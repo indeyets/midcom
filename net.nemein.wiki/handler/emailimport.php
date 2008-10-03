@@ -277,7 +277,7 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
                 debug_add("Linked to person {$person->guid}");
             }
             //Find persons suspected relations and create links
-            $link_def = new org_openpsa_relatedto_relatedto();
+            $link_def = new org_openpsa_relatedto_relatedto_dba();
             $link_def->fromComponent = 'net.nemein.wiki';
             $link_def->fromGuid = $wikipage->guid;
             $link_def->fromClass = get_class($wikipage);

@@ -206,7 +206,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.invoices'), sprintf($this->_request_data['l10n']->get('marked invoice "%s" sent'), $this->_request_data['invoice']->invoiceNumber), 'ok');
 
             // Close "Send invoice" task
-            $qb = org_openpsa_relatedto_relatedto::new_query_builder();
+            $qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
             $qb->add_constraint('toGuid', '=', $this->_request_data['invoice']->guid);
             $qb->add_constraint('fromComponent', '=', 'org.openpsa.projects');
             $qb->add_constraint('fromClass', '=', 'org_openpsa_projects_task');

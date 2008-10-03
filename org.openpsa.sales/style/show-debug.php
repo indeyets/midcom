@@ -15,7 +15,7 @@ echo "</pre>\n";
 /*
 $_MIDCOM->componentloader->load('org.openpsa.calendar');
 $event = new org_openpsa_calendar_event(269);
-$link_def = new org_openpsa_relatedto_relatedto();
+$link_def = new org_openpsa_relatedto_relatedto_dba();
 $link_def->fromComponent = 'org.openpsa.calendar';
 $link_def->fromGuid = $event->guid;
 $link_def->fromClass = get_class($event);
@@ -32,7 +32,7 @@ echo "sp<pre>" . sprint_r($sp) . "</pre>\n";
 */
 
 /*
-$rel = new org_openpsa_relatedto_relatedto();
+$rel = new org_openpsa_relatedto_relatedto_dba();
 $rel->fromComponent = 'org.openpsa.wiki';
 $rel->toComponent = 'org.openpsa.sales';
 $rel->fromGuid = 'dummy1_' . time();

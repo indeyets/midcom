@@ -39,7 +39,7 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
         }
 
         $_MIDCOM->load_library('org.openpsa.relatedto');
-        if (!class_exists('org_openpsa_relatedto_relatedto'))
+        if (!class_exists('org_openpsa_relatedto_relatedto_dba'))
         {
             debug_add('relatedto library could not be loaded', MIDCOM_LOG_WARN);
             debug_pop();
@@ -113,7 +113,7 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
             // Avoid multiple queries of events links
             if (!isset($event_links[$event->guid]))
             {
-                $qb2 = org_openpsa_relatedto_relatedto::new_query_builder();
+                $qb2 = org_openpsa_relatedto_relatedto_dba::new_query_builder();
                 $qb2->add_constraint('fromGuid', '=', $event->guid);
                 $qb2->add_constraint('fromComponent', '=', 'org.openpsa.calendar');
                 $qb2->add_constraint('toComponent', '=', 'org.openpsa.projects');

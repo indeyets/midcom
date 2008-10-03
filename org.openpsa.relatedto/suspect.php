@@ -23,7 +23,7 @@ class org_openpsa_relatedto_suspect extends midcom_baseclasses_components_pureco
     /**
      * Query all installed components for objects related to given object
      *
-     * If optional $defaults (org_openpsa_relatedto_relatedto object) is given
+     * If optional $defaults (org_openpsa_relatedto_relatedto_dba object) is given
      * it's used to fill default values for link objects returned.
      *
      * NOTE: Only returns new suspected relations, confirmed/notrelated links are filtered out

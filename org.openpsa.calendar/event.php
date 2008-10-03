@@ -484,11 +484,11 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     /**
      * Returns a defaults template for relatedto objects
      *
-     * @return object org_openpsa_relatedto_relatedto
+     * @return object org_openpsa_relatedto_relatedto_dba
      */
     function _suspect_defaults()
     {
-        $link_def = new org_openpsa_relatedto_relatedto();
+        $link_def = new org_openpsa_relatedto_relatedto_dba();
         $link_def->fromComponent = 'org.openpsa.calendar';
         $link_def->fromGuid = $this->guid;
         $link_def->fromClass = get_class($this);
@@ -519,7 +519,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         }
 
         // Do no seek if we already have confirmed links
-        $qb = org_openpsa_relatedto_relatedto::new_query_builder();
+        $qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $qb->add_constraint('status', '=', ORG_OPENPSA_RELATEDTO_STATUS_CONFIRMED);
         $qb->add_constraint('fromGuid', '=',  $this->guid);
         $qb->add_constraint('fromComponent', '=',  'org.openpsa.calendar');
@@ -565,7 +565,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
      */
     function _suspects_classes_present()
     {
-        if (   !class_exists('org_openpsa_relatedto_relatedto')
+        if (   !class_exists('org_openpsa_relatedto_relatedto_dba')
             || !class_exists('org_openpsa_relatedto_suspect'))
         {
             return false;
@@ -589,7 +589,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         }
 
         // Do no seek if we already have confirmed links
-        $qb = org_openpsa_relatedto_relatedto::new_query_builder();
+        $qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $qb->add_constraint('status', '=', ORG_OPENPSA_RELATEDTO_STATUS_CONFIRMED);
         $qb->add_constraint('fromGuid', '=',  $this->guid);
         $qb->add_constraint('fromComponent', '=',  'org.openpsa.calendar');

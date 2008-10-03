@@ -291,7 +291,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             $seen_tasks[$resource->task] = true;
             $to_array = array('other_obj' => false, 'link' => false);
             $task = new org_openpsa_projects_task($resource->task);
-            $link = new org_openpsa_relatedto_relatedto();
+            $link = new org_openpsa_relatedto_relatedto_dba();
             org_openpsa_relatedto_suspect::defaults_helper($link, $defaults, $this->_component, $task);
             $to_array['other_obj'] = $task;
             $to_array['link'] = $link;
@@ -335,7 +335,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             $seen_tasks[$resource->task] = true;
             $to_array = array('other_obj' => false, 'link' => false);
             $task = new org_openpsa_projects_task($resource->task);
-            $link = new org_openpsa_relatedto_relatedto();
+            $link = new org_openpsa_relatedto_relatedto_dba();
             org_openpsa_relatedto_suspect::defaults_helper($link, $defaults, $this->_component, $task);
             $to_array['other_obj'] = $task;
             $to_array['link'] = $link;
@@ -405,7 +405,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         // Create a relatedtolink from hour_report to the object it was created from
         $link = org_openpsa_relatedto_handler::create_relatedto($hr, 'org.openpsa.projects', $from_object, $from_component);
         if (   !is_object($link)
-            || !is_a($link, 'org_openpsa_relatedto_relatedto'))
+            || !is_a($link, 'org_openpsa_relatedto_relatedto_dba'))
         {
             debug_add("failed to create link from hour_report #{$hr->id} to " . get_class($from_object) . " {$from_object->guid}, errstr: " . mgd_errstr(), MIDCOM_LOG_WARN);
         }

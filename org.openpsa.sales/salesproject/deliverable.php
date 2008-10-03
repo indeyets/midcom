@@ -572,7 +572,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
     function get_at_entries()
     {
         $at_entries = array();
-        $relation_qb = org_openpsa_relatedto_relatedto::new_query_builder();
+        $relation_qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $relation_qb->add_constraint('toGuid', '=', $this->guid);
         $relation_qb->add_constraint('fromComponent', '=', 'midcom.services.at');
         $relation_qb->add_constraint('fromClass', '=', 'midcom_services_at_entry');
@@ -591,7 +591,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
     function _probe_project()
     {
         $salesproject = new org_openpsa_sales_salesproject($this->salesproject);
-        $relation_qb = org_openpsa_relatedto_relatedto::new_query_builder();
+        $relation_qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $relation_qb->add_constraint('toGuid', '=', $salesproject->guid);
         $relation_qb->add_constraint('fromComponent', '=', 'org.openpsa.projects');
         $relation_qb->add_constraint('fromClass', '=', 'org_openpsa_projects_project');

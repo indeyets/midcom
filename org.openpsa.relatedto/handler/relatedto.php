@@ -431,7 +431,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
     function _show_render_line_wikipage_email_recipients($page)
     {
         $seen_emails = array();
-        $qb = org_openpsa_relatedto_relatedto::new_query_builder();
+        $qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $qb->add_constraint('fromGuid', '=', $page->guid);
         $qb->add_constraint('fromComponent', '=', 'net.nemein.wiki');
         $qb->add_constraint('toComponent', '=', 'org.openpsa.contacts');
@@ -903,7 +903,7 @@ EOF;
         {
             return false;
         }
-        $qb = org_openpsa_relatedto_relatedto::new_query_builder();
+        $qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $qb->add_constraint('toGuid', '=', $obj->guid);
         $qb->add_constraint('status', '<>', ORG_OPENPSA_RELATEDTO_STATUS_NOTRELATED);
         $links = $qb->execute();
@@ -940,7 +940,7 @@ EOF;
         {
             return false;
         }
-        $qb = org_openpsa_relatedto_relatedto::new_query_builder();
+        $qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $qb->add_constraint('fromGuid', '=', $obj->guid);
         $qb->add_constraint('status', '<>', ORG_OPENPSA_RELATEDTO_STATUS_NOTRELATED);
         $links = $qb->execute();
@@ -1006,7 +1006,7 @@ EOF;
         {
             case 'deny':
                 if (   !$this->_request_data['object']
-                    || !is_a($this->_request_data['object'], 'midcom_org_openpsa_relatedto'))
+                    || !is_a($this->_request_data['object'], 'org_openpsa_relatedto'))
                 {
                     $ajax->simpleReply(false, "method '{$this->_request_data['mode']}' requires guid of a link object as an argument");
                 }
@@ -1016,7 +1016,7 @@ EOF;
                 //this will exit()
             case 'confirm':
                 if (   !$this->_request_data['object']
-                    || !is_a($this->_request_data['object'], 'midcom_org_openpsa_relatedto'))
+                    || !is_a($this->_request_data['object'], 'org_openpsa_relatedto'))
                 {
                     $ajax->simpleReply(false, "method '{$this->_request_data['mode']}' requires guid of a link object as an argument");
                 }

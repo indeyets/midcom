@@ -101,7 +101,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
         $this->prev_action = $default;
         $this->next_action = $default;
 
-        $qb = org_openpsa_relatedto_relatedto::new_query_builder();
+        $qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $qb->add_constraint('toGuid', '=', $this->guid);
         //In theory I could limit just by the class but this is more robust in the long run
         $qb->begin_group('OR');

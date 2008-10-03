@@ -32,7 +32,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
             return false;
         }
 
-        $rel = new org_openpsa_relatedto_relatedto();
+        $rel = new org_openpsa_relatedto_relatedto_dba();
         $rel->fromClass = get_class($from_obj);
         $rel->toClass = get_class($to_obj);
         $rel->fromGuid = $from_obj->guid;
@@ -62,14 +62,14 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
         }
         foreach($_REQUEST['org_openpsa_relatedto'] as $rel_array)
         {
-            $rel = new org_openpsa_relatedto_relatedto();
+            $rel = new org_openpsa_relatedto_relatedto_dba();
             foreach($rel_array as $k => $v)
             {
                 $rel->$k = $v;
             }
             if ($id = $rel->check_db())
             {
-                $rel = new org_openpsa_relatedto_relatedto($id);
+                $rel = new org_openpsa_relatedto_relatedto_dba($id);
             }
             $ret[]  = $rel;
         }
@@ -124,7 +124,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
         $i = 0;
         foreach ($array as $rel)
         {
-            if (!is_a($rel, 'midcom_org_openpsa_relatedto')) //Matches also 'org_openpsa_relatedto_relatedto'
+            if (!is_a($rel, 'org_openpsa_relatedto')) //Matches also 'org_openpsa_relatedto_relatedto_dba'
             {
                 //Wrong type of object found in array, cruelly abort the whole procedure
                 return false;
@@ -274,7 +274,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
             return false;
         }
 
-        $related_to = new org_openpsa_relatedto_relatedto();
+        $related_to = new org_openpsa_relatedto_relatedto_dba();
         $related_to->toGuid = $bind_object->guid;
         $related_to->toClass = get_class($bind_object);
         $related_to->toComponent = $calling_component;
@@ -333,7 +333,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
                     $button_component = 'org.openpsa.calendar';
                     $related_to = org_openpsa_relatedto_handler::common_node_toolbar_buttons_sanitycheck($data, $button_component, $bind_object, $calling_component);
                     if (   !is_object($related_to)
-                        || !is_a($related_to, 'org_openpsa_relatedto_relatedto'))
+                        || !is_a($related_to, 'org_openpsa_relatedto_relatedto_dba'))
                     {
                         debug_add("sanitycheck returned '{$related_to}' (relatedto object expected), skipping", MIDCOM_LOG_WARN);
                         continue 2;
@@ -357,7 +357,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
                     $button_component = 'org.openpsa.projects';
                     $related_to = org_openpsa_relatedto_handler::common_node_toolbar_buttons_sanitycheck($data, $button_component, $bind_object, $calling_component);
                     if (   !is_object($related_to)
-                        || !is_a($related_to, 'org_openpsa_relatedto_relatedto'))
+                        || !is_a($related_to, 'org_openpsa_relatedto_relatedto_dba'))
                     {
                         debug_add("sanitycheck returned '{$related_to}' (relatedto object expected), skipping", MIDCOM_LOG_WARN);
                         continue 2;
@@ -387,7 +387,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
                     }
                     $related_to = org_openpsa_relatedto_handler::common_node_toolbar_buttons_sanitycheck($data, $button_component, $bind_object, $calling_component);
                     if (   !is_object($related_to)
-                        || !is_a($related_to, 'org_openpsa_relatedto_relatedto'))
+                        || !is_a($related_to, 'org_openpsa_relatedto_relatedto_dba'))
                     {
                         debug_add("sanitycheck returned '{$related_to}' (relatedto object expected), skipping", MIDCOM_LOG_WARN);
                         continue 2;
@@ -424,7 +424,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
                     $button_component = 'org.openpsa.documents';
                     $related_to = org_openpsa_relatedto_handler::common_node_toolbar_buttons_sanitycheck($data, $button_component, $bind_object, $calling_component);
                     if (   !is_object($related_to)
-                        || !is_a($related_to, 'org_openpsa_relatedto_relatedto'))
+                        || !is_a($related_to, 'org_openpsa_relatedto_relatedto_dba'))
                     {
                         debug_add("sanitycheck returned '{$related_to}' (relatedto object expected), skipping", MIDCOM_LOG_WARN);
                         continue 2;

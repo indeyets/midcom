@@ -311,7 +311,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         $this->_request_data['totals']['totals'] = 0;
         $this->_request_data['list_type'] = 'all';
 
-        $relation_qb = org_openpsa_relatedto_relatedto::new_query_builder();
+        $relation_qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $relation_qb->add_constraint('toGuid', '=', $this->_request_data['deliverable']->guid);
         $relation_qb->add_constraint('fromComponent', '=', 'org.openpsa.invoices');
         $relation_qb->add_constraint('fromClass', '=', 'org_openpsa_invoices_invoice');

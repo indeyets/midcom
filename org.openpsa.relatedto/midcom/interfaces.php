@@ -64,7 +64,7 @@ class org_openpsa_relatedto_interface extends midcom_baseclasses_components_inte
                 break;
         }
 
-        $qb = org_openpsa_relatedto_relatedto::new_query_builder();
+        $qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $qb->begin_group('OR');
             $qb->add_constraint('fromGuid', '=', $person2->guid);
             $qb->add_constraint('toGuid', '=', $person2->guid);
@@ -104,7 +104,7 @@ class org_openpsa_relatedto_interface extends midcom_baseclasses_components_inte
         // TODO: Check version for real and act accordingly
         if ($version_not_18 = true)
         {
-            $qb = org_openpsa_relatedto_relatedto::new_query_builder();
+            $qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
             $qb->begin_group('OR');
                 $qb->add_constraint('creator', '=', $person2->id);
                 $qb->add_constraint('revisor', '=', $person2->id);

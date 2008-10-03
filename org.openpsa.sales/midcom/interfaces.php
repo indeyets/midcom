@@ -177,7 +177,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
             $seen_tasks[$resource->salesproject] = true;
             $to_array = array('other_obj' => false, 'link' => false);
             $task = new org_openpsa_sales_salesproject($resource->salesproject);
-            $link = new org_openpsa_relatedto_relatedto();
+            $link = new org_openpsa_relatedto_relatedto_dba();
             org_openpsa_relatedto_suspect::defaults_helper($link, $defaults, $this->_component, $task);
             $to_array['other_obj'] = $task;
             $to_array['link'] = $link;
@@ -212,7 +212,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
                 $seen_sp[$resource->salesproject] = true;
                 $to_array = array('other_obj' => false, 'link' => false);
                 $sp = new org_openpsa_sales_salesproject($member->salesproject);
-                $link = new org_openpsa_relatedto_relatedto();
+                $link = new org_openpsa_relatedto_relatedto_dba();
                 org_openpsa_relatedto_suspect::defaults_helper($link, $defaults, $this->_component, $sp);
                 $to_array['other_obj'] = $sp;
                 $to_array['link'] = $link;
@@ -236,7 +236,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
                 }
                 $seen_sp[$sp->id] = true;
                 $to_array = array('other_obj' => false, 'link' => false);
-                $link = new org_openpsa_relatedto_relatedto();
+                $link = new org_openpsa_relatedto_relatedto_dba();
                 org_openpsa_relatedto_suspect::defaults_helper($link, $defaults, $this->_component, $sp);
                 $to_array['other_obj'] = $sp;
                 $to_array['link'] = $link;

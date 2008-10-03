@@ -114,7 +114,7 @@ class org_openpsa_reports_handler_sales_report extends org_openpsa_reports_handl
         $deliverables = $deliverable_qb->execute();
 
         // List relations of invoices to the deliverables we have
-        $relation_qb = org_openpsa_relatedto_relatedto::new_query_builder();
+        $relation_qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $relation_qb->add_constraint('fromComponent', '=', 'org.openpsa.invoices');
         $relation_qb->add_constraint('fromClass', '=', 'org_openpsa_invoices_invoice');
         $relation_qb->begin_group('OR');

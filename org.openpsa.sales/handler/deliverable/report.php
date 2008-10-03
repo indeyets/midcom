@@ -77,7 +77,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
         $deliverables = $deliverable_qb->execute();
 
         // List relations of invoices to the deliverables we have
-        $relation_qb = org_openpsa_relatedto_relatedto::new_query_builder();
+        $relation_qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $relation_qb->add_constraint('fromComponent', '=', 'org.openpsa.invoices');
         $relation_qb->add_constraint('fromClass', '=', 'org_openpsa_invoices_invoice');
         $relation_qb->begin_group('OR');
