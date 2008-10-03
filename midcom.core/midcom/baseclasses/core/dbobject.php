@@ -702,6 +702,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 if (call_user_func(array($type, 'undelete'), $guid))
                 {
                     $undeleted = true;
+                    // refresh
+                    $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
                 }
             }
             else
@@ -709,6 +711,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 if ($object->undelete($guid))
                 {
                     $undeleted = true;
+                    // refresh
+                    $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
                 }
             }
             if (!$undeleted)
@@ -717,8 +721,27 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 debug_add("Failed to undelete object with GUID {$guid} errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
                 debug_pop();
             }
+            else
+            {
+                $parent = $object->get_parent();
+                if (   $parent
+                    && $parent->guid)
+                {
+                    // Invalidate parent from cache so content caches have chance to react
+                    $_MIDCOM->cache->invalidate($parent->guid);
+                }
+                
+                // Invalidate Midgard pagecache if we touched style/page element
+                if (   function_exists('mgd_cache_invalidate')
+                    && (   is_a($object, 'midgard_element')
+                        || is_a($object, 'midgard_pageelement'))
+                    )
+                {
+                    mgd_cache_invalidate();
+                }
+            }
             $stats[$guid] = $undeleted;
-            
+
             // FIXME: We should only undelete parameters & attachments deleted inside some small window of the main objects delete
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Calling midcom_baseclasses_core_dbobject::undelete_parameters({$guid});");
@@ -729,6 +752,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             debug_pop();
             midcom_baseclasses_core_dbobject::undelete_attachments($guid);
 
+            //FIXME: are we sure we want to undelete all children here unconditionally, shouldn't it be left as UI decision ??
             // List all deleted children
             $children_types = $ref->get_child_objects($object, true);
             
