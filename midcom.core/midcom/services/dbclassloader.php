@@ -1238,12 +1238,13 @@ EOF;
             }
             
             if (   !empty($component)
-                && isset($_MIDCOM->componentloader->manifests[$component]))
+                && isset($_MIDCOM->componentloader->manifests[$component])
+                && !$_MIDCOM->componentloader->is_loaded($component))
             {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Loading component {$component} to get DBA class {$classname}.", MIDCOM_LOG_INFO);
+                //debug_push_class(__CLASS__, __FUNCTION__);
+                //debug_add("Loading component {$component} to get DBA class {$classname}.", MIDCOM_LOG_INFO);
                 $_MIDCOM->componentloader->load_graceful($component);
-                debug_pop();
+                //debug_pop();
                 return true;
             }
         }

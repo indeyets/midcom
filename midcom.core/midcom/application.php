@@ -492,25 +492,29 @@ class midcom_application
      */
     public function content()
     {
-
-
-
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         // Enter Context
-        debug_add("Entering Context 0 (old Context: {$this->_currentcontext})", MIDCOM_LOG_DEBUG);
         $oldcontext = $this->_currentcontext;
+        if ($oldcontext != 0)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Entering Context 0 (old Context: {$this->_currentcontext})", MIDCOM_LOG_DEBUG);
+            debug_pop();
+        }
         $this->_currentcontext = 0;
         $this->style->enter_context(0);
 
         $this->_output();
 
         // Leave Context
-        debug_add("Leaving Context 0 (new Context: {$oldcontext})", MIDCOM_LOG_DEBUG);
+        if ($oldcontext != 0)
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Leaving Context 0 (new Context: {$oldcontext})", MIDCOM_LOG_DEBUG);
+            debug_pop();
+        }
+
         $this->style->leave_context();
         $this->_currentcontext = $oldcontext;
-
-        debug_pop();
     }
 
     /**
@@ -1225,10 +1229,9 @@ class midcom_application
      */
     private function _output()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         ob_start();
 
-        debug_add("We are operating in Context {$this->_currentcontext}.", MIDCOM_LOG_DEBUG);
+        //debug_add("We are operating in Context {$this->_currentcontext}.", MIDCOM_LOG_DEBUG);
 
         if (!$this->skip_page_style)
         {
@@ -1237,7 +1240,9 @@ class midcom_application
 
         if ($this->get_context_data(MIDCOM_CONTEXT_REQUESTTYPE) != MIDCOM_REQUEST_CONTENT)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE], MIDCOM_LOG_ERROR);
+            debug_pop();
             $this->generate_error(MIDCOM_ERRCRIT, "Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE]);
         }
 
@@ -1263,8 +1268,6 @@ class midcom_application
         {
             ob_end_clean();
         }
-
-        debug_pop();
     }
 
     /* *************************************************************************
@@ -1630,10 +1633,10 @@ class midcom_application
         if (   !array_key_exists($component, $this->_context[$contextid][MIDCOM_CONTEXT_CUSTOMDATA])
             || !array_key_exists($key, $this->_context[$contextid][MIDCOM_CONTEXT_CUSTOMDATA][$component]))
         {
-            debug_push("midcom_application::get_custom_context_data");
-            $midcom_errstr = "Requested Key ID $key or the component $component is invalid.";
-            debug_add($midcom_errstr, MIDCOM_LOG_WARN);
-            debug_pop();
+            //debug_push("midcom_application::get_custom_context_data");
+            $midcom_errstr = "Requested Key ID {$key} for the component {$component} is invalid.";
+            //debug_add($midcom_errstr, MIDCOM_LOG_WARN);
+            //debug_pop();
             $result = false;
             return $result;
         }
@@ -1670,21 +1673,23 @@ class midcom_application
      */
     function substyle_append ($newsub)
     {
-        if ($this->_status < MIDCOM_STATUS_HANDLE) {
+        if ($this->_status < MIDCOM_STATUS_HANDLE) 
+        {
             $this->generate_error(MIDCOM_ERRCRIT, "Cannot do a substyle_append before the HANDLE phase.");
         }
-
-        debug_push("midcom_application::substyle_append");
 
         $current_style = $this->_context[$this->_currentcontext][MIDCOM_CONTEXT_SUBSTYLE];
 
         if (strlen($current_style) > 0)
-            $newsub = $current_style . "/" . $newsub;
+        {
+            $newsub = $current_style . '/' . $newsub;
+        }
 
-        debug_add("Updating Component Context Substyle from $current_style to $newsub", MIDCOM_LOG_DEBUG);
+        //debug_push_class(__CLASS__, __FUNCTION__);
+        //debug_add("Updating Component Context Substyle from '{$current_style}' to '{$newsub}'", MIDCOM_LOG_DEBUG);
+        //debug_pop();
 
         $this->_context[$this->_currentcontext][MIDCOM_CONTEXT_SUBSTYLE] = $newsub;
-        debug_pop();
     }
 
     /**
@@ -2270,13 +2275,11 @@ class midcom_application
             }
         }
 
-        debug_push("midcom_application::serve_attachment");
-
         // Sanity check expires
         if (   !is_int($expires)
             || $expires < -1)
         {
-            $this->generate_error(MIDCOM_ERRCRIT, "\$expires has to be a positive integer or zero or -1.");
+            $this->generate_error(MIDCOM_ERRCRIT, "\$expires has to be a positive integer or zero or -1, is now {$expires}.");
             // This will exit()
         }
 
@@ -2295,18 +2298,18 @@ class midcom_application
             && $this->cache->content->_check_not_modified($last_modified, $etag))
         {
 
-            debug_add('_check_not_modified returned true, finishing up here then');
+            //debug_add('_check_not_modified returned true, finishing up here then');
             if (!headers_sent())
             {
-                debug_add('For the weirdest reason headers have not been sent by _check_not_modified, send them again');
+                //debug_add('For the weirdest reason headers have not been sent by _check_not_modified, send them again');
                 $this->cache->content->cache_control_headers();
                 // Doublemakesure these are present
                 $this->header('HTTP/1.0 304 Not Modified', 304);
                 $this->header("ETag: {$etag}");
             }
             while(@ob_end_flush());
-            debug_add('headers sent, exit()ing so nothing has a chance the mess things up anymore');
-            debug_pop();
+            //debug_add('headers sent, exit()ing so nothing has a chance the mess things up anymore');
+            //debug_pop();
             exit();
         }
 

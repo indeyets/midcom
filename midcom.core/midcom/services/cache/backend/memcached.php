@@ -56,7 +56,7 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
      * @access private
      * @var Memcache
      */
-    var $_cache = null;
+    static $memcache = null;
     
     /**
      * Whether to abort the request if connection to memcached fails
@@ -95,36 +95,39 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
         $this->_auto_serialize = false;
 
         // Open the persistant connection.
-        $this->_cache = new Memcache();
-        if (! @$this->_cache->pconnect($this->_host, $this->_port))
+        if (is_null(self::$memcache))
         {
-            // Memcache connection failed
-            if ($this->_abort_on_fail)
+            self::$memcache = new Memcache();
+            if (! @self::$memcache->pconnect($this->_host, $this->_port))
             {
-                // Abort the request
-                /**
-                 * We don't have the superglobal initialized yet
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "memcache handler: Failed to connect to {$this->_host}:{$this->_port}.");
-                 */
-                header('HTTP/1.0 503 Service Unavailable');
-                header('Retry-After: 60');
-                header('Cache-Control: no-store, no-cache, must-revalidate');
-                header('Cache-Control: post-check=0, pre-check=0', false);
-                header('Pragma: no-cache');
-                die("memcache handler: Failed to connect to {$this->_host}:{$this->_port}.");
-                // This will exit.
+                // Memcache connection failed
+                if ($this->_abort_on_fail)
+                {
+                    // Abort the request
+                    /**
+                     * We don't have the superglobal initialized yet
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "memcache handler: Failed to connect to {$this->_host}:{$this->_port}.");
+                     */
+                    header('HTTP/1.0 503 Service Unavailable');
+                    header('Retry-After: 60');
+                    header('Cache-Control: no-store, no-cache, must-revalidate');
+                    header('Cache-Control: post-check=0, pre-check=0', false);
+                    header('Pragma: no-cache');
+                    die("memcache handler: Failed to connect to {$this->_host}:{$this->_port}.");
+                    // This will exit.
+                }
+                
+                // Otherwise we just skip caching
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("memcache handler: Failed to connect to {$this->_host}:{$this->_port}. Serving this request without cache.", MIDCOM_LOG_ERROR);
+                debug_pop();
+                $this->_memcache_operational = false;
             }
-            
-            // Otherwise we just skip caching
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("memcache handler: Failed to connect to {$this->_host}:{$this->_port}. Serving this request without cache.", MIDCOM_LOG_ERROR);
-            debug_pop();
-            $this->_memcache_operational = false;
         }
 
         /*
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r('Current MemCache stats:', $this->_cache->getStats());
+        debug_print_r('Current MemCache stats:', self::$memcache->getStats());
         debug_pop();
         */
     }
@@ -150,10 +153,10 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
         $key = "{$this->_name}-{$key}";
         /* TODO: Remove when done
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Returning \$this->_cache->get('{$key}')");
+        debug_add("Returning \self::$memcache->get('{$key}')");
         debug_pop();
         */
-        return (@$this->_cache->get($key));
+        return (@self::$memcache->get($key));
     }
 
     function _put($key, $data, $timeout=false)
@@ -168,18 +171,18 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
         {
             /* TODO: Remove when done
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Returning \$this->_cache->set('{$key}', \$data, 0, {$timeout})");
+            debug_add("Returning \self::$memcache->set('{$key}', \$data, 0, {$timeout})");
             debug_pop();
             */
-            @$this->_cache->set($key, $data, 0, $timeout);
+            @self::$memcache->set($key, $data, 0, $timeout);
             return;
         }
         /* TODO: Remove when done
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Returning \$this->_cache->set('{$key}', \$data)");
+        debug_add("Returning \self::$memcache->set('{$key}', \$data)");
         debug_pop();
         */
-        @$this->_cache->set($key, $data);
+        @self::$memcache->set($key, $data);
     }
 
     function _remove($key)
@@ -192,10 +195,10 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
         $key = "{$this->_name}-{$key}";
         /* TODO: Remove when done
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Returning \$this->_cache->delete('{$key}')");
+        debug_add("Returning \self::$memcache->delete('{$key}')");
         debug_pop();
         */
-        @$this->_cache->delete($key);
+        @self::$memcache->delete($key);
     }
 
     function _remove_all()
@@ -206,9 +209,9 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
         }
         
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Calling \$this->_cache->flush()");
-        $stat = @$this->_cache->flush();
-        debug_add("\$this->_cache->flush() returnder with " . (int)$stat);
+        debug_add("Calling \self::$memcache->flush()");
+        $stat = @self::$memcache->flush();
+        debug_add("\self::$memcache->flush() returnder with " . (int)$stat);
         debug_pop();
     }
 

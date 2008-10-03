@@ -64,11 +64,10 @@ class midcom_service__sessioning
 
         if ($started)
         {
-      $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "MidCOM Sessioning has already been started, it must not be started twice. Aborting");
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "MidCOM Sessioning has already been started, it must not be started twice. Aborting");
         }
 
         $started = true;
-
     }
 
     function _initialize($unconditional_start = false)
@@ -119,10 +118,10 @@ class midcom_service__sessioning
         /* Cache disabling made conditional based on domain/key existence */
 
         // Check for session data and load or initialize it, if necessary
-        if (! array_key_exists("midcom_session_data", $_SESSION))
+        if (! array_key_exists('midcom_session_data', $_SESSION))
         {
-            $_SESSION["midcom_session_data"] = Array();
-            $_SESSION["midcom_session_data"]["midcom.service.sessioning"]["startup"] = serialize(time());
+            $_SESSION['midcom_session_data'] = Array();
+            $_SESSION['midcom_session_data']['midcom.service.sessioning']['startup'] = serialize(time());
         }
         $initialized = true;
         return true;
@@ -137,25 +136,22 @@ class midcom_service__sessioning
      * @param mixed $key        The key to query.
      * @return boolean                Indicating availability.
      */
-    function exists ($domain, $key)
+    function exists($domain, $key)
     {
         if (!$this->_initialize())
         {
             return false;
         }
-        if (! array_key_exists($domain, $_SESSION["midcom_session_data"]))
+        if (!isset($_SESSION['midcom_session_data'][$domain]))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Request for the domain [{$domain}] failed, because the domain doesn't exist.");
+            debug_add("Request for the domain '{$domain}' failed, because the domain doesn't exist.");
             debug_pop();
             return false;
         }
 
-        if (! array_key_exists($key, $_SESSION["midcom_session_data"][$domain]))
+        if (!isset($_SESSION['midcom_session_data'][$domain][$key]))
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Request for the key [{$key}] in the domain [{$domain}] failed, because the key doesn't exist.");
-            debug_pop();
             return false;
         }
 
@@ -202,6 +198,9 @@ class midcom_service__sessioning
         }
         else
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Request for the key '{$key}' in the domain '{$domain}' failed, because the key doesn't exist.");
+            debug_pop();
             return null;
         }
     }

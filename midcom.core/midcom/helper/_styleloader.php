@@ -60,13 +60,8 @@
  *
  * @package midcom
  */
-class midcom_helper__styleloader {
-
-    /**
-     * @ignore
-     */
-    var $_debug_prefix;
-
+class midcom_helper__styleloader 
+{
     /**
      * Current style scope
      *
@@ -151,8 +146,6 @@ class midcom_helper__styleloader {
      */
     function __construct()
     {
-        $this->_debug_prefix = "midcom_helper__styleloader::";
-
         $this->_context = array ();
         $this->_scope = array ();
         $this->_topic = false;
@@ -207,8 +200,6 @@ class midcom_helper__styleloader {
      */
     function get_style_id_from_path($path, $rootstyle = 0)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         $path = preg_replace("/^\/(.*)/", "$1", $path); // leading "/"
         $path_array = explode('/', $path);
 
@@ -525,7 +516,7 @@ class midcom_helper__styleloader {
         if ($this->_context === array ())
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Trying to show '$path' but there is no context set", MIDCOM_LOG_INFO);
+            debug_add("Trying to show '{$path}' but there is no context set", MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
@@ -639,7 +630,7 @@ class midcom_helper__styleloader {
         else
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("The element {$path} could not be found.", MIDCOM_LOG_INFO);
+            debug_add("The element '{$path}' could not be found.", MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
@@ -788,8 +779,9 @@ class midcom_helper__styleloader {
      */
     function prepend_styledir ($dirname)
     {
-        if (!file_exists(MIDCOM_ROOT . $dirname)) {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,"Styledirectory $dirname does not exist!");
+        if (!file_exists(MIDCOM_ROOT . $dirname))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Style directory {$dirname} does not exist.");
         }
         $this->_styledirs_prepend[] = $dirname;
         return true;

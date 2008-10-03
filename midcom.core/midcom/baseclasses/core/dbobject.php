@@ -1560,11 +1560,11 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         {
             if (! $_MIDCOM->auth->can_do('midgard:read', $object))
             {
-                debug_push_class($object, __FUNCTION__);
-                debug_add("Failed to load object, read privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
-                    MIDCOM_LOG_ERROR);
+                //debug_push_class($object, __FUNCTION__);
+                //debug_add("Failed to load object, read privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
+                //    MIDCOM_LOG_ERROR);
                 midcom_baseclasses_core_dbobject::_clear_object($object);
-                debug_pop();
+                //debug_pop();
                 return false;
             }
 
@@ -1579,9 +1579,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
         else
         {
-            debug_push_class($object, __FUNCTION__);
-            debug_add("Failed to load the record identified by path {$path}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
-            debug_pop();
+            //debug_push_class($object, __FUNCTION__);
+            //debug_add("Failed to load the record identified by path {$path}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_INFO);
+            //debug_pop();
             return false;
         }
     }

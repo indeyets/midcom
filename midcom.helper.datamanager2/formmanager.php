@@ -174,10 +174,12 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
 
     function _load_type_qfrules($fieldname)
     {
+        static $initialized = array();
+
         $config = $this->_schema->fields[$fieldname];
         $filename = MIDCOM_ROOT . "/midcom/helper/datamanager2/QuickForm_rules/{$config['type']}.php";
         $classname = "midcom_helper_datamanager2_qfrule_{$config['type']}_manager";
-        if (class_exists($classname))
+        if (!isset($initialized[$classname]))
         {
             // We have already initialized rules for this type
             return;
@@ -187,9 +189,10 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             // no file for this type found, skip silently
             return;
         }
-        include_once($filename);
+        include($filename);
         $manager = new $classname();
         $manager->register_rules($this->form);
+        $initialized[$classname] = true;
     }
 
     /**

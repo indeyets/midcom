@@ -398,10 +398,12 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             case 'private':
                 break;
             default:
-                debug_add("Cache headers strategy '{$this->_headers_strategy}' is not valid, try 'no-cache', 'revalidate', 'public' or 'private'", MIDCOM_LOG_ERROR);
+                $message = "Cache headers strategy '{$this->_headers_strategy}' is not valid, try 'no-cache', 'revalidate', 'public' or 'private'";
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add($message, MIDCOM_LOG_ERROR);
+                debug_pop();
                 $this->no_cache();
                 /* Copied from midcom_application::generate_error, because we do not yet have midcom fully loaded */
-                $message = "Cache headers strategy '{$this->_headers_strategy}' is not valid, try 'no-cache', 'revalidate', 'public' or 'private'";
                 $title = "Server Error";
                 $code = 500;
                 header('HTTP/1.0 500 Server Error');
@@ -540,11 +542,12 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
                 header("X-MidCOM-meta-cache: EXPIRED {$content_id}", false);
                 $this->_meta_cache->close();            
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Current page is in cache, but has expired.", MIDCOM_LOG_INFO);
+                debug_add('Current page is in cache, but has expired on ' . gmdate('c', $data['expires']), MIDCOM_LOG_INFO);
                 debug_pop();
                 return;
             }
         }
+
         $this->_meta_cache->close();
         header("X-MidCOM-meta-cache: HIT {$content_id}", false);
 
@@ -558,10 +561,11 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
                 header("X-MidCOM-data-cache: MISS {$content_id}");
                 $this->_data_cache->close();
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Current page is in not in the data cache, (possible ghost read).", MIDCOM_LOG_WARN);
+                debug_add("Current page is in not in the data cache, possible ghost read.", MIDCOM_LOG_WARN);
                 debug_pop();
                 return;
             }
+
             header("X-MidCOM-data-cache: HIT {$content_id}");
             $content = $this->_data_cache->get($content_id);
             $this->_data_cache->close();
@@ -783,12 +787,12 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      */
     function invalidate($guid)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         $this->_meta_cache->open();
 
         if (!$this->_meta_cache->exists($guid))
         {
-            debug_add("no entry for {$guid} in meta cache");
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("No entry for {$guid} in meta cache, ignoring invalidation request.");
             debug_pop();
             return;
         }
@@ -799,17 +803,20 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         {
             if ($this->_meta_cache->exists($content_id))
             {
-                debug_add("Removing key {$content_id} from meta cache");
+                //debug_push_class(__CLASS__, __FUNCTION__);
+                //debug_add("Removing key {$content_id} from meta cache");
+                //debug_pop()
                 $this->_meta_cache->remove($content_id);
             }
 
             if ($this->_data_cache->exists($content_id))
             {
-                debug_add("Removing key {$content_id} from data cache");
+                //debug_push_class(__CLASS__, __FUNCTION__);
+                //debug_add("Removing key {$content_id} from data cache");
+                //debug_pop();
                 $this->_data_cache->remove($content_id);
             }
         }
-        debug_pop();
     }
 
     /**
@@ -1085,56 +1092,50 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
     function check_dl_hit(&$context, &$dl_config)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
+        //debug_push_class(__CLASS__, __FUNCTION__);
         if (   $this->_no_cache
             || $this->_live_mode)
         {
-            debug_add('no_cache/live mode, not checking any further');
-            debug_pop();
             return false;
         }
         $dl_request_id = 'DL' . $this->generate_request_identifier($context, $dl_config);
-        debug_add("Checking if we have '{$dl_request_id}' in \$this->_meta_cache");
+        //debug_add("Checking if we have '{$dl_request_id}' in \$this->_meta_cache");
         $this->_meta_cache->open();
         if ($this->_meta_cache->exists($dl_request_id))
         {
             $dl_content_id = $this->_meta_cache->get($dl_request_id);
             $this->_meta_cache->close();
             $this->_data_cache->open();
-            debug_add("Checking if we have '{$dl_content_id}' in \$this->_data_cache");
+            //debug_add("Checking if we have '{$dl_content_id}' in \$this->_data_cache");
             if ($this->_data_cache->exists($dl_content_id))
             {
-                debug_add('Cached content found, serving it');
+                //debug_add('Cached content found, serving it');
                 echo $this->_data_cache->get($dl_content_id);
                 $this->_data_cache->close();
                 debug_pop();
                 return true;
             }
-            debug_add("We received content_id ({$dl_content_id}), but did not find corresponding data in cache", MIDCOM_LOG_INFO);
+            //debug_add("We received content_id ({$dl_content_id}), but did not find corresponding data in cache", MIDCOM_LOG_INFO);
             $this->_data_cache->close();
         }
         else
         {
             $this->_meta_cache->close();
         }
-        debug_pop();
+        //debug_pop();
         return false;
     }
 
     function store_dl_content(&$context, &$dl_config, &$dl_cache_data)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
+        //debug_push_class(__CLASS__, __FUNCTION__);
         if (   $this->_no_cache
             || $this->_live_mode)
         {
-            debug_add('no_cache/live mode, not storing data');
-            debug_pop();
             return;
         }
         if ($this->_uncached)
         {
-            debug_add('Uncached mode, not storing data');
-            debug_pop();
             return;
         }
         $dl_request_id = 'DL' . $this->generate_request_identifier($context, $dl_config);
@@ -1146,7 +1147,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         $this->_meta_cache->open(true);
         $this->_data_cache->open(true);
         $this->_meta_cache->put($dl_request_id, $dl_content_id);
-        debug_add("Writing cache entry for '{$dl_content_id}' in request '{$dl_request_id}'");
+        //debug_add("Writing cache entry for '{$dl_content_id}' in request '{$dl_request_id}'");
         $this->_data_cache->put($dl_content_id, $dl_cache_data);
         // Cache where the object have been
         $this->store_context_guid_map($context, $dl_content_id, $dl_request_id);
@@ -1154,7 +1155,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         $this->_meta_cache->close();
         $this->_data_cache->close();
         unset($dl_cache_data, $dl_content_id, $dl_request_id);
-        debug_pop();
+        //debug_pop();
     }
 
     /**
@@ -1251,10 +1252,10 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             }
 
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Setting last modified to the timestamp {$time} which is: " . gmdate("D, d M Y H:i:s", $time) . ' GMT');
+            debug_add("Setting last modified to " . gmdate('c', $time));
             debug_pop();
 
-            $header = "Last-Modified: " . gmdate("D, d M Y H:i:s", $time) . ' GMT';
+            $header = "Last-Modified: " . gmdate('D, d M Y H:i:s', $time) . ' GMT';
             header ($header);
             $this->_sent_headers[] = $header;
             $this->_last_modified = $time;
@@ -1269,7 +1270,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
     function cache_control_headers()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
+        //debug_push_class(__CLASS__, __FUNCTION__);
         // Add Expiration and Cache Control headers
         $cache_control = false;
         $pragma = false;
@@ -1330,23 +1331,23 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $header = "Cache-Control: {$cache_control}";
             header ($header);
             $this->_sent_headers[] = $header;
-            debug_add("Added Header '{$header}'");
+            //debug_add("Added Header '{$header}'");
         }
         if ($pragma !== false)
         {
             $header = "Pragma: {$pragma}";
             header ($header);
             $this->_sent_headers[] = $header;
-            debug_add("Added Header '{$header}'");
+            //debug_add("Added Header '{$header}'");
         }
         if ($expires !== false)
         {
             $header = "Expires: " . gmdate("D, d M Y H:i:s", $expires) . " GMT";
             header ($header);
             $this->_sent_headers[] = $header;
-            debug_add("Added Header '{$header}'");
+            //debug_add("Added Header '{$header}'");
         }
-        debug_pop();
+        //debug_pop();
     }
 }
 
