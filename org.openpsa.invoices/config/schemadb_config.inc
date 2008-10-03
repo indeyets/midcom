@@ -10,13 +10,13 @@
         (
             'title'   => 'default due days',
             'type'      => 'number',
-	    'storage' => array
-	    (
-	        'location'      => 'configuration',
-		'domain' => 'org.openpsa.invoices',
-		'name'    => 'default_due_days',
-	     ),
-	    'widget' => 'text',
+            'storage' => array
+            (
+                'location'      => 'configuration',
+                'domain' => 'org.openpsa.invoices',
+                'name'    => 'default_due_days',
+             ),
+            'widget' => 'text',
             'start_fieldset' => array
             (
                 'title' => 'invoice',
@@ -26,13 +26,13 @@
         (
             'title'   => 'vat percentages',
             'type'      => 'text',
-	    'storage' => array
-	    (
-	        'location'      => 'configuration',
-		'domain' => 'org.openpsa.invoices',
-		'name'    => 'vat_percentages',
-	     ),
-	    'widget' => 'text',
+            'storage' => array
+            (
+                'location'      => 'configuration',
+                'domain' => 'org.openpsa.invoices',
+                'name'    => 'vat_percentages',
+             ),
+            'widget' => 'text',
         ),
         'invoice_sender' => array
         (
@@ -43,12 +43,12 @@
                  'require_corresponding_option' => false,
                  'options' => array(),
             ),
-	    'storage' => array
-	    (
-	        'location'      => 'configuration',
-		'domain' => 'org.openpsa.invoices',
-		'name'    => 'invoice_sender',
-	     ),
+            'storage' => array
+            (
+                'location'      => 'configuration',
+                'domain' => 'org.openpsa.invoices',
+                'name'    => 'invoice_sender',
+             ),
             'widget' => 'universalchooser',
             'widget_config' => array
             (
@@ -83,13 +83,13 @@
         (
             'title'   => 'default hourly price',
             'type'      => 'number',
-	    'storage' => array
-	    (
-	        'location'      => 'configuration',
-		'domain' => 'org.openpsa.invoices',
-		'name'    => 'default_hourly_price',
-	     ),
-	    'widget' => 'text',
+            'storage' => array
+            (
+                'location'      => 'configuration',
+                'domain' => 'org.openpsa.invoices',
+                'name'    => 'default_hourly_price',
+             ),
+            'widget' => 'text',
             'end_fieldset' => '',
         ),        
         
@@ -98,13 +98,13 @@
         (
             'title' => 'schema database',
             'type' => 'text',
-	    'storage' => array
-	    (
-	        'location' => 'configuration',
-		'domain' => 'org.openpsa.invoices',
-		'name' => 'schemadb',
-	     ),
-	    'widget' => 'text',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.openpsa.invoices',
+                'name' => 'schemadb',
+             ),
+            'widget' => 'text',
             'start_fieldset' => array
             ( 
                 'title' => 'advanced schema and data settings',
