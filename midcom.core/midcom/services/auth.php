@@ -487,11 +487,9 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      */
     function initialize()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         $this->sessionmgr = new midcom_services_auth_sessionmgr($this);
         
-        // Midgard 1.9 compatibility: ensure that Midgard's sitegroup ID is always int
+        // Midgard 8.09beta compatibility: ensure that Midgard's sitegroup ID is always int
         if (!is_integer($_MIDGARD['sitegroup']))
         {
             $_MIDGARD['sitegroup'] = (int) $_MIDGARD['sitegroup'];
@@ -505,8 +503,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             // No new login detected, so we check if there is a running session.
             $this->_check_for_active_login_session();
         }
-
-        debug_pop();
     }
 
     /**
@@ -820,9 +816,9 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
         if (!isset($cached_privileges[$privilege_key]))
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Cache {$privilege_key} miss, fetching privileges for {$object_guid}");
-            debug_pop();
+            //debug_push_class(__CLASS__, __FUNCTION__);
+            //debug_add("Cache {$privilege_key} miss, fetching privileges for {$object_guid}");
+            //debug_pop();
             $full_privileges = $this->get_privileges_byguid($object_guid, $object_class, $for_user);
             foreach ($full_privileges as $priv => $value)
             {
@@ -1122,9 +1118,9 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         }
         else
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Cache miss for {$cache_id}");
-            debug_pop();
+            //debug_push_class(__CLASS__, __FUNCTION__);
+            //debug_add("Cache miss for {$cache_id}");
+            //debug_pop();
             if (   is_object($user)
                 && method_exists($user, 'get_privileges')
                 && method_exists($user, 'get_per_class_privileges'))

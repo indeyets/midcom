@@ -242,10 +242,10 @@ class midcom_services__i18n_l10n {
         
         if (! file_exists($filename))
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("{$filename} does not exist, creating an empty language array therefore.");
+            //debug_push_class(__CLASS__, __FUNCTION__);
+            //debug_add("{$filename} does not exist, creating an empty language array therefore.");
             $this->_stringdb[$lang] = Array();
-            debug_pop();
+            //debug_pop();
             return;
         }
         

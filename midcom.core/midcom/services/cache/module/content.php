@@ -1251,9 +1251,9 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
                 $time = time();
             }
 
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Setting last modified to " . gmdate('c', $time));
-            debug_pop();
+            //debug_push_class(__CLASS__, __FUNCTION__);
+            //debug_add("Setting last modified to " . gmdate('c', $time));
+            //debug_pop();
 
             $header = "Last-Modified: " . gmdate('D, d M Y H:i:s', $time) . ' GMT';
             header ($header);

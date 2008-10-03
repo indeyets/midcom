@@ -550,9 +550,9 @@ class midcom_services_i18n
         {
             $this->_current_language = $this->_cookie_data['language'];
             $this->_current_charset = $this->_cookie_data['charset'];
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Set current language to {$this->_current_language} with charset {$this->_current_charset} (source: cookie)", MIDCOM_LOG_INFO);
-            debug_pop();
+            //debug_push_class(__CLASS__, __FUNCTION__);
+            //debug_add("Set current language to {$this->_current_language} with charset {$this->_current_charset} (source: cookie)", MIDCOM_LOG_INFO);
+            //debug_pop();
             return;
         }
 
@@ -561,9 +561,9 @@ class midcom_services_i18n
         if ($content_language)
         {
             $this->_current_language = $content_language;
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Set current language to {$this->_current_language} (source: Midgard host language)", MIDCOM_LOG_INFO);
-            debug_pop();
+            //debug_push_class(__CLASS__, __FUNCTION__);
+            //debug_add("Set current language to {$this->_current_language} (source: Midgard host language)", MIDCOM_LOG_INFO);
+            //debug_pop();
             return;
         }
 
@@ -579,9 +579,9 @@ class midcom_services_i18n
                 }
             }
         }
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Set current language to {$this->_current_language} with charset {$this->_current_charset} (Source: HTTP)", MIDCOM_LOG_INFO);
-        debug_pop();
+        //debug_push_class(__CLASS__, __FUNCTION__);
+        //debug_add("Set current language to {$this->_current_language} with charset {$this->_current_charset} (Source: HTTP)", MIDCOM_LOG_INFO);
+        //debug_pop();
     }
 
     /**

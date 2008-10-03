@@ -708,7 +708,6 @@ class midcom_application
      */
     public function finish()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         $this->_status = MIDCOM_STATUS_CLEANUP;
 
         $this->componentloader->process_pending_notifies();
@@ -730,11 +729,8 @@ class midcom_application
 
         $this->cache->shutdown();
 
-        debug_add('Flushing...');
         // This is here to avoid trouble with end-of-processing segfaults. Will block AFAIK
         flush();
-        debug_pop();
-
         debug_add("End of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
     }
 
@@ -770,9 +766,8 @@ class midcom_application
      *
      * @access private
      */
-    private function _process() {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
+    private function _process() 
+    {
         $success = false;
         $substyle = "";
 
@@ -784,17 +779,19 @@ class midcom_application
                 {
                     case 'substyle':
                         $substyle = $value;
+                        debug_push_class(__CLASS__, __FUNCTION__);
                         debug_add("Substyle '$substyle' selected", MIDCOM_LOG_INFO);
+                        debug_pop();
                         break;
 
                     case 'serveattachmentguid':
                     case 'serveattachment':
                         if ($this->_parser->argc > 1)
                         {
+                            debug_push_class(__CLASS__, __FUNCTION__);
                             debug_add('Too many arguments remaining for serve_attachment.', MIDCOM_LOG_ERROR);
+                            debug_pop();
                         }
-
-                        debug_add("Trying to serve Attachment with GUID {$value}", MIDCOM_LOG_INFO);
 
                         $attachment = new midcom_baseclasses_database_attachment($value);
                         if (   !$attachment
@@ -838,6 +835,11 @@ class midcom_application
                         else if ($value == 'nocache')
                         {
                             $this->cache->content->no_cache();
+                        }
+                        else
+                        {
+                            $this->generate_error(MIDCOM_ERRNOTFOUND, "Invalid cache request URL.");
+                            // This will exit;
                         }
                         break;
 
@@ -903,9 +905,13 @@ class midcom_application
                         // This will exit;
 
                     case 'log':
-                        if ($this->_parser->argc > 1) {
+                        if ($this->_parser->argc > 1) 
+                        {
+                            debug_push_class(__CLASS__, __FUNCTION__);                        
                             debug_add("Too many arguments remaining for debuglog.", MIDCOM_LOG_ERROR);
+                            debug_pop();
                             $this->generate_error(MIDCOM_ERRNOTFOUND, "Failed to access debug log: Too many arguments for debuglog");
+                            // This will exit
                         }
                         $this->_showdebuglog($value);
                         break;
@@ -938,8 +944,10 @@ class midcom_application
             if (   !is_object($object)
                 || !$object->guid )
             {
-                debug_add("Root node missing.", MIDCOM_LOG_ERROR);
-                $this->generate_error(MIDCOM_ERRCRIT, "Root node missing.");
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add('Root node missing.', MIDCOM_LOG_ERROR);
+                debug_pop();
+                $this->generate_error(MIDCOM_ERRCRIT, 'Root node missing.');
             }
 
             if (is_a($object, 'midgard_attachment'))
@@ -950,8 +958,9 @@ class midcom_application
             if (!$path)
             {
                 $path = 'midcom.core.nullcomponent';
-                debug_add("No component defined for this node.", MIDCOM_LOG_ERROR);
-                debug_print_r("Root node:",$object,MIDCOM_LOG_DEBUG);
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("No component defined for this node, using 'midcom.core.nullcomponent' instead.", MIDCOM_LOG_ERROR);
+                debug_pop();
             }
 
             $this->_set_context_data($path,MIDCOM_CONTEXT_COMPONENT);
@@ -1008,11 +1017,13 @@ class midcom_application
         if (   $this->_currentcontext == 0
             && $this->skip_page_style == true)
         {
-            debug_add('We are in skip_page_style mode and context 0 is active. Executing the output handler and exiting afterwards.');
+            //debug_push_class(__CLASS__, __FUNCTION__);
+            //debug_add('We are in skip_page_style mode and context 0 is active. Executing the output handler and exiting afterwards.');
+            //debug_pop();
             $this->_status = MIDCOM_STATUS_CONTENT;
 
             // Enter Context
-            debug_add("Entering Context 0 (old Context: $this->_currentcontext)", MIDCOM_LOG_DEBUG);
+            //debug_add("Entering Context 0 (old Context: $this->_currentcontext)", MIDCOM_LOG_DEBUG);
             $oldcontext = $this->_currentcontext;
             $this->_currentcontext = 0;
             $this->style->enter_context(0);
@@ -1020,7 +1031,7 @@ class midcom_application
             $this->_output();
 
             // Leave Context
-            debug_add("Leaving Context 0 (new Context: $oldcontext)", MIDCOM_LOG_DEBUG);
+            //debug_add("Leaving Context 0 (new Context: $oldcontext)", MIDCOM_LOG_DEBUG);
             $this->style->leave_context();
             $this->_currentcontext = $oldcontext;
 
@@ -1029,9 +1040,10 @@ class midcom_application
         }
         else
         {
-            debug_add("_process finished successfully", MIDCOM_LOG_DEBUG);
+            //debug_push_class(__CLASS__, __FUNCTION__);
+            //debug_add("_process finished successfully", MIDCOM_LOG_DEBUG);
             $this->_status = MIDCOM_STATUS_CONTENT;
-            debug_pop();
+            //debug_pop();
         }
     }
 
@@ -1137,13 +1149,12 @@ class midcom_application
      */
     private function _can_handle($object)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-
         $path = $this->get_context_data(MIDCOM_CONTEXT_COMPONENT);
 
         // Request type safety check
         if ($this->_context[$this->_currentcontext][MIDCOM_CONTEXT_REQUESTTYPE] != MIDCOM_REQUEST_CONTENT)
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE], MIDCOM_LOG_ERROR);
             debug_pop();
             $this->generate_error(MIDCOM_ERRCRIT, "Unkown Request Type encountered:" . $this->_context[$this->current_context][MIDCOM_CONTEXT_REQUESTTYPE]);
@@ -1163,6 +1174,7 @@ class midcom_application
         $config = ($config_obj == false) ? array() : $config_obj->get_all();
         if (! $component_interface->configure($config, $this->_currentcontext))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add ("Component Configuration failed: " . $component_interface->errstr($this->_currentcontext), MIDCOM_LOG_ERROR);
             debug_pop();
             $this->generate_error(MIDCOM_ERRCRIT, "Component Configuration failed: " . $component_interface->errstr($this->_currentcontext));
@@ -1171,13 +1183,14 @@ class midcom_application
         // Make can_handle check
         if (!$component_interface->can_handle($object, $this->_parser->argc, $this->_parser->argv, $this->_currentcontext))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Component {$path} in {$object->name} declared unable to handle request.", MIDCOM_LOG_INFO);
             debug_pop();
             return false;
         }
 
-        debug_add("Component {$path} in {$object->name} will handle request.", MIDCOM_LOG_INFO);
-        debug_pop();
+        //debug_add("Component {$path} in {$object->name} will handle request.", MIDCOM_LOG_INFO);
+        //debug_pop();
         return true;
     }
 
