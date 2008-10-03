@@ -68,7 +68,7 @@ function midcom_helper_datamanager__selectlist_allgroups_recursor($up, $spacer, 
                 $name = "ID {$group->id}";
             }
             $data[$group->guid] = $spacer . $group->name;
-            midcom_helper_datamanager__selectlist_allgroups_recursor($groups->id,
+            midcom_helper_datamanager__selectlist_allgroups_recursor($group->id,
                                                                      $spacer . "&nbsp;&nbsp;&nbsp;&nbsp;",
                                                                      $data,
                                                                      $sitegroup);

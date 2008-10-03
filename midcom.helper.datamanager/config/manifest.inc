@@ -1,6 +1,6 @@
 'name' => 'midcom.helper.datamanager',
 'purecode' => true,
-'version' => '2.6.0beta1',
+'version' => '2.6.0beta3',
 'state' => 'beta',
 'privileges' => array(),
 'class_definitions' => array(),
