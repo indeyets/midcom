@@ -7,10 +7,10 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-require('magpierss/rss_fetch.inc');
-require('magpierss/rss_parse.inc');
-require('magpierss/rss_cache.inc');
-require('magpierss/rss_utils.inc');
+require_once('magpierss/rss_fetch.inc');
+require_once('magpierss/rss_parse.inc');
+require_once('magpierss/rss_cache.inc');
+require_once('magpierss/rss_utils.inc');
 
 /**
  * RSS and Atom feed fetching class. Caches the fetched items as articles
