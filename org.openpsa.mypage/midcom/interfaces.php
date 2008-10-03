@@ -23,7 +23,6 @@ class org_openpsa_mypage_interface extends midcom_baseclasses_components_interfa
         $this->_autoload_libraries = array(
             'org.openpsa.core',
             'org.openpsa.helpers',
-            'midcom.helper.datamanager',
             'midcom.helper.datamanager2',
             'org.openpsa.contactwidget',
             'org.routamc.positioning',
