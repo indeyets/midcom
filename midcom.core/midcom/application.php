@@ -597,7 +597,7 @@ class midcom_application
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        debug_add("Dynamic load of URL {$url}", MIDCOM_LOG_INFO);
+        debug_add("Dynamic load of URL {$url}", MIDCOM_LOG_DEBUG);
 
         if (substr($url, -5) == '.html')
         {
@@ -672,7 +672,7 @@ class midcom_application
         if ($type == MIDCOM_REQUEST_CONTENT)
         {
             $this->style->enter_context($context);
-            debug_add("Entering Context $context (old Context: $oldcontext)", MIDCOM_LOG_INFO);
+            debug_add("Entering Context $context (old Context: $oldcontext)", MIDCOM_LOG_DEBUG);
         }
 
         $this->_output();
@@ -681,7 +681,7 @@ class midcom_application
         if ($type == MIDCOM_REQUEST_CONTENT)
         {
             $this->style->leave_context();
-            debug_add("Leaving Context $context (new Context: $oldcontext)", MIDCOM_LOG_INFO);
+            debug_add("Leaving Context $context (new Context: $oldcontext)", MIDCOM_LOG_DEBUG);
         }
 
         $dl_cache_data = ob_get_contents();
@@ -731,7 +731,7 @@ class midcom_application
 
         // This is here to avoid trouble with end-of-processing segfaults. Will block AFAIK
         flush();
-        debug_add("End of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
+        debug_add("End of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_DEBUG);
     }
 
 
@@ -780,7 +780,7 @@ class midcom_application
                     case 'substyle':
                         $substyle = $value;
                         debug_push_class(__CLASS__, __FUNCTION__);
-                        debug_add("Substyle '$substyle' selected", MIDCOM_LOG_INFO);
+                        debug_add("Substyle '$substyle' selected", MIDCOM_LOG_DEBUG);
                         debug_pop();
                         break;
 
@@ -1931,7 +1931,7 @@ class midcom_application
             debug_pop();
             return false;
         } else {
-            debug_add("Setting active context to $id.", MIDCOM_LOG_INFO);
+            debug_add("Setting active context to $id.", MIDCOM_LOG_DEBUG);
             $this->_currentcontext = $id;
             debug_pop();
             return true;
@@ -2323,7 +2323,7 @@ class midcom_application
             while(@ob_end_flush());
             //debug_add('headers sent, exit()ing so nothing has a chance the mess things up anymore');
             debug_pop();
-            debug_add("End of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
+            debug_add("End of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_DEBUG);
             exit();
         }
 
@@ -2409,7 +2409,7 @@ class midcom_application
         $attachment->close();
         //debug_add('file sent, exit()ing so nothing has a chance the mess things up anymore');
         debug_pop();
-        debug_add("End of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_INFO);
+        debug_add("End of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_DEBUG);
         exit();
     }
 
