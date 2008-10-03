@@ -946,6 +946,11 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         }
 
         $cache_data = ob_get_contents();
+        /**
+         * WARNING: 
+         *   From here on anything added to content is not included in cached
+         *   data, so make sure nothing content-wise is added after this 
+         */
 
         // Generate E-Tag header.
         if (strlen($cache_data) == 0)
@@ -967,6 +972,19 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         $this->register_sent_header($header);
         $this->_complete_sent_headers($cache_data);
 
+        // If-Modified-Since / If-None-Match checks, if no match, flush the output.
+        if (! $this->_check_not_modified($this->_last_modified, $etag))
+        {
+            ob_end_flush();
+            $this->_obrunning = false;
+        }
+
+        /**
+         * WARNING: 
+         *   Stuff below here is executed *after* we have flushed output,
+         *   so here we should only write out our caches but do nothing else
+         */
+
         if ($this->_uncached)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
@@ -982,14 +1000,6 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
             $content_id = 'C-' . $etag;
             $this->write_meta_cache($content_id, $etag);
             $this->_data_cache->put($content_id, $cache_data);
-        }
-
-        // Finish caching.
-        // If-Modified-Since / If-None-Match checks, if no match, flush the output.
-        if (! $this->_check_not_modified($this->_last_modified, $etag))
-        {
-            ob_end_flush();
-            $this->_obrunning = false;
         }
     }
 
