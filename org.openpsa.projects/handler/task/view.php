@@ -172,7 +172,7 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
             'confirmed' => array(),
             'suspected' => array(),
         );
-        $qb = org_openpsa_relatedto_relatedto_dba_dba::new_query_builder();
+        $qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $qb->add_constraint('toGuid', '=', $task->guid);
         $qb->add_constraint('fromComponent', '=', 'org.openpsa.calendar');
         $qb->add_constraint('status', '<>', ORG_OPENPSA_RELATEDTO_STATUS_NOTRELATED);
