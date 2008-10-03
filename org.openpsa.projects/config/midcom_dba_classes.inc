@@ -2,7 +2,7 @@ array(
     'table' => 'org_openpsa_task',
     'old_class_name' => null,
     'new_class_name' => 'org_openpsa_task',
-    'midcom_class_name' => 'midcom_org_openpsa_task'
+    'midcom_class_name' => 'org_openpsa_projects_task'
 ),
 array(
     'table' => 'org_openpsa_task_resource',

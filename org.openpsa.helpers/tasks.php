@@ -28,7 +28,7 @@ function org_openpsa_helpers_projects($add_all = false, $display_tasks = false, 
             $GLOBALS['org_openpsa_helpers_tasks']['all'] = 'all';
         }
 
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task');
+        $qb = org_openpsa_projects_task::new_query_builder();
         /*
          * Display those that are active or finished less than two weeks ago
          * FIXME: Swithc to new task architecture
@@ -54,7 +54,7 @@ function org_openpsa_helpers_projects($add_all = false, $display_tasks = false, 
         $qb->end_group();
 
         //Execute
-        $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $ret = $qb->execute();
         if (   is_array($ret)
             && count($ret)>0)
         {

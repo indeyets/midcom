@@ -177,7 +177,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         }
 
         // Tasks user is manager of that are pending acceptance
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task');
+        $qb = org_openpsa_projects_task::new_query_builder();
         $qb->add_constraint('status', '=', ORG_OPENPSA_TASKSTATUS_PROPOSED);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
         $qb->add_constraint('manager', '=', $_MIDGARD['user']);
@@ -186,7 +186,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         {
             $qb->add_constraint('orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
         }
-        $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $ret = $qb->execute();
         if (   is_array($ret)
             && count($ret) > 0)
         {
@@ -201,7 +201,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         }
 
         // Tasks user is manager of that are have been declined by all resources
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task');
+        $qb = org_openpsa_projects_task::new_query_builder();
         $qb->add_constraint('status', '=', ORG_OPENPSA_TASKSTATUS_DECLINED);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
         $qb->add_constraint('manager', '=', $_MIDGARD['user']);
@@ -210,7 +210,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         {
             $qb->add_constraint('orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
         }
-        $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $ret = $qb->execute();
         if (   is_array($ret)
             && count($ret) > 0)
         {
@@ -225,7 +225,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         }
 
         // Tasks user is manager of that are pending approval
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task');
+        $qb = org_openpsa_projects_task::new_query_builder();
         $qb->add_constraint('status', '=', ORG_OPENPSA_TASKSTATUS_COMPLETED);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
         $qb->add_constraint('manager', '=', $_MIDGARD['user']);
@@ -249,7 +249,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         }
 
         // Tasks user is manager of that are on hold
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task');
+        $qb = org_openpsa_projects_task::new_query_builder();
         $qb->add_constraint('status', '=', ORG_OPENPSA_TASKSTATUS_ONHOLD);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
         $qb->add_constraint('manager', '=', $_MIDGARD['user']);
@@ -258,7 +258,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         {
             $qb->add_constraint('orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
         }
-        $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $ret = $qb->execute();
         if (   is_array($ret)
             && count($ret) > 0)
         {

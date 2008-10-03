@@ -17,7 +17,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
     /**
      * The task to operate on
      *
-     * @var org_openpsa_projects_task_dba
+     * @var org_openpsa_projects_task
      * @access private
      */
     var $_task = null;

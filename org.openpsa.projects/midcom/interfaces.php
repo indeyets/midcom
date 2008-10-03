@@ -349,7 +349,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
     function create_hour_report(&$task, $person_id, &$from_object, $from_component)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        if (!is_a($task, 'midcom_org_openpsa_task'))
+        if (!is_a($task, 'org_openpsa_projects_task'))
         {
             debug_add('given task is not really a task', MIDCOM_LOG_ERROR);
             debug_pop();

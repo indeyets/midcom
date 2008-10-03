@@ -11,7 +11,7 @@
  *
  * @package org.openpsa.projects
  */
-class midcom_org_openpsa_task extends __midcom_org_openpsa_task
+class org_openpsa_projects_task extends __org_openpsa_projects_task
 {
     var $contacts = array(); //Shorthand access for contact members
     var $resources = array(); // --''--
@@ -1355,17 +1355,5 @@ class midcom_org_openpsa_task extends __midcom_org_openpsa_task
         return $resource_array;
     }
 
-}
-
-/**
- * Another wrap level to get to component namespace
- * @package org.openpsa.projects
- */
-class org_openpsa_projects_task extends midcom_org_openpsa_task
-{
-    function __construct($identifier = NULL)
-    {
-        return parent::__construct($identifier);
-    }
 }
 ?>

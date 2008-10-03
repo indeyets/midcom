@@ -19,7 +19,7 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
     /**
      * The task to operate on
      *
-     * @var org_openpsa_projects_task_dba
+     * @var org_openpsa_projects_task
      * @access private
      */
     var $_task = null;

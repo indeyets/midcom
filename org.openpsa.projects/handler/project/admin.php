@@ -19,7 +19,7 @@ class org_openpsa_projects_handler_project_admin extends midcom_baseclasses_comp
     /**
      * The project to operate on
      *
-     * @var org_openpsa_projects_task_dba
+     * @var org_openpsa_projects_task
      * @access private
      */
     var $_project = null;
