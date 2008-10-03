@@ -15,30 +15,40 @@ define('ORG_OPENPSA_CORE_VERSION_NAME'  , 'It is all relative');
 
 /**
  * Returns current version of OpenPsa. Three different modes are supported:
- * 1: Return version number (version name)
- * 2: Return version number
- * 3: Return version name
- * @param int $mode Mode for output
- * @return string OpenPsa version string
+ *  version number (version name)
+ *  version number
+ *  version name
  */
-function org_openpsa_core_version($mode = 1)
+class org_openpsa_core_version
 {
-    switch ($mode)
+    /**
+     * Returns version number
+     *  
+     * @return string OpenPsa version string
+     */
+    function get_version_number()
     {
-        case 'number':
-        case 2:
             return ORG_OPENPSA_CORE_VERSION_NUMBER;
-            break;
-        case 'name':
-        case 3:
+    }
+
+    /**
+     * Returns version name
+     *  
+     * @return string OpenPsa version string
+     */
+    function get_version_name()
+    {
             return ORG_OPENPSA_CORE_VERSION_NAME;
-            break;
-        default:
-        case 'both':
-        case 1:
-            return ORG_OPENPSA_CORE_VERSION_NUMBER . ' (' . ORG_OPENPSA_CORE_VERSION_NAME . ')';
-            break;
+    }
+
+    /**
+     * Returns version number and name
+     *  
+     * @return string OpenPsa version string
+     */
+    function get_version_both()
+    {
+      return ORG_OPENPSA_CORE_VERSION_NUMBER . ' (' . ORG_OPENPSA_CORE_VERSION_NAME . ')';
     }
 }
-
 ?>
