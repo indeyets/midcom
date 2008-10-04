@@ -7,7 +7,7 @@
  *
  * @package org.openpsa.queries
  */
-class midcom_org_openpsa_query extends __midcom_org_openpsa_query
+class org_openpsa_queries_query extends __org_openpsa_queries_query
 {
     function __construct($id = null)
     {
@@ -44,17 +44,6 @@ class midcom_org_openpsa_query extends __midcom_org_openpsa_query
             return;
         }
         $this->purge();
-    }
-}
-
-/**
- * @package org.openpsa.queries
- */
-class org_openpsa_queries_query extends midcom_org_openpsa_query
-{
-    function __construct($id = null)
-    {
-        return parent::__construct($id);
     }
 }
 
