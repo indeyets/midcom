@@ -10,27 +10,12 @@
 /**
  *
  * @package org.openpsa.projects
- *
  */
-class midcom_org_openpsa_deliverable extends __midcom_org_openpsa_deliverable
+class org_openpsa_projects_deliverable extends __org_openpsa_projects_deliverable
 {
     function __construct($id = null)
     {
         return parent::__construct($id);
-    }
-}
-
-/**
- *
- * @package org.openpsa.projects
- *
- */
-class org_openpsa_projects_deliverable extends midcom_org_openpsa_deliverable
-{
-
-    function __construct($identifier=NULL)
-    {
-        return parent::__construct($identifier);
     }
 }
 
