@@ -320,7 +320,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
                         case 'org_openpsa_calendar_event':
                             midcom_show_style('weekreview-day-item-event');
                             break;
-                        case 'midcom_org_openpsa_hour_report':
+                        case 'org_openpsa_projects_hour_report':
                             midcom_show_style('weekreview-day-item-hour-report');
 
                             if ($object->invoiceable)

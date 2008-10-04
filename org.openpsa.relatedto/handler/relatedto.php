@@ -258,7 +258,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             case is_a($this->_request_data['link_other_obj'], 'midcom_org_openpsa_salesproject'):
                 $this->_show_render_line_salesproject();
                 break;
-            case is_a($this->_request_data['link_other_obj'], 'midcom_org_openpsa_hour_report'):
+            case is_a($this->_request_data['link_other_obj'], 'org_openpsa_projects_hour_report'):
                 $this->_show_render_line_hour_report();
                 break;
             case is_a($this->_request_data['link_other_obj'], 'org_openpsa_invoices_invoice'):

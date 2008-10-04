@@ -14,7 +14,7 @@ array(
     'table' => 'org_openpsa_hour_report',
     'old_class_name' => null,
     'new_class_name' => 'org_openpsa_hour_report',
-    'midcom_class_name' => 'midcom_org_openpsa_hour_report'
+    'midcom_class_name' => 'org_openpsa_projects_hour_report'
 ),
 array(
     'table' => 'org_openpsa_expense',

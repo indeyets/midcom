@@ -11,9 +11,9 @@
  *
  * @package org.openpsa.projects
  */
-class midcom_org_openpsa_hour_report extends __midcom_org_openpsa_hour_report
+class org_openpsa_projects_hour_report extends __org_openpsa_projects_hour_report
 {
-    // Simple readonly boolean property on whethe this is invoiced
+    // Simple readonly boolean property on whether this is invoiced
     var $is_invoiced = false;
     var $is_approved = false;
 
@@ -38,7 +38,7 @@ class midcom_org_openpsa_hour_report extends __midcom_org_openpsa_hour_report
     function _prepare_save()
     {
         //Make sure our hours property is a float
-        $this->hours = (float)$this->hours;
+        $this->hours = (float) $this->hours;
         $this->hours = round($this->hours, 2);
 
         //Make sure we have creator
@@ -157,15 +157,4 @@ class midcom_org_openpsa_hour_report extends __midcom_org_openpsa_hour_report
     }
 }
 
-/**
- * Another wrap level to get to component namespace
- * @package org.openpsa.projects
- */
-class org_openpsa_projects_hour_report extends midcom_org_openpsa_hour_report
-{
-    function __construct($identifier=NULL)
-    {
-        return parent::__construct($identifier);
-    }
-}
 ?>
