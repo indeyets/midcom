@@ -31,10 +31,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             'deliverables/plugin_base.php',
             'deliverables/plugin_noop.php',
             */
-            'task.php',
             'expense.php',
-            'resource.php',
-            'task_status_midcomdba.php',
             'workflow_handler.php',
         );
         $this->_autoload_libraries = Array
