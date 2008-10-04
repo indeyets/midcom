@@ -8,7 +8,7 @@ array(
     'table' => 'org_openpsa_task_resource',
     'old_class_name' => null,
     'new_class_name' => 'org_openpsa_task_resource',
-    'midcom_class_name' => 'midcom_org_openpsa_task_resource'
+    'midcom_class_name' => 'org_openpsa_projects_task_resource'
 ),
 array(
     'table' => 'org_openpsa_hour_report',
@@ -32,5 +32,5 @@ array(
     'table' => 'org_openpsa_task_status',
     'old_class_name' => null,
     'new_class_name' => 'org_openpsa_task_status',
-    'midcom_class_name' => 'midcom_org_openpsa_task_status'
+    'midcom_class_name' => 'org_openpsa_projects_task_status'
 ),

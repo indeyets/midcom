@@ -11,7 +11,7 @@
  *
  * @package org.openpsa.projects
  */
-class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resource
+class org_openpsa_projects_task_resource extends __org_openpsa_projects_task_resource
 {
     var $_personobject;
 
@@ -173,19 +173,6 @@ class midcom_org_openpsa_task_resource extends __midcom_org_openpsa_task_resourc
             $task_array[$task->$key] = $task->get_label();
         }
         return $task_array;
-    }
-}
-
-/**
- * Another wrap level to get to component namespace
- * 
- * @package org.openpsa.projects
- */
-class org_openpsa_projects_task_resource extends midcom_org_openpsa_task_resource
-{
-    function __construct($identifier = NULL)
-    {
-        return parent::__construct($identifier);
     }
 }
 ?>

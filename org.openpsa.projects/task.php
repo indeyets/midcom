@@ -281,7 +281,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
             $prefix = '';
         }
 
-        $qb = new midgard_query_builder('org_openpsa_task_resource');
+        $qb = org_openpsa_projects_task_resource::new_query_builder();
         $qb->add_constraint('task', '=', $this->id);
         $qb->add_constraint('orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_PROJECTPROSPECT);
         $ret = @$qb->execute();
@@ -457,7 +457,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
     {
         //Find the correct eventmember by person ID
         //$qb = org_openpsa_task_resource::new_query_builder('org_openpsa_task_resource');
-        $qb = new midgard_query_builder('org_openpsa_task_resource');
+        $qb = org_openpsa_projects_task_resource::new_query_builder();
         $qb->add_constraint('task', '=', $this->id);
         $qb->add_constraint('person', '=', $id);
         if (!empty($type))

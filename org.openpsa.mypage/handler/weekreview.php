@@ -330,7 +330,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
                             $day_hours_total += $object->hours;
 
                             break;
-                        case 'midcom_org_openpsa_task_status':
+                        case 'org_openpsa_projects_task_status':
                             midcom_show_style('weekreview-day-item-task-status');
                             break;
                         case 'org_routamc_positioning_log_dba':

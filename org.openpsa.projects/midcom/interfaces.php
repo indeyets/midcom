@@ -245,7 +245,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             debug_pop();
             return;
         }
-        $qb = new midgard_query_builder('org_openpsa_task_resource');
+        $qb = org_openpsa_projects_task_resource::new_query_builder();
         //Target task starts or ends inside given events window or starts before and ends after
         $qb->begin_group('OR');
             $qb->begin_group('AND');
@@ -303,13 +303,13 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
     }
 
     /**
-     * Used by org_openpsa_relatedto_find_suspects to in case the givcen object is a person
+     * Used by org_openpsa_relatedto_find_suspects to in case the given object is a person
      */
     function _org_openpsa_relatedto_find_suspects_person(&$object, &$defaults, &$links_array)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         //List all projects and tasks given person is involved with
-        $qb = new midgard_query_builder('org_openpsa_task_resource');
+        $qb = org_openpsa_projects_task_resource::new_query_builder();
         $qb->add_constraint('person', '=', $object->id);
         /* This could reduce clutter somewhat with a minor risk of missing a link
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);

@@ -11,7 +11,7 @@
  * MidCOM wrapped access to the MgdSchema class, keep logic here
  * @package org.openpsa.projects
  */
-class midcom_org_openpsa_task_status extends __midcom_org_openpsa_task_status
+class org_openpsa_projects_task_status extends __org_openpsa_projects_task_status
 {
     function __construct($id = null)
     {
@@ -48,7 +48,7 @@ class midcom_org_openpsa_task_status extends __midcom_org_openpsa_task_status
         }
 
         //Check for duplicate(s) (for some reason at times the automagic actions in task object try to create duplicate statuses)
-        $qb = new midgard_query_builder('org_openpsa_task_status');
+        $qb = org_openpsa_projects_task_status::new_query_builder();
         $qb->add_constraint('task', '=', 'task');
         $qb->add_constraint('type', '=', 'type');
         $qb->add_constraint('timestamp', '=', 'timestamp');
@@ -104,20 +104,6 @@ class midcom_org_openpsa_task_status extends __midcom_org_openpsa_task_status
     {
         return gmmktime(date('G'), date('i'), date('s'), date('n'), date('j'), date('Y'));
     }
-}
-
-/**
- * Another wrap level to get to component namespace
- * @package org.openpsa.projects
- */
-class org_openpsa_projects_task_status extends midcom_org_openpsa_task_status
-{
-
-    function __construct($identifier=NULL)
-    {
-        return parent::__construct($identifier);
-    }
-
 }
 
 ?>
