@@ -11,7 +11,7 @@
  *
  * @package org.openpsa.projects
  */
-class midcom_org_openpsa_expense extends __midcom_org_openpsa_expense
+class org_openpsa_projects_expense extends __org_openpsa_projects_expense
 {
     function __construct($id = null)
     {
@@ -95,15 +95,4 @@ class midcom_org_openpsa_expense extends __midcom_org_openpsa_expense
     }
 }
 
-/**
- * Another wrap level to get to component namespace
- * @package org.openpsa.projects
- */
-class org_openpsa_projects_expense extends midcom_org_openpsa_expense
-{
-    function __construct($identifier=NULL)
-    {
-        return parent::__construct($identifier);
-    }
-}
 ?>
