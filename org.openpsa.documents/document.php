@@ -7,26 +7,14 @@
  */
 
 /**
- * @package org.openpsa.documents
- * @todo This is a hotfix.
- */
-class midcom_org_openpsa_document extends __midcom_org_openpsa_document
-{
-    function __construct($id = null)
-    {
-        return parent::__construct($id);
-    }
-}
-
-/**
- * Wrapper for org_openpsa_document
+ * DBA class for org_openpsa_document
  *
  * Implements parameter and attachment methods for DM compatibility
  *
  * @package org.openpsa.documents
  *
  */
-class org_openpsa_documents_document extends midcom_org_openpsa_document
+class org_openpsa_documents_document extends __org_openpsa_documents_document
 {
     function __construct($identifier=NULL)
     {
