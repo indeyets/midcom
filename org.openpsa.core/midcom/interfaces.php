@@ -28,11 +28,11 @@ class org_openpsa_core_interface extends midcom_baseclasses_components_interface
     function _on_initialize()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-	
-	$this->define_constants();
-	$this->set_acl_options();
-	$this->set_workgroup_filter();
-	$return = $this->load_my_company();
+        
+        $this->define_constants();
+        $this->set_acl_options();
+        $this->set_workgroup_filter();
+        $return = $this->load_my_company();
 
         debug_pop();
         return $return;
@@ -72,7 +72,7 @@ class org_openpsa_core_interface extends midcom_baseclasses_components_interface
             }
             $GLOBALS['org.openpsa.core:owner_organization_obj'] = $my_company_object;
         }
-	return true;
+        return true;
     }
 
     /**
