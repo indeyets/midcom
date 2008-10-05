@@ -79,7 +79,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         $this->_request_data['tasks'] = Array();
 
         $structure = new org_openpsa_core_structure();
-        $this->_request_data['contacts_url'] = $structure->get_node_url('org.openpsa.contacts');
+        $this->_request_data['contacts_url'] = $structure->get_node_full_url('org.openpsa.contacts');
         $this->_request_data['sales_node'] = midcom_helper_find_node_by_component('org.openpsa.sales');
         $this->_request_data['prefix'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 

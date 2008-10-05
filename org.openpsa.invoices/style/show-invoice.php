@@ -2,7 +2,8 @@
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['invoice_dm'];
 
-$projects_node = midcom_helper_find_node_by_component('org.openpsa.projects');
+$structure = new org_openpsa_core_structure();
+$projects_url = $structure->get_node_full_url('org.openpsa.projects');
 ?>
 <div class="main org_openpsa_invoices_invoice">
     <?php
@@ -24,7 +25,7 @@ if (   array_key_exists('sorted_reports', $data)
         $hours =& $task_data['reports'];
         $task = new org_openpsa_projects_task($task_id);
         // TODO: Link etc
-        echo "<h3><a href=\"{$projects_node[MIDCOM_NAV_FULLURL]}task/{$task->guid}/\">{$task->title}</a></h3>\n";
+        echo "<h3><a href=\"{$projects_url}task/{$task->guid}/\">{$task->title}</a></h3>\n";
         echo "<table>\n";
         echo "    <tbody>\n";
         foreach ($hours as $hour_report)

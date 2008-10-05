@@ -321,14 +321,15 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
                     )
                 );
             }
+            $structure = new org_openpsa_core_structure();
 
-            $invoices_node = midcom_helper_find_node_by_component('org.openpsa.invoices');
-            if (!empty($invoices_node))
+            $invoices_url = $structure->get_node_full_url('org.openpsa.invoices');
+            if ($invoices_url)
             {
                 //TODO: Check for privileges somehow
                 $this->_view_toolbar->add_item(
                     Array(
-                        MIDCOM_TOOLBAR_URL => $invoices_node[MIDCOM_NAV_FULLURL] . "list/customer/all/{$this->_request_data['group']->guid}",
+                        MIDCOM_TOOLBAR_URL => $invoices_url . "list/customer/all/{$this->_request_data['group']->guid}",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('customers invoices'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-open.png',

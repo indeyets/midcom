@@ -7,9 +7,9 @@
     </td>
     <td>
         <?php
-        if ($data['projects_node'])
+        if ($data['projects_url'])
         {
-            echo "<a href=\"{$data['projects_node'][MIDCOM_NAV_FULLURL]}task/{$data['task']->guid}/\">{$data['task']->title}</a>\n";
+            echo "<a href=\"{$data['projects_url']}task/{$data['task']->guid}/\">{$data['task']->title}</a>\n";
         }
         else
         {

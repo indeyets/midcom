@@ -162,8 +162,9 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
     function _show_uninvoiced($handler_id, &$data)
     {
 
-        // Locate Contacts node for linking
-        $this->_request_data['projects_node'] = midcom_helper_find_node_by_component('org.openpsa.projects');
+        $structure = new org_openpsa_core_structure();
+
+        $this->_request_data['projects_url'] = $structure->get_node_full_url('org.openpsa.projects');
 
         midcom_show_style('show-projects-header');
         foreach ($this->_request_data['hour_reports'] as $customer => $tasks)

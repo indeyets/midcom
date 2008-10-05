@@ -58,10 +58,10 @@ class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
     var $link_contacts = true;
 
     /**
-     * Default NAP org.openpsa.contacts node to be used for linking to groups. Will be autoprobed if not supplied.
+     * Default NAP org.openpsa.contacts URL to be used for linking to groups. Will be autoprobed if not supplied.
      * @var Array
      */
-    var $contacts_node;
+    var $contacts_url;
 
     /**
      * DBE service ID of a user
@@ -88,9 +88,9 @@ class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
 
         parent::__construct();
 
-        // Hack to make $contacts_node static
-        static $contacts_node_local;
-        $this->contacts_node =& $contacts_node_local;
+        // Hack to make $contacts_url static
+        static $contacts_url_local;
+        $this->contacts_url =& $contacts_url_local;
 
         // Read properties of provided person object/DM array
         // TODO: Handle groups as well
@@ -187,18 +187,19 @@ class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
         }
         elseif ($this->link_contacts)
         {
-            if (!$this->contacts_node)
+            if (!$this->contacts_url)
             {
-                $this->contacts_node = midcom_helper_find_node_by_component('org.openpsa.contacts');
+                $structure = new org_openpsa_core_structure();
+                $this->contacts_url = $structure->get_node_full_url('org.openpsa.contacts');
             }
 
-            if (!$this->contacts_node)
+            if (!$this->contacts_url)
             {
                 return null;
             }
             else
             {
-                $url = "{$this->contacts_node[MIDCOM_NAV_FULLURL]}person/{$this->contact_details['guid']}/";
+                $url = "{$this->contacts_url}person/{$this->contact_details['guid']}/";
                 return $url;
             }
         }
@@ -364,18 +365,19 @@ class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
 
                     if ($this->link_contacts)
                     {
-                        if (!$this->contacts_node)
+                        if (!$this->contacts_url)
                         {
-                            $this->contacts_node = midcom_helper_find_node_by_component('org.openpsa.contacts');
+                            $structure = new org_openpsa_core_structure();
+                            $this->contacts_url = $structure->get_node_full_url('org.openpsa.contacts');
                         }
 
-                        if (!$this->contacts_node)
+                        if (!$this->contacts_url)
                         {
                             $this->link_contacts = false;
                         }
                         else
                         {
-                            $group_label = "<a href=\"{$this->contacts_node[MIDCOM_NAV_FULLURL]}group/{$group->guid}/\">{$group_label}</a>";
+                            $group_label = "<a href=\"{$this->contacts_url}group/{$group->guid}/\">{$group_label}</a>";
                         }
                     }
 
