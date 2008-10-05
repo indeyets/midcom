@@ -60,7 +60,7 @@ class org_openpsa_contacts_handler_frontpage extends midcom_baseclasses_componen
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => 'config.html',
+                    MIDCOM_TOOLBAR_URL => 'config/',
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
                     MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
