@@ -157,7 +157,6 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             $this->_request_data['link_obj'] =& $linkdata['link'];
             $this->_request_data['link_other_obj'] =& $linkdata['other_obj'];
             $this->_request_data['link_other_guid'] =& $linkdata['other_obj']->guid;
-            echo "            <a name=\"{$this->_request_data['link_other_guid']}\"></a>\n";
             $this->_show_render_line();
         }
 
@@ -192,7 +191,6 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             $this->_request_data['link_obj'] =& $linkdata['link'];
             $this->_request_data['link_other_obj'] =& $linkdata['other_obj'];
             $this->_request_data['link_other_guid'] =& $linkdata['other_obj']->guid;
-            echo "            <a name=\"{$this->_request_data['link_other_guid']}\"></a>\n";
             $this->_show_render_line();
         }
         echo "        </ol>\n";
@@ -250,7 +248,10 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
                 {
                     $this->_show_render_line_task();
                 }
-                // TODO: Show related projects too
+                else
+		{
+                    $this->_show_render_line_project();
+		}
                 break;
             case is_a($this->_request_data['link_other_obj'], 'org_openpsa_documents_document'):
                 $this->_show_render_line_document();
@@ -557,7 +558,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         if (!empty($cal_node))
         {
             //Calendar node found, render a better view
-            $event_url = "{$cal_node[MIDCOM_NAV_FULLURL]}event/{$event->guid}";
+            $event_url = "{$cal_node[MIDCOM_NAV_FULLURL]}event/{$event->guid}/";
             $event_js = org_openpsa_calendar_interface::calendar_editevent_js($event->guid, $cal_node);
             echo "                <span class=\"title\"><a href=\"{$event_url}\" onclick=\"{$event_js}\" target=\"event_{$event->guid}\">{$event->title}</a></span>\n";
 
@@ -626,7 +627,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         $proj_node =& $GLOBALS['org_openpsa_relatedto_render_line_event_projnode'];
         if (!empty($proj_node))
         {
-            $task_url = "{$proj_node[MIDCOM_NAV_FULLURL]}task/{$task->guid}";
+            $task_url = "{$proj_node[MIDCOM_NAV_FULLURL]}task/{$task->guid}/";
             echo "                <span class=\"title\"><a href=\"{$task_url}\" target=\"task_{$task->guid}\">{$task->title}</a></span>\n";
             echo "                <ul class=\"metadata\">\n";
 
@@ -661,6 +662,71 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
     }
 
     /**
+     * Renders a project line
+     *
+     * See the _show_render documentation for details about styling
+     */
+    function _show_render_line_project()
+    {
+        //Make sure we have the calendar classes available
+        $_MIDCOM->componentloader->load_graceful('org.openpsa.projects');
+        //Fallback to default renderer if not
+        if (!class_exists('org_openpsa_projects_project'))
+        {
+            return $this->_show_render_line_default();
+        }
+        $project = new org_openpsa_projects_project($this->_request_data['link_other_obj']->guid);
+        if (!is_object($project))
+        {
+            //probably ACL prevents us from seeing anything about it
+            return;
+        }
+        echo "            <li class=\"task\" id=\"org_openpsa_relatedto_line_{$this->_request_data['link_obj']->guid}\">\n";
+
+        $proj_node = false;
+        if (!array_key_exists('org_openpsa_relatedto_render_line_event_projnode', $GLOBALS))
+        {
+            $GLOBALS['org_openpsa_relatedto_render_line_event_projnode'] = midcom_helper_find_node_by_component('org.openpsa.projects');
+        }
+        $proj_node =& $GLOBALS['org_openpsa_relatedto_render_line_event_projnode'];
+        if (!empty($proj_node))
+        {
+            $project_url = "{$proj_node[MIDCOM_NAV_FULLURL]}project/{$project->guid}/";
+            echo "                <span class=\"title\"><a href=\"{$project_url}\" target=\"project_{$project->guid}\">{$project->title}</a></span>\n";
+            echo "                <ul class=\"metadata\">\n";
+
+            // Deadline
+            echo "                    <li>" . $_MIDCOM->i18n->get_string('deadline', 'org.openpsa.projects') . ": " . strftime('%x', $project->end) . "</li>";
+
+            // Resources
+            echo "                    <li>" . $_MIDCOM->i18n->get_string('resources', 'org.openpsa.projects') . ": ";
+            foreach ($project->resources as $resource_id => $confirmed)
+            {
+                $resource = new midcom_db_person($resource_id);
+                $resource_card = new org_openpsa_contactwidget($resource);
+                echo $resource_card->show_inline() . " ";
+            }
+            echo "                    </li>\n";
+            echo "                </ul>\n";
+            echo "                <div id=\"org_openpsa_relatedto_details_{$project->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
+            echo "                </div>\n";
+            //TODO: necessary JS stuff to load details (which should in turn include the tasks own relatedtos) via AHAH
+        }
+        else
+        {
+            echo "                <span class=\"title\">{$project->title}</span>\n";
+            echo "                <div id=\"org_openpsa_relatedto_details_{$project->guid}\" class=\"details hidden\" style=\"display: none;\">\n";
+            //TODO: Output some details ?
+            echo "                </div>\n";
+            //TODO: necessary JS stuff to display/hide the div here
+        }
+
+        $this->_show_render_line_controls();
+        echo "            </li>\n";
+    }
+
+
+    /**
      * Renders a sales project line
      *
      * See the _show_render documentation for details about styling
@@ -690,7 +756,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         $sales_node =& $GLOBALS['org_openpsa_relatedto_render_line_event_salesnode'];
         if (!empty($sales_node))
         {
-            $sales_url = "{$sales_node[MIDCOM_NAV_FULLURL]}salesproject/{$salesproject->guid}";
+            $sales_url = "{$sales_node[MIDCOM_NAV_FULLURL]}salesproject/{$salesproject->guid}/";
             echo "                <span class=\"title\"><a href=\"{$sales_url}\" target=\"task_{$salesproject->guid}\">{$salesproject->title}</a></span>\n";
             echo "                <ul class=\"metadata\">\n";
 
@@ -758,7 +824,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         $invoices_node =& $GLOBALS['org_openpsa_relatedto_render_line_event_invoicesnode'];
         if (!empty($invoices_node))
         {
-            $invoice_url = "{$invoices_node[MIDCOM_NAV_FULLURL]}invoice/{$invoice->guid}";
+            $invoice_url = "{$invoices_node[MIDCOM_NAV_FULLURL]}invoice/{$invoice->guid}/";
             echo "                <span class=\"title\"><a href=\"{$invoice_url}\" target=\"task_{$invoice->guid}\">".$_MIDCOM->i18n->get_string('invoice', 'org.openpsa.invoices')." {$invoice->invoiceNumber}</a></span>\n";
             echo "                <ul class=\"metadata\">\n";
 
