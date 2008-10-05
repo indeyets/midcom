@@ -12,6 +12,7 @@ else
 ?>
     </tbody>
     <tfoot>
+      <tr>
         <td colspan="&(colspan);">
             <?php echo $data['l10n']->get('totals'); ?>
         </td>
@@ -24,5 +25,6 @@ else
         <td class="hours">
             <?php echo $data['total_hours']['reported']; ?>
         </td>
+      </tr>
     </tfoot>
 </table>
