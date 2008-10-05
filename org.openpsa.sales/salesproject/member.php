@@ -12,7 +12,7 @@
  *
  * @package org.openpsa.sales
  */
-class midcom_org_openpsa_salesproject_member extends __midcom_org_openpsa_salesproject_member
+class org_openpsa_sales_salesproject_member extends __org_openpsa_sales_salesproject_member
 {
     function __construct($id = null)
     {
@@ -83,16 +83,4 @@ class midcom_org_openpsa_salesproject_member extends __midcom_org_openpsa_salesp
 
 }
 
-/**
- * Wrap the midcom class to component namespace
- *
- * @package org.openpsa.sales
- */
-class org_openpsa_sales_salesproject_member extends midcom_org_openpsa_salesproject_member
-{
-    function __construct($identifier=NULL)
-    {
-        return parent::__construct($identifier);
-    }
-}
 ?>

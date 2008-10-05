@@ -12,7 +12,7 @@
  *
  * @package org.openpsa.sales
  */
-class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
+class org_openpsa_sales_salesproject extends __org_openpsa_sales_salesproject
 {
     var $contacts = array(); //Shorthand access for contact members
     var $old_contacts = array(); //For diffing the ones above
@@ -378,7 +378,7 @@ class midcom_org_openpsa_salesproject extends __midcom_org_openpsa_salesproject
     {
         if ($this->up != 0)
         {
-            $parent = new midcom_org_openpsa_salesproject($this->up);
+            $parent = new org_openpsa_sales_salesproject($this->up);
             return $parent;
         }
         else
@@ -424,17 +424,4 @@ function org_openpsa_sales_salesproject_sort_action_by_time_reverse($a, $b)
     return 0;
 }
 
-
-/**
- * Wrap the midcom class to component namespace
- *
- * @package org.openpsa.sales
- */
-class org_openpsa_sales_salesproject extends midcom_org_openpsa_salesproject
-{
-    function __construct($identifier=NULL)
-    {
-        return parent::__construct($identifier);
-    }
-}
 ?>

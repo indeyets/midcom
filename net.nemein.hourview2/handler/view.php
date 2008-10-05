@@ -17,7 +17,7 @@ class net_nemein_hourview2_handler_view extends midcom_baseclasses_components_ha
     /**
      * Array for user's agreements
      * 
-     * @var Array of org_openpsa_salesproject_deliverable objects
+     * @var Array of org_openpsa_sales_salesproject_deliverable objects
      */
      var $_agreements = Array();
      

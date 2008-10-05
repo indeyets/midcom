@@ -945,7 +945,7 @@ function openPsaShowMonthSelector()
                             }
                         }
                         break;
-                    case 'midcom_org_openpsa_salesproject':
+                    case 'org_openpsa_sales_salesproject':
                         $qb =  $_MIDCOM->dbfactory->new_query_builder('org_openpsa_sales_salesproject_member');
                         $qb->add_constraint('salesproject', '=', $resource->id);
                         $sp_members = $_MIDCOM->dbfactory->exec_query_builder($qb);
