@@ -175,8 +175,8 @@ class org_openpsa_sales_salesproject extends __org_openpsa_sales_salesproject
                     continue 2;
             }
         }
-        usort($sort_prev, 'org_openpsa_sales_salesproject_sort_action_by_time_reverse');
-        usort($sort_next, 'org_openpsa_sales_salesproject_sort_action_by_time');
+        usort($sort_prev, array('org_openpsa_sales_salesproject', '_sort_action_by_time_reverse'));
+        usort($sort_next, array('org_openpsa_sales_salesproject', '_sort_action_by_time'));
         debug_add("sort_next \n===\n" . sprint_r($sort_next) . "===\n");
         debug_add("sort_prev \n===\n" . sprint_r($sort_prev) . "===\n");
 
@@ -386,42 +386,43 @@ class org_openpsa_sales_salesproject extends __org_openpsa_sales_salesproject
             return null;
         }
     }
-}
 
-/**
- * For sorting arrays in get_actions method (usort doesn't like even static methods)
- */
-function org_openpsa_sales_salesproject_sort_action_by_time($a, $b)
-{
-    $ap = $a['time'];
-    $bp = $b['time'];
-    if ($ap > $bp)
-    {
-        return 1;
-    }
-    if ($ap < $bp)
-    {
-        return -1;
-    }
-    return 0;
-}
+	/**
+	 * For sorting arrays in get_actions method
+	 */
+	private function _sort_action_by_time($a, $b)
+	{
+	    $ap = $a['time'];
+	    $bp = $b['time'];
+	    if ($ap > $bp)
+	    {
+	        return 1;
+	    }
+	    if ($ap < $bp)
+	    {
+	        return -1;
+	    }
+	    return 0;
+	}
+	
+	/**
+	 * For sorting arrays in get_actions method
+	 */
+	private function _sort_action_by_time_reverse($a, $b)
+	{
+	    $ap = $a['time'];
+	    $bp = $b['time'];
+	    if ($ap < $bp)
+	    {
+	        return 1;
+	    }
+	    if ($ap > $bp)
+	    {
+	        return -1;
+	    }
+	    return 0;
+	}
 
-/**
- * For sorting arrays in get_actions method (usort doesn't like even static methods)
- */
-function org_openpsa_sales_salesproject_sort_action_by_time_reverse($a, $b)
-{
-    $ap = $a['time'];
-    $bp = $b['time'];
-    if ($ap < $bp)
-    {
-        return 1;
-    }
-    if ($ap > $bp)
-    {
-        return -1;
-    }
-    return 0;
 }
 
 ?>
