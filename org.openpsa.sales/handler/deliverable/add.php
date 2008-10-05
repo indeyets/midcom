@@ -193,12 +193,12 @@ class org_openpsa_sales_handler_deliverable_add extends midcom_baseclasses_compo
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "salesproject/{$this->_salesproject->guid}.html",
+            MIDCOM_NAV_URL => "salesproject/{$this->_salesproject->guid}/",
             MIDCOM_NAV_NAME => $this->_salesproject->title,
         );
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "deliverable/add/{$this->_salesproject->guid}.html",
+            MIDCOM_NAV_URL => "deliverable/add/{$this->_salesproject->guid}/",
             MIDCOM_NAV_NAME => sprintf($this->_l10n->get('add products to %s'), $this->_salesproject->title),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

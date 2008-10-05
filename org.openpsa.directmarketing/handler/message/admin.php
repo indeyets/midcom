@@ -78,7 +78,7 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "message/edit/{$this->_message->guid}.html",
+                MIDCOM_TOOLBAR_URL => "message/edit/{$this->_message->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -91,7 +91,7 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "message/delete/{$this->_message->guid}.html",
+                MIDCOM_TOOLBAR_URL => "message/delete/{$this->_message->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_message->can_do('midgard:delete'),
@@ -102,10 +102,10 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
         switch ($handler_id)
         {
             case 'edit_message':
-                $this->_view_toolbar->disable_item("message/edit/{$this->_message->guid}.html");
+                $this->_view_toolbar->disable_item("message/edit/{$this->_message->guid}/");
                 break;
             case 'delete_message':
-                $this->_view_toolbar->disable_item("message/delete/{$this->_message->guid}.html");
+                $this->_view_toolbar->disable_item("message/delete/{$this->_message->guid}/");
                 break;
         }
     }
@@ -183,14 +183,14 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
             case 'message_edit':
                 $tmp[] = array
                 (
-                    MIDCOM_NAV_URL => "message/edit/{$this->_message->guid}.html",
+                    MIDCOM_NAV_URL => "message/edit/{$this->_message->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
                 );
                 break;
             case 'message_delete':
                 $tmp[] = array
                 (
-                    MIDCOM_NAV_URL => "message/delete/{$this->_message->guid}.html",
+                    MIDCOM_NAV_URL => "message/delete/{$this->_message->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('delete'),
                 );
                 break;

@@ -78,7 +78,7 @@ class org_openpsa_sales_handler_deliverable_admin extends midcom_baseclasses_com
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "deliverable/edit/{$this->_deliverable->guid}.html",
+                MIDCOM_TOOLBAR_URL => "deliverable/edit/{$this->_deliverable->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -91,7 +91,7 @@ class org_openpsa_sales_handler_deliverable_admin extends midcom_baseclasses_com
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "deliverable/delete/{$this->_deliverable->guid}.html",
+                MIDCOM_TOOLBAR_URL => "deliverable/delete/{$this->_deliverable->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_deliverable->can_do('midgard:delete'),
@@ -102,10 +102,10 @@ class org_openpsa_sales_handler_deliverable_admin extends midcom_baseclasses_com
         switch ($handler_id)
         {
             case 'deliverable_edit':
-                $this->_view_toolbar->disable_item("deliverable/edit/{$this->_deliverable->guid}.html");
+                $this->_view_toolbar->disable_item("deliverable/edit/{$this->_deliverable->guid}/");
                 break;
             case 'deliverable_delete':
-                $this->_view_toolbar->disable_item("deliverable/delete/{$this->_deliverable->guid}.html");
+                $this->_view_toolbar->disable_item("deliverable/delete/{$this->_deliverable->guid}/");
                 break;
         }
     }
@@ -187,14 +187,14 @@ class org_openpsa_sales_handler_deliverable_admin extends midcom_baseclasses_com
             case 'deliverable_edit':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "deliverable/edit/{$this->_deliverable->guid}.html",
+                    MIDCOM_NAV_URL => "deliverable/edit/{$this->_deliverable->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
                 );
                 break;
             case 'deliverable_delete':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "deliverable/delete/{$this->_deliverable->guid}.html",
+                    MIDCOM_NAV_URL => "deliverable/delete/{$this->_deliverable->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('delete'),
                 );
                 break;

@@ -214,7 +214,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
 
         $this->_node_toolbar->add_item(
             Array(
-                MIDCOM_TOOLBAR_URL => "invoice/new/{$this->_request_data['customer']->guid}.html",
+                MIDCOM_TOOLBAR_URL => "invoice/new/{$this->_request_data['customer']->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('create invoice'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/printer.png',
@@ -233,7 +233,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
 
             $this->_view_toolbar->add_item(
                 Array(
-                    MIDCOM_TOOLBAR_URL => "list/customer/all/{$this->_request_data['customer']->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "list/customer/all/{$this->_request_data['customer']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('all invoices'),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
@@ -249,7 +249,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
 
             $this->_view_toolbar->add_item(
                 Array(
-                    MIDCOM_TOOLBAR_URL => "list/customer/{$this->_request_data['customer']->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "list/customer/{$this->_request_data['customer']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('open invoices'),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',

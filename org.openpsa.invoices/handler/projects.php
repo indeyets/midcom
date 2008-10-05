@@ -79,7 +79,7 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
             $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.invoices'), sprintf($this->_request_data['l10n']->get('marked %s hours as invoiced'), $hours_marked), 'ok');
 
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-            $_MIDCOM->relocate("{$prefix}invoice/edit/{$invoice->guid}.html");
+            $_MIDCOM->relocate("{$prefix}invoice/edit/{$invoice->guid}/");
             // This will exit
         }
         else

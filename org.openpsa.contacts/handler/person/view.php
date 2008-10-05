@@ -50,7 +50,7 @@ class org_openpsa_contacts_handler_person_view extends midcom_baseclasses_compon
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "person/edit/{$this->_contact->guid}.html",
+                MIDCOM_TOOLBAR_URL => "person/edit/{$this->_contact->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -63,7 +63,7 @@ class org_openpsa_contacts_handler_person_view extends midcom_baseclasses_compon
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "person/delete/{$this->_contact->guid}.html",
+                MIDCOM_TOOLBAR_URL => "person/delete/{$this->_contact->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_contact->can_do('midgard:delete'),
@@ -84,7 +84,7 @@ class org_openpsa_contacts_handler_person_view extends midcom_baseclasses_compon
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "buddylist/remove/{$this->_request_data['person']->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "buddylist/remove/{$this->_request_data['person']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('remove buddy'),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -99,7 +99,7 @@ class org_openpsa_contacts_handler_person_view extends midcom_baseclasses_compon
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "buddylist/add/{$this->_request_data['person']->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "buddylist/add/{$this->_request_data['person']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('add buddy'),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_person.png',
@@ -196,7 +196,7 @@ class org_openpsa_contacts_handler_person_view extends midcom_baseclasses_compon
 
         $tmp[] = array
         (
-            MIDCOM_NAV_URL => "person/{$this->_contact->guid}.html",
+            MIDCOM_NAV_URL => "person/{$this->_contact->guid}/",
             MIDCOM_NAV_NAME => $this->_contact->name,
         );
 

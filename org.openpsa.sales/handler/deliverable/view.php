@@ -52,7 +52,7 @@ class org_openpsa_sales_handler_deliverable_view extends midcom_baseclasses_comp
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "deliverable/edit/{$this->_deliverable->guid}.html",
+                MIDCOM_TOOLBAR_URL => "deliverable/edit/{$this->_deliverable->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -65,7 +65,7 @@ class org_openpsa_sales_handler_deliverable_view extends midcom_baseclasses_comp
         /*if ($this->_salesproject->can_do('midgard:delete'))
         {
             $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "salesproject/delete/{$this->_salesproject->guid}.html",
+                MIDCOM_TOOLBAR_URL => "salesproject/delete/{$this->_salesproject->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
             ));

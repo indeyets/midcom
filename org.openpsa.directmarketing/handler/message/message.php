@@ -81,7 +81,7 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "message/edit/{$this->_message->guid}.html",
+                MIDCOM_TOOLBAR_URL => "message/edit/{$this->_message->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -92,7 +92,7 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "message/delete/{$this->_message->guid}.html",
+                MIDCOM_TOOLBAR_URL => "message/delete/{$this->_message->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',
@@ -102,11 +102,11 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
         if (   !empty($_MIDCOM->auth->user)
             && !empty($_MIDCOM->auth->user->guid))
         {
-            $preview_url = "message/compose/{$this->_message->guid}/{$_MIDCOM->auth->user->guid}.html";
+            $preview_url = "message/compose/{$this->_message->guid}/{$_MIDCOM->auth->user->guid}/";
         }
         else
         {
-            $preview_url = "message/compose/{$this->_message->guid}.html";
+            $preview_url = "message/compose/{$this->_message->guid}/";
         }
         $this->_view_toolbar->add_item
         (
@@ -124,7 +124,7 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "message/report/{$this->_request_data['message']->guid}.html",
+                MIDCOM_TOOLBAR_URL => "message/report/{$this->_request_data['message']->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get("message report"),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ACCESSKEY => 'r',
@@ -136,7 +136,7 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "message/send_test/{$this->_request_data['message']->guid}.html",
+                MIDCOM_TOOLBAR_URL => "message/send_test/{$this->_request_data['message']->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get("send message to testers"),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-send.png',
@@ -147,7 +147,7 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "message/send/{$this->_request_data['message']->guid}.html",
+                MIDCOM_TOOLBAR_URL => "message/send/{$this->_request_data['message']->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get("send message to whole campaign"),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-send.png',

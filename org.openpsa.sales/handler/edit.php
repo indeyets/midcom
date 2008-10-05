@@ -130,7 +130,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
 
         $this->_view_toolbar->add_item(
             Array(
-                MIDCOM_TOOLBAR_URL => "salesproject/edit/{$this->_request_data['salesproject']->guid}.html",
+                MIDCOM_TOOLBAR_URL => "salesproject/edit/{$this->_request_data['salesproject']->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get("edit"),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',

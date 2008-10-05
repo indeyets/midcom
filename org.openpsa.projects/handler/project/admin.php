@@ -152,14 +152,14 @@ class org_openpsa_projects_handler_project_admin extends midcom_baseclasses_comp
             case 'project_edit':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "project/edit/{$this->_project->guid}.html",
+                    MIDCOM_NAV_URL => "project/edit/{$this->_project->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
                 );
                 break;
             case 'project_delete':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "project/delete/{$this->_project->guid}.html",
+                    MIDCOM_NAV_URL => "project/delete/{$this->_project->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('delete'),
                 );
                 break;

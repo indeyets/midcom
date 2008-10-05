@@ -348,7 +348,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                 // We're buddies, show remove button
                 $this->_toolbars->bottom->add_item(
                     Array(
-                        MIDCOM_TOOLBAR_URL => "buddylist/remove/{$this->_request_data['person']->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "buddylist/remove/{$this->_request_data['person']->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('remove buddy'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -361,7 +361,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                 // We're not buddies, show add button
                 $this->_toolbars->bottom->add_item(
                     Array(
-                        MIDCOM_TOOLBAR_URL => "buddylist/add/{$this->_request_data['person']->guid}.html",
+                        MIDCOM_TOOLBAR_URL => "buddylist/add/{$this->_request_data['person']->guid}/",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('add buddy'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_person.png',

@@ -115,7 +115,7 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
         // Unsubscribe URL
         $content = str_replace('<UNSUBSCRIBE_URL>', $this->get_unsubscribe_url($node, $person), $content);
         // Unsubscribe from all URL
-        $content = str_replace('<UNSUBSCRIBE_ALL_URL>', "{$node[MIDCOM_NAV_FULLURL]}campaign/unsubscribe_all/{$person->guid}.html", $content);
+        $content = str_replace('<UNSUBSCRIBE_ALL_URL>', "{$node[MIDCOM_NAV_FULLURL]}campaign/unsubscribe_all/{$person->guid}/", $content);
         // General membership GUID
         $content = str_replace('<MEMBER_GUID>', $this->guid, $content);
         // General person GUID
@@ -174,7 +174,7 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
         {
             $person = new org_openpsa_contacts_person($this->person);
         }
-        return "{$node[MIDCOM_NAV_FULLURL]}campaign/unsubscribe/{$this->guid}.html";
+        return "{$node[MIDCOM_NAV_FULLURL]}campaign/unsubscribe/{$this->guid}/";
     }
 
     /**

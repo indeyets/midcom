@@ -147,7 +147,7 @@ class org_openpsa_interviews_handler_campaign extends midcom_baseclasses_compone
                 // This will exit.
             }
 
-            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "interview/{$member->guid}.html");
+            $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "interview/{$member->guid}/");
             // This will exit.
         }
 

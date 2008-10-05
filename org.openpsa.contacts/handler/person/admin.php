@@ -78,7 +78,7 @@ class org_openpsa_contacts_handler_person_admin extends midcom_baseclasses_compo
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "person/edit/{$this->_contact->guid}.html",
+                MIDCOM_TOOLBAR_URL => "person/edit/{$this->_contact->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -91,7 +91,7 @@ class org_openpsa_contacts_handler_person_admin extends midcom_baseclasses_compo
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "person/delete/{$this->_contact->guid}.html",
+                MIDCOM_TOOLBAR_URL => "person/delete/{$this->_contact->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_contact->can_do('midgard:delete'),
@@ -102,10 +102,10 @@ class org_openpsa_contacts_handler_person_admin extends midcom_baseclasses_compo
         switch ($handler_id)
         {
             case 'person_edit':
-                $this->_view_toolbar->disable_item("person/edit/{$this->_contact->guid}.html");
+                $this->_view_toolbar->disable_item("person/edit/{$this->_contact->guid}/");
                 break;
             case 'person_delete':
-                $this->_view_toolbar->disable_item("person/delete/{$this->_contact->guid}.html");
+                $this->_view_toolbar->disable_item("person/delete/{$this->_contact->guid}/");
                 break;
         }
     }
@@ -205,14 +205,14 @@ class org_openpsa_contacts_handler_person_admin extends midcom_baseclasses_compo
             case 'person_edit':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "person/edit/{$this->_contact->guid}.html",
+                    MIDCOM_NAV_URL => "person/edit/{$this->_contact->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
                 );
                 break;
             case 'person_delete':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "person/delete/{$this->_contact->guid}.html",
+                    MIDCOM_NAV_URL => "person/delete/{$this->_contact->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('delete'),
                 );
                 break;

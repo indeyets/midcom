@@ -396,7 +396,7 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
         }
         $campaign->schedule_update_smart_campaign_members();
         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-            . "campaign/edit/{$campaign->guid}.html");
+            . "campaign/edit/{$campaign->guid}/");
         // This will exit()
     }
 
@@ -447,7 +447,7 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
         );
         $tmp[] = array
         (
-            MIDCOM_NAV_URL => "message/report/{$this->_message->guid}.html",
+            MIDCOM_NAV_URL => "message/report/{$this->_message->guid}/",
             MIDCOM_NAV_NAME => $this->_l10n->get('message report'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
@@ -467,11 +467,11 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
         if (   !empty($_MIDCOM->auth->user)
             && !empty($_MIDCOM->auth->user->guid))
         {
-            $preview_url = "message/compose/{$this->_message->guid}/{$_MIDCOM->auth->user->guid}.html";
+            $preview_url = "message/compose/{$this->_message->guid}/{$_MIDCOM->auth->user->guid}/";
         }
         else
         {
-            $preview_url = "message/compose/{$this->_message->guid}.html";
+            $preview_url = "message/compose/{$this->_message->guid}/";
         }
         $this->_view_toolbar->add_item
         (

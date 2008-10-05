@@ -91,7 +91,7 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "campaign/import/{$this->_campaign->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "campaign/import/{$this->_campaign->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('import subscribers'),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_people.png',
@@ -115,7 +115,7 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "campaign/edit/{$this->_campaign->guid}.html",
+                MIDCOM_TOOLBAR_URL => "campaign/edit/{$this->_campaign->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
@@ -126,7 +126,7 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "campaign/delete/{$this->_campaign->guid}.html",
+                MIDCOM_TOOLBAR_URL => "campaign/delete/{$this->_campaign->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'd',

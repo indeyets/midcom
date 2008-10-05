@@ -68,7 +68,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "task/edit/{$this->_task->guid}.html",
+                MIDCOM_TOOLBAR_URL => "task/edit/{$this->_task->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -81,7 +81,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "task/delete/{$this->_task->guid}.html",
+                MIDCOM_TOOLBAR_URL => "task/delete/{$this->_task->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_task->can_do('midgard:delete'),
@@ -152,7 +152,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
             case 'task_resourcing':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "task/resourcing/{$this->_task->guid}.html",
+                    MIDCOM_NAV_URL => "task/resourcing/{$this->_task->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('resourcing'),
                 );
                 break;

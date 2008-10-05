@@ -104,7 +104,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
         $tmp = Array();
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "salesproject/{$this->_salesproject->guid}.html",
+            MIDCOM_NAV_URL => "salesproject/{$this->_salesproject->guid}/",
             MIDCOM_NAV_NAME => $this->_salesproject->title,
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

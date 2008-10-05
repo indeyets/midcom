@@ -78,7 +78,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "campaign/edit/{$this->_campaign->guid}.html",
+                MIDCOM_TOOLBAR_URL => "campaign/edit/{$this->_campaign->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -91,7 +91,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "campaign/delete/{$this->_campaign->guid}.html",
+                MIDCOM_TOOLBAR_URL => "campaign/delete/{$this->_campaign->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_campaign->can_do('midgard:delete'),
@@ -102,10 +102,10 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
         switch ($handler_id)
         {
             case 'edit_campaign':
-                $this->_view_toolbar->disable_item("campaign/edit/{$this->_campaign->guid}.html");
+                $this->_view_toolbar->disable_item("campaign/edit/{$this->_campaign->guid}/");
                 break;
             case 'delete_campaign':
-                $this->_view_toolbar->disable_item("campaign/delete/{$this->_campaign->guid}.html");
+                $this->_view_toolbar->disable_item("campaign/delete/{$this->_campaign->guid}/");
                 break;
         }
     }
@@ -177,33 +177,33 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
             case 'edit_campaign':
                 $tmp[] = array
                 (
-                    MIDCOM_NAV_URL => "campaign/edit/{$this->_campaign->guid}.html",
+                    MIDCOM_NAV_URL => "campaign/edit/{$this->_campaign->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
                 );
                 break;
             case 'delete_campaign':
                 $tmp[] = array
                 (
-                    MIDCOM_NAV_URL => "campaign/delete/{$this->_campaign->guid}.html",
+                    MIDCOM_NAV_URL => "campaign/delete/{$this->_campaign->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('delete'),
                 );
                 break;
             case 'edit_campaign_query':
                 $tmp[] = array
                 (
-                    MIDCOM_NAV_URL => "campaign/edit_query/{$this->_campaign->guid}.html",
+                    MIDCOM_NAV_URL => "campaign/edit_query/{$this->_campaign->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('edit rules'),
                 );
                 break;
             case 'edit_campaign_query_advanced':
                 $tmp[] = array
                 (
-                    MIDCOM_NAV_URL => "campaign/edit_query/{$this->_campaign->guid}.html",
+                    MIDCOM_NAV_URL => "campaign/edit_query/{$this->_campaign->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('edit rules'),
                 );
                 $tmp[] = array
                 (
-                    MIDCOM_NAV_URL => "campaign/edit_query_advanced/{$this->_campaign->guid}.html",
+                    MIDCOM_NAV_URL => "campaign/edit_query_advanced/{$this->_campaign->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('advanced rule editor'),
                 );
                 break;

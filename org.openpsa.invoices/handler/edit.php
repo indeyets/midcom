@@ -233,7 +233,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         else
         {
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-            $_MIDCOM->relocate("{$prefix}invoice/{$this->_request_data['invoice']->guid}.html");
+            $_MIDCOM->relocate("{$prefix}invoice/{$this->_request_data['invoice']->guid}/");
             // This will exit
         }
     }
@@ -276,7 +276,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         else
         {
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-            $_MIDCOM->relocate("{$prefix}invoice/{$this->_request_data['invoice']->guid}.html");
+            $_MIDCOM->relocate("{$prefix}invoice/{$this->_request_data['invoice']->guid}/");
             // This will exit
         }
     }
@@ -313,7 +313,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         {
             $this->_view_toolbar->add_item(
                 Array(
-                    MIDCOM_TOOLBAR_URL => "invoice/mark_sent/{$this->_request_data['invoice']->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "invoice/mark_sent/{$this->_request_data['invoice']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('mark sent'),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_mail-send.png',
@@ -326,7 +326,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         {
             $this->_view_toolbar->add_item(
                 Array(
-                    MIDCOM_TOOLBAR_URL => "invoice/mark_paid/{$this->_request_data['invoice']->guid}.html",
+                    MIDCOM_TOOLBAR_URL => "invoice/mark_paid/{$this->_request_data['invoice']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('mark paid'),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/approved.png',
@@ -567,7 +567,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
                 // Relocate to main view
                 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-                $_MIDCOM->relocate("{$prefix}invoice/edit/{$this->_request_data['invoice']->guid}.html");
+                $_MIDCOM->relocate("{$prefix}invoice/edit/{$this->_request_data['invoice']->guid}/");
                 break;
 
             case MIDCOM_DATAMGR_CANCELLED_NONECREATED:

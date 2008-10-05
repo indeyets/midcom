@@ -78,7 +78,7 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "task/edit/{$this->_task->guid}.html",
+                MIDCOM_TOOLBAR_URL => "task/edit/{$this->_task->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -91,7 +91,7 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "task/delete/{$this->_task->guid}.html",
+                MIDCOM_TOOLBAR_URL => "task/delete/{$this->_task->guid}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_task->can_do('midgard:delete'),
@@ -102,10 +102,10 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
         switch ($handler_id)
         {
             case 'task_edit':
-                $this->_view_toolbar->disable_item("task/edit/{$this->_task->guid}.html");
+                $this->_view_toolbar->disable_item("task/edit/{$this->_task->guid}/");
                 break;
             case 'task_delete':
-                $this->_view_toolbar->disable_item("task/delete/{$this->_task->guid}.html");
+                $this->_view_toolbar->disable_item("task/delete/{$this->_task->guid}/");
                 break;
         }
     }
@@ -187,14 +187,14 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
             case 'task_edit':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "task/edit/{$this->_task->guid}.html",
+                    MIDCOM_NAV_URL => "task/edit/{$this->_task->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
                 );
                 break;
             case 'task_delete':
                 $tmp[] = Array
                 (
-                    MIDCOM_NAV_URL => "task/delete/{$this->_task->guid}.html",
+                    MIDCOM_NAV_URL => "task/delete/{$this->_task->guid}/",
                     MIDCOM_NAV_NAME => $this->_l10n_midcom->get('delete'),
                 );
                 break;
