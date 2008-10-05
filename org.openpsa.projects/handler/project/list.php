@@ -269,7 +269,8 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
     function _show_list($handler_id, &$data)
     {
         // Locate Contacts node for linking
-        $this->_request_data['contacts_node'] = midcom_helper_find_node_by_component('org.openpsa.contacts');
+        $structure = new org_openpsa_core_structure();
+        $this->_request_data['contacts_url'] = $structure->get_node_url('org.openpsa.contacts');
 
         if ($this->_request_data['view'] == 'all')
         {

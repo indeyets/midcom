@@ -13,9 +13,9 @@ $customer = new midcom_db_group($data['project_dm']['customer']);
         ?></td>
     <td><?php echo $manager_card->show_inline(); ?></td>
     <td><?php
-    if ($data['contacts_node'])
+    if ($data['contacts_url'])
     {
-        echo "<a href=\"{$data['contacts_node'][MIDCOM_NAV_FULLURL]}group/{$customer->guid}/\">{$customer->official}</a>";
+        echo "<a href=\"{$data['contacts_url']}group/{$customer->guid}/\">{$customer->official}</a>";
     }
     else
     {

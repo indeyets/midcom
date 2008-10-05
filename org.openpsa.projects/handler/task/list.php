@@ -78,7 +78,8 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         $_MIDCOM->auth->require_valid_user();
         $this->_request_data['tasks'] = Array();
 
-        $this->_request_data['contacts_node'] = midcom_helper_find_node_by_component('org.openpsa.contacts');
+        $structure = new org_openpsa_core_structure();
+        $this->_request_data['contacts_url'] = $structure->get_node_url('org.openpsa.contacts');
         $this->_request_data['sales_node'] = midcom_helper_find_node_by_component('org.openpsa.sales');
         $this->_request_data['prefix'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
@@ -545,7 +546,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
                 if ($task->customer)
                 {
                     $customer = new org_openpsa_contacts_group($task->customer);
-                    $customer_url = "{$data['contacts_node'][MIDCOM_NAV_FULLURL]}group/{$customer->guid}";
+                    $customer_url = "{$data['contacts_url']}group/{$customer->guid}";
                     $html = "<a href='{$customer_url}'>{$customer->official}</a>";
                 }
                 $row_cache['customer'][$task->customer] = $html;

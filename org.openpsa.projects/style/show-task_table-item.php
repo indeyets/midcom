@@ -1,7 +1,6 @@
 <?php
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 
-$contacts_node =& $data['contacts_node'];
 $sales_node =& $data['sales_node'];
 
 $cells =& $data['cells'];
