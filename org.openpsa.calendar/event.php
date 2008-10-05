@@ -12,7 +12,7 @@
  * @todo Figure out a good way to always use UTC for internal time storage
  * @package org.openpsa.calendar
  */
-class midcom_org_openpsa_event extends __midcom_org_openpsa_event
+class org_openpsa_calendar_event extends __org_openpsa_calendar_event
 {
     /**
      * list of participants
@@ -1614,7 +1614,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
         }
         if (!isset($GLOBALS['org_openpsa_event_pid_cache'][$pid]))
         {
-            $GLOBALS['org_openpsa_event_pid_cache'][$pid] = midcom_org_openpsa_event::_pid_to_obj($pid);
+            $GLOBALS['org_openpsa_event_pid_cache'][$pid] = org_openpsa_calendar_event::_pid_to_obj($pid);
         }
         return $GLOBALS['org_openpsa_event_pid_cache'][$pid];
     }
@@ -1764,7 +1764,7 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
             {
                 continue;
             }
-            $person = midcom_org_openpsa_event::_pid_to_obj_cached($uid);
+            $person = self::_pid_to_obj_cached($uid);
             if (empty($person->email))
             {
                 // Attendee must have email address of valid format, these must also be unique.
@@ -1817,18 +1817,5 @@ class midcom_org_openpsa_event extends __midcom_org_openpsa_event
     }
 
 }
-
-/**
- * Another wrap level
- * @package org.openpsa.calendar
- */
-class org_openpsa_calendar_event extends midcom_org_openpsa_event
-{
-    function __construct($identifier = NULL)
-    {
-        return parent::__construct($identifier);
-    }
-}
-
 
 ?>

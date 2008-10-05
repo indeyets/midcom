@@ -37,7 +37,7 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
         {
             return;
         }
-        $qb = midcom_org_openpsa_eventmember::new_query_builder();
+        $qb = org_openpsa_calendar_eventmember::new_query_builder();
         $qb->add_constraint('eid.up', '=', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->id);
         // Display events two weeks back
         $qb->add_constraint('eid.start', '>', mktime(0, 0, 0, date('n'), date('j')-14, date('Y')));

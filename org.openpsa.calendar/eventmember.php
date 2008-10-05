@@ -10,7 +10,7 @@
  * MidCOM wants this class present and QB etc use this, so keep logic here
  * @package org.openpsa.calendar
  */
-class midcom_org_openpsa_eventmember extends __midcom_org_openpsa_eventmember
+class org_openpsa_calendar_eventmember extends __org_openpsa_calendar_eventmember
 {
     function __construct($id = null)
     {
@@ -336,26 +336,6 @@ class midcom_org_openpsa_eventmember extends __midcom_org_openpsa_eventmember
         debug_pop();
         return $slots;
     }
-}
-
-/**
- * Wrap level to get component namespaced class name
- *
- * @package org.openpsa.calendar
- */
-class org_openpsa_calendar_eventmember extends midcom_org_openpsa_eventmember
-{
-
-    function _constructor($identifier)
-    {
-        return $this->__construct($identifier);
-    }
-
-    function __construct($identifier=NULL)
-    {
-        return parent::__construct($identifier);
-    }
-
 }
 
 ?>

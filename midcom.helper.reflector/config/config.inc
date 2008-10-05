@@ -12,7 +12,7 @@
 'class_extends' => array
 (
     'midgard_event' => 'org_openpsa_event',
-    'midcom_org_openpsa_event' => 'org_openpsa_event',
+    'org_openpsa_calendar_event' => 'org_openpsa_event',
     'net_nemein_calendar_event_db' => 'org_openpsa_event',
     'midgard_eventmember' => 'org_openpsa_eventmember',
     'midgard_person' => 'org_openpsa_person',

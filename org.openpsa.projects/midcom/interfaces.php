@@ -212,7 +212,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
                 $this->_org_openpsa_relatedto_find_suspects_person($object, $defaults, $links_array);
                 break;
             case is_a($object, 'midcom_baseclasses_database_event'):
-            case is_a($object, 'midcom_org_openpsa_event'):
+            case is_a($object, 'org_openpsa_calendar_event'):
                 $this->_org_openpsa_relatedto_find_suspects_event($object, $defaults, $links_array);
                 break;
 
@@ -369,7 +369,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
 
         switch (true)
         {
-            case is_a($from_object, 'midcom_org_openpsa_event'):
+            case is_a($from_object, 'org_openpsa_calendar_event'):
                 $event =& $from_object;
                 $hr->date = $event->start;
                 $hr->hours = round((($event->end - $event->start)/3600),2);
