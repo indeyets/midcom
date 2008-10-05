@@ -5,16 +5,18 @@
  * @copyright Nemein Oy http://www.nemein.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
-// TODO Hotfix
 
 /**
  * @package org.openpsa.contacts
  */
-class midcom_org_openpsa_organization extends __midcom_org_openpsa_organization
+class org_openpsa_contacts_group extends __org_openpsa_contacts_group
 {
-    function __construct($id = null)
+    var $members = array();
+    var $members_loaded = false;
+
+    function __construct($identifier=NULL)
     {
-        return parent::__construct($id);
+        return parent::__construct($identifier);
     }
 
     function get_label()
@@ -43,20 +45,6 @@ class midcom_org_openpsa_organization extends __midcom_org_openpsa_organization
         }
 
         return $property;
-    }
-}
-
-/**
- * Wrapper group
- */
-class org_openpsa_contacts_group extends midcom_org_openpsa_organization
-{
-    var $members = array();
-    var $members_loaded = false;
-
-    function __construct($identifier=NULL)
-    {
-        return parent::__construct($identifier);
     }
 
     function get_parent_guid_uncached()

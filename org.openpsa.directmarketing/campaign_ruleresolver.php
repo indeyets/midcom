@@ -219,7 +219,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
             switch (true)
             {
                 //We need to fill the seek table, thus this no-op here (matches org_openpsa_contacts_person as well)
-                case is_a($obj, 'midcom_org_openpsa_person'):
+                case is_a($obj, 'org_openpsa_contacts_person'):
                     break;
                 //Make all other persons org_openpsa_contacts_persons
                 case is_a($obj, 'midgard_person'):

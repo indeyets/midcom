@@ -153,7 +153,6 @@ class org_openpsa_contacts_handler_search extends midcom_baseclasses_components_
         }
 
         $qb_org = org_openpsa_contacts_group::new_query_builder();
-        //$qb_org = new MidgardQuerybuilder('org_openpsa_organization');
         $qb_org->begin_group('OR');
 
         // Search using only the fields defined in config

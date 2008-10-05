@@ -111,7 +111,7 @@ class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
     {
         if (   !is_object($person)
             && !is_a($person, 'midcom_baseclasses_database_person')
-            && !is_a($person, 'midcom_org_openpsa_person')
+            && !is_a($person, 'org_openpsa_contacts_person')
             )
         {
             // Given $person is not one

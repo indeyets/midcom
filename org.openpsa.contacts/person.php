@@ -10,7 +10,7 @@
  * MidCOM wrapped access to org_openpsa_person plus some utility methods
  * @package org.openpsa.contacts
  */
-class midcom_org_openpsa_person extends __midcom_org_openpsa_person
+class org_openpsa_contacts_person extends __org_openpsa_contacts_person
 {
     var $name; //Compound of firstname, lastname and username
     var $rname; //Another compound of firstname, lastname and username
@@ -314,19 +314,6 @@ class midcom_org_openpsa_person extends __midcom_org_openpsa_person
         return $property;
     }
 
-}
-
-
-/**
- * org.openpsa.contacts specific wrapper to org_openpsa_person
- * @package org.openpsa.contacts
- */
-class org_openpsa_contacts_person extends midcom_org_openpsa_person
-{
-    function __construct($identifier=NULL)
-    {
-        return parent::__construct($identifier);
-    }
 }
 
 ?>

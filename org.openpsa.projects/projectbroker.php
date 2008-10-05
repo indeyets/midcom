@@ -44,7 +44,6 @@ class org_openpsa_projects_projectbroker
         (
             'midgard_person',
             'midcom_db_person',
-            'midcom_org_openpsa_person',
             'org_openpsa_contacts_person',
         );
         $tag_map = net_nemein_tag_handler::get_object_tags($task);
@@ -70,7 +69,7 @@ class org_openpsa_projects_projectbroker
         {
             switch (true)
             {
-                case (is_a($obj, 'midcom_org_openpsa_person')):
+                case (is_a($obj, 'org_openpsa_contacts_person')):
                     $return[] = $obj;
                     break;
                 default:
