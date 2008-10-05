@@ -22,9 +22,9 @@ if ($data['even'])
     <td><?php
     if ($data['customer'])
     {
-        if ($data['contacts_node'])
+        if ($data['contacts_url'])
         {
-            echo "<a href=\"{$data['contacts_node'][MIDCOM_NAV_FULLURL]}group/{$data['customer']->guid}/\">{$data['customer']->official}</a>";
+            echo "<a href=\"{$data['contacts_url']}group/{$data['customer']->guid}/\">{$data['customer']->official}</a>";
         }
         else
         {
