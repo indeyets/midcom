@@ -32,14 +32,16 @@ class org_openpsa_core_interface extends midcom_baseclasses_components_interface
 	$this->define_constants();
 	$this->set_acl_options();
 	$this->set_workgroup_filter();
-	$this->load_my_company();
+	$return = $this->load_my_company();
 
         debug_pop();
-        return true;
+        return $return;
     }
 
     /**
      * Load "my company" or "owner company", the group that is the main user of this instance
+     *
+     * @return boolean Indicating success
      */
     private function load_my_company()
     {
@@ -70,6 +72,7 @@ class org_openpsa_core_interface extends midcom_baseclasses_components_interface
             }
             $GLOBALS['org.openpsa.core:owner_organization_obj'] = $my_company_object;
         }
+	return true;
     }
 
     /**
