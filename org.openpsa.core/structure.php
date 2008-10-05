@@ -176,7 +176,7 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
      * @param string $component The component to look for 
      * @return mixed the component URL or false
      */
-    function get_node_full_url($component)
+    function get_node_relative_url($component)
     {
         if (!array_key_exists($component, $this->components))
         {
