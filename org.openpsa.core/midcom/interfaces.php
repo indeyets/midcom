@@ -28,7 +28,93 @@ class org_openpsa_core_interface extends midcom_baseclasses_components_interface
     function _on_initialize()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        
+	
+	$this->define_constants();
+	$this->set_acl_options();
+	$this->set_workgroup_filter();
+	$this->load_my_company();
+
+        debug_pop();
+        return true;
+    }
+
+    /**
+     * Load "my company" or "owner company", the group that is the main user of this instance
+     */
+    private function load_my_company()
+    {
+        $my_company_guid = $this->_data['config']->get('owner_organization');
+        $GLOBALS['org.openpsa.core:owner_organization_obj'] = false;
+        if (   !empty($my_company_guid)
+            && mgd_is_guid($my_company_guid))
+        {
+            // For some reason this trigger error 500
+            //$_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
+            if (!class_exists('org_openpsa_contacts_group'))
+            {
+                // Fallback to standard group object
+                $class = 'midcom_db_group';
+            }
+            else
+            {
+                $class = 'org_openpsa_contacts_group';
+            }
+            $_MIDCOM->auth->request_sudo();
+            $my_company_object = new $class($my_company_guid);
+            $_MIDCOM->auth->drop_sudo();
+            if (!$my_company_object->guid)
+            {
+                // TODO: Generate proper error
+                debug_pop();
+                return false;
+            }
+            $GLOBALS['org.openpsa.core:owner_organization_obj'] = $my_company_object;
+        }
+    }
+
+    /**
+     * Make the selected workgroup filter available to all components
+     */
+    private function set_workgroup_filter()
+    {
+        if (   !array_key_exists('org_openpsa_core_workgroup_filter', $GLOBALS)
+            // Sessioning kills caching and I doubt we really need this info when we don't have a user
+            && $_MIDGARD['user'])
+        {
+
+            if ($this->_data['config']->get('default_workgroup_filter') == 'me')
+            {
+                if ($_MIDCOM->auth->user)
+                {
+
+                    $default_filter = $_MIDCOM->auth->user->id;
+                }
+                else
+                {
+                    $default_filter = 'all';
+                }
+            }
+            else
+            {
+                $default_filter = $this->_data['config']->get('default_workgroup_filter');
+            }
+
+            $GLOBALS['org_openpsa_core_workgroup_filter'] = $default_filter;
+
+            /* the workgroup filter is deprecated, let's not screw caching over with it
+            $session = new midcom_service_session('org.openpsa.core');
+            if (!$session->exists('org_openpsa_core_workgroup_filter'))
+            {
+                $session->set('org_openpsa_core_workgroup_filter', $default_filter);
+            }
+            $GLOBALS['org_openpsa_core_workgroup_filter'] = $session->get('org_openpsa_core_workgroup_filter');
+            */
+            $GLOBALS['org_openpsa_core_workgroup_filter'] = $default_filter;
+        }
+    }
+
+    private function define_constants()
+    {
         //Constant versions of wgtype bitmasks
         define('ORG_OPENPSA_WGTYPE_NONE', 0);
         define('ORG_OPENPSA_WGTYPE_INACTIVE', 1);
@@ -90,8 +176,13 @@ class org_openpsa_core_interface extends midcom_baseclasses_components_interface
         //org.openpsa.directmarketing campaign types
         define('ORG_OPENPSA_OBTYPE_CAMPAIGN', 9500);
         define('ORG_OPENPSA_OBTYPE_CAMPAIGN_SMART', 9501);
+    }
 
-        // Make the ACL selection array available to all components
+    /**
+     * Make the ACL selection array available to all components
+     */
+    private function set_acl_options()
+    {
         if (!array_key_exists('org_openpsa_core_acl_options', $GLOBALS))
         {
             $GLOBALS['org_openpsa_core_acl_options'] = array(
@@ -102,74 +193,6 @@ class org_openpsa_core_interface extends midcom_baseclasses_components_interface
                 ORG_OPENPSA_ACCESSTYPE_AGGREGATED => 'aggregated',
             );
         }
-
-        // Make the selected workgroup filter available to all components
-        if (   !array_key_exists('org_openpsa_core_workgroup_filter', $GLOBALS)
-            // Sessioning kills caching and I doubt we really need this info when we don't have a user
-            && $_MIDGARD['user'])
-        {
-
-            if ($this->_data['config']->get('default_workgroup_filter') == 'me')
-            {
-                if ($_MIDCOM->auth->user)
-                {
-
-                    $default_filter = $_MIDCOM->auth->user->id;
-                }
-                else
-                {
-                    $default_filter = 'all';
-                }
-            }
-            else
-            {
-                $default_filter = $this->_data['config']->get('default_workgroup_filter');
-            }
-
-            $GLOBALS['org_openpsa_core_workgroup_filter'] = $default_filter;
-
-            /* the workgroup filter is deprecated, let's not screw caching over with it
-            $session = new midcom_service_session('org.openpsa.core');
-            if (!$session->exists('org_openpsa_core_workgroup_filter'))
-            {
-                $session->set('org_openpsa_core_workgroup_filter', $default_filter);
-            }
-            $GLOBALS['org_openpsa_core_workgroup_filter'] = $session->get('org_openpsa_core_workgroup_filter');
-            */
-            $GLOBALS['org_openpsa_core_workgroup_filter'] = $default_filter;
-        }
-
-        // Load "my company" or "owner company", the group that is the main user of this instance
-        $my_company_guid = $this->_data['config']->get('owner_organization');
-        $GLOBALS['org.openpsa.core:owner_organization_obj'] = false;
-        if (   !empty($my_company_guid)
-            && mgd_is_guid($my_company_guid))
-        {
-            // For some reason this trigger error 500
-            //$_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
-            if (!class_exists('org_openpsa_contacts_group'))
-            {
-                // Fallback to standard group object
-                $class = 'midcom_db_group';
-            }
-            else
-            {
-                $class = 'org_openpsa_contacts_group';
-            }
-            $_MIDCOM->auth->request_sudo();
-            $my_company_object = new $class($my_company_guid);
-            $_MIDCOM->auth->drop_sudo();
-            if (!$my_company_object->guid)
-            {
-                // TODO: Generate proper error
-                debug_pop();
-                return false;
-            }
-            $GLOBALS['org.openpsa.core:owner_organization_obj'] = $my_company_object;
-        }
-
-        debug_pop();
-        return true;
     }
 }
 ?>
