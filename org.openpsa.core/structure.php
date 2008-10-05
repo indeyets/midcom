@@ -23,11 +23,11 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
      */
     private $components = array
     (
-        'org.openpsa.contacts',
-        'org.openpsa.invoices',
-        'org.openpsa.projects',
-        'org.openpsa.sales',
-        'net.nemein.wiki',
+        'org.openpsa.contacts' => 'org.openpsa.contacts',
+        'org.openpsa.invoices' => 'org.openpsa.invoices',
+        'org.openpsa.projects' => 'org.openpsa.projects',
+        'org.openpsa.sales' => 'org.openpsa.sales',
+        'net.nemein.wiki' => 'net.nemein.wiki',
     );
 
 
@@ -71,9 +71,10 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
             $this->set_config_value($last . '_guid', $node_guid);
             $this->set_config_value($last . '_url', $node_url);
         }
+	//set auto_init to true to write only once
         $this->set_config_value('auto_init', 'false');
-        var_dump($this->snippet->code);
         $this->snippet->update();
+
         $_MIDCOM->uimessages->add($this->_i18n->get_string('org.openpsa.core'), $this->_i18n->get_string('site structure cache created'), 'info');
     }
 
@@ -92,9 +93,6 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
         else
         {
             $this->snippet->code = $this->snippet->code . " '" . $key . "' => " . $value . ",\n";
-      var_dump($this->snippet->code);
-
-
         }
     }
 
@@ -167,6 +165,23 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
         $parts = explode('.', $component);
         $last = array_pop($parts);
         return $this->_config->get($last . '_url');
+    }
+
+    /**
+     * Helper function to retrieve the GUID for the first topic of a given component
+     *
+     * @param string $component the component to look for 
+     * @return mixed the component URL or false
+     */
+    function get_node_guid($component)
+    {
+        if (!array_key_exists($component, $this->components))
+        {
+            return false;
+        }
+        $parts = explode('.', $component);
+        $last = array_pop($parts);
+        return $this->_config->get($last . '_guid');
     }
 }
 ?>

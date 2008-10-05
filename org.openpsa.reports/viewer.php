@@ -17,10 +17,6 @@
 class org_openpsa_reports_viewer extends midcom_baseclasses_components_request
 {
     var $_datamanagers = array();
-    var $_projects_handler = null;
-    /*
-    var $_contacts_handler = null;
-    */
 
     /**
      * Constructor.
@@ -206,13 +202,16 @@ class org_openpsa_reports_viewer extends midcom_baseclasses_components_request
             debug_pop();
             return $components;
         }
+        $structure = new org_openpsa_core_structure();
+
         foreach ($components as $component => $loc)
         {
-            $node = midcom_helper_find_node_by_component($component);
-            if (   empty($node)
-                || !$node[MIDCOM_NAV_OBJECT]->can_do('midgard:read'))
+	    $node_guid = $structure->get_node_guid($component);
+            $topic = $_MIDCOM->dbfactory->get_object_by_guid($node_guid);
+            if (   empty($topic)
+                || !$topic->can_do('midgard:read'))
             {
-                debug_add("node for component '{$component}' not found or accessible");
+                debug_add("topic for component '{$component}' not found or accessible");
                 unset ($components[$component]);
             }
         }
