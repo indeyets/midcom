@@ -12,9 +12,9 @@ $task = new org_openpsa_projects_task($hour_report->task);
     <td>
         <?php
         $task_label = $task->title;
-        if ($data['projects_node'])
+        if ($data['projects_url'])
         {
-            $task_label = "<a href=\"{$data['projects_node'][MIDCOM_NAV_FULLURL]}task/{$task->guid}\">{$task_label}</a>";
+            $task_label = "<a href=\"{$data['projects_url']}task/{$task->guid}\">{$task_label}</a>";
         }
         echo "{$task_label}, {$hour_report->description}: {$hour_report->hours}h";
         ?>

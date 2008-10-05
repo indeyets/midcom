@@ -6,23 +6,23 @@ $view_today =& $data['view_today'];
 <div class="org_openpsa_mypage main">
     <?php
     
-    if ($data['calendar_node'])
+    if ($data['calendar_url'])
     {
         ?>
         <div class="agenda">
             <?php
-            $_MIDCOM->dynamic_load($data['calendar_node'][MIDCOM_NAV_RELATIVEURL].'agenda/day/'.date('Y-m-d', $data['requested_time']));
+            $_MIDCOM->dynamic_load($data['calendar_url'] . 'agenda/day/' . date('Y-m-d', $data['requested_time']));
             ?>
         </div>
         <?php
     }
     
-    if ($data['wiki_node'])
+    if ($data['wiki_url'])
     {
         ?>
         <div class="wiki">
             <?php
-            $_MIDCOM->dynamic_load($data['wiki_node'][MIDCOM_NAV_RELATIVEURL].'latest/');
+            $_MIDCOM->dynamic_load($data['wiki_url'] . 'latest/');
             ?>
         </div>
         <?php
@@ -32,7 +32,7 @@ $view_today =& $data['view_today'];
 
 <div class="sidebar">
     <?php
-    if ($data['projects_node'])
+    if ($data['projects_url'])
     {
         $tasks = org_openpsa_projects_task_resource::get_resource_tasks('guid');
         if (count($tasks) > 0)
@@ -41,7 +41,7 @@ $view_today =& $data['view_today'];
             ?>
             <div class="org_openpsa_projects_workingon">
                 <h2><?php echo $_MIDCOM->i18n->get_string('now working on', 'org.openpsa.projects'); ?></h2>
-                <form method="post" action="<?php echo $data['projects_node'][MIDCOM_NAV_FULLURL] . 'workingon/set/'; ?>">
+                <form method="post" action="<?php echo $data['projects_url'] . 'workingon/set/'; ?>">
                     <input type="hidden" name="url" value="&(prefix);" />
                     <select name="task" onchange="this.form.submit();">
                         <option value="none"><?php echo $_MIDCOM->i18n->get_string('not working on a task', 'org.openpsa.projects'); ?></option>

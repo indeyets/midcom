@@ -12,9 +12,9 @@ $task = new org_openpsa_projects_task($task_status->task);
     <td>
         <?php
         $task_label = $task->title;
-        if ($data['projects_node'])
+        if ($data['projects_url'])
         {
-            $task_label = "<a href=\"{$data['projects_node'][MIDCOM_NAV_FULLURL]}task/{$task->guid}\">{$task_label}</a>";
+            $task_label = "<a href=\"{$data['projects_url']}task/{$task->guid}\">{$task_label}</a>";
         }
 
         $status_changer_label = $_MIDCOM->i18n->get_string('system', 'org.openpsa.projects');

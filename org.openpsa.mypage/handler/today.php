@@ -172,9 +172,10 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
      */
     function _show_today($handler_id, &$data)
     {
-        $data['calendar_node'] = midcom_helper_find_node_by_component('org.openpsa.calendar');
-        $data['projects_node'] = midcom_helper_find_node_by_component('org.openpsa.projects');
-        $data['wiki_node'] = midcom_helper_find_node_by_component('net.nemein.wiki');
+        $structure = new org_openpsa_core_structure();
+        $data['calendar_url'] = $structure->get_node_relative_url('org.openpsa.calendar');
+        $data['projects_url'] = $structure->get_node_full_url('org.openpsa.projects');
+        $data['wiki_url'] = $structure->get_node_relative_url('net.nemein.wiki');
 
         midcom_show_style('show-today');
     }

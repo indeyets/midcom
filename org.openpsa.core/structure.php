@@ -24,6 +24,7 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
     private $components = array
     (
         'org.openpsa.contacts' => 'org.openpsa.contacts',
+        'org.openpsa.calendar' => 'org.openpsa.calendar',
         'org.openpsa.invoices' => 'org.openpsa.invoices',
         'org.openpsa.projects' => 'org.openpsa.projects',
         'org.openpsa.sales' => 'org.openpsa.sales',
@@ -62,16 +63,18 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
             $parts = explode('.', $component);
             $last = array_pop($parts);
             $node_guid = 'false';
-            $node_url = 'false';
+            $node_full_url = 'false';
             if (is_array($node))
             {
               $node_guid = "'" . $node[MIDCOM_NAV_OBJECT]->guid . "'";
-              $node_url = "'" . $node[MIDCOM_NAV_FULLURL] . "'";
+              $node_full_url = "'" . $node[MIDCOM_NAV_FULLURL] . "'";
+              $node_relative_url = "'" . $node[MIDCOM_NAV_RELATIVEURL] . "'";
             }
             $this->set_config_value($last . '_guid', $node_guid);
-            $this->set_config_value($last . '_url', $node_url);
+            $this->set_config_value($last . '_full_url', $node_full_url);
+            $this->set_config_value($last . '_relative_url', $node_relative_url);
         }
-	//set auto_init to true to write only once
+        //set auto_init to true to write only once
         $this->set_config_value('auto_init', 'false');
         $this->snippet->update();
 
@@ -151,12 +154,12 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
     }
 
     /**
-     * Helper function to retrieve the absolute URL for the first topic of a given component
+     * Helper function to retrieve the full URL for the first topic of a given component
      *
      * @param string $component the component to look for 
-     * @return mixed the component URL or false
+     * @return mixed The component URL or false
      */
-    function get_node_url($component)
+    function get_node_full_url($component)
     {
         if (!array_key_exists($component, $this->components))
         {
@@ -164,9 +167,26 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
         }
         $parts = explode('.', $component);
         $last = array_pop($parts);
-        return $this->_config->get($last . '_url');
+        return $this->_config->get($last . '_full_url');
     }
 
+    /**
+     * Helper function to retrieve the relative URL for the first topic of a given component
+     *
+     * @param string $component The component to look for 
+     * @return mixed the component URL or false
+     */
+    function get_node_full_url($component)
+    {
+        if (!array_key_exists($component, $this->components))
+        {
+            return false;
+        }
+        $parts = explode('.', $component);
+        $last = array_pop($parts);
+        return $this->_config->get($last . '_relative_url');
+    }
+    
     /**
      * Helper function to retrieve the GUID for the first topic of a given component
      *

@@ -280,8 +280,9 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
      */
     function _show_review($handler_id, &$data)
     {
+        $structure = new org_openpsa_core_structure();
         $data['calendar_node'] = midcom_helper_find_node_by_component('org.openpsa.calendar');
-        $data['projects_node'] = midcom_helper_find_node_by_component('org.openpsa.projects');
+        $data['projects_url'] = $structure->get_node_full_url('org.openpsa.projects');
 
         $week_hours_invoiceable = 0;
         $week_hours_total = 0;

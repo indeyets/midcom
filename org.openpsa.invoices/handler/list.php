@@ -23,7 +23,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
     {
         // Locate Contacts node for linking
         $structure = new org_openpsa_core_structure();
-        $this->_request_data['contacts_url'] = $structure->get_node_url('org.openpsa.contacts');
+        $this->_request_data['contacts_url'] = $structure->get_node_full_url('org.openpsa.contacts');
     }
 
     function _process_invoice_list($invoices)
