@@ -44,19 +44,26 @@ function hideElement(element)
     ?>
 
     <?php
-    foreach($data['campaign']->testers2 as $counter => $tester)
+    if (count($data['campaign']->testers2)>0)
     {
-        $tester_link = '';
-        $person = new midcom_baseclasses_database_person($tester);
-        if ($contacts_node)
+        foreach($data['campaign']->testers2 as $counter => $tester)
         {
-            $tester_link = "{$contacts_node[MIDCOM_NAV_FULLURL]}person/{$person->guid}/";
+            $tester_link = '';
+            $person = new midcom_baseclasses_database_person($tester);
+            if ($contacts_node)
+            {
+                $tester_link = "{$contacts_node[MIDCOM_NAV_FULLURL]}person/{$person->guid}/";
+            }
+            echo "<a href=\"{$tester_link}\" target=\"_blank\" title=\"{$person->email}\" alt=\"{$person->email}\">{$person->name}</a>";
+            if(($counter+1) < count($data['campaign']->testers2))
+            {
+                echo ",&nbsp;";
+            }
         }
-        echo "<a href=\"{$tester_link}\" target=\"_blank\" title=\"{$person->email}\" alt=\"{$person->email}\">{$person->name}</a>";
-        if(($counter+1) < count($data['campaign']->testers2))
-        {
-            echo ",&nbsp;";
-        }
+    }
+    else
+    {
+        echo "<strong>".$data['l10n']->get('no testers')."</strong>";
     }
     ?>
 

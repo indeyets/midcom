@@ -583,6 +583,10 @@ Subscribed new
 Testers
 ---STRINGEND
 
+---STRING no testers
+No persons added to testers
+---STRINGEND
+
 ---STRING text email
 Text email
 ---STRINGEND
