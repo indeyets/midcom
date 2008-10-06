@@ -878,7 +878,17 @@ class midcom_services_auth extends midcom_baseclasses_core_object
         if (!is_null($user))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Querying privilege {$privilege} for user {$user->id} to class {$class}", MIDCOM_LOG_DEBUG);
+            
+            if (is_object($class))
+            {
+                $classname = get_class($class);
+            }
+            else
+            {
+                $classname = $class;
+            }
+            
+            debug_add("Querying privilege {$privilege} for user {$user->id} to class {$classname}", MIDCOM_LOG_DEBUG);
             debug_pop();
         }
 
@@ -900,18 +910,26 @@ class midcom_services_auth extends midcom_baseclasses_core_object
 
         if ($class !== null)
         {
-            if (!class_exists($class))
+            if (!is_object($class))
             {
-                if (   is_null($component)
-                    || !$_MIDCOM->componentloader->load_graceful($component))
+                if (!class_exists($class))
                 {
-                    debug_push_class(__CLASS__, __FUNCTION__);
-                    debug_add("can_user_do check to undefined class '{$class}'.", MIDCOM_LOG_ERROR);
-                    debug_pop();
-                    return false;
+                    if (   is_null($component)
+                        || !$_MIDCOM->componentloader->load_graceful($component))
+                    {
+                        debug_push_class(__CLASS__, __FUNCTION__);
+                        debug_add("can_user_do check to undefined class '{$class}'.", MIDCOM_LOG_ERROR);
+                        debug_pop();
+                        return false;
+                    }
                 }
+                
+                $tmp_object = new $class();
             }
-            $tmp_object = new $class();
+            else
+            {
+                $tmp_object = $class;
+            }
             $this->_load_class_magic_privileges($tmp_object);
         }
         else

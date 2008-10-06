@@ -90,6 +90,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
     {
         parent::__construct();
         
+        // FIXME: initialize() should be called by the callee, not here in constructor
         $this->initialize();
     }
 
@@ -117,13 +118,13 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
         }
 
         if (   !$GLOBALS['midcom_config']['toolbars_enable_centralized']
-            || !$_MIDCOM->auth->can_user_do('midcom:centralized_toolbar', null, 'midcom_services_toolbars'))
+            || !$_MIDCOM->auth->can_user_do('midcom:centralized_toolbar', null, $this))
         {
             $still_initializing = false;
             return;
         }
 
-        if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, 'midcom_services_toolbars'))
+        if ($_MIDCOM->auth->can_user_do('midcom:ajax', null, $this))
         {
             $_MIDCOM->enable_jquery();
             $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.toolbars/jquery.midcom_services_toolbars.js');
