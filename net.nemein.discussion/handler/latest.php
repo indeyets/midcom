@@ -141,19 +141,18 @@ class net_nemein_discussion_handler_latest extends midcom_baseclasses_components
         $thread_qb->set_limit($display_comments);
 
         // Find out subforums (only one level)
+        $nodes = array();
+        $nodes[] = $this->_topic->id;
+        // FIXME: We can use collector here
         $forum_qb = midcom_db_topic::new_query_builder();
         $forum_qb->add_constraint('up', '=', $this->_topic->id);
-        $thread_qb->begin_group('OR');
+        $forum_qb->add_constraint('component', '=', 'net.nemein.discussion');
         $forums = $forum_qb->execute();
         foreach ($forums as $forum)
         {
-            if ($forum->parameter('midcom', 'component') == 'net.nemein.discussion')
-            {
-                $thread_qb->add_constraint('node', '=', $forum->id);
-            }
+            $nodes[] = $forum->id;
         }
-        $thread_qb->add_constraint('node', '=', $this->_topic->id);
-        $thread_qb->end_group();
+        $thread_qb->add_constraint('node', 'IN', $nodes);
 
         $threads = $thread_qb->execute();
         $qb->begin_group('OR');
