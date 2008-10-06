@@ -385,7 +385,7 @@ function init () {
     }
     
     if ( !defined('MAGPIE_FETCH_TIME_OUT') ) {
-        define('MAGPIE_FETCH_TIME_OUT', 5); // 5 second timeout
+        define('MAGPIE_FETCH_TIME_OUT', 10); // 5 second timeout
     }
     
     // use gzip encoding to fetch rss files if supported?

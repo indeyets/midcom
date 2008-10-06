@@ -121,7 +121,7 @@ class Snoopy
     var $_isproxy        =    false;                // set if using a proxy server
     var $_fp_timeout    =    30;                    // timeout for socket connection
 
-    function Snoopy()
+    function __construct()
     {
         $this->proxy_host = $GLOBALS['midcom_component_data']['org.openpsa.httplib']['config']->get('proxy_host');
         $this->proxy_port = $GLOBALS['midcom_component_data']['org.openpsa.httplib']['config']->get('proxy_port');
@@ -765,7 +765,8 @@ class Snoopy
 
     function _check_timeout($fp)
     {
-        if ($this->read_timeout > 0) {
+        if ($this->read_timeout > 0) 
+        {
             $fp_status = socket_get_status($fp);
             if ($fp_status["timed_out"]) {
                 $this->timed_out = true;
