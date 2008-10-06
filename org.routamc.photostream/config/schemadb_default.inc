@@ -93,6 +93,7 @@
                 ),
             ),
             'widget' => 'photo',
+            'required' => true,
         ),
         'private' => Array
         (
@@ -157,6 +158,7 @@
                 ),
             ),
             'widget' => 'photo',
+            'required' => true,
         ),
         'description' => Array
         (
