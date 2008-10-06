@@ -553,8 +553,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             return false;
         }
 
-        // Explicitly set this in case someone needs to check against it
-        $object->metadata->deleted = true;
+        // Explicitly set this in case someone needs to check against it 
         midcom_baseclasses_core_dbobject::delete_post_ops($object);
 
         return true;
