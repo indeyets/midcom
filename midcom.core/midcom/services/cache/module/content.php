@@ -942,6 +942,15 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      */
     function _finish_caching($etag=null)
     {
+        // make it safe to call this multiple times
+        // done this way since it's slightly less hacky than mucking about with the cache->_modules etc 
+        static $run_count = 0;
+        ++$run_count;
+        if ($run_count > 1)
+        {
+            return;
+        }
+
         if (   $this->_no_cache
             || $this->_live_mode)
         {

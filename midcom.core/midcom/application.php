@@ -710,6 +710,10 @@ class midcom_application
     {
         $this->_status = MIDCOM_STATUS_CLEANUP;
 
+        // Shutdown content-cache (ie flush content to user :) before possibly slow DBA watches
+        // done this way since it's slightly less hacky than calling shutdown and then mucking about with the cache->_modules etc 
+        $this->cache->content->_finish_caching();
+
         $this->componentloader->process_pending_notifies();
 
         // Store any unshown messages
@@ -727,6 +731,7 @@ class midcom_application
             echo "</ul>\n";
         }
 
+        // Shutdown rest of the caches
         $this->cache->shutdown();
 
         // This is here to avoid trouble with end-of-processing segfaults. Will block AFAIK
