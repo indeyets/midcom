@@ -84,6 +84,11 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $items = array();
+        
+        if (!$_MIDCOM->componentloader->is_loaded('org.openpsa.httplib'))
+        {
+            $_MIDCOM->load_library('org.openpsa.httplib');
+        }
 
         error_reporting(E_WARNING);
         // TODO: Ensure Magpie uses conditional GETs here
