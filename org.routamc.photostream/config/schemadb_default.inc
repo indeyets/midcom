@@ -232,6 +232,26 @@
                 ),
             ),
         ),
+        'rating' => Array
+        (
+            'title' => 'rating',
+            'storage' => 'rating',
+            'type' => 'select',
+            'type_config' => Array
+            (
+                'options' => Array
+                (
+                    0 => '',
+                    1 => '*',
+                    2 => '**',
+                    3 => '***',
+                    4 => '****',
+                    5 => '*****',
+                ),
+            ),
+            'widget' => 'select',
+            'hidden' => true,
+        ),
         'private' => Array
         (
             'title' => 'private',
