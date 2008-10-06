@@ -80,7 +80,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
 
         $structure = new org_openpsa_core_structure();
         $this->_request_data['contacts_url'] = $structure->get_node_full_url('org.openpsa.contacts');
-        $this->_request_data['sales_node'] = midcom_helper_find_node_by_component('org.openpsa.sales');
+        $this->_request_data['sales_url'] = $structure->get_node_full_url('org.openpsa.sales');
         $this->_request_data['prefix'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
         if (count($args) > 0)
@@ -560,7 +560,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
                 {
                     $agreement = new org_openpsa_sales_salesproject_deliverable($task->agreement);
                     $salesproject = new org_openpsa_sales_salesproject($agreement->salesproject);
-                    $agreement_url = "{$data['sales_node'][MIDCOM_NAV_FULLURL]}salesproject/{$salesproject->guid}";
+                    $agreement_url = "{$data['sales_url']}salesproject/{$salesproject->guid}";
                     $html = "<a href='{$agreement_url}'>{$agreement->title}</a>";
                 }
                 $row_cache['agreement'][$task->agreement] = $html;

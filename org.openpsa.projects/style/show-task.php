@@ -2,7 +2,10 @@
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view_task =& $data['view_task'];
 $task =& $data['task'];
-$sales_node = midcom_helper_find_node_by_component('org.openpsa.sales');
+
+$structure = new org_openpsa_core_structure();
+$sales_url = $structure->get_node_full_url('org.openpsa.sales');
+
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 <div class="org_openpsa_projects_task">
@@ -77,10 +80,10 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             echo "<h2>" . $data['l10n']->get('agreement') . "</h2>\n";
             $agreement = new org_openpsa_sales_salesproject_deliverable($data['task']->agreement);
 
-            if ($sales_node)
+            if ($sales_url)
             {
                 $salesproject = new org_openpsa_sales_salesproject($agreement->salesproject);
-                $agreement->deliverable_html = "<a href=\"{$sales_node[MIDCOM_NAV_FULLURL]}salesproject/{$salesproject->guid}/#{$agreement->guid}\">{$agreement->deliverable_html}</a>\n";
+                $agreement->deliverable_html = "<a href=\"{$sales_url}salesproject/{$salesproject->guid}/#{$agreement->guid}\">{$agreement->deliverable_html}</a>\n";
             }
 
             echo $agreement->deliverable_html;

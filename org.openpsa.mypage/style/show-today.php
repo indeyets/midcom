@@ -79,8 +79,7 @@ $view_today =& $data['view_today'];
     }
     
     // List expenses
-    $expenses_node = midcom_helper_find_node_by_component('org.openpsa.expenses');
-    if ($expenses_node)
+    if ($data['expenses_url'])
     {
         echo "<div class=\"expenses\">\n";
         echo "<h2>" . $data['l10n']->get('this week') . "</h2>\n";
@@ -113,11 +112,11 @@ $view_today =& $data['view_today'];
             echo "        <td>". round($uninvoiceable_hours, 1) . "</td>\n";
             echo "    </tr>\n";
             echo "</table>\n";
-            echo "<p><a href=\"{$expenses_node[MIDCOM_NAV_FULLURL]}\">" . sprintf($data['l10n']->get('see all %s hours'), round($total_hours, 1)). "</a></p>\n";
+            echo "<p><a href=\"{$data['expenses_url']}\">" . sprintf($data['l10n']->get('see all %s hours'), round($total_hours, 1)). "</a></p>\n";
         }
         else
         {
-	  echo "<p><a href=\"{$expenses_node[MIDCOM_NAV_FULLURL]}\">" . $_MIDCOM->i18n->get_string('report hours', 'org.openpsa.expenses') . "</a></p>\n";
+	  echo "<p><a href=\"{$data['expenses_url']}\">" . $_MIDCOM->i18n->get_string('report hours', 'org.openpsa.expenses') . "</a></p>\n";
         }
         
         // TODO: Show expenses and mileages

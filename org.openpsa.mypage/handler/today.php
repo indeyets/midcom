@@ -151,14 +151,14 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
         $_MIDCOM->set_pagetitle($data['title']);
 
         // Add the JS file for "now working on" calculator
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.projects/workingon.js");
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/org.openpsa.projects/workingon.js");
         $_MIDCOM->add_link_head
         (
             array
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/org.openpsa.projects/projects.css",
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.projects/projects.css",
             )
         );
 
@@ -175,6 +175,7 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
         $structure = new org_openpsa_core_structure();
         $data['calendar_url'] = $structure->get_node_relative_url('org.openpsa.calendar');
         $data['projects_url'] = $structure->get_node_full_url('org.openpsa.projects');
+        $data['expenses_url'] = $structure->get_node_full_url('org.openpsa.expenses');
         $data['wiki_url'] = $structure->get_node_relative_url('net.nemein.wiki');
 
         midcom_show_style('show-today');
