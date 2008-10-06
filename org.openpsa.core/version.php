@@ -10,14 +10,16 @@
  * @ignore
  */
 //These two constants are on purpose in here
-define('ORG_OPENPSA_CORE_VERSION_NUMBER', '2.0.0');
-define('ORG_OPENPSA_CORE_VERSION_NAME'  , 'It is all relative');
+define('ORG_OPENPSA_CORE_VERSION_NUMBER', '2.1.0');
+define('ORG_OPENPSA_CORE_VERSION_NAME'  , 'Leaner and Meaner');
 
 /**
  * Returns current version of OpenPsa. Three different modes are supported:
  *  version number (version name)
  *  version number
  *  version name
+ * 
+ * @package org.openpsa.core
  */
 class org_openpsa_core_version
 {

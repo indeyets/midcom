@@ -6,13 +6,19 @@
 (
     'midcom_dba_classes.inc',
 ),
-'version' => '2.1.0beta1',
+'version' => '2.9.0beta1',
 'package.xml' => array
 (
     'summary' => 'Document management',
     'description' => 'Organize and manage documents with metadata, search inside documents.',
     'maintainers' => array
     (
+        'flack' => array
+        (
+            'name' => 'Andreas Flack',
+            'email' => 'flack@contentcontrol-berlin.de',
+            'role' => 'developer',
+        ),
         'bergie' => array
         (
             'name' => 'Henri Bergius',

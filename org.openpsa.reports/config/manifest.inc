@@ -2,7 +2,7 @@
 'purecode' => false,
 'privileges' => array(),
 'class_definitions' => array(),
-'version' => '2.1.0beta1',
+'version' => '2.9.0beta1',
 'package.xml' => array
 (
     'summary' => 'OpenPSA reporting module',
@@ -14,6 +14,12 @@
             'name' => 'Eero af Heurlin',
             'email' => 'eero.afheurlin@iki.fi',
             'role' => 'lead',
+        ),
+        'flack' => array
+        (
+            'name' => 'Andreas Flack',
+            'email' => 'flack@contentcontrol-berlin.de',
+            'role' => 'developer',
         ),
     ),
     'dependencies' => array

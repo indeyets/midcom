@@ -2,7 +2,7 @@
 'purecode' => false,
 'privileges' => array(),
 'class_definitions' => array(),
-'version' => '2.1.0beta1',
+'version' => '2.9.0beta1',
 'state' => 'beta',
 'package.xml' => array
 (
@@ -10,6 +10,12 @@
     'description' => 'At a glance view of your documents, tasks etc',
     'maintainers' => array
     (
+        'flack' => array
+        (
+            'name' => 'Andreas Flack',
+            'email' => 'flack@contentcontrol-berlin.de',
+            'role' => 'developer',
+        ),
         'bergie' => array
         (
             'name' => 'Henri Bergius',

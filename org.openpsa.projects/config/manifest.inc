@@ -5,7 +5,7 @@
 (
     'midcom_dba_classes.inc',
 ),
-'version' => '2.4.0beta1',
+'version' => '2.9.0beta1',
 'state' => 'beta',
 'package.xml' => array
 (
@@ -25,6 +25,12 @@
             'name' => 'Eero af Heurlin',
             'email' => 'eero.afheurlin@iki.fi',
             'role' => 'lead',
+        ),
+        'flack' => array
+        (
+            'name' => 'Andreas Flack',
+            'email' => 'flack@contentcontrol-berlin.de',
+            'role' => 'developer',
         ),
     ),
     'dependencies' => array

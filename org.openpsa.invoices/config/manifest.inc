@@ -1,7 +1,7 @@
 'name' => 'org.openpsa.invoices',
 'icon' => 'stock-icons/16x16/stock_mail-open.png',
 'purecode' => false,
-'version' => '1.1.0beta1',
+'version' => '2.9.0beta1',
 'state' => 'beta',
 'privileges' => array(),
 'class_definitions' => array
@@ -14,6 +14,12 @@
     'description' => 'Simple invoicing status tracker',
     'maintainers' => array
     (
+        'flack' => array
+        (
+            'name' => 'Andreas Flack',
+            'email' => 'flack@contentcontrol-berlin.de',
+            'role' => 'developer',
+        ),
         'bergie' => array
         (
             'name' => 'Henri Bergius',
