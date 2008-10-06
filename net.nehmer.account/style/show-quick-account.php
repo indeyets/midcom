@@ -25,7 +25,7 @@ $schema =& $data['datamanager']->schema;
             $last_login = $data['user']->get_last_login();
             if (!$last_login)
             {
-                echo "<p class=\"status\"><img src=\"" . MIDCOM_STATIC_URL . "/net.nehmer.account/offline.png\" alt=\"\" /> {$data['l10n']->get('the user is offline')}</p>\n";
+                echo "<p class=\"status\"><img src=\"" . MIDCOM_STATIC_URL . "/net.nehmer.account/offline.png\" alt=\"\" /> " . $data['l10n']->get('the user is offline') . "</p>\n";
             }
             else
             {

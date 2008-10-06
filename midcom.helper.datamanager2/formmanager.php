@@ -255,7 +255,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             if ($config['static_prepend'] !== null)
             {
                 $static_name = "__static_prepend_{$name}";
-                $this->form->addElement('static', $static_name, '', "<span class=\"static_prepend\">{$this->_translate($config['static_prepend'])}</span>");
+                $this->form->addElement('static', $static_name, '', "<span class=\"static_prepend\">" . $this->_translate($config['static_prepend']) . "</span>");
             }
 
             $this->widgets[$name]->set_form($this->form);
@@ -308,7 +308,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
             if ($config['static_append'] !== null)
             {
                 $static_name = "__static_append_{$name}";
-                $this->form->addElement('static', $static_name, '', "<span class=\"static_append\">{$this->_translate($config['static_append'])}</span>");
+                $this->form->addElement('static', $static_name, '', "<span class=\"static_append\">" . $this->_translate($config['static_append']) . "</span>");
             }
 
             // End the fieldsets if required

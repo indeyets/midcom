@@ -135,7 +135,7 @@ class net_nemein_favourites_viewer extends midcom_baseclasses_components_request
             return "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . " <img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/favorite.png\" alt=\"" . $l10n->get('favourite') . "\" /></span>\n";
         }
 
-        return "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . "<a href=\"{$url}create/{$objectType}/{$guid}.html\" class=\"net_nemein_favourites_create\"> <img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/not-favorite.png\" style=\"border: none;\" alt=\"{$l10n->get('add to favourites')}\" /></a></span>";
+        return "<span class=\"net_nemein_favourites\">". sprintf($l10n->get('%d favs'), $total_favs) . "<a href=\"{$url}create/{$objectType}/{$guid}.html\" class=\"net_nemein_favourites_create\"> <img src=\"" . MIDCOM_STATIC_URL . "/net.nemein.favourites/not-favorite.png\" style=\"border: none;\" alt=\"" . $l10n->get('add to favourites') . "\" /></a></span>";
     }
 
     function render_add_link($objectType, $guid, $url = '', $link_for_anonymous = true)

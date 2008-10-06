@@ -47,7 +47,7 @@ switch ($data['photo']->status)
 <?php
 foreach ($data['buttons'] as $button)
 {
-    echo "<input type=\"submit\" name=\"f_{$button}\" value=\"{$data['l10n']->get($button)}\" class=\"{$button}\" />\n";
+    echo "<input type=\"submit\" name=\"f_{$button}\" value=\"" . $data['l10n']->get($button) . "\" class=\"{$button}\" />\n";
 }
 ?>
                     </p>

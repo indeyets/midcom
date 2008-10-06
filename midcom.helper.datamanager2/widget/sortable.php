@@ -195,7 +195,7 @@ class midcom_helper_datamanager2_widget_sortable extends midcom_helper_datamanag
             }
 
             $html .= "            <input type=\"text\" name=\"{$this->name}_order[{$key}]\" value=\"{$i}\" />\n";
-            $html .= "            {$this->_translate($value)}\n";
+            $html .= "            " . $this->_translate($value). "\n";
 
             if (!$this->select_all)
             {
