@@ -23,8 +23,6 @@ class org_openpsa_httplib_interface extends midcom_baseclasses_components_interf
         $this->_purecode = true;
         $this->_autoload_files = array
         (
-            'helpers.php',
-            'main.php',
             'Snoopy.php',
             'hkit.php',
         );
