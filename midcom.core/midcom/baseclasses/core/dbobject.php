@@ -1477,6 +1477,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function refresh(&$object)
     {
+        // FIXME: be GUID based, but needs further testing...
+        //return $object->get_by_guid($object->guid);
         return $object->get_by_id($object->id);
     }
 

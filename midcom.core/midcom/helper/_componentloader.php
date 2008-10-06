@@ -195,6 +195,7 @@ class midcom_helper__componentloader
         MIDCOM_OPERATION_DBA_CREATE => Array(),
         MIDCOM_OPERATION_DBA_UPDATE => Array(),
         MIDCOM_OPERATION_DBA_DELETE => Array(),
+        MIDCOM_OPERATION_DBA_IMPORT => Array(),
     );
 
     /**
@@ -211,6 +212,7 @@ class midcom_helper__componentloader
         MIDCOM_OPERATION_DBA_CREATE => Array(),
         MIDCOM_OPERATION_DBA_UPDATE => Array(),
         MIDCOM_OPERATION_DBA_DELETE => Array(),
+        MIDCOM_OPERATION_DBA_IMPORT => Array(),
     );
 
     /**
@@ -882,7 +884,6 @@ class midcom_helper__componentloader
     function process_pending_notifies()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-
         if ($this->_watch_notifications === null)
         {
             debug_add('Pending notifies should only be processed once at the end of the request, aborting.', MIDCOM_LOG_WARN);
@@ -895,9 +896,10 @@ class midcom_helper__componentloader
             foreach ($operation_data as $tmp => $data)
             {
                 $object = array_shift($data);
-                if ($operation != MIDCOM_OPERATION_DBA_DELETE)
+                if (   $operation != MIDCOM_OPERATION_DBA_DELETE
+                    && $operation != MIDCOM_OPERATION_DBA_IMPORT)
                 {
-                    // Only refresh when we haven't deleted the record.
+                    // Only refresh when we haven't deleted/imported the record.
                     if (! $object->refresh())
                     {
                         debug_add('Failed to refresh an object before notification, skipping it. see the debug level log for a dump.', MIDCOM_LOG_WARN);

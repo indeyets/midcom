@@ -572,7 +572,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
         }
 
         $acl_object->_on_imported();
-        $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_IMPORT, $object);
+        $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_IMPORT, $acl_object);
         debug_pop();
         return true;
     }

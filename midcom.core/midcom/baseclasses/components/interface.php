@@ -839,6 +839,10 @@ class midcom_baseclasses_components_interface
             case MIDCOM_OPERATION_DBA_DELETE:
                 $this->_on_watched_dba_delete($object);
                 break;
+
+            case MIDCOM_OPERATION_DBA_IMPORT:
+                $this->_on_watched_dba_import($object);
+                break;
         }
     }
 
@@ -861,7 +865,7 @@ class midcom_baseclasses_components_interface
      *
      * @param int $operation The operation identifier (one of the MIDCOM_OPERATION constants)
      *     which applies.
-     * @param obect $object The object on which the operation has occurred.
+     * @param object $object The object on which the operation has occured.
      */
     function _on_watched_operation($operation, $object) {}
 
@@ -875,7 +879,7 @@ class midcom_baseclasses_components_interface
      *
      * It is called after the generic _on_watched_operation event handler.
      *
-     * @param obect $object The object on which the operation has occurred.
+     * @param object $object The object on which the operation has occured.
      */
     function _on_watched_dba_create($object) {}
 
@@ -889,7 +893,7 @@ class midcom_baseclasses_components_interface
      *
      * It is called after the generic _on_watched_operation event handler.
      *
-     * @param obect $object The object on which the operation has occurred.
+     * @param object $object The object on which the operation has occured.
      */
     function _on_watched_dba_update($object) {}
 
@@ -897,15 +901,21 @@ class midcom_baseclasses_components_interface
      * This function is triggered at the end of the request for each watched delete operation
      * that has been done during the request.
      *
-     * It will be called once per operation and unique object, where object uniqueness
-     * is determined by the combination of object class and guid. The object has been
-     * refreshed before being passed to this event handler.
+     * It is called after the generic _on_watched_operation event handler.
+     *
+     * @param object $object The object on which the operation has occured.
+     */
+    function _on_watched_dba_delete($object) {}
+
+    /**
+     * This function is triggered at the end of the request for each watched import operation
+     * that has been done during the request.
      *
      * It is called after the generic _on_watched_operation event handler.
      *
-     * @param obect $object The object on which the operation has occurred.
+     * @param object $object The object on which the operation has occured.
      */
-    function _on_watched_dba_delete($object) {}
+    function _on_watched_dba_import($object) {}
 
     /**
      * This is an event handler, called after the basic component initialization has been done
