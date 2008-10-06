@@ -62,7 +62,7 @@
 'link_to_external_url' => false,
 
 // Page linking system
-'enable_article_links' => false,
+'enable_article_links' => true,
 'enable_editing_of_linked_articles' => false,
 'include_linked_articles_to_feeds' => true,
 

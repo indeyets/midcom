@@ -18,6 +18,22 @@
                 'title' => 'blog settings'
             ),
         ),
+        'index_fulltext' => array
+        (
+            'description' => 'show content in index',
+            'datatype' => 'text',
+            'location' => 'config',
+            'config_domain' => 'net.nehmer.blog',
+            'config_key' => 'index_fulltext',
+            'widget' => 'config_radiobox',
+            'widget_radiobox_choices' => array
+            (
+                '' => 'default setting',
+                '1' => 'yes',
+                '0' => 'no',
+            ),
+        ),
+
         'categories' => array
         (
             'description' => 'categories',

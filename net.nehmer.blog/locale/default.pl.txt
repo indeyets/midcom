@@ -143,6 +143,10 @@ Włącz filtry pola (jako parametry GET)
 Włącz publikacje anonimowe ("Książka gości")
 ---STRINGEND
 
+---STRING enable scheduled publishing
+Włącz planowanie publikacji
+---STRINGEND
+
 ---STRING enable subdirectories
 Dołącz podkategorie do Indeksu oraz RSS
 ---STRINGEND
@@ -177,6 +181,10 @@ Ustawienia indeksu
 
 ---STRING index_entries
 Liczba pozycji w indeksie
+---STRINGEND
+
+---STRING language
+Język
 ---STRINGEND
 
 ---STRING link_to_external_url
@@ -355,11 +363,7 @@ Używaj elementu 'view' w URLach
 Widoczny?
 ---STRINGEND
 
----STRING enable scheduled publishing
-Włącz planowanie publikacji
----STRINGEND
-
----STRING language
-Język
+---STRING show content in index
+Pokaż treść artykułów w indeksie
 ---STRINGEND
 

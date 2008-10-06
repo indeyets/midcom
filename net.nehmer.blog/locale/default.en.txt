@@ -143,6 +143,10 @@ Enable field filters (GET parameter)
 Enable public posting ("Guestbook style")
 ---STRINGEND
 
+---STRING enable scheduled publishing
+Enable scheduled publishing
+---STRINGEND
+
 ---STRING enable subdirectories
 Include all subtopic's News Articles into Index (and RSS)
 ---STRINGEND
@@ -177,6 +181,10 @@ Index settings
 
 ---STRING index_entries
 List this many items on index page
+---STRINGEND
+
+---STRING language
+Language
 ---STRINGEND
 
 ---STRING link_to_external_url
@@ -319,6 +327,10 @@ Set to no for de.linkm.newsticker compatibility
 Settings
 ---STRINGEND
 
+---STRING show content in index
+Show full articles in index
+---STRINGEND
+
 ---STRING show latest items in navigation
 Show latest items in navigation
 ---STRINGEND
@@ -355,10 +367,3 @@ Use 'view' prefix in url
 Should the topic be visible
 ---STRINGEND
 
----STRING language
-Language
----STRINGEND
-
----STRING enable scheduled publishing
-Enable scheduled publishing
----STRINGEND
