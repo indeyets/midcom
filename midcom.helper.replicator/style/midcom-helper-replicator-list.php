@@ -64,7 +64,7 @@ if (count($data['subscriptions']) > 0)
                 <tr>
                     <td><?php echo "<abbr title='{$queue_path}'>" . count($queued_items) . "</abbr>&nbsp;/&nbsp;<abbr title='{$quarantine_path}'>" . count($quarantined_items) . '</abbr>'; ?></td>
                     <td><a href="&(prefix);edit/&(subscription.guid);/">&(subscription.title);</a></th>
-                    <td><?php echo $_MIDCOM->i18n->get_string($data['schemadb'][$subscription->exporter]->description, 'midcom.helper.replicator'); ?></td>
+                    <td><?php if (array_key_exists($subscription->exporter,$data['schemadb'])) echo $_MIDCOM->i18n->get_string($data['schemadb'][$subscription->exporter]->description, 'midcom.helper.replicator'); ?></td>
                     <td class="subscription_info"><?php echo $transporter->get_information(); ?></td>
                 </tr>
                 <?php
