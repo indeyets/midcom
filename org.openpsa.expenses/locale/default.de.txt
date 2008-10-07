@@ -35,6 +35,10 @@ Ausgaben-Verwaltung
 Person
 ---STRINGEND
 
+---STRING report hours
+Arbeitsstunden melden
+---STRINGEND
+
 ---STRING reporter
 Meldender
 ---STRINGEND
@@ -51,7 +55,7 @@ Summe
 Nicht abrechenbar
 ---STRINGEND
 
----STRING report hours
-Arbeitsstunden melden
+---STRING delete hour report
+Stundenbericht löschen
 ---STRINGEND
 

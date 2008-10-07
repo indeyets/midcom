@@ -35,6 +35,10 @@ Expense tracking
 Person
 ---STRINGEND
 
+---STRING report hours
+Report hours
+---STRINGEND
+
 ---STRING reporter
 Reporter
 ---STRINGEND
@@ -51,7 +55,7 @@ Total
 Not invoiceable
 ---STRINGEND
 
----STRING report hours
-Report hours
+---STRING delete hour report
+Delete hour report
 ---STRINGEND
 
