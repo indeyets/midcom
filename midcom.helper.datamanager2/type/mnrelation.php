@@ -87,6 +87,7 @@ require_once('select.php');
  *   scores will be displayed first. `DESC` is default, since then new member objects will
  *   be left at the end of the line rather than appearing first. This field is not case
  *   sensitive and string can be extended e.g. to `ascend`.
+ * - <i>array additional_fields:</i> Additional fields that should be set on the mnrelation object
  *
  * (These list is complete, including all allowed options from the base type. Base type
  * options not listed here may not be used.)
@@ -206,6 +207,14 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
     var $sorted_order = array();
 
     /**
+     * Additional fields to set on the object
+     * 
+     * @access public
+     * @var Array
+     */
+    var $additional_fields = array();
+
+    /**
      * Initialize the class, if necessary, create a callback instance, otherwise
      * validate that an option array is present.
      */
@@ -294,6 +303,15 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
         {
             $qb->add_constraint($this->member_fieldname, 'LIKE', $this->member_limit_like);
         }
+
+        if (!empty($this->additional_fields))
+        {
+            foreach ($this->additional_fields as $fieldname => $value)
+            {
+                $qb->add_constraint($fieldname, '=', $value);
+            }
+        }
+
         $this->_membership_objects = $qb->execute();
     }
 
@@ -472,7 +490,15 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
                     
                     $i++;
                 }
-                
+
+                if (!empty($this->additional_fields))
+                {
+                    foreach ($this->additional_fields as $fieldname => $value)
+                    {
+                        $member->{$fieldname} = $value;
+                    }
+                }
+
                 if (!$member->create())
                 {
                     debug_add("Failed to create a new member record for key {$key}, skipping it. " .
