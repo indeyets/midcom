@@ -11,7 +11,7 @@ $_MIDCOM->auth->require_admin_user();
 
 <h1>MidCOM Configuration Test</h1>
 
-<p>This page test the MidCOM configuration for validity.</p>
+<p>This page performs a few tests on the MidCOM configuration.</p>
 
 <table border="1" cellspacing="0" cellpadding="3">
   <tr>
@@ -100,7 +100,7 @@ function println_check_for_include_file($filename, $testname, $fail_code, $fail_
     }
 }
 
-function check_for_utility ($name, $testname, $fail_code, $fail_recommendations)
+function check_for_utility ($name, $testname, $fail_code, $fail_recommendations, $ok_notice = '&nbsp;')
 {
     $executable = $GLOBALS['midcom_config']["utility_{$name}"];
     $testname = "External Utility: {$testname}";
@@ -113,7 +113,7 @@ function check_for_utility ($name, $testname, $fail_code, $fail_recommendations)
         exec ("which {$executable}", $output, $exitcode);
         if ($exitcode == 0)
         {
-            println($testname, OK);
+            println($testname, OK, $ok_notice);
         }
         else
         {
@@ -272,39 +272,35 @@ if (! class_exists('Memcache'))
 }
 else
 {
-    println('Memcache', OK);
-}
-
-// dba with db[234] is recommended.
-
-if (! function_exists('dba_open'))
-{
-    println('Simple Database functions (dbm-style abstraction)', ERROR,
-        'The dba module with support for BerkleyDB must be available for proper operation of the caching engine.');
-}
-else
-{
-    if (! function_exists('dba_handlers'))
+    if($GLOBALS['midcom_config']['cache_module_memcache_backend'] == '')
     {
-        println('Simple Database functions (dbm-style abstraction)', WARNING,
-            'The dba module is available, but the available modules cannot be listed. Ensure that BerkleyDB is available and configure MidCOM accordingly.');
+        println('Memcache', WARNING, 'The PHP Memcache module is recommended for efficient MidCOM operation. It is available but is not set to be in use.');
     }
     else
     {
-        $handlers = dba_handlers();
-        if (   in_array('db2', $handlers)
-            || in_array('db3', $handlers)
-            || in_array('db4', $handlers))
+        if($_MIDCOM->cache->_modules['memcache']->_cache->_memcache_operational)
         {
-            println('Simple Database functions (dbm-style abstraction)', OK);
+            println('Memcache', OK);
         }
         else
         {
-            $tmp = implode($handlers, ", ");
-            println('Simple Database functions (dbm-style abstraction)', WARNING,
-                "The dba module is available, but the BerkleyDB handlers are not supported. They are recommeded for their stability. Available handlers: {$tmp}");
+            println('Memcache', ERROR, "The PHP Memcache module is available and set to be in use, but it cannot be connected to.");
         }
     }
+}
+
+// bytecode cache is recommended
+if(ini_get("apc.enabled") == "1")
+{
+    println("PHP bytecode cache", OK, "APC is enabled");
+}
+else if(ini_get("eaccelerator.enable") == "1")
+{
+    println("PHP bytecode cache", OK, "eAccelerator is enabled");
+}
+else
+{
+    println("PHP bytecode cache", WARNING, "A PHP bytecode cache is recommended for efficient MidCOM operation");
 }
 
 // Multibyte String Functions
@@ -315,22 +311,7 @@ if (! function_exists('mb_strlen'))
 }
 else
 {
-    if ($i18n->get_current_charset() == 'UTF-8')
-    {
-        $overload = ini_get('mbstring.func_overload');
-        if ($overload != '7')
-        {
-            println('Multi-Byte String functions', WARNING, 'The Multi-Byte String functions are available, but this is a UTF-8 site and Function overloading is disabled, this is not recommended since string operations are erronous then.');
-        }
-        else
-        {
-            println('Multi-Byte String functions', OK);
-        }
-    }
-    else
-    {
-        println('Multi-Byte String functions', OK);
-    }
+    println('Multi-Byte String functions', OK);
 }
 
 // EXIF Reading
@@ -377,30 +358,6 @@ else
     }
 }
 
-// Date PEAR Package for Datamanager2 date type.
-println_check_for_include_file('Date.php', 'PEAR Package: Date',
-    WARNING, 'The Date package is required to use the Date type made available by the midcom.helper.datamanager2 library.');
-
-// Mail and Mail_Mime PEAR packages for the Mailtemplate interface
-println_check_for_include_file('Mail.php', 'PEAR Package: Mail',
-    WARNING, 'The Mail package is required to use the Mailtemplate system used by various components with auto-mailing support (like n.n.orders).');
-println_check_for_include_file('Mail/mime.php', 'PEAR Package: Mail_Mime',
-    WARNING, 'The Mail_Mime package is required to use the Mailtemplate system used by various components with auto-mailing support (like n.n.orders).');
-
-// HTML_Quickform for Datamanager validation support
-println_check_for_include_file('HTML/QuickForm/RuleRegistry.php', 'PEAR Package: HTML_QuickForm',
-    WARNING, 'The HTML_QuickForm pacakge is required for the Datamanager Form Validation code. If you use more then is_empty checks you should install it.');
-
-// HTML_Treemenu
-println_check_for_include_file('HTML/TreeMenu.php', 'PEAR Package: HTML_TreeMenu',
-    WARNING, 'The HTML_TreeMenu package is required for the JS TreeMenu Navigation in AIS (disabled by default). You have to install it if you want to use the new navigation.');
-
-check_rcs();
-// Text_Diff
-println_check_for_include_file('Text/Diff.php', 'PEAR Package: Text_Diff', WARNING, 'The Text_Diff package is used by no.bergfald.rcs to show text diffs.');
-
-// XML_Serilizer
-println_check_for_include_file('XML/Serializer.php', 'PEAR Package: XML_Serializer', WARNING, 'The xml_serializer package is used to read and write rcs diffs by no.bergfald.rcs.');
 // ImageMagick
 $cmd = "{$GLOBALS['midcom_config']['utility_imagemagick_base']}identify -version";
 exec ($cmd, $output, $result);
@@ -419,7 +376,7 @@ check_for_utility('file', 'file', ERROR, 'The file utility is required for all k
 check_for_utility('unzip', 'unzip', WARNING, 'The unzip utility is required for bulk upload processing in the image galleries, you should install it if you plan to deploy Image Galleries.');
 check_for_utility('tar', 'tar', WARNING, 'The tar utility is required for bulk upload processing in the image galleries, you should install it if you plan to deploy Image Galleries.');
 check_for_utility('gzip', 'gzip', WARNING, 'The gzip utility is required for bulk upload processing in the image galleries, you should install it if you plan to deploy Image Galleries.');
-check_for_utility('jpegtran', 'jpegtran', WARNING, 'The jpegtran utility is used for lossless JPEG operations, even though ImageMagick can do the same conversions, the lossless features provided by this utility are used where appropriate, so its installation is strongly recommended.');
+check_for_utility('jpegtran', 'jpegtran', WARNING, 'The jpegtran utility is used for lossless JPEG operations, even though ImageMagick can do the same conversions, the lossless features provided by this utility are used where appropriate, so its installation is recommended unless it is known to cause problems.', 'The jpegtran utility is used for lossless rotations of JPEG images. If there are problems with image rotations, disabling jpegtran, which will cause ImageMagick to be used instead, probably helps.');
 
 check_for_utility('diff','diff',WARNING, 'diff is needed by the versioning library‥ You can also use the pear library Text_Diff');
 
