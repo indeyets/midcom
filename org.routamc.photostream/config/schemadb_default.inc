@@ -93,7 +93,7 @@
                 ),
             ),
             'widget' => 'photo',
-            'required' => true,
+            //'required' => true,
         ),
         'private' => Array
         (
@@ -192,7 +192,7 @@
                 'creation_handler' => "{$_MIDGARD['self']}__mfa/asgard/object/create/chooser/midgard_person/",
                 'creation_default_key' => 'lastname',
             ),
-            'required' => true,
+            //'required' => true,
         ),
         'to_gallery' => array
         (
