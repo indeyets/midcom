@@ -146,7 +146,7 @@ class org_openpsa_expenses_viewer extends midcom_baseclasses_components_request
      */
     function _on_handle($handler, $args)
     {
-        $this->_request_data['schemadb_hours'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_hours'));
+        $this->_request_data['schemadb_hours_list'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_hours_list'));
 
         $this->_populate_node_toolbar();
 

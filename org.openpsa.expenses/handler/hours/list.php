@@ -26,11 +26,31 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
     var $_datamanager = null;
 
     /**
+     * The schema database in use, available only while a datamanager is loaded.
+     *
+     * @var Array
+     * @access private
+     */
+    var $_schemadb = null;
+
+    /**
      * Simple default constructor.
      */
     function __construct()
     {
         parent::__construct();
+    }
+
+    /**
+     * Loads and prepares the schema database.
+     *
+     * The operations are done on all available schemas within the DB.
+     * 
+     * @param string $schemadb The schemadb to use
+     */
+    function _load_schemadb($schemadb)
+    {
+        $this->_schemadb =& midcom_helper_datamanager2_schema::load_database($this->_config->get($schemadb));
     }
 
     /**
@@ -76,6 +96,7 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
         $qb =& $this->_prepare_qb();
 
         $show_all = false;
+        $schemadb = 'schemadb_hours';
         switch ($handler_id)
         {
             case 'list_hours_between':
@@ -104,6 +125,7 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
                     // No such task
                     return false;
                 }
+                $schemadb = 'schemadb_hours_simple';
                 $qb->add_constraint('task', '=', $task->id);
                 break;
         }
@@ -113,6 +135,7 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
 
         $data['view_title'] = $data['l10n']->get($handler_id);
 
+        $this->_load_schemadb($schemadb);
         $this->_load_datamanager();
 
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
