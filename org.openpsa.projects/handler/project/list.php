@@ -37,7 +37,7 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
         {
             return false;
         }
-
+        $project->get_members();
         //Fill the customer field to DM
         debug_add("schema before \n===\n" . sprint_r($this->_datamanagers['project']->_layoutdb['default']) . "===\n");
         org_openpsa_helpers_schema_modifier($this->_datamanagers['project'], 'customer', 'widget', 'select', 'default', false);

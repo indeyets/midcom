@@ -114,6 +114,7 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
 
     function _refresh_from_tasks()
     {
+        $this->get_members();
         debug_push_class(__CLASS__, __FUNCTION__);
         $update_required = false;
         debug_add("Instantiating Query Builder for refreshing project information from tasks");
@@ -132,6 +133,7 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
             foreach($ret as $task)
             {
                 $task = new org_openpsa_projects_task($task->id);
+                $task->get_members();
                 if ($task->start < $this->start)
                 {
                     $this->start = $task->start;

@@ -76,6 +76,7 @@ class org_openpsa_projects_handler_project_action extends midcom_baseclasses_com
         {
             case 'subscribe':
                 // If person is already a member just redirect
+                $this->_request_data['project']->get_members();
                 if (   array_key_exists($_MIDGARD['user'], $this->_request_data['project']->resources)
                     || array_key_exists($_MIDGARD['user'], $this->_request_data['project']->contacts))
                 {

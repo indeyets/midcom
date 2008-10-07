@@ -77,6 +77,8 @@ class org_openpsa_projects_handler_project_view extends midcom_baseclasses_compo
             return false;
         }
 
+        $this->_project->get_members();
+
         $this->_load_datamanager();
         $this->_prepare_request_data();
         $_MIDCOM->set_pagetitle($this->_project->title);

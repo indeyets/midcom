@@ -61,8 +61,6 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
 
     function _on_loaded()
     {
-        $this->get_members();
-        $this->_sync_to_dm2();
         /* This in theory can cause confusion if the actual DB status (cache) field is different.
           but it's better to get the correct value late than never, next update will make sure it's correct in DB as well */
         $this->status = $this->_get_status(true);

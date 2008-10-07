@@ -34,6 +34,8 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
             return false;
         }
 
+        $task->get_members();
+
         // We must load schemadb only after that is in request_data so we can populate the resource pulldown
         $this->_request_data['task'] =& $task;
         $this->_request_data['schemadb_task_dm2'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_task_dm2'));

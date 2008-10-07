@@ -100,6 +100,7 @@ class org_openpsa_projects_handler_task_new extends midcom_baseclasses_component
                     org_openpsa_helpers_schema_modifier(&$this->_datamanagers['task'], 'orgOpenpsaOwnerWg', 'default', $this->_request_data['project']->orgOpenpsaOwnerWg, 'newtask', false);
 
                     // Copy resources and contacts from project
+                    $this->_request_data['project']->get_members();
                     org_openpsa_helpers_schema_modifier(&$this->_datamanagers['task'], 'resources', 'default', $this->_request_data['project']->resources, 'newtask', false);
                     org_openpsa_helpers_schema_modifier(&$this->_datamanagers['task'], 'contacts', 'default', $this->_request_data['project']->contacts, 'newtask', false);
 
