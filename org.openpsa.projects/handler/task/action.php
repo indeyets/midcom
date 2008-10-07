@@ -87,34 +87,6 @@ class org_openpsa_projects_handler_task_action extends midcom_baseclasses_compon
                 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $_MIDCOM->relocate("{$prefix}task/{$this->_request_data['task']->guid}/");
                 // This will exit()
-            // @todo There is a dedicated edit handler. Is this still needed?
-            case 'edit':
-                $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['task']);
-
-                $_MIDCOM->set_pagetitle(sprintf($this->_request_data['l10n']->get('edit task %s'), $this->_request_data['task']->title));
-
-                switch ($this->_datamanagers['task']->process_form()) {
-                    case MIDCOM_DATAMGR_EDITING:
-                        $this->_view = "edit";
-
-                        // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
-
-                        return true;
-
-                    case MIDCOM_DATAMGR_SAVED:
-                    case MIDCOM_DATAMGR_CANCELLED:
-                        $this->_view = "default";
-                        $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                            . "task/" . $this->_request_data["task"]->guid . "/");
-                        // This will exit()
-
-                    case MIDCOM_DATAMGR_FAILED:
-                        $this->errstr = "Datamanager: " . $GLOBALS["midcom_errstr"];
-                        $this->errcode = MIDCOM_ERRCRIT;
-                        return false;
-                }
-                return true;
             default:
                 return false;
         }
@@ -127,11 +99,6 @@ class org_openpsa_projects_handler_task_action extends midcom_baseclasses_compon
      */
     function _show_action($handler_id, &$data)
     {
-        if ($this->_view == "edit")
-        {
-            $this->_request_data['task_dm']  = $this->_datamanagers['task'];
-            midcom_show_style("show-task-edit");
-        }
     }
 }
 ?>
