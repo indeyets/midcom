@@ -45,6 +45,7 @@ $_MIDCOM->auth->require_valid_user();
         </div>
         <div class="clear"></div>
         <div id="content">
+            <img src="<?php echo MIDCOM_STATIC_URL; ?>/stock-icons/logos/ragnaroek.gif" alt="Ragnaroek" style="float: right;" />
             <p>
                     <a href="http://www.midgard-project.org/">Midgard</a> is a Content management Toolkit. It is Free Software that can be used to construct interactive web applications. <a href="http://www.midgard-project.org/midgard/">Learn more &raquo;</a>
             </p>
