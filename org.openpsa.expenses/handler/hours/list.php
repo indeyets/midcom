@@ -60,7 +60,7 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
      */
     function _load_datamanager()
     {
-        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_request_data['schemadb_hours']);
+        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
 
         if (!$this->_datamanager)
         {
