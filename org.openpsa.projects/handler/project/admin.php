@@ -191,6 +191,9 @@ class org_openpsa_projects_handler_project_admin extends midcom_baseclasses_comp
         }
         $this->_project->require_do('midgard:update');
 
+	$this->_project->get_members();
+	$this->_project->_sync_to_dm2();
+
         $this->_load_controller();
 
         switch ($this->_controller->process_form())

@@ -307,7 +307,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         return true;
     }
 
-    private function _sync_to_dm2()
+    function _sync_to_dm2()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("\$this->contacts before: \n===\n" . sprint_r($this->contacts) . "===\n");
