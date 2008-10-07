@@ -48,7 +48,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         $ret = Array(
             0 => 'no agreement',
         );
-
+        $task->get_members();
         if (count($task->contacts) == 0)
         {
             return $ret;
@@ -621,6 +621,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
 
         // TODO: If deliverable has a supplier specified, add the supplier
         // organization members as potential resources here
+        $project->get_members();
         $project->resources[$salesproject->owner] = true;
 
         // TODO: Figure out if we really want to keep this

@@ -191,6 +191,7 @@ class org_openpsa_projects_projectbroker
     {
         $_MIDCOM->auth->request_sudo('org.openpsa.projects');
         $task->set_parameter('org.openpsa.projects.projectbroker', 'local_search', 'SEARCH_IN_PROGRESS');
+        $task->get_members();
         $prospects = $this->find_task_prospects($task);
         if (!is_array($prospects))
         {

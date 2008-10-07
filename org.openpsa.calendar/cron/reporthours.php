@@ -141,6 +141,7 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
                 debug_add("processing task #{$task->id} ({$task->title}) for person #{$member->uid} from event #{$event->id} ({$event->title})");
 
                 // Make sure the person we found is a resource in this particular task
+                $task->get_members();
                 if (!isset($task->resources[$member->uid]))
                 {
                     debug_add("person #{$member->uid} is not a *resource* in task #{$task->id}, skipping");

@@ -64,6 +64,7 @@ class org_openpsa_invoices_invoice extends __org_openpsa_invoices_invoice
         if ($invoice_sender)
         {
             $task = new org_openpsa_projects_task();
+            $task->get_members();
             $task->resources[$invoice_sender->id] = true;
             $task->manager = $_MIDGARD['user'];
             // TODO: Connect the customer as the contact?

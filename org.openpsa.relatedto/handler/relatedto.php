@@ -635,6 +635,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
 
             // Resources
             echo "                    <li>".$_MIDCOM->i18n->get_string('resources', 'org.openpsa.projects').": ";
+            $task->get_members();
             foreach ($task->resources as $resource_id => $confirmed)
             {
                 $resource = new midcom_db_person($resource_id);
@@ -699,6 +700,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
 
             // Resources
             echo "                    <li>" . $_MIDCOM->i18n->get_string('resources', 'org.openpsa.projects') . ": ";
+            $project->get_members();
             foreach ($project->resources as $resource_id => $confirmed)
             {
                 $resource = new midcom_db_person($resource_id);

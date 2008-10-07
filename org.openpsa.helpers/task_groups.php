@@ -35,7 +35,7 @@ function org_openpsa_helpers_task_groups(&$task, $mode = 'id')
         $seen[$company->id] = true;
         _org_openpsa_helpers_task_groups_put($ret, $mode, $company);
     }
-
+    $task->get_members();
     if (   !is_array($task->contacts)
         || count($task->contacts) == 0)
     {
