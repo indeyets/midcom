@@ -15,10 +15,6 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
 {
     var $contacts = array(); //Shorthand access for contact members
     var $resources = array(); // --''--
-    var $old_contacts = array(); //For diffing the ones above
-    var $old_resources = array(); // --''--
-    var $contacts2 = array(); // Shorthand access for contact members in DM2
-    var $resources2 = array(); // Shorthand access for resource members in DM2
     private $_locale_backup = '';
     var $_skip_acl_refresh = false;
     var $_skip_parent_refresh = false;
