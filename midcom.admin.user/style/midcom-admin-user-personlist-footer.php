@@ -44,11 +44,28 @@ if (count($data['persons']) > 0)
                         <?php
                         foreach ($data['groups'] as $group)
                         {
-                            if (!is_object($group))
+                            if (!is_array($group))
                             {
                                 continue;
                             }
-                            echo "<option value=\"{$group->id}\">{$group->official}</option>\n";
+
+                            $level_indent = '';
+                            for($i = 0;$i < $group['level']; $i++)
+                            {
+                                $level_indent = $level_indent . '-';
+                            }
+                            
+                            if ($level_indent != '')
+                            {
+                                $title = $level_indent . '> ' . $group['title'];
+                            }
+                            else
+                            {
+                                $title = $group['title'];
+                            }
+
+                            
+                            echo "<option value=\"" . $group['id'] . "\">" . $title . "</option>\n";
                         }
                         ?>
                     </select>

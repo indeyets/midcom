@@ -203,16 +203,16 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
 
         $data['groups'] = array
         (
-            0 => 'Midgard Administrators',
+            0 => array
+            (
+                'title' => 'Midgard Administrators',
+                'level' => '0',
+                'id' => 0,
+            ),
         );
         if (count($this->_persons) > 0)
         {
-            $qb = midcom_db_group::new_query_builder();
-            $groups = $qb->execute();
-            foreach ($groups as $group)
-            {
-                $data['groups'][$group->id] = $group;
-            }
+            $data['groups'][] = $this->list_groups_for_select(0, &$data, 0);
         }
 
         $this->_update_breadcrumb();
@@ -220,6 +220,72 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
         $_MIDCOM->set_pagetitle($data['view_title']);
 
         return true;
+    }
+
+    /**
+     * Internal helper for showing the groups recursively
+     * 
+     * @access private
+     * @param int $id
+     * @param array &$data
+     * @param int $level
+     */
+    function list_groups_for_select($id, &$data, $level)
+    {
+        $mc = midcom_db_group::new_collector('owner', (int) $id);
+        $mc->add_value_property('name');
+        $mc->add_value_property('official');
+        $mc->add_value_property('id');
+        
+        // Hide SG0 groups if not in SG0 view
+        if ($_MIDGARD['sitegroup'] !== 0)
+        {
+            $mc->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+        }
+        
+        // Set the order
+        $mc->add_order('metadata.score');
+        $mc->add_order('official');
+        $mc->add_order('name');
+        
+        // Get the results
+        $mc->execute();
+        $keys = $mc->list_keys();
+        
+        // Hide empty groups
+        if ($mc->count() === 0)
+        {
+            return;
+        }
+        
+        $data['parent_id'] = $id;
+        
+        foreach ($keys as $guid => $array)
+        {
+            $group['guid'] = $guid;
+            $group['id'] = $mc->get_subkey($guid, 'id');
+            $group['name'] = $mc->get_subkey($guid, 'name');
+            
+            if (($title = $mc->get_subkey($guid, 'official')))
+            {
+                $group['title'] = $title;
+            }
+            else
+            {
+                $group['title'] = $group['name'];
+            }
+            
+            if (!$group['title'])
+            {
+                $group['title'] = $_MIDCOM->i18n->get_string('unknown', 'midcom.admin.user');
+            }
+            $group['level'] = $level;
+            
+            $data['groups'][] = $group;
+            $level++;
+            $this->list_groups_for_select($group['id'], &$data, $level);
+            $level--;
+        }
     }
 
     /**
