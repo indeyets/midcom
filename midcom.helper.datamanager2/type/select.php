@@ -124,7 +124,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      * @var Array
      * @access public
      */
-    var $options = null;
+    var $options = array();
 
     /**
      * In case the options are returned by a callback, this member holds the name of the
@@ -354,15 +354,19 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
     function key_exists($key)
     {
         $key = (string) $key;
-
+        
         if ($this->option_callback === null)
         {
             return array_key_exists($key, $this->options);
         }
-        else
+        
+        if (   isset($this->_callback)
+            && method_exists($this->_callback, 'key_exists'))
         {
             return $this->_callback->key_exists($key);
         }
+        
+        return false;
     }
 
     /**

@@ -146,6 +146,16 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
      * @var string
      */
     var $member_limit_like = null;
+    
+    /**
+     * Set this to false to use with universalchooser, this skips making sure the key exists in option list
+     * Mainly used to avoid unnecessary seeks to load all a ton of objects to the options list. This is false
+     * by default for mn relations, since by its nature this is intended for dynamic searches.
+     *
+     * @var boolean
+     * @access public
+     */
+     var $require_corresponding_option = false;
 
     /**
      * This is a regular expression pattern constructed from $member_limit_like to verify
@@ -295,14 +305,39 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
     function convert_from_storage ($source)
     {
         $this->selection = Array();
-
-        if (! $this->storage->object)
+        
+        // Check for the defaults section first
+        if (   isset($this->storage->_defaults)
+            && isset($this->storage->_defaults[$this->name]))
+        {
+            foreach ($this->storage->_defaults[$this->name] as $id)
+            {
+                if (is_object($id))
+                {
+                    if ($this->master_is_id)
+                    {
+                        $this->selection[] = $id->id;
+                    }
+                    else
+                    {
+                        $this->selection[] = $id->guid;
+                    }
+                }
+                else
+                {
+                    $this->selection[] = $guid;
+                }
+            }
+        }
+        
+        if (!$this->storage->object)
         {
             // That's all folks, no storage object, thus we cannot continue.
             return;
         }
-
+        
         $this->_load_membership_objects();
+        
         foreach ($this->_membership_objects as $member)
         {
             $key = $member->{$this->member_fieldname};
@@ -322,7 +357,7 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
             }
         }
     }
-
+    
     /**
      * Updates the mapping table to match the current selection.
      *
