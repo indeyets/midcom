@@ -69,76 +69,44 @@
         ),
         'resources' => array
         (
-            'title'   => 'resources',
-            'storage' => 'resources2',
-            'type' => 'select',
+            'title' => 'resources',
+            'storage' => 'resources',
+            'type' => 'mnrelation',
             'type_config' => array
             (
-                 'require_corresponding_option' => false,
-                 'allow_multiple' => true,
-                 'multiple_storagemode' => 'array',
-                 'options' => array(),
+                'mapping_class_name' => 'org_openpsa_projects_task_resource',
+                'master_fieldname' => 'task',
+                'member_fieldname' => 'person',
+                'master_is_id' => true,
+		'allow_multiple' => true,
+		'additional_fields' => array('orgOpenpsaObtype' => ORG_OPENPSA_OBTYPE_PROJECTRESOURCE)
             ),
-            'widget' => 'universalchooser',
+            'widget' => 'chooser',
             'widget_config' => array
             (
-                'class'       => 'org_openpsa_contacts_person',
-                'component'   => 'org.openpsa.contacts',
-                'titlefield'  => 'name',
-                'idfield'     => 'id',
-                'constraints' => array
-                (
-                    array
-                    (
-                        'field' => 'username',
-                        'op'    => '<>',
-                        'value' => '',
-                    ),
-                ),
-                'searchfields'  => array
-                (
-                    'firstname',
-                    'lastname',
-                    'username',
-                ),
-                'orders'        => array
-                (
-                    array('lastname'    => 'ASC'),
-                    array('firstname'    => 'ASC'),
-                ),
+                'clever_class' => 'contact',
+                'id_field' => 'id',
             ),
         ),
         'contacts' => array
         (
-            'title'   => 'contacts',
-            'storage' => 'contacts2',
-            'type' => 'select',
+            'title' => 'contacts',
+            'storage' => 'contacts',
+            'type' => 'mnrelation',
             'type_config' => array
             (
-                 'require_corresponding_option' => false,
-                 'allow_multiple' => true,
-                 'multiple_storagemode' => 'array',
-                 'options' => array(),
+                'mapping_class_name' => 'org_openpsa_projects_task_resource',
+                'master_fieldname' => 'task',
+                'member_fieldname' => 'person',
+                'master_is_id' => true,
+		'allow_multiple' => true,
+		'additional_fields' => array('orgOpenpsaObtype' => ORG_OPENPSA_OBTYPE_PROJECTCONTACT)
             ),
-            'widget' => 'universalchooser',
+            'widget' => 'chooser',
             'widget_config' => array
             (
-                'class'       => 'org_openpsa_contacts_person',
-                'component'   => 'org.openpsa.contacts',
-                'titlefield'  => 'name',
-                'idfield'     => 'id',
-                'constraints' => array(),
-                'searchfields'  => array
-                (
-                    'firstname',
-                    'lastname',
-                    'username',
-                ),
-                'orders'        => array
-                (
-                    array('lastname'    => 'ASC'),
-                    array('firstname'    => 'ASC'),
-                ),
+                'clever_class' => 'contact',
+                'id_field' => 'id',
             ),
         ),
 

@@ -53,8 +53,6 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
     function _on_created()
     {
         $this->get_members(true);
-        $this->_sync_from_dm2();
-        $this->_update_members();
         $this->_locale_restore();
         $this->_workflow_checks('created');
     }
@@ -80,9 +78,6 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         $this->_locale_set();
         if ($this->_prepare_save())
         {
-            $this->get_members(true);
-            $this->_sync_from_dm2();
-            $this->_update_members();
             $this->_handle_resource_seek();
             return true;
         }
@@ -307,168 +302,6 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         return true;
     }
 
-    function _sync_to_dm2()
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("\$this->contacts before: \n===\n" . sprint_r($this->contacts) . "===\n");
-        debug_add("\$this->resources before: \n===\n" . sprint_r($this->resources) . "===\n");
-        debug_add("\$this->contacts2 before: \n===\n" . sprint_r($this->contacts2) . "===\n");
-        debug_add("\$this->resources2 before: \n===\n" . sprint_r($this->resources2) . "===\n");
-        debug_pop();
-        $this->contacts2 = array();
-        foreach ($this->contacts as $contact => $selected)
-        {
-            $this->contacts2[] = $contact;
-        }
-        $this->resources2 = array();
-        foreach ($this->resources as $resource => $selected)
-        {
-            $this->resources2[] = $resource;
-        }
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("\$this->contacts after: \n===\n" . sprint_r($this->contacts) . "===\n");
-        debug_add("\$this->resources after: \n===\n" . sprint_r($this->resources) . "===\n");
-        debug_add("\$this->contacts2 after: \n===\n" . sprint_r($this->contacts2) . "===\n");
-        debug_add("\$this->resources2 after: \n===\n" . sprint_r($this->resources2) . "===\n");
-        debug_pop();
-    }
-
-    private function _sync_from_dm2()
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("\$this->contacts before: \n===\n" . sprint_r($this->contacts) . "===\n");
-        debug_add("\$this->resources before: \n===\n" . sprint_r($this->resources) . "===\n");
-        debug_add("\$this->contacts2 before: \n===\n" . sprint_r($this->contacts2) . "===\n");
-        debug_add("\$this->resources2 before: \n===\n" . sprint_r($this->resources2) . "===\n");
-        debug_pop();
-        
-        $this->contacts = array();
-        foreach ($this->contacts2 as $contact)
-        {
-            $this->contacts[$contact] = true;
-        }
-        $this->resources = array();
-        foreach ($this->resources2 as $resource)
-        {
-            $this->resources[$resource] = true;
-        }
-
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("\$this->contacts after: \n===\n" . sprint_r($this->contacts) . "===\n");
-        debug_add("\$this->resources after: \n===\n" . sprint_r($this->resources) . "===\n");
-        debug_add("\$this->contacts2 after: \n===\n" . sprint_r($this->contacts2) . "===\n");
-        debug_add("\$this->resources2 after: \n===\n" . sprint_r($this->resources2) . "===\n");
-        debug_pop();
-    }
-
-    private function _update_members()
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("\$this->contacts: \n===\n" . sprint_r($this->contacts) . "===\n");
-        debug_add("\$this->resources: \n===\n" . sprint_r($this->resources) . "===\n");
-        debug_add("\$this->contacts2: \n===\n" . sprint_r($this->contacts2) . "===\n");
-        debug_add("\$this->resources2: \n===\n" . sprint_r($this->resources2) . "===\n");
-        debug_add("\$this->old_contacts: \n===\n" . sprint_r($this->old_contacts) . "===\n");
-        debug_add("\$this->old_resources: \n===\n" . sprint_r($this->old_resources) . "===\n");
-        $ret['resources'] = Array();
-        $ret['resources']['added'] = Array();
-        $ret['resources']['removed'] = Array();
-        $ret['contacts'] = Array();
-        $ret['contacts']['added'] = Array();
-        $ret['contacts']['removed'] = Array();
-        if (!is_array($this->resources))
-        {
-            $this->resources = Array();
-        }
-        if (!is_array($this->contacts))
-        {
-            $this->contacts = Array();
-        }
-        if (!is_array($this->old_resources))
-        {
-            $this->old_resources = Array();
-        }
-        if (!is_array($this->old_contacts))
-        {
-            $this->old_contacts = Array();
-        }
-
-        // ** Start with resources
-        $added_resources = array_diff_assoc($this->resources, $this->old_resources);
-        $removed_resources = array_diff_assoc($this->old_resources, $this->resources);
-
-        foreach ($added_resources as $resourceId => $bool)
-        {
-            $resObj = new org_openpsa_projects_task_resource();
-            $resObj->person = $resourceId;
-            $resObj->task = $this->id;
-            $resObj->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_PROJECTRESOURCE;
-            $resObj->create();
-            $ret['resources']['added'][$resObj->person] = mgd_errstr();
-        }
-
-        foreach ($removed_resources as $resourceId => $bool)
-        {
-            $resObj = $this->_get_member_by_personid($resourceId, ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
-            if (!is_object($resObj))
-            {
-                debug_add("Could not get member object for person #{$resourceId} for removing resource", MIDCOM_LOG_WARN);
-                continue;
-            }
-            $resObj->delete();
-            $ret['resources']['removed'][$resObj->person] = mgd_errstr();
-        }
-        // ** Done with resources
-
-        // ** Start with contacts
-        $added_contacts = array_diff_assoc($this->contacts, $this->old_contacts);
-        $removed_contacts = array_diff_assoc($this->old_contacts, $this->contacts);
-
-        foreach ($added_contacts as $resourceId => $bool)
-        {
-            $resObj = new org_openpsa_projects_task_resource();
-            $resObj->person = $resourceId;
-            $resObj->task = $this->id;
-            $resObj->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_PROJECTCONTACT;
-            $resObj->create();
-            $ret['contacts']['added'][$resObj->person] = mgd_errstr();
-        }
-
-        foreach ($removed_contacts as $resourceId => $bool)
-        {
-            $resObj = $this->_get_member_by_personid($resourceId, ORG_OPENPSA_OBTYPE_PROJECTCONTACT);
-            if (!is_object($resObj))
-            {
-                debug_add("Could not get membership object for person #{$resourceId} for removing contact", MIDCOM_LOG_WARN);
-                continue;
-            }
-            $resObj->delete();
-            $ret['contacts']['removed'][$resObj->person] = mgd_errstr();
-        }
-        // ** Done with contacts
-        debug_add("returning status array: \n===\n" . sprint_r($ret) . "===\n");
-        debug_pop();
-        return $ret;
-    }
-
-    private function _get_member_by_personid($id, $type=false)
-    {
-        //Find the correct eventmember by person ID
-        //$qb = org_openpsa_task_resource::new_query_builder('org_openpsa_task_resource');
-        $qb = org_openpsa_projects_task_resource::new_query_builder();
-        $qb->add_constraint('task', '=', $this->id);
-        $qb->add_constraint('person', '=', $id);
-        if (!empty($type))
-        {
-            $qb->add_constraint('orgOpenpsaObtype', '=', $type);
-        }
-        $results = $qb->execute();
-        if (empty($results))
-        {
-            return false;
-        }
-        return $results[0];
-    }
 
     function _prepare_save()
     {
