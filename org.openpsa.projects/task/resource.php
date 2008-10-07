@@ -146,32 +146,32 @@ class org_openpsa_projects_task_resource extends __org_openpsa_projects_task_res
             return $task_array;
         }
 
-        $qb = org_openpsa_projects_task_resource::new_query_builder();
-        $qb->add_constraint('person', '=', (int)$_MIDGARD['user']);
-        $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
-        $qb->add_constraint('task.orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_PROJECT);
+        $mc = org_openpsa_projects_task_resource::new_collector('person', (int) $_MIDGARD['user']);
+	$mc->add_value_property('task');
+        $mc->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
+        $mc->add_constraint('task.orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_PROJECT);
+	$mc->add_constraint('task.start', '<=', time());
 
         if (!$list_finished)
         {
-            $qb->add_constraint( 'task.status', '<', ORG_OPENPSA_TASKSTATUS_COMPLETED);
+            $mc->add_constraint( 'task.status', '<', ORG_OPENPSA_TASKSTATUS_COMPLETED);
         }
-        $resources = $qb->execute();
-        foreach ($resources as $resource)
+	$mc->execute();
+
+        $resources = $mc->list_keys();
+	$i = 0;
+        foreach ($resources as $resource => $task_id)
         {
-            $task = new org_openpsa_projects_task($resource->task);
+	    $task = new org_openpsa_projects_task($mc->get_subkey($resource, 'task'));
+	    $i++;
             if (!$task)
             {
                 continue;
             }
 
-            if ($task->start >= time())
-            {
-                // This is not a current task yet. Skip
-                continue;
-            }
-
             $task_array[$task->$key] = $task->get_label();
         }
+
         return $task_array;
     }
 }
