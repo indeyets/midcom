@@ -271,5 +271,63 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
     {
         midcom_show_style('hours_edit');
     }
+    
+    /**
+     * The delete handler.
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param Array $args The argument list.
+     * @param Array &$data The local request data.
+     * @return boolean Indicating success.
+     */
+    function _handler_delete($handler_id, $args, &$data)
+    {
+        $this->_hour_report = new org_openpsa_projects_hour_report($args[0]);
+        if (!$this->_hour_report)
+        {
+            return false;
+        }
+
+        $this->_hour_report->require_do('midgard:delete');
+
+        if (array_key_exists('org_openpsa_expenses_deleteok', $_REQUEST))
+        {
+            // Deletion confirmed.
+            if (! $this->_hour_report->delete())
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete hour report {$args[0]}, last Midgard error was: " . mgd_errstr());
+                // This will exit.
+            }
+
+            // Delete ok, relocating to welcome.
+            $_MIDCOM->relocate('');
+            // This will exit.
+        }
+
+        if (array_key_exists('org_openpsa_expenses_deletecancel', $_REQUEST))
+        {
+            // Redirect to view page.
+            $_MIDCOM->relocate();
+            // This will exit()
+        }
+
+        $this->_prepare_request_data();
+        $this->_view_toolbar->bind_to($this->_hour_report);
+
+        $_MIDCOM->set_26_request_metadata($this->_hour_report->revised, $this->_hour_report->guid);
+      
+        return true;
+    }
+
+    /**
+     * Shows the delete hour_report form
+     *
+     * @param mixed $handler_id The ID of the handler.
+     * @param mixed &$data The local request data.
+     */
+    function _show_delete($handler_id, &$data)
+    {
+        midcom_show_style('hours_delete');
+    }
 }
 ?>

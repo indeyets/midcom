@@ -68,6 +68,14 @@ class org_openpsa_expenses_viewer extends midcom_baseclasses_components_request
             'fixed_args' => array('hours', 'edit'),
             'variable_args' => 1,
         );
+
+        // Handle /hours/delete/<guid>
+        $this->_request_switch['hours_delete'] = array
+        (
+            'handler' => array('org_openpsa_expenses_handler_hours_admin', 'delete'),
+            'fixed_args' => array('hours', 'delete'),
+            'variable_args' => 1,
+        );
          
         // Handle /hours/create/<schema>
         $this->_request_switch['hours_create'] = array
