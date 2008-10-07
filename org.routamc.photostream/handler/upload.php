@@ -550,6 +550,10 @@ class org_routamc_photostream_handler_upload extends midcom_baseclasses_componen
     {
         $this->_content_topic->require_do('midgard:create');
 
+        //Disable limits, big uploads can take time and memory
+        @ini_set('memory_limit', -1);
+        @ini_set('max_execution_time', 0);
+
         // TODO: Figure out a solid way to detect the correct key in _FILES array based on the schema data
         if (   array_key_exists('photo_file', $_FILES)
             && preg_match('/\.(zip|tar(\.gz|\.bz2)?|tgz)$/', strtolower($_FILES['photo_file']['name']), $extension_matches))
