@@ -201,7 +201,14 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
             }
         }
 
+        // Used in many checks
         $data['groups'] = array
+        (
+            0 => 'Midgard Administrators',
+        );
+
+        // Used in select
+        $data['groups_for_select'] = array
         (
             0 => array
             (
@@ -212,7 +219,13 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
         );
         if (count($this->_persons) > 0)
         {
-            $data['groups'][] = $this->list_groups_for_select(0, &$data, 0);
+            $qb = midcom_db_group::new_query_builder();
+            $groups = $qb->execute();
+            foreach ($groups as $group)
+            {
+                $data['groups'][$group->id] = $group;
+            }
+            $data['groups_for_select'][] = $this->list_groups_for_select(0, &$data, 0);
         }
 
         $this->_update_breadcrumb();

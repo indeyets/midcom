@@ -42,7 +42,7 @@ if (count($data['persons']) > 0)
                     </select>
                     <select name="midcom_admin_user_group" id="midcom_admin_user_group" style="display: none;"<?php echo $disabled; ?>>
                         <?php
-                        foreach ($data['groups'] as $group)
+                        foreach ($data['groups_for_select'] as $group)
                         {
                             if (!is_array($group))
                             {
