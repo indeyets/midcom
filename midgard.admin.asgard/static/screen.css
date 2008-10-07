@@ -184,6 +184,12 @@ p
   display: block;
 }
 
+#midgard_admin_asgard_navigation_chooser
+{
+  font-size:smaller;
+  margin-bottom: 10px;
+}
+
 #search_bar
 {
   margin-bottom: 10px;

@@ -455,8 +455,10 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         $expanded_types = array_intersect(array_keys($label_mapping), $this->expanded_root_types);
 
         // Use a different method for displaying the navigation if at least one type is expanded
-        if ( sizeof($expanded_types) > 0
-             && midgard_admin_asgard_plugin::get_preference('navigation_type') === 'dropdown')
+        // Solt: Why? If user want dropdown then give it to him without exceptions.
+//        if ( sizeof($expanded_types) > 0
+//             && midgard_admin_asgard_plugin::get_preference('navigation_type') === 'dropdown')
+        if ( midgard_admin_asgard_plugin::get_preference('navigation_type') === 'dropdown')
         {
             $this->_draw_select_navigation();
             return;
