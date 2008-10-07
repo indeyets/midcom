@@ -6,7 +6,10 @@ echo "    <td><a href=\"{$prefix}hours/edit/{$data['hour_report']->guid}/\">" . 
 echo "    <td>{$view['hours']}</td>\n";
 echo "    <td>{$view['invoiceable']}</td>\n";
 echo "    <td>{$view['person']}</td>\n";
-echo "    <td>{$view['task']}</td>\n";
+if ($data['mode'] != 'simple')
+{
+    echo "    <td>{$view['task']}</td>\n";
+}
 echo "    <td>{$view['description']}</td>\n";
 echo "</tr>\n";
 ?>

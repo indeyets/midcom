@@ -97,6 +97,8 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
 
         $show_all = false;
         $schemadb = 'schemadb_hours';
+        $mode = 'full';
+
         switch ($handler_id)
         {
             case 'list_hours_between':
@@ -112,6 +114,8 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
                 }
                 $qb->add_constraint('date', '>=', $start_time);
                 $qb->add_constraint('date', '<=', $end_time);
+
+                $data['view_title'] = $data['l10n']->get($handler_id);
                 break;
 
             case 'list_hours_task':
@@ -125,15 +129,18 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
                     // No such task
                     return false;
                 }
-                $schemadb = 'schemadb_hours_simple';
                 $qb->add_constraint('task', '=', $task->id);
+
+                $schemadb = 'schemadb_hours_simple';
+                $mode = 'simple';
+                $data['view_title'] = sprintf($data['l10n']->get($handler_id . " %s"), $task->get_label());
                 break;
         }
 
         $qb->add_order('date', 'DESC');
         $data['hours'] = $qb->execute();
 
-        $data['view_title'] = $data['l10n']->get($handler_id);
+        $data['mode'] = $mode;
 
         $this->_load_schemadb($schemadb);
         $this->_load_datamanager();

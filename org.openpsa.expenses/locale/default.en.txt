@@ -23,8 +23,8 @@ Hours
 Invoiceable
 ---STRINGEND
 
----STRING list_hours_task
-List of Hours by Task
+---STRING list_hours_task %s
+List of Hours for Task %s
 ---STRINGEND
 
 ---STRING org.openpsa.expenses

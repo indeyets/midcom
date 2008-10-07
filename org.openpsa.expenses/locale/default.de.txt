@@ -23,8 +23,8 @@ Arbeitsstunden
 Abrechenbar
 ---STRINGEND
 
----STRING list_hours_task
-Liste der Arbeitsstunden pro Aufgabe
+---STRING list_hours_task %s
+Liste der Arbeitsstunden für Aufgabe "%s"
 ---STRINGEND
 
 ---STRING org.openpsa.expenses

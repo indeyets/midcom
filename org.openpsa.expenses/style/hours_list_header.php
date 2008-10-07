@@ -7,7 +7,10 @@
             <th><?php echo $data['l10n']->get('hours'); ?></th>
             <th><?php echo $data['l10n']->get('invoiceable'); ?></th>
             <th><?php echo $data['l10n']->get('person'); ?></th>
-            <th><?php echo $data['l10n']->get('task'); ?></th>
+            <?php if ($data['mode'] != 'simple')
+            { ?>
+                <th><?php echo $data['l10n']->get('task'); ?></th>
+            <?php } ?>
             <th><?php echo $data['l10n']->get('description'); ?></th>
         </tr>
     </thead>
