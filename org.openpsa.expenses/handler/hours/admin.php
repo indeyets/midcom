@@ -254,6 +254,19 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
 
 
         $this->_prepare_request_data();
+        // Add toolbar items
+        $this->_view_toolbar->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "hours/delete/{$this->_hour_report->guid}/",
+                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('delete'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
+                MIDCOM_TOOLBAR_ACCESSKEY => 'd',
+
+            )
+        );
         $this->_view_toolbar->bind_to($this->_hour_report);
 
         $_MIDCOM->set_26_request_metadata($this->_hour_report->revised, $this->_hour_report->guid);
