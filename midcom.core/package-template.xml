@@ -37,7 +37,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <name>Jerry Jalava</name>
         <user>w_i</user>
         <email>jerry.jalava@gmail.com</email>
-        <active>yes</active>
+        <active>no</active>
     </developer>
     <developer>
         <name>Patrik Hirvinen</name>
@@ -45,8 +45,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <email>patrik.hirvinen@iki.fi</email>
         <active>yes</active>
     </developer>
-    <date>2008-09-02</date>
-    <time>16:27:00</time>
+    <date>2008-10-07</date>
+    <time>19:28:00</time>
     <version>
         <release>8.09.0</release>
         <api>8.09.0</api>
@@ -57,7 +57,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     </stability>
     <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
     <notes>
-        Changes to DBA class loading to ensure classes' components get loaded.
+        Syncrhonize release with Midgard 8.09 LTS 
     </notes>
     <contents>
         <dir name="/">
