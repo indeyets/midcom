@@ -147,23 +147,23 @@ class org_openpsa_projects_task_resource extends __org_openpsa_projects_task_res
         }
 
         $mc = org_openpsa_projects_task_resource::new_collector('person', (int) $_MIDGARD['user']);
-	$mc->add_value_property('task');
+    $mc->add_value_property('task');
         $mc->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
         $mc->add_constraint('task.orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_PROJECT);
-	$mc->add_constraint('task.start', '<=', time());
+    $mc->add_constraint('task.start', '<=', time());
 
         if (!$list_finished)
         {
             $mc->add_constraint( 'task.status', '<', ORG_OPENPSA_TASKSTATUS_COMPLETED);
         }
-	$mc->execute();
+    $mc->execute();
 
         $resources = $mc->list_keys();
-	$i = 0;
+    $i = 0;
         foreach ($resources as $resource => $task_id)
         {
-	    $task = new org_openpsa_projects_task($mc->get_subkey($resource, 'task'));
-	    $i++;
+        $task = new org_openpsa_projects_task($mc->get_subkey($resource, 'task'));
+        $i++;
             if (!$task)
             {
                 continue;

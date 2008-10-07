@@ -1,6 +1,6 @@
 'name' => 'net.nehmer.buddylist',
 'icon' => 'stock-icons/16x16/stock_people.png',
-'version' => '1.1.0beta1',
+'version' => '8.09.0',
 'class_definitions' => array
 (
     'midcomdba.inc',
@@ -42,4 +42,4 @@
         'org.openpsa.qbpager' => array(),
     ),
 ),
-'state' => 'beta',
+'state' => 'stable',

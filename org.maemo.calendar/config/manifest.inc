@@ -1,7 +1,7 @@
 'name' => 'org.maemo.calendar',
 'purecode' => false,
-'version' => '0.9.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array

@@ -1,7 +1,7 @@
 'name' => 'net.nemein.registrations',
 'purecode' => false,
-'version' => '2.1.0beta2',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array
 (
     'manage' => MIDCOM_PRIVILEGE_DENY,

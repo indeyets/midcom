@@ -249,9 +249,9 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
                     $this->_show_render_line_task();
                 }
                 else
-		{
+        {
                     $this->_show_render_line_project();
-		}
+        }
                 break;
             case is_a($this->_request_data['link_other_obj'], 'org_openpsa_documents_document'):
                 $this->_show_render_line_document();

@@ -1,8 +1,8 @@
 'name' => 'fi.mik.lentopaikkakisa',
 'icon' => 'fi.mik.lentopaikkakisa/lentopaikkakisa.png',
 'purecode' => false,
-'version' => '0.3.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array
 (
     'moderation' => MIDCOM_PRIVILEGE_DENY,

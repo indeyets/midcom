@@ -2,7 +2,7 @@
 'purecode' => false,
 'privileges' => array(),
 'class_definitions' => array(),
-'version' => '2.9.0beta1',
+'version' => '8.09.0',
 'package.xml' => array
 (
     'summary' => 'OpenPSA reporting module',
@@ -42,4 +42,4 @@
         ),
     ),
 ),
-'state' => 'beta',
+'state' => 'stable',

@@ -1,7 +1,7 @@
 'name' => 'org.maemo.devcodes',
 'purecode' => false,
-'version' => '0.1.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array
 (
     'manage' => MIDCOM_PRIVILEGE_DENY,

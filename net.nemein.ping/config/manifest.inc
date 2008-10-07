@@ -1,8 +1,8 @@
 'name' => 'net.nemein.ping',
 'icon' => 'net.nemein.ping/ping.png',
 'purecode' => true,
-'version' => '1.1.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array(),
 'watches' => array

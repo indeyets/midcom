@@ -1,5 +1,5 @@
 'name' => 'net.nehmer.marketplace',
-'version' => '1.1.0beta1',
+'version' => '8.09.0',
 'class_definitions' => array
 (
     'midcomdba.inc',
@@ -46,4 +46,4 @@
         'midcom' => array(),
     ),
 ),
-'state' => 'beta',
+'state' => 'stable',

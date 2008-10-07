@@ -1,8 +1,8 @@
 'name' => 'midcom.admin.folder',
 'icon' => 'stock-icons/16x16/folder.png',
 'purecode' => true,
-'version' => '1.3.0beta3',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array
 (
     'topic_management' => MIDCOM_PRIVILEGE_DENY,

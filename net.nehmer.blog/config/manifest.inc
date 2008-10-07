@@ -1,7 +1,7 @@
 'name' => 'net.nehmer.blog',
 'icon' => 'net.nehmer.blog/news-listing.png',
-'version' => '1.6.1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'class_definitions' => array
 (
     'midcom_dba_classes.inc',

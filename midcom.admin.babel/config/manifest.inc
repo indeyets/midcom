@@ -2,7 +2,7 @@
 'icon' => 'stock-icons/16x16/locale.png',
 'description' => 'MidCOM localization utility',
 'purecode' => true,
-'version' => '0.3.0beta1',
+'version' => '8.09.0',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array
@@ -27,7 +27,7 @@
         'midcom' => array(),
     ),
 ),
-'state' => 'beta',
+'state' => 'stable',
 'customdata' => array
 (
     'asgard_plugin' => array

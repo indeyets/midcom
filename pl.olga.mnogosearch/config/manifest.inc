@@ -1,7 +1,7 @@
 'name' => 'pl.olga.mnogosearch',
 'icon' => 'stock-icons/16x16/view.png',
-'version' => '1.1.0beta2',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'package.xml' => array
 (
     'summary' => 'Mnogosearch indexer frontend',

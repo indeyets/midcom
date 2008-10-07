@@ -1,8 +1,8 @@
 'name' => 'net.nemein.approvenotifier',
 'icon' => 'stock-icons/16x16/stock_mark.png',
 'purecode' => true,
-'version' => '0.1.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'package.xml' => array
 (
     'summary' => 'Approval notifier',

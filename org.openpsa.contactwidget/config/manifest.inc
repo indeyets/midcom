@@ -3,8 +3,8 @@
 'purecode' => true,
 'privileges' => array(),
 'class_definitions' => array(),
-'version' => '2.1.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'package.xml' => array
 (
     'summary' => 'Contact display widget',

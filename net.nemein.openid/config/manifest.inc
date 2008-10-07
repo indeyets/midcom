@@ -1,8 +1,8 @@
 'name' => 'net.nemein.openid',
 'icon' => 'net.nemein.openid/openid.gif',
 'purecode' => true,
-'version' => '0.1.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array

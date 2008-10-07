@@ -1,10 +1,10 @@
 'name' => 'net.nehmer.publications',
-'version' => '0.2.0beta1',
+'version' => '8.09.0',
 'class_definitions' => array
 (
     'midcomdba.inc',
 ),
-'state' => 'beta',
+'state' => 'stable',
 'package.xml' => array
 (
     'summary' => 'Publication management system',

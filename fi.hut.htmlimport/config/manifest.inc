@@ -1,6 +1,6 @@
 'name' => 'fi.hut.htmlimport',
 'purecode' => true,
-'version' => '1.0.0',
+'version' => '8.09.0',
 'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array(),

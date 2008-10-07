@@ -105,7 +105,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
 
     private function _handler_list_user()
     {
-	    // Query user's current tasks
+        // Query user's current tasks
         $this->_request_data['view'] = 'my_tasks';
 
         // Tasks proposed to the user

@@ -1,8 +1,8 @@
 'name' => 'net.nemein.downloads',
 'icon' => 'net.nemein.downloads/downloads-16.png',
 'purecode' => false,
-'version' => '1.1.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array

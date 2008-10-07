@@ -5,8 +5,8 @@
 (
     'midcom_dba_classes.inc',
 ),
-'version' => '0.1.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'package.xml' => array
 (
     'summary' => 'BEA BulkLoader exporter',

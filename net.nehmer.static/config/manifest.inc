@@ -1,7 +1,7 @@
 'name' => 'net.nehmer.static',
-'version' => '1.1.0beta1',
+'version' => '8.09.0',
 'icon' => 'stock-icons/16x16/document.png',
-'state' => 'beta',
+'state' => 'stable',
 'class_definitions' => array
 (
     'midcom_dba_classes.inc',

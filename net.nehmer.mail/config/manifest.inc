@@ -1,7 +1,7 @@
 'name' => 'net.nehmer.mail',
 'icon' => 'stock-icons/16x16/mail-reply-all.png',
-'version' => '1.9.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'package.xml' => array
 (
     'summary' => 'Community Mailing System',

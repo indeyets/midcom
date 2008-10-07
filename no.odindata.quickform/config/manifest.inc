@@ -1,8 +1,8 @@
 'name' => 'no.odindata.quickform',
 'description' => 'A simple email form generator',
 'purecode' => false,
-'version' => '1.4.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array

@@ -2,8 +2,8 @@
 'icon' => 'stock-icons/16x16/attach.png',
 'description' => 'Image upload and insertion tool',
 'purecode' => true,
-'version' => '0.2.0beta2',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array

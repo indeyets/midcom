@@ -1,7 +1,7 @@
 'name' => 'net.nemein.reservations',
 'purecode' => false,
-'version' => '2.1.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array

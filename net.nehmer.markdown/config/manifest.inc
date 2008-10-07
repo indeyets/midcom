@@ -1,7 +1,7 @@
 'name' => 'net.nehmer.markdown',
 'icon' => 'stock-icons/16x16/document-text.png',
-'version' => '1.1.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'purecode' => true,
 'package.xml' => array
 (

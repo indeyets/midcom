@@ -1,8 +1,8 @@
 'name' => 'midcom.helper.replicator',
 'icon' => 'midcom.helper.replicator/replicate-server-16.png',
 'purecode' => true,
-'version' => '1.1.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array
 (
     'manage' => MIDCOM_PRIVILEGE_DENY,

@@ -1,8 +1,8 @@
 'name' => 'net.nemein.tag',
 'icon' => 'net.nemein.tag/tag-16.png',
 'purecode' => true,
-'version' => '1.1.0beta2',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array
 (

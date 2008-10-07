@@ -387,41 +387,41 @@ class org_openpsa_sales_salesproject extends __org_openpsa_sales_salesproject
         }
     }
 
-	/**
-	 * For sorting arrays in get_actions method
-	 */
-	private function _sort_action_by_time($a, $b)
-	{
-	    $ap = $a['time'];
-	    $bp = $b['time'];
-	    if ($ap > $bp)
-	    {
-	        return 1;
-	    }
-	    if ($ap < $bp)
-	    {
-	        return -1;
-	    }
-	    return 0;
-	}
-	
-	/**
-	 * For sorting arrays in get_actions method
-	 */
-	private function _sort_action_by_time_reverse($a, $b)
-	{
-	    $ap = $a['time'];
-	    $bp = $b['time'];
-	    if ($ap < $bp)
-	    {
-	        return 1;
-	    }
-	    if ($ap > $bp)
-	    {
-	        return -1;
-	    }
-	    return 0;
-	}
+    /**
+     * For sorting arrays in get_actions method
+     */
+    private function _sort_action_by_time($a, $b)
+    {
+        $ap = $a['time'];
+        $bp = $b['time'];
+        if ($ap > $bp)
+        {
+            return 1;
+        }
+        if ($ap < $bp)
+        {
+            return -1;
+        }
+        return 0;
+    }
+    
+    /**
+     * For sorting arrays in get_actions method
+     */
+    private function _sort_action_by_time_reverse($a, $b)
+    {
+        $ap = $a['time'];
+        $bp = $b['time'];
+        if ($ap < $bp)
+        {
+            return 1;
+        }
+        if ($ap > $bp)
+        {
+            return -1;
+        }
+        return 0;
+    }
 
 }
 

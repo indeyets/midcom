@@ -1,7 +1,7 @@
 'name' => 'net.nemein.personnel',
 'purecode' => false,
-'version' => '1.2.0beta2',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array

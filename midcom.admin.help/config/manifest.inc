@@ -2,8 +2,8 @@
 'icon' => 'stock-icons/16x16/stock_help-agent.png',
 'description' => 'On-site help displayer',
 'purecode' => true,
-'version' => '1.1.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array

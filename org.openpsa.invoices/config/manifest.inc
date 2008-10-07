@@ -1,8 +1,8 @@
 'name' => 'org.openpsa.invoices',
 'icon' => 'stock-icons/16x16/stock_mail-open.png',
 'purecode' => false,
-'version' => '2.9.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array
 (

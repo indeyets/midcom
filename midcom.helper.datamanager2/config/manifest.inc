@@ -1,12 +1,12 @@
 'name' => 'midcom.helper.datamanager2',
-'version' => '1.1.0beta4',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'purecode' => true,
 'package.xml' => array
 (
     'summary' => 'Data abstraction and form rendering library',
     'description' => 'midcom.helper.datamanager2 is a MidCOM purecode component providing database abstraction and form processing features to MidCOM components.',
-    'state' => 'beta',
+    'state' => 'stable',
     'maintainers' => array
     (
         'rambo' => array

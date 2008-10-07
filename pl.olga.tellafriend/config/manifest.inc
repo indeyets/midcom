@@ -1,9 +1,9 @@
 'name' => 'pl.olga.tellafriend',
 'icon' => 'stock-icons/16x16/stock_mail-send.png',
 'purecode' => true,
-'version' => '1.1.0beta1',
+'version' => '8.09.0',
 'privileges' => array(),
-'state' => 'beta',
+'state' => 'stable',
 'package.xml' => array
 (
     'summary' => 'Tell a friend',

@@ -6,7 +6,7 @@
 (
     'midcom_dba_classes.inc',
 ),
-'version' => '2.9.0beta1',
+'version' => '8.09.0',
 'package.xml' => array
 (
     'summary' => 'Document management',
@@ -35,4 +35,4 @@
         'midcom' => array(),
     ),
 ),
-'state' => 'beta',
+'state' => 'stable',

@@ -116,7 +116,7 @@ $view_today =& $data['view_today'];
         }
         else
         {
-	  echo "<p><a href=\"{$data['expenses_url']}\">" . $_MIDCOM->i18n->get_string('report hours', 'org.openpsa.expenses') . "</a></p>\n";
+      echo "<p><a href=\"{$data['expenses_url']}\">" . $_MIDCOM->i18n->get_string('report hours', 'org.openpsa.expenses') . "</a></p>\n";
         }
         
         // TODO: Show expenses and mileages

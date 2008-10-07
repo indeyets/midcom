@@ -2,8 +2,8 @@
 'icon' => 'stock-icons/16x16/preferences-desktop.png',
 'description' => 'This module handles MidCOM local configuration.',
 'purecode' => true,
-'version' => '0.3.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array

@@ -1,8 +1,8 @@
 'name' => 'no.odindata.quickform2',
 'description' => 'Submit forms to email ',
 'purecode' => false,
-'version' => '1.2.0beta1',
-'state' => 'beta',
+'version' => '8.09.0',
+'state' => 'stable',
 'privileges' => array (),
 'class_definitions' => array (),
 'package.xml' => array

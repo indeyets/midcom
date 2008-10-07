@@ -228,7 +228,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         if (isset($_GET['org_openpsa_invoices_redirect']))
         {
             $_MIDCOM->relocate($_GET['org_openpsa_invoices_redirect']);
-            // This will exit    	   
+            // This will exit           
         }
         else
         {

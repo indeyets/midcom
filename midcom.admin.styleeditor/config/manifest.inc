@@ -2,7 +2,7 @@
 'description' => 'Style editor for Midgard style templates',
 'icon' => 'stock-icons/16x16/text-x-generic-template.png',
 'purecode' => true,
-'version' => '1.0.0',
+'version' => '8.09.0',
 'privileges' => array(),
 'class_definitions' => array(),
 'package.xml' => array

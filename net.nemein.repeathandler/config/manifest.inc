@@ -1,10 +1,10 @@
 'name' => 'net.nemein.repeathandler',
 'icon' => 'stock-icons/16x16/stock_task-recurring.png',
 'purecode' => true,
-'version' => '1.1.0beta1',
+'version' => '8.09.0',
 'privileges' => array(),
 'class_definitions' => array(),
-'state' => 'beta',
+'state' => 'stable',
 'package.xml' => array
 (
     'summary' => 'Handler for repeated events',
