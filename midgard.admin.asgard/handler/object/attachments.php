@@ -54,7 +54,7 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL . '/midgard.admin.asgard/style-editor.css',
+                'href' => MIDCOM_STATIC_URL . '/midcom.admin.styleeditor/style-editor.css',
             )
         );
 
@@ -476,7 +476,8 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
         $this->_file = $this->_get_file($data['filename']);
         if (!$this->_file)
         {
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Attachment '{$data['filename']}' of object {$this->_object->guid} was not found.");
+            // This will exit.
         }
 
         // Require delete privilege
