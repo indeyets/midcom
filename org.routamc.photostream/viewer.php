@@ -579,48 +579,48 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
 
     function _sanity_check_switch(&$new_switch)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r('Checking $new_switch: ', $new_switch);
+        //debug_push_class(__CLASS__, __FUNCTION__);
+        //debug_print_r('Checking $new_switch: ', $new_switch);
         if (   (   !isset($new_switch['fixed_args'])
                 || empty($new_switch['fixed_args'])
             && $new_switch['variable_args'] == 1)
             )
         {
             // Since we do not want to make hugely elaborate can_handle we just disallow feed handler that would trap the /<feedtype> (preventing subfolders etc)
-            debug_add('$new_switch would trap /<anything>, which is bad, rewriting to /feed/index/<anything>', MIDCOM_LOG_INFO);
+            //debug_add('$new_switch would trap /<anything>, which is bad, rewriting to /feed/index/<anything>', MIDCOM_LOG_INFO);
             array_unshift($new_switch['fixed_args'], 'feed', 'index');
-            debug_print_r('$new_switch after rewrite: ', $new_switch);
-            debug_pop();
+            //debug_print_r('$new_switch after rewrite: ', $new_switch);
+            //debug_pop();
             return true;
         }
         foreach ($this->_request_switch as $handler_id => $switch_data)
         {
-            debug_add("Comparing with handler '{$handler_id}'");
+            //debug_add("Comparing with handler '{$handler_id}'");
             switch(true)
             {
                 case (   !isset($switch_data['fixed_args'])
                       && isset($new_switch['fixed_args'])):
-                    debug_add('existing switch has not-set fixed_args and new_switch has');
+                    //debug_add('existing switch has not-set fixed_args and new_switch has');
                     $fixed_diff = true;
                     break;
                 case (   !isset($new_switch['fixed_args'])
                       && isset($switch_data['fixed_args'])):
-                    debug_add('new_switch has not-set fixed_args and existing switch has');
+                    //debug_add('new_switch has not-set fixed_args and existing switch has');
                     $fixed_diff = true;
                     break;
                 case (   !is_array($switch_data['fixed_args'])
                       && is_array($new_switch['fixed_args'])):
-                    debug_add('existing switch fixed_args is not array, new_switch fixed_args is');
+                    //debug_add('existing switch fixed_args is not array, new_switch fixed_args is');
                     $fixed_diff = true;
                     break;
                 case (   !is_array($new_switch['fixed_args'])
                       && is_array($switch_data['fixed_args'])):
-                    debug_add('new_switch fixed_args is not array, existing switch fixed_args is');
+                    //debug_add('new_switch fixed_args is not array, existing switch fixed_args is');
                     $fixed_diff = true;
                     break;
                 case (   is_array($switch_data['fixed_args'])
                       && is_array($new_switch['fixed_args'])):
-                    debug_add('new_switch and existing switch fixed_args are both arrays, calling array_diff');
+                    //debug_add('new_switch and existing switch fixed_args are both arrays, calling array_diff');
                     $fixed_diff = array_diff($switch_data['fixed_args'], $new_switch['fixed_args']);
                     if (empty($fixed_diff))
                     {
@@ -632,10 +632,10 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
                     }
                     break;
                 default:
-                    debug_add('defaulting fixed_diff to false');
+                    //debug_add('defaulting fixed_diff to false');
                     $fixed_diff = false;
             }
-            debug_print_r('$fixed_diff: ', $fixed_diff);
+            //debug_print_r('$fixed_diff: ', $fixed_diff);
             if (!empty($fixed_diff))
             {
                 // Fixed args differ
@@ -648,13 +648,13 @@ class org_routamc_photostream_viewer extends midcom_baseclasses_components_reque
                 // Variable args do not overlap
                 continue;
             }
-            debug_add("handler '{$handler_id}' already implements the url space", MIDCOM_LOG_INFO);
-            debug_print_r('$new_switch was: ', $new_switch, MIDCOM_LOG_INFO);
-            debug_print_r("\$this->_request_switch['{$handler_id}'] was: ", $switch_data, MIDCOM_LOG_INFO);
-            debug_pop();
+            //debug_add("handler '{$handler_id}' already implements the url space", MIDCOM_LOG_INFO);
+            //debug_print_r('$new_switch was: ', $new_switch, MIDCOM_LOG_INFO);
+            //debug_print_r("\$this->_request_switch['{$handler_id}'] was: ", $switch_data, MIDCOM_LOG_INFO);
+            //debug_pop();
             return false;
         }
-        debug_pop();
+        //debug_pop();
         return true;
     }
 

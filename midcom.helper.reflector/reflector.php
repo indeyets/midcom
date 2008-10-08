@@ -812,9 +812,9 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         if (   isset($extends[$schema_type])
             && class_exists($extends[$schema_type]))
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Rewriting type {$schema_type} to {$extends[$schema_type]}");
-            debug_pop();
+            //debug_push_class(__CLASS__, __FUNCTION__);
+            //debug_add("Rewriting type {$schema_type} to {$extends[$schema_type]}");
+            //debug_pop();
             return $extends[$schema_type];
         }
         return $schema_type;
