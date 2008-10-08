@@ -15,7 +15,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
 {
     var $contacts = array(); //Shorthand access for contact members
     var $resources = array(); // --''--
-    private $_locale_backup = '';
+    var $_locale_backup = '';
     var $_skip_acl_refresh = false;
     var $_skip_parent_refresh = false;
     var $status_comment = ''; //Shorthand access for the comment of last status
