@@ -943,6 +943,24 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                     MIDCOM_NAV_URL => "__mfa/asgard/object/attachments/{$object->guid}/",
                     MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('attachments', 'midgard.admin.asgard'),
                 );
+                
+                if ($handler_id == '____mfa-asgard-object_attachments_edit')
+                {
+                    $breadcrumb[] = array
+                    (
+                        MIDCOM_NAV_URL => "__mfa/asgard/object/attachments/{$object->guid}/edit",
+                        MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('edit', 'midcom'),
+                    );
+                }
+                if ($handler_id == '____mfa-asgard-object_attachments_delete')
+                {
+                    $breadcrumb[] = array
+                    (
+                        MIDCOM_NAV_URL => "__mfa/asgard/object/attachments/{$object->guid}/delete",
+                        MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('delete', 'midcom'),
+                    );
+                }
+
                 $toolbar->disable_item("__mfa/asgard/object/attachments/{$object->guid}/");
                 break;
             case '____mfa-asgard-object_parameters':
