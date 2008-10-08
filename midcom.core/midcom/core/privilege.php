@@ -697,7 +697,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
             if ($parent_class !== null)
             {
                 $parent_dummy_object = new $parent_class();
-                $parent_dummy_object->guid = $parent_guid;
+                $parent_dummy_object->__guid = $parent_guid;
                 $base_privileges = midcom_core_privilege::collect_content_privileges($parent_dummy_object, $user);
             }
             else
