@@ -35,7 +35,7 @@ if (   !isset($_SERVER['MIDCOM_COMPAT_REDIR'])
 {
     $redirect_test_uri = preg_replace('/\.html$/', '', $redirect_test_uri);
 }
-if (   !preg_match('%\?|/$|midcom-.+-|/.+\..+$%', $redirect_test_uri)
+if (   !preg_match('%\?|/$|midcom-.+-|/.*\.[^/]+$%', $redirect_test_uri)
     && (   !isset($_POST)
         || empty($_POST))
     )
