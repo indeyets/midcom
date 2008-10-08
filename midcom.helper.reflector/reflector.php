@@ -127,9 +127,12 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             || empty($_MIDCOM->dbclassloader->mgdschema_class_handler[$midcom_dba_classname]))
         {
             // Cannot resolve component, fallback early to our own l10n
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Could not resolve component for DBA class {$midcom_dba_classname}, using our own l10n", MIDCOM_LOG_INFO);
-            debug_pop();
+            if (substr($midcom_dba_classname, 0, 6) != 'midcom')
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Could not resolve component for DBA class {$midcom_dba_classname}, using our own l10n", MIDCOM_LOG_INFO);
+                debug_pop();
+            }
             $GLOBALS['midcom_helper_reflector_get_component_l10n_cache'][$this->mgdschema_class] = $this->_l10n;
             return $this->_l10n;
         }

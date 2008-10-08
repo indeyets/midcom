@@ -845,23 +845,21 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
 
     function _resolve_child_classes_links_back($property, $prospect_type, $schema_type)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         if (empty($property))
         {
-            debug_add('Given property is empty, aborting early');
-            debug_pop();
             return false;
         }
+        //debug_push_class(__CLASS__, __FUNCTION__);
         $ref = new midgard_reflection_property($prospect_type);
         $link_class = $ref->get_link_name($property);
-        debug_add("got link_class '{$link_class}' for property '{$property}' in type '{$prospect_type}'");
+        //debug_add("got link_class '{$link_class}' for property '{$property}' in type '{$prospect_type}'");
         if (midcom_helper_reflector::is_same_class($link_class, $schema_type))
         {
-            debug_pop();
+            //debug_pop();
             return true;
         }
-        debug_add("link_class '{$link_class}' did not match '{$schema_type}' even after rewrites");
-        debug_pop();
+        //debug_add("link_class '{$link_class}' did not match '{$schema_type}' even after rewrites");
+        //debug_pop();
         return false;
     }
 
@@ -888,12 +886,13 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
      */
     function _resolve_root_classes()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         $root_exceptions_notroot = $GLOBALS['midcom_component_data']['midcom.helper.reflector']['config']->get('root_class_exceptions_notroot');
         // Safety against misconfiguration
         if (!is_array($root_exceptions_notroot))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("config->get('root_class_exceptions_notroot') did not return array, invalid configuration ??", MIDCOM_LOG_ERROR);
+            debug_pop();
             $root_exceptions_notroot = array();
         }
         $root_classes = array();
@@ -907,7 +906,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             if (in_array($schema_type, $root_exceptions_notroot))
             {
                 // Explicitly specified to not be root class, skip all heuristics
-                debug_add("Type {$schema_type} is listed in exceptions to never be root");
+                //debug_add("Type {$schema_type} is listed in exceptions to never be root");
                 continue;
             }
 
@@ -918,7 +917,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             if (in_array($schema_type, $root_classes))
             {
                 // Already listed
-                debug_add("Type {$schema_type} already exists in \$root_types");
+                //debug_add("Type {$schema_type} already exists in \$root_types");
                 continue;
             }
             /* We might not need this afterall
@@ -928,7 +927,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             if (!empty($parent))
             {
                 // type has parent set, thus cannot be root type
-                debug_add("Type {$schema_type} has parent property {$parent}, thus cannot be root class");
+                //debug_add("Type {$schema_type} has parent property {$parent}, thus cannot be root class");
                 continue;
             }
 
@@ -958,7 +957,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
                 if (   isset($test_class->noasgard)
                     && $test_class->noasgard)
                 {
-                    debug_add("Type {$schema_type} has 'noagsard' property set, thus cannot be root class");
+                    //debug_add("Type {$schema_type} has 'noagsard' property set, thus cannot be root class");
                     continue;
                 }
             }
@@ -970,7 +969,9 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
         // Safety against misconfiguration
         if (!is_array($root_exceptions_forceroot))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("config->get('root_class_exceptions_forceroot') did not return array, invalid configuration ??", MIDCOM_LOG_ERROR);
+            debug_pop();
             $root_exceptions_forceroot = array();
         }
         if (!empty($root_exceptions_forceroot))
@@ -980,21 +981,23 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
                 if (!class_exists($schema_type))
                 {
                     // Not a valid class
+                    debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add("Type {$schema_type} has been listed to always be root class, but the class does not exist", MIDCOM_LOG_WARN);
+                    debug_pop();
                     continue;
                 }
                 if (in_array($schema_type, $root_classes))
                 {
                     // Already listed
-                    debug_add("Force type {$schema_type}, already exists in \$root_types");
+                    //debug_add("Force type {$schema_type}, already exists in \$root_types");
                     continue;
                 }
-                debug_add("Forcing type {$schema_type} to be root type", MIDCOM_LOG_INFO);
+                //debug_add("Forcing type {$schema_type} to be root type", MIDCOM_LOG_INFO);
                 $root_classes[] = $schema_type;
             }
         }
         usort($root_classes, 'strnatcmp');
-        debug_pop();
+        //debug_pop();
         return $root_classes;
     }
 }
