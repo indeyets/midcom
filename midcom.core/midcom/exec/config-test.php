@@ -214,6 +214,16 @@ else
     println('PHP Setting: track_errors', WARNING, 'track_errors is disabled, it is strongly suggested to be activated as this allows the framework to handle more errors gracefully.');
 }
 
+// Call-time pass-by-reference
+if (ini_get_boolean('allow_call_time_pass_reference'))
+{
+    println('PHP Setting: allow_call_time_pass_reference', OK, 'Call-time pass-by-reference syntax is still used in MidCOM for now');
+}
+else
+{
+    println('PHP Setting: allow_call_time_pass_reference', WARNING, 'allow_call_time_pass_reference is still used in MidCOM, you may see notices about this.');
+}
+
 // Upload File Size
 $upload_limit = ini_get_filesize('upload_max_filesize');
 if ($upload_limit >= (50 * 1024 * 1024))
