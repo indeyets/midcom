@@ -999,7 +999,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             if ($att->purge())
             {
                 $purged_size += $att->metadata->size;
-                $this->_purge_parameters($att->guid);
+                midcom_baseclasses_core_dbobject::purge_parameters($att->guid);
             }
             else
             {
