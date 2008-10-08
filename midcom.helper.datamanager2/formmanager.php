@@ -732,7 +732,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
                       && !is_a($type, 'midcom_helper_datamanager2_type_images')):
                     // 'required' does not work for uploads -> use 'uploadedfile'
                     // OTOH: Does this mean it requires new upload each time ?? TODO: Test
-                    $this->form->addRule($name, $message, 'uploadedfile', '');
+                    $this->form->addRule("{$name}_file", $message, 'uploadedfile', '');
                     break;
                 // Match all other blobs types (those allow multiple uploads which are kind of hard to validate)
                 case (is_a($type, 'midcom_helper_datamanager2_type_blobs')):
