@@ -184,7 +184,7 @@ class midgard_admin_asgard_handler_preferences extends midcom_baseclasses_compon
 
 
         // Load the common data
-        $this->_process_request_data(&$data);
+        $this->_process_request_data($data);
 
         return true;
     }
