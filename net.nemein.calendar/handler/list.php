@@ -541,7 +541,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 else
                 {
                     $qb->begin_group('AND');
-                        $qb->add_constraint('start', '>=', gmdate('Y-m-d H:i:s', $from));
+                        $qb->add_constraint('start', '>=', date('Y-m-d H:i:s', $from));
                         //$qb->add_constraint('start', '<=', gmdate('Y-m-d H:i:s', $to));
                         $qb->add_constraint('start', '<=', date('Y-m-d H:i:s', $to));
                     $qb->end_group();
@@ -550,7 +550,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 if ($this->_config->get('list_started'))
                 {
                     // The event begins before and ends after [$from, $to]
-                    $qb->begin_group('AND');
+                    $qb->begin_group('OR');
                         //$qb->add_constraint('start', '<=', gmdate('Y-m-d H:i:s', $from));
                         $qb->add_constraint('start', '<=', date('Y-m-d H:i:s', $from));
                         if (!is_null($to))
@@ -573,7 +573,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                     else
                     {
                         $qb->begin_group('AND');
-                            $qb->add_constraint('end', '>=', gmdate('Y-m-d H:i:s', $from));
+                            $qb->add_constraint('end', '>=', date('Y-m-d H:i:s', $from));
                             //$qb->add_constraint('end', '<=', gmdate('Y-m-d H:i:s', $to));
                             $qb->add_constraint('end', '<=', date('Y-m-d H:i:s', $to));
                         $qb->end_group();
@@ -785,7 +785,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                 $events_shown++;
                 midcom_show_style('show_listing_start');
 
-                $this->_request_data['event_url'] = $this->generate_event_link(&$event);
+                $this->_request_data['event_url'] = $this->generate_event_link($event);
                 midcom_show_style('show_listing_item');
             }
         }
