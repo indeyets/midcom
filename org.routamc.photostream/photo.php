@@ -322,7 +322,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         }
     
         $blob = new midgard_blob($att_obj);
-        $src = $blob->get_handler();
+        $src = fread($blob->get_path(), 'r');
 
         if (!$src)
         {
