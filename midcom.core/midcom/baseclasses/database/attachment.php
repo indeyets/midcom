@@ -166,7 +166,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
                     /* FIXME, throw error */
                 }
 
-                $handle = fopen($blob->get_path(), 'r');
+                $handle = fopen($blob->get_path(), $mode);
                 break;
 
             default:
