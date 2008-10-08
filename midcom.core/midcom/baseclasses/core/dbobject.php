@@ -112,7 +112,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if ($object->_use_rcs) 
         {
             $rcs =& $_MIDCOM->get_service('rcs');
-            $rcs->update(&$object, $object->get_rcs_message());
+            $rcs->update($object, $object->get_rcs_message());
         }
 
         $object->_on_updated();
@@ -410,7 +410,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if ($object->_use_rcs) 
         {
             $rcs =& $_MIDCOM->get_service('rcs');
-            $rcs->update(&$object, $object->get_rcs_message());
+            $rcs->update($object, $object->get_rcs_message());
         }
         
         $parent = $object->get_parent();
@@ -585,7 +585,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
         
         // Get the child nodes
-        $children = midcom_helper_reflector_tree::get_child_objects(&$object);
+        $children = midcom_helper_reflector_tree::get_child_objects($object);
         
         // Children found
         if (   $children
@@ -639,7 +639,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if ($object->_use_rcs) 
         {
             $rcs =& $_MIDCOM->get_service('rcs');
-            $rcs->update(&$object, $object->get_rcs_message());
+            $rcs->update($object, $object->get_rcs_message());
         }
 
         $_MIDCOM->cache->invalidate($object->guid);
