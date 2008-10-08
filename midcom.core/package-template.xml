@@ -57,7 +57,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     </stability>
     <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
     <notes>
-        Syncrhonize release with Midgard 8.09 LTS 
+       	Fixed privileges inheritance. 
+	Fixed url parser for prefixes or names containing dot.
     </notes>
     <contents>
         <dir name="/">
