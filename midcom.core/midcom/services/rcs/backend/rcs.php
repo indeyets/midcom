@@ -91,7 +91,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         }
         $update_string .= "|{$updatemessage}";
 
-        $result = $this->rcs_update(&$object, $update_string);
+        $result = $this->rcs_update($object, $update_string);
 
         // The methods return basically what the RCS unix level command returns, so nonzero value is error and zero is ok...
         if ($result > 0 )

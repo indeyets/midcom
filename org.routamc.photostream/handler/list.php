@@ -229,7 +229,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _show_photostream_list($handler_id, &$data)
     {
-        $this->_show_photostream($handler_id, &$data);
+        $this->_show_photostream($handler_id, $data);
     }
 
     /**
@@ -373,7 +373,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _show_photostream_latest($handler_id, &$data)
     {
-        $this->_show_photostream($handler_id, &$data);
+        $this->_show_photostream($handler_id, $data);
     }
 
     /**
@@ -420,7 +420,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _show_photostream_between($handler_id, &$data)
     {
-        $this->_show_photostream($handler_id, &$data);
+        $this->_show_photostream($handler_id, $data);
     }
 
     /**
@@ -472,7 +472,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _show_photostream_batch($handler_id, &$data)
     {
-        $this->_show_photostream($handler_id, &$data);
+        $this->_show_photostream($handler_id, $data);
     }
 
     /**
@@ -704,7 +704,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _show_photostream_tag($handler_id, &$data)
     {
-        $this->_show_photostream($handler_id, &$data);
+        $this->_show_photostream($handler_id, $data);
     }
 
     /**
@@ -838,7 +838,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _show_photostream_rated($handler_id, &$data)
     {
-        $this->_show_photostream($handler_id, &$data);
+        $this->_show_photostream($handler_id, $data);
     }
 
     /**
@@ -1130,7 +1130,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _show_sort($handler_id, &$data)
     {
-        $this->_show_photostream($handler_id, &$data);
+        $this->_show_photostream($handler_id, $data);
     }
     
     /**
@@ -1283,7 +1283,7 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _show_random($handler_id, &$data)
     {
-        $this->_show_photostream($handler_id, &$data);
+        $this->_show_photostream($handler_id, $data);
     }
 }
 ?>
