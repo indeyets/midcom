@@ -158,7 +158,7 @@ if (count($data['revised']) > 0)
         {
             $approved_str = $_MIDCOM->i18n->get_string('not approved', 'midgard.admin.asgard');
         }
-        $title = substr($data['reflectors'][$class]->get_object_label(&$object), 0, 60);
+        $title = substr($data['reflectors'][$class]->get_object_label($object), 0, 60);
         if (empty($title))
         {
             $title = '[' . $_MIDCOM->i18n->get_string('no title', 'midgard.admin.asgard') . ']';
@@ -171,7 +171,7 @@ if (count($data['revised']) > 0)
 
         echo "        <tr>\n";
         echo "            <td class=\"selection\"><input type=\"checkbox\" name=\"selections[]\" value=\"{$object->guid}\" /></td>\n";
-        echo "            <td class=\"icon\">" . $data['reflectors'][$class]->get_object_icon(&$object) . "</td>\n";
+        echo "            <td class=\"icon\">" . $data['reflectors'][$class]->get_object_icon($object) . "</td>\n";
         echo "            <td class=\"title\"><a href=\"{$prefix}__mfa/asgard/object/{$data['default_mode']}/{$object->guid}/\" title=\"{$class}\">" . $title . "</a></td>\n";
 
         if ($data['config']->get('enable_review_dates'))
@@ -256,7 +256,7 @@ else
             $title = htmlspecialchars($reflectors[$class]->get_object_label($object));
             
             echo "        <tr>\n";
-            echo "            <td class=\"icon\">" . $reflectors[$class]->get_object_icon(&$object) . "</td>\n";
+            echo "            <td class=\"icon\">" . $reflectors[$class]->get_object_icon($object) . "</td>\n";
             echo "            <td class=\"title\"><a href=\"{$prefix}__mfa/asgard/object/{$data['default_mode']}/{$object->guid}/\" title=\"{$class}\">" . $title . "</a></td>\n";
             
             

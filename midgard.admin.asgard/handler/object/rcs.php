@@ -219,10 +219,10 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
 
     function _prepare_request_data($handler_id)
     {
-        midgard_admin_asgard_plugin::init_language($handler_id, $this->_request_data['args'], &$this->_request_data);
+        midgard_admin_asgard_plugin::init_language($handler_id, $this->_request_data['args'], $this->_request_data);
 
         $this->_request_data['asgard_toolbar'] = new midcom_helper_toolbar();
-        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$this->_request_data);
+        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, $this->_request_data);
         midgard_admin_asgard_plugin::get_common_toolbar($this->_request_data);
 
         $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
@@ -527,7 +527,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
             }
         }
 
-        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, $data);
 
         $this->_do_callbacks();
         $this->_guid = $args[0];
@@ -547,7 +547,7 @@ class midgard_admin_asgard_handler_object_rcs extends midcom_baseclasses_compone
         // Load the toolbars
         $this->_rcs_toolbar();
         midgard_admin_asgard_plugin::get_common_toolbar($data);
-        midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
+        midgard_admin_asgard_plugin::finish_language($handler_id, $data);
 
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/rcs.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.tablesorter.pack.js');

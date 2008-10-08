@@ -52,7 +52,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         $this->_object_path = $this->get_object_path();
         $this->_request_data =& $request_data;
 
-        midgard_admin_asgard_plugin::get_default_mode(&$request_data);
+        midgard_admin_asgard_plugin::get_default_mode($request_data);
 
         $this->root_types = midcom_helper_reflector_tree::get_root_classes();
 
@@ -203,7 +203,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                         continue;
                     }
 
-                    $ref =& $this->_get_reflector(&$child);
+                    $ref =& $this->_get_reflector($child);
 
                     $selected = $this->_is_selected($child);
                     $css_class = $type;
@@ -477,7 +477,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
                 if (   is_array($root_objects)
                     && count($root_objects) > 0)
                 {
-                    $this->_list_root_elements($root_objects, &$ref);
+                    $this->_list_root_elements($root_objects, $ref);
                 }
             }
             midcom_show_style('midgard_admin_asgard_navigation_section_footer');

@@ -95,7 +95,7 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
      */
     function __construct($object, &$request_data)
     {
-        parent::__construct($object, &$request_data);
+        parent::__construct($object, $request_data);
         $this->page_prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         
         // Get the root object language
@@ -166,7 +166,7 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
                         continue;
                     }
 
-                    $ref =& $this->_get_reflector(&$child);
+                    $ref =& $this->_get_reflector($child);
 
                     $span_class = '';
                     $selected = $this->_is_selected($child);

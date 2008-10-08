@@ -250,7 +250,7 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
 
         if (isset($_GET['search']))
         {
-            midgard_admin_asgard_plugin::get_default_mode(&$data);
+            midgard_admin_asgard_plugin::get_default_mode($data);
             $data['search_results'] = $this->_search($_GET['search']);
 
             //If there is exactly one result, go there directly
@@ -324,7 +324,7 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
         if (count($types) > 0)
         {
             midcom_show_style('midgard_admin_asgard_type_children_start');
-            $this->show_child_types($this->type, &$data);
+            $this->show_child_types($this->type, $data);
             midcom_show_style('midgard_admin_asgard_type_children_end');
         }
         

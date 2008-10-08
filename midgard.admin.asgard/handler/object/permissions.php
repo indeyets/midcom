@@ -378,7 +378,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         // debug_print_r("POST: ", $_POST);
         // debug_pop();
 
-        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, $data);
 
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (! $this->_object)
@@ -513,8 +513,8 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                 $type = $type_parts[count($type_parts)-1];
         }
 
-        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
-        midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
+        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, $data);
+        midgard_admin_asgard_plugin::finish_language($handler_id, $data);
         return true;
     }
 
@@ -526,7 +526,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
      */
     function _show_edit($handler_id, &$data)
     {
-        $this->_generate_editor(&$data);
+        $this->_generate_editor($data);
 
         midcom_show_style('midgard_admin_asgard_header');
         midcom_show_style('midgard_admin_asgard_middle');
@@ -536,7 +536,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         midcom_show_style('midgard_admin_asgard_footer');
     }
 
-    function _generate_editor($data)
+    function _generate_editor(&$data)
     {
         $data['editor_rows'] = "";
 

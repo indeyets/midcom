@@ -679,7 +679,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
      */
     function _handler_view($handler_id, $args, &$data)
     {
-        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, $data);
 
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
 
@@ -702,8 +702,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             // This will exit.
         }
 
-        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
-        midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
+        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, $data);
+        midgard_admin_asgard_plugin::finish_language($handler_id, $data);
         midgard_admin_asgard_plugin::get_common_toolbar($data);
 
         return true;
@@ -741,7 +741,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
      */
     function _handler_edit($handler_id, $args, &$data)
     {
-        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, $data);
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (!$this->_object)
         {
@@ -805,8 +805,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         }
 
         $this->_prepare_request_data();
-        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
-        midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
+        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, $data);
+        midgard_admin_asgard_plugin::finish_language($handler_id, $data);
         return true;
     }
 
@@ -889,7 +889,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
      */
     function _handler_create($handler_id, $args, &$data)
     {
-        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, $data);
         $this->_new_type = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($args[0]);
         if (!$this->_new_type)
         {
@@ -926,7 +926,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 // This will exit
             }
             $this->_object->require_do('midgard:create');
-            midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
+            midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, $data);
 
             // Set "defaults"
             $link_info = $this->_find_linking_property($this->_new_type);
@@ -1013,7 +1013,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         }
 
         $this->_prepare_request_data();
-        midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
+        midgard_admin_asgard_plugin::finish_language($handler_id, $data);
         return true;
     }
 
@@ -1092,7 +1092,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
      */
     function _handler_delete($handler_id, $args, &$data)
     {
-        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, $data);
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
         if (!$this->_object)
         {
@@ -1166,8 +1166,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             // This will exit()
         }
 
-        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
-        midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
+        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, $data);
+        midgard_admin_asgard_plugin::finish_language($handler_id, $data);
 
         // Add Thickbox
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midgard.admin.asgard/object_browser.js');
@@ -1205,7 +1205,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         midcom_show_style('midgard_admin_asgard_middle');
 
         // Initialize the tree
-        $data['tree'] = new midgard_admin_asgard_copytree($this->_object, &$data);
+        $data['tree'] = new midgard_admin_asgard_copytree($this->_object, $data);
         $data['tree']->copy_tree = false;
         $data['tree']->inputs = false;
         
@@ -1239,7 +1239,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
      */
     function _handler_copy($handler_id, $args, &$data)
     {
-        midgard_admin_asgard_plugin::init_language($handler_id, $args, &$data);
+        midgard_admin_asgard_plugin::init_language($handler_id, $args, $data);
 
         // Get the object that will be copied
         $this->_object = $_MIDCOM->dbfactory->get_object_by_guid($args[0]);
@@ -1376,9 +1376,9 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         }
 
         // Common hooks for Asgard
-        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, &$data);
+        midgard_admin_asgard_plugin::bind_to_object($this->_object, $handler_id, $data);
         midgard_admin_asgard_plugin::get_common_toolbar($data);
-        midgard_admin_asgard_plugin::finish_language($handler_id, &$data);
+        midgard_admin_asgard_plugin::finish_language($handler_id, $data);
 
         // Set the page title
         switch ($handler_id)
@@ -1412,7 +1412,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         // Show the tree hieararchy
         if ($handler_id === '____mfa-asgard-object_copy_tree')
         {
-            $data['tree'] = new midgard_admin_asgard_copytree($this->_object, &$data);
+            $data['tree'] = new midgard_admin_asgard_copytree($this->_object, $data);
             $data['tree']->inputs = true;
             $data['tree']->copy_tree = true;
 
