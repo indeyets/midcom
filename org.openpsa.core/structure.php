@@ -57,6 +57,12 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
         {
             $nodes[$component] = midcom_helper_find_node_by_component($component);
         }
+
+        if (empty($nodes[$component]))
+        {
+            return;
+        }
+
         $this->snippet = $this->get_snippet();
         foreach ($nodes as $component => $node)
         {
@@ -76,7 +82,9 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
         }
         //set auto_init to true to write only once
         $this->set_config_value('auto_init', 'false');
+        $_MIDCOM->auth->request_sudo('org.openpsa.core');
         $this->snippet->update();
+        $_MIDCOM->auth->drop_sudo();
 
         $_MIDCOM->uimessages->add($this->_i18n->get_string('org.openpsa.core'), $this->_i18n->get_string('site structure cache created'), 'info');
     }
@@ -107,6 +115,7 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
      */
     private function get_snippet()
     {
+        $_MIDCOM->auth->request_sudo('org.openpsa.core');
         $sg_snippetdir = new midcom_baseclasses_database_snippetdir();
         $sg_snippetdir->get_by_path($GLOBALS['midcom_config']['midcom_sgconfig_basedir']);
         if (!$sg_snippetdir->guid)
@@ -149,7 +158,7 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
             $sn->create();
             $snippet = new midcom_baseclasses_database_snippet($sn->guid);
         }
-
+        $_MIDCOM->auth->drop_sudo();
         return $snippet;
     }
 

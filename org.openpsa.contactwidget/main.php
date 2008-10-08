@@ -189,6 +189,7 @@ class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
         {
             if (!$this->contacts_url)
             {
+                $_MIDCOM->load_library('org.openpsa.core');
                 $structure = new org_openpsa_core_structure();
                 $this->contacts_url = $structure->get_node_full_url('org.openpsa.contacts');
             }
