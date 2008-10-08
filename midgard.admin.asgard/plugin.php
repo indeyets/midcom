@@ -470,17 +470,21 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     function bind_to_object($object, $handler_id, &$data)
     {
         // Tell our object to MidCOM
-        $_MIDCOM->bind_view_to_object($object);
         $_MIDCOM->set_26_request_metadata($object->metadata->revised, $object->guid);
         $data['object_reflector'] = midcom_helper_reflector::get($object);
         $data['tree_reflector'] = midcom_helper_reflector_tree::get($object);
 
         $data['object'] =& $object;
 
-        // Populate toolbar
-        $data['asgard_toolbar'] = midgard_admin_asgard_plugin::get_object_toolbar($object, $handler_id, &$data);
-        midgard_admin_asgard_plugin::get_common_toolbar($data);
+        // Populate toolbars
+        if ($_MIDCOM->dbclassloader->is_midcom_db_object($object))
+        {
+            // These toolbars only work with DBA objects as they do ACL checks
+            $_MIDCOM->bind_view_to_object($object);
+            $data['asgard_toolbar'] = midgard_admin_asgard_plugin::get_object_toolbar($object, $handler_id, &$data);
+        }
 
+        midgard_admin_asgard_plugin::get_common_toolbar($data);
 
         // Figure out correct title and language handling
         switch ($handler_id)

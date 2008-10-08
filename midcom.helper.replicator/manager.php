@@ -468,10 +468,6 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
             unset($GLOBALS['midcom_helper_replicator_exporter_retry_mode']);
         }
 
-        if ($bind_toolbar)
-        {
-            $_MIDCOM->bind_view_to_object($data['object']);
-        }
         $data['language_code'] = '';
         midgard_admin_asgard_plugin::bind_to_object($data['object'], $handler_id, &$data);
 
