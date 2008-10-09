@@ -565,7 +565,6 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
 
         $main_ret = $qb->execute();
 
-        debug_add("got main_ret\n===\n" . sprint_r($main_ret) . "===\n");
         if (   !is_array($main_ret)
             || count($main_ret) == 0)
         {
