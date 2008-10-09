@@ -263,16 +263,18 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
             $prefix = '';
         }
 
-        $qb = org_openpsa_projects_task_resource::new_query_builder();
-        $qb->add_constraint('task', '=', $this->id);
-        $qb->add_constraint('orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_PROJECTPROSPECT);
-        $ret = @$qb->execute();
+        $mc = org_openpsa_projects_task_resource::new_collector('task', $this->id);
+        $mc->add_value_property('orgOpenpsaObtype');
+        $mc->add_value_property('person');
+        $mc->add_constraint('orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_PROJECTPROSPECT);
+        $mc->execute();
+        $ret = $mc->list_keys();
         if (   is_array($ret)
             && count($ret)>0)
         {
-            foreach ($ret as $resource)
+            foreach ($ret as $guid => $empty)
             {
-                switch ($resource->orgOpenpsaObtype)
+                switch ($mc->get_subkey($guid, 'orgOpenpsaObtype'))
                 {
                     case ORG_OPENPSA_OBTYPE_PROJECTCONTACT:
                         $varName = $prefix . 'contacts';
@@ -284,7 +286,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
                         break;
                 }
                 $property = &$this->$varName;
-                $property[$resource->person] = true;
+                $property[$mc->get_subkey($guid, 'person')] = true;
             }
         }
 
@@ -624,13 +626,13 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         $propose_to = $this->resources;
 
         //Remove those who already have a proposal from the list to propose to
-        $qb = org_openpsa_projects_task_status->execute();
+        $qb = org_openpsa_projects_task_status::new_query_builder();
         
         $qb->add_constraint('task', '=', $this->id);
         $qb->add_constraint('type', '=', ORG_OPENPSA_TASKSTATUS_PROPOSED);
         $qb->add_constraint('targetPerson', 'IN', array_keys($propose_to));
 
-        $proposals_ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $proposals_ret = $qb->execute();
 
         if (   is_array($proposals_ret)
             && count($proposals_ret)>0)
