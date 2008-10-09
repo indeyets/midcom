@@ -156,7 +156,7 @@ class midcom_admin_user_handler_group_edit extends midcom_baseclasses_components
         
 
         $data['language_code'] = '';
-        midgard_admin_asgard_plugin::bind_to_object($this->_group, $handler_id, &$data);
+        midgard_admin_asgard_plugin::bind_to_object($this->_group, $handler_id, $data);
 
         $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('edit %s', 'midcom.admin.user'), $this->_group->official);
         $_MIDCOM->set_pagetitle($data['view_title']);

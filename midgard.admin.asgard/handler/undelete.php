@@ -136,10 +136,11 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
 
         $dummy = new $this->type;
         $data['midcom_dba_classname'] = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($dummy);
-        if (!$data['midcom_dba_classname'])
+        /*if (!$data['midcom_dba_classname'])
         {
-            return false;
-        }
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "No DBA class matches type '{$args[0]}', and undeletion is not therefore possible.");
+            // This will exit.
+        }*/
         $data['type'] = $this->type;
         $data['reflector'] = midcom_helper_reflector::get($data['type']);
         $data['label_property'] = $data['reflector']->get_label_property();
@@ -149,7 +150,26 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
             && is_array($_POST['undelete']))
         {
             static $undeleted_size = 0;
-            midcom_baseclasses_core_dbobject::undelete($_POST['undelete'], $this->type);
+            if (!$data['midcom_dba_classname'])
+            {
+                // No DBA class for the type, use plain Midgard undelete API
+                foreach ($_POST['undelete'] as $guid)
+                {
+                    $qb = new midgard_query_builder($this->type);
+                    $qb->add_constraint('guid', '=', $guid);
+                    $qb->include_deleted();
+                    $results = $qb->execute();
+                    foreach ($results as $object)
+                    {
+                        $object->purge();
+                    }
+                }
+            }
+            else
+            {
+                // Delegate undeletion to DBA
+                midcom_baseclasses_core_dbobject::undelete($_POST['undelete'], $this->type);
+            }
 
             if ($undeleted_size > 0)
             {
@@ -162,7 +182,27 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
             && is_array($_POST['undelete']))
         {
             static $purged_size = 0;
-            midcom_baseclasses_core_dbobject::purge($_POST['undelete'], $this->type);
+            
+            if (!$data['midcom_dba_classname'])
+            {
+                // No DBA class for the type, use plain Midgard undelete API
+                foreach ($_POST['undelete'] as $guid)
+                {
+                    $qb = new midgard_query_builder($this->type);
+                    $qb->add_constraint('guid', '=', $guid);
+                    $qb->include_deleted();
+                    $results = $qb->execute();
+                    foreach ($results as $object)
+                    {
+                        $object->purge();
+                    }
+                }
+            }
+            else
+            {
+                // Delegate purging to DBA
+                midcom_baseclasses_core_dbobject::purge($_POST['undelete'], $this->type);
+            }
 
             if ($purged_size)
             {
@@ -172,7 +212,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         }
 
         $_MIDCOM->load_library('org.openpsa.qbpager');
-        $qb = new org_openpsa_qbpager_direct($data['type'], "{$data['midcom_dba_classname']}_trash");
+        $qb = new org_openpsa_qbpager_direct($data['type'], "{$data['type']}_trash");
         $qb->include_deleted();
         $qb->add_constraint('metadata.deleted', '=', true);
         $qb->add_order('metadata.revised', 'DESC');
