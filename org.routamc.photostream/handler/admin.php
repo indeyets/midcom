@@ -257,7 +257,10 @@ class org_routamc_photostream_handler_admin extends midcom_baseclasses_component
         if (   !$this->_photo
             || empty($this->_photo->guid))
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The photo {$args[0]} was not found.");
+            // FIXME: We relocate here because the SIGABORT from 8.09.0 causes the relocate below to fail and the normal page to be loaded again
+            $_MIDCOM->relocate('');
+
+            //$_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The photo {$args[0]} was not found.");
             // This will exit.
         }
         $this->_photo->require_do('midgard:delete');
