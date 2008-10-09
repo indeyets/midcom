@@ -14,7 +14,6 @@
  */
 class org_openpsa_projects_handler_task_list extends midcom_baseclasses_components_handler
 {
-    var $_datamanagers;
     var $_task_cache = Array();
 
     function __construct()
