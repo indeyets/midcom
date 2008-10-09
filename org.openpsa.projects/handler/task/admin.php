@@ -227,7 +227,6 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
         $this->_task->require_do('midgard:update');
 
 	$this->_task->get_members();
-	$this->_task->_sync_to_dm2();
 
         $this->_load_controller();
 

@@ -13,8 +13,8 @@
  */
 class org_openpsa_projects_task extends __org_openpsa_projects_task
 {
-    var $contacts = array(); //Shorthand access for contact members
-    var $resources = array(); // --''--
+    var $contacts = null; //Shorthand access for contact members
+    var $resources = null; // --''--
     var $_locale_backup = '';
     var $_skip_acl_refresh = false;
     var $_skip_parent_refresh = false;
@@ -175,27 +175,35 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
 
         // Ensure resources can read regardless of if this is a vgroup
         debug_add("Ensuring resources can read the object");
-        $this->get_members();
+
+        if (!is_array($this->resources))
+        {
+            $this->get_members();
+        }
+
         foreach ($this->resources as $pid => $bool)
         {
+            $oldPerson = $this->_pid_to_obj($pid);
+
             debug_add("Setting 'midgard:read' for {$pid}");
-            $this->set_privilege('midgard:read', $pid, MIDCOM_PRIVILEGE_ALLOW);
+            $this->set_privilege('midgard:read', $oldPerson->id, MIDCOM_PRIVILEGE_ALLOW);
 
             if ($this->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_TASK)
             {
                 // Resources must be permitted to create hour/expense reports into tasks
-                $this->set_privilege('midgard:create', $pid, MIDCOM_PRIVILEGE_ALLOW);
+                $this->set_privilege('midgard:create', $oldPerson->id, MIDCOM_PRIVILEGE_ALLOW);
                 //For declines etc they also need update...
-                $this->set_privilege('midgard:update', $pid, MIDCOM_PRIVILEGE_ALLOW);
+                $this->set_privilege('midgard:update', $oldPerson->id, MIDCOM_PRIVILEGE_ALLOW);
             }
         }
         //Ensure manager can do stuff regardless of vgroup
         if ($this->manager)
         {
-            $this->set_privilege('midgard:read', $this->manager, MIDCOM_PRIVILEGE_ALLOW);
-            $this->set_privilege('midgard:create', $this->manager, MIDCOM_PRIVILEGE_ALLOW);
-            $this->set_privilege('midgard:delete', $this->manager, MIDCOM_PRIVILEGE_ALLOW);
-            $this->set_privilege('midgard:update', $this->manager, MIDCOM_PRIVILEGE_ALLOW);
+            $manager_person = $this->_pid_to_obj($this->manager);
+            $this->set_privilege('midgard:read', $manager_person->id, MIDCOM_PRIVILEGE_ALLOW);
+            $this->set_privilege('midgard:create', $manager_person->id, MIDCOM_PRIVILEGE_ALLOW);
+            $this->set_privilege('midgard:delete', $manager_person->id, MIDCOM_PRIVILEGE_ALLOW);
+            $this->set_privilege('midgard:update', $manager_person->id, MIDCOM_PRIVILEGE_ALLOW);
         }
         debug_pop();
         $this->_workflow_checks('updated');
@@ -247,20 +255,11 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
     /**
      * Populates contacts as resources lists
      */
-    function get_members($old = false)
+    function get_members()
     {
         if (!$this->id)
         {
             return false;
-        }
-
-        if ($old)
-        {
-            $prefix = 'old_';
-        }
-        else
-        {
-            $prefix = '';
         }
 
         $mc = org_openpsa_projects_task_resource::new_collector('task', $this->id);
@@ -270,26 +269,28 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         $mc->execute();
         $ret = $mc->list_keys();
         if (   is_array($ret)
-            && count($ret)>0)
+            && count($ret) > 0)
         {
             foreach ($ret as $guid => $empty)
             {
                 switch ($mc->get_subkey($guid, 'orgOpenpsaObtype'))
                 {
                     case ORG_OPENPSA_OBTYPE_PROJECTCONTACT:
-                        $varName = $prefix . 'contacts';
+                        $varName = 'contacts';
                         break;
                     default:
                         //fall-trough intentional
                     case ORG_OPENPSA_OBTYPE_PROJECTRESOURCE:
-                        $varName = $prefix . 'resources';
+                        $varName = 'resources';
                         break;
                 }
-                $property = &$this->$varName;
-                $property[$mc->get_subkey($guid, 'person')] = true;
+                if (!is_array($this->$varName))
+                {
+                    $this->$varName = array();
+                }
+                $this->{$varName}[$mc->get_subkey($guid, 'person')] = true;
             }
         }
-
         return true;
     }
 
@@ -507,6 +508,11 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
             $project->_refresh_from_tasks();
         }
         return true;
+    }
+
+    function _pid_to_obj($pid)
+    {
+        return $_MIDCOM->auth->get_user($pid);
     }
 
     /**
