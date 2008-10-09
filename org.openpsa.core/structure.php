@@ -23,8 +23,9 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
      */
     private $components = array
     (
-        'org.openpsa.contacts' => 'org.openpsa.contacts',
         'org.openpsa.calendar' => 'org.openpsa.calendar',
+        'org.openpsa.contacts' => 'org.openpsa.contacts',
+        'org.openpsa.expenses' => 'org.openpsa.expenses',
         'org.openpsa.invoices' => 'org.openpsa.invoices',
         'org.openpsa.projects' => 'org.openpsa.projects',
         'org.openpsa.sales' => 'org.openpsa.sales',
@@ -52,13 +53,14 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
 
     private function initialize_site_structure()
     {
+
         $nodes = array();
         foreach ($this->components as $component)
         {
             $nodes[$component] = midcom_helper_find_node_by_component($component);
         }
 
-        if (empty($nodes[$component]))
+        if (empty($nodes))
         {
             return;
         }
@@ -70,6 +72,7 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
             $last = array_pop($parts);
             $node_guid = 'false';
             $node_full_url = 'false';
+            $node_relative_url = 'false';
             if (is_array($node))
             {
               $node_guid = "'" . $node[MIDCOM_NAV_OBJECT]->guid . "'";
@@ -82,10 +85,10 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
         }
         //set auto_init to true to write only once
         $this->set_config_value('auto_init', 'false');
+
         $_MIDCOM->auth->request_sudo('org.openpsa.core');
         $this->snippet->update();
         $_MIDCOM->auth->drop_sudo();
-
         $_MIDCOM->uimessages->add($this->_i18n->get_string('org.openpsa.core'), $this->_i18n->get_string('site structure cache created'), 'info');
     }
 
@@ -99,7 +102,7 @@ class org_openpsa_core_structure extends midcom_baseclasses_components_purecode
     {
         if (strpos($this->snippet->code, $key) != false)
         {
-          $this->snippet->code = preg_replace("/^.+?" . $key . ".+?$/m", " '" . $key . "' => " . $value . ",\n", $this->snippet->code);
+          $this->snippet->code = preg_replace("/^.+?" . $key . ".+?$/m", " '" . $key . "' => " . $value . ",", $this->snippet->code);
         }
         else
         {
