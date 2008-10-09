@@ -49,7 +49,7 @@ foreach ($tasks as $task => $days)
     }
     else
     {   
-        echo "        <td><a href=\"{$prefix}hours/task/{$task->guid}/\">{$task->title}</a></td>";
+        echo "        <td><a href=\"{$prefix}hours/task/{$task->guid}/\">" . $task->get_label() . "</a></td>";
     }
     while ($time < $data['week_end'])
     {
