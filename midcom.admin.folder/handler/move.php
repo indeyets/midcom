@@ -92,14 +92,15 @@ class midcom_admin_folder_handler_move extends midcom_baseclasses_components_han
         if (   !is_a($this->_object, 'midcom_baseclasses_database_topic')
             && !is_a($this->_object, 'midcom_baseclasses_database_article'))
         {
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Moving only topics and articles is supported.");
         }
 
         $this->_object->require_do('midgard:update');
 
         if (isset($_POST['move_to']))
         {
-            $move_to_topic = new midcom_db_topic((int) $_POST['move_to']);
+            $move_to_topic = new midcom_db_topic();
+            $move_to_topic->get_by_id((int) $_POST['move_to']);
             
             if (   !$move_to_topic
                 || !$move_to_topic->guid)
@@ -113,12 +114,20 @@ class midcom_admin_folder_handler_move extends midcom_baseclasses_components_han
             if (is_a($this->_object, 'midcom_baseclasses_database_topic'))
             {
                 $this->_object->up = $move_to_topic->id;
-                $this->_object->update();
+                if (!$this->_object->update())
+                {
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to move the topic, reason ' . mgd_errstr());
+                    // This will exit
+                }
             }
             else
             {
                 $this->_object->topic = $move_to_topic->id;
-                $this->_object->update();
+                if (!$this->_object->update())
+                {
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to move the article, reason ' . mgd_errstr());
+                    // This will exit
+                }
             }
             $_MIDCOM->relocate($_MIDCOM->permalinks->create_permalink($this->_object->guid));
             // This will exit
