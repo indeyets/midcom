@@ -185,13 +185,13 @@ class midcom_admin_folder_handler_order extends midcom_baseclasses_components_ha
 
         $tmp[] = array
         (
-            MIDCOM_NAV_URL => '__ais/folder/order.html',
+            MIDCOM_NAV_URL => '__ais/folder/order/',
             MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('order navigation', 'midcom.admin.folder'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
         // Hide the button in toolbar
-        $this->_node_toolbar->hide_item('__ais/folder/order.html');
+        $this->_node_toolbar->hide_item('__ais/folder/order/');
 
         // Set page title
         $data['folder'] = $this->_topic;

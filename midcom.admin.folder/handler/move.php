@@ -137,7 +137,7 @@ class midcom_admin_folder_handler_move extends midcom_baseclasses_components_han
         {
             // This is a topic
             $this->_topic->require_do('midcom.admin.folder:topic_management');
-            $this->_node_toolbar->hide_item("__ais/folder/move/{$this->_object->guid}.html");
+            $this->_node_toolbar->hide_item("__ais/folder/move/{$this->_object->guid}/");
             $data['current_folder'] = new midcom_db_topic($this->_object->up);
         }
         else
@@ -150,14 +150,14 @@ class midcom_admin_folder_handler_move extends midcom_baseclasses_components_han
                 MIDCOM_NAV_URL => $_MIDCOM->permalinks->create_permalink($this->_object->guid),
                 MIDCOM_NAV_NAME => $this->_get_object_title($this->_object),
             );
-            $this->_view_toolbar->hide_item("__ais/folder/move/{$this->_object->guid}.html");
+            $this->_view_toolbar->hide_item("__ais/folder/move/{$this->_object->guid}/");
 
             $data['current_folder'] = new midcom_db_topic($this->_object->topic);
         }
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "__ais/folder/move/{$this->_object->guid}.html",
+            MIDCOM_NAV_URL => "__ais/folder/move/{$this->_object->guid}/",
             MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('move', 'midcom.admin.folder'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);

@@ -184,7 +184,7 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
 
         if (is_a($this->_object, 'midcom_baseclasses_database_topic'))
         {
-            $this->_node_toolbar->hide_item("__ais/folder/metadata/{$this->_object->guid}.html");
+            $this->_node_toolbar->hide_item("__ais/folder/metadata/{$this->_object->guid}/");
         }
         else
         {
@@ -193,12 +193,12 @@ class midcom_admin_folder_handler_metadata extends midcom_baseclasses_components
                 MIDCOM_NAV_URL => $_MIDCOM->permalinks->create_permalink($this->_object->guid),
                 MIDCOM_NAV_NAME => $this->_get_object_title($this->_object),
             );
-            $this->_view_toolbar->hide_item("__ais/folder/metadata/{$this->_object->guid}.html");
+            $this->_view_toolbar->hide_item("__ais/folder/metadata/{$this->_object->guid}/");
         }
 
         $tmp[] = Array
         (
-            MIDCOM_NAV_URL => "__ais/folder/metadata/{$this->_object->guid}.html",
+            MIDCOM_NAV_URL => "__ais/folder/metadata/{$this->_object->guid}/",
             MIDCOM_NAV_NAME => $_MIDCOM->i18n->get_string('edit metadata', 'midcom.admin.folder'),
         );
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
