@@ -111,4 +111,11 @@ while ($time < $data['week_end'])
 }
 echo "    </tr>\n";
 echo "</table>\n";
+
+$previous_week = $data['requested_time'] - 3600 * 24 * 7;
+$next_week = $data['requested_time'] + 3600 * 24 * 7;
+echo "<p>\n";
+echo "<a href=\"{$prefix}" . $previous_week . "/\">&laquo; ". $data['l10n']->get('previous week') . "</a> | \n"; 
+echo "<a href=\"{$prefix}" . $next_week . "/\">". $data['l10n']->get('next week') . " &raquo;</a>\n"; 
+echo "</p>\n";
 ?>

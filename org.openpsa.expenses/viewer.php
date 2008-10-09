@@ -93,6 +93,12 @@ class org_openpsa_expenses_viewer extends midcom_baseclasses_components_request
             'variable_args' => 2,
         );
 
+        // Handle /<timestamp>
+        $this->_request_switch['index_timestamp'] = array
+        (
+            'handler' => Array('org_openpsa_expenses_handler_index', 'index'),
+            'variable_args' => 1,
+        );
         // Handle /
         $this->_request_switch['index'] = array
         (

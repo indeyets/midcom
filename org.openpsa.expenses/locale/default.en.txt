@@ -7,8 +7,16 @@
 Date
 ---STRINGEND
 
+---STRING delete hour report
+Delete hour report
+---STRINGEND
+
 ---STRING description
 Description
+---STRINGEND
+
+---STRING expenses in week %s
+Expenses in week %s
 ---STRINGEND
 
 ---STRING hour report
@@ -35,6 +43,10 @@ Expense tracking
 Person
 ---STRINGEND
 
+---STRING previous week
+previous week
+---STRINGEND
+
 ---STRING report hours
 Report hours
 ---STRINGEND
@@ -55,7 +67,7 @@ Total
 Not invoiceable
 ---STRINGEND
 
----STRING delete hour report
-Delete hour report
+---STRING next week
+next week
 ---STRINGEND
 

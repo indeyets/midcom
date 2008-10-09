@@ -1,3 +1,3 @@
 <?php
-echo "<h1>" . $data['l10n']->get('org.openpsa.expenses') . "</h1>\n";
+echo "<h1>" . sprintf($data['l10n']->get("expenses in week %s"), strftime("%V", $data['requested_time'])) . "</h1>\n";
 ?>

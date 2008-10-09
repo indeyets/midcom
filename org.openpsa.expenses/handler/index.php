@@ -61,7 +61,14 @@ class org_openpsa_expenses_handler_index  extends midcom_baseclasses_components_
     {
         $_MIDCOM->auth->require_valid_user();
 
-        $data['requested_time'] = time();
+        if (isset($args[0]))
+        {
+            $data['requested_time'] = $args[0];
+        }
+        else
+        {
+            $data['requested_time'] = time();
+        }
 
         $this->_calculate_week();
 

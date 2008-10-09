@@ -7,8 +7,16 @@
 Datum
 ---STRINGEND
 
+---STRING delete hour report
+Stundenbericht löschen
+---STRINGEND
+
 ---STRING description
 Beschreibung
+---STRINGEND
+
+---STRING expenses in week %s
+Ausgaben in KW %s
 ---STRINGEND
 
 ---STRING hour report
@@ -35,6 +43,10 @@ Ausgaben-Verwaltung
 Person
 ---STRINGEND
 
+---STRING previous week
+vorherige Woche
+---STRINGEND
+
 ---STRING report hours
 Arbeitsstunden melden
 ---STRINGEND
@@ -55,7 +67,7 @@ Summe
 Nicht abrechenbar
 ---STRINGEND
 
----STRING delete hour report
-Stundenbericht löschen
+---STRING next week
+Folgewoche
 ---STRINGEND
 
