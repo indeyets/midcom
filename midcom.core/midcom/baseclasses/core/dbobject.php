@@ -519,6 +519,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                     }
                 }
             }
+
             $query = new midgard_query_builder('midgard_parameter');
             $query->add_constraint('parentguid', '=', $object->guid);
             $result = @$query->execute();
@@ -535,6 +536,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                     }
                 }
             }
+
             if (! midcom_baseclasses_core_dbobject::_delete_privileges($object))
             {
                 debug_push_class($object, __FUNCTION__);

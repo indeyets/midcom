@@ -188,40 +188,19 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
             'main' => $this->main,
             'thumb' => $this->thumb
         );
-        // Detect 1.8 vs 1.7 by presence of this writing of QB
-        if (class_exists('midgard_query_builder'))
-        {
-            $qb = new midgard_query_builder('midgard_attachment');
-            $qb->add_constraint('ptable', '=', 'org_routamc_photostream_photo');
-            $qb->add_constraint('pid', '=', $this->id);
-            if (class_exists('midgard_query_builder'))
-            {
-                // This typing format of the QB is only available in 1.8+ thus we can use that for testing parameters capability
-                $qb->add_constraint('parameter.domain', '=', 'midcom.helper.datamanager2.type.blobs');
-                $qb->add_constraint('parameter.name', '=', 'identifier');
-                $qb->begin_group('OR');
-                    $qb->add_constraint('parameter.value', '=', 'archival');
-                    $qb->add_constraint('parameter.value', '=', 'main');
-                    $qb->add_constraint('parameter.value', '=', 'thumbnail');
-                $qb->end_group();
-            }
-            $atts = $qb->execute();
-        }
-        else
-        {
-            $atts = array();
-            $attachments = $this->list_attachments();
-            foreach ($attachments as $attachment)
-            {
-                $identifier = $attachment->get_parameter('midcom.helper.datamanager2.type.blobs', 'identifier');
-                if (   $identifier == 'archival'
-                    || $identifier == 'main'
-                    || $identifier == 'thumbnail')
-                {
-                    $atts[] = $attachment;
-                }
-            }
-        }
+
+        $qb = new midgard_query_builder('midgard_attachment');
+        $qb->add_constraint('ptable', '=', 'org_routamc_photostream_photo');
+        $qb->add_constraint('pid', '=', $this->id);
+        $qb->add_constraint('parameter.domain', '=', 'midcom.helper.datamanager2.type.blobs');
+        $qb->add_constraint('parameter.name', '=', 'identifier');
+        $qb->begin_group('OR');
+            $qb->add_constraint('parameter.value', '=', 'archival');
+            $qb->add_constraint('parameter.value', '=', 'main');
+            $qb->add_constraint('parameter.value', '=', 'thumbnail');
+        $qb->end_group();
+        $atts = $qb->execute();
+        
         if (!is_array($atts))
         {
             // QB error
@@ -313,16 +292,15 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         
         try
         {
-            $att_obj = new midgard_attachment($att);
+            $att_obj = new midcom_baseclasses_database_attachment($att);
         }
         catch(midgard_error_exception $e)
         {
             /* TODO, Throw error or warning */
             return false;
         }
-    
-        $blob = new midgard_blob($att_obj);
-        $src = fread($blob->get_path(), 'r');
+
+        $src = $att_obj->open('r');
 
         if (!$src)
         {
@@ -590,7 +568,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
      */
     function get_next($photo, $limiters = false, &$tags = false)
     {
-        $guids = org_routamc_photostream_photo_dba::get_surrounding_photos($photo, '>', $limiters, &$tags);
+        $guids = org_routamc_photostream_photo_dba::get_surrounding_photos($photo, '>', $limiters, $tags);
 
         if (   $guids
             && isset($guids[0]))
@@ -613,7 +591,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
      */
     function get_previous($photo, $limiters = false, &$tags = false)
     {
-        $guids = org_routamc_photostream_photo_dba::get_surrounding_photos($photo, '<', $limiters, &$tags);
+        $guids = org_routamc_photostream_photo_dba::get_surrounding_photos($photo, '<', $limiters, $tags);
 
         if (   $guids
             && isset($guids[0]))

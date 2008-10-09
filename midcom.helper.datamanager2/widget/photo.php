@@ -141,7 +141,7 @@ class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2
         {
             $main_info = $this->_type->attachments_info['main'];
         }
-        else
+        elseif (array_key_exists('artival', $this->_type->attachments_info))
         {
             $main_info = $this->_type->attachments_info['archival'];
         }
@@ -155,7 +155,11 @@ class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2
         }
 
         // Statistics & Available sizes
-        $static_html .= "</td>\n<td valign='top' class='midcom_helper_datamanager2_widget_image_stats'>" . $this->_l10n->get('type blobs: file size') . ": {$main_info['formattedsize']} Byte <br/>\n";
+        $static_html .= "</td>\n";
+        if (isset($main_info))
+        {
+            $static_html .= "<td valign='top' class='midcom_helper_datamanager2_widget_image_stats'>" . $this->_l10n->get('type blobs: file size') . ": {$main_info['formattedsize']} Byte <br/>\n";
+        }
         $static_html .= $this->_l10n->get('type image: available sizes') . ":\n" .
                 "<ul class='midcom_helper_datamanager2_widget_image_sizelist'>";
         foreach ($this->_type->attachments_info as $name => $info)

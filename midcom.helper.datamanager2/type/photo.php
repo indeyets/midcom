@@ -58,12 +58,12 @@ class midcom_helper_datamanager2_type_photo extends midcom_helper_datamanager2_t
         {
             // PONDER: This could cause issues with RAW etc special format archived versions...
             // Copy archival as original
-            $src = mgd_open_attachment($this->attachments['archival']->id, 'r');
+            $src = $this->attachments['archival']->open('r');
         }
         else
         {
             // Copy main as original
-            $src = mgd_open_attachment($this->attachments['main']->id, 'r');
+            $src = $this->attachments['main']->open('r');
         }
         // Create tmp file and copy by handles
         $this->_original_tmpname = tempnam($GLOBALS['midcom_config']['midcom_tempdir'], "midcom_helper_datamanager2_type_photo");

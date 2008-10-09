@@ -50,6 +50,12 @@ function midgard_admin_asgard_trash_type_show($object, $indent = 0, $prefix = ''
             }
         }
     }
+
+    if (empty($object->$label))
+    {
+        $label = 'guid';
+    }
+
     echo "{$prefix}    <td class=\"checkbox\"><input type=\"checkbox\" name=\"undelete[]\"{$disabled} value=\"{$object->guid}\" id=\"guid_{$object->guid}\" /></td>\n";
     //echo "{$prefix}    <td class=\"label\" style=\"padding-left: {$indent}px\"><label for=\"{$object->guid}\"><a href=\"{$url_prefix}__mfa/asgard/object/view/{$object->guid}/\">{$icon} {$object->$label}</a></label></td>\n";
     echo "{$prefix}    <td class=\"label\" style=\"padding-left: {$indent}px\"><label for=\"guid_{$object->guid}\">{$icon} {$object->$label}</label></td>\n";
