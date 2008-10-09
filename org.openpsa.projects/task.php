@@ -48,7 +48,6 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
 
     function _on_created()
     {
-        $this->get_members(true);
         $this->_locale_restore();
         $this->_workflow_checks('created');
     }
@@ -536,9 +535,9 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         $status->timestamp = org_openpsa_projects_task_status::gmtime();
         $status->comment = $comment;
         debug_add("about to create status\n===\n" . sprint_r($status) . "===\n");
-        //mgd_debug_start();
+
         $ret = $status->create();
-        //mgd_debug_stop();
+
         debug_add("got ret \"{$ret}\", errstr: " . mgd_errstr());
         debug_pop();
         return $ret;
@@ -632,22 +631,18 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
     private function _propose_to_resources()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
+        $this->get_members();
         $propose_to = $this->resources;
 
         //Remove those who already have a proposal from the list to propose to
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_status');
+        $qb = org_openpsa_projects_task_status->execute();
+        
         $qb->add_constraint('task', '=', $this->id);
         $qb->add_constraint('type', '=', ORG_OPENPSA_TASKSTATUS_PROPOSED);
-        //TODO: Make in when reliably supported
-        $qb->begin_group('OR');
-            foreach ($propose_to as $pid => $bool)
-            {
-                $qb->add_constraint('targetPerson', '=', $pid);
-            }
-        $qb->end_group();
-        //mgd_debug_start();
+        $qb->add_constraint('targetPerson', 'IN', array_keys($propose_to));
+
         $proposals_ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
-        //mgd_debug_stop();
+
         if (   is_array($proposals_ret)
             && count($proposals_ret)>0)
         {
@@ -664,7 +659,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         foreach ($propose_to as $pid => $bool)
         {
             //PONDER: Check for previous status to avoid proposing to those who already declined ? (declined persons are removed from resources list)
-            debug_add("saving propsed status for person {$pid}");
+            debug_add("saving proposed status for person {$pid}");
             $this->_create_status(ORG_OPENPSA_TASKSTATUS_PROPOSED, $pid);
             //If creator is in resources he would naturally accept his own proposal...
             if ($pid == $this->creator)
@@ -1141,12 +1136,12 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         //TODO: The more complex checks...
 
         //Always make sure we have proposals (DBE kind of follows these) in place (DM goes trough our create mode without any resources...)
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_status');
+        $qb = org_openpsa_projects_task_status::new_query_builder();
         $qb->add_constraint('task', '=', $this->id);
         $qb->add_constraint('type', '=', ORG_OPENPSA_TASKSTATUS_PROPOSED);
-        //mgd_debug_start();
-        $proposals_ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
-        //mgd_debug_stop();
+
+        $proposals_ret = $qb->execute();
+
         if (   !is_array($main_ret)
             || count($main_ret)==0)
         {
