@@ -100,7 +100,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             return $members;
         }
 
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_resource');
+        $qb = org_openpsa_projects_task_resource::new_query_builder();
         $qb->add_constraint('task', '=', $project->id);
         if ($type == 'contacts')
         {
@@ -110,7 +110,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         {
             $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
         }
-        $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $ret = $qb->execute();
         if (   is_array($ret)
             && count($ret) > 0)
         {

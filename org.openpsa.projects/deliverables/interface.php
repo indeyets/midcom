@@ -58,9 +58,9 @@ class org_openpsa_projects_deliverables_interface
      */
     function check_all_deliverables_status($task_id)
     {
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_deliverable');
+        $qb = org_openpsa_projects_deliverable::new_query_builder();
         $qb->add_constraint('task', '=', $task_id);
-        $deliverables = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $deliverables = $qb->execute();
         if (!is_array($deliverables))
         {
             //Failure to fetch deliverables

@@ -123,11 +123,11 @@ class org_openpsa_projects_handler_project_action extends midcom_baseclasses_com
                     // This will exit
                 }
 
-                $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_resource');
+                $qb = org_openpsa_projects_task_resource::new_query_builder();
                 $qb->add_constraint('person', '=', $_MIDGARD['user']);
                 $qb->add_constraint('task', '=', $this->_request_data['project']->id);
                 $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTCONTACT);
-                $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+                $ret = $qb->execute();
                 if (   is_array($ret)
                     && count($ret) > 0)
                 {

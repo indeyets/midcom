@@ -21,9 +21,9 @@ echo "<dd>\n";
 if ($data['task']->manager)
 {
     // FIXME: List resources instead
-    $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_resource');
+    $qb = org_openpsa_projects_task_resource::new_query_builder();
     $qb->add_constraint('task', '=', $data['task']->id);
-    $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+    $ret = $qb->execute();
     if (   is_array($ret)
         && count($ret) > 0)
     {

@@ -101,8 +101,7 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
             {
                 $this->_request_data['project_list_results']['not_started'] = array();
 
-                debug_add("Instantiating Query Builder for listing not started projects");
-                $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_project');
+                $qb = org_openpsa_projects_project::new_query_builder;
                 //$qb->add_constraint('start', '>', time());
                 $qb->add_constraint('status', '<', ORG_OPENPSA_TASKSTATUS_STARTED);
                 $qb->add_constraint('status', '<>', ORG_OPENPSA_TASKSTATUS_ONHOLD);
@@ -116,8 +115,7 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
                     $qb->add_constraint('orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
                 }
 
-                debug_add("Executing Query Builder");
-                $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+                $ret = $qb->execute();
                 if (   is_array($ret)
                     && count($ret) > 0)
                 {
@@ -134,8 +132,7 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
             {
                 $this->_request_data['project_list_results']['ongoing'] = array();
 
-                debug_add("Instantiating Query Builder for listing ongoing projects");
-                $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_project');
+                $qb = org_openpsa_projects_project::new_query_builder();
                 $qb->add_constraint('start', '<', time());
                 /*$qb->begin_group('OR');
                     $qb->begin_group('AND');
@@ -158,7 +155,7 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
                     $qb->add_constraint('orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
                 }
 
-                $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+                $ret = $qb->execute();
                 if (   is_array($ret)
                     && count($ret) > 0)
                 {
@@ -175,8 +172,7 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
             {
                 $this->_request_data['project_list_results']['overtime'] = array();
 
-                debug_add("Instantiating Query Builder for listing overtime projects");
-                $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_project');
+                $qb = org_openpsa_projects_project::new_query_builder();
                 $qb->add_constraint('end', '<', time());
                 $qb->add_constraint('status', '<', ORG_OPENPSA_TASKSTATUS_COMPLETED);
                 $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECT);
@@ -189,7 +185,7 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
                     $qb->add_constraint('orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
                 }
 
-                $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+                $ret = $qb->execute();
                 if (   is_array($ret)
                     && count($ret) > 0)
                 {
@@ -206,8 +202,7 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
             {
                 $this->_request_data['project_list_results']['completed'] = array();
 
-                debug_add("Instantiating Query Builder for listing finished projects");
-                $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_project');
+                $qb = org_openpsa_projects_project::new_query_builder();
                 $qb->add_constraint('status', '=', ORG_OPENPSA_TASKSTATUS_CLOSED);
                 $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECT);
 
@@ -219,7 +214,7 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
                     $qb->add_constraint('orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
                 }
 
-                $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+                $ret = $qb->execute();
                 if (   is_array($ret)
                     && count($ret) > 0)
                 {
@@ -235,8 +230,7 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
             // List *all* projects
             $this->_request_data['project_list_results']['all'] = array();
 
-            debug_add("Instantiating Query Builder for listing all projects");
-            $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_project');
+            $qb = org_openpsa_projects_project::new_query_builder();
             $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECT);
 
             // Workgroup filtering
@@ -247,8 +241,7 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
                 $qb->add_constraint('orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
             }
 
-            debug_add("Executing Query Builder");
-            $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+            $ret = $qb->execute();
             if (   is_array($ret)
                 && count($ret) > 0)
             {

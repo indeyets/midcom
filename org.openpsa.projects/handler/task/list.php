@@ -109,7 +109,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         $this->_request_data['view'] = 'my_tasks';
 
         // Tasks proposed to the user
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_resource');
+        $qb = org_openpsa_projects_task_resource::new_query_builder();
         $qb->add_constraint('person', '=', $_MIDGARD['user']);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
         $qb->add_constraint('task.orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
@@ -119,7 +119,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         {
             $qb->add_constraint('task.orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
         }
-        $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $ret = $qb->execute();
         if (   is_array($ret)
             && count($ret) > 0)
         {
@@ -130,7 +130,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         }
 
         // Tasks user has under work
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_resource');
+        $qb = org_openpsa_projects_task_resource::new_query_builder();
         $qb->add_constraint('person', '=', $_MIDGARD['user']);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
         $qb->add_constraint('task.orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
@@ -146,7 +146,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         {
             $qb->add_constraint('task.orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
         }
-        $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $ret = $qb->execute();
         if (   is_array($ret)
             && count($ret) > 0)
         {
@@ -157,7 +157,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         }
 
         // Tasks completed by user and pending approval
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_resource');
+        $qb = org_openpsa_projects_task_resource::new_query_builder();
         $qb->add_constraint('person', '=', $_MIDGARD['user']);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
         $qb->add_constraint('task.orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
@@ -167,7 +167,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         {
             $qb->add_constraint('task.orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
         }
-        $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $ret = $qb->execute();
         if (   is_array($ret)
             && count($ret) > 0)
         {
@@ -286,13 +286,12 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
 
         // Query tasks of a project
         $this->_request_data['view'] = 'project_tasks';
-        debug_add("Instantiating Query Builder for listing tasks under a project");
+
         $qb = org_openpsa_projects_task::new_query_builder();
         $qb->add_constraint('up', '=', $this->_request_data['project']->id);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
         //When we have the read-only link to object status etc use those to narrow this down
 
-        debug_add("Executing Query Builder");
         $ret = $qb->execute();
         $this->_request_data['tasks'] = array();
         if (   is_array($ret)

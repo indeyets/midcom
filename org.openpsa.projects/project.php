@@ -117,10 +117,10 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
         $this->get_members();
         debug_push_class(__CLASS__, __FUNCTION__);
         $update_required = false;
-        debug_add("Instantiating Query Builder for refreshing project information from tasks");
+
         $qb = org_openpsa_projects_task::new_query_builder();
         $qb->add_constraint('up', '=', $this->id);
-        debug_add("Executing Query Builder");
+
         $ret = $qb->execute();
         $task_statuses = Array();
         $task_number = count($ret);

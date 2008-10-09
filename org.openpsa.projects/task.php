@@ -551,7 +551,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         //Simplistic approach
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_status');
+        $qb = org_openpsa_projects_task_status::new_query_builder();
         $qb->add_constraint('task', '=', $this->id);
         if ($this->status > ORG_OPENPSA_TASKSTATUS_PROPOSED)
         {
@@ -566,9 +566,9 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         $qb->add_order('timestamp', 'DESC');
         $qb->add_order('type', 'DESC'); //Our timestamps are not accurate enough so if we have multiple with same timestamp suppose highest type is latest
         $qb->set_limit(1);
-        //mgd_debug_start();
-        $main_ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
-        //mgd_debug_stop();
+
+        $main_ret = $qb->execute();
+
         debug_add("got main_ret\n===\n" . sprint_r($main_ret) . "===\n");
         if (   !is_array($main_ret)
             || count($main_ret) == 0)
