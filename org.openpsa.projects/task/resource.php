@@ -100,10 +100,9 @@ class org_openpsa_projects_task_resource extends __org_openpsa_projects_task_res
     {
         if ($this->person)
         {
-            $this->_personobject = $this->_pid_to_obj($this->person);
-            $this->set_privilege('midgard:read', $this->_personobject->id, MIDCOM_PRIVILEGE_ALLOW);
-            $this->set_privilege('midgard:delete', $this->_personobject->id, MIDCOM_PRIVILEGE_ALLOW);
-            $this->set_privilege('midgard:update', $this->_personobject->id, MIDCOM_PRIVILEGE_ALLOW);
+            $this->set_privilege('midgard:read', $this->_person, MIDCOM_PRIVILEGE_ALLOW);
+            $this->set_privilege('midgard:delete', $this->_person, MIDCOM_PRIVILEGE_ALLOW);
+            $this->set_privilege('midgard:update', $this->_person, MIDCOM_PRIVILEGE_ALLOW);
 
             // Add resource to manager's buddy list
             $task = new org_openpsa_projects_task($this->task);
@@ -131,11 +130,6 @@ class org_openpsa_projects_task_resource extends __org_openpsa_projects_task_res
         }
 
         return parent::_on_updating();
-    }
-
-    function _pid_to_obj($pid)
-    {
-        return $_MIDCOM->auth->get_user($pid);
     }
 
     static function get_resource_tasks($key = 'id', $list_finished = false)

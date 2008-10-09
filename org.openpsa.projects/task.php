@@ -164,44 +164,38 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
             if ($this->newsTopic)
             {
                 $news_topic = new midcom_baseclasses_database_topic($this->newsTopic);
-                $sync = new org_openpsa_core_acl_synchronizer();
                 $sync->write_acls($news_topic, $this->orgOpenpsaOwnerWg, $this->orgOpenpsaAccesstype);
             }
             if ($this->forumTopic)
             {
                 $forum_topic = new midcom_baseclasses_database_topic($this->forumTopic);
-                $sync = new org_openpsa_core_acl_synchronizer();
                 $sync->write_acls($forum_topic, $this->orgOpenpsaOwnerWg, $this->orgOpenpsaAccesstype);
             }
         }
 
         // Ensure resources can read regardless of if this is a vgroup
         debug_add("Ensuring resources can read the object");
+        $this->get_members();
         foreach ($this->resources as $pid => $bool)
         {
-            if ($pid)
-            {
-                $oldPerson = $this->_pid_to_obj($pid);
-                debug_add("Setting 'midgard:read' for {$oldPerson->id}");
-                $this->set_privilege('midgard:read', $oldPerson->id, MIDCOM_PRIVILEGE_ALLOW);
+            debug_add("Setting 'midgard:read' for {$pid}");
+            $this->set_privilege('midgard:read', $pid, MIDCOM_PRIVILEGE_ALLOW);
 
-                if ($this->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_TASK)
-                {
-                    // Resources must be permitted to create hour/expense reports into tasks
-                    $this->set_privilege('midgard:create', $oldPerson->id, MIDCOM_PRIVILEGE_ALLOW);
-                    //For declines etc they also need update...
-                    $this->set_privilege('midgard:update', $oldPerson->id, MIDCOM_PRIVILEGE_ALLOW);
-                }
+            if ($this->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_TASK)
+            {
+                // Resources must be permitted to create hour/expense reports into tasks
+                $this->set_privilege('midgard:create', $pid, MIDCOM_PRIVILEGE_ALLOW);
+                //For declines etc they also need update...
+                $this->set_privilege('midgard:update', $pid, MIDCOM_PRIVILEGE_ALLOW);
             }
         }
         //Ensure manager can do stuff regardless of vgroup
         if ($this->manager)
         {
-            $manager_person = $this->_pid_to_obj($this->manager);
-            $this->set_privilege('midgard:read', $manager_person->id, MIDCOM_PRIVILEGE_ALLOW);
-            $this->set_privilege('midgard:create', $manager_person->id, MIDCOM_PRIVILEGE_ALLOW);
-            $this->set_privilege('midgard:delete', $manager_person->id, MIDCOM_PRIVILEGE_ALLOW);
-            $this->set_privilege('midgard:update', $manager_person->id, MIDCOM_PRIVILEGE_ALLOW);
+            $this->set_privilege('midgard:read', $this->manager, MIDCOM_PRIVILEGE_ALLOW);
+            $this->set_privilege('midgard:create', $this->manager, MIDCOM_PRIVILEGE_ALLOW);
+            $this->set_privilege('midgard:delete', $this->manager, MIDCOM_PRIVILEGE_ALLOW);
+            $this->set_privilege('midgard:update', $this->manager, MIDCOM_PRIVILEGE_ALLOW);
         }
         debug_pop();
         $this->_workflow_checks('updated');
@@ -511,11 +505,6 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
             $project->_refresh_from_tasks();
         }
         return true;
-    }
-
-    private function _pid_to_obj($pid)
-    {
-        return $_MIDCOM->auth->get_user($pid);
     }
 
     /**
