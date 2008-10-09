@@ -21,9 +21,10 @@ foreach ($data['hours'] as $hour_report)
 $date_totals = array();
 
 // Header line
-echo "<table>\n";
+echo "<table class='expenses'>\n";
 
 $time = $data['week_start'];
+echo "  <thead>\n";
 echo "    <tr>\n";
 echo "        <th></th>\n";
 while ($time < $data['week_end'])
@@ -35,12 +36,22 @@ while ($time < $data['week_end'])
     $time = $next_time;
 }
 echo "    </tr>\n";
-
+echo "  </thead>\n";
+$class = "even";
 foreach ($tasks as $task => $days)
 {
     $task = new org_openpsa_projects_task($task);
     $time = $data['week_start'];
-    echo "    <tr>\n";
+
+    if ($class == "even")
+    {
+        $class = "";
+    }
+    else
+    {
+        $class = "even";
+    }
+    echo "    <tr class='{$class}'>\n";
     
     if (   !$task
         || !$task->guid)

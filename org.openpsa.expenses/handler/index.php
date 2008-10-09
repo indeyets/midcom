@@ -73,6 +73,14 @@ class org_openpsa_expenses_handler_index  extends midcom_baseclasses_components_
         $hours_qb->add_order('date');
         $data['hours'] = $hours_qb->execute();
 
+        $_MIDCOM->add_link_head(array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.expenses/expenses.css",
+            )
+        );
+
         return true;
     }
 
