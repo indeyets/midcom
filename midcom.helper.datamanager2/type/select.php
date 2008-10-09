@@ -221,7 +221,7 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
      */
     function _on_initialize()
     {
-        if (   empty($this->options)
+        if (   !is_array($this->options)
             && $this->option_callback === null)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
