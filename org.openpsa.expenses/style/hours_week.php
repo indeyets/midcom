@@ -93,7 +93,7 @@ while ($time < $data['week_end'])
     }    
     else
     {
-        echo "        <td>" . round($date_totals[$date_identifier]) ."</td>\n"; 
+        echo "        <td>" . round($date_totals[$date_identifier], 1) ."</td>\n"; 
     }
     // Hop to next day
     $time = $time + 3600 * 24;
