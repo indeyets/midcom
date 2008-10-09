@@ -141,11 +141,6 @@ class org_openpsa_documents_document extends __org_openpsa_documents_document
         }
     }
 
-    function _pid_to_obj($pid)
-    {
-        return new midcom_baseclasses_database_person($pid);
-    }
-
 }
 
 ?>
