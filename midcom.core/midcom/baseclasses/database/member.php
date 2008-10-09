@@ -54,8 +54,38 @@ class midcom_baseclasses_database_member extends __midcom_baseclasses_database_m
         }
     }
 
+    /**
+     * Invalidate person's cache when a member record changes
+     */
+    function _invalidate_person_cache()
+    {
+        if (!$this->uid)
+        {
+            return;
+        }
+        $person = new midcom_db_person();
+        $person->get_by_id($this->uid);
+        if (!$person->guid)
+        {
+            return;
+        }
+        $_MIDCOM->cache->invalidate($person->guid);
+    }
+
+    function _on_created()
+    {
+        $this->_invalidate_person_cache();
+    }
+
+    function _on_updated()
+    {
+        $this->_invalidate_person_cache();
+    }
+
     function _on_deleted()
     {
+        $this->_invalidate_person_cache();
+
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add("gid={$this->gid}, sitegroup={$this->sitegroup}");
         // Workaround http://trac.midgard-project.org/ticket/206
