@@ -31,15 +31,6 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
 
         $this->_request_data['topic'] =& $this->_topic;
 
-        // Handle /config
-        $this->_request_switch['config'] = array
-        (
-            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
-            'schemadb' => 'file:/net/nemein/alphabeticalindex/config/schemadb_config.inc',
-            'schema' => 'config',
-            'fixed_args' => Array('config'),
-        );
-
         // Handle /
         $this->_request_switch['index'] = array
         (
@@ -187,22 +178,6 @@ class net_nemein_alphabeticalindex_viewer extends midcom_baseclasses_components_
                 MIDCOM_TOOLBAR_ACCESSKEY => 't',
             ));
         }
-
-        if (   $this->_topic->can_do('midgard:update')
-            && $this->_topic->can_do('midcom:component_config'))
-        {
-            $this->_node_toolbar->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => 'config/',
-                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
-                    MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
-                )
-            );
-        }
-
     }
 
     /**

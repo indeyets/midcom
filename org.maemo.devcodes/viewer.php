@@ -28,15 +28,6 @@ class org_maemo_devcodes_viewer extends midcom_baseclasses_components_request
         /**
          * Prepare the request switch, which contains URL handlers for the component
          */
-         
-        // Handle /config
-        $this->_request_switch['config'] = array
-        (
-            'fixed_args' => Array('config'),
-            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
-            'schemadb' => 'file:/org/maemo/devcodes/config/schemadb_config.inc',
-            'schema' => 'config',
-        );
 
         /**
          * Device request switches
@@ -236,19 +227,7 @@ class org_maemo_devcodes_viewer extends midcom_baseclasses_components_request
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
                 MIDCOM_TOOLBAR_ENABLED => $this->_topic->can_do('midgard:create'),
             )
-        );
-        $this->_node_toolbar->add_item
-        (
-            array
-            (
-                MIDCOM_TOOLBAR_URL => 'config.html',
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('component configuration'),
-                MIDCOM_TOOLBAR_HELPTEXT => $this->_l10n_midcom->get('component configuration helptext'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_folder-properties.png',
-                MIDCOM_TOOLBAR_ENABLED => ($this->_topic->can_do('midgard:update') && $this->_topic->can_do('midcom:component_config')),
-            )
-        );
-        
+        );        
     }
 
     /**
