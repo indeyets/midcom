@@ -30,10 +30,10 @@ class org_openpsa_projects_navigation extends midcom_baseclasses_components_navi
                 MIDCOM_NAV_NAME => $this->_l10n->get('open tasks'),
             ),
             MIDCOM_NAV_ADMIN => null,
-            MIDCOM_META_CREATOR => $this->_topic->creator,
-            MIDCOM_META_EDITOR => $this->_topic->revisor,
-            MIDCOM_META_CREATED => $this->_topic->created,
-            MIDCOM_META_EDITED => $this->_topic->revised
+            MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+            MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+            MIDCOM_META_CREATED => $this->_topic->metadata->created,
+            MIDCOM_META_EDITED => $this->_topic->metadata->revised
         );
 
         $leaves["{$this->_topic->id}:tasks_closed"] = array
@@ -44,10 +44,10 @@ class org_openpsa_projects_navigation extends midcom_baseclasses_components_navi
                 MIDCOM_NAV_NAME => $this->_l10n->get('closed tasks'),
             ),
             MIDCOM_NAV_ADMIN => null,
-            MIDCOM_META_CREATOR => $this->_topic->creator,
-            MIDCOM_META_EDITOR => $this->_topic->revisor,
-            MIDCOM_META_CREATED => $this->_topic->created,
-            MIDCOM_META_EDITED => $this->_topic->revised
+            MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+            MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+            MIDCOM_META_CREATED => $this->_topic->metadata->created,
+            MIDCOM_META_EDITED => $this->_topic->metadata->revised
         );
 
         $leaves["{$this->_topic->id}:tasks_invoiceable"] = array
@@ -58,10 +58,10 @@ class org_openpsa_projects_navigation extends midcom_baseclasses_components_navi
                 MIDCOM_NAV_NAME => $this->_l10n->get('invoiceable tasks'),
             ),
             MIDCOM_NAV_ADMIN => null,
-            MIDCOM_META_CREATOR => $this->_topic->creator,
-            MIDCOM_META_EDITOR => $this->_topic->revisor,
-            MIDCOM_META_CREATED => $this->_topic->created,
-            MIDCOM_META_EDITED => $this->_topic->revised
+            MIDCOM_META_CREATOR => $this->_topic->metadata->creator,
+            MIDCOM_META_EDITOR => $this->_topic->metadata->revisor,
+            MIDCOM_META_CREATED => $this->_topic->metadata->created,
+            MIDCOM_META_EDITED => $this->_topic->metadata->revised
         );
 
         return $leaves;
