@@ -29,19 +29,6 @@ class org_openpsa_projects_handler_frontpage extends midcom_baseclasses_componen
     {
         $_MIDCOM->auth->require_valid_user();
 
-        // FIXME: Could be great to make d_l do this
-        /*
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajax_tableform.js");
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.projects/hours_widget.js");
-        $_MIDCOM->add_link_head(array
-            (
-                'rel' => 'stylesheet',
-                'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/org.openpsa.projects/hours_widget.css",
-            )
-        );
-        */
-
         $this->_view_toolbar->add_item
         (
             Array(
