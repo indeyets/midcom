@@ -92,7 +92,15 @@ require('constants.php');
 require('globals.php');
 require('midcom/config/midcom_config.php');
 ini_set('track_errors', '1');
-
+ini_set('display_errors', '0');
+if ($GLOBALS['midcom_config_default']['display_php_errors'])
+{
+    ini_set('display_errors', '1');
+}
+if ($GLOBALS['midcom_config_default']['enable_error_handler'])
+{
+    require('errors.php');
+}
 //////////////////////////////////////////////////////////////
 // Set the MIDCOM_XDEBUG constant accordingly, if not yet set.
 
@@ -184,6 +192,7 @@ spl_autoload_register('midcom_autoload');
 // Load first-level supporting code
 // Note that the cache check hit depends on the i18n and auth code.
 require('midcom/helper/misc.php');
+
 require('midcom/helper/formatters.php');
 
 $auth = new midcom_services_auth();
