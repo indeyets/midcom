@@ -266,12 +266,12 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         }
         $script .= "var mapelement = document.getElementById('{$this->id}');\n";
         $script .= "if (mapelement) {\n";
-        $script .= "    var mapstraction_{$this->id} = new mxn.Mapstraction('{$this->id}','{$this->type}', true);\n";
+        $script .= "    var mapstraction_{$this->id} = new Mapstraction('{$this->id}','{$this->type}', true);\n";
         
         if ($this->type == 'google')
         {
             // Workaround, Google requires you to start with a center
-            $script .= "    mapstraction_{$this->id}.setCenter(new mxn.LatLonPoint(0, 0));\n";
+            $script .= "    mapstraction_{$this->id}.setCenter(new LatLonPoint(0, 0));\n";
         }
         
         foreach ($this->markers as $marker)
@@ -312,8 +312,7 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         // Just in case.. cast lat/lon to 'dot' delimited numbers
         $lat = number_format($marker['coordinates']['latitude'], 6, '.', '');
         $lon = number_format($marker['coordinates']['longitude'],6, '.', '');
-        
-        $script .= "var marker_{$i} = new mxn.Marker(new mxn.LatLonPoint({$lat}, {$lon}));\n";
+        $script .= "var marker_{$i} = new Marker(new LatLonPoint({$lat}, {$lon}))\n";
         
         $title = htmlspecialchars($marker['title'],ENT_QUOTES);
         $script .= "marker_{$i}.setLabel('{$title}');\n";
