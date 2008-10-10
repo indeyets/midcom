@@ -14,8 +14,6 @@
  */
 class org_openpsa_projects_handler_workflow extends midcom_baseclasses_components_handler
 {
-    var $_datamanagers;
-    var $_request_data;
 
     function __construct()
     {
