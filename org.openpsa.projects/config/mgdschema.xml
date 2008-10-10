@@ -12,11 +12,8 @@
         <property name="title" type="string"/>
         <property name="description" type="text"/>
         <!-- required metadata -->
-        <property name="revised" type="datetime"/>
-        <property name="revision" type="integer"/>
         <property name="created" type="datetime"/>
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /required metadata -->
         <!-- /Copied from NewMidgardevent -->
         <!-- in general we rely on ACL but until it's in core level we might need this -->
@@ -110,11 +107,8 @@
         <property name="comment" type="text" />
 
         <!-- required metadata -->
-        <property name="revised" type="datetime"/>
-        <property name="revision" type="integer"/>
         <property name="created" type="datetime"/>
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /required metadata -->
     </type>
 
@@ -168,11 +162,8 @@
 
         <!-- I think these properties will be handled by core in the future -->
         <!-- required metadata -->
-        <property name="revised" type="datetime"/>
-        <property name="revision" type="integer"/>
         <property name="created" type="datetime"/>
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /required metadata -->
 
         <!-- PONDER: Should we have separate "approved" like property ?
@@ -235,11 +226,8 @@
         <!-- /Common OpenPSA properties -->
 
         <!-- required metadata -->
-        <property name="revised" type="datetime"/>
-        <property name="revision" type="integer"/>
         <property name="created" type="datetime"/>
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /required metadata -->
     </type>
 
@@ -251,11 +239,8 @@
 
         <property name="orgOpenpsaObtype" type="integer"/>
         <!-- required metadata -->
-        <property name="revised" type="datetime"/>
-        <property name="revision" type="integer"/>
         <property name="created" type="datetime"/>
         <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /required metadata -->
     </type>
     <!-- /org.openpsa.projects objects -->
