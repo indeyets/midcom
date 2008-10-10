@@ -277,23 +277,6 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
         midcom_show_style("show-debug");
     }
 
-    function _hack_dm_for_ajax_hours()
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add('called');
-        //DM searches for this variable in the REQUEST, unfortunately we cannot cleanly pass it with the Ajax, so we add here.
-        if (   array_key_exists('hours', $this->_datamanagers)
-            && is_object($this->_datamanagers['hours'])
-            && isset($this->_datamanagers['hours']->form_prefix))
-        {
-            $_REQUEST[$this->_datamanagers['hours']->form_prefix . 'submit'] = true;
-        }
-        //Checkbox widget *really* wants this key regardless of the actual prefix.
-        $_REQUEST['midcom_helper_datamanager_submit'] = true;
-        debug_add("_REQUEST is now:\n===\n" . sprint_r($_REQUEST) . "===\n");
-        debug_pop();
-    }
-
     /**
      * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
