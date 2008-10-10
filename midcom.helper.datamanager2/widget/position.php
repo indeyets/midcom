@@ -170,7 +170,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/position/jquery.tabs.js');
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/position/widget.js');
 
-        $this->_element_id = "{$this->_namespace}{$this->name}_chooser_widget";
+        $this->_element_id = "{$this->_namespace}{$this->name}_position_widget";
 
         $config = "{
             fxAutoHeight: false,
