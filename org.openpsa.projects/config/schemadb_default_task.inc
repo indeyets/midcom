@@ -277,7 +277,7 @@
                 'orders'                      => array
                 (
                     'date'    => 'ASC',
-                    'created' => 'ASC',
+                    'metadata.created' => 'ASC',
                 ),
                 'defaults'                    => array
                 (
