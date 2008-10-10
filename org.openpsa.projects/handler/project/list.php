@@ -14,7 +14,6 @@
  */
 class org_openpsa_projects_handler_project_list extends midcom_baseclasses_components_handler
 {
-    var $_datamanagers;
 
     function __construct()
     {
@@ -23,10 +22,6 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
 
     function _on_initialize()
     {
-        $this->_datamanagers = array
-        (
-            'project' => new midcom_helper_datamanager($this->_config->get('schemadb_project'))
-        );
     }
 
     function _load_project($identifier)
@@ -38,17 +33,7 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
             return false;
         }
         $project->get_members();
-        //Fill the customer field to DM
-        debug_add("schema before \n===\n" . sprint_r($this->_datamanagers['project']->_layoutdb['default']) . "===\n");
-        org_openpsa_helpers_schema_modifier($this->_datamanagers['project'], 'customer', 'widget', 'select', 'default', false);
-        org_openpsa_helpers_schema_modifier($this->_datamanagers['project'], 'customer', 'widget_select_choices', org_openpsa_helpers_task_groups($project), 'default', false);
-        debug_add("schema after \n===\n" . sprint_r($this->_datamanagers['project']->_layoutdb['default']) . "===\n");
 
-        // Load the project to datamanager
-        if (!$this->_datamanagers['project']->init($project))
-        {
-            return false;
-        }
         return $project;
     }
 
@@ -91,7 +76,6 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
                 )
             );
         }
-
         if (   $this->_request_data['config']->get('list_projects_by_status')
             || $this->_request_data['view'] != 'all')
         {
@@ -279,7 +263,6 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
                     foreach ($this->_request_data['project_list_results'][$this->_request_data['view']] as $guid => $project)
                     {
                         $this->_request_data['project'] = $this->_load_project($guid);
-                        $this->_request_data['project_dm'] = $this->_datamanagers['project']->get_array();
                         midcom_show_style("show-project-list-status-item");
                     }
                     midcom_show_style("show-project-list-status-footer");
@@ -297,7 +280,6 @@ class org_openpsa_projects_handler_project_list extends midcom_baseclasses_compo
             foreach ($this->_request_data['project_list_results'][$this->_request_data['view']] as $guid => $project)
             {
                 $this->_request_data['project'] = $this->_load_project($guid);
-                $this->_request_data['project_dm'] = $this->_datamanagers['project']->get_array();
                 midcom_show_style("show-project-list-status-item");
             }
             midcom_show_style("show-project-list-status-footer");
