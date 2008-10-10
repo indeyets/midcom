@@ -1,6 +1,6 @@
 <?php
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
-$view = $data['metadata_dm'];
+$view = $data['document_dm'];
 $nap = new midcom_helper_nav();
 $node = $nap->get_node($nap->get_current_node());
 ?>
@@ -8,15 +8,15 @@ $node = $nap->get_node($nap->get_current_node());
     <?php $view->display_view(); ?>
 
     <?php
-    if (count($data['metadata_versions']))
+    if (count($data['document_versions']))
     {
         ?>
         <div class="area versions">
             <h2><?php echo $data['l10n']->get('older versions'); ?></h2>
             <?php
-            foreach ($data['metadata_versions'] as $guid => $metadata)
+            foreach ($data['document_versions'] as $guid => $document)
             {
-                $_MIDCOM->dynamic_load("{$node[MIDCOM_NAV_RELATIVEURL]}document_metadata/{$guid}/listview/");
+                $_MIDCOM->dynamic_load("{$node[MIDCOM_NAV_RELATIVEURL]}document/{$guid}/listview/");
             }
             ?>
         </div>

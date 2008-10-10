@@ -2,18 +2,18 @@
 /**
  * @package org.openpsa.documents
  * @author Nemein Oy http://www.nemein.com/
- * @version $Id: metadata_handler.php,v 1.13 2006/05/10 16:25:51 rambo Exp $
+ * @version $Id: document_handler.php,v 1.13 2006/05/10 16:25:51 rambo Exp $
  * @copyright Nemein Oy http://www.nemein.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
 
 /**
- * org.openpsa.documents metadata handler and viewer class.
+ * org.openpsa.documents document handler and viewer class.
  *
  * @package org.openpsa.documents
  *
  */
-class org_openpsa_documents_handler_metadata extends midcom_baseclasses_components_handler
+class org_openpsa_documents_handler_document extends midcom_baseclasses_components_handler
 {
     var $_datamanagers;
 
@@ -24,10 +24,10 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
 
     function _on_initialize()
     {
-    $this->_datamanagers['metadata'] = new midcom_helper_datamanager($this->_config->get('schemadb_metadata'));
+    $this->_datamanagers['document'] = new midcom_helper_datamanager($this->_config->get('schemadb_document'));
     }
 
-    function _load_metadata($guid)
+    function _load_document($guid)
     {
         $document = new org_openpsa_documents_document($guid);
         if (!is_object($document))
@@ -38,7 +38,7 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
         {
             return false;
         }*/
-        $this->_datamanagers['metadata']->init($this->_request_data['metadata']);
+        $this->_datamanagers['document']->init($this->_request_data['document']);
 
         return $document;
     }
@@ -61,10 +61,10 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
             return null;
         }
 
-        $this->_request_data['metadata'] = new org_openpsa_documents_document($document->id);
-        $rel_ret = org_openpsa_relatedto_handler::on_created_handle_relatedto($this->_request_data['metadata'], 'org.openpsa.documents');
+        $this->_request_data['document'] = new org_openpsa_documents_document($document->id);
+        $rel_ret = org_openpsa_relatedto_handler::on_created_handle_relatedto($this->_request_data['document'], 'org.openpsa.documents');
         debug_add("org_openpsa_relatedto_handler returned \n===\n" . sprint_r($rel_ret) . "===\n");
-        $result["storage"] =& $this->_request_data['metadata'];
+        $result["storage"] =& $this->_request_data['document'];
         $result["success"] = true;
         return $result;
     }
@@ -88,30 +88,30 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
      */
-    function _handler_metadata_action($handler_id, $args, &$data)
+    function _handler_document_action($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
-        // Check if we get the document metadata
-        if (!$this->_handler_metadata($handler_id, $args, &$data, false))
+        // Check if we get the document
+        if (!$this->_handler_document($handler_id, $args, &$data, false))
         {
             return false;
         }
 
         // Check if the action is a valid one
-        $this->_request_data['metadata_action'] = $args[1];
+        $this->_request_data['document_action'] = $args[1];
         switch ($args[1])
         {
             case "listview":
                 $this->_view = "listview";
                 return true;
             case "delete":
-                $_MIDCOM->auth->require_do('midgard:delete', $this->_request_data['metadata']);
+                $_MIDCOM->auth->require_do('midgard:delete', $this->_request_data['document']);
                 $this->_view = 'delete';
 
                 $this->_request_data['delete_succeeded'] = false;
                 if (array_key_exists('org_openpsa_documents_deleteok', $_POST))
                 {
-                    $this->_request_data['delete_succeeded'] = midcom_helper_purge_object($this->_request_data['metadata']);
+                    $this->_request_data['delete_succeeded'] = midcom_helper_purge_object($this->_request_data['document']);
                     if ($this->_request_data['delete_succeeded'])
                     {
                         // Redirect to the directory
@@ -123,7 +123,7 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
                     }
                     // Update the index
                     $indexer =& $_MIDCOM->get_service('indexer');
-                    $indexer->delete($this->_request_data['metadata']->guid);
+                    $indexer->delete($this->_request_data['document']->guid);
                 }
                 else
                 {
@@ -141,7 +141,7 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
                     );
                     $this->_view_toolbar->add_item(
                         Array(
-                            MIDCOM_TOOLBAR_URL => 'document_metadata/'.$this->_request_data['metadata']->guid.'/',
+                            MIDCOM_TOOLBAR_URL => 'document/'.$this->_request_data['document']->guid.'/',
                             MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get("cancel"),
                             MIDCOM_TOOLBAR_HELPTEXT => null,
                             MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/cancel.png',
@@ -151,17 +151,17 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
                 }
                 return true;
             case "edit":
-                $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['metadata']);
+                $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['document']);
 
                 // Handle versioning of the attachment
                 // TODO: Move this to the DBA wrapper class when DM datatype_blob behaves better
                 if (   $this->_request_data['enable_versioning']
                     && array_key_exists('midcom_helper_datamanager__document_delete', $_POST))
                 {
-                    $this->_request_data['metadata']->backup_version();
+                    $this->_request_data['document']->backup_version();
                 }
 
-                switch ($this->_datamanagers['metadata']->process_form()) {
+                switch ($this->_datamanagers['document']->process_form()) {
                     case MIDCOM_DATAMGR_EDITING:
                         $this->_view = "edit";
 
@@ -173,17 +173,17 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
                     case MIDCOM_DATAMGR_SAVED:
                         // Update the Index
                         $indexer =& $_MIDCOM->get_service('indexer');
-                        $indexer->index($this->_datamanagers['metadata']);
+                        $indexer->index($this->_datamanagers['document']);
 
                         $this->_view = "default";
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                            . "document_metadata/" . $this->_request_data["metadata"]->guid. "/");
+                            . "document/" . $this->_request_data["document"]->guid. "/");
                         // This will exit()
 
                     case MIDCOM_DATAMGR_CANCELLED:
                         $this->_view = "default";
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                            . "document_metadata/" . $this->_request_data["metadata"]->guid. "/");
+                            . "document/" . $this->_request_data["document"]->guid. "/");
                         // This will exit()
 
                     case MIDCOM_DATAMGR_FAILED:
@@ -203,21 +203,21 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */
-    function _show_metadata_action($handler_id, &$data)
+    function _show_document_action($handler_id, &$data)
     {
         switch($this->_view)
         {
             case 'listview':
-                $this->_request_data['metadata_dm'] = $this->_datamanagers['metadata']->get_array();
-                midcom_show_style("show-metadata-listview");
+                $this->_request_data['document_dm'] = $this->_datamanagers['document']->get_array();
+                midcom_show_style("show-document-listview");
                 break;
             case 'delete':
-                $this->_request_data['metadata_dm'] = $this->_datamanagers['metadata'];
-                midcom_show_style("show-metadata-delete");
+                $this->_request_data['document_dm'] = $this->_datamanagers['document'];
+                midcom_show_style("show-document-delete");
                 break;
             default:
-                $this->_request_data['metadata_dm'] = $this->_datamanagers['metadata'];
-                midcom_show_style("show-metadata-edit");
+                $this->_request_data['document_dm'] = $this->_datamanagers['document'];
+                midcom_show_style("show-document-edit");
                 break;
         }
     }
@@ -228,11 +228,11 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
      */
-    function _handler_metadata_new($handler_id, $args, &$data)
+    function _handler_document_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_do('midgard:create', $this->_request_data['directory']);
 
-        if ($handler_id == 'metadata_new_choosefolder')
+        if ($handler_id == 'document_new_choosefolder')
         {
             $this->_request_data['folders'] = Array();
             $first_documents_node = midcom_helper_find_node_by_component('org.openpsa.documents');
@@ -244,14 +244,14 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
             {
                 $this->_find_document_nodes($this->_request_data['directory']->id);
             }
-            org_openpsa_helpers_schema_modifier($this->_datamanagers['metadata'], 'topic', 'description', $this->_request_data['l10n']->get('folder'), 'newdocument');
-            org_openpsa_helpers_schema_modifier($this->_datamanagers['metadata'], 'topic', 'location', 'topic', 'newdocument');
-            org_openpsa_helpers_schema_modifier($this->_datamanagers['metadata'], 'topic', 'datatype', 'integer', 'newdocument');
-            org_openpsa_helpers_schema_modifier($this->_datamanagers['metadata'], 'topic', 'widget', 'select', 'newdocument');
-            org_openpsa_helpers_schema_modifier($this->_datamanagers['metadata'], 'topic', 'widget_select_choices', $this->_request_data['folders'], 'newdocument');
+            org_openpsa_helpers_schema_modifier($this->_datamanagers['document'], 'topic', 'description', $this->_request_data['l10n']->get('folder'), 'newdocument');
+            org_openpsa_helpers_schema_modifier($this->_datamanagers['document'], 'topic', 'location', 'topic', 'newdocument');
+            org_openpsa_helpers_schema_modifier($this->_datamanagers['document'], 'topic', 'datatype', 'integer', 'newdocument');
+            org_openpsa_helpers_schema_modifier($this->_datamanagers['document'], 'topic', 'widget', 'select', 'newdocument');
+            org_openpsa_helpers_schema_modifier($this->_datamanagers['document'], 'topic', 'widget_select_choices', $this->_request_data['folders'], 'newdocument');
         }
 
-        if (!$this->_datamanagers['metadata']->init_creation_mode("newdocument",$this,"_creation_dm_callback"))
+        if (!$this->_datamanagers['document']->init_creation_mode("newdocument",$this,"_creation_dm_callback"))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Failed to initialize datamanager in creation mode for schema 'newdocument'.");
@@ -261,7 +261,7 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
         // Add toolbar items
         org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
 
-        switch ($this->_datamanagers['metadata']->process_form()) {
+        switch ($this->_datamanagers['document']->process_form()) {
             case MIDCOM_DATAMGR_CREATING:
                 debug_add('First call within creation mode');
                 break;
@@ -270,15 +270,15 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
             case MIDCOM_DATAMGR_SAVED:
                 debug_add("First time submit, the DM has created an object");
                 // Change schema setting
-                $this->_request_data['metadata']->parameter("midcom.helper.datamanager","layout","default");
+                $this->_request_data['document']->parameter("midcom.helper.datamanager","layout","default");
 
                 // Index the document
                 $indexer =& $_MIDCOM->get_service('indexer');
-                $indexer->index($this->_datamanagers['metadata']);
+                $indexer->index($this->_datamanagers['document']);
 
                 // Relocate to document view
                 $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                    . "document_metadata/" . $this->_request_data["metadata"]->guid. "/");
+                    . "document/" . $this->_request_data["document"]->guid. "/");
                 break;
 
             case MIDCOM_DATAMGR_CANCELLED_NONECREATED:
@@ -318,10 +318,10 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */
-    function _show_metadata_new($handler_id, &$data)
+    function _show_document_new($handler_id, &$data)
     {
-        $this->_request_data['metadata_dm'] = $this->_datamanagers['metadata'];
-        midcom_show_style("show-metadata-new");
+        $this->_request_data['document_dm'] = $this->_datamanagers['document'];
+        midcom_show_style("show-document-new");
     }
 
     /**
@@ -330,13 +330,13 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
      */
-    function _handler_metadata($handler_id, $args, &$data, $add_toolbar = true)
+    function _handler_document($handler_id, $args, &$data, $add_toolbar = true)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $_MIDCOM->auth->require_valid_user();
-        // Get the requested document metadata object
-        $this->_request_data['metadata'] = $this->_load_metadata($args[0]);
-        if (!$this->_request_data['metadata'])
+        // Get the requested document object
+        $this->_request_data['document'] = $this->_load_document($args[0]);
+        if (!$this->_request_data['document'])
         {
             debug_pop();
             return false;
@@ -344,11 +344,11 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
 
         // Add toolbar items
         if (   $add_toolbar
-            && $_MIDCOM->auth->can_do('midgard:update', $this->_request_data['metadata']))
+            && $_MIDCOM->auth->can_do('midgard:update', $this->_request_data['document']))
         {
             $this->_view_toolbar->add_item(
                 Array(
-                    MIDCOM_TOOLBAR_URL => "document_metadata/{$this->_request_data['metadata']->guid}/edit.html",
+                    MIDCOM_TOOLBAR_URL => "document/{$this->_request_data['document']->guid}/edit.html",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('edit'),
                     MIDCOM_TOOLBAR_HELPTEXT => '',
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -357,11 +357,11 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
             );
         }
         if (   $add_toolbar
-            && $_MIDCOM->auth->can_do('midgard:delete', $this->_request_data['metadata']))
+            && $_MIDCOM->auth->can_do('midgard:delete', $this->_request_data['document']))
         {
             $this->_view_toolbar->add_item(
                 Array(
-                    MIDCOM_TOOLBAR_URL => "document_metadata/{$this->_request_data['metadata']->guid}/delete.html",
+                    MIDCOM_TOOLBAR_URL => "document/{$this->_request_data['document']->guid}/delete.html",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('delete'),
                     MIDCOM_TOOLBAR_HELPTEXT => '',
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -371,20 +371,20 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
         }
 
         // Load the document to datamanager
-        if (!$this->_datamanagers['metadata']->init($this->_request_data['metadata']))
+        if (!$this->_datamanagers['document']->init($this->_request_data['document']))
         {
             debug_add('Failed to initialize the datamanager, see debug level log for more information.', MIDCOM_LOG_ERROR);
-            debug_print_r('DM instance was:', $this->_datamanagers['metadata']);
-            debug_print_r('Object to be used was:', $this->_request_data['metadata']);
+            debug_print_r('DM instance was:', $this->_datamanagers['document']);
+            debug_print_r('Object to be used was:', $this->_request_data['document']);
             debug_pop();
             return false;
         }
 
         // Get list of older versions
-        $this->_request_data['metadata_versions'] = array();
+        $this->_request_data['document_versions'] = array();
         $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_documents_document');
         $qb->add_constraint('topic', '=', $this->_request_data['directory']->id);
-        $qb->add_constraint('nextVersion', '=', $this->_request_data['metadata']->id);
+        $qb->add_constraint('nextVersion', '=', $this->_request_data['document']->id);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_DOCUMENT);
         $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
         if (   is_array($ret)
@@ -392,11 +392,11 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
         {
             foreach ($ret as $document)
             {
-                $this->_request_data['metadata_versions'][$document->guid] = $document;
+                $this->_request_data['document_versions'][$document->guid] = $document;
             }
         }
 
-        $GLOBALS['midcom_component_data']['org.openpsa.documents']['active_leaf'] = $this->_request_data['metadata']->id;
+        $GLOBALS['midcom_component_data']['org.openpsa.documents']['active_leaf'] = $this->_request_data['document']->id;
 
         $_MIDCOM->add_link_head(array
             (
@@ -415,10 +415,10 @@ class org_openpsa_documents_handler_metadata extends midcom_baseclasses_componen
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */
-    function _show_metadata($handler_id, &$data)
+    function _show_document($handler_id, &$data)
     {
-        $this->_request_data['metadata_dm'] = $this->_datamanagers['metadata'];
-        midcom_show_style("show-metadata");
+        $this->_request_data['document_dm'] = $this->_datamanagers['document'];
+        midcom_show_style("show-document");
     }
 
 }

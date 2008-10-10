@@ -1,6 +1,6 @@
 <?php
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
-$view = $data['metadata_dm'];
+$view = $data['document_dm'];
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 ?>
 <div class="main">
@@ -10,7 +10,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         <form id="org_openpsa_contacts_document_deleteform" method="post">
             <input type="hidden" name="org_openpsa_documents_deleteok" value="1" />
             <input type="submit" class="button delete" value="<?php echo $data['l10n_midcom']->get('delete'); ?>" />
-            <input type="button" class="button cancel" value="<?php echo $data['l10n_midcom']->get('cancel'); ?>" onclick="window.location='<?php echo $prefix . 'document_metadata/'.$data['metadata']->guid.'/'; ?>'" />
+            <input type="button" class="button cancel" value="<?php echo $data['l10n_midcom']->get('cancel'); ?>" onclick="window.location='<?php echo $prefix . 'document/'.$data['document']->guid.'/'; ?>'" />
         </form>
     </div>
 </div>

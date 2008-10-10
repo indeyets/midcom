@@ -20,7 +20,7 @@ class org_openpsa_documents_navigation extends midcom_baseclasses_components_nav
         return $leaves;
 
         // OLD STUFF:
-        // List the metadata documents
+        // List the documents
         $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_documents_document');
         $qb->add_constraint('topic', '=', $this->_topic->id);
         $qb->add_constraint('nextVersion', '=', 0);
@@ -46,12 +46,12 @@ class org_openpsa_documents_navigation extends midcom_baseclasses_components_nav
             foreach ($ret as $document)
             {
                 // Match the toolbar to the correct URL.
-                //$toolbar[50][MIDCOM_TOOLBAR_URL] = "{$prefix}document_metadata/{$document->guid}/edit.html";
-                //$toolbar[51][MIDCOM_TOOLBAR_URL] = "{$prefix}document_metadata/{$documents->id}/delete.html";
+                //$toolbar[50][MIDCOM_TOOLBAR_URL] = "{$prefix}document/{$document->guid}/edit.html";
+                //$toolbar[51][MIDCOM_TOOLBAR_URL] = "{$prefix}document/{$documents->id}/delete.html";
 
                 $leaves[$document->id] = Array (
                     MIDCOM_NAV_SITE => Array (
-                        MIDCOM_NAV_URL => 'document_metadata/'.$document->guid.'/',
+                        MIDCOM_NAV_URL => 'document/'.$document->guid.'/',
                         MIDCOM_NAV_NAME => ($document->title != "") ? $document->title : "document #".$document->id),
                     MIDCOM_NAV_ADMIN => Array (
                         MIDCOM_NAV_URL => null,
@@ -74,7 +74,7 @@ class org_openpsa_documents_navigation extends midcom_baseclasses_components_nav
         $toolbar = Array();
         /*$toolbar[100] = Array
         (
-            MIDCOM_TOOLBAR_URL => 'document_metadata/new/',
+            MIDCOM_TOOLBAR_URL => 'document/new/',
             MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('new document'),
             MIDCOM_TOOLBAR_HELPTEXT => '',
             MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',

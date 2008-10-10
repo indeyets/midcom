@@ -2,7 +2,7 @@
 /**
  * @package org.openpsa.documents
  * @author Nemein Oy http://www.nemein.com/
- * @version $Id: metadata_handler.php,v 1.13 2006/05/10 16:25:51 rambo Exp $
+ * @version $Id: document_handler.php,v 1.13 2006/05/10 16:25:51 rambo Exp $
  * @copyright Nemein Oy http://www.nemein.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  */
@@ -24,7 +24,7 @@ class org_openpsa_documents_handler_search extends midcom_baseclasses_components
 
     function _on_initialize()
     {
-    $this->_datamanagers['metadata'] = new midcom_helper_datamanager($this->_config->get('schemadb_metadata'));
+    $this->_datamanagers['document'] = new midcom_helper_datamanager($this->_config->get('schemadb_document'));
     }
 
     /**
@@ -64,7 +64,7 @@ class org_openpsa_documents_handler_search extends midcom_baseclasses_components
      */
     function _show_search($handler_id, &$data)
     {
-    $this->_datamanagers['metadata'] = new midcom_helper_datamanager($this->_config->get('schemadb_metadata'));
+    $this->_datamanagers['document'] = new midcom_helper_datamanager($this->_config->get('schemadb_document'));
         $displayed = 0;
         midcom_show_style('show-search-header');
         if (!empty($this->_request_data['results']))
@@ -73,12 +73,12 @@ class org_openpsa_documents_handler_search extends midcom_baseclasses_components
             foreach ($this->_request_data['results'] as $document)
             {
                 // $obj->RI will contain either document or attachment GUID depending on match, ->source will always contain the document GUID
-                $this->_request_data['metadata'] = $this->_metadata_handler->_load_metadata($document->source);
-                if ($this->_request_data['metadata'])
+                $this->_request_data['document'] = $this->_document_handler->_load_document($document->source);
+                if ($this->_request_data['document'])
                 {
-                    $this->_datamanagers['metadata']->init($this->_request_data['metadata']);
-                    $this->_request_data['metadata_dm'] = $this->_datamanagers['metadata']->get_array();
-                    $this->_request_data['metadata_search'] = $document;
+                    $this->_datamanagers['document']->init($this->_request_data['document']);
+                    $this->_request_data['document_dm'] = $this->_datamanagers['document']->get_array();
+                    $this->_request_data['document_search'] = $document;
                     midcom_show_style('show-search-results-item');
                     $displayed++;
                 }

@@ -53,8 +53,8 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
         {
             foreach ($ret as $document)
             {
-                $document_metadata = new org_openpsa_documents_document($document->id);
-                $datamanager = new midcom_helper_datamanager($config->get('schemadb_metadata'));
+                $document = new org_openpsa_documents_document($document->id);
+                $datamanager = new midcom_helper_datamanager($config->get('schemadb_document'));
                 if (!$datamanager)
                 {
                     debug_add('Warning, failed to create a datamanager instance with this schemapath:' . $this->_config->get('schemadb'),
@@ -62,7 +62,7 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
                     continue;
                 }
 
-                if (!$datamanager->init($document_metadata))
+                if (!$datamanager->init($document))
                 {
                     debug_add("Warning, failed to initialize datamanager for Article {$article->id}. See Debug Log for details.", MIDCOM_LOG_WARN);
                     debug_print_r('Article dump:', $article);
@@ -85,7 +85,7 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
         {
             return null;
         }
-        return "document_metadata/{$document->guid}/";
+        return "document/{$document->guid}/";
     }
 }
 ?>

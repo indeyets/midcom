@@ -33,33 +33,33 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
         // Always run in uncached mode
         $_MIDCOM->cache->content->no_cache();
 
-        // Match /document_metadata/new/choosefolder
-        $this->_request_switch['metadata_new_choosefolder'] = array
+        // Match /document/new/choosefolder
+        $this->_request_switch['document_new_choosefolder'] = array
     (
-        'handler' => array('org_openpsa_documents_handler_metadata', 'metadata_new'),
-            'fixed_args' => Array('document_metadata', 'new', 'choosefolder'),
+        'handler' => array('org_openpsa_documents_handler_document', 'document_new'),
+            'fixed_args' => Array('document', 'new', 'choosefolder'),
         );
 
-        // Match /document_metadata/<document GUID>/action
-        $this->_request_switch['metadata_action'] = array
+        // Match /document/<document GUID>/action
+        $this->_request_switch['document_action'] = array
         (
-        'handler' => array('org_openpsa_documents_handler_metadata', 'metadata_action'),
-            'fixed_args' => 'document_metadata',
+        'handler' => array('org_openpsa_documents_handler_document', 'document_action'),
+            'fixed_args' => 'document',
             'variable_args' => 2,
         );
 
-        // Match /document_metadata/new
-        $this->_request_switch['metadata_new'] = array
+        // Match /document/new
+        $this->_request_switch['document_new'] = array
     (
-        'handler' => array('org_openpsa_documents_handler_metadata', 'metadata_new'),
-            'fixed_args' => Array('document_metadata', 'new'),
+        'handler' => array('org_openpsa_documents_handler_document', 'document_new'),
+            'fixed_args' => Array('document', 'new'),
         );
 
-        // Match /document_metadata/<document GUID>
+        // Match /document/<document GUID>
         $this->_request_switch[] = array
     (
-        'handler' => array('org_openpsa_documents_handler_metadata', 'metadata'),
-            'fixed_args' => 'document_metadata',
+        'handler' => array('org_openpsa_documents_handler_document', 'document'),
+            'fixed_args' => 'document',
             'variable_args' => 1,
         );
 

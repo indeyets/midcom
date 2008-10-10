@@ -8,7 +8,7 @@
  */
 
 /**
- * org.openpsa.documents metadata handler and viewer class.
+ * org.openpsa.documents document handler and viewer class.
  *
  * @package org.openpsa.documents
  *
@@ -25,7 +25,7 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
     function _on_initialize()
     {
         $this->_datamanagers['directory'] = new midcom_helper_datamanager($this->_config->get('schemadb_directory'));
-        $this->_datamanagers['metadata'] = new midcom_helper_datamanager($this->_config->get('schemadb_metadata'));
+        $this->_datamanagers['document'] = new midcom_helper_datamanager($this->_config->get('schemadb_document'));
     }
 
 
@@ -221,7 +221,7 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
         {
             $this->_view_toolbar->add_item(
                 Array(
-                    MIDCOM_TOOLBAR_URL => 'document_metadata/new/',
+                    MIDCOM_TOOLBAR_URL => 'document/new/',
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('new document'),
                     MIDCOM_TOOLBAR_HELPTEXT => '',
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
@@ -288,10 +288,10 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
             midcom_show_style("show-directory-index-header");
             foreach ($ret as $document)
             {
-                $this->_request_data['metadata'] = $document;
-                if ($this->_datamanagers['metadata']->init($this->_request_data['metadata']))
+                $this->_request_data['document'] = $document;
+                if ($this->_datamanagers['document']->init($this->_request_data['document']))
                 {
-                    $this->_request_data['metadata_dm'] = $this->_datamanagers['metadata']->get_array();
+                    $this->_request_data['document_dm'] = $this->_datamanagers['document']->get_array();
                     midcom_show_style("show-directory-index-item");
                 }
             }

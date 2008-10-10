@@ -1,6 +1,6 @@
 <?php
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
-$view = $data['metadata_dm'];
+$view = $data['document_dm'];
 
 // MIME type
 $icon = MIDCOM_STATIC_URL . '/stock-icons/mime/gnome-text-blank.png';
@@ -13,7 +13,7 @@ if ($view['document'])
 <div style="float: left; height: 95px; width: 80px; overflow: hidden; margin: 7px; text-align: center;"><?php
 ?>
 
-<a style="text-decoration: none;" href="&(data['prefix']);document_metadata/<?php echo $data['metadata']->guid; ?>/">
+<a style="text-decoration: none;" href="&(data['prefix']);document/<?php echo $data['document']->guid; ?>/">
     <?php
     if ($icon)
     {
