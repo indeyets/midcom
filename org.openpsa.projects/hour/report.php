@@ -41,16 +41,6 @@ class org_openpsa_projects_hour_report extends __org_openpsa_projects_hour_repor
         $this->hours = (float) $this->hours;
         $this->hours = round($this->hours, 2);
 
-        //Make sure we have creator
-        if (!$this->creator)
-        {
-            $this->creator = $_MIDGARD['user'];
-        }
-        //And created
-        if (!$this->created)
-        {
-            $this->created = date('Y-m-d H:i:s');
-        }
         //Make sure date is set
         if (!$this->date)
         {

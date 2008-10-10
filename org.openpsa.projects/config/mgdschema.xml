@@ -125,15 +125,6 @@
         <property name="person" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /Copied NewMidgardEventmember properties -->
 
-        <!-- I think these properties will be handled by core in the future -->
-        <!-- required metadata -->
-        <property name="revised" type="datetime"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="datetime"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
-
         <!-- PONDER: Should we have separate "approved" like property ?
              To distinguish between customer and internal approvals -->
         <property name="approved" type="datetime"/>
