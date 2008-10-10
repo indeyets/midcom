@@ -15,7 +15,6 @@
 class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
 {
 
-    var $_datamanagers = array();
     var $_view = "default";
     var $_toolbars;
 
@@ -252,7 +251,6 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
             )
         );
 
-        $this->_request_data['datamanagers'] =& $this->_datamanagers;
     }
 
     /**
