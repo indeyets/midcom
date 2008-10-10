@@ -28,7 +28,6 @@
     (
         'org.openpsa.core' => array(),
         'org.openpsa.helpers' => array(),
-        'midcom.helper.datamanager' => array(),
         'midcom.helper.datamanager2' => array(),
         'org.openpsa.contactwidget' => array(),
         'Calendar' => array
