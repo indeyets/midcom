@@ -14,7 +14,6 @@
  */
 class org_openpsa_projects_handler_task_view extends midcom_baseclasses_components_handler
 {
-    var $_datamanagers;
 
     function __construct()
     {
@@ -252,7 +251,6 @@ EOF;
             $data['view_task'] = $data['controller']->get_content_html();
             $data['datamanager'] =& $data['controller']->datamanager;
 
-            //$this->_request_data['task_dm']  = $this->_datamanagers['task'];
             $data['task_bookings'] = $this->_list_bookings($data['task']);
 
             midcom_show_style('show-task');

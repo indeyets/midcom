@@ -14,7 +14,6 @@
  */
 class org_openpsa_projects_handler_task_action extends midcom_baseclasses_components_handler
 {
-    var $_datamanagers;
 
     function __construct()
     {
@@ -23,10 +22,6 @@ class org_openpsa_projects_handler_task_action extends midcom_baseclasses_compon
 
     function _on_initialize()
     {
-        $this->_datamanagers = array
-        (
-            'task' => new midcom_helper_datamanager($this->_config->get('schemadb_task'))
-        );
     }
 
     function _load_task($identifier)
@@ -34,18 +29,6 @@ class org_openpsa_projects_handler_task_action extends midcom_baseclasses_compon
         $task = new org_openpsa_projects_task($identifier);
 
         if (!is_object($task))
-        {
-            return false;
-        }
-
-        //Fill the agreement field to DM
-        debug_add("schema before \n===\n" . sprint_r($this->_datamanagers['task']->_layoutdb['default']) . "===\n");
-        org_openpsa_helpers_schema_modifier($this->_datamanagers['task'], 'agreement', 'widget', 'select', 'default', false);
-        org_openpsa_helpers_schema_modifier($this->_datamanagers['task'], 'agreement', 'widget_select_choices', org_openpsa_sales_salesproject_deliverable::list_task_agreements($task), 'default', false);
-        debug_add("schema after \n===\n" . sprint_r($this->_datamanagers['task']->_layoutdb['default']) . "===\n");
-
-        // Load the task to datamanager
-        if (!$this->_datamanagers['task']->init($task))
         {
             return false;
         }

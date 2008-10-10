@@ -14,7 +14,6 @@
  */
 class org_openpsa_projects_handler_project_action extends midcom_baseclasses_components_handler
 {
-    var $_datamanagers;
 
     function __construct()
     {
@@ -23,10 +22,6 @@ class org_openpsa_projects_handler_project_action extends midcom_baseclasses_com
 
     function _on_initialize()
     {
-        $this->_datamanagers = array
-        (
-            'project' => new midcom_helper_datamanager($this->_config->get('schemadb_project'))
-        );
     }
 
     function _load_project($identifier)
@@ -38,17 +33,6 @@ class org_openpsa_projects_handler_project_action extends midcom_baseclasses_com
             return false;
         }
 
-        //Fill the customer field to DM
-        debug_add("schema before \n===\n" . sprint_r($this->_datamanagers['project']->_layoutdb['default']) . "===\n");
-        org_openpsa_helpers_schema_modifier($this->_datamanagers['project'], 'customer', 'widget', 'select', 'default', false);
-        org_openpsa_helpers_schema_modifier($this->_datamanagers['project'], 'customer', 'widget_select_choices', org_openpsa_helpers_task_groups($project), 'default', false);
-        debug_add("schema after \n===\n" . sprint_r($this->_datamanagers['project']->_layoutdb['default']) . "===\n");
-
-        // Load the project to datamanager
-        if (!$this->_datamanagers['project']->init($project))
-        {
-            return false;
-        }
         return $project;
     }
 

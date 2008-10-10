@@ -86,7 +86,7 @@ class org_openpsa_projects_handler_project_admin extends midcom_baseclasses_comp
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/midcom.helper.datamanager2/legacy.css",
+                'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager2/legacy.css",
             )
         );
     }
