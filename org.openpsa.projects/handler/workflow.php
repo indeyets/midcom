@@ -8,20 +8,27 @@
  */
 
 /**
- * org.openpsa.projects task handler and viewer class.
+ * org.openpsa.projects workflow handler and viewer class.
  *
  * @package org.openpsa.projects
  */
-class org_openpsa_projects_workflow_handler
+class org_openpsa_projects_handler_workflow extends midcom_baseclasses_components_handler
 {
     var $_datamanagers;
     var $_request_data;
 
-    function __construct(&$datamanagers, &$request_data)
+    function __construct()
     {
-        $this->_datamanagers = &$datamanagers;
-        $this->_request_data = &$request_data;
+        parent::__construct();
     }
+
+     function _on_initialize()
+     {
+         $this->_datamanagers = array
+         (
+             'task' => new midcom_helper_datamanager($this->_config->get('schemadb_task'))
+         );
+     }
 
     function _load_task($identifier)
     {

@@ -17,8 +17,6 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
 
     var $_datamanagers = array();
     var $_view = "default";
-    var $_hours_handler = null;
-    var $_workflow_handler = null;
     var $_toolbars;
 
     /**
@@ -34,9 +32,6 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
 
     function _on_initialize()
     {
-        // Load handler classes
-        $this->_workflow_handler = new org_openpsa_projects_workflow_handler(&$this->_datamanagers, &$this->_request_data);
-
 
         // Match /project/list/<status>
         $this->_request_switch['project-list-status'] = array
@@ -184,14 +179,14 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
         // Match /workflow/<GUID>/<action>
         $this->_request_switch['workflow-action'] = array
         (
-            'handler' => array(&$this->_workflow_handler, 'action'),
+            'handler' => array('org_openpsa_projects_handler_workflow', 'action'),
             'fixed_args' => 'workflow',
             'variable_args' => 2,
         );
         // Match /workflow/<GUID>
         $this->_request_switch['workflow'] = array
         (
-            'handler' => array(&$this->_workflow_handler, 'post'),
+            'handler' => array('org_openpsa_projects_handler_workflow', 'post'),
             'fixed_args' => 'workflow',
             'variable_args' => 1,
         );
