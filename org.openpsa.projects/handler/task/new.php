@@ -14,29 +14,79 @@
  */
 class org_openpsa_projects_handler_task_new extends midcom_baseclasses_components_handler
 {
-    var $_datamanagers;
+    /**
+     * The Controller of the task used for creating
+     *
+     * @var midcom_helper_datamanager2_controller_simple
+     * @access private
+     */
+    var $_controller = null;
+
+    /**
+     * The schema database in use, available only while a datamanager is loaded.
+     *
+     * @var Array
+     * @access private
+     */
+    var $_schemadb = null;
+
+    /**
+     * The schema to use for the new task.
+     *
+     * @var string
+     * @access private
+     */
+    var $_schema = 'default';
+
+    /**
+     * The defaults to use for the new task.
+     *
+     * @var Array
+     * @access private
+     */
+    var $_defaults = Array();
+
 
     function __construct()
     {
         parent::__construct();
     }
 
-    function _on_initialize()
+    /**
+     * Loads and prepares the schema database.
+     *
+     * The operations are done on all available schemas within the DB.
+     */
+    private function _load_schemadb()
     {
-        $this->_datamanagers = array
-        (
-            'task' => new midcom_helper_datamanager($this->_config->get('schemadb_task'))
-        );
+        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_task_dm2'));
     }
 
-    function _creation_dm_callback(&$datamanager)
+    /**
+     * Internal helper, fires up the creation mode controller. Any error triggers a 500.
+     *
+     * @access private
+     */
+    private function _load_controller()
     {
-        // This is what Datamanager calls to actually create a person
-        $result = array (
-            "success" => false,
-            "storage" => null,
-        );
+        $this->_load_schemadb();
+        $this->_controller =& midcom_helper_datamanager2_controller::create('create');
+        $this->_controller->schemadb =& $this->_schemadb;
+        $this->_controller->schemaname = $this->_schema;
+        $this->_controller->defaults = $this->_defaults;
+        $this->_controller->callback_object =& $this;
+        if (! $this->_controller->initialize())
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 create controller.");
+            // This will exit.
+        }
+    }
 
+    /**
+     * This is what Datamanager calls to actually create a person
+     */
+    function & dm2_create_callback(&$controller)
+    {
         $task = new org_openpsa_projects_task();
 
         if (   array_key_exists('project', $this->_request_data)
@@ -48,27 +98,24 @@ class org_openpsa_projects_handler_task_new extends midcom_baseclasses_component
             // Populate some default data from parent as needed
             $task->orgOpenpsaAccesstype = $this->_request_data['project']->orgOpenpsaAccesstype;
             $task->orgOpenpsaOwnerWg = $this->_request_data['project']->orgOpenpsaOwnerWg;
-            /* This is not the correct way to get the default to editor,
-               (causes problems if task is created after project is supposed to end)
-            $task->end = $this->_request_data['project']->end;
-            */
+
         }
 
-        //debug_add("About to create task\n===\n" . sprint_r($task) . "===\n");
-        //mgd_debug_start();
-        $stat = $task->create();
-        //mgd_debug_stop();
-        if ($stat)
+        if (! $task->create())
         {
-            $this->_request_data['task'] = new org_openpsa_projects_task($task->id);
-            $rel_ret = org_openpsa_relatedto_handler::on_created_handle_relatedto($this->_request_data['task'], 'org.openpsa.projects');
-            debug_add("org_openpsa_relatedto_handler returned \n===\n" . sprint_r($rel_ret) . "===\n");
-            //Debugging
-            $result["storage"] =& $this->_request_data['task'];
-            $result["success"] = true;
-            return $result;
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_print_r('We operated on this object:', $task);
+            debug_pop();
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                "Failed to create a new task under project #{$this->_request_data['project']->id}, cannot continue. Error: " . mgd_errstr());
+            // This will exit.
         }
-        return null;
+
+        $this->_request_data['task'] = new org_openpsa_projects_task($task->id);
+        $rel_ret = org_openpsa_relatedto_handler::on_created_handle_relatedto($this->_request_data['task'], 'org.openpsa.projects');
+        debug_add("org_openpsa_relatedto_handler returned \n===\n" . sprint_r($rel_ret) . "===\n");
+
+        return $task;
     }
 
     /**
@@ -95,18 +142,11 @@ class org_openpsa_projects_handler_task_new extends midcom_baseclasses_component
                     }
                     $_MIDCOM->auth->require_do('midgard:create', $this->_request_data['project']);
 
-                    // Copy permissions from project, TO BE DEPRECATED
-                    org_openpsa_helpers_schema_modifier(&$this->_datamanagers['task'], 'orgOpenpsaAccesstype', 'default', $this->_request_data['project']->orgOpenpsaAccesstype, 'newtask', false);
-                    org_openpsa_helpers_schema_modifier(&$this->_datamanagers['task'], 'orgOpenpsaOwnerWg', 'default', $this->_request_data['project']->orgOpenpsaOwnerWg, 'newtask', false);
-
                     // Copy resources and contacts from project
                     $this->_request_data['project']->get_members();
-                    org_openpsa_helpers_schema_modifier(&$this->_datamanagers['task'], 'resources', 'default', $this->_request_data['project']->resources, 'newtask', false);
-                    org_openpsa_helpers_schema_modifier(&$this->_datamanagers['task'], 'contacts', 'default', $this->_request_data['project']->contacts, 'newtask', false);
+                    $this->_defaults['resources'] = $this->_request_data['project']->resources;
+                    $this->_defaults['contacts'] = $this->_request_data['project']->contacts;
 
-                    // Populate deliverable editor
-                    // TODO: Enable again when we have actually working deliverables
-                    //$this->_populate_deliverables_dm(&$this->_datamanagers['task'], 'newtask');
                     break;
 
                 default:
@@ -118,11 +158,31 @@ class org_openpsa_projects_handler_task_new extends midcom_baseclasses_component
             $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_projects_task');
         }
 
-        if (!$this->_datamanagers['task']->init_creation_mode("newtask",$this,"_creation_dm_callback"))
+        $this->_load_controller();
+
+        switch ($this->_controller->process_form())
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                "Failed to initialize datamanager in creation mode for schema 'newtask'.");
-            // This will exit
+            case 'save':
+                // Relocate to group view
+                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+
+                /* this for some reason dies
+                $_MIDCOM->relocate("{$prefix}task/{$this->_request_data['task']->guid}/edit/");
+                */
+                $_MIDCOM->relocate("{$prefix}task/{$this->_request_data['task']->guid}/");
+                // This will exit.
+
+            case 'cancel':
+                if (array_key_exists('project', $this->_request_data))
+                {
+                    $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+                    $_MIDCOM->relocate("{$prefix}project/{$this->_request_data['project']->guid}/");
+                }
+                else
+                {
+                    $_MIDCOM->relocate('');
+                }
+                // This will exit.
         }
 
         if (array_key_exists('project', $this->_request_data))
@@ -134,69 +194,36 @@ class org_openpsa_projects_handler_task_new extends midcom_baseclasses_component
             $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('new task'));
         }
 
-        switch ($this->_datamanagers['task']->process_form()) {
-            case MIDCOM_DATAMGR_CREATING:
-                debug_add('First call within creation mode');
+        $this->_update_breadcrumb_line();
 
-                // Add toolbar items
-                org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
-                break;
-
-            case MIDCOM_DATAMGR_SAVED:
-            case MIDCOM_DATAMGR_EDITING:
-                debug_add("First time submit, the DM has created an object");
-                // Change schema setting
-                $this->_request_data['task']->parameter("midcom.helper.datamanager","layout","default");
-
-                // TODO: index
-
-                // Relocate to group view
-                $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-                debug_pop();
-                /* this for some reason dies
-                $_MIDCOM->relocate("{$prefix}task/{$this->_request_data['task']->guid}/edit/");
-                */
-                $_MIDCOM->relocate("{$prefix}task/{$this->_request_data['task']->guid}/");
-                break;
-
-            case MIDCOM_DATAMGR_CANCELLED_NONECREATED:
-                debug_add('Cancel without anything being created, redirecting to the welcome screen.');
-
-                if (array_key_exists('project', $this->_request_data))
-                {
-                    $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-                    $_MIDCOM->relocate("{$prefix}project/{$this->_request_data['project']->guid}/");
-                }
-                else
-                {
-                    $_MIDCOM->relocate('');
-                }
-                // This will exit
-
-            case MIDCOM_DATAMGR_CANCELLED:
-                $this->errcode = MIDCOM_ERRCRIT;
-                $this->errstr = 'Method MIDCOM_DATAMGR_CANCELLED unknown for creation mode.';
-                debug_pop();
-                return false;
-
-            case MIDCOM_DATAMGR_FAILED:
-            case MIDCOM_DATAMGR_CREATEFAILED:
-                debug_add('The DM failed critically, see above.');
-                $this->errstr = 'The Datamanager failed to process the request, see the Debug Log for details';
-                $this->errcode = MIDCOM_ERRCRIT;
-                debug_pop();
-                return false;
-
-            default:
-                $this->errcode = MIDCOM_ERRCRIT;
-                $this->errstr = 'Method unknown';
-                debug_pop();
-                return false;
-
-        }
-
-        debug_pop();
         return true;
+    }
+
+    /**
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
+     * location.
+     */
+    private function _update_breadcrumb_line()
+    {
+        $tmp = Array();
+
+        if (array_key_exists('project', $this->_request_data))
+        {
+
+            $tmp[] = Array
+            (
+                MIDCOM_NAV_URL => "project/" . $this->_request_data['project']->guid . "/",
+                MIDCOM_NAV_NAME => $this->_request_data['project']->title,
+            );
+        }
+        
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "",
+            MIDCOM_NAV_NAME => $this->_request_data['l10n']->get('new task'),
+        );
+
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 
     /**
@@ -206,7 +233,7 @@ class org_openpsa_projects_handler_task_new extends midcom_baseclasses_component
      */
     function _show_new($handler_id, &$data)
     {
-        $this->_request_data['task_dm']  = $this->_datamanagers['task'];
+        $this->_request_data['controller'] =& $this->_controller;
         midcom_show_style("show-task-new");
     }
 }

@@ -26,6 +26,7 @@ $customer = new midcom_db_group($data['project_dm']['customer']);
     <td><?php echo $data['project_dm']['end']['local_strdate']; ?></td>
     <td>
   <?php
+    $data['project']->get_members();
     if (array_key_exists($_MIDGARD['user'], $data['project']->resources))
     {
         echo $data['l10n']->get('you are project participant');
@@ -33,12 +34,12 @@ $customer = new midcom_db_group($data['project_dm']['customer']);
     elseif (array_key_exists($_MIDGARD['user'], $data['project']->contacts))
     {
         echo $data['l10n']->get('you are project subscriber');
-        echo '<form method="post" class="subscribe" action="'.$prefix.'project/'.$data['project']->guid.'/unsubscribe/"><input type="submit" class="unsubscribe" value="'.$data['l10n']->get('unsubscribe').'" /></form>';
+        echo '<form method="post" class="subscribe" action="' . $prefix.'project/' . $data['project']->guid . '/unsubscribe/"><input type="submit" class="unsubscribe" value="' . $data['l10n']->get('unsubscribe') . '" /></form>';
     }
     else
     {
         echo $data['l10n']->get('you are not subscribed to project');
-        echo '<form method="post" class="subscribe" action="'.$prefix.'project/'.$data['project']->guid.'/subscribe/"><input type="submit" value="'.$data['l10n']->get('subscribe').'" /></form>';
+        echo '<form method="post" class="subscribe" action="' . $prefix.'project/' . $data['project']->guid . '/subscribe/"><input type="submit" value="' . $data['l10n']->get('subscribe') . '" /></form>';
     }
   ?>
   </td>
