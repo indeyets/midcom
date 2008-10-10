@@ -24,10 +24,6 @@ class org_openpsa_projects_handler_workflow extends midcom_baseclasses_component
 
      function _on_initialize()
      {
-         $this->_datamanagers = array
-         (
-             'task' => new midcom_helper_datamanager($this->_config->get('schemadb_task'))
-         );
      }
 
     function _load_task($identifier)
@@ -39,11 +35,6 @@ class org_openpsa_projects_handler_workflow extends midcom_baseclasses_component
             return false;
         }
 
-        // Load the task to datamanager
-        if (!$this->_datamanagers['task']->init($task))
-        {
-            return false;
-        }
         return $task;
     }
 
