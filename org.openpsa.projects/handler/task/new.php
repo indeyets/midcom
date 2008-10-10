@@ -144,8 +144,9 @@ class org_openpsa_projects_handler_task_new extends midcom_baseclasses_component
 
                     // Copy resources and contacts from project
                     $this->_request_data['project']->get_members();
-                    $this->_defaults['resources'] = $this->_request_data['project']->resources;
-                    $this->_defaults['contacts'] = $this->_request_data['project']->contacts;
+
+                    $this->_defaults['resources'] = array_keys($this->_request_data['project']->resources);
+                    $this->_defaults['contacts'] = array_keys($this->_request_data['project']->contacts);
 
                     break;
 

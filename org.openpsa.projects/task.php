@@ -277,6 +277,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         $mc->add_constraint('orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_PROJECTPROSPECT);
         $mc->execute();
         $ret = $mc->list_keys();
+
         if (   is_array($ret)
             && count($ret) > 0)
         {
