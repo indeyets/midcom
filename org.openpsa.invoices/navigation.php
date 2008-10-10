@@ -23,31 +23,6 @@ class org_openpsa_invoices_navigation extends midcom_baseclasses_components_navi
         parent::__construct();
     }
 
-    /**
-     * Returns a static leaf list with access to the archive.
-     */
-    function get_leaves()
-    {
-        $leaves = array();
-
-        /*
-        $leaves[$this->_topic->id.':from_projects'] = array
-        (
-            MIDCOM_NAV_SITE => Array
-            (
-                MIDCOM_NAV_URL => "projects.html",
-                MIDCOM_NAV_NAME => $this->_l10n->get('project invoicing'),
-            ),
-            MIDCOM_NAV_ADMIN => null,
-            MIDCOM_META_CREATOR => $this->_topic->creator,
-            MIDCOM_META_EDITOR => $this->_topic->revisor,
-            MIDCOM_META_CREATED => $this->_topic->created,
-            MIDCOM_META_EDITED => $this->_topic->revised
-        );
-        */
-
-        return $leaves;
-    }
 }
 
 ?>
