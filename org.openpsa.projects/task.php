@@ -262,6 +262,15 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
             return false;
         }
 
+	if (!is_array($this->contacts))
+	{
+	    $this->contacts = array();
+	}
+	if (!is_array($this->resources))
+	{
+	    $this->resources = array();
+	}
+
         $mc = org_openpsa_projects_task_resource::new_collector('task', $this->id);
         $mc->add_value_property('orgOpenpsaObtype');
         $mc->add_value_property('person');
@@ -283,10 +292,6 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
                     case ORG_OPENPSA_OBTYPE_PROJECTRESOURCE:
                         $varName = 'resources';
                         break;
-                }
-                if (!is_array($this->$varName))
-                {
-                    $this->$varName = array();
                 }
                 $this->{$varName}[$mc->get_subkey($guid, 'person')] = true;
             }
