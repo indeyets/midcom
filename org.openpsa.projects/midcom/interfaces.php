@@ -34,7 +34,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         (
             'org.openpsa.core',
             'org.openpsa.helpers',
-            'midcom.helper.datamanager',
+            'midcom.helper.datamanager2',
             'org.openpsa.contactwidget',
             'org.openpsa.calendarwidget',
         );

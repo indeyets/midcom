@@ -50,7 +50,7 @@ class org_openpsa_projects_handler_project_new extends midcom_baseclasses_compon
      */
     private function _load_schemadb()
     {
-        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_project_dm2'));
+        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_project'));
     }
 
     /**

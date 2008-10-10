@@ -37,10 +37,10 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
 
         // We must load schemadb only after that is in request_data so we can populate the resource pulldown
         $this->_request_data['task'] =& $task;
-        $this->_request_data['schemadb_task_dm2'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_task_dm2'));
+        $this->_request_data['schemadb_task'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_task'));
 
         $this->_request_data['controller'] =& midcom_helper_datamanager2_controller::create('ajax');
-        $this->_request_data['controller']->schemadb =& $this->_request_data['schemadb_task_dm2'];
+        $this->_request_data['controller']->schemadb =& $this->_request_data['schemadb_task'];
         $this->_request_data['controller']->set_storage($task);
         $this->_request_data['controller']->process_ajax();
 

@@ -116,7 +116,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
      */
     function _load_schemadb()
     {
-        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_task_dm2'));
+        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_task'));
     }
 
     /**

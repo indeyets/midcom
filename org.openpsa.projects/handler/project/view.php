@@ -53,7 +53,7 @@ class org_openpsa_projects_handler_project_view extends midcom_baseclasses_compo
      */
     function _load_datamanager()
     {
-        $schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_project_dm2'));
+        $schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_project'));
         $this->_datamanager = new midcom_helper_datamanager2_datamanager($schemadb);
         if (   ! $this->_datamanager
             || ! $this->_datamanager->autoset_storage($this->_project))
