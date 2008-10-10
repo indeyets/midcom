@@ -140,7 +140,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
 
         foreach ($hour_reports as $hour_report)
         {
-            $time = mktime(date('H', $hour_report->created), date('i', $hour_report->created), date('s', $hour_report->created), date('m', $hour_report->date), date('d', $hour_report->date), date('Y', $hour_report->date));
+            $time = mktime(date('H', $hour_report->metadata->created), date('i', $hour_report->metadata->created), date('s', $hour_report->metadata->created), date('m', $hour_report->date), date('d', $hour_report->date), date('Y', $hour_report->date));
             $date = date('Y-m-d', $time);
             if (!array_key_exists($date, $data_array))
             {
