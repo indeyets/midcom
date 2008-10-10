@@ -180,20 +180,6 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
-        // Match /hours/<listtype>/<GUID>
-        $this->_request_switch['hours-listtype'] = array
-        (
-            'handler' => array('org_openpsa_projects_handler_hours_list', 'list'),
-            'fixed_args' => 'hours',
-            'variable_args' => 2,
-        );
-        // Match /hours/<listtype>/<GUID>/<action>
-        $this->_request_switch['hours-listtype-action'] = array
-        (
-            'handler' => array('org_openpsa_projects_handler_hours_action', 'action'),
-            'fixed_args' => 'hours',
-            'variable_args' => 3,
-        );
 
         // Match /workflow/<GUID>/<action>
         $this->_request_switch['workflow-action'] = array

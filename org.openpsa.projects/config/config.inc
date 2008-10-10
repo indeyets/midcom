@@ -8,7 +8,7 @@
  * Currency symbol for display
  * if NULL, defaults to the ISO 4217 currency code
  */
-'currency_symbol' => 'Û',
+'currency_symbol' => 'ï¿½',
 /**
  * Task/Project Datamanager schema snippet
  */
@@ -19,7 +19,6 @@
 /**
  * Hour Reporting Datamanager schema snippet
  */
-'schemadb_hours' => 'file:/org/openpsa/projects/config/schemadb_default_hours.inc',
 'schemadb_hours_dm2' => 'file:/org/openpsa/projects/config/schemadb_default_hours_dm2.inc',
 /**
  * Project forum and news configuration
