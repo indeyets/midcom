@@ -343,7 +343,7 @@ class midcom_helper_datamanager2_type_mnrelation extends midcom_helper_datamanag
                 }
                 else
                 {
-                    $this->selection[] = $guid;
+                    $this->selection[] = $id;
                 }
             }
         }
