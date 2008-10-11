@@ -1,7 +1,7 @@
 <?php
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 ?>
-<tr>
+<tr class="&(data['class']);">
     <td>
         <input type="checkbox"<?php echo $data['disabled']; ?> name="org_openpsa_invoices_invoice_tasks[<?php echo $data['task']->id; ?>]" checked="checked" value="1" />
     </td>
@@ -9,11 +9,11 @@
         <?php
         if ($data['projects_url'])
         {
-            echo "<a href=\"{$data['projects_url']}task/{$data['task']->guid}/\">{$data['task']->title}</a>\n";
+            echo "<a href=\"{$data['projects_url']}task/{$data['task']->guid}/\">" . $data['task']->get_label() . "</a>\n";
         }
         else
         {
-            echo $data['task']->title;
+            echo $data['task']->get_label();
         }
         ?>
     </td>

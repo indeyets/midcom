@@ -3,7 +3,7 @@
 ?>
 <h2><?php echo $data['customer_label']; ?></h2>
 
-<form method="post">
+<form method="post" action="">
     <table class="tasks">
         <thead>
             <tr>

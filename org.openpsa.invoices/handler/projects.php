@@ -107,8 +107,8 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
 
         // List invoiceable uninvoiced hours for finished tasks
         $qb_hours = org_openpsa_projects_hour_report::new_query_builder();
-        $qb_hours->add_constraint('invoiceable', '=', 1);
-        $qb_hours->add_constraint('invoiced', '=', 0);
+        $qb_hours->add_constraint('invoiceable', '=', true);
+        $qb_hours->add_constraint('invoiced', '=', '0000-00-00 00:00:00');
         $qb_hours->add_constraint('task.status', '>=', ORG_OPENPSA_TASKSTATUS_COMPLETED);
         $hour_reports = $qb_hours->execute();
         foreach ($hour_reports as $hour_report)
@@ -151,6 +151,16 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
             $this->_generate_invoice();
         }
 
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.projects/projects.css",
+            )
+        );
+
         return true;
     }
 
@@ -188,12 +198,22 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
             }
             midcom_show_style('show-projects-customer-header');
 
+	    $class = "even";
             foreach ($tasks as $task => $hour_reports)
             {
                 $this->_request_data['task'] = $this->_request_data['tasks'][$task];
                 $this->_request_data['hour_reports'] = $hour_reports;
                 $this->_request_data['invoiceable_hours'] = 0;
                 $this->_request_data['approved_hours'] = 0;
+		if ($class == "even")
+		{
+		    $class = "";
+		}
+		else
+		{
+		    $class = "even";
+		}
+                $this->_request_data['class'] = $class;
                 foreach ($hour_reports as $hour_report)
                 {
                     if (   $this->_request_data['invoice_unapproved']

@@ -24,13 +24,13 @@ class org_openpsa_invoices_viewer extends midcom_baseclasses_components_request
             'handler' => Array('org_openpsa_invoices_handler_list', 'dashboard'),
         );
 
-        /*
+
         // Match /projects/
         $this->_request_switch['list_projects_uninvoiced'] = array(
             'fixed_args' => array('projects'),
             'handler' => Array('org_openpsa_invoices_handler_projects', 'uninvoiced'),
         );
-        */
+
 
         // Match /list/customer/<company guid>
         $this->_request_switch['list_customer_open'] = array
