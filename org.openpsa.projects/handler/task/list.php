@@ -540,7 +540,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         {
             if (!array_key_exists($task->customer, $row_cache['customer']))
             {
-                $html = "&nbsp;";
+                $html = $this->_l10n->get('no customer');
                 if ($task->customer)
                 {
                     $customer = new org_openpsa_contacts_group($task->customer);
