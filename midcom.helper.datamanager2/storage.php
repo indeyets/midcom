@@ -190,7 +190,8 @@ class midcom_helper_datamanager2_storage extends midcom_baseclasses_components_p
             if ($type_definition['storage']['location'] !== null)
             {
                 $data = $this->_on_load_data($name);
-                if ($types[$name]->serialized_storage)
+                if ($types[$name]->serialized_storage 
+                    && is_string($data))
                 {
                     // Hide unserialization errors, but log them.
                     $data = @unserialize($data);
