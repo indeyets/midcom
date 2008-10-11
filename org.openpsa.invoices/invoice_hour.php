@@ -29,7 +29,7 @@ class org_openpsa_invoices_invoice_hour extends __org_openpsa_invoices_invoice_h
         {
             return false;
         }
-        $hour_report->invoiced = date('Y-m-d H:i:s', $this->created);
+        $hour_report->invoiced = date('Y-m-d H:i:s', $this->metadata->created);
         $hour_report->invoicer = $this->creator;
         return $hour_report->update();
     }
