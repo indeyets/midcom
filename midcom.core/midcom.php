@@ -93,11 +93,11 @@ require('globals.php');
 require('midcom/config/midcom_config.php');
 ini_set('track_errors', '1');
 ini_set('display_errors', '0');
-if ($GLOBALS['midcom_config_default']['display_php_errors'])
+if ($GLOBALS['midcom_config']['display_php_errors'])
 {
     ini_set('display_errors', '1');
 }
-if ($GLOBALS['midcom_config_default']['enable_error_handler'])
+if ($GLOBALS['midcom_config']['enable_error_handler'])
 {
     require('errors.php');
 }
