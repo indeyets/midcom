@@ -56,12 +56,6 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         if (!array_key_exists($task_id, $this->_request_data['tasks'][$list]))
         {
             $this->_request_data['tasks'][$list][$task_id] = $this->_task_cache[$task_id];
-
-            // Enable hour reporting for current tasks
-            if ($list == 'current')
-            {
-                $this->_initialize_hours_widget(&$this->_task_cache[$task_id]);
-            }
         }
         return true;
     }
