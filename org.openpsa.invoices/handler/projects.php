@@ -198,21 +198,21 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
             }
             midcom_show_style('show-projects-customer-header');
 
-	    $class = "even";
+            $class = "even";
             foreach ($tasks as $task => $hour_reports)
             {
                 $this->_request_data['task'] = $this->_request_data['tasks'][$task];
                 $this->_request_data['hour_reports'] = $hour_reports;
                 $this->_request_data['invoiceable_hours'] = 0;
                 $this->_request_data['approved_hours'] = 0;
-		if ($class == "even")
-		{
-		    $class = "";
-		}
-		else
-		{
-		    $class = "even";
-		}
+                if ($class == "even")
+                {
+                    $class = "";
+                }
+                else
+                {
+                    $class = "even";
+                }
                 $this->_request_data['class'] = $class;
                 foreach ($hour_reports as $hour_report)
                 {
