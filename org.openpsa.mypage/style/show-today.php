@@ -40,11 +40,11 @@ $view_today =& $data['view_today'];
             $workingon = new org_openpsa_mypage_workingon();
             ?>
             <div class="org_openpsa_mypage_workingon">
-                <h2><?php echo $_MIDCOM->i18n->get_string('now working on', 'org.openpsa.mypage'); ?></h2>
+                <h2><?php echo $data['l10n']->get('now working on'); ?></h2>
                 <form method="post" action="<?php echo $data['projects_url'] . 'workingon/set/'; ?>">
                     <input type="hidden" name="url" value="&(prefix);" />
                     <select name="task" onchange="this.form.submit();">
-                        <option value="none"><?php echo $_MIDCOM->i18n->get_string('not working on a task', 'org.openpsa.mypage'); ?></option>
+                        <option value="none"><?php echo $data['l10n']->get('not working on a task'); ?></option>
                         <?php
                         foreach ($tasks as $guid => $label)
                         {
