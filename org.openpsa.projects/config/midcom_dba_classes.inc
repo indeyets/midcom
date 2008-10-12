@@ -11,26 +11,14 @@ array(
     'midcom_class_name' => 'org_openpsa_projects_task_resource'
 ),
 array(
-    'table' => 'org_openpsa_hour_report',
-    'old_class_name' => null,
-    'new_class_name' => 'org_openpsa_hour_report',
-    'midcom_class_name' => 'org_openpsa_projects_hour_report'
-),
-array(
-    'table' => 'org_openpsa_expense',
-    'old_class_name' => null,
-    'new_class_name' => 'org_openpsa_expense',
-    'midcom_class_name' => 'org_openpsa_projects_expense'
-),
-array(
-    'table' => 'org_openpsa_deliverable',
-    'old_class_name' => null,
-    'new_class_name' => 'org_openpsa_deliverable',
-    'midcom_class_name' => 'org_openpsa_projects_deliverable'
-),
-array(
     'table' => 'org_openpsa_task_status',
     'old_class_name' => null,
     'new_class_name' => 'org_openpsa_task_status',
     'midcom_class_name' => 'org_openpsa_projects_task_status'
+),
+array(
+    'table' => 'org_openpsa_hour_report',
+    'old_class_name' => null,
+    'new_class_name' => 'org_openpsa_hour_report',
+    'midcom_class_name' => 'org_openpsa_projects_hour_report'
 ),

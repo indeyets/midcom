@@ -536,39 +536,13 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             }
         }
 
-        // ** expense reports **
-        $qb_expense = org_openpsa_projects_expense::new_query_builder();
-        $qb_expense->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
-        $qb_expense->add_constraint('person', '=', $person2->id);
-        $expenses = $qb_expense->execute();
-        if ($expenses === false)
-        {
-            // Some error with QB
-            debug_add('QB Error / expenses', MIDCOM_expense_ERROR);
-            debug_pop();
-            return false;
-        }
-        foreach($expenses as $expense)
-        {
-            debug_add("Transferred expense #{$expense->id} to person #{$person1->id} (from #{$expense->person})", MIDCOM_expense_INFO);
-            $expense->person = $person1->id;
-            if (!$expense->update())
-            {
-                // Error updating
-                debug_add("Failed to update expense #{$expense->id}, errstr: " . mgd_errstr(), MIDCOM_expense_ERROR);
-                debug_pop();
-                return false;
-            }
-        }
-
-
         // Transfer metadata dependencies from classes that we drive
-        $classes = array(
+        $classes = array
+        (
             'org_openpsa_projects_task_resource',
             'org_openpsa_projects_task_status',
             'org_openpsa_projects_task',
             'org_openpsa_projects_hour_report',
-            'org_openpsa_projects_expense',
         );
         foreach($classes as $class)
         {
@@ -577,7 +551,8 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
                 switch($class)
                 {
                     default:
-                        $metadata_fields = array(
+                        $metadata_fields = array
+                        (
                             'creator' => 'id',
                             'revisor' => 'id' // Though this will probably get touched on update we need to check it anyways to avoid invalid links
                         );

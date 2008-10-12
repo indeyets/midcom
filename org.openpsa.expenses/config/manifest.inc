@@ -1,9 +1,12 @@
 'name' => 'org.openpsa.expenses',
 'purecode' => false,
-'version' => '8.09.0',
+'version' => '8.09.1',
 'state' => 'stable',
 'privileges' => array(),
-'class_definitions' => array(),
+'class_definitions' => array
+(
+    'midcom_dba_classes.inc',
+),
 'package.xml' => array
 (
     'summary' => 'Expense tracking',

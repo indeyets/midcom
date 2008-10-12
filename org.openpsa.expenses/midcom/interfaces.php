@@ -40,5 +40,94 @@ class org_openpsa_expenses_interface extends midcom_baseclasses_components_inter
         
         return true;
     }
+
+    /**
+     * Support for contacts person merge
+     */
+    function org_openpsa_contacts_duplicates_merge_person(&$person1, &$person2, $mode)
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        switch($mode)
+        {
+            case 'all':
+                break;
+            /* In theory we could have future things (like resource/manager ships), but now we don't support that mode, we just exit */
+            case 'future':
+                return true;
+                break;
+            default:
+                // Mode not implemented
+                debug_add("mode {$mode} not implemented", MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+                break;
+        }
+
+        // Transfer links from classes we drive
+
+        // ** expense reports **
+        $qb_expense = org_openpsa_expenses_expense::new_query_builder();
+        $qb_expense->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
+        $qb_expense->add_constraint('person', '=', $person2->id);
+        $expenses = $qb_expense->execute();
+        if ($expenses === false)
+        {
+            // Some error with QB
+            debug_add('QB Error / expenses', MIDCOM_expense_ERROR);
+            debug_pop();
+            return false;
+        }
+        foreach($expenses as $expense)
+        {
+            debug_add("Transferred expense #{$expense->id} to person #{$person1->id} (from #{$expense->person})", MIDCOM_expense_INFO);
+            $expense->person = $person1->id;
+            if (!$expense->update())
+            {
+                // Error updating
+                debug_add("Failed to update expense #{$expense->id}, errstr: " . mgd_errstr(), MIDCOM_expense_ERROR);
+                debug_pop();
+                return false;
+            }
+        }
+
+
+        // Transfer metadata dependencies from classes that we drive
+        $classes = array
+        (
+            'org_openpsa_expenses_expense',
+        );
+        foreach($classes as $class)
+        {
+            if ($version_not_18 = true)
+            {
+                switch($class)
+                {
+                    default:
+                        $metadata_fields = array
+                        (
+                            'creator' => 'id',
+                            'revisor' => 'id' // Though this will probably get touched on update we need to check it anyways to avoid invalid links
+                        );
+                        break;
+                }
+            }
+            else
+            {
+                // TODO: 1.8 metadata format support
+            }
+            $ret = org_openpsa_contacts_duplicates_merge::person_metadata_dependencies_helper($class, $person1, $person2, $metadata_fields);
+            if (!$ret)
+            {
+                // Failure updating metadata
+                debug_add("Failed to update metadata dependencies in class {$class}, errsrtr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                debug_pop();
+                return false;
+            }
+        }
+
+        // All done
+        return true;
+    }
+
 }
 ?>

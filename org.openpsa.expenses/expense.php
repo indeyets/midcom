@@ -1,6 +1,6 @@
 <?php
 /**
- * @package org.openpsa.projects
+ * @package org.openpsa.expenses
  * @author Nemein Oy http://www.nemein.com/
  * @copyright Nemein Oy http://www.nemein.com/
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
@@ -9,9 +9,9 @@
 /**
  * MidCOM wrapped access to the MgdSchema class, keep logic here
  *
- * @package org.openpsa.projects
+ * @package org.openpsa.expenses
  */
-class org_openpsa_projects_expense extends __org_openpsa_projects_expense
+class org_openpsa_expenses_expense extends __org_openpsa_expenses_expense
 {
     function __construct($id = null)
     {

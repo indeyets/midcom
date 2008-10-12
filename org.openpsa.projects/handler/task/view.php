@@ -261,39 +261,5 @@ EOF;
         }
     }
 
-    /*
-    function _populate_deliverables_dm(&$datamanager, $schema)
-    {
-        $deliverable_interface = new org_openpsa_projects_deliverables_interface();
-
-        $deliverable_plugins = $deliverable_interface->list_plugins();
-        $plugins_displayed = 0;
-        foreach ($deliverable_plugins as $deliverable)
-        {
-            $field_name = 'deliverable_' . $deliverable->name;
-            // Set datatype
-            org_openpsa_helpers_schema_modifier(&$datamanager, $field_name, 'datatype', 'boolean', $schema, true);
-            // Set widget
-            org_openpsa_helpers_schema_modifier(&$datamanager, $field_name, 'widget', 'checkbox', $schema, true);
-            // Set description
-            org_openpsa_helpers_schema_modifier(&$datamanager, $field_name, 'description', $deliverable->render_select_plugin(), $schema, true);
-            org_openpsa_helpers_schema_modifier(&$datamanager, $field_name, 'widget_checkbox_textafter', true, $schema, true);
-            org_openpsa_helpers_schema_modifier(&$datamanager, $field_name, 'widget_checkbox_allow_html', true, $schema, true);
-
-            if ($plugins_displayed == 0)
-            {
-                $fieldgroup_array = array(
-                    'title'     => $this->_request_data['l10n']->get('deliverables'),
-                    'css_group' => 'area deliverables',
-                );
-                org_openpsa_helpers_schema_modifier(&$datamanager, $field_name, 'start_fieldgroup', $fieldgroup_array, $schema, true);
-            }
-            $plugins_displayed++;
-            if ($plugins_displayed == count($deliverable_plugins))
-            {
-                org_openpsa_helpers_schema_modifier(&$datamanager, $field_name, 'end_fieldgroup', '', $schema, true);
-            }
-        }
-    }*/
 }
 ?>

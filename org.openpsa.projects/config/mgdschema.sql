@@ -59,39 +59,6 @@ CREATE TABLE org_openpsa_task_resource (
 );
 alter table org_openpsa_task_resource add column guid varchar(80) NOT NULL default '';
 
-CREATE TABLE org_openpsa_expense (
-  id int(11) NOT NULL auto_increment,
-  created datetime NOT NULL default '0000-00-00 00:00:00',
-  creator int(11) NOT NULL default '0',
-  revisor int(11) NOT NULL default '0',
-  revised datetime NOT NULL default '0000-00-00 00:00:00',
-
-  task int(11) NOT NULL default '0',
-  person int(11) NOT NULL default '0',
-  pricePlugin varchar(255) NOT NULL default '',
-  costPlugin varchar(255) NOT NULL default '',
-  priceBase float NOT NULL default '0',
-  costBase float NOT NULL default '0',
-  costCache float NOT NULL default '0',
-  priceCache float NOT NULL default '0',
-  invoiceable int(11) NOT NULL default '0',
-  reportType varchar(255) NOT NULL default '',
-  description text NOT NULL default '',
-  approved datetime NOT NULL default '0000-00-00 00:00:00',
-  approver int(11) NOT NULL default '0',
-  invoiced datetime NOT NULL default '0000-00-00 00:00:00',
-  invoicer int(11) NOT NULL default '0',
-
-  orgOpenpsaObtype int(11) NOT NULL default '0',
-  orgOpenpsaWgtype int(11) NOT NULL default '0',
-  sitegroup int(11) NOT NULL default '0',
-  PRIMARY KEY (id),
-  KEY ooexpense_sitegroup_idx(sitegroup)
-);
-ALTER TABLE org_openpsa_expense ADD COLUMN date int(11) NOT NULL default '0';
-alter table org_openpsa_expense add column guid varchar(80) NOT NULL default '';
-
-
 CREATE TABLE org_openpsa_hour_report (
   id int(11) NOT NULL auto_increment,
   created datetime NOT NULL default '0000-00-00 00:00:00',
@@ -125,23 +92,6 @@ CREATE TABLE org_openpsa_hour_report (
 ALTER TABLE org_openpsa_hour_report ADD COLUMN date int(11) NOT NULL default '0';
 alter table org_openpsa_hour_report add column guid varchar(80) NOT NULL default '';
 
-CREATE TABLE org_openpsa_deliverable (
-  id int(11) NOT NULL auto_increment,
-  task int(11) NOT NULL default '0',
-  orgOpenpsaObtype int(11) NOT NULL default '0',
-  plugin varchar(255) NOT NULL default '',
-  deliverable varchar(255) NOT NULL default '',
-  sitegroup int(11) NOT NULL default '0',
-  created datetime NOT NULL default '0000-00-00 00:00:00',
-  creator int(11) NOT NULL default '0',
-  revisor int(11) NOT NULL default '0',
-  revised datetime NOT NULL default '0000-00-00 00:00:00',
-  revision int(11) NOT NULL default '0',
-  PRIMARY KEY (id),
-  KEY oodeliverable_sitegroup_idx(sitegroup)
-);
-alter table org_openpsa_deliverable add column guid varchar(80) NOT NULL default '';
-
 CREATE TABLE org_openpsa_task_status (
   id int(11) NOT NULL auto_increment,
   type int(11) NOT NULL default '0',
@@ -172,13 +122,7 @@ ALTER TABLE org_openpsa_hour_report ADD COLUMN creator int(11) NOT NULL default 
 ALTER TABLE org_openpsa_hour_report ADD COLUMN revisor int(11) NOT NULL default '0';
 ALTER TABLE org_openpsa_hour_report ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
 ALTER TABLE org_openpsa_hour_report ADD COLUMN revision int(11) NOT NULL default '0';
-#
-ALTER TABLE org_openpsa_hour_expense ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
-ALTER TABLE org_openpsa_hour_expense ADD COLUMN creator int(11) NOT NULL default '0';
-ALTER TABLE org_openpsa_hour_expense ADD COLUMN revisor int(11) NOT NULL default '0';
-ALTER TABLE org_openpsa_hour_expense ADD COLUMN revised datetime NOT NULL default '0000-00-00 00:00:00';
-ALTER TABLE org_openpsa_hour_expense ADD COLUMN revision int(11) NOT NULL default '0';
-#
+
 ALTER TABLE org_openpsa_task_resource ADD COLUMN created datetime NOT NULL default '0000-00-00 00:00:00';
 ALTER TABLE org_openpsa_task_resource ADD COLUMN creator int(11) NOT NULL default '0';
 ALTER TABLE org_openpsa_task_resource ADD COLUMN revisor int(11) NOT NULL default '0';
