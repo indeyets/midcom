@@ -132,19 +132,6 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
         $hours_qb->add_order('date');
         $data['hours'] = $hours_qb->execute();
 
-        // Muck schema so only hour reports from today are shown
-        $this->_request_data['schemadb_default']['default']->fields['hours']['type_config']['child_constraints'] = array
-        (
-            array
-            (
-                'date', '>=', $data['day_start']
-            ),
-            array
-            (
-                'date', '<=', $data['day_end']
-            ),
-        );
-
         $this->_populate_toolbar();
 
         $data['title'] = strftime('%a %x', $data['requested_time']);

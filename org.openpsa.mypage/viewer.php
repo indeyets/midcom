@@ -118,8 +118,6 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
         // This component uses Ajax, include the handler javascripts
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajaxutils.js");
 
-        $this->_request_data['schemadb_default'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_default'));
-
         return parent::_on_handle($handler, $args);
     }
 
