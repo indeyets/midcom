@@ -64,7 +64,7 @@ class org_openpsa_documents_handler_search extends midcom_baseclasses_components
      */
     function _show_search($handler_id, &$data)
     {
-    $this->_datamanagers['document'] = new midcom_helper_datamanager($this->_config->get('schemadb_document'));
+        $this->_datamanagers['document'] = new midcom_helper_datamanager($this->_config->get('schemadb_document'));
         $displayed = 0;
         midcom_show_style('show-search-header');
         if (!empty($this->_request_data['results']))

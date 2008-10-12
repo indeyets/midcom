@@ -14,7 +14,8 @@
 class org_openpsa_documents_navigation extends midcom_baseclasses_components_navigation
 {
 
-    function get_leaves() {
+    function get_leaves() 
+    {
 
         $leaves = array ();
         return $leaves;
@@ -49,13 +50,18 @@ class org_openpsa_documents_navigation extends midcom_baseclasses_components_nav
                 //$toolbar[50][MIDCOM_TOOLBAR_URL] = "{$prefix}document/{$document->guid}/edit.html";
                 //$toolbar[51][MIDCOM_TOOLBAR_URL] = "{$prefix}document/{$documents->id}/delete.html";
 
-                $leaves[$document->id] = Array (
-                    MIDCOM_NAV_SITE => Array (
-                        MIDCOM_NAV_URL => 'document/'.$document->guid.'/',
-                        MIDCOM_NAV_NAME => ($document->title != "") ? $document->title : "document #".$document->id),
-                    MIDCOM_NAV_ADMIN => Array (
+                $leaves[$document->id] = array 
+                (
+                    MIDCOM_NAV_SITE => array 
+                    (
+                        MIDCOM_NAV_URL => 'document/' . $document->guid . '/',
+                        MIDCOM_NAV_NAME => ($document->title != "") ? $document->title : "document #".$document->id
+                    ),
+                    MIDCOM_NAV_ADMIN => array 
+                    (
                         MIDCOM_NAV_URL => null,
-                        MIDCOM_NAV_NAME => ($document->title != "") ? $document->title : "document #".$document->id),
+                        MIDCOM_NAV_NAME => ($document->title != "") ? $document->title : "document #".$document->id
+                    ),
                     MIDCOM_NAV_OBJECT => $document,
                     MIDCOM_NAV_GUID => $document->guid,
                     MIDCOM_NAV_TOOLBAR => $toolbar,

@@ -32,7 +32,8 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
     function _creation_dm_callback(&$datamanager)
     {
         // This is what Datamanager calls to actually create a directory
-        $result = array (
+        $result = array 
+        (
             "success" => false,
             "storage" => null,
         );
@@ -66,7 +67,7 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
      */
-    function _handler_directory_edit($handler_id, $args, &$data)
+    function _handler_edit($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['directory']);
 
@@ -77,7 +78,8 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
             // This will exit
         }
 
-        switch ($this->_datamanagers['directory']->process_form()) {
+        switch ($this->_datamanagers['directory']->process_form()) 
+        {
             case MIDCOM_DATAMGR_EDITING:
                 $this->_view = "edit";
 
@@ -115,7 +117,7 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */
-    function _show_directory_edit($handler_id, &$data)
+    function _show_edit($handler_id, &$data)
     {
         $this->_request_data['directory_dm'] = $this->_datamanagers['directory'];
         midcom_show_style("show-directory-edit");
@@ -127,11 +129,11 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
      */
-    function _handler_directory_new($handler_id, $args, &$data)
+    function _handler_create($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_do('midgard:create', $this->_request_data['directory']);
 
-        if (!$this->_datamanagers['directory']->init_creation_mode("default",$this,"_creation_dm_callback"))
+        if (!$this->_datamanagers['directory']->init_creation_mode("default", $this, "_creation_dm_callback"))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Failed to initialize datamanager in creation mode for schema 'default'.");
@@ -141,7 +143,8 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
         // Add toolbar items
         org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
 
-        switch ($this->_datamanagers['directory']->process_form()) {
+        switch ($this->_datamanagers['directory']->process_form()) 
+        {
             case MIDCOM_DATAMGR_CREATING:
                 debug_add('First call within creation mode');
                 break;
@@ -200,7 +203,7 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */
-    function _show_directory_new($handler_id, &$data)
+    function _show_create($handler_id, &$data)
     {
         $this->_request_data['directory_dm'] = $this->_datamanagers['directory'];
         midcom_show_style("show-directory-new");
@@ -212,25 +215,29 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
      */
-    function _handler_directory($handler_id, $args, &$data)
+    function _handler_view($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
 
         // Add toolbar items
         if ($_MIDCOM->auth->can_do('midgard:create', $this->_request_data['directory']))
         {
-            $this->_view_toolbar->add_item(
-                Array(
-                    MIDCOM_TOOLBAR_URL => 'document/new/',
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'document/create/',
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('new document'),
                     MIDCOM_TOOLBAR_HELPTEXT => '',
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-text.png',
                     MIDCOM_TOOLBAR_ENABLED => true,
                 )
             );
-            $this->_view_toolbar->add_item(
-                Array(
-                    MIDCOM_TOOLBAR_URL => 'new/',
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => 'create/',
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('new directory'),
                     MIDCOM_TOOLBAR_HELPTEXT => '',
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-dir.png',
@@ -240,8 +247,10 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
         }
         if ($_MIDCOM->auth->can_do('midgard:update', $this->_request_data['directory']))
         {
-            $this->_view_toolbar->add_item(
-                Array(
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
                     MIDCOM_TOOLBAR_URL => 'edit/',
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('edit directory'),
                     MIDCOM_TOOLBAR_HELPTEXT => '',
@@ -261,7 +270,7 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */
-    function _show_directory($handler_id, &$data)
+    function _show_view($handler_id, &$data)
     {
         debug_push('_show_directory');
         

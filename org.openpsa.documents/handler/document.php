@@ -88,11 +88,11 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
      */
-    function _handler_document_action($handler_id, $args, &$data)
+    function _handler_action($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
         // Check if we get the document
-        if (!$this->_handler_document($handler_id, $args, &$data, false))
+        if (!$this->_handler_view($handler_id, $args, &$data, false))
         {
             return false;
         }
@@ -127,8 +127,10 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
                 }
                 else
                 {
-                    $this->_view_toolbar->add_item(
-                        Array(
+                    $this->_view_toolbar->add_item
+                    (
+                        array
+                        (
                             MIDCOM_TOOLBAR_URL => 'javascript:document.getElementById("org_openpsa_contacts_document_deleteform").submit();',
                             MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get("delete"),
                             MIDCOM_TOOLBAR_HELPTEXT => null,
@@ -139,8 +141,10 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
                             ),
                         )
                     );
-                    $this->_view_toolbar->add_item(
-                        Array(
+                    $this->_view_toolbar->add_item
+                    (
+                        array
+                        (
                             MIDCOM_TOOLBAR_URL => 'document/'.$this->_request_data['document']->guid.'/',
                             MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get("cancel"),
                             MIDCOM_TOOLBAR_HELPTEXT => null,
@@ -161,7 +165,8 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
                     $this->_request_data['document']->backup_version();
                 }
 
-                switch ($this->_datamanagers['document']->process_form()) {
+                switch ($this->_datamanagers['document']->process_form()) 
+                {
                     case MIDCOM_DATAMGR_EDITING:
                         $this->_view = "edit";
 
@@ -177,13 +182,13 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
 
                         $this->_view = "default";
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                            . "document/" . $this->_request_data["document"]->guid. "/");
+                            . "document/" . $this->_request_data["document"]->guid . "/");
                         // This will exit()
 
                     case MIDCOM_DATAMGR_CANCELLED:
                         $this->_view = "default";
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                            . "document/" . $this->_request_data["document"]->guid. "/");
+                            . "document/" . $this->_request_data["document"]->guid . "/");
                         // This will exit()
 
                     case MIDCOM_DATAMGR_FAILED:
@@ -203,7 +208,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */
-    function _show_document_action($handler_id, &$data)
+    function _show_action($handler_id, &$data)
     {
         switch($this->_view)
         {
@@ -228,11 +233,11 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
      */
-    function _handler_document_new($handler_id, $args, &$data)
+    function _handler_create($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_do('midgard:create', $this->_request_data['directory']);
 
-        if ($handler_id == 'document_new_choosefolder')
+        if ($handler_id == 'document-new-choosefolder')
         {
             $this->_request_data['folders'] = Array();
             $first_documents_node = midcom_helper_find_node_by_component('org.openpsa.documents');
@@ -251,7 +256,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
             org_openpsa_helpers_schema_modifier($this->_datamanagers['document'], 'topic', 'widget_select_choices', $this->_request_data['folders'], 'newdocument');
         }
 
-        if (!$this->_datamanagers['document']->init_creation_mode("newdocument",$this,"_creation_dm_callback"))
+        if (!$this->_datamanagers['document']->init_creation_mode("newdocument", $this, "_creation_dm_callback"))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 "Failed to initialize datamanager in creation mode for schema 'newdocument'.");
@@ -261,7 +266,8 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
         // Add toolbar items
         org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
 
-        switch ($this->_datamanagers['document']->process_form()) {
+        switch ($this->_datamanagers['document']->process_form()) 
+        {
             case MIDCOM_DATAMGR_CREATING:
                 debug_add('First call within creation mode');
                 break;
@@ -318,7 +324,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */
-    function _show_document_new($handler_id, &$data)
+    function _show_create($handler_id, &$data)
     {
         $this->_request_data['document_dm'] = $this->_datamanagers['document'];
         midcom_show_style("show-document-new");
@@ -330,7 +336,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
      */
-    function _handler_document($handler_id, $args, &$data, $add_toolbar = true)
+    function _handler_view($handler_id, $args, &$data, $add_toolbar = true)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $_MIDCOM->auth->require_valid_user();
@@ -346,9 +352,11 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
         if (   $add_toolbar
             && $_MIDCOM->auth->can_do('midgard:update', $this->_request_data['document']))
         {
-            $this->_view_toolbar->add_item(
-                Array(
-                    MIDCOM_TOOLBAR_URL => "document/{$this->_request_data['document']->guid}/edit.html",
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "document/{$this->_request_data['document']->guid}/edit/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('edit'),
                     MIDCOM_TOOLBAR_HELPTEXT => '',
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -359,9 +367,11 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
         if (   $add_toolbar
             && $_MIDCOM->auth->can_do('midgard:delete', $this->_request_data['document']))
         {
-            $this->_view_toolbar->add_item(
-                Array(
-                    MIDCOM_TOOLBAR_URL => "document/{$this->_request_data['document']->guid}/delete.html",
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "document/{$this->_request_data['document']->guid}/delete/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get('delete'),
                     MIDCOM_TOOLBAR_HELPTEXT => '',
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/trash.png',
@@ -398,7 +408,9 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
 
         $GLOBALS['midcom_component_data']['org.openpsa.documents']['active_leaf'] = $this->_request_data['document']->id;
 
-        $_MIDCOM->add_link_head(array
+        $_MIDCOM->add_link_head
+        (
+            array
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
@@ -415,7 +427,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */
-    function _show_document($handler_id, &$data)
+    function _show_view($handler_id, &$data)
     {
         $this->_request_data['document_dm'] = $this->_datamanagers['document'];
         midcom_show_style("show-document");

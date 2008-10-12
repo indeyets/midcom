@@ -34,53 +34,53 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
         $_MIDCOM->cache->content->no_cache();
 
         // Match /document/new/choosefolder
-        $this->_request_switch['document_new_choosefolder'] = array
-    (
-        'handler' => array('org_openpsa_documents_handler_document', 'document_new'),
-            'fixed_args' => Array('document', 'new', 'choosefolder'),
+        $this->_request_switch['document-create-choosefolder'] = array
+        (
+            'handler' => array('org_openpsa_documents_handler_document', 'create'),
+            'fixed_args' => Array('document', 'create', 'choosefolder'),
         );
 
         // Match /document/<document GUID>/action
-        $this->_request_switch['document_action'] = array
+        $this->_request_switch['document-action'] = array
         (
-        'handler' => array('org_openpsa_documents_handler_document', 'document_action'),
+            'handler' => array('org_openpsa_documents_handler_document', 'action'),
             'fixed_args' => 'document',
             'variable_args' => 2,
         );
 
         // Match /document/new
-        $this->_request_switch['document_new'] = array
-    (
-        'handler' => array('org_openpsa_documents_handler_document', 'document_new'),
-            'fixed_args' => Array('document', 'new'),
+        $this->_request_switch['document-create'] = array
+        (
+            'handler' => array('org_openpsa_documents_handler_document', 'create'),
+            'fixed_args' => Array('document', 'create'),
         );
 
         // Match /document/<document GUID>
-        $this->_request_switch[] = array
-    (
-        'handler' => array('org_openpsa_documents_handler_document', 'document'),
+        $this->_request_switch['document-view'] = array
+        (
+            'handler' => array('org_openpsa_documents_handler_document', 'view'),
             'fixed_args' => 'document',
             'variable_args' => 1,
         );
 
         // Match /edit
-        $this->_request_switch[] = array
-    (
-        'handler' => array('org_openpsa_documents_handler_directory', 'directory_edit'),
+        $this->_request_switch['directory-edit'] = array
+        (
+            'handler' => array('org_openpsa_documents_handler_directory', 'edit'),
             'fixed_args' => 'edit',
         );
 
         // Match /new
-        $this->_request_switch[] = array
-    (
-        'handler' => array('org_openpsa_documents_handler_directory', 'directory_new'),
-            'fixed_args' => 'new',
+        $this->_request_switch['directory-create'] = array
+        (
+            'handler' => array('org_openpsa_documents_handler_directory', 'create'),
+            'fixed_args' => 'create',
         );
 
         // Match /search
-        $this->_request_switch[] = array
-    (
-        'handler' => array('org_openpsa_documents_handler_search', 'search'),
+        $this->_request_switch['search'] = array
+        (
+            'handler' => array('org_openpsa_documents_handler_search', 'search'),
             'fixed_args' => 'search',
         );
 
@@ -94,8 +94,9 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
         */
 
         // Match /
-        $this->_request_switch[] = array(
-        'handler' => array('org_openpsa_documents_handler_directory', 'directory'),
+        $this->_request_switch['directory-view'] = array
+        (
+            'handler' => array('org_openpsa_documents_handler_directory', 'view'),
         );
 
         // This component uses the PEAR HTML_TreeMenu package, include the handler javascripts
