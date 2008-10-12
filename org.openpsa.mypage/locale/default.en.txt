@@ -70,3 +70,23 @@ Invoiceable
 ---STRING uninvoiceable
 Not invoiceable
 ---STRINGEND
+
+---STRING not working on a task
+Not working on a task
+---STRINGEND
+
+---STRING now working on
+Now working on
+---STRINGEND
+
+---STRING reporting %d hours to task %s failed, reason %s
+Reporting %d hours to task %s failed, reason %s
+---STRINGEND
+
+---STRING successfully reported %d hours to task %s
+Successfully reported %d hours to task %s
+---STRINGEND
+
+---STRING worked from %s to %s
+Worked from %s to %s
+---STRINGEND

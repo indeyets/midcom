@@ -190,19 +190,6 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
         );
 
-        // Match /workingon/set
-        $this->_request_switch['workingon_set'] = array
-        (
-            'handler' => array('org_openpsa_projects_handler_workingon', 'set'),
-            'fixed_args' => array('workingon', 'set' ),
-        );
-        // Match /workingon/check
-        $this->_request_switch['workingon_check'] = array
-        (
-            'handler' => array('org_openpsa_projects_handler_workingon', 'check'),
-            'fixed_args' => array('workingon', 'check'),
-        );
-
         // Match /debug
         $this->_request_switch['debug'] = array
         (

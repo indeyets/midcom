@@ -55,3 +55,10 @@ Viikon yhteenveto
 Yhteensä
 ---STRINGEND
 
+---STRING not working on a task
+Ei tehtävää
+---STRINGEND
+
+---STRING now working on
+Nyt työn alla
+---STRINGEND

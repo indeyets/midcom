@@ -1,6 +1,6 @@
 <?php
 /**
- * @package org.openpsa.projects
+ * @package org.openpsa.mypage
  * @author Nemein Oy http://www.nemein.com/
  * @version $Id: admin.php,v 1.1 2005/06/20 17:49:05 rambo Exp $
  * @copyright Nemein Oy http://www.nemein.com/
@@ -8,11 +8,11 @@
  */
 
 /**
- * org.openpsa.projects "now working on" handler
+ * org.openpsa.mypage "now working on" handler
  *
- * @package org.openpsa.projects
+ * @package org.openpsa.mypage
  */
-class org_openpsa_projects_workingon
+class org_openpsa_mypage_workingon
 {
     /**
      * Time person started working on the task
@@ -65,18 +65,18 @@ class org_openpsa_projects_workingon
      */
     function _get()
     {
-        $task_guid = $this->person->get_parameter('org.openpsa.projects:workingon', 'task');
+        $task_guid = $this->person->get_parameter('org.openpsa.mypage:workingon', 'task');
         if (!$task_guid)
         {
             // Person isn't working on anything at the moment
             return;
         }
 
-        $task_time = $this->person->get_parameter('org.openpsa.projects:workingon', 'start');
+        $task_time = $this->person->get_parameter('org.openpsa.mypage:workingon', 'start');
         if (!$task_time)
         {
             // The time worked on is not available, remove task as well
-            $this->person->delete_parameter('org.openpsa.projects:workingon', 'task');
+            $this->person->delete_parameter('org.openpsa.mypage:workingon', 'task');
             return false;
         }
         $task_time = strtotime("{$task_time} GMT");
@@ -98,7 +98,7 @@ class org_openpsa_projects_workingon
         {
             // We were previously working on another task. Report hours
             // Generate a message
-            $description = sprintf($_MIDCOM->i18n->get_string('worked from %s to %s', 'org.openpsa.projects'), strftime('%x %X', $this->start), strftime('%x %X', time()));
+            $description = sprintf($_MIDCOM->i18n->get_string('worked from %s to %s', 'org.openpsa.mypage'), strftime('%x %X', $this->start), strftime('%x %X', time()));
 
             // Do the actual report
             $this->_report_hours($description);
@@ -107,14 +107,14 @@ class org_openpsa_projects_workingon
         if ($task_guid == '')
         {
             // We won't be working on anything from now on. Delete existing parameters
-            $this->person->set_parameter('org.openpsa.projects:workingon', 'task', '');
-            $stat = $this->person->set_parameter('org.openpsa.projects:workingon', 'start', '');
+            $this->person->set_parameter('org.openpsa.mypage:workingon', 'task', '');
+            $stat = $this->person->set_parameter('org.openpsa.mypage:workingon', 'start', '');
             return $stat;
         }
 
         // Mark the new task work session as started
-        $this->person->set_parameter('org.openpsa.projects:workingon', 'task', $task_guid);
-        $stat = $this->person->set_parameter('org.openpsa.projects:workingon', 'start', gmdate('Y-m-d H:i:s', time()));
+        $this->person->set_parameter('org.openpsa.mypage:workingon', 'task', $task_guid);
+        $stat = $this->person->set_parameter('org.openpsa.mypage:workingon', 'start', gmdate('Y-m-d H:i:s', time()));
         return $stat;
     }
 
@@ -134,10 +134,10 @@ class org_openpsa_projects_workingon
         $stat = $hour_report->create();
         if (!$stat)
         {
-            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.projects', 'org.openpsa.projects'), sprintf($_MIDCOM->i18n->get_string('reporting %d hours to task %s failed, reason %s', 'org.openpsa.projects'), $hour_report->hours, $this->task->title, mgd_errstr()), 'error');
+            $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.mypage', 'org.openpsa.mypage'), sprintf($_MIDCOM->i18n->get_string('reporting %d hours to task %s failed, reason %s', 'org.openpsa.mypage'), $hour_report->hours, $this->task->title, mgd_errstr()), 'error');
             return false;
         }
-        $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.projects', 'org.openpsa.projects'), sprintf($_MIDCOM->i18n->get_string('successfully reported %d hours to task %s', 'org.openpsa.projects'), $hour_report->hours, $this->task->title), 'ok');
+        $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.mypage', 'org.openpsa.mypage'), sprintf($_MIDCOM->i18n->get_string('successfully reported %d hours to task %s', 'org.openpsa.mypage'), $hour_report->hours, $this->task->title), 'ok');
         return true;
     }
 

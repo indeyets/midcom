@@ -153,14 +153,14 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
         // Add the JS file for "now working on" calculator
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/Pearified/JavaScript/Prototype/prototype.js");
     
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/org.openpsa.projects/workingon.js");
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/org.openpsa.mypage/workingon.js");
         $_MIDCOM->add_link_head
         (
             array
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL . "/org.openpsa.projects/projects.css",
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.mypage/mypage.css",
             )
         );
 

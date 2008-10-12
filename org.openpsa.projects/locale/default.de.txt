@@ -231,10 +231,6 @@ Kein Kunde
 Keine Suche
 ---STRINGEND
 
----STRING not working on a task
-Sie arbeiten nicht an einer Aufgabe
----STRINGEND
-
 ---STRING not_started
 Nicht begonnen
 ---STRINGEND
@@ -245,10 +241,6 @@ Noch nicht begonnene Aufgaben
 
 ---STRING notes for task %s on %s
 Notizen von Aufgabe "%s" zu %s
----STRINGEND
-
----STRING now working on
-Sie arbeiten an
 ---STRINGEND
 
 ---STRING ongoing
@@ -331,10 +323,6 @@ Gemeldet
 Berichterstatter
 ---STRINGEND
 
----STRING reporting %d hours to task %s failed, reason %s
-Melden von %d Arbeitsstunden für Aufgabe "%s" ist fehlgeschlagen, Ursache: %s
----STRINGEND
-
 ---STRING resources
 Ressourcen
 ---STRINGEND
@@ -369,10 +357,6 @@ Status-Verlauf
 
 ---STRING subscribe
 Abonnieren
----STRINGEND
-
----STRING successfully reported %d hours to task %s
-%d Arbeitsstunden für Aufgabe "%s" erfolgreich gemeldet
 ---STRINGEND
 
 ---STRING synchronization

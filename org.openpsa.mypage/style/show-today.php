@@ -37,14 +37,14 @@ $view_today =& $data['view_today'];
         $tasks = org_openpsa_projects_task_resource::get_resource_tasks('guid');
         if (count($tasks) > 0)
         {
-            $workingon = new org_openpsa_projects_workingon();
+            $workingon = new org_openpsa_mypage_workingon();
             ?>
-            <div class="org_openpsa_projects_workingon">
-                <h2><?php echo $_MIDCOM->i18n->get_string('now working on', 'org.openpsa.projects'); ?></h2>
+            <div class="org_openpsa_mypage_workingon">
+                <h2><?php echo $_MIDCOM->i18n->get_string('now working on', 'org.openpsa.mypage'); ?></h2>
                 <form method="post" action="<?php echo $data['projects_url'] . 'workingon/set/'; ?>">
                     <input type="hidden" name="url" value="&(prefix);" />
                     <select name="task" onchange="this.form.submit();">
-                        <option value="none"><?php echo $_MIDCOM->i18n->get_string('not working on a task', 'org.openpsa.projects'); ?></option>
+                        <option value="none"><?php echo $_MIDCOM->i18n->get_string('not working on a task', 'org.openpsa.mypage'); ?></option>
                         <?php
                         foreach ($tasks as $guid => $label)
                         {
@@ -63,11 +63,11 @@ $view_today =& $data['view_today'];
                     {
                         ?>
                         <label class="calculator">
-                            <input type="text" id="org_openpsa_projects_workingon_time" name="&(workingon.start);" value="<?php echo $workingon->format_time(); ?>" />
+                            <input type="text" id="org_openpsa_mypage_workingon_time" name="&(workingon.start);" value="<?php echo $workingon->format_time(); ?>" />
                             <span>h</span>
                         </label>
                         <script type="text/javascript">
-                            timeCounter = new workingOnCalculator('org_openpsa_projects_workingon_time', <?php echo time(); ?>);
+                            timeCounter = new workingOnCalculator('org_openpsa_mypage_workingon_time', <?php echo time(); ?>);
                         </script>
                         <?php
                     }

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package org.openpsa.projects
+ * @package org.openpsa.mypage
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: workingon.php,v 1.1 2006/05/10 13:00:45 rambo Exp $
  * @copyright The Midgard Project, http://www.midgard-project.org
@@ -10,7 +10,7 @@
 /**
  * Projects "now working on"
  *
- * @package org.openpsa.projects
+ * @package org.openpsa.mypage
  */
 class org_openpsa_projects_handler_workingon extends midcom_baseclasses_components_handler
 {
@@ -47,11 +47,11 @@ class org_openpsa_projects_handler_workingon extends midcom_baseclasses_componen
         }
 
         // Set the "now working on" status
-        $workingon = new org_openpsa_projects_workingon();
+        $workingon = new org_openpsa_mypage_workingon();
         $stat = $workingon->set($_POST['task']);
         if (!$stat)
         {
-            $_MIDCOM->uimessages->add($this->_l10n->get('org.openpsa.projects'),  'Failed to set "working on" parameter to "' . $_POST['task'] . '", reason ' . mgd_errstr(), 'error');
+            $_MIDCOM->uimessages->add($this->_l10n->get('org.openpsa.mypage'),  'Failed to set "working on" parameter to "' . $_POST['task'] . '", reason ' . mgd_errstr(), 'error');
         }
 
         if (array_key_exists('url', $_POST))
@@ -75,7 +75,7 @@ class org_openpsa_projects_handler_workingon extends midcom_baseclasses_componen
         $_MIDCOM->auth->require_valid_user();
 
         // Set the "now working on" status
-        $data['workingon'] = new org_openpsa_projects_workingon();
+        $data['workingon'] = new org_openpsa_mypage_workingon();
 
         $_MIDCOM->skip_page_style = true;
 

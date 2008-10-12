@@ -231,10 +231,6 @@ No Customer
 No search
 ---STRINGEND
 
----STRING not working on a task
-Not working on a task
----STRINGEND
-
 ---STRING not_started
 Not started
 ---STRINGEND
@@ -245,10 +241,6 @@ Not Started Tasks
 
 ---STRING notes for task %s on %s
 Notes for task %s on %s
----STRINGEND
-
----STRING now working on
-Now working on
 ---STRINGEND
 
 ---STRING ongoing
@@ -331,10 +323,6 @@ Reported
 Reporter
 ---STRINGEND
 
----STRING reporting %d hours to task %s failed, reason %s
-Reporting %d hours to task %s failed, reason %s
----STRINGEND
-
 ---STRING resources
 Resources
 ---STRINGEND
@@ -369,10 +357,6 @@ Status history
 
 ---STRING subscribe
 Subscribe
----STRINGEND
-
----STRING successfully reported %d hours to task %s
-Successfully reported %d hours to task %s
 ---STRINGEND
 
 ---STRING synchronization

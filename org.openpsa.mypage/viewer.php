@@ -39,59 +39,75 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
         $_MIDCOM->cache->content->no_cache();
 
         // Match /savefilter
-        $this->_request_switch[] = array(
+        $this->_request_switch[] = array
+        (
             'fixed_args' => 'savefilter',
             'handler' => 'savefilter'
         );
 
         // Match /userinfo
-        $this->_request_switch[] = array(
+        $this->_request_switch[] = array
+        (
             'fixed_args' => 'userinfo',
             'handler' => 'userinfo'
         );
 
         // Match /updates
-        $this->_request_switch[] = array(
+        $this->_request_switch[] = array
+        (
             'fixed_args' => 'updates',
             'handler' => 'updates'
         );
 
         // Match /
-        $this->_request_switch['today'] = Array
+        $this->_request_switch['today'] = array
         (
-            'handler' => Array('org_openpsa_mypage_handler_today', 'today'),
+            'handler' => array('org_openpsa_mypage_handler_today', 'today'),
         );
 
         // Match /day/<date>
-        $this->_request_switch['day'] = Array
+        $this->_request_switch['day'] = array
         (
-            'handler' => Array('org_openpsa_mypage_handler_today', 'today'),
-            'fixed_args' => Array('day'),
+            'handler' => array('org_openpsa_mypage_handler_today', 'today'),
+            'fixed_args' => array('day'),
             'variable_args' => 1,
         );
 
         // Match /weekreview/<date>
-        $this->_request_switch['weekreview'] = Array
+        $this->_request_switch['weekreview'] = array
         (
-            'handler' => Array('org_openpsa_mypage_handler_weekreview', 'review'),
-            'fixed_args' => Array('weekreview'),
+            'handler' => array('org_openpsa_mypage_handler_weekreview', 'review'),
+            'fixed_args' => array('weekreview'),
             'variable_args' => 1,
         );
 
         // Match /weekreview/
-        $this->_request_switch['weekreview_redirect'] = Array
+        $this->_request_switch['weekreview_redirect'] = array
         (
-            'handler' => Array('org_openpsa_mypage_handler_weekreview', 'redirect'),
-            'fixed_args' => Array('weekreview'),
+            'handler' => array('org_openpsa_mypage_handler_weekreview', 'redirect'),
+            'fixed_args' => array('weekreview'),
         );
 
-        // Match /config/
-        $this->_request_switch['config'] = Array
+        // Match /workingon/set
+        $this->_request_switch['workingon_set'] = array
         (
-            'handler' => Array('midcom_core_handler_configdm', 'configdm'),
+            'handler' => array('org_openpsa_projects_handler_workingon', 'set'),
+            'fixed_args' => array('workingon', 'set' ),
+        );
+        // Match /workingon/check
+        $this->_request_switch['workingon_check'] = array
+        (
+            'handler' => array('org_openpsa_projects_handler_workingon', 'check'),
+            'fixed_args' => array('workingon', 'check'),
+        );
+        
+        // Match /config/
+        $this->_request_switch['config'] = array
+        (
+            'handler' => array('midcom_core_handler_configdm', 'configdm'),
             'schemadb' => 'file:/org/openpsa/mypage/config/schemadb_config.inc',
             'schema' => 'config',
-            'fixed_args' => Array('config'),
+            'fixed_args' => array('config'),
         );
     }
 

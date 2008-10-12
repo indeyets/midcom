@@ -211,20 +211,12 @@ Uusi tehtävä projektiin %s
 Ei hakua
 ---STRINGEND
 
----STRING not working on a task
-Ei tehtävää
----STRINGEND
-
 ---STRING not_started
 Ei aloitettu
 ---STRINGEND
 
 ---STRING notes for task %s on %s
 Muistio tehtävään %s (%s)
----STRINGEND
-
----STRING now working on
-Nyt työn alla
 ---STRINGEND
 
 ---STRING ongoing
