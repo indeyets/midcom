@@ -1,44 +1,62 @@
-'default' => array (
-
-    'name'        => 'default',
-    'description' => 'Directory',
-    'fields'      => array (
+'default' => array 
+(
+    'description' => 'directory',
+    'fields'      => array 
+    (
         // Metadata
-        'extra' => array (
-            'description' => 'Title',
-            'datatype'    => 'text',
-            'location'    => 'extra',
-            'start_fieldgroup' => array (
-                'title' => 'Directory',
+        'extra' => array 
+        (
+            'title' => 'Title',
+            'storage'    => 'extra',
+            'type'    => 'text',
+            'widget'    => 'text',
+            'required'    => true,
+            'start_fieldset' => array
+            (
+                'title' => 'directory',
                 'css_group' => 'area',
             ),
-            'end_fieldgroup' => '',
-            'required'    => true,
+            'end_fieldset' => '',
         ),
-        'orgOpenpsaAccesstype' => array (
-            'description' => 'Access type',
-            'location'    => 'config',
-            'config_domain' => 'org.openpsa.core',
-            'config_key' => 'orgOpenpsaAccesstype',
-            'datatype'     => 'integer',
+        'orgOpenpsaAccesstype' => array 
+        (
+            'title' => 'Access type',
+            'storage' => array
+            (
+                'location'      => 'configuration',
+                'domain' => 'org.openpsa.core',
+                'name'    => 'orgOpenpsaAccesstype',
+             ),
+            'type'     => 'select',
+            'type_config' => array
+            (
+                 'options' => $GLOBALS['org_openpsa_core_acl_options'],
+            ),
             'widget'       => 'select',
-            'widget_select_choices' => $GLOBALS['org_openpsa_core_acl_options'],
-            'start_fieldgroup' => array (
+            'start_fieldset' => array 
+            (
                 'title' => 'Access control',
                 'css_group' => 'area acl',
             ),
             'index_merge_with_content' => false,
         ),
-        'orgOpenpsaOwnerWg' => array (
-            'description' => 'Workgroup',
-            'location'    => 'config',
-            'config_domain' => 'org.openpsa.core',
-            'config_key' => 'orgOpenpsaOwnerWg',
-            'datatype'     => 'text',
-            'widget'       => 'select',
-            'widget_select_choices' => org_openpsa_helpers_workgroups(),
+        'orgOpenpsaOwnerWg' => array 
+        (
+            'title' => 'workgroup',
+            'storage' => array
+            (
+                'location'      => 'configuration',
+                'domain' => 'org.openpsa.core',
+                'name'    => 'orgOpenpsaOwnerWg',
+             ),
+            'type'     => 'select',
+            'type_config' => array
+            (
+                'options' => org_openpsa_helpers_workgroups(),
+            ),
+            'widget' => 'select',
             'default' => $GLOBALS['org_openpsa_core_workgroup_filter'],
-            'end_fieldgroup' => '',
+            'end_fieldset' => '',
             'index_merge_with_content' => false,
         ),
     )

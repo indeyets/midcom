@@ -59,3 +59,7 @@ Suchen
 Text
 ---STRINGEND
 
+---STRING directory
+Verzeichnis
+---STRINGEND
+

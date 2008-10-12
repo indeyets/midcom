@@ -25,6 +25,7 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
             'org.openpsa.core',
             'org.openpsa.helpers',
             'midcom.helper.datamanager',
+            'midcom.helper.datamanager2',
         );
 
     }
