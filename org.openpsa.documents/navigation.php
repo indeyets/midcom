@@ -22,11 +22,11 @@ class org_openpsa_documents_navigation extends midcom_baseclasses_components_nav
 
         // OLD STUFF:
         // List the documents
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_documents_document');
+        $qb = org_openpsa_documents_document::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_topic->id);
         $qb->add_constraint('nextVersion', '=', 0);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_DOCUMENT);
-        $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $ret = $qb->execute();
         if (   is_array($ret)
             && count($ret) > 0)
         {

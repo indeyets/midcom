@@ -392,11 +392,11 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
 
         // Get list of older versions
         $this->_request_data['document_versions'] = array();
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_documents_document');
+        $qb = org_openpsa_documents_document::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_request_data['directory']->id);
         $qb->add_constraint('nextVersion', '=', $this->_request_data['document']->id);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_DOCUMENT);
-        $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $ret = $qb->execute();
         if (   is_array($ret)
             && count($ret) > 0)
         {

@@ -272,12 +272,8 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
      */
     function _show_view($handler_id, &$data)
     {
-        debug_push('_show_directory');
-        
         midcom_show_style("show-directory-header");
     
-        debug_add("Instantiating Query Builder for creating directory index");
-        
         $qb = org_openpsa_documents_document::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_request_data['directory']->id);
         $qb->add_constraint('nextVersion', '=', 0);
@@ -286,10 +282,12 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
         // Workgroup filtering
         if ($GLOBALS['org_openpsa_core_workgroup_filter'] != 'all')
         {
+            debug_push('_show_directory');
             debug_add("Filtering documents by workgroup {$GLOBALS['org_openpsa_core_workgroup_filter']}");
             $qb->add_constraint('orgOpenpsaOwnerWg', '=', $GLOBALS['org_openpsa_core_workgroup_filter']);
+            debug_pop();
         }
-        debug_add("Executing Query Builder");
+
         $ret = $qb->execute();
         if (   is_array($ret)
             && count($ret) > 0)
@@ -307,7 +305,6 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
             midcom_show_style("show-directory-index-footer");
         }
         midcom_show_style("show-directory-footer");
-        debug_pop();
     }
 
 }

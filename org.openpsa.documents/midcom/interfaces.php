@@ -43,11 +43,11 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
     function _on_reindex($topic, $config, &$indexer)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_documents_document');
+        $qb = org_openpsa_documents_document::new_query_builder();
         $qb->add_constraint('topic', '=', $topic->id);
         $qb->add_constraint('nextVersion', '=', 0);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_DOCUMENT);
-        $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $ret = $qb->execute();
         if (   is_array($ret)
             && count($ret) > 0)
         {
