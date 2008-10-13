@@ -28,9 +28,9 @@ while(@ob_end_flush());
 echo "<pre>\n";
 flush();
 
-$qb = org_openpsa_relatedto_dba::new_query_builder();
+$qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
 $qb->begin_group('OR');
-    $qb->add_constraint('formClass', 'LIKE', 'org_openpsa_%');
+    $qb->add_constraint('fromClass', 'LIKE', 'org_openpsa_%');
     $qb->add_constraint('toClass', 'LIKE', 'org_openpsa_%');
 $qb->end_group();
 $results = $qb->execute();
