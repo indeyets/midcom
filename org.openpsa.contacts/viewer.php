@@ -244,6 +244,8 @@ class org_openpsa_contacts_viewer extends midcom_baseclasses_components_request
             $_MIDCOM->auth->require_valid_user();
         }
 
+        $_MIDCOM->load_library('org.openpsa.contactwidget');
+
         // Safety
         if (!class_exists('midcom_helper_datamanager2_schema'))
         {

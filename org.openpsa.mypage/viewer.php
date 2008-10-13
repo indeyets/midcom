@@ -115,6 +115,8 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
     {
         $_MIDCOM->auth->require_valid_user();
 
+        $_MIDCOM->load_library('org.openpsa.contactwidget');
+
         // This component uses Ajax, include the handler javascripts
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajaxutils.js");
 

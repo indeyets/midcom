@@ -35,7 +35,6 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             'org.openpsa.core',
             'org.openpsa.helpers',
             'midcom.helper.datamanager2',
-            'org.openpsa.contactwidget',
         );
 
         $this->_fill_virtual_groups();

@@ -39,7 +39,6 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
             'org.openpsa.helpers',
             'midcom.helper.datamanager',
             'midcom.helper.datamanager2',
-            'org.openpsa.contactwidget',
             'org.openpsa.smslib',
             'org.openpsa.qbpager',
             'midcom.services.at',

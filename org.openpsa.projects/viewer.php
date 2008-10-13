@@ -240,6 +240,12 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
 
     }
 
+    function _on_handle($handler, $args)
+    {
+        $_MIDCOM->load_library('org.openpsa.contactwidget');
+        return parent::_on_handle($handler, $args);
+    }
+
     /**
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
