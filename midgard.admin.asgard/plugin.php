@@ -1112,7 +1112,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     function get_last_visited()
     {
         $last_visited_guids = midgard_admin_asgard_plugin::get_preference('last_visited');
-        $last_visited_guids = unserialize($last_visited_guids);
+        $last_visited_guids = @unserialize($last_visited_guids);
         
         $last_visited = array();
         
