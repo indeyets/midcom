@@ -29,7 +29,6 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
             'midcom.helper.datamanager',
             'midcom.helper.datamanager2',
             'midcom.services.at',
-            'net.nemein.tag',
         );
     }
 
