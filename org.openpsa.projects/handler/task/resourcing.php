@@ -95,6 +95,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
      */
     function _on_initialize()
     {
+        $_MIDCOM->load_library('org.openpsa.calendarwidget');
         $_MIDCOM->add_link_head
         (
             array

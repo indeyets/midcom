@@ -19,6 +19,11 @@ class org_openpsa_calendar_handler_agenda extends midcom_baseclasses_components_
         parent::__construct();
     }
 
+    function _on_initialize()
+    {
+        $_MIDCOM->load_library('org.openpsa.calendarwidget');
+    }
+
     /**
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
