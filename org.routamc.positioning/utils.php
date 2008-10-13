@@ -281,14 +281,19 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
     /**
      * Get closest items
      *
+     * Note: If you set a max distance you may not always get the number of items specified in the limit.
+     *
      * @param string $class MidCOM DBA class to query
-     * @param Array $position Center position
+     * @param array $position Center position
      * @param integer $limit How many results to return
-     * @return Array Array of MidCOM DBA objects sorted by proximity
+     * @param integer $max_distance Maximum distance of returned objects in kilometers, or NULL if any
+     * @param float $modifier
+     * @return array array of MidCOM DBA objects sorted by proximity
      */
-    function get_closest($class, $center, $limit, $modifier = 0.15)
+    function get_closest($class, $center, $limit, $max_distance = null, $modifier = 0.15)
     {
         $classname = org_routamc_positioning_utils::get_positioning_class($class);
+        $direct = false;
         if ($classname != $class)
         {
             $direct = false;
@@ -308,35 +313,32 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
         static $rounds = 0;
         $rounds++;
 
+        // Limit to earth coordinates
         $from['latitude'] = $center['latitude'] + $modifier;
         if ($from['latitude'] > 90)
         {
             $from['latitude'] = 90;
         }
-
         $from['longitude'] = $center['longitude'] - $modifier;
         if ($from['longitude'] < -180)
         {
             $from['longitude'] = -180;
         }
-
         $to['latitude'] = $center['latitude'] - $modifier;
         if ($to['latitude'] < -90)
         {
             $to['latitude'] = -90;
         }
-
         $to['longitude'] = $center['longitude'] + $modifier;
         if ($to['longitude'] > 180)
         {
             $to['longitude'] = 180;
         }
 
-
         if (!isset($current_locale))
         {
-            $current_locale = setlocale(LC_NUMERIC,"0");
-            setlocale(LC_NUMERIC,"C");
+            $current_locale = setlocale(LC_NUMERIC, '0');
+            setlocale(LC_NUMERIC, 'C');
         }
 
         $qb->begin_group('AND');
@@ -348,7 +350,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
         $qb->add_constraint('longitude', '<', (float) $to['longitude']);
         $qb->end_group();
         $result_count = $qb->count();
-        //echo "<br />Round {$rounds}, lat1 {$from['latitude']} lon1 {$from['longitude']}, lat2 {$to['latitude']} lon2 {$to['longitude']}: {$result_count} results\n";
+        //debug_add("Round {$rounds}, lat1 {$from['latitude']} lon1 {$from['longitude']}, lat2 {$to['latitude']} lon2 {$to['longitude']}: {$result_count} results");
 
         if ($result_count < $limit)
         {
@@ -359,15 +361,23 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
             {
                 // We've queried the entire globe so we return whatever we got
                 $results = $qb->execute();
-                $closest = Array();
+                $closest = array();
                 foreach ($results as $result)
                 {
-                    $result_coordinates = Array(
+                    $result_coordinates = array
+                    (
                         'latitude' => $result->latitude,
                         'longitude' => $result->longitude,
                     );
 
                     $distance = sprintf("%05d", round(org_routamc_positioning_utils::get_distance($center, $result_coordinates)));
+
+                    if (   !is_null($max_distance)
+                        && $distance > $max_distance)
+                    {
+                        // This entry is too far
+                        continue;
+                    }
 
                     if (!$direct)
                     {
@@ -375,6 +385,7 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
                         $result = new $class($result->parent);
                         $result->latitude = $result_coordinates['latitude'];
                         $result->longitude = $result_coordinates['longitude'];
+                        $result->distance = (int) $distance;
                     }
 
                     $closest[$distance . $result->guid] = $result;
@@ -386,23 +397,32 @@ class org_routamc_positioning_utils extends midcom_baseclasses_components_pureco
 
             $modifier = $modifier * 1.05;
             setlocale(LC_NUMERIC,$current_locale);
-            return org_routamc_positioning_utils::get_closest($class, $center, $limit, $modifier);
+            return org_routamc_positioning_utils::get_closest($class, $center, $limit, $max_distance, $modifier);
         }
 
         $results = $qb->execute();
-        $closest = Array();
+        $closest = array();
         foreach ($results as $result)
         {
-            $result_coordinates = Array(
+            $result_coordinates = array
+            (
                 'latitude'  => $result->latitude,
                 'longitude' => $result->longitude,
             );
             $distance = sprintf("%05d", round(org_routamc_positioning_utils::get_distance($center, $result_coordinates)));
+            
+            if (   !is_null($max_distance)
+                && $distance > $max_distance)
+            {
+                // This entry is too far
+                continue;
+            }
 
             if (!$direct)
             {
                 // Instantiate the real object as the result
                 $result = new $class($result->parent);
+                $result->distance = (int) $distance;
                 $result->latitude = $result_coordinates['latitude'];
                 $result->longitude = $result_coordinates['longitude'];
             }
