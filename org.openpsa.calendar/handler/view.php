@@ -92,8 +92,8 @@ class org_openpsa_calendar_handler_view extends midcom_baseclasses_components_ha
             );
         }
 
-        $prefix = MIDCOM_STATIC_URL . '/midcom.helper.datamanager/jscript-calendar';
-        $_MIDCOM->add_jsfile("{$prefix}/calendar.js");
+        $prefix = MIDCOM_STATIC_URL . '/midcom.helper.datamanager2/jscript-calendar';
+        $_MIDCOM->add_jsfile("{$prefix}/calendar_stripped.js");
 
         // Select correct locale
         $i18n =& $_MIDCOM->get_service('i18n');
