@@ -11,7 +11,7 @@
  *
  * @package org.openpsa.reports
  */
-class org_openpsa_reports_query extends org_openpsa_queries_query
+class org_openpsa_reports_query_dba extends org_openpsa_queries_query_dba
 {
     function __construct($id = null)
     {

@@ -87,7 +87,7 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
 
     function _load_query($identifier, $dm_key)
     {
-        $query = new org_openpsa_reports_query($identifier);
+        $query = new org_openpsa_reports_query_dba($identifier);
 
         if (!is_object($query))
         {
@@ -110,11 +110,11 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
             "storage" => null,
         );
 
-        $query = new org_openpsa_reports_query();
+        $query = new org_openpsa_reports_query_dba();
         $stat = $query->create();
         if ($stat)
         {
-            $this->_request_data['query'] = new org_openpsa_reports_query($query->id);
+            $this->_request_data['query'] = new org_openpsa_reports_query_dba($query->id);
             //Debugging
             $result["storage"] =& $this->_request_data['query'];
             $result["success"] = true;

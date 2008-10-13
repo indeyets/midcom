@@ -7,7 +7,7 @@
  *
  * @package org.openpsa.queries
  */
-class org_openpsa_queries_query extends __org_openpsa_queries_query
+class org_openpsa_queries_query_dba extends __org_openpsa_queries_query_dba
 {
     function __construct($id = null)
     {
