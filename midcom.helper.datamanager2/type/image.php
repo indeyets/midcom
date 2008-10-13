@@ -206,6 +206,14 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
      * @access private
      */
     var $_instance_mode = 'single';
+    
+    /**
+     * Whether to check for imagemagic by running some commands
+     *
+     * @var boolean
+     * @access private
+     */
+    var $_check_imagemagic = false;
 
     function _on_initialize()
     {
@@ -223,6 +231,11 @@ class midcom_helper_datamanager2_type_image extends midcom_helper_datamanager2_t
 
     function _imagemagick_available()
     {
+        if (!$this->_check_imagemagic)
+        {
+            return true;
+        }
+
         static $return = -1;
         if ($return !== -1)
         {
