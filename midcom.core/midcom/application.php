@@ -831,7 +831,11 @@ class midcom_application
                     case 'cache':
                         if ($value == 'invalidate')
                         {
-                            $_MIDCOM->auth->require_admin_user();
+                            if (   empty($GLOBALS['midcom_config']['indexer_reindex_allowed_ips'])
+                                || !in_array($_SERVER['REMOTE_ADDR'], $GLOBALS['midcom_config']['indexer_reindex_allowed_ips']))
+                            {
+                                $_MIDCOM->auth->require_admin_user();
+                            }
                             $this->cache->content->enable_live_mode();
                             $this->cache->invalidate_all();
                             $this->uimessages->add($_MIDCOM->i18n->get_string('MidCOM', 'midcom'), "Cache invalidation successful.", 'info');
