@@ -96,7 +96,8 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         // Prepare object and DM2
         if (!$this->_load_photo($args[0]))
         {
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Photo {$args[0]} not found.");
+            // This will exit.
         }
 
         // Show only the moderated photos for those who aren't supposed to see it
@@ -111,15 +112,18 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
         if ($handler_id == 'photo_gallery')
         {
             $gallery = new midcom_db_topic($args[1]);
-            if (!$gallery)
+            if (   !$gallery
+                || !$gallery->guid)
             {
-                return false;
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Photo gallery {$args[1]} not found.");
+                // This will exit.
             }
             $nap = new midcom_helper_nav();
             $data['gallery_node'] = $nap->get_node($gallery->id);
             if (!$data['gallery_node'])
             {
-                return false;
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Photo gallery {$args[1]} not found.");
+                // This will exit.
             }
         }
 
@@ -191,9 +195,21 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
             switch ($limiters['type'])
             {
                 case 'tag':
+                    if (   !$this->_config->get('enable_tags')
+                        || count($args) != 4)
+                    {
+                        $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Tag view not available.");
+                        // This will exit.
+                    }
+
                     $limiters['tag'] = $args[3];
                     break;
                 case 'user':
+                    if (count($args) != 3)
+                    {
+                        $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Invalid arguments.");
+                        // This will exit.
+                    }
                     $limiters['user'] = $args[2];
                     break;
                 case 'between':
@@ -207,6 +223,11 @@ class org_routamc_photostream_handler_view extends midcom_baseclasses_components
                     {
                         $limiters['start'] = $args[2];
                         $limiters['end'] = $args[3];
+                        if (count($args) != 4)
+                        {
+                            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Invalid arguments.");
+                            // This will exit.
+                        }
                     }
             }
         }

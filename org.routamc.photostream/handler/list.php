@@ -121,7 +121,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $data['user'] = $this->_resolve_user($args[0]);
             if (!$data['user'])
             {
-                return false;
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "User {$args[0]} not available.");
+                // This will exit.
             }
 
             $data['view_title'] = sprintf($this->_l10n->get('photos of %s'), $data['user']->name);
@@ -252,7 +253,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $data['user'] = $this->_resolve_user($args[0]);
             if (!$data['user'])
             {
-                return false;
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "User {$args[0]} not available.");
+                // This will exit.
             }
 
             $data['view_title'] = sprintf($this->_l10n->get('latest photos of %s'), $data['user']->name);
@@ -390,9 +392,11 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         $data['from_time'] = @strtotime($args[0]);
         $data['to_time'] = @strtotime($args[1]);
         if (   !$data['from_time']
-            || !$data['to_time'])
+            || !$data['to_time']
+            || $data['from_time'] >= $data['to_time'])
         {
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Invalid time range {$args[0]} - {$args[1]}.");
+            // This will exit.
         }
 
         $data['view_title'] = sprintf($this->_l10n->get('photos from %s - %s'), strftime('%x', $data['from_time']), strftime('%x', $data['to_time']));
@@ -502,7 +506,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $data['user'] = $this->_resolve_user($args[0]);
             if (!$data['user'])
             {
-                return false;
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "User {$args[0]} not available.");
+                // This will exit.
             }
 
             $data['view_title'] = sprintf($this->_l10n->get('photo tags of %s'), $data['user']->name);
@@ -560,7 +565,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $data['user'] = $this->_resolve_user($args[0]);
             if (!$data['user'])
             {
-                return false;
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "User {$args[0]} not available.");
+                // This will exit.
             }
 
             $data['view_title'] = sprintf($this->_l10n->get('photos of %s tagged with %s'), $data['user']->name, $data['tag']);
@@ -735,7 +741,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             $data['user'] = $this->_resolve_user($args[0]);
             if (!$data['user'])
             {
-                return false;
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "User {$args[0]} not available.");
+                // This will exit.
             }
 
             $data['view_title'] = sprintf($this->_l10n->get('photos of %s rated as %s'), $data['user']->name, $data['rating']);
@@ -750,7 +757,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
 
         if (!is_numeric($data['rating']))
         {
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Invalid arguments.");
+            // This will exit.
         }
 
         // List photos
@@ -1076,7 +1084,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
             && (   preg_match('/metadata\.(.+)$/', $args[0], $regs)
                 && !isset($photo->metadata->$regs[1])))
         {
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Sorting property not found.");
+            // This will exit.
         }
         
         // List photos
@@ -1090,7 +1099,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
         {
             if (!preg_match('/^(asc|desc)/i', $args[1], $regs))
             {
-                return false;
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Invalid sorting order.");
+                // This will exit.
             }
             
             $data['view_title'] = sprintf($this->_l10n->get('sorted by %s %s'), $this->_l10n->get($args[0]), "{$regs[1]}ending");
@@ -1225,7 +1235,8 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                 }
                 else
                 {
-                    return false;
+                    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Invalid arguments.");
+                    // This will exit.
                 }
                 
                 break;
