@@ -1757,6 +1757,11 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
         // Participants
         $vcal_keys['ATTENDEE'] = array();
         $vcal_key_parameters['ATTENDEE'] = array();
+        // Safety, otherwise the notice will make output invalid
+        if (!is_array($this->participants))
+        {
+            $this->participants = array();
+        }
         foreach ($this->participants as $uid => $bool)
         {
             // Just a safety
@@ -1771,7 +1776,8 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
                 $person->email = preg_replace('/[^0-9_\x61-\x7a]/i','_', strtolower($person->name)) . '_is_not@openpsa.org';
             }
             $vcal_keys['ATTENDEE'][] = "mailto:{$person->email}";
-            $vcal_key_parameters['ATTENDEE'][] = array(
+            $vcal_key_parameters['ATTENDEE'][] = array
+                (
                     'ROLE' => 'REQ-PARTICIPANT',
                     'CUTYPE' => 'INDIVIDUAL',
                     'STATUS' => 'ACCEPTED',

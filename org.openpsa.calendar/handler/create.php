@@ -99,7 +99,7 @@ class org_openpsa_calendar_handler_create extends midcom_baseclasses_components_
      */
     function & dm2_create_callback (&$controller)
     {
-        $this->_event = new midcom_org_openpsa_event();
+        $this->_event = new org_openpsa_calendar_event();
         $this->_event->up = $this->_root_event->id;
 
         if (! $this->_event->create())
@@ -127,7 +127,7 @@ class org_openpsa_calendar_handler_create extends midcom_baseclasses_components_
     function _handler_create($handler_id, $args, &$data)
     {
         // Get the root event
-        $this->_root_event = new midcom_org_openpsa_event($this->_config->get('calendar_root_event'));
+        $this->_root_event = new org_openpsa_calendar_event($this->_config->get('calendar_root_event'));
         
         if (   !$this->_root_event
             || !$this->_root_event->guid)
