@@ -16,6 +16,7 @@
                 <label for="org_openpsa_calendar_deleteok">
                     <?php echo $data['l10n']->get('really delete event'); ?>
                     <input type="submit" id="org_openpsa_calendar_deleteok" name="org_openpsa_calendar_deleteok" value="<?php echo $data['l10n_midcom']->get('yes'); ?>" />
+                    <input type="submit" id="org_openpsa_calendar_delete_cancel" name="org_openpsa_calendar_delete_cancel" value="<?php echo $data['l10n_midcom']->get('no'); ?>" />
                 </label>
             </fieldset>
         </form>

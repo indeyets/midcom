@@ -11,6 +11,10 @@ Available time slot
 Back to calendar
 ---STRINGEND
 
+---STRING calendar
+Calendar
+---STRINGEND
+
 ---STRING choose calendars
 Choose calendars to display
 ---STRINGEND
@@ -79,6 +83,10 @@ Failed to delete event, reason
 Go to
 ---STRINGEND
 
+---STRING groups
+Groups
+---STRINGEND
+
 ---STRING location
 Location
 ---STRINGEND
@@ -111,6 +119,10 @@ Calendar
 Participants
 ---STRINGEND
 
+---STRING people
+People
+---STRINGEND
+
 ---STRING popup
 Pop-Up
 ---STRINGEND
@@ -135,6 +147,10 @@ Read private event
 Really delete event?
 ---STRINGEND
 
+---STRING resources
+Resources
+---STRINGEND
+
 ---STRING start time
 Start time
 ---STRINGEND
@@ -153,5 +169,9 @@ Week #%s %s
 
 ---STRING week view
 Week view
+---STRINGEND
+
+---STRING week %s
+Week %s
 ---STRINGEND
 

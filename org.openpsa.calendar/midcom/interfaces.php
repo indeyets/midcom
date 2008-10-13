@@ -21,10 +21,12 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
 
         $this->_component = 'org.openpsa.calendar';
         $this->_autoload_class_definitions = array('midcom_dba_classes.inc');
-        $this->_autoload_files = array(
+        $this->_autoload_files = array
+        (
             'event_resource.php',
         );
-        $this->_autoload_libraries = Array(
+        $this->_autoload_libraries = array
+        (
             'midcom.helper.datamanager',
             'org.openpsa.core',
             'org.openpsa.helpers',
@@ -322,7 +324,8 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
         }
 
         // Transfer metadata dependencies from classes that we drive
-        $classes = array(
+        $classes = array
+        (
             'org_openpsa_calendar_event',
             'org_openpsa_calendar_eventmember',
         );
@@ -333,7 +336,8 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
                 switch($class)
                 {
                     default:
-                        $metadata_fields = array(
+                        $metadata_fields = array
+                        (
                             'creator' => 'id',
                             'revisor' => 'id' // Though this will probably get touched on update we need to check it anyways to avoid invalid links
                         );

@@ -11,6 +11,10 @@ Saatavilla oleva aika
 Takaisin kalenteriin
 ---STRINGEND
 
+---STRING calendar
+Kalenteri
+---STRINGEND
+
 ---STRING choose calendars
 Valitse näytettävät kalenterit
 ---STRINGEND
@@ -79,6 +83,10 @@ Tapahtuman poistaminen epäonnistui, syy
 Mene ajankohtaan
 ---STRINGEND
 
+---STRING groups
+Ryhmät
+---STRINGEND
+
 ---STRING location
 Paikka
 ---STRINGEND
@@ -111,6 +119,10 @@ Kalenteri
 Osallistujat
 ---STRINGEND
 
+---STRING people
+Henkilöt
+---STRINGEND
+
 ---STRING popup
 Pop-up -ikkuna
 ---STRINGEND
@@ -135,6 +147,10 @@ Yksityisen tapahtuman luku
 Oletko varma että haluat poistaa tapahtuman?
 ---STRINGEND
 
+---STRING resources
+Resurssit
+---STRINGEND
+
 ---STRING start time
 Alkaa
 ---STRINGEND
@@ -153,5 +169,9 @@ Viikko %s. %s
 
 ---STRING week view
 Viikkonäkym
+---STRINGEND
+
+---STRING week %s
+Viikko %s
 ---STRINGEND
 

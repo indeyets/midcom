@@ -1,128 +1,150 @@
 'config' => array
 (
-    'name'        => 'config',
-    'description' => 'Default Configuration Schema', /* This is a topic */
+    'name' => 'config',
+    'title' => 'Default Configuration Schema', /* This is a topic */
     'locktimeout' => 0, /* Don't lock this, we display the edit view always */
-    'fields'      => array
+    'fields' => array
     (
         /* view settings */
         'start_view' => array
         (
-            'description'   => 'which view to start in',
-            'datatype'      => 'text',
-            'default'       => 'week',
-            'location'      => 'config',
-            'config_domain' => 'org.openpsa.calendar',
-            'config_key'    => 'start_view',
-            'start_fieldgroup' => array
+            'title' => 'which view to start in',
+            'type' => 'text',
+            'default' => 'week',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.openpsa.calendar',
+                'name' => 'start_view'
+            ),
+            'start_fieldset' => array
             (
                 'title' => 'view settings',
             ),
         ),
         'calendar_popup_height' => array
         (
-            'description'   => 'height of the event popup window (px)',
-            'datatype'      => 'integer',
-            'default'       => 450,
-            'location'      => 'config',
-            'config_domain' => 'org.openpsa.calendar',
-            'config_key'    => 'calendar_popup_height',
+            'title' => 'height of the event popup window (px)',
+            'type' => 'integer',
+            'default' => 450,
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.openpsa.calendar',
+                'name' => 'calendar_popup_height'
+            ),
         ),
         'calendar_popup_width' => array
         (
-            'description'   => 'width of the event popup window (px)',
-            'datatype'      => 'integer',
-            'default'       => 300,
-            'location'      => 'config',
-            'config_domain' => 'org.openpsa.calendar',
-            'config_key'    => 'calendar_popup_width',
-            'end_fieldgroup' => '',
+            'title' => 'width of the event popup window (px)',
+            'type' => 'integer',
+            'default' => 300,
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.openpsa.calendar',
+                'name' => 'calendar_popup_width'
+            ),
+            'end_fieldset' => '',
         ),
         /* time settings */
         'day_start_time' => array
         (
-            'description'   => 'hour "working day" starts',
-            'datatype'      => 'integer',
-            'location'      => 'config',
-            'default'       => 8,
+            'title' => 'hour "working day" starts',
+            'type' => 'integer',
+            'storage' => 'config',
+            'default' => 8,
             'config_domain' => 'org.openpsa.calendar',
-            'config_key'    => 'day_start_time',
-            'start_fieldgroup' => array
+            'config_key' => 'day_start_time',
+            'start_fieldset' => array
             (
                 'title' => 'time settings',
             ),
         ),
         'day_end_time' => array
         (
-            'description'   => 'hour "working day" ends',
-            'datatype'      => 'integer',
-            'location'      => 'config',
-            'default'       => 18,
+            'title' => 'hour "working day" ends',
+            'type' => 'integer',
+            'storage' => 'config',
+            'default' => 18,
             'config_domain' => 'org.openpsa.calendar',
-            'config_key'    => 'day_end_time',
+            'config_key' => 'day_end_time',
         ),
         'day_slot_length' => array
         (
-            'description'   => 'size of week day slot (minutes)',
-            'datatype'      => 'integer',
-            'location'      => 'config',
-            'default'       => 60,
+            'title' => 'size of week day slot (minutes)',
+            'type' => 'integer',
+            'storage' => 'config',
+            'default' => 60,
             'config_domain' => 'org.openpsa.calendar',
-            'config_key'    => 'day_slot_length',
+            'config_key' => 'day_slot_length',
         ),
         'week_slot_length' => array
         (
-            'description'   => 'size of week view slot (minutes)',
-            'datatype'      => 'integer',
-            'location'      => 'config',
-            'default'       => 120,
+            'title' => 'size of week view slot (minutes)',
+            'type' => 'integer',
+            'storage' => 'config',
+            'default' => 120,
             'config_domain' => 'org.openpsa.calendar',
-            'config_key'    => 'week_slot_length',
-            'end_fieldgroup' => '',
+            'config_key' => 'week_slot_length',
+            'end_fieldset' => '',
         ),
         
         /* Schema settings */
         'schemadb' => array
         (
-            'description' => 'schema database',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.openpsa.calendar',
-            'config_key' => 'schemadb',
-            'start_fieldgroup' => array
+            'title' => 'schema database',
+            'type' => 'text',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.openpsa.calendar',
+                'name' => 'schemadb'
+            ),
+            'start_fieldset' => array
             ( 
                 'title' => 'advanced schema and data settings',
             ),
         ),
-        'always_show_group'  => array
+        'always_show_group' => array
         (
-            'description' => 'always display group',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.openpsa.calendar',
-            'config_key' => 'always_show_group',
+            'title' => 'always display group',
+            'type' => 'text',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.openpsa.calendar',
+                'name' => 'always_show_group'
+            ),
         ), 
-        'always_show_self'  => array
+        'always_show_self' => array
         (
-            'description' => 'always display self',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.openpsa.calendar',
-            'config_key' => 'always_show_self',
-            'widget'       => 'select',
-            'widget_select_choices' => array(
+            'title' => 'always display self',
+            'type' => 'text',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.openpsa.calendar',
+                'name' => 'always_show_self'
+            ),
+            'widget' => 'select',
+            'widget_select_choices' => array
+            (
                 1 => 'yes',            
                 0 => 'no',
             ),
         ),         
-        'event_label'  => array
+        'event_label' => array
         (
-            'description' => 'event label field',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.openpsa.calendar',
-            'config_key' => 'event_label',
-            'end_fieldgroup' => '',
+            'title' => 'event label field',
+            'type' => 'text',
+            'storage' => array
+            (
+                'location' => 'configuration',
+                'domain' => 'org.openpsa.calendar',
+                'name' => 'event_label'
+            ),
+            'end_fieldset' => '',
         ),
     ),
 ),

@@ -18,7 +18,10 @@ class org_openpsa_calendar_handler_filters extends midcom_baseclasses_components
     {
         parent::__construct();
     }
-
+    
+    /**
+     * Handle the AJAX request
+     */
     function _handle_ajax()
     {
         $update_succeeded = false;
@@ -49,96 +52,87 @@ class org_openpsa_calendar_handler_filters extends midcom_baseclasses_components
     }
 
     /**
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
+     * Handle the request for editing contact list
+     * 
+     * @access public
+     * @param String $handler_id    Name of the request handler
+     * @param array $args           Variable arguments
+     * @param array &$data          Public request data, passed by reference
+     * @return boolean              Indicating success
      */
     function _handler_edit($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
-
-        $this->_request_data['user'] = $_MIDCOM->auth->user->get_storage();
-
-        if (   array_key_exists('org_openpsa_calendar_filters_add', $_POST)
-            || array_key_exists('org_openpsa_calendar_filters_remove', $_POST))
+        
+        // Get the current user
+        $this->_person = new midcom_db_person($_MIDGARD['user']);
+        $this->_person->require_do('midgard:update');
+        
+        // Load the schema database
+        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_filters'));
+        
+        // Load the controller
+        $this->_controller = midcom_helper_datamanager2_controller::create('simple');
+        $this->_controller->schemadb =& $this->_schemadb;
+        $this->_controller->set_storage($this->_person);
+        if (! $this->_controller->initialize())
         {
-            $this->_handle_ajax();
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to initialize a DM2 controller instance for article {$this->_article->id}.");
+            // This will exit.
         }
-
-        // Debug helpers
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/messages.js");
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.helpers/ajaxutils.js");
-
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.calendar/filters.js");
-        $_MIDCOM->add_jsonload("org_openpsa_calendar_filters_makeEditable();");
-
-        $this->_request_data['buddylist'] = array();
-
-        $qb = org_openpsa_contacts_buddy::new_query_builder();
-        $qb->add_constraint('account', '=', $this->_request_data['user']->guid);
-        $qb->add_constraint('blacklisted', '=', false);
-        $buddies = $qb->execute();
-
-        foreach ($buddies as $buddy)
+        
+        // Process the form
+        switch ($this->_controller->process_form())
         {
-            $person = new org_openpsa_contacts_person($buddy->buddy);
-            if ($person)
-            {
-                $this->_request_data['buddylist'][$person->id] = $person;
-            }
+            case 'save':
+            case 'cancel':
+                if (isset($_GET['org_openpsa_calendar_returnurl']))
+                {
+                    $url = $_GET['org_openpsa_calendar_returnurl'];
+                }
+                else
+                {
+                    $url = '';
+                }
+                $_MIDCOM->relocate($url);
+                // This will exit
         }
-
-        // Add user to the filter list if needed
-        if (   !array_key_exists($this->_request_data['user']->id, $this->_request_data['buddylist'])
-            && $_MIDCOM->auth->can_do('midgard:create', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']))
+        
+        // Add the breadcrumb pieces
+        $tmp = array();
+        
+        if (isset($_GET['org_openpsa_calendar_returnurl']))
         {
-                $this->_request_data['buddylist'][$this->_request_data['user']->id] = $this->_request_data['user'];
-        }
-
-        if (array_key_exists('org_openpsa_calendar_returnurl', $_GET))
-        {
-            $this->_view_toolbar->add_item(
-                Array(
-                    MIDCOM_TOOLBAR_URL => $_GET['org_openpsa_calendar_returnurl'],
-                    MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('back to calendar'),
-                    MIDCOM_TOOLBAR_HELPTEXT => null,
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_left.png',
-                    MIDCOM_TOOLBAR_ENABLED => true,
-                )
+            $tmp[] = array
+            (
+                MIDCOM_NAV_URL => $_GET['org_openpsa_calendar_returnurl'],
+                MIDCOM_NAV_NAME => $this->_l10n->get('calendar'),
             );
         }
-
-        $_MIDCOM->set_pagetitle($this->_request_data['l10n']->get('choose calendars'));
+        
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => 'filters/',
+            MIDCOM_NAV_NAME => $this->_l10n->get('choose calendars'),
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
 
         return true;
     }
 
     /**
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
+     * Show the contact editing interface
+     * 
+     * @access public
+     * @param String $handler_id    Name of the request handler
+     * @param array &$data          Public request data, passed by reference
      */
     function _show_edit($handler_id, &$data)
     {
-        if (count($this->_request_data['buddylist']) > 0)
-        {
-            midcom_show_style("show-filters-header");
-            foreach ($this->_request_data['buddylist'] as $person)
-            {
-                $this->_request_data['person'] =& $person;
-                if ($this->_request_data['user']->parameter('org_openpsa_calendar_show', $person->guid))
-                {
-                    $this->_request_data['subscribed'] = true;
-                }
-                else
-                {
-                    $this->_request_data['subscribed'] = false;
-                }
-                midcom_show_style("show-filters-item");
-            }
-            midcom_show_style("show-filters-footer");
-        }
+        $data['controller'] =& $this->_controller;
+        $data['person'] =& $this->_person;
+        
+        midcom_show_style('calendar-filter-chooser');
     }
 }
 ?>

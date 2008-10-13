@@ -30,10 +30,16 @@
             'role' => 'lead',
             'active' => 'no',
         ),
+        'adrenalin' => array
+        (
+            'name' => 'Arttu Manninen',
+            'email' => 'arttu@kaktus.cc',
+            'role' => 'developer',
+        ),
     ),
     'dependencies' => array
     (
-        'midcom.helper.datamanager' => array(),
+        'midcom.helper.datamanager2' => array(),
         'org.openpsa.core' => array(),
         'org.openpsa.mail' => array(),
         'org.openpsa.helpers' => array(),
