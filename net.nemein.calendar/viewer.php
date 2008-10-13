@@ -193,7 +193,7 @@ class net_nemein_calendar_viewer extends midcom_baseclasses_components_request
         // Match /config/
         $this->_request_switch['config'] = Array
         (
-            'handler' => Array('midcom_helper_dm2config_config', 'config'),
+            'handler' => Array('midcom_core_handler_configdm2', 'config'),
             'fixed_args' => Array('config'),
         );
 

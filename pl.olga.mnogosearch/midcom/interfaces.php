@@ -34,7 +34,6 @@ class pl_olga_mnogosearch_interface extends midcom_baseclasses_components_interf
         $this->_autoload_libraries = Array
         (
             'midcom.helper.datamanager2',
-            'midcom.helper.dm2config',
         );
     }
 

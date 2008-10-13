@@ -1,6 +1,6 @@
 <?php
 /**
- * @package midcom.helper.dm2config
+ * @package midcom.core.handler
  * @author The Midgard Project, http://www.midgard-project.org
  * @version $Id: viewer.php 11095 2007-07-04 16:31:49Z rambo $
  * @copyright The Midgard Project, http://www.midgard-project.org
@@ -18,18 +18,16 @@
  *    component configuration (_config/config.inc_)
  * 3. Refer to DM2 component configuration helper with a request handler,
  *    e.g.
- * 
+ *
+ * <code>
  *     $this->_request_handler['config'] = array
  *     (
- *         'handler' => array ('midcom_helper_dm2config_config', 'config'),
+ *         'handler' => array ('midcom_core_handler_configdm2', 'config'),
  *         'fixed_args' => array ('config'),
  *     );
+ * </code>
  * 
- * 4. Remember to include midcom.helper.dm2config as a requirement in
- *    _config/manifest.inc_ and to set it in $this->_autoload_libraries in
- *    _midcom/interfaces.php_
- * 
- * @package midcom.helper.dm2config
+ * @package midcom.core.handler
  */
 class midcom_core_handler_configdm2 extends midcom_baseclasses_components_handler
 {
@@ -134,10 +132,7 @@ class midcom_core_handler_configdm2 extends midcom_baseclasses_components_handle
      * @return boolean              Indicating success
      */
     function _handler_config($handler_id, $args, &$data)
-    {
-        // Prepend the style directory to show configuration style elements
-        $_MIDCOM->style->prepend_component_styledir('midcom.helper.dm2config');
-        
+    {        
         // Require corresponding ACL's
         $this->_topic->require_do('midgard:update');
         $this->_topic->require_do('midgard:config');
@@ -161,13 +156,13 @@ class midcom_core_handler_configdm2 extends midcom_baseclasses_components_handle
         switch ($this->_controller->process_form())
         {
             case 'save':
-                $_MIDCOM->uimessages->add($this->_l10n_midcom->get('component configuration'), $_MIDCOM->i18n->get_string('configuration saved', 'midcom.helper.dm2config'));
+                $_MIDCOM->uimessages->add($this->_l10n_midcom->get('component configuration'), $this->_l10n_midcom->get('configuration saved'));
                 $_MIDCOM->relocate('');
                 // This will exit
                 break;
             
             case 'cancel':
-                $_MIDCOM->uimessages->add($this->_l10n_midcom->get('component configuration'), $_MIDCOM->i18n->get_string('cancelled', 'midcom.helper.dm2config'));
+                $_MIDCOM->uimessages->add($this->_l10n_midcom->get('component configuration'), $this->_l10n_midcom->get('cancelled'));
                 $_MIDCOM->relocate('');
                 // This will exit
                 break;
@@ -195,7 +190,7 @@ class midcom_core_handler_configdm2 extends midcom_baseclasses_components_handle
         );
 
         $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
-        $_MIDCOM->set_pagetitle(sprintf($_MIDCOM->i18n->get_string('component configuration for folder %s', 'midcom.helper.dm2config'), $this->_topic->extra));
+        $_MIDCOM->set_pagetitle(sprintf($this->_l10n_midcom->get('component configuration for folder %s'), $this->_topic->extra));
         
         debug_add('Schemadb loaded for DM2 configuration');
         debug_pop();

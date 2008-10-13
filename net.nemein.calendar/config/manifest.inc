@@ -36,7 +36,6 @@
         ),
         'org.routamc.positioning' => array(),
         'de.bitfolge.feedcreator' => array(),
-        'midcom.helper.dm2config' => array(),
         'Calendar' => array
         (
             'channel' => 'pear.php.net',

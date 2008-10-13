@@ -33,7 +33,6 @@ class net_nemein_personnel_interface extends midcom_baseclasses_components_inter
         $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager2',
-            'midcom.helper.dm2config',
         );
     }
     

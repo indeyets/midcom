@@ -35,7 +35,7 @@ class net_nemein_feedcollector_viewer extends midcom_baseclasses_components_requ
         // Handle /config
         $this->_request_switch['config'] = array
         (
-            'handler' => Array('midcom_helper_dm2config_config', 'config'),
+            'handler' => Array('midcom_core_handler_configdm2', 'config'),
             'fixed_args' => Array('config'),
         );
 

@@ -45,7 +45,7 @@ class pl_olga_mnogosearch_viewer extends midcom_baseclasses_components_request
         // *** Prepare the request switch ***
         $this->_request_switch['config'] = array
         (
-            'handler' => array ('midcom_helper_dm2config_config', 'config'),
+            'handler' => array ('midcom_core_handler_configdm2', 'config'),
             'fixed_args' => array ('config'),
         );
 
@@ -53,7 +53,6 @@ class pl_olga_mnogosearch_viewer extends midcom_baseclasses_components_request
         (
             'handler' => Array('pl_olga_mnogosearch_handler_view', 'view'),
         );
-        debug_pop();
     }
 
 

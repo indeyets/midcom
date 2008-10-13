@@ -27,8 +27,8 @@
     'dependencies' => array
     (
         'midcom.helper.datamanager2' => array (),
-        'midcom.helper.dm2config' => array (),
-        'midcom' => array (),
+        'org.openpsa.mail' => array(),
+        'midcom' => array(),
         'Net_SMTP' => array
         (
             'channel' => 'pear.php.net',

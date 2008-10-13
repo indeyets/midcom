@@ -38,7 +38,6 @@ class net_nemein_calendar_interface extends midcom_baseclasses_components_interf
         $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager2',
-            'midcom.helper.dm2config',
             'net.nemein.repeathandler',
             'org.openpsa.calendarwidget',
         );
