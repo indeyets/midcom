@@ -287,6 +287,10 @@ class net_nehmer_buddylist_entry extends __net_nehmer_buddylist_entry
         $_MIDCOM->auth->require_do('midgard:owner', $this);
         $_MIDCOM->auth->require_do('midgard:update', $buddy);
         $_MIDCOM->auth->require_do('midgard:privileges', $buddy);
+        
+        // Invalidate cache for both users
+        $_MIDCOM->cache->invalidate($buddy_user->guid);
+        $_MIDCOM->cache->invalidate($buddy->guid);
 
         $this->isapproved = true;
         $this->update();
