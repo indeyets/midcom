@@ -53,11 +53,14 @@ class org_routamc_photostream_handler_index extends midcom_baseclasses_component
                 'title' => $this->_l10n->get('my photos'),
             );
 
-            $data['photostreams'][] = array
-            (
-                'url' => "tag/{$user->username}/",
-                'title' => $this->_l10n->get('my tags'),
-            );
+            if ($this->_config->get('enable_tags'))
+            {
+                $data['photostreams'][] = array
+                (
+                    'url' => "tag/{$user->username}/",
+                    'title' => $this->_l10n->get('my tags'),
+                );
+            }
         }
 
         // Show "all" options
@@ -67,11 +70,14 @@ class org_routamc_photostream_handler_index extends midcom_baseclasses_component
             'title' => $this->_l10n->get('all photos'),
         );
 
-        $data['photostreams'][] = array
-        (
-            'url' => 'tag/all/',
-            'title' => $this->_l10n->get('all tags'),
-        );
+        if ($this->_config->get('enable_tags'))
+        {
+            $data['photostreams'][] = array
+            (
+                'url' => 'tag/all/',
+                'title' => $this->_l10n->get('all tags'),
+            );
+        }
 
         $data['view_title'] = $this->_topic->extra;
         $_MIDCOM->set_pagetitle($data['view_title']);

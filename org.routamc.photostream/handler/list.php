@@ -485,6 +485,12 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _handler_photostream_tags($handler_id, $args, &$data)
     {
+        if (!$this->_config->get('enable_tags'))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Tag view not available.");
+            // This will exit.
+        }
+
         if (strstr($handler_id, 'raw'))
         {
             $_MIDCOM->skip_page_style = true;
@@ -537,6 +543,12 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
      */
     function _handler_photostream_tag($handler_id, $args, &$data)
     {
+        if (!$this->_config->get('enable_tags'))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Tag view not available.");
+            // This will exit.
+        }
+
         if (strstr($handler_id, 'raw'))
         {
             $_MIDCOM->skip_page_style = true;

@@ -81,6 +81,11 @@ if (   isset($data['next_guid'])
             echo "    <dt>{$context}</dt>\n";
             foreach ($tags as $tag => $url)
             {
+                if (!$data['config']->get('enable_tags'))
+                {
+                    echo "        <dd class=\"tag\">{$tag}</dd>\n";
+                    continue;
+                }
                 echo "        <dd class=\"tag\"><a href=\"{$prefix}tag/{$data['user_url']}/{$tag}\">{$tag}</a></dd>\n";
             }
         }

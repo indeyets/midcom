@@ -4,6 +4,8 @@
 // Entry page
 'entry_page' => 'lists',
 
+'enable_tags' => true,
+
 // Email API settings
 'api_email_enable' => false,
 'api_email_schema' => 'photo',
