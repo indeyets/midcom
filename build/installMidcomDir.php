@@ -136,10 +136,10 @@ class installMidcomDir extends Task {
             return;
         }
         $ret = "";
-        exec($command, & $output, $ret);
+        exec($command, $output, $ret);
         if ($ret !== 0)
         {
-            throw new Exception("Exec of $command returned non zero code $ret");
+            throw new Exception("Exec of {$command} returned non zero code {$ret}");
         }
 
     }
