@@ -27,7 +27,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
         );
         $this->_autoload_libraries = array
         (
-            'midcom.helper.datamanager',
+            'midcom.helper.datamanager2',
             'org.openpsa.core',
             'org.openpsa.helpers',
             'org.openpsa.calendarwidget',

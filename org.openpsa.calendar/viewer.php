@@ -283,61 +283,6 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
         midcom_show_style('show-not-initialized');
     }
 
-
-    function _creation_dm_callback(&$datamanager)
-    {
-        // This is what Datamanager calls to actually create an event
-        $result = array
-        (
-            'storage' => null,
-            'success' => false,
-        );
-
-        $event = new org_openpsa_calendar_event();
-        //Pre-populate some data to the event to allow consistency checks to work (I *really* hate the way DM handles creation)
-        if (array_key_exists('midcom_helper_datamanager_field_participants', $_POST))
-        {
-            $event->participants = $_POST['midcom_helper_datamanager_field_participants'];
-        }
-        if (array_key_exists('midcom_helper_datamanager_field_busy', $_POST))
-        {
-            $event->busy = $_POST['midcom_helper_datamanager_field_busy'];
-        }
-        if (array_key_exists('midcom_helper_datamanager_field_start', $_POST))
-        {
-            $event->start = strtotime($_POST['midcom_helper_datamanager_field_start']);
-        }
-        if (array_key_exists('midcom_helper_datamanager_field_end', $_POST))
-        {
-            $event->end = strtotime($_POST['midcom_helper_datamanager_field_end']);
-        }
-        $event->send_notify = false;
-
-        $stat = $event->create();
-        if ($stat)
-        {
-            $this->_request_data['event'] = new org_openpsa_calendar_event($event->id);
-            $rel_ret = org_openpsa_relatedto_handler::on_created_handle_relatedto($this->_request_data['event'], 'org.openpsa.calendar');
-            debug_add("org_openpsa_relatedto_handler returned \n===\n" . print_r($rel_ret) . "===\n");
-            $this->_request_data['event']->notify_force_add = true;
-            $result['storage'] =& $this->_request_data['event'];
-            $result['success'] = true;
-            //return $result;
-        }
-        else
-        {
-            $this->_dm_createfailed_event = $event;
-            $result = null;
-        }
-        return $result;
-    }
-
-    function _handler_event_new_toolbar()
-    {
-        // Add toolbar items
-        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
-    }
-
     function _handler_frontpage($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
