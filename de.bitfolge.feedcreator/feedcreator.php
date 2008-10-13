@@ -899,7 +899,7 @@ class RSSCreator10 extends FeedCreator {
         if ($this->items[0]->thumb!="")
             $feed.= "    xmlns:photo=\"http://www.pheed.com/pheed/\"\n";
         if ($this->items[0]->lat!="")
-            $feed.= "    xmlns:georss=\"http://www.georss.org/georss/\"\n";
+            $feed.= "    xmlns:georss=\"http://www.georss.org/georss\"\n";
         $feed.= "    xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n";
         $feed.= "    <channel rdf:about=\"".$this->syndicationURL."\">\n";
         $feed.= "        <title>".htmlspecialchars($this->title)."</title>\n";

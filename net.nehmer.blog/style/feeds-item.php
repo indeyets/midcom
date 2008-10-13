@@ -39,7 +39,7 @@ else
 }
 
 $item->guid = $_MIDCOM->permalinks->create_permalink($data['article']->guid);
-$item->date = $data['article']->metadata->published;
+$item->date = (int) $data['article']->metadata->published;
 $item->description = '';
 
 if ($data['article']->abstract != '')
