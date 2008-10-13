@@ -27,7 +27,6 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
         (
             'org.openpsa.helpers',
             'midcom.helper.datamanager2',
-            'org.openpsa.qbpager',
         );
     }
 

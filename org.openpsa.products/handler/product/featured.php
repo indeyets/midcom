@@ -25,6 +25,11 @@ class org_openpsa_products_handler_product_featured extends midcom_baseclasses_c
         parent::__construct();
     }
 
+    function _on_initialize()
+    {
+        $_MIDCOM->load_library('org.openpsa.qbpager');
+    }
+
     function _list_products($show_products = 1,$product_group = '')
     {
         $product_qb = new org_openpsa_qbpager('org_openpsa_products_product_dba', 'featured_products');

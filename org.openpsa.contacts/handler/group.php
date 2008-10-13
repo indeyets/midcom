@@ -596,6 +596,7 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
         if ($this->_view == "area_group_members")
         {
             // This is most likely a dynamic_load
+            $_MIDCOM->load_library('org.openpsa.qbpager');
             $qb = new org_openpsa_qbpager('midcom_baseclasses_database_member', 'group_members');
             $qb->add_constraint('gid', '=', $this->_request_data['group']->id);
             $qb->results_per_page = 10;

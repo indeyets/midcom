@@ -22,6 +22,11 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
         parent::__construct();
     }
 
+    function _on_initialize()
+    {
+        $_MIDCOM->load_library('org.openpsa.qbpager');
+    }
+
     /**
      * Redirector moving user to the search form of first schema
      *

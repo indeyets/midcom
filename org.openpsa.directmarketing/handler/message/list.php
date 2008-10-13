@@ -57,6 +57,9 @@ class org_openpsa_directmarketing_handler_message_list extends midcom_baseclasse
             // TODO: error reporting
             return false;
         }
+
+        $_MIDCOM->load_library('org.openpsa.qbpager');
+
         $data['campaign'] =& $this->_campaign;
         $this->_load_datamanager();
 

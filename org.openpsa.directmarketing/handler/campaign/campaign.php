@@ -58,6 +58,8 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
             // This will 404
         }
 
+        $_MIDCOM->load_library('org.openpsa.qbpager');
+
         $this->_load_datamanager();
         $this->_datamanager->autoset_storage($this->_campaign);
         
