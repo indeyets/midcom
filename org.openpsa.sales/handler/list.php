@@ -49,11 +49,11 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('create salesproject'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_people.png',
-                MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_sales_salesproject'),
+                MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_sales_salesproject_dba'),
             )
         );
 
-        $qb = org_openpsa_sales_salesproject::new_query_builder();
+        $qb = org_openpsa_sales_salesproject_dba::new_query_builder();
 
         if ($handler_id == 'list_active')
         {

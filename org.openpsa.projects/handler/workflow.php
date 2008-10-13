@@ -26,7 +26,7 @@ class org_openpsa_projects_handler_workflow extends midcom_baseclasses_component
 
     function _load_task($identifier)
     {
-        $task = new org_openpsa_projects_task($identifier);
+        $task = new org_openpsa_projects_task_dba($identifier);
 
         if (!is_object($task))
         {

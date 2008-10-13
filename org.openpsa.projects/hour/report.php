@@ -11,7 +11,7 @@
  *
  * @package org.openpsa.projects
  */
-class org_openpsa_projects_hour_report extends __org_openpsa_projects_hour_report
+class org_openpsa_projects_hour_report_dba extends __org_openpsa_projects_hour_report_dba
 {
     // Simple readonly boolean property on whether this is invoiced
     var $is_invoiced = false;
@@ -26,7 +26,7 @@ class org_openpsa_projects_hour_report extends __org_openpsa_projects_hour_repor
     {
         if ($this->task != 0)
         {
-            $parent = new org_openpsa_projects_task($this->task);
+            $parent = new org_openpsa_projects_task_dba($this->task);
             return $parent;
         }
         else

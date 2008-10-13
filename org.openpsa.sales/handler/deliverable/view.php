@@ -17,7 +17,7 @@ class org_openpsa_sales_handler_deliverable_view extends midcom_baseclasses_comp
     /**
      * The deliverable to display
      *
-     * @var org_openpsa_sales_salesproject_deliverable
+     * @var org_openpsa_sales_salesproject_deliverable_dba
      * @access private
      */
     var $_deliverable = null;
@@ -25,7 +25,7 @@ class org_openpsa_sales_handler_deliverable_view extends midcom_baseclasses_comp
     /**
      * The salesproject of the deliverable
      *
-     * @var org_openpsa_sales_salesproject
+     * @var org_openpsa_sales_salesproject_dba
      * @access private
      */
     var $_salesproject = null;
@@ -102,13 +102,13 @@ class org_openpsa_sales_handler_deliverable_view extends midcom_baseclasses_comp
      */
     function _handler_view($handler_id, $args, &$data)
     {
-        $this->_deliverable = new org_openpsa_sales_salesproject_deliverable($args[0]);
+        $this->_deliverable = new org_openpsa_sales_salesproject_deliverable_dba($args[0]);
         if (!$this->_deliverable)
         {
             return false;
         }
 
-        $this->_salesproject = new org_openpsa_sales_salesproject($this->_deliverable->salesproject);
+        $this->_salesproject = new org_openpsa_sales_salesproject_dba($this->_deliverable->salesproject);
         if (!$this->_salesproject)
         {
             return false;

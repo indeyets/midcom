@@ -56,7 +56,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
         {
             $this->_initialize_datamanager('salesproject', $this->_config->get('schemadb_salesproject'));
         }
-        $salesproject = new org_openpsa_sales_salesproject($identifier);
+        $salesproject = new org_openpsa_sales_salesproject_dba($identifier);
 
         if (!is_object($salesproject))
         {
@@ -86,11 +86,11 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
             "success" => false,
             "storage" => null,
         );
-        $salesproject = new org_openpsa_sales_salesproject();
+        $salesproject = new org_openpsa_sales_salesproject_dba();
         $stat = $salesproject->create();
         if ($stat)
         {
-            $this->_request_data['salesproject'] = new org_openpsa_sales_salesproject($salesproject->id);
+            $this->_request_data['salesproject'] = new org_openpsa_sales_salesproject_dba($salesproject->id);
             //Debugging
             $result["storage"] =& $this->_request_data['salesproject'];
             $result["success"] = true;
@@ -142,7 +142,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
 
         // List deliverables
         $this->_schemadb_deliverable = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_deliverable'));
-        $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
+        $deliverable_qb = org_openpsa_sales_salesproject_deliverable_dba::new_query_builder();
         $deliverable_qb->add_constraint('salesproject', '=', $this->_request_data['salesproject']->id);
         $deliverable_qb->add_constraint('up', '=', 0);
         $deliverable_qb->add_order('created', 'DESC');
@@ -236,14 +236,14 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
     function _handler_new_salesproject($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
-        $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_sales_salesproject');
+        $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_sales_salesproject_dba');
 
         if (!isset($this->_datamanagers['salesproject']))
         {
             $this->_initialize_datamanager('salesproject', $this->_config->get('schemadb_salesproject'));
         }
 
-        org_openpsa_helpers_schema_modifier($this->_datamanagers['salesproject'], 'code', 'default', org_openpsa_sales_salesproject::generate_salesproject_number(), 'newsalesproject', false);
+        org_openpsa_helpers_schema_modifier($this->_datamanagers['salesproject'], 'code', 'default', org_openpsa_sales_salesproject_dba::generate_salesproject_number(), 'newsalesproject', false);
 
         if (!$this->_datamanagers['salesproject']->init_creation_mode('newsalesproject',$this,'_creation_dm_callback'))
         {

@@ -74,7 +74,7 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
      */
     function &_prepare_qb()
     {
-        $qb = new org_openpsa_qbpager('org_openpsa_projects_hour_report', 'org_openpsa_projects_hour_report');
+        $qb = new org_openpsa_qbpager('org_openpsa_projects_hour_report_dba', 'org_openpsa_projects_hour_report_dba');
         $qb->results_per_page = 30;
         $this->_request_data['qb'] =& $qb;
         return $qb;
@@ -122,7 +122,7 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
                 $qb->add_constraint('person', '=', $_MIDGARD['user']);
                 // Fallthrough
             case 'list_hours_task_all':
-                $task = new org_openpsa_projects_task($args[0]);
+                $task = new org_openpsa_projects_task_dba($args[0]);
                 if (   !$task
                     || !$task->guid)
                 {

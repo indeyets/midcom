@@ -7,7 +7,7 @@ echo date("Y-m-d H:i:s", $made) . "<br>\n";;
 $_MIDCOM->componentloader->load_graceful('net.nemein.tag');
 */
 
-$task = new org_openpsa_projects_task('b093253a0c96d4cb7868787f8a2357fc');
+$task = new org_openpsa_projects_task_dba('b093253a0c96d4cb7868787f8a2357fc');
 $broker = new org_openpsa_projects_projectbroker();
 $prospects = $broker->find_task_prospects($task);
 echo "prospects:\n<pre>\n" . sprint_r($prospects) . "</pre>\n";

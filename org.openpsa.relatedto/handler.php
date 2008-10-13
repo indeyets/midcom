@@ -368,7 +368,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
                             MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('create task', $button_component),
                             MIDCOM_TOOLBAR_HELPTEXT => null,
                             MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new_task.png',
-                            MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_projects_task'),
+                            MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_projects_task_dba'),
                             MIDCOM_TOOLBAR_OPTIONS  => Array(
                                 //PONDER: Open in new window or not??
                                 'target' => 'newtask',

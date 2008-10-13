@@ -26,7 +26,7 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
 
     function _load_task($identifier)
     {
-        $task = new org_openpsa_projects_task($identifier);
+        $task = new org_openpsa_projects_task_dba($identifier);
 
         if (!is_object($task))
         {

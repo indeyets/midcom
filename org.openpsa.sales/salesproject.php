@@ -12,7 +12,7 @@
  *
  * @package org.openpsa.sales
  */
-class org_openpsa_sales_salesproject extends __org_openpsa_sales_salesproject
+class org_openpsa_sales_salesproject_dba extends __org_openpsa_sales_salesproject_dba
 {
     var $contacts = array(); //Shorthand access for contact members
     var $old_contacts = array(); //For diffing the ones above
@@ -35,7 +35,7 @@ class org_openpsa_sales_salesproject extends __org_openpsa_sales_salesproject
         $value = 0;
         $cost = 0;
 
-        $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
+        $deliverable_qb = org_openpsa_sales_salesproject_deliverable_dba::new_query_builder();
         $deliverable_qb->add_constraint('salesproject', '=', $this->id);
         $deliverable_qb->add_constraint('up', '=', 0);
         $deliverable_qb->add_constraint('state', '<>', ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_DECLINED);
@@ -70,7 +70,7 @@ class org_openpsa_sales_salesproject extends __org_openpsa_sales_salesproject
     {
         // TODO: Make configurable
         $year = date('Y', time());
-        $qb = org_openpsa_sales_salesproject::new_query_builder();
+        $qb = org_openpsa_sales_salesproject_dba::new_query_builder();
         $qb->add_order('created', 'DESC');
         $qb->add_constraint('start', '>=', mktime(0, 0, 1, 1, 1, $year));
         $previous = $qb->count_unchecked();
@@ -111,7 +111,7 @@ class org_openpsa_sales_salesproject extends __org_openpsa_sales_salesproject
             $qb->end_group();
             $qb->begin_group('AND');
                 $qb->add_constraint('fromComponent', '=', 'org.openpsa.projects');
-                $qb->add_constraint('fromClass', '=', 'org_openpsa_projects_task');
+                $qb->add_constraint('fromClass', '=', 'org_openpsa_projects_task_dba');
             $qb->end_group();
         $qb->end_group();
         $links = $qb->execute();
@@ -129,8 +129,8 @@ class org_openpsa_sales_salesproject extends __org_openpsa_sales_salesproject
             $to_sort = $default;
             switch ($link->fromClass)
             {
-                case 'org_openpsa_projects_task':
-                    $task = new org_openpsa_projects_task($link->fromGuid);
+                case 'org_openpsa_projects_task_dba':
+                    $task = new org_openpsa_projects_task_dba($link->fromGuid);
                     if (!$task)
                     {
                         continue 2;
@@ -175,8 +175,8 @@ class org_openpsa_sales_salesproject extends __org_openpsa_sales_salesproject
                     continue 2;
             }
         }
-        usort($sort_prev, array('org_openpsa_sales_salesproject', '_sort_action_by_time_reverse'));
-        usort($sort_next, array('org_openpsa_sales_salesproject', '_sort_action_by_time'));
+        usort($sort_prev, array('org_openpsa_sales_salesproject_dba', '_sort_action_by_time_reverse'));
+        usort($sort_next, array('org_openpsa_sales_salesproject_dba', '_sort_action_by_time'));
         debug_add("sort_next \n===\n" . sprint_r($sort_next) . "===\n");
         debug_add("sort_prev \n===\n" . sprint_r($sort_prev) . "===\n");
 
@@ -333,7 +333,7 @@ class org_openpsa_sales_salesproject extends __org_openpsa_sales_salesproject
 
         foreach ($added_contacts as $resourceId => $bool)
         {
-            $resObj = new org_openpsa_sales_salesproject_member();
+            $resObj = new org_openpsa_sales_salesproject_member_dba();
             $resObj->person = $resourceId;
             $resObj->salesproject = $this->id;
             $resObj->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_SALESPROJECT_MEMBER;
@@ -368,7 +368,7 @@ class org_openpsa_sales_salesproject extends __org_openpsa_sales_salesproject
         {
             //There should be only one match in any case
             $finder->fetch();
-            $resObj = new org_openpsa_sales_salesproject_member($finder->id);
+            $resObj = new org_openpsa_sales_salesproject_member_dba($finder->id);
             return $resObj;
         }
         return false;
@@ -378,7 +378,7 @@ class org_openpsa_sales_salesproject extends __org_openpsa_sales_salesproject
     {
         if ($this->up != 0)
         {
-            $parent = new org_openpsa_sales_salesproject($this->up);
+            $parent = new org_openpsa_sales_salesproject_dba($this->up);
             return $parent;
         }
         else

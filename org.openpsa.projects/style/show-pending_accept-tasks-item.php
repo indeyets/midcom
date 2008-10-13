@@ -21,7 +21,7 @@ echo "<dd>\n";
 if ($data['task']->manager)
 {
     // FIXME: List resources instead
-    $qb = org_openpsa_projects_task_resource::new_query_builder();
+    $qb = org_openpsa_projects_task_resource_dba::new_query_builder();
     $qb->add_constraint('task', '=', $data['task']->id);
     $ret = $qb->execute();
     if (   is_array($ret)

@@ -65,7 +65,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
         // Generate invoice number
         // TODO: Check that a default hasn't already been set
-        org_openpsa_helpers_schema_modifier($this->_datamanager, 'invoiceNumber', 'default', org_openpsa_invoices_invoice::generate_invoice_number(), 'default', false);
+        org_openpsa_helpers_schema_modifier($this->_datamanager, 'invoiceNumber', 'default', org_openpsa_invoices_invoice_dba::generate_invoice_number(), 'default', false);
 
         // Make VAT field a select
         $vat_array = explode(',', $this->_config->get('vat_percentages'));
@@ -138,7 +138,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             $this->_initialize_datamanager($this->_config->get('schemadb'));
         }
 
-        $this->_request_data['invoice'] = new org_openpsa_invoices_invoice($identifier);
+        $this->_request_data['invoice'] = new org_openpsa_invoices_invoice_dba($identifier);
 
         if (!is_object($this->_request_data['invoice']))
         {
@@ -163,11 +163,11 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             'success' => false,
             'storage' => null,
         );
-        $invoice = new org_openpsa_invoices_invoice();
+        $invoice = new org_openpsa_invoices_invoice_dba();
         $stat = $invoice->create();
         if ($stat)
         {
-            $this->_request_data['invoice'] = new org_openpsa_invoices_invoice($invoice->id);
+            $this->_request_data['invoice'] = new org_openpsa_invoices_invoice_dba($invoice->id);
             $result['storage'] =& $this->_request_data['invoice'];
             $result['success'] = true;
             return $result;
@@ -190,7 +190,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
         $_MIDCOM->auth->require_valid_user();
 
-        $this->_request_data['invoice'] = new org_openpsa_invoices_invoice($args[0]);
+        $this->_request_data['invoice'] = new org_openpsa_invoices_invoice_dba($args[0]);
         if ($this->_request_data['invoice']->guid == "")
         {
             return false;
@@ -209,12 +209,12 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             $qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
             $qb->add_constraint('toGuid', '=', $this->_request_data['invoice']->guid);
             $qb->add_constraint('fromComponent', '=', 'org.openpsa.projects');
-            $qb->add_constraint('fromClass', '=', 'org_openpsa_projects_task');
+            $qb->add_constraint('fromClass', '=', 'org_openpsa_projects_task_dba');
             $qb->add_constraint('status', '<>', ORG_OPENPSA_RELATEDTO_STATUS_NOTRELATED);
             $links = $qb->execute();
             foreach ($links as $link)
             {
-                $task = new org_openpsa_projects_task($link->fromGuid);
+                $task = new org_openpsa_projects_task_dba($link->fromGuid);
                 if ($task)
                 {
                     if ($task->complete())
@@ -252,7 +252,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
         $_MIDCOM->auth->require_valid_user();
 
-        $this->_request_data['invoice'] = new org_openpsa_invoices_invoice($args[0]);
+        $this->_request_data['invoice'] = new org_openpsa_invoices_invoice_dba($args[0]);
         if ($this->_request_data['invoice']->guid == "")
         {
             return false;
@@ -387,7 +387,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         );
         foreach ($hour_links as $link)
         {
-            $report = new org_openpsa_projects_hour_report($link->hourReport);
+            $report = new org_openpsa_projects_hour_report_dba($link->hourReport);
             if (!$report)
             {
                 // Could not fetch report for some reason
@@ -443,7 +443,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         $hours = $hours_qb->execute();
         foreach ($hours as $invoice_hour)
         {
-            $hour_report = new org_openpsa_projects_hour_report($invoice_hour->hourReport);
+            $hour_report = new org_openpsa_projects_hour_report_dba($invoice_hour->hourReport);
             if (!array_key_exists($hour_report->task, $data['invoice_hours']))
             {
                 $data['invoice_hours'][$hour_report->task] = array();
@@ -516,7 +516,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
     function _handler_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
-        $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_invoices_invoice');
+        $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_invoices_invoice_dba');
 
         if (   $handler_id == 'invoice_new'
             && count($args) == 1)

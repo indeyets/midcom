@@ -62,7 +62,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('create invoice'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/printer.png',
-                MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_invoices_invoice'),
+                MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_invoices_invoice_dba'),
             )
         );
 
@@ -106,7 +106,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
      */
     function _show_unsent($handler_id, &$data)
     {
-        $qb = org_openpsa_invoices_invoice::new_query_builder();
+        $qb = org_openpsa_invoices_invoice_dba::new_query_builder();
         $qb->add_constraint('sent', '=', 0);
         $qb->add_order('due');
         $qb->add_order('invoiceNumber');
@@ -127,7 +127,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
      */
     function _show_overdue($handler_id, &$data)
     {
-        $qb = org_openpsa_invoices_invoice::new_query_builder();
+        $qb = org_openpsa_invoices_invoice_dba::new_query_builder();
         $qb->add_constraint('sent', '>', 0);
         $qb->add_constraint('paid', '=', 0);
         $qb->add_constraint('due', '<=', time());
@@ -150,7 +150,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
      */
     function _show_open($handler_id, &$data)
     {
-        $qb = org_openpsa_invoices_invoice::new_query_builder();
+        $qb = org_openpsa_invoices_invoice_dba::new_query_builder();
         $qb->add_constraint('sent', '>', 0);
         $qb->add_constraint('paid', '=', 0);
         $qb->add_constraint('due', '>', time());
@@ -173,7 +173,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
      */
     function _show_recent($handler_id, &$data)
     {
-        $qb = org_openpsa_invoices_invoice::new_query_builder();
+        $qb = org_openpsa_invoices_invoice_dba::new_query_builder();
         $qb->add_constraint('paid', '>', 0);
         $qb->add_order('paid', 'DESC');
         $qb->set_limit(6);
@@ -219,11 +219,11 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
                 MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('create invoice'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/printer.png',
-                MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_invoices_invoice'),
+                MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_invoices_invoice_dba'),
             )
         );
 
-        $qb = org_openpsa_invoices_invoice::new_query_builder();
+        $qb = org_openpsa_invoices_invoice_dba::new_query_builder();
         $qb->add_constraint('customer', '=', $this->_request_data['customer']->id);
 
         if ($handler_id == 'list_customer_open')
@@ -294,12 +294,12 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         }
 
         // We're displaying invoices of a specific deliverable
-        $this->_request_data['deliverable'] = new org_openpsa_sales_salesproject_deliverable($args[0]);
+        $this->_request_data['deliverable'] = new org_openpsa_sales_salesproject_deliverable_dba($args[0]);
         if (!$this->_request_data['deliverable'])
         {
             return false;
         }
-        $this->_request_data['salesproject'] = new org_openpsa_sales_salesproject($this->_request_data['deliverable']->salesproject);
+        $this->_request_data['salesproject'] = new org_openpsa_sales_salesproject_dba($this->_request_data['deliverable']->salesproject);
 
         $this->_request_data['list_label'] = sprintf($this->_request_data['l10n']->get('all invoices for deliverable %s in sales project %s'), $this->_request_data['deliverable']->title, $this->_request_data['salesproject']->title);
 
@@ -312,12 +312,12 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         $relation_qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $relation_qb->add_constraint('toGuid', '=', $this->_request_data['deliverable']->guid);
         $relation_qb->add_constraint('fromComponent', '=', 'org.openpsa.invoices');
-        $relation_qb->add_constraint('fromClass', '=', 'org_openpsa_invoices_invoice');
+        $relation_qb->add_constraint('fromClass', '=', 'org_openpsa_invoices_invoice_dba');
         $relations = $relation_qb->execute();
         $invoices = Array();
         foreach ($relations as $relation)
         {
-            $invoice = new org_openpsa_invoices_invoice($relation->fromGuid);
+            $invoice = new org_openpsa_invoices_invoice_dba($relation->fromGuid);
             if ($invoice)
             {
                 $invoices[] = $invoice;

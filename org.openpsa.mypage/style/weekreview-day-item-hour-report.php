@@ -1,7 +1,7 @@
 <?php
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 $hour_report = $data['object'];
-$task = new org_openpsa_projects_task($hour_report->task);
+$task = new org_openpsa_projects_task_dba($hour_report->task);
 ?>
 <tr class="hour_report">
     <td class="time">

@@ -87,7 +87,7 @@ class org_openpsa_projects_handler_task_new extends midcom_baseclasses_component
      */
     function & dm2_create_callback(&$controller)
     {
-        $task = new org_openpsa_projects_task();
+        $task = new org_openpsa_projects_task_dba();
 
         if (   array_key_exists('project', $this->_request_data)
             && !empty($this->_request_data['project']))
@@ -111,7 +111,7 @@ class org_openpsa_projects_handler_task_new extends midcom_baseclasses_component
             // This will exit.
         }
 
-        $this->_request_data['task'] = new org_openpsa_projects_task($task->id);
+        $this->_request_data['task'] = new org_openpsa_projects_task_dba($task->id);
         $rel_ret = org_openpsa_relatedto_handler::on_created_handle_relatedto($this->_request_data['task'], 'org.openpsa.projects');
         debug_add("org_openpsa_relatedto_handler returned \n===\n" . sprint_r($rel_ret) . "===\n");
 
@@ -156,7 +156,7 @@ class org_openpsa_projects_handler_task_new extends midcom_baseclasses_component
         }
         else
         {
-            $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_projects_task');
+            $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_projects_task_dba');
         }
 
         $this->_load_controller();

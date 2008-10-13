@@ -132,7 +132,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
     function _list_hour_reports_between(&$data_array, $person, $from, $to)
     {
         // List user's hour reports
-        $qb = org_openpsa_projects_hour_report::new_query_builder();
+        $qb = org_openpsa_projects_hour_report_dba::new_query_builder();
         $qb->add_constraint('date', '>=', $from);
         $qb->add_constraint('date', '<=', $to);
         $qb->add_constraint('person', '=', $person);
@@ -157,7 +157,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
     function _list_task_statuses_between(&$data_array, $person, $from, $to)
     {
         // List user's hour reports
-        $qb = org_openpsa_projects_task_status::new_query_builder();
+        $qb = org_openpsa_projects_task_status_dba::new_query_builder();
         $qb->add_constraint('timestamp', '>=', $from);
         $qb->add_constraint('timestamp', '<=', $to);
         $qb->begin_group('OR');
@@ -321,7 +321,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
                         case 'org_openpsa_calendar_event':
                             midcom_show_style('weekreview-day-item-event');
                             break;
-                        case 'org_openpsa_projects_hour_report':
+                        case 'org_openpsa_projects_hour_report_dba':
                             midcom_show_style('weekreview-day-item-hour-report');
 
                             if ($object->invoiceable)
@@ -331,7 +331,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
                             $day_hours_total += $object->hours;
 
                             break;
-                        case 'org_openpsa_projects_task_status':
+                        case 'org_openpsa_projects_task_status_dba':
                             midcom_show_style('weekreview-day-item-task-status');
                             break;
                         case 'org_routamc_positioning_log_dba':

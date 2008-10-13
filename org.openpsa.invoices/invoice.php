@@ -12,7 +12,7 @@
  *
  * @package org.openpsa.invoices
  */
-class org_openpsa_invoices_invoice extends __org_openpsa_invoices_invoice
+class org_openpsa_invoices_invoice_dba extends __org_openpsa_invoices_invoice_dba
 {
     function __construct($id = null)
     {
@@ -39,7 +39,7 @@ class org_openpsa_invoices_invoice extends __org_openpsa_invoices_invoice
     function generate_invoice_number()
     {
         // TODO: Make configurable
-        $qb = org_openpsa_invoices_invoice::new_query_builder();
+        $qb = org_openpsa_invoices_invoice_dba::new_query_builder();
         $qb->add_order('metadata.created', 'DESC');
         $qb->set_limit(1);
         $last_invoice = $qb->execute_unchecked();
@@ -63,7 +63,7 @@ class org_openpsa_invoices_invoice extends __org_openpsa_invoices_invoice
         $invoice_sender = new midcom_db_person($invoicer);
         if ($invoice_sender)
         {
-            $task = new org_openpsa_projects_task();
+            $task = new org_openpsa_projects_task_dba();
             $task->get_members();
             $task->resources[$invoice_sender->id] = true;
             $task->manager = $_MIDGARD['user'];

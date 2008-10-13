@@ -14,7 +14,7 @@
 function org_openpsa_helpers_projects($add_all = false, $display_tasks = false, $require_privileges = false)
 {
     //Make sure the class we need exists
-    if (!class_exists('org_openpsa_projects_task'))
+    if (!class_exists('org_openpsa_projects_task_dba'))
     {
         $_MIDCOM->componentloader->load('org.openpsa.projects');
     }
@@ -28,7 +28,7 @@ function org_openpsa_helpers_projects($add_all = false, $display_tasks = false, 
             $GLOBALS['org_openpsa_helpers_tasks']['all'] = 'all';
         }
 
-        $qb = org_openpsa_projects_task::new_query_builder();
+        $qb = org_openpsa_projects_task_dba::new_query_builder();
         /*
          * Display those that are active or finished less than two weeks ago
          * FIXME: Swithc to new task architecture

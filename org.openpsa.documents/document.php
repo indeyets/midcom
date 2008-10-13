@@ -14,7 +14,7 @@
  * @package org.openpsa.documents
  *
  */
-class org_openpsa_documents_document extends __org_openpsa_documents_document
+class org_openpsa_documents_document_dba extends __org_openpsa_documents_document_dba
 {
     function __construct($identifier=NULL)
     {
@@ -27,7 +27,7 @@ class org_openpsa_documents_document extends __org_openpsa_documents_document
         if (   isset($this->nextversion)
             && $this->nextversion != 0)
         {
-            $parent = new org_openpsa_documents_document($this->nextversion);
+            $parent = new org_openpsa_documents_document_dba($this->nextversion);
         }
         else
         {
@@ -70,7 +70,7 @@ class org_openpsa_documents_document extends __org_openpsa_documents_document
     function backup_version()
     {
         // Instantiate the backup object
-        $backup = new org_openpsa_documents_document();
+        $backup = new org_openpsa_documents_document_dba();
 
         // Copy current properties
         while (list($key, $value) = each($this))
@@ -85,7 +85,7 @@ class org_openpsa_documents_document extends __org_openpsa_documents_document
 
         if ($stat)
         {
-            $backup = new org_openpsa_documents_document($backup->id);
+            $backup = new org_openpsa_documents_document_dba($backup->id);
 
             // Find the attachment
             $attachments = $this->listattachments();

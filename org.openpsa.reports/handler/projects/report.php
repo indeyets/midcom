@@ -60,7 +60,7 @@ class org_openpsa_reports_handler_projects_report extends org_openpsa_reports_ha
         //When recursing we get object, otherwise GUID
         if (!is_object($task))
         {
-            $task = new org_openpsa_projects_task($task);
+            $task = new org_openpsa_projects_task_dba($task);
         }
         //Something went seriously wrong, abort as cleanly as possible
         if (!is_object($task))
@@ -82,7 +82,7 @@ class org_openpsa_reports_handler_projects_report extends org_openpsa_reports_ha
         //We pop already here due to recursion
         debug_add('Checking for children & recursing them');
         debug_pop();
-        $qb = org_openpsa_projects_task::new_query_builder();
+        $qb = org_openpsa_projects_task_dba::new_query_builder();
         $qb->add_constraint('up', '=', $task->id);
         $results = $qb->execute();
         if (is_array($results))
@@ -102,7 +102,7 @@ class org_openpsa_reports_handler_projects_report extends org_openpsa_reports_ha
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         //Create queries to get data
-        $qb_hr = org_openpsa_projects_hour_report::new_query_builder();
+        $qb_hr = org_openpsa_projects_hour_report_dba::new_query_builder();
         $qb_hr->add_constraint('date', '<=', $this->_request_data['query_data']['end']['timestamp']);
         $qb_hr->add_constraint('date', '>=', $this->_request_data['query_data']['start']['timestamp']);
         if (   array_key_exists('invoiceable_filter', $this->_request_data['query_data'])

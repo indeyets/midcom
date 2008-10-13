@@ -23,7 +23,7 @@ if (   array_key_exists('sorted_reports', $data)
     foreach ($data['sorted_reports']['tasks'] as $task_id => $task_data)
     {
         $hours =& $task_data['reports'];
-        $task = new org_openpsa_projects_task($task_id);
+        $task = new org_openpsa_projects_task_dba($task_id);
         // TODO: Link etc
         echo "<h3><a href=\"{$projects_url}task/{$task->guid}/\">{$task->title}</a></h3>\n";
         echo "<table>\n";

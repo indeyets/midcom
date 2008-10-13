@@ -175,7 +175,7 @@
             'type' => 'composite',
             'type_config' => Array
             (
-                'child_class' => 'org_openpsa_sales_salesproject_deliverable',
+                'child_class' => 'org_openpsa_sales_salesproject_deliverable_dba',
                 'child_schemadb' => 'file:/org/openpsa/sales/config/schemadb_deliverable_component_default.inc',
                 'child_foreign_key_fieldname' => 'up',
                 'style_element_name' => 'deliverable',
@@ -383,7 +383,7 @@
             'type' => 'composite',
             'type_config' => Array
             (
-                'child_class' => 'org_openpsa_sales_salesproject_deliverable',
+                'child_class' => 'org_openpsa_sales_salesproject_deliverable_dba',
                 'child_schemadb' => 'file:/org/openpsa/sales/config/schemadb_deliverable_component_default.inc',
                 'child_foreign_key_fieldname' => 'up',
                 'style_element_name' => 'deliverable',

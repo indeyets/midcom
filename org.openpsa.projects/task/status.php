@@ -11,7 +11,7 @@
  * MidCOM wrapped access to the MgdSchema class, keep logic here
  * @package org.openpsa.projects
  */
-class org_openpsa_projects_task_status extends __org_openpsa_projects_task_status
+class org_openpsa_projects_task_status_dba extends __org_openpsa_projects_task_status_dba
 {
     function __construct($id = null)
     {
@@ -30,7 +30,7 @@ class org_openpsa_projects_task_status extends __org_openpsa_projects_task_statu
     {
         if ($this->task != 0)
         {
-            $parent = new org_openpsa_projects_task($this->task);
+            $parent = new org_openpsa_projects_task_dba($this->task);
             return $parent;
         }
         else
@@ -48,7 +48,7 @@ class org_openpsa_projects_task_status extends __org_openpsa_projects_task_statu
         }
 
         //Check for duplicate(s) (for some reason at times the automagic actions in task object try to create duplicate statuses)
-        $qb = org_openpsa_projects_task_status::new_query_builder();
+        $qb = org_openpsa_projects_task_status_dba::new_query_builder();
         $qb->add_constraint('task', '=', 'task');
         $qb->add_constraint('type', '=', 'type');
         $qb->add_constraint('timestamp', '=', 'timestamp');

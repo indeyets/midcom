@@ -40,7 +40,7 @@ class org_openpsa_invoices_handler_delete extends midcom_baseclasses_components_
             $this->_initialize_datamanager($this->_config->get('schemadb'));
         }
 
-        $this->_request_data['invoice'] = new org_openpsa_invoices_invoice($identifier);
+        $this->_request_data['invoice'] = new org_openpsa_invoices_invoice_dba($identifier);
 
         if (!is_object($this->_request_data['invoice']))
         {

@@ -28,7 +28,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
     /**
      * Add a task to a requested task list view
      * 
-     * @param integer $task_id ID of an org_openpsa_projects_task object
+     * @param integer $task_id ID of an org_openpsa_projects_task_dba object
      * @param string $list Key of the task list
      * @return boolean
      */
@@ -43,7 +43,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         // Instantiate each task only once
         if (!array_key_exists($task_id, $this->_task_cache))
         {
-            $this->_task_cache[$task_id] = new org_openpsa_projects_task($task_id);
+            $this->_task_cache[$task_id] = new org_openpsa_projects_task_dba($task_id);
         }
 
         // Only accept tasks to this list, projects need not apply
@@ -102,7 +102,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         $this->_request_data['view'] = 'my_tasks';
 
         // Tasks proposed to the user
-        $qb = org_openpsa_projects_task_resource::new_query_builder();
+        $qb = org_openpsa_projects_task_resource_dba::new_query_builder();
         $qb->add_constraint('person', '=', $_MIDGARD['user']);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
         $qb->add_constraint('task.orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
@@ -123,7 +123,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         }
 
         // Tasks user has under work
-        $qb = org_openpsa_projects_task_resource::new_query_builder();
+        $qb = org_openpsa_projects_task_resource_dba::new_query_builder();
         $qb->add_constraint('person', '=', $_MIDGARD['user']);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
         $qb->add_constraint('task.orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
@@ -150,7 +150,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         }
 
         // Tasks completed by user and pending approval
-        $qb = org_openpsa_projects_task_resource::new_query_builder();
+        $qb = org_openpsa_projects_task_resource_dba::new_query_builder();
         $qb->add_constraint('person', '=', $_MIDGARD['user']);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
         $qb->add_constraint('task.orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
@@ -171,7 +171,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         }
 
         // Tasks user is manager of that are pending acceptance
-        $qb = org_openpsa_projects_task::new_query_builder();
+        $qb = org_openpsa_projects_task_dba::new_query_builder();
         $qb->add_constraint('status', '=', ORG_OPENPSA_TASKSTATUS_PROPOSED);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
         $qb->add_constraint('manager', '=', $_MIDGARD['user']);
@@ -195,7 +195,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         }
 
         // Tasks user is manager of that are have been declined by all resources
-        $qb = org_openpsa_projects_task::new_query_builder();
+        $qb = org_openpsa_projects_task_dba::new_query_builder();
         $qb->add_constraint('status', '=', ORG_OPENPSA_TASKSTATUS_DECLINED);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
         $qb->add_constraint('manager', '=', $_MIDGARD['user']);
@@ -219,7 +219,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         }
 
         // Tasks user is manager of that are pending approval
-        $qb = org_openpsa_projects_task::new_query_builder();
+        $qb = org_openpsa_projects_task_dba::new_query_builder();
         $qb->add_constraint('status', '=', ORG_OPENPSA_TASKSTATUS_COMPLETED);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
         $qb->add_constraint('manager', '=', $_MIDGARD['user']);
@@ -243,7 +243,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         }
 
         // Tasks user is manager of that are on hold
-        $qb = org_openpsa_projects_task::new_query_builder();
+        $qb = org_openpsa_projects_task_dba::new_query_builder();
         $qb->add_constraint('status', '=', ORG_OPENPSA_TASKSTATUS_ONHOLD);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
         $qb->add_constraint('manager', '=', $_MIDGARD['user']);
@@ -280,7 +280,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         // Query tasks of a project
         $this->_request_data['view'] = 'project_tasks';
 
-        $qb = org_openpsa_projects_task::new_query_builder();
+        $qb = org_openpsa_projects_task_dba::new_query_builder();
         $qb->add_constraint('up', '=', $this->_request_data['project']->id);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
         //When we have the read-only link to object status etc use those to narrow this down
@@ -327,7 +327,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
      */
     private function _handler_list_all(&$args)
     {
-        $qb = org_openpsa_projects_task::new_query_builder();
+        $qb = org_openpsa_projects_task_dba::new_query_builder();
         $qb->add_order('up');
         $qb->add_order('customer');
         $qb->add_order('end');
@@ -550,8 +550,8 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
                 $html = "&nbsp;";
                 if ($task->agreement)
                 {
-                    $agreement = new org_openpsa_sales_salesproject_deliverable($task->agreement);
-                    $salesproject = new org_openpsa_sales_salesproject($agreement->salesproject);
+                    $agreement = new org_openpsa_sales_salesproject_deliverable_dba($task->agreement);
+                    $salesproject = new org_openpsa_sales_salesproject_dba($agreement->salesproject);
                     $agreement_url = "{$data['sales_url']}salesproject/{$salesproject->guid}";
                     $html = "<a href='{$agreement_url}'>{$agreement->title}</a>";
                 }

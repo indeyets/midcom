@@ -396,7 +396,7 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
 
     function _get_cache_obj_tasks($id)
     {
-        return new org_openpsa_projects_task($id);
+        return new org_openpsa_projects_task_dba($id);
     }
 
 }

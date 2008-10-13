@@ -47,7 +47,7 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
         }
 
         $_MIDCOM->componentloader->load_graceful('org.openpsa.projects');
-        if (!class_exists('org_openpsa_projects_task'))
+        if (!class_exists('org_openpsa_projects_task_dba'))
         {
             debug_add('org.openpsa.projects could not be loaded', MIDCOM_LOG_WARN);
             debug_pop();
@@ -117,7 +117,7 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
                 $qb2->add_constraint('fromGuid', '=', $event->guid);
                 $qb2->add_constraint('fromComponent', '=', 'org.openpsa.calendar');
                 $qb2->add_constraint('toComponent', '=', 'org.openpsa.projects');
-                $qb2->add_constraint('toClass', '=', 'org_openpsa_projects_task');
+                $qb2->add_constraint('toClass', '=', 'org_openpsa_projects_task_dba');
                 $qb2->add_constraint('status', '=', ORG_OPENPSA_RELATEDTO_STATUS_CONFIRMED);
                 $event_links[$event->guid] = $qb2->execute();
             }
@@ -134,7 +134,7 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
                 //Avoid multiple loads of same task
                 if (!isset($seen_tasks[$link->toGuid]))
                 {
-                    $seen_tasks[$link->toGuid] = new org_openpsa_projects_task($link->toGuid);
+                    $seen_tasks[$link->toGuid] = new org_openpsa_projects_task_dba($link->toGuid);
                 }
                 $task =& $seen_tasks[$link->toGuid];
 

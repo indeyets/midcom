@@ -12,7 +12,7 @@
  *
  * @package org.openpsa.sales
  */
-class org_openpsa_sales_salesproject_member extends __org_openpsa_sales_salesproject_member
+class org_openpsa_sales_salesproject_member_dba extends __org_openpsa_sales_salesproject_member_dba
 {
     function __construct($id = null)
     {
@@ -45,7 +45,7 @@ class org_openpsa_sales_salesproject_member extends __org_openpsa_sales_salespro
     function _on_created()
     {
         // Check if the salesman and the contact are buddies already
-        $salesproject = new org_openpsa_sales_salesproject($this->salesproject);
+        $salesproject = new org_openpsa_sales_salesproject_dba($this->salesproject);
         $owner = new midcom_db_person($salesproject->owner);
         $person = new midcom_db_person($this->person);
 
@@ -72,7 +72,7 @@ class org_openpsa_sales_salesproject_member extends __org_openpsa_sales_salespro
     {
         if ($this->salesproject != 0)
         {
-            $parent = new org_openpsa_sales_salesproject($this->salesproject);
+            $parent = new org_openpsa_sales_salesproject_dba($this->salesproject);
             return $parent;
         }
         else

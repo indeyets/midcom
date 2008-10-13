@@ -55,14 +55,14 @@
             'description' => 'enable invoice creation',
             'datatype'    => 'privilege',
             'privilege'   => 'midgard:create',
-            'privilege_classname' => 'org_openpsa_invoices_invoice',
+            'privilege_classname' => 'org_openpsa_invoices_invoice_dba',
         ),
 
         'invoices_editing' => array (
             'description' => 'enable editing invoices created by others',
             'datatype'    => 'privilege',
             'privilege'   => 'midgard:update',
-            'privilege_classname' => 'org_openpsa_invoices_invoice',
+            'privilege_classname' => 'org_openpsa_invoices_invoice_dba',
         ),
 
         'campaigns_creation' => array (
@@ -84,7 +84,7 @@
             'description' => 'enable salesproject creation',
             'datatype'    => 'privilege',
             'privilege'   => 'midgard:create',
-            'privilege_classname' => 'org_openpsa_sales_salesproject',
+            'privilege_classname' => 'org_openpsa_sales_salesproject_dba',
         ),
     )
 )

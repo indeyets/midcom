@@ -17,7 +17,7 @@ class org_openpsa_sales_handler_deliverable_add extends midcom_baseclasses_compo
     /**
      * The deliverable to display
      *
-     * @var org_openpsa_sales_salesproject_deliverable
+     * @var org_openpsa_sales_salesproject_deliverable_dba
      * @access private
      */
     var $_deliverable = null;
@@ -25,7 +25,7 @@ class org_openpsa_sales_handler_deliverable_add extends midcom_baseclasses_compo
     /**
      * The salesproject the deliverable is connected to
      *
-     * @var org_openpsa_sales_salesproject_deliverable
+     * @var org_openpsa_sales_salesproject_deliverable_dba
      * @access private
      */
     var $_salesproject = null;
@@ -58,7 +58,7 @@ class org_openpsa_sales_handler_deliverable_add extends midcom_baseclasses_compo
 
     function _create_deliverable($product, $up = 0, $units = 1)
     {
-        $deliverable = new org_openpsa_sales_salesproject_deliverable();
+        $deliverable = new org_openpsa_sales_salesproject_deliverable_dba();
         $deliverable->product = $product->id;
         $deliverable->salesproject = $this->_salesproject->id;
         $deliverable->up = $up;
@@ -115,7 +115,7 @@ class org_openpsa_sales_handler_deliverable_add extends midcom_baseclasses_compo
             $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, 'Only POST requests are allowed here.');
         }
 
-        $this->_salesproject = new org_openpsa_sales_salesproject($args[0]);
+        $this->_salesproject = new org_openpsa_sales_salesproject_dba($args[0]);
         if (!$this->_salesproject)
         {
             return false;

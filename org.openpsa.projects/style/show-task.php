@@ -78,11 +78,11 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         if ($data['task']->agreement)
         {
             echo "<h2>" . $data['l10n']->get('agreement') . "</h2>\n";
-            $agreement = new org_openpsa_sales_salesproject_deliverable($data['task']->agreement);
+            $agreement = new org_openpsa_sales_salesproject_deliverable_dba($data['task']->agreement);
 
             if ($sales_url)
             {
-                $salesproject = new org_openpsa_sales_salesproject($agreement->salesproject);
+                $salesproject = new org_openpsa_sales_salesproject_dba($agreement->salesproject);
                 $agreement->deliverable_html = "<a href=\"{$sales_url}salesproject/{$salesproject->guid}/#{$agreement->guid}\">{$agreement->deliverable_html}</a>\n";
             }
 
@@ -146,7 +146,7 @@ $node = $nap->get_node($nap->get_current_node());
 ?>
 <div class="org_openpsa_helper_box history status">
     <?php
-    $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_status');
+    $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_task_status_dba');
     $qb->add_constraint('task', '=', $view_data['task']->id);
     $qb->add_order('timestamp', 'ASC');
     $qb->add_order('type', 'ASC');

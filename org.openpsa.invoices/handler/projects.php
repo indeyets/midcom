@@ -21,9 +21,9 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
 
     function _generate_invoice()
     {
-        $invoice = new org_openpsa_invoices_invoice();
+        $invoice = new org_openpsa_invoices_invoice_dba();
         $invoice->customer = $_POST['org_openpsa_invoices_invoice_customer'];
-        $invoice->invoiceNumber = org_openpsa_invoices_invoice::generate_invoice_number();
+        $invoice->invoiceNumber = org_openpsa_invoices_invoice_dba::generate_invoice_number();
         $invoice->owner = $_MIDGARD['user'];
         $invoice->due = ($this->_config->get('default_due_days') * 3600 * 24) + time();
         $invoice->description = '';
@@ -97,7 +97,7 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
     function _handler_uninvoiced($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
-        $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_invoices_invoice');
+        $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_invoices_invoice_dba');
 
         $this->_component_data['active_leaf'] = $this->_topic->id.':from_projects';
 
@@ -106,7 +106,7 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
         $this->_request_data['customers'] = array();
 
         // List invoiceable uninvoiced hours for finished tasks
-        $qb_hours = org_openpsa_projects_hour_report::new_query_builder();
+        $qb_hours = org_openpsa_projects_hour_report_dba::new_query_builder();
         $qb_hours->add_constraint('invoiceable', '=', true);
         $qb_hours->add_constraint('invoiced', '=', '0000-00-00 00:00:00');
         $qb_hours->add_constraint('task.status', '>=', ORG_OPENPSA_TASKSTATUS_COMPLETED);
@@ -116,7 +116,7 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
             $task_id = $hour_report->task;
             if (!array_key_exists($hour_report->task, $this->_request_data['tasks']))
             {
-                 $this->_request_data['tasks'][$task_id] = new org_openpsa_projects_task($task_id);
+                 $this->_request_data['tasks'][$task_id] = new org_openpsa_projects_task_dba($task_id);
             }
 
             if ($this->_request_data['tasks'][$task_id]->customer)

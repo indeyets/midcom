@@ -17,7 +17,7 @@ class net_nemein_hourview2_handler_view extends midcom_baseclasses_components_ha
     /**
      * Array for user's agreements
      * 
-     * @var Array of org_openpsa_sales_salesproject_deliverable objects
+     * @var Array of org_openpsa_sales_salesproject_deliverable_dba objects
      */
      var $_agreements = Array();
      
@@ -58,14 +58,14 @@ class net_nemein_hourview2_handler_view extends midcom_baseclasses_components_ha
     function _list_agreements()
     {
         // List agreements where user is part of
-        $qb_member = org_openpsa_sales_salesproject_member::new_query_builder();
+        $qb_member = org_openpsa_sales_salesproject_member_dba::new_query_builder();
         $qb_member->add_constraint('person', '=', $_MIDGARD['user']);
         $memberships = $qb_member->execute_unchecked();
         
         if (count($memberships) > 0)
         {
         
-            $qb_agreement = org_openpsa_sales_salesproject_deliverable::new_query_builder();
+            $qb_agreement = org_openpsa_sales_salesproject_deliverable_dba::new_query_builder();
             $qb_agreement->add_constraint('state', '>=', 400); // ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_ORDERED
 
             $qb_agreement->begin_group('OR');
@@ -107,7 +107,7 @@ class net_nemein_hourview2_handler_view extends midcom_baseclasses_components_ha
         }
         
         // List tasks user is customer in
-        $task_qb = org_openpsa_projects_task::new_query_builder();
+        $task_qb = org_openpsa_projects_task_dba::new_query_builder();
         
         $task_qb->begin_group('OR');
         foreach ($this->_agreements as $agreement)
@@ -129,7 +129,7 @@ class net_nemein_hourview2_handler_view extends midcom_baseclasses_components_ha
         }
         
         // List hour reports
-        $qb = org_openpsa_projects_hour_report::new_query_builder();
+        $qb = org_openpsa_projects_hour_report_dba::new_query_builder();
 
         if ($hide_approved)
         {
@@ -249,7 +249,7 @@ class net_nemein_hourview2_handler_view extends midcom_baseclasses_components_ha
             org_openpsa_notifications::notify('org.openpsa.projects:hour_reports_approved', $manager->guid, $message);
             
             //Send the notification also to the owner of the salesproject
-            $salesproject = new org_openpsa_sales_salesproject($this->_agreements[$task->agreement]->salesproject);
+            $salesproject = new org_openpsa_sales_salesproject_dba($this->_agreements[$task->agreement]->salesproject);
             $owner = new midcom_db_person($salesproject->owner);
             if ($owner->id != $manager->id)
             {

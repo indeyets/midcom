@@ -96,7 +96,7 @@
             'widget' => 'universalchooser',
             'widget_config' => array
             (
-                'class'       => 'org_openpsa_sales_salesproject_deliverable',
+                'class'       => 'org_openpsa_sales_salesproject_deliverable_dba',
                 'component'   => 'org.openpsa.sales',
                 'titlefield'  => 'deliverable_html',
                 'idfield'     => 'id',
@@ -171,7 +171,7 @@
             'type' => 'mnrelation',
             'type_config' => array
             (
-                'mapping_class_name' => 'org_openpsa_projects_task_resource',
+                'mapping_class_name' => 'org_openpsa_projects_task_resource_dba',
                 'master_fieldname' => 'task',
                 'member_fieldname' => 'person',
                 'master_is_id' => true,
@@ -220,7 +220,7 @@
             'type' => 'mnrelation',
             'type_config' => array
             (
-                'mapping_class_name' => 'org_openpsa_projects_task_resource',
+                'mapping_class_name' => 'org_openpsa_projects_task_resource_dba',
                 'master_fieldname' => 'task',
                 'member_fieldname' => 'person',
                 'master_is_id' => true,
@@ -269,7 +269,7 @@
             'type' => 'composite',
             'type_config' => Array
             (
-                'child_class'                 => 'org_openpsa_projects_hour_report',
+                'child_class'                 => 'org_openpsa_projects_hour_report_dba',
                 'child_schemadb'              => 'file:/org/openpsa/projects/config/schemadb_default_hours.inc',
                 'child_foreign_key_fieldname' => 'task',
                 'style_element_name'          => 'hours',

@@ -266,7 +266,7 @@ class org_openpsa_projects_viewer extends midcom_baseclasses_components_request
      * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      *
-     * @param org_openpsa_projects_task
+     * @param org_openpsa_projects_task_dba
      */
     function update_breadcrumb_line($task)
     {

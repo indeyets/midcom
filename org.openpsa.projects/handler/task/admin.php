@@ -19,7 +19,7 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
     /**
      * The task to operate on
      *
-     * @var org_openpsa_projects_task
+     * @var org_openpsa_projects_task_dba
      * @access private
      */
     var $_task = null;
@@ -218,7 +218,7 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
      */
     function _handler_edit($handler_id, $args, &$data)
     {
-        $this->_task = new org_openpsa_projects_task($args[0]);
+        $this->_task = new org_openpsa_projects_task_dba($args[0]);
         if (! $this->_task)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The task {$args[0]} was not found.");
@@ -279,7 +279,7 @@ class org_openpsa_projects_handler_task_admin extends midcom_baseclasses_compone
      */
     function _handler_delete($handler_id, $args, &$data)
     {
-        $this->_task = new org_openpsa_projects_task($args[0]);
+        $this->_task = new org_openpsa_projects_task_dba($args[0]);
         if (! $this->_task)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The task {$args[0]} was not found.");

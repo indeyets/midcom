@@ -17,7 +17,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
     /**
      * The task to operate on
      *
-     * @var org_openpsa_projects_task
+     * @var org_openpsa_projects_task_dba
      * @access private
      */
     var $_task = null;
@@ -171,7 +171,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
      */
     function _handler_resourcing($handler_id, $args, &$data)
     {
-        $this->_task = new org_openpsa_projects_task($args[0]);
+        $this->_task = new org_openpsa_projects_task_dba($args[0]);
         if (! $this->_task)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The task {$args[0]} was not found.");
@@ -186,7 +186,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
             $_MIDCOM->componentloader->load('org.openpsa.relatedto');
             foreach ($_POST['org_openpsa_projects_prospects'] as $prospect_guid => $slots)
             {
-                $prospect = new org_openpsa_projects_task_resource($prospect_guid);
+                $prospect = new org_openpsa_projects_task_resource_dba($prospect_guid);
                 if (!$prospect)
                 {
                     // Could not fetch  prospect object
@@ -271,7 +271,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
      */
     function _handler_list_prospects($handler_id, $args, &$data)
     {
-        $this->_task = new org_openpsa_projects_task($args[0]);
+        $this->_task = new org_openpsa_projects_task_dba($args[0]);
         if (! $this->_task)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The task {$args[0]} was not found.");
@@ -279,7 +279,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
         }
         $this->_task->require_do('midgard:create');
 
-        $qb = org_openpsa_projects_task_resource::new_query_builder();
+        $qb = org_openpsa_projects_task_resource_dba::new_query_builder();
         $qb->add_constraint('task', '=', $this->_task->id);
         $qb->begin_group('OR');
             $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTPROSPECT);
@@ -314,7 +314,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
      */
     function _handler_prospect_slots($handler_id, $args, &$data)
     {
-        $data['prospect'] = new org_openpsa_projects_task_resource($args[0]);
+        $data['prospect'] = new org_openpsa_projects_task_resource_dba($args[0]);
         if (!$data['prospect'])
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Prospect {$args[0]} was not found.");
@@ -328,7 +328,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
             // This will exit.
         }
 
-        $this->_task = new org_openpsa_projects_task($data['prospect']->task);
+        $this->_task = new org_openpsa_projects_task_dba($data['prospect']->task);
         if (! $this->_task)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Task #{$data['prospect']->task} was not found.");

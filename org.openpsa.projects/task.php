@@ -11,7 +11,7 @@
  *
  * @package org.openpsa.projects
  */
-class org_openpsa_projects_task extends __org_openpsa_projects_task
+class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
 {
     var $contacts = null; //Shorthand access for contact members
     var $resources = null; // --''--
@@ -271,7 +271,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
 	    $this->resources = array();
 	}
 
-        $mc = org_openpsa_projects_task_resource::new_collector('task', $this->id);
+        $mc = org_openpsa_projects_task_resource_dba::new_collector('task', $this->id);
         $mc->add_value_property('orgOpenpsaObtype');
         $mc->add_value_property('person');
         $mc->add_constraint('orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_PROJECTPROSPECT);
@@ -341,10 +341,10 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         if ($this->agreement)
         {
             // Get customer company into cache from agreement's sales project
-            $agreement = new org_openpsa_sales_salesproject_deliverable($this->agreement);
+            $agreement = new org_openpsa_sales_salesproject_deliverable_dba($this->agreement);
             if ($agreement)
             {
-                $salesproject = new org_openpsa_sales_salesproject($agreement->salesproject);
+                $salesproject = new org_openpsa_sales_salesproject_dba($agreement->salesproject);
                 $this->customer = $salesproject->customer;
             }
             $this->hoursInvoiceableDefault = true;
@@ -395,7 +395,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
             $agreement_hours = $hours;
 
             // List hours from other tasks of the same agreement too
-            $qb = org_openpsa_projects_task::new_query_builder();
+            $qb = org_openpsa_projects_task_dba::new_query_builder();
             $qb->add_constraint('agreement', '=', $this->agreement);
             $qb->add_constraint('id', '<>', $this->id);
             $other_tasks = $qb->execute_unchecked();
@@ -411,7 +411,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
 
             // Update units on the agreement with invoiceable hours
             // list_hours does the needed checks on hour types
-            $agreement = new org_openpsa_sales_salesproject_deliverable($this->agreement);
+            $agreement = new org_openpsa_sales_salesproject_deliverable_dba($this->agreement);
             if ($agreement)
             {
                 $agreement->units = $agreement_hours['invoiceable'];
@@ -442,7 +442,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         $invoice_enable = false;
         if ($this->agreement)
         {
-            $agreement = new org_openpsa_sales_salesproject_deliverable($this->agreement);
+            $agreement = new org_openpsa_sales_salesproject_deliverable_dba($this->agreement);
             if ($agreement)
             {
                 $invoice_enable = true;
@@ -453,7 +453,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
             }
         }
 
-        $report_qb = org_openpsa_projects_hour_report::new_query_builder();
+        $report_qb = org_openpsa_projects_hour_report_dba::new_query_builder();
         $report_qb->add_constraint('task', '=', $this->id);
         $reports = $report_qb->execute();
         foreach ($reports as $report)
@@ -527,7 +527,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
     function _create_status($status_type, $target_person = 0, $comment = '')
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $status = new org_openpsa_projects_task_status();
+        $status = new org_openpsa_projects_task_status_dba();
         if ($target_person != 0)
         {
             $status->targetPerson = $target_person;
@@ -535,7 +535,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         $status->task = $this->id;
         $status->type = $status_type;
         //This shouldn't be needed
-        $status->timestamp = org_openpsa_projects_task_status::gmtime();
+        $status->timestamp = org_openpsa_projects_task_status_dba::gmtime();
         $status->comment = $comment;
         debug_add("about to create status\n===\n" . sprint_r($status) . "===\n");
 
@@ -553,7 +553,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         //Simplistic approach
-        $qb = org_openpsa_projects_task_status::new_query_builder();
+        $qb = org_openpsa_projects_task_status_dba::new_query_builder();
         $qb->add_constraint('task', '=', $this->id);
         if ($this->status > ORG_OPENPSA_TASKSTATUS_PROPOSED)
         {
@@ -637,7 +637,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         $propose_to = $this->resources;
 
         //Remove those who already have a proposal from the list to propose to
-        $qb = org_openpsa_projects_task_status::new_query_builder();
+        $qb = org_openpsa_projects_task_status_dba::new_query_builder();
         
         $qb->add_constraint('task', '=', $this->id);
         $qb->add_constraint('type', '=', ORG_OPENPSA_TASKSTATUS_PROPOSED);
@@ -1008,10 +1008,10 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
             $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.projects', 'org.openpsa.projects'), sprintf($_MIDCOM->i18n->get_string('marked task "%s" closed', 'org.openpsa.projects'), $this->title), 'ok');
             if ($this->agreement)
             {
-                $agreement = new org_openpsa_sales_salesproject_deliverable($this->agreement);
+                $agreement = new org_openpsa_sales_salesproject_deliverable_dba($this->agreement);
 
                 // Set agreement delivered if this is the only open task for it
-                $task_qb = org_openpsa_projects_task::new_query_builder();
+                $task_qb = org_openpsa_projects_task_dba::new_query_builder();
                 $task_qb->add_constraint('agreement', '=', $this->agreement);
                 $task_qb->add_constraint('status', '<', ORG_OPENPSA_TASKSTATUS_CLOSED);
                 $task_qb->add_constraint('id', '<>', $this->id);
@@ -1076,7 +1076,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
 
         // Mark the hour reports invoiced
         $hours_marked = 0;
-        $report_qb = org_openpsa_projects_hour_report::new_query_builder();
+        $report_qb = org_openpsa_projects_hour_report_dba::new_query_builder();
         $report_qb->add_constraint('task', '=', $this->id);
         $report_qb->add_constraint('invoiced', '=', '0000-00-00 00:00:00');
 
@@ -1084,7 +1084,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         $check_approvals = false;
         if ($this->agreement)
         {
-            $agreement = new org_openpsa_sales_salesproject_deliverable($this->agreement);
+            $agreement = new org_openpsa_sales_salesproject_deliverable_dba($this->agreement);
             if ($agreement)
             {
                 if ($agreement->invoiceApprovedOnly)
@@ -1138,7 +1138,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
         //TODO: The more complex checks...
 
         //Always make sure we have proposals (DBE kind of follows these) in place (DM goes trough our create mode without any resources...)
-        $qb = org_openpsa_projects_task_status::new_query_builder();
+        $qb = org_openpsa_projects_task_status_dba::new_query_builder();
         $qb->add_constraint('task', '=', $this->id);
         $qb->add_constraint('type', '=', ORG_OPENPSA_TASKSTATUS_PROPOSED);
 
@@ -1167,7 +1167,7 @@ class org_openpsa_projects_task extends __org_openpsa_projects_task
             return $resource_array;
         }
 
-        $qb = org_openpsa_projects_task_resource::new_query_builder();
+        $qb = org_openpsa_projects_task_resource_dba::new_query_builder();
         $qb->add_constraint('task', '=', $view_data['task']->id);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
         $resources = $qb->execute();

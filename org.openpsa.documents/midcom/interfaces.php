@@ -44,7 +44,7 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
     function _on_reindex($topic, $config, &$indexer)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $qb = org_openpsa_documents_document::new_query_builder();
+        $qb = org_openpsa_documents_document_dba::new_query_builder();
         $qb->add_constraint('topic', '=', $topic->id);
         $qb->add_constraint('nextVersion', '=', 0);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_DOCUMENT);
@@ -54,7 +54,7 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
         {
             foreach ($ret as $document)
             {
-                $document = new org_openpsa_documents_document($document->id);
+                $document = new org_openpsa_documents_document_dba($document->id);
                 $datamanager = new midcom_helper_datamanager($config->get('schemadb_document'));
                 if (!$datamanager)
                 {
@@ -80,7 +80,7 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
 
     function _on_resolve_permalink($topic, $config, $guid)
     {
-        $document = new org_openpsa_documents_document($guid);
+        $document = new org_openpsa_documents_document_dba($guid);
         if (   ! $document
             || $document->topic != $topic->id)
         {

@@ -11,7 +11,7 @@ while(@ob_end_flush())
 
 echo "<h1>Invalidating task caches:</h1>\n";
 
-$qb = org_openpsa_projects_task::new_query_builder();
+$qb = org_openpsa_projects_task_dba::new_query_builder();
 $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
 $tasks = $qb->execute();
 

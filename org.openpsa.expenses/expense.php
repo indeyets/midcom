@@ -22,7 +22,7 @@ class org_openpsa_expenses_expense extends __org_openpsa_expenses_expense
     {
         if ($this->task != 0)
         {
-            $parent = new org_openpsa_projects_task($this->task);
+            $parent = new org_openpsa_projects_task_dba($this->task);
             return $parent;
         }
         else

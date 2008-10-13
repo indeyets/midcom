@@ -24,7 +24,7 @@ class org_openpsa_invoices_invoice_hour extends __org_openpsa_invoices_invoice_h
         parent::_on_created();
 
         // Cache the information that the hour report has been invoiced to the report itself
-        $hour_report = new org_openpsa_projects_hour_report($this->hourReport);
+        $hour_report = new org_openpsa_projects_hour_report_dba($this->hourReport);
         if (!$hour_report)
         {
             return false;

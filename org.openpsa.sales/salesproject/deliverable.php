@@ -11,7 +11,7 @@
  *
  * @package org.openpsa.sales
  */
-class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_salesproject_deliverable
+class org_openpsa_sales_salesproject_deliverable_dba extends __org_openpsa_sales_salesproject_deliverable_dba
 {
     /**
      * Combination property containing HTML depiction of the deliverable
@@ -29,12 +29,12 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
     {
         if ($this->up != 0)
         {
-            $parent = new org_openpsa_sales_salesproject_deliverable($this->up);
+            $parent = new org_openpsa_sales_salesproject_deliverable_dba($this->up);
             return $parent;
         }
         elseif ($this->salesproject != 0)
         {
-            $parent = new org_openpsa_sales_salesproject($this->salesproject);
+            $parent = new org_openpsa_sales_salesproject_dba($this->salesproject);
             return $parent;
         }
         else
@@ -56,7 +56,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
 
         $companies = Array();
 
-        $member_qb = org_openpsa_sales_salesproject_member::new_query_builder();
+        $member_qb = org_openpsa_sales_salesproject_member_dba::new_query_builder();
         $member_qb->begin_group('OR');
         foreach ($task->contacts as $contact_id => $active)
         {
@@ -66,7 +66,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
 
         $members = $member_qb->execute();
 
-        $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
+        $deliverable_qb = org_openpsa_sales_salesproject_deliverable_dba::new_query_builder();
         $deliverable_qb->add_constraint('state', '>=', ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_ORDERED);
         $deliverable_qb->add_constraint('state', '<', ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_DELIVERED);
         $deliverable_qb->begin_group('OR');
@@ -79,7 +79,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
 
         foreach ($deliverables as $deliverable)
         {
-            $salesproject = new org_openpsa_sales_salesproject($deliverable->salesproject);
+            $salesproject = new org_openpsa_sales_salesproject_dba($deliverable->salesproject);
             $customer = new midcom_db_group($salesproject->customer);
             $ret[$deliverable->id] = "{$deliverable->title} ({$customer->official}: {$salesproject->title})";
         }
@@ -121,7 +121,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
 
     function _generate_html()
     {
-        $this->_salesproject = new org_openpsa_sales_salesproject($this->salesproject);
+        $this->_salesproject = new org_openpsa_sales_salesproject_dba($this->salesproject);
 
         $this->deliverable_html  = "<div class=\"org_openpsa_sales_salesproject_deliverable\">\n";
         $this->deliverable_html .= "    <span class=\"title\">{$this->title}</span>\n";
@@ -163,7 +163,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
      */
     function _get_components()
     {
-        $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
+        $deliverable_qb = org_openpsa_sales_salesproject_deliverable_dba::new_query_builder();
         $deliverable_qb->add_constraint('salesproject', '=', $this->salesproject);
         $deliverable_qb->add_constraint('up', '=', $this->id);
         $deliverables = $deliverable_qb->execute();
@@ -260,12 +260,12 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
             return;
         }
 
-        $salesproject = new org_openpsa_sales_salesproject($this->salesproject);
+        $salesproject = new org_openpsa_sales_salesproject_dba($this->salesproject);
 
         // Send invoice
-        $invoice = new org_openpsa_invoices_invoice();
+        $invoice = new org_openpsa_invoices_invoice_dba();
         $invoice->customer = $salesproject->customer;
-        $invoice->invoiceNumber = org_openpsa_invoices_invoice::generate_invoice_number();
+        $invoice->invoiceNumber = org_openpsa_invoices_invoice_dba::generate_invoice_number();
         $invoice->owner = $salesproject->owner;
 
         // TODO: Get from invoices configuration or make the invoice class handle due dates itself
@@ -279,7 +279,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
             // TODO: Create invoicing task if assignee is defined
 
             // Mark the tasks (and hour reports) related to this agreement as invoiced
-            $task_qb = org_openpsa_projects_task::new_query_builder();
+            $task_qb = org_openpsa_projects_task_dba::new_query_builder();
             $task_qb->add_constraint('agreement', '=', $this->id);
             $tasks = $task_qb->execute();
             foreach ($tasks as $task)
@@ -356,7 +356,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         {
             case ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_SERVICE:
                 // Close previous task(s)
-                $task_qb = org_openpsa_projects_task::new_query_builder();
+                $task_qb = org_openpsa_projects_task_dba::new_query_builder();
                 $task_qb->add_constraint('agreement', '=', $this->id);
                 $task_qb->add_constraint('status', '<', ORG_OPENPSA_TASKSTATUS_CLOSED);
                 $tasks = $task_qb->execute();
@@ -429,7 +429,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
     {
         // Prepare notification to sales project owner
         $message = array();
-        $salesproject = new org_openpsa_sales_salesproject($this->salesproject);
+        $salesproject = new org_openpsa_sales_salesproject_dba($this->salesproject);
         $owner = new midcom_db_person($salesproject->owner);
         $customer = new midcom_db_group($salesproject->customer);
 
@@ -590,7 +590,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
      */
     function _probe_project()
     {
-        $salesproject = new org_openpsa_sales_salesproject($this->salesproject);
+        $salesproject = new org_openpsa_sales_salesproject_dba($this->salesproject);
         $relation_qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $relation_qb->add_constraint('toGuid', '=', $salesproject->guid);
         $relation_qb->add_constraint('fromComponent', '=', 'org.openpsa.projects');
@@ -639,7 +639,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
     {
         $project = false;
         $task = false;
-        $salesproject = new org_openpsa_sales_salesproject($this->salesproject);
+        $salesproject = new org_openpsa_sales_salesproject_dba($this->salesproject);
         $product = new org_openpsa_products_product_dba($this->product);
 
         // TODO: Check if we already have an open task for this delivery?
@@ -648,7 +648,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
         $project = $this->_probe_project();
 
         // Create the task
-        $task = new org_openpsa_projects_task();
+        $task = new org_openpsa_projects_task_dba();
         $task->agreement = $this->id;
         $task->customer = $salesproject->customer;
         $task->title = $title;
@@ -670,7 +670,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
 
         if ($task->create())
         {
-            $task = new org_openpsa_projects_task($task->id);
+            $task = new org_openpsa_projects_task_dba($task->id);
             $relation_product = org_openpsa_relatedto_handler::create_relatedto($task, 'org.openpsa.projects', $product, 'org.openpsa.products');
 
             // Copy tags from deliverable so we can seek resources
@@ -712,13 +712,13 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
             }
 
             // Update sales project if it doesn't have any open deliverables
-            $qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
+            $qb = org_openpsa_sales_salesproject_deliverable_dba::new_query_builder();
             $qb->add_constraint('salesproject', '=', $this->salesproject);
             $qb->add_constraint('state', '<>', ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_DECLINED);
             if ($qb->count() == 0)
             {
                 // No proposals that are not declined
-                $salesproject = new org_openpsa_sales_salesproject($this->salesproject);
+                $salesproject = new org_openpsa_sales_salesproject_dba($this->salesproject);
                 $salesproject->status = ORG_OPENPSA_SALESPROJECTSTATUS_LOST;
                 $salesproject->update();
             }
@@ -780,7 +780,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
             }
 
             // Update sales project and mark as won
-            $salesproject = new org_openpsa_sales_salesproject($this->salesproject);
+            $salesproject = new org_openpsa_sales_salesproject_dba($this->salesproject);
             if ($salesproject->status < ORG_OPENPSA_SALESPROJECTSTATUS_WON)
             {
                 $salesproject->status = ORG_OPENPSA_SALESPROJECTSTATUS_WON;
@@ -814,7 +814,7 @@ class org_openpsa_sales_salesproject_deliverable extends __org_openpsa_sales_sal
             {
                 case ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_SERVICE:
                     // Change status of tasks connected to the deliverable
-                    $task_qb = org_openpsa_projects_task::new_query_builder();
+                    $task_qb = org_openpsa_projects_task_dba::new_query_builder();
                     $task_qb->add_constraint('agreement', '=', $this->id);
                     $task_qb->add_constraint('status', '<', ORG_OPENPSA_TASKSTATUS_CLOSED);
                     $tasks = $task_qb->execute();

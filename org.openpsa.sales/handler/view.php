@@ -86,7 +86,7 @@ class org_openpsa_sales_handler_view extends midcom_baseclasses_components_handl
      */
     function _handler_view($handler_id, $args, &$data)
     {
-        $this->_salesproject = new org_openpsa_sales_salesproject($args[0]);
+        $this->_salesproject = new org_openpsa_sales_salesproject_dba($args[0]);
         if (!$this->_salesproject)
         {
             return false;
@@ -114,7 +114,7 @@ class org_openpsa_sales_handler_view extends midcom_baseclasses_components_handl
         // $_MIDCOM->style->enter_context(0);
 
         // List deliverables
-        $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
+        $deliverable_qb = org_openpsa_sales_salesproject_deliverable_dba::new_query_builder();
         $deliverable_qb->add_constraint('salesproject', '=', $this->_request_data['salesproject']->id);
         $deliverable_qb->add_constraint('up', '=', 0);
 

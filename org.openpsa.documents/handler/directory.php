@@ -278,7 +278,7 @@ class org_openpsa_documents_handler_directory extends midcom_baseclasses_compone
     {
         midcom_show_style("show-directory-header");
     
-        $qb = org_openpsa_documents_document::new_query_builder();
+        $qb = org_openpsa_documents_document_dba::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_request_data['directory']->id);
         $qb->add_constraint('nextVersion', '=', 0);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_DOCUMENT);

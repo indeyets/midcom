@@ -72,7 +72,7 @@ class org_openpsa_expenses_handler_index  extends midcom_baseclasses_components_
 
         $this->_calculate_week();
 
-        $hours_qb = org_openpsa_projects_hour_report::new_query_builder();
+        $hours_qb = org_openpsa_projects_hour_report_dba::new_query_builder();
         $hours_qb->add_constraint('person', '=', $_MIDGARD['user']);
         $hours_qb->add_constraint('date', '>=', $data['week_start']);
         $hours_qb->add_constraint('date', '<=', $data['week_end']);

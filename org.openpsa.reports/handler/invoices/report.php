@@ -67,7 +67,7 @@ class org_openpsa_reports_handler_invoices_report extends org_openpsa_reports_ha
         $data['end'] = $this->_request_data['query_data']['end']['timestamp'];
 
         // List invoices
-        $invoice_qb = org_openpsa_invoices_invoice::new_query_builder();
+        $invoice_qb = org_openpsa_invoices_invoice_dba::new_query_builder();
         $invoice_qb->begin_group('AND');
             $invoice_qb->add_constraint('due', '>=', $data['start']);
             $invoice_qb->add_constraint('due', '<', $data['end']);

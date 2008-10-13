@@ -82,7 +82,7 @@ class org_openpsa_mypage_workingon
         $task_time = strtotime("{$task_time} GMT");
 
         // Set the protected vars
-        $this->task = new org_openpsa_projects_task($task_guid);
+        $this->task = new org_openpsa_projects_task_dba($task_guid);
         $this->time = time() - $task_time;
         $this->start = $task_time;
 
@@ -125,7 +125,7 @@ class org_openpsa_mypage_workingon
      */
     function _report_hours($description)
     {
-        $hour_report = new org_openpsa_projects_hour_report();
+        $hour_report = new org_openpsa_projects_hour_report_dba();
         $hour_report->date = $this->start;
         $hour_report->person = $this->person->id;
         $hour_report->task = $this->task->id;

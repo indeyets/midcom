@@ -67,7 +67,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
 
     function _on_resolve_permalink($topic, $config, $guid)
     {
-        $task = new org_openpsa_sales_salesproject($guid);
+        $task = new org_openpsa_sales_salesproject_dba($guid);
         if (!$task)
         {
             return null;
@@ -176,7 +176,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
             }
             $seen_tasks[$resource->salesproject] = true;
             $to_array = array('other_obj' => false, 'link' => false);
-            $task = new org_openpsa_sales_salesproject($resource->salesproject);
+            $task = new org_openpsa_sales_salesproject_dba($resource->salesproject);
             $link = new org_openpsa_relatedto_relatedto_dba();
             org_openpsa_relatedto_suspect::defaults_helper($link, $defaults, $this->_component, $task);
             $to_array['other_obj'] = $task;
@@ -211,7 +211,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
                 }
                 $seen_sp[$resource->salesproject] = true;
                 $to_array = array('other_obj' => false, 'link' => false);
-                $sp = new org_openpsa_sales_salesproject($member->salesproject);
+                $sp = new org_openpsa_sales_salesproject_dba($member->salesproject);
                 $link = new org_openpsa_relatedto_relatedto_dba();
                 org_openpsa_relatedto_suspect::defaults_helper($link, $defaults, $this->_component, $sp);
                 $to_array['other_obj'] = $sp;
@@ -220,7 +220,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
                 $links_array[] = $to_array;
             }
         }
-        $qb2 = org_openpsa_sales_salesproject::new_query_builder();
+        $qb2 = org_openpsa_sales_salesproject_dba::new_query_builder();
         $qb2->add_constraint('owner', '=', $object->id);
         $qb2->add_constraint('status', '=', ORG_OPENPSA_SALESPROJECTSTATUS_ACTIVE);
         $qb2ret = @$qb2->execute();
@@ -265,7 +265,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
             return false;
         }
 
-        $deliverable = new org_openpsa_sales_salesproject_deliverable($args['deliverable']);
+        $deliverable = new org_openpsa_sales_salesproject_deliverable_dba($args['deliverable']);
         if (!$deliverable)
         {
             $msg = "Deliverable {$args['deliverable']} not found, error " . mgd_errstr();

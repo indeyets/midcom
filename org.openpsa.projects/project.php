@@ -7,10 +7,10 @@
  */
 
 /**
- * special case 'project' of class org_openpsa_projects_task
+ * special case 'project' of class org_openpsa_projects_task_dba
  * @package org.openpsa.projects
  */
-class org_openpsa_projects_project extends org_openpsa_projects_task
+class org_openpsa_projects_project extends org_openpsa_projects_task_dba
 {
     function __construct($identifier = NULL)
     {
@@ -118,7 +118,7 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
         debug_push_class(__CLASS__, __FUNCTION__);
         $update_required = false;
 
-        $qb = org_openpsa_projects_task::new_query_builder();
+        $qb = org_openpsa_projects_task_dba::new_query_builder();
         $qb->add_constraint('up', '=', $this->id);
 
         $ret = $qb->execute();
@@ -132,7 +132,7 @@ class org_openpsa_projects_project extends org_openpsa_projects_task
             $this->contacts = array();
             foreach($ret as $task)
             {
-                $task = new org_openpsa_projects_task($task->id);
+                $task = new org_openpsa_projects_task_dba($task->id);
                 $task->get_members();
                 if ($task->start < $this->start)
                 {

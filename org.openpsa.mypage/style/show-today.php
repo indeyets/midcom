@@ -34,7 +34,7 @@ $view_today =& $data['view_today'];
     <?php
     if ($data['projects_url'])
     {
-        $tasks = org_openpsa_projects_task_resource::get_resource_tasks('guid');
+        $tasks = org_openpsa_projects_task_resource_dba::get_resource_tasks('guid');
         if (count($tasks) > 0)
         {
             $workingon = new org_openpsa_mypage_workingon();

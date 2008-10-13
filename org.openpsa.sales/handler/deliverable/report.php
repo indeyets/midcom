@@ -56,7 +56,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
         $data['end'] = $next_month->getTimestamp() - 1;
 
         // List sales projects
-        $salesproject_qb = org_openpsa_sales_salesproject::new_query_builder();
+        $salesproject_qb = org_openpsa_sales_salesproject_dba::new_query_builder();
         $salesproject_qb->add_constraint('status', '<>', ORG_OPENPSA_SALESPROJECTSTATUS_LOST);
         if ($handler_id == 'deliverable_report')
         {
@@ -66,7 +66,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
         $salesprojects = $salesproject_qb->execute();
 
         // List deliverables related to the sales projects
-        $deliverable_qb = org_openpsa_sales_salesproject_deliverable::new_query_builder();
+        $deliverable_qb = org_openpsa_sales_salesproject_deliverable_dba::new_query_builder();
         $deliverable_qb->add_constraint('state', '<>', 'ORG_OPENPSA_SALESPROJECT_DELIVERABLE_STATUS_DECLINED');
         $deliverable_qb->begin_group('OR');
         foreach ($salesprojects as $salesproject)
@@ -79,7 +79,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
         // List relations of invoices to the deliverables we have
         $relation_qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $relation_qb->add_constraint('fromComponent', '=', 'org.openpsa.invoices');
-        $relation_qb->add_constraint('fromClass', '=', 'org_openpsa_invoices_invoice');
+        $relation_qb->add_constraint('fromClass', '=', 'org_openpsa_invoices_invoice_dba');
         $relation_qb->begin_group('OR');
         foreach ($deliverables as $deliverable)
         {
@@ -93,7 +93,7 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
 
         foreach ($relations as $relation)
         {
-            $invoice = new org_openpsa_invoices_invoice($relation->fromGuid);
+            $invoice = new org_openpsa_invoices_invoice_dba($relation->fromGuid);
             if (   $invoice->created >= $data['start']
                 && $invoice->created < $data['end'])
             {
@@ -143,8 +143,8 @@ class org_openpsa_sales_handler_deliverable_report extends midcom_baseclasses_co
                 continue;
             }
 
-            $deliverable = new org_openpsa_sales_salesproject_deliverable($deliverable_guid);
-            $salesproject = new org_openpsa_sales_salesproject($deliverable->salesproject);
+            $deliverable = new org_openpsa_sales_salesproject_deliverable_dba($deliverable_guid);
+            $salesproject = new org_openpsa_sales_salesproject_dba($deliverable->salesproject);
             $customer = new midcom_db_group($salesproject->customer);
 
             if (!array_key_exists($salesproject->owner, $sums_per_person))

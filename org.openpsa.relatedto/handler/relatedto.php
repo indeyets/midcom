@@ -243,7 +243,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
             case is_a($this->_request_data['link_other_obj'], 'org_openpsa_calendar_event'):
                 $this->_show_render_line_event();
                 break;
-            case is_a($this->_request_data['link_other_obj'], 'org_openpsa_projects_task'):
+            case is_a($this->_request_data['link_other_obj'], 'org_openpsa_projects_task_dba'):
                 if ($this->_request_data['link_other_obj']->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_TASK)
                 {
                     $this->_show_render_line_task();
@@ -253,16 +253,16 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
                     $this->_show_render_line_project();
         }
                 break;
-            case is_a($this->_request_data['link_other_obj'], 'org_openpsa_documents_document'):
+            case is_a($this->_request_data['link_other_obj'], 'org_openpsa_documents_document_dba'):
                 $this->_show_render_line_document();
                 break;
-            case is_a($this->_request_data['link_other_obj'], 'org_openpsa_sales_salesproject'):
+            case is_a($this->_request_data['link_other_obj'], 'org_openpsa_sales_salesproject_dba'):
                 $this->_show_render_line_salesproject();
                 break;
-            case is_a($this->_request_data['link_other_obj'], 'org_openpsa_projects_hour_report'):
+            case is_a($this->_request_data['link_other_obj'], 'org_openpsa_projects_hour_report_dba'):
                 $this->_show_render_line_hour_report();
                 break;
-            case is_a($this->_request_data['link_other_obj'], 'org_openpsa_invoices_invoice'):
+            case is_a($this->_request_data['link_other_obj'], 'org_openpsa_invoices_invoice_dba'):
                 $this->_show_render_line_invoice();
                 break;
             default:
@@ -323,7 +323,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         {
             return $this->_show_render_line_default();
         }
-        $document = new org_openpsa_documents_document($this->_request_data['link_other_obj']->guid);
+        $document = new org_openpsa_documents_document_dba($this->_request_data['link_other_obj']->guid);
         if (!is_object($document))
         {
             //probably ACL prevents us from seeing anything about it
@@ -606,11 +606,11 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         //Make sure we have the calendar classes available
         $_MIDCOM->componentloader->load_graceful('org.openpsa.projects');
         //Fallback to default renderer if not
-        if (!class_exists('org_openpsa_projects_task'))
+        if (!class_exists('org_openpsa_projects_task_dba'))
         {
             return $this->_show_render_line_default();
         }
-        $task = new org_openpsa_projects_task($this->_request_data['link_other_obj']->guid);
+        $task = new org_openpsa_projects_task_dba($this->_request_data['link_other_obj']->guid);
         if (!is_object($task))
         {
             //probably ACL prevents us from seeing anything about it
@@ -737,11 +737,11 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         //Make sure we have the calendar classes available
         $_MIDCOM->componentloader->load_graceful('org.openpsa.sales');
         //Fallback to default renderer if not
-        if (!class_exists('org_openpsa_projects_task'))
+        if (!class_exists('org_openpsa_projects_task_dba'))
         {
             return $this->_show_render_line_default();
         }
-        $salesproject = new org_openpsa_sales_salesproject($this->_request_data['link_other_obj']->guid);
+        $salesproject = new org_openpsa_sales_salesproject_dba($this->_request_data['link_other_obj']->guid);
         if (!is_object($salesproject))
         {
             //probably ACL prevents us from seeing anything about it
@@ -805,11 +805,11 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         //Make sure we have the calendar classes available
         $_MIDCOM->componentloader->load_graceful('org.openpsa.invoices');
         //Fallback to default renderer if not
-        if (!class_exists('org_openpsa_invoices_invoice'))
+        if (!class_exists('org_openpsa_invoices_invoice_dba'))
         {
             return $this->_show_render_line_default();
         }
-        $invoice = new org_openpsa_invoices_invoice($this->_request_data['link_other_obj']->guid);
+        $invoice = new org_openpsa_invoices_invoice_dba($this->_request_data['link_other_obj']->guid);
         if (!is_object($invoice))
         {
             //probably ACL prevents us from seeing anything about it
@@ -1044,7 +1044,7 @@ EOF;
         {
             case is_a($obj, 'midcom_baseclasses_database_event'):
                 return $obj->start;
-            case is_a($obj, 'org_openpsa_projects_task'):
+            case is_a($obj, 'org_openpsa_projects_task_dba'):
                 return $obj->start;
             default:
                 return $obj->created;

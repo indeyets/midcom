@@ -176,7 +176,7 @@ class org_openpsa_sales_viewer extends midcom_baseclasses_components_request
 
         while ($object)
         {
-            if (is_a($object, 'org_openpsa_sales_salesproject_deliverable'))
+            if (is_a($object, 'org_openpsa_sales_salesproject_deliverable_dba'))
             {
                 $tmp[] = array
                 (

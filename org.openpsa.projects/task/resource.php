@@ -11,7 +11,7 @@
  *
  * @package org.openpsa.projects
  */
-class org_openpsa_projects_task_resource extends __org_openpsa_projects_task_resource
+class org_openpsa_projects_task_resource_dba extends __org_openpsa_projects_task_resource_dba
 {
     var $_personobject;
 
@@ -25,7 +25,7 @@ class org_openpsa_projects_task_resource extends __org_openpsa_projects_task_res
     {
         if ($this->task != 0)
         {
-            $parent = new org_openpsa_projects_task($this->task);
+            $parent = new org_openpsa_projects_task_dba($this->task);
 
             if ($parent->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
             {
@@ -68,7 +68,7 @@ class org_openpsa_projects_task_resource extends __org_openpsa_projects_task_res
 
     function _find_duplicates()
     {
-        $qb = org_openpsa_projects_task_resource::new_query_builder();
+        $qb = org_openpsa_projects_task_resource_dba::new_query_builder();
         $qb->add_constraint('person', '=', (int)$this->person);
         $qb->add_constraint('task', '=', (int)$this->task);
         $qb->add_constraint('orgOpenpsaObtype', '=', (int)$this->orgOpenpsaObtype);
@@ -107,11 +107,11 @@ class org_openpsa_projects_task_resource extends __org_openpsa_projects_task_res
             $this->set_privilege('midgard:read', $this->_person, MIDCOM_PRIVILEGE_ALLOW);
 
             // Add resource to manager's buddy list
-            $task = new org_openpsa_projects_task($this->task);
+            $task = new org_openpsa_projects_task_dba($this->task);
             $this->_add_to_buddylist_of($task->manager);
 
             // Add resource to other resources' buddy lists
-            $qb = org_openpsa_projects_task_resource::new_query_builder();
+            $qb = org_openpsa_projects_task_resource_dba::new_query_builder();
             $qb->add_constraint('task', '=', (int)$this->task);
             $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
             $qb->add_constraint('id', '<>', (int)$this->id);
@@ -147,7 +147,7 @@ class org_openpsa_projects_task_resource extends __org_openpsa_projects_task_res
             return $task_array;
         }
 
-        $mc = org_openpsa_projects_task_resource::new_collector('person', (int) $_MIDGARD['user']);
+        $mc = org_openpsa_projects_task_resource_dba::new_collector('person', (int) $_MIDGARD['user']);
         $mc->add_value_property('task');
         $mc->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
         $mc->add_constraint('task.orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_PROJECT);
@@ -163,7 +163,7 @@ class org_openpsa_projects_task_resource extends __org_openpsa_projects_task_res
         $i = 0;
         foreach ($resources as $resource => $task_id)
         {
-            $task = new org_openpsa_projects_task($mc->get_subkey($resource, 'task'));
+            $task = new org_openpsa_projects_task_dba($mc->get_subkey($resource, 'task'));
             $i++;
             if (!$task)
             {

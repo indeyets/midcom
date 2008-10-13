@@ -74,7 +74,7 @@
             'type' => 'mnrelation',
             'type_config' => array
             (
-                'mapping_class_name' => 'org_openpsa_projects_task_resource',
+                'mapping_class_name' => 'org_openpsa_projects_task_resource_dba',
                 'master_fieldname' => 'task',
                 'member_fieldname' => 'person',
                 'master_is_id' => true,
@@ -123,7 +123,7 @@
             'type' => 'mnrelation',
             'type_config' => array
             (
-                'mapping_class_name' => 'org_openpsa_projects_task_resource',
+                'mapping_class_name' => 'org_openpsa_projects_task_resource_dba',
                 'master_fieldname' => 'task',
                 'member_fieldname' => 'person',
                 'master_is_id' => true,

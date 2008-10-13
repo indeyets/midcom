@@ -40,7 +40,7 @@ echo "  </thead>\n";
 $class = "even";
 foreach ($tasks as $task => $days)
 {
-    $task = new org_openpsa_projects_task($task);
+    $task = new org_openpsa_projects_task_dba($task);
     $time = $data['week_start'];
 
     if ($class == "even")

@@ -17,7 +17,7 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
     /**
      * The hour report
      *
-     * @var org_openpsa_projects_hour_report
+     * @var org_openpsa_projects_hour_report_dba
      * @access private
      */
     var $_hour_report = null;
@@ -111,7 +111,7 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
      */
     function & dm2_create_callback (&$controller)
     {
-        $this->_hour_report = new org_openpsa_projects_hour_report();
+        $this->_hour_report = new org_openpsa_projects_hour_report_dba();
         $this->_hour_report->hour_reportGroup = $this->_request_data['task'];
 
         if (! $this->_hour_report->create())
@@ -154,7 +154,7 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
         {
             $data['task'] = (int) $args[1];
 
-            $parent = new org_openpsa_projects_task($data['task']);
+            $parent = new org_openpsa_projects_task_dba($data['task']);
             if (!$parent)
             {
                 return false;
@@ -224,7 +224,7 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
      */
     function _handler_edit($handler_id, $args, &$data)
     {
-        $this->_hour_report = new org_openpsa_projects_hour_report($args[0]);
+        $this->_hour_report = new org_openpsa_projects_hour_report_dba($args[0]);
         if (!$this->_hour_report)
         {
             return false;
@@ -296,7 +296,7 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
      */
     function _handler_delete($handler_id, $args, &$data)
     {
-        $this->_hour_report = new org_openpsa_projects_hour_report($args[0]);
+        $this->_hour_report = new org_openpsa_projects_hour_report_dba($args[0]);
         if (!$this->_hour_report)
         {
             return false;

@@ -19,7 +19,7 @@ class org_openpsa_projects_handler_project_admin extends midcom_baseclasses_comp
     /**
      * The project to operate on
      *
-     * @var org_openpsa_projects_task
+     * @var org_openpsa_projects_task_dba
      * @access private
      */
     var $_project = null;
@@ -183,7 +183,7 @@ class org_openpsa_projects_handler_project_admin extends midcom_baseclasses_comp
      */
     function _handler_edit($handler_id, $args, &$data)
     {
-        $this->_project = new org_openpsa_projects_task($args[0]);
+        $this->_project = new org_openpsa_projects_task_dba($args[0]);
         if (! $this->_project)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The project {$args[0]} was not found.");

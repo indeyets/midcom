@@ -67,7 +67,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
 
     function _on_retrieve_vgroup_members($groupname)
     {
-        if (!class_exists('org_openpsa_projects_task_resource'))
+        if (!class_exists('org_openpsa_projects_task_resource_dba'))
         {
             return null;
         }
@@ -99,7 +99,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             return $members;
         }
 
-        $qb = org_openpsa_projects_task_resource::new_query_builder();
+        $qb = org_openpsa_projects_task_resource_dba::new_query_builder();
         $qb->add_constraint('task', '=', $project->id);
         if ($type == 'contacts')
         {
@@ -172,7 +172,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
 
     function _on_resolve_permalink($topic, $config, $guid)
     {
-        $task = new org_openpsa_projects_task($guid);
+        $task = new org_openpsa_projects_task_dba($guid);
         if (!$task)
         {
             return null;
@@ -238,7 +238,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             debug_pop();
             return;
         }
-        $qb = org_openpsa_projects_task_resource::new_query_builder();
+        $qb = org_openpsa_projects_task_resource_dba::new_query_builder();
         //Target task starts or ends inside given events window or starts before and ends after
         $qb->begin_group('OR');
             $qb->begin_group('AND');
@@ -283,7 +283,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             }
             $seen_tasks[$resource->task] = true;
             $to_array = array('other_obj' => false, 'link' => false);
-            $task = new org_openpsa_projects_task($resource->task);
+            $task = new org_openpsa_projects_task_dba($resource->task);
             $link = new org_openpsa_relatedto_relatedto_dba();
             org_openpsa_relatedto_suspect::defaults_helper($link, $defaults, $this->_component, $task);
             $to_array['other_obj'] = $task;
@@ -302,7 +302,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         //List all projects and tasks given person is involved with
-        $qb = org_openpsa_projects_task_resource::new_query_builder();
+        $qb = org_openpsa_projects_task_resource_dba::new_query_builder();
         $qb->add_constraint('person', '=', $object->id);
         /* This could reduce clutter somewhat with a minor risk of missing a link
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
@@ -327,7 +327,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             }
             $seen_tasks[$resource->task] = true;
             $to_array = array('other_obj' => false, 'link' => false);
-            $task = new org_openpsa_projects_task($resource->task);
+            $task = new org_openpsa_projects_task_dba($resource->task);
             $link = new org_openpsa_relatedto_relatedto_dba();
             org_openpsa_relatedto_suspect::defaults_helper($link, $defaults, $this->_component, $task);
             $to_array['other_obj'] = $task;
@@ -342,7 +342,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
     function create_hour_report(&$task, $person_id, &$from_object, $from_component)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        if (!is_a($task, 'org_openpsa_projects_task'))
+        if (!is_a($task, 'org_openpsa_projects_task_dba'))
         {
             debug_add('given task is not really a task', MIDCOM_LOG_ERROR);
             debug_pop();
@@ -361,7 +361,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         $GLOBALS['midcom_user_backup'] = $_MIDCOM->auth->user;
         $_MIDCOM->auth->user = $_MIDCOM->auth->get_user($_MIDGARD['user']);
 
-        $hr = new org_openpsa_projects_hour_report();
+        $hr = new org_openpsa_projects_hour_report_dba();
         $hr->task = $task->id;
         $hr->person = $person_id;
         $hr->invoiceable = $task->hoursInvoiceableDefault;
@@ -435,7 +435,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
 
         // Transfer links from classes we drive
         // ** resources **
-        $qb_member = org_openpsa_projects_task_resource::new_query_builder();
+        $qb_member = org_openpsa_projects_task_resource_dba::new_query_builder();
         $qb_member->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
         $qb_member->add_constraint('person', '=', $person2->id);
         $members = $qb_member->execute();
@@ -462,7 +462,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         }
 
         // ** task statuses **
-        $qb_receipt = org_openpsa_projects_task_status::new_query_builder();
+        $qb_receipt = org_openpsa_projects_task_status_dba::new_query_builder();
         $qb_receipt->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
         $qb_receipt->add_constraint('targetPerson', '=', $person2->id);
         $receipts = $qb_receipt->execute();
@@ -487,7 +487,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         }
 
         // ** hour reports **
-        $qb_log = org_openpsa_projects_hour_report::new_query_builder();
+        $qb_log = org_openpsa_projects_hour_report_dba::new_query_builder();
         $qb_log->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
         $qb_log->add_constraint('person', '=', $person2->id);
         $logs = $qb_log->execute();
@@ -512,7 +512,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         }
 
         // ** Task managers **
-        $qb_task = org_openpsa_projects_task::new_query_builder();
+        $qb_task = org_openpsa_projects_task_dba::new_query_builder();
         $qb_task->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
         $qb_task->add_constraint('manager', '=', $person2->id);
         $tasks = $qb_task->execute();
@@ -539,10 +539,10 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         // Transfer metadata dependencies from classes that we drive
         $classes = array
         (
-            'org_openpsa_projects_task_resource',
-            'org_openpsa_projects_task_status',
-            'org_openpsa_projects_task',
-            'org_openpsa_projects_hour_report',
+            'org_openpsa_projects_task_resource_dba',
+            'org_openpsa_projects_task_status_dba',
+            'org_openpsa_projects_task_dba',
+            'org_openpsa_projects_hour_report_dba',
         );
         foreach($classes as $class)
         {
@@ -579,7 +579,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
 
     function background_search_resources($args, &$handler)
     {
-        $task = new org_openpsa_projects_task($args['task']);
+        $task = new org_openpsa_projects_task_dba($args['task']);
         if (!is_object($task))
         {
             // TODO: error reporting

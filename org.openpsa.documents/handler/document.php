@@ -29,7 +29,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
 
     function _load_document($guid)
     {
-        $document = new org_openpsa_documents_document($guid);
+        $document = new org_openpsa_documents_document_dba($guid);
         if (!is_object($document))
         {
             return false;
@@ -51,7 +51,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
             "storage" => null,
         );
 
-        $document = new org_openpsa_documents_document();
+        $document = new org_openpsa_documents_document_dba();
         $document->topic = $this->_request_data['directory']->id;
         $document->orgOpenpsaAccesstype = ORG_OPENPSA_ACCESSTYPE_WGPRIVATE;
 
@@ -61,7 +61,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
             return null;
         }
 
-        $this->_request_data['document'] = new org_openpsa_documents_document($document->id);
+        $this->_request_data['document'] = new org_openpsa_documents_document_dba($document->id);
         $rel_ret = org_openpsa_relatedto_handler::on_created_handle_relatedto($this->_request_data['document'], 'org.openpsa.documents');
         debug_add("org_openpsa_relatedto_handler returned \n===\n" . sprint_r($rel_ret) . "===\n");
         $result["storage"] =& $this->_request_data['document'];
@@ -392,7 +392,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
 
         // Get list of older versions
         $this->_request_data['document_versions'] = array();
-        $qb = org_openpsa_documents_document::new_query_builder();
+        $qb = org_openpsa_documents_document_dba::new_query_builder();
         $qb->add_constraint('topic', '=', $this->_request_data['directory']->id);
         $qb->add_constraint('nextVersion', '=', $this->_request_data['document']->id);
         $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_DOCUMENT);

@@ -124,7 +124,7 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
         $this->_calculate_week();
 
         // List work hours this week
-        $hours_qb = org_openpsa_projects_hour_report::new_query_builder();
+        $hours_qb = org_openpsa_projects_hour_report_dba::new_query_builder();
         $hours_qb->add_constraint('person', '=', $_MIDGARD['user']);
         $hours_qb->add_constraint('date', '>=', $data['week_start']);
         $hours_qb->add_constraint('date', '<=', $data['week_end']);

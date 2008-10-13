@@ -19,7 +19,7 @@ class org_openpsa_sales_handler_deliverable_admin extends midcom_baseclasses_com
     /**
      * The deliverable to operate on
      *
-     * @var org_openpsa_sales_salesproject_deliverable
+     * @var org_openpsa_sales_salesproject_deliverable_dba
      * @access private
      */
     var $_deliverable = null;
@@ -219,7 +219,7 @@ class org_openpsa_sales_handler_deliverable_admin extends midcom_baseclasses_com
      */
     function _handler_edit($handler_id, $args, &$data)
     {
-        $this->_deliverable = new org_openpsa_sales_salesproject_deliverable($args[0]);
+        $this->_deliverable = new org_openpsa_sales_salesproject_deliverable_dba($args[0]);
         if (! $this->_deliverable)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The deliverable {$args[0]} was not found.");
@@ -278,7 +278,7 @@ class org_openpsa_sales_handler_deliverable_admin extends midcom_baseclasses_com
      */
     function _handler_delete($handler_id, $args, &$data)
     {
-        $this->_deliverable = new org_openpsa_sales_salesproject_deliverable($args[0]);
+        $this->_deliverable = new org_openpsa_sales_salesproject_deliverable_dba($args[0]);
         if (! $this->_deliverable)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The deliverable {$args[0]} was not found.");

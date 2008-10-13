@@ -26,7 +26,7 @@ echo "event_suspects_projects<pre>" . sprint_r($event_suspects_projects) . "</pr
 */
 
 /*
-$sp = new org_openpsa_sales_salesproject('5f8093bb1db4afc10b984952ea4268b5');
+$sp = new org_openpsa_sales_salesproject_dba('5f8093bb1db4afc10b984952ea4268b5');
 $sp->get_actions();
 echo "sp<pre>" . sprint_r($sp) . "</pre>\n";
 */

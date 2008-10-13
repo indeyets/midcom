@@ -56,7 +56,7 @@
             'type' => 'select',
             'type_config' => array
             (
-                 'options' => array_merge(array(0 => ''), org_openpsa_projects_task_resource::get_resource_tasks('id', true)),
+                 'options' => array_merge(array(0 => ''), org_openpsa_projects_task_resource_dba::get_resource_tasks('id', true)),
             ),
             'widget' => 'select',
         ),
