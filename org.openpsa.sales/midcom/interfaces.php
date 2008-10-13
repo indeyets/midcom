@@ -39,8 +39,6 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
         // Load needed data classes
         $_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
         $_MIDCOM->componentloader->load_graceful('org.openpsa.products');
-        $_MIDCOM->componentloader->load_graceful('org.openpsa.projects');
-        $_MIDCOM->componentloader->load_graceful('org.openpsa.invoices');
 
         //TODO: Check that the loads actually succeeded
 

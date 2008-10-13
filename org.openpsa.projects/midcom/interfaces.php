@@ -132,8 +132,6 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        $_MIDCOM->componentloader->load_graceful('org.openpsa.sales');
-
         //With the plentyness of typecasting around any other numeric locale calls for trouble with floats
         setlocale(LC_NUMERIC, 'C');
 

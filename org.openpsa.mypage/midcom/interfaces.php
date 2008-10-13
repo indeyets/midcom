@@ -32,7 +32,6 @@ class org_openpsa_mypage_interface extends midcom_baseclasses_components_interfa
     {
         // Load needed data classes
         $_MIDCOM->componentloader->load_graceful('org.openpsa.calendar');
-        $_MIDCOM->componentloader->load_graceful('org.openpsa.projects');
 
         return true;
     }

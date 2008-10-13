@@ -35,9 +35,6 @@ class org_openpsa_expenses_interface extends midcom_baseclasses_components_inter
     
     function _on_initialize()
     {
-        // Load needed data classes
-        $_MIDCOM->componentloader->load_graceful('org.openpsa.projects');
-        
         return true;
     }
 

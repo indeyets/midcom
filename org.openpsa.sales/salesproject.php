@@ -90,7 +90,6 @@ class org_openpsa_sales_salesproject_dba extends __org_openpsa_sales_salesprojec
         //TODO: Implement $limit_to_person support
         debug_push_class(__CLASS__, __FUNCTION__);
         //PONDER: graceful loads and then later check for class_exists ??
-        $_MIDCOM->componentloader->load('org.openpsa.projects');
         $_MIDCOM->componentloader->load('org.openpsa.calendar');
         $default = array(
             'time'  => false,
