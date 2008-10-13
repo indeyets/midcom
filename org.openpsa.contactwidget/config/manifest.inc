@@ -22,6 +22,5 @@
     'dependencies' => array
     (
         'midcom' => array(),
-        'org.openpsa.core' => array(),
     ),
 ),

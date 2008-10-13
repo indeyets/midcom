@@ -187,22 +187,26 @@ class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
         }
         elseif ($this->link_contacts)
         {
+            if (!$_MIDCOM->componentloader->is_loaded('org.openpsa.core'))
+            {
+                $this->link_contacts = false;
+                return null;
+            }
+
             if (!$this->contacts_url)
             {
-                $_MIDCOM->load_library('org.openpsa.core');
                 $structure = new org_openpsa_core_structure();
                 $this->contacts_url = $structure->get_node_full_url('org.openpsa.contacts');
             }
 
             if (!$this->contacts_url)
             {
+                $this->link_contacts = false;
                 return null;
             }
-            else
-            {
-                $url = "{$this->contacts_url}person/{$this->contact_details['guid']}/";
-                return $url;
-            }
+
+            $url = "{$this->contacts_url}person/{$this->contact_details['guid']}/";
+            return $url;
         }
     }
 
