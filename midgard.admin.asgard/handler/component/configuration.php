@@ -518,11 +518,11 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             case 'cancel':
                 if ($handler_id == '____mfa-asgard-components_configuration_edit_folder')
                 {
-                    $_MIDCOM->relocate("__mfa/asgard/object/view/{$data['folder']->guid}");
+                    $_MIDCOM->relocate("__mfa/asgard/object/view/{$data['folder']->guid}/");
                 }
                 else
                 {
-                    $_MIDCOM->relocate("__mfa/asgard/components/configuration/edit/{$data['name']}");
+                    $_MIDCOM->relocate("__mfa/asgard/components/configuration/edit/{$data['name']}/");
                 }
                 // This will exit.
         }

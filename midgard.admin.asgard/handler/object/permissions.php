@@ -432,7 +432,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
             && $_POST['add_assignee'])
         {
             $this->_object->set_privilege('midgard:read', $_POST['add_assignee']);
-            $_MIDCOM->relocate("__mfa/asgard/object/permissions/{$this->_object->guid}");
+            $_MIDCOM->relocate("__mfa/asgard/object/permissions/{$this->_object->guid}/");
         }
 
         // Unset privileges so rearrangements work
@@ -492,11 +492,11 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                     // Then clear the parameter and relocate
                     $this->_object->parameter('midgard.admin.acl', 'add_assignee', '');
 
-                    $_MIDCOM->relocate("__mfa/asgard/object/permissions/{$this->_object->guid}");
+                    $_MIDCOM->relocate("__mfa/asgard/object/permissions/{$this->_object->guid}/");
                     // This will exit.
                 }
             case 'cancel':
-                $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}");
+                $_MIDCOM->relocate("__mfa/asgard/object/view/{$this->_object->guid}/");
                 // This will exit.
         }
 

@@ -162,7 +162,7 @@ class midgard_admin_asgard_handler_preferences extends midcom_baseclasses_compon
         // Load the controller instance
         $this->_load_controller();
 
-        $return_page = '__mfa/asgard';
+        $return_page = '__mfa/asgard/';
         if(isset($_GET['return_uri']))
         {
             $return_page = $_GET['return_uri'];

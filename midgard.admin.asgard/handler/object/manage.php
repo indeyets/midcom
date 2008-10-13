@@ -780,11 +780,11 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 //$indexer =& $_MIDCOM->get_service('indexer');
                 //net_nemein_wiki_viewer::index($this->_request_data['controller']->datamanager, $indexer, $this->_topic);
                 // *** FALL-THROUGH ***
-                $_MIDCOM->relocate("__mfa/asgard/object/edit/{$this->_object->guid}/{$data['language_code']}");
+                $_MIDCOM->relocate("__mfa/asgard/object/edit/{$this->_object->guid}/{$data['language_code']}/");
                 // This will exit.
 
             case 'cancel':
-                $_MIDCOM->relocate("__mfa/asgard/object/{$this->_request_data['default_mode']}/{$this->_object->guid}/{$data['language_code']}");
+                $_MIDCOM->relocate("__mfa/asgard/object/{$this->_request_data['default_mode']}/{$this->_object->guid}/{$data['language_code']}/");
                 // This will exit.
             case 'edit':
                 $qf =& $this->_controller->formmanager->form;
@@ -989,7 +989,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
 
                 if ($handler_id != '____mfa-asgard-object_create_chooser')
                 {
-                    $_MIDCOM->relocate("__mfa/asgard/object/edit/{$this->_new_object->guid}/{$data['language_code']}");
+                    $_MIDCOM->relocate("__mfa/asgard/object/edit/{$this->_new_object->guid}/{$data['language_code']}/");
                     // This will exit.
                 }
                 break;
@@ -1007,7 +1007,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
 
                 if ($handler_id != '____mfa-asgard-object_create_chooser')
                 {
-                    $_MIDCOM->relocate("__mfa/asgard/{$objecturl}{$data['language_code']}");
+                    $_MIDCOM->relocate("__mfa/asgard/{$objecturl}{$data['language_code']}/");
                     // This will exit.
                 }
         }
