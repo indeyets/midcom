@@ -523,11 +523,11 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
 
         if (in_array($this->_request_data['navigation_type'], $this->expanded_root_types))
         {
-            $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard/{$this->_request_data['navigation_type']}";
+            $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard/{$this->_request_data['navigation_type']}/";
         }
         else
         {
-            $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard/{$this->_request_data['navigation_type']}";
+            $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard/{$this->_request_data['navigation_type']}/";
         }
 
         $ref = $this->_get_reflector($this->_request_data['navigation_type']);
@@ -535,7 +535,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         // Show the navigation of the requested object
         $root_objects = $ref->get_root_objects();
 
-        $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard/{$this->_request_data['navigation_type']}";
+        $this->_request_data['section_url'] = "{$_MIDGARD['self']}__mfa/asgard/{$this->_request_data['navigation_type']}/";
         $this->_request_data['section_name'] = $ref->get_class_label();
 
         if (   is_array($root_objects)
