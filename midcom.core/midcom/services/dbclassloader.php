@@ -1230,6 +1230,9 @@ EOF;
                 case 'org.openpsa.document':
                     $component = 'org.openpsa.documents';
                     break;
+                case 'org.openpsa.event':
+                    $component = 'org.openpsa.calendar';
+                    break;
                 case 'org.openpsa.task':
                 case 'org.openpsa.expense':
                 case 'org.openpsa.deliverable':
