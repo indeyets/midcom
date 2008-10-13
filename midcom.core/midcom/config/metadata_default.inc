@@ -52,7 +52,6 @@
             'storage' => 'metadata',
             'type' => 'number',
             'widget' => 'text',
-            'hidden' => version_compare(mgd_version(), '1.8.3', '<'),
             'end_fieldgroup' => '',
         ),
         'hidden' => array
