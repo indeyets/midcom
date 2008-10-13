@@ -19,16 +19,16 @@
         <!-- Metadata -->        
         <property name="population" type="integer"/>
         <!-- Area is in square km -->
-        <property name="area" type="double"/>
+        <property name="area" type="float"/>
         <property name="currency" type="string"/>
         <property name="continent" type="string"/>
         <property name="capital" type="integer" link="org_routamc_positioning_city:id" reverse="no"/>
         
         <!-- Coordinates in decimal format -->
-        <property name="bboxwest" type="double"/>
-        <property name="bboxnorth" type="double"/>
-        <property name="bboxeast" type="double"/>
-        <property name="bboxsouth" type="double"/>
+        <property name="bboxwest" type="float"/>
+        <property name="bboxnorth" type="float"/>
+        <property name="bboxeast" type="float"/>
+        <property name="bboxsouth" type="float"/>
     </type>
 
     <!-- City is used for mapping log entries to "real-world places" -->
@@ -42,8 +42,8 @@
         <property name="alternatenames" type="string"/>
         <property name="population" type="integer"/>
         <!-- Coordinates in decimal format -->
-        <property name="latitude" type="double"/>
-        <property name="longitude" type="double"/>
+        <property name="latitude" type="float"/>
+        <property name="longitude" type="float"/>
         <property name="altitude" type="integer"/>
     </type>
 
@@ -57,11 +57,11 @@
         <property name="city" link="org_routamc_positioning_city:id" reverse="no" type="integer" parentfield="city"/>
         <property name="country" link="org_routamc_positioning_country:code" reverse="no" type="string"/>
         <!-- Coordinates in decimal format -->
-        <property name="latitude" type="double"/>
-        <property name="longitude" type="double"/>
+        <property name="latitude" type="float"/>
+        <property name="longitude" type="float"/>
 
         <!-- Runway altitude in meters -->
-        <property name="altitude" type="double"/>
+        <property name="altitude" type="float"/>
     </type>
 
     <!-- Log entries are user's position entries -->
@@ -93,8 +93,8 @@
         <property name="accuracy" type="integer"/>
 
         <!-- Coordinates in decimal format -->
-        <property name="latitude" type="double"/>
-        <property name="longitude" type="double"/>
+        <property name="latitude" type="float"/>
+        <property name="longitude" type="float"/>
 
         <!-- Altitude in meters -->
         <property name="altitude" type="integer"/>
@@ -128,11 +128,11 @@
         <property name="relation" type="integer"/>
 
         <!-- Coordinates in decimal format, mapping to XEP-0080 lat and lon -->
-        <property name="latitude" type="double"/>
-        <property name="longitude" type="double"/>
+        <property name="latitude" type="float"/>
+        <property name="longitude" type="float"/>
 
         <!-- Altitude in meters, mapping to XEP-0080 alt -->
-        <property name="altitude" type="double"/>
+        <property name="altitude" type="float"/>
         
         <!-- XEP-0080 compatible civic location elements from http://www.xmpp.org/extensions/xep-0080.html#format -->
         <property name="area" type="string"/>
