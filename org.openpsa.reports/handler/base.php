@@ -12,7 +12,7 @@
  *
  * @package org.openpsa.projects
  */
-class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_components_handler
+class org_openpsa_reports_handler_base extends midcom_baseclasses_components_handler
 {
     var $_datamanagers = array();
     var $module = false;
@@ -303,7 +303,7 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
         debug_add('Got resource_id: ' . $resource_id);
         $dba_obj =& $_MIDCOM->auth->get_assignee($resource_id);
         //debug_add("got dba_obj:\n===\n" . sprint_r($dba_obj) . "===\n");
-        org_openpsa_reports_handler_reports_base::_verify_cache('users', $this->_request_data);
+        org_openpsa_reports_handler_base::_verify_cache('users', $this->_request_data);
         switch (get_class($dba_obj))
         {
             case 'midcom_core_group':
@@ -356,7 +356,7 @@ class org_openpsa_reports_handler_reports_base extends midcom_baseclasses_compon
 
     function &_get_cache($type, $id, &$request_data)
     {
-        org_openpsa_reports_handler_reports_base::_verify_cache($type, $request_data);
+        org_openpsa_reports_handler_base::_verify_cache($type, $request_data);
         if (!array_key_exists($id, $request_data['object_cache'][$type]))
         {
             switch ($type)

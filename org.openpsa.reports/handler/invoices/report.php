@@ -12,7 +12,7 @@
  *
  * @package org.openpsa.projects
  */
-class org_openpsa_reports_handler_invoices_report extends org_openpsa_reports_handler_reports_base
+class org_openpsa_reports_handler_invoices_report extends org_openpsa_reports_handler_base
 {
     /**
      * Simple default constructor.
