@@ -24,8 +24,7 @@ class org_openpsa_reports_handler_invoices_report extends org_openpsa_reports_ha
 
     function _on_initialize()
     {
-        // We need sales classes etc here
-        $_MIDCOM->componentloader->load('org.openpsa.invoices');
+        $_MIDCOM->load_library('org.openpsa.contactwidget');
         $this->module = 'invoices';
         $this->_initialize_datamanager1($this->module, $this->_config->get('schemadb_queryform_'. $this->module));
         return true;
