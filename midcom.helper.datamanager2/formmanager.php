@@ -254,7 +254,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
 
             if ($config['static_prepend'] !== null)
             {
-                $static_name = "__static_prepend_{$name}";
+                $static_name = "static_prepend_{$name}";
                 $this->form->addElement('static', $static_name, '', "<span class=\"static_prepend\">" . $this->_translate($config['static_prepend']) . "</span>");
             }
 
