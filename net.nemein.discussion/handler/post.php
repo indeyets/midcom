@@ -742,7 +742,18 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         if (empty($post->sendername))
         {
             $post->sendername = 'unknown';
+            
+            if (!empty($post->sender))
+            {
+                $sender = new midcom_db_person();
+                $sender->get_by_id($post->sender);
+                if ($sender->guid)
+                {
+                    $post->sendername = $sender->name;
+                }
+            }
         }
+
         $subj_prefix = trim($this->_config->get('email_out_subject_prefix'));
 
         $mail = new org_openpsa_mail();
