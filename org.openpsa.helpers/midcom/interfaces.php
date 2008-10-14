@@ -19,11 +19,7 @@ class org_openpsa_helpers_interface extends midcom_baseclasses_components_interf
 
         $this->_component = 'org.openpsa.helpers';
         $this->_purecode = true;
-        $this->_autoload_files = array
-        (
-            'vx_parser.php',
-
-        );
+        $this->_autoload_files = array();
     }
 }
 

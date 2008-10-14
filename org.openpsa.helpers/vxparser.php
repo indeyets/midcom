@@ -5,7 +5,7 @@
  * Refactored from Old OpenPSA calendar.
  * @package org.openpsa.helpers
  * @author Eero af Heurlin, http://www.iki.fi/rambo
- * @version $Id: vx_parser.php,v 1.6 2006/07/17 14:47:15 rambo Exp $
+ * @version $Id: vxparser.php,v 1.6 2006/07/17 14:47:15 rambo Exp $
  * @copyright Nemein Oy, http://www.nemein.com
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
