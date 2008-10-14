@@ -1105,7 +1105,7 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
                 continue;
             }
 
-            $invoice_member = new org_openpsa_invoices_invoice_hour();
+            $invoice_member = new org_openpsa_invoices_invoice_hour_dba();
             $invoice_member->hourReport = $report->id;
             $invoice_member->invoice = $invoice->id;
             if ($invoice_member->create())

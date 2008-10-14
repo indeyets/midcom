@@ -12,7 +12,7 @@
  *
  * @package org.openpsa.invoices
  */
-class org_openpsa_invoices_invoice_hour extends __org_openpsa_invoices_invoice_hour
+class org_openpsa_invoices_invoice_hour_dba extends __org_openpsa_invoices_invoice_hour_dba
 {
     function __construct($id = null)
     {

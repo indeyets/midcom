@@ -66,7 +66,7 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
                     // Mark the hour reports invoiced
                     foreach ($this->_request_data['hour_reports'][$invoice->customer][$task_id] as $hour_report)
                     {
-                        $invoice_member = new org_openpsa_invoices_invoice_hour();
+                        $invoice_member = new org_openpsa_invoices_invoice_hour_dba();
                         $invoice_member->hourReport = $hour_report->id;
                         $invoice_member->invoice = $invoice->id;
                         if ($invoice_member->create())

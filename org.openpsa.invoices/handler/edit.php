@@ -360,7 +360,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
     function _count_invoice_hours()
     {
-        $qb = org_openpsa_invoices_invoice_hour::new_query_builder();
+        $qb = org_openpsa_invoices_invoice_hour_dba::new_query_builder();
         $qb->add_constraint('invoice', '=', $this->_request_data['invoice']->id);
         $hour_links = $qb->execute();
         if (!is_array($hour_links))
@@ -436,7 +436,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         /*
         // List hour reports invoiced in this invoice
         $data['invoice_hours'] = array();
-        $hours_qb = org_openpsa_invoices_invoice_hour::new_query_builder();
+        $hours_qb = org_openpsa_invoices_invoice_hour_dba::new_query_builder();
         $hours_qb->add_constraint('invoice', '=', $data['invoice']->id);
         //TODO: 1.8 $hours_qb->add_order('hourReport.task');
         //TODO: 1.8 $hours_qb->add_order('hourReport.date');
