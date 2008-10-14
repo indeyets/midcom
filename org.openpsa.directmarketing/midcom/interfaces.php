@@ -46,8 +46,6 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
 
     function _on_initialize()
     {
-        //We need the contacts person class available.
-        $_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
         return true;
     }
 

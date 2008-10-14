@@ -20,7 +20,8 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
         parent::__construct();
 
         $this->_component = 'org.openpsa.sales';
-        $this->_autoload_files = array(
+        $this->_autoload_files = array
+        (
             'sort_helper.php',
         );
         $this->_autoload_libraries = array
@@ -35,7 +36,6 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
     function _on_initialize()
     {
         // Load needed data classes
-        $_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
         $_MIDCOM->componentloader->load_graceful('org.openpsa.products');
 
         //TODO: Check that the loads actually succeeded

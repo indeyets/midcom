@@ -25,7 +25,7 @@ class org_openpsa_invoices_interface extends midcom_baseclasses_components_inter
 
         $this->_component = 'org.openpsa.invoices';
         $this->_autoload_files = array();
-        $this->_autoload_libraries = Array
+        $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager',
         );
@@ -33,9 +33,6 @@ class org_openpsa_invoices_interface extends midcom_baseclasses_components_inter
 
     function _on_initialize()
     {
-
-        //We need the contacts person class available.
-        $_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
         return true;
     }
 }

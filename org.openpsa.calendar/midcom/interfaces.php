@@ -39,10 +39,6 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
 
     function _on_initialize()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add('Load contacts classes');
-        $_MIDCOM->componentloader->load('org.openpsa.contacts');
-
         // Check for calendar event tree.
         $qb = org_openpsa_calendar_event_dba::new_query_builder();
         $qb->add_constraint('title', '=', '__org_openpsa_calendar');
@@ -56,6 +52,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
         }
         else
         {
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("OpenPSA Calendar root event could not be found", MIDCOM_LOG_ERROR);
             //Attempt to auto-initialize
             $_MIDCOM->auth->request_sudo();
@@ -75,9 +72,8 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
             {
                 $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event'] = $event;
             }
+            debug_pop();
         }
-
-        debug_pop();
         return true;
     }
 

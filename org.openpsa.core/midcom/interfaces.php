@@ -50,8 +50,6 @@ class org_openpsa_core_interface extends midcom_baseclasses_components_interface
         if (   !empty($my_company_guid)
             && mgd_is_guid($my_company_guid))
         {
-            // For some reason this trigger error 500
-            //$_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
             if (!class_exists('org_openpsa_contacts_group_dba'))
             {
                 // Fallback to standard group object
