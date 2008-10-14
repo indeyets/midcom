@@ -199,6 +199,7 @@ class net_nehmer_blog_handler_index extends midcom_baseclasses_components_handle
 
             // Add category to title
             $data['page_title'] = sprintf($this->_l10n->get('%s category %s'), $this->_topic->extra, $data['category']);
+            $_MIDCOM->set_pagetitle($data['page_title']);
 
             // Activate correct leaf
             if (   $this->_config->get('show_navigation_pseudo_leaves')
