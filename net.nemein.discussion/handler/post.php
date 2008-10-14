@@ -202,6 +202,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
             $user =& $_MIDCOM->auth->user->get_storage();
             $this->_post->sender = $user->id;
             $this->_post->senderemail = $user->email;
+            $this->_post->sendername = $user->name;
         }
 
         if (! $this->_post->create())
