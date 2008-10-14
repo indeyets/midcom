@@ -100,7 +100,7 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
                 }
                 $mode = 'id';
                 // Add it to the options array for DM mucking to be done later in this loop.
-                org_openpsa_helpers__list::task_groups_put($dm_customers, $mode, $this->_request_data['customers'][$salesproject->customer]);
+                org_openpsa_helpers_list::task_groups_put($dm_customers, $mode, $this->_request_data['customers'][$salesproject->customer]);
             }
             if (!isset($this->_request_data['owners'][$salesproject->owner]))
             {
