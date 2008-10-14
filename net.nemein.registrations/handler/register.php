@@ -496,6 +496,13 @@ class net_nemein_registrations_handler_register extends midcom_baseclasses_compo
             }
         }
 
+        // We should always metadata approve the object if approval checks are enabled for the site
+        if (!$GLOBALS['midcom_config']['show_unapproved_objects'])
+        {
+            $metadata = $this->_registration->get_metadata();
+            $metadata->approve();
+        }
+
         /*
         if (! $_MIDCOM->auth->user)
         {

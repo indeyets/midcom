@@ -117,6 +117,14 @@ class net_nemein_registrations_registration_dba extends __net_nemein_registratio
         {
             return false;
         }
+
+        // We should always metadata approve the object if approval checks are enabled for the site
+        if (!$GLOBALS['midcom_config']['show_unapproved_objects'])
+        {
+            $metadata = $this->get_metadata();
+            $metadata->approve();
+        }
+
         return true;
     }
 
