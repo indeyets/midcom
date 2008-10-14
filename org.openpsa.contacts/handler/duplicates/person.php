@@ -38,8 +38,8 @@ class org_openpsa_contacts_handler_duplicates_person extends midcom_baseclasses_
             && count($_POST['org_openpsa_contacts_handler_duplicates_person_options']) == 2
             )
         {
-            $option1 = new org_openpsa_contacts_person($_POST['org_openpsa_contacts_handler_duplicates_person_options'][1]);
-            $option2 = new org_openpsa_contacts_person($_POST['org_openpsa_contacts_handler_duplicates_person_options'][2]);
+            $option1 = new org_openpsa_contacts_person_dba($_POST['org_openpsa_contacts_handler_duplicates_person_options'][1]);
+            $option2 = new org_openpsa_contacts_person_dba($_POST['org_openpsa_contacts_handler_duplicates_person_options'][2]);
             foreach ($_POST['org_openpsa_contacts_handler_duplicates_person_keep'] as $keep => $dummy)
             {
                 switch(true)
@@ -138,8 +138,8 @@ class org_openpsa_contacts_handler_duplicates_person extends midcom_baseclasses_
 
             $param =& $ret[0];
             debug_add("Found duplicate mark on person #{$param->oid} for person {$param->name}");
-            $person1 = new org_openpsa_contacts_person($param->oid);
-            $person2 = new org_openpsa_contacts_person($param->name);
+            $person1 = new org_openpsa_contacts_person_dba($param->oid);
+            $person2 = new org_openpsa_contacts_person_dba($param->name);
             // Make sure we actually have enough rights to do this
             if (   !is_object($person1)
                 || !$_MIDCOM->auth->can_do('midgard:update', $person1)

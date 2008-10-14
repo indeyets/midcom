@@ -9,7 +9,7 @@
 /**
  * @package org.openpsa.contacts
  */
-class org_openpsa_contacts_group extends __org_openpsa_contacts_group
+class org_openpsa_contacts_group_dba extends __org_openpsa_contacts_group_dba
 {
     var $members = array();
     var $members_loaded = false;
@@ -52,7 +52,7 @@ class org_openpsa_contacts_group extends __org_openpsa_contacts_group
         // FIXME: Midgard Core should do this
         if ($this->owner != 0)
         {
-            $parent = new org_openpsa_contacts_group($this->owner);
+            $parent = new org_openpsa_contacts_group_dba($this->owner);
             return $parent->guid;
         }
         else

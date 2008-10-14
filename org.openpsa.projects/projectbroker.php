@@ -44,7 +44,7 @@ class org_openpsa_projects_projectbroker
         (
             'midgard_person',
             'midcom_db_person',
-            'org_openpsa_contacts_person',
+            'org_openpsa_contacts_person_dba',
         );
         $tag_map = net_nemein_tag_handler::get_object_tags($task);
         if (!is_array($tag_map))
@@ -69,11 +69,11 @@ class org_openpsa_projects_projectbroker
         {
             switch (true)
             {
-                case (is_a($obj, 'org_openpsa_contacts_person')):
+                case (is_a($obj, 'org_openpsa_contacts_person_dba')):
                     $return[] = $obj;
                     break;
                 default:
-                    $tmpobj = new org_openpsa_contacts_person($obj->id);
+                    $tmpobj = new org_openpsa_contacts_person_dba($obj->id);
                     if (!$tmpobj->guid)
                     {
                         break;
@@ -108,7 +108,7 @@ class org_openpsa_projects_projectbroker
                     }
                     else
                     {
-                        $group_cache[$guid] = new org_openpsa_contacts_group($guid);
+                        $group_cache[$guid] = new org_openpsa_contacts_group_dba($guid);
                     }
                 }
                 $group =& $group_cache[$guid];

@@ -23,7 +23,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         $customer_title = $data['l10n']->get('no customer');
         if ($customer != 0)
         {
-            $customer = new org_openpsa_contacts_group($customer);
+            $customer = new org_openpsa_contacts_group_dba($customer);
             $customer_title = $customer->official;
         }
 

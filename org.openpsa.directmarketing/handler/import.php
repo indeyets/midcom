@@ -238,7 +238,7 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
             && $subscriber['person']['email'])
         {
             // Perform a simple email test. More complicated duplicate checking is best left to the o.o.contacts duplicate checker
-            $qb = org_openpsa_contacts_person::new_query_builder();
+            $qb = org_openpsa_contacts_person_dba::new_query_builder();
             $qb->add_constraint('email', '=', $subscriber['person']['email']);
             $persons = $qb->execute_unchecked();
             if (count($persons) > 0)
@@ -253,7 +253,7 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
             && $subscriber['person']['handphone'])
         {
             // Perform a simple cell phone test. More complicated duplicate checking is best left to the o.o.contacts duplicate checker
-            $qb = org_openpsa_contacts_person::new_query_builder();
+            $qb = org_openpsa_contacts_person_dba::new_query_builder();
             $qb->add_constraint('handphone', '=', $subscriber['person']['handphone']);
             $persons = $qb->execute_unchecked();
             if (count($persons) > 0)
@@ -266,7 +266,7 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
         if (!$person)
         {
             // We didn't have person matching the email in DB. Create a new one.
-            $person = new org_openpsa_contacts_person();
+            $person = new org_openpsa_contacts_person_dba();
             if (!$person->create())
             {
                 $this->_request_data['new_objects']['person'] =& $person;
@@ -358,7 +358,7 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
         {
             // Perform a simple check for existing organization. More complicated duplicate checking is best left to the o.o.contacts duplicate checker
             $GLOBALS['org_openpsa_contacts_group_autoload_members'] = false;
-            $qb = org_openpsa_contacts_group::new_query_builder();
+            $qb = org_openpsa_contacts_group_dba::new_query_builder();
 
             if (   array_key_exists('company_id', $this->_schemadbs['organization']['default']->fields)
                 && array_key_exists('company_id', $subscriber['organization'])
@@ -394,7 +394,7 @@ class org_openpsa_directmarketing_handler_import extends midcom_baseclasses_comp
         if (!$organization)
         {
             // We didn't have person matching the email in DB. Create a new one.
-            $organization = new org_openpsa_contacts_group();
+            $organization = new org_openpsa_contacts_group_dba();
             if (!$organization->create())
             {
                 $this->_request_data['new_objects']['organization'] =& $organization;

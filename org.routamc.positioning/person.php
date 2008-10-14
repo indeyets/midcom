@@ -43,7 +43,7 @@ class org_routamc_positioning_person extends midcom_baseclasses_components_purec
         $this->_component = 'org.routamc.positioning';
 
         if (   !is_a($person, 'midgard_person')
-            && !is_a($person, 'org_openpsa_contacts_person'))
+            && !is_a($person, 'org_openpsa_contacts_person_dba'))
         {
             $this->_person = null;
             return false;

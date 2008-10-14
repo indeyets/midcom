@@ -74,7 +74,7 @@
             'widget' => 'universalchooser',
             'widget_config' => array
             (
-                'class'       => 'org_openpsa_contacts_person',
+                'class'       => 'org_openpsa_contacts_person_dba',
                 'component'   => 'org.openpsa.contacts',
                 'titlefield'  => 'name',
                 'idfield'     => 'id',

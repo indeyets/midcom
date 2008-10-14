@@ -242,7 +242,7 @@ class org_maemo_devcodes_application_dba extends __org_maemo_devcodes_applicatio
             debug_pop();
             return -1;
         }
-        $person =& org_openpsa_contacts_person::get_cached($user);
+        $person =& org_openpsa_contacts_person_dba::get_cached($user);
         if ($person->get_parameter('org.maemo.devcodes', 'cannot_apply:all'))
         {
             // Generic 'cannot_apply' set

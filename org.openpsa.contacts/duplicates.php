@@ -28,8 +28,8 @@ class org_openpsa_contacts_duplicates
     var $_membership_cache = array();
 
     /**
-     * Find duplicates for given org_openpsa_contacts_person object
-     * @param org_openpsa_contacts_person $person object (does not need id)
+     * Find duplicates for given org_openpsa_contacts_person_dba object
+     * @param org_openpsa_contacts_person_dba $person object (does not need id)
      * @return array array of possible duplicates
      */
     function find_duplicates_person($person, $threshold = 1)
@@ -37,7 +37,7 @@ class org_openpsa_contacts_duplicates
         $this->p_map = array(); //Make sure this is clean before starting
         $ret = array();
         //Search for all potential duplicates (more detailed checking is done later)
-        $qb = org_openpsa_contacts_person::new_query_builder();
+        $qb = org_openpsa_contacts_person_dba::new_query_builder();
         //$qb = new midgard_query_builder('org_openpsa_person');
         $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
         if ($person->id)
@@ -266,15 +266,15 @@ class org_openpsa_contacts_duplicates
     }
 
     /**
-     * Find duplicates for given org_openpsa_contacts_group object
-     * @param org_openpsa_contacts_group $group org_openpsa_contacts_group object (does not need id)
+     * Find duplicates for given org_openpsa_contacts_group_dba object
+     * @param org_openpsa_contacts_group_dba $group org_openpsa_contacts_group_dba object (does not need id)
      * @return array array of possible duplicates
      */
     function find_duplicates_group($group, $threshold = 1)
     {
         $this->p_map = array(); //Make sure this is clean before starting
         $ret = array();
-        $qb = org_openpsa_contacts_group::new_query_builder();
+        $qb = org_openpsa_contacts_group_dba::new_query_builder();
         $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
         if ($group->id)
         {
@@ -414,7 +414,7 @@ class org_openpsa_contacts_duplicates
     }
 
     /**
-     * Find duplicates for given all org_openpsa_contacts_person objects in database
+     * Find duplicates for given all org_openpsa_contacts_person_dba objects in database
      * @return array array of persons with their possible duplicates
      */
     function check_all_persons($threshold = 1)
@@ -434,7 +434,7 @@ class org_openpsa_contacts_duplicates
         $ret['p_map'] = array();
         $ret['threshold'] =& $threshold;
 
-        $qb = org_openpsa_contacts_person::new_query_builder();
+        $qb = org_openpsa_contacts_person_dba::new_query_builder();
         $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
         $persons = $qb->execute();
         if (empty($persons))
@@ -500,7 +500,7 @@ EOF;
     }
 
     /**
-     * Find duplicates for given all org_openpsa_contacts_group objects in database
+     * Find duplicates for given all org_openpsa_contacts_group_dba objects in database
      * @return array array of groups with their possible duplicates
      */
     function check_all_groups($threshold = 1)
@@ -514,7 +514,7 @@ EOF;
         $ret['p_map'] = array();
         $ret['threshold'] =& $threshold;
 
-        $qb = org_openpsa_contacts_group::new_query_builder();
+        $qb = org_openpsa_contacts_group_dba::new_query_builder();
         $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
 
         $groups = $qb->execute();

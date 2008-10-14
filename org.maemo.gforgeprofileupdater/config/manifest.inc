@@ -33,7 +33,7 @@
         'classes' => array
         (
             'midcom_baseclasses_database_person',
-            'org_openpsa_contacts_person',
+            'org_openpsa_contacts_person_dba',
         ),
         'operations' => MIDCOM_OPERATION_DBA_ALL,
     ),

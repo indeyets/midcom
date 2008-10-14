@@ -262,7 +262,8 @@ class midcom_helper_datamanager2_renderer_simple extends HTML_QuickForm_Renderer
     function finishForm(&$form)
     {
         // add a required note, if one is needed
-        if (!empty($form->_required) && !$form->_freezeAll)
+        if (!empty($form->_required) 
+            && !$form->_freezeAll)
         {
             $this->_html .= str_replace('{requiredNote}', $form->getRequiredNote(), $this->_requiredNoteTemplate);
         }

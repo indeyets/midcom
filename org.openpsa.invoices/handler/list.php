@@ -202,7 +202,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
         }
 
         // We're creating invoice for chosen company
-        $this->_request_data['customer'] = new org_openpsa_contacts_group($args[0]);
+        $this->_request_data['customer'] = new org_openpsa_contacts_group_dba($args[0]);
         if (!$this->_request_data['customer'])
         {
             return false;
@@ -351,7 +351,7 @@ class org_openpsa_invoices_handler_list extends midcom_baseclasses_components_ha
             foreach ($this->_request_data['invoices'] as $invoice)
             {
                 $this->_request_data['invoice'] =& $invoice;
-                $this->_request_data['customer'] = new org_openpsa_contacts_group($invoice->customer);
+                $this->_request_data['customer'] = new org_openpsa_contacts_group_dba($invoice->customer);
                 midcom_show_style('show-list-item');
 
                 if ($this->_request_data['even'])

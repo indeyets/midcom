@@ -124,7 +124,7 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
                 $customer_id = $this->_request_data['tasks'][$task_id]->customer;
                 if (!array_key_exists($customer_id, $this->_request_data['customers']))
                 {
-                     $this->_request_data['customers'][$customer_id] = new org_openpsa_contacts_group($customer_id);
+                     $this->_request_data['customers'][$customer_id] = new org_openpsa_contacts_group_dba($customer_id);
                 }
             }
             else

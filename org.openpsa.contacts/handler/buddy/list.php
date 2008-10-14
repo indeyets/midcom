@@ -30,14 +30,14 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
         $user =& $_MIDCOM->auth->user->get_storage();
         $user->require_do('midgard:create');
 
-        $target = new org_openpsa_contacts_person($args[0]);
+        $target = new org_openpsa_contacts_person_dba($args[0]);
         if (!$target)
         {
             return false;
         }
 
         // Check we're not buddies already
-        $qb = org_openpsa_contacts_buddy::new_query_builder();
+        $qb = org_openpsa_contacts_buddy_dba::new_query_builder();
         $qb->add_constraint('account', '=', $user->guid);
         $qb->add_constraint('buddy', '=', $target->guid);
         $qb->add_constraint('isapproved', '=', true);
@@ -47,7 +47,7 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
             return false;
         }
 
-        $buddy = new org_openpsa_contacts_buddy();
+        $buddy = new org_openpsa_contacts_buddy_dba();
         $buddy->account = $user->guid;
         $buddy->buddy = $target->guid;
         $buddy->isapproved = true;
@@ -72,14 +72,14 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
         $user =& $_MIDCOM->auth->user->get_storage();
         $user->require_do('midgard:create');
 
-        $target = new org_openpsa_contacts_person($args[0]);
+        $target = new org_openpsa_contacts_person_dba($args[0]);
         if (!$target)
         {
             return false;
         }
 
         // Check we're not buddies already
-        $qb = org_openpsa_contacts_buddy::new_query_builder();
+        $qb = org_openpsa_contacts_buddy_dba::new_query_builder();
         $qb->add_constraint('account', '=', $user->guid);
         $qb->add_constraint('buddy', '=', $target->guid);
         $buddies = $qb->execute();
@@ -125,7 +125,7 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
 
         $this->_request_data['buddylist'] = array();
 
-        $qb = org_openpsa_contacts_buddy::new_query_builder();
+        $qb = org_openpsa_contacts_buddy_dba::new_query_builder();
         $qb->add_constraint('account', '=', $user->guid);
         //$qb->add_constraint('isapproved', '=', true);
         $qb->add_constraint('blacklisted', '=', false);
@@ -135,7 +135,7 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
 
         foreach ($buddies as $buddy)
         {
-            $person = new org_openpsa_contacts_person($buddy->buddy);
+            $person = new org_openpsa_contacts_person_dba($buddy->buddy);
             if ($person)
             {
                 $this->_request_data['buddylist'][] = $person;
@@ -176,7 +176,7 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
                     $memberships = $qb->execute();
                     foreach ($memberships as $membership)
                     {
-                        $group = new org_openpsa_contacts_group($membership->gid);
+                        $group = new org_openpsa_contacts_group_dba($membership->gid);
                         //$buddy->addChild('company', htmlentities($group->get_label(), ENT_NOQUOTES, 'UTF-8'));
                         $buddy->addChild('company', str_replace('&', '&amp;', $group->get_label()));
                         break;

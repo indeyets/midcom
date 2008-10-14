@@ -82,7 +82,7 @@ $data =& $_MIDCOM->get_custom_context_data('request_data');
             <span>Kerho:</span>
             <select name="operator">
                 <?php
-                $qb = org_openpsa_contacts_group::new_query_builder();
+                $qb = org_openpsa_contacts_group_dba::new_query_builder();
                 $qb->add_order('official');
                 $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
                 $qb->add_constraint('official', '<>', '');

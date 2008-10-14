@@ -565,7 +565,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         }
         $GLOBALS['org_openpsa_directmarketing_campaign_message_send_i']++;
         $token = $this->_create_email_token();
-        $person = new org_openpsa_contacts_person($member->person);
+        $person = new org_openpsa_contacts_person_dba($member->person);
         $mail = new org_openpsa_mail();
         $mail->to = $person->email;
         if ($this->test_mode)
@@ -967,7 +967,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
             $GLOBALS['org_openpsa_directmarketing_campaign_message_send_i'] = 0;
         }
         $GLOBALS['org_openpsa_directmarketing_campaign_message_send_i']++;
-        $person = new org_openpsa_contacts_person($member->person);
+        $person = new org_openpsa_contacts_person_dba($member->person);
         $person->handphone = $this->_normalize_phone($person->handphone);
         $content_p = $member->personalize_message($content, $this->orgOpenpsaObtype, &$person);
 

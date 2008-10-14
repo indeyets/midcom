@@ -49,7 +49,7 @@ class org_openpsa_sales_salesproject_member_dba extends __org_openpsa_sales_sale
         $owner = new midcom_db_person($salesproject->owner);
         $person = new midcom_db_person($this->person);
 
-        $qb = org_openpsa_contacts_buddy::new_query_builder();
+        $qb = org_openpsa_contacts_buddy_dba::new_query_builder();
         $user =& $_MIDCOM->auth->user->get_storage();
         $qb->add_constraint('account', '=', (string)$owner->guid);
         $qb->add_constraint('buddy', '=', (string)$person->guid);
@@ -59,7 +59,7 @@ class org_openpsa_sales_salesproject_member_dba extends __org_openpsa_sales_sale
         if (count($buddies) == 0)
         {
             // Cache the association to buddy list of the sales project owner
-            $buddy = new org_openpsa_contacts_buddy();
+            $buddy = new org_openpsa_contacts_buddy_dba();
             $buddy->account = $owner->guid;
             $buddy->buddy = $person->guid;
             $buddy->isapproved = false;

@@ -3,7 +3,7 @@
 $application =& $data['application'];
 if (!empty($application->applicant))
 {
-    $applicant =& org_openpsa_contacts_person::get_cached($application->applicant);
+    $applicant =& org_openpsa_contacts_person_dba::get_cached($application->applicant);
 }
 ?>
         <tr>

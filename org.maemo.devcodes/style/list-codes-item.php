@@ -3,7 +3,7 @@
 $code =& $data['code'];
 if (!empty($code->recipient))
 {
-    $recipient =& org_openpsa_contacts_person::get_cached($code->recipient);
+    $recipient =& org_openpsa_contacts_person_dba::get_cached($code->recipient);
 }
 ?>
         <tr>

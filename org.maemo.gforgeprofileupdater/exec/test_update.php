@@ -13,7 +13,7 @@ else
 if ($fetch_user)
 {
     $person = false;
-    $qb = org_openpsa_contacts_person::new_query_builder();
+    $qb = org_openpsa_contacts_person_dba::new_query_builder();
     $qb->add_constraint('username', '=', $fetch_user);
     $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
     $persons = $qb->execute();

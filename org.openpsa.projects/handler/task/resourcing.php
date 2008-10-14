@@ -320,7 +320,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
             // This will exit.
         }
 
-        $data['person'] = new org_openpsa_contacts_person($data['prospect']->person);
+        $data['person'] = new org_openpsa_contacts_person_dba($data['prospect']->person);
         if (! $data['person'])
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Person #{$data['prospect']->person} was not found.");

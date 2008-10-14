@@ -193,7 +193,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         switch(true)
         {
             case is_a($object, 'midcom_baseclasses_database_person'):
-            case is_a($object, 'org_openpsa_contacts_person'):
+            case is_a($object, 'org_openpsa_contacts_person_dba'):
                 $this->_org_openpsa_relatedto_find_suspects_person($object, $defaults, $links_array);
                 break;
             case is_a($object, 'midcom_baseclasses_database_event'):

@@ -366,7 +366,7 @@ class org_openpsa_reports_handler_base extends midcom_baseclasses_components_han
                     $obj = $core_user->get_storage();
                 break;
                 case 'groups':
-                    $obj = new org_openpsa_contacts_group($id);
+                    $obj = new org_openpsa_contacts_group_dba($id);
                 break;
                 default:
                     $method = "_get_cache_obj_{$type}";

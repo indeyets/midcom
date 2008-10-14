@@ -36,7 +36,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
     function _load_person($identifier)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $person = new org_openpsa_contacts_person($identifier);
+        $person = new org_openpsa_contacts_person_dba($identifier);
 
         if (!is_object($person))
         {
@@ -79,14 +79,14 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
             "storage" => null,
         );
 
-        $person = new org_openpsa_contacts_person();
+        $person = new org_openpsa_contacts_person_dba();
         $person->firstname = "";
         $person->lastname = "";
 
         $stat = $person->create();
         if ($stat)
         {
-            $this->_request_data['person'] = new org_openpsa_contacts_person($person->id);
+            $this->_request_data['person'] = new org_openpsa_contacts_person_dba($person->id);
             //Debugging
             $person = $this->_request_data['person'];
             $result["storage"] =& $this->_request_data['person'];
@@ -106,7 +106,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         $_MIDCOM->auth->require_valid_user();
-        $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_contacts_person');
+        $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_contacts_person_dba');
 
         if (!$this->_datamanagers['person']->init_creation_mode("newperson",$this,"_creation_dm_callback_person"))
         {
@@ -211,10 +211,10 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
 
     private function _load_group($identifier)
     {
-        $group = new org_openpsa_contacts_group($identifier);
+        $group = new org_openpsa_contacts_group_dba($identifier);
 
         //$parent = $group->get_parent_guid_uncached();
-        //$parent = new org_openpsa_contacts_group($parent);
+        //$parent = new org_openpsa_contacts_group_dba($parent);
         //die("can edit parent: ".$parent->can_do('midgard:update').", can edit group: ".$group->can_do('midgard:update'));
 
         if (!$group)
@@ -337,7 +337,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                 );
             }
 
-            $qb = org_openpsa_contacts_buddy::new_query_builder();
+            $qb = org_openpsa_contacts_buddy_dba::new_query_builder();
             $user = $_MIDCOM->auth->user->get_storage();
             $qb->add_constraint('account', '=', $user->guid);
             $qb->add_constraint('buddy', '=', $this->_request_data['person']->guid);
@@ -746,7 +746,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                         $member->extra = $this->_request_data['l10n']->get('<title>');
                     }
                     $this->_request_data['member_title'] = $member->extra;
-                    $this->_request_data['group'] = new org_openpsa_contacts_group($member->gid);
+                    $this->_request_data['group'] = new org_openpsa_contacts_group_dba($member->gid);
                     midcom_show_style("show-person-groups-item");
                 }
             }

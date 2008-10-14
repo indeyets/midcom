@@ -109,7 +109,7 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
         }
         if (!is_object($person))
         {
-            $person = new org_openpsa_contacts_person($this->person);
+            $person = new org_openpsa_contacts_person_dba($this->person);
         }
         //TODO: All kinds of string substitutions, remember to check message type before mangling if only applies to certain types
         // Unsubscribe URL
@@ -172,7 +172,7 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
         }
         if (!is_object($person))
         {
-            $person = new org_openpsa_contacts_person($this->person);
+            $person = new org_openpsa_contacts_person_dba($this->person);
         }
         return "{$node[MIDCOM_NAV_FULLURL]}campaign/unsubscribe/{$this->guid}/";
     }

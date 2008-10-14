@@ -101,12 +101,12 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
         $group = false;
         $person = false;
 
-        $group = new org_openpsa_contacts_group($guid);
+        $group = new org_openpsa_contacts_group_dba($guid);
         if (   !$group
             || !$group->guid)
         {
             $group = null;
-            $person = new org_openpsa_contacts_person($guid);
+            $person = new org_openpsa_contacts_person_dba($guid);
             if (   !$person
                 || !$person->guid)
             {
@@ -212,8 +212,8 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
         // Transfer metadata dependencies from classes that we drive
         $classes = array(
             'midcom_db_member',
-            'org_openpsa_contacts_person',
-            'org_openpsa_contacts_group'
+            'org_openpsa_contacts_person_dba',
+            'org_openpsa_contacts_group_dba'
         );
         foreach($classes as $class)
         {
@@ -222,7 +222,7 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
                 switch($class)
                 {
                     // Person would have creator&revisor but old-api gets confused...
-                    case 'org_openpsa_contacts_person':
+                    case 'org_openpsa_contacts_person_dba':
                     case 'midcom_db_member':
                         $metadata_fields = array();
                         break;
@@ -363,7 +363,7 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
         {
             // Handling for persons
 
-            $person = new org_openpsa_contacts_person($args['person']);
+            $person = new org_openpsa_contacts_person_dba($args['person']);
             if (!$person)
             {
                 $msg = "Person {$args['person']} not found, error " . mgd_errstr();
@@ -452,7 +452,7 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
         {
             // Handling for persons
 
-            $group = new org_openpsa_contacts_group($args['group']);
+            $group = new org_openpsa_contacts_group_dba($args['group']);
             if (!$group)
             {
                 $msg = "Group {$args['group']} not found, error " . mgd_errstr();
@@ -494,7 +494,7 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
                         $location->longitude = $longitude;
                         $location->relation = ORG_ROUTAMC_POSITIONING_RELATION_LOCATED;
                         $location->parent = $group->guid;
-                        $location->parentclass = 'org_openpsa_contacts_group';
+                        $location->parentclass = 'org_openpsa_contacts_group_dba';
                         $location->parentcomponent = 'org.openpsa.contacts';
                         $stat = $location->create();
                     }

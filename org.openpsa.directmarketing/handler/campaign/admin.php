@@ -218,10 +218,10 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
         switch ($row['object'])
         {
             case 'person':
-                $classname = 'org_openpsa_contacts_person';
+                $classname = 'org_openpsa_contacts_person_dba';
                 break;
             case 'group':
-                $classname = 'org_openpsa_contacts_group';
+                $classname = 'org_openpsa_contacts_group_dba';
                 break;
             case 'membership':
                 $classname = 'midgard_member';
@@ -338,10 +338,10 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
         switch ($row['object'])
         {
             case 'person_parameters':
-                $classname = 'org_openpsa_contacts_person';
+                $classname = 'org_openpsa_contacts_person_dba';
                 break;
             case 'group_parameters':
-                $classname = 'org_openpsa_contacts_group';
+                $classname = 'org_openpsa_contacts_group_dba';
                 break;
             case 'membership_parameters':
                 $classname = 'midgard_member';
@@ -537,7 +537,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
             $from['rows'] = $_POST['midcom_helper_datamanager_dummy_field_row'];
             $data['new_rule_from'] =& $from;
             $rule = array();
-            $user = new org_openpsa_contacts_person($_MIDGARD['user']);
+            $user = new org_openpsa_contacts_person_dba($_MIDGARD['user']);
             $rule['comment'] = sprintf($this->_l10n->get('generated on %s by %s'), strftime('%x %R'),  $user->name);
             switch ($from['type'])
             {

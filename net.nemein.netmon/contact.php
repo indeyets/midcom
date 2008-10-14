@@ -12,7 +12,7 @@
  *
  * @package net.nemein.netmon
  */
-class net_nemein_netmon_contact_dba extends org_openpsa_contacts_person
+class net_nemein_netmon_contact_dba extends org_openpsa_contacts_person_dba
 {
     var $nagiosname = '';
 

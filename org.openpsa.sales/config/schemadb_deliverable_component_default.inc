@@ -32,7 +32,7 @@
             'widget' => 'universalchooser',
             'widget_config' => array
             (
-                'class'       => 'org_openpsa_contacts_group',
+                'class'       => 'org_openpsa_contacts_group_dba',
                 'component'   => 'org.openpsa.contacts',
                 'titlefield'  => 'official',
                 'idfield'     => 'id',
@@ -166,7 +166,7 @@
             'widget' => 'universalchooser',
             'widget_config' => array
             (
-                'class'       => 'org_openpsa_contacts_group',
+                'class'       => 'org_openpsa_contacts_group_dba',
                 'component'   => 'org.openpsa.contacts',
                 'titlefield'  => 'official',
                 'idfield'     => 'id',

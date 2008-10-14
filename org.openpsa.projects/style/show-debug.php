@@ -19,7 +19,7 @@ $classes = array
     'midgard_person',
     'midcom_db_person',
     'midcom_org_openpsa_person',
-    'org_openpsa_contacts_person',
+    'org_openpsa_contacts_person_dba',
 );
 $tags = array('php', 'midgard');
 $persons = net_nemein_tag_handler::get_objects_with_tags($tags, $classes, 'OR');

@@ -26,7 +26,7 @@ if (count($data['latest']) > 0)
     foreach ($data['latest'] as $report)
     {
         echo "    <tr>\n";
-        $pilot = new org_openpsa_contacts_person($report->pilot);
+        $pilot = new org_openpsa_contacts_person_dba($report->pilot);
         echo "      <td>{$pilot->name}</td>\n";
         echo "      <td>".strftime('%x', $report->end)."</td>\n";
         echo "      <td>{$report->origin}</td>\n";

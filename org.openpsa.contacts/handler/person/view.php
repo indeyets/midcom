@@ -71,7 +71,7 @@ class org_openpsa_contacts_handler_person_view extends midcom_baseclasses_compon
             )
         );
 
-        $qb = org_openpsa_contacts_buddy::new_query_builder();
+        $qb = org_openpsa_contacts_buddy_dba::new_query_builder();
         $user = $_MIDCOM->auth->user->get_storage();
         $qb->add_constraint('account', '=', $user->guid);
         $qb->add_constraint('buddy', '=', $this->_request_data['person']->guid);
@@ -213,7 +213,7 @@ class org_openpsa_contacts_handler_person_view extends midcom_baseclasses_compon
      */
     function _handler_view($handler_id, $args, &$data)
     {
-        $this->_contact = new org_openpsa_contacts_person($args[0]);
+        $this->_contact = new org_openpsa_contacts_person_dba($args[0]);
         if (!$this->_contact)
         {
             return false;

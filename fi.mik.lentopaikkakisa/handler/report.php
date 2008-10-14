@@ -202,7 +202,7 @@ class fi_mik_lentopaikkakisa_handler_report extends midcom_baseclasses_component
                     $organization_aerodromes[$flight->pilot][$flight->destination] = $flight->scoredestination;
                 }
             }
-            $organization = new org_openpsa_contacts_group($_POST['operator']);
+            $organization = new org_openpsa_contacts_group_dba($_POST['operator']);
             $organization->parameter('fi.mik.lentopaikkakisa', 'organization_scores', $organization_scores);
             $_MIDCOM->auth->drop_sudo();
             // Redirect to front page

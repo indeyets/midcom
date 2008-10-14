@@ -52,14 +52,14 @@ class org_openpsa_core_interface extends midcom_baseclasses_components_interface
         {
             // For some reason this trigger error 500
             //$_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
-            if (!class_exists('org_openpsa_contacts_group'))
+            if (!class_exists('org_openpsa_contacts_group_dba'))
             {
                 // Fallback to standard group object
                 $class = 'midcom_db_group';
             }
             else
             {
-                $class = 'org_openpsa_contacts_group';
+                $class = 'org_openpsa_contacts_group_dba';
             }
             $_MIDCOM->auth->request_sudo();
             $my_company_object = new $class($my_company_guid);

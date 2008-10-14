@@ -1,7 +1,7 @@
 <?php
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 $application =& $data['application'];
-$applicant =& org_openpsa_contacts_person::get_cached($application->applicant);
+$applicant =& org_openpsa_contacts_person_dba::get_cached($application->applicant);
 ?>
             <tr>
                 <td>

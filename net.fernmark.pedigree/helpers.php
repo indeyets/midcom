@@ -69,7 +69,7 @@ function net_fernmark_pedigree_widget_universalchooser_config_person($idfield = 
 {
     $ret = array
     (
-        'class' => 'org_openpsa_contacts_person',
+        'class' => 'org_openpsa_contacts_person_dba',
         'component' => 'org.openpsa.contacts',
         'idfield' => $idfield,
         'titlefield' => 'name',
@@ -113,7 +113,7 @@ function net_fernmark_pedigree_widget_universalchooser_config_group($idfield = '
 {
     $ret = array
     (
-        'class' => 'org_openpsa_contacts_group',
+        'class' => 'org_openpsa_contacts_group_dba',
         'component' => 'org.openpsa.contacts',
         'idfield' => $idfield,
         'titlefield' => 'official',

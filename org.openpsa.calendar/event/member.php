@@ -99,7 +99,7 @@ class org_openpsa_calendar_event_member_dba extends __org_openpsa_calendar_event
         }
         if (!array_key_exists($id, $GLOBALS['midcom_component_data']['org.openpsa.calendar']['persons_cache']))
         {
-            $GLOBALS['midcom_component_data']['org.openpsa.calendar']['persons_cache'][$id] = new org_openpsa_contacts_person($id);
+            $GLOBALS['midcom_component_data']['org.openpsa.calendar']['persons_cache'][$id] = new org_openpsa_contacts_person_dba($id);
         }
         $person =& $GLOBALS['midcom_component_data']['org.openpsa.calendar']['persons_cache'][$id];
 
@@ -169,7 +169,7 @@ class org_openpsa_calendar_event_member_dba extends __org_openpsa_calendar_event
         $slots = array();
         if (!is_object($person))
         {
-            $person = new org_openpsa_contacts_person($person);
+            $person = new org_openpsa_contacts_person_dba($person);
         }
         // Get current events for person
         $qb = org_openpsa_calendar_event_participant_dba::new_query_builder();

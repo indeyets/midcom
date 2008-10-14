@@ -10,7 +10,7 @@
  *
  * @package org.openpsa.contacts
  */
-class org_openpsa_contacts_buddy extends __org_openpsa_contacts_buddy
+class org_openpsa_contacts_buddy_dba extends __org_openpsa_contacts_buddy_dba
 {
     function __construct($id = null)
     {
@@ -21,7 +21,7 @@ class org_openpsa_contacts_buddy extends __org_openpsa_contacts_buddy
     {
         if ($this->account)
         {
-            $person = new org_openpsa_contacts_person($this->account);
+            $person = new org_openpsa_contacts_person_dba($this->account);
             if ($person)
             {
                 return $person;

@@ -79,7 +79,7 @@ class org_openpsa_contacts_handler_search extends midcom_baseclasses_components_
         $_MIDCOM->auth->require_valid_user();
         //We always want to display *something*
 
-        if ($_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_contacts_person'))
+        if ($_MIDCOM->auth->can_user_do('midgard:create', null, 'org_openpsa_contacts_person_dba'))
         {
             $this->_toolbars->top->add_item(
                 Array(
@@ -152,7 +152,7 @@ class org_openpsa_contacts_handler_search extends midcom_baseclasses_components_
             return false;
         }
 
-        $qb_org = org_openpsa_contacts_group::new_query_builder();
+        $qb_org = org_openpsa_contacts_group_dba::new_query_builder();
         $qb_org->begin_group('OR');
 
         // Search using only the fields defined in config
@@ -184,7 +184,7 @@ class org_openpsa_contacts_handler_search extends midcom_baseclasses_components_
             foreach($results as $group)
             {
                 //TODO: When we actually use MgdSchema objects just use $group
-                //$GLOBALS['view_group'] = new org_openpsa_contacts_group($group->id);
+                //$GLOBALS['view_group'] = new org_openpsa_contacts_group_dba($group->id);
                 $GLOBALS['view_group'] = $group;
                 midcom_show_style('search-groups-item');
             }
@@ -217,7 +217,7 @@ class org_openpsa_contacts_handler_search extends midcom_baseclasses_components_
 
         $search = str_replace('*', '%', $search);
 
-        $qb_org = org_openpsa_contacts_person::new_query_builder();
+        $qb_org = org_openpsa_contacts_person_dba::new_query_builder();
         $qb_org->begin_group('OR');
 
         // Search using only the fields defined in config

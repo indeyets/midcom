@@ -87,7 +87,7 @@ class org_openpsa_directmarketing_handler_message_compose extends midcom_basecla
 
         if ($handler_id === 'compose4person')
         {
-            $data['person'] = new org_openpsa_contacts_person($args[1]);
+            $data['person'] = new org_openpsa_contacts_person_dba($args[1]);
             if (   !is_object($data['person'])
                 || !$data['person']->id)
             {

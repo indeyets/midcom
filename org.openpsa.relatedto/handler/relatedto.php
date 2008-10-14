@@ -438,7 +438,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         $qb->add_constraint('toComponent', '=', 'org.openpsa.contacts');
         $qb->begin_group('OR');
             $qb->add_constraint('toClass', '=', 'midcom_db_person');
-            $qb->add_constraint('toClass', '=', 'org_openpsa_contacts_person');
+            $qb->add_constraint('toClass', '=', 'org_openpsa_contacts_person_dba');
         $qb->end_group();
         $qb->add_constraint('status', '<>', ORG_OPENPSA_RELATEDTO_STATUS_NOTRELATED);
         $recipients = $qb->execute();

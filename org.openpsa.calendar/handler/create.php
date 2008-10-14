@@ -66,7 +66,7 @@ class org_openpsa_calendar_handler_create extends midcom_baseclasses_components_
         reset($conflict_event->busy_em);
         foreach ($conflict_event->busy_em as $pid => $events)
         {
-            $person = new org_openpsa_contacts_person($pid);
+            $person = new org_openpsa_contacts_person_dba($pid);
             if (   !is_object($person)
                 || !$person->id)
             {

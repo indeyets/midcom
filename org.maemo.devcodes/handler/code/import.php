@@ -197,7 +197,7 @@ class org_maemo_devcodes_handler_code_import extends midcom_baseclasses_componen
         if (   isset($csv_line['recipient'])
             && !empty($csv_line['recipient']))
         {
-            $recipient =& org_openpsa_contacts_person::get_cached($csv_line['recipient']);
+            $recipient =& org_openpsa_contacts_person_dba::get_cached($csv_line['recipient']);
             if (   !$recipient
                 || empty($recipient->guid))
             {

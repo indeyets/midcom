@@ -12,8 +12,8 @@ echo "</pre>\n";
 
 
 
-$group = new org_openpsa_contacts_group(17);
-$group2 = new org_openpsa_contacts_group(18);
+$group = new org_openpsa_contacts_group_dba(17);
+$group2 = new org_openpsa_contacts_group_dba(18);
 /*
 echo "group: <pre>\n" . org_openpsa_helpers::sprint_r($group) . "</pre>\n";
 echo "group2: <pre>\n" . org_openpsa_helpers::sprint_r($group2) . "</pre>\n";
@@ -47,15 +47,15 @@ $qb->add_order('name', 'ASC');
 $ret = $qb->execute();
 foreach($ret as $param)
 {
-    $person1 = new org_openpsa_contacts_person($param->oid);
-    $person2 = new org_openpsa_contacts_person($param->name);
+    $person1 = new org_openpsa_contacts_person_dba($param->oid);
+    $person2 = new org_openpsa_contacts_person_dba($param->name);
     echo "Found marked as duplicate ids #{$person1->id} and #{$person2->id}<br/>\n";
 }
 
 
 /*
-$person = new org_openpsa_contacts_person(20380);
-$person2 = new org_openpsa_contacts_person(20395);
+$person = new org_openpsa_contacts_person_dba(20380);
+$person2 = new org_openpsa_contacts_person_dba(20395);
 echo "person: <pre>\n" . org_openpsa_helpers::sprint_r($person) . "</pre>\n";
 echo "person2: <pre>\n" . org_openpsa_helpers::sprint_r($person2) . "</pre>\n";
 $dfinder = new org_openpsa_contacts_duplicates();

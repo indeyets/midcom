@@ -49,7 +49,7 @@ class org_maemo_gforgeprofileupdater_interface extends midcom_baseclasses_compon
             return false;
         }
         $_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
-        if (!class_exists('org_openpsa_contacts_person'))
+        if (!class_exists('org_openpsa_contacts_person_dba'))
         {
             debug_add('Could not load org.openpsa.contacts, aborting');
             debug_pop();
@@ -83,21 +83,21 @@ class org_maemo_gforgeprofileupdater_interface extends midcom_baseclasses_compon
             return true;
         }
 
-        // Normalize object to org_openpsa_contacts_person
-        if (is_a($object, 'org_openpsa_contacts_person'))
+        // Normalize object to org_openpsa_contacts_person_dba
+        if (is_a($object, 'org_openpsa_contacts_person_dba'))
         {
             // PHP5-TODO: Copy by value
             $person = $object;
         }
         else
         {
-            $person = new org_openpsa_contacts_person($object->id);
+            $person = new org_openpsa_contacts_person_dba($object->id);
         }
         if (   !$person
             || !$person->guid)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Could not cast object to org_openpsa_contacts_person', MIDCOM_LOG_ERROR);
+            debug_add('Could not cast object to org_openpsa_contacts_person_dba', MIDCOM_LOG_ERROR);
             debug_print_r('object:', $object);
             debug_print_r('person:', $person);
             debug_pop();

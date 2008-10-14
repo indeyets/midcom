@@ -37,14 +37,14 @@ class fi_mik_lentopaikkakisa_handler_score extends midcom_baseclasses_components
                 $data['view_title'] = $this->_l10n->get('scores by pilot');
                 $this->_component_data['active_leaf'] = "{$this->_topic->id}:scores_pilot";
                 $report_type = 'person';
-                $report_class = 'org_openpsa_contacts_person';
+                $report_class = 'org_openpsa_contacts_person_dba';
                 $report_label = 'name';
                 break;
             default:
                 $data['view_title'] = $this->_l10n->get('scores by organization');
                 $this->_component_data['active_leaf'] = "{$this->_topic->id}:scores_organization";
                 $report_type = 'organization';
-                $report_class = 'org_openpsa_contacts_group';
+                $report_class = 'org_openpsa_contacts_group_dba';
                 $report_label = 'official';
                 break;
         }

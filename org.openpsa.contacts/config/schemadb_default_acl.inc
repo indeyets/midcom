@@ -18,14 +18,14 @@
             'description' => 'enable project creation',
             'datatype'    => 'privilege',
             'privilege'   => 'midgard:create',
-            'privilege_classname' => 'org_openpsa_projects_project',
+            'privilege_classname' => 'org_openpsa_projects_project_dba',
         ),
 
         'contact_creation' => array (
             'description' => 'enable contact creation',
             'datatype'    => 'privilege',
             'privilege'   => 'midgard:create',
-            'privilege_classname' => 'org_openpsa_contacts_person',
+            'privilege_classname' => 'org_openpsa_contacts_person_dba',
             /* Set the contacts root group and assignee prior to initializing */
         ),
 
@@ -33,7 +33,7 @@
             'description' => 'enable editing contacts created by others',
             'datatype'    => 'privilege',
             'privilege'   => 'midgard:update',
-            'privilege_classname' => 'org_openpsa_contacts_person',
+            'privilege_classname' => 'org_openpsa_contacts_person_dba',
             /* Set the contacts root group and assignee prior to initializing */
         ),
 
@@ -41,14 +41,14 @@
             'description' => 'enable organization creation',
             'datatype'    => 'privilege',
             'privilege'   => 'midgard:create',
-            'privilege_classname' => 'org_openpsa_contacts_group',
+            'privilege_classname' => 'org_openpsa_contacts_group_dba',
         ),
 
         'organization_editing' => array (
             'description' => 'enable editing organizations created by others',
             'datatype'    => 'privilege',
             'privilege'   => 'midgard:update',
-            'privilege_classname' => 'org_openpsa_contacts_group',
+            'privilege_classname' => 'org_openpsa_contacts_group_dba',
         ),
 
         'invoices_creation' => array (

@@ -42,7 +42,7 @@ class net_fernmark_pedigree_dog_dba extends __net_fernmark_pedigree_dog_dba
         if (empty($this->kennel))
         {
             $GLOBALS['org_openpsa_contacts_group_autoload_members'] = false;
-            $kennel = new org_openpsa_contacts_group($this->kennel);
+            $kennel = new org_openpsa_contacts_group_dba($this->kennel);
             unset($GLOBALS['org_openpsa_contacts_group_autoload_members']);
         }
         switch (true)

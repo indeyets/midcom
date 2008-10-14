@@ -17,7 +17,7 @@
  *    'classes' => array(
  *        array (
  *            'type' => 'OR',
- *            'class' => 'org_openpsa_contacts_person',
+ *            'class' => 'org_openpsa_contacts_person_dba',
  *            'rules' => array(
  *                array(
  *                    'property' => 'email',
@@ -204,7 +204,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
     }
 
     /**
-     * Normalizes the various intermediate classes to org_openpsa_contacts_persons
+     * Normalizes the various intermediate classes to org_openpsa_contacts_person_dbas
      * for final results merging. Removes those entries which cannot be normalized.
      */
     function _normalize_to_persons(&$array, $from_class)
@@ -218,30 +218,30 @@ class org_openpsa_directmarketing_campaign_ruleresolver
             //debug_add("processing key #{$k}, object id #{$obj->id}, class: " . get_class($obj));
             switch (true)
             {
-                //We need to fill the seek table, thus this no-op here (matches org_openpsa_contacts_person as well)
-                case is_a($obj, 'org_openpsa_contacts_person'):
+                //We need to fill the seek table, thus this no-op here (matches org_openpsa_contacts_person_dba as well)
+                case is_a($obj, 'org_openpsa_contacts_person_dba'):
                     break;
-                //Make all other persons org_openpsa_contacts_persons
+                //Make all other persons org_openpsa_contacts_person_dbas
                 case is_a($obj, 'midgard_person'):
-                    $array[$k] = new org_openpsa_contacts_person($obj->id);
+                    $array[$k] = new org_openpsa_contacts_person_dba($obj->id);
                     break;
-                // Expand add org_openpsa_contacts_person for each group member
+                // Expand add org_openpsa_contacts_person_dba for each group member
                 case is_a($obj, 'midgard_group'):
                 case is_a($obj, 'org_openpsa_organization'):
                     unset ($array[$k]);
                     $this->_expand_group_members2persons($obj->id, $array);
                     break;
-                //Expand member to org_openpsa_contacts_person
+                //Expand member to org_openpsa_contacts_person_dba
                 case is_a($obj, 'midgard_member'):
                 case is_a($obj, 'midgard_eventmember'):
-                    $array[$k] = new org_openpsa_contacts_person($obj->uid);
+                    $array[$k] = new org_openpsa_contacts_person_dba($obj->uid);
                     break;
-                //Expand various parameters to corresponding org_openpsa_contacts_person(s)
+                //Expand various parameters to corresponding org_openpsa_contacts_person_dba(s)
                 case is_a($obj, 'midgard_parameter'):
                     switch ($obj->tablename)
                     {
                         case 'person':
-                            $array[$k] = new org_openpsa_contacts_person($obj->oid);
+                            $array[$k] = new org_openpsa_contacts_person_dba($obj->oid);
                             break;
                         case 'grp':
                             unset ($array[$k]);
@@ -256,13 +256,13 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                 case is_a($obj, 'midcom_org_openpsa_campaign_member'):
                 case is_a($obj, 'midcom_org_openpsa_campaign_message_receipt'):
                 case is_a($obj, 'midcom_org_openpsa_link_log'):
-                    $array[$k] = new org_openpsa_contacts_person($obj->person);
+                    $array[$k] = new org_openpsa_contacts_person_dba($obj->person);
                     break;
                 case is_a($obj, 'org_maemo_devcodes_application'):
-                    $array[$k] = new org_openpsa_contacts_person($obj->applicant);
+                    $array[$k] = new org_openpsa_contacts_person_dba($obj->applicant);
                     break;
                 case is_a($obj, 'org_maemo_devcodes_code'):
-                    $array[$k] = new org_openpsa_contacts_person($obj->recipient);
+                    $array[$k] = new org_openpsa_contacts_person_dba($obj->recipient);
                     break;
                 default:
                     debug_add("class " . get_class($obj) . " not supported", MIDCOM_LOG_WARN);
@@ -284,7 +284,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
     }
 
     /**
-     * Adds group #$id members to array as org_openpsa_contacts_persons
+     * Adds group #$id members to array as org_openpsa_contacts_person_dbas
      */
     function _expand_group_members2persons($id, &$array)
     {
@@ -297,7 +297,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
         }
         foreach($grp_mems as $grp_mem)
         {
-            $array[] = new org_openpsa_contacts_person($grp_mem->uid);
+            $array[] = new org_openpsa_contacts_person_dba($grp_mem->uid);
         }
     }
 

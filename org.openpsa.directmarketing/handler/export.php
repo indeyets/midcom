@@ -267,7 +267,7 @@ class org_openpsa_directmarketing_handler_export extends midcom_baseclasses_comp
         {
             $adder = array();
             $adder['campaign_member'] = $member;
-            $adder['person'] = new org_openpsa_contacts_person($member->person);
+            $adder['person'] = new org_openpsa_contacts_person_dba($member->person);
             if (!is_object($adder['person']))
             {
                 // TODO: Log error
@@ -289,10 +289,10 @@ class org_openpsa_directmarketing_handler_export extends midcom_baseclasses_comp
                     foreach ($memberships as $k2 => $membership)
                     {
                         $adder['organization_member'] = $membership;
-                        $adder['organization'] = new org_openpsa_contacts_group($membership->gid);
+                        $adder['organization'] = new org_openpsa_contacts_group_dba($membership->gid);
                         if (!is_object($adder['organization']))
                         {
-                            debug_log("Error fetching org_openpsa_contacts_group #{$membership->gid}, skipping", MIDCOM_LOG_WARN);
+                            debug_log("Error fetching org_openpsa_contacts_group_dba #{$membership->gid}, skipping", MIDCOM_LOG_WARN);
                             continue;
                         }
                         $merged[] = $adder;
@@ -307,10 +307,10 @@ class org_openpsa_directmarketing_handler_export extends midcom_baseclasses_comp
                     foreach ($memberships as $k2 => $membership)
                     {
                         $adder['organization_member'] = $membership;
-                        $adder['organization'] = new org_openpsa_contacts_group($membership->gid);
+                        $adder['organization'] = new org_openpsa_contacts_group_dba($membership->gid);
                         if (!is_object($adder['organization']))
                         {
-                            debug_log("Error fetching org_openpsa_contacts_group #{$membership->gid}, skipping", MIDCOM_LOG_WARN);
+                            debug_log("Error fetching org_openpsa_contacts_group_dba #{$membership->gid}, skipping", MIDCOM_LOG_WARN);
                             continue;
                         }
                         // Get only first or last membership

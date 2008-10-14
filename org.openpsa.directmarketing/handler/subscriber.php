@@ -308,8 +308,8 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
             // This will exit
         }
         $_MIDCOM->auth->request_sudo();
-        $this->_request_data['person'] = new org_openpsa_contacts_person($args[0]);
-        if (!is_a($this->_request_data['person'], 'org_openpsa_contacts_person'))
+        $this->_request_data['person'] = new org_openpsa_contacts_person_dba($args[0]);
+        if (!is_a($this->_request_data['person'], 'org_openpsa_contacts_person_dba'))
         {
             debug_add("Person record '{$args[0]}' not found", MIDCOM_LOG_ERROR);
             debug_pop();

@@ -40,14 +40,14 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 </div>
 <div class="sidebar">
     <?php
-    $customer = new org_openpsa_contacts_group($data['project']->customer);
+    $customer = new org_openpsa_contacts_group_dba($data['project']->customer);
     if ($customer)
     {
         echo "<h2>" . $data['l10n']->get('customer') . "</h2>\n";
         echo $customer->official;
     }
 
-    $manager = new org_openpsa_contacts_person($data['project']->manager);
+    $manager = new org_openpsa_contacts_person_dba($data['project']->manager);
     if ($manager)
     {
         echo "<h2>" . $data['l10n']->get('manager') . "</h2>\n";
@@ -59,7 +59,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         echo "<h2>" . $data['l10n']->get('resources') . "</h2>\n";
         foreach ($data['project']->resources as $contact_id => $display)
         {
-            $contact = new org_openpsa_contacts_person($contact_id);
+            $contact = new org_openpsa_contacts_person_dba($contact_id);
             $contact = new org_openpsa_contactwidget($contact);
             echo $contact->show_inline() . " ";
         }
@@ -70,7 +70,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         echo "<h2>" . $data['l10n']->get('contacts') . "</h2>\n";
         foreach ($data['project']->contacts as $contact_id => $display)
         {
-            $contact = new org_openpsa_contacts_person($contact_id);
+            $contact = new org_openpsa_contacts_person_dba($contact_id);
             $contact = new org_openpsa_contactwidget($contact);
             echo $contact->show();
         }

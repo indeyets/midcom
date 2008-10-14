@@ -523,7 +523,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         // Get task manager
         if (!array_key_exists($task->manager, $row_cache['manager']))
         {
-            $manager = new org_openpsa_contacts_person($task->manager);
+            $manager = new org_openpsa_contacts_person_dba($task->manager);
             $widget = new org_openpsa_contactwidget($manager);
             $row_cache['manager'][$task->manager] = $widget->show_inline();
         }
@@ -537,7 +537,7 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
                 $html = $this->_l10n->get('no customer');
                 if ($task->customer)
                 {
-                    $customer = new org_openpsa_contacts_group($task->customer);
+                    $customer = new org_openpsa_contacts_group_dba($task->customer);
                     $customer_url = "{$data['contacts_url']}group/{$customer->guid}";
                     $html = "<a href='{$customer_url}'>{$customer->official}</a>";
                 }

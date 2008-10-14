@@ -60,10 +60,10 @@ class net_nemein_shoppingcart_handler_checkout_email  extends midcom_baseclasses
         }
         switch(true)
         {
-            // Lets use org_openpsa_contacts_person if we can (more/better properties)
+            // Lets use org_openpsa_contacts_person_dba if we can (more/better properties)
             case (   $_MIDCOM->componentloader->load_graceful('org.openpsa.contacts')
-                  && class_exists('org_openpsa_contacts_person')):
-                $person = new org_openpsa_contacts_person($_MIDGARD['user']);
+                  && class_exists('org_openpsa_contacts_person_dba')):
+                $person = new org_openpsa_contacts_person_dba($_MIDGARD['user']);
                 break;
             default:
                 $person = $_MIDCOM->auth->user->get_storage();

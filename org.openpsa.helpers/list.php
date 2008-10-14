@@ -36,7 +36,7 @@ class org_openpsa_helpers_list
         {
             //Make sure we can read the current customer for the name
             $_MIDCOM->auth->request_sudo();
-            $company = new org_openpsa_contacts_group($task->customer);
+            $company = new org_openpsa_contacts_group_dba($task->customer);
             $_MIDCOM->auth->drop_sudo();
             $seen[$company->id] = true;
             self::task_groups_put($ret, $mode, $company);
@@ -76,7 +76,7 @@ class org_openpsa_helpers_list
             {
                 continue;
             }
-            $company = new org_openpsa_contacts_group($member->gid);
+            $company = new org_openpsa_contacts_group_dba($member->gid);
             if (   !is_object($company)
                 || !$company->id
                 /* Skip magic groups */

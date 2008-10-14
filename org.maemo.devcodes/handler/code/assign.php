@@ -398,9 +398,9 @@ class org_maemo_devcodes_handler_code_assign extends midcom_baseclasses_componen
          * We need these persons in any case, and collector has issues
          * with getting values from metadata.xxx
          */
-        $a_applicant =& org_openpsa_contacts_person::get_cached($a->applicant);
+        $a_applicant =& org_openpsa_contacts_person_dba::get_cached($a->applicant);
         $a_karma =& $a_applicant->metadata->score;
-        $b_applicant =& org_openpsa_contacts_person::get_cached($b->applicant);
+        $b_applicant =& org_openpsa_contacts_person_dba::get_cached($b->applicant);
         $b_karma =& $b_applicant->metadata->score;
         // Higher karma comes first
         if ($a_karma > $b_karma)

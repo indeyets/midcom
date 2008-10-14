@@ -134,7 +134,7 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
             return false;
         }
         $_MIDCOM->auth->request_sudo();
-        $qb = org_openpsa_contacts_person::new_query_builder();
+        $qb = org_openpsa_contacts_person_dba::new_query_builder();
         $qb->add_constraint('username', '=', $username);
         $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
         $persons = $qb->execute();

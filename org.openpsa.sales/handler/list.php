@@ -96,7 +96,7 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
                 // Cache the customer, we need it later too
                 if (!isset($this->_request_data['customers'][$salesproject->customer]))
                 {
-                    $this->_request_data['customers'][$salesproject->customer] = new org_openpsa_contacts_group($salesproject->customer);
+                    $this->_request_data['customers'][$salesproject->customer] = new org_openpsa_contacts_group_dba($salesproject->customer);
                 }
                 $mode = 'id';
                 // Add it to the options array for DM mucking to be done later in this loop.
@@ -104,7 +104,7 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
             }
             if (!isset($this->_request_data['owners'][$salesproject->owner]))
             {
-                $this->_request_data['owners'][$salesproject->owner] = new org_openpsa_contacts_person($salesproject->owner);
+                $this->_request_data['owners'][$salesproject->owner] = new org_openpsa_contacts_person_dba($salesproject->owner);
             }
 
             // Populate previous/next actions in the project

@@ -620,7 +620,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             ),
             'contact' => array
             (
-                'class' => 'org_openpsa_contacts_person',
+                'class' => 'org_openpsa_contacts_person_dba',
                 'component' => 'org.openpsa.contacts',
                 'headers' => array
                 (
@@ -1518,7 +1518,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         {
             if ($this->reflector_key == 'buddy')
             {
-                $this->class = 'org_openpsa_contacts_person';
+                $this->class = 'org_openpsa_contacts_person_dba';
                 $this->component = 'org.openpsa.contacts';
             }
         }

@@ -6,7 +6,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     <?php
     foreach ($data['prospects'] as $prospect)
     {
-        $person = new org_openpsa_contacts_person($prospect->person);
+        $person = new org_openpsa_contacts_person_dba($prospect->person);
         ?>
         <person>
             <guid>&(person.guid);</guid>

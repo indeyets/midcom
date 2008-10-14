@@ -43,7 +43,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                     echo " (";
                     foreach ($booking->participants as $participant_id => $display)
                     {
-                        $participant = new org_openpsa_contacts_person($participant_id);
+                        $participant = new org_openpsa_contacts_person_dba($participant_id);
                         $participant = new org_openpsa_contactwidget($participant);
                         echo $participant->show_inline();
                     }
@@ -89,7 +89,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             echo $agreement->deliverable_html;
         }
 
-        $manager = new org_openpsa_contacts_person($data['task']->manager);
+        $manager = new org_openpsa_contacts_person_dba($data['task']->manager);
         if ($manager)
         {
             echo "<h2>" . $data['l10n']->get('manager') . "</h2>\n";
@@ -117,7 +117,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             echo "<h2>" . $data['l10n']->get('resources') . "</h2>\n";
             foreach ($data['task']->resources as $contact_id => $display)
             {
-                $contact = new org_openpsa_contacts_person($contact_id);
+                $contact = new org_openpsa_contacts_person_dba($contact_id);
                 $contact = new org_openpsa_contactwidget($contact);
                 echo $contact->show_inline() . " ";
             }
@@ -128,7 +128,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             echo "<h2>" . $data['l10n']->get('contacts') . "</h2>\n";
             foreach ($data['task']->contacts as $contact_id => $display)
             {
-                $contact = new org_openpsa_contacts_person($contact_id);
+                $contact = new org_openpsa_contacts_person_dba($contact_id);
                 $contact = new org_openpsa_contactwidget($contact);
                 echo $contact->show();
             }
