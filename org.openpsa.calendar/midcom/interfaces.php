@@ -21,10 +21,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
 
         $this->_component = 'org.openpsa.calendar';
         $this->_autoload_class_definitions = array('midcom_dba_classes.inc');
-        $this->_autoload_files = array
-        (
-            'event_resource.php',
-        );
+        $this->_autoload_files = array();
         $this->_autoload_libraries = array
         (
             'midcom.helper.datamanager2',

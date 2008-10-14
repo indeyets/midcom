@@ -456,6 +456,7 @@ class fi_protie_navigation
     function _list_child_nodes($id, $indent = '')
     {
         $children = $this->_nap->list_nodes($id);
+
         // Stop traversing the path if there are no children
         if (   !$children
             || count($children) === 0)
@@ -540,6 +541,7 @@ class fi_protie_navigation
      */
     function _list_child_elements($id, $indent = '')
     {
+
         // If only nodes are to be listed use the appropriate NAP call
         if (!$this->list_leaves)
         {
@@ -713,7 +715,6 @@ class fi_protie_navigation
 
         echo "{$indent}    <li{$class}>\n";
         echo "{$indent}        <a href=\"{$item[MIDCOM_NAV_FULLURL]}{$get_params}\"{$link_class}>{$item[MIDCOM_NAV_NAME]}</a>\n";
-
         // If either of the follow nodes switches is on, follow all the nodes
         if (   $item[MIDCOM_NAV_TYPE] === 'node'
             && !$this->show_only_current

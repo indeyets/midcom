@@ -183,8 +183,6 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
         if (   array_key_exists('org_openpsa_projects_prospects', $_POST)
             && $_POST['save'])
         {
-            $_MIDCOM->componentloader->load('org.openpsa.calendar');
-            $_MIDCOM->componentloader->load('org.openpsa.relatedto');
             foreach ($_POST['org_openpsa_projects_prospects'] as $prospect_guid => $slots)
             {
                 $prospect = new org_openpsa_projects_task_resource_dba($prospect_guid);

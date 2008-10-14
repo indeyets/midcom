@@ -534,8 +534,6 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
      */
     function _show_render_line_event()
     {
-        //Make sure we have the calendar classes available
-        $_MIDCOM->componentloader->load_graceful('org.openpsa.calendar');
         //Fallback to default renderer if not
         if (!class_exists('org_openpsa_calendar_event_dba'))
         {
