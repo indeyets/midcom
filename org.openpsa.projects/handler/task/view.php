@@ -37,13 +37,14 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
 
         // We must load schemadb only after that is in request_data so we can populate the resource pulldown
         $this->_request_data['task'] =& $task;
-        $this->_request_data['schemadb_task'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_task'));
-
-        $this->_request_data['controller'] =& midcom_helper_datamanager2_controller::create('ajax');
-        $this->_request_data['controller']->schemadb =& $this->_request_data['schemadb_task'];
-        $this->_request_data['controller']->set_storage($task);
-        $this->_request_data['controller']->process_ajax();
-
+        $schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_task'));
+        $this->_request_data['datamanager'] = new midcom_helper_datamanager2_datamanager($schemadb);
+        if (   ! $this->_request_data['datamanager']
+            || ! $this->_request_data['datamanager']->autoset_storage($task))
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance for project {$task->id}.");
+            // This will exit.
+        }
         return $task;
     }
 
@@ -70,8 +71,10 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
             && $this->_request_data['task']->can_do('midgard:update'))
         {
             //$this->_initialize_hours_widget(&$this->_request_data['task']);
-            $this->_view_toolbar->add_item(
-                Array(
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
                     MIDCOM_TOOLBAR_URL => "task/edit/{$data['task']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_l10n->get('edit'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
@@ -97,8 +100,10 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
             if ($this->_request_data['task']->status == ORG_OPENPSA_TASKSTATUS_CLOSED)
             {
                 // TODO: Make POST request
-                $this->_view_toolbar->add_item(
-                    Array(
+                $this->_view_toolbar->add_item
+                (
+                    array
+                    (
                         MIDCOM_TOOLBAR_URL => "task/{$this->_request_data['task']->guid}/reopen/",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('reopen'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
@@ -110,8 +115,10 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
             elseif ($this->_request_data['task']->status_type == 'ongoing')
             {
                 // TODO: Make POST request
-                $this->_view_toolbar->add_item(
-                    Array(
+                $this->_view_toolbar->add_item
+                (
+                    array
+                    (
                         MIDCOM_TOOLBAR_URL => "task/{$this->_request_data['task']->guid}/complete/",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('mark completed'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
@@ -124,8 +131,10 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
 
         if ($handler_id == 'task_view')
         {
-            $this->_view_toolbar->add_item(
-                Array(
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
                     MIDCOM_TOOLBAR_URL => "task/related/{$this->_request_data['task']->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('view related information'),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
@@ -148,7 +157,7 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
 
         $data['calendar_node'] = midcom_helper_find_node_by_component('org.openpsa.calendar');
 
-        $_MIDCOM->bind_view_to_object($data['task'], $data['controller']->datamanager->schema->name);
+        $_MIDCOM->bind_view_to_object($data['task'], $data['datamanager']->schema->name);
 
         $breadcrumb = org_openpsa_projects_viewer::update_breadcrumb_line($data['task']);
 
@@ -248,8 +257,8 @@ EOF;
     {
         if ($handler_id == 'task_view')
         {
-            $data['view_task'] = $data['controller']->get_content_html();
-            $data['datamanager'] =& $data['controller']->datamanager;
+            $data['view_task'] = $data['datamanager']->get_content_html();
+            $data['datamanager'] =& $data['datamanager'];
 
             $data['task_bookings'] = $this->_list_bookings($data['task']);
 
