@@ -205,7 +205,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
                     $prospect->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_PROJECTRESOURCE;
                     $update_prospect = true;
                     // Create event from slot
-                    $event = new org_openpsa_calendar_event();
+                    $event = new org_openpsa_calendar_event_dba();
                     $event->start = $data['start'];
                     $event->end = $data['end'];
                     $event->search_relatedtos = false;

@@ -10,7 +10,7 @@ $finder->up=$GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_
 $finder->find();
 while ($finder->fetch())
 {
-    $ev = new org_openpsa_calendar_event($finder->id);
+    $ev = new org_openpsa_calendar_event_dba($finder->id);
 
     //if (count($ev->participants)==0)
     //{
@@ -26,7 +26,7 @@ while ($finder->fetch())
 }
 
 /*
-$ev = new org_openpsa_calendar_event(1999);
+$ev = new org_openpsa_calendar_event_dba(1999);
 echo "ev=<pre>".org_openpsa_helpers::sprint_r($ev)."</pre>\n";
 */
 /*
@@ -48,7 +48,7 @@ echo "ev=<pre>".org_openpsa_helpers::sprint_r($ev)."</pre>\n";
 
 
 /*
-$ev = new org_openpsa_calendar_event(4);
+$ev = new org_openpsa_calendar_event_dba(4);
 $ret=$ev->listparameters('midcom.helper.datamanager');
 echo "ret=<pre>".org_openpsa_helpers::sprint_r($ret)."</pre>, errstr=".mgd_errstr()."<br>\n";
 while ($ret->fetch())

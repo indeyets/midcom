@@ -73,7 +73,7 @@ class org_openpsa_calendar_handler_agenda extends midcom_baseclasses_components_
         $this->_request_data['events'] = array();
         foreach ($eventmembers as $eventmember)
         {
-            $this->_request_data['events'][] = new org_openpsa_calendar_event($eventmember->eid);
+            $this->_request_data['events'][] = new org_openpsa_calendar_event_dba($eventmember->eid);
         }
 
         return true;

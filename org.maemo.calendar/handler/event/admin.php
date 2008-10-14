@@ -27,7 +27,7 @@ class org_maemo_calendar_handler_event_admin extends midcom_baseclasses_componen
     /**
      * The event to operate on
      *
-     * @var org_openpsa_calendar_event
+     * @var org_openpsa_calendar_event_dba
      * @access private
      */
     var $_event = null;

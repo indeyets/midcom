@@ -15,7 +15,7 @@ $_MIDCOM->componentloader->load('org.openpsa.calendar');
  * @todo Figure out a good way to always use UTC for internal time storage
  * @package org.openpsa.calendar
  */
-class midcom_org_maemo_event extends org_openpsa_calendar_event
+class midcom_org_maemo_event extends org_openpsa_calendar_event_dba
 {
     var $participants = array(); //list of participants (stored as eventmembers, referenced here for easier access)
     var $old_participants = array(); //as above, for diffs

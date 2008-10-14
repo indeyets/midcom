@@ -16,6 +16,7 @@ $_MIDCOM->auth->require_admin_user();
 
 $replaces = array
 (
+    'org_openpsa_calendar_event' => 'org_openpsa_calendar_event_dba',
     'org_openpsa_projects_task' => 'org_openpsa_projects_task_dba',
     'org_openpsa_projects_hour_report' => 'org_openpsa_projects_hour_report_dba',
     'org_openpsa_documents_document' => 'org_openpsa_documents_document_dba',

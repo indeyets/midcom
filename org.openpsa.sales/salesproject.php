@@ -106,7 +106,7 @@ class org_openpsa_sales_salesproject_dba extends __org_openpsa_sales_salesprojec
         $qb->begin_group('OR');
             $qb->begin_group('AND');
                 $qb->add_constraint('fromComponent', '=', 'org.openpsa.calendar');
-                $qb->add_constraint('fromClass', '=', 'org_openpsa_calendar_event');
+                $qb->add_constraint('fromClass', '=', 'org_openpsa_calendar_event_dba');
             $qb->end_group();
             $qb->begin_group('AND');
                 $qb->add_constraint('fromComponent', '=', 'org.openpsa.projects');
@@ -151,8 +151,8 @@ class org_openpsa_sales_salesproject_dba extends __org_openpsa_sales_salesprojec
                         $sort_next[] = $to_sort;
                     }
                     break;
-                case 'org_openpsa_calendar_event':
-                    $event = new org_openpsa_calendar_event($link->fromGuid);
+                case 'org_openpsa_calendar_event_dba':
+                    $event = new org_openpsa_calendar_event_dba($link->fromGuid);
                     if (!$event)
                     {
                         continue 2;

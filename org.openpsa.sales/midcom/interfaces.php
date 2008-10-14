@@ -97,7 +97,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
                 $this->_org_openpsa_relatedto_find_suspects_person($object, $defaults, $links_array);
                 break;
             case is_a($object, 'midcom_baseclasses_database_event'):
-            case is_a($object, 'org_openpsa_calendar_event'):
+            case is_a($object, 'org_openpsa_calendar_event_dba'):
                 $this->_org_openpsa_relatedto_find_suspects_event($object, $defaults, $links_array);
                 break;
                 //TODO: groups ? other objects ?

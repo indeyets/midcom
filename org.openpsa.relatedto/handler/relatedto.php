@@ -240,7 +240,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
                 break;
             case is_a($this->_request_data['link_other_obj'], 'midcom_baseclasses_database_event'):
                 //Fall-trough intentional
-            case is_a($this->_request_data['link_other_obj'], 'org_openpsa_calendar_event'):
+            case is_a($this->_request_data['link_other_obj'], 'org_openpsa_calendar_event_dba'):
                 $this->_show_render_line_event();
                 break;
             case is_a($this->_request_data['link_other_obj'], 'org_openpsa_projects_task_dba'):
@@ -537,11 +537,11 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         //Make sure we have the calendar classes available
         $_MIDCOM->componentloader->load_graceful('org.openpsa.calendar');
         //Fallback to default renderer if not
-        if (!class_exists('org_openpsa_calendar_event'))
+        if (!class_exists('org_openpsa_calendar_event_dba'))
         {
             return $this->_show_render_line_default();
         }
-        $event = new org_openpsa_calendar_event($this->_request_data['link_other_obj']->guid);
+        $event = new org_openpsa_calendar_event_dba($this->_request_data['link_other_obj']->guid);
         if (!is_object($event))
         {
             //probably ACL prevents us from seeing anything about it

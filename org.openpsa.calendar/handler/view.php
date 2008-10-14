@@ -272,7 +272,7 @@ function openPsaShowMonthSelector()
         {
             foreach ($memberships as $membership)
             {
-                $event = new org_openpsa_calendar_event($membership->eid);
+                $event = new org_openpsa_calendar_event_dba($membership->eid);
 
                 // Customize label
                 $label_field = $this->_config->get('event_label');
@@ -433,7 +433,7 @@ function openPsaShowMonthSelector()
 
     function _load_event($guid)
     {
-        $event = new org_openpsa_calendar_event($guid);
+        $event = new org_openpsa_calendar_event_dba($guid);
         if (!is_object($event))
         {
             return false;

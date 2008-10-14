@@ -114,7 +114,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
 
         foreach ($eventmembers as $eventmember)
         {
-            $event = new org_openpsa_calendar_event($eventmember->eid);
+            $event = new org_openpsa_calendar_event_dba($eventmember->eid);
             $time = $event->start;
             $date = date('Y-m-d', $time);
             if (!array_key_exists($date, $data_array))
@@ -321,7 +321,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
                     $data['object'] = $object;
                     switch (get_class($object))
                     {
-                        case 'org_openpsa_calendar_event':
+                        case 'org_openpsa_calendar_event_dba':
                             midcom_show_style('weekreview-day-item-event');
                             break;
                         case 'org_openpsa_projects_hour_report_dba':

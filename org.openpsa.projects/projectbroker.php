@@ -149,7 +149,7 @@ class org_openpsa_projects_projectbroker
             return;
         }
         $_MIDCOM->componentloader->load_graceful('org.openpsa.calendar');
-        if (!class_exists('org_openpsa_calendar_eventparticipant'))
+        if (!class_exists('org_openpsa_calendar_event_participant_dba'))
         {
             debug_add('could not load org.openpsa.calendar, aborting', MIDCOM_LOG_WARN);
             debug_pop();
@@ -158,7 +158,7 @@ class org_openpsa_projects_projectbroker
         $_MIDCOM->auth->request_sudo('org.openpsa.projects');
         foreach ($prospects as $key => $person)
         {
-            $slots = org_openpsa_calendar_eventparticipant::find_free_times(($minimum_time_slot * 60), $person, $task->start, $task->end);
+            $slots = org_openpsa_calendar_event_participant_dba::find_free_times(($minimum_time_slot * 60), $person, $task->start, $task->end);
             //echo "DEBUG: slots <pre>\n" . org_openpsa_helpers::sprint_r($slots) . "</pre>\n";
             if (   is_array($slots)
                 && count($slots > 0))
@@ -238,13 +238,13 @@ class org_openpsa_projects_projectbroker
             $minimum_time_slot = 0.25;
         }
         $_MIDCOM->componentloader->load_graceful('org.openpsa.calendar');
-        if (!class_exists('org_openpsa_calendar_eventparticipant'))
+        if (!class_exists('org_openpsa_calendar_event_participant_dba'))
         {
             debug_add('could not load org.openpsa.calendar, aborting', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
-        $slots = org_openpsa_calendar_eventparticipant::find_free_times(($minimum_time_slot * 60), $person, $task->start, $task->end);
+        $slots = org_openpsa_calendar_event_participant_dba::find_free_times(($minimum_time_slot * 60), $person, $task->start, $task->end);
         return $slots;
     }
 }

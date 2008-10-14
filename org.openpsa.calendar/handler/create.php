@@ -78,7 +78,7 @@ class org_openpsa_calendar_handler_create extends midcom_baseclasses_components_
             {
                 //We might need sudo to get the event
                 $_MIDCOM->auth->request_sudo();
-                $event = new org_openpsa_calendar_event($eguid);
+                $event = new org_openpsa_calendar_event_dba($eguid);
                 $_MIDCOM->auth->drop_sudo();
                 if (   !is_object($event)
                     || !$event->id)
@@ -99,7 +99,7 @@ class org_openpsa_calendar_handler_create extends midcom_baseclasses_components_
      */
     function & dm2_create_callback (&$controller)
     {
-        $this->_event = new org_openpsa_calendar_event();
+        $this->_event = new org_openpsa_calendar_event_dba();
         $this->_event->up = $this->_root_event->id;
 
         if (! $this->_event->create())
@@ -127,7 +127,7 @@ class org_openpsa_calendar_handler_create extends midcom_baseclasses_components_
     function _handler_create($handler_id, $args, &$data)
     {
         // Get the root event
-        $this->_root_event = new org_openpsa_calendar_event($this->_config->get('calendar_root_event'));
+        $this->_root_event = new org_openpsa_calendar_event_dba($this->_config->get('calendar_root_event'));
         
         if (   !$this->_root_event
             || !$this->_root_event->guid)

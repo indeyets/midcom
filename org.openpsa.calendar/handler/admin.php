@@ -46,7 +46,7 @@ class org_openpsa_calendar_handler_admin extends midcom_baseclasses_components_h
         $this->_request_data['view'] = $args[1];
         
         // Get the event
-        $this->_event = new org_openpsa_calendar_event($args[0]);
+        $this->_event = new org_openpsa_calendar_event_dba($args[0]);
         $data['event'] =& $this->_event;
         
         // This is a popup

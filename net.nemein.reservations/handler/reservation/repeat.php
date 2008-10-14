@@ -25,7 +25,7 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
     /**
      * The event which has been created
      *
-     * @var org_openpsa_calendar_event
+     * @var org_openpsa_calendar_event_dba
      * @access private
      */
     var $_event = null;
@@ -73,7 +73,7 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
             // This will exit
         }
         
-        $this->_event = new org_openpsa_calendar_event($args[0]);
+        $this->_event = new org_openpsa_calendar_event_dba($args[0]);
         
         if (   !$this->_event
             || !$this->_event->guid
@@ -284,7 +284,7 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
             {
                 continue;
             }
-            $resolver = new org_openpsa_calendar_event();
+            $resolver = new org_openpsa_calendar_event_dba();
             $resolver->resources = $this->_event->resources;
             $resolver->participants = $this->_event->resources;
             $resolver->start = $instance['start'];

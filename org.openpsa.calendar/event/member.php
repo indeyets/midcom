@@ -10,7 +10,7 @@
  * MidCOM wants this class present and QB etc use this, so keep logic here
  * @package org.openpsa.calendar
  */
-class org_openpsa_calendar_eventmember extends __org_openpsa_calendar_eventmember
+class org_openpsa_calendar_event_member_dba extends __org_openpsa_calendar_event_member_dba
 {
     function __construct($id = null)
     {
@@ -21,7 +21,7 @@ class org_openpsa_calendar_eventmember extends __org_openpsa_calendar_eventmembe
     {
         if ($this->eid)
         {
-            $event = new org_openpsa_calendar_event($this->eid);
+            $event = new org_openpsa_calendar_event_dba($this->eid);
             return $event;
         }
         else
@@ -133,7 +133,7 @@ class org_openpsa_calendar_eventmember extends __org_openpsa_calendar_eventmembe
      */
     function get_event_obj()
     {
-        $event = new org_openpsa_calendar_event($this->eid);
+        $event = new org_openpsa_calendar_event_dba($this->eid);
         return $event;
     }
 
@@ -145,13 +145,13 @@ class org_openpsa_calendar_eventmember extends __org_openpsa_calendar_eventmembe
             /* Nowadays in different class
             case ORG_OPENPSA_OBTYPE_EVENTRESOURCE:
                 $x =& $this;
-                $x = new org_openpsa_calendar_eventresource($this->id);
+                $x = new org_openpsa_calendar_event_resource_dba($this->id);
                 break;
             */
             default:
             case ORG_OPENPSA_OBTYPE_EVENTPARTICIPANT:
                 $x =& $this;
-                $x = new org_openpsa_calendar_eventparticipant($this->id);
+                $x = new org_openpsa_calendar_event_participant_dba($this->id);
                 break;
         }
         return true;
@@ -172,7 +172,7 @@ class org_openpsa_calendar_eventmember extends __org_openpsa_calendar_eventmembe
             $person = new org_openpsa_contacts_person($person);
         }
         // Get current events for person
-        $qb = org_openpsa_calendar_eventparticipant::new_query_builder();
+        $qb = org_openpsa_calendar_event_participant_dba::new_query_builder();
         $qb->begin_group('OR');
             $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_EVENTPARTICIPANT);
             $qb->add_constraint('orgOpenpsaObtype', '=', 0);
@@ -209,7 +209,7 @@ class org_openpsa_calendar_eventmember extends __org_openpsa_calendar_eventmembe
         {
             if (!array_key_exists($eventmember->eid, $event_cache))
             {
-                $event_cache[$eventmember->eid] = new org_openpsa_calendar_event($eventmember->eid);
+                $event_cache[$eventmember->eid] = new org_openpsa_calendar_event_dba($eventmember->eid);
             }
             $event =& $event_cache[$eventmember->eid];
             if (!$event)
@@ -235,7 +235,7 @@ class org_openpsa_calendar_eventmember extends __org_openpsa_calendar_eventmembe
                 continue;
             }
             debug_add('none found, adding a dummy one');
-            $dummy = new org_openpsa_calendar_event();
+            $dummy = new org_openpsa_calendar_event_dba();
             $dummy->start = $stamp;
             $dummy->end = $stamp+1;
             $events_by_date[$ymd] = array($dummy);

@@ -181,7 +181,7 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
         $relations = $qb->execute();
         foreach ($relations as $relation)
         {
-            $booking = new org_openpsa_calendar_event($relation->fromGuid);
+            $booking = new org_openpsa_calendar_event_dba($relation->fromGuid);
             if (!$booking)
             {
                 continue;

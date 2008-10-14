@@ -27,7 +27,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
     /**
      * The event to operate on
      *
-     * @var org_openpsa_calendar_event
+     * @var org_openpsa_calendar_event_dba
      * @access private
      */
     var $_event = null;
@@ -228,7 +228,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
      */
     function _handler_edit($handler_id, $args, &$data)
     {
-        $this->_event = new org_openpsa_calendar_event($args[0]);
+        $this->_event = new org_openpsa_calendar_event_dba($args[0]);
         if (! $this->_event)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The event {$args[0]} was not found.");
@@ -296,7 +296,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
      */
     function _handler_delete($handler_id, $args, &$data)
     {
-        $this->_event = new org_openpsa_calendar_event($args[0]);
+        $this->_event = new org_openpsa_calendar_event_dba($args[0]);
         if (! $this->_event)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The event {$args[0]} was not found.");
@@ -313,7 +313,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
         {
             if (version_compare(mgd_version(), '1.8', '>='))
             {
-                $qb = org_openpsa_calendar_event::new_query_builder();
+                $qb = org_openpsa_calendar_event_dba::new_query_builder();
                 $qb->add_constraint('parameter.domain', '=', 'net.nemein.repeathandler');
                 $qb->add_constraint('parameter.name', '=', 'master_guid');
                 $qb->add_constraint('parameter.value', '=', $this->_event->guid);
@@ -333,7 +333,7 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
                 $params = @$qb->execute();
                 foreach ($params as $parameter)
                 {
-                    $results[] = new org_openpsa_calendar_event($parameter->oid);
+                    $results[] = new org_openpsa_calendar_event_dba($parameter->oid);
                 }
                 $data['dependant_events'] = $results;
             }

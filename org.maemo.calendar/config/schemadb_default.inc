@@ -130,7 +130,7 @@
             (
                 'option_callback' => 'org_maemo_calendar_callbacks_buddylister',
                 'option_callback_arg' => 1,
-                'mapping_class_name' => 'org_openpsa_calendar_eventmember',
+                'mapping_class_name' => 'org_openpsa_calendar_event_member_dba',
                 'master_fieldname' => 'uid',
                 'member_fieldname' => 'eid',
             ),

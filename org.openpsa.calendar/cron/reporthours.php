@@ -62,7 +62,7 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
             return;
         }
 
-        $qb = org_openpsa_calendar_eventparticipant::new_query_builder();
+        $qb = org_openpsa_calendar_event_participant_dba::new_query_builder();
         // Event must be directly under openpsa calendar root event
         $qb->add_constraint('eid.up', '=', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->id);
         // Member type must not be resource
@@ -106,7 +106,7 @@ class org_openpsa_calendar_cron_reporthours extends midcom_baseclasses_component
             //Avoid multiple loads of same event
             if (!isset($seen_events[$member->eid]))
             {
-                $seen_events[$member->eid] = new org_openpsa_calendar_event($member->eid);
+                $seen_events[$member->eid] = new org_openpsa_calendar_event_dba($member->eid);
             }
             $event =& $seen_events[$member->eid];
 

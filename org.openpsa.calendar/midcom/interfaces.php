@@ -47,7 +47,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
         $_MIDCOM->componentloader->load('org.openpsa.contacts');
 
         // Check for calendar event tree.
-        $qb = org_openpsa_calendar_event::new_query_builder();
+        $qb = org_openpsa_calendar_event_dba::new_query_builder();
         $qb->add_constraint('title', '=', '__org_openpsa_calendar');
         $qb->add_constraint('up', '=', '0');
         $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
@@ -91,7 +91,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
     function _on_reindex($topic, $config, &$indexer)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_calendar_event');
+        $qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_calendar_event_dba');
         $qb->add_constraint('up', '=',  $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->id);
         $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
         if (   is_array($ret)
@@ -222,7 +222,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
         debug_push_class(__CLASS__, __FUNCTION__);
         $event = false;
 
-        $event = new org_openpsa_calendar_event($guid);
+        $event = new org_openpsa_calendar_event_dba($guid);
         debug_add("event: ===\n" . org_openpsa_helpers::sprint_r($event) . "===\n");
         if (   is_object($event)
             && $event->id)
@@ -258,7 +258,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
                 return false;
                 break;
         }
-        $qb = org_openpsa_calendar_eventmember::new_query_builder();
+        $qb = org_openpsa_calendar_event_member_dba::new_query_builder();
         // Make sure we stay in current SG even if we could see more
         $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
         $qb->begin_group('OR');
@@ -324,8 +324,8 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
         // Transfer metadata dependencies from classes that we drive
         $classes = array
         (
-            'org_openpsa_calendar_event',
-            'org_openpsa_calendar_eventmember',
+            'org_openpsa_calendar_event_dba',
+            'org_openpsa_calendar_event_member_dba',
         );
         foreach($classes as $class)
         {

@@ -14,7 +14,7 @@ echo "</pre>\n";
 
 /*
 $_MIDCOM->componentloader->load('org.openpsa.calendar');
-$event = new org_openpsa_calendar_event(269);
+$event = new org_openpsa_calendar_event_dba(269);
 $link_def = new org_openpsa_relatedto_relatedto_dba();
 $link_def->fromComponent = 'org.openpsa.calendar';
 $link_def->fromGuid = $event->guid;

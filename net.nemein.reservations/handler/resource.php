@@ -269,7 +269,7 @@ class net_nemein_reservations_handler_resource extends midcom_baseclasses_compon
         // Populate the main calendar
         foreach ($reservations as $reservation)
         {
-            $event = new org_openpsa_calendar_event($reservation->event);
+            $event = new org_openpsa_calendar_event_dba($reservation->event);
             $calendar_event = new org_openpsa_calendarwidget_event($event);
             $calendar_event->link = "{$prefix}reservation/{$event->guid}/";
 
@@ -347,7 +347,7 @@ class net_nemein_reservations_handler_resource extends midcom_baseclasses_compon
 
                 foreach ($this->_resources[$guid]->get_reservations($this->_calendar->get_start(), $this->_calendar->get_end()) as $reservation)
                 {
-                    $event = new org_openpsa_calendar_event($reservation->event);
+                    $event = new org_openpsa_calendar_event_dba($reservation->event);
                     $calendar_event = new org_openpsa_calendarwidget_event($event);
                     $calendar_event->link = "{$prefix}reservation/{$event->guid}/";
 

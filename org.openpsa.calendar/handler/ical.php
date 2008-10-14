@@ -37,7 +37,7 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
         {
             return;
         }
-        $qb = org_openpsa_calendar_eventmember::new_query_builder();
+        $qb = org_openpsa_calendar_event_member_dba::new_query_builder();
         $qb->add_constraint('eid.up', '=', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']->id);
         // Display events two weeks back
         $qb->add_constraint('eid.start', '>', mktime(0, 0, 0, date('n'), date('j')-14, date('Y')));
@@ -52,7 +52,7 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
         {
             foreach($members as $member)
             {
-                $this->_request_data['events'][] = new org_openpsa_calendar_event($member->eid);
+                $this->_request_data['events'][] = new org_openpsa_calendar_event_dba($member->eid);
             }
         }
     }
@@ -108,7 +108,7 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        $event = new org_openpsa_calendar_event();
+        $event = new org_openpsa_calendar_event_dba();
         echo $event->vcal_headers();
         foreach ($this->_request_data['events'] as $event)
         {
@@ -180,7 +180,7 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        $event = new org_openpsa_calendar_event();
+        $event = new org_openpsa_calendar_event_dba();
         echo $event->vcal_headers();
         foreach ($this->_request_data['events'] as $event)
         {

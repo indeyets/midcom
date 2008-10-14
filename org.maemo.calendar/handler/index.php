@@ -429,7 +429,7 @@ class org_maemo_calendar_handler_index  extends midcom_baseclasses_components_ha
 
         $events = array();
 
-        $qb = org_openpsa_calendar_eventmember::new_query_builder();
+        $qb = org_openpsa_calendar_event_member_dba::new_query_builder();
 
         // Find all events that occur during [$from, $to]
         $qb->begin_group("OR");

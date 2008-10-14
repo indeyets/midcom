@@ -110,7 +110,7 @@ class net_nemein_reservations_handler_reservation_list extends midcom_baseclasse
                 // We have already seen this event, skip (in theory possible if we have multiple resources)
                 continue;
             }
-            $event = new org_openpsa_calendar_event($eid);
+            $event = new org_openpsa_calendar_event_dba($eid);
             if (   !is_object($event)
                 || !isset($event->id)
                 || empty($event->id))

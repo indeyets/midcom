@@ -26,7 +26,7 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
     /**
      * The event which has been created
      *
-     * @var org_openpsa_calendar_event
+     * @var org_openpsa_calendar_event_dba
      * @access private
      */
     var $_event = null;
@@ -156,7 +156,7 @@ class net_nemein_reservations_handler_reservation_create extends midcom_baseclas
     function &dm2_create_callback(&$controller)
     {
         $this->_resource->require_do('org.openpsa.calendar:reserve');
-        $this->_event = new org_openpsa_calendar_event();
+        $this->_event = new org_openpsa_calendar_event_dba();
 
         $add_creator = $this->_config->get('add_creator_to_reservation');
 

@@ -25,7 +25,7 @@ class net_nemein_reservations_handler_reservation_view extends midcom_baseclasse
     /**
      * The event which has been created
      *
-     * @var org_openpsa_calendar_event
+     * @var org_openpsa_calendar_event_dba
      * @access private
      */
     var $_event = null;
@@ -64,7 +64,7 @@ class net_nemein_reservations_handler_reservation_view extends midcom_baseclasse
      */
     function _handler_view($handler_id, $args, &$data)
     {
-        $this->_event = new org_openpsa_calendar_event($args[0]);
+        $this->_event = new org_openpsa_calendar_event_dba($args[0]);
         if (   !is_object($this->_event)
             || !isset($this->_event->guid)
             || empty($this->_event->guid)

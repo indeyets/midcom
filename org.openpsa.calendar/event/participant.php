@@ -11,7 +11,7 @@
  *
  * @package org.openpsa.calendar
  */
-class org_openpsa_calendar_eventparticipant extends org_openpsa_calendar_eventmember
+class org_openpsa_calendar_event_participant_dba extends org_openpsa_calendar_event_member_dba
 {
     var $event;
     var $person;
@@ -134,7 +134,7 @@ class org_openpsa_calendar_eventparticipant extends org_openpsa_calendar_eventme
         return org_openpsa_notifications::notify($action, $recipient->guid, $message);
     }
 
-// *** End class org_openpsa_calendar_eventparticipant ***
+// *** End class org_openpsa_calendar_event_participant_dba ***
 }
 
 ?>

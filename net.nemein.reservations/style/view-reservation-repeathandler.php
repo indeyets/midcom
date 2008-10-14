@@ -29,7 +29,7 @@ if(count($duplicate_reservations['resources']) > 0 || count($duplicate_reservati
         {
             foreach($duplicate_resource as $guid);
             {
-                $duplicate_event = new org_openpsa_calendar_event($guid);
+                $duplicate_event = new org_openpsa_calendar_event_dba($guid);
                 $rendered_widget = new org_openpsa_calendarwidget_event($duplicate_event);
                 $rendered = $rendered_widget->render_timelabel(0);
                 echo "<li><a href=\"" . $prefix . $duplicate_event->guid ."\">" . $duplicate_event->title . ", " . $duplicate_event->location . "</a> ( " . $rendered . " ) </li>\n";
@@ -45,7 +45,7 @@ if(count($duplicate_reservations['resources']) > 0 || count($duplicate_reservati
         {
             foreach($duplicate_resource as $guid);
             {
-                $duplicate_event = new org_openpsa_calendar_event($guid);
+                $duplicate_event = new org_openpsa_calendar_event_dba($guid);
                 $rendered_widget = new org_openpsa_calendarwidget_event($duplicate_event);
                 $rendered = $rendered_widget->render_timelabel(0);
                 echo "<li><a href=\"" . $prefix . $duplicate_event->guid ."\">" . $duplicate_event->title . ", " . $duplicate_event->location . "</a> ( " . $rendered . " ) </li>\n";

@@ -26,7 +26,7 @@ class org_openpsa_calendar_event_resource_dba extends __org_openpsa_calendar_eve
         if ($this->resource)
         {
             $resource = new org_openpsa_calendar_resource_dba($this->resource);
-            $event = new org_openpsa_calendar_event($this->event);
+            $event = new org_openpsa_calendar_event_dba($this->event);
             return sprintf($_MIDCOM->i18n->get_string('%s for %s', 'midcom'), $resource->title, $event->title);
         }
         return "member #{$this->id}";
@@ -100,7 +100,7 @@ class org_openpsa_calendar_event_resource_dba extends __org_openpsa_calendar_eve
     {
         if ($this->event != 0)
         {
-            $parent = new org_openpsa_calendar_event($this->event);
+            $parent = new org_openpsa_calendar_event_dba($this->event);
             return $parent->guid;
         }
         else

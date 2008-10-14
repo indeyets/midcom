@@ -12,7 +12,7 @@
  * @todo Figure out a good way to always use UTC for internal time storage
  * @package org.openpsa.calendar
  */
-class org_openpsa_calendar_event extends __org_openpsa_calendar_event
+class org_openpsa_calendar_event_dba extends __org_openpsa_calendar_event_dba
 {
     /**
      * list of participants
@@ -728,7 +728,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
     function _get_member_by_personid($id, $type='participant')
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $qb = org_openpsa_calendar_eventparticipant::new_query_builder();
+        $qb = org_openpsa_calendar_event_participant_dba::new_query_builder();
         $qb->add_constraint('eid', '=', $this->id);
         $qb->add_constraint('uid', '=', $id);
         $results = $qb->execute_unchecked();
@@ -1002,8 +1002,8 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
                   if (!$rep_handler) {
                      return 0; //Require repeat handler when repeats are set
                   } else {
-                     if ($this->repeat_prev) $prev_ev=new org_openpsa_calendar_Event($this->repeat_prev);
-                     if ($this->repeat_next) $next_ev=new org_openpsa_calendar_Event($this->repeat_next);
+                     if ($this->repeat_prev) $prev_ev=new org_openpsa_calendar_event_dba($this->repeat_prev);
+                     if ($this->repeat_next) $next_ev=new org_openpsa_calendar_event_dba($this->repeat_next);
                      switch ($rep_handler) {
                             case "reprule":
                             case "this":
@@ -1123,7 +1123,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
         if (!empty($this->participants))
         {
             //We attack this "backwards" in the sense that in the end we need the events but this is faster way to filter them
-            $qb_ev = org_openpsa_calendar_eventmember::new_query_builder();
+            $qb_ev = org_openpsa_calendar_event_member_dba::new_query_builder();
             $this->_busy_em_event_constraints($qb_ev, 'eid');
             //Shared eventmembers
             $qb_ev->begin_group('OR');
@@ -1199,7 +1199,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
             }
             $processed_events_participants[$member->eid][$member->uid] = true;
 
-            $event = new org_openpsa_calendar_event($member->eid);
+            $event = new org_openpsa_calendar_event_dba($member->eid);
             if (   !is_object($event)
                 || !isset($event->guid)
                 || empty($event->guid))
@@ -1215,7 +1215,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
             {
                 debug_add('event is tentative, robbing resources');
                 //"rob" resources from tentative event
-                $event = new org_openpsa_calendar_event($event->id);
+                $event = new org_openpsa_calendar_event_dba($event->id);
 
                 //participants
                 reset($this->participants);
@@ -1278,7 +1278,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
             }
             else
             {
-                $event = new org_openpsa_calendar_event($member->event);
+                $event = new org_openpsa_calendar_event_dba($member->event);
                 $set_as_modified = true;
             }
             if (   !is_object($event)
@@ -1296,7 +1296,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
             {
                 debug_add('event is tentative, robbing resources');
                 //"rob" resources from tentative event
-                $event = new org_openpsa_calendar_event($event->id);
+                $event = new org_openpsa_calendar_event_dba($event->id);
 
                 //resources
                 reset($this->resources);
@@ -1548,7 +1548,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
 
         foreach ($added_participants as $participantId => $bool)
         {
-            $resObj = new org_openpsa_calendar_eventparticipant();
+            $resObj = new org_openpsa_calendar_event_participant_dba();
             $resObj->uid = $participantId;
             $resObj->eid = $this->id;
             $resObj->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_EVENTPARTICIPANT;
@@ -1614,7 +1614,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
         }
         if (!isset($GLOBALS['org_openpsa_event_pid_cache'][$pid]))
         {
-            $GLOBALS['org_openpsa_event_pid_cache'][$pid] = org_openpsa_calendar_event::_pid_to_obj($pid);
+            $GLOBALS['org_openpsa_event_pid_cache'][$pid] = org_openpsa_calendar_event_dba::_pid_to_obj($pid);
         }
         return $GLOBALS['org_openpsa_event_pid_cache'][$pid];
     }
@@ -1669,7 +1669,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
         $i = 0;
         foreach($array as $pid => $bool)
         {
-            $person =& org_openpsa_calendar_eventmember::get_person_obj_cache($pid);
+            $person =& org_openpsa_calendar_event_member_dba::get_person_obj_cache($pid);
             debug_add('pid: ' . $pid . ', person->id: ' . $person->id . ', person->firstname: ' . $person->firstname . ', person->lastname: ' . $person->lastname . ', person->name: ' . $person->name . ', person->rname: ' . $person->rname);
             $str .= $person->name;
             if ($i != $cnt)
