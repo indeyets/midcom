@@ -2657,6 +2657,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 MIDCOM_LOG_ERROR);
             return false;
         }
+        $metadata->object =& $object;
 
         return $metadata;
     }
