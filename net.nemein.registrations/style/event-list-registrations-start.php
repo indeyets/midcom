@@ -17,7 +17,8 @@ $event_dm =& $data['event_dm'];
                 <th><?php echo $data['l10n']->get('registrar'); ?></th>
                 <th><?php echo $data['l10n']->get('registration date'); ?></th>
 <?php
-if (!$event_dm->types['auto_approve']->value)
+if (   !isset($event_dm->types['auto_approve'])
+    || !$event_dm->types['auto_approve']->value)
 {
     echo "                <th>" . $data['l10n_midcom']->get('approved') . "</th>\n";
 }

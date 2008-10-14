@@ -29,7 +29,8 @@ else
                 <td><?php echo strftime("%x %X", $registration->metadata->created); ?></td>
 <?php
 $event_dm =& $data['event_dm'];
-if (!$event_dm->types['auto_approve']->value)
+if (   !isset($event_dm->types['auto_approve'])
+    || !$event_dm->types['auto_approve']->value)
 {
     /* approved checkbox */
     echo "                <td><input type='checkbox' name='net_nemein_registrations_process[approved][{$registration->guid}]' value=1 ";
