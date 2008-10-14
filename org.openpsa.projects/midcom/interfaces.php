@@ -377,7 +377,7 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
                 debug_pop();
                 return false;
         }
-        debug_add("about to create hour_report\n===\n" . sprint_r($hr) . "===\n");
+        debug_add("about to create hour_report\n===\n" . org_openpsa_helpers::sprint_r($hr) . "===\n");
 
         $stat = $hr->create();
         if (!$stat)

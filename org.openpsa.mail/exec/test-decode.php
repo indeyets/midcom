@@ -51,7 +51,7 @@ else
             }
         }
         echo "mail->headers (trough htmlentities()):\n<pre>\n";
-        echo htmlentities(sprint_r($mail->headers));
+        echo htmlentities(org_openpsa_helpers::sprint_r($mail->headers));
         echo "</pre>\n";
         echo "List of attachments\n<ol>\n";
         foreach($mail->attachments as $data)
@@ -62,7 +62,7 @@ else
         echo "</ol>\n";
 
         echo "Full decoded mail object (trough htmlentities()):\n<pre>\n";
-        echo htmlentities(sprint_r($mail));
+        echo htmlentities(org_openpsa_helpers::sprint_r($mail));
         echo "</pre>\n";
     }
 }

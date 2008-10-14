@@ -111,9 +111,9 @@ if (!function_exists('debug_add'))
     }
 }
 
-if (!function_exists('sprint_r'))
+if (!function_exists('org_openpsa_helpers::sprint_r'))
 {
-    function sprint_r($var)
+    function org_openpsa_helpers::sprint_r($var)
     {
         return;
     }

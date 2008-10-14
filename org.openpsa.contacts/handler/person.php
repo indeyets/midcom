@@ -48,13 +48,13 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
         // Add the DBE settings field
         if ($this->_request_data['enable_dbe'])
         {
-            org_openpsa_helpers_schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'description', 'dbe service id');
-            org_openpsa_helpers_schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'datatype', 'text');
-            org_openpsa_helpers_schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'location', 'config');
-            org_openpsa_helpers_schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'config_domain', 'org.openpsa.dbe');
-            org_openpsa_helpers_schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'config_key', 'serviceID');
-            org_openpsa_helpers_schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'start_fieldgroup', Array('title' => $this->_request_data['l10n']->get('digital business ecosystem')));
-            org_openpsa_helpers_schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'end_fieldgroup', '');
+            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'description', 'dbe service id');
+            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'datatype', 'text');
+            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'location', 'config');
+            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'config_domain', 'org.openpsa.dbe');
+            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'config_key', 'serviceID');
+            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'start_fieldgroup', Array('title' => $this->_request_data['l10n']->get('digital business ecosystem')));
+            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'end_fieldgroup', '');
         }
 
         // Load the group to datamanager
@@ -134,7 +134,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                 debug_add('First call within creation mode');
 
                 // Add toolbar items
-                org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
+                org_openpsa_helpers::dm_savecancel($this->_toolbars->bottom, $this);
 
                 break;
 
@@ -417,7 +417,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
     {
         if ($handler_id == 'person_view')
         {
-            org_openpsa_helpers_schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'hidden', true);
+            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'hidden', true);
             $this->_request_data['person_dm'] = $this->_datamanagers['person'];
             midcom_show_style("show-person");
         }
@@ -507,7 +507,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                         $this->_view = "privileges";
 
                         // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
+                        org_openpsa_helpers::dm_savecancel($this->_toolbars->bottom, $this);
 
                         debug_pop();
                         return true;
@@ -548,7 +548,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                 $this->_view = "area_person_account_create";
 
                 // Add toolbar items
-                org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
+                org_openpsa_helpers::dm_savecancel($this->_toolbars->bottom, $this);
 
                 if (array_key_exists('midcom_helper_datamanager_submit', $_POST))
                 {
@@ -625,7 +625,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                 $this->_view = "area_person_account_edit";
 
                 // Add toolbar items
-                org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
+                org_openpsa_helpers::dm_savecancel($this->_toolbars->bottom, $this);
 
                 if (array_key_exists('midcom_helper_datamanager_submit', $_POST))
                 {
@@ -679,7 +679,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                         $this->_view = "default";
 
                         // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
+                        org_openpsa_helpers::dm_savecancel($this->_toolbars->bottom, $this);
 
                         return true;
 

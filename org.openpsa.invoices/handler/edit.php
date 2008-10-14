@@ -45,27 +45,27 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             $person = new midcom_db_person($member->uid);
             $persons_array[$person->id] = $person->rname;
         }
-        org_openpsa_helpers_schema_modifier($this->_datamanager, 'customerContact', 'widget', 'select', 'default', false);
-        org_openpsa_helpers_schema_modifier($this->_datamanager, 'customerContact', 'widget_select_choices', $persons_array, 'default', false);
+        org_openpsa_helpers::schema_modifier($this->_datamanager, 'customerContact', 'widget', 'select', 'default', false);
+        org_openpsa_helpers::schema_modifier($this->_datamanager, 'customerContact', 'widget_select_choices', $persons_array, 'default', false);
 
         // And display the organization too
         $organization_array = Array();
         $organization_array[$customer->id] = $customer->official;
-        org_openpsa_helpers_schema_modifier($this->_datamanager, 'customer', 'widget', 'select', 'default', false);
-        org_openpsa_helpers_schema_modifier($this->_datamanager, 'customer', 'widget_select_choices', $organization_array, 'default', false);
+        org_openpsa_helpers::schema_modifier($this->_datamanager, 'customer', 'widget', 'select', 'default', false);
+        org_openpsa_helpers::schema_modifier($this->_datamanager, 'customer', 'widget_select_choices', $organization_array, 'default', false);
     }
 
     function _modify_schema()
     {
-        debug_add("schema before \n===\n" . sprint_r($this->_datamanager->_layoutdb['default']) . "===\n");
+        debug_add("schema before \n===\n" . org_openpsa_helpers::sprint_r($this->_datamanager->_layoutdb['default']) . "===\n");
 
         // Set default due date
         $due_date = ($this->_config->get('default_due_days') * 3600 * 24) + time();
-        org_openpsa_helpers_schema_modifier($this->_datamanager, 'due', 'default', $due_date, 'default', false);
+        org_openpsa_helpers::schema_modifier($this->_datamanager, 'due', 'default', $due_date, 'default', false);
 
         // Generate invoice number
         // TODO: Check that a default hasn't already been set
-        org_openpsa_helpers_schema_modifier($this->_datamanager, 'invoiceNumber', 'default', org_openpsa_invoices_invoice_dba::generate_invoice_number(), 'default', false);
+        org_openpsa_helpers::schema_modifier($this->_datamanager, 'invoiceNumber', 'default', org_openpsa_invoices_invoice_dba::generate_invoice_number(), 'default', false);
 
         // Make VAT field a select
         $vat_array = explode(',', $this->_config->get('vat_percentages'));
@@ -77,8 +77,8 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             {
                 $vat_values[$vat] = "{$vat}%";
             }
-            org_openpsa_helpers_schema_modifier($this->_datamanager, 'vat', 'widget', 'select', 'default', false);
-            org_openpsa_helpers_schema_modifier($this->_datamanager, 'vat', 'widget_select_choices', $vat_values, 'default', false);
+            org_openpsa_helpers::schema_modifier($this->_datamanager, 'vat', 'widget', 'select', 'default', false);
+            org_openpsa_helpers::schema_modifier($this->_datamanager, 'vat', 'widget_select_choices', $vat_values, 'default', false);
         }
 
         if (array_key_exists('invoice', $this->_request_data))
@@ -97,8 +97,8 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
                 }
 
                 //Fill the customer field to DM
-                org_openpsa_helpers_schema_modifier($this->_datamanager, 'customer', 'widget', 'select', 'default', false);
-                org_openpsa_helpers_schema_modifier($this->_datamanager, 'customer', 'widget_select_choices', $organizations, 'default', false);
+                org_openpsa_helpers::schema_modifier($this->_datamanager, 'customer', 'widget', 'select', 'default', false);
+                org_openpsa_helpers::schema_modifier($this->_datamanager, 'customer', 'widget_select_choices', $organizations, 'default', false);
             }
             elseif ($this->_request_data['invoice']->customer)
             {
@@ -108,12 +108,12 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
             if ($this->_request_data['invoice']->sent)
             {
-                org_openpsa_helpers_schema_modifier($this->_datamanager, 'sent', 'hidden', false, 'default', false);
+                org_openpsa_helpers::schema_modifier($this->_datamanager, 'sent', 'hidden', false, 'default', false);
             }
 
             if ($this->_request_data['invoice']->paid)
             {
-                org_openpsa_helpers_schema_modifier($this->_datamanager, 'paid', 'hidden', false, 'default', false);
+                org_openpsa_helpers::schema_modifier($this->_datamanager, 'paid', 'hidden', false, 'default', false);
             }
         }
         else
@@ -125,10 +125,10 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             else
             {
                 // We don't know company, present customer contact as contactchooser and hide customer field
-                org_openpsa_helpers_schema_modifier($this->_datamanager, 'customer', 'hidden', true, 'default', false);
+                org_openpsa_helpers::schema_modifier($this->_datamanager, 'customer', 'hidden', true, 'default', false);
             }
         }
-        debug_add("schema after \n===\n" . sprint_r($this->_datamanager->_layoutdb['default']) . "===\n");
+        debug_add("schema after \n===\n" . org_openpsa_helpers::sprint_r($this->_datamanager->_layoutdb['default']) . "===\n");
     }
 
     function _load_invoice($identifier)
@@ -474,7 +474,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         {
             case MIDCOM_DATAMGR_EDITING:
                 // Add toolbar items
-                org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+                org_openpsa_helpers::dm_savecancel($this->_view_toolbar, $this);
                 return true;
                 // This will break;
 
@@ -549,7 +549,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
                 debug_add('First call within creation mode');
 
                 // Add toolbar items
-                org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+                org_openpsa_helpers::dm_savecancel($this->_view_toolbar, $this);
                 break;
 
             case MIDCOM_DATAMGR_EDITING:

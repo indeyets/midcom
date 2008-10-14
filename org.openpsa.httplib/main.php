@@ -166,7 +166,7 @@ class org_openpsa_httplib extends midcom_baseclasses_components_purecode
         }
         $code = $c->getResponseCode();
         $headers = $c->getResponseHeader();
-        debug_add("Response code is {$code}, headers\n===\n" .  sprint_r($headers) . "===\n", MIDCOM_LOG_DEBUG);
+        debug_add("Response code is {$code}, headers\n===\n" .  org_openpsa_helpers::sprint_r($headers) . "===\n", MIDCOM_LOG_DEBUG);
         if (!$this->_is_success((int)$code))
         {
             $this->error = $this->_http_code2error($code);

@@ -263,7 +263,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
      */
     function _fix_serialization($data = null)
     {
-        return org_openpsa_helpers_fix_serialization($data);
+        return org_openpsa_helpers::fix_serialization($data);
     }
 
     /**
@@ -314,7 +314,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
     function _prepare_save($ignorebusy_em = false, $rob_tentantive = false, $repeat_handler='this')
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Starting preparations, this:\n---\n".sprint_r($this)."---", MIDCOM_LOG_DEBUG);
+        debug_add("Starting preparations, this:\n---\n".org_openpsa_helpers::sprint_r($this)."---", MIDCOM_LOG_DEBUG);
 
         // Make sure we have accessType
         if (!$this->orgOpenpsaAccesstype)
@@ -405,8 +405,8 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
         if (   $this->busy_em($rob_tentantive)
             && !$ignorebusy_em)
         {
-            debug_add("Unresolved resource conflicts, aborting, busy_em:\n---\n" . sprint_r($this->busy_em) . "---\n");
-            $this->errstr='Resource conflict with busy event'; //': '.sprint_r($this->busy_em);
+            debug_add("Unresolved resource conflicts, aborting, busy_em:\n---\n" . org_openpsa_helpers::sprint_r($this->busy_em) . "---\n");
+            $this->errstr='Resource conflict with busy event'; //': '.org_openpsa_helpers::sprint_r($this->busy_em);
             debug_pop();
             return false;
         }
@@ -436,7 +436,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
 
         $this->_serialize_vcal();
 
-        debug_add("Preparations done, this:\n---\n".sprint_r($this)."---", MIDCOM_LOG_DEBUG);
+        debug_add("Preparations done, this:\n---\n".org_openpsa_helpers::sprint_r($this)."---", MIDCOM_LOG_DEBUG);
 
         debug_pop();
         return true;
@@ -535,7 +535,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
 
         $link_def = $this->_suspect_defaults();
         $projects_suspect_links = org_openpsa_relatedto_suspect::find_links_object_component($this, 'org.openpsa.projects', $link_def);
-        //debug_add("got suspected links:\n===\n" . sprint_r($projects_suspect_links) . "===\n");
+        //debug_add("got suspected links:\n===\n" . org_openpsa_helpers::sprint_r($projects_suspect_links) . "===\n");
         foreach ($projects_suspect_links as $linkdata)
         {
             debug_add("processing task/project #{$linkdata['other_obj']->id}, type: {$linkdata['other_obj']->orgOpenpsaObtype} (class: " . get_class($linkdata['other_obj']) . ")");
@@ -646,9 +646,9 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
         $this->_get_em('old_');
 
         /*
-        debug_add("this->participants\n===\n" .  sprint_r($this->participants) . "===\n");
-        debug_add("this->old_participants\n===\n" .  sprint_r($this->old_participants) . "===\n");
-        debug_add("this->_carried_participants_obj\n===\n" .  sprint_r($this->_carried_participants_obj) . "===\n");
+        debug_add("this->participants\n===\n" .  org_openpsa_helpers::sprint_r($this->participants) . "===\n");
+        debug_add("this->old_participants\n===\n" .  org_openpsa_helpers::sprint_r($this->old_participants) . "===\n");
+        debug_add("this->_carried_participants_obj\n===\n" .  org_openpsa_helpers::sprint_r($this->_carried_participants_obj) . "===\n");
         */
 
         $this->_update_em($repeat_handler);
@@ -661,9 +661,9 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
     {
         debug_push_class(__CLASS__, __FUNCTION__);
 
-        debug_add("this->participants\n===\n" .  sprint_r($this->participants) . "===\n");
-        debug_add("this->old_participants\n===\n" .  sprint_r($this->old_participants) . "===\n");
-        debug_add("this->_carried_participants_obj\n===\n" .  sprint_r($this->_carried_participants_obj) . "===\n");
+        debug_add("this->participants\n===\n" .  org_openpsa_helpers::sprint_r($this->participants) . "===\n");
+        debug_add("this->old_participants\n===\n" .  org_openpsa_helpers::sprint_r($this->old_participants) . "===\n");
+        debug_add("this->_carried_participants_obj\n===\n" .  org_openpsa_helpers::sprint_r($this->_carried_participants_obj) . "===\n");
 
         if ($this->send_notify)
         {
@@ -732,7 +732,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
         $qb->add_constraint('eid', '=', $this->id);
         $qb->add_constraint('uid', '=', $id);
         $results = $qb->execute_unchecked();
-        debug_add("qb returned:\n===\n" . sprint_r($results) . "===\n");
+        debug_add("qb returned:\n===\n" . org_openpsa_helpers::sprint_r($results) . "===\n");
         if (empty($results))
         {
             debug_pop();
@@ -749,7 +749,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
         $qb->add_constraint('event', '=', $this->id);
         $qb->add_constraint('resource', '=', $id);
         $results = $qb->execute_unchecked();
-        debug_add("qb returned:\n===\n" . sprint_r($results) . "===\n");
+        debug_add("qb returned:\n===\n" . org_openpsa_helpers::sprint_r($results) . "===\n");
         if (empty($results))
         {
             debug_pop();
@@ -1064,7 +1064,7 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         /*
-        debug_add("qb_ev \n===\n" .  sprint_r($qb_ev) . "===\n");
+        debug_add("qb_ev \n===\n" .  org_openpsa_helpers::sprint_r($qb_ev) . "===\n");
         debug_add("calling: \$qb_ev->add_constraint('{$fieldname}.busy', '<>', false)");
         */
         $qb_ev->add_constraint($fieldname . '.busy', '<>', false);
@@ -1581,15 +1581,15 @@ class org_openpsa_calendar_event extends __org_openpsa_calendar_event
         $_MIDCOM->auth->drop_sudo();
         // ** Done with participants
         /*
-        debug_add("added_participants\n===\n" .  sprint_r($added_participants) . "===\n");
-        debug_add("removed_participants\n===\n" .  sprint_r($removed_participants) . "===\n");
-        debug_add("this->participants\n===\n" .  sprint_r($this->participants) . "===\n");
-        debug_add("this->old_participants\n===\n" .  sprint_r($this->old_participants) . "===\n");
-        debug_add("carried_participants\n===\n" .  sprint_r($carried_participants) . "===\n");
-        debug_add("this->_carried_participants_obj\n===\n" .  sprint_r($this->_carried_participants_obj) . "===\n");
+        debug_add("added_participants\n===\n" .  org_openpsa_helpers::sprint_r($added_participants) . "===\n");
+        debug_add("removed_participants\n===\n" .  org_openpsa_helpers::sprint_r($removed_participants) . "===\n");
+        debug_add("this->participants\n===\n" .  org_openpsa_helpers::sprint_r($this->participants) . "===\n");
+        debug_add("this->old_participants\n===\n" .  org_openpsa_helpers::sprint_r($this->old_participants) . "===\n");
+        debug_add("carried_participants\n===\n" .  org_openpsa_helpers::sprint_r($carried_participants) . "===\n");
+        debug_add("this->_carried_participants_obj\n===\n" .  org_openpsa_helpers::sprint_r($this->_carried_participants_obj) . "===\n");
         */
 
-        debug_add("returning:\n===\n" . sprint_r($ret) . "===\n");
+        debug_add("returning:\n===\n" . org_openpsa_helpers::sprint_r($ret) . "===\n");
         debug_pop();
         return $ret;
     }

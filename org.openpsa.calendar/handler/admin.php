@@ -104,7 +104,7 @@ class org_openpsa_calendar_handler_admin extends midcom_baseclasses_components_h
                 debug_pop();
                 return true;
             case 'edit':
-                //debug_add("got POST\n===\n" .  sprint_r($_POST) . "===\n");
+                //debug_add("got POST\n===\n" .  org_openpsa_helpers::sprint_r($_POST) . "===\n");
                 $_MIDCOM->auth->require_do('midgard:update', $this->_request_data['event']);
 
                 switch ($this->_datamanager->process_form()) {
@@ -112,7 +112,7 @@ class org_openpsa_calendar_handler_admin extends midcom_baseclasses_components_h
                         $this->_view = 'default';
 
                         // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+                        org_openpsa_helpers::dm_savecancel($this->_view_toolbar, $this);
 
                         debug_pop();
                         return true;
@@ -139,7 +139,7 @@ class org_openpsa_calendar_handler_admin extends midcom_baseclasses_components_h
                         {
                             debug_add('resource conflict hooked, handling it');
                             // Add toolbar items
-                            org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+                            org_openpsa_helpers::dm_savecancel($this->_view_toolbar, $this);
                             $this->_event_resourceconflict_messages(&$this->_request_data['event']);
                             debug_pop();
                             return true;

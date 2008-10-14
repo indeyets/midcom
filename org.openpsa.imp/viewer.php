@@ -276,7 +276,7 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
         {
             case MIDCOM_DATAMGR_EDITING:
                 // Add toolbar items
-                org_openpsa_helpers_dm_savecancel($this->_toolbars->bottom, $this);
+                org_openpsa_helpers::dm_savecancel($this->_toolbars->bottom, $this);
                 break;
             case MIDCOM_DATAMGR_SAVED:
                 $_MIDCOM->relocate( $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) );

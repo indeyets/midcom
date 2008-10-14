@@ -302,7 +302,7 @@ class org_openpsa_reports_handler_base extends midcom_baseclasses_components_han
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add('Got resource_id: ' . $resource_id);
         $dba_obj =& $_MIDCOM->auth->get_assignee($resource_id);
-        //debug_add("got dba_obj:\n===\n" . sprint_r($dba_obj) . "===\n");
+        //debug_add("got dba_obj:\n===\n" . org_openpsa_helpers::sprint_r($dba_obj) . "===\n");
         org_openpsa_reports_handler_base::_verify_cache('users', $this->_request_data);
         switch (get_class($dba_obj))
         {
@@ -389,7 +389,7 @@ class org_openpsa_reports_handler_base extends midcom_baseclasses_components_han
         {
             $obj =& $request_data['object_cache'][$type][$id];
         }
-        //debug_add("returning reference to object\n===\n" . sprint_r($request_data['object_cache'][$type][$obj->id]) . "===\n");
+        //debug_add("returning reference to object\n===\n" . org_openpsa_helpers::sprint_r($request_data['object_cache'][$type][$obj->id]) . "===\n");
         return $request_data['object_cache'][$type][$obj->id];
     }
 

@@ -56,7 +56,7 @@ else
     list ($new_html, $embeds) = $mail->html_get_embeds(false, $mail->html_body);
     /*
     debug_add("Got new_html\n===\n{$new_html}\n===\n");
-    debug_add("Got embeds\n===" . sprint_r($embeds) . "===\n");
+    debug_add("Got embeds\n===" . org_openpsa_helpers::sprint_r($embeds) . "===\n");
     */
     $mail->html_body = $new_html;
     $mail->embeds = $embeds;

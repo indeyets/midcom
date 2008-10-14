@@ -158,7 +158,7 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
         if ($_MIDCOM->auth->user)
         {
             $this->_request_data['virtual_groups']['all'] = $this->_request_data['l10n']->get('all groups');
-            $this->_request_data['virtual_groups'] += org_openpsa_helpers_workgroups();
+            $this->_request_data['virtual_groups'] += org_openpsa_helpers_list::workgroups();
         }
 
         return true;

@@ -99,7 +99,7 @@
                 'location'      => 'parameter',
                 'datatype'      => 'text',
                 'widget'        => 'select',
-                'widget_select_choices' => array_merge(array('all' => 'all'), org_openpsa_helpers_workgroups('first', true)),
+                'widget_select_choices' => array_merge(array('all' => 'all'), org_openpsa_helpers_list::workgroups('first', true)),
                 'start_fieldgroup'  => array (
                     'title'     => 'Scope',
                     'css_group' => 'area',
@@ -206,7 +206,7 @@
                 'location'      => 'parameter',
                 'datatype'      => 'text',
                 'widget'        => 'select',
-                'widget_select_choices' => array_merge(array('all' => 'all'), org_openpsa_helpers_workgroups('first', true)),
+                'widget_select_choices' => array_merge(array('all' => 'all'), org_openpsa_helpers_list::workgroups('first', true)),
                 'start_fieldgroup'  => array (
                     'title'     => 'Scope',
                     'css_group' => 'area',

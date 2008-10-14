@@ -62,7 +62,7 @@ class org_openpsa_projects_task_status_dba extends __org_openpsa_projects_task_s
             && count($qbret) > 0)
         {
             debug_add('Duplicate statuses found, aborting create', MIDCOM_LOG_WARN);
-            debug_add("List of duplicate status objects \n===\n" . sprint_r($qbret) . "===\n");
+            debug_add("List of duplicate status objects \n===\n" . org_openpsa_helpers::sprint_r($qbret) . "===\n");
             return false;
         }
 

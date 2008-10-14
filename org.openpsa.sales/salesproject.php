@@ -176,8 +176,8 @@ class org_openpsa_sales_salesproject_dba extends __org_openpsa_sales_salesprojec
         }
         usort($sort_prev, array('org_openpsa_sales_salesproject_dba', '_sort_action_by_time_reverse'));
         usort($sort_next, array('org_openpsa_sales_salesproject_dba', '_sort_action_by_time'));
-        debug_add("sort_next \n===\n" . sprint_r($sort_next) . "===\n");
-        debug_add("sort_prev \n===\n" . sprint_r($sort_prev) . "===\n");
+        debug_add("sort_next \n===\n" . org_openpsa_helpers::sprint_r($sort_next) . "===\n");
+        debug_add("sort_prev \n===\n" . org_openpsa_helpers::sprint_r($sort_prev) . "===\n");
 
         if (isset($sort_next[0]))
         {
@@ -351,7 +351,7 @@ class org_openpsa_sales_salesproject_dba extends __org_openpsa_sales_salesprojec
         }
         // ** Done with contacts
 
-        debug_add("returning status array: \n===\n" . sprint_r($ret) . "===\n");
+        debug_add("returning status array: \n===\n" . org_openpsa_helpers::sprint_r($ret) . "===\n");
         debug_pop();
         return $ret;
     }

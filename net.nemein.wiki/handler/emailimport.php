@@ -71,9 +71,9 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
         $decoder->mime_decode();
 
         /*
-        echo "DEBUG: decoder->body: \n===\n" . sprint_r($decoder->body) . "===\n";
-        echo "DEBUG: decoder->html_body: \n===\n" . sprint_r($decoder->html_body) . "===\n";
-        echo "DEBUG: decoder->headers: \n===\n" . sprint_r($decoder->headers) . "===\n";
+        echo "DEBUG: decoder->body: \n===\n" . org_openpsa_helpers::sprint_r($decoder->body) . "===\n";
+        echo "DEBUG: decoder->html_body: \n===\n" . org_openpsa_helpers::sprint_r($decoder->html_body) . "===\n";
+        echo "DEBUG: decoder->headers: \n===\n" . org_openpsa_helpers::sprint_r($decoder->headers) . "===\n";
         */
 
         //Parse email addresses
@@ -107,7 +107,7 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
             }
         }
 
-        //echo "DEBUG: emails: \n===\n" . sprint_r($emails) . "===\n";
+        //echo "DEBUG: emails: \n===\n" . org_openpsa_helpers::sprint_r($emails) . "===\n";
 
         $_MIDCOM->auth->request_sudo();
         //TODO: Create wikinote
@@ -300,7 +300,7 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
             }
         }
 
-        //echo "DEBUG: wikipage (title format '{$title_format}'): \n===\n" . sprint_r($wikipage) . "===\n";
+        //echo "DEBUG: wikipage (title format '{$title_format}'): \n===\n" . org_openpsa_helpers::sprint_r($wikipage) . "===\n";
 
         //Give us output from MDA
         //echo "ERROR: just debugging\n";

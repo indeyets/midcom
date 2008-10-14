@@ -97,7 +97,7 @@ class midcom_helper_datamanager_widget_contactchooser extends midcom_helper_data
             }
             if (array_key_exists($this->_fieldname, $_POST))
             {
-                debug_add("Got POST:\n---\n".sprint_r($_POST[$this->_fieldname])."---\n");
+                debug_add("Got POST:\n---\n".org_openpsa_helpers::sprint_r($_POST[$this->_fieldname])."---\n");
                 foreach ($_POST[$this->_fieldname] as $key => $value)
                 {
                     if ($value == 'on')
@@ -112,7 +112,7 @@ class midcom_helper_datamanager_widget_contactchooser extends midcom_helper_data
                         }
                     }
                 }
-                debug_add("_value is now:\n---\n".sprint_r($this->_value)."---\n");
+                debug_add("_value is now:\n---\n".org_openpsa_helpers::sprint_r($this->_value)."---\n");
             }
         }
         debug_pop();

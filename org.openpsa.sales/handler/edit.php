@@ -64,11 +64,11 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
         }
 
         //Fill the customer field to DM
-        debug_add("schema before \n===\n" . sprint_r($this->_datamanagers['salesproject']->_layoutdb['default']) . "===\n");
-        org_openpsa_helpers_schema_modifier($this->_datamanagers['salesproject'], 'customer', 'widget', 'select', 'default', false);
+        debug_add("schema before \n===\n" . org_openpsa_helpers::sprint_r($this->_datamanagers['salesproject']->_layoutdb['default']) . "===\n");
+        org_openpsa_helpers::schema_modifier($this->_datamanagers['salesproject'], 'customer', 'widget', 'select', 'default', false);
         //Indidentally this helper works for salesprojects as well (same property names and logic)
-        org_openpsa_helpers_schema_modifier($this->_datamanagers['salesproject'], 'customer', 'widget_select_choices', org_openpsa_helpers_task_groups($salesproject), 'default', false);
-        debug_add("schema after \n===\n" . sprint_r($this->_datamanagers['salesproject']->_layoutdb['default']) . "===\n");
+        org_openpsa_helpers::schema_modifier($this->_datamanagers['salesproject'], 'customer', 'widget_select_choices', org_openpsa_helpers_list::task_groups($salesproject), 'default', false);
+        debug_add("schema after \n===\n" . org_openpsa_helpers::sprint_r($this->_datamanagers['salesproject']->_layoutdb['default']) . "===\n");
 
         // Load the project to datamanager
         if (!$this->_datamanagers['salesproject']->init($salesproject))
@@ -194,7 +194,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
         {
             case MIDCOM_DATAMGR_EDITING:
                 // Add toolbar items
-                org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+                org_openpsa_helpers::dm_savecancel($this->_view_toolbar, $this);
                 return true;
                 // This will break;
 
@@ -243,7 +243,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
             $this->_initialize_datamanager('salesproject', $this->_config->get('schemadb_salesproject'));
         }
 
-        org_openpsa_helpers_schema_modifier($this->_datamanagers['salesproject'], 'code', 'default', org_openpsa_sales_salesproject_dba::generate_salesproject_number(), 'newsalesproject', false);
+        org_openpsa_helpers::schema_modifier($this->_datamanagers['salesproject'], 'code', 'default', org_openpsa_sales_salesproject_dba::generate_salesproject_number(), 'newsalesproject', false);
 
         if (!$this->_datamanagers['salesproject']->init_creation_mode('newsalesproject',$this,'_creation_dm_callback'))
         {
@@ -258,7 +258,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
                 debug_add('First call within creation mode');
 
                 // Add toolbar items
-                org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+                org_openpsa_helpers::dm_savecancel($this->_view_toolbar, $this);
                 break;
 
             case MIDCOM_DATAMGR_EDITING:

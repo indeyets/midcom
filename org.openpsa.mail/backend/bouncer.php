@@ -89,7 +89,7 @@ class org_openpsa_mail_backend_bouncer
         if (class_exists($classname))
         {
             $this->_backend = new $classname();
-            debug_add("backend is now\n===\n" . sprint_r($this->_backend) . "===\n");
+            debug_add("backend is now\n===\n" . org_openpsa_helpers::sprint_r($this->_backend) . "===\n");
             debug_pop();
             return true;
         }

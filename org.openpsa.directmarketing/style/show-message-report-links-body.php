@@ -35,7 +35,7 @@ $body_class = " class='{$data['body_class']}'";
                 $total += $count['total'];
                 $of_clicks = $link_data['percentages']['of_links'][$target]['total'];
                 $of_recipients = $link_data['percentages']['of_recipients'][$target]['total'];
-                $rule_ser = array2code($link_data['rules'][$target]);
+                $rule_ser = org_openpsa_helpers::array2code($link_data['rules'][$target]);
                 $visual_width = round($of_clicks*5);
                 $target_label = $target;
                 // Fetch target url and look for a heading to use
@@ -63,10 +63,10 @@ $body_class = " class='{$data['body_class']}'";
                         {
                             if (preg_match($regex, $remote_data, $title_matches))
                             {
-                                debug_add("Got title_matches\n===\n" . sprint_r($title_matches) . "===\n");
+                                debug_add("Got title_matches\n===\n" . org_openpsa_helpers::sprint_r($title_matches) . "===\n");
                                 /*
                                 echo "title_matches from url {$target}: <pre>\n";
-                                echo htmlentities(sprint_r($title_matches));
+                                echo htmlentities(org_openpsa_helpers::sprint_r($title_matches));
                                 echo "</pre>\n";
                                 */
                                 if (!empty($title_matches[3]))

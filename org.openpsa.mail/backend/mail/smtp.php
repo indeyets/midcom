@@ -60,10 +60,10 @@ class org_openpsa_mail_backend_mail_smtp
         $this->_mail = Mail::factory('smtp', $params);
         $mail =& $this->_mail;
         $merged = $mailclass->merge_address_headers();
-        //debug_add("address_headers_merged:\n===\n{$merged}\n===\nheaders:\n===\n" . sprint_r($mailclass->headers) . "===\n");
+        //debug_add("address_headers_merged:\n===\n{$merged}\n===\nheaders:\n===\n" . org_openpsa_helpers::sprint_r($mailclass->headers) . "===\n");
         $mailRet = $mail->send($merged, $mailclass->headers, $mailclass->body);
         //This gives *huge* log in case of error since the full org_openpsa_mail object is included in the PEAR error as well
-        //debug_add("mail->send returned\n===\n" . sprint_r($mailRet) . "===\n");
+        //debug_add("mail->send returned\n===\n" . org_openpsa_helpers::sprint_r($mailRet) . "===\n");
         if ($mailRet === true)
         {
             $ret = true;

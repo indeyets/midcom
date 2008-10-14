@@ -159,7 +159,7 @@ class org_openpsa_projects_projectbroker
         foreach ($prospects as $key => $person)
         {
             $slots = org_openpsa_calendar_eventparticipant::find_free_times(($minimum_time_slot * 60), $person, $task->start, $task->end);
-            //echo "DEBUG: slots <pre>\n" . sprint_r($slots) . "</pre>\n";
+            //echo "DEBUG: slots <pre>\n" . org_openpsa_helpers::sprint_r($slots) . "</pre>\n";
             if (   is_array($slots)
                 && count($slots > 0))
             {

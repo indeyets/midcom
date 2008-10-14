@@ -61,7 +61,7 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
     function at_test($args, &$handler)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        $message = "got args:\n===\n" . sprint_r($args) . "===\n";
+        $message = "got args:\n===\n" . org_openpsa_helpers::sprint_r($args) . "===\n";
         $handler->print_error($message);
         debug_add($message);
         debug_pop();
@@ -188,13 +188,13 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
         $message = false;
 
         $campaign = new org_openpsa_directmarketing_campaign($guid);
-        debug_add("campaign: ===\n" . sprint_r($campaign) . "===\n");
+        debug_add("campaign: ===\n" . org_openpsa_helpers::sprint_r($campaign) . "===\n");
         if (   !$campaign
             || !isset($campaign->guid)
             || $campaign->guid !== $guid)
         {
             $message = new org_openpsa_directmarketing_campaign_message($guid);
-            debug_add("message: ===\n" . sprint_r($message) . "===\n");
+            debug_add("message: ===\n" . org_openpsa_helpers::sprint_r($message) . "===\n");
         }
 
         switch (true)

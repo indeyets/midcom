@@ -224,7 +224,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
         $event = false;
 
         $event = new org_openpsa_calendar_event($guid);
-        debug_add("event: ===\n" . sprint_r($event) . "===\n");
+        debug_add("event: ===\n" . org_openpsa_helpers::sprint_r($event) . "===\n");
         if (   is_object($event)
             && $event->id)
         {

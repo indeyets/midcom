@@ -19,8 +19,8 @@ $weekly_data_group['total'] = $weekly_data_group['invoiceable_total']+$weekly_da
                                 && count($weekly_data_group['invoiceable_total_by_customer']) > 0)
                             {
                                 /*
-                                echo "DEBUG: invoiceable_total_by_customer<pre>\n" .  sprint_r($weekly_data_group['invoiceable_total_by_customer']) . "</pre>\n";
-                                echo "DEBUG: invoiceable_customers<pre>\n" .  sprint_r($weekly_data_group['invoiceable_customers']) . "</pre>\n";
+                                echo "DEBUG: invoiceable_total_by_customer<pre>\n" .  org_openpsa_helpers::sprint_r($weekly_data_group['invoiceable_total_by_customer']) . "</pre>\n";
+                                echo "DEBUG: invoiceable_customers<pre>\n" .  org_openpsa_helpers::sprint_r($weekly_data_group['invoiceable_customers']) . "</pre>\n";
                                 */
                                 echo ' (';
                                 $i = 0;
@@ -89,8 +89,8 @@ $weekly_data_group['total'] = $weekly_data_group['invoiceable_total']+$weekly_da
                                 && count($weekly_data_group['uninvoiceable_total_by_customer']) > 0)
                             {
                                 /*
-                                echo "DEBUG: uninvoiceable_total_by_customer<pre>\n" .  sprint_r($weekly_data_group['uninvoiceable_total_by_customer']) . "</pre>\n";
-                                echo "DEBUG: uninvoiceable_customers<pre>\n" .  sprint_r($weekly_data_group['uninvoiceable_customers']) . "</pre>\n";
+                                echo "DEBUG: uninvoiceable_total_by_customer<pre>\n" .  org_openpsa_helpers::sprint_r($weekly_data_group['uninvoiceable_total_by_customer']) . "</pre>\n";
+                                echo "DEBUG: uninvoiceable_customers<pre>\n" .  org_openpsa_helpers::sprint_r($weekly_data_group['uninvoiceable_customers']) . "</pre>\n";
                                 */
                                 echo ' (';
                                 $i = 0;

@@ -399,10 +399,10 @@ EOF;
         }
 
         //Mangling if report wants to do it (done here to have style context, othewise MidCOM will not like us.
-        debug_add("query data before mangle:\n===\n" . sprint_r($this->_request_data['query_data']) . "===\n");
+        debug_add("query data before mangle:\n===\n" . org_openpsa_helpers::sprint_r($this->_request_data['query_data']) . "===\n");
         debug_add("calling midcom_show_style('report{$bpr}-mangle-query') to mangle the query data as necessary");
         midcom_show_style("projects_report{$bpr}-mangle-query");
-        debug_add("query data after mangle:\n===\n" . sprint_r($this->_request_data['query_data']) . "===\n");
+        debug_add("query data after mangle:\n===\n" . org_openpsa_helpers::sprint_r($this->_request_data['query_data']) . "===\n");
 
         //Handle grouping
         debug_add('checking grouping');

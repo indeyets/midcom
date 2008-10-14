@@ -86,7 +86,7 @@ foreach($mails as $key => $mailbody)
 
     /*
     echo "DEBUG: Key {$key}, decoded headers: <pre>\n";
-    echo htmlentities(sprint_r($mail->headers));
+    echo htmlentities(org_openpsa_helpers::sprint_r($mail->headers));
     echo "</pre>\n and body:<pre>\n";
     echo htmlentities($mail->body);
     echo "</pre>\n<br/>\n";

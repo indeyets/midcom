@@ -135,7 +135,7 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
             $_MIDCOM->auth->require_do('midgard:create', $this->_request_data['parent_group']);
 
             // Set the default type to "department"
-            org_openpsa_helpers_schema_modifier(&$this->_datamanagers['group'], 'object_type', 'default', ORG_OPENPSA_OBTYPE_DEPARTMENT, 'newgroup', false);
+            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['group'], 'object_type', 'default', ORG_OPENPSA_OBTYPE_DEPARTMENT, 'newgroup', false);
         }
         else
         {
@@ -157,7 +157,7 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
                 debug_add('First call within creation mode');
 
                 // Add toolbar items
-                org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+                org_openpsa_helpers::dm_savecancel($this->_view_toolbar, $this);
 
                 break;
 
@@ -406,7 +406,7 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
                         $this->_view = "notifications";
 
                         // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+                        org_openpsa_helpers::dm_savecancel($this->_view_toolbar, $this);
 
                         debug_pop();
                         return true;
@@ -447,7 +447,7 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
 
                 // Get the calendar root event
                 $_MIDCOM->componentloader->load('org.openpsa.calendar');
-                org_openpsa_helpers_schema_modifier(&$this->_datamanagers['acl'], 'calendar', 'privilege_object', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']);
+                org_openpsa_helpers::schema_modifier(&$this->_datamanagers['acl'], 'calendar', 'privilege_object', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']);
 
                 // Set the contacts root group into ACL
                 /* The persons are not necessarily under the root group...
@@ -481,7 +481,7 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
                         $this->_view = "privileges";
 
                         // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+                        org_openpsa_helpers::dm_savecancel($this->_view_toolbar, $this);
 
                         debug_pop();
                         return true;
@@ -554,7 +554,7 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
                         $this->_view = "default";
 
                         // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+                        org_openpsa_helpers::dm_savecancel($this->_view_toolbar, $this);
 
                         return true;
 

@@ -97,7 +97,7 @@
                 'location'      => 'parameter',
                 'datatype'      => 'text',
                 'widget'        => 'select',
-                'widget_select_choices' => array_merge(array('all' => 'all'), org_openpsa_helpers_workgroups('first', true)),
+                'widget_select_choices' => array_merge(array('all' => 'all'), org_openpsa_helpers_list::workgroups('first', true)),
                 'start_fieldgroup'  => array (
                     'title'     => 'Scope',
                     'css_group' => 'area',
@@ -108,7 +108,7 @@
                 'location'      => 'parameter',
                 'datatype'      => 'text',
                 'widget'        => 'select',
-                'widget_select_choices' => org_openpsa_helpers_projects(true),
+                'widget_select_choices' => org_openpsa_helpers_list::projects(true),
             ),
             /* Testing */
             /*
@@ -270,7 +270,7 @@
                 'location'      => 'parameter',
                 'datatype'      => 'text',
                 'widget'        => 'select',
-                'widget_select_choices' => array_merge(array('all' => 'all'), org_openpsa_helpers_workgroups('first', true)),
+                'widget_select_choices' => array_merge(array('all' => 'all'), org_openpsa_helpers_list::workgroups('first', true)),
                 'start_fieldgroup'  => array (
                     'title'     => 'Scope',
                     'css_group' => 'area',
@@ -281,7 +281,7 @@
                 'location'      => 'parameter',
                 'datatype'      => 'text',
                 'widget'        => 'select',
-                'widget_select_choices' => org_openpsa_helpers_projects(true),
+                'widget_select_choices' => org_openpsa_helpers_list::projects(true),
                 'end_fieldgroup'    => '',
             ),
             /* Testing */

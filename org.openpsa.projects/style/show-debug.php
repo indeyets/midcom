@@ -10,7 +10,7 @@ $_MIDCOM->componentloader->load_graceful('net.nemein.tag');
 $task = new org_openpsa_projects_task_dba('b093253a0c96d4cb7868787f8a2357fc');
 $broker = new org_openpsa_projects_projectbroker();
 $prospects = $broker->find_task_prospects($task);
-echo "prospects:\n<pre>\n" . sprint_r($prospects) . "</pre>\n";
+echo "prospects:\n<pre>\n" . org_openpsa_helpers::sprint_r($prospects) . "</pre>\n";
 
 /*
 $_MIDCOM->componentloader->load_graceful('org.openpsa.contacts');
@@ -23,7 +23,7 @@ $classes = array
 );
 $tags = array('php', 'midgard');
 $persons = net_nemein_tag_handler::get_objects_with_tags($tags, $classes, 'OR');
-echo "persons:\n<pre>\n" . sprint_r($persons) . "</pre>\n";
+echo "persons:\n<pre>\n" . org_openpsa_helpers::sprint_r($persons) . "</pre>\n";
 */
 
 ?>

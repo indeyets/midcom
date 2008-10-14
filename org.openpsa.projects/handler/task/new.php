@@ -113,7 +113,7 @@ class org_openpsa_projects_handler_task_new extends midcom_baseclasses_component
 
         $this->_request_data['task'] = new org_openpsa_projects_task_dba($task->id);
         $rel_ret = org_openpsa_relatedto_handler::on_created_handle_relatedto($this->_request_data['task'], 'org.openpsa.projects');
-        debug_add("org_openpsa_relatedto_handler returned \n===\n" . sprint_r($rel_ret) . "===\n");
+        debug_add("org_openpsa_relatedto_handler returned \n===\n" . org_openpsa_helpers::sprint_r($rel_ret) . "===\n");
 
         return $task;
     }

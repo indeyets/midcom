@@ -14,7 +14,7 @@ $data['current_row']['customer'] = false;
 if ($task->customer)
 {
     $data['current_row']['customer'] =& org_openpsa_reports_handler_projects_report::_get_cache('groups', $task->customer, $data);
-    // echo "DEBUG: view_data['current_row']['customer'] <pre>\n" . sprint_r($data['current_row']['customer']) . "</pre><br>\n";
+    // echo "DEBUG: view_data['current_row']['customer'] <pre>\n" . org_openpsa_helpers::sprint_r($data['current_row']['customer']) . "</pre><br>\n";
 }
 
 if ($hour->invoiceable)

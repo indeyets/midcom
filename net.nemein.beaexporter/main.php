@@ -216,7 +216,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
         }
         /*
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("matches \n===\n" . sprint_r($matches) . "===\n");
+        debug_add("matches \n===\n" . org_openpsa_helpers::sprint_r($matches) . "===\n");
         debug_pop();
         */
         return str_replace($matches[1], '/', $url);
@@ -377,7 +377,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
             debug_pop();
             return true;
         }
-        debug_add("matches\n===\n" . sprint_r($matches) . "===\n");
+        debug_add("matches\n===\n" . org_openpsa_helpers::sprint_r($matches) . "===\n");
 
         $seen_urls = array();
         foreach ($matches[3] as $k => $url)
@@ -525,7 +525,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
         $this->_clean_files[$path] = true;
 
         // And start writing
-        debug_add("metadata_merged\n===" . sprint_r($metadata_merged) . "===\n");
+        debug_add("metadata_merged\n===" . org_openpsa_helpers::sprint_r($metadata_merged) . "===\n");
         foreach ($metadata_merged as $key => $value)
         {
             //TODO: Escape special characters in value
@@ -562,7 +562,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
         $attachment_rewrite = $this->_config->get('attachment_rewrite');
 
         debug_add("attachment_rewrite={$attachment_rewrite}");
-        debug_add("matches\n===\n" . sprint_r($matches) . "===\n");
+        debug_add("matches\n===\n" . org_openpsa_helpers::sprint_r($matches) . "===\n");
 
         $seen_urls = array();
         foreach ($matches[3] as $k => $url)

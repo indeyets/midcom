@@ -45,7 +45,7 @@ class org_openpsa_directmarketing_handler_logger extends midcom_baseclasses_comp
         $_MIDCOM->auth->request_sudo('org.openpsa.directmarketing');
         debug_add("Looking for token '{$_POST['token']}' in sent receipts");
         $ret = $this->_qb_token_receipts($_POST['token']);
-        debug_add("_qb_token_receipts({$_POST['token']}) returned ===\n" . sprint_r($ret) . "===\n");
+        debug_add("_qb_token_receipts({$_POST['token']}) returned ===\n" . org_openpsa_helpers::sprint_r($ret) . "===\n");
         if (empty($ret))
         {
             //Token not present
@@ -164,7 +164,7 @@ class org_openpsa_directmarketing_handler_logger extends midcom_baseclasses_comp
         $_MIDCOM->auth->request_sudo('org.openpsa.directmarketing');
         debug_add("Looking for token '{$_POST['token']}' in sent receipts");
         $ret = $this->_qb_token_receipts($_POST['token']);
-        debug_add("_qb_token_receipts({$_POST['token']}) returned ===\n" . sprint_r($ret) . "===\n");
+        debug_add("_qb_token_receipts({$_POST['token']}) returned ===\n" . org_openpsa_helpers::sprint_r($ret) . "===\n");
         if (empty($ret))
         {
             //Token not present
@@ -284,7 +284,7 @@ class org_openpsa_directmarketing_handler_logger extends midcom_baseclasses_comp
         $_MIDCOM->auth->request_sudo('org.openpsa.directmarketing');
         debug_add("Looking for token '{$this->_request_data['token']}' in sent receipts");
         $ret = $this->_qb_token_receipts($this->_request_data['token']);
-        debug_add("_qb_token_receipts({$this->_request_data['token']}) returned ===\n" . sprint_r($ret) . "===\n");
+        debug_add("_qb_token_receipts({$this->_request_data['token']}) returned ===\n" . org_openpsa_helpers::sprint_r($ret) . "===\n");
         if (empty($ret))
         {
             //Token not present

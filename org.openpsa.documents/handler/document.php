@@ -63,7 +63,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
 
         $this->_request_data['document'] = new org_openpsa_documents_document_dba($document->id);
         $rel_ret = org_openpsa_relatedto_handler::on_created_handle_relatedto($this->_request_data['document'], 'org.openpsa.documents');
-        debug_add("org_openpsa_relatedto_handler returned \n===\n" . sprint_r($rel_ret) . "===\n");
+        debug_add("org_openpsa_relatedto_handler returned \n===\n" . org_openpsa_helpers::sprint_r($rel_ret) . "===\n");
         $result["storage"] =& $this->_request_data['document'];
         $result["success"] = true;
         return $result;
@@ -171,7 +171,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
                         $this->_view = "edit";
 
                         // Add toolbar items
-                        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+                        org_openpsa_helpers::dm_savecancel($this->_view_toolbar, $this);
 
                         return true;
 
@@ -249,11 +249,11 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
             {
                 $this->_find_document_nodes($this->_request_data['directory']->id);
             }
-            org_openpsa_helpers_schema_modifier($this->_datamanagers['document'], 'topic', 'description', $this->_request_data['l10n']->get('folder'), 'newdocument');
-            org_openpsa_helpers_schema_modifier($this->_datamanagers['document'], 'topic', 'location', 'topic', 'newdocument');
-            org_openpsa_helpers_schema_modifier($this->_datamanagers['document'], 'topic', 'datatype', 'integer', 'newdocument');
-            org_openpsa_helpers_schema_modifier($this->_datamanagers['document'], 'topic', 'widget', 'select', 'newdocument');
-            org_openpsa_helpers_schema_modifier($this->_datamanagers['document'], 'topic', 'widget_select_choices', $this->_request_data['folders'], 'newdocument');
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['document'], 'topic', 'description', $this->_request_data['l10n']->get('folder'), 'newdocument');
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['document'], 'topic', 'location', 'topic', 'newdocument');
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['document'], 'topic', 'datatype', 'integer', 'newdocument');
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['document'], 'topic', 'widget', 'select', 'newdocument');
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['document'], 'topic', 'widget_select_choices', $this->_request_data['folders'], 'newdocument');
         }
 
         if (!$this->_datamanagers['document']->init_creation_mode("newdocument", $this, "_creation_dm_callback"))
@@ -264,7 +264,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
         }
 
         // Add toolbar items
-        org_openpsa_helpers_dm_savecancel($this->_view_toolbar, $this);
+        org_openpsa_helpers::dm_savecancel($this->_view_toolbar, $this);
 
         switch ($this->_datamanagers['document']->process_form()) 
         {

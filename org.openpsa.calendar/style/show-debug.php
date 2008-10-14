@@ -27,7 +27,7 @@ while ($finder->fetch())
 
 /*
 $ev = new org_openpsa_calendar_event(1999);
-echo "ev=<pre>".sprint_r($ev)."</pre>\n";
+echo "ev=<pre>".org_openpsa_helpers::sprint_r($ev)."</pre>\n";
 */
 /*
 unset($ev->participants[13]);
@@ -35,29 +35,29 @@ $ev->participants[3]=true;
 
 $ev->_get_em('old_');
 $ret=$ev->busy_em();
-echo "ret=<pre>".sprint_r($ret)."</pre>, errstr=".mgd_errstr()."<br>\n";
+echo "ret=<pre>".org_openpsa_helpers::sprint_r($ret)."</pre>, errstr=".mgd_errstr()."<br>\n";
 $ret=$ev->_update_em();
-echo "ret=<pre>".sprint_r($ret)."</pre>, errstr=".mgd_errstr()."<br>\n";
+echo "ret=<pre>".org_openpsa_helpers::sprint_r($ret)."</pre>, errstr=".mgd_errstr()."<br>\n";
 */
 /*
 $ret=$ev->update();
-echo "ret=<pre>".sprint_r($ret)."</pre>, errstr=".mgd_errstr()."<br>\n";
+echo "ret=<pre>".org_openpsa_helpers::sprint_r($ret)."</pre>, errstr=".mgd_errstr()."<br>\n";
 
-echo "ev=<pre>".sprint_r($ev)."</pre>\n";
+echo "ev=<pre>".org_openpsa_helpers::sprint_r($ev)."</pre>\n";
 */
 
 
 /*
 $ev = new org_openpsa_calendar_event(4);
 $ret=$ev->listparameters('midcom.helper.datamanager');
-echo "ret=<pre>".sprint_r($ret)."</pre>, errstr=".mgd_errstr()."<br>\n";
+echo "ret=<pre>".org_openpsa_helpers::sprint_r($ret)."</pre>, errstr=".mgd_errstr()."<br>\n";
 while ($ret->fetch())
 {
-    echo "ret=<pre>".sprint_r($ret)."</pre>";
+    echo "ret=<pre>".org_openpsa_helpers::sprint_r($ret)."</pre>";
 }
 */
 /*
 $ret = $ev->parameter('midcom.helper.datamanager', 'layout', '');
-echo "ret=<pre>".sprint_r($ret)."</pre>, errstr=".mgd_errstr()."<br>\n";
+echo "ret=<pre>".org_openpsa_helpers::sprint_r($ret)."</pre>, errstr=".mgd_errstr()."<br>\n";
 */
 ?>

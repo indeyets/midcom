@@ -807,7 +807,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         }
 
         reset($results);
-        //debug_add("returning results\n===\n" . sprint_r($results) . "\n===\n");
+        //debug_add("returning results\n===\n" . org_openpsa_helpers::sprint_r($results) . "\n===\n");
         debug_pop();
         return $results;
     }

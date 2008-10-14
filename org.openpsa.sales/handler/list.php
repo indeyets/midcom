@@ -100,7 +100,7 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
                 }
                 $mode = 'id';
                 // Add it to the options array for DM mucking to be done later in this loop.
-                _org_openpsa_helpers_task_groups_put($dm_customers, $mode, $this->_request_data['customers'][$salesproject->customer]);
+                org_openpsa_helpers__list::task_groups_put($dm_customers, $mode, $this->_request_data['customers'][$salesproject->customer]);
             }
             if (!isset($this->_request_data['owners'][$salesproject->owner]))
             {
@@ -113,15 +113,15 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
             $this->_request_data['salesprojects'][$key] = $salesproject;
 
             // Muck the customers to DM
-            org_openpsa_helpers_schema_modifier($this->_datamanagers['salesproject'], 'customer', 'widget', 'select', 'default', false);
-            org_openpsa_helpers_schema_modifier($this->_datamanagers['salesproject'], 'customer', 'widget_select_choices', $dm_customers, 'default', false);
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['salesproject'], 'customer', 'widget', 'select', 'default', false);
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['salesproject'], 'customer', 'widget_select_choices', $dm_customers, 'default', false);
             if (!$this->_datamanagers['salesproject']->init($salesproject))
             {
                 // DM failure, abort
                 return false;
             }
             $this->_request_data['salesprojects_dm'][$key] = $this->_datamanagers['salesproject']->get_array();
-            debug_add("salesproject_dm[{$key}]\n===\n" . sprint_r($this->_request_data['salesprojects_dm'][$key]) . "===\n");
+            debug_add("salesproject_dm[{$key}]\n===\n" . org_openpsa_helpers::sprint_r($this->_request_data['salesprojects_dm'][$key]) . "===\n");
         }
 
         // TODO: Filtering

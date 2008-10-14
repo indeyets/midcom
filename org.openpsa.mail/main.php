@@ -689,7 +689,7 @@ EOF;
         {
             // Sort the results to make sure '=' gets encoded first (otherwise there will be double-encodes...)
             usort($matches[0], create_function('$a,$b', $this->_code_for_sort_encode_subject()));
-            debug_add("matches[0]\n===\n" . sprint_r($matches) . "===\n");
+            debug_add("matches[0]\n===\n" . org_openpsa_helpers::sprint_r($matches) . "===\n");
             $cache = array();
             $newSubj = $this->subject;
             while (list ($k, $char) = each ($matches[0]))
@@ -755,12 +755,12 @@ EOF;
             $this->body = $mime->get();
             // mime->headers() has some corner cases with UTF-8 so we encode at least the subject ourselves
             $this->encode_subject();
-            debug_add("Headers before mime->headers\n===\n" . sprint_r($this->headers) . "===\n");
+            debug_add("Headers before mime->headers\n===\n" . org_openpsa_helpers::sprint_r($this->headers) . "===\n");
             $this->headers = $mime->headers($this->headers);
-            debug_add("Headers after mime->headers\n===\n" . sprint_r($this->headers) . "===\n");
+            debug_add("Headers after mime->headers\n===\n" . org_openpsa_helpers::sprint_r($this->headers) . "===\n");
             // some MTAs manage to mangle multiline headers (RFC "folded"), here we make sure at least the content type is in single line
             $this->headers['Content-Type'] = preg_replace('/\s+/', ' ', $this->headers['Content-Type']);
-            debug_add("Headers after multiline fix\n===\n" . sprint_r($this->headers) . "===\n");
+            debug_add("Headers after multiline fix\n===\n" . org_openpsa_helpers::sprint_r($this->headers) . "===\n");
         }
 
         // Encode subject (if necessary) and set Content-Type (if not set already)
@@ -827,7 +827,7 @@ EOF;
         if (class_exists($classname))
         {
             $this->_backend = new $classname();
-            debug_add("backend is now\n===\n" . sprint_r($this->_backend) . "===\n");
+            debug_add("backend is now\n===\n" . org_openpsa_helpers::sprint_r($this->_backend) . "===\n");
             debug_pop();
             return true;
         }
@@ -981,7 +981,7 @@ EOF;
 
             $regExp_file = "/(.*\/|^)(.+?)$/";
             preg_match($regExp_file, $search['location'][$k], $match_file);
-            debug_add("match_file:\n===\n".sprint_r($match_file)."===\n");
+            debug_add("match_file:\n===\n".org_openpsa_helpers::sprint_r($match_file)."===\n");
             $search['filename'][$k] = $match_file[2];
 
             if (isset($embeds_data_cache[$search['location'][$k]]))
@@ -1137,7 +1137,7 @@ EOF;
         //Anything with SRC = "" something in it (images etc)
         $regExp_src = "/(src|background)=([\"'�])(((https?|ftp):\/\/)?(.*?))\\2/i";
         preg_match_all($regExp_src, $html, $matches_src);
-        debug_add("matches_src:\n===\n" . sprint_r($matches_src) . "===\n");
+        debug_add("matches_src:\n===\n" . org_openpsa_helpers::sprint_r($matches_src) . "===\n");
         $tmpArr = array();
         $tmpArr['whole']    = $matches_src[0];
         $tmpArr['uri']      = $matches_src[3];
@@ -1152,13 +1152,13 @@ EOF;
             //Anything with url() something in it (images etc)
             $regExp_url = "/url\s*\(([\"'�])?(((https?|ftp):\/\/)?(.*?))\\1?\)/i";
             preg_match_all($regExp_url, $html, $matches_url);
-            debug_add("matches_url:\n===\n" . sprint_r($matches_url) . "===\n");
+            debug_add("matches_url:\n===\n" . org_openpsa_helpers::sprint_r($matches_url) . "===\n");
             $tmpArr = array();
             $tmpArr['whole']    = $matches_url[0];
             $tmpArr['uri']      = $matches_url[2];
             $tmpArr['proto']    = $matches_url[3];
             $tmpArr['location'] = $matches_url[5];
-            debug_add("tmpArr:\n===\n" . sprint_r($tmpArr) . "===\n");
+            debug_add("tmpArr:\n===\n" . org_openpsa_helpers::sprint_r($tmpArr) . "===\n");
             list ($html, $embeds) = $this->_html_get_embeds_loop($obj, $html, $tmpArr, $embeds, 'url');
         }
 
@@ -1215,9 +1215,9 @@ EOF;
 
 }
 
-if (!function_exists('sprint_r')) 
+if (!function_exists('org_openpsa_helpers::sprint_r')) 
 {
-    function sprint_r($var) 
+    function org_openpsa_helpers::sprint_r($var) 
     {
         ob_start();
         print_r($var);

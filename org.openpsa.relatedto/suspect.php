@@ -111,7 +111,7 @@ class org_openpsa_relatedto_suspect extends midcom_baseclasses_components_pureco
             if ($id = $linkdata['link']->check_db(false))
             {
                 //Essentially same link already exists in db, remove from returned values
-                debug_add("found matching link with #{$id} (skipping), our data \n===\n" . sprint_r($linkdata['link']) . "===\n");
+                debug_add("found matching link with #{$id} (skipping), our data \n===\n" . org_openpsa_helpers::sprint_r($linkdata['link']) . "===\n");
                 unset($ret[$k]);
             }
         }

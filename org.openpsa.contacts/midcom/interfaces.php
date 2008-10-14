@@ -65,7 +65,7 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
         //mgd_debug_start();
         $results = $qb->execute($qb);
         //mgd_debug_stop();
-        debug_add("results for searching '__org_openpsa_contacts'\n===\n" . sprint_r($results) . "===\n");
+        debug_add("results for searching '__org_openpsa_contacts'\n===\n" . org_openpsa_helpers::sprint_r($results) . "===\n");
         if (   is_array($results)
             && count($results) > 0)
         {

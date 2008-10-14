@@ -217,7 +217,7 @@ class org_openpsa_contacts_duplicates_merge
                 || !isset($person2->$link_property)
                 || empty($person2->$link_property))
             {
-                debug_add("Problem with link_property on field {$field}, skipping. metadata_fields:\n===\n" . sprint_r($metadata_fields) . "===\n", MIDCOM_LOG_WARN);
+                debug_add("Problem with link_property on field {$field}, skipping. metadata_fields:\n===\n" . org_openpsa_helpers::sprint_r($metadata_fields) . "===\n", MIDCOM_LOG_WARN);
                 continue;
             }
             debug_add("About to add constraint: {$field}, '=', {$person2->$link_property} (class: {$class})");

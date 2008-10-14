@@ -537,7 +537,7 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
         //This shouldn't be needed
         $status->timestamp = org_openpsa_projects_task_status_dba::gmtime();
         $status->comment = $comment;
-        debug_add("about to create status\n===\n" . sprint_r($status) . "===\n");
+        debug_add("about to create status\n===\n" . org_openpsa_helpers::sprint_r($status) . "===\n");
 
         $ret = $status->create();
 
@@ -734,7 +734,7 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
             return false;
         }
         $resource_removed = false;
-        debug_add("task->resources: \n===\n" . sprint_r($this->resources) . "===\n");
+        debug_add("task->resources: \n===\n" . org_openpsa_helpers::sprint_r($this->resources) . "===\n");
         if (isset($this->resources[$_MIDGARD['user']]))
         {
             debug_add("removing user #{$_MIDGARD['user']} from resources");

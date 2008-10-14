@@ -36,7 +36,7 @@ class midcom_org_maemo_event extends org_openpsa_calendar_event
     function _prepare_save($ignorebusy_em = false, $rob_tentantive = false, $repeat_handler='this')
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Starting maemo preparations, this:\n---\n".sprint_r($this)."---", MIDCOM_LOG_DEBUG);
+        debug_add("Starting maemo preparations, this:\n---\n".org_openpsa_helpers::sprint_r($this)."---", MIDCOM_LOG_DEBUG);
 
         if (! is_array($this->participants))
         {
@@ -54,7 +54,7 @@ class midcom_org_maemo_event extends org_openpsa_calendar_event
             $this->participants = $participants;
         }
 
-        debug_add("Maemo preparations done, this:\n---\n".sprint_r($this)."---", MIDCOM_LOG_DEBUG);
+        debug_add("Maemo preparations done, this:\n---\n".org_openpsa_helpers::sprint_r($this)."---", MIDCOM_LOG_DEBUG);
 
         debug_pop();
         return parent::_prepare_save($ignorebusy_em, $rob_tentantive, $repeat_handler);
@@ -63,7 +63,7 @@ class midcom_org_maemo_event extends org_openpsa_calendar_event
     function return_as_dm2_hacked()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Starting dm2 hacking, this:\n---\n".sprint_r($this)."---", MIDCOM_LOG_DEBUG);
+        debug_add("Starting dm2 hacking, this:\n---\n".org_openpsa_helpers::sprint_r($this)."---", MIDCOM_LOG_DEBUG);
 
         if (is_array($this->participants))
         {
@@ -75,7 +75,7 @@ class midcom_org_maemo_event extends org_openpsa_calendar_event
             $this->participants = serialize($participants);
         }
 
-        debug_add("DM2 hacking done, this:\n---\n".sprint_r($this)."---", MIDCOM_LOG_DEBUG);
+        debug_add("DM2 hacking done, this:\n---\n".org_openpsa_helpers::sprint_r($this)."---", MIDCOM_LOG_DEBUG);
         debug_pop();
 
         return $this;

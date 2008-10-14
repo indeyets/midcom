@@ -150,7 +150,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         //Sort the array of links
         $this->_sort_link_array($this->_request_data['links']['in']);
 
-        //echo "        <p>DEBUG: links['in']<pre>\n" . sprint_r($this->_request_data['links']['in']) . "</pre></p>\n";
+        //echo "        <p>DEBUG: links['in']<pre>\n" . org_openpsa_helpers::sprint_r($this->_request_data['links']['in']) . "</pre></p>\n";
 
         foreach($this->_request_data['links']['in'] as $linkdata)
         {
@@ -184,7 +184,7 @@ class org_openpsa_relatedto_handler_relatedto extends midcom_baseclasses_compone
         //Sort the array of links
         $this->_sort_link_array($this->_request_data['links']['out']);
 
-        //echo "        <p>DEBUG: links['out']<pre>\n" . sprint_r($this->_request_data['links']['out']) . "</pre></p>\n";
+        //echo "        <p>DEBUG: links['out']<pre>\n" . org_openpsa_helpers::sprint_r($this->_request_data['links']['out']) . "</pre></p>\n";
 
         foreach($this->_request_data['links']['out'] as $linkdata)
         {

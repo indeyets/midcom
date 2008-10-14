@@ -566,7 +566,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
         // TODO: Refactor so that check for existence of parameter constraints first and then be smarter about the PHP constraints
         foreach ($constraints as $constraint)
         {
-            debug_add("checking constraint\n===\n" . sprint_r($constraint) . "===\n");
+            debug_add("checking constraint\n===\n" . org_openpsa_helpers::sprint_r($constraint) . "===\n");
             $storage = $this->_request_data['schemadb_product'][$this->_request_data['search_schema']]->fields[$constraint['property']]['storage'];
             if (   is_array($storage)
                 // Do not add constraint if it's all wildcards
@@ -688,7 +688,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
                 // in OR searches we must validate the actual values as well
                 elseif ($this->_request_data['search_type'] == 'OR')
                 {
-                    debug_add("calling this->_constraint_test_value(\$constraint, \$product->{$storage['location']})\n\$product->{$storage['location']}: {$product->$storage['location']}, \$constraint\n===\n" . sprint_r($constraint) . "===\n");
+                    debug_add("calling this->_constraint_test_value(\$constraint, \$product->{$storage['location']})\n\$product->{$storage['location']}: {$product->$storage['location']}, \$constraint\n===\n" . org_openpsa_helpers::sprint_r($constraint) . "===\n");
                     if ($this->_constraint_test_value($constraint, $product->$storage['location']))
                     {
                         $display_OR_tmp = true;

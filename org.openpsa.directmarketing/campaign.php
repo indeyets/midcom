@@ -251,7 +251,7 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
      */
     function _fix_serialization($data = null)
     {
-        return org_openpsa_helpers_fix_serialization($data);
+        return org_openpsa_helpers::fix_serialization($data);
     }
 
     /**
@@ -287,13 +287,13 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
         {
             $this->parameter('org.openpsa.directmarketing_smart_campaign', 'members_update_failed', time());
             debug_add('Failed to resolve rules', MIDCOM_LOG_ERROR);
-            debug_add("this->rules has value:\n===\n" . sprint_r($this->rules) . "===\n");
+            debug_add("this->rules has value:\n===\n" . org_openpsa_helpers::sprint_r($this->rules) . "===\n");
             debug_pop();
             $_MIDCOM->auth->drop_sudo();
             return false;
         }
         $rule_persons =  $solver->execute();
-        debug_add("solver->execute() returned with:\n===\n" . sprint_r($rule_persons) . "===\n");
+        debug_add("solver->execute() returned with:\n===\n" . org_openpsa_helpers::sprint_r($rule_persons) . "===\n");
         if (!is_array($rule_persons))
         {
             $this->parameter('org.openpsa.directmarketing_smart_campaign', 'members_update_failed', time());

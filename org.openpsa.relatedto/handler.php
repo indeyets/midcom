@@ -203,7 +203,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
     function common_request_switches(&$switch, $component)
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        //debug_add("request switch before\n===\n" . sprint_r($switch) . "===\n");
+        //debug_add("request switch before\n===\n" . org_openpsa_helpers::sprint_r($switch) . "===\n");
         $prefix = str_replace('.', '_', $component);
 
 
@@ -234,7 +234,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
             'variable_args' => 1,
             'handler' => Array($prefix . '_handler_relatedto', 'ajax'),
         );
-        //debug_add("request switch after\n===\n" . sprint_r($switch) . "===\n");
+        //debug_add("request switch after\n===\n" . org_openpsa_helpers::sprint_r($switch) . "===\n");
         debug_pop();
     }
 
@@ -319,7 +319,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
 
         foreach($buttons as $mode => $data)
         {
-            debug_add("processing button '{$mode}' with data:\n===\n" . sprint_r($data) . "===\n");
+            debug_add("processing button '{$mode}' with data:\n===\n" . org_openpsa_helpers::sprint_r($data) . "===\n");
             if ($data === false)
             {
                 //In case somebody didn't unset() a button from the defaults, just marked it as false

@@ -117,7 +117,7 @@
             'type'        => 'select',
             'type_config' => array
             (
-                'options' => org_openpsa_helpers_workgroups(),
+                'options' => org_openpsa_helpers_list::workgroups(),
             ),
             'widget'      => 'select',
         ),
