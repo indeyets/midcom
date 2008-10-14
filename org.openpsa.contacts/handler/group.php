@@ -440,8 +440,6 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
                 $_MIDCOM->auth->require_do('midgard:privileges', $this->_request_data['group']);
                 $group_object = $_MIDCOM->auth->get_group("group:{$this->_request_data['group']->guid}");
 
-                // Load project classes
-                $_MIDCOM->componentloader->load('org.openpsa.projects');
                 // Load campaign classes
                 $_MIDCOM->componentloader->load('org.openpsa.directmarketing');
 

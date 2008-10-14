@@ -23,10 +23,10 @@ class org_openpsa_imp_interface extends midcom_baseclasses_components_interface
             'viewer.php',
             'navigation.php'
         );
-        $this->_autoload_libraries = array(
+        $this->_autoload_libraries = array
+        (
             /*
             'org.openpsa.core',
-            'org.openpsa.helpers',
             */
             'midcom.helper.datamanager',
         );

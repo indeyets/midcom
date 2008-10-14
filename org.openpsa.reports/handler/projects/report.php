@@ -30,8 +30,6 @@ class org_openpsa_reports_handler_projects_report extends org_openpsa_reports_ha
 
     function _on_initialize()
     {
-        // We need sales classes etc here
-        $_MIDCOM->componentloader->load('org.openpsa.projects');
         $this->module = 'projects';
         $this->_initialize_datamanager1($this->module, $this->_config->get('schemadb_queryform_'. $this->module));
         return true;

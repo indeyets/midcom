@@ -367,7 +367,6 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
         {
             return false;
         }
-        $_MIDCOM->componentloader->load('org.openpsa.projects');
 
         $this->_request_data['sorted_reports'] = array
         (

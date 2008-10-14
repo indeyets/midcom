@@ -20,20 +20,10 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
         parent::__construct();
         $this->_component = 'org.openpsa.projects';
         $this->_autoload_class_definitions = array('midcom_dba_classes.inc');
-        $this->_autoload_files = array
-        (
-            /* 
-             * @todo The code using this is commented out (handler/task/view.php)
-             * 
-            'deliverables/interface.php',
-            'deliverables/plugin_base.php',
-            'deliverables/plugin_noop.php',
-            */
-        );
+        $this->_autoload_files = array();
         $this->_autoload_libraries = Array
         (
             'org.openpsa.core',
-            'org.openpsa.helpers',
             'midcom.helper.datamanager2',
         );
 

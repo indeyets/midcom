@@ -23,9 +23,9 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
         $this->_autoload_files = array(
             'sort_helper.php',
         );
-        $this->_autoload_libraries = array(
+        $this->_autoload_libraries = array
+        (
             'org.openpsa.core',
-            'org.openpsa.helpers',
             'midcom.helper.datamanager',
             'midcom.helper.datamanager2',
             'midcom.services.at',

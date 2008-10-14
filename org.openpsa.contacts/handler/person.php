@@ -483,10 +483,6 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                 $this->_datamanagers['acl']->_layoutdb['default']['fields']['contact_editing']['privilege_assignee'] = $user_object->id;
                 */
 
-                // Load project classes
-                $_MIDCOM->componentloader->load('org.openpsa.projects');
-                // Load invoice classes
-                $_MIDCOM->componentloader->load('org.openpsa.invoices');
                 // Load campaign classes
                 $_MIDCOM->componentloader->load('org.openpsa.directmarketing');
 

@@ -38,6 +38,7 @@
         'net.nemein.wiki' => array(),
         'net.nemein.tag' => array(),
         'org.openpsa.calendar' => array(),
+        'org.openpsa.helpers' => array(),
         'org.openpsa.projects' => array(),
         'org.openpsa.products' => array(),
         'org.openpsa.invoices' => array(),
