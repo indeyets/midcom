@@ -136,7 +136,8 @@ class org_openpsa_contacts_handler_buddy_list extends midcom_baseclasses_compone
         foreach ($buddies as $buddy)
         {
             $person = new org_openpsa_contacts_person_dba($buddy->buddy);
-            if ($person)
+            if (   $person
+                && $person->guid)
             {
                 $this->_request_data['buddylist'][] = $person;
             }
