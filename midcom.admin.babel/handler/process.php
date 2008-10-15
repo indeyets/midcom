@@ -450,7 +450,7 @@ class midcom_admin_babel_handler_process extends midcom_baseclasses_components_h
         $this->_request_data['view_strings'] = $view_strings;
 
         midgard_admin_asgard_plugin::asgard_header();
-        $this->_show_permission_check($handler_id, &$data);
+        $this->_show_permission_check($handler_id, $data);
         midcom_show_style('midcom_admin_babel_edit');
         midgard_admin_asgard_plugin::asgard_footer();
 
