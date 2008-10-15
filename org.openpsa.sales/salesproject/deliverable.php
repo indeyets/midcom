@@ -306,6 +306,7 @@ class org_openpsa_sales_salesproject_deliverable_dba extends __org_openpsa_sales
      */
     function new_subscription_cycle($cycle_number, $send_invoice = true)
     {
+        $_MIDCOM->load_library('midcom.services.at');
         if (time() < $this->start)
         {
             // Subscription hasn't started yet, register the start-up event to $start
@@ -571,6 +572,7 @@ class org_openpsa_sales_salesproject_deliverable_dba extends __org_openpsa_sales
 
     function get_at_entries()
     {
+        $_MIDCOM->load_library('midcom.services.at');
         $at_entries = array();
         $relation_qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
         $relation_qb->add_constraint('toGuid', '=', $this->guid);
