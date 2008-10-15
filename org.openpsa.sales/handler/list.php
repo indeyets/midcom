@@ -132,40 +132,40 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
             switch($_REQUEST['org_openpsa_sales_sort_by'])
             {
                 case 'title':
-                    uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_title');
+                    uasort($this->_request_data['salesprojects_dm'], array ('org_openpsa_sales_sort', 'by_title'));
                     break;
                 case 'value':
-                    uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_value');
+                    uasort($this->_request_data['salesprojects_dm'], array ('org_openpsa_sales_sort', 'by_value'));
                     break;
                 case 'profit':
-                    uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_profit');
+                    uasort($this->_request_data['salesprojects_dm'], array ('org_openpsa_sales_sort', 'by_profit'));
                     break;
                 case 'weighted_value':
-                    uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_weighted_value');
+                    uasort($this->_request_data['salesprojects_dm'], array ('org_openpsa_sales_sort', 'by_weighted_value'));
                     break;
                 case 'close_est':
-                    uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_close_est');
+                    uasort($this->_request_data['salesprojects_dm'], array ('org_openpsa_sales_sort', 'by_close_est'));
                     break;
                 case 'probability':
-                    uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_probability');
+                    uasort($this->_request_data['salesprojects_dm'], array ('org_openpsa_sales_sort', 'by_probability'));
                     break;
                 case 'prev_action':
                     $GLOBALS['org_openpsa_sales_project_map'] =& $this->_request_data['salesprojects_map_id_key'];
                     $GLOBALS['org_openpsa_sales_project_cache'] =& $this->_request_data['salesprojects'];
-                    uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_prev_action');
+                    uasort($this->_request_data['salesprojects_dm'], array ('org_openpsa_sales_sort', 'by_prev_action'));
                     break;
                 case 'next_action':
                     $GLOBALS['org_openpsa_sales_project_map'] =& $this->_request_data['salesprojects_map_id_key'];
                     $GLOBALS['org_openpsa_sales_project_cache'] =& $this->_request_data['salesprojects'];
-                    uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_next_action');
+                    uasort($this->_request_data['salesprojects_dm'], array ('org_openpsa_sales_sort', 'by_next_action'));
                     break;
                 case 'customer':
                     $GLOBALS['org_openpsa_sales_customer_cache'] =& $this->_request_data['customers'];
-                    uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_customer');
+                    uasort($this->_request_data['salesprojects_dm'], array ('org_openpsa_sales_sort', 'by_customer'));
                     break;
                 case 'owner':
                     $GLOBALS['org_openpsa_sales_owner_cache'] =& $this->_request_data['owners'];
-                    uasort($this->_request_data['salesprojects_dm'], 'org_openpsa_sales_sort_by_owner');
+                    uasort($this->_request_data['salesprojects_dm'], array ('org_openpsa_sales_sort', 'by_owner'));
                     break;
                 default:
                     debug_add("Sort {$_REQUEST['org_openpsa_sales_sort_by']} is not supported", MIDCOM_LOG_WARN);

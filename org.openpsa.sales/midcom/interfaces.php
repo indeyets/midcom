@@ -20,10 +20,7 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
         parent::__construct();
 
         $this->_component = 'org.openpsa.sales';
-        $this->_autoload_files = array
-        (
-            'sort_helper.php',
-        );
+        $this->_autoload_files = array();
         $this->_autoload_libraries = array
         (
             'org.openpsa.core',

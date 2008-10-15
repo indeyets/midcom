@@ -8,16 +8,16 @@
     <table id="org_openpsa_sales_activeprojects" class="salesprojects">
         <thead>
             <tr>
-                <?php echo org_openpsa_sales_sort_link('title', $data['l10n']->get('title')); ?>
-                <?php echo org_openpsa_sales_sort_link('customer', $data['l10n']->get('customer')); ?>
-                <?php echo org_openpsa_sales_sort_link('owner', $data['l10n']->get('owner')); ?>
-                <?php echo org_openpsa_sales_sort_link('close_est', $data['l10n']->get('estimated closing date')); ?>
-                <?php echo org_openpsa_sales_sort_link('probability', $data['l10n']->get('probability')); ?>
-                <?php echo org_openpsa_sales_sort_link('value', $data['l10n']->get('value')); ?>
-                <?php echo org_openpsa_sales_sort_link('weighted_value', $data['l10n']->get('weighted value')); ?>
-                <?php echo org_openpsa_sales_sort_link('profit', $data['l10n']->get('profit')); ?>
-                <?php echo org_openpsa_sales_sort_link('prev_action', $data['l10n']->get('previous action')); ?>
-                <?php echo org_openpsa_sales_sort_link('next_action', $data['l10n']->get('next action')); ?>
+                <?php echo org_openpsa_sales_sort::link('title', $data['l10n']->get('title')); ?>
+                <?php echo org_openpsa_sales_sort::link('customer', $data['l10n']->get('customer')); ?>
+                <?php echo org_openpsa_sales_sort::link('owner', $data['l10n']->get('owner')); ?>
+                <?php echo org_openpsa_sales_sort::link('close_est', $data['l10n']->get('estimated closing date')); ?>
+                <?php echo org_openpsa_sales_sort::link('probability', $data['l10n']->get('probability')); ?>
+                <?php echo org_openpsa_sales_sort::link('value', $data['l10n']->get('value')); ?>
+                <?php echo org_openpsa_sales_sort::link('weighted_value', $data['l10n']->get('weighted value')); ?>
+                <?php echo org_openpsa_sales_sort::link('profit', $data['l10n']->get('profit')); ?>
+                <?php echo org_openpsa_sales_sort::link('prev_action', $data['l10n']->get('previous action')); ?>
+                <?php echo org_openpsa_sales_sort::link('next_action', $data['l10n']->get('next action')); ?>
             </tr>
         </thead>
         <tbody>
