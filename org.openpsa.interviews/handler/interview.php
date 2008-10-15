@@ -123,7 +123,7 @@ class org_openpsa_interviews_handler_interview extends midcom_baseclasses_compon
         {
             case 'save':
                 // Redirect to next interviewee
-                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "next/{$this->_request_data['campaign']->guid}.html");
+                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "next/{$this->_request_data['campaign']->guid}/");
                 // This will exit.
 
             case 'cancel':
@@ -131,7 +131,7 @@ class org_openpsa_interviews_handler_interview extends midcom_baseclasses_compon
                 $this->_member->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER;
                 $this->_member->update();
 
-                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "campaign/{$this->_request_data['campaign']->guid}.html");
+                $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "campaign/{$this->_request_data['campaign']->guid}/");
                 // This will exit.
         }
 

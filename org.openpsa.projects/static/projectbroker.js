@@ -19,7 +19,7 @@ project_prospects_renderer.prototype = {
 
     get_prospect_list: function()
     {
-        url = this.base_url + 'task/resourcing/prospects/' + this.task_guid + '.html';
+        url = this.base_url + 'task/resourcing/prospects/' + this.task_guid + '/';
         Element.removeClassName(this.element, 'project_prospects_renderer_search_ok');
         Element.removeClassName(this.element, 'project_prospects_renderer_search_fail');
         /* Set the class which should give us a "loading" icon */
@@ -60,7 +60,7 @@ project_prospects_renderer.prototype = {
         {
             return;
         }
-        url = this.base_url + 'task/resourcing/prospect/' + prospect + '.html';
+        url = this.base_url + 'task/resourcing/prospect/' + prospect + '/';
         new Insertion.Bottom(this.element, '<li id="prospect_' + prospect + '" class="project_prospects_renderer_searching">' + label + '</li>');
         /* new Insertion.Bottom(this.element, '<li id="prospect_' + prospect + '" class="project_prospects_renderer_searching" style="display: none;">' + label + '</li>'); */
         /* todo: use blinddown, etc to make the ui less jumpy */

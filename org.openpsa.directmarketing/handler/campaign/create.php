@@ -195,7 +195,7 @@ class org_openpsa_directmarketing_handler_campaign_create extends midcom_basecla
 
         $tmp[] = array
         (
-            MIDCOM_NAV_URL => "create/{$this->_schema}.html",
+            MIDCOM_NAV_URL => "create/{$this->_schema}/",
             MIDCOM_NAV_NAME => sprintf($this->_l10n_midcom->get('create %s'), $this->_l10n->get($this->_schemadb[$this->_schema]->description)),
         );
 

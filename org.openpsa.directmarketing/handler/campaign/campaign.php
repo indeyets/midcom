@@ -142,7 +142,7 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
             (
                 array
                 (
-                    MIDCOM_TOOLBAR_URL => "message/create/{$this->_campaign->guid}/{$name}.html",
+                    MIDCOM_TOOLBAR_URL => "message/create/{$this->_campaign->guid}/{$name}/",
                     MIDCOM_TOOLBAR_LABEL => sprintf($this->_l10n->get('new %s'), $this->_l10n->get($schema->description)),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/' . org_openpsa_directmarketing_viewer::get_messagetype_icon($schema->customdata['org_openpsa_directmarketing_messagetype']),
                     MIDCOM_TOOLBAR_ENABLED => $this->_campaign->can_do('midgard:create'),

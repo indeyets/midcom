@@ -388,7 +388,7 @@ class org_openpsa_directmarketing_viewer extends midcom_baseclasses_components_r
                 (
                     array
                     (
-                        MIDCOM_TOOLBAR_URL => "campaign/create/{$name}.html",
+                        MIDCOM_TOOLBAR_URL => "campaign/create/{$name}/",
                         MIDCOM_TOOLBAR_LABEL => sprintf
                         (
                             $this->_l10n_midcom->get('create %s'),

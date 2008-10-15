@@ -284,7 +284,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
 
             $this->_toolbars->bottom->add_item(
                 Array(
-                    MIDCOM_TOOLBAR_URL => "person/{$this->_request_data['person']->guid}/privileges.html",
+                    MIDCOM_TOOLBAR_URL => "person/{$this->_request_data['person']->guid}/privileges/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get("permissions"),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png', // TODO: Get better icon
@@ -297,7 +297,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                 (
                     Array
                     (
-                        MIDCOM_TOOLBAR_URL => "person/{$this->_request_data['person']->guid}/account_edit.html",
+                        MIDCOM_TOOLBAR_URL => "person/{$this->_request_data['person']->guid}/account_edit/",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('edit account'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
@@ -309,7 +309,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
             {
                 $this->_toolbars->bottom->add_item(
                     Array(
-                        MIDCOM_TOOLBAR_URL => "person/{$this->_request_data['person']->guid}/account_create.html",
+                        MIDCOM_TOOLBAR_URL => "person/{$this->_request_data['person']->guid}/account_create/",
                         MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('create account'),
                         MIDCOM_TOOLBAR_HELPTEXT => null,
                         MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
@@ -615,7 +615,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                 {
                     // Account needs to be created first, relocate
                     $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-                    $_MIDCOM->relocate($prefix."person/".$this->_request_data['person']->guid."/account_create.html");
+                    $_MIDCOM->relocate($prefix."person/".$this->_request_data['person']->guid."/account_create/");
                 }
 
                 $this->_view = "area_person_account_edit";

@@ -37,12 +37,12 @@ class org_openpsa_contacts_navigation extends midcom_baseclasses_components_navi
             (
                 MIDCOM_NAV_SITE => array
                 (
-                    MIDCOM_NAV_URL => "duplicates/person.html",
+                    MIDCOM_NAV_URL => "duplicates/person/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('merge persons'),
                 ),
                 MIDCOM_NAV_ADMIN => array
                 (
-                    MIDCOM_NAV_URL => "duplicates/person.html",
+                    MIDCOM_NAV_URL => "duplicates/person/",
                     MIDCOM_NAV_NAME => $this->_l10n->get('merge persons'),
                 ),
                 MIDCOM_NAV_GUID => false,

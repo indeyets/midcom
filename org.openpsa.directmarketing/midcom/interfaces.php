@@ -278,7 +278,7 @@ class org_openpsa_directmarketing_interface extends midcom_baseclasses_component
                 debug_add("Message created from forum post #{$post->id} \"{$post->subject}\"");
 
                 // TODO: Now we should actually send the message
-                $sending_url = $directmarketing_node[MIDCOM_NAV_RELATIVEURL]."message/{$message->guid}/send.html";
+                $sending_url = $directmarketing_node[MIDCOM_NAV_RELATIVEURL]."message/{$message->guid}/send/";
 
                 debug_add("START SEND TO URL {$sending_url}");
                 $_MIDCOM->auth->request_sudo();

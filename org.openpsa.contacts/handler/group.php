@@ -255,7 +255,7 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
 
             $this->_view_toolbar->add_item(
                 Array(
-                    MIDCOM_TOOLBAR_URL => "group/{$this->_request_data['group']->guid}/notifications.html",
+                    MIDCOM_TOOLBAR_URL => "group/{$this->_request_data['group']->guid}/notifications/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get("notification settings"),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_help-agent.png',
@@ -265,7 +265,7 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
 
             $this->_view_toolbar->add_item(
                 Array(
-                    MIDCOM_TOOLBAR_URL => "group/{$this->_request_data['group']->guid}/privileges.html",
+                    MIDCOM_TOOLBAR_URL => "group/{$this->_request_data['group']->guid}/privileges/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get("permissions"),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/repair.png', // TODO: Get better icon

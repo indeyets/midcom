@@ -89,7 +89,7 @@ class org_openpsa_reports_viewer extends midcom_baseclasses_components_request
         /*
         //Add icon for user settings
         $GLOBALS['org_openpsa_core_toolbar']->add_item(Array(
-            MIDCOM_TOOLBAR_URL => 'settings.html',
+            MIDCOM_TOOLBAR_URL => 'settings/',
             MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('settings'),
             MIDCOM_TOOLBAR_HELPTEXT => null,
             MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',

@@ -8,7 +8,7 @@ $node = $nap->get_node($nap->get_current_node());
         <h2><?php echo $data['l10n']->get('org.openpsa.jabber'); ?></h2>
 
         <p>
-            <a href="#" onclick="window.open('<?php echo $node[MIDCOM_NAV_FULLURL]; ?>applet.html','JabberApplet','width=200,height=300,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no');"><?php echo $data['l10n']->get('open jabber applet'); ?></a>
+            <a href="#" onclick="window.open('<?php echo $node[MIDCOM_NAV_FULLURL]; ?>applet/','JabberApplet','width=200,height=300,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no');"><?php echo $data['l10n']->get('open jabber applet'); ?></a>
         </p>
     </div>
 </div>

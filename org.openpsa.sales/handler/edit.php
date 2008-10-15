@@ -271,7 +271,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
 
                 // Relocate to main view
                 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-                $_MIDCOM->relocate($prefix."salesproject/edit/".$this->_request_data['salesproject']->guid.".html");
+                $_MIDCOM->relocate($prefix."salesproject/edit/" . $this->_request_data['salesproject']->guid . "/");
                 break;
 
             case MIDCOM_DATAMGR_SAVED:
@@ -282,7 +282,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
 
                 // Relocate to main view
                 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
-                $_MIDCOM->relocate($prefix."salesproject/edit/".$this->_request_data['salesproject']->guid.".html");
+                $_MIDCOM->relocate($prefix."salesproject/edit/" . $this->_request_data['salesproject']->guid . "/");
                 break;
 
             case MIDCOM_DATAMGR_CANCELLED_NONECREATED:

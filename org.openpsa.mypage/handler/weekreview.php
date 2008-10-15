@@ -27,7 +27,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
     function _handler_redirect($handler_id, $args, &$data)
     {
         $date = date('Y-m-d', time());
-        $_MIDCOM->relocate("weekreview/{$date}.html");
+        $_MIDCOM->relocate("weekreview/{$date}/");
     }
 
     function _calculate_week()
@@ -54,7 +54,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "weekreview/{$prev_week}.html",
+                MIDCOM_TOOLBAR_URL => "weekreview/{$prev_week}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('previous'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/up.png',
@@ -65,7 +65,7 @@ class org_openpsa_mypage_handler_weekreview extends midcom_baseclasses_component
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "weekreview/{$next_week}.html",
+                MIDCOM_TOOLBAR_URL => "weekreview/{$next_week}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('next'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/down.png',

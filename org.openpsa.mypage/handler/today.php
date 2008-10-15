@@ -58,7 +58,7 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "day/{$prev_day}.html",
+                MIDCOM_TOOLBAR_URL => "day/{$prev_day}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('previous'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/up.png',
@@ -69,7 +69,7 @@ class org_openpsa_mypage_handler_today extends midcom_baseclasses_components_han
         (
             array
             (
-                MIDCOM_TOOLBAR_URL => "day/{$next_day}.html",
+                MIDCOM_TOOLBAR_URL => "day/{$next_day}/",
                 MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('next'),
                 MIDCOM_TOOLBAR_HELPTEXT => null,
                 MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/down.png',

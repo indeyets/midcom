@@ -132,7 +132,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
         if (   $resource
             && $start)
         {
-            $url = "{$node[MIDCOM_NAV_FULLURL]}event/new/{$resource}/{$start}.html";
+            $url = "{$node[MIDCOM_NAV_FULLURL]}event/new/{$resource}/{$start}/";
         }
         else if ($resource)
         {

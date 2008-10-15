@@ -61,13 +61,17 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
         debug_push_class(__CLASS__, __FUNCTION__);
 
         //Add icon for user settings
-        $this->_toolbars->bottom->add_item(Array(
-            MIDCOM_TOOLBAR_URL => 'settings.html',
-            MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('settings'),
-            MIDCOM_TOOLBAR_HELPTEXT => null,
-            MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
-            MIDCOM_TOOLBAR_ENABLED => true
-        ));
+        $this->_toolbars->bottom->add_item
+        (
+            array
+            (
+                MIDCOM_TOOLBAR_URL => 'settings/',
+                MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('settings'),
+                MIDCOM_TOOLBAR_HELPTEXT => null,
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
+                MIDCOM_TOOLBAR_ENABLED => true
+            )
+        );
 
         debug_pop();
         return true;
@@ -326,7 +330,7 @@ class org_openpsa_imp_viewer extends midcom_baseclasses_components_request
             debug_add("Horde/Imp settings incomplete, redirecting to settings page.");
             debug_pop();
             $_MIDCOM->relocate( $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                                . 'settings.html');
+                                . 'settings/');
             //This will exit
         }
 

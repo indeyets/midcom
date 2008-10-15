@@ -46,7 +46,7 @@ if ($data['even'])
         if ($_MIDCOM->auth->can_do('midgard:update', $data['invoice'])
         && isset($data['next_marker']))
         {
-            $next_marker_url = $prefix . "invoice/mark_" . $data['next_marker'] . "/" . $data['invoice']->guid . ".html";
+            $next_marker_url = $prefix . "invoice/mark_" . $data['next_marker'] . "/" . $data['invoice']->guid . "/";
             $next_marker_url .= "?org_openpsa_invoices_redirect=" . urlencode($_SERVER['PHP_SELF']);
             ?>
             <form method="post" action="&(next_marker_url);">

@@ -114,7 +114,7 @@ class org_openpsa_contacts_handler_person_view extends midcom_baseclasses_compon
             (
                 Array
                 (
-                    MIDCOM_TOOLBAR_URL => "person/{$this->_request_data['person']->guid}/account_edit.html",
+                    MIDCOM_TOOLBAR_URL => "person/{$this->_request_data['person']->guid}/account_edit/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('edit account'),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
@@ -127,7 +127,7 @@ class org_openpsa_contacts_handler_person_view extends midcom_baseclasses_compon
             $this->_view_toolbar->add_item
             (
                 Array(
-                    MIDCOM_TOOLBAR_URL => "person/{$this->_request_data['person']->guid}/account_create.html",
+                    MIDCOM_TOOLBAR_URL => "person/{$this->_request_data['person']->guid}/account_create/",
                     MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n']->get('create account'),
                     MIDCOM_TOOLBAR_HELPTEXT => null,
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/properties.png',
