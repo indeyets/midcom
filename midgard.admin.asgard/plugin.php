@@ -481,7 +481,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
         {
             // These toolbars only work with DBA objects as they do ACL checks
             $_MIDCOM->bind_view_to_object($object);
-            $data['asgard_toolbar'] = midgard_admin_asgard_plugin::get_object_toolbar($object, $handler_id, &$data);
+            $data['asgard_toolbar'] = midgard_admin_asgard_plugin::get_object_toolbar($object, $handler_id, $data);
         }
 
         midgard_admin_asgard_plugin::get_common_toolbar($data);
@@ -581,7 +581,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
     {
         $toolbar = new midcom_helper_toolbar();
 
-        midgard_admin_asgard_plugin::get_default_mode(&$data);
+        midgard_admin_asgard_plugin::get_default_mode($data);
 
         // Show view toolbar button, if the user hasn't configured to use straight the edit mode
         if ($data['default_mode'] === 'view')

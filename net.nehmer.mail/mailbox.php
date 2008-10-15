@@ -450,7 +450,7 @@ class net_nehmer_mail_mailbox extends __net_nehmer_mail_mailbox
             // This will exit.
         }
 
-        $mail->deliver_to(&$this->owner);
+        $mail->deliver_to($this->owner);
 
         debug_pop();
     }

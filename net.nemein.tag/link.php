@@ -160,7 +160,7 @@ class net_nemein_tag_link_dba extends __net_nemein_tag_link_dba
 
         // Get all "geo" tags of the object
         $object = $_MIDCOM->dbfactory->get_object_by_guid($this->fromGuid);
-        $geotags = net_nemein_tag_handler::get_object_machine_tags_in_context(&$object, 'geo');
+        $geotags = net_nemein_tag_handler::get_object_machine_tags_in_context($object, 'geo');
 
         $position = array
         (

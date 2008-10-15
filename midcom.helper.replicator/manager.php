@@ -116,7 +116,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
 
         $this->_load_schemadb();
 
-        midgard_admin_asgard_plugin::prepare_plugin('', &$this->_request_data);
+        midgard_admin_asgard_plugin::prepare_plugin('', $this->_request_data);
         foreach (array_keys($this->_schemadb) as $name)
         {
             if (preg_match('/midcom.helper.replicator\/create\//', $_MIDGARD['uri']))
@@ -469,7 +469,7 @@ class midcom_helper_replicator_manager extends midcom_baseclasses_components_han
         }
 
         $data['language_code'] = '';
-        midgard_admin_asgard_plugin::bind_to_object($data['object'], $handler_id, &$data);
+        midgard_admin_asgard_plugin::bind_to_object($data['object'], $handler_id, $data);
 
         $data['view_title'] = sprintf($_MIDCOM->i18n->get_string('replication information for %s', 'midcom.helper.replicator'), $this->_resolve_object_title($data['object']));
         $_MIDCOM->set_pagetitle($data['view_title']);

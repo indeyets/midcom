@@ -509,7 +509,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
             //$GLOBALS['midcom_helper_replicator_logger']->log("File {$item_path} removed from queue \"{$subscription->title}\"");
             unset($items_paths[$item_key]);
         }
-        $this->_quarantine_items(&$q_items, &$items_paths, &$subscription);
+        $this->_quarantine_items($q_items, $items_paths, $subscription);
         unset($q_items);
         // Restore to original value
         set_time_limit(ini_get('max_execution_time'));

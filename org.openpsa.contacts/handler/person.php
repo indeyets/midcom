@@ -48,13 +48,13 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
         // Add the DBE settings field
         if ($this->_request_data['enable_dbe'])
         {
-            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'description', 'dbe service id');
-            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'datatype', 'text');
-            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'location', 'config');
-            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'config_domain', 'org.openpsa.dbe');
-            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'config_key', 'serviceID');
-            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'start_fieldgroup', Array('title' => $this->_request_data['l10n']->get('digital business ecosystem')));
-            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'end_fieldgroup', '');
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['person'], 'dbe_service_id', 'description', 'dbe service id');
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['person'], 'dbe_service_id', 'datatype', 'text');
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['person'], 'dbe_service_id', 'location', 'config');
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['person'], 'dbe_service_id', 'config_domain', 'org.openpsa.dbe');
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['person'], 'dbe_service_id', 'config_key', 'serviceID');
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['person'], 'dbe_service_id', 'start_fieldgroup', Array('title' => $this->_request_data['l10n']->get('digital business ecosystem')));
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['person'], 'dbe_service_id', 'end_fieldgroup', '');
         }
 
         // Load the group to datamanager
@@ -417,7 +417,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
     {
         if ($handler_id == 'person_view')
         {
-            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['person'], 'dbe_service_id', 'hidden', true);
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['person'], 'dbe_service_id', 'hidden', true);
             $this->_request_data['person_dm'] = $this->_datamanagers['person'];
             midcom_show_style("show-person");
         }
@@ -440,7 +440,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
         debug_add("Person action handler called");
 
         // Check if we get the person
-        if (!$this->_handler_person($handler_id, $args, &$data))
+        if (!$this->_handler_person($handler_id, $args, $data))
         {
             debug_add("Person handler failed");
             debug_pop();

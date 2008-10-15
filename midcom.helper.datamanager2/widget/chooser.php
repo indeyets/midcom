@@ -1506,7 +1506,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 return $results;
             }
 
-            return $this->_object_to_jsdata(&$results);
+            return $this->_object_to_jsdata($results);
         }
 
         // debug_add("Using clever class or predefined class");
@@ -1561,7 +1561,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
 
         if ($in_render_mode)
         {
-            return $this->_resolve_object_name(&$object);
+            return $this->_resolve_object_name($object);
         }
 
         if ($this->_renderer_callback)
@@ -1569,7 +1569,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             return $object;
         }
 
-        return $this->_object_to_jsdata(&$object);
+        return $this->_object_to_jsdata($object);
     }
 
     /**

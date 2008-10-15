@@ -89,7 +89,7 @@ class midcom_helper_xml_toarray
      * Push an element to the stack
      * @access private
      */
-    function _push_pos(& $pos)
+    function _push_pos(&$pos)
     {
         $this->_stack[count($this->_stack)] = & $pos;
         $this->_stack_ref = & $pos;
@@ -118,7 +118,7 @@ class midcom_helper_xml_toarray
         xml_parser_set_option($this->_parser, XML_OPTION_CASE_FOLDING, 0);
         xml_set_character_data_handler($this->_parser, "_tag_data");
 
-        $this->_push_pos(& $this->_output);
+        $this->_push_pos($this->_output);
 
         // Hide newlines from XML parser
         $xml = str_replace("\n", 'MIDCOM_HELPER_XML_NEWLINE', $xml);
@@ -173,16 +173,17 @@ class midcom_helper_xml_toarray
             }
             $this->_stack_ref[$name][$cnt]['_content'] ="";
 
-            $this->_push_pos(& $this->_stack_ref[$name][$cnt]);
+            $this->_push_pos($this->_stack_ref[$name][$cnt]);
         }
         else
         {
             $this->_stack_ref[$name] = array ('_content' => '');
-            if (isset ($attrs) && count($attrs) > 0)
+            if (   isset ($attrs) 
+                && count($attrs) > 0)
             {
                 $this->_stack_ref[$name]['attributes'] = $attrs;
             }
-            $this->_push_pos(& $this->_stack_ref[$name]);
+            $this->_push_pos($this->_stack_ref[$name]);
         }
     }
     /**

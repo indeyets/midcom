@@ -550,7 +550,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
         foreach($pluginargs as $k => $intanceargs)
         {
             unset($intanceargs);
-            $this->_filter_callback_real(&$serializations, &$pluginargs[$k]);
+            $this->_filter_callback_real($serializations, $pluginargs[$k]);
         }
     }
 

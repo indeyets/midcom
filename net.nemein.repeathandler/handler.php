@@ -140,7 +140,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             */
 
             // Copy properties
-            $this->_copy_event_properties(&$event);
+            $this->_copy_event_properties($event);
 
             // Return GUID for usage in next event
             $event = $this->_get_object($event->guid);
