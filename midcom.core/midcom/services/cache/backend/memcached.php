@@ -66,7 +66,7 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
     /**
      * Whether memcached is working
      */
-    var $_memcache_operational = true;
+    static $memcache_operational = true;
 
     /**
      * The constructor is empty yet.
@@ -98,7 +98,11 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
         if (is_null(self::$memcache))
         {
             self::$memcache = new Memcache();
-            if (! @self::$memcache->pconnect($this->_host, $this->_port))
+            try
+            {
+                self::$memcache_operational = @self::$memcache->pconnect($this->_host, $this->_port);
+            }
+            catch (Exception $e)
             {
                 // Memcache connection failed
                 if ($this->_abort_on_fail)
@@ -113,15 +117,15 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
                     header('Cache-Control: no-store, no-cache, must-revalidate');
                     header('Cache-Control: post-check=0, pre-check=0', false);
                     header('Pragma: no-cache');
-                    die("memcache handler: Failed to connect to {$this->_host}:{$this->_port}.");
+                    die("memcache handler: Failed to connect to {$this->_host}:{$this->_port}. " . $e->getMessage());
                     // This will exit.
                 }
                 
                 // Otherwise we just skip caching
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("memcache handler: Failed to connect to {$this->_host}:{$this->_port}. Serving this request without cache.", MIDCOM_LOG_ERROR);
+                debug_add("memcache handler: Failed to connect to {$this->_host}:{$this->_port}. " . $e->getMessage() . ". Serving this request without cache.", MIDCOM_LOG_ERROR);
                 debug_pop();
-                $this->_memcache_operational = false;
+                self::$memcache_operational = false;
             }
         }
 
@@ -145,7 +149,7 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
 
     function _get($key)
     {
-        if (!$this->_memcache_operational)
+        if (!self::$memcache_operational)
         {
             return;
         }
@@ -161,7 +165,7 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
 
     function _put($key, $data, $timeout=false)
     {
-        if (!$this->_memcache_operational)
+        if (!self::$memcache_operational)
         {
             return;
         }
@@ -187,7 +191,7 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
 
     function _remove($key)
     {
-        if (!$this->_memcache_operational)
+        if (!self::$memcache_operational)
         {
             return;
         }
@@ -203,7 +207,7 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
 
     function _remove_all()
     {
-        if (!$this->_memcache_operational)
+        if (!self::$memcache_operational)
         {
             return;
         }
@@ -220,7 +224,7 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
      */
     function _exists($key)
     {
-        if (!$this->_memcache_operational)
+        if (!self::$memcache_operational)
         {
             return false;
         }
