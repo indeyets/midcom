@@ -135,7 +135,7 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
             $_MIDCOM->auth->require_do('midgard:create', $this->_request_data['parent_group']);
 
             // Set the default type to "department"
-            org_openpsa_helpers::schema_modifier(&$this->_datamanagers['group'], 'object_type', 'default', ORG_OPENPSA_OBTYPE_DEPARTMENT, 'newgroup', false);
+            org_openpsa_helpers::schema_modifier($this->_datamanagers['group'], 'object_type', 'default', ORG_OPENPSA_OBTYPE_DEPARTMENT, 'newgroup', false);
         }
         else
         {
@@ -385,7 +385,7 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
     {
         $_MIDCOM->auth->require_valid_user();
         // Check if we get the group
-        if (!$this->_handler_view($handler_id, $args, &$data))
+        if (!$this->_handler_view($handler_id, $args, $data))
         {
             return false;
         }
@@ -445,7 +445,7 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
 
                 // Get the calendar root event
                 $_MIDCOM->componentloader->load('org.openpsa.calendar');
-                org_openpsa_helpers::schema_modifier(&$this->_datamanagers['acl'], 'calendar', 'privilege_object', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']);
+                org_openpsa_helpers::schema_modifier($this->_datamanagers['acl'], 'calendar', 'privilege_object', $GLOBALS['midcom_component_data']['org.openpsa.calendar']['calendar_root_event']);
 
                 // Set the contacts root group into ACL
                 /* The persons are not necessarily under the root group...

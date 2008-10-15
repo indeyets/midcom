@@ -92,7 +92,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
     {
         $_MIDCOM->auth->require_valid_user();
         // Check if we get the document
-        if (!$this->_handler_view($handler_id, $args, &$data, false))
+        if (!$this->_handler_view($handler_id, $args, $data, false))
         {
             return false;
         }

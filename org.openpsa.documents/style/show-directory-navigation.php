@@ -39,7 +39,7 @@ if (class_exists('HTML_TreeMenu'))
             foreach ($subnodes as $subnode_id)
             {
                 $subnode = $nap->get_node($subnode_id);
-                $subnode_menu_[$subnode_id] = org_openpsa_documents_build_treemenu($subnode_id, &$nap, $nodes_array);
+                $subnode_menu_[$subnode_id] = org_openpsa_documents_build_treemenu($subnode_id, $nap, $nodes_array);
                 if ($subnode_menu_[$subnode_id])
                 {
                     $node_menu->additem($subnode_menu_[$subnode_id]);
@@ -82,7 +82,7 @@ if (class_exists('HTML_TreeMenu'))
         foreach ($toplevel_nodes as $toplevel_node_id)
         {
             $toplevel_node = $nap->get_node($toplevel_node_id);
-            $toplevel_node_menu_[$toplevel_node_id] = org_openpsa_documents_build_treemenu($toplevel_node_id, &$nap, $nodes);
+            $toplevel_node_menu_[$toplevel_node_id] = org_openpsa_documents_build_treemenu($toplevel_node_id, $nap, $nodes);
             if ($toplevel_node_menu_[$toplevel_node_id])
             {
                 $menu->additem($toplevel_node_menu_[$toplevel_node_id]);
