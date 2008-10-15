@@ -269,7 +269,13 @@ class org_openpsa_calendar_viewer extends midcom_baseclasses_components_request
      */
     function _handler_notinitialized($handler_id, $args, &$data)
     {
-        $_MIDCOM->auth->require_valid_user();
+        $_MIDCOM->auth->require_admin_user();
+        
+        if ($this->create_root_event())
+        {
+            $_MIDCOM->relocate('');
+        }
+        
         return true;
     }
 
