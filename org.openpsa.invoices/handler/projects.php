@@ -39,7 +39,7 @@ class org_openpsa_invoices_handler_projects extends midcom_baseclasses_component
                     $invoiceable_hours += $hour_report->hours;
                 }
                 $invoice->description .= "{$task->title}: {$invoiceable_hours}\n";
-                $invoice->sum += $_POST['org_openpsa_invoices_invoice_tasks_price'][$task_id];
+                $invoice->sum += (float) $_POST['org_openpsa_invoices_invoice_tasks_price'][$task_id];
             }
         }
 
