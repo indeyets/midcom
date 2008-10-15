@@ -561,8 +561,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                     else
                     {
                         // Failure, give a message
-                        $messagebox = new org_openpsa_helpers_uimessages();
-                        $messagebox->addMessage($this->_request_data['l10n']->get("failed to create user account, reason ").mgd_errstr(), 'error');
+                        $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.contacts'), $this->_request_data['l10n']->get("failed to create user account, reason ").mgd_errstr(), 'error');
                     }
                 }
 
@@ -629,8 +628,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                     // Check that the inputted passwords match
                     if ($_POST['org_openpsa_contacts_person_account_newpassword'] != $_POST['org_openpsa_contacts_person_account_newpassword2'])
                     {
-                        $messagebox = new org_openpsa_helpers_uimessages();
-                        $messagebox->addMessage($this->_request_data['l10n']->get("passwords don't match"), 'error');
+                        $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.contacts'), $this->_request_data['l10n']->get("passwords don't match"), 'error');
                     }
                     else
                     {
@@ -649,8 +647,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                         else
                         {
                             // Failure, give a message
-                            $messagebox = new org_openpsa_helpers_uimessages();
-                            $messagebox->addMessage($this->_request_data['l10n']->get("failed to update user account, reason ").mgd_errstr(), 'error');
+                            $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.contacts'), $this->_request_data['l10n']->get("failed to update user account, reason ").mgd_errstr(), 'error');
                         }
                     }
                 }

@@ -62,7 +62,6 @@ class org_openpsa_calendar_handler_create extends midcom_baseclasses_components_
      */
     function _event_resourceconflict_messages(&$conflict_event)
     {
-        $messenger = new org_openpsa_helpers_uimessages();
         reset($conflict_event->busy_em);
         foreach ($conflict_event->busy_em as $pid => $events)
         {
@@ -88,8 +87,7 @@ class org_openpsa_calendar_handler_create extends midcom_baseclasses_components_
                 //Then on_loaded checks again
                 $event->_on_loaded();
                 debug_add("{$person->name} is busy in event {$event->title}, appending error\n===\n".sprintf('%s is busy in event "%s" (%s)', $person->name, $event->title, $event->format_timeframe())."\n===\n");
-                //TODO: Localize
-                $messenger->addMessage(sprintf($this->_request_data['l10n']->get('%s is busy in event \'%s\' (%s)'), $person->name, $event->title, $event->format_timeframe()), 'error');
+                $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.calendar'), sprintf($this->_request_data['l10n']->get('%s is busy in event \'%s\' (%s)'), $person->name, $event->title, $event->format_timeframe()), 'error');
             }
         }
     }

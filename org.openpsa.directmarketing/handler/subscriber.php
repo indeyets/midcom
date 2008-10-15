@@ -54,10 +54,9 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
                     $member->person = $this->_request_data['person']->id;
                     $member->campaign = $campaign->id;
                     $member->create();
-                    $message = new org_openpsa_helpers_uimessages();
                     if ($member->id)
                     {
-                        $message->addMessage(
+                        $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.directmarketing'), 
                             sprintf(
                                 $this->_request_data['l10n']->get('Added person %s to campaign %s'),
                                 "{$this->_request_data['person']->firstname} {$this->_request_data['person']->lastname}",
@@ -68,7 +67,7 @@ class org_openpsa_directmarketing_handler_subscriber extends midcom_baseclasses_
                     }
                     else
                     {
-                        $message->addMessage(
+                        $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.directmarketing'), 
                             sprintf(
                                 $this->_request_data['l10n']->get('Failed adding person %s to campaign %s'),
                                 "{$this->_request_data['person']->firstname} {$this->_request_data['person']->lastname}",

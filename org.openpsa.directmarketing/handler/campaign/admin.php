@@ -645,7 +645,6 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
         {
             //debug_add("_POST\n===\n" . org_openpsa_helpers::sprint_r($_POST) . "===\n");
             //Actual save routine
-            $messages = new org_openpsa_helpers_uimessages();
             if (   !isset($_POST['midcom_helper_datamanager_dummy_field_rules'])
                 || empty($_POST['midcom_helper_datamanager_dummy_field_rules']))
             {

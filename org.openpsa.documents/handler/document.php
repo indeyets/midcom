@@ -118,8 +118,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX));
                     } else {
                         // Failure, give a message
-                        $messagebox = new org_openpsa_helpers_uimessages();
-                        $messagebox->addMessage($this->_request_data['l10n']->get("failed to delete document, reason ").mgd_errstr(), 'error');
+                        $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.documents'), $this->_request_data['l10n']->get("failed to delete document, reason ").mgd_errstr(), 'error');
                     }
                     // Update the index
                     $indexer =& $_MIDCOM->get_service('indexer');

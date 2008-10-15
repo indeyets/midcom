@@ -58,7 +58,7 @@
         ),
         'description' => array
         (
-            'title' => 'title',
+            'title' => 'description',
             'storage' => 'description',
             'type' => 'text',
             'type_config' => array
