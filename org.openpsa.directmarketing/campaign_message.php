@@ -612,15 +612,15 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         switch($this->orgOpenpsaObtype)
         {
             case ORG_OPENPSA_MESSAGETYPE_EMAIL_TEXT:
-                $mail->body = $member->personalize_message($content, $this->orgOpenpsaObtype, &$person);
+                $mail->body = $member->personalize_message($content, $this->orgOpenpsaObtype, $person);
                 //debug_add("mail->body:\n===\n".$mail->body."\n===\n");
             break;
             case ORG_OPENPSA_MESSAGETYPE_EMAIL_HTML:
-                $mail->html_body = $member->personalize_message($content, $this->orgOpenpsaObtype, &$person);
+                $mail->html_body = $member->personalize_message($content, $this->orgOpenpsaObtype, $person);
                 if (   array_key_exists('htmlemail_force_text_body', $data_array)
                     && strlen($data_array['htmlemail_force_text_body']) > 0)
                 {
-                    $mail->body = $member->personalize_message($data_array['htmlemail_force_text_body'], $this->orgOpenpsaObtype, &$person);
+                    $mail->body = $member->personalize_message($data_array['htmlemail_force_text_body'], $this->orgOpenpsaObtype, $person);
                 }
                 // Allow sensing only HTML body if requested
                 if (   array_key_exists('htmlemail_onlyhtml', $data_array)
@@ -969,7 +969,7 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
         $GLOBALS['org_openpsa_directmarketing_campaign_message_send_i']++;
         $person = new org_openpsa_contacts_person_dba($member->person);
         $person->handphone = $this->_normalize_phone($person->handphone);
-        $content_p = $member->personalize_message($content, $this->orgOpenpsaObtype, &$person);
+        $content_p = $member->personalize_message($content, $this->orgOpenpsaObtype, $person);
 
         //TODO: Add sender support
         $status = $smsbroker->send_sms($person->handphone, $content_p, $from);

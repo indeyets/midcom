@@ -100,7 +100,7 @@ class midcom_org_openpsa_campaign_member extends __midcom_org_openpsa_campaign_m
      * Substitutes magic strings in content with values from the membership
      * and/or the person.
      */
-    function personalize_message($content, $message_type=-1, $person=false, $node=false)
+    function personalize_message($content, $message_type=-1, &$person=false, $node=false)
     {
         if (!$node)
         {

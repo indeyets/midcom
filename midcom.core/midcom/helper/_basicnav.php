@@ -1046,7 +1046,7 @@ class midcom_helper__basicnav
             foreach ($uplinks as $uptopic)
             {
                 // Pass the full topic so _loadNodeData doesn't have to reload it
-                $result = $this->_loadNodeData(&$uptopic);
+                $result = $this->_loadNodeData($uptopic);
                 switch ($result)
                 {
                     case MIDCOM_ERRFORBIDDEN:
@@ -1063,7 +1063,7 @@ class midcom_helper__basicnav
             }
         }
 
-        return $this->_loadNodeData(&$topic);
+        return $this->_loadNodeData($topic);
     }
 
     /**

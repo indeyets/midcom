@@ -155,7 +155,7 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                 $this->_results[$class] = @$qb->execute();
             }
             //mgd_debug_stop();
-            $this->_normalize_to_persons(&$this->_results[$class], $class);
+            $this->_normalize_to_persons($this->_results[$class], $class);
         }
         debug_add("this->_results:\n===\n" . org_openpsa_helpers::sprint_r($this->_results) . "===\n");
 

@@ -672,11 +672,11 @@ class org_openpsa_calendar_event_dba extends __org_openpsa_calendar_event_dba
                 debug_add("Notifying participant #{$resObj->id}");
                 if ($this->notify_force_add)
                 {
-                    $resObj->notify('add', &$this);
+                    $resObj->notify('add', $this);
                 }
                 else
                 {
-                    $resObj->notify('update', &$this);
+                    $resObj->notify('update', $this);
                 }
             }
             foreach ($this->_carried_resources_obj as $resObj)
@@ -684,11 +684,11 @@ class org_openpsa_calendar_event_dba extends __org_openpsa_calendar_event_dba
                 debug_add("Notifying resource #{$resObj->id}");
                 if ($this->notify_force_add)
                 {
-                    $resObj->notify('add', &$this);
+                    $resObj->notify('add', $this);
                 }
                 else
                 {
-                    $resObj->notify('update', &$this);
+                    $resObj->notify('update', $this);
                 }
             }
         }
@@ -774,7 +774,7 @@ class org_openpsa_calendar_event_dba extends __org_openpsa_calendar_event_dba
                 if (   $repeat_handler=='this'
                     && $this->send_notify)
                 {
-                    $obj->notify('cancel', &$this);
+                    $obj->notify('cancel', $this);
                 }
                 $obj->delete(false);
             }
@@ -790,7 +790,7 @@ class org_openpsa_calendar_event_dba extends __org_openpsa_calendar_event_dba
                 if (   $repeat_handler=='this'
                     && $this->send_notify)
                 {
-                    $obj->notify('cancel', &$this);
+                    $obj->notify('cancel', $this);
                 }
                 $obj->delete(false);
             }
@@ -1512,7 +1512,7 @@ class org_openpsa_calendar_event_dba extends __org_openpsa_calendar_event_dba
             $resObj = new org_openpsa_calendar_event_resource_dba();
             $resObj->resource = $resourceId;
             $resObj->event = $this->id;
-            $ret['resources']['added'][$resObj->resource] = $resObj->create($this->send_notify, &$this);
+            $ret['resources']['added'][$resObj->resource] = $resObj->create($this->send_notify, $this);
         }
 
         foreach ($removed_resources as $resourceId => $bool)
@@ -1521,7 +1521,7 @@ class org_openpsa_calendar_event_dba extends __org_openpsa_calendar_event_dba
             $resObj = $this->_get_member_by_resourceid($resourceId);
             if (is_object($resObj))
             {
-                $ret['resources']['removed'][$resObj->resource] = $resObj->delete($this->send_notify, &$this);
+                $ret['resources']['removed'][$resObj->resource] = $resObj->delete($this->send_notify, $this);
                 // TODO: Remove ACL permissions from removed members
             }
         }
@@ -1552,7 +1552,7 @@ class org_openpsa_calendar_event_dba extends __org_openpsa_calendar_event_dba
             $resObj->uid = $participantId;
             $resObj->eid = $this->id;
             $resObj->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_EVENTPARTICIPANT;
-            $ret['participants']['added'][$resObj->uid] = $resObj->create($this->send_notify, &$this);
+            $ret['participants']['added'][$resObj->uid] = $resObj->create($this->send_notify, $this);
         }
 
         foreach ($removed_participants as $participantId => $bool)
@@ -1563,7 +1563,7 @@ class org_openpsa_calendar_event_dba extends __org_openpsa_calendar_event_dba
                 debug_add("Failed to get participant object for person #{$participantId}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
                 continue;
             }
-            $ret['participants']['removed'][$resObj->uid] = $resObj->delete($this->send_notify, &$this);
+            $ret['participants']['removed'][$resObj->uid] = $resObj->delete($this->send_notify, $this);
         }
 
         // Make sure we can read the carried objects
