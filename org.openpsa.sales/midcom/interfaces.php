@@ -27,7 +27,6 @@ class org_openpsa_sales_interface extends midcom_baseclasses_components_interfac
         $this->_autoload_libraries = array
         (
             'org.openpsa.core',
-            'midcom.helper.datamanager',
             'midcom.helper.datamanager2',
         );
     }

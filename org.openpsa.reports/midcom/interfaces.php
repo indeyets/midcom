@@ -23,7 +23,6 @@ class org_openpsa_reports_interface extends midcom_baseclasses_components_interf
         $this->_autoload_libraries = array
         (
             'org.openpsa.core',
-            'midcom.helper.datamanager',
         );
 
     }

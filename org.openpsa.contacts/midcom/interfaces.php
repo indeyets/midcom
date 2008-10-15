@@ -21,7 +21,7 @@ class org_openpsa_contacts_interface extends midcom_baseclasses_components_inter
 
         $this->_component = 'org.openpsa.contacts';
 
-        $this->_autoload_files = array('group.php'); // needed when creating an invoice from sales project
+        $this->_autoload_files = array();
 
         $this->_autoload_libraries = array
         (

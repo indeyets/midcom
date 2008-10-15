@@ -104,6 +104,11 @@ class org_openpsa_documents_viewer extends midcom_baseclasses_components_request
 
     }
 
+    function _on_handle()
+    {
+        $_MIDCOM->load_library('midcom.helper.datamanager');
+    }
+
     /**
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.

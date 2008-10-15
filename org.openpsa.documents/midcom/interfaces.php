@@ -24,7 +24,6 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
         $this->_autoload_libraries = array
         (
             'org.openpsa.core',
-            'midcom.helper.datamanager',
             'midcom.helper.datamanager2',
         );
 

@@ -25,6 +25,8 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
     function _initialize_datamanager($schemadb_snippet)
     {
         // Initialize the datamanager with the schema
+        $_MIDCOM->load_library('midcom.helper.datamanager');
+
         $this->_datamanager = new midcom_helper_datamanager($schemadb_snippet);
 
         if (!$this->_datamanager) {
