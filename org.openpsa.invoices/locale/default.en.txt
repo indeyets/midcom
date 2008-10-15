@@ -43,12 +43,12 @@ Delete invoice
 Due date
 ---STRINGEND
 
----STRING next action
-Next Action
----STRINGEND
-
 ---STRING invoice
 Invoice
+---STRINGEND
+
+---STRING invoice %s created
+Invoice %s created
 ---STRINGEND
 
 ---STRING invoice number
@@ -71,6 +71,10 @@ Mark paid
 Mark sent
 ---STRINGEND
 
+---STRING marked %s hours as invoiced
+Marked %s hours as invoiced
+---STRINGEND
+
 ---STRING marked invoice "%s" paid
 Marked invoice "%s" as paid
 ---STRINGEND
@@ -81,6 +85,10 @@ Marked invoice "%s" as sent
 
 ---STRING marked task "%s" finished
 Marked task "%s" as finished
+---STRINGEND
+
+---STRING next action
+Next Action
 ---STRINGEND
 
 ---STRING no customer
@@ -145,5 +153,9 @@ Unsent invoices
 
 ---STRING vat
 VAT
+---STRINGEND
+
+---STRING failed to create invoice, reason
+Failed to create invoice, reason
 ---STRINGEND
 

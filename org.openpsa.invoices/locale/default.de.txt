@@ -4,7 +4,7 @@
 ---LANGUAGE de
 
 ---STRING all invoices
-Alle Rechnungen 
+Alle Rechnungen
 ---STRINGEND
 
 ---STRING all invoices for customer %s
@@ -43,12 +43,12 @@ Rechnung löschen
 Fällig
 ---STRINGEND
 
----STRING next action
-Nächste Aktion
----STRINGEND
-
 ---STRING invoice
 Rechnung
+---STRINGEND
+
+---STRING invoice %s created
+Rechnung %s wurde erstellt
 ---STRINGEND
 
 ---STRING invoice number
@@ -71,6 +71,10 @@ bezahlt
 verschickt
 ---STRINGEND
 
+---STRING marked %s hours as invoiced
+%s Arbeitsstunden als abgerechnet markiert
+---STRINGEND
+
 ---STRING marked invoice "%s" paid
 Rechnung "%s" wurde als bezahlt markiert
 ---STRINGEND
@@ -81,6 +85,10 @@ Rechnung "%s" wurde als verschickt markiert
 
 ---STRING marked task "%s" finished
 Aufgabe "%s" wurde als fertiggestellt markiert
+---STRINGEND
+
+---STRING next action
+Nächste Aktion
 ---STRINGEND
 
 ---STRING no customer
@@ -145,5 +153,9 @@ Unverschickte Rechnungen
 
 ---STRING vat
 MwSt
+---STRINGEND
+
+---STRING failed to create invoice, reason
+Rechnung konnte nicht erstellt werden. Ursache:
 ---STRINGEND
 
