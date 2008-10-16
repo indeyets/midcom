@@ -84,7 +84,7 @@ class WindguruFcst {
         }
         else
         {
-            return str_replace("wg_images/","/midcom-static/pl.olga.windguru/images/",$this->html);
+            return str_replace("wg_images/",MIDCOM_STATIC_URL."/pl.olga.windguru/images/",$this->html);
         }
     }
 
