@@ -269,6 +269,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
         }
         $classarray =& $rule['classes'][$classname];
         $tablename = false;
+        /*
         switch ($row['object'])
         {
             case 'person_parameters':
@@ -289,6 +290,7 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
             // doublecheck
             return false;
         }
+        */
         $group = array
         (
             'comment' => "\$object->parameter(\"{$row['parameter_domain']}\", \"{$row['parameter_name']}\") {$row['match']} \"{$row['value']}\"",
@@ -296,12 +298,14 @@ class org_openpsa_directmarketing_handler_campaign_admin extends midcom_baseclas
             'class'   => $classname,
             'rules'   => array
             (
+                /*
                 array
                 (
                     'property'  => 'tablename',
                     'match'     => '=',
                     'value'     => $tablename,
                 ),
+                */
                 array
                 (
                     'property'  => 'domain',

@@ -237,17 +237,18 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                     break;
                 //Expand various parameters to corresponding org_openpsa_contacts_person_dba(s)
                 case is_a($obj, 'midgard_parameter'):
-                    switch ($obj->tablename)
+                    $parent = $_MIDCOM->dbfactory->get_object_by_guid($obj->parentguid);
+                    switch (true)
                     {
-                        case 'person':
-                            $array[$k] = new org_openpsa_contacts_person_dba($obj->oid);
+                        case (is_a($parent, 'midgard_person')):
+                            $array[$k] = new org_openpsa_contacts_person($parent->guid);
                             break;
-                        case 'grp':
+                        case (is_a($parent, 'midgard_group')):
                             unset ($array[$k]);
-                            $this->_expand_group_members2persons($obj->oid, $array);
+                            $this->_expand_group_members2persons($parent->id, $array);
                             break;
                         default:
-                            debug_add("parameters for table {$obj->tablename} not supported");
+                            debug_add("parameters for " . get_class($parent) . " -objects not supported");
                             unset ($array[$k]);
                             break;
                     }
@@ -406,6 +407,10 @@ class org_openpsa_directmarketing_campaign_ruleresolver
             return false;
         }
         debug_add("calling qb->add_constraint({$rule['property']}, {$rule['match']}, {$rule['value']})");
+        if ($rule['value'] === null)
+        {
+            $rule['value'] = (string)'';
+        }
         $qb->add_constraint($rule['property'], $rule['match'], $rule['value']);
 
         debug_pop();

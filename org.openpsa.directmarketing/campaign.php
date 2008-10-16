@@ -71,8 +71,10 @@ class midcom_org_openpsa_campaign extends __midcom_org_openpsa_campaign
         //Sync the testers array to member objects
         $this->_update_testers();
         // Sync the object's ACL properties into MidCOM ACL system
+        /* This craps out for some reason, and it wasn't such a hit idea afterall...
         $sync = new org_openpsa_core_acl_synchronizer();
         $sync->write_acls($this, $this->orgOpenpsaOwnerWg, $this->orgOpenpsaAccesstype);
+        */
         return true;
     }
 

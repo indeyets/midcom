@@ -136,17 +136,24 @@ foreach ($properties_map as $class => $properties)
     }
     }
     echo "             }\n";
+    /*
     echo "        },\n";
     echo "        '{$class}_parameters': {\n";
     echo "            localized: '" . $data['l10n']->get("class:{$class} parameters") . "',\n";
     echo "            parameters: true,\n";
     echo "            properties: false\n";
+    */
     if ($i < $cnt)
     {
         echo "        },\n";
     }
     else
     {
+        echo "        },\n";
+        echo "        'generic_parameters': {\n";
+        echo "            localized: '" . $data['l10n']->get("class:generic parameters") . "',\n";
+        echo "            parameters: true,\n";
+        echo "            properties: false\n";
         echo "        }\n";
     }
 }
