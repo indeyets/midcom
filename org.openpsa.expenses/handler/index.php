@@ -73,43 +73,43 @@ class org_openpsa_expenses_handler_index  extends midcom_baseclasses_components_
         $this->_calculate_week();
 
         $hours_mc = org_openpsa_projects_hour_report_dba::new_collector('person', $_MIDGARD['user']);
-		$hours_mc->add_value_property('task');
-		$hours_mc->add_value_property('hours');
-		$hours_mc->add_value_property('date');
-		
+        $hours_mc->add_value_property('task');
+        $hours_mc->add_value_property('hours');
+        $hours_mc->add_value_property('date');
+                
         $hours_mc->add_constraint('date', '>=', $data['week_start']);
         $hours_mc->add_constraint('date', '<=', $data['week_end']);
         $hours_mc->add_order('task');
         $hours_mc->add_order('date');
         $hours_mc->execute();
 
-		$hours = $hours_mc->list_keys();
+        $hours = $hours_mc->list_keys();
 
-		// Sort the reports by task and day
-		$tasks = array();
-		foreach ($data['hours'] as $guid => $empty)
-		{
-			$task = $hours_mc->get_subkey($guid, 'task');
-			$date = $hours_mc->get_subkey($guid, 'date');
-			$report_hours = $hours_mc->get_subkey($guid, 'hours');
-		    if (!isset($tasks[$task]))
-		    {
-		        $tasks[$task] = array();
-		    }
-		
-		    $date_identifier = date('Y-m-d', $date);
-		    if (!isset($tasks[$task][$date_identifier]))
-		    {
-		        $tasks[$task][$date_identifier] = 0;
-		    }
-		    $tasks[$task][$date_identifier][] += $report_hours;
-		}
-		
-		$data['tasks'] =& $tasks;
+        // Sort the reports by task and day
+        $tasks = array();
+        foreach ($hours as $guid => $empty)
+        {
+            $task = $hours_mc->get_subkey($guid, 'task');
+            $date = $hours_mc->get_subkey($guid, 'date');
+            $report_hours = $hours_mc->get_subkey($guid, 'hours');
+            if (!isset($tasks[$task]))
+            {
+                $tasks[$task] = array();
+            }
+
+            $date_identifier = date('Y-m-d', $date);
+            if (!isset($tasks[$task][$date_identifier]))
+            {
+                 $tasks[$task][$date_identifier] = 0;
+            }
+            $tasks[$task][$date_identifier] += $report_hours;
+        }
+                
+        $data['tasks'] =& $tasks;
 
         $_MIDCOM->add_link_head
         (
-        	array
+                array
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
