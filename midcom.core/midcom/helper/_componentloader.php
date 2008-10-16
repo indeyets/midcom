@@ -1068,6 +1068,22 @@ class midcom_helper__componentloader
         return false;
     }
 
+    public function get_component_version($component)
+    {
+        if ($component == 'midcom')
+        {
+            return $GLOBALS['midcom_version'];
+        }
+
+        if (   !isset($this->manifests[$component])
+            || !isset($this->manifests[$component]->version))
+        {
+            return null;
+        }
+
+        return $this->manifests[$component]->version;
+    }
+
     public function get_component_icon($component, $provide_fallback = true)
     {
         if ($component == 'midcom')

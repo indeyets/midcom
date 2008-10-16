@@ -10,7 +10,7 @@
  * @ignore
  */
 //These two constants are on purpose in here
-define('ORG_OPENPSA_CORE_VERSION_NUMBER', '2.1.0');
+define('ORG_OPENPSA_CORE_VERSION_NUMBER', $_MIDCOM->componentloader->get_component_version('org.openpsa.core'));
 define('ORG_OPENPSA_CORE_VERSION_NAME'  , 'Leaner and Meaner');
 
 /**
