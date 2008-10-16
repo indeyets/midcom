@@ -32,24 +32,26 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
 
     function _fill_virtual_groups()
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        $qb = new midgard_query_builder('org_openpsa_task');
-        //$qb = $_MIDCOM->dbfactory->new_query_builder('org_openpsa_projects_project');
         // FIXME: Constant ORG_OPENPSA_WGTYPE_ACTIVE is not set yet
-        $qb->add_constraint('orgOpenpsaWgtype', '=', 3);
-        $ret = @$qb->execute();
-        //$ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $mc = new midgard_collector('org_openpsa_task', 'orgOpenpsaWgtype', 3);
+        $mc->set_key_property('guid');
+        $mc->add_value_property('title');
+        $mc->execute();
+
+        $ret = $mc->list_keys();
         if (   is_array($ret)
             && count($ret) > 0)
         {
-            foreach($ret as $wg)
+            debug_push_class(__CLASS__, __FUNCTION__);
+            foreach($ret as $guid => $empty)
             {
-                debug_add('Adding workgroup: '.$wg->title.' (guid: '.$wg->guid.')');
-                $this->_virtual_groups[$wg->guid] = $wg->title;
-                $this->_virtual_groups[$wg->guid.'subscribers'] = $wg->title.' contacts';
+                $title = $mc->get_subkey($guid, $title);
+                debug_add('Adding workgroup: ' . $title . ' (guid: ' . $guid . ')');
+                $this->_virtual_groups[$guid] = $title;
+                $this->_virtual_groups[$guid . 'subscribers'] = $title . ' contacts';
             }
+            debug_pop();
         }
-        debug_pop();
         return true;
     }
 

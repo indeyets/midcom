@@ -38,10 +38,10 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $class = "even";
             }
 
-            $task_qb = org_openpsa_projects_project::new_query_builder();
-            $task_qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
-            $task_qb->add_constraint('up', '=', $project->id);
-            $task_count = $task_qb->count();
+            $task_mc = org_openpsa_projects_project::new_collector('up', $project->id);
+            $task_mc->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_TASK);
+            $task_mc->execute();
+            $task_count = $task_mc->count();
 
             echo "    <tr class='{$class}'>\n";
             echo "        <td>{$customer_title}</td>\n";

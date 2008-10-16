@@ -208,15 +208,17 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.invoices'), sprintf($this->_request_data['l10n']->get('marked invoice "%s" sent'), $this->_request_data['invoice']->invoiceNumber), 'ok');
 
             // Close "Send invoice" task
-            $qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
-            $qb->add_constraint('toGuid', '=', $this->_request_data['invoice']->guid);
-            $qb->add_constraint('fromComponent', '=', 'org.openpsa.projects');
-            $qb->add_constraint('fromClass', '=', 'org_openpsa_projects_task_dba');
-            $qb->add_constraint('status', '<>', ORG_OPENPSA_RELATEDTO_STATUS_NOTRELATED);
-            $links = $qb->execute();
-            foreach ($links as $link)
+            $mc = org_openpsa_relatedto_relatedto_dba::new_collector('toGuid', $this->_request_data['invoice']->guid);
+            $mc->add_value_property('fromGuid');
+            $mc->add_constraint('fromComponent', '=', 'org.openpsa.projects');
+            $mc->add_constraint('fromClass', '=', 'org_openpsa_projects_task_dba');
+            $mc->add_constraint('status', '<>', ORG_OPENPSA_RELATEDTO_STATUS_NOTRELATED);
+            $mc->execute();
+            
+            $links = $mc->list_keys();
+            foreach ($links as $guid => $empty)
             {
-                $task = new org_openpsa_projects_task_dba($link->fromGuid);
+                $task = new org_openpsa_projects_task_dba($mc->get_subkey($guid, 'fromGuid'));
                 if ($task)
                 {
                     if ($task->complete())
@@ -362,9 +364,10 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
 
     function _count_invoice_hours()
     {
-        $qb = org_openpsa_invoices_invoice_hour_dba::new_query_builder();
-        $qb->add_constraint('invoice', '=', $this->_request_data['invoice']->id);
-        $hour_links = $qb->execute();
+        $mc = org_openpsa_invoices_invoice_hour_dba::new_collector('invoice', $this->_request_data['invoice']->id);
+        $mc->add_value_property('hourReport');
+        $mc->execute();
+        $hour_links = $mc->list_keys();
         if (!is_array($hour_links))
         {
             return false;
@@ -386,9 +389,9 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
             'tasks' => array(),
             // TODO other sorts ?
         );
-        foreach ($hour_links as $link)
+        foreach ($hour_links as $guid => $link)
         {
-            $report = new org_openpsa_projects_hour_report_dba($link->hourReport);
+            $report = new org_openpsa_projects_hour_report_dba($mc->get_subkey($guid, 'hourReport'));
             if (!$report)
             {
                 // Could not fetch report for some reason

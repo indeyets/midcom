@@ -115,14 +115,16 @@ class org_openpsa_contacts_group_dba extends __org_openpsa_contacts_group_dba
     function _get_members_array()
     {
         $members = array();
-        $qb = $_MIDCOM->dbfactory->new_query_builder('midcom_db_member');
-        $qb->add_constraint('gid', '=', $this->id);
-        $ret = $_MIDCOM->dbfactory->exec_query_builder($qb);
+        $mc = new midgard_collector('midcom_db_member', 'gid', $this->id);
+        $mc->set_key_property('guid');
+        $mc->add_value_property('uid');
+        $mc->execute();
+        $ret = $mc->list_keys();
         if (count($ret) > 0)
         {
-            foreach ($ret as $member)
+            foreach ($ret as $guid => $empty)
             {
-                $members[$member->uid] = true;
+                $members[$mc->get_subkey($guid, 'uid')] = true;
             }
         }
         return $members;

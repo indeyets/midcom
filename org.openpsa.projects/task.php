@@ -262,14 +262,14 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
             return false;
         }
 
-	if (!is_array($this->contacts))
-	{
-	    $this->contacts = array();
-	}
-	if (!is_array($this->resources))
-	{
-	    $this->resources = array();
-	}
+        if (!is_array($this->contacts))
+        {
+            $this->contacts = array();
+        }
+        if (!is_array($this->resources))
+        {
+            $this->resources = array();
+        }
 
         $mc = org_openpsa_projects_task_resource_dba::new_collector('task', $this->id);
         $mc->add_value_property('orgOpenpsaObtype');
@@ -551,30 +551,36 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
      */
     function _get_status($set_comment = false, $set_time = true)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         //Simplistic approach
-        $qb = org_openpsa_projects_task_status_dba::new_query_builder();
-        $qb->add_constraint('task', '=', $this->id);
+        $mc = org_openpsa_projects_task_status_dba::new_collector('task', $this->id);
+        $mc->add_value_property('type');
+        $mc->add_value_property('comment');
+        $mc->add_value_property('timestamp');
+
         if ($this->status > ORG_OPENPSA_TASKSTATUS_PROPOSED)
         {
             //Only get proposed status objects here if are not over that phase
-            $qb->add_constraint('type', '<>', ORG_OPENPSA_TASKSTATUS_PROPOSED);
+            $mc->add_constraint('type', '<>', ORG_OPENPSA_TASKSTATUS_PROPOSED);
         }
         if (count($this->resources) > 0)
         {
             //Do not ever set status to declined if we still have resources left
-            $qb->add_constraint('type', '<>', ORG_OPENPSA_TASKSTATUS_DECLINED);
+            $mc->add_constraint('type', '<>', ORG_OPENPSA_TASKSTATUS_DECLINED);
         }
-        $qb->add_order('timestamp', 'DESC');
-        $qb->add_order('type', 'DESC'); //Our timestamps are not accurate enough so if we have multiple with same timestamp suppose highest type is latest
-        $qb->set_limit(1);
+        $mc->add_order('timestamp', 'DESC');
+        $mc->add_order('type', 'DESC'); //Our timestamps are not accurate enough so if we have multiple with same timestamp suppose highest type is latest
+        $mc->set_limit(1);
 
-        $main_ret = $qb->execute();
+        $mc->execute();
 
-        if (   !is_array($main_ret)
-            || count($main_ret) == 0)
+        $ret = $mc->list_keys();
+
+        if (   !is_array($ret)
+            || count($ret) == 0)
         {
             //Failure to get status object
+            debug_push_class(__CLASS__, __FUNCTION__);
+
             if (!$this->status)
             {
                 //Default to proposed if nothing else is available
@@ -588,19 +594,24 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
             return $this->status;
         }
 
+        $main_ret = key($ret);
+        $comment = $mc->get_subkey($main_ret, 'comment');
+        $type = $mc->get_subkey($main_ret, 'type');
+        $timestamp = $mc->get_subkey($main_ret, 'timestamp');
+
         //TODO: Check various combinations of accept/decline etc etc
 
         if ($set_comment)
         {
-            $this->status_comment = $main_ret[0]->comment;
+            $this->status_comment = $comment;
         }
         if ($set_time)
         {
-            $this->status_time = $main_ret[0]->timestamp;
+            $this->status_time = $timestamp;
         }
 
 
-        switch ($main_ret[0]->type)
+        switch ($type)
         {
             case ORG_OPENPSA_TASKSTATUS_REJECTED:
                 $this->status_type = 'rejected';
@@ -626,8 +637,7 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
                 break;
         }
 
-        debug_pop();
-        return $main_ret[0]->type;
+        return $type;
     }
 
     private function _propose_to_resources()
@@ -1167,13 +1177,16 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
             return $resource_array;
         }
 
-        $qb = org_openpsa_projects_task_resource_dba::new_query_builder();
-        $qb->add_constraint('task', '=', $view_data['task']->id);
-        $qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
-        $resources = $qb->execute();
-        foreach ($resources as $resource)
+        $mc = org_openpsa_projects_task_resource_dba::new_collector('task', $view_data['task']->id);
+        $mc->add_value_property('person');
+        $mc->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECTRESOURCE);
+        $mc->execute();
+
+        $resources = $mc->list_keys();
+
+        foreach ($resources as $resource => $task_id)
         {
-            $person = new midcom_db_person($resource->person);
+            $person = new midcom_db_person($mc->get_subkey($resource, 'person'));
             $resource_array[$person->id] = $person->rname;
         }
         return $resource_array;
