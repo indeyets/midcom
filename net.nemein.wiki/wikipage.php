@@ -185,6 +185,13 @@ class net_nemein_wiki_wikipage extends midcom_db_article
             return;
         }
         
+        $diff = $this->_get_diff();
+        if (empty($diff))
+        {
+            // No sense to email empty diffs
+            return;
+        }
+        
         $_MIDCOM->load_library('org.openpsa.notifications');
         
         // Construct the message
@@ -202,7 +209,7 @@ class net_nemein_wiki_wikipage extends midcom_db_article
         
         // TODO: Get RCS diff here
         $message['content'] .= $_MIDCOM->i18n->get_string('page modifications', 'net.nemein.wiki') . ":\n";
-        $message['content'] .= "\n" . $this->_get_diff() . "\n\n";
+        $message['content'] .= "\n{$diff}\n\n";
         
         $message['content'] .= $_MIDCOM->i18n->get_string('link to page', 'net.nemein.wiki') . ":\n";
         $message['content'] .= $_MIDCOM->permalinks->create_permalink($this->guid);
