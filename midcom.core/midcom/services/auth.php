@@ -2205,7 +2205,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             </div>
 
             <div id="bottom">
-                <div id="version">Midgard <?php echo substr(mgd_version(), 0, 5); ?></div>
+                <div id="version">Midgard <?php echo substr(mgd_version(), 0, 4); ?></div>
             </div>
 
             <div id="footer">
@@ -2334,7 +2334,7 @@ class midcom_services_auth extends midcom_baseclasses_core_object
             </div>
 
             <div id="bottom">
-                <div id="version">Midgard <?php echo substr(mgd_version(), 0, 5); ?></div>
+                <div id="version">Midgard <?php echo substr(mgd_version(), 0, 4); ?></div>
             </div>
 
             <div id="footer">

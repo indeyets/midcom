@@ -59,7 +59,7 @@ class org_openpsa_mail extends midcom_baseclasses_components_purecode
         $this->cc =& $this->headers['Cc'];
         $this->headers['Bcc'] = null;
         $this->bcc =& $this->headers['Bcc'];
-        $this->headers['User-Agent'] = "OpenPSA / Midgard " . mgd_version();
+        $this->headers['User-Agent'] = 'Midgard/' . substr(mgd_version(), 0, 4);
         $this->headers['X-Originating-Ip'] = $_SERVER['REMOTE_ADDR'];
         $this->__mailErr = false;
         $this->htmlBody =& $this->html_body;

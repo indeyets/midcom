@@ -199,7 +199,7 @@ class org_openpsa_httplib extends midcom_baseclasses_components_purecode
 
     function _user_agent()
     {
-        return 'Midgard/' . mgd_version();
+        return 'Midgard/' . substr(mgd_version(), 0, 4);
     }
 }
 ?>

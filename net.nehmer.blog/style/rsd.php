@@ -12,7 +12,7 @@ echo '<?xml version="1.0" ?>';
 ?>
 <rsd version="1.0" xmlns="http://archipelago.phrasewise.com/rsd" >
     <service>
-        <engineName>Midgard CMS/<?php echo mgd_version(); ?></engineName> 
+        <engineName>Midgard CMS/<?php echo substr(mgd_version(), 0, 4); ?></engineName> 
         <engineLink>http://www.midgard-project.org/</engineLink>
         <homePageLink><?php echo htmlspecialchars($prefix);?></homePageLink>
         <apis>

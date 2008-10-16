@@ -7,16 +7,9 @@ if (count($argv) != 5)
 $sitegroup = (int) $argv[1];
 $conffile = $argv[2];
 
-if (version_compare(mgd_version(), '1.9.0alpha', '>='))
-{
-    $midgard = new midgard_connection();
-    $midgard->open('bergietest');
-    //$midgard->set_sitegroup(1);
-}
-else
-{
-    mgd_config_init($conffile);
-}
+$midgard = new midgard_connection();
+$midgard->open('bergietest');
+//$midgard->set_sitegroup(1);
 
 mgd_auth_midgard($argv[3], $argv[4]);
 
