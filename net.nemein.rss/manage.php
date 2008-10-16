@@ -372,7 +372,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         }
         $data['feed']->require_do('midgard:update');
 
-        $this->_load_controller(&$data);
+        $this->_load_controller($data);
 
         switch ($data['controller']->process_form())
         {
@@ -425,7 +425,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         }
         $data['feed']->require_do('midgard:delete');
 
-        $this->_load_controller(&$data);
+        $this->_load_controller($data);
 
         if (array_key_exists('net_nemein_rss_deleteok', $_REQUEST))
         {

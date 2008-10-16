@@ -216,7 +216,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
             $results = array();
             $offset = 0;
 
-            net_nehmer_blog_navigation::get_articles($this->_content_topic->id, $offset, $limit, &$results);
+            net_nehmer_blog_navigation::get_articles($this->_content_topic->id, $offset, $limit, $results);
         }
 
         // Checkup for the url prefix
@@ -317,7 +317,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
         // Push the offset
         $offset = $offset + $limit;
 
-        net_nehmer_blog_navigation::get_articles($topic_id, $offset, $limit, &$results);
+        net_nehmer_blog_navigation::get_articles($topic_id, $offset, $limit, $results);
     }
 
     /**
