@@ -1,23 +1,6 @@
 <?php
 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
-// Sort the reports by task and day
-$tasks = array();
-foreach ($data['hours'] as $hour_report)
-{
-    if (!isset($tasks[$hour_report->task]))
-    {
-        $tasks[$hour_report->task] = array();
-    }
-
-    $date_identifier = date('Y-m-d', $hour_report->date);
-    if (!isset($tasks[$hour_report->task][$date_identifier]))
-    {
-        $tasks[$hour_report->task][$date_identifier] = array();
-    }
-    $tasks[$hour_report->task][$date_identifier][] = $hour_report;
-}
-
 $date_totals = array();
 
 // Header line
@@ -38,7 +21,7 @@ while ($time < $data['week_end'])
 echo "    </tr>\n";
 echo "  </thead>\n";
 $class = "even";
-foreach ($tasks as $task => $days)
+foreach ($data['tasks'] as $task => $days)
 {
     $task = new org_openpsa_projects_task_dba($task);
     $time = $data['week_start'];
@@ -71,12 +54,8 @@ foreach ($tasks as $task => $days)
         }
         else
         {
-            $hours_total = 0;
-            foreach ($days[$date_identifier] as $hour_report)
-            {
-                $hours_total += $hour_report->hours;
-            }
-            
+            $hours_total = $days[$date_identifier];
+
             if (!isset($date_totals[$date_identifier]))
             {
                 $date_totals[$date_identifier] = 0;
