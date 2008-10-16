@@ -96,7 +96,7 @@ class org_routamc_positioning_importer_instamapper extends org_routamc_positioni
      */
     function get_instamapper_location($user, $cache = true)
     {
-        $instamapper_url = $user->parameter('org.routamc.positioning:instamapper', 'api_key');
+        $instamapper_url = trim($user->parameter('org.routamc.positioning:instamapper', 'api_key'));
 
         if ($instamapper_url)
         {
