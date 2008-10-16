@@ -406,7 +406,7 @@ $GLOBALS['midcom_config_default']['i18n_fallback_language'] = 'en';
 $GLOBALS['midcom_config_default']['indexer_backend'] = false;
 $GLOBALS['midcom_config_default']['indexer_index_name'] = $unique_host_name;
 $GLOBALS['midcom_config_default']['indexer_reindex_memorylimit'] = 250;
-$GLOBALS['midcom_config_default']['indexer_reindex_allowed_ips'] = Array('127.0.0.1');
+$GLOBALS['midcom_config_default']['indexer_reindex_allowed_ips'] = Array('127.0.0.1', $_SERVER['SERVER_ADDR']);
 
 // XMLTCP indexer backend (THE RECOMMENDED ONE)
 $GLOBALS['midcom_config_default']['indexer_xmltcp_host'] = "127.0.0.1";
