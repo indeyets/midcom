@@ -453,41 +453,57 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
             }
         }
 
-        $report_qb = org_openpsa_projects_hour_report_dba::new_query_builder();
-        $report_qb->add_constraint('task', '=', $this->id);
-        $reports = $report_qb->execute();
-        foreach ($reports as $report)
+        $report_mc = org_openpsa_projects_hour_report_dba::new_collector('task', $this->id);
+        $report_mc->execute();
+        
+        $reports = $mc->list_keys();
+        foreach ($reports as $guid => $empty)
         {
-            $hours['reported'] += $report->hours;
+            $hours = $mc->get_subkey($guid, 'hours');
+            $invoiced = $mc->get_subkey($guid, 'invoiced');
+            $invoiceable = $mc->get_subkey($guid, 'invoiceable');
+            $approved = $mc->get_subkey($guid, 'approved');
+            $approver = $mc->get_subkey($guid, 'approver');
 
-            if ($report->is_approved)
+            $is_approved = false;
+            if (   $approved != '0000-00-00 00:00:00'
+                && $approved != '0000-00-00 00:00:00+0000'
+                && $approved
+                && $approver)
             {
-                $hours['approved'] += $report->hours;
+                $is_approved = true;
+            }
+            
+            $hours['reported'] += $hours;
+
+            if ($is_approved)
+            {
+                $hours['approved'] += $hours;
             }
 
-            if (   $report->invoiced != '0000-00-00 00:00:00'
-                && $report->invoiced != '0000-00-00 00:00:00+0000'
-                && $report->invoiced)
+            if (   $invoiced != '0000-00-00 00:00:00'
+                && $invoiced != '0000-00-00 00:00:00+0000'
+                && $invoiced)
             {
-                $hours['invoiced'] += $report->hours;
+                $hours['invoiced'] += $hours;
             }
-            elseif ($report->invoiceable)
+            else if ($invoiceable)
             {
-                // Check agreement for invoceability rules
+                // Check agreement for invoiceability rules
                 if ($invoice_enable)
                 {
                     if ($invoice_approved)
                     {
                         // Count only uninvoiced approved hours as invoiceable
-                        if ($report->is_approved)
+                        if ($is_approved)
                         {
-                            $hours['invoiceable'] += $report->hours;
+                            $hours['invoiceable'] += $hours;
                         }
                     }
                     else
                     {
                         // Count all uninvoiced invoiceable hours as invoiceable regardless of approval status
-                        $hours['invoiceable'] += $report->hours;
+                        $hours['invoiceable'] += $hours;
                     }
                 }
             }
