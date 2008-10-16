@@ -456,14 +456,14 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
         $report_mc = org_openpsa_projects_hour_report_dba::new_collector('task', $this->id);
         $report_mc->execute();
         
-        $reports = $mc->list_keys();
+        $reports = $report_mc->list_keys();
         foreach ($reports as $guid => $empty)
         {
-            $hours = $mc->get_subkey($guid, 'hours');
-            $invoiced = $mc->get_subkey($guid, 'invoiced');
-            $invoiceable = $mc->get_subkey($guid, 'invoiceable');
-            $approved = $mc->get_subkey($guid, 'approved');
-            $approver = $mc->get_subkey($guid, 'approver');
+            $report_hours = $report_mc->get_subkey($guid, 'hours');
+            $invoiced = $report_mc->get_subkey($guid, 'invoiced');
+            $invoiceable = $report_mc->get_subkey($guid, 'invoiceable');
+            $approved = $report_mc->get_subkey($guid, 'approved');
+            $approver = $report_mc->get_subkey($guid, 'approver');
 
             $is_approved = false;
             if (   $approved != '0000-00-00 00:00:00'
@@ -474,18 +474,18 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
                 $is_approved = true;
             }
             
-            $hours['reported'] += $hours;
+            $hours['reported'] += $report_hours;
 
             if ($is_approved)
             {
-                $hours['approved'] += $hours;
+                $hours['approved'] += $report_hours;
             }
 
             if (   $invoiced != '0000-00-00 00:00:00'
                 && $invoiced != '0000-00-00 00:00:00+0000'
                 && $invoiced)
             {
-                $hours['invoiced'] += $hours;
+                $hours['invoiced'] += $report_hours;
             }
             else if ($invoiceable)
             {
@@ -497,13 +497,13 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
                         // Count only uninvoiced approved hours as invoiceable
                         if ($is_approved)
                         {
-                            $hours['invoiceable'] += $hours;
+                            $hours['invoiceable'] += $report_hours;
                         }
                     }
                     else
                     {
                         // Count all uninvoiced invoiceable hours as invoiceable regardless of approval status
-                        $hours['invoiceable'] += $hours;
+                        $hours['invoiceable'] += $report_hours;
                     }
                 }
             }
