@@ -454,6 +454,11 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
         }
 
         $report_mc = org_openpsa_projects_hour_report_dba::new_collector('task', $this->id);
+	$report_mc->add_value_property('hours');
+	$report_mc->add_value_property('invoiced');
+	$report_mc->add_value_property('invoiceable');
+	$report_mc->add_value_property('approved');
+	$report_mc->add_value_property('approver');
         $report_mc->execute();
         
         $reports = $report_mc->list_keys();
