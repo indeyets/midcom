@@ -1,7 +1,7 @@
 <?php
-//$data =& $_MIDCOM->get_custom_context_data('request_data');
 $view = $data['salesproject_dm'];
 ?>
 <div class="main">
+    <h1><?php echo $data['l10n']->get('create salesproject'); ?></h1>
     <?php $view->display_form(); ?>
 </div>
