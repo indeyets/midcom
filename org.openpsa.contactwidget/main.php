@@ -344,19 +344,23 @@ class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
             && array_key_exists('id', $this->contact_details)
             && !empty($this->contact_details['id']))
         {
-            $qb = $_MIDCOM->dbfactory->new_query_builder('midcom_db_member');
-            $qb->add_constraint('uid', '=', $this->contact_details['id']);
-            $memberships = $_MIDCOM->dbfactory->exec_query_builder($qb);
+            $mc = new midgard_collector('midcom_db_member', 'uid', $this->contact_details['id']);
+            $mc->set_key_property('guid');
+            $mc->add_value_property('gid');
+            $mc->add_value_property('extra');
+            $mc->execute();
+
+            $memberships = $mc->list_keys();
             if ($memberships)
             {
-                foreach ($memberships as $membership)
+                foreach ($memberships as $guid => $empty)
                 {
                     echo "<li class=\"org\">";
-                    $group = new midcom_baseclasses_database_group($membership->gid);
+                    $group = new midcom_baseclasses_database_group($mc->get_subkey($guid, 'gid'));
 
-                    if ($membership->extra)
+                    if ($mc->get_subkey($guid, 'extra'))
                     {
-                        echo "<span class=\"title\">{$membership->extra}</span>, ";
+                        echo "<span class=\"title\">" . $mc->get_subkey($guid, 'extra') . "</span>, ";
                     }
 
                     if ($group->official)

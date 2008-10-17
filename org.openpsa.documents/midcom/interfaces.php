@@ -53,7 +53,6 @@ class org_openpsa_documents_interface extends midcom_baseclasses_components_inte
         {
             foreach ($ret as $document)
             {
-                $document = new org_openpsa_documents_document_dba($document->id);
                 $datamanager = new midcom_helper_datamanager($config->get('schemadb_document'));
                 if (!$datamanager)
                 {

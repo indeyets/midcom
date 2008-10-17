@@ -48,19 +48,13 @@ class org_openpsa_helpers_list
             return $ret;
         }
     
-        $qb = new midgard_query_builder('midgard_member');
-        $qb->begin_group('OR');
-        foreach ($task->contacts as $pid => $bool)
-        {
-            if (!$bool)
-            {
-                //Safeguard
-                continue;
-            }
-            $qb->add_constraint('uid', '=', $pid);
-        }
-        $qb->end_group();
-        $memberships = @$qb->execute();
+        $mc = new midgard_collector('midcom_db_member', 'uid', $this->contact_details['id']);
+        $mc->set_key_property('guid');
+        $mc->add_value_property('gid');
+        $mc->add_constraint('uid', 'IN', array_keys($task->contacts));
+        $mc->execute();
+
+        $memberships = @$mc->list_keys();
         //echo "<pre>DEBUG: got memberships \n===\n" . org_openpsa_helpers::sprint_r($memberships) . "===</pre>\n";
         if (   !is_array($memberships)
             || count($memberships) == 0)
@@ -69,14 +63,15 @@ class org_openpsa_helpers_list
         }
     
         reset ($memberships);
-        foreach ($memberships as $member)
+        foreach ($memberships as $guid => $empty)
         {
-            if (isset($seen[$member->gid])
-                && $seen[$member->gid] == true)
+            $gid = $mc->get_subkey($guid, 'gid');
+            if (isset($seen[$gid])
+                && $seen[$gid] == true)
             {
                 continue;
             }
-            $company = new org_openpsa_contacts_group_dba($member->gid);
+            $company = new org_openpsa_contacts_group_dba($gid);
             if (   !is_object($company)
                 || !$company->id
                 /* Skip magic groups */
