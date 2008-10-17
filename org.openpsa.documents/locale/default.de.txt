@@ -19,6 +19,14 @@ Dokument erstellen
 Dokumenten-Suche
 ---STRINGEND
 
+---STRING document
+Dokument
+---STRINGEND
+
+---STRING document status
+Dokumenten-Status
+---STRINGEND
+
 ---STRING documents
 Dokumente
 ---STRINGEND
