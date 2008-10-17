@@ -105,6 +105,7 @@ class org_openpsa_projects_handler_task_resourcing extends midcom_baseclasses_co
                 'href' => MIDCOM_STATIC_URL."/midcom.helper.datamanager2/legacy.css",
             )
         );
+        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . "/Pearified/JavaScript/Prototype/prototype.js");
 
         $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.projects/projectbroker.js");
         //$_MIDCOM->add_jsfile(MIDCOM_STATIC_URL."/org.openpsa.projects/crir.js");
