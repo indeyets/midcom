@@ -15,6 +15,7 @@ class org_openpsa_projects_task_status_dba extends __org_openpsa_projects_task_s
 {
     function __construct($id = null)
     {
+        $this->_use_rcs = false;
         $ret = parent::__construct($id);
         if (!$this->id)
         {

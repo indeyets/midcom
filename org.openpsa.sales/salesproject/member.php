@@ -16,6 +16,7 @@ class org_openpsa_sales_salesproject_member_dba extends __org_openpsa_sales_sale
 {
     function __construct($id = null)
     {
+        $this->_use_rcs = false;
         return parent::__construct($id);
     }
     

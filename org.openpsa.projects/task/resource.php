@@ -17,6 +17,7 @@ class org_openpsa_projects_task_resource_dba extends __org_openpsa_projects_task
 
     function __construct($id = null)
     {
+        $this->_use_rcs = false;
         return parent::__construct($id);
     }
 

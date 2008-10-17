@@ -16,6 +16,7 @@ class org_openpsa_relatedto_relatedto_dba extends __org_openpsa_relatedto_relate
 {
     function __construct($id = null)
     {
+        $this->_use_rcs = false;
         return parent::__construct($id);
     }
 
