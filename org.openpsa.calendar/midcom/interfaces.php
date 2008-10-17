@@ -40,7 +40,7 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
     function _on_initialize()
     {
         // Check for calendar event tree.
-        $qb = org_openpsa_calendar_event_dba::new_query_builder();
+        $qb = midcom_db_event::new_query_builder();
         $qb->add_constraint('title', '=', '__org_openpsa_calendar');
         $qb->add_constraint('up', '=', '0');
         $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
