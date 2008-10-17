@@ -337,13 +337,11 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
      */
     function _handler_view($handler_id, $args, &$data, $add_toolbar = true)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         $_MIDCOM->auth->require_valid_user();
         // Get the requested document object
         $this->_request_data['document'] = $this->_load_document($args[0]);
         if (!$this->_request_data['document'])
         {
-            debug_pop();
             return false;
         }
 
@@ -382,6 +380,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
         // Load the document to datamanager
         if (!$this->_datamanagers['document']->init($this->_request_data['document']))
         {
+	    debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Failed to initialize the datamanager, see debug level log for more information.', MIDCOM_LOG_ERROR);
             debug_print_r('DM instance was:', $this->_datamanagers['document']);
             debug_print_r('Object to be used was:', $this->_request_data['document']);
@@ -417,7 +416,8 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
             )
         );
 
-        debug_pop();
+	$_MIDCOM->componentloader->load('org.openpsa.contactwidget');
+
         return true;
     }
 
