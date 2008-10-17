@@ -55,6 +55,8 @@
     'addAttribute' => array
     (
         array('a', 'name', 'Text'),
+        array('img', 'hspace', 'Length'),
+        array('img', 'vspace', 'Length'),
     ),
     /**
      * each value passed in order with call_user_func_array to $def->addElement()
