@@ -86,6 +86,11 @@ class org_openpsa_contactwidget extends midcom_baseclasses_components_purecode
     {
         $this->_component = 'org.openpsa.contactwidget';
 
+        //make sue the component is loaded, so that config data is available
+        if (!$_MIDCOM->componentloader->is_loaded($this->_component))
+        {
+            $_MIDCOM->componentloader->load($this->_component);
+        }
         parent::__construct();
 
         // Hack to make $contacts_url static
