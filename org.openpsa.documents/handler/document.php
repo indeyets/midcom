@@ -413,7 +413,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager/columned..css",
+                'href' => MIDCOM_STATIC_URL . "/midcom.helper.datamanager/columned.css",
             )
         );
 
