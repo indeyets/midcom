@@ -24,7 +24,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
 
     function _on_initialize()
     {
-    $this->_datamanagers['document'] = new midcom_helper_datamanager($this->_config->get('schemadb_document'));
+        $this->_datamanagers['document'] = new midcom_helper_datamanager($this->_config->get('schemadb_document'));
     }
 
     function _load_document($guid)
@@ -38,7 +38,18 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
         {
             return false;
         }*/
-        $this->_datamanagers['document']->init($this->_request_data['document']);
+        
+        // Load the document to datamanager
+        if (!$this->_datamanagers['document']->init($document))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Failed to initialize the datamanager, see debug level log for more information.', MIDCOM_LOG_ERROR);
+            debug_print_r('DM instance was:', $this->_datamanagers['document']);
+            debug_print_r('Object to be used was:', $document);
+            debug_pop();
+            return false;
+        }
+
 
         return $document;
     }
@@ -375,17 +386,6 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
                     MIDCOM_TOOLBAR_ENABLED => true,
                 )
             );
-        }
-
-        // Load the document to datamanager
-        if (!$this->_datamanagers['document']->init($this->_request_data['document']))
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Failed to initialize the datamanager, see debug level log for more information.', MIDCOM_LOG_ERROR);
-            debug_print_r('DM instance was:', $this->_datamanagers['document']);
-            debug_print_r('Object to be used was:', $this->_request_data['document']);
-            debug_pop();
-            return false;
         }
 
         // Get list of older versions
