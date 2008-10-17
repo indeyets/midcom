@@ -380,7 +380,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
         // Load the document to datamanager
         if (!$this->_datamanagers['document']->init($this->_request_data['document']))
         {
-	    debug_push_class(__CLASS__, __FUNCTION__);
+            debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Failed to initialize the datamanager, see debug level log for more information.', MIDCOM_LOG_ERROR);
             debug_print_r('DM instance was:', $this->_datamanagers['document']);
             debug_print_r('Object to be used was:', $this->_request_data['document']);
@@ -416,7 +416,9 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
             )
         );
 
-	$_MIDCOM->componentloader->load('org.openpsa.contactwidget');
+        $_MIDCOM->componentloader->load('org.openpsa.contactwidget');
+
+        $this->_update_breadcrumb_line();
 
         return true;
     }
@@ -430,6 +432,24 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
     {
         $this->_request_data['document_dm'] = $this->_datamanagers['document'];
         midcom_show_style("show-document");
+    }
+
+    /**
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
+     * location.
+     *
+     */
+    private function _update_breadcrumb_line()
+    {
+        $tmp = Array();
+
+        $tmp[] = Array
+        (
+            MIDCOM_NAV_URL => "{$this->_request_data['document']->guid}/",
+            MIDCOM_NAV_NAME => $this->_request_data['document']->title,
+        );
+
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 
 }
