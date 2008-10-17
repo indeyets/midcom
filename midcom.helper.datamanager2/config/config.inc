@@ -55,6 +55,7 @@
     'addAttribute' => array
     (
         array('a', 'name', 'Text'),
+        array('a', 'rel', 'Text'),
         array('img', 'hspace', 'Length'),
         array('img', 'vspace', 'Length'),
     ),
