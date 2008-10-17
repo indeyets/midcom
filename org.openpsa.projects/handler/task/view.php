@@ -182,21 +182,24 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
             'confirmed' => array(),
             'suspected' => array(),
         );
-        $qb = org_openpsa_relatedto_relatedto_dba::new_query_builder();
-        $qb->add_constraint('toGuid', '=', $task->guid);
-        $qb->add_constraint('fromComponent', '=', 'org.openpsa.calendar');
-        $qb->add_constraint('status', '<>', ORG_OPENPSA_RELATEDTO_STATUS_NOTRELATED);
+        $mc = org_openpsa_relatedto_relatedto_dba::new_collector('toGuid', $task->guid);
+        $mc->add_value_property('status');
+        $mc->add_value_property('fromGuid');
+        $mc->add_constraint('fromComponent', '=', 'org.openpsa.calendar');
+        $mc->add_constraint('status', '<>', ORG_OPENPSA_RELATEDTO_STATUS_NOTRELATED);
         // TODO: fromClass too?
-        $relations = $qb->execute();
-        foreach ($relations as $relation)
+        $mc->execute();
+        
+        $relations = $mc->list_keys();
+        foreach ($relations as $guid => $empty)
         {
-            $booking = new org_openpsa_calendar_event_dba($relation->fromGuid);
+            $booking = new org_openpsa_calendar_event_dba($mc->get_subkey($guid, 'fromGuid'));
             if (!$booking)
             {
                 continue;
             }
 
-            if ($relation->status == ORG_OPENPSA_RELATEDTO_STATUS_CONFIRMED)
+            if ($mc->get_subkey($guid, 'status') == ORG_OPENPSA_RELATEDTO_STATUS_CONFIRMED)
             {
                 $bookings['confirmed'][] = $booking;
 
@@ -208,9 +211,8 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
             }
         }
 
-        // Sort by start time (uses an anonymous function since usort cannot use object methods even statically)
-        usort($bookings['confirmed'], create_function('$a,$b', $this->_code_for_sort_by_time()));
-        usort($bookings['suspected'], create_function('$a,$b', $this->_code_for_sort_by_time()));
+        usort($bookings['confirmed'], array('org_openpsa_projects_handler_task_view', '_sort_by_time'));
+        usort($bookings['suspected'], array('org_openpsa_projects_handler_task_view', '_sort_by_time'));
 
         $this->_request_data['task_booked_time'] = round($this->_request_data['task_booked_time']);
 
@@ -231,21 +233,19 @@ class org_openpsa_projects_handler_task_view extends midcom_baseclasses_componen
      *
      * Used by $this->_list_bookings()
      */
-    function _code_for_sort_by_time()
+    private static function _sort_by_time($a, $b)
     {
-        return <<<EOF
-        \$ap = \$a->start;
-        \$bp = \$b->start;
-        if (\$ap > \$bp)
+        $ap = $a->start;
+        $bp = $b->start;
+        if ($ap > $bp)
         {
             return 1;
         }
-        if (\$ap < \$bp)
+        if ($ap < $bp)
         {
             return -1;
         }
         return 0;
-EOF;
     }
 
     /**
