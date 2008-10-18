@@ -1,359 +1,342 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE pl
 
 ---STRING %d photos tagged with %s
-<span>%d photos tagged with </span>%s
+<span>zdjęcia %d z tagiem </span>%s
 ---STRINGEND
 
 ---STRING a new photo waiting for moderation
-A new photo is waiting for moderation
+Nowe zdjęcie czeka na moderację
 ---STRINGEND
 
 ---STRING accept
-Accept
+Zaakceptuj
 ---STRINGEND
 
 ---STRING accepted mail message
-Accepted mail message
+Zaakceptuj treść
 ---STRINGEND
 
 ---STRING accepted mail subject
-Accepted mail subject
+Zaakceptuj temat
 ---STRINGEND
 
 ---STRING accepted_photo_message
-Your photo has been approved for public viewing. You can now see it in __URL__.
-
---
-Sent from __URL__ on __DATE__.
+Twoje zdjęcie zostało zaakceptowane. Możesz je zobaczyć pod adresem __URL__. -- Wysłano z __URL__, __DATE__.
 ---STRINGEND
 
 ---STRING all
-All
+Wszystkie
 ---STRINGEND
 
 ---STRING all photos
-All photos
+Wszystkie zdjęcia
 ---STRINGEND
 
 ---STRING all photos rated as %s
-All photos rated as %s
+Wszystkie zdjęcia z oceną %s
 ---STRINGEND
 
 ---STRING all tags
-All tags
+Wszystkie tagi
 ---STRINGEND
 
 ---STRING ascending
-ascending
+rosnąco
 ---STRINGEND
 
 ---STRING between %s-%s
-Between %s - %s
+Pomiędzy %s a %s
 ---STRINGEND
 
 ---STRING create callback function
-Create callback function
+Utwórz funkcję zwrotną
 ---STRINGEND
 
 ---STRING create callback snippet
-Create callback snippet
+Utwórz skrypt zwrotny
 ---STRINGEND
 
 ---STRING delete
-Delete
+Usuń
 ---STRINGEND
 
 ---STRING delete photo
-Delete photo
+Usuń zdjęcie
 ---STRINGEND
 
 ---STRING descending
-descending
+malejąco
 ---STRINGEND
 
 ---STRING done recreating derived images
-Done recreating derived images
+Obrazy odtworzone
 ---STRINGEND
 
 ---STRING edit photo
-Edit photo
+Edytuj zdjęcie
 ---STRINGEND
 
 ---STRING email API default tags to apply to photos
-Email API default tags to apply to photos
+Domyślny tag do Email API
 ---STRINGEND
 
 ---STRING email API enable
-Enable email API
+Włącz Email API
 ---STRINGEND
 
 ---STRING email API schema
-Schema for the email API
+Schemat Email API
 ---STRINGEND
 
 ---STRING enable ajax editing
-Enable AJAX editing
+Włącz AJAX
 ---STRINGEND
 
 ---STRING entry page operating model
-Entry page operating model
+Tryb strony głównej
 ---STRINGEND
 
 ---STRING failure when processing photo "%s" (GUID: %s)
-Failure when processing photo "%s" (GUID: %s)
+Błąd edycji zdjęcia "%s" (GUID: %s)
 ---STRINGEND
 
 ---STRING flickr_username
-Flickr username
+Użytkownik Flickr
 ---STRINGEND
 
 ---STRING go straight to the all photos view
-Go straight to the all photos view
+Pokaż wszystkie zdjęcia
 ---STRINGEND
 
 ---STRING how many photos should be shown per page
-How many photos should be shown per page
+Ilość zdjęć na stronie
 ---STRINGEND
 
 ---STRING if checked only logged in users can see this photo
-If checked only logged in users can see this photo
+Jeśli wybrane, tylko zalogowani użytkownicy mogą zobaczyć to zdjęcie
 ---STRINGEND
 
 ---STRING if checked only you can see this photo
-If checked only you can see this photo
+Jeśli wybrane, tylko Ty możesz zobaczyć to zdjęcie
 ---STRINGEND
 
 ---STRING if this is on, photos require moderation before they will be displayed to the public
-If this is on, photos require moderation before they will be displayed to the public
+Jeśli wybrane, zdjęcia wymagają moderacji
 ---STRINGEND
 
 ---STRING message sent after accepting a photo
-Message sent after accepting a photo
+Wiadomość wysyłana po zaakceptowaniu zdjęcia
 ---STRINGEND
 
 ---STRING message sent after rejecting a photo
-Message sent after rejecting a photo
+Wiadomość wysyłana po odrzuceniu zdjęcia
 ---STRINGEND
 
 ---STRING messages sent to user
-Messages sent to user
+Wiadomości do użytkownika
 ---STRINGEND
 
 ---STRING moderate
-Moderate
+Moderacja
 ---STRINGEND
 
 ---STRING moderate callback function
-Moderate callback function
+Funkcja zwrotna moderacji
 ---STRINGEND
 
 ---STRING moderate callback options
-Moderate callback options
+Opcje zwrotne moderacji
 ---STRINGEND
 
 ---STRING moderate callback snippet
-Moderate callback snippet
+Skrypt zwrotny moderacji
 ---STRINGEND
 
 ---STRING moderate photos
-Moderate photos
+Moderuj zdjęcia
 ---STRINGEND
 
 ---STRING moderate photos for folder %s
-Moderate photos for folder %s
+Moderuj zdjęcia w folderze %s
 ---STRINGEND
 
 ---STRING moderate uploaded photos
-Moderate uploaded photos
+Moderuj wysyłane zdjęcia
 ---STRINGEND
 
 ---STRING moderation settings
-Moderation settings
+Ustawienia moderacji
 ---STRINGEND
 
 ---STRING moderation_mail_body
-There is new material waiting for approval. Please visit __URL__ to evaluate the material.
-
---
-Sent from __URL__
+Nowe zdjęcia oczekuja na moderację. Wejdź na stronę __URL__ żeby ocenić materiał. -- Wysłano z __URL__
 ---STRINGEND
 
 ---STRING moderator email address
-Moderator email address
+Email moderatora
 ---STRINGEND
 
 ---STRING moderator mail message
-Moderator mail message
+Wiadomość do moderatora
 ---STRINGEND
 
 ---STRING moderator mail subject
-Moderator mail subject
+Temat wiadomości do moderatora
 ---STRINGEND
 
 ---STRING my photos
-My photos
+Moje zdjęcia
 ---STRINGEND
 
 ---STRING my tags
-My tags
----STRINGEND
-
----STRING navigate with sticky context (e.g. tags, timespan or photographer)
-Navigate with sticky context (e.g. tags, timespan or photographer)
+Moje tagi
 ---STRINGEND
 
 ---STRING next
-Next
+Dalej
 ---STRINGEND
 
 ---STRING not public
-Not public
+Niepubliczne
 ---STRINGEND
 
 ---STRING org.routamc.photostream
-Photo management
+Zarządzanie zdjęciami
 ---STRINGEND
 
 ---STRING photo
-Photo
+Zdjęcie
 ---STRINGEND
 
 ---STRING photo %s accepted
-Photo %s accepted
+Zdjęcie %s zaakceptowane
 ---STRINGEND
 
 ---STRING photo %s rejected
-Photo %s rejected
+Zdjęcie %s odrzucone
 ---STRINGEND
 
 ---STRING photo details
-Photo details
+Szczegóły
 ---STRINGEND
 
 ---STRING photo tags
-Photo tags
+Tagi
 ---STRINGEND
 
 ---STRING photo tags of %s
-Photo tags of %s
+Tagi zdjęcia %s
 ---STRINGEND
 
 ---STRING photographer
-Photographer
+Autor
 ---STRINGEND
 
 ---STRING photos in batch %s
-Photos in batch %s
+Zdjęcia w paczce %s
 ---STRINGEND
 
 ---STRING photos of %s
-Photos of %s
+Zdjęcia %s
 ---STRINGEND
 
 ---STRING photos of %s rated as %s
-Photos of %s rated as %s
+Zdjęcia %s ocenione na %s
 ---STRINGEND
 
 ---STRING photos of %s tagged with %s
-Photos of %s tagged with "%s"
+Zdjęcia %s z tagiem %s
 ---STRINGEND
 
 ---STRING photos tagged with %s
-Photos tagged with "%s"
+Zdjęcia z tagiem %s
 ---STRINGEND
 
 ---STRING previous
-Previous
+Wstecz
 ---STRINGEND
 
 ---STRING private
-Photo is private
+Prywatne
 ---STRINGEND
 
 ---STRING privilege moderate
-Moderate
+Moderacja
 ---STRINGEND
 
 ---STRING processed photo "%s" (GUID: %s)
-Processed photo "%s" (GUID: %s)
+Zdjęcie "%s" (GUID: %s) przetworzone
 ---STRINGEND
 
 ---STRING random photos
-Random photos
+Losowe zdjęcia
 ---STRINGEND
 
 ---STRING rating
-Rating
+Ocena
 ---STRINGEND
 
 ---STRING recreate derived images
-Recreate derived images
+Odtwórz obrazy
 ---STRINGEND
 
 ---STRING recreating derived images
-Recreating derived images
+Odtwarzanie obrazów
 ---STRINGEND
 
 ---STRING reject
-Reject
+Odrzuć
 ---STRINGEND
 
 ---STRING rejected mail message
-Rejected mail message
+Wiadomość o odrzuceniu
 ---STRINGEND
 
 ---STRING rejected mail subject
-Rejected mail subject
+Temat wiadomości o odrzuceniu
 ---STRINGEND
 
 ---STRING rejected_photo_message
-Your photo has been rejected. It will not be available for public viewing in __URL__.
-
---
-Sent from __URL__ on __DATE__.
----STRINGEND
-
----STRING related to the moderator
-Related to the moderator
+Twoje zdjęcie zostało odrzucone. Nie zostanie opublikowane na stronie __URL__. -- Wysłano ze strony __URL__, __DATE__.
 ---STRINGEND
 
 ---STRING return to photostream
-Return to photostream
+Powrót do zdjęć
 ---STRINGEND
 
 ---STRING schema database
-Schema database
+Schemat
 ---STRINGEND
 
 ---STRING select the user or tags
-Select the user or tags
+Wybierz użytkownika lub tagi
 ---STRINGEND
 
 ---STRING send accepting message
-Send accepting message
+Wyślij mail z akceptacją
 ---STRINGEND
 
 ---STRING send rejection message
-Send rejection message
+Wyślij mail z odrzuceniem
 ---STRINGEND
 
 ---STRING send status change messages to the photographer
-Send status change messages to the photographer
+Powiadom autora o zmianie statusu
 ---STRINGEND
 
 ---STRING show next and previous links (can be computationally expensive for large streams)
-Show next and previous links (can be computationally expensive for large streams)
+Pokaż linki dalej i wstecz (może być obciążeniem przy wielu zdjęciach)
 ---STRINGEND
 
 ---STRING sorted by %s
-Sorted by %s
+Sortowanie wg %s
 ---STRINGEND
 
 ---STRING sorted by %s %s
-Sorted by %s in %s order
+Sortowanie wg %s, %s
 ---STRINGEND
 
 ---STRING start
@@ -365,82 +348,82 @@ Status
 ---STRINGEND
 
 ---STRING symlinked folder
-Read the content from a different folder (symlink)
+Link symboliczny
 ---STRINGEND
 
 ---STRING system email address for outgoing mail
-System email address for outgoing mail
+Adres nadawcy
 ---STRINGEND
 
 ---STRING tagged %s
-Tagged '%s'
+Tag '%s'
 ---STRINGEND
 
 ---STRING taken
-Photo taken on
+Data zdjęcia
 ---STRINGEND
 
 ---STRING taken on %s
-Taken on %s
+Wykonano %s
 ---STRINGEND
 
 ---STRING taken on %s in %s
-Taken on %s in %s
+Wykonano %s w %s
 ---STRINGEND
 
 ---STRING these settings are for system administrators only
-These settings are for system administrators only
+Ustawienia tylko dla administratorów
 ---STRINGEND
 
 ---STRING this address will be the one used from which the emails will be sent
-This address will be the one used from which the emails will be sent
+Adres nadawcy wszystkich maili
 ---STRINGEND
 
 ---STRING this address will receive the messages notifying of new photos
-This address will receive the messages notifying of new photos
+Adres na który zostaną wysłane maile o moderacji
 ---STRINGEND
 
 ---STRING this operation will take some time
-This operation will take some time
+To chwilę potrwa
 ---STRINGEND
 
 ---STRING thumbnail
-Thumbnail
+Miniatura
 ---STRINGEND
 
 ---STRING upload photos
-Upload photos
+Wyślij zdjęcia
 ---STRINGEND
 
 ---STRING upload size limit
-Size limit for uploaded files
+Limit wysyłania
 ---STRINGEND
 
 ---STRING upload to gallery
-Upload to gallery
+Dodaj do galerii
 ---STRINGEND
 
 ---STRING user interface settings
-User interface settings
+Ustawienia interfejsu
 ---STRINGEND
 
 ---STRING view all photos
-View all photos
+Pokaż wszystkie zdjęcia
 ---STRINGEND
 
 ---STRING view rejected photos
-View rejected photos
+Pokaż zdjęcia odrzucone
 ---STRINGEND
 
 ---STRING view unmoderated photos
-View unmoderated photos
+Pokaż zdjęcia niemoderowane
 ---STRINGEND
 
 ---STRING your photo has been accepted
-Your photo has been accepted
+Twoje zdjęcie zostało zaakceptowane
 ---STRINGEND
 
 ---STRING your photo has been rejected
-Your photo has been rejected
+Twoje zdjęcie zostało odrzucone
 ---STRINGEND
 
