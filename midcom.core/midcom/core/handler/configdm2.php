@@ -211,7 +211,7 @@ class midcom_core_handler_configdm2 extends midcom_baseclasses_components_handle
             && mgd_is_element_loaded('dm2_config'))
         {
             $data['controller'] =& $this->_controller;
-            mgd_show_element('dm2_config');
+            midcom_show_element('dm2_config');
         }
         else
         {

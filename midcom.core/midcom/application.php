@@ -124,7 +124,7 @@ class midcom_application
      * @var int
      * @access private
      */
-    private $_currentcontext = null;
+    private $_currentcontext = 0;
 
     /**
      * The active component.
@@ -2094,7 +2094,7 @@ class midcom_application
         if (   $code < 500
             && mgd_is_element_loaded("midcom_error_{$code}"))
         {
-            mgd_show_element("midcom_error_{$code}");
+            midcom_show_element("midcom_error_{$code}");
         }
         else
         {

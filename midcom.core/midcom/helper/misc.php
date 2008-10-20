@@ -261,4 +261,9 @@ function midcom_helper_find_node_by_component($component, $node_id = null, $nap 
     }
     return $component_node;
 }
+
+function midcom_show_element($name) 
+{ 
+    eval('?>' . mgd_preparse(mgd_template($name))); 
+} 
 ?>

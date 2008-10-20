@@ -61,7 +61,7 @@ class midcom_services_auth_frontend_form extends midcom_services_auth_frontend
         if (   function_exists('mgd_is_element_loaded')
             && mgd_is_element_loaded('midcom_services_auth_frontend_form'))
         {
-            mgd_show_element('midcom_services_auth_frontend_form');
+            midcom_show_element('midcom_services_auth_frontend_form');
         }
         else
         {
