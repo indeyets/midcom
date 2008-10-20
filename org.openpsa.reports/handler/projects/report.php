@@ -320,7 +320,7 @@ EOF;
             {
                 debug_add(sprintf('found subgroup in key "%s", recursing it', $k));
                 debug_pop();
-                $got =& $this->_get_report_group($matching, $sort, $title, &$rows[$k], $recursed+1);
+                $got =& $this->_get_report_group($matching, $sort, $title, $rows[$k], $recursed+1);
                 debug_push_class(__CLASS__, __FUNCTION__);
                 if ($got !== false)
                 {
@@ -453,7 +453,7 @@ EOF;
         //Indented to make style flow clearer
         midcom_show_style("projects_report{$bpr}-start");
             midcom_show_style("projects_report{$bpr}-header");
-                $this->_show_generator_group(&$this->_request_data['report']['rows'], $bpr);
+                $this->_show_generator_group($this->_request_data['report']['rows'], $bpr);
             midcom_show_style("projects_report{$bpr}-totals");
             midcom_show_style("projects_report{$bpr}-footer");
         midcom_show_style("projects_report{$bpr}-end");
@@ -477,7 +477,7 @@ EOF;
                 //Indented to make style flow clearer
                 midcom_show_style("projects_report{$bpr}-group-start");
                     midcom_show_style("projects_report{$bpr}-group-header");
-                        $this->_show_generator_group(&$row['rows'], $bpr, $level+1);
+                        $this->_show_generator_group($row['rows'], $bpr, $level + 1);
                     midcom_show_style("projects_report{$bpr}-group-totals");
                     midcom_show_style("projects_report{$bpr}-group-footer");
                 midcom_show_style("projects_report{$bpr}-group-end");
