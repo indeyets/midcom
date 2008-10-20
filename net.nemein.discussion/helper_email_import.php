@@ -431,15 +431,8 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
         $thread->firstpost = $post->id;
         $thread->latestpost = $post->id;
         // Try to figure out the correct latestposttime to use
-        if (is_numeric($post->metadata->published))
-        {
-            $thread->latestposttime = $post->metadata->published;
-        }
-        else
-        {
-            // The problem here is that the timestamp is in UTC
-            $thread->latestposttime = strtotime($post->metadata->published);
-        }
+        $thread->latestposttime = (int) $post->metadata->published;
+
         // Make sure name is unique
         $i = 1;
         while (true)

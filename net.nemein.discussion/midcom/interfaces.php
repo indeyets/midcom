@@ -116,7 +116,7 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
         $thread->name = midcom_generate_urlname_from_string(strftime('%x %X', time()) . ": {$post->subject}");
         $thread->firstpost = $post->id;
         $thread->latestpost = $post->id;
-        $thread->latestposttime = $post->metadata->published;
+        $thread->latestposttime = (int) $post->metadata->published;
         if (!$thread->update())
         {
             $post->delete();

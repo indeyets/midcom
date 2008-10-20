@@ -395,7 +395,7 @@ class net_nemein_discussion_post_dba extends __net_nemein_discussion_post_dba
             {
                 $thread->posts = count($posts);
                 $thread->latestpost = $latest_post->id;
-                $thread->latestposttime = $latest_post->metadata->published;
+                $thread->latestposttime = (int) $latest_post->metadata->published;
                 $thread->update();
             }
             else

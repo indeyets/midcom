@@ -36,12 +36,26 @@ foreach ($threads as $thread)
     if ($thread->latestpost)
     {
         $latest_post = new net_nemein_discussion_thread();
-        $latest_post->get_by_id($thread->latestpost);
+        try
+        {
+            $latest_post->get_by_id($thread->latestpost);
+        }
+        catch (Exception $e)
+        {
+            $latest_post = null;
+        }
     }
     if ($thread->firstpost)
     {
         $first_post = new net_nemein_discussion_thread();
-        $first_post->get_by_id($thread->firstpost);
+        try
+        {
+            $first_post->get_by_id($thread->firstpost);
+        }
+        catch (Exception $e)
+        {
+            $first_post = null;
+        }
     }
     foreach ($posts as $post)
     {
@@ -74,7 +88,7 @@ foreach ($threads as $thread)
             $thread->firstpost = $first_post->id;
         }
         
-        $thread->latestposttime = strtotime($latest_post->metadata->published);
+        $thread->latestposttime = (int) strtotime($latest_post->metadata->published);
         
         echo "Setting post count for thread \"{$thread->title}\" to {$thread->posts}, latest post to #{$thread->latestpost} and first post to #{$thread->firstpost}<br />\n";
         flush();

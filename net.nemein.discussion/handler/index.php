@@ -79,10 +79,10 @@ class net_nemein_discussion_handler_index extends midcom_baseclasses_components_
                 }
                 else
                 {
-                    $thread_date = date('Y-m-d', $thread->metadata->published);
+                    $thread_date = date('Y-m-d', (int) $thread->metadata->published);
                     $thread_time = $thread->metadata->published;
                 }
-                
+
                 if ($date != $thread_date)
                 {
                     $data['date'] = $thread_time;

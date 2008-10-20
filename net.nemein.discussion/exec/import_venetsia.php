@@ -53,7 +53,7 @@ foreach ($simplexml->PROGRAM as $program)
     $thread->name = (string) $program->OHESNO;
     $thread->firstpost = $post->id;
     $thread->latestpost = $post->id;
-    $thread->latestposttime = $post->metadata->published;
+    $thread->latestposttime =(int) $post->metadata->published;
     $thread->update();
 }
 ?>

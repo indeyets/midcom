@@ -337,7 +337,7 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 $this->_thread->posts = 1;
                 $this->_thread->firstpost = $this->_post->id;
                 $this->_thread->latestpost = $this->_post->id;
-                $this->_thread->latestposttime = $this->_post->metadata->published;
+                $this->_thread->latestposttime = (int) $this->_post->metadata->published;
                 $i = 0;
                 // FIXME: check for duplicate name explicitly
                 while (   !$this->_thread->update()
