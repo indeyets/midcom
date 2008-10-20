@@ -2403,13 +2403,6 @@ class midcom_application
             exit();
         }
 
-        $f = $attachment->open('r');
-        if (! $f)
-        {
-            debug_pop();
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to open attachment for reading: ' . mgd_errstr());
-            // This will exit()
-        }
         fpassthru($f);
         $attachment->close();
         //debug_add('file sent, exit()ing so nothing has a chance the mess things up anymore');
