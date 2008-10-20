@@ -276,7 +276,7 @@ class org_routamc_positioning_map extends midcom_baseclasses_components_purecode
         
         foreach ($this->markers as $marker)
         {
-            $marker_instance = $this->create_js_marker($marker, &$script);
+            $marker_instance = $this->create_js_marker($marker, $script);
             $script .= "    mapstraction_{$this->id}.addMarker({$marker_instance});\n";
         }
         $script .= "    mapstraction_{$this->id}.addSmallControls();\n";
