@@ -164,22 +164,4 @@ class midcom_services_cache
         debug_pop();
     }
 }
-
-/**
- * Global instance of the Caching service. This is also available as $midcom->cache.
- *
- * @global midcom_services_cache $GLOBALS['midcom_cache']
- */
-$GLOBALS['midcom_cache'] = null;
-
-/**
- * Helper function, starts up the caching system, assigns it to the global
- * variable $GLOBALS['midcom_cache'].
- */
-function midcom_services_cache_startup()
-{
-    $GLOBALS['midcom_cache'] = new midcom_services_cache();
-    $GLOBALS['midcom_cache']->initialize();
-}
-
 ?>

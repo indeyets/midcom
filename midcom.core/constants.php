@@ -466,6 +466,12 @@ $GLOBALS['midcom_debugger'] = null;
  */
 $GLOBALS['midcom_component_data'] = Array();
 
+/**
+ * Global instance of the Caching service. This is also available as $midcom->cache.
+ *
+ * @global midcom_services_cache $GLOBALS['midcom_cache']
+ */
+$GLOBALS['midcom_cache'] = null;
 
 /**#@-*/
 ?>

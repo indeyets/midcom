@@ -362,12 +362,7 @@ class midcom_application
         // set prefix for "new" midgard->self
         $this->_prefix = $GLOBALS['midcom_config']['midcom_prefix'];
 
-        //$this->midgard = $this->get_midgard();
-
         $this->_status = MIDCOM_STATUS_PREPARE;
-
-        // Associate the global cache instance
-        $this->cache = $GLOBALS['midcom_cache'];
 
         // Start-up some of the services
         $this->dbclassloader->load_classes('midcom', 'legacy_classes.inc');

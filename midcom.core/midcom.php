@@ -51,6 +51,7 @@ unset($redirect_test_uri);
 
 // Advertise the fact that this is a Midgard server
 header('X-Powered-By: Midgard/' . mgd_version());
+//mgd_debug_start();
 
 ///////////////////////////////////////////////////////////
 // Ease debugging and make sure the code actually works(tm)
@@ -190,6 +191,7 @@ spl_autoload_register('midcom_autoload');
 ///////////////////////////////////
 // Load first-level supporting code
 // Note that the cache check hit depends on the i18n and auth code.
+require(MIDCOM_ROOT . '/midcom/services/auth.php');
 $auth = new midcom_services_auth();
 $auth->initialize();
 
@@ -198,7 +200,8 @@ $auth->initialize();
 // this might already end the request
 // on a content cache hit.
 require(MIDCOM_ROOT . '/midcom/services/cache.php');
-midcom_services_cache_startup();
+$GLOBALS['midcom_cache'] = new midcom_services_cache();
+$GLOBALS['midcom_cache']->initialize();
 
 ///////////////////////////////////////////////
 // Load all required MidCOM Framework Libraries
@@ -209,7 +212,6 @@ require(MIDCOM_ROOT . '/midcom/services/_i18n_l10n.php');
 require(MIDCOM_ROOT . '/midcom/helper/misc.php');
 require(MIDCOM_ROOT . '/midcom/helper/formatters.php');
 
-//mgd_debug_start();
 /////////////////////////////////////
 // Instantiate the MidCOM main class
 
@@ -217,6 +219,15 @@ require(MIDCOM_ROOT . '/midcom/application.php');
 
 $_MIDCOM = new midcom_application();
 $_MIDCOM->auth = $auth;
+$_MIDCOM->cache = $GLOBALS['midcom_cache'];
+
+// Quick-and-dirty handler for catching attachment serve requests to reduce overhead
+if (   count($_MIDGARD['argv']) == 1
+    && substr($_MIDGARD['argv'][0], 0, 27) == 'midcom-serveattachmentguid-')
+{
+    $_MIDCOM->serve_attachment(substr($_MIDGARD['argv'][0], 27));
+}
+
 $_MIDCOM->initialize();
 
 if (file_exists(MIDCOM_CONFIG_FILE_AFTER))
