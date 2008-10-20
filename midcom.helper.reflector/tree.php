@@ -383,6 +383,87 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
     }
 
     /**
+     * Statically callable method to get rendered path for object
+     *
+     * @param midgard_object $object, the object to get path for
+     * @param string $separator the string used to separate path components
+     * @param GUID $stop_at in case we wish to stop resolving at certain object give guid here
+     * @return string resolved path
+     */
+    function resolve_path(&$object, $separator = ' &gt; ', $stop_at = null)
+    {
+        static $cache = array();
+        $cache_key = $object->guid . $separator . $stop_at;
+        if (isset($cache[$cache_key]))
+        {
+            return $cache[$cache_key]; 
+        }
+        $parts = midcom_helper_reflector_tree::resolve_path_parts($object, $stop_at);
+        $d = count($parts);
+        $ret = '';
+        foreach ($parts as $part)
+        {
+            $ret .= $part['label'];
+            --$d;
+            if ($d)
+            {
+                $ret .= $separator;
+            }
+        }
+        unset($part, $d, $parts);
+        $cache[$cache_key] = $ret;
+        unset($ret);
+        return $cache[$cache_key];
+    }
+
+    /**
+     * Statically callable method to get path components for object
+     *
+     * @param midgard_object $object, the object to get path for
+     * @param GUID $stop_at in case we wish to stop resolving at certain object give guid here
+     * @return array path components
+     */
+    function resolve_path_parts(&$object, $stop_at = null)
+    {
+        static $cache = array();
+        $cache_key = $object->guid . $stop_at;
+        if (isset($cache[$cache_key]))
+        {
+            return $cache[$cache_key]; 
+        }
+
+        $ret = array();
+        $object_reflector =& midcom_helper_reflector::get($object);
+        $part = array
+        (
+            'object' => $object,
+            'label' => $object_reflector->get_object_label($object),
+        );
+        $ret[] = $part;
+        unset($part, $object_reflector);
+
+        $parent = midcom_helper_reflector_tree::get_parent($object);
+        while (is_object($parent))
+        {
+            $parent_reflector =& midcom_helper_reflector::get($parent);
+            $part = array
+            (
+                'object' => $parent,
+                'label' => $parent_reflector->get_object_label($parent),
+            );
+            $ret[] = $part;
+            unset($part, $parent_reflector);
+            $parent = midcom_helper_reflector_tree::get_parent($parent);
+        }
+        unset($parent);
+        
+        $ret = array_reverse($ret);
+        $cache[$cache_key] = $ret;
+        unset($ret);
+        return $cache[$cache_key];
+    }
+
+    /**
      * statically callable method to get the parent object of given object
      *
      * Tries to utilize MidCOM DBA features first but can fallback on pure MgdSchema
