@@ -354,7 +354,7 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         if (   $handler_id == 'rss20_items'
             || $handler_id == 'rss20_items_personal')
         {
-            $this->_show_rss_items($handler_id, &$data);
+            $this->_show_rss_items($handler_id, $data);
             return;
         }
         midcom_show_style('index_header');
