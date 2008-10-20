@@ -21,7 +21,7 @@
  * 
  * @package midcom.services
  */
-class midcom_services_auth_backend extends midcom_baseclasses_core_object
+class midcom_services_auth_backend
 {
     /**
      * This variable holds the user that has been successfully authenticated by the class,
@@ -47,7 +47,6 @@ class midcom_services_auth_backend extends midcom_baseclasses_core_object
     function __construct($auth)
     {
         $this->auth = $auth;
-        return parent::__construct();
     }
 
     /**

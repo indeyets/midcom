@@ -55,11 +55,6 @@ class midcom_services_cache
      */
     var $_unload_queue = Array();
 
-    function __construct()
-    {
-        // Nothing to do yet.
-    }
-
     /**
      * Cache service startup. It initializes all cache modules configured in the
      * global configuration as outlined in the class introduction.
@@ -96,7 +91,7 @@ class midcom_services_cache
      */
     function load_module($name)
     {
-        if (array_key_exists($name, $this->_modules))
+        if (isset($this->_modules[$name]))
         {
             return;
         }

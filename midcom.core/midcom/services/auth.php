@@ -280,7 +280,7 @@
  * @todo Fully document authentication.
  * @package midcom.services
  */
-class midcom_services_auth extends midcom_baseclasses_core_object
+class midcom_services_auth
 {
     /**
      * The currently authenticated user or null in case of anonymous access.
@@ -464,17 +464,6 @@ class midcom_services_auth extends midcom_baseclasses_core_object
      * @access public
      */
     var $auth_credentials_found = false;
-
-    /**
-     * Simple constructor, calls base class and initializes the data members where applicable.
-     * The real initialization work is done in initialize.
-     */
-    function __construct()
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        parent::__construct();
-        debug_pop();
-    }
 
     /**
      * Initialize the service:

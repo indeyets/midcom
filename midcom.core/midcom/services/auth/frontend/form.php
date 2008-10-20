@@ -19,14 +19,6 @@ require_once (MIDCOM_ROOT . '/midcom/services/auth/frontend.php');
 class midcom_services_auth_frontend_form extends midcom_services_auth_frontend
 {
     /**
-     * Nothing to do here.
-     */
-    function __construct()
-    {
-        return parent::__construct();
-    }
-
-    /**
      * This call checks whether the two form fields we have created are present, if yes
      * it reads and returns their values.
      *

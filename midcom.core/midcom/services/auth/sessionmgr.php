@@ -26,7 +26,7 @@
  * @package midcom.services
  */
 
-class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
+class midcom_services_auth_sessionmgr
 {
     /**
      * A list of loaded login sessions, indexed by their session identifier.
@@ -56,7 +56,6 @@ class midcom_services_auth_sessionmgr extends midcom_baseclasses_core_object
     function __construct($auth)
     {
         $this->auth = $auth;
-        parent::__construct();
     }
 
     /**
