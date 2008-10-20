@@ -27,9 +27,12 @@ class org_openpsa_projects_interface extends midcom_baseclasses_components_inter
             'midcom.helper.datamanager2',
         );
 
-        $this->_fill_virtual_groups();
+        //$this->_fill_virtual_groups();
     }
-
+    
+    /**
+     * @todo this function doesn't seem to do anything useful ($this->_virtual_groups isn't used anywhere)
+     */
     function _fill_virtual_groups()
     {
         // FIXME: Constant ORG_OPENPSA_WGTYPE_ACTIVE is not set yet
