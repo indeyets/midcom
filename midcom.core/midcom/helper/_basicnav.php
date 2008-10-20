@@ -394,30 +394,15 @@ class midcom_helper__basicnav
 
         // Retrieve a NAP instance
         // if we are missing the component, use the nullcomponent.
-        if (!array_key_exists( $topic->component, $_MIDCOM->componentloader->manifests))
+        if (!array_key_exists($topic->component, $_MIDCOM->componentloader->manifests))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("The topic {$topic->id} has no component assigned to it, using nullcomponent.",
+            debug_add("The topic {$topic->id} has no component assigned to it, using 'midcom.core.nullcomponent'.",
                 MIDCOM_LOG_ERROR);
             debug_pop();
             $topic->component = 'midcom.core.nullcomponent';
         }
         $path = $topic->component;
-
-        /*
-        if (!$path)
-        {
-            debug_add("The topic {$topic->id} has no component assigned to it, cannot add it to the NAP list.",
-                MIDCOM_LOG_ERROR);
-            return null;
-        }
-        if (! array_key_exists($path, $_MIDCOM->componentloader->manifests))
-        {
-            debug_add("The component '{$path}' of topic {$topic->id} is unknown to MidCOM, cannot add it to the NAP list.",
-                MIDCOM_LOG_ERROR);
-            return null;
-        }
-        */
 
         $interface =& $this->_loader->get_interface_class($path);
         if (!$interface)
@@ -1143,7 +1128,7 @@ class midcom_helper__basicnav
         // Use the midgard_collector to get the subnodes
         $collector = midcom_db_topic::new_collector('up', $parent_node);
         $collector->add_value_property('id');
-        $collector->add_constraint('component', '<>', '');
+        //$collector->add_constraint('component', '<>', '');
         $collector->add_constraint('name', '<>', '');
         if (!$show_noentry)
         {
