@@ -222,10 +222,13 @@ $_MIDCOM->auth = $auth;
 $_MIDCOM->cache = $GLOBALS['midcom_cache'];
 
 // Quick-and-dirty handler for catching attachment serve requests to reduce overhead
-if (   count($_MIDGARD['argv']) == 1
+if (   count($_MIDGARD['argv']) > 0
     && substr($_MIDGARD['argv'][0], 0, 27) == 'midcom-serveattachmentguid-')
 {
-    $_MIDCOM->serve_attachment(substr($_MIDGARD['argv'][0], 27));
+    $guid = substr($_MIDGARD['argv'][0], 27);
+    $_MIDCOM->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
+    $attachment = new midcom_baseclasses_database_attachment($guid);
+    $_MIDCOM->serve_attachment($attachment);
 }
 
 $_MIDCOM->initialize();
