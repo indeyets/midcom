@@ -252,7 +252,7 @@ class org_routamc_positioning_object extends midcom_baseclasses_components_purec
                 array
                 (
                     'name' => 'icbm',
-                    'content' => "{$coordinates['latitude']},{$coordinates['longitude']}",
+                    'content' => str_replace(',', '.', $coordinates['latitude']) . ',' . str_replace(',', '.', $coordinates['longitude']),
                 )
             );
         }
