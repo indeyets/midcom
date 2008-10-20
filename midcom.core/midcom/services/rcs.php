@@ -23,8 +23,8 @@
  * * boolean midcom_services_rcs_enable - if set, midcom will fail hard if the rcs service is not operational.
  *
  */
-require 'rcs/backend.php';
-require 'rcs/config.php';
+require MIDCOM_ROOT. '/midcom/services/rcs/backend.php';
+require MIDCOM_ROOT. '/midcom/services/rcs/config.php';
 
 /**
  * @package midcom.services.rcs

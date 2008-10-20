@@ -88,9 +88,9 @@ if (! defined('MIDCOM_CONFIG_FILE_AFTER'))
 
 ///////////////////////////////////////
 //Constants, Globals and Configuration
-require('constants.php');
-require('globals.php');
-require('midcom/config/midcom_config.php');
+require(MIDCOM_ROOT . '/constants.php');
+require(MIDCOM_ROOT . '/globals.php');
+require(MIDCOM_ROOT. '/midcom/config/midcom_config.php');
 ini_set('track_errors', '1');
 ini_set('display_errors', '0');
 if ($GLOBALS['midcom_config']['display_php_errors'])
@@ -99,7 +99,7 @@ if ($GLOBALS['midcom_config']['display_php_errors'])
 }
 if ($GLOBALS['midcom_config']['enable_error_handler'])
 {
-    require('errors.php');
+    require(MIDCOM_ROOT. '/errors.php');
 }
 //////////////////////////////////////////////////////////////
 // Set the MIDCOM_XDEBUG constant accordingly, if not yet set.
@@ -122,7 +122,7 @@ if (! defined('MIDCOM_XDEBUG'))
 
 /////////////////////
 // Start the Debugger
-require('midcom/debug.php');
+require(MIDCOM_ROOT. '/midcom/debug.php');
 
 debug_add("Start of MidCOM run: {$_SERVER['REQUEST_URI']}", MIDCOM_LOG_DEBUG);
 
@@ -191,9 +191,9 @@ spl_autoload_register('midcom_autoload');
 ///////////////////////////////////
 // Load first-level supporting code
 // Note that the cache check hit depends on the i18n and auth code.
-require('midcom/helper/misc.php');
+require(MIDCOM_ROOT . '/midcom/helper/misc.php');
 
-require('midcom/helper/formatters.php');
+require(MIDCOM_ROOT . '/midcom/helper/formatters.php');
 
 $auth = new midcom_services_auth();
 $auth->initialize();
@@ -202,7 +202,7 @@ $auth->initialize();
 // Load and start up the cache system,
 // this might already end the request
 // on a content cache hit.
-require('midcom/services/cache.php');
+require(MIDCOM_ROOT . '/midcom/services/cache.php');
 midcom_services_cache_startup();
 
 ///////////////////////////////////////////////
@@ -210,12 +210,12 @@ midcom_services_cache_startup();
 
 // Helpers and First-Generation services
 // Services
-require('midcom/services/_i18n_l10n.php');
+require(MIDCOM_ROOT . '/midcom/services/_i18n_l10n.php');
 
 //mgd_debug_start();
 /////////////////////////////////////
 // Instantiate the MidCOM main class
-require('midcom/application.php');
+require(MIDCOM_ROOT . '/midcom/application.php');
 
 $_MIDCOM = new midcom_application();
 $_MIDCOM->auth = $auth;

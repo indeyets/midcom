@@ -789,7 +789,7 @@ function midcom_generate_urlname_from_string($string, $replacer = "-")
     // TODO: sanity-check $replacer ?
     $orig_string = $string;
     // Try to transliterate non-latin strings to URL-safe format
-    require_once('utf8_to_ascii.php');
+    require_once(MIDCOM_ROOT. '/midcom/helper/utf8_to_ascii.php');
     $string = utf8_to_ascii($string, $replacer);
     $string = trim(str_replace('[?]', '', $string));
 

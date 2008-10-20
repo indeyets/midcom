@@ -435,8 +435,8 @@ class midcom_application
     private function _load_core_dba_classes()
     {
         // Load DBA legacy classes required for core operation
-        require('db/privilege_dba.php');
-        require('db/group_virtual_dba.php');
+        require(MIDCOM_ROOT. '/db/privilege_dba.php');
+        require(MIDCOM_ROOT. '/db/group_virtual_dba.php');
     }
 
     /* *************************************************************************

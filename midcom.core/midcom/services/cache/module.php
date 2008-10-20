@@ -112,7 +112,7 @@ class midcom_services_cache_module
                 "Cannot create backend driver instance {$name}: The driver class is not specified in the configuration.");
             // This will exit.
         }
-        $filename = "backend/{$config['driver']}.php";
+        $filename = MIDCOM_ROOT . "/midcom/services/cache/backend/{$config['driver']}.php";
         $classname = "midcom_services_cache_backend_{$config['driver']}";
         
         require_once($filename);

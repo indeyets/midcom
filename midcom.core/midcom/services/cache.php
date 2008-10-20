@@ -101,7 +101,7 @@ class midcom_services_cache
             return;
         }
 
-        $filename = "cache/module/{$name}.php";
+        $filename = MIDCOM_ROOT. "/midcom/services/cache/module/{$name}.php";
         $classname = "midcom_services_cache_module_{$name}";
 
         require_once($filename);
