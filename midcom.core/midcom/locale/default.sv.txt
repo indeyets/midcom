@@ -7,6 +7,10 @@
 %s i %s
 ---STRINGEND
 
+---STRING %s of packages of type %s
+%s paket av typen %s
+---STRINGEND
+
 ---STRING Edit this page
 Ändra sidan
 ---STRINGEND
@@ -51,11 +55,39 @@ Resumé
 Åtkomst nekad: Du måste vara inloggad.
 ---STRINGEND
 
+---STRING access type
+Åtkomst typ
+---STRINGEND
+
 ---STRING advanced schema and data settings
 Avancerade schema och data inställningar
 ---STRINGEND
 
+---STRING ais-deprecation-heading
+AIS används inte längre för denna komponent
+---STRINGEND
+
+---STRING ais-deprecation-text
+All administration for denna komponent görs nu på siten.
+---STRINGEND
+
+---STRING all
+allt
+---STRINGEND
+
+---STRING and
+och
+---STRINGEND
+
+---STRING anonymous
+anonym
+---STRINGEND
+
 ---STRING approval
+Godkännande
+---STRINGEND
+
+---STRING approvals
 Godkännande
 ---STRINGEND
 
@@ -63,12 +95,24 @@ Godkännande
 Godkänn
 ---STRINGEND
 
+---STRING approve topic
+Godkänn katalog
+---STRINGEND
+
 ---STRING approved
 Godkänd
 ---STRINGEND
 
+---STRING approved changes will be replicated within next minute
+Replikationen av godkända ändringar kommer starta om en minut.
+---STRINGEND
+
 ---STRING approver
 Godkännd av
+---STRINGEND
+
+---STRING arrangement score
+poäng
 ---STRINGEND
 
 ---STRING back
@@ -87,6 +131,14 @@ Tillbaka till ämnets index
 Innehåll
 ---STRINGEND
 
+---STRING bottom
+nederst
+---STRINGEND
+
+---STRING by name
+efter namn
+---STRINGEND
+
 ---STRING calendar
 efter skapande datum
 ---STRINGEND
@@ -95,8 +147,20 @@ efter skapande datum
 Avbryt
 ---STRINGEND
 
+---STRING captcha field title
+Säkerhetskod
+---STRINGEND
+
+---STRING close configuration screen
+Stäng konfigurations skärmen
+---STRINGEND
+
 ---STRING component
 Komponent
+---STRINGEND
+
+---STRING component %s configuration for folder %s
+Komponent %s konfiguration för katalog "%s"
 ---STRINGEND
 
 ---STRING component configuration
@@ -105,6 +169,18 @@ Komponent inställningar
 
 ---STRING component configuration helptext
 Klicka på den här menyn för att konfigurera spceifika inställningar för den här foldern.
+---STRINGEND
+
+---STRING component depends on
+Komponenten beror på
+---STRINGEND
+
+---STRING copy
+Kopiera
+---STRINGEND
+
+---STRING country
+Land
 ---STRINGEND
 
 ---STRING create
@@ -121,6 +197,10 @@ Skapa sida
 
 ---STRING created
 efter datum (äldst först)
+---STRINGEND
+
+---STRING created on
+Skapad den
 ---STRINGEND
 
 ---STRING creator
@@ -143,8 +223,16 @@ Radera
 Beskrivning
 ---STRINGEND
 
+---STRING developer
+Utvecklare
+---STRINGEND
+
 ---STRING discussion in %s
 Diskussion i %s
+---STRINGEND
+
+---STRING down
+ner
 ---STRINGEND
 
 ---STRING download %s
@@ -187,6 +275,10 @@ Krypterad
 Slut datum
 ---STRINGEND
 
+---STRING folder
+Katalog
+---STRINGEND
+
 ---STRING get help
 Hämta hjälp
 ---STRINGEND
@@ -197,6 +289,10 @@ Dold
 
 ---STRING hide
 Dölj
+---STRINGEND
+
+---STRING host
+Websida
 ---STRINGEND
 
 ---STRING id
@@ -219,8 +315,24 @@ i %s
 Intern metadata
 ---STRINGEND
 
+---STRING invalidate cache
+Invalidera MidCOM's cahce
+---STRINGEND
+
 ---STRING keywords
 Nyckelord
+---STRINGEND
+
+---STRING last modified
+Senast ändrad
+---STRINGEND
+
+---STRING lead
+Huvudutvecklare
+---STRINGEND
+
+---STRING library
+Bibliotek
 ---STRINGEND
 
 ---STRING login
@@ -268,7 +380,7 @@ Flytta upp
 ---STRINGEND
 
 ---STRING name
-efter namn
+Namn
 ---STRINGEND
 
 ---STRING nav_noentry
@@ -287,12 +399,32 @@ Ny
 Nästa
 ---STRINGEND
 
+---STRING next page
+Nästa sida
+---STRINGEND
+
 ---STRING no
 Nej
 ---STRINGEND
 
+---STRING not active %s
+Inte aktiv %s
+---STRINGEND
+
 ---STRING not hidden
 Synlig
+---STRINGEND
+
+---STRING offline
+Offline
+---STRINGEND
+
+---STRING online
+Online
+---STRINGEND
+
+---STRING online state
+Online status
 ---STRINGEND
 
 ---STRING optional
@@ -303,6 +435,18 @@ Valfri
 Ägare
 ---STRINGEND
 
+---STRING page
+Sida
+---STRINGEND
+
+---STRING page %d of %d
+Sida %d av %d
+---STRINGEND
+
+---STRING parameters
+Parametrar
+---STRINGEND
+
 ---STRING password
 Lösenord
 ---STRINGEND
@@ -311,8 +455,28 @@ Lösenord
 Lösenorden matchar inte
 ---STRINGEND
 
+---STRING permalink
+Permalänk
+---STRINGEND
+
 ---STRING photo in %s
 Bilder i %s
+---STRINGEND
+
+---STRING previous
+Föregående
+---STRINGEND
+
+---STRING previous page
+Föregående sida
+---STRINGEND
+
+---STRING privileges
+Rättigheter
+---STRINGEND
+
+---STRING reject
+Neka
 ---STRINGEND
 
 ---STRING reset
@@ -371,6 +535,10 @@ Tillåt inte indexering
 Inte satt, använd robots.txt
 ---STRINGEND
 
+---STRING run replication
+Kör replikering
+---STRINGEND
+
 ---STRING save
 Spara
 ---STRINGEND
@@ -407,6 +575,10 @@ Schema databas
 efter poäng
 ---STRINGEND
 
+---STRING search
+Sök
+---STRINGEND
+
 ---STRING select
 Välj
 ---STRINGEND
@@ -425,6 +597,10 @@ Visade från %s till %s
 
 ---STRING shown until %s
 Visade till %s
+---STRINGEND
+
+---STRING sitegroup
+Sitegrupp
 ---STRINGEND
 
 ---STRING sort_by_calendar
@@ -479,12 +655,28 @@ Start datum
 Website statistik
 ---STRINGEND
 
+---STRING tags
+Taggar
+---STRINGEND
+
+---STRING test settings
+Testa inställningar
+---STRINGEND
+
 ---STRING text
 Text
 ---STRINGEND
 
+---STRING thumbnail
+Miniatyr
+---STRINGEND
+
 ---STRING title
 Titel
+---STRINGEND
+
+---STRING top
+överst
 ---STRINGEND
 
 ---STRING topic
@@ -495,12 +687,24 @@ Titel
 Godkänn inte
 ---STRINGEND
 
+---STRING unapprove topic
+Godkänn inte folder
+---STRINGEND
+
 ---STRING unapproved
 Ej godkännd
 ---STRINGEND
 
 ---STRING unhide
 Visa
+---STRINGEND
+
+---STRING unknown
+Okänd
+---STRINGEND
+
+---STRING up
+upp
 ---STRINGEND
 
 ---STRING update
@@ -523,6 +727,10 @@ Updaterad
 Ladda upp
 ---STRINGEND
 
+---STRING upload image
+Ladda upp bild
+---STRINGEND
+
 ---STRING url name
 URL Namn (Internt)
 ---STRINGEND
@@ -543,183 +751,11 @@ Verifiera lösenord
 Visa
 ---STRINGEND
 
----STRING visibilty settings
+---STRING visibility settings
 Synlighets inställningar
 ---STRINGEND
 
----STRING yes
-Ja
----STRINGEND
-
----STRING access type
-Åtkomst typ
----STRINGEND
-
----STRING ais-deprecation-heading
-AIS används inte längre för denna komponent
----STRINGEND
-
----STRING ais-deprecation-text
-All administration for denna komponent görs nu på siten.
----STRINGEND
-
----STRING all
-allt
----STRINGEND
-
----STRING and
-och
----STRINGEND
-
----STRING anonymous
-anonym
----STRINGEND
-
----STRING approve topic
-Godkänn katalog
----STRINGEND
-
----STRING approved changes will be replicated within next minute
-Replikationen av godkända ändringar kommer starta om en minut.
----STRINGEND
-
----STRING bottom
-nederst
----STRINGEND
-
----STRING by name
-efter namn
----STRINGEND
-
----STRING captcha field title
-Säkerhetskod
----STRINGEND
-
----STRING close configuration screen
-Stäng konfigurations skärmen
----STRINGEND
-
----STRING component %s configuration for folder %s
-Komponent %s konfiguration för katalog "%s"
----STRINGEND
-
----STRING copy
-Kopiera
----STRINGEND
-
----STRING created on
-Skapad den
----STRINGEND
-
----STRING down
-ner
----STRINGEND
-
----STRING folder
-Katalog
----STRINGEND
-
----STRING host
-Websida
----STRINGEND
-
----STRING invalidate cache
-Invalidera MidCOM's cahce
----STRINGEND
-
----STRING last modified
-Senast ändrad
----STRINGEND
-
----STRING next page
-Nästa sida
----STRINGEND
-
----STRING offline
-Offline
----STRINGEND
-
----STRING online
-Online
----STRINGEND
-
----STRING online state
-Online status
----STRINGEND
-
----STRING page
-Sida
----STRINGEND
-
----STRING page %d of %d
-Sida %d av %d
----STRINGEND
-
----STRING permalink
-Permalänk
----STRINGEND
-
----STRING previous
-Föregående
----STRINGEND
-
----STRING previous page
-Föregående sida
----STRINGEND
-
----STRING privileges
-Rättigheter
----STRINGEND
-
----STRING reject
-Neka
----STRINGEND
-
----STRING run replication
-Kör replikering
----STRINGEND
-
----STRING search
-Sök
----STRINGEND
-
----STRING sitegroup
-Sitegrupp
----STRINGEND
-
----STRING tags
-Taggar
----STRINGEND
-
----STRING test settings
-Testa inställningar
----STRINGEND
-
----STRING thumbnail
-Miniatyr
----STRINGEND
-
----STRING top
-överst
----STRINGEND
-
----STRING unapprove topic
-Godkänn inte folder
----STRINGEND
-
----STRING unknown
-Okänd
----STRINGEND
-
----STRING up
-upp
----STRINGEND
-
----STRING upload image
-Ladda upp bild
----STRINGEND
-
----STRING visibility settings
+---STRING visibilty settings
 Synlighets inställningar
 ---STRINGEND
 
@@ -729,5 +765,25 @@ Arbetsgrupp
 
 ---STRING write mail
 Skriv mail
+---STRINGEND
+
+---STRING yes
+Ja
+---STRINGEND
+
+---STRING get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
+Hämta fler komponenter från <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
+---STRINGEND
+
+---STRING long date
+%A %B %d, %Y
+---STRINGEND
+
+---STRING short date
+%Y-%m-%d
+---STRINGEND
+
+---STRING url
+Url
 ---STRINGEND
 
