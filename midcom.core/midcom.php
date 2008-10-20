@@ -89,7 +89,6 @@ if (! defined('MIDCOM_CONFIG_FILE_AFTER'))
 ///////////////////////////////////////
 //Constants, Globals and Configuration
 require(MIDCOM_ROOT . '/constants.php');
-require(MIDCOM_ROOT . '/globals.php');
 require(MIDCOM_ROOT. '/midcom/config/midcom_config.php');
 ini_set('track_errors', '1');
 ini_set('display_errors', '0');
@@ -157,7 +156,7 @@ function midcom_autoload($class_name)
             return;
         }
         
-        $path = dirname($path) . ".php";
+        $path = dirname($path) . '.php';
     }
     
     if (   basename($path) == 'interface.php'
@@ -218,7 +217,6 @@ require(MIDCOM_ROOT . '/midcom/application.php');
 
 $_MIDCOM = new midcom_application();
 $_MIDCOM->auth = $auth;
-//$GLOBALS['midcom'] =& $_MIDCOM;
 $_MIDCOM->initialize();
 
 if (file_exists(MIDCOM_CONFIG_FILE_AFTER))
