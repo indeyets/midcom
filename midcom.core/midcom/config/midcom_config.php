@@ -467,7 +467,6 @@ $GLOBALS['midcom_config_default']['service_midcom_core_service_urlgenerator'] = 
 $GLOBALS['midcom_config_default']['attachment_cache_enabled'] = false;
 $GLOBALS['midcom_config_default']['attachment_cache_root'] = '/var/lib/midgard/vhosts/example.net/80/midcom-static/blobs';
 $GLOBALS['midcom_config_default']['attachment_cache_url'] = '/midcom-static/blobs';
-// $GLOBALS['midcom_config_default']['attachment_cache_blobdir'] = '/var/lib/midgard/blobs/midgard';
 
 //X-sendfile support
 $GLOBALS['midcom_config_default']['attachment_xsendfile_blobdir'] = null; // Try '/var/lib/midgard/blobs/midgard'
