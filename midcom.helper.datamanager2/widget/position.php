@@ -186,7 +186,8 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         $this->_get_country_list();
         $this->_init_widgets_js_options();
 
-        $this->_other_xep_keys = array(
+        $this->_other_xep_keys = array
+        (
             'area',
             'building',
             'description',
@@ -325,7 +326,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         }
 
         $html .= "<label for='{$this->_element_id}_input_place_city' id='{$this->_element_id}_input_place_city_label'>";
-        $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('city', 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";
+        $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('xep_city', 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";
         $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_city\" id=\"{$this->_element_id}_input_place_city\" name=\"{$this->_element_id}_input_place_city\" type=\"text\" value=\"{$city_name}\" />";
         $html .= "</label>";
 
@@ -342,7 +343,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         }
 
         $html .= "<label for='{$this->_element_id}_input_place_region' id='{$this->_element_id}_input_place_region_label'>";
-        $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('region', 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";
+        $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('xep_region', 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";
         $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_region\" id=\"{$this->_element_id}_input_place_region\" name=\"{$this->_element_id}_input_place_region\" type=\"text\" value=\"{$region}\" />";
         $html .= "</label>";
 
@@ -359,7 +360,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         }
 
         $html .= "<label for='{$this->_element_id}_input_place_street' id='{$this->_element_id}_input_place_street_label'>";
-        $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('street', 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";
+        $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('xep_street', 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";
         $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_street\" id=\"{$this->_element_id}_input_place_street\" name=\"{$this->_element_id}_input_place_street\" type=\"text\" value=\"{$street}\" />";
         $html .= "</label>";
 
@@ -376,7 +377,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         }
 
         $html .= "<label for='{$this->_element_id}_input_place_postalcode' id='{$this->_element_id}_input_place_postalcode_label'>";
-        $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('postalcode', 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";
+        $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('xep_postalcode', 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";
         $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_postalcode\" id=\"{$this->_element_id}_input_place_postalcode\" name=\"{$this->_element_id}_input_place_postalcode\" type=\"text\" value=\"{$postalcode}\" />";
         $html .= "</label>";
 
@@ -402,7 +403,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
                 }
 
                 $html .= "<label for='{$this->_element_id}_input_place_{$xep_key}' id='{$this->_element_id}_input_place_{$xep_key}_label'>";
-                $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string($xep_key, 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";
+                $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string("xep_{$xep_key}", 'org.routamc.positioning') . "</span><span class=\"proposal\"></span>";
                 $html .= "<input size=\"40\" class=\"shorttext position_widget_input position_widget_input_place_{$xep_key}\" id=\"{$this->_element_id}_input_place_{$xep_key}\" name=\"{$this->_element_id}_input_place_{$xep_key}\" type=\"text\" value=\"{$xep_value}\" />";
                 $html .= "</label>";
             }
@@ -495,7 +496,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
     {
         $this->_countrylist = array
         (
-            '' => $this->_l10n_midcom->get('select your country'),
+            '' => $_MIDCOM->i18n->get_string('select your country', 'org.routamc.positioning'),
         );
 
         $qb = org_routamc_positioning_country_dba::new_query_builder();
@@ -524,7 +525,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
             || count($this->_countrylist) == 1)
         {
             $html .= "<label for='{$this->_element_id}_input_place_country' id='{$this->_element_id}_input_place_country_label'>";
-            $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('country', 'org.routamc.positioning') . "</span>";
+            $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('xep_country', 'org.routamc.positioning') . "</span>";
             $html .= "<input size=\"30\" class=\"shorttext position_widget_input position_widget_input_place_country\" id=\"{$this->_element_id}_input_place_country\" name=\"{$this->_element_id}_input_place_country\" type=\"text\" value=\"{$current}\" />";
             $html .= "</label>";
 
@@ -532,7 +533,7 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
         }
 
         $html .= "<label for='{$this->_element_id}_input_place_country' id='{$this->_element_id}_input_place_country_label'>";
-        $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('country', 'org.routamc.positioning') . "</span>";
+        $html .= "<span class=\"field_text\">" . $_MIDCOM->i18n->get_string('xep_country', 'org.routamc.positioning') . "</span>";
         $html .= "<select class=\"dropdown position_widget_input position_widget_input_place_country\" id=\"{$this->_element_id}_input_place_country\" name=\"{$this->_element_id}_input_place_country\">";
 
         foreach ($this->_countrylist as $code => $name)

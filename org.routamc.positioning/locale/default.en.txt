@@ -3,7 +3,7 @@
 ---CVS $Id$
 ---LANGUAGE en
 
----STRING city
+---STRING xep_city
 City
 ---STRINGEND
 
@@ -11,7 +11,7 @@ City
 Coordinates
 ---STRINGEND
 
----STRING country
+---STRING xep_country
 Country
 ---STRINGEND
 
@@ -75,12 +75,16 @@ Plazes password
 Plazes username
 ---STRINGEND
 
----STRING postalcode
+---STRING xep_postalcode
 Postal code
 ---STRINGEND
 
----STRING region
+---STRING xep_region
 Region
+---STRINGEND
+
+---STRING select your country
+Select your country
 ---STRINGEND
 
 ---STRING sms_import_enable
@@ -95,8 +99,12 @@ Allowed IP for SMS import
 source: %s
 ---STRINGEND
 
----STRING street
+---STRING xep_street
 Street address
+---STRINGEND
+
+---STRING xep_text
+Place details
 ---STRINGEND
 
 ---STRING yahoo_application_key

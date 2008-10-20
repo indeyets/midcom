@@ -3,7 +3,7 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
----STRING city
+---STRING xep_city
 Kaupunki
 ---STRINGEND
 
@@ -11,7 +11,7 @@ Kaupunki
 Koordinaatit
 ---STRINGEND
 
----STRING country
+---STRING xep_country
 Maa
 ---STRINGEND
 
@@ -75,12 +75,16 @@ Plazes salasana
 Plazes käyttäjätunnus
 ---STRINGEND
 
----STRING postalcode
+---STRING xep_postalcode
 Postinumero
 ---STRINGEND
 
----STRING region
+---STRING xep_region
 Alue
+---STRINGEND
+
+---STRING select your country
+Valitse maa
 ---STRINGEND
 
 ---STRING sms_import_enable
@@ -95,8 +99,12 @@ Tekstiviestin sisäälukuun sallittu IP-osoite
 lähde: %s
 ---STRINGEND
 
----STRING street
+---STRING xep_street
 Katuosoite
+---STRINGEND
+
+---STRING xep_text
+Tarkempi paikka
 ---STRINGEND
 
 ---STRING yahoo_application_key
