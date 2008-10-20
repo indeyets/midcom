@@ -1,21 +1,21 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE sv
 
 ---STRING comment
-Comment
+Kommentar
 ---STRINGEND
 
 ---STRING recipient
-Recipient
+Mottagare
 ---STRINGEND
 
 ---STRING sender email
-Sender's Email
+Avsändarens E-post
 ---STRINGEND
 
 ---STRING sender name
-Sender's Name
+Avsändarens namn
 ---STRINGEND
 
