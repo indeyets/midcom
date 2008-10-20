@@ -14,7 +14,7 @@
  * 
  * @global Array $GLOBALS["midcom_services_i18n__l10n_localedb"]
  */
-$GLOBALS["midcom_services_i18n__l10n_localedb"] = Array();
+$GLOBALS['midcom_services_i18n__l10n_localedb'] = Array();
 
 /**
  * This is the L10n main interface class, used by the components. It
@@ -173,19 +173,19 @@ class midcom_services__i18n_l10n {
             $library = "/{$library}locale/{$database}";
         }
         
-        $this->_localedb =& $GLOBALS["midcom_services_i18n__l10n_localedb"];
+        $this->_localedb =& $GLOBALS['midcom_services_i18n__l10n_localedb'];
         $this->_library_filename = MIDCOM_ROOT . $library;
         $this->_library = $library;
         
         $this->_language_db = $_MIDCOM->i18n->get_language_db();
         $this->_fallback_language = $_MIDCOM->i18n->get_fallback_language();
         
-        if (! array_key_exists($this->_library, $this->_localedb)) 
+        if (!isset($this->_localedb[$this->_library]))
         {
-            $GLOBALS["midcom_services_i18n__l10n_localedb"][$this->_library] = Array();
+            $GLOBALS['midcom_services_i18n__l10n_localedb'][$this->_library] = array();
         }
         
-        $this->_stringdb =& $GLOBALS["midcom_services_i18n__l10n_localedb"][$this->_library];
+        $this->_stringdb =& $GLOBALS['midcom_services_i18n__l10n_localedb'][$this->_library];
         
         $this->set_language($_MIDCOM->i18n->get_current_language());
         $this->set_charset($_MIDCOM->i18n->get_current_charset());
