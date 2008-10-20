@@ -277,8 +277,7 @@ class net_nemein_simpledb_handler_admin extends midcom_baseclasses_components_ha
                 else
                 {
                     debug_add('Cancel with a temporary object, deleting it and redirecting to the welcome screen.');
-                    if (   ! mgd_delete_extensions($this->_request_data['entry'])
-                        || ! $this->_request_data['entry']->delete())
+                    if (! $this->_request_data['entry']->delete())
                     {
                         $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                             'Failed to remove temporary article or its dependants.');

@@ -474,7 +474,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      *
      * 1. Validate privileges using can_do. The user needs midgard:delete privilege on the content object.
      * 2. bool $object->_on_deleting() is executed. If it returns false, delete is aborted.
-     * 3. mgd_delete_extensions is called now, dropping all remainint attachments and parameters.
+     * 3. All extensions of the object are deleted
      * 4. bool $object->__exec_delete() is executed to do the actual DB delete. This has to exectue parent::delete()
      *    and return its value, nothing else.
      * 5. void $object->_on_deleted() is executed to notify the class from a successful DB deletion.

@@ -797,7 +797,6 @@ class org_openpsa_calendar_event_dba extends __org_openpsa_calendar_event_dba
         }
 
         //Remove event parameters
-        mgd_delete_extensions($this);
         $_MIDCOM->auth->drop_sudo();
 
         return true;

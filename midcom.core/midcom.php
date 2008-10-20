@@ -191,10 +191,6 @@ spl_autoload_register('midcom_autoload');
 ///////////////////////////////////
 // Load first-level supporting code
 // Note that the cache check hit depends on the i18n and auth code.
-require(MIDCOM_ROOT . '/midcom/helper/misc.php');
-
-require(MIDCOM_ROOT . '/midcom/helper/formatters.php');
-
 $auth = new midcom_services_auth();
 $auth->initialize();
 
@@ -211,10 +207,13 @@ midcom_services_cache_startup();
 // Helpers and First-Generation services
 // Services
 require(MIDCOM_ROOT . '/midcom/services/_i18n_l10n.php');
+require(MIDCOM_ROOT . '/midcom/helper/misc.php');
+require(MIDCOM_ROOT . '/midcom/helper/formatters.php');
 
 //mgd_debug_start();
 /////////////////////////////////////
 // Instantiate the MidCOM main class
+
 require(MIDCOM_ROOT . '/midcom/application.php');
 
 $_MIDCOM = new midcom_application();

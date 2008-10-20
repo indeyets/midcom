@@ -431,7 +431,7 @@ class net_nemein_rss_manage extends midcom_baseclasses_components_handler
         {
             // Deletion confirmed.
 
-            if (! midcom_helper_purge_object($data['feed']))
+            if (!$data['feed']->delete())
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete feed {$args[0]}, last Midgard error was: " . mgd_errstr());
                 // This will exit.

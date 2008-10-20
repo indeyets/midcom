@@ -194,7 +194,8 @@ class midcom_helper_datamanager2_widget_universalchooser extends midcom_helper_d
 
         try
         {
-            $key_snippet = mgd_get_snippet_by_path('/sitegroup-config/midcom.helper.datamanager2/widget_universalchooser_key');
+            $key_snippet = new midgard_snippet();
+            $key_snippet->get_by_path('/sitegroup-config/midcom.helper.datamanager2/widget_universalchooser_key');
         }
         catch (midgard_error_exception $e)
         {

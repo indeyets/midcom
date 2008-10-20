@@ -852,9 +852,6 @@ class midcom_helper_datamanager {
      * same result as the first call to avoid trouble with multiple updated runs
      * in the datatypes.
      *
-     * It will also call the _update_nemein_rcs helper to utilize its RCS mechanism
-     * if available on any successful storage to the storage object.
-     *
      * @return int Status code of the form processing run.
      */
     function process_form ()
@@ -1113,7 +1110,6 @@ class midcom_helper_datamanager {
             // also invalidate the cache.
             if ($success)
             {
-                $this->_update_nemein_rcs();
                 $_MIDCOM->cache->invalidate($this->_storage->guid());
                 debug_add("Invalidated MidCOM Cache.");
             }
@@ -1884,27 +1880,6 @@ class midcom_helper_datamanager {
         $data = midcom_get_snippet_content($path);
         eval ("\$layout = Array(\n" . $data . "\n);");
         return $layout;
-    }
-
-    /**
-     * Calls midcom_update_nemein_rcs to update the Nemein RCS store if configured.
-     *
-     * @return boolean    Indicating success.
-     * @see midcom_update_nemein_rcs()
-     * @access private
-     */
-    function _update_nemein_rcs()
-    {
-        return true;
-        /*
-         * Disabled, does not fail gracefully if nemein rcs isn't installed/setup properly:
-         *
-         * Warning: chmod(): File or directory not found in
-         * /home/torben/XPDATA/FILES/Eclipse Workbench/MidCOM/lib/no/bergfald/rcs/backends/aegirrcs.php
-         * on line 501
-         *
-        return midcom_update_nemein_rcs($this->_storage);
-         */
     }
 
     /**

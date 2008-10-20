@@ -743,7 +743,16 @@ class midcom_services_i18n
             {
                 return null;
             }
-            $snippet = mgd_get_snippet_by_path ($path);
+            
+            $snippet = new midgard_snippet();
+            try
+            {
+                $snippet->get_by_path($path);
+            }
+            catch (Exception $e)
+            {
+                return null;
+            }
             $data = $snippet->code;
         }
 

@@ -276,7 +276,7 @@ class net_nemein_downloads_handler_admin extends midcom_baseclasses_components_h
                 $this->_topic->parameter('net.nemein.downloads', 'current_release', '');
             }
 
-            if (! midcom_helper_purge_object($this->_downloadpage))
+            if (!$this->_downloadpage->delete())
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to delete downloadpage {$args[0]}, last Midgard error was: " . mgd_errstr());
                 // This will exit.

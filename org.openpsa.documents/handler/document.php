@@ -122,7 +122,7 @@ class org_openpsa_documents_handler_document extends midcom_baseclasses_componen
                 $this->_request_data['delete_succeeded'] = false;
                 if (array_key_exists('org_openpsa_documents_deleteok', $_POST))
                 {
-                    $this->_request_data['delete_succeeded'] = midcom_helper_purge_object($this->_request_data['document']);
+                    $this->_request_data['delete_succeeded'] = $this->_request_data['document']->delete();
                     if ($this->_request_data['delete_succeeded'])
                     {
                         // Redirect to the directory

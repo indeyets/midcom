@@ -90,7 +90,7 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
                 continue;
             }
 
-            midcom_helper_purge_object($event->guid);
+            $event->delete();
         }
     }
 

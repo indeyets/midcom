@@ -424,4 +424,86 @@ function _midcom_helper_formatters_replace_content(&$in, $replace, $start, $end)
     $in    = $begin.$replace.$end;
 }
 
+if (!function_exists('midcom_helper_toc_formatter'))
+{
+    /**
+     * This function parses HTML content and looks for header tags, making index of them.
+     *
+     * What exactly it does is looks for all H<num> tags and converts them to named
+     * anchors, and prepends a list of links to them to the start of HTML.
+     *
+     * @todo Parse the heading structure to create OL subtrees based on their relative levels
+     */
+    function midcom_helper_toc_formatter_prefix($level)
+    {
+        $prefix = '';
+        for ($i=0; $i < $level; $i++)
+        {
+            $prefix .= '    ';
+        }
+        return $prefix;
+    }
+    function midcom_helper_toc_formatter($data)
+    {
+        if (!preg_match_all("/(<(h([1-9][0-9]*))[^>]*?>)(.*?)(<\/\\2>)/i", $data, $headings))
+        {
+            echo mgd_format($data, 'h');
+            return;
+        }
+
+        $current_tag_level = false;
+        $current_list_level = 1;
+        echo "\n<ol class=\"midcom_helper_toc_formatter level_{$current_list_level}\">\n";
+        foreach ($headings[4] as $key => $heading)
+        {
+            $anchor = md5($heading);
+            $tag_level =& $headings[3][$key];
+            $heading_code =& $headings[0][$key];
+            $heading_tag =& $headings[2][$key];
+            $heading_new_code = "<a name='{$anchor}'></a>{$heading_code}";
+            $data = str_replace($heading_code, $heading_new_code, $data);
+            $prefix = midcom_helper_toc_formatter_prefix($current_list_level);
+            if ($current_tag_level === false)
+            {
+                $current_tag_level = $tag_level;
+            }
+            if ($tag_level > $current_tag_level)
+            {
+                for ($i = $current_tag_level; $i < $tag_level; $i++)
+                {
+                    $current_tag_level = $tag_level;
+                    $current_list_level++;
+                    echo "{$prefix}<ol class=\"level_{$current_list_level}\">\n";
+                    $prefix .= '    ';
+                }
+            }
+            if ($tag_level < $current_tag_level)
+            {
+                for ($i = $current_tag_level; $i > $tag_level; $i--)
+                {
+                    $current_tag_level = $tag_level;
+                    if ($current_list_level > 1)
+                    {
+                        $current_list_level--;
+                        $prefix = midcom_helper_toc_formatter_prefix($current_list_level);
+                        echo "{$prefix}</ol>\n";
+                    }
+                }
+            }
+            echo "{$prefix}<li class='{$heading_tag}'><a href='#{$anchor}'>" . strip_tags($heading) .  "</a></li>\n";
+        }
+        for ($i = $current_list_level; $i > 0; $i--)
+        {
+            $prefix = midcom_helper_toc_formatter_prefix($i-1);
+            echo "{$prefix}</ol>\n";
+        }
+
+        echo mgd_format($data, 'h');
+    }
+
+    /**
+     * Register the formatter as "toc", meaning that &(variable:xtoc); will filter through it
+     */
+    mgd_register_filter('toc', 'midcom_helper_toc_formatter');
+}
 ?>
