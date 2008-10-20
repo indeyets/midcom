@@ -188,6 +188,97 @@ class midcom_helper_datamanager_datatype {
     }
 
     /**
+     * Load a variable form an attachment to a Midgard object.
+     *
+     * @param MidgardObject $object    The object at which to save the data.
+     * @param string $name            The identifier to use for storage.
+     * @return mixed The retrieved variable.
+     */
+    function load_var_from_attachment($name) 
+    {
+        $att = $this->_storage->get_attachment($name);
+        if (!$att)
+        {
+            return false;
+        }
+        $stats = $att->stat();
+        if ($stats[7] == 0)
+        {
+            return false;
+        }
+
+        $h_att = $att->open('r');
+        if (!$h_att)
+        {
+            return false;
+        }
+        $content = fread($h_att, $stats[7]);
+        $result = @unserialize($content);
+        if ($result === false)
+        {
+            debug_add("Possible Failure to unserialize the attachment {$name}, unserialize returned false.", MIDCOM_LOG_INFO);
+            debug_add("PHP Error Message was: {$php_errormsg}", MIDCOM_LOG_INFO);
+            debug_print_r("Content Object:", $object);
+            debug_print_r("Attachment {$name}:", $att);
+            debug_print_r("First 1.000 Bytes of the content:", substr($content, 0, 1000));
+        }
+        ini_restore('track_errors');
+        fclose($h_att);
+    
+        return $result;
+    }
+
+    /**
+     * Save a variable as attachment to a Midgard object. Type is preserved
+     * through serialization.
+     *
+     * This is used only by midcom.helper.datamanager/datatype.php
+     *
+     * @param MidgardObject $object    The object at which to save the data.
+     * @param mixed &$var            The variable that should be saved.
+     * @param string $name            The identifier to use for storage.
+     * @return boolean Indicating success.
+     */
+    function save_var_as_attachment(&$var, $name) 
+    {
+        $att = $this->_storage->get_attachment($name);
+    
+        if (!$att)
+        {
+            $att = $this->_storage->create_attachment($name, "mgd_save_var of $name", "application/octet-stream");
+            if (!$att)
+            {
+                debug_add("Failed to create attachment '{$name}': " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                return false;
+            }
+        }
+
+        $att->open('w');
+    
+        if (!$h_att)
+        {
+            debug_add("Could not open attachment {$name} for writing: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+            return false;
+        }
+    
+        $result = fwrite($h_att, serialize($var));
+    
+        if ($result == -1 || ! fclose($h_att))
+        {
+            debug_add("Failed to write to attachment {$name}, result was {$result}.", MIDCOM_LOG_ERROR);
+            return false;
+        }
+    
+        // Hack for Repligard Bug: Update core object to propagate changes
+        // See also #154.
+        // No errorchecking, we fail silently anyway, and sometimes $att seems
+        // not to be populated, for whatever reason.
+        $object->update();
+    
+        return true;
+    }
+
+    /**
      * Loads the data from the object.
      *
      * The default behavior is to simply load
@@ -235,7 +326,7 @@ class midcom_helper_datamanager_datatype {
                 break;
 
             case "attachment":
-                $this->_value = mgd_load_var_from_attachment ($this->_storage, "data_" . $this->_field["name"]);
+                $this->_value = $this->load_var_from_attachment("data_" . $this->_field["name"]);
                 if ($this->_value === false)
                 {
                     $this->_value = $this->_get_default_value();
@@ -283,7 +374,7 @@ class midcom_helper_datamanager_datatype {
      *
      * @return int Any valid returncode from midcom_helper_datamanager::process_form().
      */
-    function save_to_storage ()
+    function save_to_storage()
     {
         // update $this->_storage and save parameters / attachments
         if (is_null ($this->_storage))
@@ -297,7 +388,7 @@ class midcom_helper_datamanager_datatype {
         switch ($this->_field["location"])
         {
             case "attachment":
-                if (! mgd_save_var_as_attachment($this->_storage, $this->_value, "data_{$this->_field['name']}"))
+                if (!$this->save_var_as_attachment($this->_value, "data_{$this->_field['name']}"))
                 {
                     debug_push_class(__CLASS__, __FUNCTION__);
                     debug_add ("ERROR saving attachment \"" . $this->_field["name"] . "\"!", MIDCOM_LOG_ERROR);

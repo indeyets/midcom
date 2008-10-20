@@ -72,98 +72,6 @@ function midcom_get_snippet_content($path)
 }
 
 /**
- * Save a variable as attachment to a Midgard object. Type is preserved
- * through serialization.
- *
- * This is used only by midcom.helper.datamanager/datatype.php
- *
- * @param MidgardObject $object    The object at which to save the data.
- * @param mixed &$var            The variable that should be saved.
- * @param string $name            The identifier to use for storage.
- * @return boolean Indicating success.
- */
-function mgd_save_var_as_attachment($object, &$var, $name) {
-    $att = $object->getattachment($name);
-
-    if (!$att)
-    {
-        $att = $object->createattachment($name, "mgd_save_var of $name", "application/octet-stream");
-        if (!$att)
-        {
-            debug_add("Failed to create attachment '{$name}': " . mgd_errstr(), MIDCOM_LOG_ERROR);
-            return false;
-        }
-    }
-
-    $h_att = $object->openattachment($name);
-
-    if (!$h_att)
-    {
-        debug_add("Could not open attachment {$name} for writing: " . mgd_errstr(), MIDCOM_LOG_ERROR);
-        return false;
-    }
-
-    $result = fwrite($h_att, serialize($var));
-
-    if ($result == -1 || ! fclose($h_att))
-    {
-        debug_add("Failed to write to attachment {$name}, result was {$result}.", MIDCOM_LOG_ERROR);
-        return false;
-    }
-
-    // Hack for Repligard Bug: Update core object to propagate changes
-    // See also #154.
-    // No errorchecking, we fail silently anyway, and sometimes $att seems
-    // not to be populated, for whatever reason.
-    $object->update();
-
-    return true;
-}
-
-/**
- * Load a variable form an attachment to a Midgard object.
- *
- * This is used only by midcom.helper.datamanager/datatype.php
- *
- * @param MidgardObject $object    The object at which to save the data.
- * @param string $name            The identifier to use for storage.
- * @return mixed The retrieved variable.
- */
-function mgd_load_var_from_attachment($object, $name) {
-    $att = $object->getattachment($name);
-    if (!$att)
-    {
-        return false;
-    }
-
-    $stats = mgd_stat_attachment ($att->id);
-    if ($stats[7] == 0)
-    {
-        return false;
-    }
-
-    $h_att = $object->openattachment($name, "r");
-    if (!$h_att)
-    {
-        return false;
-    }
-    $content = fread($h_att, $stats[7]);
-    $result = @unserialize($content);
-    if ($result === false)
-    {
-        debug_add("Possible Failure to unserialize the attachment {$name}, unserialize returned false.", MIDCOM_LOG_INFO);
-        debug_add("PHP Error Message was: {$php_errormsg}", MIDCOM_LOG_INFO);
-        debug_print_r("Content Object:", $object);
-        debug_print_r("Attachment {$name}:", $att);
-        debug_print_r("First 1.000 Bytes of the content:", substr($content, 0, 1000));
-    }
-    ini_restore('track_errors');
-    fclose($h_att);
-
-    return $result;
-}
-
-/**
  * PHP-level implementation of the Midgard Preparser language
  * construct mgd_include_snippet. Same semantics, but probably a little bit
  * slower.
@@ -173,20 +81,16 @@ function mgd_load_var_from_attachment($object, $name) {
  */
 // This function is there as a backup in case you are not running within the
 // Midgard Parser; it will run the snippet code through mgd_preparse manually.
-function mgd_include_snippet_php ($path)
+function mgd_include_snippet_php($path)
 {
-    $snippet = new midgard_snippet();
-    try
-    {
-        $snippet->get_by_path($path);
-    }
-    catch (Exception $e)
+    $code = midcom_get_snippet_content_graceful($path);
+    if (empty($code))
     {
         debug_add("mgd_include_snippet_php: Could not find snippet {$path}: " . $e->getMessage(), MIDCOM_LOG_ERROR);
         return false;
     }
     debug_add("mgd_include_snippet_php: Evaluating snippet {$path}.");
-    eval ('?>' . mgd_preparse($snippet->code));
+    eval ('?>' . mgd_preparse($code));
     return true;
 }
 
