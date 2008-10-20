@@ -245,7 +245,7 @@ class net_nemein_discussion_handler_latest extends midcom_baseclasses_components
             {
                 $item = new FeedItem();
                 $item->title = $post->subject;
-                $item->date = $post->metadata->published;
+                $item->date = (int) $post->metadata->published;
                 $item->author = $post->sendername;
                 $item->description = Markdown($post->content);
 
