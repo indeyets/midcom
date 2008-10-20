@@ -186,7 +186,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         $this->data['name']  = 'net.nemein.quickpoll';
 
         // Check if user can vote
-        $data['voted'] = net_nemein_quickpoll_viewer::has_voted($this->_article->id, &$this->_config);
+        $data['voted'] = net_nemein_quickpoll_viewer::has_voted($this->_article->id, $this->_config);
         
         $qb_options = net_nemein_quickpoll_option_dba::new_query_builder();
         $qb_options->add_constraint('article', '=', $this->_article->id);
@@ -410,7 +410,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         }
 
         // Check if user can vote
-        $data['voted'] = net_nemein_quickpoll_viewer::has_voted($this->_article->id, &$this->_config);
+        $data['voted'] = net_nemein_quickpoll_viewer::has_voted($this->_article->id, $this->_config);
 
         // Set context data
         /**
@@ -500,7 +500,7 @@ class net_nemein_quickpoll_handler_index  extends midcom_baseclasses_components_
         }
   
         // Check if user can vote
-        $data['voted'] = net_nemein_quickpoll_viewer::has_voted($this->_article->id, &$this->_config);
+        $data['voted'] = net_nemein_quickpoll_viewer::has_voted($this->_article->id, $this->_config);
 
         $poll_results = array
         (
