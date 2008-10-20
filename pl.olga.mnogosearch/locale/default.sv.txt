@@ -1,0 +1,93 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING bytes
+bytes.
+---STRINGEND
+
+---STRING database uri
+Databas URI (tex. mysql://midgard:midgard@localhost/mnogosearch/?dbmode=multi)
+---STRINGEND
+
+---STRING date format
+Datum format
+---STRINGEND
+
+---STRING detect clones
+Hitta kloner?
+---STRINGEND
+
+---STRING docs <b>%d-%d</b> of <b>%d</b> found
+Visar dokument <b>%d-%d</b> av <b>%d</b> hittade.
+---STRINGEND
+
+---STRING end mark
+HTML att lägga till efter hittat ord i resultatet.
+---STRINGEND
+
+---STRING excerpt padding
+Utdrags utfyllnad
+---STRINGEND
+
+---STRING excerpt size
+Udrags-storlek
+---STRINGEND
+
+---STRING max number of results
+Begränsning av sökresultat.
+---STRINGEND
+
+---STRING mnogosearch settings
+Mnogosearch settings
+---STRINGEND
+
+---STRING next
+Nästa
+---STRINGEND
+
+---STRING prev
+Föregående
+---STRINGEND
+
+---STRING search
+Sök
+---STRINGEND
+
+---STRING search cache
+Använd sök cache?
+---STRINGEND
+
+---STRING search for <b>%s</b>
+Sök efter <b>%s</b>.
+---STRINGEND
+
+---STRING search for:
+Sök efter:
+---STRINGEND
+
+---STRING search time: %s seconds
+Söktid: %s sekunder.
+---STRINGEND
+
+---STRING begin mark
+HTML att lägga till före ord i sökresultat.
+---STRINGEND
+
+---STRING crosswords
+Korsord?
+---STRINGEND
+
+---STRING pl.olga.mnogosearch
+Mnogosearch frontend
+---STRINGEND
+
+---STRING query tracking
+Spärning av förfrågan?
+---STRINGEND
+
+---STRING results per page
+Antal resultat per sida
+---STRINGEND
+

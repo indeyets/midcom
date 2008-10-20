@@ -1,13 +1,9 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE sv
 
----STRING time
-Time
----STRINGEND
-
----STRING week
-Week
+---STRING link to page
+Länk till sida
 ---STRINGEND
 

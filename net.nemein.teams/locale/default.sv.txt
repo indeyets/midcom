@@ -1,0 +1,141 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING application
+Ansökning
+---STRINGEND
+
+---STRING application declined by
+Ansökning nekad av
+---STRINGEND
+
+---STRING application was accepted by
+Ansökning accepterad av
+---STRINGEND
+
+---STRING apply to team
+Applicera på grupp
+---STRINGEND
+
+---STRING approve
+Godkänn
+---STRINGEND
+
+---STRING back to teams
+tillbaka till grupp
+---STRINGEND
+
+---STRING cancel
+Avbryt
+---STRINGEND
+
+---STRING confirm
+Bekfräfta
+---STRINGEND
+
+---STRING create a team
+Skapa en grupp
+---STRINGEND
+
+---STRING create team home
+Skapa grupp hem
+---STRINGEND
+
+---STRING decline
+Neka
+---STRINGEND
+
+---STRING delete team %s
+ta bort grupp 5s
+---STRINGEND
+
+---STRING has been accepted
+har accepteras
+---STRINGEND
+
+---STRING has been declined
+har nekats
+---STRINGEND
+
+---STRING manage team
+Hantera grupp
+---STRINGEND
+
+---STRING manage teams
+Hantera grupper
+---STRINGEND
+
+---STRING net.nemein.teams
+Grupphantering
+---STRINGEND
+
+---STRING new application from %s
+Ny ansökning från %s
+---STRINGEND
+
+---STRING pending
+Avaktar
+---STRINGEND
+
+---STRING player
+Spelare
+---STRINGEND
+
+---STRING really quit?
+Verkligen avsluta?
+---STRINGEND
+
+---STRING really remove team
+Vill du verkligen ta bort denna grupp?
+---STRINGEND
+
+---STRING registered
+Registrerad
+---STRINGEND
+
+---STRING remove team
+Ta bort grupp
+---STRINGEND
+
+---STRING system lockdown
+Systemet är för närvarande låst
+---STRINGEND
+
+---STRING team introduction text
+Grupp presentation
+---STRINGEND
+
+---STRING team is full
+Gruppen är full för tillfället
+---STRINGEND
+
+---STRING team location
+Läge
+---STRINGEND
+
+---STRING team logo
+Logo
+---STRINGEND
+
+---STRING team name
+Gruppnamn
+---STRINGEND
+
+---STRING teams
+Grupper
+---STRINGEND
+
+---STRING teams list
+Gupplista
+---STRINGEND
+
+---STRING you have quit your team
+Du har gått ur din grupp
+---STRINGEND
+
+---STRING your application to team
+Din ansökan till grupp
+---STRINGEND
+

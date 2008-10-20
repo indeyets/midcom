@@ -1,0 +1,209 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING add creator to reservation
+Lägg till skapar till reservering
+---STRINGEND
+
+---STRING beginning from
+Börjar från
+---STRINGEND
+
+---STRING by hour
+På timme
+---STRINGEND
+
+---STRING capacity
+Kapacitet
+---STRINGEND
+
+---STRING choose the repeat option
+Välj upprepnings alternativ
+---STRINGEND
+
+---STRING daily
+Daglig
+---STRINGEND
+
+---STRING data schema settings
+Inställningar för Data schema
+---STRINGEND
+
+---STRING delete
+Ta bort
+---STRINGEND
+
+---STRING description
+Beskrivning
+---STRINGEND
+
+---STRING description_before_listing
+Beskrning innan lista
+---STRINGEND
+
+---STRING duplicate reservations
+Dublett bokningar
+---STRINGEND
+
+---STRING duplicate reservations in members
+Dublett bokningar bland medlemmar
+---STRINGEND
+
+---STRING duplicate reservations in resources
+Dublett bokningar i resuser
+---STRINGEND
+
+---STRING enable javascript hover
+Aktivera javascript svävande för att visa reservationer
+---STRINGEND
+
+---STRING enable multiple calendars for comparison
+Aktivera flera kalanerar för jämnförelse
+---STRINGEND
+
+---STRING end
+Bokningen slutar
+---STRINGEND
+
+---STRING event
+Händelse
+---STRINGEND
+
+---STRING failed to create a new event due to resourcing conflict
+Misslyckades att skapa en ny händelse på grund av en resurs konflikt
+---STRINGEND
+
+---STRING location
+Plats
+---STRINGEND
+
+---STRING meeting room
+Mötesrum
+---STRINGEND
+
+---STRING monthly
+Månadsvis
+---STRINGEND
+
+---STRING net.nemein.reservations
+Resurs bokningar
+---STRINGEND
+
+---STRING next day
+Nästa dag
+---STRINGEND
+
+---STRING no reservations on %s
+Inga reservationer på %s
+---STRINGEND
+
+---STRING or you can redefine the repeat rule
+eller så kan du omdefinera repeteringsreglerna
+---STRINGEND
+
+---STRING participants
+Deltagare
+---STRINGEND
+
+---STRING person responsible
+Ansvarig person
+---STRINGEND
+
+---STRING previous day
+Föregående dag
+---STRINGEND
+
+---STRING repeat interval
+Upprepningsintervall
+---STRINGEND
+
+---STRING repeat on days
+Repetera på dagar
+---STRINGEND
+
+---STRING repeat rules
+Repeteringsregler
+---STRINGEND
+
+---STRING repeating
+Repterande
+---STRINGEND
+
+---STRING reservation period
+Boknings period
+---STRINGEND
+
+---STRING reservations list
+Bokningslista
+---STRINGEND
+
+---STRING reservations on %s
+Bokningar på %s
+---STRINGEND
+
+---STRING reserve %s
+Boka %s
+---STRINGEND
+
+---STRING resource
+Resurs
+---STRINGEND
+
+---STRING resources
+Resuser
+---STRINGEND
+
+---STRING root event privileges
+Grund händelse priviliger
+---STRINGEND
+
+---STRING root event privileges helptext
+Ändra grund händelse privliger
+---STRINGEND
+
+---STRING schema_reservation
+Schema för bokningar
+---STRINGEND
+
+---STRING schema_resource
+Schema för resuser
+---STRINGEND
+
+---STRING select resources to compare
+Välj resuser att jämnföra
+---STRINGEND
+
+---STRING start
+Bokning börjar
+---STRINGEND
+
+---STRING submit
+Skicka
+---STRINGEND
+
+---STRING this reservation is a master event for repeated events
+Den här bokningen är en huvudhändelse för repeterade bokningar
+---STRINGEND
+
+---STRING time
+Tid
+---STRINGEND
+
+---STRING times
+Tider
+---STRINGEND
+
+---STRING until date
+Tills datum
+---STRINGEND
+
+---STRING weekly
+Veckovis
+---STRINGEND
+
+---STRING you can remove the dependant events first
+Du kan ta bort beronde bokningar först
+---STRINGEND
+

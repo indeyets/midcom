@@ -1,0 +1,45 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING delete
+Ta bort
+---STRINGEND
+
+---STRING edit
+Editera
+---STRINGEND
+
+---STRING group name
+Gruppnamn
+---STRINGEND
+
+---STRING item deleted successfully
+Objektet raderades
+---STRINGEND
+
+---STRING item updated successfully
+Objektet uppdateras
+---STRINGEND
+
+---STRING manage
+Hantera
+---STRINGEND
+
+---STRING move down
+Flytta ner
+---STRINGEND
+
+---STRING move up
+Flytta upp
+---STRINGEND
+
+---STRING submit
+Skicka
+---STRINGEND
+
+---STRING title
+Titel
+---STRINGEND
+

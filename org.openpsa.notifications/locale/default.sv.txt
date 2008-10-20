@@ -1,0 +1,37 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING default
+Standard
+---STRINGEND
+
+---STRING email
+Epost
+---STRINGEND
+
+---STRING inherit
+Ärvd
+---STRINGEND
+
+---STRING nabaztag
+Nabaztag kanin
+---STRINGEND
+
+---STRING none
+Ingen notifiering
+---STRINGEND
+
+---STRING notification preferences
+Notifieringsinställningar
+---STRINGEND
+
+---STRING notification sent to %s
+Notifierings skickad till
+---STRINGEND
+
+---STRING org.openpsa.notifications
+Notifierings hantering
+---STRINGEND
+

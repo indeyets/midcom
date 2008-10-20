@@ -4,7 +4,7 @@
 ---LANGUAGE sv
 
 ---STRING de.linkm.sitemap
-Sitekarta
+Sajtkarta
 ---STRINGEND
 
 ---STRING display leaves first
@@ -25,5 +25,25 @@ Rootkatalog att använda
 
 ---STRING use google sitemap mode
 Använd Google Sitekarta för att skriva site strukturen i XML
+---STRINGEND
+
+---STRING root topic
+Root ämne
+---STRINGEND
+
+---STRING select root to show
+Väl root att visa
+---STRINGEND
+
+---STRING show
+Visa
+---STRINGEND
+
+---STRING show levels
+Visa nivåer
+---STRINGEND
+
+---STRING skip topics
+Vält ämne att hoppa över i sajtkarta översikt
 ---STRINGEND
 

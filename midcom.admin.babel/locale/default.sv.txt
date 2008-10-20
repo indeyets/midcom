@@ -3,10 +3,6 @@
 ---CVS $Id$
 ---LANGUAGE sv
 
----STRING perm-denied text
-<p>Den är MidCOM installationen är inte rätt konfigurerad för att skriva till översättnings tabellen.</p><p>Se till att Apache användaren kan skriva i alla locale mappar och filer som finns beskrivna i MidComs installations instruktioner (se INSTALL).</p>
----STRINGEND
-
 ---STRING component
 Komponent
 ---STRINGEND
@@ -35,6 +31,10 @@ MidCOM Lokaliserings verktyg
 Status (annat)
 ---STRINGEND
 
+---STRING perm-denied text
+<p>Den är MidCOM installationen är inte rätt konfigurerad för att skriva till översättnings tabellen.</p><p>Se till att Apache användaren kan skriva i alla locale mappar och filer som finns beskrivna i MidComs installations instruktioner (se INSTALL).</p>
+---STRINGEND
+
 ---STRING read information from midgard wiki on how to add languages
 Information om hur man lägger till nya användar interface språk kan hittar på <a href="http://www.midgard-project.org/midcom-permalink-ded2437586408cd03cd4582ba45b91f2">Midgard Wiki</a>.
 ---STRINGEND
@@ -53,5 +53,29 @@ Sträng ID
 
 ---STRING translation status for language %s
 Översättnings status av %s
+---STRINGEND
+
+---STRING core components
+Core komponenter
+---STRINGEND
+
+---STRING new string
+Ny sträng
+---STRINGEND
+
+---STRING other components
+Andra komponenter
+---STRINGEND
+
+---STRING percentage
+Procenttal
+---STRINGEND
+
+---STRING strings total
+Antal strängar
+---STRINGEND
+
+---STRING translated strings
+Översatta strängar
 ---STRINGEND
 

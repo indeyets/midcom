@@ -1,0 +1,81 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING age
+Ålder
+---STRINGEND
+
+---STRING archive
+Akriv
+---STRINGEND
+
+---STRING city
+Stad
+---STRINGEND
+
+---STRING close manage
+Stäng hantering av alternativ
+---STRINGEND
+
+---STRING comment
+Kommentar
+---STRINGEND
+
+---STRING create poll
+Skapa omröstning
+---STRINGEND
+
+---STRING delete poll
+Ta bort omröstning
+---STRINGEND
+
+---STRING edit poll
+Editera omröstning
+---STRINGEND
+
+---STRING enable_anonymous
+Tillåt anonym röstning
+---STRINGEND
+
+---STRING lock_ip_address
+Lås röstarens IP-adress
+---STRINGEND
+
+---STRING manage
+Hantera val
+---STRINGEND
+
+---STRING moderate comments
+Moderera kommentarer
+---STRINGEND
+
+---STRING name
+Namn
+---STRINGEND
+
+---STRING net.nemein.quickpoll
+Omröstning
+---STRINGEND
+
+---STRING option
+val
+---STRINGEND
+
+---STRING poll settings
+Inställningar för omröstning
+---STRINGEND
+
+---STRING posted
+Postad
+---STRINGEND
+
+---STRING vote
+Rösta
+---STRINGEND
+
+---STRING vote count
+Antal röster
+---STRINGEND
+

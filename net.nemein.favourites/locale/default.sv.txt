@@ -1,57 +1,57 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE sv
 
 ---STRING add
-Add
+Lägg till
 ---STRINGEND
 
 ---STRING add to favourites
-Add to favourites
+Lägg till i favoriter
 ---STRINGEND
 
 ---STRING buried
-Buried
+Begravd
 ---STRINGEND
 
 ---STRING bury
-Bury
+Begrava
 ---STRINGEND
 
 ---STRING bury item
-Bury item
+Begrav post
 ---STRINGEND
 
 ---STRING deleting favourite %s failed: %s
-Deleting favourite "%s" failed: %s
+Borttagning av "%s" misslyckades: %s
 ---STRINGEND
 
 ---STRING favourite
-Favourite
+Favorit
 ---STRINGEND
 
 ---STRING favouriting %s failed: %s
-Saving "%s" to favourites failed: %s
+Misslyckades att spara"%s" till favoriter: %s
 ---STRINGEND
 
 ---STRING net.nemein.favourites
-Favourites
+Favoriter
 ---STRINGEND
 
 ---STRING return and dont add
-Return back and don't add
+Gå tillbaka och lägg inte till
 ---STRINGEND
 
 ---STRING you are adding the following item to buries list
-You are burying the following item. Click "Add" to confirm.
+Du begraver följande post. Klicka på "Lägg till" för att godkänna.
 ---STRINGEND
 
 ---STRING you are adding the following item to favourites
-You are adding the following item to your favourites on this site. Click "add" to save it.
+Du lägger till följande post i dina favoriter på denna sajt. Klicka på "Lägg till" för att spara.
 ---STRINGEND
 
 ---STRING you have already favourited the item
-You have already favourited the item
+Du har redan posten bland dina favoriter
 ---STRINGEND
 

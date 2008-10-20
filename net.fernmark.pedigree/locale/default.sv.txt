@@ -1,0 +1,13 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING This is the index
+Det här är index
+---STRINGEND
+
+---STRING You can change this to something else :-)
+Du kan ändra detta till någonting annat. :-)
+---STRINGEND
+
