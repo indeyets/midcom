@@ -1,0 +1,17 @@
+---# MidCOM String Database
+---VERSION 2.1.0
+---CVS $Id$
+---LANGUAGE sv
+
+---STRING back to %s
+Tillbaka till sida %s
+---STRINGEND
+
+---STRING changes done in revision %s to %s
+Ändringar gjorda i revision %s till %s
+---STRINGEND
+
+---STRING changes from version %s
+Ändringar från version %s
+---STRINGEND
+
