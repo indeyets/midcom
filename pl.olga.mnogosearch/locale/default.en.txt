@@ -43,6 +43,10 @@ Excerpt padding
 Excerpt size
 ---STRINGEND
 
+---STRING max number of results
+Limit of total results found.
+---STRINGEND
+
 ---STRING mnogosearch settings
 Mnogosearch settings
 ---STRINGEND
@@ -85,9 +89,5 @@ Search for:
 
 ---STRING search time: %s seconds
 Search time: %s seconds.
----STRINGEND
-
----STRING max number of results
-Limit of total results found.
 ---STRINGEND
 

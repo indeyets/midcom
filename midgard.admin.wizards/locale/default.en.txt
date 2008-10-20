@@ -1,89 +1,18 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
+---CVS $Id$
 ---LANGUAGE en
-
----STRING new midgard sitegroup
-New Midgard sitegroup
----STRINGEND
-
----STRING password
-Password
----STRINGEND
 
 ---STRING admin user
 Admin user
 ---STRINGEND
 
----STRING sitegroup
-Sitegroup
----STRINGEND
-
----STRING midgard wizards
-Midgard Wizards
----STRINGEND
-
----STRING prefix
-Prefix
----STRINGEND
-
----STRING generated vhost
-Generated vhost
----STRINGEND
-
----STRING notification has been sent to
-Notification has been sent to
----STRINGEND
-
----STRING run sitewizard again
-Run sitewizard again
----STRINGEND
-
----STRING new website created
-New website created
----STRINGEND
-
----STRING generating vhost config
-Generating vhost config
----STRINGEND
-
----STRING move vhost config under apache vhosts and restart
-Move vhost config under apache vhosts and restart
----STRINGEND
-
----STRING select structure
-Select structure
----STRINGEND
-
----STRING no structure
-No structure
----STRINGEND
-
----STRING select style
-Select style
----STRINGEND
-
----STRING next
-Next
----STRINGEND
-
----STRING new midgard host
-New Midgard host
----STRINGEND
-
----STRING site name
-Website name
----STRINGEND
-
----STRING host
-Host
----STRINGEND
-
----STRING custom
-Custom
----STRINGEND
-
 ---STRING completely empty style
 Completely empty style
+---STRINGEND
+
+---STRING configure structure
+Configure structure
 ---STRINGEND
 
 ---STRING create
@@ -94,10 +23,83 @@ Create
 Create website
 ---STRINGEND
 
+---STRING custom
+Custom
+---STRINGEND
+
+---STRING generated vhost
+Generated vhost
+---STRINGEND
+
+---STRING generating vhost config
+Generating vhost config
+---STRINGEND
+
+---STRING host
+Host
+---STRINGEND
+
+---STRING midgard wizards
+Midgard Wizards
+---STRINGEND
+
+---STRING move vhost config under apache vhosts and restart
+Move vhost config under apache vhosts and restart
+---STRINGEND
+
+---STRING new midgard host
+New Midgard host
+---STRINGEND
+
+---STRING new midgard sitegroup
+New Midgard sitegroup
+---STRINGEND
+
+---STRING new website created
+New website created
+---STRINGEND
+
+---STRING next
+Next
+---STRINGEND
+
+---STRING no structure
+No structure
+---STRINGEND
+
+---STRING notification has been sent to
+Notification has been sent to
+---STRINGEND
+
+---STRING password
+Password
+---STRINGEND
+
+---STRING prefix
+Prefix
+---STRINGEND
+
 ---STRING report
 Report
 ---STRINGEND
 
----STRING configure structure
-Configure structure
+---STRING run sitewizard again
+Run sitewizard again
 ---STRINGEND
+
+---STRING select structure
+Select structure
+---STRINGEND
+
+---STRING select style
+Select style
+---STRINGEND
+
+---STRING site name
+Website name
+---STRINGEND
+
+---STRING sitegroup
+Sitegroup
+---STRINGEND
+

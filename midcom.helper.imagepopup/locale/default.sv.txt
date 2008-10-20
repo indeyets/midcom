@@ -1,37 +1,37 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE sv
 
 ---STRING files
-Files
+Filer
 ---STRINGEND
 
 ---STRING folder attachments
-Folder attachments
+Bilagor till katalog
 ---STRINGEND
 
 ---STRING images
-Images
+Bilder
 ---STRINGEND
 
 ---STRING midcom.helper.imagepopup
-Image addition pop-up
+Bild popup
 ---STRINGEND
 
 ---STRING page attachments
-Page attachments
+Bilagor till sida
 ---STRINGEND
 
 ---STRING query
-Query
+Fråga
 ---STRINGEND
 
 ---STRING search
-Search
+Sök
 ---STRINGEND
 
 ---STRING unified search
-Unified search
+Unifierad sökning
 ---STRINGEND
 

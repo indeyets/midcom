@@ -11,8 +11,28 @@ Create entry
 Database Administration
 ---STRINGEND
 
+---STRING database entry
+Database entry
+---STRINGEND
+
+---STRING database id
+Database ID
+---STRINGEND
+
+---STRING description
+Description
+---STRINGEND
+
 ---STRING entry
 entry
+---STRINGEND
+
+---STRING entry name
+Entry name
+---STRINGEND
+
+---STRING export database to excel
+Export database to Excel file
 ---STRINGEND
 
 ---STRING go
@@ -31,48 +51,12 @@ No entries in database
 No matching entries found
 ---STRINGEND
 
----STRING search
-Search
----STRINGEND
-
----STRING select database schema
-Select database schema
----STRINGEND
-
----STRING set database schema
-Set database schema
----STRINGEND
-
----STRING simple database
-Simple database
----STRINGEND
-
----STRING view entry
-View entry
----STRINGEND
-
 ---STRING really delete entry
 Really delete entry?
 ---STRINGEND
 
----STRING database entry
-Database entry
----STRINGEND
-
----STRING sort order
-Sort order
----STRINGEND
-
----STRING database id
-Database ID
----STRINGEND
-
----STRING url name
-URL name
----STRINGEND
-
----STRING entry name
-Entry name
+---STRING search
+Search
 ---STRINGEND
 
 ---STRING searchable 1
@@ -87,10 +71,27 @@ Searchable 2
 Searchable 3
 ---STRINGEND
 
----STRING description
-Description
+---STRING select database schema
+Select database schema
 ---STRINGEND
 
----STRING export database to excel
-Export database to Excel file
+---STRING set database schema
+Set database schema
 ---STRINGEND
+
+---STRING simple database
+Simple database
+---STRINGEND
+
+---STRING sort order
+Sort order
+---STRINGEND
+
+---STRING url name
+URL name
+---STRINGEND
+
+---STRING view entry
+View entry
+---STRINGEND
+

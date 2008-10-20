@@ -7,6 +7,10 @@
 Cancelled
 ---STRINGEND
 
+---STRING confirm
+Confirm
+---STRINGEND
+
 ---STRING create a new host
 Create a new host
 ---STRINGEND
@@ -45,9 +49,5 @@ Prefix
 
 ---STRING root page
 Root page
----STRINGEND
-
----STRING confirm
-Confirm
 ---STRINGEND
 

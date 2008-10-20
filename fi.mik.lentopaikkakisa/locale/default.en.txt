@@ -47,6 +47,10 @@ Pilot
 Plane registration
 ---STRINGEND
 
+---STRING privilege moderation
+Moderation
+---STRINGEND
+
 ---STRING report flight
 Report flight
 ---STRINGEND
@@ -69,9 +73,5 @@ Scores by pilot
 
 ---STRING total
 Total
----STRINGEND
-
----STRING privilege moderation
-Moderation
 ---STRINGEND
 

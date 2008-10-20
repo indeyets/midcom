@@ -19,12 +19,16 @@ Inlägg
 Gå
 ---STRINGEND
 
+---STRING net.nemein.simpledb
+Enkel databas
+---STRINGEND
+
 ---STRING no entries
 Inga inlägg i databasen
 ---STRINGEND
 
 ---STRING no matches
-Inga matchande inlägg funna
+Inga matchande inlägg hittade
 ---STRINGEND
 
 ---STRING search
@@ -47,7 +51,47 @@ Enkel databas
 Visa inlägg
 ---STRINGEND
 
----STRING net.nemein.simpledb
-Enkel databas
+---STRING database entry
+Databas inlägg
+---STRINGEND
+
+---STRING database id
+Databas ID
+---STRINGEND
+
+---STRING description
+Beskrivning
+---STRINGEND
+
+---STRING entry name
+Namn på inlägg
+---STRINGEND
+
+---STRING export database to excel
+Expotera databas till Excel fil
+---STRINGEND
+
+---STRING really delete entry
+Verkligen ta bort inlägg?
+---STRINGEND
+
+---STRING searchable 1
+Sökbar 1
+---STRINGEND
+
+---STRING searchable 2
+Sökbar 2
+---STRINGEND
+
+---STRING searchable 3
+Sökbar 3
+---STRINGEND
+
+---STRING sort order
+Soterings ordning
+---STRINGEND
+
+---STRING url name
+URL namn
 ---STRINGEND
 
