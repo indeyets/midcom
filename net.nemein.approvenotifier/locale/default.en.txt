@@ -7,15 +7,15 @@
 Article %s will expire on %s
 ---STRINGEND
 
+---STRING link to page
+Link to page
+---STRINGEND
+
 ---STRING net.nemein.approvenotifier
 Approval notifications
 ---STRINGEND
 
 ---STRING this is the %s day advance notification
 This is the %s day advance notification.
----STRINGEND
-
----STRING link to page
-Link to page
 ---STRINGEND
 

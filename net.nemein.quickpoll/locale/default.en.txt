@@ -39,6 +39,10 @@ Edit poll
 Enable anonymous voting
 ---STRINGEND
 
+---STRING lock_ip_address
+Lock voter IP address
+---STRINGEND
+
 ---STRING manage
 Manage options
 ---STRINGEND
@@ -73,9 +77,5 @@ Vote
 
 ---STRING vote count
 Vote count
----STRINGEND
-
----STRING lock_ip_address
-Lock voter IP address
 ---STRINGEND
 

@@ -7,6 +7,10 @@
 Could not discover OpenID provider for identity %s
 ---STRINGEND
 
+---STRING failed to authenticate to midgard as %s via openid
+Failed to authenticate to Midgard as %s via OpenID
+---STRINGEND
+
 ---STRING login using openid
 Login using your OpenID
 ---STRINGEND
@@ -29,9 +33,5 @@ Please provide an OpenID URL
 
 ---STRING successfully authenticated as %s via openid
 Successfully authenticated as %s via OpenID
----STRINGEND
-
----STRING failed to authenticate to midgard as %s via openid
-Failed to authenticate to Midgard as %s via OpenID
 ---STRINGEND
 

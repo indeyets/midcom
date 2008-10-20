@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE en
 
+---STRING add creator to reservation
+Add creator to reservation
+---STRINGEND
+
 ---STRING beginning from
 Beginning from
 ---STRINGEND
@@ -23,8 +27,36 @@ Choose the repeat option
 Daily
 ---STRINGEND
 
+---STRING data schema settings
+Data schema settins
+---STRINGEND
+
+---STRING delete
+Delete
+---STRINGEND
+
 ---STRING description
 Description
+---STRINGEND
+
+---STRING description_before_listing
+Description before listing
+---STRINGEND
+
+---STRING duplicate reservations
+Duplicate reservations
+---STRINGEND
+
+---STRING duplicate reservations in members
+Duplicate reservations in members
+---STRINGEND
+
+---STRING duplicate reservations in resources
+Duplicate reservations in resources
+---STRINGEND
+
+---STRING enable javascript hover
+Enable javascrip hover for displaying reservations
 ---STRINGEND
 
 ---STRING enable multiple calendars for comparison
@@ -37,6 +69,10 @@ Reservation ends
 
 ---STRING event
 Event
+---STRINGEND
+
+---STRING failed to create a new event due to resourcing conflict
+Failed to create a new event due to resourcing conflict
 ---STRINGEND
 
 ---STRING location
@@ -61,6 +97,10 @@ Next day
 
 ---STRING no reservations on %s
 No reservations on %s
+---STRINGEND
+
+---STRING or you can redefine the repeat rule
+or you can redefine the repeat rule
 ---STRINGEND
 
 ---STRING participants
@@ -119,12 +159,32 @@ Resources
 Root event privileges
 ---STRINGEND
 
+---STRING root event privileges helptext
+Modify root event privileges
+---STRINGEND
+
+---STRING schema_reservation
+Schema for reservations
+---STRINGEND
+
+---STRING schema_resource
+Schema for resources
+---STRINGEND
+
 ---STRING select resources to compare
 Select resources to compare
 ---STRINGEND
 
 ---STRING start
 Reservation starts
+---STRINGEND
+
+---STRING submit
+Submit
+---STRINGEND
+
+---STRING this reservation is a master event for repeated events
+This reservation is a master event for repeated events
 ---STRINGEND
 
 ---STRING time
@@ -143,66 +203,7 @@ Until date
 Weekly
 ---STRINGEND
 
----STRING failed to create a new event due to resourcing conflict
-Failed to create a new event due to resourcing conflict
----STRINGEND
-
----STRING submit
-Submit
----STRINGEND
-
----STRING delete
-Delete
----STRINGEND
-
----STRING this reservation is a master event for repeated events
-This reservation is a master event for repeated events
----STRINGEND
-
 ---STRING you can remove the dependant events first
 You can remove the dependant events first
 ---STRINGEND
 
----STRING or you can redefine the repeat rule
-or you can redefine the repeat rule
----STRINGEND
-
----STRING root event privileges helptext
-Modify root event privileges
----STRINGEND
-
----STRING description_before_listing
-Description before listing
----STRINGEND
-
----STRING data schema settings
-Data schema settins
----STRINGEND
-
----STRING schema_resource
-Schema for resources
----STRINGEND
-
----STRING schema_reservation
-Schema for reservations
----STRINGEND
-
----STRING enable javascript hover
-Enable javascrip hover for displaying reservations
----STRINGEND
-
----STRING add creator to reservation
-Add creator to reservation
----STRINGEND
-
----STRING duplicate reservations
-Duplicate reservations
----STRINGEND
-
----STRING duplicate reservations in resources
-Duplicate reservations in resources
----STRINGEND
-
----STRING duplicate reservations in members
-Duplicate reservations in members
----STRINGEND

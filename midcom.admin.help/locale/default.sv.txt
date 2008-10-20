@@ -4,14 +4,38 @@
 ---LANGUAGE sv
 
 ---STRING help
-Online hjälp
+Hjälp
 ---STRINGEND
 
 ---STRING help for %s in %s
-Online hjälp för %s i %s
+Hjälp online för %s i %s
 ---STRINGEND
 
 ---STRING midcom.admin.help
-Online hjälp
+Hjälp online
+---STRINGEND
+
+---STRING about midgard
+Om Midgard
+---STRINGEND
+
+---STRING available urls
+Tillgängliga URLr i den här mappen
+---STRINGEND
+
+---STRING component help
+Komponentens dokumentation
+---STRINGEND
+
+---STRING help for %s
+Hjälp online för %s
+---STRINGEND
+
+---STRING online documentation
+Dokumentation online
+---STRINGEND
+
+---STRING user forum
+Discussionsforum
 ---STRINGEND
 

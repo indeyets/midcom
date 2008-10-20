@@ -35,11 +35,11 @@ Redirection type
 Redirection URL
 ---STRINGEND
 
----STRING url entered below
-URL entered below
----STRINGEND
-
 ---STRING selected node
 Selected node
+---STRINGEND
+
+---STRING url entered below
+URL entered below
 ---STRINGEND
 

@@ -67,6 +67,10 @@ Manage team
 Manage teams
 ---STRINGEND
 
+---STRING net.nemein.teams
+Team management
+---STRINGEND
+
 ---STRING new application from %s
 New application from %s
 ---STRINGEND
@@ -133,9 +137,5 @@ You have quit your team
 
 ---STRING your application to team
 Your application to team
----STRINGEND
-
----STRING net.nemein.teams
-Team management
 ---STRINGEND
 

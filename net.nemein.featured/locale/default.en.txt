@@ -11,6 +11,10 @@ Add to featured
 Create featured item
 ---STRINGEND
 
+---STRING default style
+Substyle to use
+---STRINGEND
+
 ---STRING delete
 Delete
 ---STRINGEND
@@ -29,6 +33,14 @@ Get bookmarklet
 
 ---STRING group name
 Group name
+---STRINGEND
+
+---STRING item deleted successfully
+item deleted successfully
+---STRINGEND
+
+---STRING item updated successfully
+item updated successfully
 ---STRINGEND
 
 ---STRING manage
@@ -63,14 +75,3 @@ Submit
 Title
 ---STRINGEND
 
----STRING default style
-Substyle to use
----STRINGEND
-
----STRING item deleted successfully
-item deleted successfully
----STRINGEND
-
----STRING item updated successfully
-item updated successfully
----STRINGEND
