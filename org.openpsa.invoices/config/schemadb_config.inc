@@ -49,13 +49,13 @@
                 'domain' => 'org.openpsa.invoices',
                 'name'    => 'invoice_sender',
              ),
-            'widget' => 'universalchooser',
+            'widget' => 'chooser',
             'widget_config' => array
             (
                 'class'       => 'org_openpsa_contacts_person_dba',
                 'component'   => 'org.openpsa.contacts',
                 'titlefield'  => 'name',
-                'idfield'     => 'id',
+                'id_field'     => 'id',
                 'constraints' => array
                 (
                     array
@@ -70,6 +70,19 @@
                     'firstname',
                     'lastname',
                     'username',
+                ),
+                'result_headers' => array
+                (
+                    array
+                    (
+                        'title' => 'name',
+                        'name' => 'name',
+                    ),
+                    array
+                    (
+                        'title' => 'email',
+                        'name' => 'email',
+                    ),
                 ),
                 'orders'        => array
                 (

@@ -437,24 +437,6 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
     {
         $data['invoice_dm']  = $this->_datamanager;
         $this->_count_invoice_hours();
-        /*
-        // List hour reports invoiced in this invoice
-        $data['invoice_hours'] = array();
-        $hours_qb = org_openpsa_invoices_invoice_hour_dba::new_query_builder();
-        $hours_qb->add_constraint('invoice', '=', $data['invoice']->id);
-        //TODO: 1.8 $hours_qb->add_order('hourReport.task');
-        //TODO: 1.8 $hours_qb->add_order('hourReport.date');
-        $hours = $hours_qb->execute();
-        foreach ($hours as $invoice_hour)
-        {
-            $hour_report = new org_openpsa_projects_hour_report_dba($invoice_hour->hourReport);
-            if (!array_key_exists($hour_report->task, $data['invoice_hours']))
-            {
-                $data['invoice_hours'][$hour_report->task] = array();
-            }
-            $data['invoice_hours'][$hour_report->task][] = $hour_report;
-        }
-        */
 
         midcom_show_style('show-invoice');
     }
