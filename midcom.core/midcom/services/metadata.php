@@ -243,13 +243,17 @@ class midcom_services_metadata extends midcom_baseclasses_core_object
         );
 
         // Last revision time for the entire page
-        $_MIDCOM->add_meta_head(
-            array
+        if ($request_metadata['lastmodified'])
+        {
+            $_MIDCOM->add_meta_head
             (
-                'name' => 'lastupdated',
-                'content' => @gmdate('Y-m-d H:i:s\Z', $request_metadata['lastmodified'])
-            )
-        );
+                array
+                (
+                    'name' => 'lastupdated',
+                    'content' => @gmdate('Y-m-d H:i:s\Z', $request_metadata['lastmodified'])
+                )
+            );
+        }
         
         // If an object has been bound we have more information available
         $view_metadata =& $this->get_view_metadata();
