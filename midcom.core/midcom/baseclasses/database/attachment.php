@@ -248,23 +248,29 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         }
         
         $filename = "{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$this->guid}_{$this->name}";
-        
-        // First try to symlink
-        if (   isset($GLOBALS['midcom_config']['attachment_cache_blobdir'])
-            && file_exists("{$GLOBALS['midcom_config']['attachment_cache_blobdir']}/{$this->location}"))
+        if (file_exists($filename))
         {
-            if (file_exists($filename))
-            {
-                return;
-            }
-        
-            if (symlink("{$GLOBALS['midcom_config']['attachment_cache_blobdir']}/{$this->location}", $filename))
-            {
-                return;
-            }
+            return;
         }
         
-        // Actually copy the data
+        // Then symlink the file
+        try 
+        {
+            $att_obj = new midgard_attachment($this->id);
+        }
+        catch (midgard_error_exception $e) 
+        {
+            return;
+        }
+        
+        $blob = new midgard_blob($att_obj);
+        
+        if (symlink($blob->get_path(), $filename))
+        {
+            return;
+        }
+        
+        // Symlink failed, actually copy the data
         $fh = $this->open('r');
         $data = '';
         while (!feof($fh))
