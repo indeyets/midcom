@@ -9,17 +9,9 @@
 
 $_MIDCOM->auth->require_admin_user();
 
-function midcom_helper_replicator_export_archive_clean_subscription(&$subscription)
-{
-    $subscription->delete();
-    if (method_exists($subscription, 'purge'))
-    {
-        $subscription->purge();
-    }
-}
-
 // do temp subscription
 $subscription = new midcom_helper_replicator_subscription_dba();
+$subscription->_use_rcs = false;
 $subscription->title = date('Y-m-d H:i:s') . ' temporary for export_archive.php';
 $subscription->status = MIDCOM_REPLICATOR_MANUAL;
 $subscription->transporter = 'archive';
@@ -61,7 +53,8 @@ if (!$transporter->create_archive())
 }
 
 // delete (&& purge) subscription
-midcom_helper_replicator_export_archive_clean_subscription($subscription);
+$subscription->delete();
+$subscription->purge();
 
 // send the file
 

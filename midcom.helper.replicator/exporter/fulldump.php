@@ -63,7 +63,8 @@ class midcom_helper_replicator_exporter_fulldump extends midcom_helper_replicato
             }
             if (!$this->dump_type($mgdschema_class))
             {
-                return false;
+                // We should ignore this and move to next type.
+                continue;
             }
         }
         return true;
@@ -77,19 +78,20 @@ class midcom_helper_replicator_exporter_fulldump extends midcom_helper_replicato
      */
     function dump_type($mgdschema_classname)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         $dummy_object = new $mgdschema_classname();
         $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($dummy_object);
         if (empty($midcom_dba_classname))
         {
-            debug_add("MidCOM does not know of class {$mgdschema_classname}, cannot export.", MIDCOM_LOG_WARN);
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("MidCOM DBA does not know of class {$mgdschema_classname}, cannot export.", MIDCOM_LOG_WARN);
             debug_pop();
             // We return true to avoid aborting rest of processing
             return true;
         }
         if (! $_MIDCOM->dbclassloader->load_mgdschema_class_handler($midcom_dba_classname))
         {
-            debug_add("Failed to load the handling component for {$midcom_dba_classname}, cannot export.", MIDCOM_LOG_ERROR);
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to load the handling component for DBA class {$midcom_dba_classname}, cannot export.", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
@@ -106,6 +108,7 @@ class midcom_helper_replicator_exporter_fulldump extends midcom_helper_replicato
         $qb_callback = array($midcom_dba_classname, 'new_query_builder');
         if (!is_callable($qb_callback))
         {
+            debug_push_class(__CLASS__, __FUNCTION__);        
             debug_add("Static method {$midcom_dba_classname}::new_query_builder() is not callable", MIDCOM_LOG_ERROR);
             debug_pop();
             // We return true to avoid aborting rest of processing
@@ -115,7 +118,8 @@ class midcom_helper_replicator_exporter_fulldump extends midcom_helper_replicato
         $qb = call_user_func($qb_callback);
         if (!is_a($qb, 'midcom_core_querybuilder'))
         {
-            debug_add("Did not get valid QB to use", MIDCOM_LOG_ERROR);
+            debug_push_class(__CLASS__, __FUNCTION__);        
+            debug_add("Did not get valid QB to use with {$midcom_dba_classname}", MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
         }
@@ -159,6 +163,7 @@ class midcom_helper_replicator_exporter_fulldump extends midcom_helper_replicato
                 $items = $this->serialize_attachment($object);
                 if ($items === false)
                 {
+                    debug_push_class(__CLASS__, __FUNCTION__);                
                     debug_add("\$this->serialize_attachment() returned failure for {$class} {$object->guid}", MIDCOM_LOG_ERROR);
                     debug_pop();
                     return false;
@@ -169,6 +174,7 @@ class midcom_helper_replicator_exporter_fulldump extends midcom_helper_replicato
                 $serialized = midcom_helper_replicator_serialize($object);
                 if ($serialized === false)
                 {
+                    debug_push_class(__CLASS__, __FUNCTION__);                
                     debug_add("midcom_helper_replicator_serialize() returned failure for {$class} {$object->guid}", MIDCOM_LOG_ERROR);
                     debug_pop();
                     return false;
@@ -185,6 +191,7 @@ class midcom_helper_replicator_exporter_fulldump extends midcom_helper_replicato
             if (!$this->transporter->add_items($items))
             {
                 // TODO: error reporting
+                debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("transporter->add_items() returned failure with error: {$this->transporter->error}", MIDCOM_LOG_ERROR);
                 debug_pop();
                 unset($items, $serialized, $objects);
