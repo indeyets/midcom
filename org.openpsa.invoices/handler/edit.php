@@ -221,7 +221,7 @@ class org_openpsa_invoices_handler_edit extends midcom_baseclasses_components_ha
                 $task = new org_openpsa_projects_task_dba($mc->get_subkey($guid, 'fromGuid'));
                 if ($task)
                 {
-                    if ($task->complete())
+                    if (org_openpsa_projects_workflow::complete($task))
                     {
                         $_MIDCOM->uimessages->add($this->_request_data['l10n']->get('org.openpsa.invoices'), sprintf($this->_request_data['l10n']->get('marked task "%s" finished'), $task->title), 'ok');
                     }

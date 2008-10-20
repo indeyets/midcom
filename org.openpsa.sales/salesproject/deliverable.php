@@ -284,7 +284,7 @@ class org_openpsa_sales_salesproject_deliverable_dba extends __org_openpsa_sales
             $tasks = $task_qb->execute();
             foreach ($tasks as $task)
             {
-                $task->mark_invoiced($invoice);
+                org_openpsa_projects_workflow::mark_invoiced($task, $invoice);
             }
 
             // Register relation between the invoice and this agreement
@@ -363,7 +363,7 @@ class org_openpsa_sales_salesproject_deliverable_dba extends __org_openpsa_sales
                 $tasks = $task_qb->execute();
                 foreach ($tasks as $task)
                 {
-                    $stat = $task->complete(sprintf($_MIDCOM->i18n->get_string('completed by subscription %s', 'org.openpsa.sales'), $this_cycle_identifier));
+                    $stat = org_openpsa_projects_workflow::complete($task, sprintf($_MIDCOM->i18n->get_string('completed by subscription %s', 'org.openpsa.sales'), $this_cycle_identifier));
                     if ($stat)
                     {
                         $tasks_completed[] = $task;
@@ -822,7 +822,7 @@ class org_openpsa_sales_salesproject_deliverable_dba extends __org_openpsa_sales
                     $tasks = $task_qb->execute();
                     foreach ($tasks as $task)
                     {
-                        $task->close(sprintf($_MIDCOM->i18n->get_string('completed from deliverable %s', 'org.openpsa.sales'), $this->title));
+                        org_openpsa_projects_helper::close($task, sprintf($_MIDCOM->i18n->get_string('completed from deliverable %s', 'org.openpsa.sales'), $this->title));
                     }
                     break;
                 case ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_GOODS:

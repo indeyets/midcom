@@ -59,14 +59,14 @@ class org_openpsa_projects_handler_task_action extends midcom_baseclasses_compon
         {
             case 'reopen':
                 $this->_request_data['task']->require_do('midgard:update');
-                $this->_request_data['task']->reopen();
+                org_openpsa_projects_workflow::reopen($this->_request_data['task']);
                 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $_MIDCOM->relocate("{$prefix}task/{$this->_request_data['task']->guid}/");
                 // This will exit()
 
             case 'complete':
                 $this->_request_data['task']->require_do('midgard:update');
-                $this->_request_data['task']->complete();
+                org_openpsa_projects_workflow::complete($this->_request_data['task'])
                 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 $_MIDCOM->relocate("{$prefix}task/{$this->_request_data['task']->guid}/");
                 // This will exit()

@@ -99,7 +99,7 @@ class org_openpsa_projects_hour_report_dba extends __org_openpsa_projects_hour_r
         $parent = $this->get_parent_guid_uncached();
         if (is_object($parent))
         {
-            $parent->start($this->person);
+            org_openpsa_projects_workflow::start($parent, $this->person);
             $parent->update_cache();
         }
         return true;

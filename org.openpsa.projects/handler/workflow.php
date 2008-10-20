@@ -111,7 +111,7 @@ class org_openpsa_projects_handler_workflow extends midcom_baseclasses_component
 
     function _handle_accept()
     {
-        $stat = $this->_request_data['task']->accept();
+        $stat = org_openpsa_projects_workflow::accept($this->_request_data['task']);
         $errstr = mgd_errstr();
         switch($this->_request_data['reply_mode'])
         {
@@ -134,7 +134,7 @@ class org_openpsa_projects_handler_workflow extends midcom_baseclasses_component
 
     function _handle_decline()
     {
-        $stat = $this->_request_data['task']->decline();
+        $stat = org_openpsa_projects_workflow::decline($this->_request_data['task']);
         $errstr = mgd_errstr();
         switch($this->_request_data['reply_mode'])
         {
@@ -157,7 +157,7 @@ class org_openpsa_projects_handler_workflow extends midcom_baseclasses_component
 
     function _handle_complete()
     {
-        $stat = $this->_request_data['task']->complete();
+        $stat = org_openpsa_projects_workflow::complete($this->_request_data['task']);
         $errstr = mgd_errstr();
         switch($this->_request_data['reply_mode'])
         {
@@ -180,7 +180,7 @@ class org_openpsa_projects_handler_workflow extends midcom_baseclasses_component
 
     function _handle_remove_complete()
     {
-        $stat = $this->_request_data['task']->remove_complete();
+        $stat = org_openpsa_projects_workflow::remove_complete($this->_request_data['task']);;
         $errstr = mgd_errstr();
         switch($this->_request_data['reply_mode'])
         {
@@ -203,7 +203,7 @@ class org_openpsa_projects_handler_workflow extends midcom_baseclasses_component
 
     function _handle_approve()
     {
-        $stat = $this->_request_data['task']->approve();
+        $stat = org_openpsa_projects_workflow::approve($this->_request_data['task']);
         $errstr = mgd_errstr();
         switch($this->_request_data['reply_mode'])
         {
@@ -226,7 +226,7 @@ class org_openpsa_projects_handler_workflow extends midcom_baseclasses_component
 
     function _handle_remove_approve()
     {
-        $stat = $this->_request_data['task']->remove_approve();
+        $stat = org_openpsa_projects_workflow::remove_approve($this->_request_data['task']);
         $errstr = mgd_errstr();
         switch($this->_request_data['reply_mode'])
         {
@@ -249,7 +249,7 @@ class org_openpsa_projects_handler_workflow extends midcom_baseclasses_component
 
     function _handle_reject()
     {
-        $stat = $this->_request_data['task']->reject();
+        $stat = org_openpsa_projects_workflow::reject($this->_request_data['task']);
         $errstr = mgd_errstr();
         switch($this->_request_data['reply_mode'])
         {
@@ -272,7 +272,7 @@ class org_openpsa_projects_handler_workflow extends midcom_baseclasses_component
 
     function _handle_close()
     {
-        $stat = $this->_request_data['task']->close();
+        $stat = org_openpsa_projects_workflow::close($this->_request_data['task']);
         $errstr = mgd_errstr();
         switch($this->_request_data['reply_mode'])
         {
@@ -295,7 +295,7 @@ class org_openpsa_projects_handler_workflow extends midcom_baseclasses_component
 
     function _handle_reopen()
     {
-        $stat = $this->_request_data['task']->reopen();
+        $stat = org_openpsa_projects_workflow::reopen($this->_request_data['task']);
         $errstr = mgd_errstr();
         switch($this->_request_data['reply_mode'])
         {
