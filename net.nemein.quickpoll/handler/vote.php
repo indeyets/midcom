@@ -82,7 +82,7 @@ class net_nemein_quickpoll_handler_vote extends midcom_baseclasses_components_ha
             // This will exit.
         }
         
-        if (net_nemein_quickpoll_viewer::has_voted($this->_article->id, &$this->_config))
+        if (net_nemein_quickpoll_viewer::has_voted($this->_article->id, $this->_config))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRFORBIDDEN, "You are not allowed to vote in {$this->_article->title}.");
             // This will exit.
