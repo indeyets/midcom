@@ -36,26 +36,20 @@ class org_openpsa_products_product_dba extends __org_openpsa_products_product_db
 
     function _on_creating()
     {
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
+        if (!$this->validate_code($this->code))
         {
-            if (!$this->validate_code($this->code))
-            {
-                mgd_set_errno(MGD_ERR_OBJECT_NAME_EXISTS);
-                return false;
-            }
+            mgd_set_errno(MGD_ERR_OBJECT_NAME_EXISTS);
+            return false;
         }
         return true;
     }
 
     function _on_updating()
     {
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
+        if (!$this->validate_code($this->code))
         {
-            if (!$this->validate_code($this->code))
-            {
-                mgd_set_errno(MGD_ERR_OBJECT_NAME_EXISTS);
-                return false;
-            }
+            mgd_set_errno(MGD_ERR_OBJECT_NAME_EXISTS);
+            return false;
         }
         return true;
     }

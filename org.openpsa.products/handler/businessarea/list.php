@@ -100,12 +100,8 @@ class org_openpsa_products_handler_businessarea_list  extends midcom_baseclasses
         $data['groups'] = array();
         $group_qb = org_openpsa_products_businessarea_member_dba::new_query_builder();
         $group_qb->add_constraint('businessarea', '=', $data['parent_businessarea']);
-
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
-        {
-            $group_qb->add_order('grp.code');
-            $group_qb->add_order('grp.title');
-        }
+        $group_qb->add_order('grp.code');
+        $group_qb->add_order('grp.title');
 
         $groups = $group_qb->execute();
         foreach ($groups as $member)

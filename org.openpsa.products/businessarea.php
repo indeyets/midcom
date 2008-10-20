@@ -33,26 +33,20 @@ class org_openpsa_products_businessarea_dba extends __org_openpsa_products_busin
 
     function _on_creating()
     {
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
+        if ($this->_check_duplicates($this->code))
         {
-            if ($this->_check_duplicates($this->code))
-            {
-                mgd_set_errno(MGD_ERR_OBJECT_NAME_EXISTS);
-                return false;
-            }
+            mgd_set_errno(MGD_ERR_OBJECT_NAME_EXISTS);
+            return false;
         }
         return true;
     }
 
     function _on_updating()
     {
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
+        if ($this->_check_duplicates($this->code))
         {
-            if ($this->_check_duplicates($this->code))
-            {
-                mgd_set_errno(MGD_ERR_OBJECT_NAME_EXISTS);
-                return false;
-            }
+            mgd_set_errno(MGD_ERR_OBJECT_NAME_EXISTS);
+            return false;
         }
         return true;
     }

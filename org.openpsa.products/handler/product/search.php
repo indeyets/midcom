@@ -213,22 +213,6 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
                 $reversed = false;
             }
 
-            if ($ordering === 'metadata.score')
-            {
-                if (version_compare(mgd_version(), '1.8.2', '<'))
-                {
-                    $ordering = 'score';
-                    $reversed = false;
-                }
-            }
-
-            if (   strpos($ordering, '.')
-                && !class_exists('midgard_query_builder'))
-            {
-                debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
-                continue;
-            }
-
             if ($reversed)
             {
                 $qb->add_order($ordering, 'DESC');
@@ -326,22 +310,6 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             else
             {
                 $reversed = false;
-            }
-
-            if ($ordering === 'metadata.score')
-            {
-                if (version_compare(mgd_version(), '1.8.2', '<'))
-                {
-                    $ordering = 'score';
-                    $reversed = false;
-                }
-            }
-
-            if (   strpos($ordering, '.')
-                && !class_exists('midgard_query_builder'))
-            {
-                debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
-                continue;
             }
 
             if ($reversed)
@@ -499,22 +467,6 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
                 $reversed = false;
             }
 
-            if ($ordering === 'metadata.score')
-            {
-                if (version_compare(mgd_version(), '1.8.2', '<'))
-                {
-                    $ordering = 'score';
-                    $reversed = false;
-                }
-            }
-
-            if (   strpos($ordering, '.')
-                && !class_exists('midgard_query_builder'))
-            {
-                debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
-                continue;
-            }
-
             if ($reversed)
             {
                 $qb->add_order($ordering, 'DESC');
@@ -543,183 +495,6 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             }
         }
 
-        return $filtered_products;
-    }
-
-    /**
-     * Search products using combination of Query Builder and PHP-based checks
-     */
-    function _php_search($constraints)
-    {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        $qb = new org_openpsa_qbpager('org_openpsa_products_product_dba', 'org_openpsa_products_product_dba');
-        $qb->results_per_page = $this->_config->get('products_per_page');
-
-        $php_constraints = array();
-        $filtered_products = array();
-        $parameter_dummy_constraint_added = false;
-
-        if ($this->_request_data['search_type'] == 'OR')
-        {
-            $qb->begin_group('OR');
-        }
-        // TODO: Refactor so that check for existence of parameter constraints first and then be smarter about the PHP constraints
-        foreach ($constraints as $constraint)
-        {
-            debug_add("checking constraint\n===\n" . org_openpsa_helpers::sprint_r($constraint) . "===\n");
-            $storage = $this->_request_data['schemadb_product'][$this->_request_data['search_schema']]->fields[$constraint['property']]['storage'];
-            if (   is_array($storage)
-                // Do not add constraint if it's all wildcards
-                && !preg_match('/^%+$/', $constraint['value']))
-            {
-                if (   $storage['location'] == 'parameter'
-                    || $storage['location'] == 'configuration')
-                {
-                    if (   $this->_request_data['search_type'] == 'OR'
-                        && !$parameter_dummy_constraint_added)
-                    {
-                        $qb->add_constraint('id', '>', 0);
-                        $parameter_dummy_constraint_added;
-                    }
-                    $constraint['storage'] = $storage;
-                    $php_constraints[] = $constraint;
-                }
-                else
-                {
-                    // Simple field storage, use as constraint for QB
-                    // FIXME: This seems to be an enormous source for QB crashes and errors
-                    if (is_numeric($constraint['value']))
-                    {
-                        // TODO: When 1.8.4 becomes more common we can reflect this instead
-                        $constraint['value'] = (int) $constraint['value'];
-                    }
-
-                    $qb->add_constraint($storage['location'], $constraint['constraint'], $constraint['value']);
-                    if ($this->_request_data['search_type'] == 'OR')
-                    {
-                        $constraint['storage'] = $storage;
-                        $php_constraints[] = $constraint;
-                    }
-                }
-            }
-            // do not leave this laying around
-            unset($storage);
-        }
-        if ($this->_request_data['search_type'] == 'OR')
-        {
-            $qb->end_group();
-        }
-
-        foreach ($this->_config->get('search_index_order') as $ordering)
-        {
-            if (preg_match('/\s*reversed?\s*/', $ordering))
-            {
-                $reversed = true;
-                $ordering = preg_replace('/\s*reversed?\s*/', '', $ordering);
-            }
-            else
-            {
-                $reversed = false;
-            }
-
-            if ($ordering === 'metadata.score')
-            {
-                if (version_compare(mgd_version(), '1.8.2', '<'))
-                {
-                    $ordering = 'score';
-                    $reversed = false;
-                }
-            }
-
-            if (   strpos($ordering, '.')
-                && !class_exists('midgard_query_builder'))
-            {
-                debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
-                continue;
-            }
-
-            if ($reversed)
-            {
-                $qb->add_order($ordering, 'DESC');
-            }
-            else
-            {
-                $qb->add_order($ordering);
-            }
-        }
-
-        $initial_products = $qb->execute();
-
-        foreach ($initial_products as $product)
-        {
-            $display = true;
-            $display_OR_tmp = false;
-
-            foreach ($php_constraints as $constraint)
-            {
-                $storage =& $constraint['storage'];
-                // Run the product through filters
-                if ($storage['location'] == 'parameter')
-                {
-                    $pstat = $this->_check_parameter($product, $storage['domain'], $constraint['property'], $constraint);
-                    if (!$pstat)
-                    {
-                        $display = false;
-                    }
-                    if (   $this->_request_data['search_type'] == 'OR'
-                        && $pstat)
-                    {
-                        $display_OR_tmp = true;
-                    }
-                }
-                elseif ($storage['location'] == 'configuration')
-                {
-                    $pstat = $this->_check_parameter($product, $storage['domain'], $storage['name'], $constraint);
-                    if (!$pstat)
-                    {
-                        $display = false;
-                    }
-                    if (   $this->_request_data['search_type'] == 'OR'
-                        && $pstat)
-                    {
-                        $display_OR_tmp = true;
-                    }
-                }
-                // in OR searches we must validate the actual values as well
-                elseif ($this->_request_data['search_type'] == 'OR')
-                {
-                    debug_add("calling this->_constraint_test_value(\$constraint, \$product->{$storage['location']})\n\$product->{$storage['location']}: {$product->$storage['location']}, \$constraint\n===\n" . org_openpsa_helpers::sprint_r($constraint) . "===\n");
-                    if ($this->_constraint_test_value($constraint, $product->$storage['location']))
-                    {
-                        $display_OR_tmp = true;
-                    }
-                    else
-                    {
-                        $display = false;
-                    }
-                }
-            }
-            if (   $this->_request_data['search_type'] == 'OR'
-                && $display_OR_tmp)
-            {
-                $display = true;
-            }
-
-            // Check that the schema is correct
-            $schema = $product->get_parameter('midcom.helper.datamanager2', 'schema_name');
-            if (   $schema != $this->_request_data['search_schema']
-                && !empty($schema))
-            {
-                $display = false;
-            }
-
-            if ($display)
-            {
-                $filtered_products[] = $product;
-            }
-        }
-
-        debug_pop();
         return $filtered_products;
     }
 
@@ -769,39 +544,13 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             {
 
                 // Process search
-                if (   class_exists('midgard_query_builder')
-                //    && $this->_request_data['search_type'] == 'OR'
-                )
-                {
-                    $data['results'] = $this->_qb_search($data['search_constraints']);
-                }
-                /*
-                else if (class_exists('midgard_query_builder'))
-                {
-                    // 1.8 would allow us to do this properly if not for core bug regarding parameters
-                    $data['results'] = $this->_qb_search($data['search_constraints']);
-                }
-                */
-                else
-                {
-                    // 1.7 forces us to read all objects and filter on PHP level
-                    $data['results'] = $this->_php_search($data['search_constraints']);
-                }
+                $data['results'] = $this->_qb_search($data['search_constraints']);
             }
         }
         elseif (array_key_exists('org_openpsa_products_list_all', $_REQUEST))
         {
             // Process search
-            if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-            {
-                // 1.8 allows us to do this elegantly
-                $data['results'] = $this->_qb_list_all();
-            }
-            else
-            {
-                // 1.7 forces us to read all objects and filter on PHP level
-                $data['results'] = $this->_php_list_all();
-            }
+            $data['results'] = $this->_qb_list_all();
         }
         else
         {
@@ -809,16 +558,7 @@ class org_openpsa_products_handler_product_search extends midcom_baseclasses_com
             if ($this->_config->get('search_default_to_all'))
             {
                 // Process search
-                if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-                {
-                    // 1.8 allows us to do this elegantly
-                    $data['results'] = $this->_qb_list_all();
-                }
-                else
-                {
-                    // 1.7 forces us to read all objects and filter on PHP level
-                    $data['results'] = $this->_php_list_all();
-                }
+                $data['results'] = $this->_qb_list_all();
             }
         }
 
