@@ -22,11 +22,18 @@
  */
 function midcom_get_snippet_content_graceful($path)
 {
+    static $cached_snippets = array();
+    if (array_key_exists($path, $cached_snippets))
+    {
+        return $cached_snippets[$path];
+    }
+
     if (substr($path, 0, 5) == 'file:')
     {
         $filename = MIDCOM_ROOT . substr($path, 5);
         if (! file_exists($filename))
         {
+            $cached_snippets[$path] = null;
             return null;
         }
         $data = file_get_contents($filename);
@@ -40,11 +47,13 @@ function midcom_get_snippet_content_graceful($path)
         }
         catch (Exception $e)
         {
+            $cached_snippets[$path] = null;
             return null;
         }
         $_MIDCOM->cache->content->register($snippet->guid);
         $data = $snippet->code;
     }
+    $cached_snippets[$path] = $data;
     return $data;
 }
 
