@@ -1364,6 +1364,10 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             {
                 $item_name = $header_item['name'];
                 $value = @$object->$item_name;
+                if ($item_name === $this->generate_path_for)
+                {
+                    $value = midcom_helper_datamanager2_widget_chooser::resolve_path($object, $value);
+                }
                 // $value = rawurlencode(utf8_decode($value));
                 // debug_add("adding header item: name={$item_name} value={$value}");
         //         
@@ -1454,6 +1458,10 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             {
                 $item_name = $header_item['name'];
                 $value = @$object->$item_name;
+                if ($item_name === $this->generate_path_for)
+                {
+                    $value = midcom_helper_datamanager2_widget_chooser::resolve_path($object, $value);
+                }
                 $value = rawurlencode(utf8_decode($value));
                 // debug_add("adding header item: name={$item_name} value={$value}");
                 
