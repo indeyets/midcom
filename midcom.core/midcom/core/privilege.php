@@ -472,10 +472,9 @@ class midcom_core_privilege extends midcom_core_privilege_db
         $mc->add_value_property('value');
         $mc->execute();
         $privileges = $mc->list_keys();
-
         if (!$privileges)
         {
-            if (mgd_errstr() != 'MGD_ERR_OK')
+            if (mgd_errno() != MGD_ERR_OK)
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Failed to retrieve all privileges for the Object GUID {$guid}: " . mgd_errstr(), MIDCOM_LOG_INFO);
@@ -486,7 +485,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
                 }
                 debug_pop();
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    'The query builder failed to execute, see the log file for more information.');
+                    'Collector failed to execute, see the log file for more information.');
                 // This will exit.
             }
 

@@ -1,7 +1,7 @@
 'name' => 'org.openpsa.products',
 'icon' => 'stock-icons/16x16/package.png',
 'purecode' => false,
-'version' => '8.09.0',
+'version' => '8.09.2beta1',
 'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array

@@ -48,7 +48,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <date>2008-10-07</date>
     <time>19:28:00</time>
     <version>
-        <release>8.09.0</release>
+        <release>8.09.2beta1</release>
         <api>8.09.0</api>
     </version>
     <stability>
@@ -57,8 +57,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     </stability>
     <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
     <notes>
-       	Fixed privileges inheritance. 
-	Fixed url parser for prefixes or names containing dot.
+       	Major performance improvements.
     </notes>
     <contents>
         <dir name="/">
@@ -126,7 +125,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
             </package>
             <extension>
                 <name>midgard</name>
-                <min>8.09.0beta1</min>
+                <min>8.09.2beta1</min>
             </extension>
         </required>
     </dependencies>

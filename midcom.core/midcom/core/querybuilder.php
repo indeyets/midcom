@@ -298,13 +298,12 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
         }
 
         // Workaround until the QB returns the correct type, refetch everything
-        $newresult = Array();
-        $classname = $this->_real_class;
+        $newresult = array();
         $this->denied = 0;
         debug_push_class(__CLASS__, __FUNCTION__);
-        foreach ($result as $key => $value)
+        foreach ($result as $key => $object)
         {
-            if (isset($value->lang))
+            if (isset($object->lang))
             {
                 // Workaround ML bugs, see if the next result is same object with different language
                 $check_key = $key+1;
@@ -313,7 +312,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
                 {
                     $check =& $result[$check_key];
                     //echo "DEBUG: \$check_key={$check_key} \$check->guid={$check->guid}, \$check->lang={$check->lang}<br/>\n";
-                    if (   $check->guid === $value->guid
+                    if (   $check->guid === $object->guid
                         && $value->lang === 0
                         && $check->lang !== 0)
                     {
@@ -324,19 +323,16 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             }
 
             // Workaround to ML bug where we get multiple results in non-strict mode
-            if (isset($this->_seen_guids[$value->guid]))
+            if (isset($this->_seen_guids[$object->guid]))
             {
                 //debug_add("The {$classname} object {$value->guid} has already been seen, probably MultiLang bug", MIDCOM_LOG_WARN);
                 continue;
             }
-            $this->_seen_guids[$value->guid] = true;
+            $this->_seen_guids[$object->guid] = true;
 
-            // Create a new object instance (checks read privilege implicitly) using the copy-constructor.
-            $object = new $classname($value);
-
-            if (mgd_errno() == MGD_ERR_ACCESS_DENIED)
+            // Check read privileges
+            if (!midcom_baseclasses_core_dbobject::post_db_load_checks($object))
             {
-                // This is logged by the callers
                 $this->denied++;
                 continue;
             }
