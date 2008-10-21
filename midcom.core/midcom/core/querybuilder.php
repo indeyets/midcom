@@ -224,7 +224,6 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
     function __construct($classname)
     {
         $this->classname = $classname;
-        static $_class_mapping_cache = array();
         
         if (!class_exists($classname))
         {
@@ -233,40 +232,16 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             // This will exit.
         }
 
-        if (array_key_exists($classname, $_class_mapping_cache))
+        // Validate the class, we check for a single callback representatively only
+        if (!method_exists($classname, '_on_prepare_new_query_builder'))
         {
-            $baseclass = $_class_mapping_cache[$classname];
-        }
-        else
-        {
-            // Validate the class, we check for a single callback representatively only
-            if (!in_array('_on_prepare_new_query_builder', get_class_methods($classname)))
-            {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Cannot create a midcom_core_querybuilder instance for the type {$classname}: Does not seem to be a DBA class name.");
-                // This will exit.
-            }
-
-            $parent = $classname;
-            $baseclass = $classname;
-            do
-            {
-                $baseclass = $parent;
-                $parent = get_parent_class($baseclass);
-            }
-            while ($parent !== false);
-
-            if (! class_exists($baseclass))
-            {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Cannot create a midcom_core_querybuilder instance for the type {$baseclass}: Class not found.");
-                // This will exit.
-            }
-            $_class_mapping_cache[$classname] = $baseclass;
+            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                "Cannot create a midcom_core_querybuilder instance for the type {$classname}: Does not seem to be a DBA class name.");
+            // This will exit.
         }
 
         $this->_real_class = $classname;
-        $this->_qb = new midgard_query_builder($baseclass);
+        $this->_qb = new midgard_query_builder($classname);
 
         if ($GLOBALS['midcom_config']['i18n_multilang_strict'])
         {
