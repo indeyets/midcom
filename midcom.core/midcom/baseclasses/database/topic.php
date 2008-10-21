@@ -110,7 +110,7 @@ class midcom_baseclasses_database_topic extends __midcom_baseclasses_database_to
      */
     function _get_parent_guid_uncached_static_topic($parent_id)
     {
-        if (empty($parent_id))
+        if (!$parent_id)
         {
             return null;
         }

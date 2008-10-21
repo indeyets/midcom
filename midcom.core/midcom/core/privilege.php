@@ -423,7 +423,7 @@ class midcom_core_privilege extends midcom_core_privilege_db
      */
     function get_all_privileges($guid)
     {
-        static $cache = Array();
+        static $cache = array();
 
         if (array_key_exists($guid, $cache))
         {
@@ -626,11 +626,6 @@ class midcom_core_privilege extends midcom_core_privilege_db
         {
             $object = null;
             $guid = $arg;
-
-            if (array_key_exists($guid, $cached_collected_privileges))
-            {
-                return $cached_collected_privileges[$guid];
-            }
         }
         else if (is_object($arg))
         {
@@ -641,7 +636,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
             {
                 $guid = $object->__guid;
             }
-            elseif (mgd_is_guid($object->guid))
+            elseif (   isset($object->guid)
+                    && mgd_is_guid($object->guid))
             {
                 $guid = $object->guid;
             }
@@ -654,6 +650,11 @@ class midcom_core_privilege extends midcom_core_privilege_db
         if (is_null($guid))
         {
             return array();
+        }
+
+        if (isset($cached_collected_privileges[$guid]))
+        {
+            return $cached_collected_privileges[$guid];
         }
 
         // If we have a parent, we recurse.

@@ -239,6 +239,8 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
      */
     function get_parent_guid($object, $class = null)
     {
+        static $cached_parent_guids = array();
+        
         if (is_object($object))
         {
             if (!property_exists($object, 'guid'))
@@ -262,7 +264,7 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
             $the_object = null;
         }
 
-        if (! mgd_is_guid($object_guid))
+        if (!mgd_is_guid($object_guid))
         {
             if ($the_object === null)
             {
@@ -274,6 +276,11 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
         }
         else
         {
+            if (array_key_exists($object_guid, $cached_parent_guids))
+            {
+                // We already got this either via query or memcache
+                return $cached_parent_guids[$object_guid];
+            }
             $parent_guid = $_MIDCOM->cache->memcache->lookup_parent_guid($object_guid);
         }
 
@@ -313,7 +320,10 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
             }
         }
 
-        if (! mgd_is_guid($parent_guid))
+        // Remember this so we don't need to get it again
+        $cached_parent_guids[$object_guid] = $parent_guid;
+
+        if (!mgd_is_guid($parent_guid))
         {
             return null;
         }
