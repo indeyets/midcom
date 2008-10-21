@@ -622,17 +622,17 @@ class org_openpsa_sales_salesproject_deliverable_dba extends __org_openpsa_sales
         $project->end = $schedule_object->end;
 
         $project->manager = $salesproject->owner;
-        $project->contacts = $salesproject->contacts;
 
         // TODO: If deliverable has a supplier specified, add the supplier
         // organization members as potential resources here
-        $project->get_members();
-        $project->resources[$salesproject->owner] = true;
 
         // TODO: Figure out if we really want to keep this
         $project->invoiceable_default = true;
         if ($project->create())
         {
+            $project->add_members('resources', array($salesproject->owner));
+            $project->add_members('contacts', array_keys($salesproject->contacts));
+            
             $relation = org_openpsa_relatedto_handler::create_relatedto($project, 'org.openpsa.projects', $salesproject, 'org.openpsa.sales');
             $_MIDCOM->uimessages->add($_MIDCOM->i18n->get_string('org.openpsa.sales', 'org.openpsa.sales'), sprintf($_MIDCOM->i18n->get_string('created project "%s"', 'org.openpsa.sales'), $project->title), 'ok');
             return $project;
@@ -663,7 +663,6 @@ class org_openpsa_sales_salesproject_deliverable_dba extends __org_openpsa_sales
         $task->plannedHours = $this->plannedUnits;
 
         $task->manager = $salesproject->owner;
-        $task->contacts = $salesproject->contacts;
 
         if ($project)
         {
@@ -676,6 +675,7 @@ class org_openpsa_sales_salesproject_deliverable_dba extends __org_openpsa_sales
         if ($task->create())
         {
             $task = new org_openpsa_projects_task_dba($task->id);
+            $task->add_members('contacts', array_keys($salesproject->contacts));
             $relation_product = org_openpsa_relatedto_handler::create_relatedto($task, 'org.openpsa.projects', $product, 'org.openpsa.products');
 
             // Copy tags from deliverable so we can seek resources

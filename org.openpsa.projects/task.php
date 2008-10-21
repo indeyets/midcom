@@ -300,6 +300,42 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
         return true;
     }
 
+    /**
+     * Adds new contacts or resources
+     * 
+     * @param string $property Where should thy be added
+     * @param array $ids The IDs of the contacts to add
+     */
+    function add_members($property, $ids)
+    {
+    	if (!is_array($ids)
+            || empty ($ids))
+        {
+        	return;
+        }
+        foreach ($ids as $id)
+        {
+        	$resource = new org_openpsa_projects_task_resource_dba();
+            switch ($property)
+            {
+            	case 'contacts':
+                    $resource->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_PROJECTCONTACT;
+                    break;
+                case 'resources':
+                    $resource->orgOpenpsaObtype = ORG_OPENPSA_OBTYPE_PROJECTRESOURCE;
+                    break;
+                default:
+                    continue;                    
+            }
+            $resource->task = $this->id;
+            $resource->person = (int) $id;
+            if ($resource->create())
+            {
+            	$this->{$property}[$id] = true;
+            }
+        }
+    }
+
 
     function _prepare_save()
     {
