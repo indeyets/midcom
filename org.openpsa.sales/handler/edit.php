@@ -35,20 +35,14 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
     {
         $_MIDCOM->load_library('midcom.helper.datamanager');
 
-        debug_push_class(__CLASS__, __FUNCTION__);
-        // Load schema database snippet or file
-        debug_add("Loading Schema Database", MIDCOM_LOG_DEBUG);
-        $schemadb_contents = midcom_get_snippet_content($schemadb_snippet);
-        eval("\$schemadb = Array ( {$schemadb_contents} );");
         // Initialize the datamanager with the schema
-        $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb);
+        $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb_snippet);
 
-        if (!$this->_datamanagers[$type]) {
-            debug_pop();
+        if (!$this->_datamanagers[$type])
+        {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantiated.");
             // This will exit.
         }
-        debug_pop();
     }
 
 
@@ -101,92 +95,13 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
         return null;
     }
 
-/*
-    function _handler_xxx($handler_id, $args, &$data)
-    {
-        $_MIDCOM->auth->require_valid_user();
-        return true;
-    }
-
-    function _show_xxx($handler_id, &$data)
-    {
-    }
-*/
-
     /**
      * @param mixed $handler_id The ID of the handler.
      * @param Array $args The argument list.
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
      */
-    function _handler_view_salesproject($handler_id, $args, &$data)
-    {
-        $_MIDCOM->auth->require_valid_user();
-        $this->_request_data['salesproject'] = $this->_load_salesproject($args[0]);
-        if (!$this->_request_data['salesproject'])
-        {
-            return false;
-        }
-
-        $_MIDCOM->set_pagetitle($this->_request_data['salesproject']->title);
-
-        $this->_view_toolbar->add_item(
-            Array(
-                MIDCOM_TOOLBAR_URL => "salesproject/edit/{$this->_request_data['salesproject']->guid}/",
-                MIDCOM_TOOLBAR_LABEL => $this->_request_data['l10n_midcom']->get("edit"),
-                MIDCOM_TOOLBAR_HELPTEXT => null,
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-                MIDCOM_TOOLBAR_ENABLED => $_MIDCOM->auth->can_do('midgard:update', $this->_request_data['salesproject']),
-            )
-        );
-
-        $this->_view_toolbar->bind_to($this->_request_data['salesproject']);
-
-        // List deliverables
-        $this->_schemadb_deliverable = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_deliverable'));
-        $deliverable_qb = org_openpsa_sales_salesproject_deliverable_dba::new_query_builder();
-        $deliverable_qb->add_constraint('salesproject', '=', $this->_request_data['salesproject']->id);
-        $deliverable_qb->add_constraint('up', '=', 0);
-        $deliverable_qb->add_order('created', 'DESC');
-        $deliverables = $deliverable_qb->execute();
-        foreach ($deliverables as $deliverable)
-        {
-            $this->_controllers[$deliverable->id] =& midcom_helper_datamanager2_controller::create('ajax');
-            // TODO: Modify schema's "price per unit" to readonly if the product has components
-            $this->_controllers[$deliverable->id]->schemadb =& $this->_schemadb_deliverable;
-            $this->_controllers[$deliverable->id]->set_storage($deliverable);
-            $this->_controllers[$deliverable->id]->process_ajax();
-            $this->_request_data['deliverables'][$deliverable->guid] = $this->_controllers[$deliverable->id]->get_content_html();
-            $this->_request_data['deliverables_objects'][$deliverable->guid] = $deliverable;
-        }
-
-        $relatedto_button_settings = org_openpsa_relatedto_handler::common_toolbar_buttons_defaults();
-        $relatedto_button_settings['wikinote']['wikiword'] = sprintf($this->_request_data['l10n']->get($this->_config->get('new_wikinote_wikiword_format')), $this->_request_data['salesproject']->title, date('Y-m-d H:i'));
-        //TODO: make wiki node configurable
-        //TODO: make documents node configurable
-        org_openpsa_relatedto_handler::common_node_toolbar_buttons($this->_node_toolbar, $this->_request_data['salesproject'], $this->_component, $relatedto_button_settings);
-
-        return true;
-    }
-
-    /**
-     *
-     * @param mixed $handler_id The ID of the handler.
-     * @param mixed &$data The local request data.
-     */
-    function _show_view_salesproject($handler_id, &$data)
-    {
-        $this->_request_data['salesproject_dm']  = $this->_datamanagers['salesproject'];
-        midcom_show_style('show-salesproject');
-    }
-
-    /**
-     * @param mixed $handler_id The ID of the handler.
-     * @param Array $args The argument list.
-     * @param Array &$data The local request data.
-     * @return boolean Indicating success.
-     */
-    function _handler_edit_salesproject($handler_id, $args, &$data)
+    function _handler_edit($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
         $this->_request_data['salesproject'] = $this->_load_salesproject($args[0]);
@@ -223,7 +138,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */
-    function _show_edit_salesproject($handler_id, &$data)
+    function _show_edit($handler_id, &$data)
     {
         $this->_request_data['salesproject_dm']  = $this->_datamanagers['salesproject'];
         midcom_show_style('show-salesproject-edit');
@@ -235,7 +150,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
      * @param Array &$data The local request data.
      * @return boolean Indicating success.
      */
-    function _handler_new_salesproject($handler_id, $args, &$data)
+    function _handler_new($handler_id, $args, &$data)
     {
         $_MIDCOM->auth->require_valid_user();
         $_MIDCOM->auth->require_user_do('midgard:create', null, 'org_openpsa_sales_salesproject_dba');
@@ -320,7 +235,7 @@ class org_openpsa_sales_handler_edit extends midcom_baseclasses_components_handl
      * @param mixed $handler_id The ID of the handler.
      * @param mixed &$data The local request data.
      */
-    function _show_new_salesproject($handler_id, &$data)
+    function _show_new($handler_id, &$data)
     {
         $this->_request_data['salesproject_dm']  = $this->_datamanagers['salesproject'];
         midcom_show_style('show-salesproject-new');

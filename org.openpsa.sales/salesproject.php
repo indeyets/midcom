@@ -90,7 +90,7 @@ class org_openpsa_sales_salesproject_dba extends __org_openpsa_sales_salesprojec
         //TODO: Implement $limit_to_person support
         debug_push_class(__CLASS__, __FUNCTION__);
         $default = array
-	(
+	    (
             'time'  => false,
             'obj'   => false,
             /* valid types are: noaction, task, event */
@@ -265,7 +265,7 @@ class org_openpsa_sales_salesproject_dba extends __org_openpsa_sales_salesprojec
     /**
      * Populates contacts as resources lists
      */
-    function get_members($old=false)
+    function get_members($old = false)
     {
         if (!$this->id)
         {
@@ -274,18 +274,18 @@ class org_openpsa_sales_salesproject_dba extends __org_openpsa_sales_salesprojec
 
         if ($old)
         {
-            $prefix='old_';
+            $prefix = 'old_';
         }
         else
         {
-            $prefix='';
+            $prefix = '';
         }
 
         $qb = new midgard_query_builder('org_openpsa_salesproject_member');
         $qb->add_constraint('salesproject', '=', $this->id);
         $ret = @$qb->execute();
         if (   is_array($ret)
-            && count($ret)>0)
+            && count($ret) > 0)
         {
             foreach ($ret as $contact)
             {

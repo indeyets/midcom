@@ -41,11 +41,15 @@ class org_openpsa_sales_handler_view extends midcom_baseclasses_components_handl
         // Populate the toolbar
         if ($this->_salesproject->can_do('midgard:update'))
         {
-            $this->_view_toolbar->add_item(Array(
-                MIDCOM_TOOLBAR_URL => "salesproject/edit/{$this->_salesproject->guid}/",
-                MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
-            ));
+            $this->_view_toolbar->add_item
+            (
+                array
+                (
+                    MIDCOM_TOOLBAR_URL => "salesproject/edit/{$this->_salesproject->guid}/",
+                    MIDCOM_TOOLBAR_LABEL => $this->_l10n_midcom->get('edit'),
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                )
+            );
         }
 
         /*if ($this->_salesproject->can_do('midgard:delete'))
@@ -99,7 +103,7 @@ class org_openpsa_sales_handler_view extends midcom_baseclasses_components_handl
         $this->_request_data['controller']->set_storage($this->_salesproject);
         $this->_request_data['controller']->process_ajax();
         $tmp = Array();
-        $tmp[] = Array
+        $tmp[] = array
         (
             MIDCOM_NAV_URL => "salesproject/{$this->_salesproject->guid}/",
             MIDCOM_NAV_NAME => $this->_salesproject->title,

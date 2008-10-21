@@ -22,7 +22,7 @@ class org_openpsa_sales_navigation extends midcom_baseclasses_components_navigat
     {
         $leaves = array();
 
-        $leaves[$this->_topic->id.':deliverable_won'] = array
+        $leaves[$this->_topic->id . ':deliverable_won'] = array
         (
             MIDCOM_NAV_SITE => Array
             (
@@ -35,22 +35,6 @@ class org_openpsa_sales_navigation extends midcom_baseclasses_components_navigat
             MIDCOM_META_CREATED => $this->_topic->metadata->created,
             MIDCOM_META_EDITED => $this->_topic->metadata->revised
         );
-
-        /* Moved to reports
-        $leaves[$this->_topic->id.':deliverable_report'] = array
-        (
-            MIDCOM_NAV_SITE => Array
-            (
-                MIDCOM_NAV_URL => "deliverable/report/",
-                MIDCOM_NAV_NAME => $this->_l10n->get('sales report'),
-            ),
-            MIDCOM_NAV_ADMIN => null,
-            MIDCOM_META_CREATOR => $this->_topic->creator,
-            MIDCOM_META_EDITOR => $this->_topic->revisor,
-            MIDCOM_META_CREATED => $this->_topic->created,
-            MIDCOM_META_EDITED => $this->_topic->revised
-        );
-        */
 
         return $leaves;
     }

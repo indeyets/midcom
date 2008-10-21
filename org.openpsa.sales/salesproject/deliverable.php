@@ -45,7 +45,8 @@ class org_openpsa_sales_salesproject_deliverable_dba extends __org_openpsa_sales
 
     function list_task_agreements($task)
     {
-        $ret = Array(
+        $ret = array
+        (
             0 => 'no agreement',
         );
         $task->get_members();
@@ -310,7 +311,8 @@ class org_openpsa_sales_salesproject_deliverable_dba extends __org_openpsa_sales
         if (time() < $this->start)
         {
             // Subscription hasn't started yet, register the start-up event to $start
-            $args = array(
+            $args = array
+            (
                 'deliverable' => $this->guid,
                 'cycle'       => $cycle_number,
             );
@@ -400,7 +402,8 @@ class org_openpsa_sales_salesproject_deliverable_dba extends __org_openpsa_sales
         }
 
         // Register next cycle with midcom.services.at
-        $args = array(
+        $args = array
+        (
             'deliverable' => $this->guid,
             'cycle'       => $this_cycle_identifier + 1,
         );

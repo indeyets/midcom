@@ -85,64 +85,6 @@ div.salesproject div.deliverables ol.deliverable_list li div.components
     clear: right;
 }
 
-/* Sales report display */
-table.sales_report
-{
-    border-collapse: collapse;
-}
-
-table.sales_report thead th
-{
-    background-color: #4e9a06;
-    color: #ffffff;
-    text-align: left;
-    padding-right: 8px;
-}
-
-table.sales_report tr
-{
-    vertical-align: top;
-}
-
-table.sales_report td
-{
-    padding-right: 8px;
-}
-table.sales_report tr.even td
-{
-    background-color: #e0e0e0;
-}
-
-table.sales_report td.invoices ul
-{
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
-}
-table.sales_report td.invoices ul li
-{
-    margin: 0px;
-    padding: 0px;
-}
-table.sales_report td.invoices ul .overdue
-{
-    color: #ef2929;
-}
-table.sales_report td.invoices ul .paid
-{
-    color: #4e9a06;
-}
-
-table.sales_report tfoot
-{
-    margin-top: 10px;
-}
-
-table.sales_report tfoot td
-{
-    border-top: 1px solid #000000;
-}
-
 /* Individual deliverable view */
 div.org_openpsa_sales_salesproject_deliverable div.tags
 {

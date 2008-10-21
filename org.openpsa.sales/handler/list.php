@@ -235,23 +235,15 @@ class org_openpsa_sales_handler_list extends midcom_baseclasses_components_handl
     {
         $_MIDCOM->load_library('midcom.helper.datamanager');
         
-        debug_push_class(__CLASS__, __FUNCTION__);
-        // Load schema database snippet or file
-        debug_add("Loading Schema Database", MIDCOM_LOG_DEBUG);
-        $schemadb_contents = midcom_get_snippet_content($schemadb_snippet);
-        eval("\$schemadb = Array ( {$schemadb_contents} );");
         // Initialize the datamanager with the schema
-        $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb);
+        $this->_datamanagers[$type] = new midcom_helper_datamanager($schemadb_snippet);
 
         if (!$this->_datamanagers[$type])
         {
-            debug_pop();
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Datamanager could not be instantiated.");
             // This will exit.
         }
-        debug_pop();
     }
-
 
 }
 

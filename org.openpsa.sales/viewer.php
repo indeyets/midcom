@@ -25,81 +25,72 @@ class org_openpsa_sales_viewer extends midcom_baseclasses_components_request
         $this->_request_data['toolbars'] =& $this->_toolbars;
 
         // Match /list/<status>
-        $this->_request_switch['list_status'] = array(
+        $this->_request_switch['list_status'] = array
+        (
+            'handler' => array('org_openpsa_sales_handler_list', 'list'),
             'fixed_args' => array('list'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_sales_handler_list', 'list'),
         );
 
         // Match /salesproject/edit/<salesproject>
-        $this->_request_switch[] = array(
+        $this->_request_switch[] = array
+        (
+            'handler' => array('org_openpsa_sales_handler_edit', 'edit'),
             'fixed_args' => array('salesproject', 'edit'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_sales_handler_edit', 'edit_salesproject'),
         );
 
         // Match /salesproject/new
-        $this->_request_switch[] = array(
+        $this->_request_switch[] = array
+        (
+            'handler' => array('org_openpsa_sales_handler_edit', 'new'),
             'fixed_args' => array('salesproject', 'new'),
-            'handler' => Array('org_openpsa_sales_handler_edit', 'new_salesproject'),
         );
 
         // Match /salesproject/<salesproject>
-        $this->_request_switch[] = array(
+        $this->_request_switch[] = array
+        (
+            'handler' => array('org_openpsa_sales_handler_view', 'view'),
             'fixed_args' => array('salesproject'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_sales_handler_view', 'view'),
         );
 
         // Match /deliverable/add/<salesproject>/
-        $this->_request_switch[] = array(
+        $this->_request_switch[] = array
+        (
+            'handler' => array('org_openpsa_sales_handler_deliverable_add', 'add'),
             'fixed_args' => array('deliverable', 'add'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_sales_handler_deliverable_add', 'add'),
         );
 
         // Match /deliverable/process/<deliverable>/
-        $this->_request_switch[] = array(
+        $this->_request_switch[] = array
+        (
+            'handler' => array('org_openpsa_sales_handler_deliverable_process', 'process'),
             'fixed_args' => array('deliverable', 'process'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_sales_handler_deliverable_process', 'process'),
         );
 
-        /* Moved to reports
-        // Match /deliverable/report/all/
-        $this->_request_switch['deliverable_report_all'] = array
-        (
-            'fixed_args' => array('deliverable', 'report', 'all'),
-            'handler' => Array('org_openpsa_sales_handler_deliverable_report', 'report'),
-        );
-
-        // Match /deliverable/report/
-        $this->_request_switch['deliverable_report'] = array
-        (
-            'fixed_args' => array('deliverable', 'report'),
-            'handler' => Array('org_openpsa_sales_handler_deliverable_report', 'report'),
-        );
-        */
-
-       // Match /deliverable/edit/<deliverable>
+        // Match /deliverable/edit/<deliverable>
         $this->_request_switch['deliverable_edit'] = array
         (
+            'handler' => array('org_openpsa_sales_handler_deliverable_admin', 'edit'),
             'fixed_args' => array('deliverable', 'edit'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_sales_handler_deliverable_admin', 'edit'),
         );
 
         // Match /deliverable/<deliverable>
         $this->_request_switch['deliverable_view'] = array
         (
+            'handler' => array('org_openpsa_sales_handler_deliverable_view', 'view'),
             'fixed_args' => array('deliverable'),
             'variable_args' => 1,
-            'handler' => Array('org_openpsa_sales_handler_deliverable_view', 'view'),
         );
 
         // Match /
-        $this->_request_switch['list_active'] = array(
-            'handler' => Array('org_openpsa_sales_handler_list', 'list'),
+        $this->_request_switch['list_active'] = array
+        (
+            'handler' => array('org_openpsa_sales_handler_list', 'list'),
         );
 
         //Add common relatedto request switches
@@ -112,7 +103,7 @@ class org_openpsa_sales_viewer extends midcom_baseclasses_components_request
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/org.openpsa.core/ui-elements.css",
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.core/ui-elements.css",
             )
         );
 
@@ -122,7 +113,7 @@ class org_openpsa_sales_viewer extends midcom_baseclasses_components_request
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/org.openpsa.projects/projects.css",
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.projects/projects.css",
             )
         );
 
@@ -132,7 +123,7 @@ class org_openpsa_sales_viewer extends midcom_baseclasses_components_request
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/org.openpsa.invoices/invoices.css",
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.invoices/invoices.css",
             )
         );
 
@@ -142,7 +133,7 @@ class org_openpsa_sales_viewer extends midcom_baseclasses_components_request
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
-                'href' => MIDCOM_STATIC_URL."/org.openpsa.sales/sales.css",
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.sales/sales.css",
             )
         );
 
@@ -174,7 +165,7 @@ class org_openpsa_sales_viewer extends midcom_baseclasses_components_request
      */
     function update_breadcrumb_line($object)
     {
-        $tmp = Array();
+        $tmp = array();
 
         while ($object)
         {
