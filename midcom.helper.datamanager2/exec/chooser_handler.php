@@ -8,6 +8,10 @@
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
+if (!class_exists('midcom_helper_datamanager2_widget_chooser'))
+{
+    require(MIDCOM_ROOT . '/midcom/helper/datamanager2/widget/chooser.php');
+}
 
 debug_push_class('midcom_helper_datamanager2_widget_chooser_handler', 'initialize');
 //debug_print_r('_REQUEST',  $_REQUEST);
@@ -279,8 +283,11 @@ foreach ($results as $object)
     echo "          <id>{$id}</id>\n";
     echo "          <guid>{$guid}</guid>\n";
     
-    if (   !empty($reflector_key)
-        && !$result_headers)
+    debug_print_r('$result_headers', $result_headers);
+    if (   !is_array($result_headers)
+        || (   !empty($reflector_key)
+            && !$result_headers)
+        )
     {
         $value = @$object->get_label();
         debug_add("adding header item: name=label value={$value}");
@@ -331,12 +338,16 @@ foreach ($results as $object)
             }
             
             if (   $generate_path_for == $item_name
+                /**
+                 * Shouldn't these be handled by the 'clever' classes ? 
+                 * Also: is_a() would be better way the check for classes
+                 */
                 || (   $class == 'midcom_db_topic'
                     && $item_name == 'extra')
                 || (   in_array($class, array('midcom_baseclasses_database_group', 'midcom_db_group'))
                     && $item_name == 'name') )
             {
-                $value = resolve_path($object->id, $class, $value);
+                $value = midcom_helper_datamanager2_widget_chooser::resolve_path($object, $value);
             }
             
             $item_name = str_replace('.', '_', $item_name);
@@ -356,116 +367,4 @@ debug_print_r('Got results',$results);
 
 debug_pop();
 $_MIDCOM->finish();
-
-/**
- * @todo Reflectorize this
- */
-function resolve_path($object_id, $class, $title)
-{
-    debug_add("resolve_path for {$object_id}, {$class}, {$title}");
-    
-    $result_components = array();
-    
-    switch ($class)
-    {
-        case 'midcom_db_article':
-        case 'midcom_baseclaases_database_article':
-            $result_components[] = $title;
-            
-            // Get the owner topic
-            $mc = midcom_db_article::new_collector('id', $object_id);
-            $mc->add_value_property('topic');
-            $mc->execute();
-            $keys = $mc->list_keys();
-            
-            foreach ($keys as $guid => $array)
-            {
-                $id = $mc->get_subkey($guid, 'topic');
-            }
-            
-            // Fall through
-            
-        case 'midcom_db_topic':
-            if (!isset($id))
-            {
-                $id = $object_id;
-            }
-            
-            $last_name = '';
-            while ($id != 0)
-            {
-                $mc = midcom_db_topic::new_collector('id', $id);
-                $mc->add_value_property('extra');
-                $mc->add_value_property('up');
-                $mc->add_value_property('name');
-                $mc->execute();
-                $topics = $mc->list_keys();
-    
-                if (! $topics)
-                {
-                    $id = 0;
-                    $rc_count = count($result_components);
-                    $result_components[$rc_count-1] = $last_name;
-                    break;
-                }
-    
-                foreach ($topics as $topic_guid => $value)
-                {
-                    $id = $mc->get_subkey($topic_guid, 'up');
-                    $last_name = $mc->get_subkey($topic_guid, 'name');
-                    
-                    if ($id == 0)
-                    {
-                        $result_components[] = $last_name;
-                    }
-                    else
-                    {
-                        $result_components[] = $mc->get_subkey($topic_guid, 'extra');
-                    }
-                }
-            }
-            break;
-        
-        case 'midcom_db_group':
-        case 'midcom_baseclasses_database_group':
-            $result_components[] = $title;
-            
-            $id = $object_id;
-            while ($id != 0)
-            {
-                $mc = midcom_db_group::new_collector('id', $id);
-                $mc->add_value_property('name');
-                $mc->add_value_property('owner');
-                $mc->execute();
-                $groups = $mc->list_keys();
-                
-                if (! $groups)
-                {
-                    $id = 0;
-                    break;
-                }
-    
-                foreach ($groups as $group_guid => $value)
-                {
-                    if ($object_id != $id)
-                    {
-                        $result_components[] = $mc->get_subkey($group_guid, 'name');
-                    }
-                    $id = $mc->get_subkey($group_guid, 'owner');
-                }
-            }
-            break;
-    }
-    
-    
-    if (empty($result_components))
-    {
-        return $title;
-    }
-    
-    $result_components = array_reverse($result_components);
-    
-    return implode(' &gt; ', $result_components);
-}
-
 ?>

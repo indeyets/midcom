@@ -762,7 +762,7 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
             ),
         );
 
-        if (array_key_exists($this->clever_class,$clever_classes))
+        if (array_key_exists($this->clever_class, $clever_classes))
         {
             // debug_add("clever class {$this->clever_class} found!");
 
@@ -1690,6 +1690,18 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
         echo "</table>\n";
 
         // debug_pop();
+    }
+
+    /**
+     * Statically callable helper method to resolve path for an object
+     */
+    function resolve_path(&$object, $title)
+    {
+        if (!class_exists('midcom_helper_reflector_tree'))
+        {
+            return $title;
+        }
+        return midcom_helper_reflector_tree::resolve_path($object);    
     }
 }
 ?>
