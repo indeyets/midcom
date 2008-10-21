@@ -48,7 +48,7 @@ class org_openpsa_helpers_list
             return $ret;
         }
     
-        $mc = new midgard_collector('midcom_db_member', 'uid', $this->contact_details['id']);
+        $mc = new midgard_collector('midcom_db_member', 'sitegroup', $_MIDGARD['sitegroup']);
         $mc->set_key_property('guid');
         $mc->add_value_property('gid');
         $mc->add_constraint('uid', 'IN', array_keys($task->contacts));
