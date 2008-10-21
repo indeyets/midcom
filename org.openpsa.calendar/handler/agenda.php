@@ -47,33 +47,34 @@ class org_openpsa_calendar_handler_agenda extends midcom_baseclasses_components_
         $to = $this->_request_data['calendar']->get_day_end();
 
         // List user's event memberships
-        $qb = midcom_db_eventmember::new_query_builder();
-        $qb->add_constraint('uid', '=', $_MIDGARD['user']);
+        $mc = midcom_db_eventmember::new_collector('uid', $_MIDGARD['user']);
+        $mc->add_value_property('eid');
 
         // Find all events that occur during [$from, $end]
-        $qb->begin_group("OR");
+        $mc->begin_group("OR");
             // The event begins during [$from, $to]
-            $qb->begin_group("AND");
-                $qb->add_constraint("eid.start", ">=", $from);
-                $qb->add_constraint("eid.start", "<=", $to);
-            $qb->end_group();
+            $mc->begin_group("AND");
+                $mc->add_constraint("eid.start", ">=", $from);
+                $mc->add_constraint("eid.start", "<=", $to);
+            $mc->end_group();
             // The event begins before and ends after [$from, $to]
-            $qb->begin_group("AND");
-                $qb->add_constraint("eid.start", "<=", $from);
-                $qb->add_constraint("eid.end", ">=", $to);
-            $qb->end_group();
+            $mc->begin_group("AND");
+                $mc->add_constraint("eid.start", "<=", $from);
+                $mc->add_constraint("eid.end", ">=", $to);
+            $mc->end_group();
             // The event ends during [$from, $to]
-            $qb->begin_group("AND");
-                $qb->add_constraint("eid.end", ">=", $from);
-                $qb->add_constraint("eid.end", "<=", $to);
-            $qb->end_group();
-        $qb->end_group();
+            $mc->begin_group("AND");
+                $mc->add_constraint("eid.end", ">=", $from);
+                $mc->add_constraint("eid.end", "<=", $to);
+            $mc->end_group();
+        $mc->end_group();
+        $mc->execute();
 
-        $eventmembers = $qb->execute();
+        $eventmembers = $mc->list_keys();
         $this->_request_data['events'] = array();
-        foreach ($eventmembers as $eventmember)
+        foreach ($eventmembers as $guid => $empty)
         {
-            $this->_request_data['events'][] = new org_openpsa_calendar_event_dba($eventmember->eid);
+            $this->_request_data['events'][] = new org_openpsa_calendar_event_dba($mc->get_subkey($guid, 'eid'));
         }
 
         return true;
