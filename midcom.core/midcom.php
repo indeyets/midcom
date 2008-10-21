@@ -51,7 +51,7 @@ unset($redirect_test_uri);
 
 // Advertise the fact that this is a Midgard server
 header('X-Powered-By: Midgard/' . mgd_version());
-mgd_debug_start();
+//mgd_debug_start();
 
 ///////////////////////////////////////////////////////////
 // Ease debugging and make sure the code actually works(tm)
