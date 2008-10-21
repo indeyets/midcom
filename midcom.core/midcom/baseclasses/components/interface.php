@@ -471,11 +471,14 @@ class midcom_baseclasses_components_interface
      */
     public function read_array_from_snippet ($snippetpath)
     {
-        $snippet = new midcom_baseclasses_database_snippet();
+        $snippet = new midgard_snippet();
         
-        try {            
+        try 
+        {            
             $snippet->get_by_path($snippetpath);            
-        } catch(midgard_error_exception $e) {
+        } 
+        catch(midgard_error_exception $e) 
+        {
             return false;
         }
         $_MIDCOM->cache->content->register($snippet->guid);
