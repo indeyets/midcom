@@ -469,20 +469,10 @@ class midcom_baseclasses_components_interface
      * @return Array The read data or false on failure.
      * @see read_array_from_file()
      */
-    public function read_array_from_snippet ($snippetpath)
+    public function read_array_from_snippet($snippetpath)
     {
-        $snippet = new midgard_snippet();
-        
-        try 
-        {            
-            $snippet->get_by_path($snippetpath);            
-        } 
-        catch(midgard_error_exception $e) 
-        {
-            return false;
-        }
-        $_MIDCOM->cache->content->register($snippet->guid);
-        $result = eval ("\$data = Array({$snippet->code}\n);");
+        $code = midcom_get_snippet_content_graceful($snippetpath);
+        $result = eval("\$data = Array({$code}\n);");
         if ($result === false)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
