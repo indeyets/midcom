@@ -248,7 +248,8 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
                 //net_nemein_wiki_viewer::index($this->_request_data['controller']->datamanager, $indexer, $this->_topic);
                 // *** FALL-THROUGH ***
             case 'cancel':
-                $_MIDCOM->relocate("hours/");
+                $task = new org_openpsa_projects_task_dba($this->_hour_report->task);
+                $_MIDCOM->relocate("hours/task/" . $task->guid . "/");
                 // This will exit.
         }
 
