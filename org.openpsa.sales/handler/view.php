@@ -62,22 +62,15 @@ class org_openpsa_sales_handler_view extends midcom_baseclasses_components_handl
         }*/
     }
 
-    function _load_schema()
+    private function _load_controller()
     {
-        /*
-        foreach ($this->_request_data['schemadb_salesproject'] as $schema)
-        {
-            // No need to add components to a component
-            if (array_key_exists('components', $schema->fields)
-                && (   $this->_salesproject->orgOpenpsaObtype == ORG_OPENPSA_PRODUCTS_PRODUCT_TYPE_COMPONENT
-                    || !$this->_config->get('enable_components')
-                    )
-                )
-            {
-                unset($schema->fields['components']);
-            }
-        }
-        */
+        $this->_request_data['schemadb_salesproject_dm2'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_salesproject_dm2'));
+        $this->_request_data['schemadb_salesproject_deliverable'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_deliverable'));
+
+        $this->_request_data['controller'] =& midcom_helper_datamanager2_controller::create('ajax');
+        $this->_request_data['controller']->schemadb =& $this->_request_data['schemadb_salesproject_dm2'];
+        $this->_request_data['controller']->set_storage($this->_salesproject);
+        $this->_request_data['controller']->process_ajax();
     }
 
     /**
@@ -96,21 +89,11 @@ class org_openpsa_sales_handler_view extends midcom_baseclasses_components_handl
             return false;
         }
 
-        $this->_load_schema();
+        $this->_load_controller();
 
-        $this->_request_data['controller'] =& midcom_helper_datamanager2_controller::create('ajax');
-        $this->_request_data['controller']->schemadb =& $this->_request_data['schemadb_salesproject_dm2'];
-        $this->_request_data['controller']->set_storage($this->_salesproject);
-        $this->_request_data['controller']->process_ajax();
-        $tmp = Array();
-        $tmp[] = array
-        (
-            MIDCOM_NAV_URL => "salesproject/{$this->_salesproject->guid}/",
-            MIDCOM_NAV_NAME => $this->_salesproject->title,
-        );
-        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
         $this->_prepare_request_data();
 
+        $this->_update_breadcrumb_line();
         $_MIDCOM->set_26_request_metadata($this->_salesproject->revised, $this->_salesproject->guid);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_salesproject->title}");
 
@@ -147,6 +130,17 @@ class org_openpsa_sales_handler_view extends midcom_baseclasses_components_handl
         $_MIDCOM->bind_view_to_object($this->_salesproject);
 
         return true;
+    }
+
+    private function _update_breadcrumb_line()
+    {
+    	$tmp = Array();
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => "salesproject/{$this->_salesproject->guid}/",
+            MIDCOM_NAV_NAME => $this->_salesproject->title,
+        );
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 
     /**

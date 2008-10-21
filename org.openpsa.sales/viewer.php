@@ -151,9 +151,6 @@ class org_openpsa_sales_viewer extends midcom_baseclasses_components_request
     {
         $_MIDCOM->load_library('org.openpsa.contactwidget');
 
-        $this->_request_data['schemadb_salesproject_dm2'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_salesproject_dm2'));
-        $this->_request_data['schemadb_salesproject_deliverable'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_deliverable'));
-
         return true;
     }
 

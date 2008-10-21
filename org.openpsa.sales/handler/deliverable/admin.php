@@ -133,7 +133,8 @@ class org_openpsa_sales_handler_deliverable_admin extends midcom_baseclasses_com
      */
     function _load_schemadb()
     {
-        $this->_schemadb =& $this->_request_data['schemadb_salesproject_deliverable'];
+        $this->_schemadb = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_deliverable'));
+        ;
     }
 
     /**
