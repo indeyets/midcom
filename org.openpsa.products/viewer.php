@@ -229,29 +229,6 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
             'variable_args' => 2,
         );
 
-        // Handle /businessarea/
-        $this->_request_switch['index_businessarea'] = Array
-        (
-            'handler' => Array('org_openpsa_products_handler_businessarea_list', 'list'),
-            'fixed_args' => Array('businessarea'),
-        );
-
-        // Handle /businessarea/<businessarea guid>
-        $this->_request_switch['list_businessarea'] = Array
-        (
-            'handler' => Array('org_openpsa_products_handler_businessarea_list', 'list'),
-            'fixed_args' => Array('businessarea'),
-            'variable_args' => 1,
-        );
-
-        // Handle /product/create/<group id>/<schema name>
-        $this->_request_switch['create_businessarea'] = Array
-        (
-            'handler' => Array('org_openpsa_products_handler_businessarea_create', 'create'),
-            'fixed_args' => Array('businessarea', 'create'),
-            'variable_args' => 2,
-        );
-
         // Handle /search/
         $this->_request_switch['view_search_redirect'] = Array
         (
@@ -460,24 +437,6 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
      */
     function _populate_node_toolbar()
     {
-        /*
-        foreach (array_keys($this->_request_data['schemadb_businessarea']) as $name)
-        {
-            $this->_node_toolbar->add_item
-            (
-                array
-                (
-                    MIDCOM_TOOLBAR_URL => "businessarea/create/0/{$name}/",
-                    MIDCOM_TOOLBAR_LABEL => sprintf
-                    (
-                        $this->_l10n_midcom->get('create %s'),
-                        $this->_l10n->get($this->_request_data['schemadb_businessarea'][$name]->description)
-                    ),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/new-dir.png',
-                )
-            );
-        }
-        */
         if (   $this->_topic->can_do('midgard:update')
             && $this->_topic->can_do('midgard:create'))
         {
@@ -547,7 +506,6 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
     {
         $this->_request_data['schemadb_group'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_group'));
         $this->_request_data['schemadb_product'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_product'));
-        $this->_request_data['schemadb_businessarea'] = midcom_helper_datamanager2_schema::load_database($this->_config->get('schemadb_businessarea'));
 
         $this->_populate_node_toolbar();
 

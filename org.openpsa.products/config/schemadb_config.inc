@@ -187,14 +187,5 @@
             'config_domain' => 'org.openpsa.products',
             'config_key' => 'schemadb_group',
         ),
-        'schemadb_businessarea' => array
-        (
-            'description' => 'business area schema database',
-            'datatype' => 'text',
-            'location' => 'config',
-            'config_domain' => 'org.openpsa.products',
-            'config_key' => 'schemadb_businessarea',
-            'end_fieldgroup' => '',
-        ),
     )
 ),
