@@ -200,6 +200,16 @@ class midcom_helper__styleloader
      */
     function get_style_id_from_path($path, $rootstyle = 0)
     {
+        static $cached = array();
+        if (!isset($cached[$rootstyle]))
+        {
+            $cached[$rootstyle] = array();
+        }
+        if (array_key_exists($path, $cached[$rootstyle]))
+        {
+            return $cached[$rootstyle][$path];
+        }
+
         $path = preg_replace("/^\/(.*)/", "$1", $path); // leading "/"
         $path_array = explode('/', $path);
 
@@ -207,6 +217,7 @@ class midcom_helper__styleloader
 
         if (count($path_array) == 0)
         {
+            $cached[$rootstyle][$path] = false;
             return false;
         }
 
@@ -228,6 +239,7 @@ class midcom_helper__styleloader
             if (!$styles)
             {
                 //$mc->destroy();
+                $cached[$rootstyle][$path] = false;
                 return false;
             }
 
@@ -241,9 +253,11 @@ class midcom_helper__styleloader
 
         if ($current_style != 0)
         {
+            $cached[$rootstyle][$path] = $current_style;
             return $current_style;
         }
 
+        $cached[$rootstyle][$path] = false;
         return false;
     }
     
@@ -370,6 +384,36 @@ class midcom_helper__styleloader
      */
     function _get_element_in_styletree($id, $name)
     {
+        static $cached = array();
+        if (!isset($cached[$id]))
+        {
+            $cached[$id] = array();
+        }
+        if (array_key_exists($name, $cached[$id]))
+        {
+            return $cached[$id][$name];
+        }
+
+        $element_mc = midgard_element::new_collector('style', $id);
+        $element_mc->set_key_property('guid');
+        $element_mc->add_value_property('value');
+        $element_mc->add_constraint('name', '=', $name);
+        $element_mc->execute();
+        $elements = $element_mc->list_keys();
+        if ($elements)
+        {
+            foreach ($elements as $element_guid => $value)
+            {
+                //$style_mc->destroy();
+                $value = $element_mc->get_subkey($element_guid, 'value');
+                //$element_mc->destroy();
+                $_MIDCOM->cache->content->register($element_guid);
+                $cached[$id][$name] = $value;
+                return $value;
+            }
+        }
+
+        // No such element on this level, check parents
         $style_mc = midgard_style::new_collector('id', $id);
         $style_mc->set_key_property('guid');
         $style_mc->add_value_property('up');
@@ -377,38 +421,24 @@ class midcom_helper__styleloader
         $styles = $style_mc->list_keys();
         foreach ($styles as $style_guid => $value)
         {
+            // FIXME: Should we register this also in the other case
             $_MIDCOM->cache->content->register($style_guid);
-            $element_mc = midgard_element::new_collector('style', $id);
-            $element_mc->set_key_property('guid');
-            $element_mc->add_value_property('value');
-            $element_mc->add_constraint('name', '=', $name);
-            $element_mc->execute();
-            $elements = $element_mc->list_keys();
-            if ($elements)
+
+            $up = $style_mc->get_subkey($style_guid, 'up');
+            if (   $up
+                && $up != 0)
             {
-                foreach ($elements as $element_guid => $value)
-                {
-                    //$style_mc->destroy();
-                    $value = $element_mc->get_subkey($element_guid, 'value');
-                    //$element_mc->destroy();
-                    $_MIDCOM->cache->content->register($element_guid);
-                    return $value;
-                }
-            }
-            else
-            {
-                $up = $style_mc->get_subkey($style_guid, 'up');
-                if (   $up
-                    && $up != 0)
-                {
-                    //$style_mc->destroy();
-                    //$element_mc->destroy();
-                    return $this->_get_element_in_styletree($up, $name);
-                }
+                //$style_mc->destroy();
+                //$element_mc->destroy();
+                $value = $this->_get_element_in_styletree($up, $name);
+                $cached[$id][$name] = $value;
+                return $value;
             }
         }
         //$style_mc->destroy();
-        return false;
+        
+        $cached[$id][$name] = false;
+        return $cached[$id][$name];
     }
     
     function get_style_elements_and_nodes($style)
