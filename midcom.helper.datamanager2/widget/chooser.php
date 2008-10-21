@@ -654,8 +654,8 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 'component' => 'net.nemein.wiki',
                 'headers' => array
                 (
-                    'title',
                     'revised',
+                    'title',
                 ),
                 'constraints' => array(),
                 'searchfields' => array
@@ -741,9 +741,9 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
                 'component' => 'net.nemein.calendar',
                 'headers' => array
                 (
-                    'title',
                     'start',
                     'end',
+                    'title',
                     'location',
                 ),
                 'constraints' => array(),
