@@ -42,6 +42,7 @@ function midcom_get_snippet_content_graceful($path)
         {
             return null;
         }
+        $_MIDCOM->cache->content->register($snippet->guid);
         $data = $snippet->code;
     }
     return $data;
