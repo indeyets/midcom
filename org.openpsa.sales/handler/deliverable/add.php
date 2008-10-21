@@ -120,6 +120,7 @@ class org_openpsa_sales_handler_deliverable_add extends midcom_baseclasses_compo
         {
             return false;
         }
+
         $this->_salesproject->require_do('midgard:create');
 
         if (!array_key_exists('product', $_POST))
@@ -128,8 +129,8 @@ class org_openpsa_sales_handler_deliverable_add extends midcom_baseclasses_compo
                 'No product specified, aborting.');
         }
 
-        $this->_product = new org_openpsa_products_product_dba($_POST['product']);
-        if (!$this->_product)
+        $this->_product = new org_openpsa_products_product_dba((int) $_POST['product']);
+        if (empty($this->_product->guid))
         {
             return false;
         }
