@@ -8,11 +8,11 @@
  */
 
 /**
- * Projects "now working on"
+ * Mypage "now working on"
  *
  * @package org.openpsa.mypage
  */
-class org_openpsa_projects_handler_workingon extends midcom_baseclasses_components_handler
+class org_openpsa_mypage_handler_workingon extends midcom_baseclasses_components_handler
 {
     function __construct()
     {

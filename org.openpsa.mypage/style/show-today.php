@@ -41,7 +41,7 @@ $view_today =& $data['view_today'];
             ?>
             <div class="org_openpsa_mypage_workingon">
                 <h2><?php echo $data['l10n']->get('now working on'); ?></h2>
-                <form method="post" action="<?php echo $data['projects_url'] . 'workingon/set/'; ?>">
+                <form method="post" action="workingon/set/">
                     <input type="hidden" name="url" value="&(prefix);" />
                     <select name="task" onchange="this.form.submit();">
                         <option value="none"><?php echo $data['l10n']->get('not working on a task'); ?></option>

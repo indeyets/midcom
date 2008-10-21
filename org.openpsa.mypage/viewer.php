@@ -91,13 +91,13 @@ class org_openpsa_mypage_viewer extends midcom_baseclasses_components_request
         // Match /workingon/set
         $this->_request_switch['workingon_set'] = array
         (
-            'handler' => array('org_openpsa_projects_handler_workingon', 'set'),
+            'handler' => array('org_openpsa_mypage_handler_workingon', 'set'),
             'fixed_args' => array('workingon', 'set' ),
         );
         // Match /workingon/check
         $this->_request_switch['workingon_check'] = array
         (
-            'handler' => array('org_openpsa_projects_handler_workingon', 'check'),
+            'handler' => array('org_openpsa_mypage_handler_workingon', 'check'),
             'fixed_args' => array('workingon', 'check'),
         );
         
