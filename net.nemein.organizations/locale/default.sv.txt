@@ -1,105 +1,105 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE sv
 
 ---STRING create group
-Create group
+Skapa grupp
 ---STRINGEND
 
 ---STRING delete group
-Delete group
+Ta bort grupp
 ---STRINGEND
 
 ---STRING delete group confirmation message
-Are you sure that you want to delete this group?
+Är du säker på att du vill ta bort denna grupp?
 ---STRINGEND
 
 ---STRING edit group
-Edit group
+Editera grupp
 ---STRINGEND
 
 ---STRING email
-Email
+E-post
 ---STRINGEND
 
 ---STRING firstname
-First name
+Förnamn
 ---STRINGEND
 
 ---STRING group
-Group to display
+Grupp att visa
 ---STRINGEND
 
 ---STRING job title
-Title
+Titel
 ---STRINGEND
 
 ---STRING lastname
-Last name
+Efternamn
 ---STRINGEND
 
 ---STRING list settings
-List settings
+List inställningar
 ---STRINGEND
 
 ---STRING location
-Location
+Plats
 ---STRINGEND
 
 ---STRING nearest groups to %s
-Nearest to %s
+Närmast %s
 ---STRINGEND
 
 ---STRING net.nemein.organizations
-Organizations
+Organisation
 ---STRINGEND
 
 ---STRING no groups found.
-There are no groups in this group.
+Det finns inga grupper i denna grupp.
 ---STRINGEND
 
 ---STRING no permissions for
-No permissions for
+Inga rättigheter för
 ---STRINGEND
 
 ---STRING none
-None
+Inga
 ---STRINGEND
 
 ---STRING official name
-Official name
+Officellt namn
 ---STRINGEND
 
 ---STRING organizations
-Organizations
+Organisationer
 ---STRINGEND
 
 ---STRING organizations folder
-Organizations folder
+Organisations katalog
 ---STRINGEND
 
 ---STRING select
-Select
+Välj
 ---STRINGEND
 
 ---STRING select group to display
-Select group to display
+Välj grupp att visa
 ---STRINGEND
 
 ---STRING select member to display first
-Select member to display first
+Välj medlem att visa först
 ---STRINGEND
 
 ---STRING view group
-View group
+Visa grupp
 ---STRINGEND
 
 ---STRING work phone
-Work phone
+Arbetstelefon
 ---STRINGEND
 
 ---STRING your account has insufficient permissions
-Your account has insufficient permissions to access details of this group
+Ditt konto har inte tillräckliga rättigheter för att visa detaljer om denna grupp.
 ---STRINGEND
 

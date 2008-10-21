@@ -1,61 +1,53 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE sv
 
 ---STRING approval
-Approval
+Godkännade
 ---STRINGEND
 
 ---STRING approval failed for hours
-Approval failed for hours
+Godännade misslyckades av timmar
 ---STRINGEND
 
 ---STRING approved %s hour reports in task "%s"
-Approved %s hour reports in task "%s"
+Godkännade av %s timrapporten i uppgift "%s"
 ---STRINGEND
 
 ---STRING approved by %s on %s
-Approved by %s on %s
+Godkänd av %s på %s
 ---STRINGEND
 
 ---STRING approved hours
-Approved hours
+Godkända timmar
 ---STRINGEND
 
 ---STRING comments
-Comments
+Kommentarer
 ---STRINGEND
 
 ---STRING hours
-Hours
+Timmar
 ---STRINGEND
 
 ---STRING mailed note to %s <%s>
-Mailed note to %s <%s>
+Mailade antecking till %s <%s>
 ---STRINGEND
 
 ---STRING net.nemein.hourview2
-Hour report viewer
+Granska timrapporter
 ---STRINGEND
 
 ---STRING no hour reports
-No hour reports
+Inga timrapporter
 ---STRINGEND
 
 ---STRING not approved hours
-Not approved hours
----STRINGEND
-
----STRING processed hour reports in %s
-Processed hour reports in task %s
----STRINGEND
-
----STRING reporter
-Reporter
+Icke godkända timmar
 ---STRINGEND
 
 ---STRING send
-Send
+Skicka
 ---STRINGEND
 
