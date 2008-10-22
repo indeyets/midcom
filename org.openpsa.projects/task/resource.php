@@ -173,7 +173,6 @@ class org_openpsa_projects_task_resource_dba extends __org_openpsa_projects_task
 
             $task_array[$task->$key] = $task->get_label();
         }
-
         return $task_array;
     }
 }

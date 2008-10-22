@@ -113,6 +113,7 @@ class org_openpsa_sales_salesproject_dba extends __org_openpsa_sales_salesprojec
             $qb->end_group();
         $qb->end_group();
         $links = $qb->execute();
+
         if (   !is_array($links)
             || count($links) == 0)
         {
@@ -274,36 +275,34 @@ class org_openpsa_sales_salesproject_dba extends __org_openpsa_sales_salesprojec
 
         if ($old)
         {
-            $prefix = 'old_';
+            $property = 'old_contacts';
         }
         else
         {
-            $prefix = '';
+            $property = 'contacts';
         }
 
-        $qb = new midgard_query_builder('org_openpsa_salesproject_member');
-        $qb->add_constraint('salesproject', '=', $this->id);
-        $ret = @$qb->execute();
+        if (!is_array($this->contacts))
+        {
+            $this->contacts = array();
+        }
+        if (!is_array($this->old_contacts))
+        {
+            $this->old_contacts = array();
+        }
+
+        $mc = org_openpsa_salesproject_member::new_collector('salesproject', $this->id);
+        $mc->set_key_property('guid');
+        $mc->add_value_property('person');
+        $mc->execute();
+	
+	$ret = $mc->list_keys();
         if (   is_array($ret)
             && count($ret) > 0)
         {
-            foreach ($ret as $contact)
+            foreach (array_keys($ret) as $guid)
             {
-                switch ($contact->orgOpenpsaObtype)
-                {
-                    /*
-                    case ORG_OPENPSA_OBTYPE_SALESPROJECT_MEMBER_foo:
-                        $varName=$prefix . 'foo';
-                        break;
-                    */
-                    default:
-                        //fall-trough intentional
-                    case ORG_OPENPSA_OBTYPE_SALESPROJECT_MEMBER:
-                        $varName=$prefix . 'contacts';
-                        break;
-                }
-                $property = &$this->$varName;
-                $property[$contact->person] = true;
+                $this->{$property}[$mc->get_subkey($guid, 'person')] = true;
             }
         }
 
