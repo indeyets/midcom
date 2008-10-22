@@ -69,6 +69,14 @@ class midcom_helper_configuration
      * @access private
      */
     var $_merged;
+    
+    /**
+     * Internal cache-related items
+     * @ignore
+     */
+    private $_object_stored = false;
+    private $_object = null;
+    private $_path = null;
 
     /**
      * The constructor initializes the global configuration.
@@ -89,10 +97,10 @@ class midcom_helper_configuration
     {
         if (! is_null($param2))
         {
-            $object = &$param1;
-            $path = &$param2;
+            $this->_object = &$param1;
+            $this->_path = &$param2;
             $this->_local = array();
-            $this->_store_from_object($object, $path, true);
+            $this->_store_from_object(true);
         }
         else if (! is_null($param1))
         {
@@ -119,43 +127,32 @@ class midcom_helper_configuration
      *
      * Any error such as invalid configuration data will trigger a MidCOM error.
      *
-     * @param MidgardObject $object        The object from which to retrieve the configuration.
-     * @param string        $path        The Parameter domain to query.
      * @param boolean            $global        Set to true to replace the global configuration.
      * @access private
      */
-    function _store_from_object($object, $path, $global = false)
+    private function _store_from_object($global = false)
     {
         $array = array();
 
         // Cast to DBA type.
-        if (! $_MIDCOM->dbclassloader->is_midcom_db_object($object))
+        if (! $_MIDCOM->dbclassloader->is_midcom_db_object($this->_object))
         {
-            $object = $_MIDCOM->dbfactory->convert_midgard_to_midcom($object);
+            $this->_object = $_MIDCOM->dbfactory->convert_midgard_to_midcom($this->_object);
         }
 
-        $array = $object->list_parameters($path);
-
-        /*
-        if ($params) {
-            while ($params->fetch())
-            {
-                $array[$params->name] = $params->value;
-            }
-        }
-        */
-
+        $array = $this->_object->list_parameters($this->_path);
 
         if ($global)
         {
             $this->_global = $array;
             $this->_local = array();
             $this->_merged = $array;
-            debug_pop();
         }
+
         $this->_check_local_array($array);
         $this->_local = $array;
         $this->_update_cache();
+        $this->_object_stored = true;
     }
 
     /**
@@ -164,7 +161,7 @@ class midcom_helper_configuration
      *
      * @access private
      */
-    function _update_cache()
+    private function _update_cache()
     {
         $this->_merged = $this->_global;
         if ( !empty($this->_local) )
@@ -189,7 +186,7 @@ class midcom_helper_configuration
      *
      * @access private
      */
-    function _check_local_array($array)
+    private function _check_local_array($array)
     {
         if ( !empty($array) )
         {
@@ -222,8 +219,14 @@ class midcom_helper_configuration
      * @return boolean                Indicating success.
      * @see midcom_helper_configuration::reset_local()
      */
-    function store($params, $reset = true)
+    public function store($params, $reset = true)
     {
+        if (   !$this->_object_stored
+            && $this->_object)
+        {
+            $this->_store_from_object();
+        }
+
         $this->_check_local_array($params);
         if ($reset == true)
         {
@@ -249,16 +252,18 @@ class midcom_helper_configuration
      * @param string        $path    The parameter domain to query.
      * @return boolean            Indicating success
      */
-    function store_from_object($object, $path)
+    public function store_from_object($object, $path)
     {
-        return $this->_store_from_object ($object, $path, false);
+        $this->_object = $object;
+        $this->_path = $path;
+        return true;
     }
 
     /**
      * Clear the local configuration data, effectively reverting to the global
      * default.
      */
-    function reset_local()
+    public function reset_local()
     {
         $this->_local = array();
         $this->_merged = $this->_global;
@@ -277,8 +282,14 @@ class midcom_helper_configuration
      * @return mixed        Its value or FALSE, if the key doesn't exist.
      * @see midcom_helper_configuration::exists()
      */
-    function get($key)
+    public function get($key)
     {
+        if (   !$this->_object_stored
+            && $this->_object)
+        {
+            $this->_store_from_object();
+        }
+
         if ($this->exists($key))
         {
             return $this->_merged[$key];
@@ -294,8 +305,14 @@ class midcom_helper_configuration
      *
      * @return Array    The complete current configuration.
      */
-    function get_all()
+    public function get_all()
     {
+        if (   !$this->_object_stored
+            && $this->_object)
+        {
+            $this->_store_from_object();
+        }
+
         // Copy-By-Value is PHPs default, so don't bother copying it by hand...
         return $this->_merged;
     }
@@ -306,9 +323,15 @@ class midcom_helper_configuration
      * @param string    $key    The configuration key to check for.
      * @return boolean                True, if the key is available, false otherwise.
      */
-    function exists($key)
+    public function exists($key)
     {
-        return array_key_exists ($key, $this->_merged);
+        if (   !$this->_object_stored
+            && $this->_object)
+        {
+            $this->_store_from_object();
+        }
+
+        return array_key_exists($key, $this->_merged);
     }
 
 }
