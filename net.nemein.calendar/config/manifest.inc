@@ -1,7 +1,7 @@
 'name' => 'net.nemein.calendar',
 'icon' => 'stock-icons/16x16/stock_event.png',
 'purecode' => false,
-'version' => '8.09.0',
+'version' => '8.09.2beta1',
 'state' => 'stable',
 'privileges' => array(),
 'class_definitions' => array
@@ -30,10 +30,7 @@
     'dependencies' => array
     (
         'net.nemein.repeathandler' => array(),
-        'org.openpsa.calendarwidget' => array
-        (
-            'min' => '2.1.6',
-        ),
+        'org.openpsa.calendarwidget' => array,
         'org.routamc.positioning' => array(),
         'de.bitfolge.feedcreator' => array(),
         'Calendar' => array

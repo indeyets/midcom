@@ -809,6 +809,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
      */
     function _handler_calendar($handler_id, $args, &$data)
     {
+        $_MIDCOM->load_library('org.openpsa.calendarwidget');
         $_MIDCOM->add_link_head
         (
             array
