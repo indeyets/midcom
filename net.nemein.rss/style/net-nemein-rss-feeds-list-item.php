@@ -13,7 +13,18 @@ else
 }
 echo "    <ul class=\"details\">\n";
 echo "        <li></li>\n";
-echo "        <li><a href=\"{$prefix}category/{$data['feed_category']}/\">" . sprintf($_MIDCOM->i18n->get_string('%s items', 'net.nemein.rss'), $data['feed_items']) . "</a></li>\n";
+
+switch ($data['topic']->component)
+{
+    case 'net.nehmer.blog':
+        $qb = midcom_db_article::new_query_builder();
+        $qb->add_constraint('topic', '=', $data['topic']->id);
+        $qb->add_constraint('extra1', 'LIKE', "%|{$data['feed_category']}|%");
+        $data['feed_items'] = $qb->count_unchecked();
+        echo "        <li><a href=\"{$prefix}category/{$data['feed_category']}/\">" . sprintf($_MIDCOM->i18n->get_string('%s items', 'net.nemein.rss'), $data['feed_items']) . "</a></li>\n";
+        break;
+}
+
 if ($data['feed']->latestupdate)
 {
     echo "        <li>" . sprintf($_MIDCOM->i18n->get_string('latest item from %s', 'net.nemein.rss'), strftime('%x %X', $data['feed']->latestupdate)) . "</li>\n";
