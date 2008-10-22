@@ -46,18 +46,27 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         return $this->nodes[$node_id];
     }
 
-    private function get_initial_score($id)
+    private function get_initial_scores($articles)
     {
-        $score = 0;
-        $sc = org_maemo_socialnews_score_article_dba::new_collector('article', $id);
+        $article_guids = array();
+        foreach ($articles as $article)
+        {
+            $this->articles_scores_initial[$article->guid] = 0;
+            $article_guids[$article->id] = $article->guid;
+        }
+        $sc = org_maemo_socialnews_score_article_dba::new_collector('sitegroup', $_MIDGARD['sitegroup']);
+        $sc->add_constraint('article', 'IN', array_keys($article_guids));
+        $sc->add_value_property('article');
         $sc->add_value_property('score');
         $sc->execute();
         $score_caches = $sc->list_keys();
         foreach ($score_caches as $guid => $cache)
         {
+            $article = $sc->get_subkey($guid, 'article');
             $score = $sc->get_subkey($guid, 'score');
+            
+            $this->articles_scores_initial[$article_guids[$article]] = $score;
         }
-        return $score;
     }
     
     private function get_personal_score($article)
@@ -91,9 +100,14 @@ class org_maemo_socialnews_handler_index  extends midcom_baseclasses_components_
         $qb->add_constraint('metadata.published', '>', $cutoff_date);
         $qb->add_constraint('topic.component', '=', 'net.nehmer.blog');
         $articles = $qb->execute();
+        
+        if (!empty($articles))
+        {
+            $this->get_initial_scores($articles);
+        }
+
         foreach ($articles as $article)
         {
-            $this->articles_scores_initial[$article->guid] = $this->get_initial_score($article->id);
             if ($this->articles_scores_initial[$article->guid] < $this->_config->get('frontpage_score_start'))
             {
                 continue;
