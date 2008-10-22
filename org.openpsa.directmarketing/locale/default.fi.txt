@@ -91,6 +91,10 @@ Henkilön ominaisuus
 Henkilön parametri
 ---STRINGEND
 
+---STRING class:generic parameters
+Parametri
+---STRINGEND
+
 ---STRING comma
 pilkku
 ---STRINGEND

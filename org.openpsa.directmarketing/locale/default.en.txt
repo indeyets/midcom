@@ -91,6 +91,10 @@ Persons property
 Persons parameter
 ---STRINGEND
 
+---STRING class:generic parameters
+Parameter
+---STRINGEND
+
 ---STRING comma
 comma
 ---STRINGEND
