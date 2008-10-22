@@ -82,7 +82,6 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
      */
     function raw_fetch($url)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
         $items = array();
         
         if (!$_MIDCOM->componentloader->is_loaded('org.openpsa.httplib'))
@@ -90,17 +89,27 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
             $_MIDCOM->load_library('org.openpsa.httplib');
         }
 
-        error_reporting(E_WARNING);
-        // TODO: Ensure Magpie uses conditional GETs here
-        debug_add("Fetching RSS feed {$url}", MIDCOM_LOG_DEBUG);
-        $rss = fetch_rss($url);
-        error_reporting(E_ALL);
+        try
+        {
+            // TODO: Ensure Magpie uses conditional GETs here
+            error_reporting(E_WARNING);
+            $rss = fetch_rss($url);
+            error_reporting(E_ALL);
+        }
+        catch (Exception $e)
+        {
+            // Magpie failed fetching or parsing the feed somehow
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to fetch or parse feed {$url}: " . $e->getMessage(), MIDCOM_LOG_INFO);
+            debug_pop();
+            return $items;
+        }
 
         if (!$rss)
         {
             // Magpie failed fetching or parsing the feed somehow
-            debug_add("Failed to fetch or parse feed", MIDCOM_LOG_ERROR);
-            debug_add($GLOBALS['MAGPIE_ERROR'], MIDCOM_LOG_ERROR);
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add("Failed to fetch or parse feed {$url}: " . $GLOBALS['MAGPIE_ERROR'], MIDCOM_LOG_INFO);
             debug_pop();
             return $items;
         }
@@ -117,8 +126,8 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         }
         $rss->items = $items;
 
-        debug_add('Got ' . count($items) . ' RSS items.', MIDCOM_LOG_DEBUG);
-        debug_pop();
+        //debug_add('Got ' . count($items) . ' RSS items.', MIDCOM_LOG_DEBUG);
+        //debug_pop();
 
         return $rss;
     }
