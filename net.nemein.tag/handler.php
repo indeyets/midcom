@@ -263,48 +263,65 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
     function get_tags_by_guid($guid)
     {
         $tags = array();
-        $qb = net_nemein_tag_link_dba::new_query_builder();
-        $qb->add_constraint('fromGuid', '=', $guid);
-        $qb->add_order('tag.tag', 'ASC');
-        $links = $qb->execute();
-        if (!is_array($links))
+        $link_mc = net_nemein_tag_link::new_collector('fromGuid', $guid);
+        $link_mc->set_key_property('tag');
+        $link_mc->add_value_property('value');
+        $link_mc->add_value_property('context');
+        $link_mc->add_order('tag.tag');
+        $link_mc->execute();
+        $links = $link_mc->list_keys();
+        
+        if (!$links)
         {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('QB reported critical failure, aborting', MIDCOM_LOG_ERROR);
-            debug_pop();
-            return false;
+            return $tags;
         }
-        foreach ($links as $link)
+        
+        $mc = net_nemein_tag_tag_dba::new_collector('sitegroup', $_MIDGARD['sitegroup']);
+        $mc->add_value_property('tag');
+        $mc->add_value_property('url');
+        $mc->add_value_property('id');
+        $mc->add_constraint('id', 'IN', array_keys($links));
+        $mc->execute();
+        $tag_guids = $mc->list_keys();
+        
+        if (!$tag_guids)
         {
-            $tag = new net_nemein_tag_tag_dba($link->tag);
-            $tagname = net_nemein_tag_handler::tag_link2tagname($link, $tag);
-            $tags[$tagname] = $tag->url;
+            return $tags;
+        }
+        
+        foreach ($tag_guids as $tag_guid => $value)
+        {
+            $tag = $mc->get_subkey($tag_guid, 'tag');
+            $url = $mc->get_subkey($tag_guid, 'url');
+            $context = $link_mc->get_subkey($mc->get_subkey($tag_guid, 'id'), 'context');
+            $value = $link_mc->get_subkey($mc->get_subkey($tag_guid, 'id'), 'value');
+
+            $tagname = net_nemein_tag_handler::tag_link2tagname($tag, $value, $context);
+            $tags[$tagname] = $url;
         }
         return $tags;
     }
 
-    function tag_link2tagname(&$link, $tag=false, $include_context = true)
+    function tag_link2tagname($tag, $value = null, $context = null)
     {
-        if (!is_a($tag, 'net_nemein_tag'))
-        {
-            $tag = new net_nemein_tag_tag_dba($link->tag);
-        }
         switch (true)
         {
             /* Tag with context and value and we want contexts */
-            case (   !empty($link->value) && strlen($link->value)>0
-                  && !empty($link->context) && strlen($link->context)>0
-                  && !empty($include_context)):
-                $tagname = "{$link->context}:{$tag->tag}={$link->value}";
+            case (   !empty($value) 
+                  && strlen($value) > 0
+                  && !empty($context) 
+                  && strlen($context) > 0):
+                $tagname = "{$context}:{$tag}={$value}";
                 break;
             /* Tag with value (or value and context but we don't want contexts) */
-            case (!empty($link->value) && strlen($link->value)>0):
-                $tagname = "{$tag->tag}={$link->value}";
+            case (   !empty($value) 
+                  && strlen($link->value) > 0):
+                $tagname = "{$tag}={$value}";
                 break;
             /* Tag with context (no value) and we want contexts */
-            case (   !empty($link->context) && strlen($link->context)>0
-                  && !empty($include_context)):
-                $tagname = "{$link->context}:{$tag->tag}";
+            case (   !empty($context) 
+                  && strlen($context) > 0):
+                $tagname = "{$context}:{$tag}";
                 break;
             /* Default case, just the tag */
             default:
@@ -384,38 +401,52 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
     function get_object_tags_by_contexts(&$object)
     {
         $tags = array();
-        $qb = net_nemein_tag_link_dba::new_query_builder();
-        $qb->add_constraint('fromGuid', '=', $object->guid);
-        $qb->add_order('context', 'ASC');
-        if (class_exists('midgard_query_builder'))
+        $link_mc = net_nemein_tag_link::new_collector('fromGuid', $guid);
+        $link_mc->set_key_property('tag');
+        $link_mc->add_value_property('value');
+        $link_mc->add_value_property('context');
+        $link_mc->add_order('context');
+        $link_mc->add_order('tag.tag');
+        $link_mc->execute();
+        $links = $link_mc->list_keys();
+        
+        if (!$links)
         {
-            // 1.8 branch allows ordering by linked properties
-            $qb->add_order('tag.tag', 'ASC');
+            return $tags;
         }
-        $links = $qb->execute();
-        if (!is_array($links))
+        
+        $mc = net_nemein_tag_tag_dba::new_collector('sitegroup', $_MIDGARD['sitegroup']);
+        $mc->add_value_property('tag');
+        $mc->add_value_property('url');
+        $mc->add_value_property('id');
+        $mc->add_constraint('id', 'IN', array_keys($links));
+        $mc->execute();
+        $tag_guids = $mc->list_keys();
+        
+        if (!$tag_guids)
         {
-            return false;
+            return $tags;
         }
-        foreach ($links as $link)
+        
+        foreach ($tag_guids as $tag_guid => $value)
         {
-            if ($link->context == '')
+            $context = $mc->get_subkey($tag_guid, 'context');
+            if (empty($context))
             {
                 $context = 0;
-            }
-            else
-            {
-                $context = $link->context;
             }
 
             if (!array_key_exists($context, $tags))
             {
                 $tags[$context] = array();
             }
+            
+            $tag = $mc->get_subkey($tag_guid, 'tag');
+            $url = $mc->get_subkey($tag_guid, 'url');
+            $value = $link_mc->get_subkey($mc->get_subkey($tag_guid, 'id'), 'value');
 
-            $tag = new net_nemein_tag_tag_dba($link->tag);
-            $tagname = net_nemein_tag_handler::tag_link2tagname($link, $tag, false);
-            $tags[$context][$tagname] = $tag->url;
+            $tagname = net_nemein_tag_handler::tag_link2tagname($tag, $value, $context);
+            $tags[$context][$tagname] = $url;
         }
         return $tags;
     }
