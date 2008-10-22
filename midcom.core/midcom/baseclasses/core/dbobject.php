@@ -1931,6 +1931,11 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid] = array();
         }
 
+        if (isset(midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid]['__midcom_baseclasses_core_dbobject_all']))
+        {
+            return midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid];
+        }
+
         $mc = midgard_parameter::new_collector('parentguid', $object->guid);
         $mc->set_key_property('guid');
         $mc->add_value_property('domain');
@@ -1959,6 +1964,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
 
         unset($mc);
+
+        // Flag that we have queried all domains for this object
+        midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid]['__midcom_baseclasses_core_dbobject_all'] = array();
 
         return midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid];
     }
