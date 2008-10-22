@@ -26,7 +26,7 @@
             'type' => 'number',
             'type_config' => array
             (
-                'precision' => 1,
+                'precision' => 2,
             ),
             'widget'  => 'text',
             'required' => true,
