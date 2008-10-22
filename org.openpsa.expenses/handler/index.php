@@ -126,7 +126,7 @@ class org_openpsa_expenses_handler_index  extends midcom_baseclasses_components_
      * Helper, updates the context so that we get a complete breadcrumb line towards the current
      * location.
      */
-    private function update_breadcrumb_line()
+    private function _update_breadcrumb_line()
     {
         $tmp = Array();
 
