@@ -33,6 +33,7 @@
  */
 class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 {
+    static $parameter_cache = array();
     /**
      * "Pre-flight" checks for update method
      *
@@ -1688,31 +1689,22 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function get_parameter(&$object, $domain, $name)
     {
-        if (   ! $object->guid
-            && ! $object->id)
+        if (!$object->guid)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add('Cannot retrieve information on a non-persistant object.', MIDCOM_LOG_WARN);
             debug_pop();
             return false;
         }
+
+        if (isset(midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain][$name]))
+        {
+            // We have this already thanks to some parameter listing
+            return midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain][$name];
+        }
+
         $value = $object->_parent_parameter($domain, $name);
         return $value;
-        /*
-        $parameter = midcom_baseclasses_core_dbobject::_get_parameter_object($object, $domain, $name);
-        if (! $parameter)
-        {
-            return null;
-        }
-
-        // Temporary workaround for missing delete support
-        if ($parameter->value == '')
-        {
-            return null;
-        }
-
-        return $parameter->value;
-        */
     }
 
     /**
@@ -1878,32 +1870,44 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _list_parameters_domain(&$object, $domain)
     {
-        // TODO: Switch to collector
-        $query = new midgard_query_builder('midgard_parameter');
-        $query->add_constraint('parentguid', '=', $object->guid);
-        $query->add_constraint('domain', '=', $domain);
-
-        // Temporary workaround for missing delete support
-        $query->add_constraint('value', '<>', '');
-
-        $result = @$query->execute();
-
-        if (count($result) == 0)
+        if (!$object->guid)
         {
-            //debug_push_class($object, __FUNCTION__);
-            //debug_add("Cannot retrieve the parameter {$domain} for {$object->__table__} ID {$object->id}; query execution failed, this is most probably an empty resultset.",
-            //    MIDCOM_LOG_INFO);
-            //debug_pop();
-            return Array();
-        }
-        $return = Array();
-
-        foreach ($result as $parameter)
-        {
-            $return[$parameter->name] = $parameter->value;
+            return array();
         }
 
-        return $return;
+        if (!isset(midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid]))
+        {
+            midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid] = array();
+        }
+        
+        if (isset(midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain]))
+        {
+            return midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain];
+        }
+
+        midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain] = array();
+
+        $mc = midgard_parameter::new_collector('parentguid', $object->guid);
+        $mc->set_key_property('name');
+        $mc->add_value_property('value');
+        $mc->add_constraint('domain', '=', $domain);
+        $mc->execute();
+        $parameters = $mc->list_keys();
+
+        if (count($parameters) == 0)
+        {
+            unset($mc);
+            return midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain];
+        }
+
+        foreach ($parameters as $name => $values)
+        {
+            midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain][$name] = $mc->get_subkey($name, 'value');
+        }
+
+        unset($mc);
+
+        return midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain];
     }
 
     /**
@@ -1917,32 +1921,46 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _list_parameters_all(&$object)
     {
-        // TODO: Switch to collector
-        $query = new midgard_query_builder('midgard_parameter');
-        $query->add_constraint('parentguid', '=', $object->guid);
-
-        // Temporary workaround for missing delete support
-        $query->add_constraint('value', '<>', '');
-
-        $result = @$query->execute();
-
-        if (count($result) == 0)
+        if (!$object->guid)
         {
-            debug_push_class($object, __FUNCTION__);
-            debug_add("Cannot retrieve all parameters for {$object->__table__} ID {$object->id}; query execution failed, this is most probably an empty resultset.",
-                MIDCOM_LOG_DEBUG);
-            debug_pop();
-            return Array();
+            return array();
         }
 
-        $return = Array();
-
-        foreach ($result as $parameter)
+        if (!isset(midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid]))
         {
-            $return[$parameter->domain][$parameter->name] = $parameter->value;
+            midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid] = array();
         }
 
-        return $return;
+        $mc = midgard_parameter::new_collector('parentguid', $object->guid);
+        $mc->set_key_property('guid');
+        $mc->add_value_property('domain');
+        $mc->add_value_property('name');
+        $mc->add_value_property('value');
+        $mc->execute();
+        $parameters = $mc->list_keys();
+
+        if (count($parameters) == 0)
+        {
+            unset($mc);
+            return midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid];
+        }
+
+        foreach ($parameters as $guid => $values)
+        {
+            $name = $mc->get_subkey($guid, 'name');
+            $domain = $mc->get_subkey($guid, 'domain');
+
+            if (!isset(midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain]))
+            {
+                midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain] = array();
+            }
+
+            midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain][$name] = $mc->get_subkey($guid, 'value');
+        }
+
+        unset($mc);
+
+        return midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid];
     }
 
     /**
@@ -1980,26 +1998,13 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             return false;
         }
 
-        $result = $object->_parent_parameter($domain, $name, $value);
-        /*
-        $parameter = midcom_baseclasses_core_dbobject::_get_parameter_object($object, $domain, $name);
-        if (! $parameter)
+        if (isset(midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain]))
         {
-            $result = midcom_baseclasses_core_dbobject::_create_parameter_object($object, $domain, $name, $value);   
-        }
-        else
-        {
-            // we need to update
-            $parameter->value = $value;
-            $result = @$parameter->update();
+            // Invalidate run-time cache
+            unset(midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain]);
         }
 
-        if (! $result)
-        {
-            debug_pop();
-            return false;
-        }
-        */
+        $result = $object->_parent_parameter($domain, $name, $value);
 
         $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
         return true;
@@ -2062,6 +2067,12 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             debug_pop();
             mgd_set_errno(MGD_ERR_ACCESS_DENIED);
             return false;
+        }
+
+        if (isset(midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain]))
+        {
+            // Invalidate run-time cache
+            unset(midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain]);
         }
 
         $result = $object->_parent_parameter($domain, $name, '');

@@ -946,7 +946,7 @@ class midcom_application
         {
             $object = $this->_parser->get_current_object();
             if (   !is_object($object)
-                || !$object->guid )
+                || !$object->guid)
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add('Root node missing.', MIDCOM_LOG_ERROR);
@@ -958,12 +958,13 @@ class midcom_application
             {
                 $this->serve_attachment($object);
             }
+
             $path = $object->component;
             if (!$path)
             {
                 $path = 'midcom.core.nullcomponent';
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("No component defined for this node, using 'midcom.core.nullcomponent' instead.", MIDCOM_LOG_ERROR);
+                debug_add("No component defined for this node, using 'midcom.core.nullcomponent' instead.", MIDCOM_LOG_INFO);
                 debug_pop();
             }
 
@@ -1179,9 +1180,9 @@ class midcom_application
         if (! $component_interface->configure($config, $this->_currentcontext))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add ("Component Configuration failed: " . $component_interface->errstr($this->_currentcontext), MIDCOM_LOG_ERROR);
+            debug_add ("Component Configuration failed: " . mgd_errstr(), MIDCOM_LOG_ERROR);
             debug_pop();
-            $this->generate_error(MIDCOM_ERRCRIT, "Component Configuration failed: " . $component_interface->errstr($this->_currentcontext));
+            $this->generate_error(MIDCOM_ERRCRIT, "Component Configuration failed: " . mgd_errstr());
         }
 
         // Make can_handle check

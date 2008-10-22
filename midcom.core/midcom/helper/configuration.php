@@ -164,7 +164,8 @@ class midcom_helper_configuration
     private function _update_cache()
     {
         $this->_merged = $this->_global;
-        if ( !empty($this->_local) )
+        if (   !empty($this->_local)
+            && is_array($this->_local))
         {
             foreach ($this->_local as $key => $value)
             {
@@ -188,7 +189,8 @@ class midcom_helper_configuration
      */
     private function _check_local_array($array)
     {
-        if ( !empty($array) )
+        if (   !empty($array)
+            && is_array($array))
         {
             foreach ($array as $key => $value)
             {
@@ -225,6 +227,11 @@ class midcom_helper_configuration
             && $this->_object)
         {
             $this->_store_from_object();
+        }
+
+        if (!is_array($params))
+        {
+            return false;
         }
 
         $this->_check_local_array($params);
