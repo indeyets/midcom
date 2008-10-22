@@ -34,6 +34,13 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
 
     public function tokenize($url)
     {
+        static $tokenized = array();
+        $original_url = $url;
+        if (isset($tokenized[$original_url]))
+        {
+            return $tokenized[$original_url];
+        }
+
         if (strlen($_MIDGARD['prefix']) > 1)
         {
             $url = str_replace($_MIDGARD['prefix'], '', $url);
@@ -41,20 +48,21 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
         if (   $url == ''
             || $url == '/')
         {
-            return array();
+            $tokenized[$original_url] = array();
+            return $tokenized[$original_url];
         }
         else
         {
-            if (strpos($url,"/") === 0)
+            if (strpos($url, '/') === 0)
             {
-                $url = substr($url,1);
+                $url = substr($url, 1);
             }
-            if (substr($url,-1) == "/")
+            if (substr($url,-1) == '/')
             {
-                $url = substr($url,0,-1);
+                $url = substr($url, 0, -1);
             }
 
-            $argv_tmp = explode ("/", $url);
+            $argv_tmp = explode('/', $url);
         }
 
         $argv = array();
@@ -68,7 +76,8 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
             $argv[] = $arg;
         }
 
-        return $argv;
+        $tokenized[$original_url] = $argv;
+        return $tokenized[$original_url];
     }
 
     /**
@@ -122,8 +131,16 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
         if ($this->argc == 0)
         {
             // No arguments left
-
             return false;
+        }
+
+        // Run-time cache of objects by URL
+        static $objects = array();
+        $object_url = "{$this->url}/{$this->argv[0]}/";
+        if (array_key_exists($object_url, $objects))
+        {
+            $this->current_object = $objects[$object_url];
+            return $objects[$object_url];
         }
 
         $qb = midcom_db_topic::new_query_builder();
@@ -150,13 +167,15 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
 
             $atts = $att_qb->execute();
             $this->current_object = $atts[0];
-            return $this->current_object;
+            $objects[$object_url] = $this->current_object;
+            return $objects[$object_url];
         }
 
         $topics = $qb->execute();
 
         // Set to current topic
         $this->current_object = $topics[0];
+        $objects[$object_url] = $this->current_object;
 
         // TODO: Remove
         $this->check_style_inheritance($this->current_object);
@@ -166,7 +185,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
         array_shift ($this->argv);
 
         $this->url .= $this->current_object->name . '/';
-        return $this->current_object;
+        return $objects[$object_url];
     }
 
     /**
