@@ -24,7 +24,14 @@ class net_nemein_favourites_admin
     
     function get_data($objectType, $guid, $link_for_anonymous = true)
     {
-        $data = array
+        static $cache = array();
+        
+        if (isset($cache[$guid]))
+        {
+            return $cache[$guid];
+        }
+        
+        $cache[$guid] = array
         (
             'favs'     => 0,
             'buries'   => 0,
@@ -33,23 +40,74 @@ class net_nemein_favourites_admin
             'has_buried' => false,
             'can_bury' => true,
         );
+
+        if (   !$_MIDCOM->auth->user
+            && !$link_for_anonymous)
+        {
+            $cache[$guid]['can_fav'] = false;
+            $cache[$guid]['can_bury'] = false;
+        }
+
+        $mc = net_nemein_favourites_favourite::new_collector('objectGuid', $guid);
+        $mc->set_key_property('guid');
+        $mc->add_value_property('bury');
+        $mc->add_value_property('metadata.creator');
+        $mc->execute();
+        $favourites = $mc->list_keys();
+
+        if (empty($favourites))
+        {
+            return $cache[$guid];
+        }
+
+        foreach ($favourites as $favourites_guid => $value)
+        {
+            $bury = $mc->get_subkey($favourites_guid, 'bury');
+            if ($bury)
+            {
+                $cache[$guid]['buries']++;
+            }
+            else
+            {
+                $cache[$guid]['favs']++;
+            }
+
+            if ($_MIDCOM->auth->user)
+            {
+                $creator = $mc->get_subkey($favourites_guid, 'creator');
+                if ($creator != $_MIDCOM->auth->user->guid)
+                {
+                    continue;
+                }
+                
+                if ($bury)
+                {
+                    $cache[$guid]['can_bury'] = false;
+                    $cache[$guid]['has_buried'] = true;
+                }
+                else
+                {
+                    $cache[$guid]['can_fav'] = false;
+                    $cache[$guid]['has_faved'] = true;
+                }
+            }
+        }
         
+        /*
+        BELOW: The old QB-based solution, kept as reference until we determine which one is actually faster
+
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
         $qb->add_constraint('objectGuid', '=', $guid);
         $qb->add_constraint('bury', '=', false);
-        $data['favs'] = $qb->count_unchecked();
+        $cache[$guid]['favs'] = $qb->count_unchecked();
 
         $qb = net_nemein_favourites_favourite_dba::new_query_builder();
         $qb->add_constraint('objectGuid', '=', $guid);
         $qb->add_constraint('bury', '=', true);
-        $data['buries'] = $qb->count_unchecked();
+        $cache[$guid]['buries'] = $qb->count_unchecked();
         
-        if (   !$_MIDCOM->auth->user
-            && !$link_for_anonymous)
-        {
-            $data['can_fav'] = false;
-            $data['can_bury'] = false;
-            return $data;
+
+            return $cache[$guid];
         }
 
         
@@ -62,8 +120,8 @@ class net_nemein_favourites_admin
             $qb->add_constraint('bury', '=', false);
             if ($qb->count_unchecked() > 0)
             {
-                $data['can_fav'] = false;
-                $data['has_faved'] = true;
+                $cache[$guid]['can_fav'] = false;
+                $cache[$guid]['has_faved'] = true;
             }
             
             // Check if user has already buried this
@@ -73,12 +131,13 @@ class net_nemein_favourites_admin
             $qb->add_constraint('bury', '=', true);
             if ($qb->count_unchecked() > 0)
             {
-                $data['can_bury'] = false;
-                $data['has_buried'] = true;
+                $cache[$guid]['can_bury'] = false;
+                $cache[$guid]['has_buried'] = true;
             }
         }
+        */
         
-        return $data;
+        return $cache[$guid];
     }
 
     function get_json_data($objectType, $guid, $url = '', $link_for_anonymous = true)
