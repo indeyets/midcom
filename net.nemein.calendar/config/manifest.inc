@@ -30,7 +30,7 @@
     'dependencies' => array
     (
         'net.nemein.repeathandler' => array(),
-        'org.openpsa.calendarwidget' => array,
+        'org.openpsa.calendarwidget' => array(),
         'org.routamc.positioning' => array(),
         'de.bitfolge.feedcreator' => array(),
         'Calendar' => array
