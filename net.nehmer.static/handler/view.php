@@ -207,6 +207,25 @@ class net_nehmer_static_handler_view extends midcom_baseclasses_components_handl
 
             if (empty($result))
             {
+                if (   $_MIDCOM->i18n->get_midgard_language() != 0
+                    && $GLOBALS['midcom_config']['i18n_multilang_strict'])
+                {
+                    // If we're on multilang environment, check that the index article doesn't already exist in lang0
+                    $ml_strict_backup = $GLOBALS['midcom_config']['i18n_multilang_strict'];
+                    $GLOBALS['midcom_config']['i18n_multilang_strict'] = false;
+                    $index_qb = midcom_db_topic::new_query_builder();
+                    $index_qb->add_constraint('topic', '=', $this->_content_topic->id);
+                    $index_qb->add_constraint('name', '=', 'index');
+                    $index_found = $index_qb->execute_unchecked();
+                    $GLOBALS['midcom_config']['i18n_multilang_strict'] = $ml_strict_backup;
+                    unset($ml_strict_backup);
+                    
+                    if ($index_found)
+                    {
+                        $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Directory index not found");
+                    }
+                }
+
                 if ($this->_content_topic->can_do('midgard:create'))
                 {
                     $schemas = array_keys($this->_request_data['schemadb']);
