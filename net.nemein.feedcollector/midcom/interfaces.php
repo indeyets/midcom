@@ -43,31 +43,6 @@ class net_nemein_feedcollector_interface extends midcom_baseclasses_components_i
      */
     function _on_resolve_permalink(&$topic, &$config, $guid)
     {
-        /*
-        $topic_guid = $config->get('symlink_topic');
-        if ($topic_guid !== null)
-        {
-            $topic = new midcom_db_topic($topic_guid);
-            // Validate topic.
-
-            if (! $topic)
-            {
-                debug_add('Failed to open symlink content topic, (might also be an invalid object) last Midgard Error: '
-                    . mgd_errstr(), MIDCOM_LOG_ERROR);
-                $_MIDCOM->generate_error('Failed to open symlink content topic.');
-                // This will exit.
-            }
-
-            if ($topic->component != 'net.nehmer.static')
-            {
-                debug_print_r('Retrieved topic was:', $topic);
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    'Symlink content topic is invalid, see the debug level log for details.');
-                // This will exit.
-            }
-        }
-        */
-
         $fc_topic = new net_nemein_feedcollector_topic_dba($guid);
 
         if (   ! $fc_topic

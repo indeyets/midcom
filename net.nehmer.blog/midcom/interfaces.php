@@ -100,25 +100,40 @@ class net_nehmer_blog_interface extends midcom_baseclasses_components_interface
     function _on_resolve_permalink($topic, $config, $guid)
     {
         $topic_guid = $config->get('symlink_topic');
-        if ($topic_guid !== null)
+        if (   !empty($topic_guid)
+            && mgd_is_guid($topic_guid))
         {
-            $topic = new midcom_db_topic($topic_guid);
+            $new_topic = new midcom_db_topic($topic_guid);
             // Validate topic.
 
-            if (! $topic)
+            if (   !is_object($new_topic)
+                || !isset($new_topic->guid)
+                || empty($new_topic->guid))
             {
+                /**
+                 * See http://trac.midgard-project.org/ticket/421
                 debug_add('Failed to open symlink content topic, (might also be an invalid object) last Midgard Error: '
                     . mgd_errstr(), MIDCOM_LOG_ERROR);
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to open symlink content topic.');
                 // This will exit.
+                */
             }
-
-            if ($topic->component != 'net.nehmer.blog')
+            else 
             {
-                debug_print_r('Retrieved topic was:', $topic);
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    'Symlink content topic is invalid, see the debug level log for details.');
-                // This will exit.
+                if ($new_topic->component != 'net.nehmer.blog')
+                {
+                    /**
+                     * See http://trac.midgard-project.org/ticket/421
+                    debug_print_r('Retrieved topic was:', $topic);
+                    $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                        'Symlink content topic is invalid, see the debug level log for details.');
+                    // This will exit.
+                    */
+                }
+                else
+                {
+                    $topic = $new_topic;
+                }
             }
         }
 
