@@ -139,6 +139,11 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
         $object_url = "{$this->url}/{$this->argv[0]}/";
         if (array_key_exists($object_url, $objects))
         {
+            // Remove this component from path
+            $this->argc -= 1;
+            array_shift($this->argv);
+            
+            // Set as current object
             $this->current_object = $objects[$object_url];
             return $objects[$object_url];
         }
@@ -166,6 +171,12 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
             }
 
             $atts = $att_qb->execute();
+
+            // Remove this component from path
+            $this->argc -= 1;
+            array_shift($this->argv);
+
+            // Set as current object
             $this->current_object = $atts[0];
             $objects[$object_url] = $this->current_object;
             return $objects[$object_url];
@@ -182,7 +193,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
 
         // Remove this component from path
         $this->argc -= 1;
-        array_shift ($this->argv);
+        array_shift($this->argv);
 
         $this->url .= $this->current_object->name . '/';
         return $objects[$object_url];
