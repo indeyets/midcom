@@ -117,7 +117,26 @@ class org_openpsa_expenses_handler_index  extends midcom_baseclasses_components_
             )
         );
 
+        $this->_update_breadcrumb_line();
+
         return true;
+    }
+
+    /**
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
+     * location.
+     */
+    private function update_breadcrumb_line()
+    {
+        $tmp = Array();
+
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => "",
+            MIDCOM_NAV_NAME => sprintf($this->_l10n->get("expenses in week %s"), strftime("%V", $this->_request_data['requested_time'])),
+        );
+
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
     }
 
     /**

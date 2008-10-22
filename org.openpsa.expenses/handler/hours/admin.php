@@ -273,8 +273,36 @@ class org_openpsa_expenses_handler_hours_admin extends midcom_baseclasses_compon
         $_MIDCOM->set_26_request_metadata($this->_hour_report->metadata->revised, $this->_hour_report->guid);
         //$_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_hour_report->title}");
 
+        $this->_update_breadcrumb_line();
+
         return true;
     }
+
+
+    /**
+     * Helper, updates the context so that we get a complete breadcrumb line towards the current
+     * location.
+     */
+    private function _update_breadcrumb_line()
+    {
+        $task = new org_openpsa_projects_task_dba($this->_hour_report->task);
+        $tmp = Array();
+
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => "hours/task/" . $task->guid,
+            MIDCOM_NAV_NAME => $task->get_label(),
+        );
+
+        $tmp[] = array
+        (
+            MIDCOM_NAV_URL => "",
+            MIDCOM_NAV_NAME => $this->_l10n_midcom->get('edit'),
+        );
+
+        $_MIDCOM->set_custom_context_data('midcom.helper.nav.breadcrumb', $tmp);
+    }
+
 
     /**
      * Shows the loaded hour_report.
