@@ -435,7 +435,11 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         
         // Filter the upcoming list by a type if required
         $type_filter = $this->_config->get('type_filter_upcoming');
-        
+        if ($type_filter !== null)
+        {
+            $qb->add_constraint('type', '=', (int)$type_filter);
+        }
+
         // Switch for determining if the filters have already been initialized
         $filtered = false;
         
@@ -474,7 +478,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         if ($this->_show_past_in_upcoming)
         {
             $qb->begin_group('OR');
-                $qb->add_constraint('type', '=', $type_filter);
+                $qb->add_constraint('type', '=', (int)$type_filter);
                 //$qb->add_constraint('end', '>', gmdate('Y-m-d H:i:s', $from));
                 $qb->add_constraint('end', '>', date('Y-m-d H:i:s', $from));
             $qb->end_group();
