@@ -232,13 +232,14 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         $filename = "{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$this->guid}_{$this->name}";
         if (file_exists($filename))
         {
+            // FIXME: This may cause data not the be updated properly when blob contents are overwritten
             return;
         }
         
         // Then symlink the file
         $blob = new midgard_blob($this);
         
-        if (symlink($blob->get_path(), $filename))
+        if (@symlink($blob->get_path(), $filename))
         {
             return;
         }
@@ -250,6 +251,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         {
             $data .= fgets($fh);
         }
+        fclose($fh);
         
         file_put_contents($filename, $data);
     }
