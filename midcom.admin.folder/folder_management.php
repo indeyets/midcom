@@ -335,10 +335,7 @@ class midcom_admin_folder_folder_management extends midcom_baseclasses_component
             midcom_admin_folder_folder_management::list_styles($style->id, $style_string . '/', $spacer . '&nbsp;&nbsp;');
         }
 
-        if ($prefix === '/')
-        {
-            return $style_array;
-        }
+        return $style_array;
     }
 }
 ?>
