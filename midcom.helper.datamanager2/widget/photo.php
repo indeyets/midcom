@@ -94,6 +94,22 @@ class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2
     {
         debug_push_class(__CLASS__, __FUNCTION__);
         debug_add('called');
+
+        switch (true)
+        {
+            case (array_key_exists('main', $this->_type->attachments_info)):
+                $main_info = $this->_type->attachments_info['main'];
+                break;
+            case (array_key_exists('archival', $this->_type->attachments_info)):
+                $main_info = $this->_type->attachments_info['archival'];
+                break;
+            case (array_key_exists('view', $this->_type->attachments_info)):
+                $main_info = $this->_type->attachments_info['view'];
+                break;
+            default:
+                list($main_key, $main_info) = each($this->_type->attachments_info);
+        }
+
         // Get preview image source
         if (array_key_exists('thumbnail', $this->_type->attachments))
         {
@@ -105,18 +121,9 @@ class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2
         else
         {
             $is_thumbnail = false;
-            if (array_key_exists('main', $this->_type->attachments_info))
-            {
-                $url = $this->_type->attachments_info['main']['url'];
-                $x = $this->_type->attachments_info['main']['size_x'];
-                $y = $this->_type->attachments_info['main']['size_y'];
-            }
-            else
-            {
-                $url = $this->_type->attachments_info['archival']['url'];
-                $x = $this->_type->attachments_info['archival']['size_x'];
-                $y = $this->_type->attachments_info['archival']['size_y'];
-            }
+            $url = $main_info['url'];
+            $x = $main_info['size_x'];
+            $y = $main_info['size_y'];
 
             // Downscale Preview image to max 75px, protect against broken images:
             if (   $x != 0
@@ -137,14 +144,6 @@ class midcom_helper_datamanager2_widget_photo extends midcom_helper_datamanager2
         }
 
         $size = " width='{$x}' height='{$y}'";
-        if (array_key_exists('main', $this->_type->attachments_info))
-        {
-            $main_info = $this->_type->attachments_info['main'];
-        }
-        elseif (array_key_exists('artival', $this->_type->attachments_info))
-        {
-            $main_info = $this->_type->attachments_info['archival'];
-        }
 
         // Start widget table, add Thumbnail
         $static_html = "<table border='0' class='midcom_helper_datamanager2_widget_image_table' id='{$this->_namespace}{$this->name}_table'>\n<tr>\n" .

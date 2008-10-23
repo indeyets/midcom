@@ -198,6 +198,21 @@ class midcom_helper_datamanager2_widget_image extends midcom_helper_datamanager2
      */
     function _create_replace_elements(&$elements)
     {
+        switch (true)
+        {
+            case (array_key_exists('main', $this->_type->attachments_info)):
+                $main_info = $this->_type->attachments_info['main'];
+                break;
+            case (array_key_exists('archival', $this->_type->attachments_info)):
+                $main_info = $this->_type->attachments_info['archival'];
+                break;
+            case (array_key_exists('view', $this->_type->attachments_info)):
+                $main_info = $this->_type->attachments_info['view'];
+                break;
+            default:
+                list($main_key, $main_info) = each($this->_type->attachments_info);
+        }
+
         // Get preview image source
         if (array_key_exists('thumbnail', $this->_type->attachments))
         {
@@ -208,10 +223,10 @@ class midcom_helper_datamanager2_widget_image extends midcom_helper_datamanager2
         }
         else
         {
-            $url = $this->_type->attachments_info['main']['url'];
-            $x = $this->_type->attachments_info['main']['size_x'];
-            $y = $this->_type->attachments_info['main']['size_y'];
             $is_thumbnail = false;
+            $url = $main_info['url'];
+            $x = $main_info['size_x'];
+            $y = $main_info['size_y'];
 
             // Downscale Preview image to max 75px, protect against broken images:
             if (   $x != 0
@@ -232,7 +247,6 @@ class midcom_helper_datamanager2_widget_image extends midcom_helper_datamanager2
         }
 
         $size = " width='{$x}' height='{$y}'";
-        $main_info = $this->_type->attachments_info['main'];
 
         // Start widget table, add Thumbnail
         $static_html = "<table border='0' class='midcom_helper_datamanager2_widget_image_table' id='{$this->_namespace}{$this->name}_table'>\n<tr>\n" .
