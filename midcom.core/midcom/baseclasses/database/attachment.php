@@ -252,6 +252,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
             $data .= fgets($fh);
         }
         fclose($fh);
+        $this->_open_handle = null;
         
         file_put_contents($filename, $data);
     }
