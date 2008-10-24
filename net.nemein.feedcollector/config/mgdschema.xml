@@ -4,7 +4,7 @@
   <type name="net_nemein_feedcollector_topic" table="net_nemein_feedcollector_topic" parent="midgard_topic">
     <property name="id" type="integer" primaryfield="id" />
     <property name="node" type="integer" link="midgard_topic:id" parentfield="node" />
-    <property name="feedtopic" type="string" link="midgard_topic:id" />
+    <property name="feedtopic" type="integer" link="midgard_topic:id" />
     <property name="title" type="string" />
     <property name="categories" type="string" />
   </type>

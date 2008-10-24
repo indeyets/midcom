@@ -27,28 +27,69 @@
             'widget' => 'chooser',
             'widget_config' => array
             (
-                'clever_class' => 'topic',
-                'result_headers' => array
+                'class'       => 'midcom_db_topic',
+                'component'   => 'net.nemein.feedcollector',
+                'titlefield'  => 'extra',
+                'idfield'     => 'guid',
+                'searchfields' => array
                 (
-                    array
-                    (
-                        'name' => 'extra',
-                        'title' => 'title'
-                    ),
-                    array
-                    (
-                        'name' => 'component',
-                        'title' => 'component'
-                    ),
+                    /* title is not actually used, extra is
+                    'title',
+                    */
+                    'extra',
+                    'name',
                 ),
-                'id_field' => 'id',
                 'constraints' => array
                 (
+                    array
+                    (
+                        'field' => 'extra',
+                        'op' => '<>',
+                        'value' => '',
+                    ),
                     array
                     (
                         'field' => 'component',
                         'op' => '=',
                         'value' => 'net.nehmer.blog',
+                    ),
+                ),
+                'result_headers' => array
+                (
+                    array
+                    (
+                        'name' => 'extra',
+                        'title' => $_MIDCOM->i18n->get_string('title', 'midcom'),
+                    ),
+                    array
+                    (
+                        'name' => 'name',
+                        'title' => $_MIDCOM->i18n->get_string('name', 'midcom'),
+                    ),
+                    /* This is already constraint and as such useless
+                    array
+                    (
+                        'name' => 'component',
+                        'title' => $_MIDCOM->i18n->get_string('component', 'midcom'),
+                    ),
+                    */
+                ),
+                'generate_path_for' => 'extra',
+                'orders' => array
+                (
+                    /* title is not actually used, extra is
+                    array
+                    (
+                        'title' => 'ASC',
+                    ),
+                    */
+                    array
+                    (
+                        'extra' => 'ASC',
+                    ),
+                    array
+                    (
+                        'name' => 'ASC',
                     ),
                 ),
             ),

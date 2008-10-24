@@ -18,5 +18,22 @@ class net_nemein_feedcollector_topic_dba extends __net_nemein_feedcollector_topi
     {
         return parent::__construct($id);
     }
+
+    function get_parent_guid_uncached()
+    {
+        if (empty($this->node))
+        {
+            return null;
+        }
+        $node = new midcom_db_topic($this->node);
+        if (   !is_object($node)
+            || !isset($node->guid)
+            || empty($node->guid))
+        {
+            return null;
+        }
+        return $node->guid;
+    }
+
 }
 ?>

@@ -250,6 +250,84 @@ class net_nemein_feedcollector_viewer extends midcom_baseclasses_components_requ
         return true;
     }
 
+    function _enter_language(&$topic)
+    {
+        if (isset($this->_request_data['original_language']))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            $GLOBALS['midcom_debugger']->print_function_stack('_enter_language called for second time', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return;
+        }
+        $lang = $topic->get_parameter('net.nehmer.blog', 'language');
+        if ($lang)
+        {
+            $this->_request_data['original_language'] = $_MIDGARD['lang'];
+            
+            $language = $_MIDCOM->i18n->code_to_id($lang);
+            if ($language && $language != $_MIDGARD['lang'])
+            {
+                mgd_set_lang($language);
+            }
+        }
+    }
+    
+    function _exit_language()
+    {
+        if (!isset($this->_request_data['original_language']))
+        {
+            /**
+             * Causes noise when not using language contexts
+            debug_push_class(__CLASS__, __FUNCTION__);
+            $GLOBALS['midcom_debugger']->print_function_stack('_exit_language called without being in language context', MIDCOM_LOG_DEBUG);
+            debug_pop();
+             */
+            return;
+        }
+
+        mgd_set_lang($this->_request_data['original_language']);
+        unset($this->_request_data['original_language']);
+    }
+
+    function &get_article_qb(&$feedtopic, $target_topic, &$config)
+    {
+        $symlink = $target_topic->get_parameter('net.nehmer.blog', 'symlink_topic');
+        if (!empty($symlink))
+        {
+            $symlink_topic = new midcom_db_topic($symlink);
+            if (   !is_object($symlink_topic)
+                || !isset($symlink_topic->guid)
+                || empty($symlink_topic->guid))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to resolve symlink '{$symlink}' for topic '{$target_topic->guid}' ($target_topic->name), errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                debug_pop();
+                unset($symlink, $symlink_topic);
+                $x = false;
+                return $x;
+            }
+            $target_topic = $symlink_topic;
+        }
+        $qb = midcom_db_article::new_query_builder();
+        $qb->add_constraint('topic','=', (int)$target_topic->id);
+        $categories = explode('|', $feedtopic->categories);
+        if (   is_array($categories)
+            && !empty($categories))
+        {
+            $qb->begin_group('OR');
+            foreach ($categories as $category)
+            {
+                if (empty($category))
+                {
+                    continue;
+                }
+                $qb->add_constraint('extra1', 'LIKE', "%|{$category}|%");
+            }
+            $qb->end_group();
+        }
+        return $qb;
+    }
+
 }
 
 ?>

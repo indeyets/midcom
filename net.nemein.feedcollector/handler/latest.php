@@ -60,47 +60,59 @@ class net_nemein_feedcollector_handler_latest  extends midcom_baseclasses_compon
 
         if (count($feedtopics) > 0)
         {
-            $qb_news = midcom_db_article::new_query_builder();
-            $qb_news->begin_group('OR');
-            foreach($feedtopics as $feedtopic)
-            {
-
-                if (   $feedtopic->categories != '||' 
-                    && $feedtopic->categories != '')
-                {
-                    $qb_news->begin_group('AND');
-                    $categories = explode('|', $feedtopic->categories);
-                    foreach($categories as $category)
-                    {
-                        if($category != '')
-                        {
-                            $category = str_replace('|', '', $category);
-                            $qb_news->add_constraint('extra1', 'LIKE', "%|{$category}|%");
-                        }
-                    }
-                    $qb_news->add_constraint('topic','=', (int)$feedtopic->feedtopic);
-                    $qb_news->end_group();
-                }
-                else
-                {
-                    $qb_news->add_constraint('topic','=', (int) $feedtopic->feedtopic);
-                }
-            }
-            $qb_news->end_group();
+            $items_temp = array();
             if($handler_id == 'latest')
             {
-                $qb_news->set_limit($this->_config->get('articles_count_index'));
+                $limit = $this->_config->get('articles_count_index');
             }
             else
             {
-                $qb_news->set_limit($args[0]);
+                $limit = $args[0];
             }
-            $qb_news->add_order('metadata.published', 'DESC');
-            $this->items = $qb_news->execute();
+            foreach ($feedtopics as $feedtopic)
+            {
+                $target_topic = new midcom_db_topic($feedtopic->feedtopic);
+                net_nemein_feedcollector_viewer::_enter_language($target_topic);
+                $qb_news =& net_nemein_feedcollector_viewer::get_article_qb($feedtopic, $target_topic, $this->_config);
+                if (!$qb_news)
+                {
+                    continue;
+                }
+                $qb_news->add_order('metadata.published', 'DESC');
+                $qb_news->set_limit($limit);
+                $result = $qb_news->execute();
+                net_nemein_feedcollector_viewer::_exit_language();
+                if (!empty($result))
+                {
+                    $items_temp = array_merge($items_temp, $result);
+                }
+                unset($result);
+            }
         }
 
+        usort($items_temp, array($this, 'sort_items'));
+        while(count($items_temp) > $limit)
+        {
+            array_pop($items_temp);
+        }
+        $this->items = $items_temp;
 
         return true;
+    }
+
+    function sort_items($a, $b)
+    {
+        $a_val =& $a->metadata->published;
+        $b_val =& $b->metadata->published;
+        if ($a_val > $b_val)
+        {
+            return -1;
+        }
+        if ($a_val < $b_val)
+        {
+            return 1;
+        }
+        return 0;
     }
 
     /**
