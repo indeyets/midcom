@@ -258,6 +258,7 @@ class net_nemein_personnel_navigation extends midcom_baseclasses_components_navi
                 MIDCOM_NAV_ADMIN => null,
                 MIDCOM_NAV_GUID => $person->guid,
                 MIDCOM_NAV_OBJECT => $person,
+                MIDCOM_NAV_SCORE => $person->metadata->score,
                 MIDCOM_META_CREATOR => $creator,
                 MIDCOM_META_EDITOR => $revisor,
                 MIDCOM_META_CREATED => $created,
