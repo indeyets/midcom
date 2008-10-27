@@ -198,7 +198,16 @@ class midcom_helper__dbfactory extends midcom_baseclasses_core_object
                 debug_add("Failed to load the handling component for {$classname}, cannot convert.", MIDCOM_LOG_ERROR);
                 debug_pop();
                 return null;
-            } 
+            }
+
+            if (!class_exists($classname))
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Got non-existing DBA class {$classname} for object of type " . get_class($object) . ", cannot convert.", MIDCOM_LOG_ERROR);
+                debug_pop();
+                return null;
+            }
+
             $result = new $classname($object);
         }
         else
