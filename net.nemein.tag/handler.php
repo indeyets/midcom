@@ -325,7 +325,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
                 break;
             /* Default case, just the tag */
             default:
-                $tagname = $tag->tag;
+                $tagname = $tag;
         }
         return $tagname;
     }
