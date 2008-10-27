@@ -1156,25 +1156,24 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 }
             }
             else 
-        {
-        $last_visited_new = $last_visited_orig;
-
+            {
+                $last_visited_new = $last_visited_orig;
+        
                 // remove the oldest entry if maximum size is reached
-        if (sizeof($last_visited_orig) == $this->_config->get('last_visited_size'))
-        {
-            $remove_candidate = array_pop($last_visited_new);
-        }
-        }
+                if (sizeof($last_visited_orig) == $GLOBALS['midcom_component_data']['midgard.admin.asgard']['config']->get('last_visited_size'))
+                {
+                    $remove_candidate = array_pop($last_visited_new);
+                }
+            }
         }
 
         // now, add the new guid
         array_unshift($last_visited_new, $guid);
 
-    // if something has changed, update accordingly
+        // if something has changed, update accordingly
         if (serialize($last_visited_orig) != serialize($last_visited_new))
         {
-            $user = new midcom_db_person($_MIDCOM->auth->user->guid);
-            
+            $user = new midcom_db_person($_MIDCOM->auth->user->guid);         
             $user->set_parameter('midgard.admin.asgard:preferences', 'last_visited', serialize($last_visited_new));
         }
     }
