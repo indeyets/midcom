@@ -46,15 +46,11 @@ class org_routamc_positioning_geocoder extends midcom_baseclasses_components_pur
      * It takes care of loading the required class files. The returned instances will be created
      * but not initialized.
      *
-     * On any error (class not found etc.) the factory method will call generate_error.
-     *
-     * <b>This function must be called statically.</b>
-     *
      * @param string $type The type of the geocoder (the file name from the geocoder directory).
      * @return org_routamc_positioning_geocoder A reference to the newly created geocoder instance.
      * @static
      */
-    function & create($type)
+    static function & create($type)
     {
         $filename = MIDCOM_ROOT . "/org/routamc/positioning/geocoder/{$type}.php";
         if (!file_exists($filename))
