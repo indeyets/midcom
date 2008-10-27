@@ -225,7 +225,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
             {
                 $data['groups'][$group->id] = $group;
             }
-            $data['groups_for_select'][] = $this->list_groups_for_select(0, &$data, 0);
+            $data['groups_for_select'][] = $this->list_groups_for_select(0, $data, 0);
         }
 
         $this->_update_breadcrumb();
@@ -296,7 +296,7 @@ class midcom_admin_user_handler_list extends midcom_baseclasses_components_handl
             
             $data['groups'][] = $group;
             $level++;
-            $this->list_groups_for_select($group['id'], &$data, $level);
+            $this->list_groups_for_select($group['id'], $data, $level);
             $level--;
         }
     }
