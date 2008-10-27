@@ -1106,7 +1106,7 @@ class midcom_helper__componentloader
             return null;
         }
 
-        return 'stock-icons/16x16/package.png';
+        return 'stock-icons/16x16/component.png';
     }
 }
 

@@ -1,4 +1,5 @@
 'name' => 'midcom.helper.datamanager',
+'icon' => 'midcom.helper.datamanager/datamanager.png',
 'purecode' => true,
 'version' => '8.09.0',
 'state' => 'stable',

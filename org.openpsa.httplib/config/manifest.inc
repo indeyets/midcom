@@ -1,5 +1,5 @@
 'name' => 'org.openpsa.httplib',
-'icon' => 'stock-icons/16x16/stock_internet.png',
+'icon' => 'org.openpsa.httplib/httplib.png',
 'purecode' => true,
 'version' => '8.09.0',
 'state' => 'stable',

@@ -247,7 +247,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
             (
                 MIDCOM_TOOLBAR_URL => '__mfa/asgard/components/',
                 MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('components', 'midgard.admin.asgard'),
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/package.png',
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/component.png',
             )
         );
 

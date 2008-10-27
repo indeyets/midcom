@@ -1,4 +1,5 @@
 'name' => 'de.linkm.sitemap',
+'icon' => 'de.linkm.sitemap/sitemap.png',
 'description' => 'Automatic sitemap',
 'purecode' => false,
 'version' => '8.09.0',

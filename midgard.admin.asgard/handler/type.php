@@ -243,7 +243,7 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
                 (
                     MIDCOM_TOOLBAR_URL => "__mfa/asgard/components/{$data['component']}/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string($data['component'], $data['component']),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/package.png',
+                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/component.png',
                 )
             );
         }

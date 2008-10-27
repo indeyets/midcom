@@ -1,4 +1,5 @@
 'name' => 'midcom.helper.xml',
+'icon' => 'midcom.helper.xml/xml.png',
 'purecode' => true,
 'version' => '8.09.0',
 'privileges' => array(),

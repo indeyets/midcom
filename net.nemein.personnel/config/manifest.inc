@@ -1,4 +1,5 @@
 'name' => 'net.nemein.personnel',
+'icon' => 'net.nemein.personnel/personnel.png',
 'purecode' => false,
 'version' => '8.09.0',
 'state' => 'stable',
