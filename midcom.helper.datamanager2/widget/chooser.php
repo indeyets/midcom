@@ -1585,11 +1585,11 @@ class midcom_helper_datamanager2_widget_chooser extends midcom_helper_datamanage
      */
     function freeze()
     {
-        //We should freeze the inputs and results here
+        // FIXME: We should freeze the inputs and results here
     }
     function unfreeze()
     {
-        //We should unfreeze the inputs and results here
+        // FIXME: We should unfreeze the inputs and results here
     }
     function is_frozen()
     {
