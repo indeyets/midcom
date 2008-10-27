@@ -132,7 +132,7 @@ class net_nemein_updatenotification_viewer extends midcom_baseclasses_components
      * @access public
      * @static
      */
-    function list_root_nodes()
+    static function list_root_nodes()
     {
         $nap = new midcom_helper_nav();
 

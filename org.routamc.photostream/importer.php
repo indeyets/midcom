@@ -88,16 +88,12 @@ class org_routamc_photostream_importer extends midcom_baseclasses_components_pur
      * It takes care of loading the required class files. The returned instances will be created
      * but not initialized.
      *
-     * On any error (class not found etc.) the factory method will call generate_error.
-     *
-     * <b>This function must be called statically.</b>
-     *
      * @param string $type The type of the importer (the file name from the importer directory).
      * @param int $photostream ID of a photostream node
      * @return org_routamc_photostream_importer A reference to the newly created importer instance.
      * @static
      */
-    function & create($type, $photostream)
+    static function & create($type, $photostream)
     {
         $filename = MIDCOM_ROOT . "/org/routamc/photostream/importer/{$type}.php";
         $classname = "org_routamc_photostream_importer_{$type}";

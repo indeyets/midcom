@@ -56,7 +56,7 @@ class org_openpsa_products_navigation extends midcom_baseclasses_components_navi
      * @static
      * @return Array containing navigation data
      */
-    function get_product_group_navigation($id)
+    static function get_product_group_navigation($id)
     {
         // Initialize the array
         $leaves = array();
@@ -116,7 +116,7 @@ class org_openpsa_products_navigation extends midcom_baseclasses_components_navi
      * @param mixed $stopper  ID or GUID of the product group that should be the last to parse
      * @return Array     Containing arrays of navigation data for each level
      */
-    function get_product_tree($id, $stopper = 0)
+    static function get_product_tree($id, $stopper = 0)
     {
         // Initialize the return data
         $levels = array();

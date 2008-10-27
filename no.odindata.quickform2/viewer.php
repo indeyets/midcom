@@ -157,7 +157,7 @@ class no_odindata_quickform2_viewer extends midcom_baseclasses_components_reques
      * @param String $string     String for underlining
      * @param String $char       Underlining character
      */
-    function underline($string, $char = '=')
+    static function underline($string, $char = '=')
     {
         // Initialize the string
         $str = '';

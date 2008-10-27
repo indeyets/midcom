@@ -566,7 +566,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
      * @param array $limiters     Array of limiters (keys type, tags, user, start and end)
      * @param array $tags_shared  Shared tags, pass by reference
      */
-    function get_next($photo, $limiters = false, &$tags = false)
+    static function get_next($photo, $limiters = false, &$tags = false)
     {
         $guids = org_routamc_photostream_photo_dba::get_surrounding_photos($photo, '>', $limiters, $tags);
 
@@ -589,7 +589,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
      * @param array $limiters     Array of limiters (keys type, tags, user, start and end)
      * @param array $tags_shared  Shared tags, pass by reference
      */
-    function get_previous($photo, $limiters = false, &$tags = false)
+    static function get_previous($photo, $limiters = false, &$tags = false)
     {
         $guids = org_routamc_photostream_photo_dba::get_surrounding_photos($photo, '<', $limiters, $tags);
 

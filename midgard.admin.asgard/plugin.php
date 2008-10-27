@@ -403,7 +403,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
      * @param string $title     Page title
      * @param array &$data      Local request data
      */
-    function prepare_plugin($title, &$data)
+    static function prepare_plugin($title, &$data)
     {
         $_MIDCOM->auth->require_user_do('midgard.admin.asgard:access', null, 'midgard_admin_asgard_plugin');
         // Disable content caching
@@ -541,7 +541,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
      * @static
      * @access public
      */
-    function get_default_mode(&$data)
+    static function get_default_mode(&$data)
     {
         //only set mode once per request
         if (!empty($data['default_mode']))
@@ -1056,7 +1056,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
      * @static
      * @access public
      */
-    function asgard_header()
+    static function asgard_header()
     {
         midcom_show_style('midgard_admin_asgard_header');
         midcom_show_style('midgard_admin_asgard_middle');
@@ -1068,7 +1068,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
      * @static
      * @access public
      */
-    function asgard_footer()
+    static function asgard_footer()
     {
         midcom_show_style('midgard_admin_asgard_footer');
     }
@@ -1084,7 +1084,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
      * @access public
      * @param string $preference    Name of the preference
      */
-    function get_preference($preference)
+    static function get_preference($preference)
     {
         static $preferences = array();
         
@@ -1109,7 +1109,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
      * @access public
      * @param array $last_visited    Array of guid => object pairs
      */
-    function get_last_visited()
+    static function get_last_visited()
     {
         $last_visited_guids = midgard_admin_asgard_plugin::get_preference('last_visited');
         $last_visited_guids = @unserialize($last_visited_guids);
@@ -1137,7 +1137,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
      * @access public
      * @param string $guid    GUID of the object to add
      */
-    function set_last_visited($guid)
+    static function set_last_visited($guid)
     {
         $last_visited_orig = array_keys(midgard_admin_asgard_plugin::get_last_visited());
         $last_visited_new = Array();
@@ -1186,7 +1186,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
      * @access public
      * @return Array containing class name and translated name
      */
-    function get_root_classes()
+    static function get_root_classes()
     {
         static $root_classes = array();
         

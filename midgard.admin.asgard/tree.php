@@ -87,8 +87,7 @@ class midgard_admin_asgard_copytree extends midgard_admin_asgard_navigation
     
     /**
      * Constructor, connect to the parent class constructor.
-     * 
-     * @static
+     *
      * @access public
      * @param mixed $object
      * @param Array $request_data

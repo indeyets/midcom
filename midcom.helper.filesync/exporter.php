@@ -28,15 +28,11 @@ class midcom_helper_filesync_exporter extends midcom_baseclasses_components_pure
      * It takes care of loading the required class files. The returned instances will be created
      * but not initialized.
      *
-     * On any error (class not found etc.) the factory method will call generate_error.
-     *
-     * <b>This function must be called statically.</b>
-     *
      * @param string $type type
      * @return midcom_helper_filesync_exporter A reference to the newly created exporter instance.
      * @static
      */
-    function & create($type)
+    static function & create($type)
     {
         $filename = MIDCOM_ROOT . "/midcom/helper/filesync/exporter/{$type}.php";
         
