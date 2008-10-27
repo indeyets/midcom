@@ -8,7 +8,7 @@
  */
 
 /** Base type include */
-require_once('boolean.php');
+require_once(MIDCOM_ROOT . '/midcom/helper/datamanager2/type/boolean.php');
 
 /**
  * Datamanager 2 privilege set datatype.

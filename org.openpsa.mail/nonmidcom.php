@@ -143,11 +143,11 @@ if (!function_exists('mgd_version'))
 
 
 $_SERVER['REMOTE_ADDR'] = 'cli-script: n/a';
-require_once('backends/mail.php');
-require_once('backends/mail_sendmail.php');
-require_once('backends/mail_smtp.php');
-require_once('backends/bouncer.php');
-require_once('main.php');
+require_once(MIDCOM_ROOT . '/org/openpsa/mail/backends/mail.php');
+require_once(MIDCOM_ROOT . '/org/openpsa/mail/backends/mail_sendmail.php');
+require_once(MIDCOM_ROOT . '/org/openpsa/mail/backends/mail_smtp.php');
+require_once(MIDCOM_ROOT . '/org/openpsa/mail/backends/bouncer.php');
+require_once(MIDCOM_ROOT . '/org/openpsa/mail/main.php');
 
 
 ?>

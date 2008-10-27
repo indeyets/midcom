@@ -615,7 +615,8 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
         }
         else
         {
-            require_once("renderer/{$name}.php");
+            $filename = MIDCOM_ROOT . "/midcom/helper/datamanager2/renderer/{$name}.php";
+            require_once($filename);
             $classname = "midcom_helper_datamanager2_renderer_{$name}";
             $this->renderer = new $classname();
         }

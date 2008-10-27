@@ -10,7 +10,7 @@
 /** @ignore */
 if (!class_exists('midcom_helper_replicator_exporter_staging2live'))
 {
-    require_once('staging2live.php');
+    require_once(MIDCOM_ROOT . '/midcom/helper/replicator/exporter/staging2live.php');
 }
 
 /**

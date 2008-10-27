@@ -7,8 +7,8 @@
  */
 
 /** @ignore */
-require_once 'field.php';
-require_once 'supertype.php';
+require_once(MIDCOM_ROOT . '/midcom/helper/schemaapi/field.php');
+require_once(MIDCOM_ROOT . '/midcom/helper/schemaapi/supertype.php');
 
 /**
  * @package midcom.helper.schemaapi
@@ -83,7 +83,7 @@ EOF;
 
             file_put_contents( dirname( __FILE__ ) . "/widget/$widget.php", $class );
         }
-        require_once "widget/$widget.php";
+        require_once(MIDCOM_ROOT . "/midcom/helper/schemaapi/widget/$widget.php");
     }
     public static function load_type( $type ) {
         if ( !file_exists( dirname( __FILE__ ) . "/type/$type.php" ) )
@@ -104,7 +104,7 @@ EOF;
 
             file_put_contents( dirname( __FILE__ ) . "/type/$type.php", $class );
         }
-        require_once "type/$type.php";
+        require_once(MIDCOM_ROOT . "/midcom/helper/schemaapi/type/{$type}.php");
     }
 
 

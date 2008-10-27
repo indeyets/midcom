@@ -8,7 +8,7 @@
  */
 
 /** @ignore */
-require_once('select.php');
+require_once(MIDCOM_ROOT . '/midcom/helper/datamanager2/type/select.php');
 
 /**
  * Datamanager 2 tag datatype. The values encapsulated by this type are

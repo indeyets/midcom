@@ -141,12 +141,16 @@ if (!function_exists('mgd_version'))
 
 
 $_SERVER['REMOTE_ADDR'] = 'cli-script: n/a';
-require_once('helpers.php');
-require_once('main.php');
-require_once('Snoopy.php');
+require_once(MIDCOM_ROOT . '/org/openpsa/httplib/helpers.php');
+require_once(MIDCOM_ROOT . '/org/openpsa/httplib/main.php');
+require_once(MIDCOM_ROOT . '/org/openpsa/httplib/Snoopy.php');
 
 $tmpconfig = new midcom_helper_configuration();
-$GLOBALS['midcom_component_data'] = array('org.openpsa.httplib' => array('config' => $tmpconfig));
-
-
+$GLOBALS['midcom_component_data'] = array
+(
+    'org.openpsa.httplib' => array
+    (
+        'config' => $tmpconfig
+    )
+);
 ?>

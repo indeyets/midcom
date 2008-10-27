@@ -8,7 +8,7 @@
  */
 
 /** @ignore */
-require_once('image.php');
+require_once(MIDCOM_ROOT . '/midcom/helper/datamanager2/widget/image.php');
 
 /**
  * Image widget specialized for org.routamc.photostream

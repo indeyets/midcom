@@ -8,7 +8,7 @@
  */
 
 /** Base class */
-require_once('textarea.php');
+require_once(MIDCOM_ROOT . '/midcom/helper/datamanager2/widget/textarea.php');
 
 /**
  * Datamanager 2 FCKeditor driven textarea widget

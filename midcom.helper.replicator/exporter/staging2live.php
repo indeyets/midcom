@@ -10,7 +10,7 @@
 /** @ignore */
 if (!class_exists('midcom_helper_replicator_exporter_mirror'))
 {
-    require_once('mirror.php');
+    require_once(MIDCOM_ROOT . '/midcom/helper/replicator/exporter/mirror.php');
 }
 // We need this library
 $_MIDCOM->load_library('midcom.services.at');

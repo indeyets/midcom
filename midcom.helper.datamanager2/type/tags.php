@@ -8,7 +8,7 @@
  */
 
 /** @ignore */
-require_once('text.php');
+require_once(MIDCOM_ROOT . '/midcom/helper/datamanager2/type/text.php');
 
 /**
  * Datamanager 2 tag datatype. The text value encapsulated by this type is

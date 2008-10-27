@@ -8,7 +8,7 @@
  */
 
 /** @ignore */
-require_once('blobs.php');
+require_once(MIDCOM_ROOT . '/midcom/helper/datamanager2/type/blobs.php');
 
 /**
  * Datamanager 2 Video type.

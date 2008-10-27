@@ -8,7 +8,7 @@
  */
 
 /** @ignore */
-require_once MIDCOM_ROOT . '/midcom/helper/datamanager2/widget/simpleposition.php';
+require_once(MIDCOM_ROOT . '/midcom/helper/datamanager2/widget/simpleposition.php');
 
 /**
  * Datamanager 2 Positioning widget

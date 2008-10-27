@@ -8,7 +8,7 @@
  */
 
 /** @ignore */
-require_once('image.php');
+require_once(MIDCOM_ROOT . '/midcom/helper/datamanager2/type/image.php');
 
 /**
  * Image type specialized for org.routamc.photostream
