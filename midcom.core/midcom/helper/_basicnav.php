@@ -993,14 +993,14 @@ class midcom_helper__basicnav
             return MIDCOM_ERRCRIT;
         }
 
-        if (   $topic->id != $this->_root
+        /*if (   $topic->id != $this->_root
             && !$topic->is_in_tree($this->_root, $topic->id))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Node #{$topic->id} is not in the MidCOM content tree #{$this->_root}. Aborting", MIDCOM_LOG_WARN);
             debug_pop();
             return MIDCOM_ERRNOTFOUND;
-        }
+        }*/
 
         $up = $topic->up;
 
