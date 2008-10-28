@@ -224,12 +224,28 @@ function midcom_helper_filesize_to_string($size)
  * This helper function returns the first instance of a given component on
  * the MidCOM site.
  *
- * Note from torben, Seems to return null on failure. Not sure though.
- *
  * @return array NAP array of the first component instance found
  */
 function midcom_helper_find_node_by_component($component, $node_id = null, $nap = null)
 {
+    static $cache = array();
+
+    $cache_node = $node_id;
+    if (is_null($cache_node))
+    {
+        $cache_node = 0;
+    }
+    
+    if (!isset($cache[$cache_node]))
+    {
+        $cache[$cache_node] = array();
+    }
+
+    if (array_key_exists($component, $cache[$cache_node]))
+    {
+        return $cache[$cache_node][$component];
+    }
+
     if (is_null($nap))
     {
         $nap = new midcom_helper_nav();
@@ -242,6 +258,7 @@ function midcom_helper_find_node_by_component($component, $node_id = null, $nap 
         $root_node = $nap->get_node($node_id);
         if ($root_node[MIDCOM_NAV_COMPONENT] == $component)
         {
+            $cache[$cache_node][$component] = $root_node;
             return $root_node;
         }
     }
@@ -256,10 +273,13 @@ function midcom_helper_find_node_by_component($component, $node_id = null, $nap 
     
     if (count($topics) == 0)
     {
+        $cache[$cache_node][$component] = null;
         return null;
     }
     
     $node = $nap->get_node($topics[0]);
+    $cache[$cache_node][$component] = $node;
+
     return $node;
 }
 
