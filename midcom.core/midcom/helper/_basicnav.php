@@ -1226,9 +1226,15 @@ class midcom_helper__basicnav
      * @return Array        The node-data as outlined in the class introduction, false on failure
      */
     // Keep this doc in sync with midcom_helper_nav
-    function get_node ($node_id)
+    function get_node($node_id)
     {
-        if (! is_numeric($node_id))
+        $node = $node_id;
+        if (   is_object($node_id)
+            && $node_id->guid)
+        {
+            $node_id = $node->id;
+        }
+        elseif (!is_numeric($node_id))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Parameter passed is no integer: [$node_id]", MIDCOM_LOG_ERROR);
@@ -1238,7 +1244,7 @@ class midcom_helper__basicnav
 
         if (!isset($this->_nodes[$node_id]))
         {
-            if ($this->_loadNode($node_id) != MIDCOM_ERROK)
+            if ($this->_loadNode($node) != MIDCOM_ERROK)
             {
                 return false;
             }

@@ -226,7 +226,6 @@ function midcom_helper_filesize_to_string($size)
  *
  * Note from torben, Seems to return null on failure. Not sure though.
  *
- * @todo for Bergie: Check return value in case of failure.
  * @return array NAP array of the first component instance found
  */
 function midcom_helper_find_node_by_component($component, $node_id = null, $nap = null)
@@ -247,29 +246,21 @@ function midcom_helper_find_node_by_component($component, $node_id = null, $nap 
         }
     }
 
-    $component_node = null;
-    $nodes = $nap->list_nodes($node_id);
-    if ($nodes)
+    // Otherwise, go with QB
+    $qb = midcom_db_topic::new_query_builder();
+    $qb->add_constraint('component', '=', $component);
+    $qb->add_constraint('name', '<>', '');
+    $qb->add_constraint('up', 'INTREE', $node_id);
+    $qb->set_limit(1);
+    $topics = $qb->execute();
+    
+    if (count($topics) == 0)
     {
-        foreach ($nodes as $nodes_id)
-        {
-            $node = $nap->get_node($nodes_id);
-            if ($node[MIDCOM_NAV_COMPONENT] == $component)
-            {
-                $component_node = $node;
-                return $node;
-            }
-            else
-            {
-                $returned_node = midcom_helper_find_node_by_component($component, $node[MIDCOM_NAV_ID], $nap);
-                if (!is_null($returned_node))
-                {
-                    return $returned_node;
-                }
-            }
-        }
+        return null;
     }
-    return $component_node;
+    
+    $node = $nap->get_node($topics[0]);
+    return $node;
 }
 
 function midcom_show_element($name) 
