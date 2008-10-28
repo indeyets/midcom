@@ -246,14 +246,14 @@ class midcom_helper_metadata
      */
     function set ($key, $value)
     {
-      $return = false;
-      if ($this->_set_property($key, $value))
-    {
-      $return = $this->object->update();
-      // Update the corresponding cache variable
-      $this->on_update($key);
-    }
-      return $return;
+        $return = false;
+        if ($this->_set_property($key, $value))
+        {
+            $return = $this->object->update();
+            // Update the corresponding cache variable
+            $this->on_update($key);
+        }
+        return $return;
     }
 
     /**
@@ -263,25 +263,25 @@ class midcom_helper_metadata
      */
     function set_multiple ($properties)
     {
-      $return = false;
-      foreach ($properties as $key => $value)
-    {
-      if (!$this->_set_property($key, $value))
+        $return = false;
+        foreach ($properties as $key => $value)
         {
-          return false;
-          // this will exit
+            if (!$this->_set_property($key, $value))
+            {
+                return false;
+                // this will exit
+            }
         }
-    }
-      if ($this->object->update())
-    {
-      $return = true;
-      // Update the corresponding cache variables
-      foreach ($properties as $key => $value)
+        if ($this->object->update())
         {
-          $this->on_update($key);
+            $return = true;
+            // Update the corresponding cache variables
+            foreach ($properties as $key => $value)
+            {
+                $this->on_update($key);
+            }
         }
-    }
-      return $return;
+        return $return;
     }
 
     /**
@@ -311,6 +311,8 @@ class midcom_helper_metadata
             case 'created':
             case 'revisor':
             case 'revised':
+            case 'locker':
+            case 'locked':
             case 'revision':
             case 'size':
             case 'deleted':
@@ -320,8 +322,7 @@ class midcom_helper_metadata
                 return false;
 
             // Writable properties
-            case 'locker':
-            case 'locked':
+
             case 'approver':
             case 'approved':
                 // Prevent lock changes from creating new revisions
@@ -842,28 +843,16 @@ class midcom_helper_metadata
             $user = $_MIDCOM->auth->user->guid;
         }
         
-        if (   is_object($this->object)
-            && method_exists($this->object, 'lock'))
+        if (!is_object($this->object))
         {
-            // This is the Midgard 8.09+ way for locking
-            if ($this->object->is_locked())
-            {
-                return true;
-            }
-            return $this->object->lock();
+            return false;
         }
         
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Using legacy update() method for locking object, please update to Midgard 8.09", MIDCOM_LOG_WARN);
-        debug_pop();
-
-        $lock = Array
-        (
-            'locker' => $user, 
-            'locked' => time() + $timeout * 60
-        );
-
-        return $this->set_multiple($lock);
+        if ($this->object->is_locked())
+        {
+            return true;
+        }
+        return $this->object->lock();
     }
 
     /**
@@ -896,36 +885,18 @@ class midcom_helper_metadata
             return false;
         }
 
-        if (   is_object($this->object)
-            && method_exists($this->object, 'unlock'))
-        {
-            // This is the Midgard 8.09+ way for locking
-            // TODO: Should we support soft unlock somehow?
-            if (!$this->object->is_locked())
-            {
-                return true;
-            }
-            
-            return $this->object->unlock();
-        }
-        
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_add("Using legacy update() method for unlocking object, please update to Midgard 8.09", MIDCOM_LOG_WARN);
-        debug_pop();
-
-        if ($soft_unlock)
-        {
-            $this->object->metadata->locked = 0;
-            $this->object->metadata->locker = '';
-            return true;
-        }
-
-        if (!$this->set_multiple(Array('locked' => 0, 'locker' => '')))
+        if (!is_object($this->object))
         {
             return false;
         }
-
-        return true;
+        
+        // TODO: Should we support soft unlock somehow?
+        if (!$this->object->is_locked())
+        {
+            return true;
+        }
+        
+        return $this->object->unlock();
     }
 }
 ?>
