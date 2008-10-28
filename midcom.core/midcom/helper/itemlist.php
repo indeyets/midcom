@@ -53,14 +53,13 @@ abstract class midcom_helper_itemlist
     /** Initialize the object, used by the factory function.  
      * 
      * @param midcom_helper_nav $basicnav A reference to a NAP object to use.
-     * @param midcom_db_topic $parent_topic A reference to the topic in which we operate.
+     * @param integer $parent_topic_id A ID of the topic in which we operate.
      * @access private
      */
-    function _init (&$basicnav, &$parent_topic) 
+    function _init(&$basicnav, &$parent_topic_id) 
     {
         $this->_basicnav =& $basicnav;
-        $this->_parent_topic =& $parent_topic;
-        $this->parent_node_id = $parent_topic->id;
+        $this->parent_node_id = $parent_topic_id;
     }
   
    /**
@@ -104,18 +103,13 @@ abstract class midcom_helper_itemlist
      *
      *
      * @param string sorting sorttype (eks topicsfirst)
-     *         object _basicnav pointer pointer to the basicnav object.
-     *         object parent_topic pointer to the topic to base the list on.
+     * @param object _basicnav pointer pointer to the basicnav object.
+     * @param integer parent_topic_id pointer to the topic to base the list on.
      * @return midcom_helper_itemlist sortobject
      */
     /** @ignore */
-    static public function factory ($sorting, &$_basicnav ,&$parent_topic) 
+    static public function factory ($sorting, midcom_helper_nav &$_basicnav, &$parent_topic) 
     {
-        if (! is_a($parent_topic, 'midgard_topic' )) 
-        {
-            $_MIDCOM->generate_error(MIDCOM_LOG_WARN, 'midcom_helper_itemlist::factory: parent topic not a midgard_topic object'); 
-        }
-     
         $class = basename($sorting);
         $class = "midcom_helper_itemlist_{$class}";
         $sortclass = &new $class();

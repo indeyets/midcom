@@ -114,7 +114,7 @@ class midcom_helper_nav
      * @return Array            An Array of Node IDs or false on failure.
      * @see midcom_helper__basicnav::list_nodes()
      */
-    function list_nodes ($parent_node, $show_noentry = false)
+    function list_nodes($parent_node, $show_noentry = false)
     {
         return $this->_basicnav->list_nodes($parent_node, $show_noentry);
     }
@@ -130,9 +130,9 @@ class midcom_helper_nav
      * @return Array             A list of leaves found, or false on failure.
      * @see midcom_helper__basicnav::list_leaves()
      */
-    function list_leaves ($parent_leaf, $show_noentry = false)
+    function list_leaves ($parent_node, $show_noentry = false)
     {
-        return $this->_basicnav->list_leaves($parent_leaf, $show_noentry);
+        return $this->_basicnav->list_leaves($parent_node, $show_noentry);
     }
 
     /**
@@ -144,7 +144,7 @@ class midcom_helper_nav
      * @return Array        The node-data as outlined in the class introduction, false on failure
      * @see midcom_helper__basicnav::get_node()
      */
-    function get_node ($node_id)
+    function get_node($node_id)
     {
         return $this->_basicnav->get_node($node_id);
     }
@@ -158,7 +158,7 @@ class midcom_helper_nav
      * @return Array        The leaf-data as outlined in the class introduction, false on failure
      * @see midcom_helper__basicnav::get_leaf()
      */
-    function get_leaf ($leaf_id)
+    function get_leaf($leaf_id)
     {
         return $this->_basicnav->get_leaf($leaf_id);
     }
@@ -196,7 +196,7 @@ class midcom_helper_nav
      * @param int    $root_node    The root node to use.
      * @return boolean                True, if the node is a subnode of the root node, false otherwise.
      */
-    function is_node_in_tree ($node_id, $root_id)
+    function is_node_in_tree($node_id, $root_id)
     {
         //$topic = new midcom_db_topic();
         //return $topic->is_in_tree($root_id, $node_id);
@@ -258,13 +258,13 @@ class midcom_helper_nav
             return false;
         }
 
-        $parent_topic = new midcom_db_topic($parent_node_id);
-        if (! $parent_topic)
+        $parent_node = $this->get_node($parent_node_id);
+        if (!$parent_node)
         {
             return false;
         }
 
-        $navorder = (int) $parent_topic->get_parameter('midcom.helper.nav', 'navorder');
+        $navorder = (int) $parent_node[MIDCOM_NAV_OBJECT]->get_parameter('midcom.helper.nav', 'navorder');
 
         switch ($navorder)
         {
@@ -289,7 +289,7 @@ class midcom_helper_nav
                 break;
         }
         
-        $nav_object = midcom_helper_itemlist::factory($navorder, $this, $parent_topic);
+        $nav_object = midcom_helper_itemlist::factory($navorder, $this, $parent_node_id);
         $result = $nav_object->get_sorted_list();
         
         return $result;
@@ -315,6 +315,7 @@ class midcom_helper_nav
      */
     function resolve_guid ($guid, $node_is_sufficient = false)
     {
+        echo "Called for {$guid}<br />\n";
         // First, check if the GUID is already known by basicnav:
         $cached_result = $this->_basicnav->get_loaded_object_by_guid($guid);
         if (! is_null($cached_result))
@@ -329,7 +330,8 @@ class midcom_helper_nav
         // Note, that objects that cannot be resolved will still be processed using a full-scan of
         // the tree. This is, for example, used by the on-delete cache invalidation.
         $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
-        if (! $object)
+        if (   !$object
+            || !$object->guid)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Could not load GUID {$guid}, trying to continue anyway. Last error was: " . mgd_errstr(), MIDCOM_LOG_WARN);
