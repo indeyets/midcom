@@ -348,12 +348,32 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
             return;
         }
 
-        $raw_list = $this->storage->object->get_parameter('midcom.helper.datamanager2.type.images', "attachment_map_{$this->name}");
-        if (! $raw_list)
+        if (   $this->multilang
+            && $_MIDCOM->i18n->get_midgard_language() != 0)
         {
-            // No attachments found.
-            parent::convert_from_storage($source);
-            return;
+            // Try this language's attachment list first
+            $raw_list = $this->storage->object->get_parameter('midcom.helper.datamanager2.type.images', "attachment_map_{$this->name}_" . $_MIDCOM->i18n->get_content_language());
+            if (!$raw_list)
+            {
+                // Fall back to master language
+                $raw_list = $this->storage->object->get_parameter('midcom.helper.datamanager2.type.images', "attachment_map_{$this->name}");
+                if (!$raw_list)
+                {
+                    // No attachments found.
+                    parent::convert_from_storage($source);
+                    return;
+                }
+            }
+        }
+        else
+        {
+            $raw_list = $this->storage->object->get_parameter('midcom.helper.datamanager2.type.images', "attachment_map_{$this->name}");
+            if (!$raw_list)
+            {
+                // No attachments found.
+                parent::convert_from_storage($source);
+                return;
+            }
         }
 
         $items = explode(',', $raw_list);
@@ -553,7 +573,15 @@ class midcom_helper_datamanager2_type_images extends midcom_helper_datamanager2_
         // an object, we set the parameter unconditionally, to get all deletions.
         if ($this->storage->object)
         {
-            $this->storage->object->set_parameter('midcom.helper.datamanager2.type.images', "attachment_map_{$this->name}", implode(',', $data));
+            if (   $this->multilang
+                && $_MIDCOM->i18n->get_midgard_language() != 0)
+            {
+                $this->storage->object->set_parameter('midcom.helper.datamanager2.type.images', "attachment_map_{$this->name}_" . $_MIDCOM->i18n->get_content_language(), implode(',', $data));
+            }
+            else
+            {       
+                $this->storage->object->set_parameter('midcom.helper.datamanager2.type.images', "attachment_map_{$this->name}", implode(',', $data));
+            }
         }
         else if ($data)
         {

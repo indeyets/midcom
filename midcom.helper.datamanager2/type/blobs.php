@@ -116,7 +116,16 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
      * @var array
      */
     var $_sorted_list = array();
-    
+
+    /**
+     * Multilang emulation for attachment storage. If enabled, uploads in other languages than "Lang 0" will not overwrite
+     * Lang 0 data.
+     * 
+     * @access public
+     * @var boolean
+     */
+    var $multilang = false;
+
     /**
      * Set the base URL accordingly
      *
@@ -146,16 +155,30 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
             return;
         }
 
-        // Midgard 1.8.6 has a very strange bug that prevents it from receiving some parameters
-        // unless list_parameters() is called first.
-        $parameters = $this->storage->object->list_parameters();
-        $temp = $parameters;
-
-        $raw_list = $this->storage->object->get_parameter('midcom.helper.datamanager2.type.blobs', "guids_{$this->name}");
-        if (!$raw_list)
+        if (   $this->multilang
+            && $_MIDCOM->i18n->get_midgard_language() != 0)
         {
-            // No attachments found.
-            return;
+            // Try this language's attachment list first
+            $raw_list = $this->storage->object->get_parameter('midcom.helper.datamanager2.type.blobs', "guids_{$this->name}_" . $_MIDCOM->i18n->get_content_language());
+            if (!$raw_list)
+            {
+                // Fall back to master language
+                $raw_list = $this->storage->object->get_parameter('midcom.helper.datamanager2.type.blobs', "guids_{$this->name}");
+                if (!$raw_list)
+                {
+                    // No attachments found.
+                    return;
+                }
+            }
+        }
+        else
+        {
+            $raw_list = $this->storage->object->get_parameter('midcom.helper.datamanager2.type.blobs', "guids_{$this->name}");
+            if (!$raw_list)
+            {
+                // No attachments found.
+                return;
+            }
         }
 
         $items = explode(',', $raw_list);
@@ -395,7 +418,15 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         // an object, we set the parameter unconditionally, to get all deletions.
         if ($this->storage->object)
         {
-            $this->storage->object->set_parameter('midcom.helper.datamanager2.type.blobs', "guids_{$this->name}", implode(',', $data));
+            if (   $this->multilang
+                && $_MIDCOM->i18n->get_midgard_language() != 0)
+            {
+                $this->storage->object->set_parameter('midcom.helper.datamanager2.type.blobs', "guids_{$this->name}_" . $_MIDCOM->i18n->get_content_language(), implode(',', $data));
+            }
+            else
+            {
+                $this->storage->object->set_parameter('midcom.helper.datamanager2.type.blobs', "guids_{$this->name}", implode(',', $data));
+            }
         }
         else if ($data)
         {
@@ -572,6 +603,14 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         if (! $this->storage->object)
         {
             $this->storage->create_temporary_object();
+        }
+
+        // Ensure there are no namespace clashes in multilang mode
+        if (   $this->multilang
+            && $_MIDCOM->i18n->get_midgard_language() != 0)
+        {
+            $filename_parts = explode('.', $filename);
+            $filename = str_replace($filename_parts[0], "{$filename_parts[0]}_" . $_MIDCOM->i18n->get_content_language(), $filename);
         }
 
         // Try to create a new attachment.
