@@ -553,7 +553,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
         // Check If-Modified-Since and If-None-Match, do content output only if
         // we have a not modified match.
-        if (! $this->_check_not_modified($data['last_modified'], $data['etag']))
+        if (! $this->_check_not_modified($data['last_modified'], $data['etag'], $data['sent_headers']))
         {
             $this->_data_cache->open();
             if (! $this->_data_cache->exists($content_id))
@@ -861,7 +861,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
      * @param string $etag The etag header associated with the current document.
      * @return boolean True, if an 304 match was detected and the appropriate headers were sent.
      */
-    function _check_not_modified($last_modified, $etag)
+    function _check_not_modified($last_modified, $etag, $additional_headers = array())
     {
         if (headers_sent())
         {
@@ -924,6 +924,11 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
 
         // Emit the 304 header, then exit.
         header('HTTP/1.0 304 Not Modified');
+        header("ETag: {$etag}");
+        foreach ($additional_headers as $header)
+        {
+            header($header);
+        }
         return true;
     }
     
@@ -989,7 +994,7 @@ class midcom_services_cache_module_content extends midcom_services_cache_module
         $this->_complete_sent_headers($cache_data);
 
         // If-Modified-Since / If-None-Match checks, if no match, flush the output.
-        if (! $this->_check_not_modified($this->_last_modified, $etag))
+        if (! $this->_check_not_modified($this->_last_modified, $etag, $this->_sent_headers))
         {
             ob_end_flush();
             $this->_obrunning = false;
