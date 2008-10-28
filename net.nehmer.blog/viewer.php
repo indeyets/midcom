@@ -169,11 +169,9 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
         );
         $this->_request_switch['config'] = Array
         (
-            'handler' => Array('net_nehmer_blog_handler_configuration', 'configdm'),
-            //FIXME: make configurable
-            'schemadb' => 'file:/net/nehmer/blog/config/schemadb_config.inc',
-            'schema' => 'config',
-            'fixed_args' => Array('config'),
+            'handler' => array ('midcom_core_handler_configdm2', 'config'),
+            'schemadb' => $this->_config->get('schemadb_config'),
+            'fixed_args' => array ('config'),
         );
 
         $this->_request_switch['api-email'] = Array

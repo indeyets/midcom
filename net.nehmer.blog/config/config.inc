@@ -5,6 +5,7 @@
 (
     'file:/net/nehmer/blog/config/schemadb_default.inc' => 'Default Schema Database',
 ),
+'schemadb_config' => 'file:/net/nehmer/blog/config/schemadb_config.inc',
 
 // Use the content from another topic instead of the current one.
 // Do not overwrite this except on a per-topic level!!!
