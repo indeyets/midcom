@@ -125,7 +125,7 @@ if (!empty($_callback_class))
         return false;
     }
     $_callback = new $_callback_class($_callback_args);
-    $results = $_callback->run_search($query,&$_REQUEST);
+    $results = $_callback->run_search($query, $_REQUEST);
 }
 else
 {
