@@ -2733,7 +2733,12 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function get_parent($object)
     {
-        return $_MIDCOM->dbfactory->get_object_by_guid($object->get_parent_guid());
+        static $parents = array();
+        if (!isset($parents[$object->guid]))
+        {
+            $parents[$object->guid] = $_MIDCOM->dbfactory->get_object_by_guid($object->get_parent_guid());
+        }
+        return $parents[$object->guid];
     }
 }
 ?>
