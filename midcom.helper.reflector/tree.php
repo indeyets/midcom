@@ -500,7 +500,9 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
         // up takes precedence over parent
         $up_property = midgard_object_class::get_property_up($schema_type);
         if (   !empty($up_property)
-            && !empty($object->$up_property))
+            && !empty($object->$up_property)
+            && $object->$up_property != ''
+            && $object->$up_property != 0)
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Checking if we can get something with up property {$up_property} (value: {$object->$up_property})");
