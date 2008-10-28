@@ -1700,9 +1700,13 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             return false;
         }
 
-        if (isset(midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain][$name]))
+        if (isset(midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain]))
         {
-            // We have this already thanks to some parameter listing
+            // We have this domain in cache already thanks to some parameter listing
+            if (!isset(midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain][$name]))
+            {
+                return '';
+            }
             return midcom_baseclasses_core_dbobject::$parameter_cache[$object->guid][$domain][$name];
         }
 

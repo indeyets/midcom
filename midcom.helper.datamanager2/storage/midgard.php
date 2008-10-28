@@ -126,9 +126,18 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
 
     function _on_load_data($name)
     {
+        // Cache parameter queries so we get them once
+        static $loaded_domains = array();
+
         switch ($this->_schema->fields[$name]['storage']['location'])
         {
             case 'parameter':
+                if (!isset($loaded_domains[$this->_schema->fields[$name]['storage']['domain']]))
+                {
+                    // Run the list here so all parameters of the domain go to cache
+                    $loaded_domains[$this->_schema->fields[$name]['storage']['domain']] = $this->object->list_parameters($this->_schema->fields[$name]['storage']['domain']);
+                }
+
                 if (   array_key_exists('multilang', $this->_schema->fields[$name]['storage'])
                     && $this->_schema->fields[$name]['storage']['multilang']
                     && $_MIDCOM->i18n->get_midgard_language() != 0)
@@ -152,6 +161,12 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
                 );
 
             case 'configuration':
+                if (!isset($loaded_domains[$this->_schema->fields[$name]['storage']['domain']]))
+                {
+                    // Run the list here so all parameters of the domain go to cache
+                    $loaded_domains[$this->_schema->fields[$name]['storage']['domain']] = $this->object->list_parameters($this->_schema->fields[$name]['storage']['domain']);
+                }
+
                 if (   array_key_exists('multilang', $this->_schema->fields[$name]['storage'])
                     && $this->_schema->fields[$name]['storage']['multilang']
                     && $_MIDCOM->i18n->get_midgard_language() != 0)
