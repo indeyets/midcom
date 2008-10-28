@@ -838,11 +838,6 @@ class midcom_helper_metadata
             $timeout = $GLOBALS['midcom_config']['metadata_lock_timeout'];
         }
         
-        if (!$user)
-        {
-            $user = $_MIDCOM->auth->user->guid;
-        }
-        
         if (!is_object($this->object))
         {
             return false;
