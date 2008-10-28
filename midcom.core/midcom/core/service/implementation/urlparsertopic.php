@@ -136,7 +136,14 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
 
         // Run-time cache of objects by URL
         static $objects = array();
-        $object_url = "{$this->url}/{$this->argv[0]}/";
+        if (empty($this->url))
+        {
+            $object_url = "{$this->argv[0]}/";
+        }
+        else
+        {
+            $object_url = "{$this->url}/{$this->argv[0]}/";
+        }
         if (array_key_exists($object_url, $objects))
         {
             // Remove this component from path
@@ -144,6 +151,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
             array_shift($this->argv);
             
             // Set as current object
+            $this->url = $object_url;
             $this->current_object = $objects[$object_url];
             return $objects[$object_url];
         }
@@ -177,6 +185,7 @@ class midcom_core_service_implementation_urlparsertopic implements midcom_core_s
             array_shift($this->argv);
 
             // Set as current object
+            $this->url = $object_url;
             $this->current_object = $atts[0];
             $objects[$object_url] = $this->current_object;
             return $objects[$object_url];
