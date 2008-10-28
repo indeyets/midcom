@@ -401,7 +401,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
     function get_object_tags_by_contexts(&$object)
     {
         $tags = array();
-        $link_mc = net_nemein_tag_link::new_collector('fromGuid', $guid);
+        $link_mc = net_nemein_tag_link::new_collector('fromGuid', $object->guid);
         $link_mc->set_key_property('tag');
         $link_mc->add_value_property('value');
         $link_mc->add_value_property('context');
