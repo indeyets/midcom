@@ -25,12 +25,32 @@
         (
             'title' => 'parent group',
             'storage' => 'up',
-            'type' => 'select',
-            'type_config' => Array
+            'type'    => 'select',
+            'type_config' => array
             (
-                'options' => org_openpsa_products_product_group_dba::list_groups(),
+                'require_corresponding_option' => false,
+                'allow_multiple' => false,
+                'options' => array(),
             ),
-            'widget' => 'select',
+            'widget'  => 'chooser',
+            'widget_config' => array
+            (
+                'class' => 'org_openpsa_products_product_group_dba',
+                'component' => 'org.openpsa.products',
+                'titlefield' => 'name',
+                'id_field' => 'id',
+                'searchfields' => array
+                (
+                    'code',
+                    'title',
+                ),
+                'result_headers' => array
+                (
+                    array('name' => 'title', 'title' => 'title'),
+                    array('name' => 'code', 'title' => 'code'),
+                ),
+                'generate_path_for' => 'title',
+            ),
         ),
         'description' => Array
         (

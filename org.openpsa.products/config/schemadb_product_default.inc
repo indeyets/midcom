@@ -47,12 +47,32 @@
         (
             'title' => 'product group',
             'storage' => 'productGroup',
-            'type' => 'select',
-            'type_config' => Array
+            'type'    => 'select',
+            'type_config' => array
             (
-                'options' => org_openpsa_products_product_group_dba::list_groups(),
+                'require_corresponding_option' => false,
+                'allow_multiple' => false,
+                'options' => array(),
             ),
-            'widget' => 'select',
+            'widget'  => 'chooser',
+            'widget_config' => array
+            (
+                'class' => 'org_openpsa_products_product_group_dba',
+                'component' => 'org.openpsa.products',
+                'titlefield' => 'name',
+                'id_field' => 'id',
+                'searchfields' => array
+                (
+                    'code',
+                    'title',
+                ),
+                'result_headers' => array
+                (
+                    array('name' => 'title', 'title' => 'title'),
+                    array('name' => 'code', 'title' => 'code'),
+                ),
+                'generate_path_for' => 'title',
+            ),
         ),
         'supplier' => array
         (
@@ -64,15 +84,20 @@
                  'require_corresponding_option' => false,
                  'options' => array(),
             ),
-            'widget' => 'universalchooser',
+            'widget' => 'chooser',
             'widget_config' => array
             (
                 'class'       => 'midcom_db_group',
                 'component'   => 'midgard.admin.asgard',
                 'titlefield'  => 'official',
-                'idfield'     => 'id',
+                'id_field'     => 'id',
                 'constraints' => array
                 (
+                ),
+                'result_headers' => array
+                (
+                    array('name' => 'name', 'title' => 'name'),
+                    array('name' => 'official', 'title' => 'official'),
                 ),
                 'searchfields'  => array
                 (
