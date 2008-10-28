@@ -1179,7 +1179,10 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
         
         // Register the GUID as loaded in this request
-        $_MIDCOM->cache->content->register($object->guid);
+        if (isset($_MIDCOM->cache->content))
+        {
+            $_MIDCOM->cache->content->register($object->guid);
+        }
         
         return $result;
     }
