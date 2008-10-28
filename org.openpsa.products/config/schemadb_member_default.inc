@@ -8,14 +8,31 @@
             // COMPONENT-REQUIRED
             'title' => 'component',
             'storage' => 'component',
-            'type' => 'select',
-            'required' => true,
-            // TODO: Switch to universalchooser when it is ready
-            'type_config' => Array
+            'type'    => 'select',
+            'type_config' => array
             (
-                'options' => org_openpsa_products_product_dba::list_products(true),
+                'require_corresponding_option' => false,
+                'allow_multiple' => false,
+                'options' => array(),
             ),
-            'widget' => 'select',
+            'widget'  => 'chooser',
+            'widget_config' => array
+            (
+                'class' => 'org_openpsa_products_product_dba',
+                'component' => 'org.openpsa.products',
+                'id_field' => 'id',
+                'searchfields' => array
+                (
+                    'code',
+                    'title',
+                ),
+                'result_headers' => array
+                (
+                    array('name' => 'title', 'title' => 'title'),
+                    array('name' => 'code', 'title' => 'code'),
+                ),
+                'generate_path_for' => 'title',
+            ),
         ),
         'pieces' => Array
         (
@@ -45,14 +62,32 @@
             // COMPONENT-REQUIRED
             'title' => 'component group',
             'storage' => 'componentGroup',
-            'type' => 'select',
-            'required' => true,
-            // TODO: Switch to universalchooser when it is ready
-            'type_config' => Array
+            'type'    => 'select',
+            'type_config' => array
             (
-                'options' => org_openpsa_products_product_group_dba::list_groups(),
+                'require_corresponding_option' => false,
+                'allow_multiple' => false,
+                'options' => array(),
             ),
-            'widget' => 'select',
+            'widget'  => 'chooser',
+            'widget_config' => array
+            (
+                'class' => 'org_openpsa_products_product_group_dba',
+                'component' => 'org.openpsa.products',
+                'id_field' => 'id',
+                'searchfields' => array
+                (
+                    'code',
+                    'title',
+                ),
+                'result_headers' => array
+                (
+                    array('name' => 'title', 'title' => 'title'),
+                    array('name' => 'code', 'title' => 'code'),
+                ),
+                'generate_path_for' => 'title',
+            ),
+            'required' => true,
         ),
         'pieces' => Array
         (
