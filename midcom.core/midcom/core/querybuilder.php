@@ -341,7 +341,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
                 || ! is_object($object)
                 || ! $object->guid)
             {
-                debug_add("Could not create a MidCOM DBA instance of the {$classname} ID {$value->id}. See debug level log for details.",
+                debug_add("Could not create a MidCOM DBA instance of the {$this->_real_class} ID {$object->id}. See debug level log for details.",
                     MIDCOM_LOG_INFO);
                 continue;
             }
