@@ -1,7 +1,7 @@
 <?php
 if (!class_exists('HTMLPurifier'))
 {
-    require('HTMLPurifier.php');
+    require_once('HTMLPurifier.includes.php');
 }
 /**
  * Helper for importing directory of HTML files as n.n.static content tree
@@ -19,6 +19,7 @@ class fi_hut_htmlimport_importer extends midcom_baseclasses_components_purecode
     var $ruleset = false;
     var $field_map = false;
     var $encoding = 'UTF-8';
+    private $delete = false;
 
     /**
      * Contsructors, loads configurations and tries to select the default
@@ -26,7 +27,7 @@ class fi_hut_htmlimport_importer extends midcom_baseclasses_components_purecode
      *
      * @see select_ruleset()
      */
-    function __construct()
+    function __construct($delete_missing = false)
     {
         $this->_component = 'fi.hut.htmlimport';
         parent::__construct();
@@ -39,14 +40,14 @@ class fi_hut_htmlimport_importer extends midcom_baseclasses_components_purecode
             ),
         );
 
-        if (isset($purifier_common_config['Cache']['SerializerPath']) 
+        if (   isset($purifier_common_config['Cache']['SerializerPath']) 
             && !file_exists($purifier_common_config['Cache']['SerializerPath']))
         {
             mkdir($purifier_common_config['Cache']['SerializerPath']);
         }
 
         $this->purifier = new HTMLPurifier($purifier_common_config);
-        $this->purifier->config->set('HTML', 'EnableAttrID', true);
+        $this->purifier->config->set('Attr', 'EnableID', true);
         $this->purifier->config->set('HTML', 'Doctype', 'XHTML 1.0 Strict');
         $this->purifier->config->set('HTML', 'TidyLevel', 'light');
         $this->purifier->config->set('Core', 'EscapeNonASCIICharacters', true);
@@ -58,6 +59,8 @@ class fi_hut_htmlimport_importer extends midcom_baseclasses_components_purecode
 
         $this->rulesets = $this->_config->get('rulesets');
         $this->select_ruleset($this->_config->get('default_ruleset'));
+
+        $this->delete = $delete_missing;
     }
 
     /**
@@ -510,8 +513,10 @@ class fi_hut_htmlimport_importer extends midcom_baseclasses_components_purecode
             }
         }
 
+        $filenames = array();
         foreach ($folder->files as $file)
         {
+            $filenames[] = $file->name;
             if (!$this->import_file($file, $topic->id))
             {
                 echo "ERROR: Failed to import file {$file->name} to #{$topic->id}<br>\n";
@@ -519,15 +524,29 @@ class fi_hut_htmlimport_importer extends midcom_baseclasses_components_purecode
             }
         }
 
+        if ($this->delete)
+        {
+            // Then delete files that are in DB but not in the importing folder
+            $this->delete_missing_files($filenames, $topic->id);
+        }
+
+        $foldernames = array();
         foreach ($folder->folders as $subfolder)
         {
+            $foldernames[] = $subfolder->name;
             if (!$this->import_folder($subfolder, $topic->id))
             {
                 echo "ERROR: Failed to import subfolder {$subfolder->name} to #{$topic->id}<br>\n";
                 // PONDER: abort ??
             }
         }
-        
+
+        if ($this->delete)
+        {
+            // Then delete files that are in DB but not in the importing folder
+            $this->delete_missing_folders($foldernames, $topic->id);
+        }
+
         return true;
     }
 
@@ -633,6 +652,40 @@ class fi_hut_htmlimport_importer extends midcom_baseclasses_components_purecode
         // PONDER: Call net_nehmer_static_viewer::index ??
 
         return true;
+    }
+    
+    private function delete_missing_files($filenames, $topic_id)
+    {
+        if (!$this->delete)
+        {
+            return;
+        }
+
+        $qb = midcom_db_article::new_query_builder();
+        $qb->add_constraint('topic', '=', $topic_id);
+        $qb->add_constraint('name', 'NOT IN', $filenames);
+        $articles = $qb->execute();
+        foreach ($articles as $article)
+        {
+            $article->delete();
+        }
+    }
+
+    private function delete_missing_folders($foldernames, $topic_id)
+    {
+        if (!$this->delete)
+        {
+            return;
+        }
+
+        $qb = midcom_db_topic::new_query_builder();
+        $qb->add_constraint('up', '=', $topic_id);
+        $qb->add_constraint('name', 'NOT IN', $foldernames);
+        $topics = $qb->execute();
+        foreach ($topics as $topic)
+        {
+            $topic->delete();
+        }
     }
 }
 

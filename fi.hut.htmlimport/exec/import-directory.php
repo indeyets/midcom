@@ -7,7 +7,14 @@ $_MIDCOM->auth->require_admin_user();
 // Get us to full live mode
 $_MIDCOM->cache->content->enable_live_mode();
 
-$importer = new fi_hut_htmlimport_importer();
+$delete_missing = false;
+if (   isset($_POST['deletemissing'])
+    && $_POST['deletemissing'] == 1)
+{
+    $delete_missing = true;
+}
+
+$importer = new fi_hut_htmlimport_importer($delete_missing);
 if (isset($_POST['ruleset']))
 {
     $importer->select_ruleset($_POST['ruleset']);
@@ -75,6 +82,14 @@ else
             </select>
         </label>
         <br/>
+        <label>
+            <span>Delete missing documents</span>
+            <select name="deletemissing">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </label>
+        <br />
         <div class="form_toolbar">
             <input type="submit" value="Import" />
         </div>
