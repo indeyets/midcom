@@ -597,18 +597,26 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             );
         }
 
-        $link = $_MIDCOM->permalinks->resolve_permalink($object->guid);
-        if ($link)
+        if (   !is_a($object, 'midgard_style')
+            && !is_a($object, 'midgard_element')
+            && !is_a($object, 'midgard_snippetdir')
+            && !is_a($object, 'midgard_snippet')
+            && !is_a($object, 'midgard_page')
+            && !is_a($object, 'midgard_pageelement'))
         {
-            $toolbar->add_item
-            (
-                array
+            $link = $_MIDCOM->permalinks->resolve_permalink($object->guid);
+            if ($link)
+            {
+                $toolbar->add_item
                 (
-                    MIDCOM_TOOLBAR_URL => $link,
-                    MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('view on site', 'midgard.admin.asgard'),
-                    MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_internet.png',
-                )
-            );
+                    array
+                    (
+                        MIDCOM_TOOLBAR_URL => $link,
+                        MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('view on site', 'midgard.admin.asgard'),
+                        MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/stock_internet.png',
+                    )
+                );
+            }
         }
 
         if ($object->can_do('midgard:update'))
