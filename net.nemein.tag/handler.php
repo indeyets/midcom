@@ -430,7 +430,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
         
         foreach ($tag_guids as $tag_guid => $value)
         {
-            $context = $mc->get_subkey($tag_guid, 'context');
+            $context = $link_mc->get_subkey($tag_guid, 'context');
             if (empty($context))
             {
                 $context = 0;
