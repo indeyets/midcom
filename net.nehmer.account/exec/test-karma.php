@@ -1,9 +1,4 @@
 <?php
-if (version_compare(phpversion(), '5.0.0', '<'))
-{
-    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Karma calculator requires PHP 5");
-    // This wil exit()
-}
 require_once(MIDCOM_ROOT . '/net/nehmer/account/calculator.php');
 $_MIDCOM->auth->require_admin_user();
 
@@ -17,18 +12,16 @@ if (   isset($_GET['cache'])
 }
 
 $qb = midcom_db_person::new_query_builder();
+// FIXME: These are maemo-specific hack
 $qb->add_constraint('username', '<>', 'admin');
-$qb->add_order('metadata.score', 'DESC');
+$qb->add_constraint('firstname', 'NOT LIKE', 'DELETE %');
+$qb->add_order('metadata.revised', 'ASC');
+$qb->set_limit((int) $GLOBALS['midcom_component_data']['net.nehmer.account']['config']->get('karma_calculate_per_hour'));
 $persons = $qb->execute();
 $persons_array = array();
 
 foreach ($persons as $person)
 {
-    if (substr($person->firstname, 0, 7) == 'DELETE ')
-    {
-        continue;
-    }
-
     $karmas = $calculator->calculate_person($person, $cache);
     $karma_string = '';
     foreach ($karmas as $source => $karma)
@@ -40,7 +33,7 @@ foreach ($persons as $person)
     $persons_array[sprintf('%003d', $karmas['karma'])."_{$person->guid}"] = $person;
 }
 echo count($persons_array) . " persons processed.";
-/*
+
 krsort($persons_array);
 echo "<ul>\n";
 foreach ($persons_array as $person)
@@ -48,5 +41,4 @@ foreach ($persons_array as $person)
     echo "<li><a href=\"{$person->homepage}\">{$person->name}</a> ({$person->tmp})</li>\n";
 }
 echo "</ul>\n";
-*/
 ?>
