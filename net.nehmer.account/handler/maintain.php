@@ -455,8 +455,7 @@ class net_nehmer_account_handler_maintain extends midcom_baseclasses_components_
         }
 
         $person = new midcom_db_person($guid);
-
-        if (empty($person->guid))
+        if (!$person->guid)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, 'Invalid reset link, the person record was not found.');
             // This will exit.

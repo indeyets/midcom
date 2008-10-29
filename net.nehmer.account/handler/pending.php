@@ -164,11 +164,10 @@ class net_nehmer_account_handler_pending extends midcom_baseclasses_components_h
         else
         {
             $person = new midcom_db_person($args[0]);
-
-            // No user found
-            if (empty($person))
+            if (   !$person
+                || !$person->guid)
             {
-                return false;
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The account '{$args[0]}' could not be loaded, reason: " . mgd_errstr());
             }
 
             $this->persons[$person->guid] =& $person;

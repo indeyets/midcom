@@ -200,14 +200,14 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
             case 'other':
                 if (!$this->_get_account($args[0]))
                 {
-                    return false;
+                    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The account '{$args[0]}' could not be loaded, reason: " . mgd_errstr());
                 }
                 break;
 
             case 'other_direct':
                 if (!$this->_get_account($args[0]))
                 {
-                    return false;
+                    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The account '{$args[0]}' could not be loaded, reason: " . mgd_errstr());
                 }
                 $this->_view_self = false;
                 $this->_view_quick = false;
@@ -216,7 +216,7 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
             case 'other_quick':
                 if (!$this->_get_account($args[0]))
                 {
-                    return false;
+                    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The account '{$args[0]}' could not be loaded, reason: " . mgd_errstr());
                 }
                 $this->_view_self = false;
                 $this->_view_quick = true;
@@ -225,10 +225,11 @@ class net_nehmer_account_handler_view extends midcom_baseclasses_components_hand
             default:
                 $this->errstr = "Unknown handler ID {$handler_id} encountered.";
                 $this->errcode = MIDCOM_ERRCRIT;
-                return false;
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Unknown handler ID {$handler_id} encountered.");
         }
 
-        if (! $this->_account)
+        if (   !$this->_account
+            || !$this->_account->guid)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, $this->_l10n->get('the account was not found.'));
             // this will exit

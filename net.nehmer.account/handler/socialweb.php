@@ -76,11 +76,10 @@ class net_nehmer_account_handler_socialweb extends midcom_baseclasses_components
         {
             $_MIDCOM->auth->require_admin_user();
             $this->_account = new midcom_db_person($args[0]);
-            if (! $this->_account)
+            if (   !$this->_account
+                || !$this->_account->guid)
             {
-                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND,
-                    "The account '{$args[0]}' could not be loaded, last Mdigard error was: "
-                    . mgd_errstr());
+                $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The account '{$args[0]}' could not be loaded, reason: " . mgd_errstr());
             }
             net_nehmer_account_viewer::verify_person_privileges($this->_account);
             $return_url = "view/{$this->_account->guid}/";
