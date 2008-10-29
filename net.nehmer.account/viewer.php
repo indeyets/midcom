@@ -591,6 +591,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      */
     function send_registration_mail(&$person, $password, $activation_link, $config)
     {
+        $_MIDCOM->load_library('org.openpsa.mail');
         $mail = new org_openpsa_mail();
         $mail->from = $config->get('activation_mail_sender');
         
@@ -642,6 +643,7 @@ class net_nehmer_account_viewer extends midcom_baseclasses_components_request
      */
     function send_password_reset_mail($person, $link, &$config)
     {
+        $_MIDCOM->load_library('org.openpsa.mail');
         $mail = new org_openpsa_mail();
         $mail->from = $config->get('password_reset_mail_sender');
         

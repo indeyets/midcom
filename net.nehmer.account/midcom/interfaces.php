@@ -54,36 +54,14 @@ class net_nehmer_account_interface extends midcom_baseclasses_components_interfa
         define ('NET_NEHMER_ACCOUNT_LEAFID_OTHER', 999);
 
         $this->_component = 'net.nehmer.account';
-        $this->_autoload_files = array
-        (
-            'viewer.php', 
-            'navigation.php', 
-            'invite.php',
-        );
+        $this->_autoload_files = array();
         
         $this->_autoload_libraries = Array
         (
             'midcom.helper.datamanager2',
-            'org.openpsa.mail',
         );
     }
-    
-    function _on_initialize()
-    {
-        if (!class_exists('midcom_helper_itemlist'))
-        {
-            require(MIDCOM_ROOT . '/midcom/helper/itemlist.php');
-        }
-        
-        /** This should be deprecated
-        if (!class_exists('midcom_helper_mailtemplate'))
-        {
-            require(MIDCOM_ROOT . '/midcom/helper/mailtemplate.php');
-        }
-        */
-        return true;
-    }
-    
+
     /**
      * This is a factory method which creates a remote controller instance bound to a specific
      * topic.
@@ -95,7 +73,6 @@ class net_nehmer_account_interface extends midcom_baseclasses_components_interfa
      */
     function create_remote_controller($guid)
     {
-        require_once(MIDCOM_ROOT . '/net/nehmer/account/remote.php');
         return new net_nehmer_account_remote($guid);
     }
 

@@ -326,6 +326,7 @@ class net_nehmer_account_handler_pending extends midcom_baseclasses_components_h
      */
     function _send_rejection_mail(&$person, $subject, $body)
     {
+        $_MIDCOM->load_library('org.openpsa.mail');
         $mail = new org_openpsa_mail();
         $mail->from = $this->_config->get('activation_mail_sender');
         

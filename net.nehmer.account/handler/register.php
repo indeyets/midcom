@@ -845,6 +845,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      */
     function _send_activation_pending_mail()
     {
+        $_MIDCOM->load_library('org.openpsa.mail');
         $mail = new org_openpsa_mail();
         $mail->from = $this->_config->get('activation_mail_sender');
         
@@ -878,6 +879,7 @@ class net_nehmer_account_handler_register extends midcom_baseclasses_components_
      */
     function _send_activation_request_mail()
     {
+        $_MIDCOM->load_library('org.openpsa.mail');
         $mail = new org_openpsa_mail();
         $mail->from = $this->_config->get('activation_mail_sender');
         
