@@ -245,23 +245,7 @@ class no_bergfald_rcs_aegirrcs extends no_bergfald_rcs {
 
     function _probe_nemein_rcs()
     {
-
-
-
-        debug_add ("Bergfald RCS interface: checking for /AegirCore/config/config");
-        if (mgd_snippet_exists("/AegirCore/config/config")) {
-
-          debug_add ("Bergfald RCS interface: Including /AegirCore/config/config");
-          mgd_include_snippet_php("/AegirCore/config/config");
-        }
-
-        debug_add ("Bargfald RCS interface: Checking configuration");
-        if (!isset($set) || !is_array($set) || !array_key_exists("rcsroot", $set)) {
-            debug_add("NemeinRCS interface: Aegir rcsroot not set by Aegir, going to default");
-            $set["rcsroot"] = $this->rcsroot;
-        } else {
-            $this->rcsroot = $set['rcsroot'];
-        }
+        $set["rcsroot"] = $this->rcsroot;
 
         if (!file_exists($set["rcsroot"])) {
             debug_add("Bergfald RCS interface: Aegir rcsroot directory ".$set["rcsroot"]." not found on system");

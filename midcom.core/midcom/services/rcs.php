@@ -125,32 +125,14 @@ class midcom_services_rcs extends midcom_baseclasses_core_object
         debug_add ("RCS interface: checking for /AegirCore/config/config");
 
         // we like config in midcom best!
-        if (array_key_exists('midcom_rcs_root',$this->config) )
+        if (array_key_exists('midcom_rcs_root', $this->config) )
         {
             $set['rcsroot'] = $this->config['midcom_rcs_root'];
 
-        } elseif (mgd_snippet_exists("/AegirCore/config/config"))
-        {
-
-          debug_add ("RCS interface: Including /AegirCore/config/config");
-          mgd_include_snippet_php("/AegirCore/config/config");
-        } elseif (!isset($set) || !is_array($set) || !array_key_exists("rcsroot", $set))
-        {
-            debug_add("NemeinRCS interface: Aegir rcsroot not set by Aegir, going to default");
-            if (   $_MIDGARD['config']['prefix'] == '/usr'
-                || $_MIDGARD['config']['prefix'] == '/usr/local')
-            {
-                $set['rcsroot'] = '/var/lib/midgard/rcs';
-            }
-            else
-            {
-                $set['rcsroot'] = "{$_MIDGARD['config']['prefix']}/var/lib/midgard/rcs";
-            }
         }
-
-        if (!array_key_exists('rcsroot', $set))
+        else
         {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'RCS root directory must be set.');
+            $set['rcsroot'] = "{$_MIDGARD['config']['prefix']}/var/lib/midgard/rcs";
         }
 
         if ($this->_check_config($set))

@@ -728,33 +728,7 @@ class midcom_services_i18n
 
         $path = $GLOBALS['midcom_config']['i18n_language_db_path'];
 
-        if (substr($path, 0, 5) == 'file:')
-        {
-            $filename = MIDCOM_ROOT . substr($path, 5);
-            if (! file_exists($filename))
-            {
-                return null;
-            }
-            $data = file_get_contents($filename);
-        }
-        else
-        {
-            if (! mgd_snippet_exists($path))
-            {
-                return null;
-            }
-            
-            $snippet = new midgard_snippet();
-            try
-            {
-                $snippet->get_by_path($path);
-            }
-            catch (Exception $e)
-            {
-                return null;
-            }
-            $data = $snippet->code;
-        }
+        $data = midcom_get_snippet_content_graceful($path);
 
         eval ("\$layout = Array(\n{$data}\n);");
         $this->_language_db = $layout;
