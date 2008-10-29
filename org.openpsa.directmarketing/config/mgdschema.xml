@@ -1,18 +1,10 @@
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
     <!-- org.openpsa.spammer objects  -->
-    <type name="org_openpsa_campaign" table="org_openpsa_campaign">
+    <type name="org_openpsa_campaign" table="org_openpsa_campaign" parent="midgard_topic" parentfield="node">
         <property name="id" type="integer" primaryfield="id"/>
         <property name="title" type="string"/>
         <property name="description" type="text"/>
-
-        <!--  required metadata, NOT ANYMORE
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        -->
-
+        <property name="node" link="midgard_topic:id" reverse="no" type="integer" parentfield="node"/>        
         <property name="archived" type="integer" />
         <property name="rulesSerialized" type="text" />
 

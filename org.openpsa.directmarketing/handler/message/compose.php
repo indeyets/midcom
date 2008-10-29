@@ -69,8 +69,21 @@ class org_openpsa_directmarketing_handler_message_compose extends midcom_basecla
         $_MIDCOM->auth->request_sudo();
         //Load message
         $data['message'] = new org_openpsa_directmarketing_campaign_message($args[0]);
+        if (   !$data['message']
+            || !$data['message']->guid)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The message {$args[0]} was not found.");
+            // This will exit.
+        }
 
         $data['campaign'] = new org_openpsa_directmarketing_campaign($data['message']->campaign);
+        if (   !$data['campaign']
+            || $data['campaign']->node != $this->_topic->id)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The campaign {$this->_message->campaign} was not found.");
+            // This will exit.
+        }
+
         $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";
 
         $this->_load_datamanager();

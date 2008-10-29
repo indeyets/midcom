@@ -409,21 +409,25 @@ class org_openpsa_directmarketing_handler_message_report extends midcom_baseclas
     function _handler_report($handler_id, $args, &$data)
     {
         $this->_message = new org_openpsa_directmarketing_campaign_message($args[0]);
-        if (   !is_object($this->_message)
-            || !$this->_message->id)
+        if (   !$this->_message
+            || !$this->_message->guid)
         {
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The message {$args[0]} was not found.");
+            // This will exit.
         }
+
         $data['message'] =& $this->_message;
         $this->_load_datamanager();
         $this->_datamanager->autoset_storage($data['message']);
         $data['message_array'] = $this->_datamanager->get_content_raw();
         $this->_campaign = new org_openpsa_directmarketing_campaign($this->_message->campaign);
-        if (   !is_object($this->_campaign)
-            || !$this->_campaign->id)
+        if (   !$this->_campaign
+            || $this->_campaign->node != $this->_topic->id)
         {
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The campaign {$this->_message->campaign} was not found.");
+            // This will exit.
         }
+
         $data['campaign'] =& $this->_campaign;
         $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";
 

@@ -52,13 +52,21 @@ class org_openpsa_directmarketing_handler_message_message extends midcom_basecla
     function _handler_view ($handler_id, $args, &$data)
     {
         $this->_message = new org_openpsa_directmarketing_campaign_message($args[0]);
-        if (!$this->_message)
+        if (   !$this->_message
+            || !$this->_message->guid)
         {
-            return false;
-            // This will 404
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The message {$args[0]} was not found.");
+            // This will exit.
         }
+
         $this->_campaign = new org_openpsa_directmarketing_campaign($this->_message->campaign);
-        
+        if (   !$this->_campaign
+            || $this->_campaign->node != $this->_topic->id)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The campaign {$this->_message->campaign} was not found.");
+            // This will exit.
+        }
+
         $this->_component_data['active_leaf'] = "campaign_{$this->_campaign->id}";  
 
         $this->_load_datamanager();

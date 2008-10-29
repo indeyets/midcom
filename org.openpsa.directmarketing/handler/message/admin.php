@@ -210,7 +210,8 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
     function _handler_edit($handler_id, $args, &$data)
     {
         $this->_message = new org_openpsa_directmarketing_campaign_message($args[0]);
-        if (! $this->_message)
+        if (   !$this->_message
+            || !$this->_message->guid)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The message {$args[0]} was not found.");
             // This will exit.
@@ -219,6 +220,13 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
         $this->_message->require_do('midgard:update');
         
         $data['campaign'] = new org_openpsa_directmarketing_campaign($this->_message->campaign);
+        if (   !$data['campaign']
+            || $data['campaign']->node != $this->_topic->id)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The campaign {$this->_message->campaign} was not found.");
+            // This will exit.
+        }
+
         $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";       
 
         $this->_load_controller();
@@ -266,7 +274,8 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
     function _handler_delete($handler_id, $args, &$data)
     {
         $this->_message = new org_openpsa_directmarketing_campaign_message($args[0]);
-        if (! $this->_message)
+        if (   !$this->_message
+            || !$this->_message->guid)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The message {$args[0]} was not found.");
             // This will exit.
@@ -275,6 +284,13 @@ class org_openpsa_directmarketing_handler_message_admin extends midcom_baseclass
         $this->_message->require_do('midgard:delete');
         
         $data['campaign'] = new org_openpsa_directmarketing_campaign($this->_message->campaign);
+        if (   !$data['campaign']
+            || $data['campaign']->node != $this->_topic->id)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The campaign {$this->_message->campaign} was not found.");
+            // This will exit.
+        }
+
         $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";        
 
         $this->_load_datamanager();

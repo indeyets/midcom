@@ -21,6 +21,8 @@ CREATE TABLE org_openpsa_campaign (
 );
 alter table org_openpsa_campaign add column guid varchar(80) NOT NULL default '';
 alter table org_openpsa_campaign add column rulesSerialized text NOT NULL default '';
+alter table org_openpsa_campaign add column node int(11) NOT NULL default '0';
+create index org_openpsa_campaign_node_idx on org_openpsa_campaign(node);
 
 CREATE TABLE org_openpsa_campaign_member (
   id int(11) NOT NULL auto_increment,

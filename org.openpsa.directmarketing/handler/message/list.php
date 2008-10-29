@@ -49,6 +49,13 @@ class org_openpsa_directmarketing_handler_message_list extends midcom_baseclasse
         $_MIDCOM->auth->require_valid_user();
         $this->_list_type = $args[0];
         $this->_campaign = new org_openpsa_directmarketing_campaign($args[1]);
+        if (   !$this->_campaign
+            || $this->_campaign->node != $this->_topic->id)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The campaign {$args[1]} was not found.");
+            // This will exit.
+        }
+
         $this->_component_data['active_leaf'] = "campaign_{$this->_campaign->id}";
         
         if (   !is_object($this->_campaign)

@@ -53,9 +53,11 @@ class org_openpsa_directmarketing_handler_export extends midcom_baseclasses_comp
 
         // Try to load the correct campaign
         $this->_request_data['campaign'] = new org_openpsa_directmarketing_campaign($args[0]);
-        if (!$this->_request_data['campaign'])
+        if (   !$this->_request_data['campaign']
+            || $this->_request_data['campaign']->node != $this->_topic->id)
         {
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The campaign {$args[0]} was not found.");
+            // This will exit.
         }
 
         $this->_view_toolbar->add_item

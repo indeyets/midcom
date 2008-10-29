@@ -119,6 +119,7 @@ class org_openpsa_directmarketing_handler_campaign_create extends midcom_basecla
     function & dm2_create_callback (&$controller)
     {
         $this->_campaign = new org_openpsa_directmarketing_campaign();
+        $this->_campaign->node = $this->_topic->id;
         /* TODO: in the future we may need to set this
         $this->_campaign->orgOpenpsaObtype = ;
         */

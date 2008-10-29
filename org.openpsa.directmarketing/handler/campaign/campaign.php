@@ -52,10 +52,11 @@ class org_openpsa_directmarketing_handler_campaign_campaign extends midcom_basec
     function _handler_view ($handler_id, $args, &$data)
     {
         $this->_campaign = new org_openpsa_directmarketing_campaign($args[0]);
-        if (!$this->_campaign)
+        if (   !$this->_campaign
+            || $this->_campaign->node != $this->_topic->id)
         {
-            return false;
-            // This will 404
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The campaign {$args[0]} was not found.");
+            // This will exit.
         }
 
         $_MIDCOM->load_library('org.openpsa.qbpager');

@@ -26,8 +26,9 @@ class org_openpsa_directmarketing_navigation extends midcom_baseclasses_componen
     function get_leaves()
     {
         $leaves = array();
-        //TODO: Add visible campaigns to leaves
+
         $qb = org_openpsa_directmarketing_campaign::new_query_builder();
+        $qb->add_constraint('node', '=', $this->_topic->id);
         $qb->add_constraint('archived', '=', 0);
         $qb->add_order('metadata.created', $this->_config->get('navi_order'));
         $campaigns = $qb->execute();
@@ -50,6 +51,7 @@ class org_openpsa_directmarketing_navigation extends midcom_baseclasses_componen
                     MIDCOM_NAV_NAME => $campaign->title
                 ),
                 MIDCOM_NAV_GUID => $campaign->guid,
+                MIDCOM_NAV_OBJECT => $campaign,
                 MIDCOM_META_CREATOR => $campaign->metadata->creator,
                 MIDCOM_META_EDITOR => $campaign->metadata->revisor,
                 MIDCOM_META_CREATED => $campaign->metadata->created,

@@ -147,12 +147,13 @@ class org_openpsa_directmarketing_handler_message_create extends midcom_baseclas
     function _handler_create($handler_id, $args, &$data)
     {
         $data['campaign'] = new org_openpsa_directmarketing_campaign($args[0]);
-        if (   !is_object($data['campaign'])
-            || !$data['campaign']->id)
+        if (   !$data['campaign']
+            || $data['campaign']->node != $this->_topic->id)
         {
-            // TODO: better error reporting
-            return false;
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The campaign {$args[0]} was not found.");
+            // This will exit.
         }
+
         $_MIDCOM->auth->require_do('midgard:create', $data['campaign']);
 
         $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";  

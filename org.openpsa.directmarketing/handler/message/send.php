@@ -59,6 +59,14 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
 
         //Load message
         $data['message'] = new org_openpsa_directmarketing_campaign_message($args[0]);
+        if (   !$data['message']
+            || !$data['message']->guid)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The message {$args[0]} was not found.");
+            // This will exit.
+        }
+        // TODO: Check that campaign is in this topic
+
         $this->_load_datamanager();
         $this->_datamanager->autoset_storage($data['message']);
         $data['message_obj'] =& $data['message'];
@@ -228,7 +236,21 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
         debug_push_class(__CLASS__, __FUNCTION__);
         //Load message
         $data['message'] = new org_openpsa_directmarketing_campaign_message($args[0]);
+        if (   !$data['message']
+            || !$data['message']->guid)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The message {$args[0]} was not found.");
+            // This will exit.
+        }
+
         $data['campaign'] = new org_openpsa_directmarketing_campaign($data['message']->campaign);
+        if (   !$data['campaign']
+            || $data['campaign']->node != $this->_topic->id)
+        {
+            $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "The campaign {$data['message']->campaign} was not found.");
+            // This will exit.
+        }
+
         $this->_component_data['active_leaf'] = "campaign_{$data['campaign']->id}";
 
         $tmp = array();
