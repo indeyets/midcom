@@ -76,7 +76,7 @@
         array
         (
             'handler' => 'net_nehmer_account_cron_karma',
-            'recurrence' => MIDCOM_CRON_DAY,
+            'recurrence' => MIDCOM_CRON_HOUR,
         ),
     ),
 ),

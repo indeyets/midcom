@@ -192,6 +192,7 @@
 'karma_discussion_badpost_modifier' => -1,
 'karma_groups_enable' => true,
 'karma_groups_modifier' => 4,
+'karma_calculate_per_hour' => 100,
 
 /**
  * Karma plugins as array containing key, snippet path and function name

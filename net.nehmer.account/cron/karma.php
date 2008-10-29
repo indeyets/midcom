@@ -25,12 +25,6 @@ class net_nehmer_account_cron_karma extends midcom_baseclasses_components_cron_h
     function _on_execute()
     {
         debug_push_class(__CLASS__, __FUNCTION__);
-        if (version_compare(phpversion(), '5.0.0', '<'))
-        {
-            debug_add("Karma calculator requires PHP 5", MIDCOM_LOG_DEBUG);
-            debug_pop();
-            return;
-        }
         require_once(MIDCOM_ROOT . '/net/nehmer/account/calculator.php');
         $calculator = new net_nehmer_account_calculator();
 
@@ -41,16 +35,14 @@ class net_nehmer_account_cron_karma extends midcom_baseclasses_components_cron_h
 
         $qb = midcom_db_person::new_query_builder();
         $qb->add_constraint('username', '<>', 'admin');
-        $qb->add_order('metadata.score', 'DESC');
+        // FIXME: This is maemo-specific hack
+        $qb->add_constraint('firstname', 'NOT LIKE', 'DELETE %');
+        $qb->add_order('metadata.revised', 'ASC');
+        $qb->set_limit((int) $this->_config->get('karma_calculate_per_hour'));
         $persons = $qb->execute();
         
         foreach ($persons as $person)
         {
-            if (substr($person->firstname, 0, 7) == 'DELETE ')
-            {
-                continue;
-            }
-        
             $karmas = $calculator->calculate_person($person, true);
             debug_add("{$person->name} got Karma of {$karmas['karma']}.");
         }

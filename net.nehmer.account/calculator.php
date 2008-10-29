@@ -299,7 +299,7 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
                 if ($source == 'karma')
                 {
                     // Total karma is cached to metadata score for easy retrieval
-                    $person->metadata->score = $karma;
+                    $person->metadata->score = (int) $karma;
                     $person->update();
                     continue;
                 }
