@@ -385,7 +385,7 @@ class midcom_helper__basicnav
             $topic = new midcom_db_topic($node);
             print_r($node);
             if (   !$topic
-                || !$topic->guid)
+                || !mgd_is_guid($topic->guid))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Could not load the topic {$node} through DBA; assuming missing privileges.", MIDCOM_LOG_INFO);
