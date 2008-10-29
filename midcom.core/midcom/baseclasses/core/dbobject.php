@@ -1231,7 +1231,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
         foreach ($timestamps as $timestamp)
         {
-            if (array_key_exists($timestamp, $object))
+            if (property_exists($object, $timestamp))
             {
                 if (   $object->$timestamp == '0000-00-00 00:00:00'
                     || $object->$timestamp == '0000-00-00 00:00:00+0000'
@@ -1256,7 +1256,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
         foreach ($metadata_timestamps as $timestamp)
         {
-            if (array_key_exists($timestamp, $object->metadata))
+            if (property_exists($object->metadata, $timestamp))
             {
                 if (   $object->metadata->$timestamp == '0000-00-00 00:00:00'
                     || $object->metadata->$timestamp == '0000-00-00 00:00:00+0000'
