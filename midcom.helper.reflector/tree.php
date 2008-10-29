@@ -487,6 +487,12 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
              * used class
              */
         }
+        
+        return $parent_object;
+        /* Code below is executed in midgard-core's get_parent method.
+         * Besides code below  might trigger empty object instances to be returned.
+         * Return parent object with above method. */
+
         if (!empty($parent_object))
         {
             return $parent_object;
