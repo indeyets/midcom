@@ -18,15 +18,26 @@ global $argc, $argv;
 
 $session = new midcom_service_session('midcom_helper_datamanager2_widget_captcha');
 
+if (!isset($argv[0]))
+{
+    $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Missing CAPTCHA session key.");
+    // This will exit.
+}
+
 if (   $argc == 0
-    || ! $session->exists($argv[0]))
+    || !$session->exists($argv[0]))
 {
     $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-        'Failed to generate Captcha, the session key passed is invalid.');
+        'Failed to generate CAPTCHA, the session key passed is invalid.');
     // This will exit.
 }
 
 $passphrase = $session->get($argv[0]);
+if (empty($passphrase))
+{
+    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to generate CAPTCHA, no passphrase in session.');
+    // This will exit.
+}
 
 // Set Captcha options (font must exist!)
 $width = 200;
@@ -58,7 +69,7 @@ if (PEAR::isError($result))
 $image = $captcha->getCAPTCHA();
 if (! is_resource($image))
 {
-    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to generate Captcha, captcha rendering failed. <br /><strong>Reason</strong>: '.$image->getMessage());
+    $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to generate CAPTCHA, rendering failed. Reason: '.$image->getMessage());
     // This will exit.
 }
 
