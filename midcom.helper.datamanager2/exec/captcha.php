@@ -40,13 +40,18 @@ if (empty($passphrase))
 }
 
 // Set Captcha options (font must exist!)
-$width = 200;
-$height = 80;
 $options = Array
 (
-    'font_path' => MIDCOM_ROOT . '/midcom/helper/datamanager2/widget/',
-    'font_file' => 'captcha-font.ttf',
-    'background_color' => '#000000',
+    'width' => 200,
+    'height' => 80,
+    'phrase' => $passphrase,
+    'imageOptions' => array
+    (
+        'font_path' => MIDCOM_ROOT . '/midcom/helper/datamanager2/widget/',
+        'font_file' => 'captcha-font.ttf',
+        'background_color' => '#000000',
+        'text_color'       => '#FFFFFF',
+    ),
 );
 
 /* Generate a new Text_CAPTCHA object, Image driver
@@ -55,13 +60,14 @@ $options = Array
  */
 
    $captcha = Text_CAPTCHA::factory('Image');
-   $result = $captcha->init($width, $height, $passphrase, $options);
+   $result = $captcha->init($options);
+// $result = $captcha->init($width, $height, $passphrase, $options);
 // $result = $captcha->init($height, $width, $passphrase, $options);
 
 if (PEAR::isError($result))
 {
     $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-        'Failed to generate Captcha, captcha class init call failed: ' . $result->getMessage());
+        'Failed to generate CAPTCHA, class init call failed: ' . $result->getMessage());
     // This will exit.
 }
 
