@@ -437,17 +437,22 @@ class midcom_baseclasses_components_interface
      * @return Array The read data or false on failure.
      * @see read_array_from_snippet()
      */
-    public function read_array_from_file ($filename)
+    public function read_array_from_file($filename)
     {
+        if (!file_exists($filename))
+        {
+            return array();
+        }
+
         try
         {
-            $data = @file_get_contents($filename);
+            $data = file_get_contents($filename);
         }
         catch (Exception $e)
         {
             return false;
         }
-        $result = eval ("\$data = Array ({$data}\n);");
+        $result = eval("\$data = array({$data}\n);");
         if ($result === false)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
