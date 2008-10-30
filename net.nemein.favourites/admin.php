@@ -93,50 +93,6 @@ class net_nemein_favourites_admin
             }
         }
         
-        /*
-        BELOW: The old QB-based solution, kept as reference until we determine which one is actually faster
-
-        $qb = net_nemein_favourites_favourite_dba::new_query_builder();
-        $qb->add_constraint('objectGuid', '=', $guid);
-        $qb->add_constraint('bury', '=', false);
-        $cache[$guid]['favs'] = $qb->count_unchecked();
-
-        $qb = net_nemein_favourites_favourite_dba::new_query_builder();
-        $qb->add_constraint('objectGuid', '=', $guid);
-        $qb->add_constraint('bury', '=', true);
-        $cache[$guid]['buries'] = $qb->count_unchecked();
-        
-
-            return $cache[$guid];
-        }
-
-        
-        if ($_MIDCOM->auth->user)
-        {
-            // Check if user has already favorited this
-            $qb = net_nemein_favourites_favourite_dba::new_query_builder();
-            $qb->add_constraint('metadata.creator', '=', $_MIDCOM->auth->user->guid);
-            $qb->add_constraint('objectGuid', '=', $guid);
-            $qb->add_constraint('bury', '=', false);
-            if ($qb->count_unchecked() > 0)
-            {
-                $cache[$guid]['can_fav'] = false;
-                $cache[$guid]['has_faved'] = true;
-            }
-            
-            // Check if user has already buried this
-            $qb = net_nemein_favourites_favourite_dba::new_query_builder();
-            $qb->add_constraint('metadata.creator', '=', $_MIDCOM->auth->user->guid);
-            $qb->add_constraint('objectGuid', '=', $guid);
-            $qb->add_constraint('bury', '=', true);
-            if ($qb->count_unchecked() > 0)
-            {
-                $cache[$guid]['can_bury'] = false;
-                $cache[$guid]['has_buried'] = true;
-            }
-        }
-        */
-        
         return $cache[$guid];
     }
 
