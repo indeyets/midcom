@@ -101,15 +101,7 @@ else
         // Then dump articles
         echo "<p>Dumping articles<br/>\n";
         $qb = midcom_db_article::new_query_builder();
-        switch ($handler_master->mgd_api)
-        {
-            case '1.7':
-                $qb->add_constraint('revised', '>', $start);
-                break;
-            case '1.8':
-                $qb->add_constraint('metadata.revised', '>', $start);
-                break;
-        }
+        $qb->add_constraint('metadata.revised', '>', $start);
         $articles = $qb->execute();
         foreach ($articles as $article)
         {

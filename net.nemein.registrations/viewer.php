@@ -264,15 +264,7 @@ class net_nemein_registrations_viewer extends midcom_baseclasses_components_requ
         // bottom of the field list.
         $registrar_schema = $this->_request_data['schemadb'][$this->_config->get('registrar_schema')];
         $event_dm =& $event->get_datamanager();
-        // This must be copy-by-value or we will pollute the registrar schema, so use clone() if available
-        if (version_compare(phpversion(), '5.0.0', '<'))
-        {
-            $merged_schema = $registrar_schema;
-        }
-        else
-        {
-            $merged_schema = clone($registrar_schema);
-        }
+        $merged_schema = clone($registrar_schema);
         
         if (count($event_dm->types['additional_questions']->selection) > 0)
         {

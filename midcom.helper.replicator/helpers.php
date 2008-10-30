@@ -136,23 +136,13 @@ function midcom_helper_replicator_serialize_check_bug244(&$serialized, &$object)
 /**
  * Wrapper for accessing blob serialization routines
  *
- * Serves two purposes
- *  1. API has changed between 1.8.2 and 1.8.3
- *  2. see midcom_helper_replicator_serialize
- *
  * @param midgard_attachment $object reference to attachment object
  * @return string blob serialized (or false in case of failure)
  * @see midcom_helper_replicator_serialize
  */
 function midcom_helper_replicator_serialize_blob(&$object)
 {
-    if (is_callable(array('midgard_replicator', 'serialize_blob')))
-    {
-        // Use this method if it's available
-        return midgard_replicator::serialize_blob($object);
-    }
-    // Old (semantically incorrect) method
-    return midgard_replicator::export_blob($object);
+    return midgard_replicator::serialize_blob($object);
 }
 
 /**

@@ -169,14 +169,7 @@ class org_routamc_photostream_handler_api_metaweblog extends midcom_baseclasses_
         }
         else
         {
-            if (version_compare(phpversion(), '5.0.0', '>='))
-            {
-                $new_title = html_entity_decode($args[3]['title'], ENT_QUOTES, 'UTF-8');
-            }
-            else
-            {
-                $new_title = $args[3]['title'];
-            }
+            $new_title = html_entity_decode($args[3]['title'], ENT_QUOTES, 'UTF-8');
         }
 
         $photo = $this->_create_photo($new_title);
@@ -370,14 +363,7 @@ class org_routamc_photostream_handler_api_metaweblog extends midcom_baseclasses_
             switch ($field)
             {
                 case 'title':
-                    if (version_compare(phpversion(), '5.0.0', '>='))
-                    {
-                        $this->_datamanager->types['title']->value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
-                    }
-                    else
-                    {
-                        $this->_datamanager->types['title']->value = $value;
-                    }
+                    $this->_datamanager->types['title']->value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
                     break;
 
                 case 'mt_excerpt':

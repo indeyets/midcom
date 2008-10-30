@@ -42,11 +42,7 @@ class org_openpsa_calendar_handler_ical extends midcom_baseclasses_components_ha
         // Display events two weeks back
         $qb->add_constraint('eid.start', '>', mktime(0, 0, 0, date('n'), date('j')-14, date('Y')));
         $qb->add_constraint('uid', '=', $this->request_data['person']->id);
-        if (class_exists('midgard_query_builder'))
-        {
-            // 1.8 support ordering by linked values
-            $qb->add_order('eid.start', 'ASC');
-        }
+        $qb->add_order('eid.start', 'ASC');
         $members = $qb->execute();
         if (is_array($members))
         {

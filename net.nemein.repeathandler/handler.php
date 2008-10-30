@@ -57,29 +57,17 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
      */
     function delete_stored_repeats($guid)
     {
-        if (version_compare(mgd_version(), '1.8', '>='))
+        $qb = new midgard_query_builder('midgard_parameter');
+        $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
+        $qb->add_constraint('name', '=', 'master_guid');
+        $qb->add_constraint('value', '=', $guid);
+        $qb->add_constraint('tablename', '=', 'event');
+
+        $results = array ();
+
+        foreach (@$qb->execute() as $parameter)
         {
-            $qb = org_openpsa_calendar_event_dba::new_query_builder();
-            $qb->add_constraint('parameter.domain', '=', 'net.nemein.repeathandler');
-            $qb->add_constraint('parameter.name', '=', 'master_guid');
-            $qb->add_constraint('parameter.value', '=', $guid);
-
-            $results = $qb->execute_unchecked();
-        }
-        else
-        {
-            $qb = new midgard_query_builder('midgard_parameter');
-            $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
-            $qb->add_constraint('name', '=', 'master_guid');
-            $qb->add_constraint('value', '=', $guid);
-            $qb->add_constraint('tablename', '=', 'event');
-
-            $results = array ();
-
-            foreach (@$qb->execute() as $parameter)
-            {
-                $results[] = new org_openpsa_calendar_event_dba($parameter->oid);
-            }
+            $results[] = new org_openpsa_calendar_event_dba($parameter->oid);
         }
 
         foreach ($results as $event)
@@ -383,23 +371,12 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
             $rules['end_type'] = 'num';
         }
 
-        if (version_compare(mgd_version(), '1.8', '>='))
-        {
-            $qb = org_openpsa_calendar_event_dba::new_query_builder();
-            $qb->add_constraint('parameter.domain', '=', 'net.nemein.repeathandler');
-            $qb->add_constraint('parameter.name', '=', 'master_guid');
-            $qb->add_constraint('parameter.value', '=', $master_guid);
-            $rules['num'] = $qb->count();
-        }
-        else
-        {
-            $qb = new midgard_query_builder('midgard_parameter');
-            $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
-            $qb->add_constraint('name', '=', 'master_guid');
-            $qb->add_constraint('value', '=', $master_guid);
-            $qb->add_constraint('tablename', '=', 'event');
-            $rules['num'] = $qb->count();
-        }
+        $qb = new midgard_query_builder('midgard_parameter');
+        $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
+        $qb->add_constraint('name', '=', 'master_guid');
+        $qb->add_constraint('value', '=', $master_guid);
+        $qb->add_constraint('tablename', '=', 'event');
+        $rules['num'] = $qb->count();
 
         return $rules;
     }
@@ -412,40 +389,22 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
      */
     function get_repeat_start($master_guid)
     {
-        if (version_compare(mgd_version(), '1.8', '>='))
-        {
-            $start = 0;
-            $qb = org_openpsa_calendar_event_dba::new_query_builder();
-            $qb->add_constraint('parameter.domain', '=', 'net.nemein.repeathandler');
-            $qb->add_constraint('parameter.name', '=', 'master_guid');
-            $qb->add_constraint('parameter.value', '=', $master_guid);
-            $qb->add_order('start');
-            $qb->set_limit(1);
+        $qb = new midgard_query_builder('midgard_parameter');
+        $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
+        $qb->add_constraint('name', '=', 'master_guid');
+        $qb->add_constraint('value', '=', $master_guid);
+        $qb->add_constraint('tablename', '=', 'event');
 
-            foreach ($qb->execute_unchecked() as $event)
+        $results = array ();
+
+        foreach (@$qb->execute() as $parameter)
+        {
+            $event = new org_openpsa_calendar_event_dba($parameter->oid);
+
+            if (   !isset($start)
+                || $start > $event->start)
             {
                 $start = $event->start;
-            }
-        }
-        else
-        {
-            $qb = new midgard_query_builder('midgard_parameter');
-            $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
-            $qb->add_constraint('name', '=', 'master_guid');
-            $qb->add_constraint('value', '=', $master_guid);
-            $qb->add_constraint('tablename', '=', 'event');
-
-            $results = array ();
-
-            foreach (@$qb->execute() as $parameter)
-            {
-                $event = new org_openpsa_calendar_event_dba($parameter->oid);
-
-                if (   !isset($start)
-                    || $start > $event->start)
-                {
-                    $start = $event->start;
-                }
             }
         }
 
@@ -460,41 +419,22 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
      */
     function get_repeat_end($master_guid)
     {
-        if (version_compare(mgd_version(), '1.8', '>='))
+        $qb = new midgard_query_builder('midgard_parameter');
+        $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
+        $qb->add_constraint('name', '=', 'master_guid');
+        $qb->add_constraint('value', '=', $master_guid);
+        $qb->add_constraint('tablename', '=', 'event');
+
+        $results = array ();
+
+        foreach (@$qb->execute() as $parameter)
         {
-            $qb = org_openpsa_calendar_event_dba::new_query_builder();
-            $qb->add_constraint('parameter.domain', '=', 'net.nemein.repeathandler');
-            $qb->add_constraint('parameter.name', '=', 'master_guid');
-            $qb->add_constraint('parameter.value', '=', $master_guid);
-            $qb->add_order('end', 'DESC');
-            $qb->set_limit(1);
+            $event = new org_openpsa_calendar_event_dba($parameter->oid);
 
-            $end = 0;
-
-            foreach ($qb->execute_unchecked() as $event)
+            if (   !isset($end)
+                || $end < $event->end)
             {
                 $end = $event->end;
-            }
-        }
-        else
-        {
-            $qb = new midgard_query_builder('midgard_parameter');
-            $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
-            $qb->add_constraint('name', '=', 'master_guid');
-            $qb->add_constraint('value', '=', $master_guid);
-            $qb->add_constraint('tablename', '=', 'event');
-
-            $results = array ();
-
-            foreach (@$qb->execute() as $parameter)
-            {
-                $event = new org_openpsa_calendar_event_dba($parameter->oid);
-
-                if (   !isset($end)
-                    || $end < $event->end)
-                {
-                    $end = $event->end;
-                }
             }
         }
 

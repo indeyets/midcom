@@ -373,7 +373,7 @@ class midcom_services__i18n_l10n {
         if (version_compare($version, $this->_version, "<"))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                "L10n DB ERROR: File format version of $filename is too old, no update available at the moment.");
+                "L10n DB ERROR: File format version of {$filename} is too old, no update available at the moment.");
             // This will exit
         }
         if ($lang != $language)

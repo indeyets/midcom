@@ -27,10 +27,14 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
      */
     function get_class_magic_default_privileges()
     {
-        return Array (
-            'EVERYONE' => Array(),
-            'ANONYMOUS' => Array(),
-            'USERS' => Array('midgard:create' => MIDCOM_PRIVILEGE_ALLOW),
+        return array
+        (
+            'EVERYONE' => array(),
+            'ANONYMOUS' => array(),
+            'USERS' => array
+            (
+                'midgard:create' => MIDCOM_PRIVILEGE_ALLOW
+            ),
         );
     }
 
@@ -78,14 +82,7 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
             $qb->set_limit($limit);
         }
         
-        if (version_compare(mgd_version(), '1.8', '>='))
-        {        
-            $qb->add_order('metadata.created', $order);
-        }
-        else
-        {
-            $qb->add_order('created', $order);
-        }
+        $qb->add_order('metadata.created', $order);
 
         if ($paging !== false)
         {
@@ -134,14 +131,7 @@ class net_nehmer_comments_comment extends __net_nehmer_comments_comment
             $qb->set_limit($limit);
         }
 
-        if (version_compare(mgd_version(), '1.8', '>='))
-        {        
-            $qb->add_order('metadata.created', $order);
-        }
-        else
-        {
-            $qb->add_order('created', $order);
-        }
+        $qb->add_order('metadata.created', $order);
 
         if ($paging !== false)
         {

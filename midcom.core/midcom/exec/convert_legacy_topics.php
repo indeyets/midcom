@@ -2,7 +2,7 @@
 
 /**
  * Update script to convert all legacy topic information into data compatible
- * with the new midgard_topic MgdSchema class from Midgard 1.8.1. 
+ * with the midgard_topic MgdSchema class. 
  * 
  * The script requires admin privileges to execute properly.
  *

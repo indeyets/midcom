@@ -29,7 +29,6 @@ require_once('Calendar/Decorator/Textual.php');
  * <b>Requirements:</b>
  *
  * - PEAR Calendar
- * - Midgard 1.8
  *
  * @package net.nemein.calendar
  */

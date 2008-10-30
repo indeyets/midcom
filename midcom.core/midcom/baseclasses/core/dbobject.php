@@ -699,24 +699,13 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             $label = $ref->get_label_property();
 
             $undeleted = false;
-            if (version_compare(phpversion(), '5.0.0', '<'))
+            if ($object->undelete($guid))
             {
-                if (call_user_func(array($type, 'undelete'), $guid))
-                {
-                    $undeleted = true;
-                    // refresh
-                    $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
-                }
+                $undeleted = true;
+                // refresh
+                $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
             }
-            else
-            {
-                if ($object->undelete($guid))
-                {
-                    $undeleted = true;
-                    // refresh
-                    $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
-                }
-            }
+
             if (!$undeleted)
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
@@ -807,19 +796,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         foreach ($params as $param)
         {
             $undeleted = false;
-            if (version_compare(phpversion(), '5.0.0', '<'))
+            if ($param->undelete($param->guid))
             {
-                if (call_user_func(array('midgard_parameter', 'undelete'), $param->guid))
-                {
-                    $undeleted = true;
-                }
-            }
-            else
-            {
-                if ($param->undelete($param->guid))
-                {
-                    $undeleted = true;
-                }
+                $undeleted = true;
             }
             if ($undeleted)
             {
@@ -850,19 +829,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         foreach ($atts as $att)
         {
             $undeleted = false;
-            if (version_compare(phpversion(), '5.0.0', '<'))
+            if ($att->undelete($att->guid))
             {
-                if (call_user_func(array('midgard_attachment', 'undelete'),$att->guid))
-                {
-                    $undeleted = true;
-                }
-            }
-            else
-            {
-                if ($att->undelete($att->guid))
-                {
-                    $undeleted = true;
-                }
+                $undeleted = true;
             }
             if (!$undeleted)
             {

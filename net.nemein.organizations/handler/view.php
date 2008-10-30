@@ -211,10 +211,7 @@ class net_nemein_organizations_handler_view extends midcom_baseclasses_component
             ));
         }
 
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
-        {
-            $_MIDCOM->set_26_request_metadata($this->_group->metadata->revised, $this->_group->guid);
-        }
+        $_MIDCOM->set_26_request_metadata($this->_group->metadata->revised, $this->_group->guid);
         $this->_view_toolbar->bind_to($this->_group);
         $this->_prepare_request_data();
 

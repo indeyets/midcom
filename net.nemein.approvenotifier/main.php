@@ -13,12 +13,7 @@
  * @package net.nemein.approvenotifier
  */
 class net_nemein_approvenotifier extends midcom_baseclasses_components_purecode
-{
-    /**
-     * Which metadata API are we targeting for, 1.7 (legacy) or 1.8?
-     */
-    var $mgd_api = '1.7';
-    
+{    
     /**
      * Timestamp for the "advance notification"
      */
@@ -37,10 +32,6 @@ class net_nemein_approvenotifier extends midcom_baseclasses_components_purecode
     function __construct($debug_mode = false)
     {
         $this->_component = 'net.nemein.approvenotifier';
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-        {
-            $this->mgd_api = '1.8';
-        }
         parent::__construct();
         
         $this->debug_mode = $debug_mode;
@@ -60,14 +51,9 @@ class net_nemein_approvenotifier extends midcom_baseclasses_components_purecode
         $qb = midcom_db_article::new_query_builder();
         $qb->add_constraint('topic', '=', $topic_id);
         
-        // For 1.8 we can add metadata constraints to make this query more efficient
-        // TODO: Test this
-        if ($this->mgd_api == '1.8')
-        {
-            $qb->add_constraint('metadata.scheduleend', '<=', gmdate('Y-m-d H:i:s', $this->advance_time));
-            $qb->add_constraint('metadata.scheduleend', '>=', gmdate('Y-m-d H:i:s', time()));
-            $qb->add_constraint('metadata.scheduleend', '<>', '0000-00-00 00:00:00');
-        }
+        $qb->add_constraint('metadata.scheduleend', '<=', gmdate('Y-m-d H:i:s', $this->advance_time));
+        $qb->add_constraint('metadata.scheduleend', '>=', gmdate('Y-m-d H:i:s', time()));
+        $qb->add_constraint('metadata.scheduleend', '<>', '0000-00-00 00:00:00');
         
         $articles = $qb->execute();
         foreach ($articles as $article)
@@ -124,21 +110,10 @@ class net_nemein_approvenotifier extends midcom_baseclasses_components_purecode
         if ($previous_notice_sent)
         {
             // We've sent a previous notice. Check if it was before last edit to object
-            if ($this->mgd_api == '1.8')
+            if (strtotime($previous_notice_sent) > $object->metadata->revised)
             {
-                if (strtotime($previous_notice_sent) > $object->metadata->revised)
-                {
-                    // No changes since previous notice
-                    return false;
-                }
-            }
-            else
-            {
-                if (strtotime($previous_notice_sent) > $object->revised)
-                {
-                    // No changes since previous notice
-                    return false;
-                }
+                // No changes since previous notice
+                return false;
             }
         }
         

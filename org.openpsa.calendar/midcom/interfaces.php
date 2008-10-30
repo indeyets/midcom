@@ -322,23 +322,6 @@ class org_openpsa_calendar_interface extends midcom_baseclasses_components_inter
         );
         foreach($classes as $class)
         {
-            if ($version_not_18 = true)
-            {
-                switch($class)
-                {
-                    default:
-                        $metadata_fields = array
-                        (
-                            'creator' => 'id',
-                            'revisor' => 'id' // Though this will probably get touched on update we need to check it anyways to avoid invalid links
-                        );
-                        break;
-                }
-            }
-            else
-            {
-                // TODO: 1.8 metadata format support
-            }
             $ret = org_openpsa_contacts_duplicates_merge::person_metadata_dependencies_helper($class, $person1, $person2, $metadata_fields);
             if (!$ret)
             {

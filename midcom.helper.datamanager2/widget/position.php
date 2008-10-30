@@ -109,14 +109,6 @@ class midcom_helper_datamanager2_widget_position extends midcom_helper_datamanag
      */
     function _on_initialize()
     {
-        if (version_compare(phpversion(), "5.0.0", "<"))
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("The position widget used on field {$this->name} currently requires PHP5.",
-                MIDCOM_LOG_ERROR);
-            debug_pop();
-        }
-
         if (is_a('midcom_helper_datamanager2_type_position', $this->_type))
         {
             debug_push_class(__CLASS__, __FUNCTION__);

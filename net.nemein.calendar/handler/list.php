@@ -121,9 +121,8 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         {
             $qb->add_constraint($field, '=', $filter);
         }
-        // QnD category filter (only in 1.8)
-        if (   isset($_REQUEST['net_nemein_calendar_category'])
-            && class_exists('midgard_query_builder'))
+        // QnD category filter
+        if (isset($_REQUEST['net_nemein_calendar_category']))
         {
             $qb->begin_group('AND');
                 $qb->add_constraint('parameter.domain', '=', 'net.nemein.calendar');
@@ -493,9 +492,8 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         {
             $qb->add_constraint($field, '=', $filter);
         }
-        // QnD category filter (only in 1.8)
-        if (   isset($_REQUEST['net_nemein_calendar_category'])
-            && class_exists('midgard_query_builder'))
+        // QnD category filter
+        if (   isset($_REQUEST['net_nemein_calendar_category']))
         {
             $this->_request_data['category'] = $_REQUEST['net_nemein_calendar_category'];
             /**

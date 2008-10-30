@@ -258,25 +258,11 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
 
         if ($storage === 'parameter')
         {
-            if (version_compare(mgd_version(), '1.7', '>'))
-            {
-                $this->_qb->begin_group('AND');
-                    $this->_qb->add_constraint('parameter.domain', '=', 'midcom.helper.datamanager');
-                    $this->_qb->add_constraint('parameter.name', '=', "data_{$domain}");
-                    $this->_qb->add_constraint('parameter.value', $constraint, $value);
-                $this->_qb->end_group();
-            }
-            else
-            {
-                // With Midgard 1.7 it has to be done this way. Unfortunately it means that
-                // we will be including only those search results, which have the parameter
-                // AND a hit in an earlier point. Results might be left out.
-                $this->_parameters[$domain] = array
-                (
-                    'constraint' => $constraint,
-                    'query' => $value,
-                );
-            }
+            $this->_parameters[$domain] = array
+            (
+                'constraint' => $constraint,
+                'query' => $value,
+            );
             return;
         }
 
@@ -384,10 +370,7 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
 
         if (array_key_exists('net_nemein_simpledb_viewer_query', $_REQUEST))
         {
-            if (version_compare(mgd_version(), '1.7', '>'))
-            {
-                $this->_check_get_filters();
-            }
+            $this->_check_get_filters();
 
             // Prepare the query
             $data['query'] = $_REQUEST['net_nemein_simpledb_viewer_query'];
@@ -556,13 +539,10 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
                 $data['view'] = $data['datamanager']->get_array();
 
                 // Filter out the values that couldn't be used in query builder
-                if (version_compare(mgd_version(), '1.8', '<'))
+                if (!$this->_check_filters())
                 {
-                    if (!$this->_check_filters())
-                    {
-                        // We're not displaying this one
-                        continue;
-                    }
+                    // We're not displaying this one
+                    continue;
                 }
 
                 $data['entry'] = $result;
@@ -629,13 +609,10 @@ class net_nemein_simpledb_handler_search extends midcom_baseclasses_components_h
             $data['view'] = $data['datamanager']->get_array();
 
             // Filter out the values that couldn't be used in query builder
-            if (version_compare(mgd_version(), '1.8', '<'))
+            if (!$this->_check_filters())
             {
-                if (!$this->_check_filters())
-                {
-                    // We're not displaying this one
-                    continue;
-                }
+                // We're not displaying this one
+                continue;
             }
 
             $data['entry'] = $result;

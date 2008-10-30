@@ -242,19 +242,10 @@ class net_nemein_personnel_handler_search extends midcom_baseclasses_components_
 
         $qb = midcom_db_member::new_query_builder();
 
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
+        $qb->add_constraint('gid.guid', '=', $this->_config->get('group'));
+        foreach ($this->_config->get('index_order') as $ordering)
         {
-            $qb->add_constraint('gid.guid', '=', $this->_config->get('group'));
-
-            foreach ($this->_config->get('index_order') as $ordering)
-            {
-                $qb->add_order($ordering);
-            }
-        }
-        else
-        {
-            $group = new midcom_db_group($this->_config->get('group'));
-            $qb->add_constraint('gid.id', '=', $group->id);
+            $qb->add_order($ordering);
         }
 
         foreach ($constraints as $constraint)

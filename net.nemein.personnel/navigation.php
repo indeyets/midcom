@@ -158,65 +158,22 @@ class net_nemein_personnel_navigation extends midcom_baseclasses_components_navi
              $qb->add_constraint('gid', '=', $group->id);
         }
         
-        // Different Midgard versions require different kind of magic
-        if (version_compare(mgd_version(), '1.8.2', '>='))
+        foreach ($this->_config->get('index_order') as $order)
         {
-            foreach ($this->_config->get('index_order') as $order)
+            if (stristr($order, 'reverse'))
             {
-                if (stristr($order, 'reverse'))
-                {
-                    $qb->add_order(ereg_replace('reverse[[:space:]]+', '', $order), 'DESC');
-                    continue;
-                }
-                
-                $qb->add_order($order);
+                $qb->add_order(ereg_replace('reverse[[:space:]]+', '', $order), 'DESC');
+                continue;
             }
             
-            $persons = array();
-            
-            foreach ($qb->execute_unchecked() as $membership)
-            {
-                $persons[] =& new midcom_db_person($membership->uid);
-            }
+            $qb->add_order($order);
         }
-        else
+        
+        $persons = array();
+        
+        foreach ($qb->execute_unchecked() as $membership)
         {
-            $temp = array ();
-            
-            // Sort by score
-            if (stristr($this->_config->get('sort_order'), 'sorted'))
-            {
-                foreach ($qb->execute_unchecked() as $membership)
-                {
-                    $temp[$membership->guid] = $membership->get_parameter('net.nemein.personnel', 'score');
-                }
-                
-                asort($temp);
-            }
-            else
-            {
-                foreach ($qb->execute_unchecked() as $membership)
-                {
-                    $person = new midcom_db_person($membership->uid);
-                    $personnel[$membership->guid] =& $person;
-                    $temp[$membership->guid] = '';
-                    
-                    foreach ($sorting as $sort)
-                    {
-                        $temp[$membership->guid] .= $person->$sort . ' ';
-                    }
-                }
-                
-                asort($temp);
-                
-                $persons = array();
-                
-                foreach ($temp as $membership_guid => $string)
-                {
-                    $persons[] = $personnel[$membership_guid];
-                }
-            }
-            
+            $persons[] =& new midcom_db_person($membership->uid);
         }
         
         // Finally loop through the person records and forge the final array
@@ -232,20 +189,10 @@ class net_nemein_personnel_navigation extends midcom_baseclasses_components_navi
             
             $url = net_nemein_personnel_viewer::get_url($person);
             
-            if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-            {
-                $created = $person->metadata->created;
-                $creator = $person->metadata->creator;
-                $revised = $person->metadata->revised;
-                $revisor = $person->metadata->revisor;
-            }
-            else
-            {
-                $created = $person->created;
-                $creator = $person->creator;
-                $revised = $person->revised;
-                $revisor = $person->revisor;
-            }
+            $created = $person->metadata->created;
+            $creator = $person->metadata->creator;
+            $revised = $person->metadata->revised;
+            $revisor = $person->metadata->revisor;
             
             // Forge the leaf information
             $leaves[$person->guid] = array

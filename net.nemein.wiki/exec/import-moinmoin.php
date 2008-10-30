@@ -137,17 +137,9 @@ class net_nemein_wiki_moinmoin_importer
                     $topic = new midcom_db_topic();
                     $topic->up = $to_node[MIDCOM_NAV_ID];
                     $topic->extra = $folder_title;
-                    if (isset($topic->title))
-                    {
-                        // 1.8 topic->title support
-                        $topic->title = $folder_title;
-                    }
+                    $topic->title = $folder_title;
                     $topic->name = midcom_generate_urlname_from_string($folder_title);
-                    // 1.8.1 topic->component support
-                    if (isset($topic->component))
-                    {
-                        $topic->component = 'net.nemein.wiki';
-                    }
+                    $topic->component = 'net.nemein.wiki';
                     if (!$topic->create())
                     {
                         // TODO: error reporting

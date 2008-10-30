@@ -171,14 +171,7 @@ class net_nehmer_blog_handler_api_metaweblog extends midcom_baseclasses_componen
         }
         else
         {
-            if (version_compare(phpversion(), '5.0.0', '>='))
-            {
-                $new_title = html_entity_decode($args[3]['title'], ENT_QUOTES, 'UTF-8');
-            }
-            else
-            {
-                $new_title = $args[3]['title'];
-            }
+            $new_title = html_entity_decode($args[3]['title'], ENT_QUOTES, 'UTF-8');
         }
 
         $article = $this->_create_article($new_title);
@@ -372,14 +365,7 @@ class net_nehmer_blog_handler_api_metaweblog extends midcom_baseclasses_componen
             switch ($field)
             {
                 case 'title':
-                    if (version_compare(phpversion(), '5.0.0', '>='))
-                    {
-                        $this->_datamanager->types['title']->value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
-                    }
-                    else
-                    {
-                        $this->_datamanager->types['title']->value = $value;
-                    }
+                    $this->_datamanager->types['title']->value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
                     break;
 
                 case 'mt_excerpt':

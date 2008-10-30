@@ -163,11 +163,7 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
                     $topic = new midcom_db_topic();
                     $topic->up = $to_node[MIDCOM_NAV_ID];
                     $topic->extra = $folder_title;
-                    if (isset($topic->title))
-                    {
-                        // 1.8 topic->title support
-                        $topic->title = $folder_title;
-                    }
+                    $topic->title = $folder_title;
                     $topic->name = midcom_generate_urlname_from_string($folder_title);
                     if (isset($topic->component))
                     {

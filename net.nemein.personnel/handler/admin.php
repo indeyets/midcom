@@ -206,11 +206,7 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
         $this->_prepare_request_data();
         $_MIDCOM->substyle_append($this->_controller->datamanager->schema->name);
 
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
-        {
-            $_MIDCOM->set_26_request_metadata($this->_person->metadata->revised, $this->_person->guid);
-        }
-
+        $_MIDCOM->set_26_request_metadata($this->_person->metadata->revised, $this->_person->guid);
         $this->_view_toolbar->bind_to($this->_person);
         $this->_component_data['active_leaf'] = $this->_person->id;
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_person->name}");
@@ -303,11 +299,7 @@ class net_nemein_personnel_handler_admin extends midcom_baseclasses_components_h
 
         $this->_prepare_request_data();
 
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
-        {
-            $_MIDCOM->set_26_request_metadata($this->_person->metadata->revised, $this->_person->guid);
-        }
-
+        $_MIDCOM->set_26_request_metadata($this->_person->metadata->revised, $this->_person->guid);
         $this->_view_toolbar->bind_to($this->_person);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_person->name}");
         $this->_component_data['active_leaf'] = $this->_person->id;

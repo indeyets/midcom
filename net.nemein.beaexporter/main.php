@@ -11,7 +11,6 @@
  */
 class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
 {
-    var $mgd_api = '1.7';
     var $_object = false;
     var $_object_url = false;
     var $_object_old_url = false;
@@ -31,10 +30,6 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
     function __construct()
     {
         $this->_component = 'net.nemein.beaexporter';
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-        {
-            $this->mgd_api = '1.8';
-        }
         parent::__construct();
 
         $this->_dump_dir = $this->_config->get('dump_directory');
@@ -429,16 +424,7 @@ class net_nemein_beaexporter extends midcom_baseclasses_components_purecode
         */
         $metadata_merged['url'] = $this->_object_url;
         $metadata_merged['status'] = 'live';
-        switch (true)
-        {
-            case (   $this->mgd_api == '1.7'
-                  || is_a($this->_object, 'net_nemein_beaexporter_dummyobject')):
-                $available = $this->_object->created;
-                break;
-            case ($this->mgd_api == '1.8'):
-                $available = $this->_object->metadata->published;
-                break;
-        }
+        $available = $this->_object->metadata->published;
         $metadata_merged['available'] = strftime($this->_time_format, $available);
         $metadata_merged['title'] = $this->_object->title;
         /* What is this property actually used for ?

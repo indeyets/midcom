@@ -443,14 +443,10 @@ class midcom_org_openpsa_campaign_message extends __midcom_org_openpsa_campaign_
             $qb->add_constraint('orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER_UNSUBSCRIBED);
             $qb->add_constraint('orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_CAMPAIGN_MEMBER_BOUNCED);
         }
-        if (class_exists('midgard_query_builder'))
-        {
-            // In 1.8 sort by name
-            $qb->add_order('person.lastname', 'ASC');
-            $qb->add_order('person.firstname', 'ASC');
-            $qb->add_order('person.username', 'ASC');
-            $qb->add_order('person.id', 'ASC');
-        }
+        $qb->add_order('person.lastname', 'ASC');
+        $qb->add_order('person.firstname', 'ASC');
+        $qb->add_order('person.username', 'ASC');
+        $qb->add_order('person.id', 'ASC');
         debug_pop();
         return;
     }

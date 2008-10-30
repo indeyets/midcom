@@ -582,7 +582,7 @@ class packageMidCOM extends Task
                             {$package['dependencies']}  
                             <extension>
                                 <name>midgard</name>
-                                <min>1.8.6</min>
+                                <min>8.09.1</min>
                             </extension>
                         </required>
                     </dependencies>

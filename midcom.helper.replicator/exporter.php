@@ -313,8 +313,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
             return $this->serialize_attachment($object);
         }
 
-        if (   version_compare(mgd_version(), '1.8.2', '>=')
-            && !$skip_children)
+        if (!$skip_children)
         {
             // TODO: refactor to separate method(s)
             // Reflect the object to handle any linked fields

@@ -212,20 +212,11 @@ class net_nemein_personnel_viewer extends midcom_baseclasses_components_request
         }
 
         $qb = midcom_db_member::new_query_builder();
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
-        {
-            $qb->add_constraint('gid.guid', '=', $this->_config->get('group'));
-            $qb->add_order('uid.lastname');
-            $qb->add_order('uid.firstname');
-        }
-        else
-        {
-            $group = new midcom_db_group($this->_config->get('group'));
-            $qb->add_constraint('gid', '=', $group->id);
-        }
+        $qb->add_constraint('gid.guid', '=', $this->_config->get('group'));
+        $qb->add_order('uid.lastname');
+        $qb->add_order('uid.firstname');
 
-        $members = array ();
-
+        $members = array();
         foreach ($qb->execute_unchecked() as $membership)
         {
             $person = new midcom_db_person($membership->uid);

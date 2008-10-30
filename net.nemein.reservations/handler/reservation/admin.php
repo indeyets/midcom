@@ -311,32 +311,19 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
         if (   $this->_event->get_parameter('net.nemein.repeathandler', 'master_guid')
             && $this->_event->guid == $this->_event->get_parameter('net.nemein.repeathandler', 'master_guid'))
         {
-            if (version_compare(mgd_version(), '1.8', '>='))
-            {
-                $qb = org_openpsa_calendar_event_dba::new_query_builder();
-                $qb->add_constraint('parameter.domain', '=', 'net.nemein.repeathandler');
-                $qb->add_constraint('parameter.name', '=', 'master_guid');
-                $qb->add_constraint('parameter.value', '=', $this->_event->guid);
+            $qb = new midgard_query_builder('midgard_parameter');
+            $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
+            $qb->add_constraint('name', '=', 'master_guid');
+            $qb->add_constraint('value', '=', $this->_event->guid);
+            $qb->add_constraint('tablename', '=', 'event');
 
-                $results = $qb->execute_unchecked();
-                $data['dependant_events'] = $results;
-            }
-            else
+            $results = array ();
+            $params = @$qb->execute();
+            foreach ($params as $parameter)
             {
-                $qb = new midgard_query_builder('midgard_parameter');
-                $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
-                $qb->add_constraint('name', '=', 'master_guid');
-                $qb->add_constraint('value', '=', $this->_event->guid);
-                $qb->add_constraint('tablename', '=', 'event');
-
-                $results = array ();
-                $params = @$qb->execute();
-                foreach ($params as $parameter)
-                {
-                    $results[] = new org_openpsa_calendar_event_dba($parameter->oid);
-                }
-                $data['dependant_events'] = $results;
+                $results[] = new org_openpsa_calendar_event_dba($parameter->oid);
             }
+            $data['dependant_events'] = $results;
 
             // Dependencies found, block deleting
             if ($qb->count() > 1)

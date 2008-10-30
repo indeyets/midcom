@@ -94,11 +94,7 @@ class net_nemein_reservations_handler_reservation_list extends midcom_baseclasse
             $qb->end_group();
         $qb->end_group();
 
-        // In 1.8 sort on QB
-        if (class_exists('midgard_query_builder'))
-        {
-            $qb->add_order('event.start');
-        }
+        $qb->add_order('event.start');
 
         $eventresources = $qb->execute();
         $data['events'] = array();
@@ -122,12 +118,6 @@ class net_nemein_reservations_handler_reservation_list extends midcom_baseclasse
         }
         unset($eventresources, $qb);
 
-        if (!class_exists('midgard_query_builder'))
-        {
-            // Can't use QB to sort by linked values, sort events by hand...
-            /* HACK: usort can't use even static methods so we create an "anonymous" function from code received via method */
-            uasort($data['events'], create_function('$a,$b', $this->_code_for_sort_events_by_start()));
-        }
         $data['page_title'] = sprintf($this->_l10n->get('reservations on %s'), strftime('%x', $data['show_date']));
 
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['page_title']}");
@@ -202,28 +192,6 @@ class net_nemein_reservations_handler_reservation_list extends midcom_baseclasse
         }
         midcom_show_style('view-datereservations-footer');
         debug_pop();
-    }
-
-    /**
-     * Code to sort array of events by event->start, from smallest to greatest
-     *
-     * Used by $this->_handler_view() when we don't have 1.8
-     */
-    function _code_for_sort_events_by_start()
-    {
-        return <<<EOF
-        \$ap = \$a->start;
-        \$bp = \$b->start;
-        if (\$ap > \$bp)
-        {
-            return 1;
-        }
-        if (\$ap < \$bp)
-        {
-            return -1;
-        }
-        return 0;
-EOF;
     }
 }
 

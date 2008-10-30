@@ -638,36 +638,18 @@ class net_nehmer_comments_handler_view extends midcom_baseclasses_components_han
             return 0;
         }
 
-        if (version_compare(mgd_version(), '1.8', '>='))
-        {
-            $lastmod = $this->_comments[0]->metadata->revised;
-        }
-        else
-        {
-            $lastmod = $this->_comments[0]->revised;
-        }
+        $lastmod = $this->_comments[0]->metadata->revised;
 
         foreach ($this->_comments as $comment)
         {
-            if (version_compare(mgd_version(), '1.8', '>='))
+            // TODO: Workaround for #134
+            if (! $comment->metadata->revised)
             {
-                // TODO Workaround for #134
-                if (! $comment->metadata->revised)
-                {
-                    $comment->metadata->revised = $comment->metadata->created;
-                }
-                if ($comment->metadata->revised > $lastmod)
-                {
-                    $lastmod = $comment->metadata->revised;
-                }
+                $comment->metadata->revised = $comment->metadata->created;
             }
-            else
+            if ($comment->metadata->revised > $lastmod)
             {
-                if ($comment->revised > $lastmod)
-                {
-                    $lastmod = $comment->revised;
-                }
-
+                $lastmod = $comment->metadata->revised;
             }
         }
 

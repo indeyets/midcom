@@ -67,9 +67,6 @@ class midgard_admin_acl_editor_plugin extends midcom_baseclasses_components_hand
         $this->_privileges[] = 'midgard:delete';
         $this->_privileges[] = 'midgard:owner';
 
-        // TEMPORARY CODE: This links the old midcom approval helpers into the site
-        // if we are configured to do so. This will be replaced once we revampt the
-        // Metadata system of MidCOM to use 1.8
         if ($GLOBALS['midcom_config']['metadata_approval'])
         {
             $this->_privileges[] = 'midcom:approve';

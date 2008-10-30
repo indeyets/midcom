@@ -148,22 +148,6 @@ class org_routamc_gallery_handler_index  extends midcom_baseclasses_components_h
                 $reversed = false;
             }
 
-            if ($ordering === 'metadata.score')
-            {
-                if (version_compare(mgd_version(), '1.8.2', '<'))
-                {
-                    $ordering = 'score';
-                    $reversed = false;
-                }
-            }
-
-            if (   strpos($ordering, '.')
-                && !class_exists('midgard_query_builder'))
-            {
-                debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
-                continue;
-            }
-
             if ($reversed)
             {
                 $qb->add_order($ordering, 'DESC');

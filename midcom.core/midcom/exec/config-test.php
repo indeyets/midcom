@@ -174,9 +174,9 @@ function check_rcs()
 // Some helpers
 $i18n =& $_MIDCOM->get_service('i18n');
 
-if (version_compare(mgd_version(), '8.09.0beta1', '<'))
+if (version_compare(mgd_version(), '8.09.2beta1', '<'))
 {
-    println('Midgard Version', ERROR, 'Midgard 8.09.0beta1 or greater is required for MidCOM.');
+    println('Midgard Version', ERROR, 'Midgard 8.09.2beta1 or greater is required for this version of MidCOM.');
 }
 else
 {
@@ -350,47 +350,13 @@ else
 }
 
 // EXIF Reading
-
-$have_jhead = ! is_null($GLOBALS['midcom_config']['utility_jhead']);
-
 if (! function_exists('read_exif_data'))
 {
-    if (! $have_jhead)
-    {
-        println('EXIF reader', WARNING, 'Neither PHP-EXIF nor JHead is available. They are required for proper operation of the Image Gallery components. PHP Exif is recommended for PHP 4.2+, JHEAD for older versions.');
-    }
-    else
-    {
-        if (version_compare($version, '4.2.0', '<'))
-        {
-            println('EXIF reader', OK);
-            check_for_utility('jhead', 'jhead', ERROR, 'JHead is required to read the EXIF information from images.');
-        }
-        else
-        {
-            println('EXIF reader', WARNING, 'PHP-EXIF is unavailable, but JHead was found. For PHP 4.2+ PHP Exif is the recommended way of processing EXIF information due to JHeads limited Featureset.');
-            check_for_utility('jhead', 'jhead', ERROR, 'JHead is required to read the EXIF information from images.');
-        }
-    }
+    println('EXIF reader', WARNING, 'PHP-EXIF is not available. It required for proper operation of Image Gallery components.');
 }
 else
 {
-    if (version_compare($version, '4.2.0', '<'))
-    {
-        if (! $have_jhead)
-        {
-            println('EXIF reader', WARNING, 'PHP EXIF is available, but on a pre 4.2 installations. This may cause segfaults. You should either upgrade PHP or install JHead.');
-        }
-        else
-        {
-            println('EXIF reader', WARNING, 'PHP EXIF is available, but on a pre 4.2 installations. This may cause segfaults. JHead can be used instead, but with a reduced feature set.');
-            check_for_utility('jhead', 'jhead', ERROR, 'JHead is required to read the EXIF information from images.');
-        }
-    }
-    else
-    {
-        println('EXIF reader', OK);
-    }
+    println('EXIF reader', OK);
 }
 
 // ImageMagick

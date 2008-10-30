@@ -185,10 +185,7 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
         $this->_prepare_request_data();
         $_MIDCOM->substyle_append($this->_controller->datamanager->schema->name);
 
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
-        {
-            $_MIDCOM->set_26_request_metadata($this->_group->metadata->revised, $this->_group->guid);
-        }
+        $_MIDCOM->set_26_request_metadata($this->_group->metadata->revised, $this->_group->guid);
 
         $this->_view_toolbar->bind_to($this->_group);
         $this->_component_data['active_leaf'] = $this->_group->id;
@@ -282,10 +279,7 @@ class net_nemein_organizations_handler_admin extends midcom_baseclasses_componen
 
         $this->_prepare_request_data();
 
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
-        {
-            $_MIDCOM->set_26_request_metadata($this->_group->metadata->revised, $this->_group->guid);
-        }
+        $_MIDCOM->set_26_request_metadata($this->_group->metadata->revised, $this->_group->guid);
 
         $this->_view_toolbar->bind_to($this->_group);
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$this->_group->official}");

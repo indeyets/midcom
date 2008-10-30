@@ -256,24 +256,7 @@ function mgd_get_att_parent_guid($obj)
 {
     $att = new midgard_attachment();
     $att->get_by_id($obj->id);
-    if (isset($att->parentguid))
-    {
-        // 1.8, life is simple
-        return $att->parentguid;
-    }
-    // not 1.8, try something
-    $class = "midgard_{$att->ptable}";
-    if (!class_exists($class))
-    {
-        return false;
-    }
-    $obj = new $class();
-    $obj->get_by_id($att->pid);
-    if (!$obj->id)
-    {
-        return false;
-    }
-    return $obj->guid;
+    return $att->parentguid;
 }
 $qb_dm1p = new midgard_query_builder('midgard_parameter');
 $qb_dm1p->begin_group('OR');
@@ -370,7 +353,6 @@ foreach ($att_params as $param)
         mgd_param_domain_replace($att, 'midcom.helper.datamanager.datatype.blob', 'midcom.helper.datamanager2.type.blobs');
         mgd_param_domain_replace($parent_att, 'midcom.helper.datamanager.datatype.blob', 'midcom.helper.datamanager2.type.blobs');
         
-        // This requires 1.8 !!
         $parent_object_guid = mgd_get_att_parent_guid($att);
         $object = mgd_get_object_by_guid($parent_object_guid);
         if (!$object->id)
@@ -390,11 +372,6 @@ foreach ($att_params as $param)
         echo "ERROR: Collections not supported ATM\n";
         continue;
         */
-        if (!class_exists('midgard_query_builder'))
-        {
-            echo "ERROR: Collections can only be converted under 1.8\n";
-            continue;
-        }
         $parent_object_guid = mgd_get_att_parent_guid($att);
         $object = mgd_get_object_by_guid($parent_object_guid);
         if (!$object->id)
@@ -453,8 +430,7 @@ foreach ($att_params as $param)
     $identifier = md5("midcom.helper.datamanager.datatype.blob->midcom.helper.datamanager2.type.blobs:{$att->guid}");
     $att->parameter('midcom.helper.datamanager2.type.blobs', 'identifier', $identifier);
 
-    // This requires 1.8 !!
-    $parent_object_guid = mgd_get_att_parent_guid($att);
+    $parent_object_guid = $att->parentguid;
     $object = mgd_get_object_by_guid($parent_object_guid);
     if (!$object->id)
     {

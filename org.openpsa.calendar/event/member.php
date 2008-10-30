@@ -193,11 +193,8 @@ class org_openpsa_calendar_event_member_dba extends __org_openpsa_calendar_event
                 $qb->add_constraint('eid.end', '>=', $end);
             $qb->end_group();
         $qb->end_group();
-        // Order if we're in 1.8
-        /*
         $qb->add_order('eid.start', 'ASC');
         $qb->add_order('eid.end', 'ASC');
-        */
         $eventmembers = $qb->execute();
         if (!is_array($eventmembers))
         {

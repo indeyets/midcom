@@ -184,22 +184,6 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                     $reversed = false;
                 }
                 
-                if ($ordering === 'metadata.score')
-                {
-                    if (version_compare(mgd_version(), '1.8.2', '<'))
-                    {
-                        $ordering = 'score';
-                        $reversed = false;
-                    }
-                }
-                
-                if (   strpos($ordering, '.')
-                    && !class_exists('midgard_query_builder'))
-                {
-                    debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
-                    continue;
-                }
-                
                 if ($reversed)
                 {
                     $qb->add_order($ordering, 'DESC');
@@ -328,22 +312,6 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                     $reversed = false;
                 }
                 
-                if ($ordering === 'metadata.score')
-                {
-                    if (version_compare(mgd_version(), '1.8.2', '<'))
-                    {
-                        $ordering = 'score';
-                        $reversed = false;
-                    }
-                }
-                
-                if (   strpos($ordering, '.')
-                    && !class_exists('midgard_query_builder'))
-                {
-                    debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
-                    continue;
-                }
-                
                 if ($reversed)
                 {
                     $qb->add_order($ordering, 'DESC');
@@ -439,24 +407,14 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
     {
         $data['view_title'] = sprintf($this->_l10n->get('photos in batch %s'), $args[0]);
         $qb =& $this->_prepare_photo_qb();
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
+
+        $photos = $qb->execute();
+        $data['photos'] = array();
+        foreach ($photos as $photo)
         {
-            $qb->add_constraint('parameter.domain', '=', 'org.routamc.photostream');
-            $qb->add_constraint('parameter.name', '=', 'batch_number');
-            $qb->add_constraint('parameter.value', '=', $args[0]);
-            $data['photos'] = $qb->execute();
-        }
-        else
-        {
-            // FIXME: This is Midgard 1.7 compatibility patch
-            $photos = $qb->execute();
-            $data['photos'] = array();
-            foreach ($photos as $photo)
+            if ($photo->parameter('org.routamc.photostream', 'batch_number') == $args[0])
             {
-                if ($photo->parameter('org.routamc.photostream', 'batch_number') == $args[0])
-                {
-                    $data['photos'][] = $photo;
-                }
+                $data['photos'][] = $photo;
             }
         }
 
@@ -676,22 +634,6 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                         $reversed = false;
                     }
                     
-                    if ($ordering === 'metadata.score')
-                    {
-                        if (version_compare(mgd_version(), '1.8.2', '<'))
-                        {
-                            $ordering = 'score';
-                            $reversed = false;
-                        }
-                    }
-                    
-                    if (   strpos($ordering, '.')
-                        && !class_exists('midgard_query_builder'))
-                    {
-                        debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
-                        continue;
-                    }
-                    
                     if ($reversed)
                     {
                         $qb->add_order($ordering, 'DESC');
@@ -811,22 +753,6 @@ class org_routamc_photostream_handler_list extends midcom_baseclasses_components
                 else
                 {
                     $reversed = false;
-                }
-                
-                if ($ordering === 'metadata.score')
-                {
-                    if (version_compare(mgd_version(), '1.8.2', '<'))
-                    {
-                        $ordering = 'score';
-                        $reversed = false;
-                    }
-                }
-                
-                if (   strpos($ordering, '.')
-                    && !class_exists('midgard_query_builder'))
-                {
-                    debug_add("Ordering by linked properties requires 1.8 series Midgard", MIDCOM_LOG_WARN);
-                    continue;
                 }
                 
                 if ($reversed)

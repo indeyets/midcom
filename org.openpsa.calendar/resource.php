@@ -100,10 +100,7 @@ class org_openpsa_calendar_resource_dba extends __org_openpsa_calendar_resource_
 
         $qb->add_constraint('resource', '=', $this->id);
 
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-        {
-            $qb->add_order('event.start');
-        }
+        $qb->add_order('event.start');
 
         return $qb->execute();
     }

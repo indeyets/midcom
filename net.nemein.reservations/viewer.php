@@ -224,43 +224,15 @@ class net_nemein_reservations_viewer extends midcom_baseclasses_components_reque
     
     function load_resource($arg)
     {
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-        {
-            debug_add('1.8.x detected, doing with single QB');
-            // 1.8 allows us to do this the easy way
-            $qb = org_openpsa_calendar_resource_dba::new_query_builder();
-            $qb->begin_group('OR');
-                $qb->add_constraint('name', '=', $arg);
-                $qb->add_constraint('guid', '=', $arg);
-            $qb->end_group();
-            $resources = $qb->execute();
-            if (count($resources) > 0)
-            {
-                return $resources[0];
-            }
-        }
-        else
-        {
-            debug_add('1.7.x detected, doing separate checks');
-            // 1.7 requires that we check for guid and name separately
-            debug_add('Trying to fetch with name');
-            $qb = org_openpsa_calendar_resource_dba::new_query_builder();
+        $qb = org_openpsa_calendar_resource_dba::new_query_builder();
+        $qb->begin_group('OR');
             $qb->add_constraint('name', '=', $arg);
-            $resources = $qb->execute();
-            if (count($resources) > 0)
-            {
-                return $resources[0];
-            }
-            elseif (mgd_is_guid($arg))
-            {
-                debug_add('mgd_is_guid returned true, trying to fetch with guid');
-                $resource = new org_openpsa_calendar_resource_dba($arg);
-                if (   is_object($resource)
-                    && is_a($resource, 'org_openpsa_calendar_resource_dba'))
-                {
-                    return $resource;
-                }
-            }
+            $qb->add_constraint('guid', '=', $arg);
+        $qb->end_group();
+        $resources = $qb->execute();
+        if (count($resources) > 0)
+        {
+            return $resources[0];
         }
         return false;
     }

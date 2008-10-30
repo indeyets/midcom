@@ -1,13 +1,6 @@
 <?php
 $_MIDCOM->auth->require_valid_user('basic');
 $_MIDCOM->auth->require_admin_user();
-if (   !class_exists('midgard_query_builder')
-    || !($dummy_qb = new midgard_query_builder('midgard_topic'))
-    || !method_exists($dummy_qb, 'include_deleted'))
-{
-    echo "<h1>This requires Midgard 1.8.2</h1>";
-    return;
-}
 
 if (!isset($_GET['days']))
 {

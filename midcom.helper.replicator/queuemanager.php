@@ -213,16 +213,7 @@ class midcom_helper_replicator_queuemanager extends midcom_baseclasses_component
             foreach ($queued_guids as $export_guid => $bool)
             {
                 $marked_exported = false;
-                if (version_compare(mgd_version(), '1.8.2', '>='))
-                {
-                    // In Midgard 1.8.2 we can do this efficiently with the export_by_guid method
-                    $marked_exported = midgard_replicator::export_by_guid($export_guid);
-                }
-                else
-                {
-                    $object = $_MIDCOM->dbfactory->get_object_by_guid($export_guid);
-                    $marked_exported = midgard_replicator::export($object);
-                }
+                $marked_exported = midgard_replicator::export_by_guid($export_guid);
                 
                 if ($marked_exported)
                 {

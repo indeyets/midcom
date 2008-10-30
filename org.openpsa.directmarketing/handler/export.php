@@ -254,11 +254,8 @@ class org_openpsa_directmarketing_handler_export extends midcom_baseclasses_comp
         $qb_members->add_constraint('campaign', '=', $this->_request_data['campaign']->id);
         $qb_members->add_constraint('orgOpenpsaObtype', '<>', ORG_OPENPSA_OBTYPE_CAMPAIGN_TESTER);
         // PONDER: Filter by status (other than tester) ??
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>='))
-        {
-            $qb_members->add_order('person.lastname', 'ASC');
-            $qb_members->add_order('person.firstname', 'ASC');
-        }
+        $qb_members->add_order('person.lastname', 'ASC');
+        $qb_members->add_order('person.firstname', 'ASC');
         $members = $qb_members->execute_unchecked();
         if (!is_array($members))
         {

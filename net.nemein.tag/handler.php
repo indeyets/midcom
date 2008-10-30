@@ -28,7 +28,7 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
      * @param object &$object MidCOM DBA object
      * @param array $tags List of tags and urls, tag is key, url is value
      * @return boolean indicating success/failure
-     * @todo Set the link->navorder property (only in 1.8)
+     * @todo Set the link->navorder property
      */
     function tag_object(&$object, $tags, $component = null)
     {
@@ -568,11 +568,8 @@ class net_nemein_tag_handler extends midcom_baseclasses_components_purecode
         }
         $qb->end_group();
         $qb->add_order('fromGuid', 'ASC');
-        // TODO: check midgard version and use this sort if we have 1.8
-        if (class_exists('midgard_query_builder'))
-        {
-            $qb->add_order('tag.tag', 'ASC');
-        }
+        $qb->add_order('tag.tag', 'ASC');
+
         $links = $qb->execute();
         if (!is_array($links))
         {

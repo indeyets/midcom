@@ -3,16 +3,8 @@
 //$data =& $_MIDCOM->get_custom_context_data('request_data');
 $comment = $data['comment'];
 
-if (version_compare(mgd_version(), '1.8', '>='))
-{
-    $creator = $comment->metadata->creator;
-    $created = $comment->metadata->created;
-}
-else
-{
-    $creator = $comment->creator;
-    $created = $comment->created;
-}
+$creator = $comment->metadata->creator;
+$created = $comment->metadata->created;
 
 $user =& $_MIDCOM->auth->get_user($creator);
 if ($user)

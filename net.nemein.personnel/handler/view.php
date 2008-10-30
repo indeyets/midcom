@@ -161,20 +161,11 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
         }
         $qb = midcom_db_member::new_query_builder();
 
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
-        {
-            $qb->add_constraint('gid.guid', '=', $this->_config->get('group'));
-            $qb->begin_group('OR');
+        $qb->add_constraint('gid.guid', '=', $this->_config->get('group'));
+        $qb->begin_group('OR');
             $qb->add_constraint('uid.guid', '=', $arg);
             $qb->add_constraint('uid.username', '=', $arg);
-            $qb->end_group();
-        }
-        else
-        {
-            $group = new midcom_db_group($this->_config->get('group'));
-            $qb->add_constraint('gid.id', '=', $group->id);
-            $qb->add_constraint('uid.username', '=', $arg);
-        }
+        $qb->end_group();
 
         $qb->set_limit(1);
         $qb->hide_invisible = false;
@@ -286,11 +277,7 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
             )
         );
 
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
-        {
-            $_MIDCOM->set_26_request_metadata($this->_person->metadata->revised, $this->_person->guid);
-        }
-
+        $_MIDCOM->set_26_request_metadata($this->_person->metadata->revised, $this->_person->guid);
         $this->_view_toolbar->bind_to($this->_person);
         $this->_prepare_request_data();
 
@@ -364,24 +351,16 @@ class net_nemein_personnel_handler_view extends midcom_baseclasses_components_ha
     {
         $qb = midcom_db_member::new_query_builder();
 
-        if (version_compare(mgd_version(), '1.8.0alpha1', '>'))
+        $qb->add_constraint('gid.guid', '=', $this->_config->get('group'));
+
+        if ($this->_alpha_filter)
         {
-            $qb->add_constraint('gid.guid', '=', $this->_config->get('group'));
-
-            if ($this->_alpha_filter)
-            {
-                $qb->add_constraint('uid.lastname', 'LIKE', "{$this->_alpha_filter}%");
-            }
-
-            foreach ($this->_config->get('index_order') as $ordering)
-            {
-                $qb->add_order($ordering);
-            }
+            $qb->add_constraint('uid.lastname', 'LIKE', "{$this->_alpha_filter}%");
         }
-        else
+
+        foreach ($this->_config->get('index_order') as $ordering)
         {
-            $group = new midcom_db_group($this->_config->get('group'));
-            $qb->add_constraint('gid.id', '=', $group->id);
+            $qb->add_order($ordering);
         }
 
         $qb->hide_invisible = false;

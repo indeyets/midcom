@@ -22,8 +22,6 @@
  * The user's name and E-Mail will be stored along with the created information in the
  * Metadata in case that the user gets deleted.
  *
- * This component requires Midgard 1.8.
- *
  * <b>Install instructions</b>
  *
  * Just create a topic with this component assigned to it. I recommend dropping it out of
