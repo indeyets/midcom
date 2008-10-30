@@ -615,6 +615,21 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
                 case ($property == 'title'):
                     $search_properties[] = $property;
                     break;
+                case ($property == 'tag'):
+                    $search_properties[] = $property;
+                    break;
+                case ($property == 'firstname'):
+                    $search_properties[] = $property;
+                    break;
+                case ($property == 'lastname'):
+                    $search_properties[] = $property;
+                    break;
+                case ($property == 'official'):
+                    $search_properties[] = $property;
+                    break;
+                case ($property == 'username'):
+                    $search_properties[] = $property;
+                    break;
                 // TODO: More per property heuristics
             }
         }

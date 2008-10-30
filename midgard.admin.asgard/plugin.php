@@ -603,7 +603,8 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             && !is_a($object, 'midgard_snippet')
             && !is_a($object, 'midgard_page')
             && !is_a($object, 'midgard_pageelement')
-            && substr($object->__mgdschema_class_name__, 0, 23) != 'org_routamc_positioning')
+            && substr($object->__mgdschema_class_name__, 0, 23) != 'org_routamc_positioning'
+            && substr($object->__mgdschema_class_name__, 0, 14) != 'net_nemein_tag')
         {
             $link = $_MIDCOM->permalinks->resolve_permalink($object->guid);
             if ($link)

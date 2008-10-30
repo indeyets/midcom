@@ -55,6 +55,19 @@ class net_nemein_tag_link_dba extends __net_nemein_tag_link_dba
         return $parent->guid;
     }
 
+    function get_label()
+    {
+        $mc = net_nemein_tag_tag_dba::new_collector('id', $this->tag);
+        $mc->add_value_property('tag');
+        $mc->execute();
+        $tag_guids = $mc->list_keys();
+        foreach ($tag_guids as $guid => $array)
+        {
+            return net_nemein_tag_handler::tag_link2tagname($mc->get_subkey($guid, 'tag'), $this->value, $this->context);
+        }
+        return $this->guid;
+    }
+
     function _sanity_check()
     {
         if (   empty($this->fromGuid)
