@@ -18,6 +18,7 @@ if (count($data['items']) == 0)
 {
 
     echo '<p>' . $_MIDCOM->i18n->get_string('no items found in feed', 'net.nemein.rss') . "</p>\n";
+    echo "<p class=\"error\">{$GLOBALS['MAGPIE_ERROR']}</p>\n";
 }
 else
 {

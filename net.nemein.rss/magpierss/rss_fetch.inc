@@ -83,7 +83,7 @@ require_once( MAGPIE_EXTLIB . 'Snoopy.class.inc');
 
 define('MAGPIE_VERSION', '0.7');
 
-$MAGPIE_ERROR = "";
+$GLOBALS['MAGPIE_ERROR'] = "";
 
 function fetch_rss ($url) {
     // initialize constants
@@ -226,16 +226,14 @@ function fetch_rss ($url) {
 \*=======================================================================*/
 
 function error ($errormsg, $lvl=E_USER_WARNING) {
-        global $MAGPIE_ERROR;
-        
         // append PHP's error message if track_errors enabled
         if ( isset($php_errormsg) ) { 
             $errormsg .= " ($php_errormsg)";
         }
         if ( $errormsg ) {
             $errormsg = "MagpieRSS: $errormsg";
-            $MAGPIE_ERROR = $errormsg;
-            trigger_error( $errormsg, $lvl);                
+            $GLOBALS['MAGPIE_ERROR'] = $errormsg;
+            //trigger_error( $errormsg, $lvl);                
         }
 }
 
@@ -248,13 +246,11 @@ function debug ($debugmsg, $lvl=E_USER_NOTICE) {
     Purpose:    accessor for the magpie error variable
 \*=======================================================================*/
 function magpie_error ($errormsg="") {
-    global $MAGPIE_ERROR;
-    
     if ( isset($errormsg) and $errormsg ) { 
-        $MAGPIE_ERROR = $errormsg;
+        $GLOBALS['MAGPIE_ERROR'] = $errormsg;
     }
     
-    return $MAGPIE_ERROR;   
+    return $GLOBALS['MAGPIE_ERROR'];   
 }
 
 /*=======================================================================*\

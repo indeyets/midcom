@@ -93,7 +93,7 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         {
             // TODO: Ensure Magpie uses conditional GETs here
             error_reporting(E_WARNING);
-            $rss = fetch_rss($url);
+            $rss = @fetch_rss($url);
             error_reporting(E_ALL);
         }
         catch (Exception $e)
