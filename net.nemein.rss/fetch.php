@@ -646,6 +646,7 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
         $qb->end_group();
         $local_items = $qb->execute_unchecked();
         $guid_property = $this->_guid_property;
+        $purge_guids = array();
         foreach ($local_items as $item)
         {
             if (!in_array($item->$guid_property, $item_guids))
@@ -664,9 +665,13 @@ class net_nemein_rss_fetch extends midcom_baseclasses_components_purecode
                     }
                 }
 
+                $purge_guids[] = $item->guid;
                 $item->delete();
             }
         }
+
+        midcom_baseclasses_core_dbobject::purge($purge_guids, 'midgard_article');
+
         return true;
     }
 
