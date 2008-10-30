@@ -459,7 +459,7 @@ Asetukset
 Midgardin tietueet
 ---STRINGEND
 
----STRING midgard.admin.acl
+---STRING acl_editor
 Käyttöoikeuksien hallinta
 ---STRINGEND
 

@@ -159,10 +159,10 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
             $this->_privileges[] = $privilege;
         }
 
-        if (   isset($current_manifest->customdata['midgard.admin.acl'])
-            && isset($current_manifest->customdata['midgard.admin.acl']['extra_privileges']))
+        if (   isset($current_manifest->customdata['midgard.admin.asgard.acl'])
+            && isset($current_manifest->customdata['midgard.admin.asgard.acl']['extra_privileges']))
         {
-            foreach ($current_manifest->customdata['midgard.admin.acl']['extra_privileges'] as $privilege)
+            foreach ($current_manifest->customdata['midgard.admin.asgard.acl']['extra_privileges'] as $privilege)
             {
                 if (!strpos($privilege, ':'))
                 {
@@ -225,9 +225,9 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         );
 
         // Populate the magic assignees
-        $additional_assignees['EVERYONE'] = $_MIDCOM->i18n->get_string('EVERYONE', 'midgard.admin.acl');
-        $additional_assignees['USERS'] = $_MIDCOM->i18n->get_string('USERS', 'midgard.admin.acl');
-        $additional_assignees['ANONYMOUS'] = $_MIDCOM->i18n->get_string('ANONYMOUS', 'midgard.admin.acl');
+        $additional_assignees['EVERYONE'] = $_MIDCOM->i18n->get_string('EVERYONE', 'midgard.admin.asgard');
+        $additional_assignees['USERS'] = $_MIDCOM->i18n->get_string('USERS', 'midgard.admin.asgard');
+        $additional_assignees['ANONYMOUS'] = $_MIDCOM->i18n->get_string('ANONYMOUS', 'midgard.admin.asgard');
 
         // List groups as potential assignees
         $qb = midcom_db_group::new_query_builder();
@@ -245,7 +245,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
                 $label = $group->name;
                 if (empty($group->name))
                 {
-                    $label = sprintf($_MIDCOM->i18n->get_string('group %s', 'midgard.admin.acl'), "#{$group->id}");
+                    $label = sprintf($_MIDCOM->i18n->get_string('group %s', 'midgard.admin.asgard'), "#{$group->id}");
                 }
             }
 
@@ -267,7 +267,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
             if (!$assignee)
             {
                 // This is a magic assignee
-                $label = $_MIDCOM->i18n->get_string($privilege->assignee, 'midgard.admin.acl');
+                $label = $_MIDCOM->i18n->get_string($privilege->assignee, 'midgard.admin.asgard');
             }
             else
             {
@@ -316,13 +316,13 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
 
                 if (! isset($header_items[$privilege_label]))
                 {
-                    $header_items[$privilege_label] = "        <th scope=\"col\" class=\"{$privilege_components[1]}\"><span>" . str_replace(" ","\n", $_MIDCOM->i18n->get_string($privilege_label, 'midgard.admin.acl')) . "</span></th>\n";
+                    $header_items[$privilege_label] = "        <th scope=\"col\" class=\"{$privilege_components[1]}\"><span>" . str_replace(" ","\n", $_MIDCOM->i18n->get_string($privilege_label, 'midgard.admin.asgard')) . "</span></th>\n";
                 }
 
                 $this->_schemadb['privileges']->append_field(str_replace(':', '_', $assignee) . '_' . str_replace(':', '_', str_replace('.', '_', $privilege)), Array
                     (
                         'title' => $privilege_label,
-                        'helptext'    => sprintf($_MIDCOM->i18n->get_string('sets privilege %s', 'midgard.admin.acl'), $privilege),
+                        'helptext'    => sprintf($_MIDCOM->i18n->get_string('sets privilege %s', 'midgard.admin.asgard'), $privilege),
                         'storage' => null,
                         'type' => 'privilege',
                         'type_config' => Array
@@ -483,14 +483,14 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         {
             case 'save':
                 // Handle populating additional assignees
-                if ($this->_object->parameter('midgard.admin.acl', 'add_assignee'))
+                if ($this->_object->parameter('midgard.admin.asgard.acl', 'add_assignee'))
                 {
                     // We do this by adding a READ privilege so they show up on get_privileges()
                     // TODO: Would be nicer to register a priv that doesn't really count
-                    $this->_object->set_privilege('midgard:read', $this->_object->parameter('midgard.admin.acl', 'add_assignee'), MIDCOM_PRIVILEGE_ALLOW);
+                    $this->_object->set_privilege('midgard:read', $this->_object->parameter('midgard.admin.asgard.acl', 'add_assignee'), MIDCOM_PRIVILEGE_ALLOW);
 
                     // Then clear the parameter and relocate
-                    $this->_object->parameter('midgard.admin.acl', 'add_assignee', '');
+                    $this->_object->parameter('midgard.admin.asgard.acl', 'add_assignee', '');
 
                     $_MIDCOM->relocate("__mfa/asgard/object/permissions/{$this->_object->guid}/");
                     // This will exit.
@@ -506,7 +506,7 @@ class midgard_admin_asgard_handler_object_permissions extends midcom_baseclasses
         switch (get_class($this->_object))
         {
             case 'midcom_baseclasses_database_topic':
-                $type = $_MIDCOM->i18n->get_string('folder', 'midgard.admin.acl');
+                $type = $_MIDCOM->i18n->get_string('folder', 'midgard.admin.asgard');
                 break;
             default:
                 $type_parts = explode('_', get_class($this->_object));

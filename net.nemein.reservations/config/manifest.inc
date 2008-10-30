@@ -38,26 +38,16 @@
     'dependencies' => array
     (
         'midcom.helper.datamanager2' => array(),
-        'org.openpsa.calendar' => array
-        (
-            'min' => '2.0.15',
-        ),
+        'org.openpsa.calendar' => array(),
         'org.openpsa.calendarwidget' => array(),
         'org.openpsa.contactwidget' => array(),
-        'midgard.admin.acl' => array
-        (
-            'min' => '1.0.3',
-        ),
-        'net.nemein.repeathandler' => array
-        (
-            'min' => '1.0.1',
-        ),
+        'net.nemein.repeathandler' => array(),
         'midcom' => array(),
     ),
 ),
 'customdata' => array
 (
-    'midgard.admin.acl' => array
+    'midgard.admin.asgard.acl' => array
     (
         'extra_privileges' => array
         (

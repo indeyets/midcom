@@ -463,7 +463,7 @@ Configuration
 Midgard objects
 ---STRINGEND
 
----STRING midgard.admin.acl
+---STRING acl_editor
 Access Control Lists editor
 ---STRINGEND
 
@@ -791,3 +791,74 @@ Version %s of %s
 XML
 ---STRINGEND
 
+---STRING ANONYMOUS
+Anonymous users
+---STRINGEND
+
+---STRING EVERYONE
+Everyone
+---STRINGEND
+
+---STRING USERS
+All users
+---STRINGEND
+
+---STRING add assignee
+Add group for privilege assignment
+---STRINGEND
+
+---STRING folder
+folder
+---STRINGEND
+
+---STRING group %s
+Group %s
+---STRINGEND
+
+---STRING midcom:approve
+Approve
+---STRINGEND
+
+---STRING midcom:component_config
+Configuration
+---STRINGEND
+
+---STRING acl_editor
+Access Control Lists editor
+---STRINGEND
+
+---STRING midgard:create
+Create
+---STRINGEND
+
+---STRING midgard:delete
+Delete
+---STRINGEND
+
+---STRING midgard:owner
+Owner
+---STRINGEND
+
+---STRING midgard:read
+Read
+---STRINGEND
+
+---STRING midgard:update
+Update
+---STRINGEND
+
+---STRING permissions for %s %s
+Permissions for %s %s
+---STRINGEND
+
+---STRING privilege reserve
+Reserve
+---STRINGEND
+
+---STRING privileges
+Permissions
+---STRINGEND
+
+---STRING topic privileges
+Folder permissions
+---STRINGEND

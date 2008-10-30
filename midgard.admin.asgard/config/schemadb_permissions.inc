@@ -8,9 +8,10 @@
         (
             // COMPONENT-REQUIRED
             'title' => 'add assignee',
-            'storage' => Array(
+            'storage' => array
+            (
                 'location' => 'configuration',
-                'domain'   => 'midgard.admin.acl',
+                'domain'   => 'midgard.admin.asgard.acl',
                 'name'     => 'add_assignee',
             ),
             'type' => 'select',

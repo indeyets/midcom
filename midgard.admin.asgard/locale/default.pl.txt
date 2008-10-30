@@ -163,7 +163,7 @@ Konfiguracja
 Obiekty
 ---STRINGEND
 
----STRING midgard.admin.acl
+---STRING acl_editor
 Edycja uprawnień
 ---STRINGEND
 

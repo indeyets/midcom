@@ -509,13 +509,13 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                 switch (get_class($this->_object))
                 {
                     case 'midcom_baseclasses_database_topic':
-                        $type = $_MIDCOM->i18n->get_string('folder', 'midgard.admin.acl');
+                        $type = $_MIDCOM->i18n->get_string('folder', 'midgard.admin.asgard');
                         break;
                     default:
                         $type_parts = explode('_', get_class($this->_object));
                         $type = $type_parts[count($type_parts)-1];
                 }
-                $title_string = sprintf($_MIDCOM->i18n->get_string('permissions for %s %s', 'midgard.admin.acl'), $type, midgard_admin_asgard_handler_object_permissions::resolve_object_title($this->_object));
+                $title_string = sprintf($_MIDCOM->i18n->get_string('permissions for %s %s', 'midgard.admin.asgard'), $type, midgard_admin_asgard_handler_object_permissions::resolve_object_title($this->_object));
                 break;
             case '____mfa-asgard-object_create':
                 $title_string = sprintf($_MIDCOM->i18n->get_string('create %s under %s', 'midgard.admin.asgard'), midgard_admin_asgard_plugin::get_type_label($data['new_type_arg']), '%s %s');
@@ -603,8 +603,8 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             && !is_a($object, 'midgard_snippet')
             && !is_a($object, 'midgard_page')
             && !is_a($object, 'midgard_pageelement')
-            && substr($object->__mgdschema_class_name__, 0, 23) != 'org_routamc_positioning'
-            && substr($object->__mgdschema_class_name__, 0, 14) != 'net_nemein_tag')
+            && substr($object->__new_class_name__, 0, 23) != 'org_routamc_positioning'
+            && substr($object->__new_class_name__, 0, 14) != 'net_nemein_tag')
         {
             $link = $_MIDCOM->permalinks->resolve_permalink($object->guid);
             if ($link)

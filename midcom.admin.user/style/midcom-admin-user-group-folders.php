@@ -9,7 +9,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         echo "<th>" . $_MIDCOM->i18n->get_string('folders', 'midcom.admin.user') . "</th>\n";        
         foreach ($data['privileges'] as $privilege)
         {
-            echo "<th>" . $_MIDCOM->i18n->get_string($privilege, 'midgard.admin.acl') . "</th>\n";
+            echo "<th>" . $_MIDCOM->i18n->get_string($privilege, 'midgard.admin.asgard') . "</th>\n";
         }
         ?>
     </thead>
