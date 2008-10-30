@@ -72,7 +72,7 @@ if (!class_exists('midcom_helper_configuration'))
 
         function __construct()
         {
-            $data = file_get_contents(MIDCOM_ROOT . '/lib/org/openpsa/httplib/config/config.inc');
+            $data = file_get_contents(MIDCOM_ROOT . '/org/openpsa/httplib/config/config.inc');
             $code = "\$tmparray = array(\n$data\n);";
             eval($code);
             $this->options = $tmparray;
