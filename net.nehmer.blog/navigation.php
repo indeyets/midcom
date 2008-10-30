@@ -143,7 +143,7 @@ class net_nehmer_blog_navigation extends midcom_baseclasses_components_navigatio
                 return $leaves;
             }
 
-            $first_year = (int) date('Y', $result[0]->metadata->published);
+            $first_year = (int) date('Y', (int) $result[0]->metadata->published);
             $year = $first_year;
             $this_year = (int) date('Y', time());
             while ($year <= $this_year)
