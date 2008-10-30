@@ -4,7 +4,7 @@
         <property name="id" type="unsigned integer" primaryfield="id" />
 
         <property name="objectType" type="string"/>
-        <property name="objectGuid" type="string"/>
+        <property name="objectGuid" type="guid"/>
         <property name="objectTitle" type="string"/>
         <property name="bury" type="boolean"/>
 

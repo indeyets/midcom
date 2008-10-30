@@ -6,10 +6,10 @@
         <property name="url" type="string"/>
     </type>
 
-    <type name="net_nemein_tag_link" table="net_nemein_tag_link" >
+    <type name="net_nemein_tag_link" table="net_nemein_tag_link">
         <property name="id" type="unsigned integer" primaryfield="id"/>
         <property name="fromComponent" type="string"/>
-        <property name="fromGuid" type="string"/>
+        <property name="fromGuid" type="guid"/>
         <property name="fromClass" type="string"/>
         <property name="tag" link="net_nemein_tag:id" reverse="no" type="integer"/>
         <property name="context" type="string"/>
