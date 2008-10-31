@@ -87,5 +87,38 @@ class org_openpsa_invoices_invoice_dba extends __org_openpsa_invoices_invoice_db
     {
         return $this->invoiceNumber;
     }
+
+    /**
+     * Deletes all invoice_hours related to the invoice
+     */
+    function _on_deleted()
+    {
+        parent::_on_deleted();
+
+        if (! $_MIDCOM->auth->request_sudo('org.openpsa.invoices'))
+        {
+            debug_push_class(__CLASS__, __FUNCTION__);
+            debug_add('Failed to get SUDO privileges, skipping invoice hour deletion silently.', MIDCOM_LOG_ERROR);
+            debug_pop();
+            return;
+        }
+        
+        // Delete invoice_hours
+        $qb = org_openpsa_invoices_invoice_hour_dba::new_query_builder();
+        $qb->add_constraint('invoice', '=', $this->id);
+        $hours = $qb->execute();
+        foreach ($hours as $hour)
+        {
+            if (!$hour->delete())
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to delete invoice hour record {$hour->id}, last Midgard error was: " . mgd_errstr(), MIDCOM_LOG_ERROR);
+                debug_pop();
+            }
+        }
+        
+        $_MIDCOM->auth->drop_sudo();
+        return;
+    }
 }
 ?>
