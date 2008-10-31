@@ -32,20 +32,13 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
         $_MIDCOM->skip_page_style = true;
         $_MIDCOM->cache->content->content_type('text/plain');
 
-        //Load o.o.mail && relatedto
+        //Load o.o.mail
         $_MIDCOM->load_library('org.openpsa.mail');
 
         //Make sure we have the components we use and the Mail_mimeDecode package
         if (!class_exists('org_openpsa_mail'))
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'library org.openpsa.mail could not be loaded.');
-            // This will exit.
-        }
-
-        $_MIDCOM->load_library('org.openpsa.relatedto');
-        if (!class_exists('org_openpsa_relatedto_handler'))
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'library org.openpsa.relatedto could not be loaded.');
             // This will exit.
         }
 
@@ -230,7 +223,7 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
             $wikipage->update();
         }
 
-        //Create related_to links to persons based on the email addresses
+        // Store recipients of the email to the page for possible later use
         reset ($emails);
         foreach ($emails as $email)
         {
@@ -246,57 +239,7 @@ class net_nemein_wiki_handler_emailimport extends midcom_baseclasses_components_
                     $wikipage->parameter('net.nemein.wiki:emailimport_notlinked', $email, time());
                     continue;
                 }
-                /* DEPRECATED in favour of the org.openpsa.relatedto
-                $stat = $wikipage->parameter('net.nemein.wiki:related_to', $group->guid, "midcom_db_group:{$group->guid}");
-                */
-                $stat = org_openpsa_relatedto_handler::create_relatedto($wikipage, 'net.nemein.wiki', $group, 'org.openpsa.contacts', ORG_OPENPSA_RELATEDTO_STATUS_SUSPECTED);
-                if (!$stat)
-                {
-                    debug_add("Could not link to group {$group->guid}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
-                }
-                else
-                {
-                    $stat->fromExtra = "email:{$email};";
-                    $stat->update();
-                    debug_add("Linked to group {$group->guid}");
-                }
                 continue;
-            }
-            /* DEPRECATED in favour of the org.openpsa.relatedto
-            $stat = $wikipage->parameter('net.nemein.wiki:related_to', $person->guid, "midcom_db_person:{$person->guid}");
-            */
-            $stat = org_openpsa_relatedto_handler::create_relatedto($wikipage, 'net.nemein.wiki', $person, 'org.openpsa.contacts', ORG_OPENPSA_RELATEDTO_STATUS_CONFIRMED);
-            if (!$stat)
-            {
-                debug_add("Could not link to person {$person->guid}, errstr: " . mgd_errstr(), MIDCOM_LOG_ERROR);
-            }
-            else
-            {
-                $stat->fromExtra = "email:{$email};";
-                $stat->update();
-                debug_add("Linked to person {$person->guid}");
-            }
-            //Find persons suspected relations and create links
-            $link_def = new org_openpsa_relatedto_relatedto_dba();
-            $link_def->fromComponent = 'net.nemein.wiki';
-            $link_def->fromGuid = $wikipage->guid;
-            $link_def->fromClass = get_class($wikipage);
-            $link_def->status = ORG_OPENPSA_RELATEDTO_STATUS_SUSPECTED;
-            $possible_links = org_openpsa_relatedto_suspect::find_links_object($person, $link_def);
-            foreach ($possible_links as $linkdata)
-            {
-                switch(true)
-                {
-                    //Any rules for skipping save ??
-                    /* obviously dummy rule
-                    case (!is_object($linkdata['link'])):
-                        //switch is considered a loop-statement in PHP, we need to continue two levels
-                        continue 2;
-                    */
-                    default:
-                        $linkdata['link']->create();
-                        break;
-                }
             }
         }
 

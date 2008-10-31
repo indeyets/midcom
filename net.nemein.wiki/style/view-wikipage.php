@@ -31,13 +31,6 @@ $node = $nap->get_node($nap->get_current_node());
         echo "<p class=\"stub\">" . $data['l10n']->get('this page is stub') . "</p>";
     }
     
-    if ($data['display_related_to'])
-    {
-        // Handle OpenPsa-style
-        echo "<div style=\"clear: both;\"></div>\n";    
-        $_MIDCOM->dynamic_load("{$node[MIDCOM_NAV_RELATIVEURL]}relatedto/render/{$data['wikipage']->guid}/out/normal"); 
-    }
-    
     // List possible wiki pages tagged with name of this page
     $qb = net_nemein_tag_link_dba::new_query_builder();
     $qb->add_constraint('tag.tag', '=', $data['wikipage']->title);

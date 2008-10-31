@@ -63,7 +63,6 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
     function __construct()
     {
         parent::__construct();
-        $_MIDCOM->load_library('org.openpsa.relatedto');
     }
 
     /**
@@ -103,38 +102,12 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_print_r('We operated on this object:', $this->_page);
             debug_pop();
-            if (class_exists('org_openpsa_relatedto_handler'))
-            {
-                // Save failed and we are likely to have data hanging around in session, clean it up
-                org_openpsa_relatedto_handler::get2session_cleanup();
-            }
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                 'Failed to create a new page, cannot continue. Last Midgard error was: '. mgd_errstr());
             // This will exit.
         }
 
         $this->_page = new net_nemein_wiki_wikipage($this->_page->id);
-
-        // Store old format "related to" information (TO BE DEPRECATED!)
-        if (array_key_exists('related_to', $this->_request_data))
-        {
-            foreach ($this->_request_data['related_to'] as $guid => $related_to)
-            {
-                // Save the relation information
-                $this->_page->parameter('net.nemein.wiki:related_to', $this->_request_data['related_to'][$guid]['target'], "{$this->_request_data['related_to'][$guid]['node'][MIDCOM_NAV_COMPONENT]}:{$this->_request_data['related_to'][$guid]['node'][MIDCOM_NAV_GUID]}");
-            }
-        }
-        // Save new format "related to" information (if we have the component available)
-        if (class_exists('org_openpsa_relatedto_handler'))
-        {
-            $rel_ret = org_openpsa_relatedto_handler::on_created_handle_relatedto($this->_page, 'net.nemein.wiki');
-            //sprint_r is not part of MidCOM helpers
-            ob_start();
-            print_r($rel_ret);
-            $rel_ret_r = ob_get_contents();
-            ob_end_clean();
-            debug_add("org_openpsa_relatedto_handler returned \n===\n{$rel_ret_r}===\n");
-        }
 
         return $this->_page;
     }
@@ -332,11 +305,6 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
                 // This will exit.
 
             case 'cancel':
-                if (class_exists('org_openpsa_relatedto_handler'))
-                {
-                    // Save cancelled and we are likely to have data hanging around in session, clean it up
-                    org_openpsa_relatedto_handler::get2session_cleanup();
-                }
                 $_MIDCOM->relocate('');
                 // This will exit.
         }
@@ -344,12 +312,6 @@ class net_nemein_wiki_handler_create extends midcom_baseclasses_components_handl
         $data['view_title'] = sprintf($this->_request_data['l10n']->get('create wikipage %s'), $this->_wikiword);
         $_MIDCOM->set_pagetitle($data['view_title']);
         $data['preview_mode'] = false;
-
-        // DM2 form action does not include our GET parameters, store them in session for a moment
-        if (class_exists('org_openpsa_relatedto_handler'))
-        {
-            org_openpsa_relatedto_handler::get2session();
-        }
 
         $tmp = Array();
         $tmp[] = Array

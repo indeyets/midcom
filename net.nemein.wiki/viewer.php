@@ -66,13 +66,6 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
             'handler' => Array('net_nemein_wiki_handler_create', 'create'),
         );
 
-        // Match /create/<related to node>/<related to object>
-        $this->_request_switch['create_by_word_relation'] = array(
-            'fixed_args' => 'create',
-            'variable_args' => 2,
-            'handler' => Array('net_nemein_wiki_handler_create', 'create'),
-        );
-
         // Match /notfound/<wikiword>
         $this->_request_switch[] = array(
             'fixed_args' => 'notfound',
@@ -129,11 +122,6 @@ class net_nemein_wiki_viewer extends midcom_baseclasses_components_request
             'variable_args' => 1,
             'handler' => Array('net_nemein_wiki_handler_view', 'view'),
         );
-
-        //Add common relatedto request switches
-        $_MIDCOM->load_library('org.openpsa.relatedto');
-        org_openpsa_relatedto_handler::common_request_switches($this->_request_switch, 'net.nemein.wiki');
-        //If you need any custom switches add them here
     }
 
     function _on_handle($handler_id, $args)
