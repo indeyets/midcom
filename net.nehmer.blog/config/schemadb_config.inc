@@ -68,6 +68,7 @@
                 'options' => array_merge(array('' => 'default setting'), $_MIDCOM->i18n->list_languages()),
             ),
             'widget' => 'select',
+            'readonly' => net_nehmer_blog_viewer::disable_language_select(),
             'end_fieldset' => '',
         ),
         'schemadb' => array

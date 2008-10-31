@@ -339,7 +339,8 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
             $this->_request_data['original_language'] = $_MIDGARD['lang'];
 
             $language = $_MIDCOM->i18n->code_to_id($lang);
-            if ($language && $language != $_MIDGARD['lang'])
+            if (   $language 
+                && $language != $_MIDGARD['lang'])
             {
                 mgd_set_lang($language);
             }
@@ -361,6 +362,25 @@ class net_nehmer_blog_viewer extends midcom_baseclasses_components_request
 
         mgd_set_lang($this->_request_data['original_language']);
         unset($this->_request_data['original_language']);
+    }
+
+    /**
+     * If the folder already has content in it we should disable the language chooser to avoid confusion
+     *
+     * @return boolean
+     */
+    static function disable_language_select()
+    {
+        // We cannot use $this->_topic in a static method
+        $topic = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
+        $qb = midcom_db_article::new_query_builder();
+        $qb->add_constraint('topic', '=', $topic->id);
+        $qb->set_limit(1);
+        if ($qb->count() > 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     /**
