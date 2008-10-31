@@ -1,6 +1,6 @@
 <h1><?php echo $data['view_title']; ?></h1>
 
-<table>
+<table class="list">
     <thead>
         <tr>
             <th><?php echo $data['l10n']->get('date'); ?></th>

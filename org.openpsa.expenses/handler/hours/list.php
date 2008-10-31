@@ -17,21 +17,22 @@
 class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_components_handler
 {
 
-    /**
-     * The Datamanager of the hour reports to display.
-     *
-     * @var midcom_helper_datamanager2_datamanager
-     * @access private
-     */
-    var $_datamanager = null;
 
     /**
-     * The schema database in use, available only while a datamanager is loaded.
+     * The reporter cache
      *
      * @var Array
      * @access private
      */
-    var $_schemadb = null;
+    private $reporters = array();
+
+    /**
+     * The task cache
+     *
+     * @var Array
+     * @access private
+     */
+    private $tasks = array();
 
     /**
      * Simple default constructor.
@@ -39,34 +40,6 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
     function __construct()
     {
         parent::__construct();
-    }
-
-    /**
-     * Loads and prepares the schema database.
-     *
-     * The operations are done on all available schemas within the DB.
-     * 
-     * @param string $schemadb The schemadb to use
-     */
-    function _load_schemadb($schemadb)
-    {
-        $this->_schemadb =& midcom_helper_datamanager2_schema::load_database($this->_config->get($schemadb));
-    }
-
-    /**
-     * Internal helper, loads the datamanager for the current article. Any error triggers a 500.
-     *
-     * @access private
-     */
-    function _load_datamanager()
-    {
-        $this->_datamanager = new midcom_helper_datamanager2_datamanager($this->_schemadb);
-
-        if (!$this->_datamanager)
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Failed to create a DM2 instance for hour reports.");
-            // This will exit.
-        }
     }
 
     /**
@@ -92,11 +65,12 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
     {
         $_MIDCOM->auth->require_valid_user();
 
-        // List photos
+        $_MIDCOM->componentloader->load('org.openpsa.contactwidget');
+
+        // List hours
         $qb =& $this->_prepare_qb();
 
         $show_all = false;
-        $schemadb = 'schemadb_hours';
         $mode = 'full';
 
         switch ($handler_id)
@@ -131,7 +105,6 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
                 }
                 $qb->add_constraint('task', '=', $task->id);
 
-                $schemadb = 'schemadb_hours_simple';
                 $mode = 'simple';
                 $data['view_title'] = sprintf($data['l10n']->get($handler_id . " %s"), $task->get_label());
                 break;
@@ -140,15 +113,53 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
         $qb->add_order('date', 'DESC');
         $data['hours'] = $qb->execute();
 
+        $this->load_hour_data($data['hours']);
+
         $data['mode'] = $mode;
 
-        $this->_load_schemadb($schemadb);
-        $this->_load_datamanager();
+
+        $_MIDCOM->add_link_head
+        (
+                array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.core/list.css",
+            )
+        );
 
         $_MIDCOM->set_pagetitle("{$this->_topic->extra}: {$data['view_title']}");
         $this->_update_breadcrumb_line();
 
         return true;
+    }
+
+    /**
+     * Helper to load the data linked to the hour reports
+     *
+     * @param array &$hours the hour reports we're working with
+     */
+    private function load_hour_data(&$hours)
+    {
+        $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
+        foreach($hours as $report)
+        {
+            if (!array_key_exists($report->person, $this->reporters))
+            {
+                $reporter = new midcom_db_person($report->person);
+                $reporter_card = new org_openpsa_contactwidget($reporter);
+                $this->reporters[$report->person] = $reporter_card->show_inline();
+            }
+
+            if (!array_key_exists($report->task, $this->tasks))
+            {
+                $task = new org_openpsa_projects_task_dba($report->task);
+                $task_html = "<a href=\"{$prefix}hours/task/{$task->guid}/\">" . $task->get_label() . "</a>";
+                $this->tasks[$report->task] = $task_html;
+            }
+
+
+        }
     }
 
 
@@ -180,12 +191,23 @@ class org_openpsa_expenses_handler_hours_list extends midcom_baseclasses_compone
     {
         midcom_show_style('hours_list_header');
 
+        $data['reporters'] =& $this->reporters;
+
         $total_hours = 0;
+        $class = "even";
+
         foreach ($data['hours'] as $hour_report)
         {
-            $this->_datamanager->autoset_storage($hour_report);
+            if ($class == "even")
+            {
+                $class = "odd";
+            }
+            else
+            {
+                $class = "even";
+            }
+            $data['class'] = $class;
             $data['hour_report'] = $hour_report;
-            $data['view_hour_report'] = $this->_datamanager->get_content_html();
             $total_hours += $hour_report->hours;
 
             midcom_show_style('hours_list_item');

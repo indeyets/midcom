@@ -24,6 +24,7 @@
     'dependencies' => array
     (
         'org.openpsa.projects' => array(),
+        'org.openpsa.core' => array(),
         'midcom.helper.datamanager2' => array(),
         'Calendar' => array
         (
