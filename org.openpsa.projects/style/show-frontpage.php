@@ -6,7 +6,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
     <h1><?php echo $data['l10n']->get('projects'); ?></h1>
     <?php
     $class = "even";
-    echo "<table class='tasks'>\n";
+    echo "<table class='list'>\n";
     echo "  <thead>\n";
     echo "    <tr>\n";
     echo "        <th>" . $data['l10n']->get('customer') . "</th>\n";
@@ -49,7 +49,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             echo "        <td>" . $data['l10n']->get($project->status_type) . "</td>\n";
             echo "        <td> " . strftime('%x', $project->start) . "</td>\n";
             echo "        <td> " . strftime('%x', $project->end) . "</td>\n";
-            echo "        <td>{$task_count}</td>\n";
+            echo "        <td class=\"numeric\">{$task_count}</td>\n";
             echo "    </tr>\n";
         }
     }

@@ -11,7 +11,7 @@ else
 }
 ?>
 <h&(h_level);><?php echo $data['l10n']->get($data['table-heading']); ?></h&(h_level);>
-<table class="tasks">
+<table class="list">
     <thead>
         <tr>
             <th><?php echo $data['l10n']->get('task'); ?></th>
@@ -27,9 +27,9 @@ else
             ?>
             <th><?php echo $data['l10n']->get('manager'); ?></th>
             <th><?php echo $data['l10n']->get('duration'); ?></th>
-            <th class="hours"><?php echo $data['l10n']->get('invoiceable'); ?></th>
-            <th class="hours"><?php echo $data['l10n']->get('invoiced'); ?></th>
-            <th class="hours"><?php echo $data['l10n']->get('reported'); ?></th>
+            <th><?php echo $data['l10n']->get('invoiceable'); ?></th>
+            <th><?php echo $data['l10n']->get('invoiced'); ?></th>
+            <th><?php echo $data['l10n']->get('reported'); ?></th>
         </tr>
     </thead>
     <tbody>

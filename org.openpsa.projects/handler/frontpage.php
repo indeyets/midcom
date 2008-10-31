@@ -74,6 +74,17 @@ class org_openpsa_projects_handler_frontpage extends midcom_baseclasses_componen
         $closed_qb->add_constraint('orgOpenpsaObtype', '=', ORG_OPENPSA_OBTYPE_PROJECT);
         $data['closed_count'] = $closed_qb->count();
 
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.core/list.css",
+            )
+        );
+
+
         return true;
     }
 

@@ -40,13 +40,13 @@ if ($data['even'])
         <td>
             <?php echo strftime('%x', $task->start) . ' - ' . strftime('%x', $task->end); ?>
         </td>
-        <td class="hours">
+        <td class="numeric">
             <?php echo $data['hours']['invoiceable']; ?>
         </td>
-        <td class="hours">
+        <td class="numeric">
             <?php echo $data['hours']['invoiced']; ?>
         </td>
-        <td class="hours">
+        <td class="numeric">
             <?php
             echo $data['hours']['reported'];
             if ($task->plannedHours > 0)

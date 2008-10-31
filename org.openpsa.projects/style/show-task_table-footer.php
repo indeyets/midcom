@@ -16,13 +16,13 @@ else
         <td colspan="&(colspan);">
             <?php echo $data['l10n']->get('totals'); ?>
         </td>
-        <td class="hours">
+        <td class="numeric">
             <?php echo $data['total_hours']['invoiceable']; ?>
         </td>
-        <td class="hours">
+        <td class="numeric">
             <?php echo $data['total_hours']['invoiced']; ?>
         </td>
-        <td class="hours">
+        <td class="numeric">
             <?php echo $data['total_hours']['reported']; ?>
         </td>
       </tr>

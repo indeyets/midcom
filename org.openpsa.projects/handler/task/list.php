@@ -76,6 +76,16 @@ class org_openpsa_projects_handler_task_list extends midcom_baseclasses_componen
         $this->_request_data['sales_url'] = $structure->get_node_full_url('org.openpsa.sales');
         $this->_request_data['prefix'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
 
+        $_MIDCOM->add_link_head
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDCOM_STATIC_URL . "/org.openpsa.core/list.css",
+            )
+        );
+
         if (count($args) > 0)
         {
             switch ($args[0])

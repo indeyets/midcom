@@ -17,52 +17,6 @@ div.org_openpsa_projects_task div.bookings p.bad
     color: #a40000;
 }
 
-/* Task listings */
-table.tasks
-{
-    border-collapse: collapse;
-}
-
-table.tasks thead th
-{
-    background-color: #3465a4;
-    color: #ffffff;
-    text-align: left;
-    padding-right: 8px;
-}
-
-table.tasks tr
-{
-    vertical-align: top;
-}
-
-table.tasks td
-{
-    padding-right: 8px;
-}
-table.tasks td.title
-{
-    font-weight: bold;
-}
-table.tasks th.hours, table.tasks td.hours
-{
-    text-align: right;
-}
-table.tasks tr.even td
-{
-    background-color: #e0e0e0;
-}
-
-table.tasks tfoot
-{
-    margin-top: 10px;
-}
-
-table.tasks tfoot td
-{
-    border-top: 1px solid #000000;
-}
-
 /* Composite hour reporting element */
 div.hours table.composite thead th
 {
