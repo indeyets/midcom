@@ -3,50 +3,6 @@
 ---CVS $Id$
 ---LANGUAGE sv
 
----STRING edit person
-Ändra person
----STRINGEND
-
----STRING net.nemein.personnel
-Personal
----STRINGEND
-
----STRING no permissions for
-Inga rättigheter för
----STRINGEND
-
----STRING none
-Inga
----STRINGEND
-
----STRING personnel
-Personal
----STRINGEND
-
----STRING personnel folder
-Personal katalog
----STRINGEND
-
----STRING select
-Välj
----STRINGEND
-
----STRING select group to display
-Välj grupp att visa
----STRINGEND
-
----STRING select member to display first
-Välj medlem att visa först
----STRINGEND
-
----STRING view person
-Visa person
----STRINGEND
-
----STRING your account has insufficient permissions
-Ditt konto har inte tillräckligt med rättigheter för att ta del av information om det här personen
----STRINGEND
-
 ---STRING accessibility
 Tillgänglighet
 ---STRINGEND
@@ -101,6 +57,10 @@ Släpa och släpp för att sortera.
 
 ---STRING edit group %s
 Ändra gruppen "%s"
+---STRINGEND
+
+---STRING edit person
+Ändra person
 ---STRINGEND
 
 ---STRING edit user account
@@ -183,12 +143,24 @@ Max %s
 Medlemmar
 ---STRINGEND
 
+---STRING net.nemein.personnel
+Personal
+---STRINGEND
+
+---STRING no permissions for
+Inga rättigheter för
+---STRINGEND
+
 ---STRING no persons found
 Inga personer hittades i gruppen!
 ---STRINGEND
 
 ---STRING no persons found.
 Det finns inga personer i den här gruppen.
+---STRINGEND
+
+---STRING none
+Inga
 ---STRINGEND
 
 ---STRING opens in a new window
@@ -223,6 +195,14 @@ Personen '%s' skapad
 Personen '%s' sparad
 ---STRINGEND
 
+---STRING personnel
+Personal
+---STRINGEND
+
+---STRING personnel folder
+Personal katalog
+---STRINGEND
+
 ---STRING postal code
 Postnummer
 ---STRINGEND
@@ -237,6 +217,18 @@ Förhindra liknande bokstäver
 
 ---STRING retype password
 Skriv lösenord igen
+---STRINGEND
+
+---STRING select
+Välj
+---STRINGEND
+
+---STRING select group to display
+Välj grupp att visa
+---STRINGEND
+
+---STRING select member to display first
+Välj medlem att visa först
 ---STRINGEND
 
 ---STRING send password by email to
@@ -280,7 +272,7 @@ Användarkonto
 ---STRINGEND
 
 ---STRING user account updated successfully
-Anvöndarkontot uppdaterades
+Användarkontot uppdaterades
 ---STRINGEND
 
 ---STRING username
@@ -291,7 +283,27 @@ Användarnamn
 Användarnamner innehåller ogiltiga tecken
 ---STRINGEND
 
+---STRING view person
+Visa person
+---STRINGEND
+
 ---STRING work phone
 Arbetstelefon
+---STRINGEND
+
+---STRING your account has insufficient permissions
+Ditt konto har inte tillräckligt med rättigheter för att ta del av information om det här personen
+---STRINGEND
+
+---STRING how many persons should be displayed in a row
+Hur många personer ska visas i en rad
+---STRINGEND
+
+---STRING illegal characters
+Ogiltiga tecken
+---STRINGEND
+
+---STRING preferred person
+Förvald person
 ---STRINGEND
 

@@ -127,3 +127,27 @@ URL
 XML
 ---STRINGEND
 
+---STRING cascading style sheet
+Cascading Style Sheet
+---STRINGEND
+
+---STRING element name required
+Elementnamn krävs
+---STRINGEND
+
+---STRING list of %s folders using the same style template path
+Lista över %s foldrar som använder samma stilmalls sökväg
+---STRINGEND
+
+---STRING style attachments
+Stilens bifogade filer
+---STRINGEND
+
+---STRING style editor
+Stil editor
+---STRINGEND
+
+---STRING style elements for %s
+Stil element för stil %s
+---STRINGEND
+

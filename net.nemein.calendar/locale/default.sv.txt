@@ -3,6 +3,26 @@
 ---CVS $Id$
 ---LANGUAGE sv
 
+---STRING archive
+Arkiv
+---STRINGEND
+
+---STRING archive year order
+Arkivets års ordning
+---STRINGEND
+
+---STRING back to archive.
+Tillbaka till arkivet.
+---STRINGEND
+
+---STRING calendar widget
+Kalender widget
+---STRINGEND
+
+---STRING categories
+Kategorier
+---STRINGEND
+
 ---STRING create event
 Skapa händelse
 ---STRINGEND
@@ -17,6 +37,14 @@ Datum
 
 ---STRING description
 Beskrivning
+---STRINGEND
+
+---STRING display settings
+Visa inställningar
+---STRINGEND
+
+---STRING edit event
+Ändra händelse
 ---STRINGEND
 
 ---STRING end
@@ -52,6 +80,10 @@ Månader startar från
 ---STRINGEND
 
 ---STRING nemein.net calendar
+Grupp kalender
+---STRINGEND
+
+---STRING net.nemein.calendar
 Grupp kalender
 ---STRINGEND
 
@@ -123,7 +155,71 @@ Till och med datum
 Veckovis
 ---STRINGEND
 
----STRING net.nemein.calendar
-Grupp kalender
+---STRING enable get filters
+Slå på fält filter
+---STRINGEND
+
+---STRING enable rss subscription
+Slå på RSS prenumeration
+---STRINGEND
+
+---STRING index count
+Hur många händelser att visa på huvudsidan
+---STRINGEND
+
+---STRING language
+Språk
+---STRINGEND
+
+---STRING list events from folders
+Lista händelser från kataloger
+---STRINGEND
+
+---STRING list events from master event
+Lista alla händelser under huvudhändelsens katalog
+---STRINGEND
+
+---STRING master event guid
+GUID för huvudhändelse katalogen
+---STRINGEND
+
+---STRING numbers in parantheses show ongoing events.
+Siffrorna i paratenterserna är pågående händelser
+---STRINGEND
+
+---STRING root event guid
+GUID för root händelsen
+---STRINGEND
+
+---STRING rss item count
+Hur många händelser att visa i RSS feed
+---STRINGEND
+
+---STRING rss subscriptions
+RSS prenumerationer
+---STRINGEND
+
+---STRING show events locally
+Visa alla händelser lokalt
+---STRINGEND
+
+---STRING symlink topic
+Länka till ett annat ämne med innehåll ("mjuk länk")
+---STRINGEND
+
+---STRING there is a total of %d events.
+Totalt %s händelser funna.
+---STRINGEND
+
+---STRING type filter for upcoming
+Typfilter för händelselista
+---STRINGEND
+
+---STRING use javascript to emulate hovering effect
+Använd JavaScript för att emulera hovrings effekt
+---STRINGEND
+
+---STRING week %1$s of year %2$s
+Vecka %1$s i år %2$s
 ---STRINGEND
 

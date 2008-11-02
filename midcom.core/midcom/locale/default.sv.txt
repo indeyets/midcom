@@ -283,6 +283,10 @@ Katalog
 Hämta hjälp
 ---STRINGEND
 
+---STRING get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
+Hämta fler komponenter från <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
+---STRINGEND
+
 ---STRING hidden
 Dold
 ---STRINGEND
@@ -316,7 +320,7 @@ Intern metadata
 ---STRINGEND
 
 ---STRING invalidate cache
-Invalidera MidCOM's cahce
+Invalidera MidCOM's cache
 ---STRINGEND
 
 ---STRING keywords
@@ -353,6 +357,10 @@ Användarnamn eller lösenord är felaktigt.
 
 ---STRING logout
 Logga ut
+---STRINGEND
+
+---STRING long date
+%A %B %d, %Y
 ---STRINGEND
 
 ---STRING lowercase, no special characters or spaces
@@ -587,6 +595,10 @@ Välj
 Inställningar
 ---STRINGEND
 
+---STRING short date
+%Y-%m-%d
+---STRINGEND
+
 ---STRING shown from %s
 Visade från %s
 ---STRINGEND
@@ -731,6 +743,10 @@ Ladda upp
 Ladda upp bild
 ---STRINGEND
 
+---STRING url
+Url
+---STRINGEND
+
 ---STRING url name
 URL Namn (Internt)
 ---STRINGEND
@@ -769,21 +785,5 @@ Skriv mail
 
 ---STRING yes
 Ja
----STRINGEND
-
----STRING get more components from <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
-Hämta fler komponenter från <a href="http://pear.php.net/manual/en/guide.users.commandline.cli.php">PEAR</a> channel <a href="http://%s/">%s</a>
----STRINGEND
-
----STRING long date
-%A %B %d, %Y
----STRINGEND
-
----STRING short date
-%Y-%m-%d
----STRINGEND
-
----STRING url
-Url
 ---STRINGEND
 

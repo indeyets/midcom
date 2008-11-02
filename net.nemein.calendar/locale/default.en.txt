@@ -187,6 +187,10 @@ Start date
 Subscribed event - Click to unsubscribe
 ---STRINGEND
 
+---STRING symlink topic
+Link to another content topic ("symlink")
+---STRINGEND
+
 ---STRING syndicated
 Available for syndication
 ---STRINGEND
@@ -225,9 +229,5 @@ Week %1$s of year %2$s
 
 ---STRING weekly
 Weekly
----STRINGEND
-
----STRING symlink topic
-Link to another content topic ("symlink")
 ---STRINGEND
 

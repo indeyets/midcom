@@ -19,6 +19,10 @@ Lägg till i grupp
 Mängd
 ---STRINGEND
 
+---STRING apply to selected
+Värkställ för valda
+---STRINGEND
+
 ---STRING batch generate passwords
 Batch generera lösenord
 ---STRINGEND
@@ -37,6 +41,10 @@ Skapa grupp
 
 ---STRING create user
 Skapa användare
+---STRINGEND
+
+---STRING current time (%s)
+nuvarande tid (%s)
 ---STRINGEND
 
 ---STRING edit %s
@@ -271,11 +279,7 @@ Skriv meddelande som kommer att skickas till mottagarna
 Ditt lösenord är ändrat
 ---STRINGEND
 
----STRING apply to selected
-Värkställ för valda
----STRINGEND
-
----STRING current time (%s)
-nuvarande tid (%s)
+---STRING choose action
+Välj funktion
 ---STRINGEND
 

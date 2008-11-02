@@ -1,21 +1,21 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE sv
 
 ---STRING display_levels
-Display this many topic levels
+Visa såhär många nivåer av ämnen
 ---STRINGEND
 
 ---STRING root topic to use
-Root topic to use in listing
+Huvudämne att visa i lista
 ---STRINGEND
 
 ---STRING text before form
-Text before the form listing available topics
+Text före formulären över tillgängliga ämnen
 ---STRINGEND
 
 ---STRING unlimited
-Unlimited
+Obegränsat
 ---STRINGEND
 

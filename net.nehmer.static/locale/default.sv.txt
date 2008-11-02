@@ -3,8 +3,32 @@
 ---CVS $Id$
 ---LANGUAGE sv
 
+---STRING Only show approved articles
+Visa endast godkända artiklar
+---STRINGEND
+
+---STRING activate autoindex
+Automatisk skapa ett index för det här ämnet
+---STRINGEND
+
 ---STRING approve
 Godkänn
+---STRINGEND
+
+---STRING article
+Artikel
+---STRINGEND
+
+---STRING article %s deleted
+Artikeln %s raderad
+---STRINGEND
+
+---STRING article link deleted
+Artikellänk raderad
+---STRINGEND
+
+---STRING auto_approve
+Godkänn nya artiklar automatiskt
 ---STRINGEND
 
 ---STRING autoindex
@@ -15,12 +39,40 @@ Automatiskt skapa en index sida för det här ämnet?
 Index sidan ersätter artikeln vars URL namn är index och innehåller en lista av alla artiklar och bifogade filer under det nuvarande ämnet.
 ---STRINGEND
 
+---STRING back to overview
+Tillbaka till översikten
+---STRINGEND
+
+---STRING content
+Innehåll
+---STRINGEND
+
 ---STRING create article
 Skapa artikel
 ---STRINGEND
 
+---STRING default_schema
+Standard schema för artiklar
+---STRINGEND
+
 ---STRING delete article
 Radera artikel
+---STRINGEND
+
+---STRING delete article link
+Radera artikellänken
+---STRINGEND
+
+---STRING delete cancelled
+Radering avbruten
+---STRINGEND
+
+---STRING delete link
+Radera länk
+---STRINGEND
+
+---STRING delete_link
+Radera länk
 ---STRINGEND
 
 ---STRING directory index for %s
@@ -29,6 +81,14 @@ Katalogs index för %s
 
 ---STRING edit article
 Ändra artikel
+---STRINGEND
+
+---STRING enable_article_links
+Sidlänknings system
+---STRINGEND
+
+---STRING failed to delete the article link, contact the site administrator
+Misslyckades med att radera artikellänken, kontakta administratören
 ---STRINGEND
 
 ---STRING file lastmodified
@@ -49,98 +109,6 @@ Filstorlek
 
 ---STRING filetype
 Filtyp
----STRINGEND
-
----STRING no files in this directory
-Det finns inga  filer i den här katalogen
----STRINGEND
-
----STRING no index article
-Den här katalogen har ingen <strong>index</strong> artikel. Var vänlig att skapa en med URL namn <strong>index</strong> eller aktivera autoindex läge.
----STRINGEND
-
----STRING no schemas available
-Inga scheman tillgängliga
----STRINGEND
-
----STRING select schema
-Välj schema
----STRINGEND
-
----STRING settings
-Inställningar
----STRINGEND
-
----STRING taviewer
-Statisk innehåll
----STRINGEND
-
----STRING unapprove
-Godkänn inte
----STRINGEND
-
----STRING view article
-Visa artikel
----STRINGEND
-
----STRING Only show approved articles
-Visa endast godkända artiklar
----STRINGEND
-
----STRING activate autoindex
-Automatisk skapa ett index för det här ämnet
----STRINGEND
-
----STRING article
-Artikel
----STRINGEND
-
----STRING article %s deleted
-Artikeln %s raderad
----STRINGEND
-
----STRING article link deleted
-Artikellänk raderad
----STRINGEND
-
----STRING auto_approve
-Godkänn nya artiklar automatiskt
----STRINGEND
-
----STRING back to overview
-Tillbaka till översikten
----STRINGEND
-
----STRING content
-Innehåll
----STRINGEND
-
----STRING default_schema
-Standard schema för artiklar
----STRINGEND
-
----STRING delete article link
-Radera artikellänken
----STRINGEND
-
----STRING delete cancelled
-Radering avbruten
----STRINGEND
-
----STRING delete link
-Radera länk
----STRINGEND
-
----STRING delete_link
-Radera länk
----STRINGEND
-
----STRING enable_article_links
-Sidlänknings system
----STRINGEND
-
----STRING failed to delete the article link, contact the site administrator
-Misslyckades med att radera artikellänken, kontakta administratören
 ---STRINGEND
 
 ---STRING folder_in_title
@@ -167,12 +135,32 @@ Visa index artikeln i navigering?
 Vanligt innehåll
 ---STRINGEND
 
+---STRING no files in this directory
+Det finns inga  filer i den här katalogen
+---STRINGEND
+
+---STRING no index article
+Den här katalogen har ingen <strong>index</strong> artikel. Var vänlig att skapa en med URL namn <strong>index</strong> eller aktivera autoindex läge.
+---STRINGEND
+
+---STRING no schemas available
+Inga scheman tillgängliga
+---STRINGEND
+
 ---STRING schema settings
 Data schemats inställningar
 ---STRINGEND
 
 ---STRING schemadb
 Schemadatabas för det här ämnet
+---STRINGEND
+
+---STRING select schema
+Välj schema
+---STRINGEND
+
+---STRING settings
+Inställningar
 ---STRINGEND
 
 ---STRING show blobs in autoindex
@@ -195,7 +183,35 @@ Hämta innehåll från ett annat ämne ("mjuklänk")
 Inget ämne valt
 ---STRINGEND
 
+---STRING taviewer
+Statisk innehåll
+---STRINGEND
+
+---STRING unapprove
+Godkänn inte
+---STRINGEND
+
+---STRING view article
+Visa artikel
+---STRINGEND
+
 ---STRING visible
 Ska ämnet vara synligt
+---STRINGEND
+
+---STRING callback_function
+
+---STRINGEND
+
+---STRING display settings
+Artikel visnings konfiguration
+---STRINGEND
+
+---STRING simple_name_handling
+Ska artikelns URL genereras automatiskt?
+---STRINGEND
+
+---STRING this article has been linked from <a href="%s">%s</a> and confirming will delete only the link
+Den här artikeln är länkad från <a href="%s">%s</a> och bekräftning kommer endast att radera länken.
 ---STRINGEND
 

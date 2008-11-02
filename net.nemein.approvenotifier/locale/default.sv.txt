@@ -7,3 +7,7 @@
 Länk till sida
 ---STRINGEND
 
+---STRING article %s will expire on %s
+Artikel %s kommer att upphöra %s
+---STRINGEND
+

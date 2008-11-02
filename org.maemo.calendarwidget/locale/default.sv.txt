@@ -1,13 +1,13 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE sv
 
 ---STRING Event Toolbox
-Event Toolbox
+Händelse verktygslåda
 ---STRINGEND
 
 ---STRING to shelf
-To Shelf
+Till hylla
 ---STRINGEND
 
