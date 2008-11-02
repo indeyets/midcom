@@ -207,7 +207,36 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
             $this->file_to_cache();
         }
     }
-    
+
+    /**
+     * Get the path to the document in the static cache
+     * 
+     * @return string
+     */
+    static function get_cache_path(midcom_baseclasses_database_attachment $attachment)
+    {
+        // Check if the attachment can be read anonymously
+        if (   !$GLOBALS['midcom_config']['attachment_cache_enabled']
+            || !$attachment->can_do('midgard:read', 'EVERYONE'))
+        {
+            return null;
+        }
+
+        // Copy the file to the static directory
+        if (!file_exists($GLOBALS['midcom_config']['attachment_cache_root']))
+        {
+            mkdir($GLOBALS['midcom_config']['attachment_cache_root']);
+        }
+        
+        $subdir = substr($attachment->guid, 0, 1);
+        if (!file_exists("{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}"))
+        {
+            mkdir("{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}");
+        }
+        
+        $filename = "{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$attachment->guid}_{$attachment->name}";
+    }
+
     function file_to_cache()
     {
         // Check if the attachment can be read anonymously
@@ -216,20 +245,9 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         {
             return;
         }
+
+        $filename = midcom_baseclasses_database_attachment::get_cache_path($this);
         
-        // Copy the file to the static directory
-        if (!file_exists($GLOBALS['midcom_config']['attachment_cache_root']))
-        {
-            mkdir($GLOBALS['midcom_config']['attachment_cache_root']);
-        }
-        
-        $subdir = substr($this->guid, 0, 1);
-        if (!file_exists("{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}"))
-        {
-            mkdir("{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}");
-        }
-        
-        $filename = "{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$this->guid}_{$this->name}";
         if (file_exists($filename))
         {
             // FIXME: This may cause data not the be updated properly when blob contents are overwritten
@@ -425,18 +443,17 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         if ($GLOBALS['midcom_config']['attachment_cache_enabled'])
         {
             // Check if other attachments point to the same file
-            $mc = midcom_baseclasses_database_attachment::new_collector('name', $this->name);
-            $mc->execute();
-            
-            if (count($mc->list_keys()) > 0)
+            //$mc = midcom_baseclasses_database_attachment::new_collector('name', $this->name);
+            //$mc->execute();
+            //if (count($mc->list_keys()) > 0)
+            //{
+            //}
+
+            // Remove attachment cache
+            $filename = midcom_baseclasses_database_attachment::get_cache_path($this);
+            if (file_exists($filename))
             {
-                // Remove attachment cache
-                $subdir = substr($this->guid, 0, 1);
-                $filename = "{$GLOBALS['midcom_config']['attachment_cache_root']}/{$subdir}/{$this->guid}_{$this->name}";
-                if (file_exists($filename))
-                {
-                    @unlink($filename);
-                }
+                @unlink($filename);
             }
         }
 
