@@ -335,3 +335,11 @@ Title is empty!
 Warning! Might result in data loss!
 ---STRINGEND
 
+---STRING objects with no navigation entry are still accessible on-site if the url is known
+Objects that are hidden from navigation are still accessible on-site if the URL is known
+---STRINGEND
+
+---STRING submitting the form
+Submitting the form
+---STRINGEND
+

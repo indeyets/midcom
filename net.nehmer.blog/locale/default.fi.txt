@@ -35,6 +35,10 @@ Salli arkistojen käyttö
 Artikkeli
 ---STRINGEND
 
+---STRING article %s deleted
+Artikkeli %s poistettu
+---STRINGEND
+
 ---STRING ascending
 Nouseva
 ---STRINGEND
@@ -53,6 +57,10 @@ Seuraavat sisällön syndikointiformaatit ovat saatavilla:
 
 ---STRING back to overview
 Takaisin etusivulle
+---STRINGEND
+
+---STRING blog link deleted
+Blogilinkki poistettu
 ---STRINGEND
 
 ---STRING blog settings
@@ -85,6 +93,18 @@ Luo uutisartikkeli
 
 ---STRING delete article
 Poista artikkeli
+---STRINGEND
+
+---STRING delete article link
+Poista artikkelilinkki
+---STRINGEND
+
+---STRING delete cancelled
+Poistaminen peruutettu
+---STRINGEND
+
+---STRING delete link
+Poista linkki
 ---STRINGEND
 
 ---STRING descending
@@ -123,6 +143,10 @@ Salli sisältökentillä suodatus (GET-parametri)
 Salli avoin artikkelien lisäys ("vieraskirja-tyylisesti")
 ---STRINGEND
 
+---STRING enable scheduled publishing
+Käytä ajastettua julkaisua
+---STRINGEND
+
 ---STRING enable subdirectories
 Lisää alikansioiden artikkelit listaan (ja RSS-listaan)
 ---STRINGEND
@@ -131,8 +155,20 @@ Lisää alikansioiden artikkelit listaan (ja RSS-listaan)
 Tehokäyttäjän asetukset
 ---STRINGEND
 
+---STRING failed to delete the blog link, contact the site administrator
+Blogilinkin poistaminen epäonnistui, ota yhteyttä sivuston ylläpitäjään
+---STRINGEND
+
 ---STRING first post was made on %s.
 Julkaistu %s.
+---STRINGEND
+
+---STRING from
+Kansiosta
+---STRINGEND
+
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+Jos haluat poistaa alkuperäisen artikkelin, <a href="%s">klikkaa tästä</a>.
 ---STRINGEND
 
 ---STRING index count
@@ -145,6 +181,10 @@ Listan asetukset
 
 ---STRING index_entries
 Näytä näin monta artikkelia etusivulla
+---STRINGEND
+
+---STRING language
+Kieli
 ---STRINGEND
 
 ---STRING link_to_external_url
@@ -311,6 +351,10 @@ Kansiota ei valittu
 Yhteensä %s uutista.
 ---STRINGEND
 
+---STRING this blog entry has been linked from <a href="%s">%s</a> and confirming will delete only the link
+Tämä blogiartikkeli on linkitetty kansiosta <a href="%s">%s</a> ja vahvistaminen poistaa vain linkin.
+---STRINGEND
+
 ---STRING use view prefix in url
 Käytä 'view'-etuliitettä osoitteissa
 ---STRINGEND
@@ -319,46 +363,7 @@ Käytä 'view'-etuliitettä osoitteissa
 Näytetäänkö kansio
 ---STRINGEND
 
----STRING article %s deleted
-Artikkeli %s poistettu
+---STRING show content in index
+Näytä artikkelien sisältö listaussivulla
 ---STRINGEND
 
----STRING blog link deleted
-Blogilinkki poistettu
----STRINGEND
-
----STRING delete article link
-Poista artikkelilinkki
----STRINGEND
-
----STRING delete cancelled
-Poistaminen peruutettu
----STRINGEND
-
----STRING delete link
-Poista linkki
----STRINGEND
-
----STRING failed to delete the blog link, contact the site administrator
-Blogilinkin poistaminen epäonnistui, ota yhteyttä sivuston ylläpitäjään
----STRINGEND
-
----STRING from
-Kansiosta
----STRINGEND
-
----STRING if you want to delete the original article, <a href="%s">click here</a>
-Jos haluat poistaa alkuperäisen artikkelin, <a href="%s">klikkaa tästä</a>.
----STRINGEND
-
----STRING this blog entry has been linked from <a href="%s">%s</a> and confirming will delete only the link
-Tämä blogiartikkeli on linkitetty kansiosta <a href="%s">%s</a> ja vahvistaminen poistaa vain linkin.
----STRINGEND
-
----STRING language
-Kieli
----STRINGEND
-
----STRING enable scheduled publishing
-Käytä ajastettua julkaisua
----STRINGEND

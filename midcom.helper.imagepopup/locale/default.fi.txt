@@ -3,6 +3,14 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING files
+Liitetiedostot
+---STRINGEND
+
+---STRING folder attachments
+Kansion liitetiedostot
+---STRINGEND
+
 ---STRING images
 Kuvat
 ---STRINGEND
@@ -15,15 +23,15 @@ Kuvien lisäysikkuna
 Sivun liitetiedostot
 ---STRINGEND
 
----STRING folder attachments
-Kansion liitetiedostot
----STRINGEND
-
----STRING files
-Liitetiedostot
----STRINGEND
-
 ---STRING unified search
 Yhdistetty haku
+---STRINGEND
+
+---STRING query
+Haku
+---STRINGEND
+
+---STRING search
+Hae
 ---STRINGEND
 

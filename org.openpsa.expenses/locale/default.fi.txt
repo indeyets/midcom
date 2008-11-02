@@ -1,73 +1,73 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE fi
 
 ---STRING date
-Date
+Päivämäärä
 ---STRINGEND
 
 ---STRING delete hour report
-Delete hour report
+Poista tuntikirjaus
 ---STRINGEND
 
 ---STRING description
-Description
+Kuvaus
 ---STRINGEND
 
 ---STRING expenses in week %s
-Expenses in week %s
+Kulut viikolla %s
 ---STRINGEND
 
 ---STRING hour report
-Hour report
+Tuntiraportti
 ---STRINGEND
 
 ---STRING hours
-Hours
+Tunteja
 ---STRINGEND
 
 ---STRING invoiceable
-Invoiceable
+Laskutettava
 ---STRINGEND
 
 ---STRING list_hours_task %s
-List of Hours for Task %s
+Listaa tehtävän %s tunnit
 ---STRINGEND
 
 ---STRING next week
-next week
+seuraava viikko
 ---STRINGEND
 
 ---STRING org.openpsa.expenses
-Expense tracking
+Kulujen seuranta
 ---STRINGEND
 
 ---STRING person
-Person
+Henkilö
 ---STRINGEND
 
 ---STRING previous week
-previous week
+edellinen viikko
 ---STRINGEND
 
 ---STRING report hours
-Report hours
+Raportoi tunteja
 ---STRINGEND
 
 ---STRING reporter
-Reporter
+Raportoija
 ---STRINGEND
 
 ---STRING task
-Task
+Tehtävä
 ---STRINGEND
 
 ---STRING total
-Total
+Yhteensä
 ---STRINGEND
 
 ---STRING uninvoiceable
-Not invoiceable
+Ei-laskutettava
 ---STRINGEND
 

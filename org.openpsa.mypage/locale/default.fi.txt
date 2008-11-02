@@ -23,6 +23,14 @@ Luo tehtävä
 Yhteenveto
 ---STRINGEND
 
+---STRING not working on a task
+Ei tehtävää
+---STRINGEND
+
+---STRING now working on
+Nyt työn alla
+---STRINGEND
+
 ---STRING org.openpsa.mypage
 Henkilökohtainen yhteenveto
 ---STRINGEND
@@ -33,6 +41,10 @@ Viikon %s esikatselu
 
 ---STRING review of week %s
 Viikon %s yhteenveto
+---STRINGEND
+
+---STRING totals
+Yhteensä
 ---STRINGEND
 
 ---STRING updated %s
@@ -51,14 +63,31 @@ Päivitetty eilen
 Viikon yhteenveto
 ---STRINGEND
 
----STRING totals
-Yhteensä
+---STRING invoiceable
+Laskutettava
 ---STRINGEND
 
----STRING not working on a task
-Ei tehtävää
+---STRING reporting %d hours to task %s failed, reason %s
+%d tunnin raportointi tehtävään %s epäonnistui, syy %s
 ---STRINGEND
 
----STRING now working on
-Nyt työn alla
+---STRING see all %s hours
+Näytä kaikki %s tunnit
 ---STRINGEND
+
+---STRING successfully reported %d hours to task %s
+%d tunnin raportointi tehtävään %s onnistui
+---STRINGEND
+
+---STRING this week
+Tämä viikko
+---STRINGEND
+
+---STRING uninvoiceable
+Ei-laskutettava
+---STRINGEND
+
+---STRING worked from %s to %s
+Työskennelty %s-%s
+---STRINGEND
+

@@ -3,6 +3,10 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING %s %s could not be exported for replication because one of its parents is not approved
+%s %s ei voida replikoida koska jokin sen vanhemmista ei ole hyväksytty.
+---STRINGEND
+
 ---STRING POST to %s
 HTTP POST-lähetys osoitteeseen <code>%s</code>
 ---STRINGEND
@@ -119,7 +123,23 @@ Siirtotyyppi
 Pakota muutosten sisäänluku
 ---STRINGEND
 
----STRING %s %s could not be exported for replication because one of its parents is not approved
-%s %s ei voida replikoida koska jokin sen vanhemmista ei ole hyväksytty.
+---STRING http post transport
+HTTP POST -protokolla
+---STRINGEND
+
+---STRING replication queue %s cannot be written by Apache user
+Replikointijonoon %s ei voida kirjoittaa Apache-käyttäjän oikeuksilla.
+---STRINGEND
+
+---STRING replication queue %s does not exist
+Replikointijonoa %s ei löydy
+---STRINGEND
+
+---STRING staging2live subscription with type filter
+Esikatselu/tuotanto tyyppisuodattimella
+---STRINGEND
+
+---STRING xml filters
+XML-suodattimet (tehokäyttäjille)
 ---STRINGEND
 

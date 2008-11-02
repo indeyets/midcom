@@ -55,6 +55,10 @@ Order saved
 Photo gallery
 ---STRINGEND
 
+---STRING photo
+Photo
+---STRINGEND
+
 ---STRING photo selection method
 Photo selection method
 ---STRINGEND
@@ -93,9 +97,5 @@ By date taken
 
 ---STRING you can also create sub galleries for the current gallery
 You can also create sub galleries for the current gallery
----STRINGEND
-
----STRING photo
-Photo
 ---STRINGEND
 

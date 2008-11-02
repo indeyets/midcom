@@ -63,11 +63,19 @@ Tallenna arvioiden pisteet kommentoitavaan tietueeseen
 Tallenna arvio olion kenttään
 ---STRINGEND
 
+---STRING ratings_cache_total
+Tallenna summa tietueeseen keskiarvon sijaan
+---STRINGEND
+
 ---STRING ratings_enable
 Salli arviointi
 ---STRINGEND
 
----STRING ratings_cache_total
-Tallenna summa tietueeseen keskiarvon sijaan
+---STRING comment_count_cache_to_object
+Tallenna kommenttien määrä tietueeseen jota kommentoidaan
+---STRINGEND
+
+---STRING comment_count_cache_to_object_property
+Tietueen kenttä johon kommenttien määrä tallennetaan
 ---STRINGEND
 

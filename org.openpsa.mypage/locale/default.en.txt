@@ -19,8 +19,20 @@ Create person
 Create task
 ---STRINGEND
 
+---STRING invoiceable
+Invoiceable
+---STRINGEND
+
 ---STRING my summary
 My summary
+---STRINGEND
+
+---STRING not working on a task
+Not working on a task
+---STRINGEND
+
+---STRING now working on
+Now working on
 ---STRINGEND
 
 ---STRING org.openpsa.mypage
@@ -31,8 +43,32 @@ Personal Summary
 Preview for week %s
 ---STRINGEND
 
+---STRING reporting %d hours to task %s failed, reason %s
+Reporting %d hours to task %s failed, reason %s
+---STRINGEND
+
 ---STRING review of week %s
 Review of week %s
+---STRINGEND
+
+---STRING see all %s hours
+See all %s hours
+---STRINGEND
+
+---STRING successfully reported %d hours to task %s
+Successfully reported %d hours to task %s
+---STRINGEND
+
+---STRING this week
+This week
+---STRINGEND
+
+---STRING totals
+Totals
+---STRINGEND
+
+---STRING uninvoiceable
+Not invoiceable
 ---STRINGEND
 
 ---STRING updated %s
@@ -51,42 +87,7 @@ Updated yesterday
 Week review
 ---STRINGEND
 
----STRING totals
-Totals
----STRINGEND
-
----STRING see all %s hours
-See all %s hours
----STRINGEND
-
----STRING this week
-This week
----STRINGEND
-
----STRING invoiceable
-Invoiceable
----STRINGEND
-
----STRING uninvoiceable
-Not invoiceable
----STRINGEND
-
----STRING not working on a task
-Not working on a task
----STRINGEND
-
----STRING now working on
-Now working on
----STRINGEND
-
----STRING reporting %d hours to task %s failed, reason %s
-Reporting %d hours to task %s failed, reason %s
----STRINGEND
-
----STRING successfully reported %d hours to task %s
-Successfully reported %d hours to task %s
----STRINGEND
-
 ---STRING worked from %s to %s
 Worked from %s to %s
 ---STRINGEND
+

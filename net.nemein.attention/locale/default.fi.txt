@@ -11,3 +11,7 @@ del.icio.us -käyttäjätunnus
 Last.fm -käyttäjätunnus
 ---STRINGEND
 
+---STRING net.nemein.attention
+Kiinnostuksen seuranta
+---STRINGEND
+

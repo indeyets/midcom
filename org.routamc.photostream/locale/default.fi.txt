@@ -158,6 +158,10 @@ Moderoinnin callback-asetukset
 Moderoinnin callback-snippet
 ---STRINGEND
 
+---STRING moderate photos
+Valokuvien moderointi
+---STRINGEND
+
 ---STRING moderate photos for folder %s
 Moderoi kansion %s kuvia
 ---STRINGEND
@@ -436,7 +440,7 @@ Valokuvasi on hyväksytty
 Valokuvasi on hylätty
 ---STRINGEND
 
----STRING moderate photos
-Valokuvien moderointi
+---STRING sorted by %s
+Järjestelty %s mukaan
 ---STRINGEND
 

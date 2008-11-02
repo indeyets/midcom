@@ -111,3 +111,23 @@ Place details
 Yahoo! application key
 ---STRINGEND
 
+---STRING city
+city
+---STRINGEND
+
+---STRING country
+country
+---STRINGEND
+
+---STRING postalcode
+postal code
+---STRINGEND
+
+---STRING region
+region
+---STRINGEND
+
+---STRING street
+street
+---STRINGEND
+

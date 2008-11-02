@@ -3,16 +3,8 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
----STRING xep_city
-Kaupunki
----STRINGEND
-
 ---STRING coordinates
 Koordinaatit
----STRINGEND
-
----STRING xep_country
-Maa
 ---STRINGEND
 
 ---STRING georss
@@ -75,14 +67,6 @@ Plazes salasana
 Plazes käyttäjätunnus
 ---STRINGEND
 
----STRING xep_postalcode
-Postinumero
----STRINGEND
-
----STRING xep_region
-Alue
----STRINGEND
-
 ---STRING select your country
 Valitse maa
 ---STRINGEND
@@ -99,6 +83,22 @@ Tekstiviestin sisäälukuun sallittu IP-osoite
 lähde: %s
 ---STRINGEND
 
+---STRING xep_city
+Kaupunki
+---STRINGEND
+
+---STRING xep_country
+Maa
+---STRINGEND
+
+---STRING xep_postalcode
+Postinumero
+---STRINGEND
+
+---STRING xep_region
+Alue
+---STRINGEND
+
 ---STRING xep_street
 Katuosoite
 ---STRINGEND
@@ -109,5 +109,25 @@ Tarkempi paikka
 
 ---STRING yahoo_application_key
 Yahoo!:n kehittäjäavain
+---STRINGEND
+
+---STRING city
+kaupunki
+---STRINGEND
+
+---STRING country
+maa
+---STRINGEND
+
+---STRING postalcode
+postinumero
+---STRINGEND
+
+---STRING region
+alue
+---STRINGEND
+
+---STRING street
+katu
 ---STRINGEND
 

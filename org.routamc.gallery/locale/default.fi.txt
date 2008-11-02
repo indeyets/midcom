@@ -3,6 +3,26 @@
 ---CVS $Id$
 ---LANGUAGE fi
 
+---STRING approve automatically
+Hyväksy automaattisesti
+---STRINGEND
+
+---STRING by score
+Järjestellyn mukaan
+---STRINGEND
+
+---STRING create
+Luo
+---STRINGEND
+
+---STRING create a new sub gallery
+Luo uusi aligalleria
+---STRINGEND
+
+---STRING enable ajax editing
+Salli AJAX-editointi
+---STRINGEND
+
 ---STRING gallery settings
 Gallerian asetukset
 ---STRINGEND
@@ -11,44 +31,12 @@ Gallerian asetukset
 Valitse kuinka kuvia näytetään galleriassa
 ---STRINGEND
 
----STRING org.routamc.gallery
-Valokuvagalleria
----STRINGEND
-
----STRING photo selection method
-Valokuvien valintatapa
----STRINGEND
-
----STRING photos with tags
-Tag-merkkejä vastaavat kuvat
----STRINGEND
-
 ---STRING hand picked photos
 Käsin valitut kuvat
 ---STRINGEND
 
----STRING sort photos
-Järjestele kuvia
----STRINGEND
-
----STRING sort photos by dragging and dropping
-Järjestele kuvat siirtämällä niitä
----STRINGEND
-
----STRING you can also create sub galleries for the current gallery
-Voit myös luoda aligallerioita nykyiselle gallerialle
----STRINGEND
-
----STRING approve automatically
-Hyväksy automaattisesti
----STRINGEND
-
----STRING create a new sub gallery
-Luo uusi aligalleria
----STRINGEND
-
----STRING create
-Luo
+---STRING hide items from navigation
+Piilota kohteet navigaatiosta
 ---STRINGEND
 
 ---STRING hide thumbnails
@@ -59,38 +47,55 @@ Piilota pikkukuvat
 Navigaatiossa näkyvien kohteiden määrä
 ---STRINGEND
 
----STRING sort order
-Näyttöjärjestys
+---STRING order saved
+Järjestys tallennettu
 ---STRINGEND
 
----STRING hide items from navigation
-Piilota kohteet navigaatiosta
+---STRING org.routamc.gallery
+Valokuvagalleria
 ---STRINGEND
 
----STRING by score
-Järjestellyn mukaan
----STRINGEND
-
----STRING taken
-Kuvauspäivämäärä (vanhin ensin)
----STRINGEND
-
----STRING reverse taken
-Käänteinen kuvauspäivämäärä (uusin ensin)
----STRINGEND
-
----STRING reverse edited
-Käänteinen muokkauspäivämäärä
+---STRING photo selection method
+Valokuvien valintatapa
 ---STRINGEND
 
 ---STRING photos per page
 Kuvien lukumäärä sivua kohti
 ---STRINGEND
 
----STRING enable ajax editing
-Salli AJAX-editointi
+---STRING photos with tags
+Tag-merkkejä vastaavat kuvat
 ---STRINGEND
 
----STRING order saved
-Järjestys tallennettu
+---STRING reverse edited
+Käänteinen muokkauspäivämäärä
 ---STRINGEND
+
+---STRING reverse taken
+Käänteinen kuvauspäivämäärä (uusin ensin)
+---STRINGEND
+
+---STRING sort order
+Näyttöjärjestys
+---STRINGEND
+
+---STRING sort photos
+Järjestele kuvia
+---STRINGEND
+
+---STRING sort photos by dragging and dropping
+Järjestele kuvat siirtämällä niitä
+---STRINGEND
+
+---STRING taken
+Kuvauspäivämäärä (vanhin ensin)
+---STRINGEND
+
+---STRING you can also create sub galleries for the current gallery
+Voit myös luoda aligallerioita nykyiselle gallerialle
+---STRINGEND
+
+---STRING photo
+Valokuva
+---STRINGEND
+

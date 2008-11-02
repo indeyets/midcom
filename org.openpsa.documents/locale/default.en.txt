@@ -15,12 +15,16 @@ Powerpoint
 Create document
 ---STRINGEND
 
----STRING document search
-Document search
+---STRING directory
+Directory
 ---STRINGEND
 
 ---STRING document
 Document
+---STRINGEND
+
+---STRING document search
+Document search
 ---STRINGEND
 
 ---STRING document status
@@ -65,9 +69,5 @@ Search
 
 ---STRING text/plain
 Text
----STRINGEND
-
----STRING directory
-Directory
 ---STRINGEND
 

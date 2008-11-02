@@ -7,10 +7,6 @@
 Näytä vain hyväksytyt artikkelit
 ---STRINGEND
 
----STRING autoindex
-Luo automaattinen sisällysluettelo kansiolle?
----STRINGEND
-
 ---STRING approve
 Hyväksy
 ---STRINGEND
@@ -29,6 +25,10 @@ Artikkelilinkki poistettu
 
 ---STRING auto_approve
 Hyväksy uudet artikkelit oletuksena
+---STRINGEND
+
+---STRING autoindex
+Luo automaattinen sisällysluettelo kansiolle?
 ---STRINGEND
 
 ---STRING autoindex-notes
@@ -111,6 +111,10 @@ Tyyppi
 Kansiosta
 ---STRINGEND
 
+---STRING hide_navigation
+Piilota artikkelit navigaatiosta
+---STRINGEND
+
 ---STRING if you want to delete the original article, <a href="%s">click here</a>
 Jos haluat poistaa alkuperäisen artikkelin, <a href="%s">klikkaa tästä</a>.
 ---STRINGEND
@@ -187,7 +191,35 @@ Näytä artikkeli
 Onko kansio näkyvissä
 ---STRINGEND
 
----STRING hide_navigation
-Piilota artikkelit navigaatiosta
+---STRING activate autoindex
+Luodaanko kansiolle automaattinen etusivu?
+---STRINGEND
+
+---STRING callback_function
+Luonnin jälkeen kutsuttava callback-funktio jota käytetään esim. sivujen linkitykseen
+---STRINGEND
+
+---STRING callback_snippet
+Luonnin jälkeen kutsuttavan callback-funktion sisältävä snippet-tietue
+---STRINGEND
+
+---STRING enable_ajax_editing
+Salli sivustolla AJAX-editointi
+---STRINGEND
+
+---STRING enable_article_links
+Salli sivujen linkitys
+---STRINGEND
+
+---STRING folder_in_title
+Näytä kansion nimi sivun otsikossa
+---STRINGEND
+
+---STRING show blobs in autoindex
+Näytä liitetiedostot automaattisella etusivulla
+---STRINGEND
+
+---STRING sort_order
+Järjestely
 ---STRINGEND
 

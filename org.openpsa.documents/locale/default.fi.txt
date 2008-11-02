@@ -7,6 +7,10 @@
 %s dokumentti
 ---STRINGEND
 
+---STRING application/vnd.ms-powerpoint
+Powerpoint
+---STRINGEND
+
 ---STRING create document
 Luo dokumentti
 ---STRINGEND
@@ -55,7 +59,15 @@ Hae
 Teksti
 ---STRINGEND
 
----STRING application/vnd.ms-powerpoint
-Powerpoint
+---STRING directory
+Kansio
+---STRINGEND
+
+---STRING document
+Dokumentti
+---STRINGEND
+
+---STRING document status
+Dokumentin tila
 ---STRINGEND
 
