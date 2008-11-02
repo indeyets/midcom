@@ -1,146 +1,122 @@
 ---# MidCOM String Database
 ---VERSION 2.1.0
 ---CVS $Id$
----LANGUAGE en
+---LANGUAGE sv
 
 ---STRING add text file
-Add text file
+Lägg till textfil
 ---STRINGEND
 
 ---STRING all style elements
-All style elements
----STRINGEND
-
----STRING cascading style sheet
-Cascading Style Sheet
+Alla stilelement
 ---STRINGEND
 
 ---STRING component default
-Component default
+Komponentens standardinställningar
 ---STRINGEND
 
 ---STRING confirm delete of file %s
-Confirm delete of file '%s'
+Bekräfta bortttagning av filen '%s'
 ---STRINGEND
 
 ---STRING copy to editor
-Copy to editor
+Kopiera till editor
 ---STRINGEND
 
 ---STRING create a new element
-Create a new element
+Skapa nytt element
 ---STRINGEND
 
 ---STRING delete cancelled
-Delete cancelled
+Borttagning avbruten
 ---STRINGEND
 
 ---STRING delete file %s
-Delete file '%s'
+Raderade filen '%s'
 ---STRINGEND
 
 ---STRING edit element %s
-Edit element %s
+Ändra element %s
 ---STRINGEND
 
 ---STRING edit file %s
-Edit file %s
+Ändra filen %s
 ---STRINGEND
 
 ---STRING edit layout template
-Edit layout template
+Ändra stilmall
 ---STRINGEND
 
 ---STRING edit text file
-Edit text file
+Ändra textfil
 ---STRINGEND
 
 ---STRING element %s exists
-Element '%s' exists
+Element '%s' finns redan
 ---STRINGEND
 
 ---STRING element from file
-Upload an element
+Ladda upp element
 ---STRINGEND
 
 ---STRING element name
-Element name
----STRINGEND
-
----STRING element name required
-Element name is required
+Elementnamn
 ---STRINGEND
 
 ---STRING file %s deleted
-File '%s' deleted
+Filen '%s' raderad
 ---STRINGEND
 
 ---STRING file contents
-File contents
+Filinnehåll
 ---STRINGEND
 
 ---STRING file information
-File information
+Filinformation
 ---STRINGEND
 
 ---STRING filename
-Filename
+Filnamn
 ---STRINGEND
 
 ---STRING javascript
 JavaScript
 ---STRINGEND
 
----STRING list of %s folders using the same style template path
-List of %s folders using the same style template path
----STRINGEND
-
 ---STRING local element
-Local element
+Lokalt element
 ---STRINGEND
 
 ---STRING midcom.admin.styleeditor
-Style editor
+Stilmalls editor
 ---STRINGEND
 
 ---STRING mimetype
-File type
+Filtyp
 ---STRINGEND
 
 ---STRING no files
-No files
+Inga filer
 ---STRINGEND
 
 ---STRING plain text
-Plain text
----STRINGEND
-
----STRING style attachments
-Style attachments
----STRINGEND
-
----STRING style editor
-Style editor
+Text
 ---STRINGEND
 
 ---STRING style element %s created
-Style element %s created
+Stilelement %s skapad
 ---STRINGEND
 
 ---STRING style element %s updated
-Style element %s updated
+Stilelement %s uppdaterad
 ---STRINGEND
 
 ---STRING style element list
-List of style elements
----STRINGEND
-
----STRING style elements for %s
-Style elements for style %s
+Lista över stilelement
 ---STRINGEND
 
 ---STRING upload file
-Upload file
+Ladda upp fil
 ---STRINGEND
 
 ---STRING url

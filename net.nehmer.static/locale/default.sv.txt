@@ -3,12 +3,12 @@
 ---CVS $Id$
 ---LANGUAGE sv
 
----STRING autoindex
-Automatiskt skapa en index sida för det här ämnet?
----STRINGEND
-
 ---STRING approve
 Godkänn
+---STRINGEND
+
+---STRING autoindex
+Automatiskt skapa en index sida för det här ämnet?
 ---STRINGEND
 
 ---STRING autoindex-notes
@@ -76,10 +76,126 @@ Statisk innehåll
 ---STRINGEND
 
 ---STRING unapprove
-Ej godkänd
+Godkänn inte
 ---STRINGEND
 
 ---STRING view article
 Visa artikel
+---STRINGEND
+
+---STRING Only show approved articles
+Visa endast godkända artiklar
+---STRINGEND
+
+---STRING activate autoindex
+Automatisk skapa ett index för det här ämnet
+---STRINGEND
+
+---STRING article
+Artikel
+---STRINGEND
+
+---STRING article %s deleted
+Artikeln %s raderad
+---STRINGEND
+
+---STRING article link deleted
+Artikellänk raderad
+---STRINGEND
+
+---STRING auto_approve
+Godkänn nya artiklar automatiskt
+---STRINGEND
+
+---STRING back to overview
+Tillbaka till översikten
+---STRINGEND
+
+---STRING content
+Innehåll
+---STRINGEND
+
+---STRING default_schema
+Standard schema för artiklar
+---STRINGEND
+
+---STRING delete article link
+Radera artikellänken
+---STRINGEND
+
+---STRING delete cancelled
+Radering avbruten
+---STRINGEND
+
+---STRING delete link
+Radera länk
+---STRINGEND
+
+---STRING delete_link
+Radera länk
+---STRINGEND
+
+---STRING enable_article_links
+Sidlänknings system
+---STRINGEND
+
+---STRING failed to delete the article link, contact the site administrator
+Misslyckades med att radera artikellänken, kontakta administratören
+---STRINGEND
+
+---STRING folder_in_title
+Visa mappens namn i sidans titel
+---STRINGEND
+
+---STRING from
+Från
+---STRINGEND
+
+---STRING hide_navigation
+Dölj artiklar från navigation
+---STRINGEND
+
+---STRING if you want to delete the original article, <a href="%s">click here</a>
+Om du vill radera orginal artikeln, <a href="%s">klicka här</a>
+---STRINGEND
+
+---STRING indexinnav
+Visa index artikeln i navigering?
+---STRINGEND
+
+---STRING net.nehmer.static
+Vanligt innehåll
+---STRINGEND
+
+---STRING schema settings
+Data schemats inställningar
+---STRINGEND
+
+---STRING schemadb
+Schemadatabas för det här ämnet
+---STRINGEND
+
+---STRING show blobs in autoindex
+Visa blobs i autoindex
+---STRINGEND
+
+---STRING show_blobs_in_autoindex
+Visa blobs i autoindex
+---STRINGEND
+
+---STRING sort_order
+Sorterings ordning
+---STRINGEND
+
+---STRING symlink_topic
+Hämta innehåll från ett annat ämne ("mjuklänk")
+---STRINGEND
+
+---STRING symlink_topic disabled
+Inget ämne valt
+---STRINGEND
+
+---STRING visible
+Ska ämnet vara synligt
 ---STRINGEND
 

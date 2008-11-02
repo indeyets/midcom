@@ -7,6 +7,10 @@
 Ändra person
 ---STRINGEND
 
+---STRING net.nemein.personnel
+Personal
+---STRINGEND
+
 ---STRING no permissions for
 Inga rättigheter för
 ---STRINGEND
@@ -43,7 +47,251 @@ Visa person
 Ditt konto har inte tillräckligt med rättigheter för att ta del av information om det här personen
 ---STRINGEND
 
----STRING net.nemein.personnel
-Personal
+---STRING accessibility
+Tillgänglighet
+---STRINGEND
+
+---STRING alphabetic
+Alfabetisk
+---STRINGEND
+
+---STRING amount
+Mängd
+---STRINGEND
+
+---STRING city
+Stad
+---STRINGEND
+
+---STRING create a new group
+Skapa ny grupp
+---STRINGEND
+
+---STRING create person
+Skapa person
+---STRINGEND
+
+---STRING delete person
+Radera person
+---STRINGEND
+
+---STRING delete person confirmation message
+Är du säker på att du vill radera den hör personen?
+---STRINGEND
+
+---STRING display in navigation
+Visa i navigering
+---STRINGEND
+
+---STRING display nothing
+Visa inget
+---STRINGEND
+
+---STRING double click to edit
+Dubbelklicka för att ändra.
+---STRINGEND
+
+---STRING drag and drop to sort
+Släpa och släpp för att sortera.
+---STRINGEND
+
+---STRING edit group
+Ändra grupp
+---STRINGEND
+
+---STRING edit group %s
+Ändra gruppen "%s"
+---STRINGEND
+
+---STRING edit user account
+Ändra användarkonto
+---STRINGEND
+
+---STRING email
+Epost
+---STRINGEND
+
+---STRING email sent
+Epost skickat
+---STRINGEND
+
+---STRING enable alphabetical ordering
+Slå på alfabetisk ordning
+---STRINGEND
+
+---STRING enter the same password twice
+Skriv i samma lösenord två gånger
+---STRINGEND
+
+---STRING firstname
+Förnamn
+---STRINGEND
+
+---STRING generate
+Generera
+---STRINGEND
+
+---STRING generate random passwords
+Generera lösenord
+---STRINGEND
+
+---STRING group
+Grupp att visa
+---STRINGEND
+
+---STRING group %s saved
+Grupp '%s' sparad
+---STRINGEND
+
+---STRING groups
+Grupper
+---STRINGEND
+
+---STRING hide this group from the list
+Dölj grupp från listan.
+---STRINGEND
+
+---STRING invalid email address
+Ogiltig epostadress
+---STRINGEND
+
+---STRING job title
+Titel
+---STRINGEND
+
+---STRING lastname
+Efternamn
+---STRINGEND
+
+---STRING list settings
+Lista inställningar
+---STRINGEND
+
+---STRING manually sorted
+Manuell sortering
+---STRINGEND
+
+---STRING manually sorted and grouped
+Manuellt sorterad och grupperad
+---STRINGEND
+
+---STRING maximum %s
+Max %s
+---STRINGEND
+
+---STRING members
+Medlemmar
+---STRINGEND
+
+---STRING no persons found
+Inga personer hittades i gruppen!
+---STRINGEND
+
+---STRING no persons found.
+Det finns inga personer i den här gruppen.
+---STRINGEND
+
+---STRING opens in a new window
+Öppnas i ett nytt fönster
+---STRINGEND
+
+---STRING order saved
+Ordning sparad!
+---STRINGEND
+
+---STRING password
+Lösenord
+---STRINGEND
+
+---STRING password length
+Lösenords längd
+---STRINGEND
+
+---STRING password sent by email to the user
+Lösenord skickat med epost till användaren
+---STRINGEND
+
+---STRING passwords did not match
+Lösenordena matchar inte
+---STRINGEND
+
+---STRING person %s created
+Personen '%s' skapad
+---STRINGEND
+
+---STRING person %s saved
+Personen '%s' sparad
+---STRINGEND
+
+---STRING postal code
+Postnummer
+---STRINGEND
+
+---STRING prevent repeating characters
+Förhindra upprepning av bokstäver
+---STRINGEND
+
+---STRING prevent similar characters
+Förhindra liknande bokstäver
+---STRINGEND
+
+---STRING retype password
+Skriv lösenord igen
+---STRINGEND
+
+---STRING send password by email to
+Skicka lösenord via epost till
+---STRINGEND
+
+---STRING sending of the email failed
+Skicka lösenord via epost misslyckades
+---STRINGEND
+
+---STRING sort personnel into sub groups
+Sortera personal i undergrupper
+---STRINGEND
+
+---STRING sort personnel manually
+Sortera personal manuellt
+---STRINGEND
+
+---STRING sorting order
+Sorterings ordning
+---STRINGEND
+
+---STRING street address
+Gatuadress
+---STRINGEND
+
+---STRING this person will be displayed first
+Denhär personen kommer att visas först
+---STRINGEND
+
+---STRING unsorted
+Osorterad
+---STRINGEND
+
+---STRING use only characters
+Använd bara bokstäver
+---STRINGEND
+
+---STRING user account
+Användarkonto
+---STRINGEND
+
+---STRING user account updated successfully
+Anvöndarkontot uppdaterades
+---STRINGEND
+
+---STRING username
+Användarnamn
+---STRINGEND
+
+---STRING username contains illegal characters
+Användarnamner innehåller ogiltiga tecken
+---STRINGEND
+
+---STRING work phone
+Arbetstelefon
 ---STRINGEND
 

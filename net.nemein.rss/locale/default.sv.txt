@@ -15,6 +15,14 @@ Aggregator läge
 Aggregator inställningar
 ---STRINGEND
 
+---STRING bloglines
+Bloglines
+---STRINGEND
+
+---STRING bloglines account
+Bloglines konto
+---STRINGEND
+
 ---STRING cancel
 Avbryt
 ---STRINGEND
@@ -35,7 +43,15 @@ Alla detaljer
 Visa objekt som
 ---STRINGEND
 
+---STRING feed icon url
+Kanalens icon url
+---STRINGEND
+
 ---STRING feed title
+Kanalens titel
+---STRINGEND
+
+---STRING feed title display
 Kanalens titel
 ---STRINGEND
 
@@ -51,12 +67,24 @@ Importera prenumerationer i OPML
 Hur många senaste objekt ska visas?
 ---STRINGEND
 
+---STRING local
+Spara lokalt
+---STRINGEND
+
+---STRING net.nemein.rss
+RSS och Atom nyhets samlare
+---STRINGEND
+
 ---STRING opml file
 OPML fil
 ---STRINGEND
 
+---STRING remote from feed
+Från feed
+---STRINGEND
+
 ---STRING remove feed
-Radera kanal
+Radera feed
 ---STRINGEND
 
 ---STRING rss aggregator
@@ -79,6 +107,10 @@ RSS vinsings inställningar
 Spara
 ---STRINGEND
 
+---STRING subscription mode
+Prenumerations läge
+---STRINGEND
+
 ---STRING titles
 Endast titlar
 ---STRINGEND
@@ -87,35 +119,67 @@ Endast titlar
 Har ingen titel
 ---STRINGEND
 
----STRING bloglines
-Bloglines
+---STRING %s items
+%s artiklar importerade
 ---STRINGEND
 
----STRING bloglines account
-Bloglines konto
+---STRING approve new items automatically
+Godkänn nya artiklar automatiskt
 ---STRINGEND
 
----STRING feed icon url
-Kanalens icon url
+---STRING default author for items
+Standard författare för artiklar
 ---STRINGEND
 
----STRING feed title display
-Kanalens titel
+---STRING delete feed
+Radera feed
 ---STRINGEND
 
----STRING local
-Spara lokalt
+---STRING edit feed %s
+Ändra feed "%s"
 ---STRINGEND
 
----STRING net.nemein.rss
-RSS och Atom nyhets samlare
+---STRING fetch feed %s
+Hämtade feed "%s"
 ---STRINGEND
 
----STRING remote from feed
-Från kanal
+---STRING keep removed items
+Spara artiklar raderade från feed lokalt
 ---STRINGEND
 
----STRING subscription mode
-Prenumerations läge
+---STRING latest fetch %s
+Senaste hämtning gjordes %s
+---STRINGEND
+
+---STRING latest item from %s
+Senaste artikel är från %s
+---STRINGEND
+
+---STRING local item
+Lokalt kopia av artikel
+---STRINGEND
+
+---STRING manage feeds
+Hantera feeds
+---STRINGEND
+
+---STRING manage feeds of %s
+Hantera feeds för katalog "%s"
+---STRINGEND
+
+---STRING n/a
+N/A
+---STRINGEND
+
+---STRING no items found in feed
+Inga artiklar funna i feed.
+---STRINGEND
+
+---STRING remote item
+Artikel i feed
+---STRINGEND
+
+---STRING subscribe feeds
+Prenumerera på nya feeds
 ---STRINGEND
 

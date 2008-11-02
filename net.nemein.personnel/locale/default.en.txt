@@ -107,6 +107,10 @@ Group '%s' saved
 Groups
 ---STRINGEND
 
+---STRING hide this group from the list
+Hide this group from the list
+---STRINGEND
+
 ---STRING how many persons should be displayed in a row
 How many persons should be displayed in a row
 ---STRINGEND
@@ -305,9 +309,5 @@ Work phone
 
 ---STRING your account has insufficient permissions
 Your account has insufficient permissions to access details of this person
----STRINGEND
-
----STRING hide this group from the list
-Hide this group from the list
 ---STRINGEND
 

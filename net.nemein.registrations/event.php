@@ -438,7 +438,7 @@ class net_nemein_registrations_event extends net_nemein_calendar_event_dba
             $id = $user;
         }
 
-        if (! array_key_exists($id, $this->_registration_cache))
+        if (!array_key_exists($id, $this->_registration_cache))
         {
             $qb = $this->get_registrations_qb();
             $qb->add_constraint('uid', '=', $id);

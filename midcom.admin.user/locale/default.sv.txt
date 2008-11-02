@@ -271,3 +271,11 @@ Skriv meddelande som kommer att skickas till mottagarna
 Ditt lösenord är ändrat
 ---STRINGEND
 
+---STRING apply to selected
+Värkställ för valda
+---STRINGEND
+
+---STRING current time (%s)
+nuvarande tid (%s)
+---STRINGEND
+
