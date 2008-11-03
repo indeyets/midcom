@@ -69,6 +69,11 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
     static $memcache_operational = true;
 
     /**
+     * Serialize content so that php-midgard can handle it properly
+     */
+    var $_auto_serialize = true;
+
+    /**
      * The constructor is empty yet.
      */
     function __construct()
@@ -90,9 +95,6 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
         {
             $this->_port = $this->_config['port'];
         }
-
-        // Force-disable the php serializer calls, let memcached worry about it.
-        // $this->_auto_serialize = false;
 
         // Open the persistant connection.
         if (is_null(self::$memcache))
