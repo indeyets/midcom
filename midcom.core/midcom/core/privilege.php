@@ -108,6 +108,8 @@ class midcom_core_privilege extends midcom_core_privilege_db
      */
     function __construct($src = null)
     {
+        parent::__construct();
+
         if (! is_null($src))
         {
             // Explicity manual listing for performance reasons.
