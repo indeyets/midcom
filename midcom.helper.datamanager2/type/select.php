@@ -313,6 +313,12 @@ class midcom_helper_datamanager2_type_select extends midcom_helper_datamanager2_
                     return null;
                 }
 
+                if (!$_MIDCOM->componentloader->is_loaded($this->storage->_schema->fields[$this->name]['widget_config']['component']))
+                {
+                    // Ensure the corresponding component is loaded
+                    $_MIDCOM->componentloader->load($this->storage->_schema->fields[$this->name]['widget_config']['component']);
+                }
+
                 $object = new $class($key);
 
                 if (!$object)
