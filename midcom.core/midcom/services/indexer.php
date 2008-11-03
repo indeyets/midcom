@@ -228,7 +228,7 @@ class midcom_services_indexer
      * @return Array An array of documents matching the query, or false on a failure.
      * @todo Refactor into multiple methods
      */
-    function query ($query, $filter = null)
+    function query($query, $filter = null)
     {
         if ($this->_disabled)
         {
@@ -242,7 +242,7 @@ class midcom_services_indexer
         $query = $i18n->convert_to_utf8($query);
 
         $nav = new midcom_helper_nav();
-        $result_raw = $this->_backend->query ($query, $filter);
+        $result_raw = $this->_backend->query($query, $filter);
         if ($result_raw === false)
         {
             debug_add("Failed to execute the query, aborting.", MIDCOM_LOG_INFO);
@@ -274,10 +274,11 @@ class midcom_services_indexer
                 // Try to retrieve object:
                 // Strip language code from end of RI if it looks like "<GUID>_<LANG>" (because *many* places suppose it's plain GUID)
                 $object = $_MIDCOM->dbfactory->get_object_by_guid(preg_replace('/^([0-9a-f]{32,80})_[a-z]{2}$/', '\\1', $document->RI));
-                if (! $object)
+                if (   !$object
+                    || !$object->guid)
                 {
                     // Skip document, the object is hidden.
-                    debug_add("Skipping the MidCOM document {$document->title}, it seems to be invisible");
+                    debug_add("Skipping the MidCOM document {$document->title} because it is not viewable");
                     continue;
                 }
             }
