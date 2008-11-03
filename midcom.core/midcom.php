@@ -181,7 +181,7 @@ function midcom_autoload($class_name)
         }
     }
     
-    require($path);
+    require_once($path);
     $autoloaded++;
     //debug_add("Autoloader got '{$path}', loading file {$autoloaded}");
 }
