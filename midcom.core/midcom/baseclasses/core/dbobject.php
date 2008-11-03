@@ -1178,13 +1178,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _rewrite_timestamps_to_unixdate(&$object)
     {
-        $timestamps = array
-        (
-            'revised', 
-            'created', 
-            'locked', 
-            'approved'
-        );
         $metadata_timestamps = array
         (
             'created', 
@@ -1198,76 +1191,41 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             'scheduleend',
         );
 
-        foreach ($timestamps as $timestamp)
-        {
-            if (property_exists($object, $timestamp))
-            {
-                if (   $object->$timestamp == '0000-00-00 00:00:00'
-                    || $object->$timestamp == '0000-00-00 00:00:00+0000'
-                    || empty($object->timestamp))
-                {
-                    $object->$timestamp = 0;
-                }
-                else
-                {
-                    // We do this silently to avoid problems with broken values. They are rewritten to a
-                    // zero timestamp silently. Also, we need special treatment for NULL timestamps, which
-                    // are cast to '0' (which is in theory wrong for a stamp like '0000-00-00 00:00:00').
-                    $tmp = @strtotime($object->$timestamp);
-                    if ($tmp == -1)
-                    {
-                        $tmp = 0;
-                    }
-                    $object->$timestamp = @strtotime("{$object->$timestamp} GMT");
-                }
-            }
-        }
-
         foreach ($metadata_timestamps as $timestamp)
         {
-            if (property_exists($object->metadata, $timestamp))
+            if (   $object->metadata->$timestamp == '0000-00-00 00:00:00'
+                || $object->metadata->$timestamp == '0000-00-00 00:00:00+0000'
+                || !$object->metadata->$timestamp)
             {
-                if (   $object->metadata->$timestamp == '0000-00-00 00:00:00'
-                    || $object->metadata->$timestamp == '0000-00-00 00:00:00+0000'
-                    || !$object->metadata->$timestamp)
+                $tmp = 0;
+            }
+            else
+            {
+                // We do this silently to avoid problems with broken values. They are rewritten to a
+                // zero timestamp silently. Also, we need special treatment for NULL timestamps, which
+                // are cast to '0' (which is in theory wrong for a stamp like '0000-00-00 00:00:00').
+                if (strlen($object->metadata->$timestamp) == 19)
                 {
-                    $object->metadata->$timestamp = 0;
+                    // Old format, timestamp doesn't include timezone
+                    $tmp = @strtotime("{$object->metadata->$timestamp} GMT");
                 }
                 else
                 {
-                    // We do this silently to avoid problems with broken values. They are rewritten to a
-                    // zero timestamp silently. Also, we need special treatment for NULL timestamps, which
-                    // are cast to '0' (which is in theory wrong for a stamp like '0000-00-00 00:00:00').
-                    if (strlen($object->metadata->$timestamp) == 19)
-                    {
-                        // Old format, timestamp doesn't include timezone
-                        $tmp = @strtotime("{$object->metadata->$timestamp} GMT");
-                    }
-                    else
-                    {
-                        // New format, timezone included
-                        $tmp = @strtotime($object->metadata->$timestamp);
-                    }
-                    if ($tmp == -1)
-                    {
-                        $tmp = 0;
-                    }
-                    $object->metadata->$timestamp = $tmp;
+                    // New format, timezone included
+                    $tmp = @strtotime($object->metadata->$timestamp);
+                }
+                if ($tmp == -1)
+                {
+                    $tmp = 0;
                 }
             }
+            $object->metadata->$timestamp = $tmp;
         }
     }
 
     /**
-     * This function prepares the previously converted UNIX timestamps again for saving by
+     * This function prepares the previously converted UNIX metadata timestamps again for saving by
      * converting them back to ISO 8859-1 Format.
-     *
-     * It pprocesses these members, if present:
-     *
-     * - revised
-     * - created
-     * - locked
-     * - approved
      *
      * The following rules apply:
      *
@@ -1278,13 +1236,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function _rewrite_timestamps_to_isodate(&$object)
     {
-        static $timestamps = array
-        (
-            'revised', 
-            'created', 
-            'locked', 
-            'approved'
-        );
         static $metadata_timestamps = array
         (
             'created', 
@@ -1302,25 +1253,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         debug_print_r('$object->metadata before rewrites', $object->metadata);
         debug_pop();
         */
-
-        foreach ($timestamps as $timestamp)
-        {
-            if (array_key_exists($timestamp, $object))
-            {
-                if (! is_numeric($object->$timestamp))
-                {
-                    $object->$timestamp = 0;
-                }
-                if ($object->$timestamp == 0)
-                {
-                    $object->$timestamp = '0000-00-00 00:00:00';
-                }
-                else
-                {
-                    $object->$timestamp = gmstrftime('%Y-%m-%d %T', $object->$timestamp);
-                }
-            }
-        }
         
         foreach ($metadata_timestamps as $timestamp)
         {
@@ -1333,7 +1265,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 else
                 {
                     // typecast just to be sure.
-                    $object->metadata->$timestamp = (int)$object->metadata->$timestamp;
+                    $object->metadata->$timestamp = (int) $object->metadata->$timestamp;
                 }
                 if ($object->metadata->$timestamp == 0)
                 {
