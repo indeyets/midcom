@@ -240,9 +240,11 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                     $parent = $_MIDCOM->dbfactory->get_object_by_guid($obj->parentguid);
                     switch (true)
                     {
-                        case (is_a($parent, 'org_openpsa_person')):
+                        case (is_a($parent, 'org_openpsa_contacts_person')):
                             $array[$k] = $parent;
-                        case (is_a($parent, 'midgard_person')):
+                            break;
+                        case (   is_a($parent, 'midgard_person')
+                              || is_a($parent, 'org_openpsa_person')):
                             $array[$k] = new org_openpsa_contacts_person($parent->guid);
                             break;
                         case (is_a($parent, 'midgard_group')):
