@@ -734,11 +734,19 @@ p
   color: red;
 }
 
-div.midcom_services_uimessages_holder div.midcom_services_uimessages_message
+#midcom_services_uimessages_wrapper
+{
+    position: static !important;
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+#midcom_services_uimessages_wrapper div.midcom_services_uimessages_message
 {
     background-color: #3465a4;
     color: #ffffff;
-    padding: 2px;
+    font-family: sans-serif;
+    padding: 2px !important;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
@@ -748,34 +756,34 @@ div.midcom_services_uimessages_holder div.midcom_services_uimessages_message
     margin-right: auto;
 }
 
-div.midcom_services_uimessages_holder div.midcom_services_uimessages_message div.midcom_services_uimessages_message_type
+#midcom_services_uimessages_wrapper div.midcom_services_uimessages_message div.midcom_services_uimessages_message_type
 {
     display: none;
 }
 
-div.midcom_services_uimessages_holder div.midcom_services_uimessages_message div.midcom_services_uimessages_message_title
+#midcom_services_uimessages_wrapper div.midcom_services_uimessages_message div.midcom_services_uimessages_message_title
 {
     font-weight: bold;
     display: inline;
     margin-right: 1em;
 }
 
-div.midcom_services_uimessages_holder div.midcom_services_uimessages_message div.midcom_services_uimessages_message_msg
+#midcom_services_uimessages_wrapper div.midcom_services_uimessages_message div.midcom_services_uimessages_message_msg
 {
     display: inline;
 }
 
-div.midcom_services_uimessages_holder div.msu_ok
+#midcom_services_uimessages_wrapper div.msu_ok
 {
     background-color: #73d216;
 }
 
-div.midcom_services_uimessages_holder div.msu_warning
+#midcom_services_uimessages_wrapper div.msu_warning
 {
     background-color: #f57900;
 }
 
-div.midcom_services_uimessages_holder div.msu_error
+#midcom_services_uimessages_wrapper div.msu_error
 {
     background-color: #cc0000;
 }
