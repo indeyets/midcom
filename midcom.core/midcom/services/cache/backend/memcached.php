@@ -92,7 +92,7 @@ class midcom_services_cache_backend_memcached extends midcom_services_cache_back
         }
 
         // Force-disable the php serializer calls, let memcached worry about it.
-        $this->_auto_serialize = false;
+        // $this->_auto_serialize = false;
 
         // Open the persistant connection.
         if (is_null(self::$memcache))
