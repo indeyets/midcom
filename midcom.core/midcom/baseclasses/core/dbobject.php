@@ -669,10 +669,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function undelete($guids, $type)
     {
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r("called type '{$type}' for \$guids:", $guids);
-        debug_pop();
-        static $undeleted_size = 0;
+        $undeleted_size = 0;
         
         $ref = midcom_helper_reflector_tree::get($type);
         
@@ -704,6 +701,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 $undeleted = true;
                 // refresh
                 $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
+                $undeleted_size += $object->metadata->size;
             }
 
             if (!$undeleted)
@@ -734,14 +732,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             $stats[$guid] = $undeleted;
 
             // FIXME: We should only undelete parameters & attachments deleted inside some small window of the main objects delete
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Calling midcom_baseclasses_core_dbobject::undelete_parameters({$guid});");
-            debug_pop();
-            midcom_baseclasses_core_dbobject::undelete_parameters($guid);
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Calling midcom_baseclasses_core_dbobject::undelete_attachments({$guid});");
-            debug_pop();
-            midcom_baseclasses_core_dbobject::undelete_attachments($guid);
+            $undeleted_size += midcom_baseclasses_core_dbobject::undelete_parameters($guid);
+            $undeleted_size += midcom_baseclasses_core_dbobject::undelete_attachments($guid);
 
             //FIXME: are we sure we want to undelete all children here unconditionally, shouldn't it be left as UI decision ??
             // List all deleted children
@@ -762,17 +754,11 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                         $child_guids[] = $child->guid;
                     }
                 }
-                midcom_baseclasses_core_dbobject::undelete($child_guids, $type);
+                $undeleted_size += midcom_baseclasses_core_dbobject::undelete($child_guids, $type);
             }
         }
-        foreach ($stats as $guid => $bool)
-        {
-            if (!$bool)
-            {
-                return false;
-            }
-        }
-        return true;
+
+        return $undeleted_size;
     }
 
     /**
@@ -786,7 +772,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function undelete_parameters($guid)
     {
-        static $undeleted_size = 0;
+        $undeleted_size = 0;
         
         $qb = new midgard_query_builder('midgard_parameter');
         $qb->include_deleted();
@@ -805,7 +791,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 $undeleted_size += $param->metadata->size;
             }
         }
-        return true;
+
+        return $undeleted_size;
     }
 
     /**
@@ -819,7 +806,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function undelete_attachments($guid)
     {
-        static $undeleted_size = 0;
+        $undeleted_size = 0;
         
         $qb = new midgard_query_builder('midgard_attachment');
         $qb->include_deleted();
@@ -841,10 +828,11 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             {
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('attachment %s undeleted'), $att->name, mgd_errstr()), 'ok');
                 $undeleted_size += $att->metadata->size;
-                midcom_baseclasses_core_dbobject::undelete_parameters($att->guid);
+                $undeleted_size += midcom_baseclasses_core_dbobject::undelete_parameters($att->guid);
             }
         }
-        return true;
+
+        return $undeleted_size;
     }
 
     /**
@@ -858,7 +846,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function purge($guids, $type)
     {
-        static $purged_size = 0;
+        $purged_size = 0;
         
         $ref = midcom_helper_reflector_tree::get($type);
         foreach ($guids as $guid)
@@ -866,6 +854,9 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             $object = midcom_helper_reflector::get_object($guid, $type);
             if (is_null($object))
             {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to get object {$type} {$guid}", MIDCOM_LOG_ERROR);
+                debug_pop();
                 // Something wrong
                 continue;
             }
@@ -892,8 +883,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
             // then shoot your dogs
 
-            midcom_baseclasses_core_dbobject::purge_parameters($guid);
-            midcom_baseclasses_core_dbobject::purge_attachments($guid);
+            $purged_size += midcom_baseclasses_core_dbobject::purge_parameters($guid);
+            $purged_size += midcom_baseclasses_core_dbobject::purge_attachments($guid);
 
             $label = $ref->get_label_property();
 
@@ -901,14 +892,17 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
             if (!$object->purge())
             {
-                return false;
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Failed to purge object " . get_class($object) . " {$object->guid}", MIDCOM_LOG_INFO);
+                debug_pop();
             }
             else
             {
                 $purged_size += $object->metadata->size;
-                return true;
             }
         }
+        
+        return $purged_size;
     }
 
     /**
@@ -921,7 +915,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function purge_parameters($guid)
     {
-        static $purged_size = 0;
+        $purged_size = 0;
         
         $qb = new midgard_query_builder('midgard_parameter');
         $qb->include_deleted();
@@ -943,6 +937,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('failed purging attachment %s => %s, reason %s'), $param->domain,$param->name, mgd_errstr()), 'error');
             }
         }
+        
+        return $purged_size;
     }
 
     /**
@@ -955,7 +951,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function purge_attachments($guid)
     {
-        static $purged_size = 0;
+        $purged_size = 0;
         
         $qb = new midgard_query_builder('midgard_attachment');
         $qb->include_deleted();
@@ -978,6 +974,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('failed purging attachment %s, reason %s'), $att->name, mgd_errstr()), 'error');
             }
         }
+
+        return $purged_size;
     }
 
     /**

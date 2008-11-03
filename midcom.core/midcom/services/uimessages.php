@@ -120,7 +120,8 @@ class midcom_services_uimessages extends midcom_baseclasses_core_object
             $_MIDCOM->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/effects.core.js');
             $_MIDCOM->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/effects.pulsate.js');
             
-            $_MIDCOM->add_link_head(
+            $_MIDCOM->add_link_head
+            (
                 array
                 (
                     'rel'   => 'stylesheet',

@@ -181,7 +181,7 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
         if (   isset($_POST['purge'])
             && is_array($_POST['undelete']))
         {
-            static $purged_size = 0;
+            $purged_size = 0;
             
             if (!$data['midcom_dba_classname'])
             {
@@ -194,20 +194,24 @@ class midgard_admin_asgard_handler_undelete extends midcom_baseclasses_component
                     $results = $qb->execute();
                     foreach ($results as $object)
                     {
-                        $object->purge();
+                        if ($object->purge())
+                        {
+                            $purged_size += $object->metadata->size;
+                        }
                     }
                 }
             }
             else
             {
                 // Delegate purging to DBA
-                midcom_baseclasses_core_dbobject::purge($_POST['undelete'], $this->type);
+                $purged_size = midcom_baseclasses_core_dbobject::purge($_POST['undelete'], $this->type);
             }
 
             if ($purged_size)
             {
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('in total %s purged'), midcom_helper_filesize_to_string($purged_size)), 'info');
             }
+
             $_MIDCOM->relocate("__mfa/asgard/trash/{$this->type}/");
         }
 
