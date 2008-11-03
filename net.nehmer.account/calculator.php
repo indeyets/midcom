@@ -328,7 +328,7 @@ class net_nehmer_account_calculator extends midcom_baseclasses_components_pureco
                 }
             }
             
-            $person->parameter('net.nehmer.account', 'karma_calculated', gmdate('Y-m-d H:i:s'));
+            $person->set_parameter('net.nehmer.account', 'karma_calculated', gmdate('Y-m-d H:i:s'));
         }
         
         return $person_karma;
