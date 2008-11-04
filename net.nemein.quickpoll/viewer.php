@@ -318,7 +318,7 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
     {
         $total = 0;
         
-        $mc = new midgard_collector('net_nemein_quickpoll_vote_dba', 'article', $poll_id);
+        $mc = net_nemein_quickpoll_vote_dba::new_collector('article', $poll_id);
         $mc->set_key_property('id');
         $mc->add_value_property('value');
         $mc->execute();
@@ -342,7 +342,7 @@ class net_nemein_quickpoll_viewer extends midcom_baseclasses_components_request
     {
         $total = 0;
         
-        $mc = new midgard_collector('net_nemein_quickpoll_vote_dba', 'article', $poll_id);
+        $mc = net_nemein_quickpoll_vote_dba::new_collector('article', $poll_id);
         $mc->set_key_property('id');
         $mc->add_value_property('value');
         $mc->execute();
