@@ -77,7 +77,14 @@ class midcom_helper_metadata
      *
      * @var MidgardObject
      */
-    var $object = null;
+    public $object = null;
+
+    /**
+     * Metadata object of the current object
+     *
+     * @var midgard_metadata
+     */
+    private $metadata = null;
 
     /**
      * The guid of the object, it is cached for fast access to avoid repeated
@@ -138,6 +145,7 @@ class midcom_helper_metadata
     function __construct($guid, $object, $schemadb)
     {
         $this->guid = $guid;
+        $this->metadata =& $object->__object->metadata;
         $this->object = $object;
         $this->_schemadb_path = $schemadb;
     }
@@ -156,13 +164,28 @@ class midcom_helper_metadata
      * @param string $key The key to retrieve
      * @return mixed The key's value.
      */
-    function get ($key)
+    function get($key)
     {
-        if (! array_key_exists($key, $this->_cache))
+        if (!$this->metadata)
+        {
+            return null;
+        }
+
+        if (!isset($this->_cache[$key]))
         {
             $this->_retrieve_value($key);
         }
+
         return $this->_cache[$key];
+    }
+    
+    public function __get($key)
+    {
+        if ($key == 'object')
+        {
+            return $this->object;
+        }
+        return $this->get($key);
     }
 
     /**
@@ -244,7 +267,7 @@ class midcom_helper_metadata
      * @param string $key The key to set.
      * @param mixed $value The value to set.
      */
-    function set ($key, $value)
+    function set($key, $value)
     {
         $return = false;
         if ($this->_set_property($key, $value))
@@ -256,12 +279,24 @@ class midcom_helper_metadata
         return $return;
     }
 
+    public function __set($key, $value)
+    {
+        switch ($key)
+        {
+            case '_schemadb':
+                $this->_schemadb = $value;
+                return true;
+            default:
+                return $this->set($key, $value);
+        }
+    }
+
     /**
      * Frontend for setting multiple metadata options
      *
      * @param Array $properties Array of key => value properties.
      */
-    function set_multiple ($properties)
+    function set_multiple($properties)
     {
         $return = false;
         foreach ($properties as $key => $value)
@@ -299,7 +334,7 @@ class midcom_helper_metadata
      * @param string $key The key to set.
      * @param mixed $value The value to set.
      */
-    function _set_property ($key, $value)
+    private function _set_property($key, $value)
     {
         // Store the RCS mode
         $rcs_mode = $this->object->_use_rcs;
@@ -322,22 +357,36 @@ class midcom_helper_metadata
                 return false;
 
             // Writable properties
+            case 'published':
+            case 'schedulestart':
+            case 'scheduleend':
+                // Cast to ISO datetime
+                if (! is_numeric($this->metadata->$key))
+                {
+                    $this->metadata->$key = 0;
+                }
+                if ($this->metadata->$key == 0)
+                {
+                    $this->metadata->$key = '0000-00-00 00:00:00';
+                }
+                else
+                {
+                    $this->metadata->$key = gmstrftime('%Y-%m-%d %T', $this->metadata->$key);
+                }
+                $value = true;
+                break;
 
             case 'approver':
             case 'approved':
                 // Prevent lock changes from creating new revisions
                 $this->object->_use_rcs = false;
-                // Fall through
-            
+                // Fall through      
             case 'authors':
             case 'owner':
-            case 'published':
-            case 'schedulestart':
-            case 'scheduleend':
             case 'hidden':
             case 'navnoentry':
             case 'score':
-                $this->object->metadata->$key = $value;
+                $this->metadata->$key = $value;
                 $value = true;
                 break;
 
@@ -407,7 +456,7 @@ class midcom_helper_metadata
      * @param string $key The key to retrieve.
      * @access private
      */
-    function _retrieve_value($key)
+    private function _retrieve_value($key)
     {
         switch ($key)
         {
@@ -421,16 +470,15 @@ class midcom_helper_metadata
             case 'scheduleend':
             case 'exported':
             case 'imported':
-            case 'revised':
-                $value = $this->object->metadata->$key;
+                $value = strtotime($this->metadata->$key);
                 break;
 
             case 'nav_noentry':
-                $value = $this->get('navnoentry');
+                $value = $this->metadata->navnoentry;
                 break;
 
             case 'edited':
-                $value = $this->get('revised');
+                $value = $this->metadata->revised;
                 break;
 
             // Person properties
@@ -439,7 +487,7 @@ class midcom_helper_metadata
             case 'locker':
             case 'approver':
             case 'authors':
-                $value = $this->object->metadata->$key;
+                $value = $this->metadata->$key;
                 if (!$value)
                 {
                     // Fall back to "Midgard admin" if person is not found
@@ -449,7 +497,7 @@ class midcom_helper_metadata
 
             // Group property
             case 'owner':
-                $value = $this->object->metadata->$key;
+                $value = $this->metadata->$key;
                 if (!$value)
                 {
                     // Fall back to SG admin group if owner is not found
@@ -470,15 +518,7 @@ class midcom_helper_metadata
                 $value = $this->get('revisor');
                 break;
             case 'publisher':
-                if (   $this->object->__table__ == 'article'
-                    || $this->object->__table__ == 'page')
-                {
-                    $value = $this->object->author;
-                }
-                else
-                {
-                    $value = $this->get('authors');
-                }
+                $value = $this->get('authors');
                 break;
             case 'hide':
                 $value = $this->get('hidden');
@@ -497,7 +537,7 @@ class midcom_helper_metadata
             case 'size':
             case 'deleted':
             case 'score':
-                $value = $this->object->metadata->$key;
+                $value = $this->metadata->$key;
                 break;
 
             // Fall-back for non-core properties
@@ -659,7 +699,7 @@ class midcom_helper_metadata
      * @param mixed $source The object to attach to, this may be either a MidgardObject, a GUID or a NAP data structure (node or leaf).
      * @return midcom_helper_metadata A reference to the created metadata object.
      */
-    function & retrieve ($source)
+    function & retrieve($source)
     {
         // The object cache, indexed by GUID.
         static $_object_cache = Array();
@@ -704,14 +744,13 @@ class midcom_helper_metadata
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("The GUID '{$guid}' is invalid, cannot retrieve a metadata object reliably therefore.", MIDCOM_LOG_WARN);
             debug_pop();
-            $result = false;
-            return $result;
+            return false;
         }
 
         // $guid is now populated, check the cache.
-        if (array_key_exists($guid, $_object_cache))
+        if (isset($_object_cache[$guid]))
         {
-            // This is a hit :-)
+            // Cache hit
             return $_object_cache[$guid];
         }
 

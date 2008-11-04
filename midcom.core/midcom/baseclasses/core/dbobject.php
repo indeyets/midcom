@@ -83,7 +83,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
 
         // Now, if possible, set revised and revisor.
-        midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_isodate($object);
         midcom_baseclasses_core_dbobject::_set_revisor($object);
 
         if (! $object->__exec_update())
@@ -107,8 +106,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     function update_post_ops(&$object)
     {
         debug_push_class($object, __FUNCTION__);
-
-        midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
 
         if ($object->_use_rcs) 
         {
@@ -352,8 +349,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         // Now, if possible, set created and creator.
         midcom_baseclasses_core_dbobject::_set_creator($object);
         midcom_baseclasses_core_dbobject::_set_revisor($object);
-        
-        midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_isodate($object);
 
         if (! $object->__exec_create() && $object->id == 0)
         {
@@ -363,7 +358,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             return false;
         }
 
-        midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
         midcom_baseclasses_core_dbobject::create_post_ops($object);
 
         return true;
@@ -1134,8 +1128,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             return false;
         }
 
-        midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
-
         $result = $object->_on_loaded();
         if (! $result)
         {
@@ -1152,134 +1144,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
         
         return $result;
-    }
-
-    /**
-     * This function parses the loaded object and detects all meta timestamps of the original
-     * Midgard object which were in Unix Timestamp format before that and are in ISO format now.
-     * It will convert all of these timestamps to be in Unix timestamp format again.
-     *
-     * It processes these members, if present:
-     *
-     * - revised
-     * - created
-     * - locked
-     * - approved
-     *
-     * The following conversion rules apply:
-     *
-     * 1. Any errors are dropped silently, and cast to a zero value.
-     * 2. The special case of '0000-00-00 00:00:00' is converted into a zero timestamp, which
-     *    is in theory incorrect, but this is what is expected by the legacy applications.
-     *
-     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     */
-    function _rewrite_timestamps_to_unixdate(&$object)
-    {
-        $metadata_timestamps = array
-        (
-            'created', 
-            'revised', 
-            'exported', 
-            'imported', 
-            'approved', 
-            'published',
-            'locked',
-            'schedulestart',
-            'scheduleend',
-        );
-
-        foreach ($metadata_timestamps as $timestamp)
-        {
-            if (   $object->metadata->$timestamp == '0000-00-00 00:00:00'
-                || $object->metadata->$timestamp == '0000-00-00 00:00:00+0000'
-                || !$object->metadata->$timestamp)
-            {
-                $tmp = 0;
-            }
-            else
-            {
-                // We do this silently to avoid problems with broken values. They are rewritten to a
-                // zero timestamp silently. Also, we need special treatment for NULL timestamps, which
-                // are cast to '0' (which is in theory wrong for a stamp like '0000-00-00 00:00:00').
-                if (strlen($object->metadata->$timestamp) == 19)
-                {
-                    // Old format, timestamp doesn't include timezone
-                    $tmp = @strtotime("{$object->metadata->$timestamp} GMT");
-                }
-                else
-                {
-                    // New format, timezone included
-                    $tmp = @strtotime($object->metadata->$timestamp);
-                }
-                if ($tmp == -1)
-                {
-                    $tmp = 0;
-                }
-            }
-            $object->metadata->$timestamp = $tmp;
-        }
-    }
-
-    /**
-     * This function prepares the previously converted UNIX metadata timestamps again for saving by
-     * converting them back to ISO 8859-1 Format.
-     *
-     * The following rules apply:
-     *
-     * 1. Any non-numeric timestamp will be zeroed before conversion.
-     * 2. Zero timestamps are converted to the magic '0000-00-00 00:00:00' timestamp.
-     *
-     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     */
-    function _rewrite_timestamps_to_isodate(&$object)
-    {
-        static $metadata_timestamps = array
-        (
-            'created', 
-            'revised', 
-            'published', 
-            'exported', 
-            'imported', 
-            'approved', 
-            'locked',
-            'schedulestart',
-            'scheduleend',
-        );
-        /*
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r('$object->metadata before rewrites', $object->metadata);
-        debug_pop();
-        */
-        
-        foreach ($metadata_timestamps as $timestamp)
-        {
-            if (array_key_exists($timestamp, $object->metadata))
-            {
-                if (! is_numeric($object->metadata->$timestamp))
-                {
-                    $object->metadata->$timestamp = 0;
-                }
-                else
-                {
-                    // typecast just to be sure.
-                    $object->metadata->$timestamp = (int) $object->metadata->$timestamp;
-                }
-                if ($object->metadata->$timestamp == 0)
-                {
-                    $object->metadata->$timestamp = '0000-00-00 00:00:00';
-                }
-                else
-                {
-                    $object->metadata->$timestamp = gmstrftime('%Y-%m-%d %T', $object->metadata->$timestamp);
-                }
-            }
-        }
-        /*
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r('$object->metadata after rewrites', $object->metadata);
-        debug_pop();
-        */
     }
     
     /**
@@ -1412,8 +1276,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 return false;
             }
 
-            midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
-
             $result = $object->_on_loaded();
             if (! $result)
             {
@@ -1455,8 +1317,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 return false;
             }
 
-            midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
-
             $result = $object->_on_loaded();
             if (! $result)
             {
@@ -1497,8 +1357,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 //debug_pop();
                 return false;
             }
-
-            midcom_baseclasses_core_dbobject::_rewrite_timestamps_to_unixdate($object);
 
             $result = $object->_on_loaded();
             if (! $result)
@@ -2509,28 +2367,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             return false;
         }
         return $privilege;
-    }
-
-    /**
-     * This helper will return a reference to the metadata class associated with the
-     * given object instance.
-     *
-     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return midcom_helper_metadata A reference to the metadata object associated with this class or false on failure.
-     */
-    function & get_metadata($object)
-    {
-        $metadata =& midcom_helper_metadata::retrieve($object);
-        if (! $metadata)
-        {
-            debug_push_class($object, __FUNCTION__);
-            debug_add("Failed to load the metadata for the {$object->__table__} ID {$object->id}.",
-                MIDCOM_LOG_ERROR);
-            return false;
-        }
-        $metadata->object =& $object;
-
-        return $metadata;
     }
 
     /**

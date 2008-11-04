@@ -551,12 +551,6 @@ EOF;
         // Write the class' constructor
         $this->_write_constructor();
 
-        // We now add all event handlers first.
-        $this->_write_event_handlers();
-
-        // This dumps the various __exec handler functions.
-        $this->_write_exec_handlers();
-
         // Write main API
         $this->_write_main_api();
 
@@ -770,26 +764,6 @@ EOF;
     }
 
     /**
-     * Helper, writes the exec handlers to the class.
-      *
-      * @access private
-      */
-    function _write_exec_handlers()
-    {
-        $this->_class_string .= <<<EOF
-    // Exec handlers
-    public function __exec_create() { return @\$this->__object->create(); }
-    public function __exec_update() { return @\$this->__object->update(); }
-    public function __exec_delete() { return @\$this->__object->delete(); }
-    public function __exec_get_by_id(\$id) { return \$this->__object->get_by_id(\$id); }
-    public function __exec_get_by_guid(\$guid) { return \$this->__object->get_by_guid(\$guid); }
-    public function __exec_get_by_path(\$path) { return \$this->__object->get_by_path(\$path); }
-
-EOF;
-        $this->_class_string .= "\n    \n";
-    }
-
-    /**
      * This helper adds all definition properties as __$key__ = '$value' members.
      * Objects and arrays are skipped.
      *
@@ -831,47 +805,7 @@ EOF;
         $this->_class_string .= "    private \$__midcom_generator__ = 'midcom_services_dbclassloader';\n";
         $this->_class_string .= "    private \$__midcom_generator_version__ = '{$GLOBALS['midcom_version']}';\n";
 
-        // Add the MgdSchema object placeholder
-        $this->_class_string .= "    public \$__object = null;\n";
-
         $this->_class_string .= "    \n";
-    }
-
-    /**
-     * Helper, writes the event handlers to the class.
-     *
-     * @access private
-     */
-    function _write_event_handlers()
-    {
-        $this->_class_string .= <<<EOF
-    // Event handlers
-    function _on_created() {}
-    function _on_creating() { return true; }
-    function _on_deleted() {}
-    function _on_deleting() { return true; }
-    function _on_loaded() { return true; }
-    function _on_prepare_exec_query_builder(&\$qb) { return true; }
-    function _on_prepare_new_query_builder(&\$qb) {}
-    function _on_process_query_result(&\$result) {}
-    function _on_prepare_new_collector(&\$mc) {}
-    function _on_prepare_exec_collector(&\$mc) { return true; }
-    function _on_process_collector_result(&\$result) {}
-    function _on_updated() {}
-    function _on_updating() { return true; }
-    function _on_imported() {}
-    function _on_importing() { return true; }
-
-    // functions related to the rcs service.
-    var \$_use_rcs = true;
-    var \$_rcs_message = false;
-    public function disable_rcs() { \$this->_use_rcs = false; }
-    public function enable_rcs() { \$this->_use_rcs  = true; }
-    public function set_rcs_message(\$msg) { \$this->_rcs_message = \$msg; }
-    public function get_rcs_message() { return \$this->_rcs_message; }
-
-EOF;
-        $this->_class_string .= "\n    \n";
     }
 
     /**

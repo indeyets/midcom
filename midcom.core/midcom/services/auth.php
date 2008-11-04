@@ -706,7 +706,12 @@ class midcom_services_auth
      * @return boolean True if the privilege has been granted, false otherwise.
      */
     function can_do($privilege, &$content_object, $user = null)
-    {    
+    {
+        if (!is_object($content_object))
+        {
+            return false;
+        }
+
         if (   $privilege !== 'midgard:read'
             && $_MIDGARD['sitegroup'] !== 0
             && $content_object->sitegroup !== $_MIDGARD['sitegroup'])

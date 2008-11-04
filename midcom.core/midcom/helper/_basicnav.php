@@ -739,7 +739,7 @@ class midcom_helper__basicnav
                 $metadata =& $leaf->get_metadata();
                 if ($metadata)
                 {
-                    $leaf[MIDCOM_NAV_NOENTRY] = (bool) $metadata->get('nav_noentry');
+                    $leaf[MIDCOM_NAV_NOENTRY] = (bool) $metadata->get('navnoentry');
                 }
             }
 

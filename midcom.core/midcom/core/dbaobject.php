@@ -14,6 +14,9 @@
  */
 abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
 {
+    public $__object = null;
+    public $__metadata = null;
+
     public function __construct($id = null)
     {
         if (is_object($id))
@@ -48,8 +51,18 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
     { 
         if (!is_object($this->__object)) 
         {
-            return null; 
-        } 
+            return null;
+        }
+        
+        if ($property == 'metadata')
+        {
+            if (is_null($this->__metadata))
+            {
+                $this->__metadata = $this->get_metadata();
+            }
+            return $this->__metadata;
+        }
+        
         return $this->__object->$property; 
     }
     public function __set($property, $value) 
@@ -64,7 +77,7 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
     // Main API
     public function create() 
     {
-        return midcom_baseclasses_core_dbobject::create($this->__object);
+        return midcom_baseclasses_core_dbobject::create($this);
     }
     public function create_attachment($name, $title, $mimetype) 
     {
@@ -86,10 +99,21 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
     public function get_by_guid($guid) { return midcom_baseclasses_core_dbobject::get_by_guid($this, $guid->__object); }
     public function get_by_id($id) { return midcom_baseclasses_core_dbobject::get_by_id($this->__object, $id); }
     public function get_by_path($path) { return midcom_baseclasses_core_dbobject::get_by_path($this->__object, $path); }  
-    public function & get_metadata() { return midcom_baseclasses_core_dbobject::get_metadata($this->__object); }
+
+    public function & get_metadata() 
+    {
+        return midcom_helper_metadata::retrieve($this);
+    }
+
     public function get_parameter($domain, $name) { return midcom_baseclasses_core_dbobject::get_parameter($this, $domain, $name); }
-    public function get_parent() { return midcom_baseclasses_core_dbobject::get_parent($this->__object); }
-    public function get_parent_guid() { return midcom_baseclasses_core_dbobject::get_parent_guid($this->__object); }
+    public function get_parent()
+    {
+        return midcom_baseclasses_core_dbobject::get_parent($this);
+    }
+    public function get_parent_guid()
+    { 
+        return midcom_baseclasses_core_dbobject::get_parent_guid($this);
+    }
     public function get_privilege($privilege, $assignee, $classname = '') { return midcom_baseclasses_core_dbobject::get_privilege($this->__object, $privilege, $assignee, $classname); }
     public function get_privileges() { return midcom_baseclasses_core_dbobject::get_privileges($this->__object); }
     public function is_object_visible_onsite() { return midcom_baseclasses_core_dbobject::is_object_visible_onsite($this->__object); }
@@ -155,5 +179,38 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
             'USERS' => Array()
         );
     }
+
+    // Event handlers
+    function _on_created() {}
+    function _on_creating() { return true; }
+    function _on_deleted() {}
+    function _on_deleting() { return true; }
+    function _on_loaded() { return true; }
+    function _on_prepare_exec_query_builder(&$qb) { return true; }
+    function _on_prepare_new_query_builder(&$qb) {}
+    function _on_process_query_result(&$result) {}
+    function _on_prepare_new_collector(&$mc) {}
+    function _on_prepare_exec_collector(&$mc) { return true; }
+    function _on_process_collector_result(&$result) {}
+    function _on_updated() {}
+    function _on_updating() { return true; }
+    function _on_imported() {}
+    function _on_importing() { return true; }
+
+    // Exec handlers
+    public function __exec_create() { return @$this->__object->create(); }
+    public function __exec_update() { return @$this->__object->update(); }
+    public function __exec_delete() { return @$this->__object->delete(); }
+    public function __exec_get_by_id($id) { return $this->__object->get_by_id($id); }
+    public function __exec_get_by_guid($guid) { return $this->__object->get_by_guid($guid); }
+    public function __exec_get_by_path($path) { return $this->__object->get_by_path($path); }
+
+    // functions related to the rcs service.
+    var $_use_rcs = true;
+    var $_rcs_message = false;
+    public function disable_rcs() { $this->_use_rcs = false; }
+    public function enable_rcs() { $this->_use_rcs  = true; }
+    public function set_rcs_message($msg) { $this->_rcs_message = $msg; }
+    public function get_rcs_message() { return $this->_rcs_message; }
 }
 ?>
