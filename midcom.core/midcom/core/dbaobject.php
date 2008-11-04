@@ -63,7 +63,8 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
             return $this->__metadata;
         }
         
-        if (substr($property, 0, 2) == '__')
+        if (   substr($property, 0, 2) == '__'
+            && $property != '__guid')
         {
             return $this->$property;
         }
