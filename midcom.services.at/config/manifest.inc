@@ -6,7 +6,7 @@
 (
     'midcom_dba_classes.inc',
 ),
-'version' => '8.09.0',
+'version' => '8.09.2',
 'state' => 'stable',
 'package.xml' => array
 (
