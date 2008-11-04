@@ -126,7 +126,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
                 $mode = 'default';
                 $this->_open_write_mode = true;
 
-                $blob = new midgard_blob($this);
+                $blob = new midgard_blob($this->__object);
 
                 if(!$blob)
                 {
@@ -141,7 +141,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
                 $this->_open_write_mode = ($mode{0} != 'r');
 
                 /* WARNING, read mode not supported by midgard_blob! */
-                $blob = new midgard_blob($this);
+                $blob = new midgard_blob($this->__object);
 
                 if(!$blob)
                 {
@@ -255,7 +255,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
         }
         
         // Then symlink the file
-        $blob = new midgard_blob($this);
+        $blob = new midgard_blob($this->__object);
         
         if (@symlink($blob->get_path(), $filename))
         {

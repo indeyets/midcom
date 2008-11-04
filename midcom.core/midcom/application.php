@@ -2378,7 +2378,7 @@ class midcom_application
         $send_att_body = true;
         if ($GLOBALS['midcom_config']['attachment_xsendfile_enable'])
         {
-            $blob = new midgard_blob($attachment);
+            $blob = new midgard_blob($attachment->__object);
             $att_local_path = $blob->get_path();        
             debug_add("Checking is_readable({$att_local_path})");
             if (is_readable($att_local_path))

@@ -81,31 +81,55 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
     }
     public function create_attachment($name, $title, $mimetype) 
     {
-        return midcom_baseclasses_core_dbobject::create_attachment($this->__object, $name, $title, $mimetype);
+        return midcom_baseclasses_core_dbobject::create_attachment($this, $name, $title, $mimetype);
     }
     public function create_new_privilege_object($privilege, $assignee = null, $value = MIDCOM_PRIVILEGE_ALLOW, $classname = '') 
     {
-        return midcom_baseclasses_core_dbobject::create_new_privilege_object($this->__object, $privilege, $assignee, $value, $classname);
+        return midcom_baseclasses_core_dbobject::create_new_privilege_object($this, $privilege, $assignee, $value, $classname);
     }
     public function delete()
     {
-         return midcom_baseclasses_core_dbobject::delete($this->__object);
+         return midcom_baseclasses_core_dbobject::delete($this);
     }
-    public function delete_attachment($name) { return midcom_baseclasses_core_dbobject::delete_attachment($this->__object, $name); }
-    public function delete_parameter($domain, $name) { return midcom_baseclasses_core_dbobject::delete_parameter($this->__object, $domain, $name); }
-    public function delete_tree() { return midcom_baseclasses_core_dbobject::delete_tree($this->__object); }
-    public function get_attachment($name) { return midcom_baseclasses_core_dbobject::get_attachment($this->__object, $name); }
-    public function get_attachment_qb() { return midcom_baseclasses_core_dbobject::get_attachment_qb($this->__object); }
-    public function get_by_guid($guid) { return midcom_baseclasses_core_dbobject::get_by_guid($this, $guid->__object); }
-    public function get_by_id($id) { return midcom_baseclasses_core_dbobject::get_by_id($this->__object, $id); }
-    public function get_by_path($path) { return midcom_baseclasses_core_dbobject::get_by_path($this->__object, $path); }  
-
+    public function delete_attachment($name) 
+    {
+        return midcom_baseclasses_core_dbobject::delete_attachment($this, $name);
+    }
+    public function delete_parameter($domain, $name)
+    {
+        return midcom_baseclasses_core_dbobject::delete_parameter($this, $domain, $name);
+    }
+    public function delete_tree() {
+        return midcom_baseclasses_core_dbobject::delete_tree($this);
+    }
+    public function get_attachment($name)
+    {
+        return midcom_baseclasses_core_dbobject::get_attachment($this, $name);
+    }
+    public function get_attachment_qb()
+    {
+        return midcom_baseclasses_core_dbobject::get_attachment_qb($this);
+    }
+    public function get_by_guid($guid) 
+    { 
+        return midcom_baseclasses_core_dbobject::get_by_guid($this, $guid);
+    }
+    public function get_by_id($id)
+    {
+        return midcom_baseclasses_core_dbobject::get_by_id($this, $id);
+    }
+    public function get_by_path($path)
+    {
+        return midcom_baseclasses_core_dbobject::get_by_path($this, $path);
+    }  
     public function & get_metadata() 
     {
         return midcom_helper_metadata::retrieve($this);
     }
-
-    public function get_parameter($domain, $name) { return midcom_baseclasses_core_dbobject::get_parameter($this, $domain, $name); }
+    public function get_parameter($domain, $name) 
+    {
+        return midcom_baseclasses_core_dbobject::get_parameter($this, $domain, $name);
+    }
     public function get_parent()
     {
         return midcom_baseclasses_core_dbobject::get_parent($this);
@@ -114,18 +138,65 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
     { 
         return midcom_baseclasses_core_dbobject::get_parent_guid($this);
     }
-    public function get_privilege($privilege, $assignee, $classname = '') { return midcom_baseclasses_core_dbobject::get_privilege($this->__object, $privilege, $assignee, $classname); }
-    public function get_privileges() { return midcom_baseclasses_core_dbobject::get_privileges($this->__object); }
-    public function is_object_visible_onsite() { return midcom_baseclasses_core_dbobject::is_object_visible_onsite($this->__object); }
-    public function is_owner($person = null) { return midcom_baseclasses_core_dbobject::is_owner($this->__object, $person); }
-    public function list_attachments() { return midcom_baseclasses_core_dbobject::list_attachments($this->__object); }
-    public function list_parameters($domain = null) { return midcom_baseclasses_core_dbobject::list_parameters($this->__object, $domain); }
-    public function refresh() { return midcom_baseclasses_core_dbobject::refresh($this); }
-    public function set_parameter($domain, $name, $value) { return midcom_baseclasses_core_dbobject::set_parameter($this, $domain, $name, $value); }
-    public function set_privilege($privilege, $assignee = null, $value = MIDCOM_PRIVILEGE_ALLOW, $classname = '') { return midcom_baseclasses_core_dbobject::set_privilege($this, $privilege, $assignee, $value, $classname); }
-    public function unset_privilege($privilege, $assignee = null, $classname = '') { return midcom_baseclasses_core_dbobject::unset_privilege($this, $privilege, $assignee, $classname); }
-    public function unset_all_privileges() { return midcom_baseclasses_core_dbobject::unset_all_privileges($this); }
-    public function update() { return midcom_baseclasses_core_dbobject::update($this); }
+    public function get_privilege($privilege, $assignee, $classname = '')
+    {
+        return midcom_baseclasses_core_dbobject::get_privilege($this, $privilege, $assignee, $classname);
+    }
+    public function get_privileges() {
+        return midcom_baseclasses_core_dbobject::get_privileges($this);
+    }
+    public function is_object_visible_onsite()
+    {
+        return midcom_baseclasses_core_dbobject::is_object_visible_onsite($this->__object);
+    }
+    public function is_owner($person = null)
+    {
+        return midcom_baseclasses_core_dbobject::is_owner($this, $person);
+    }
+    public function list_attachments()
+    {
+        return midcom_baseclasses_core_dbobject::list_attachments($this);
+    }
+    public function list_parameters($domain = null)
+    {
+        return midcom_baseclasses_core_dbobject::list_parameters($this, $domain);
+    }
+    public function refresh()
+    {
+        return midcom_baseclasses_core_dbobject::refresh($this);
+    }
+    public function set_parameter($domain, $name, $value)
+    {
+        return midcom_baseclasses_core_dbobject::set_parameter($this, $domain, $name, $value);
+    }
+    public function set_privilege($privilege, $assignee = null, $value = MIDCOM_PRIVILEGE_ALLOW, $classname = '')
+    {
+        return midcom_baseclasses_core_dbobject::set_privilege($this, $privilege, $assignee, $value, $classname);
+    }
+    public function unset_privilege($privilege, $assignee = null, $classname = '')
+    {
+        return midcom_baseclasses_core_dbobject::unset_privilege($this, $privilege, $assignee, $classname);
+    }
+    public function unset_all_privileges()
+    {
+        return midcom_baseclasses_core_dbobject::unset_all_privileges($this);
+    }
+    public function update()
+    {
+        return midcom_baseclasses_core_dbobject::update($this);
+    }
+    public function is_locked()
+    {
+        return $this->metadata->is_locked();
+    }
+    public function lock()
+    {
+        return $this->__object->lock();
+    }
+    public function unlock()
+    {
+        return $this->__object->unlock();
+    }
 
     // Legacy API
     // TODO: Get rid of these

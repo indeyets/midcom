@@ -33,6 +33,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         if (is_object($src))
         {
             $this->_original_class = get_class($src);
+            $this->mgdschema_class = $src->__mgdschema_class_name__;
         }
         else
         {
@@ -280,7 +281,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         }
 
         debug_push_class(__CLASS__, __FUNCTION__);
-        $properties = get_object_vars($obj);
+        $properties = get_object_vars($obj->__object);
         if (empty($properties))
         {
             debug_add("Could not list object properties, aborting", MIDCOM_LOG_ERROR);
@@ -595,7 +596,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         $obj =& $this->_dummy_object;
 
         // Get property list and start checking (or abort on error)
-        $properties = get_object_vars($obj);
+        $properties = get_object_vars($obj->__object);
         if (empty($properties))
         {
             debug_add("Could not list object properties, aborting", MIDCOM_LOG_ERROR);
@@ -735,7 +736,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         $obj =& $this->_dummy_object;
 
         // Get property list and start checking (or abort on error)
-        $properties = get_object_vars($obj);
+        $properties = get_object_vars($obj->__object);
         if (empty($properties))
         {
             debug_add("Could not list object properties, aborting", MIDCOM_LOG_ERROR);
@@ -897,26 +898,47 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
     }
 
     /**
-     * Get the root level classname for given class, statically callable
+     * Get the MgdSchema classname for given class, statically callable
      *
      * @param string $classname to get the baseclass for
      * @return string the base class name
      */
     static public function resolve_baseclass($classname)
     {
-        $parent = $classname;
-        do
+        if (!$classname)
         {
-            $baseclass = $parent;
-            $parent = get_parent_class($baseclass);
-            
-            if (empty($parent))
-            {
-                break;
-            }
+            return null;
         }
-        while ($parent !== false);
-        return $baseclass;
+
+        static $cached = array();
+        if (isset($cached[$classname]))
+        {
+            return $cached[$classname];
+        }
+
+        if (!property_exists($classname, '__mgdschema_class_name__'))
+        {
+            // Not DBA class, traverse the inheritance tree
+            $parent = $classname;
+            do
+            {
+                $cached[$classname] = $parent;
+                $parent = get_parent_class($cached[$classname]);
+                
+                if (empty($parent))
+                {
+                    break;
+                }
+            }
+            while ($parent !== false);
+        }
+        else
+        {
+            $dummy = new $classname();
+            $cached[$classname] = $dummy->__mgdschema_class_name__;
+        }
+    
+        return $cached[$classname];
     }
     
     /**
@@ -1078,7 +1100,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         $target = new $class_name();
         
         // Copy the object properties
-        foreach (array_keys(get_object_vars($source_object)) as $property)
+        foreach (array_keys(get_object_vars($source_object->__object)) as $property)
         {
             // Skip certain fields
             if (preg_match('/^(_|metadata|guid|id)/', $property))

@@ -113,8 +113,8 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
 
             default:
                 $fieldname = $this->_schema->fields[$name]['storage']['location'];
-                if (!property_exists($this->object, $fieldname)
-                    && (!property_exists(get_class($this->object), $fieldname)) ) 
+                if (   !property_exists($this->object, $fieldname)
+                    && !property_exists($this->object->__object, $fieldname)) 
                 {
                     throw new Exception("Missing {$fieldname} field in object: " . get_class($this->object));
                 }

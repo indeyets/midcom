@@ -396,8 +396,6 @@ class midcom_helper_metadata
                 break;
         }
 
-        debug_pop();
-
         // Return the original RCS mode
         $this->object->_use_rcs = $rcs_mode;
         
@@ -882,7 +880,7 @@ class midcom_helper_metadata
             return false;
         }
         
-        if ($this->object->is_locked())
+        if ($this->is_locked())
         {
             return true;
         }
@@ -925,7 +923,7 @@ class midcom_helper_metadata
         }
         
         // TODO: Should we support soft unlock somehow?
-        if (!$this->object->is_locked())
+        if (!$this->is_locked())
         {
             return true;
         }
