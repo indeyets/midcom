@@ -269,13 +269,22 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
     {
         if ($type != null)
         {
-            $dummy_object = new $type();
-            $type_fields = array_keys(get_object_vars($dummy_object));
+            $dba_type = $type;
+            if (!$_MIDCOM->dbclassloader->is_midcom_db_object($type))
+            {
+                $dba_type = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($type);
+            }
+            $dummy_object = new $dba_type();
+            $type_fields = $dummy_object->get_properties();
         }
         else
         {
             $type = get_class($this->_object);
-            $type_fields = array_keys(get_object_vars($this->_object));
+            if (!$_MIDCOM->dbclassloader->is_midcom_db_object($type))
+            {
+                $this->_object = $_MIDCOM->dbfactory->convert_midgard_to_midcom($this->_object);
+            }
+            $type_fields = $this->_object->get_properties();
         }
 
         switch (true)

@@ -968,9 +968,12 @@ EOF;
         {
             // In some cases we get a class name instead
             $classname = $object;
-            if ($classname == $class_definition['new_class_name'])
+            foreach ($this->_loaded_classes as $class_definition)
             {
-                return $class_definition['midcom_class_name'];
+                if ($classname == $class_definition['mgdschema_class_name'])
+                {
+                    return $class_definition['midcom_class_name'];
+                }
             }
     
             // We don't have the class loaded, try to load it
@@ -978,7 +981,7 @@ EOF;
             {
                 foreach ($this->_loaded_classes as $class_definition)
                 {
-                    if ($classname == $class_definition['new_class_name'])
+                    if ($classname == $class_definition['mgdschema_class_name'])
                     {
                         return $class_definition['midcom_class_name'];
                     }
@@ -1073,10 +1076,25 @@ EOF;
      */
     function is_midcom_db_object(&$object)
     {
-        $classname = get_class($object);
+        if (is_object($object))
+        {
+            $classname = get_class($object);
+        }
+        else
+        {
+            $classname = $object;
+        }
+
         foreach ($this->_loaded_classes as $class_definition)
         {
-            if (is_a($object, $class_definition['midcom_class_name']))
+            if (is_object($object))
+            {
+                if (is_a($object, $class_definition['midcom_class_name']))
+                {
+                    return true;
+                }
+            }
+            elseif ($classname == $class_definition['midcom_class_name'])
             {
                 return true;
             }

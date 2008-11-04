@@ -205,6 +205,15 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
         }
         return $this->__object->unlock();
     }
+    public function get_properties()
+    {
+        if (!$this->__object)
+        {
+            $classname = $this->__mgdschema_class_name__;
+            $this->__object = new $classname();
+        }
+        return array_keys(get_object_vars($this->__object));
+    }
 
     // Legacy API
     // TODO: Get rid of these

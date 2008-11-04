@@ -596,7 +596,14 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         $obj =& $this->_dummy_object;
 
         // Get property list and start checking (or abort on error)
-        $properties = get_object_vars($obj->__object);
+        if ($_MIDCOM->dbclassloader->is_midcom_db_object($obj))
+        {
+            $properties = $obj->get_object_vars();
+        }
+        else
+        {
+            $properties = array_keys(get_object_vars($obj));
+        }
         if (empty($properties))
         {
             debug_add("Could not list object properties, aborting", MIDCOM_LOG_ERROR);
@@ -605,7 +612,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
         }
 
         $search_properties = array();
-        foreach ($properties as $property => $dummy)
+        foreach ($properties as $property)
         {
             switch(true)
             {

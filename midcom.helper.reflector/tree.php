@@ -673,8 +673,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
         {
             // Figure correct MidCOM DBA class to use and get midcom QB
             $qb = false;
-            $dummy_object = new $schema_type();
-            $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($dummy_object);
+            $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($schema_type);
             if (empty($midcom_dba_classname))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
@@ -728,7 +727,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
         $linkfields = array();
         $linkfields['up'] = midgard_object_class::get_property_up($schema_type);
         $linkfields['parent'] = midgard_object_class::get_property_parent($schema_type);
-
+        $object_baseclass = midcom_helper_reflector::resolve_baseclass(get_class($for_object));
         foreach ($linkfields as $link_type => $field)
         {
             if (empty($field))
@@ -739,7 +738,7 @@ class midcom_helper_reflector_tree extends midcom_helper_reflector
             }
 
             $linked_class = $ref->get_link_name($field);
-            if (!is_a($for_object, $linked_class))
+            if ($linked_class != $object_baseclass)
             {
                 // This link points elsewhere
                 unset($linkfields[$link_type]);
