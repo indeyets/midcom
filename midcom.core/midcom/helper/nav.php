@@ -337,7 +337,7 @@ class midcom_helper_nav
             debug_pop();
         }
 
-        if (is_a($object, 'midgard_topic'))
+        if (is_a($object, 'midcom_baseclasses_database_topic'))
         {
             // Ok. This topic should be within the content tree,
             // we check this and return the node if everything is ok.
@@ -351,7 +351,7 @@ class midcom_helper_nav
             return $this->get_node($object->id);
         }
 
-        if (is_a($object, 'midgard_article'))
+        if (is_a($object, 'midcom_baseclasses_database_article'))
         {
             debug_push_class(__CLASS__, __FUNCTION__);
             // Ok, let's try to find the article using the topic in the tree.
@@ -400,7 +400,7 @@ class midcom_helper_nav
         
         while ($parent)
         {
-            if (is_a($parent, 'midgard_topic'))
+            if (is_a($parent, 'midcom_baseclasses_database_topic'))
             {
                 // Verify that this topic is within the current sites tree, if it is not,
                 // we ignore it. This might happen on symlink topics with taviewer & co

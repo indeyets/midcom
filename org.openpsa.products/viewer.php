@@ -404,7 +404,7 @@ class org_openpsa_products_viewer extends midcom_baseclasses_components_request
         // of the index() method. Needs fixes there.
 
         $document = $indexer->new_document($dm);
-        if (is_a($object, 'org_openpsa_products_product'))
+        if (is_a($object, 'org_openpsa_products_product_dba'))
         {
             // Check start/end for products
             if (   (   $object->start != 0

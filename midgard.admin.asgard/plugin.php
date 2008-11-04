@@ -597,12 +597,12 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             );
         }
 
-        if (   !is_a($object, 'midgard_style')
-            && !is_a($object, 'midgard_element')
-            && !is_a($object, 'midgard_snippetdir')
-            && !is_a($object, 'midgard_snippet')
-            && !is_a($object, 'midgard_page')
-            && !is_a($object, 'midgard_pageelement')
+        if (   !is_a($object, 'midcom_baseclasses_database_style')
+            && !is_a($object, 'midcom_baseclasses_database_element')
+            && !is_a($object, 'midcom_baseclasses_database_snippetdir')
+            && !is_a($object, 'midcom_baseclasses_database_snippet')
+            && !is_a($object, 'midcom_baseclasses_database_page')
+            && !is_a($object, 'midcom_baseclasses_database_pageelement')
             && substr($object->__new_class_name__, 0, 23) != 'org_routamc_positioning'
             && substr($object->__new_class_name__, 0, 14) != 'net_nemein_tag')
         {
@@ -664,7 +664,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
 
         if ($object->can_do('midgard:update'))
         {
-            if (   is_a($object, 'midgard_topic')
+            if (   is_a($object, 'midcom_baseclasses_database_topic')
                 && $object->component
                 && $object->can_do('midcom:component_config'))
             {
@@ -785,7 +785,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
             foreach ($child_types as $type)
             {
                 $display_button = true;
-                if (is_a($object, 'midgard_topic'))
+                if (is_a($object, 'midcom_baseclasses_database_topic'))
                 {
                     // With topics we should check for component before populating create buttons as so many types can be children of topics
                     switch ($type)
@@ -795,7 +795,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                             // Articles and topics can always be created
                             break;
                         default:
-                            $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($type);
+                            $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($type);
                             if (!$midcom_dba_classname)
                             {
                                 $display_button = false;
@@ -809,7 +809,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                             break;
                     }
                 }
-                elseif (   is_a($object, 'midgard_article')
+                elseif (   is_a($object, 'midcom_baseclasses_database_article')
                         && $object->topic)
                 {
                     $topic = new midcom_db_topic($object->topic);
@@ -820,7 +820,7 @@ class midgard_admin_asgard_plugin extends midcom_baseclasses_components_handler
                             // Articles can always be created
                             break;
                         default:
-                            $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($type);
+                            $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($type);
                             $component = $_MIDCOM->dbclassloader->_mgdschema_class_handler[$midcom_dba_classname];
                             if ($component != $topic->component)
                             {

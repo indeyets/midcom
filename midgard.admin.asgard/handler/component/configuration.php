@@ -451,7 +451,7 @@ class midgard_admin_asgard_handler_component_configuration extends midcom_basecl
             midgard_admin_asgard_plugin::init_language($handler_id, $args, $data);
             $data['folder'] = new midcom_db_topic($args[1]);
             if (   !$data['folder']->guid
-                || !is_a($data['folder'], 'midgard_topic')
+                || !is_a($data['folder'], 'midcom_baseclasses_database_topic')
                 || $data['folder']->component != $data['name'])
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRNOTFOUND, "Folder {$args[1]} not found for configuration.");

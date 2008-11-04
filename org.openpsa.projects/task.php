@@ -564,7 +564,7 @@ class org_openpsa_projects_task_dba extends __org_openpsa_projects_task_dba
             && $project->orgOpenpsaObtype == ORG_OPENPSA_OBTYPE_PROJECT)
         {
             //Make sure the parent is initialized in correct class
-            if (!is_a($project, 'org_openpsa_projects_project'))
+            if (!is_a($project, 'org_openpsa_projects_project_dba'))
             {
                 $project = new org_openpsa_projects_project($project->id);
             }

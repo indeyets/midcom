@@ -154,7 +154,7 @@ class net_fernmark_pedigree_handler_result_create extends midcom_baseclasses_com
             && !empty($args[0]))
         {
             $this->_dog = new net_fernmark_pedigree_dog_dba($args[0]);
-            if (!is_a($this->_dog, 'net_fernmark_pedigree_dog'))
+            if (!is_a($this->_dog, 'net_fernmark_pedigree_dog_dba'))
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT, "Could not find dog '{$args[0]}'");
                 // this will exit

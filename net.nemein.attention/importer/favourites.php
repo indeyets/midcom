@@ -177,7 +177,7 @@ class net_nemein_attention_importer_favourites extends net_nemein_attention_impo
             // Read object authors from database into Authors
             $this->read_authors($object->metadata->authors, &$nodes, $value);
             
-            if (   is_a($object, 'midgard_article')
+            if (   is_a($object, 'midcom_baseclasses_database_article')
                 && strpos($object->extra1, '|') !== false)
             {
                 // Special handling for blog articles

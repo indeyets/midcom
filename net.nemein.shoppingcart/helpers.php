@@ -64,7 +64,7 @@ function net_nemein_shoppingcart_get_node_url()
 
 function net_nemein_shoppingcart_get_additem_url(&$product)
 {
-    if (!is_a($product, 'org_openpsa_products_product'))
+    if (!is_a($product, 'org_openpsa_products_product_dba'))
     {
         return false;
     }

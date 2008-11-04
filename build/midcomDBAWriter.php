@@ -22,7 +22,6 @@ class MidcomDBAWriter {
     public function write(  ) {
         $new = array(
             'table' => $this->schema->getTable(  ),
-            'old_class_name' => null,
             'new_class_name' => $this->type,
             'midcom_class_name' =>  ( $this->db) ? $this->db : $this->type . "_db"
         );

@@ -202,7 +202,7 @@ class default_create_website extends midcom_baseclasses_components_handler
         // Touch everything
         foreach ($_MIDGARD['schema']['types'] as $classname => $null)
         {
-            $dba_class = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($classname);
+            $dba_class = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($classname);
             if (   !$dba_class
                 || !class_exists($dba_class))
             {

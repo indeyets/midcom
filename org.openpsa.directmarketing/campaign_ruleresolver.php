@@ -221,33 +221,32 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                 case is_a($obj, 'org_openpsa_contacts_person_dba'):
                     break;
                 //Make all other persons org_openpsa_contacts_person_dbas
-                case is_a($obj, 'midgard_person'):
+                case is_a($obj, 'midcom_baseclasses_database_person'):
                     $array[$k] = new org_openpsa_contacts_person_dba($obj->id);
                     break;
                 // Expand add org_openpsa_contacts_person_dba for each group member
-                case is_a($obj, 'midgard_group'):
-                case is_a($obj, 'org_openpsa_organization'):
+                case is_a($obj, 'midcom_baseclasses_database_group'):
+                case is_a($obj, 'org_openpsa_contacts_group_dba'):
                     unset ($array[$k]);
                     $this->_expand_group_members2persons($obj->id, $array);
                     break;
                 //Expand member to org_openpsa_contacts_person_dba
-                case is_a($obj, 'midgard_member'):
-                case is_a($obj, 'midgard_eventmember'):
+                case is_a($obj, 'midcom_baseclasses_database_member'):
+                case is_a($obj, 'midcom_baseclasses_database_eventmember'):
                     $array[$k] = new org_openpsa_contacts_person_dba($obj->uid);
                     break;
                 //Expand various parameters to corresponding org_openpsa_contacts_person_dba(s)
-                case is_a($obj, 'midgard_parameter'):
+                case is_a($obj, 'midcom_baseclasses_database_parameter'):
                     $parent = $_MIDCOM->dbfactory->get_object_by_guid($obj->parentguid);
                     switch (true)
                     {
                         case (is_a($parent, 'org_openpsa_contacts_person')):
                             $array[$k] = $parent;
                             break;
-                        case (   is_a($parent, 'midgard_person')
-                              || is_a($parent, 'org_openpsa_person')):
+                        case (is_a($parent, 'midcom_baseclasses_database_person')):
                             $array[$k] = new org_openpsa_contacts_person($parent->guid);
                             break;
-                        case (is_a($parent, 'midgard_group')):
+                        case (is_a($parent, 'midcom_baseclasses_database_group')):
                             unset ($array[$k]);
                             $this->_expand_group_members2persons($parent->id, $array);
                             break;
@@ -262,10 +261,10 @@ class org_openpsa_directmarketing_campaign_ruleresolver
                 case is_a($obj, 'midcom_org_openpsa_link_log'):
                     $array[$k] = new org_openpsa_contacts_person_dba($obj->person);
                     break;
-                case is_a($obj, 'org_maemo_devcodes_application'):
+                case is_a($obj, 'org_maemo_devcodes_application_dba'):
                     $array[$k] = new org_openpsa_contacts_person_dba($obj->applicant);
                     break;
-                case is_a($obj, 'org_maemo_devcodes_code'):
+                case is_a($obj, 'org_maemo_devcodes_code_dba'):
                     $array[$k] = new org_openpsa_contacts_person_dba($obj->recipient);
                     break;
                 default:

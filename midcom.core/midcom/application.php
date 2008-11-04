@@ -954,7 +954,7 @@ class midcom_application
                 $this->generate_error(MIDCOM_ERRCRIT, 'Root node missing.');
             }
 
-            if (is_a($object, 'midgard_attachment'))
+            if (is_a($object, 'midcom_baseclasses_database_attachment'))
             {
                 $this->serve_attachment($object);
             }

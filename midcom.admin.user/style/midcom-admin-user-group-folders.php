@@ -18,7 +18,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         foreach ($data['objects'] as $guid => $privs)
         {
             $object = $_MIDCOM->dbfactory->get_object_by_guid($guid);
-            if (!is_a($object, 'midgard_topic'))
+            if (!is_a($object, 'midcom_db_topic'))
             {
                 continue;
             }

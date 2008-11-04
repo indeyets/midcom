@@ -320,7 +320,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
 
             // Only hosts have lang field that we will actually display
             if (   $key == 'lang'
-                && !is_a($this->_object, 'midgard_host'))
+                && !is_a($this->_object, 'midcom_baseclasses_database_host'))
             {
                 continue;
             }
@@ -359,7 +359,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 {
                     case MGD_TYPE_INT:
                     case MGD_TYPE_STRING:
-                        $class = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($linked_type);
+                        $class = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($linked_type);
                         if (! $class)
                         {
                             break;
@@ -408,7 +408,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 case MGD_TYPE_GUID:
                 case MGD_TYPE_STRING:
                     if (   $key == 'component'
-                        && is_a($this->_object, 'midgard_topic'))
+                        && is_a($this->_object, 'midcom_baseclasses_database_topic'))
                     {
                         // Component pulldown for topics
                         $components = array('' => '');
@@ -445,7 +445,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
 
                     // Special page treatment
                     if (   $key === 'info'
-                        && is_a($this->_object, 'midgard_page'))
+                        && is_a($this->_object, 'midcom_baseclasses_database_page'))
                     {
                         $this->_schemadb['object']->append_field
                         (
@@ -473,7 +473,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                     }
 
                     if (   $key === 'info'
-                        && is_a($this->_object, 'midgard_pageelement'))
+                        && is_a($this->_object, 'midcom_baseclasses_database_pageelement'))
                     {
                         $this->_schemadb['object']->append_field
                         (
@@ -768,10 +768,10 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         switch ($this->_controller->process_form())
         {
             case 'save':
-                if (   is_a($this->_object, 'midgard_style')
-                    || is_a($this->_object, 'midgard_element')
-                    || is_a($this->_object, 'midgard_page')
-                    || is_a($this->_object, 'midgard_pageelement'))
+                if (   is_a($this->_object, 'midcom_baseclasses_database_style')
+                    || is_a($this->_object, 'midcom_baseclasses_database_element')
+                    || is_a($this->_object, 'midcom_baseclasses_database_page')
+                    || is_a($this->_object, 'midcom_baseclasses_database_pageelement'))
                 {
                     mgd_cache_invalidate();
                 }
@@ -890,7 +890,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
     function _handler_create($handler_id, $args, &$data)
     {
         midgard_admin_asgard_plugin::init_language($handler_id, $args, $data);
-        $this->_new_type = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($args[0]);
+        $this->_new_type = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($args[0]);
         if (!$this->_new_type)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
@@ -975,8 +975,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
         switch ($this->_controller->process_form())
         {
             case 'save':
-                if (   is_a($this->_new_object, 'midgard_style')
-                    || is_a($this->_new_object, 'midgard_element'))
+                if (   is_a($this->_new_object, 'midcom_baseclasses_database_style')
+                    || is_a($this->_new_object, 'midcom_baseclasses_database_element'))
                 {
                     mgd_cache_invalidate();
                 }
@@ -1131,8 +1131,8 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
                 // This will exit.
             }
 
-            if (   is_a($this->_object, 'midgard_style')
-                || is_a($this->_object, 'midgard_element'))
+            if (   is_a($this->_object, 'midcom_baseclasses_database_style')
+                || is_a($this->_object, 'midcom_baseclasses_database_element'))
             {
                 mgd_cache_invalidate();
             }

@@ -165,7 +165,7 @@ class net_nemein_attention_calculator extends midcom_baseclasses_components_pure
         }
         
         // Read possible article categories as concepts too
-        if (   is_a($object, 'midgard_article')
+        if (   is_a($object, 'midcom_baseclasses_database_article')
             && strpos($object->extra1, '|') !== false)
         {
             $categories = explode('|', substr($object->extra1, 1, -1));

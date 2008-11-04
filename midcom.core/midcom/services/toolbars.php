@@ -765,7 +765,7 @@ class midcom_services_toolbars extends midcom_baseclasses_core_object
                     MIDCOM_TOOLBAR_URL => "{$prefix}__ais/folder/move/{$object->guid}/",
                     MIDCOM_TOOLBAR_LABEL => $_MIDCOM->i18n->get_string('move', 'midcom.admin.folder'),
                     MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/save-as.png',
-                    MIDCOM_TOOLBAR_ENABLED => is_a($object, 'midgard_article')
+                    MIDCOM_TOOLBAR_ENABLED => is_a($object, 'midcom_baseclasses_database_article')
                 )
             );
             $toolbar->add_item

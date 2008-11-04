@@ -193,7 +193,7 @@ class midcom_helper_replicator_exporter_mirror extends midcom_helper_replicator_
         }
 
         // In case of a topic we have to check for possible extra dependencies
-        if (is_a($object, 'midgard_topic'))
+        if (is_a($object, 'midcom_baseclasses_database_topic'))
         {
             $dependency_serializations = $this->serialize_component_dependencies(&$object);
             $serializations = array_merge($serializations, $dependency_serializations);

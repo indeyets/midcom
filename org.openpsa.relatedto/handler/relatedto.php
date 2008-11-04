@@ -1071,7 +1071,7 @@ EOF;
         {
             case 'deny':
                 if (   !$this->_request_data['object']
-                    || !is_a($this->_request_data['object'], 'org_openpsa_relatedto'))
+                    || !is_a($this->_request_data['object'], 'org_openpsa_relatedto_relatedto_dba'))
                 {
                     $ajax->simpleReply(false, "method '{$this->_request_data['mode']}' requires guid of a link object as an argument");
                 }
@@ -1081,7 +1081,7 @@ EOF;
                 //this will exit()
             case 'confirm':
                 if (   !$this->_request_data['object']
-                    || !is_a($this->_request_data['object'], 'org_openpsa_relatedto'))
+                    || !is_a($this->_request_data['object'], 'org_openpsa_relatedto_relatedto_dba'))
                 {
                     $ajax->simpleReply(false, "method '{$this->_request_data['mode']}' requires guid of a link object as an argument");
                 }

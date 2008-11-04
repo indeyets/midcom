@@ -485,10 +485,10 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
         }
 
         $this->_thread = $this->_parent_post->get_parent();
-        if (is_a($this->_thread, 'net_nemein_discussion_post'))
+        if (is_a($this->_thread, 'net_nemein_discussion_post_dba'))
         {
             // This post has up pointing to another post, setting the parent in that way
-            while (!is_a($this->_thread, 'net_nemein_discussion_thread'))
+            while (!is_a($this->_thread, 'net_nemein_discussion_thread_dba'))
             {
                 $this->_thread = $this->_thread->get_parent();
             }

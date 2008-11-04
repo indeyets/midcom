@@ -66,7 +66,7 @@ class net_nemein_discussion_interface extends midcom_baseclasses_components_inte
             return;
         }
         
-        if (!is_a($vote, 'net_nemein_quickpoll_vote'))
+        if (!is_a($vote, 'net_nemein_quickpoll_vote_dba'))
         {
             return;
         }

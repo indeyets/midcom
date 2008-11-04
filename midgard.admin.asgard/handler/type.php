@@ -313,7 +313,7 @@ class midgard_admin_asgard_handler_type extends midcom_baseclasses_components_ha
         $class = $this->type;
         
         $data['used_types'][] = $data['type'];
-        $data['used_types'][] = $_MIDCOM->dbclassloader->get_midcom_class_name_for_legacy_midgard_class($this->type);
+        $data['used_types'][] = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($this->type);
         
         $data['prefix'] = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
         

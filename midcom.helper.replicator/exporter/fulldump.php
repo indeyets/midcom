@@ -156,7 +156,7 @@ class midcom_helper_replicator_exporter_fulldump extends midcom_helper_replicato
             */
 
             // The special case of attachment
-            if (is_a($object, 'midgard_attachment'))
+            if (is_a($object, 'midcom_baseclasses_database_attachment'))
             {
                 // Define this even though we don't need it in this case
                 $serialized = 'dummy';

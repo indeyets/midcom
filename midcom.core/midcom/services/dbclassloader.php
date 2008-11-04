@@ -40,7 +40,6 @@
  * Array
  * (
  *     'table' => 'article',
- *     'old_class_name' => 'MidgardArticle',
  *     'new_class_name' => 'midgard_article',
  *     'midcom_class_name' => 'midcom_baseclasses_database_article'
  * )
@@ -53,11 +52,6 @@
  * necessary for now to get a clean transition between legacy Midgard and MgdSchema. The
  * argument is checked for basic sanity (basically, only alphanumeric characters, underscores
  * and dashes are allowed).
- *
- * <i>old_class_name</i> is a compatibility value as well, and should take the name of the
- * original Midgard class that was used to work, with this type. If there is no such type,
- * set it to null which is the default if and only if this key is omitted in the declaration.
- * If specified the class is checked for existence when the file is being loaded.
  *
  * <i>new_class_name</i> is the MgdSchema class name from that you want to use. This argument
  * is mandatory, and the class specified must exist.
@@ -356,19 +350,6 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
                 debug_add("Validation failed: Key {$key} had an invalid table element.", MIDCOM_LOG_INFO);
-                debug_pop();
-                return false;
-            }
-
-            if (! array_key_exists('old_class_name', $definition))
-            {
-                $definition['old_class_name'] = null;
-            }
-            if (   ! is_null($definition['old_class_name'])
-                && ! class_exists($definition['old_class_name']))
-            {
-                debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Validation failed: Key {$key} had an invalid old_class_name element.", MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }
@@ -951,90 +932,6 @@ EOF;
     }
 
     /**
-     * Simple helper to check whether we are dealing with a legacy midgard object
-     * or a subclass thereof.
-     *
-     * @param object &$object The object to check
-     * @return boolean true if this is a Legacy Midgard object, false otherwise.
-     */
-    function is_legacy_midgard_object(&$object)
-    {
-        /* TODO, remove this method and all its references */
-        $classname = get_class($object);    
-        foreach ($this->_loaded_classes as $class_definition)
-        {
-            if (is_a($object, $class_definition['old_class_name']))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Get a MidCOM DB class name for a legacy Midgard class.
-     *
-     * @param object $classname The class to check
-     * @return string The corresponding MidCOM DB class name, false otherwise.
-     */
-    function get_midcom_class_name_for_legacy_midgard_class($classname)
-    {
-        foreach ($this->_loaded_classes as $class_definition)
-        {
-            if ($classname == $class_definition['new_class_name'])
-            {
-                return $class_definition['midcom_class_name'];
-            }
-        }
-        
-        // We don't have the class loaded, try to load it
-        if ($this->load_component_for_class($classname))
-        {
-            foreach ($this->_loaded_classes as $class_definition)
-            {
-                if ($classname == $class_definition['new_class_name'])
-                {
-                    return $class_definition['midcom_class_name'];
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Get a MidCOM DB class name for a legacy Midgard Object.
-     *
-     * @param object &$object The object to check
-     * @return string The corresponding MidCOM DB class name, false otherwise.
-     */
-    function get_midcom_class_name_for_legacy_midgard_object(&$object)
-    {
-        $classname = get_class($object);
-        foreach ($this->_loaded_classes as $class_definition)
-        {
-            if (is_a($object, $class_definition['old_class_name']))
-            {
-                return $class_definition['midcom_class_name'];
-            }
-        }
-        
-        // We don't have the class loaded, try to load it
-        if ($this->load_component_for_class($classname))
-        {
-            foreach ($this->_loaded_classes as $class_definition)
-            {
-                if (is_a($object, $class_definition['old_class_name']))
-                {
-                    return $class_definition['midcom_class_name'];
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Simple helper to check whether we are dealing with a MgdSchema object
      * or a subclass thereof.
      *
@@ -1133,6 +1030,28 @@ EOF;
      */
     function get_midcom_class_name_for_mgdschema_object(&$object)
     {
+        if (is_string($object))
+        {
+            // In some cases we get a class name instead
+            $classname = $object;
+            if ($classname == $class_definition['new_class_name'])
+            {
+                return $class_definition['midcom_class_name'];
+            }
+    
+            // We don't have the class loaded, try to load it
+            if ($this->load_component_for_class($classname))
+            {
+                foreach ($this->_loaded_classes as $class_definition)
+                {
+                    if ($classname == $class_definition['new_class_name'])
+                    {
+                        return $class_definition['midcom_class_name'];
+                    }
+                }
+            }
+        }          
+
         $classname = get_class($object);
         foreach ($this->_loaded_classes as $class_definition)
         {

@@ -236,10 +236,10 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             case (method_exists($obj,'get_label_property')):
                 $label = $obj->get_label();
                 break;
-            case (is_a($obj, 'midgard_topic')):
+            case (is_a($obj, 'midcom_baseclasses_database_topic')):
                 $property = 'extra';
                 break;
-            case (is_a($obj, 'midgard_person')):
+            case (is_a($obj, 'midcom_baseclasses_database_person')):
                 $property = array
                 (
                     'rname',
@@ -293,7 +293,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             case (method_exists($obj,'get_label')):
                 $label = $obj->get_label();
                 break;
-            case (is_a($obj, 'midgard_person')):
+            case (is_a($obj, 'midcom_baseclasses_database_person')):
                 if ($obj->rname)
                 {
                     $label = $obj->rname;
@@ -304,7 +304,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
                 }
                 break;
 
-            case (is_a($obj, 'midgard_topic')):
+            case (is_a($obj, 'midcom_baseclasses_database_topic')):
                 if ($obj->extra)
                 {
                     $label = $obj->extra;
@@ -314,8 +314,8 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
                     $label = $obj->name;
                 }
                 break;
-            case (is_a($obj, 'midgard_event')):
-            case (is_a($obj, 'org_openpsa_event')):
+            case (is_a($obj, 'midcom_baseclasses_database_event')):
+            case (is_a($obj, 'org_openpsa_calendar_event')):
                 if ($obj->start == 0)
                 {
                     $label = $obj->title;
@@ -325,17 +325,17 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
                     $label = strftime('%x', $obj->start) . " {$obj->title}";
                 }
                 break;
-            case (is_a($obj, 'midgard_eventmember')):
+            case (is_a($obj, 'midcom_baseclasses_database_eventmember')):
                 $person = new midcom_db_person($obj->uid);
                 $event = new midcom_db_event($obj->eid);
                 $label = sprintf($_MIDCOM->i18n->get_string('%s in %s', 'midcom'), $person->name, $event->title);
                 break;
-            case (is_a($obj, 'midgard_member')):
+            case (is_a($obj, 'midcom_baseclasses_database_member')):
                 $person = new midcom_db_person($obj->uid);
                 $grp = new midcom_db_group($obj->gid);
                 $label = sprintf($_MIDCOM->i18n->get_string('%s in %s', 'midcom'), $person->name, $grp->official);
                 break;
-            case (is_a($obj, 'midgard_host')):
+            case (is_a($obj, 'midcom_baseclasses_database_host')):
                 if (   $obj->port
                     && $obj->port != '80')
                 {
@@ -512,10 +512,10 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
             case (strpos($object_class, 'organization') !== false):
                 $icon='stock_people.png';
                 break;
-            case (is_a($obj, 'midgard_host')):
+            case (is_a($obj, 'midcom_baseclasses_database_host')):
                 $icon='stock_internet.png';
                 break;
-            case (is_a($obj, 'midgard_snippet')):
+            case (is_a($obj, 'midcom_baseclasses_database_snippet')):
                 $icon='script.png';
                 break;
             case (strpos($object_class, 'element') !== false):
@@ -1012,13 +1012,7 @@ class midcom_helper_reflector extends midcom_baseclasses_components_purecode
                 case $_MIDCOM->dbclassloader->is_midcom_db_object($source):
                     $source_object =& $source;
                     break;
-                
-                // This is a MgdSchema object
-                case $_MIDCOM->dbclassloader->is_legacy_midgard_object($source):
-                    $midcom_dba_classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($source);
-                    $source_object = new $midcom_dba_classname($source->guid);
-                    break;
-                
+
                 // Unable to determine, force the result out
                 default:
                     // Get the MidCOM dba classname for the element

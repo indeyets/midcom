@@ -306,7 +306,7 @@ class midcom_helper_replicator_exporter extends midcom_baseclasses_components_pu
         $GLOBALS['midcom_helper_replicator_logger']->push_prefix('exporter');
 
         // Special case of midgard_attachment (and classes extending it)
-        if (is_a($object, 'midgard_attachment'))
+        if (is_a($object, 'midcom_baseclasses_database_attachment'))
         {
             debug_add('object is attachment, passing control to serialize_attachment()', MIDCOM_LOG_INFO);
             debug_pop();

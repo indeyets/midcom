@@ -132,8 +132,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
         // Invalidate Midgard pagecache if we touched style/page element
         if (   function_exists('mgd_cache_invalidate')
-            && (   is_a($object, 'midgard_element')
-                || is_a($object, 'midgard_pageelement'))
+            && (   is_a($object, 'midcom_baseclasses_database_element')
+                || is_a($object, 'midcom_baseclasses_database_pageelement'))
             )
         {
             debug_add('invalidating Midgard page cache');
@@ -424,8 +424,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         
         // Invalidate Midgard pagecache if we touched style/page element
         if (   function_exists('mgd_cache_invalidate')
-            && (   is_a($object, 'midgard_element')
-                || is_a($object, 'midgard_pageelement'))
+            && (   is_a($object, 'midcom_baseclasses_database_element')
+                || is_a($object, 'midcom_baseclasses_database_pageelement'))
             )
         {
             mgd_cache_invalidate();
@@ -649,8 +649,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
         // Invalidate Midgard pagecache if we touched style/page element
         if (   function_exists('mgd_cache_invalidate')
-            && (   is_a($object, 'midgard_element')
-                || is_a($object, 'midgard_pageelement'))
+            && (   is_a($object, 'midcom_baseclasses_database_element')
+                || is_a($object, 'midcom_baseclasses_database_pageelement'))
             )
         {
             mgd_cache_invalidate();
@@ -722,8 +722,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
                 
                 // Invalidate Midgard pagecache if we touched style/page element
                 if (   function_exists('mgd_cache_invalidate')
-                    && (   is_a($object, 'midgard_element')
-                        || is_a($object, 'midgard_pageelement'))
+                    && (   is_a($object, 'midcom_baseclasses_database_element')
+                        || is_a($object, 'midcom_baseclasses_database_pageelement'))
                     )
                 {
                     mgd_cache_invalidate();
@@ -1107,8 +1107,8 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         // TODO: Do this with midgard_object_class::is_multilang($object) when it works
         if (   $GLOBALS['midcom_config']['i18n_multilang_strict']
             && isset($object->lang)
-            && !is_a($object, 'midgard_parameter')
-            && !is_a($object, 'midgard_attachment')
+            && !is_a($object, 'midcom_baseclasses_database_parameter')
+            && !is_a($object, 'midcom_baseclasses_database_attachment')
             && $object->lang != $_MIDCOM->i18n->get_midgard_language())
         {
             // TODO: Some other error code might be nicer here

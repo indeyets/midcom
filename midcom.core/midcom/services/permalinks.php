@@ -102,7 +102,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
             return null;
         }
 
-        if (is_a($object, 'midgard_topic'))
+        if (is_a($object, 'midcom_baseclasses_database_topic'))
         {
             $napobj = $nav->get_node($object->id);
             if (! $napobj)
@@ -123,7 +123,7 @@ class midcom_services_permalinks extends midcom_baseclasses_core_object
 
         while ($parent)
         {
-            if (is_a($parent, 'midgard_topic'))
+            if (is_a($parent, 'midcom_baseclasses_database_topic'))
             {
                 // Verify that this topic is within the current sites tree, if it is not,
                 // we ignore it. This might happen on symlink topics with static & co

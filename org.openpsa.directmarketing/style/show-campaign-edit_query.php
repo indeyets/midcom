@@ -44,7 +44,7 @@ if (!function_exists('list_object_properties'))
             $skip_properties[] = 'revisor';
             $skip_properties[] = 'revision';
         }
-        if (is_a($object, 'org_openpsa_person'))
+        if (is_a($object, 'org_openpsa_contacts_person_dba'))
         {
             // The info field is a special case
             $skip_properties[] = 'info';
@@ -57,7 +57,7 @@ if (!function_exists('list_object_properties'))
             // Duh
             $skip_properties[] = 'password';
         }
-        if (is_a($object, 'midgard_member'))
+        if (is_a($object, 'midcom_baseclasses_database_member'))
         {
             // The info field is a special case
             $skip_properties[] = 'info';

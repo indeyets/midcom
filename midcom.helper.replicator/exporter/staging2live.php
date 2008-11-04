@@ -266,7 +266,7 @@ class midcom_helper_replicator_exporter_staging2live extends midcom_helper_repli
             return;
         }
 
-        if (   is_a($object, 'midgard_article')
+        if (   is_a($object, 'midcom_baseclasses_database_article')
             && !empty($object->up))
         {
             // Child articles don't currently have any approval UI, skip approval for them (but do check parent below)

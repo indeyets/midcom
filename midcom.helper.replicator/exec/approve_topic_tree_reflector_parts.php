@@ -98,7 +98,7 @@ function approve_object_reflectorrecursive($obj)
     {
         foreach ($child_objects as $k => $child)
         {
-            if (!is_a($child, 'midgard_topic'))
+            if (!is_a($child, 'midcom_baseclasses_database_topic'))
             {
                 approve_object_reflectorrecursive($child);
             }

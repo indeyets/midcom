@@ -116,11 +116,11 @@ function net_nemein_calendar_event2document($event)
 function net_nemein_calendar_compute_first_event(&$parent)
 {
     $qb = net_nemein_calendar_event_dba::new_query_builder();
-    if (is_a($parent, 'net_nemein_calendar_event'))
+    if (is_a($parent, 'net_nemein_calendar_event_dba'))
     {
         $qb->add_constraint('up', 'INTREE', $parent->id);
     }
-    elseif (is_a($parent, 'midgard_topic'))
+    elseif (is_a($parent, 'midcom_baseclasses_database_topic'))
     {
         $qb->add_constraint('node', '=', $parent->id);
     }
@@ -153,11 +153,11 @@ function net_nemein_calendar_compute_first_event(&$parent)
 function net_nemein_calendar_compute_last_event(&$parent)
 {
     $qb = net_nemein_calendar_event_dba::new_query_builder();
-    if (is_a($parent, 'net_nemein_calendar_event'))
+    if (is_a($parent, 'net_nemein_calendar_event_dba'))
     {
         $qb->add_constraint('up', 'INTREE', $parent->id);
     }
-    elseif (is_a($parent, 'midgard_topic'))
+    elseif (is_a($parent, 'midcom_baseclasses_database_topic'))
     {
         $qb->add_constraint('node', '=', $parent->id);
     }

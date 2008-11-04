@@ -261,8 +261,8 @@ class midcom_core_user extends midcom_baseclasses_core_object
             }
         }
         else if (   is_object($id)
-                 && (   is_a($id, 'midgard_person')
-                     || is_a($id, 'org_openpsa_person')))
+                 && (   is_a($id, 'midcom_baseclasses_database_person')
+                     || is_a($id, 'org_openpsa_contacts_person')))
         {
             $this->_storage = $id;
         }

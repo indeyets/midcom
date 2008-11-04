@@ -124,7 +124,7 @@ class org_openpsa_relatedto_handler extends midcom_baseclasses_components_pureco
         $i = 0;
         foreach ($array as $rel)
         {
-            if (!is_a($rel, 'org_openpsa_relatedto')) //Matches also 'org_openpsa_relatedto_relatedto_dba'
+            if (!is_a($rel, 'org_openpsa_relatedto_relatedto_dba')) //Matches also 'org_openpsa_relatedto_relatedto_dba'
             {
                 //Wrong type of object found in array, cruelly abort the whole procedure
                 return false;

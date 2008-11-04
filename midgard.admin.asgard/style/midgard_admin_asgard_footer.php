@@ -33,7 +33,7 @@
 
                         if (   isset($data['object'])
                             && property_exists($data['object'], 'lang')
-                            && !is_a($data['object'], 'midgard_host'))
+                            && !is_a($data['object'], 'midcom_baseclasses_database_host'))
                         {
                             // FIXME: It would be better to reflect whether object is MultiLang
                             $object_langs = $data['object']->get_languages();
