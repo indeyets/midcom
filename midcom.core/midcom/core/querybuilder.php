@@ -116,7 +116,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * @var string
      * @access private
      */
-    var $_real_class;
+    private $_real_class;
 
     /**
      * The query builder instance that is internally used.
@@ -124,7 +124,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      * @var midgard_query_builder
      * @access private
      */
-    var $_qb;
+    private $_qb;
     
     /**
      * The number of groups open
@@ -232,16 +232,30 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
             // This will exit.
         }
 
-        // Validate the class, we check for a single callback representatively only
-        if (!method_exists($classname, '_on_prepare_new_query_builder'))
-        {
-            $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                "Cannot create a midcom_core_querybuilder instance for the type {$classname}: Does not seem to be a DBA class name.");
-            // This will exit.
-        }
+        static $_class_mapping_cache = Array();
 
         $this->_real_class = $classname;
-        $this->_qb = new midgard_query_builder($classname);
+        if (isset($_class_mapping_cache[$classname]))
+        {
+            $mgdschemaclass = $_class_mapping_cache[$classname];
+        }
+        else
+        {
+            // Validate the class, we check for a single callback representatively only
+            if (!method_exists($classname, '_on_prepare_new_query_builder'))
+            {
+                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
+                    "Cannot create a midcom_core_querybuilder instance for the type {$classname}: Does not seem to be a DBA class name.");
+                // This will exit.
+            }
+
+            // Figure out the actual MgdSchema class from the decorator
+            $dummy = new $classname();
+            $mgdschemaclass = $dummy->__new_class_name__;
+            $_class_mapping_cache[$classname] = $mgdschemaclass;
+        }
+
+        $this->_qb = new midgard_query_builder($mgdschemaclass);
 
         if ($GLOBALS['midcom_config']['i18n_multilang_strict'])
         {
@@ -266,18 +280,7 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
      */
     function _execute_and_check_privileges($false_on_empty_mgd_resultset = false)
     {
-        // TODO: Remove this silence after all MgdSchemas are fixed
-        //try
-        //{
-            $result = $this->_qb->execute();
-        /*}
-        catch (Exception $e)
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('The querybuilder failed to execute, aborting. Midgard Exception: ' . $e->getMessage(), MIDCOM_LOG_ERROR);
-            debug_pop();
-            return array();
-        }*/
+        $result = $this->_qb->execute();
 
         if (!is_array($result))
         {
@@ -329,6 +332,9 @@ class midcom_core_querybuilder extends midcom_baseclasses_core_object
                 continue;
             }
             $this->_seen_guids[$object->guid] = true;
+            
+            $classname = $this->_real_class;
+            $object = new $classname($object);
 
             // Check read privileges
             if (!midcom_baseclasses_core_dbobject::post_db_load_checks($object))

@@ -124,42 +124,28 @@ class midcom_core_collector
      */
     function __construct($classname, $domain, $value)
     {
-        static $_class_mapping_cache = Array();
-
-        if (array_key_exists($classname, $_class_mapping_cache))
+        $this->_real_class = $classname;
+        if (isset($_class_mapping_cache[$classname]))
         {
-            $baseclass = $_class_mapping_cache[$classname];
+            $mgdschemaclass = $_class_mapping_cache[$classname];
         }
         else
         {
             // Validate the class, we check for a single callback representatively only
-            if (! in_array('_on_prepare_new_collector', get_class_methods($classname)))
+            if (!method_exists($classname, '_on_prepare_new_collector'))
             {
                 $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
                     "Cannot create a midcom_core_collector instance for the type {$classname}: Does not seem to be a DBA class name.");
                 // This will exit.
             }
 
-            $parent = $classname;
-            $baseclass = $classname;
-            do
-            {
-                $baseclass = $parent;
-                $parent = get_parent_class($baseclass);
-            }
-            while ($parent !== false);
-
-            if (! class_exists($baseclass))
-            {
-                $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                    "Cannot create a midcom_core_collector instance for the type {$baseclass}: Class not found.");
-                // This will exit.
-            }
-            $_class_mapping_cache[$classname] = $baseclass;
+            // Figure out the actual MgdSchema class from the decorator
+            $dummy = new $classname();
+            $mgdschemaclass = $dummy->__new_class_name__;
+            $_class_mapping_cache[$classname] = $mgdschemaclass;
         }
 
-        $this->_mc = new midgard_collector($baseclass, $domain, $value);
-        $this->_real_class = $classname;
+        $this->_mc = new midgard_collector($mgdschemaclass, $domain, $value);
 
         // MidCOM's collector always uses the GUID as the key for ACL purposes
         $this->_mc->set_key_property('guid');

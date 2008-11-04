@@ -175,15 +175,6 @@
 class midcom_services_dbclassloader extends midcom_baseclasses_core_object
 {
     /**
-     * Internal version number, this is added to the generated classes for
-     * informational purposes only (right now).
-     *
-     * @var string
-     * @access private
-     */
-    var $_cvs_revision = '$Revision:3765 $';
-
-    /**
      * Temporary variable during class construction, stores the
      * constructed code.
      *
@@ -568,7 +559,8 @@ EOF;
     function _write_class()
     {
         // We first produce the class header
-        $this->_class_string .= "class __{$this->_class_definition['midcom_class_name']} extends {$this->_class_definition['new_class_name']}\n";
+        //$this->_class_string .= "class __{$this->_class_definition['midcom_class_name']} extends {$this->_class_definition['new_class_name']}\n";
+        $this->_class_string .= "class __{$this->_class_definition['midcom_class_name']} extends midcom_core_dbaobject\n";
         $this->_class_string .= "{\n";
         $this->_class_string .= "    \n";
 
@@ -596,38 +588,12 @@ EOF;
      *
      * @access private
      */
-    function _write_constructor()
+    private function _write_constructor()
     {
         $this->_class_string .= <<<EOF
-    function __construct(\$id = null)
+    public function __construct(\$id = null)
     {
-        \$_id = null;
-        
-        if(is_object(\$id))
-        {
-            \$_id = \$id->guid;
-        }
-        else
-        {
-            \$_id = \$id;
-        }
-
-        try
-        {
-            parent::__construct(\$_id);
-        }
-        catch (midgard_error_exception \$e)
-        {
-            \$x =& \$this; 
-            \$x = false; 
-            return false; 
-        }
-          
-        if (  \$this->guid
-            && mgd_is_guid(\$this->guid))
-        {
-            midcom_baseclasses_core_dbobject::post_db_load_checks(\$this);
-        }
+        parent::__construct(\$id);
     }
 EOF;
         $this->_class_string .= "\n    \n";
@@ -641,97 +607,11 @@ EOF;
     function _write_main_api()
     {
         $this->_class_string .= <<<EOF
-    // Main API
-    function create() { return midcom_baseclasses_core_dbobject::create(\$this); }
-    function create_attachment(\$name, \$title, \$mimetype) { return midcom_baseclasses_core_dbobject::create_attachment(\$this, \$name, \$title, \$mimetype); }
-    function create_new_privilege_object(\$privilege, \$assignee = null, \$value = MIDCOM_PRIVILEGE_ALLOW, \$classname = '') { return midcom_baseclasses_core_dbobject::create_new_privilege_object(\$this, \$privilege, \$assignee, \$value, \$classname); }
-    function delete() { return midcom_baseclasses_core_dbobject::delete(\$this); }
-    function delete_attachment(\$name) { return midcom_baseclasses_core_dbobject::delete_attachment(\$this, \$name); }
-    function delete_parameter(\$domain, \$name) { return midcom_baseclasses_core_dbobject::delete_parameter(\$this, \$domain, \$name); }
-    function delete_tree() { return midcom_baseclasses_core_dbobject::delete_tree(\$this); }
-    function get_attachment(\$name) { return midcom_baseclasses_core_dbobject::get_attachment(\$this, \$name); }
-    function get_attachment_qb() { return midcom_baseclasses_core_dbobject::get_attachment_qb(\$this); }
-    function get_by_guid(\$guid) { return midcom_baseclasses_core_dbobject::get_by_guid(\$this, \$guid); }
-    function get_by_id(\$id) { return midcom_baseclasses_core_dbobject::get_by_id(\$this, \$id); }
-    function get_by_path(\$path) { return midcom_baseclasses_core_dbobject::get_by_path(\$this, \$path); }  
-    /* function get_by_path(\$path) { return parent::get_by_path(\$this, \$path); } */
-    function & get_metadata() { return midcom_baseclasses_core_dbobject::get_metadata(\$this); }
-    function get_parameter(\$domain, \$name) { return midcom_baseclasses_core_dbobject::get_parameter(\$this, \$domain, \$name); }
-    function get_parent() { return midcom_baseclasses_core_dbobject::get_parent(\$this); }
-    function get_parent_guid() { return midcom_baseclasses_core_dbobject::get_parent_guid(\$this); }
-    function get_privilege(\$privilege, \$assignee, \$classname = '') { return midcom_baseclasses_core_dbobject::get_privilege(\$this, \$privilege, \$assignee, \$classname); }
-    function get_privileges() { return midcom_baseclasses_core_dbobject::get_privileges(\$this); }
-    function is_object_visible_onsite() { return midcom_baseclasses_core_dbobject::is_object_visible_onsite(\$this); }
-    function is_owner(\$person = null) { return midcom_baseclasses_core_dbobject::is_owner(\$this, \$person); }
-    function list_attachments() { return midcom_baseclasses_core_dbobject::list_attachments(\$this); }
-    function list_parameters(\$domain = null) { return midcom_baseclasses_core_dbobject::list_parameters(\$this, \$domain); }
+
     static function new_query_builder() { return \$_MIDCOM->dbfactory->new_query_builder('{$this->_class_definition['midcom_class_name']}'); }
     static function new_collector(\$domain, \$value) { return \$_MIDCOM->dbfactory->new_collector('{$this->_class_definition['midcom_class_name']}', \$domain, \$value); }
-    function open_attachment(\$name, \$mode = 'w') { return midcom_baseclasses_core_dbobject::open_attachment(\$this, \$name, \$mode); }
-    function refresh() { return midcom_baseclasses_core_dbobject::refresh(\$this); }
-    function set_parameter(\$domain, \$name, \$value) { return midcom_baseclasses_core_dbobject::set_parameter(\$this, \$domain, \$name, \$value); }
-    function set_privilege(\$privilege, \$assignee = null, \$value = MIDCOM_PRIVILEGE_ALLOW, \$classname = '') { return midcom_baseclasses_core_dbobject::set_privilege(\$this, \$privilege, \$assignee, \$value, \$classname); }
-    function unset_privilege(\$privilege, \$assignee = null, \$classname = '') { return midcom_baseclasses_core_dbobject::unset_privilege(\$this, \$privilege, \$assignee, \$classname); }
-    function unset_all_privileges() { return midcom_baseclasses_core_dbobject::unset_all_privileges(\$this); }
-    function update() { return midcom_baseclasses_core_dbobject::update(\$this); }
 
-    // Legacy API
-    function guid() { return \$this->guid; }
-    function createattachment(\$name, \$title, \$mimetype) { return midcom_baseclasses_core_dbobject::createattachment(\$this, \$name, \$title, \$mimetype); }
-    function deleteattachment(\$name) { return midcom_baseclasses_core_dbobject::delete_attachment(\$this, \$name); }
-    function getattachment(\$name) { return midcom_baseclasses_core_dbobject::get_attachment(\$this, \$name); }
-    function listattachments() { return midcom_baseclasses_core_dbobject::listattachments(\$this); }
-    function openattachment(\$name, \$mode = 'w') { return midcom_baseclasses_core_dbobject::open_attachment(\$this, \$name, \$mode); }
-    function parameter(\$domain, \$name)
-    {
-        if (func_num_args() == 2)
-        {
-            return \$this->get_parameter(\$domain, \$name);
-        }
-        else
-        {
-            \$value = func_get_arg(2);
-            if (   \$value === false
-                || \$value === null
-                || \$value === '')
-            {
-                return \$this->delete_parameter(\$domain, \$name);
-            }
-            else
-            {
-                return \$this->set_parameter(\$domain, \$name, \$value);
-            }
-        }
-    }
-    function _parent_parameter(\$domain, \$name)
-    {
-        if (func_num_args() == 2)
-        {
-            return parent::parameter(\$domain, \$name);
-        }
-        else
-        {
-            \$value = func_get_arg(2);
-            return parent::parameter(\$domain, \$name, \$value);
-        }
-    }
-
-    // ACL Shortcuts
-    function can_do(\$privilege, \$user = null) { return \$_MIDCOM->auth->can_do(\$privilege, \$this, \$user); }
-    function can_user_do(\$privilege, \$user = null) { return \$_MIDCOM->auth->can_user_do(\$privilege, \$user, '{$this->_class_definition["midcom_class_name"]}'); }
-    function require_do(\$privilege, \$message = null) { \$_MIDCOM->auth->require_do(\$privilege, \$this, \$message); }
-    function require_user_do(\$privilege, \$message = null) { \$_MIDCOM->auth->require_user_do(\$privilege, \$message, '{$this->_class_definition["midcom_class_name"]}'); }
-
-    // DBA API
-    function get_class_magic_default_privileges()
-    {
-        return Array (
-            'EVERYONE' => Array(),
-            'ANONYMOUS' => Array(),
-            'USERS' => Array()
-        );
-    }
-    function get_parent_guid_uncached()
+    public function get_parent_guid_uncached()
     {
 EOF;
         $reflector = new midgard_reflection_property($this->_class_definition['new_class_name']);
@@ -806,7 +686,7 @@ EOF;
         $this->_class_string .= <<<EOF
         return null;
     }
-    function get_parent_guid_uncached_static(\$object_guid)
+    public function get_parent_guid_uncached_static(\$object_guid)
     {
 EOF;
         $reflector = new midgard_reflection_property($this->_class_definition['new_class_name']);
@@ -898,21 +778,12 @@ EOF;
         $this->_class_string .= <<<EOF
         return null;
     }
-    function get_dba_parent_class()
+    public function get_dba_parent_class()
     {
         // TODO: Try to figure this out via reflection (NOTE: this must return a midcom DBA class...)
         return null;
     }
 
-    // PEAR API mapping
-    function isError (\$data, \$msgcode = null) { return PEAR::isError(\$data, \$msgcode); }
-    function raiseError(\$message = null, \$code = null, \$mode = null, \$options = null, \$userinfo = null, \$error_class = null, \$skipmsg = false)
-    {
-        return PEAR::raiseError(\$message, \$code, \$mode, \$options, \$userinfo, \$error_class, \$skipmsg);
-    }
-
-    // Private API
-    function _load_from_database(\$id) { return midcom_baseclasses_core_dbobject::load(\$this, \$id); }
 EOF;
         $this->_class_string .= "\n    \n";
     }
@@ -926,15 +797,12 @@ EOF;
     {
         $this->_class_string .= <<<EOF
     // Exec handlers
-    function __exec_create() { return @parent::create(); }
-    function __exec_update() { return @parent::update(); }
-    function __exec_delete() { return @parent::delete(); }
-    function __exec_get_by_id(\$id) { return parent::get_by_id(\$id); }
-    function __exec_get_by_guid(\$guid) { return parent::get_by_guid(\$guid); }
-    function __exec_get_by_path(\$path) { return parent::get_by_path(\$path); }
-
-    // Legacy API exec handlers
-    function __exec_listattachments() { return parent::listattachments(); }
+    public function __exec_create() { return @\$this->__object->create(); }
+    public function __exec_update() { return @\$this->__object->update(); }
+    public function __exec_delete() { return @\$this->__object->delete(); }
+    public function __exec_get_by_id(\$id) { return \$this->__object->get_by_id(\$id); }
+    public function __exec_get_by_guid(\$guid) { return \$this->__object->get_by_guid(\$guid); }
+    public function __exec_get_by_path(\$path) { return \$this->__object->get_by_path(\$path); }
 
 EOF;
         $this->_class_string .= "\n    \n";
@@ -979,9 +847,11 @@ EOF;
         }
 
         // Add the generator metadata revision
-        $revision = substr($this->_cvs_revision, 11, -2);
-        $this->_class_string .= "    var \$__midcom_generator__ = 'midcom_services_dbclassloader';\n";
-        $this->_class_string .= "    var \$__midcom_generator_version__ = '{$revision}';\n";
+        $this->_class_string .= "    private \$__midcom_generator__ = 'midcom_services_dbclassloader';\n";
+        $this->_class_string .= "    private \$__midcom_generator_version__ = '{$GLOBALS['midcom_version']}';\n";
+
+        // Add the MgdSchema object placeholder
+        $this->_class_string .= "    public \$__object = null;\n";
 
         $this->_class_string .= "    \n";
     }
@@ -1014,12 +884,10 @@ EOF;
     // functions related to the rcs service.
     var \$_use_rcs = true;
     var \$_rcs_message = false;
-    function disable_rcs() { \$this->_use_rcs = false; }
-    function enable_rcs() { \$this->_use_rcs  = true; }
-    function set_rcs_message(\$msg) { \$this->_rcs_message = \$msg; }
-    function get_rcs_message() { return \$this->_rcs_message; }
-
-
+    public function disable_rcs() { \$this->_use_rcs = false; }
+    public function enable_rcs() { \$this->_use_rcs  = true; }
+    public function set_rcs_message(\$msg) { \$this->_rcs_message = \$msg; }
+    public function get_rcs_message() { return \$this->_rcs_message; }
 
 EOF;
         $this->_class_string .= "\n    \n";
@@ -1033,7 +901,9 @@ EOF;
      */
     function _write_header()
     {
-        $this->_class_string .= "/* Autogenerated MidCOM Database Interface Class\n";
+        $this->_class_string .= "/**\n";
+        $this->_class_string .= " * Autogenerated MidCOM Database Interface Class\n";
+        $this->_class_string .= " * Acts as a decorator to Midgard's MgdSchema objects\n";
         $this->_class_string .= " *\n";
         $this->_class_string .= " * Description used:\n";
         foreach ($this->_class_definition as $key => $value)
@@ -1174,10 +1044,10 @@ EOF;
     function is_mgdschema_object(&$object)
     {
         $classname = get_class($object);
-        
         foreach ($this->_loaded_classes as $class_definition)
         {
-            if (is_a($object, $class_definition['new_class_name']))
+            if (   is_a($object, $class_definition['new_class_name'])
+                || is_a($object, $class_definition['midcom_class_name']))
             {
                 return true;
             }
@@ -1187,7 +1057,8 @@ EOF;
         $this->load_component_for_class($classname);
         foreach ($this->_loaded_classes as $class_definition)
         {
-            if (is_a($object, $class_definition['new_class_name']))
+            if (   is_a($object, $class_definition['new_class_name'])
+                || is_a($object, $class_definition['midcom_class_name']))
             {
                 return true;
             }

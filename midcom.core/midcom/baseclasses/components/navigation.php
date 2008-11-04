@@ -228,7 +228,7 @@ class midcom_baseclasses_components_navigation
      * @param MidgardTopic $topic The topic to process.
      * @return boolean Indicating success.
      */
-    public function set_object(midgard_topic $topic)
+    public function set_object(midcom_db_topic $topic)
     {
         $this->_topic = $topic;
         $this->_config->store_from_object($topic, $this->_component);
