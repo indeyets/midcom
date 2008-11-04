@@ -145,7 +145,7 @@ class midcom_helper_metadata
     function __construct($guid, $object, $schemadb)
     {
         $this->guid = $guid;
-        $this->metadata =& $object->__object->metadata;
+        $this->metadata = $object->__object->metadata;
         $this->object = $object;
         $this->_schemadb_path = $schemadb;
     }

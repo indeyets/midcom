@@ -63,6 +63,11 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
             return $this->__metadata;
         }
         
+        if (substr($property, 0, 2) == '__')
+        {
+            return $this->$property;
+        }
+        
         return $this->__object->$property; 
     }
     public function __set($property, $value) 
