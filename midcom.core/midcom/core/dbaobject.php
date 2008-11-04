@@ -191,10 +191,18 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
     }
     public function lock()
     {
+        if ($this->__object->is_locked())
+        {
+            return true;
+        }
         return $this->__object->lock();
     }
     public function unlock()
     {
+        if (!$this->__object->is_locked())
+        {
+            return true;
+        }
         return $this->__object->unlock();
     }
 

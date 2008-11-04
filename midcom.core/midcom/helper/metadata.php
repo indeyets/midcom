@@ -879,11 +879,7 @@ class midcom_helper_metadata
         {
             return false;
         }
-        
-        if ($this->is_locked())
-        {
-            return true;
-        }
+
         return $this->object->lock();
     }
 
@@ -923,10 +919,6 @@ class midcom_helper_metadata
         }
         
         // TODO: Should we support soft unlock somehow?
-        if (!$this->is_locked())
-        {
-            return true;
-        }
         
         return $this->object->unlock();
     }
