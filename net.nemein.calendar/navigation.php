@@ -90,7 +90,7 @@ class net_nemein_calendar_navigation extends midcom_baseclasses_components_navig
                 $this->_determine_content_topic();
             }
 
-            $fevent = net_nemein_calendar_compute_first_event($this->_content_topic->id);
+            $fevent = net_nemein_calendar_compute_first_event($this->_content_topic);
             if (!$fevent)
             {
                 return $leaves;
@@ -98,7 +98,7 @@ class net_nemein_calendar_navigation extends midcom_baseclasses_components_navig
             $first_year = (int) date('Y', strtotime($fevent->start));
             $year = $first_year;
 
-            $levent = net_nemein_calendar_compute_last_event($this->_content_topic->id);
+            $levent = net_nemein_calendar_compute_last_event($this->_content_topic);
             if (!$levent)
             {
                 $last_year = (int) date('Y', time());
