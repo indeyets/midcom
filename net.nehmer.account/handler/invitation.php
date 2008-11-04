@@ -34,8 +34,12 @@ class net_nehmer_account_handler_invitation extends midcom_baseclasses_component
     function _on_initialize()
     {
         $_MIDCOM->load_library('org.openpsa.mail');
-        $_MIDCOM->load_library('com.magnettechnologies.contactgrabber');
-        $this->_contactgrabber = new com_magnettechnologies_contactgrabber();
+        
+        if ($_MIDCOM->componentloader->is_installed('com.magnettechnologies.contactgrabber'))
+        {
+            $_MIDCOM->load_library('com.magnettechnologies.contactgrabber');
+            $this->_contactgrabber = new com_magnettechnologies_contactgrabber();
+        }
         $this->_request_data['contactgrabber'] =& $this->_contactgrabber;
     }
 

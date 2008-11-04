@@ -433,6 +433,22 @@ class midcom_helper__componentloader
     }
 
     /**
+     * Returns TRUE if the component identified by the MidCOM path $url
+     * is installed.
+     *
+     * @param string $path    The component to be queried.
+     * @return boolean            true if it is loaded, false otherwise.
+     */
+    function is_installed($path)
+    {
+        if (!isset($this->manifests[$path]))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Returns a reference to an instance of the specified component's
      * MIDCOM class. The component is given in $path as a MidCOM path.
      * Such an instance will be cached by the framework so that only
@@ -972,7 +988,7 @@ class midcom_helper__componentloader
         }
         $checked[$component] = true;
 
-        if (!isset($this->manifests[$component]))
+        if (!$this->is_installed($component))
         {
             return array();
         }
@@ -1075,7 +1091,7 @@ class midcom_helper__componentloader
             return $GLOBALS['midcom_version'];
         }
 
-        if (   !isset($this->manifests[$component])
+        if (   !$this->is_installed($component)
             || !isset($this->manifests[$component]->version))
         {
             return null;
@@ -1091,7 +1107,7 @@ class midcom_helper__componentloader
             return 'stock-icons/logos/midgard-16x16.png';
         }
 
-        if (!isset($this->manifests[$component]))
+        if (!$this->is_installed($component))
         {
             return null;
         }

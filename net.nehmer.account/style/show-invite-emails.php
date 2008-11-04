@@ -15,8 +15,9 @@ $total_contacts = 0;
 <h2><?php echo $data['l10n']->get("import contacts"); ?></h2>
 
 <?php
-if ($_MIDCOM->load_library('com.magnettechnologies.contactgrabber'))
+if ($_MIDCOM->componentloader->is_installed('com.magnettechnologies.contactgrabber'))
 {
+    $_MIDCOM->load_library('com.magnettechnologies.contactgrabber');
     $crabber = new com_magnettechnologies_contactgrabber();
     $crabber_contacts = $crabber->grab_contacts();
 
