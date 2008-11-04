@@ -69,6 +69,8 @@
         'Text_CAPTCHA' => array
         (
             'channel' => 'pear.php.net',
+            'min' => '0.2.1',
+            'max' => '0.2.1',
         ),
         'JavaScript_Prototype' => array
         (
@@ -76,6 +78,9 @@
         ),
         'midcom' => array(),
         'midcom.helper.imagepopup' => array(),
-        'midcom.helper.reflector' => array(),
+        'midcom.helper.reflector' => array
+        (
+            'min' => '1.0.1',
+        ),
     ),
 ),
