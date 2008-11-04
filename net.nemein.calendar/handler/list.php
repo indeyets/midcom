@@ -582,6 +582,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
                     }
                 }
             $qb->end_group();
+            $qb->add_constraint('end', '>=', date('Y-m-d H:i:s', $from));
             $qb->add_order('start');
             $filtered = true;
         }
