@@ -2340,47 +2340,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
     }
 
     /**
-     * Legacy Midgard Compatibility function.
-     *
-     * Creates a new attachment at the current object and returns it for usage.
-     *
-     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @param string $name The name of the attachment.
-     * @param string $title The title of the attachment.
-     * @param string $mimetype The MIME-Type of the attachment.
-     * @return int The id of the created attachment or false on failure.
-     * @deprecated Deprecated since MidCOM 2.5.0
-     */
-    function createattachment(&$object, $name, $title, $mimetype)
-    {
-        $attachment = $object->create_attachment($name, $title, $mimetype);
-        if (! $attachment)
-        {
-            return false;
-        }
-        return $attachment->id;
-    }
-
-    /**
-     * Opens an attachment for File IO operations.
-     *
-     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @param string $name The name of the attachment to look up.
-     * @param string $mode The mode which should be used to open the attachment, same as
-     *     the mode parameter of the PHP fopen call.
-     * @return resource A file handle to the attachment if successful, false on failure.
-     */
-    function open_attachment(&$object, $name, $mode)
-    {
-        $attachment = $object->get_attachment($name);
-        if (! $attachment)
-        {
-            return false;
-        }
-        return $attachment->open($mode);
-    }
-
-    /**
      * Returns a prepared query builder that is already limited to the attachments of the given
      * object.
      *
@@ -2429,28 +2388,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
 
         return $result;
-    }
-
-    /**
-     * Legacy Midgard Compatibility Method
-     *
-     * Returns a fetchable of all attachments for the current object.
-     *
-     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @return object A fetchable which can be used to traverse the attachments to the object, or false on failure.
-     * @deprecated Deprecated since MidCOM 2.5.0
-     */
-    function listattachments(&$object)
-    {
-        if (! $object->id)
-        {
-            debug_push_class($object, __FUNCTION__);
-            debug_add('Cannot retrieve attachments on a non-persistant object.', MIDCOM_LOG_WARN);
-            debug_pop();
-            return false;
-        }
-
-        return $object->__exec_listattachments();
     }
 
     /**

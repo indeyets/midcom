@@ -12,7 +12,7 @@
  *
  * @package midcom
  */
-class midcom_core_dbaobject extends midcom_baseclasses_core_object
+abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
 {
     public function __construct($id = null)
     {

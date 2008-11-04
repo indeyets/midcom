@@ -365,7 +365,7 @@ class midcom_helper_datamanager_datatype_image extends midcom_helper_datamanager
 
         $filename = basename($file_tmp_thumb);
 
-        if ($this->_storage->getattachment($filename))
+        if ($this->_storage->get_attachment($filename))
         {
             $midcom_errstr = "A file with the thumbnail file name already exists.";
             debug_add($midcom_errstr, MIDCOM_LOG_ERROR);

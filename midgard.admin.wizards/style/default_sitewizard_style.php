@@ -31,7 +31,7 @@
             $template_credits = $template->parameter('midgard.admin.sitewizard', 'template_credits');
     
             // template preview thumbnail
-            $template_image = $template->getattachment('__preview.jpg');
+            $template_image = $template->get_attachment('__preview.jpg');
             if ($template_image)
             {
                 $template_image_url = "{$_MIDGARD['self']}midcom-serveattachmentguid-{$template_image->guid}/{$template_image->name}";

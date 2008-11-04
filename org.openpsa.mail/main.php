@@ -1071,10 +1071,10 @@ EOF;
                     case 'objFile':
                         if (is_object($obj))
                         {
-                            $attObj = $obj->getattachment($search['filename'][$k]);
+                            $attObj = $obj->get_attachment($search['filename'][$k]);
                             if ($attObj)
                             {
-                                $fp = mgd_open_attachment($attObj->id, 'r');
+                                $fp = $attObj->open('r');
                                 if ($fp)
                                 {
                                     $tmpArr2 = array();
