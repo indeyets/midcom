@@ -1109,7 +1109,7 @@ class midgard_admin_asgard_handler_object_manage extends midcom_baseclasses_comp
             // This will exit.
         }
 
-        $type = $this->_object->__new_class_name__;
+        $type = $this->_object->__mgdschema_class_name__;
         
         $relocate_url = $type;
         $class_extends = $this->_config->get('class_extends');

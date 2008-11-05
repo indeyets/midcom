@@ -40,7 +40,7 @@
  * Array
  * (
  *     'table' => 'article',
- *     'new_class_name' => 'midgard_article',
+ *     'mgdschema_class_name' => 'midgard_article',
  *     'midcom_class_name' => 'midcom_baseclasses_database_article'
  * )
  * </code>
@@ -53,7 +53,7 @@
  * argument is checked for basic sanity (basically, only alphanumeric characters, underscores
  * and dashes are allowed).
  *
- * <i>new_class_name</i> is the MgdSchema class name from that you want to use. This argument
+ * <i>mgdschema_class_name</i> is the MgdSchema class name from that you want to use. This argument
  * is mandatory, and the class specified must exist.
  *
  * <i>midcom_class_name</i> this is the name of the MidCOM base class you intend to create.
@@ -354,17 +354,17 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
                 return false;
             }
 
-            if (! array_key_exists('new_class_name', $definition))
+            if (! array_key_exists('mgdschema_class_name', $definition))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Validation failed: Key {$key} had no new_class_name element.", MIDCOM_LOG_INFO);
+                debug_add("Validation failed: Key {$key} had no mgdschema_class_name element.", MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }
-            if (! class_exists($definition['new_class_name']))
+            if (! class_exists($definition['mgdschema_class_name']))
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Validation failed: Key {$key} had an invalid new_class_name element: {$definition['new_class_name']}. Probably the required MgdSchema is not loaded.", MIDCOM_LOG_INFO);
+                debug_add("Validation failed: Key {$key} had an invalid mgdschema_class_name element: {$definition['mgdschema_class_name']}. Probably the required MgdSchema is not loaded.", MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }
@@ -379,7 +379,7 @@ class midcom_services_dbclassloader extends midcom_baseclasses_core_object
             if (preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $definition['midcom_class_name']) == 0)
             {
                 debug_push_class(__CLASS__, __FUNCTION__);
-                debug_add("Validation failed: Key {$key} had an invalid new_class_name element.", MIDCOM_LOG_INFO);
+                debug_add("Validation failed: Key {$key} had an invalid mgdschema_class_name element.", MIDCOM_LOG_INFO);
                 debug_pop();
                 return false;
             }
@@ -540,7 +540,7 @@ EOF;
     function _write_class()
     {
         // We first produce the class header
-        //$this->_class_string .= "class __{$this->_class_definition['midcom_class_name']} extends {$this->_class_definition['new_class_name']}\n";
+        //$this->_class_string .= "class __{$this->_class_definition['midcom_class_name']} extends {$this->_class_definition['mgdschema_class_name']}\n";
         $this->_class_string .= "class __{$this->_class_definition['midcom_class_name']} extends midcom_core_dbaobject\n";
         $this->_class_string .= "{\n";
         $this->_class_string .= "    \n";
@@ -589,8 +589,8 @@ EOF;
     public function get_parent_guid_uncached()
     {
 EOF;
-        $reflector = new midgard_reflection_property($this->_class_definition['new_class_name']);
-        $up_property = midgard_object_class::get_property_up($this->_class_definition['new_class_name']);
+        $reflector = new midgard_reflection_property($this->_class_definition['mgdschema_class_name']);
+        $up_property = midgard_object_class::get_property_up($this->_class_definition['mgdschema_class_name']);
         if (!empty($up_property))
         {
             $target_property = $reflector->get_link_target($up_property);
@@ -605,7 +605,7 @@ EOF;
         // Up takes precedence over parent
         if (!empty(\$this->{$up_property}))
         {
-            \$mc = new midgard_collector('{$this->_class_definition['new_class_name']}', '{$target_property}', \$this->{$up_property});
+            \$mc = new midgard_collector('{$this->_class_definition['mgdschema_class_name']}', '{$target_property}', \$this->{$up_property});
             \$mc->set_key_property('guid');
             \$mc->execute();
             \$guids = \$mc->list_keys();
@@ -620,7 +620,7 @@ EOF;
         }
 EOF;
         }
-        $parent_property = midgard_object_class::get_property_parent($this->_class_definition['new_class_name']);
+        $parent_property = midgard_object_class::get_property_parent($this->_class_definition['mgdschema_class_name']);
         if (!empty($parent_property))
         {
             $target_property = $reflector->get_link_target($parent_property);
@@ -664,15 +664,15 @@ EOF;
     public function get_parent_guid_uncached_static(\$object_guid)
     {
 EOF;
-        $reflector = new midgard_reflection_property($this->_class_definition['new_class_name']);
-        $up_property = midgard_object_class::get_property_up($this->_class_definition['new_class_name']);
+        $reflector = new midgard_reflection_property($this->_class_definition['mgdschema_class_name']);
+        $up_property = midgard_object_class::get_property_up($this->_class_definition['mgdschema_class_name']);
         if (!empty($up_property))
         {
             $target_property = $reflector->get_link_target($up_property);
             $this->_class_string .= "\n";
             $this->_class_string .= <<<EOF
         // Up takes precedence over parent
-        \$mc = new midgard_collector('{$this->_class_definition['new_class_name']}', 'guid', \$object_guid);
+        \$mc = new midgard_collector('{$this->_class_definition['mgdschema_class_name']}', 'guid', \$object_guid);
         \$mc->set_key_property('{$up_property}');
         \$mc->execute();
         \$link_values = \$mc->list_keys();
@@ -682,7 +682,7 @@ EOF;
             unset(\$mc, \$link_values, \$dummy);
             if (!empty(\$link_value))
             {
-                \$mc2 = new midgard_collector('{$this->_class_definition['new_class_name']}', '{$target_property}', \$link_value);
+                \$mc2 = new midgard_collector('{$this->_class_definition['mgdschema_class_name']}', '{$target_property}', \$link_value);
                 \$mc2->set_key_property('guid');
                 \$mc2->execute();
                 \$guids = \$mc2->list_keys();
@@ -707,14 +707,14 @@ EOF;
 EOF;
         }
 
-        $parent_property = midgard_object_class::get_property_parent($this->_class_definition['new_class_name']);
+        $parent_property = midgard_object_class::get_property_parent($this->_class_definition['mgdschema_class_name']);
         if (!empty($parent_property))
         {
             $target_property = $reflector->get_link_target($parent_property);
             $target_class = $reflector->get_link_name($parent_property);
             $this->_class_string .= "\n";
             $this->_class_string .= <<<EOF
-        \$mc = new midgard_collector('{$this->_class_definition['new_class_name']}', 'guid', \$object_guid);
+        \$mc = new midgard_collector('{$this->_class_definition['mgdschema_class_name']}', 'guid', \$object_guid);
         \$mc->set_key_property('{$parent_property}');
         \$mc->execute();
         \$link_values = \$mc->list_keys();
@@ -877,7 +877,7 @@ EOF;
         $classname = get_class($object);
         foreach ($this->_loaded_classes as $class_definition)
         {
-            if (   is_a($object, $class_definition['new_class_name'])
+            if (   is_a($object, $class_definition['mgdschema_class_name'])
                 || is_a($object, $class_definition['midcom_class_name']))
             {
                 return true;
@@ -888,7 +888,7 @@ EOF;
         $this->load_component_for_class($classname);
         foreach ($this->_loaded_classes as $class_definition)
         {
-            if (   is_a($object, $class_definition['new_class_name'])
+            if (   is_a($object, $class_definition['mgdschema_class_name'])
                 || is_a($object, $class_definition['midcom_class_name']))
             {
                 return true;
@@ -992,7 +992,7 @@ EOF;
         $classname = get_class($object);
         foreach ($this->_loaded_classes as $class_definition)
         {
-            if (is_a($object, $class_definition['new_class_name']))
+            if (is_a($object, $class_definition['mgdschema_class_name']))
             {
                 return $class_definition['midcom_class_name'];
             }
@@ -1003,7 +1003,7 @@ EOF;
         {
             foreach ($this->_loaded_classes as $class_definition)
             {
-                if (is_a($object, $class_definition['new_class_name']))
+                if (is_a($object, $class_definition['mgdschema_class_name']))
                 {
                     return $class_definition['midcom_class_name'];
                 }

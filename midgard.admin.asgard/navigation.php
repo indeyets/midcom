@@ -490,7 +490,7 @@ class midgard_admin_asgard_navigation extends midcom_baseclasses_components_pure
         {
             $root_object = $_MIDCOM->dbfactory->get_object_by_guid($this->_object_path[0]);
             $this->_request_data['root_object'] =& $root_object;
-            $this->_request_data['navigation_type'] = $root_object->__new_class_name__;
+            $this->_request_data['navigation_type'] = $root_object->__mgdschema_class_name__;
         }
         elseif (isset($this->expanded_root_types[0]))
         {

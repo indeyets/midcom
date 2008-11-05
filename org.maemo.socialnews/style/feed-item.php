@@ -5,7 +5,7 @@ $item = new FeedItem();
 $item->descriptionHtmlSyndicated = true;
 $item->title = $data['article']->title;
 $item->description = $data['article']->content;
-$item->description .= net_nemein_favourites_admin::get_add_link($data['article']->__new_class_name__, $data['article']->guid);
+$item->description .= net_nemein_favourites_admin::get_add_link($data['article']->__mgdschema_class_name__, $data['article']->guid);
 
 $item->description .= "<div class=\"org_maemo_socialnews_score\">\n";
 $item->description .= sprintf($data['l10n']->get('%s with score %d'), $date_string, $data['score']);

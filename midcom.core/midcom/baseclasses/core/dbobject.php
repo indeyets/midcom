@@ -377,7 +377,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         // records, which could be even worse and is not covered here):
         if (! $object->guid)
         {
-            $tmp = new $object->__new_class_name__();
+            $tmp = new $object->__mgdschema_class_name__();
             if (! $tmp->get_by_id($object->id))
             {
                 debug_push_class($object, __FUNCTION__);
@@ -981,7 +981,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function cast_object(&$newobject, &$oldobject)
     {
-        if (is_a($oldobject, $newobject->__new_class_name__))
+        if (is_a($oldobject, $newobject->__mgdschema_class_name__))
         {
             $vars = get_object_vars($oldobject);
             foreach ($vars as $name => $value)
@@ -1000,7 +1000,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         else
         {
             debug_push_class($newobject, __FUNCTION__);
-            debug_add('Failed to cast ' . get_class($oldobject) . " to a {$newobject->__new_class_name__}: Incompatible Types", MIDCOM_LOG_INFO);
+            debug_add('Failed to cast ' . get_class($oldobject) . " to a {$newobject->__mgdschema_class_name__}: Incompatible Types", MIDCOM_LOG_INFO);
             midcom_baseclasses_core_dbobject::_clear_object($newobject);
             debug_pop();
             return false;

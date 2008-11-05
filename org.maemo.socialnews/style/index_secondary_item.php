@@ -38,7 +38,7 @@ $date_string = "<abbr class=\"published\" title=\"" . strftime('%Y-%m-%dT%H:%M:%
 
     <div class="post-info">
         <?php
-        net_nemein_favourites_admin::render_add_link($data['article']->__new_class_name__, $data['article']->guid);
+        net_nemein_favourites_admin::render_add_link($data['article']->__mgdschema_class_name__, $data['article']->guid);
         if (empty($author_string))
         {
             echo sprintf($data['l10n']->get('%s to %s with score %d'), $date_string, $node_string, $data['score']);

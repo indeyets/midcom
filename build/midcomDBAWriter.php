@@ -22,14 +22,14 @@ class MidcomDBAWriter {
     public function write(  ) {
         $new = array(
             'table' => $this->schema->getTable(  ),
-            'new_class_name' => $this->type,
+            'mgdschema_class_name' => $this->type,
             'midcom_class_name' =>  ( $this->db) ? $this->db : $this->type . "_db"
         );
         if ( file_exists( $this->moduleRoot  . "/config/midcomdba.inc" ) ) {
             $content = file_get_contents(  $this->moduleRoot  . "/config/midcomdba.inc"  );
             eval (" \$cont = array ( $content ) ; ");
             foreach ( $cont as $def => $var ) {
-                if ( $var['new_class_name']  == $this->type ) {
+                if ( $var['mgdschema_class_name']  == $this->type ) {
                     echo "Warning: midcomdba.inc definition for type exists, will not overwrite.\n";
                     return;
 

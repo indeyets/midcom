@@ -141,7 +141,7 @@ class midcom_core_collector
 
             // Figure out the actual MgdSchema class from the decorator
             $dummy = new $classname();
-            $mgdschemaclass = $dummy->__new_class_name__;
+            $mgdschemaclass = $dummy->__mgdschema_class_name__;
             $_class_mapping_cache[$classname] = $mgdschemaclass;
         }
 

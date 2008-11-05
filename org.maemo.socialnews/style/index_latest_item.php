@@ -14,7 +14,7 @@ $node_string = "<a href=\"{$node[MIDCOM_NAV_FULLURL]}\" rel=\"category\">${node[
 
     <div class="post-info">
         <?php
-        net_nemein_favourites_admin::render_add_link($data['article']->__new_class_name__, $data['article']->guid);
+        net_nemein_favourites_admin::render_add_link($data['article']->__mgdschema_class_name__, $data['article']->guid);
         ?>
     </div>
 </div>

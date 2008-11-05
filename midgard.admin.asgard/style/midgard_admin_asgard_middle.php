@@ -66,11 +66,11 @@
                         }
                         
                         if (   isset($data['object'])
-                            && isset($data['object']->__new_class_name__))
+                            && isset($data['object']->__mgdschema_class_name__))
                         {
                             $ref = midcom_helper_reflector::get($data['object']);
                             $type_icon = $ref->get_object_icon($data['object']);
-                            echo "<span class=\"object_type_link\"><a href=\"{$prefix}__mfa/asgard/{$data['object']->__new_class_name__}/\">{$type_icon}</a></span> ";
+                            echo "<span class=\"object_type_link\"><a href=\"{$prefix}__mfa/asgard/{$data['object']->__mgdschema_class_name__}/\">{$type_icon}</a></span> ";
                         }
                         
                         echo mgd_format("{$data['view_title']}", 's') . "</h1>\n";

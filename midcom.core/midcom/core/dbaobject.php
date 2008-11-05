@@ -27,7 +27,7 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
         {
             try
             {
-                $mgdschemaclass = $this->__new_class_name__;
+                $mgdschemaclass = $this->__mgdschema_class_name__;
                 $this->__object = new $mgdschemaclass($id);
             }
             catch (midgard_error_exception $e)
@@ -66,6 +66,16 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
         if (   substr($property, 0, 2) == '__'
             && $property != '__guid')
         {
+            // API change safety
+            if ($property == '__new_class_name__')
+            {
+                debug_push_class(__CLASS__, __FUNCTION__);
+                debug_add("Deprecated property __new_class_name__ used with object of type {$this->__mgdschema_class_name__}", MIDCOM_LOG_WARN);
+                debug_pop();
+                
+                $property = '__mgdschema_class_name__';
+            }
+
             return $this->$property;
         }
         

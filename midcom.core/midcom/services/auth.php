@@ -937,13 +937,13 @@ class midcom_services_auth
             $user_per_class_privileges = Array();
             if ($tmp_object !== null)
             {
-                if (!isset($tmp_object->__new_class_name__))
+                if (!isset($tmp_object->__mgdschema_class_name__))
                 {
                     $tmp_class_name = get_class($tmp_object);
                 }
                 else
                 {
-                    $tmp_class_name = $tmp_object->__new_class_name__;
+                    $tmp_class_name = $tmp_object->__mgdschema_class_name__;
                 }
 
                 $default_magic_class_privileges = array_merge
@@ -962,13 +962,13 @@ class midcom_services_auth
             }
             else
             {
-                if (!isset($tmp_object->__new_class_name__))
+                if (!isset($tmp_object->__mgdschema_class_name__))
                 {
                     $tmp_class_name = get_class($tmp_object);
                 }
                 else
                 {
-                    $tmp_class_name = $tmp_object->__new_class_name__;
+                    $tmp_class_name = $tmp_object->__mgdschema_class_name__;
                 }
 
                 $user_per_class_privileges = $user->get_per_class_privileges($tmp_object);
@@ -1159,11 +1159,11 @@ class midcom_services_auth
             $full_privileges = array_merge
             (
                 $this->_default_privileges,
-                $this->_default_magic_class_privileges[$dummy_object->__new_class_name__]['EVERYONE'],
+                $this->_default_magic_class_privileges[$dummy_object->__mgdschema_class_name__]['EVERYONE'],
                 (
                     (is_null($this->user))
-                        ? $this->_default_magic_class_privileges[$dummy_object->__new_class_name__]['ANONYMOUS']
-                        : $this->_default_magic_class_privileges[$dummy_object->__new_class_name__]['USERS']
+                        ? $this->_default_magic_class_privileges[$dummy_object->__mgdschema_class_name__]['ANONYMOUS']
+                        : $this->_default_magic_class_privileges[$dummy_object->__mgdschema_class_name__]['USERS']
                 ),
                 $user_privileges,
                 $user_per_class_privileges,
@@ -2378,13 +2378,13 @@ class midcom_services_auth
     function _load_class_magic_privileges(&$class)
     {
         // Check if we have loaded these privileges already...
-        if (!isset($class->__new_class_name__))
+        if (!isset($class->__mgdschema_class_name__))
         {
             $loadable_class = get_class($class);
         }
         else
         {
-            $loadable_class = $class->__new_class_name__;
+            $loadable_class = $class->__mgdschema_class_name__;
         }
 
         if (array_key_exists($loadable_class, $this->_default_magic_class_privileges))
