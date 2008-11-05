@@ -652,7 +652,7 @@ class net_nemein_calendar_handler_list extends midcom_baseclasses_components_han
         }
         else
         {
-            $event_url = $_MIDCOM->get_host_prefix().'midcom-permalink-'.$event->guid();
+            $event_url = $_MIDCOM->permalinks->create_permalink($event->guid);
         }
         return $event_url;
     }

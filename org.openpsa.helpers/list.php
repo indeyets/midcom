@@ -173,7 +173,7 @@ class org_openpsa_helpers_list
                     {
                         //TODO: check via ACL.
                     }
-                    $GLOBALS['org_openpsa_helpers_tasks'][$task->guid()] = $task->title;
+                    $GLOBALS['org_openpsa_helpers_tasks'][$task->guid] = $task->title;
                 }
             }
         }

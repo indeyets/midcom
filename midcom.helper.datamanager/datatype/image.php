@@ -91,7 +91,7 @@ class midcom_helper_datamanager_datatype_image extends midcom_helper_datamanager
         $this->_value["thumbnail"]["filename"] = $att->name;
         $this->_value["thumbnail"]["mimetype"] = $att->mimetype;
         $this->_value["thumbnail"]["description"] = $this->_value["description"];
-        $this->_value["thumbnail"]["url"] = $this->_anchorprefix . "midcom-serveattachmentguid-" . $att->guid() . "/" . $att->name;
+        $this->_value["thumbnail"]["url"] = $this->_anchorprefix . "midcom-serveattachmentguid-{$att->guid}/{$att->name}";
         $this->_value["thumbnail"]["filesize"] = $stat[7];
         $this->_value["thumbnail"]["lastmod"] = $stat[9];
         $this->_value["thumbnail"]["formattedsize"] = $this->_format_filesize($stat[7]);
@@ -191,8 +191,8 @@ class midcom_helper_datamanager_datatype_image extends midcom_helper_datamanager
             debug_add("Storing thumbnail as-is, no further conversion.", MIDCOM_LOG_DEBUG);
             // thumbguid == attachment guid
             // image is its own thumbnail and its own parent
-            $att->parameter("midcom.helper.datamanager.datatype.image","thumbguid", $att->guid());
-            $att->parameter("midcom.helper.datamanager.datatype.image","parent_guid",$att->guid());
+            $att->parameter("midcom.helper.datamanager.datatype.image", "thumbguid", $att->guid);
+            $att->parameter("midcom.helper.datamanager.datatype.image", "parent_guid", $att->guid);
 
             debug_pop();
             return $id;
@@ -412,14 +412,14 @@ class midcom_helper_datamanager_datatype_image extends midcom_helper_datamanager
         @unlink($file_tmp_thumb);
 
         // add parameters to thumbnail attachment
-        $thumb_att->parameter("midcom.helper.datamanager.datatype.image","parent_guid",$att->guid());
+        $thumb_att->parameter("midcom.helper.datamanager.datatype.image", "parent_guid", $att->guid);
         if ($new_x && $new_y)
         {
-            $thumb_att->parameter("midcom.helper.datamanager.datatype.blob","size_x",$new_x);
-            $thumb_att->parameter("midcom.helper.datamanager.datatype.blob","size_y",$new_y);
-            $thumb_att->parameter("midcom.helper.datamanager.datatype.blob","size_line","width=\"$new_x\" height=\"$new_y\"");
+            $thumb_att->parameter("midcom.helper.datamanager.datatype.blob", "size_x", $new_x);
+            $thumb_att->parameter("midcom.helper.datamanager.datatype.blob", "size_y", $new_y);
+            $thumb_att->parameter("midcom.helper.datamanager.datatype.blob", "size_line", "width=\"{$new_x}\" height=\"{$new_y}\"");
         }
-        $att->parameter("midcom.helper.datamanager.datatype.image","thumbguid",$thumb_att->guid());
+        $att->parameter("midcom.helper.datamanager.datatype.image", "thumbguid", $thumb_att->guid);
 
         debug_pop();
         return $id;

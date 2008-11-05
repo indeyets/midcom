@@ -216,7 +216,7 @@ class midcom_helper_datamanager_datatype_blob extends midcom_helper_datamanager_
         debug_print_r("Got these stats:", $stat);
         $this->_value["filename"] = $att->name;
         $this->_value["mimetype"] = $att->mimetype;
-        $this->_value["url"] = $this->_anchorprefix . "midcom-serveattachmentguid-" . $att->guid() . "/" . $att->name;
+        $this->_value["url"] = $this->_anchorprefix . "midcom-serveattachmentguid-{$att->guid}/{$att->name}";
 
         $this->_value["filesize"] = $stat[7];
         $this->_value["lastmod"] = $stat[9];

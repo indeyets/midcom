@@ -155,13 +155,6 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         {
             return;
         }
-        if (   !isset($att->guid)
-            || empty($att->guid)
-            && method_exists($att, 'guid'))
-        {
-            // Object was initialized with legacy api, thus the guid property is not set.
-            $att->guid = $att->guid();
-        }
         $img_url = "{$GLOBALS['midcom_config']['midcom_site_url']}midcom-serveattachmentguid-{$att->guid}/" . rawurlencode($att->name);
         $img_size = $att->parameter('midcom.helper.datamanager2.type.blobs', 'size_line');
         $img_tag = "<img src=\"{$img_url}\" class=\"photo thumbnail\" {$img_size} />";

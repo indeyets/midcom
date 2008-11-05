@@ -1108,8 +1108,8 @@ class midcom_helper_datamanager {
             // also invalidate the cache.
             if ($success)
             {
-                $_MIDCOM->cache->invalidate($this->_storage->guid());
-                debug_add("Invalidated MidCOM Cache.");
+                $_MIDCOM->cache->invalidate($this->_storage->guid);
+                debug_add("Invalidated MidCOM Cache for {$this->_storage->guid}.");
             }
 
             // rebuild layout array, this is done even in the case of an error

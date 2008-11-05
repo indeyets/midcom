@@ -563,13 +563,13 @@ class org_openpsa_contacts_handler_group extends midcom_baseclasses_components_h
 
                         $this->_view = "default";
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                            . "group/" . $this->_request_data["group"]->guid());
+                            . "group/" . $this->_request_data["group"]->guid);
                         // This will exit()
 
                     case MIDCOM_DATAMGR_CANCELLED:
                         $this->_view = "default";
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                            . "group/" . $this->_request_data["group"]->guid());
+                            . "group/" . $this->_request_data["group"]->guid);
                         // This will exit()
 
                     case MIDCOM_DATAMGR_FAILED:

@@ -229,7 +229,13 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
 
     // Legacy API
     // TODO: Get rid of these
-    function guid() { return $this->__object->guid; }
+    function guid() 
+    {
+        debug_push_class(__CLASS__, __FUNCTION__);
+        debug_add("Deprecated method guid() used with object of type {$this->__mgdschema_class_name__}", MIDCOM_LOG_WARN);
+        debug_pop();
+        return $this->__object->guid; 
+    }
     function parameter($domain, $name)
     {
         if (func_num_args() == 2)

@@ -164,7 +164,7 @@ class org_openpsa_reports_handler_base extends midcom_baseclasses_components_han
                 // Relocate to report view
                 $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
                 debug_pop();
-                $_MIDCOM->relocate($prefix . $this->module . '/' . $this->_request_data['query']->guid() . "/");
+                $_MIDCOM->relocate($prefix . $this->module . '/' . $this->_request_data['query']->guid . "/");
                 //this will exit
 
             case MIDCOM_DATAMGR_CANCELLED_NONECREATED:
@@ -256,7 +256,7 @@ class org_openpsa_reports_handler_base extends midcom_baseclasses_components_han
             debug_add('Generated filename: ' . $filename);
             $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
             debug_pop();
-            $_MIDCOM->relocate($prefix . $this->module . '/' . $this->_request_data['query']->guid() . '/' . $filename);
+            $_MIDCOM->relocate($prefix . $this->module . '/' . $this->_request_data['query']->guid . '/' . $filename);
             //this will exit
         }
         $this->_request_data['filename'] = $args[1];

@@ -685,7 +685,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                         debug_add('indexing person done');
 
                         $this->_view = "default";
-                        $relocate_to = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "person/" . $this->_request_data["person"]->guid();
+                        $relocate_to = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX) . "person/" . $this->_request_data["person"]->guid;
                         debug_add("trying to relocate to: {$relocate_to}");
                         $_MIDCOM->relocate($relocate_to);
                         // This will exit()
@@ -694,7 +694,7 @@ class org_openpsa_contacts_handler_person extends midcom_baseclasses_components_
                         debug_add('DM returned to mode: MIDCOM_DATAMGR_CANCELLED');
                         $this->_view = "default";
                         $_MIDCOM->relocate($_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX)
-                            . "person/" . $this->_request_data["person"]->guid());
+                            . "person/" . $this->_request_data["person"]->guid);
                         // This will exit()
                         break;
                     case MIDCOM_DATAMGR_FAILED:

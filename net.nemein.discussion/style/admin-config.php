@@ -19,7 +19,7 @@ $prefix = $_MIDCOM->get_context_data(MIDCOM_CONTEXT_ANCHORPREFIX);
     if ($groups) {
       while ($groups->fetch()) {
 
-        $groups_guid = $groups->guid();
+        $groups_guid = $groups->guid;
         $groups_selected = "";
         if ($groups_guid == $view_config->get("moderator_group")) {
           $groups_selected = " selected=\"selected\"";

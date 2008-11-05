@@ -147,8 +147,8 @@ class org_openpsa_directmarketing_handler_message_send extends midcom_baseclasse
         debug_push_class(__CLASS__, __FUNCTION__);
         $nap = new midcom_helper_nav();
         $node = $nap->get_node($nap->get_current_node());
-        $data['compose_url'] = $node[MIDCOM_NAV_RELATIVEURL] . 'message/compose/' . $data['message_obj']->guid();
-        $data['batch_url_base_full'] = $node[MIDCOM_NAV_RELATIVEURL] . 'message/send_bg/' . $data['message_obj']->guid();
+        $data['compose_url'] = $node[MIDCOM_NAV_RELATIVEURL] . 'message/compose/' . $data['message_obj']->guid;
+        $data['batch_url_base_full'] = $node[MIDCOM_NAV_RELATIVEURL] . 'message/send_bg/' . $data['message_obj']->guid;
         debug_add("compose_url: {$data['compose_url']}");
         debug_add("batch_url base: {$data['batch_url_base_full']}");
         $de_backup = ini_get('display_errors');

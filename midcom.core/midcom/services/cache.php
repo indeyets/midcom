@@ -149,7 +149,7 @@ class midcom_services_cache
         if (is_object($guid))
         {
             debug_add_type ("Got an object, trying to auto-detect the GUID. Passed type was:", $guid);
-            $guid = $guid->guid();
+            $guid = $guid->guid;
         }
         foreach ($this->_unload_queue as $name)
         {

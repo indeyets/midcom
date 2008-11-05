@@ -307,7 +307,7 @@ class net_nemein_reservations_handler_reservation_repeat extends midcom_baseclas
         if(count($duplicate_reservations_resource) == 0 && count($duplicate_reservations_members) == 0)
         {
             $repeat_handler = new net_nemein_repeathandler(&$this->_event);
-            $repeat_handler->delete_stored_repeats($this->_event->guid());
+            $repeat_handler->delete_stored_repeats($this->_event->guid);
             
             foreach ($instances as $date => $instance)
             {

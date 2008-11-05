@@ -479,7 +479,7 @@ class midcom_services_indexer_document
         }
         else
         {
-            $this->add_text('__CREATOR', $this->creator->guid());
+            $this->add_text('__CREATOR', $this->creator->guid);
         }
         if (! is_object($this->editor))
         {
@@ -491,7 +491,7 @@ class midcom_services_indexer_document
         }
         else
         {
-            $this->add_text('__EDITOR', $this->editor->guid());
+            $this->add_text('__EDITOR', $this->editor->guid);
         }
         $this->add_text('author', $this->author);
         $this->add_text('abstract', $this->abstract);
@@ -521,12 +521,12 @@ class midcom_services_indexer_document
         $this->creator = $this->get_field('__CREATOR');
         if ($this->creator != '')
         {
-            $this->creator = mgd_get_object_by_guid($this->creator);
+            $this->creator = $_MIDCOM->dbfactory->get_object_by_guid($this->creator);
         }
         $this->editor = $this->get_field('__EDITOR');
         if ($this->editor != '')
         {
-            $this->editor = mgd_get_object_by_guid($this->editor);
+            $this->editor = $_MIDCOM->dbfactory->get_object_by_guid($this->editor);
         }
         $this->author = $this->get_field('author');
         $this->abstract = $this->get_field('abstract');

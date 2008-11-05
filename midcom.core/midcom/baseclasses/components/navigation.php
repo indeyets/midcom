@@ -150,7 +150,7 @@ class midcom_baseclasses_components_navigation
      *              MIDCOM_NAV_URL => "view/" . $articles->id,
      *              MIDCOM_NAV_NAME => ($articles->title != "") ? $articles->title : $articles->name
      *          ),
-     *          MIDCOM_NAV_GUID => $articles->guid(),
+     *          MIDCOM_NAV_GUID => $articles->guid,
      *          MIDCOM_NAV_TOOLBAR => $toolbar,
      *          MIDCOM_META_CREATOR => $articles->creator,
      *          MIDCOM_META_EDITOR => $articles->revisor,
