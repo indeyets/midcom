@@ -271,18 +271,31 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
     }
 
     // ACL Shortcuts
-    public function can_do($privilege, $user = null) { return $_MIDCOM->auth->can_do($privilege, $this->__object, $user); }
-    public function can_user_do($privilege, $user = null) { return $_MIDCOM->auth->can_user_do($privilege, $user, '{$this->_class_definition["midcom_class_name"]}'); }
-    public function require_do($privilege, $message = null) { $_MIDCOM->auth->require_do($privilege, $this->__object, $message); }
-    public function require_user_do($privilege, $message = null) { $_MIDCOM->auth->require_user_do($privilege, $message, '{$this->_class_definition["midcom_class_name"]}'); }
+    public function can_do($privilege, $user = null)
+    {
+        return $_MIDCOM->auth->can_do($privilege, $this->__object, $user);
+    }
+    public function can_user_do($privilege, $user = null)
+    {
+        return $_MIDCOM->auth->can_user_do($privilege, $user, $this->__midcom_class_name__);
+    }
+    public function require_do($privilege, $message = null)
+    {
+        $_MIDCOM->auth->require_do($privilege, $this->__object, $message);
+    }
+    public function require_user_do($privilege, $message = null)
+    {
+        $_MIDCOM->auth->require_user_do($privilege, $message, $this->__midcom_class_name__);
+    }
 
     // DBA API
     public function get_class_magic_default_privileges()
     {
-        return Array (
-            'EVERYONE' => Array(),
-            'ANONYMOUS' => Array(),
-            'USERS' => Array()
+        return array
+        (
+            'EVERYONE' => array(),
+            'ANONYMOUS' => array(),
+            'USERS' => array()
         );
     }
 
@@ -311,7 +324,7 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
     public function __exec_get_by_guid($guid) { return $this->__object->get_by_guid($guid); }
     public function __exec_get_by_path($path) { return $this->__object->get_by_path($path); }
 
-    // functions related to the rcs service.
+    // functions related to the RCS service.
     var $_use_rcs = true;
     var $_rcs_message = false;
     public function disable_rcs() { $this->_use_rcs = false; }
