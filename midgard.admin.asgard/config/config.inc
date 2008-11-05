@@ -73,9 +73,6 @@
     // Legacy 1.7 parameter fields
     'oid',
     'tablename',
-    // Legacy 1.7 attachment fields
-    'pid',
-    'ptable',
 ),
 'schemadb_parameters' => 'file:/midgard/admin/asgard/config/schemadb_parameters.inc',
 'schemadb_permissions' => 'file:/midgard/admin/asgard/config/schemadb_permissions.inc',

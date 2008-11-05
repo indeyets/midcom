@@ -121,10 +121,6 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
                 $local_file->parentguid = $this->_object->guid;
                 $local_file->mimetype = $uploaded_file['type'];
 
-                // Legacy data, TODO: Remove
-                //$local_file->ptable = 'style';
-                //$local_file->pid = $this->_object->id;
-
                 if (!$local_file->create())
                 {
                     $_MIDCOM->generate_error(MIDCOM_ERRCRIT, 'Failed to create attachment, reason: ' . mgd_errstr());
@@ -182,10 +178,6 @@ class midgard_admin_asgard_handler_object_attachments extends midcom_baseclasses
                 $local_file = new midcom_baseclasses_database_attachment();
                 $local_file->name = $local_filename;
                 $local_file->parentguid = $this->_object->guid;
-
-                // Legacy data, TODO: Remove
-                //$local_file->ptable = 'style';
-                //$local_file->pid = $this->_object->id;
 
                 if (!$local_file->create())
                 {

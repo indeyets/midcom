@@ -190,8 +190,7 @@ class org_routamc_photostream_photo_dba extends __org_routamc_photostream_photo_
         );
 
         $qb = new midgard_query_builder('midgard_attachment');
-        $qb->add_constraint('ptable', '=', 'org_routamc_photostream_photo');
-        $qb->add_constraint('pid', '=', $this->id);
+        $qb->add_constraint('parentguid', '=', $this->guid);
         $qb->add_constraint('parameter.domain', '=', 'midcom.helper.datamanager2.type.blobs');
         $qb->add_constraint('parameter.name', '=', 'identifier');
         $qb->begin_group('OR');

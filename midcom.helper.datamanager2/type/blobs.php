@@ -313,8 +313,8 @@ class midcom_helper_datamanager2_type_blobs extends midcom_helper_datamanager2_t
         if (!isset($info['url']))
         {
             // Uncached attachment served straight out of MidCOM
-            // FIXME: ptable is a deprecated property
-            if ($att->ptable == 'topic')
+            if (   $this->storage->object
+                && is_a($this->storage->object, 'midcom_baseclasses_database_topic'))
             {
                 // Topic attachment, try to generate "clean" URL
                 $nap = new midcom_helper_nav();
