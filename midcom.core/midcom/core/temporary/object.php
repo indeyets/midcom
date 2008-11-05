@@ -115,8 +115,6 @@ class midcom_core_temporary_object extends __midcom_core_temporary_object
         $attachments = $this->list_attachments();
         foreach ($attachments as $attachment)
         {
-            $attachment->ptable = $object->__table__;
-            $attachment->pid = $object->id;
             $attachment->parent_guid = $object->guid;
             $attachment->update();
         }

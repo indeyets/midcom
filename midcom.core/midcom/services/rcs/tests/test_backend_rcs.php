@@ -56,7 +56,6 @@ class test_class {
     var $id;
     var $content;
     var $_private;
-    var $__table__ = 'test';
 }
 
 

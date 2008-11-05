@@ -57,7 +57,7 @@ class midcom_admin_folder_handler_approvals extends midcom_baseclasses_component
         if (! $metadata)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                "Failed to retrieve Metadata for '{$object->__table__}' ID {$object->id}.");
+                "Failed to retrieve Metadata for " . get_class($object) . " {$object->guid}.");
             // This will exit.
         }
 

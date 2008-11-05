@@ -165,10 +165,6 @@ abstract class midcom_core_dbaobject extends midcom_baseclasses_core_object
     {
         return midcom_baseclasses_core_dbobject::is_object_visible_onsite($this->__object);
     }
-    public function is_owner($person = null)
-    {
-        return midcom_baseclasses_core_dbobject::is_owner($this, $person);
-    }
     public function list_attachments()
     {
         return midcom_baseclasses_core_dbobject::list_attachments($this);

@@ -424,8 +424,6 @@ class midcom_helper_datamanager {
      * Besides the values of all fields, the following keys are added to the array as well:
      *
      * - _schema contains the name of the data schema in use.
-     * - _storage_type contains the name of the table in which we are stored (WARNING, this value will be deprecated
-     *   during the DBA updates)
      * - _storage_id and _storage_guid hold the ID and GUID respectively of the storage object.
      *
      * @var Array
@@ -1839,13 +1837,11 @@ class midcom_helper_datamanager {
         $this->data["_schema"] = $this->_layoutname;
         if (! is_null ($this->_storage))
         {
-            $this->data["_storage_type"] = $this->_storage->__table__;
             $this->data["_storage_id"] = $this->_storage->id;
-            $this->data["_storage_guid"] = $this->_storage->guid();
+            $this->data["_storage_guid"] = $this->_storage->guid;
         }
         else
         {
-            $this->data["_storage_type"] = null;
             $this->data["_storage_id"] = null;
             $this->data["_storage_guid"] = null;
         }
@@ -2018,22 +2014,6 @@ class midcom_helper_datamanager {
             return true;
         }
 
-        /*
-        $owner = false;
-        $owner_function = "mgd_is_{$this->_storage->__table__}_owner";
-        if (function_exists($owner_function))
-        {
-            $owner = $owner_function($this->_storage->id);
-        }
-        else
-        {
-            debug_add("We have to do a can_do");
-            $owner = $_MIDCOM->auth->can_do('midgard:update', $this->_storage);
-        }
-
-        if (   ! $midgard->admin
-            && ! $owner)
-        */
         if (! $_MIDCOM->auth->can_do('midgard:update', $this->_storage))
         {
             debug_add("Denied, not owner of the target object");

@@ -320,7 +320,7 @@ class midcom_baseclasses_database_attachment extends __midcom_baseclasses_databa
 
         while ($location_in_use)
         {
-            $base = $this->__table__;
+            $base = get_class($this);
             $base .= microtime();
             if (isset($this->id))
             {

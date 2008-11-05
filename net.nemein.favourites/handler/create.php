@@ -107,6 +107,7 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
             $title = null;
 
             // Trying to figure out a reasonable title for favourite object
+            // FIXME: Use reflector for this
             if (   isset($obj->extra)
                 && !empty($obj->extra))
             {
@@ -124,8 +125,8 @@ class net_nemein_favourites_handler_create extends midcom_baseclasses_components
             }
 
             // Special cases
-            if (   isset($obj->__table__)
-                && $obj->__table__ == 'person')
+            if (   is_a($obj, 'midcom_baseclasses_database_person')
+                || is_a($obj, 'org_openpsa_contacts_person'))
             {
                 $title = $obj->firstname . " " .$obj->lastname;
             }

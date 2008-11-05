@@ -44,9 +44,10 @@ class midcom_helper_datamanager_datatype_account extends midcom_helper_datamanag
     {
         if ($this->_field["location"] == "MidgardPerson")
         {
-            if ($this->_storage->__table__ != "person")
+            if (   !is_a($this->_storage, 'midcom_baseclasses_database_person')
+                && !is_a($this->_storage, 'org_openpsa_contacts_person'))
             {
-                $this->_datamanager->append_error("CRITICAL: Storage object is not a MidgardPerson, cannot work with MidgardPerson credentials here.");
+                $this->_datamanager->append_error("CRITICAL: Storage object is not a midgard_person, cannot work with midgard_person credentials here.");
                 debug_add("Trying to use MidgardPerson storage location with a non-person, this is critical.", MIDCOM_LOG_CRIT);
                 debug_print_r("Storage object is: ", $this->_storage);
                 return false;
@@ -94,7 +95,8 @@ class midcom_helper_datamanager_datatype_account extends midcom_helper_datamanag
 
         if ($this->_field["location"] == "MidgardPerson")
         {
-            if ($this->_storage->__table__ != "person")
+            if (   !is_a($this->_storage, 'midcom_baseclasses_database_person')
+                && !is_a($this->_storage, 'org_openpsa_contacts_person'))
             {
                 $this->_datamanager->append_error("CRITICAL: Storage object is not a MidgardPerson, cannot work with MidgardPerson credentials here.");
                 debug_add("Trying to use MidgardPerson storage location with a non-person, this is critical.", MIDCOM_LOG_CRIT);

@@ -549,7 +549,7 @@ class midcom_services_rcs_backend_rcs extends midcom_services_rcs_backend
         $status = null;
         $guid = $object->guid;
 
-        $type = $object->__table__;
+        $type = get_class($object);
 
         $data = $this->rcs_object2data($object, $type);
 

@@ -89,9 +89,6 @@ class midcom_core_privilege extends midcom_core_privilege_db
      */
     var $value = MIDCOM_PRIVILEGE_INHERIT;
 
-    /** @ignore */
-    var $__table__ = 'midcom_core_privilege';
-
     /**
      * Cached content object, based on $objectguid.
      *

@@ -152,7 +152,7 @@ class midgard_admin_asgard_handler_object_metadata extends midcom_baseclasses_co
         if (! $this->_metadata)
         {
             $_MIDCOM->generate_error(MIDCOM_ERRCRIT,
-                "Failed to retrieve Metadata for '{$this->_object->__table__}' ID {$this->_object->id}.");
+                "Failed to retrieve Metadata for " . get_class($this->_object) . " {$this->_object->guid}.");
             // This will exit.
         }
 

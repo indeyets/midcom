@@ -44,7 +44,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         debug_push_class($object, __FUNCTION__);
         if (! $_MIDCOM->auth->can_do('midgard:update', $object))
         {
-            debug_add("Failed to load object, update privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
+            debug_add("Failed to load object, update privilege on the " . get_class($object) . " {$object->id} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             mgd_set_errno(MGD_ERR_ACCESS_DENIED);
             return false;
@@ -248,7 +248,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if (! $_MIDCOM->auth->user)
         {
             debug_push_class($object, __FUNCTION__);
-            debug_add ("Could not retrieve the midcom_core_user instance for the creator of {$object->__table__} ID {$object->id}, skipping owner privilege assignment.",
+            debug_add ("Could not retrieve the midcom_core_user instance for the creator of " . get_class($object) . " {$object->guid}, skipping owner privilege assignment.",
                 MIDCOM_LOG_INFO);
             debug_pop();
             return;
@@ -295,7 +295,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             if (   ! $_MIDCOM->auth->can_do('midgard:create', $parent)
                 && ! $_MIDCOM->auth->can_user_do('midgard:create', null, get_class($object)))
             {
-                debug_add("Failed to create object, create privilege on the parent {$parent->__table__} ID {$parent->id} or the actual object class not granted for the current user.",
+                debug_add("Failed to create object, create privilege on the parent " . get_class($parent) . " {$parent->guid} or the actual object class not granted for the current user.",
                     MIDCOM_LOG_ERROR);
                 mgd_set_errno(MGD_ERR_ACCESS_DENIED);
                 return false;
@@ -448,7 +448,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if (! $_MIDCOM->auth->can_do('midgard:delete', $object))
         {
             debug_push_class($object, __FUNCTION__);
-            debug_add("Failed to delete object, delete privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
+            debug_add("Failed to delete object, delete privilege on the " . get_class($object) . " {$object->guid} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             // debug_print_r('Object was:', $object);
             debug_pop();
@@ -1121,7 +1121,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             mgd_set_errno(MGD_ERR_ACCESS_DENIED);
 
             debug_push_class($object, __FUNCTION__);
-            debug_add("Failed to load object, read privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
+            debug_add("Failed to load object, read privilege on the " . get_class($object) . " {$object->guid} not granted for the current user.",
                 MIDCOM_LOG_INFO);
             midcom_baseclasses_core_dbobject::_clear_object($object);
             debug_pop();
@@ -1132,7 +1132,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if (! $result)
         {
             debug_push_class($object, __FUNCTION__);
-            debug_add("The _on_loaded event handler returned false for {$object->__table__} ID {$object->id}.", MIDCOM_LOG_INFO);
+            debug_add("The _on_loaded event handler returned false for " . get_class($object) . " {$object->guid}.", MIDCOM_LOG_INFO);
             debug_pop();
             midcom_baseclasses_core_dbobject::_clear_object($object);
         }
@@ -1269,7 +1269,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             if (! $_MIDCOM->auth->can_do('midgard:read', $object))
             {
                 debug_push_class($object, __FUNCTION__);
-                debug_add("Failed to load object, read privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
+                debug_add("Failed to load object, read privilege on the " . get_class($object) . " {$object->guid} not granted for the current user.",
                     MIDCOM_LOG_ERROR);
                 midcom_baseclasses_core_dbobject::_clear_object($object);
                 debug_pop();
@@ -1310,7 +1310,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             if (! $_MIDCOM->auth->can_do('midgard:read', $object))
             {
                 debug_push_class($object, __FUNCTION__);
-                debug_add("Failed to load object, read privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
+                debug_add("Failed to load object, read privilege on the " . get_class($object) . " {$object->guid} not granted for the current user.",
                     MIDCOM_LOG_ERROR);
                 midcom_baseclasses_core_dbobject::_clear_object($object);
                 debug_pop();
@@ -1351,7 +1351,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             if (! $_MIDCOM->auth->can_do('midgard:read', $object))
             {
                 //debug_push_class($object, __FUNCTION__);
-                //debug_add("Failed to load object, read privilege on the {$object->__table__} ID {$object->id} not granted for the current user.",
+                //debug_add("Failed to load object, read privilege on the " . get_class($object) . " {$object->guid} not granted for the current user.",
                 //    MIDCOM_LOG_ERROR);
                 midcom_baseclasses_core_dbobject::_clear_object($object);
                 //debug_pop();
@@ -1419,7 +1419,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             }
 
             debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Failed to retrieve all privileges for the {$object->__table__} ID {$object->id}: " . mgd_errstr(), MIDCOM_LOG_INFO);
+            debug_add("Failed to retrieve all privileges for the " . get_class($object) . " {$object->guid}: " . mgd_errstr(), MIDCOM_LOG_INFO);
             if (isset($php_errormsg))
             {
                 debug_add("Error message was: {$php_errormsg}", MIDCOM_LOG_ERROR);
@@ -1469,89 +1469,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
         $value = $object->_parent_parameter($domain, $name);
         return $value;
-    }
-
-    /**
-     * Internal helper function that retrieves a parameter object for a given domain/name pair.
-     * It is used by various other objects for parameter manipulation.
-     *
-     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @param string $domain The parameter domain.
-     * @param string $name The parameter name.
-     * @return midgard_parameter The parameter object or false otherwise.
-     * @access private
-     */
-    function _get_parameter_object(&$object, $domain, $name)
-    {
-        if (   ! $object->guid
-            && ! $object->id)
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add('Cannot retrieve information on a non-persistant object.', MIDCOM_LOG_WARN);
-            debug_pop();
-            return false;
-        }
-
-        $query = new midgard_query_builder('midgard_parameter');
-        if (!$object->guid)
-        {
-            // FIXME: This way of fetching parameter objects is going to be deprected
-            $query->add_constraint('tablename', '=', $object->__table__);
-            $query->add_constraint('oid', '=', $object->id);
-        }
-        else
-        {
-            $query->add_constraint('parentguid', '=', $object->guid);
-        }
-        $query->add_constraint('domain', '=', $domain);
-        $query->add_constraint('name', '=', $name);
-        $result = @$query->execute();
-
-        if ($result === false)
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("Cannot retrieve the parameter {$domain} / {$name} for {$object->__table__} ID {$object->id}: The query failed.",
-                MIDCOM_LOG_WARN);
-            debug_add('Last Midgard error was: ' . mgd_errstr(), MIDCOM_LOG_INFO);
-            if (isset($php_errorstr))
-            {
-                debug_add("Last PHP error was: {$php_errorstr}", MIDCOM_LOG_INFO);
-            }
-            debug_pop();
-            return false;
-        }
-
-        if (count($result) == 0)
-        {
-            // No Match.
-            return false;
-        }
-
-        if (count($result) > 1)
-        {
-            debug_push_class(__CLASS__, __FUNCTION__);
-            debug_add("We have multiple results for parameter {$domain} / {$name} for {$object->__table__} ID {$object->id}: The query returned more then one result, this should not happen and is most probably a DB incosistency.",
-                MIDCOM_LOG_INFO);
-            
-            $keep_parameter = null;
-            foreach ($result as $parameter)
-            {
-                // Keep first
-                if (is_null($keep_parameter))
-                {
-                    $keep_parameter = $parameter;
-                }
-                else
-                {
-                    $parameter->delete();
-                }
-            }
-            
-            debug_pop();
-            return $keep_parameter;
-        }
-
-        return $result[0];
     }
 
     /**
@@ -1772,7 +1689,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             || ! $_MIDCOM->auth->can_do('midgard:parameters', $object))
         {
             debug_push_class($object, __FUNCTION__);
-            debug_add("Failed to set parameters, midgard:update or midgard:parameters on the {$object->__table__} ID {$object->id} not granted for the current user.",
+            debug_add("Failed to set parameters, midgard:update or midgard:parameters on the " . get_class($object) . " {$object->guid} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             debug_pop();
             mgd_set_errno(MGD_ERR_ACCESS_DENIED);
@@ -1789,28 +1706,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
 
         $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
         return true;
-    }
-
-    /**
-     * Internal helper, which creates a new parameter object. ACL checks have to be done
-     * by the callee.
-     *
-     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @param string $domain The Parameter Domain.
-     * @param string $name The Parameter name.
-     * @param string $value The Parameter value. If this is empty, the corresponding parameter is deleted.
-     * @return bool Indicating success.
-     */
-    function _create_parameter_object($object, $domain, $name, $value)
-    {
-        $parameter = new midgard_parameter();
-        $parameter->domain = $domain;
-        $parameter->name = $name;
-        $parameter->value = $value;
-        $parameter->tablename = $object->__table__;
-        $parameter->oid = $object->id;
-        $parameter->parentguid = $object->guid;
-        return @$parameter->create();
     }
 
     /**
@@ -1843,7 +1738,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             || ! $_MIDCOM->auth->can_do('midgard:parameters', $object))
         {
             debug_push_class($object, __FUNCTION__);
-            debug_add("Failed to delete parameters, midgard:update or midgard:parameters on the {$object->__table__} ID {$object->id} not granted for the current user.",
+            debug_add("Failed to delete parameters, midgard:update or midgard:parameters on the " . get_class($object) . " {$object->guid} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             debug_pop();
             mgd_set_errno(MGD_ERR_ACCESS_DENIED);
@@ -1857,17 +1752,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
 
         $result = $object->_parent_parameter($domain, $name, '');
-        /*
-        $parameter = midcom_baseclasses_core_dbobject::_get_parameter_object($object, $domain, $name);
-        if (! $parameter)
-        {
-            // We don't have an object, so we're fine.   
-            debug_add("Cannot delete the parameter {$domain}/{$name} for {$object->__table__} ID {$object->id}; the parameter does not exist. Ignoring silently.");      
-            debug_pop();
-            return true;
-        }
-        $result = @$parameter->delete();
-        */
+
         $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);
         return $result;
     }
@@ -1923,7 +1808,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             || ! $_MIDCOM->auth->can_do('midgard:privileges', $object))
         {
             debug_push_class($object, __FUNCTION__);
-            debug_add("Failed to set a privilege on object object, midgard:update or midgard:privileges on the {$object->__table__} ID {$object->id} not granted for the current user.",
+            debug_add("Failed to set a privilege on object object, midgard:update or midgard:privileges on the " . get_class($object) . " {$object->guid} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -1981,7 +1866,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             || ! $_MIDCOM->auth->can_do('midgard:privileges', $object))
         {
             debug_push_class($this, __FUNCTION__);
-            debug_add("Failed to unset a privilege on object object, midgard:update or midgard:privileges on the {$object->__table__} ID {$object->id} not granted for the current user.",
+            debug_add("Failed to unset a privilege on object object, midgard:update or midgard:privileges on the " . get_class($object) . " {$object->guid} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -2036,7 +1921,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if (! $_MIDCOM->auth->can_do('midgard:privileges', $object))
         {
             debug_push_class($object, __FUNCTION__);
-            debug_add("Failed to get a privilege, midgard:update or midgard:privileges on the {$object->__table__} ID {$object->id} not granted for the current user.",
+            debug_add("Failed to get a privilege, midgard:update or midgard:privileges on the " . get_class($object) . " {$object->guid} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -2127,7 +2012,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if (!$attachment)
         {
             debug_push_class($object, __FUNCTION__);
-            debug_add("Tried to delete the attachment {$name} at the object {$object->__table__} ID {$object->id}, but it did not exist. Failing silently.");
+            debug_add("Tried to delete the attachment {$name} at the object " . get_class($object) . " {$object->guid}, but it did not exist. Failing silently.");
             debug_pop();
             return false;
         }
@@ -2136,7 +2021,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             || ! $_MIDCOM->auth->can_do('midgard:attachments', $object))
         {
             debug_push_class($object, __FUNCTION__);
-            debug_add("Failed to set parameters, midgard:update or midgard:attachments on the {$object->__table__} ID {$object->id} not granted for the current user.",
+            debug_add("Failed to set parameters, midgard:update or midgard:attachments on the " . get_class($object) . " {$object->guid} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             debug_pop();
             return false;
@@ -2168,14 +2053,12 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             || ! $_MIDCOM->auth->can_do('midgard:attachments', $object))
         {
             debug_push_class($object, __FUNCTION__);
-            debug_add("Failed to set parameters, midgard:update or midgard:attachments on the {$object->__table__} ID {$object->id} not granted for the current user.",
+            debug_add("Failed to set parameters, midgard:update or midgard:attachments on the " . get_class($object) . " {$object->guid} not granted for the current user.",
                 MIDCOM_LOG_ERROR);
             return false;
         }
 
         $attachment = new midcom_baseclasses_database_attachment();
-        $attachment->ptable = $object->__table__;
-        $attachment->pid = $object->id;
         $attachment->name = $name;
         $attachment->title = $title;
         $attachment->mimetype = $mimetype;
@@ -2186,7 +2069,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             || ! $attachment->id)
         {
             debug_push_class($object, __FUNCTION__);
-            debug_add("Could not create the attachment {$name} at the object {$object->__table__} ID {$object->id}: Creation failed.",
+            debug_add("Could not create the attachment {$name} at the object " . get_class($object) . " {$object->guid}: Creation failed.",
                 MIDCOM_LOG_INFO);
             debug_add('Last Midgard error was: ' . mgd_errstr());
             debug_add('Return code was: ' . $result);
@@ -2246,67 +2129,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         }
 
         return $result;
-    }
-
-    /**
-     * Checks, whether the person given to the function is an owner (read: has
-     * write access) to the object in question.
-     *
-     * <i>Be aware that this is a temporary implementation only:</i> It tries to locate
-     * a mgd_is_xxx_owner function matching the object in question. All other cases will
-     * silently return true.
-     *
-     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @param mixed $person A midcom_baseclasses_database_person object or an identifier usable to retrieve one. You may set
-     *     this to NULL to use the currently authenticated user as a default.
-     * @return bool True if the person is the owner of the selected object, false otherwise. (For all objects
-     *     which are currently not supported, true is always returned as a stub implementation only.)
-     */
-    function is_owner(&$object, $person)
-    {
-        if ($object->__table__ == 'grp')
-        {
-            $function_name = 'mgd_is_group_owner';
-        }
-        else
-        {
-            $function_name = "mgd_is_{$object->__table__}_owner";
-        }
-
-        if (! function_exists($function_name))
-        {
-            debug_push_class($object, __FUNCTION__);
-            debug_add("The function {$function_name} is unavailable, no owner check can be done reliably.", MIDCOM_LOG_INFO);
-            debug_pop();
-            return true;
-        }
-
-        if (mgd_is_guid($person))
-        {
-            $obj = new midcom_baseclasses_database_person($person);
-            $id = $obj->id;
-        }
-        else if (is_numeric($person))
-        {
-            $id = $person;
-        }
-        else if (is_null($person))
-        {
-            $id = $_MIDGARD['user'];
-        }
-        else if (is_a($person, 'midgard_baseclasses_database_person'))
-        {
-            $id = $person->id;
-        }
-        else
-        {
-            debug_push_class($object, __FUNCTION__);
-            debug_add('The person passed to is_owner is not of a valid type.', MIDCOM_LOG_ERROR);
-            debug_pop();
-            return false;
-        }
-
-        return $function_name($id);
     }
 
     /**
@@ -2382,7 +2204,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         if (! $metadata)
         {
             debug_push_class($object, __FUNCTION__);
-            debug_add("Failed to load the metadata for the {$object->__table__} ID {$object->id}, assuming invisible object.",
+            debug_add("Failed to load the metadata for the " . get_class($object) . " {$object->guid}, assuming invisible object.",
                 MIDCOM_LOG_ERROR);
             return false;
         }

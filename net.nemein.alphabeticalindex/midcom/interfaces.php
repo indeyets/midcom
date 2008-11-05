@@ -313,9 +313,10 @@ class net_nemein_alphabeticalindex_interface extends midcom_baseclasses_componen
         // debug_pop();
     }
 
+    // FIXME: Use reflector for this
     function _resolve_object_title(&$object)
     {
-        if ($object->__table__ == 'article')
+        if (is_a($object, 'midcom_baseclasses_database_article'))
         {
             $title = $object->title;
         }

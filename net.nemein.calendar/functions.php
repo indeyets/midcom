@@ -94,7 +94,6 @@ function net_nemein_calendar_functions_daylabel($label='start', $start, $end , $
 function net_nemein_calendar_event2document($event)
 {
     // Add missing fields to the object:
-    $event->__table__ = 'event';
     $event->revised = 0;
     $event->revisor = 1;
     $event->created = 0;
