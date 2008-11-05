@@ -32,13 +32,16 @@ class org_routamc_statusmessage_importer_twitter extends org_routamc_statusmessa
         $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=','org.routamc.statusmessage:twitter');
         $qb->add_constraint('name', '=','username');
-        $qb->add_constraint('tablename', '=', 'person');
         $accounts = $qb->execute();
         if (count($accounts) > 0)
         {
             foreach ($accounts as $account_param)
             {
-                $user = new midcom_db_person($account_param->oid);
+                $user = new midcom_db_person($account_param->parentguid);
+                if (!$user->guid)
+                {
+                    continue;
+                }
                 $this->get_twitter_status($user, true);
             }
         }

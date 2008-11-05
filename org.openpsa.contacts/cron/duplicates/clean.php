@@ -39,11 +39,8 @@ class org_openpsa_contacts_cron_duplicates_clean extends midcom_baseclasses_comp
 
         ignore_user_abort();
 
-        // FIXME: write to use person object with parameter contraints tablename & oid are deprecated...
         $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=', 'org.openpsa.contacts.duplicates:possible_duplicate');
-        $qb->add_constraint('tablename', '=', 'person');
-        $qb->add_order('oid', 'ASC');
         $qb->add_order('name', 'ASC');
         $results = @$qb->execute();
         foreach($results as $param)

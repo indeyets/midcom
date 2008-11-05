@@ -36,11 +36,6 @@
  *            'class' => 'midgard_parameter',
  *            'rules' => array(
  *                array(
- *                    'property' => 'tablename',
- *                    'match' => '=',
- *                    'value' => 'person'
- *                ),
- *                array(
  *                    'property' => 'domain',
  *                    'match' => '=',
  *                    'value' => 'openpsa_test'

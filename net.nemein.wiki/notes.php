@@ -55,8 +55,12 @@ class net_nemein_wiki_notes extends midcom_baseclasses_components_purecode
         {
             foreach ($memberships as $membership)
             {
-                $event = new midcom_baseclasses_database_event($membership->eid);
                 // FIXME: This is slow way to do it, use a single QB instance for all instead
+                $event = new midcom_baseclasses_database_event($membership->eid);
+                if (!$event->guid)
+                {
+                    continue;
+                }
                 $this->_related_guids[$event->guid] = true;
             }
         }
@@ -118,8 +122,6 @@ class net_nemein_wiki_notes extends midcom_baseclasses_components_purecode
             }
             $qb->end_group();
             
-            // TODO: Fix when moving to wikipage objects
-            $qb->add_constraint('tablename', '=', 'article');
             $qb->add_constraint('domain', '=', 'net.nemein.wiki:related_to');
             $ret = @$qb->execute();
             if (   is_array($ret)
@@ -127,7 +129,11 @@ class net_nemein_wiki_notes extends midcom_baseclasses_components_purecode
             {
                 foreach ($ret as $related_to)
                 {
-                    $wikipage = new net_nemein_wiki_wikipage($related_to->oid);
+                    $wikipage = new net_nemein_wiki_wikipage($related_to->parentguid);
+                    if (!$wikipage->guid)
+                    {
+                        continue;
+                    }
                     $this->related[$wikipage->guid] = $wikipage;
                 }
             }

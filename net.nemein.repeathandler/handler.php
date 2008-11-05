@@ -61,13 +61,17 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
         $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
         $qb->add_constraint('name', '=', 'master_guid');
         $qb->add_constraint('value', '=', $guid);
-        $qb->add_constraint('tablename', '=', 'event');
 
-        $results = array ();
+        $results = array();
 
         foreach (@$qb->execute() as $parameter)
         {
-            $results[] = new org_openpsa_calendar_event_dba($parameter->oid);
+            $event = new org_openpsa_calendar_event_dba($parameter->parentguid);
+            if (!$event->guid)
+            {
+                continue;
+            }
+            $results[] = $event;
         }
 
         foreach ($results as $event)
@@ -375,7 +379,6 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
         $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
         $qb->add_constraint('name', '=', 'master_guid');
         $qb->add_constraint('value', '=', $master_guid);
-        $qb->add_constraint('tablename', '=', 'event');
         $rules['num'] = $qb->count();
 
         return $rules;
@@ -393,13 +396,16 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
         $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
         $qb->add_constraint('name', '=', 'master_guid');
         $qb->add_constraint('value', '=', $master_guid);
-        $qb->add_constraint('tablename', '=', 'event');
 
         $results = array ();
 
         foreach (@$qb->execute() as $parameter)
         {
-            $event = new org_openpsa_calendar_event_dba($parameter->oid);
+            $event = new org_openpsa_calendar_event_dba($parameter->parentguid);
+            if (!$event->guid)
+            {
+                continue;
+            }
 
             if (   !isset($start)
                 || $start > $event->start)
@@ -423,13 +429,16 @@ class net_nemein_repeathandler extends midcom_baseclasses_components_purecode
         $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
         $qb->add_constraint('name', '=', 'master_guid');
         $qb->add_constraint('value', '=', $master_guid);
-        $qb->add_constraint('tablename', '=', 'event');
 
         $results = array ();
 
         foreach (@$qb->execute() as $parameter)
         {
-            $event = new org_openpsa_calendar_event_dba($parameter->oid);
+            $event = new org_openpsa_calendar_event_dba($parameter->parentguid);
+            if (!$event->guid)
+            {
+                continue;
+            }
 
             if (   !isset($end)
                 || $end < $event->end)

@@ -41,13 +41,11 @@ echo "check_all_groups returned: <pre>\n" . org_openpsa_helpers::sprint_r($ret2)
 
 $qb = new midgard_query_builder('midgard_parameter');
 $qb->add_constraint('domain', '=', 'org.openpsa.contacts.duplicates:possible_duplicate');
-$qb->add_constraint('tablename', '=', 'person');
-$qb->add_order('oid', 'ASC');
 $qb->add_order('name', 'ASC');
 $ret = $qb->execute();
 foreach($ret as $param)
 {
-    $person1 = new org_openpsa_contacts_person_dba($param->oid);
+    $person1 = new org_openpsa_contacts_person_dba($param->parentguid);
     $person2 = new org_openpsa_contacts_person_dba($param->name);
     echo "Found marked as duplicate ids #{$person1->id} and #{$person2->id}<br/>\n";
 }

@@ -119,8 +119,6 @@ class org_openpsa_contacts_handler_duplicates_person extends midcom_baseclasses_
             debug_add("Loop iteration {$i}");
             $qb = new midgard_query_builder('midgard_parameter');
             $qb->add_constraint('domain', '=', 'org.openpsa.contacts.duplicates:possible_duplicate');
-            $qb->add_constraint('tablename', '=', 'person');
-            $qb->add_order('oid', 'ASC');
             $qb->add_order('name', 'ASC');
             $qb->set_limit(1);
             if ($i > 0)
@@ -137,14 +135,16 @@ class org_openpsa_contacts_handler_duplicates_person extends midcom_baseclasses_
             }
 
             $param =& $ret[0];
-            debug_add("Found duplicate mark on person #{$param->oid} for person {$param->name}");
-            $person1 = new org_openpsa_contacts_person_dba($param->oid);
+            debug_add("Found duplicate mark on person #{$param->parentguid} for person {$param->name}");
+            $person1 = new org_openpsa_contacts_person_dba($param->parentguid);
             $person2 = new org_openpsa_contacts_person_dba($param->name);
             // Make sure we actually have enough rights to do this
             if (   !is_object($person1)
+                || !$person1->guid
                 || !$_MIDCOM->auth->can_do('midgard:update', $person1)
                 || !$_MIDCOM->auth->can_do('midgard:delete', $person1)
                 || !is_object($person2)
+                || !$person2->guid
                 || !$_MIDCOM->auth->can_do('midgard:update', $person2)
                 || !$_MIDCOM->auth->can_do('midgard:delete', $person2)
                 )

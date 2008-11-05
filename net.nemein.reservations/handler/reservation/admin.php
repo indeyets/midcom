@@ -315,13 +315,17 @@ class net_nemein_reservations_handler_reservation_admin extends midcom_baseclass
             $qb->add_constraint('domain', '=', 'net.nemein.repeathandler');
             $qb->add_constraint('name', '=', 'master_guid');
             $qb->add_constraint('value', '=', $this->_event->guid);
-            $qb->add_constraint('tablename', '=', 'event');
 
             $results = array ();
             $params = @$qb->execute();
             foreach ($params as $parameter)
             {
-                $results[] = new org_openpsa_calendar_event_dba($parameter->oid);
+                $event = new org_openpsa_calendar_event_dba($parameter->parentguid);
+                if (!$event->guid)
+                {
+                    continue;
+                }
+                $results[] = $event;
             }
             $data['dependant_events'] = $results;
 

@@ -286,10 +286,8 @@ class org_openpsa_contacts_duplicates_merge
         switch ($this->_object_mode)
         {
             case 'person':
-                $ptable = 'person';
                 break;
             case 'group':
-                $ptable = 'grp';
                 break;
             default:
                 // object mode not set properly
@@ -299,9 +297,6 @@ class org_openpsa_contacts_duplicates_merge
         }
         $qb = new midgard_query_builder('midgard_parameter');
         $qb->add_constraint('domain', '=', 'org.openpsa.contacts.duplicates:possible_duplicate');
-        // FIXME: Parameters are now linked via parentguid, not tablename
-        $qb->add_constraint('tablename', '=', $ptable);
-        $qb->add_order('oid', 'ASC');
         $qb->add_order('name', 'ASC');
         $qb->set_limit(1);
         $results = @$qb->execute();

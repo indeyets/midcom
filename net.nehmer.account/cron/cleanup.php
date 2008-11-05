@@ -44,7 +44,6 @@ class net_nehmer_account_cron_cleanup extends midcom_baseclasses_components_cron
         // check all persons manually. We need to use a pure Midgard QB here,
         // as Parameter Query support is not yet supported in MidCOM/Midgard
         $query = new midgard_query_builder('midgard_parameter');
-        $query->add_constraint('tablename', '=', 'person');
         $query->add_constraint('domain', '=', 'net.nehmer.account');
         $query->add_constraint('name', '=', 'activation_hash_created');
         $query->add_constraint('value', '<', $timeout);
@@ -54,17 +53,18 @@ class net_nehmer_account_cron_cleanup extends midcom_baseclasses_components_cron
         {
             foreach ($result as $parameter)
             {
-                $person = new midcom_db_person($parameter->oid);
-                if (! $person)
+                $person = new midcom_db_person($parameter->parentguid);
+                if (   !$person
+                    || !$person->guid)
                 {
-                    debug_add("Failed to open the Person record ID {$parameter->oid}, skipping it.", MIDCOM_LOG_WARN);
+                    debug_add("Failed to open the Person record ID {$parameter->parentguid}, skipping it.", MIDCOM_LOG_WARN);
                     continue;
                 }
                 debug_add("Dropping not activated account ID {$person->id}", MIDCOM_LOG_INFO);
                 debug_print_r('Object Dump:', $person);
                 if (! $person->delete())
                 {
-                    debug_add("Failed to delete the Person record ID {$parameter->oid}.", MIDCOM_LOG_WARN);
+                    debug_add("Failed to delete the Person record ID {$parameter->parentguid}.", MIDCOM_LOG_WARN);
                 }
             }
         }
