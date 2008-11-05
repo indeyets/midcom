@@ -43,9 +43,8 @@ else
                     if(is_object($user))
                     {
                         $person = $user->get_storage();
-                        if (class_exists('org_openpsa_contactwidget'))
+                        if ($_MIDCOM->load_library('org.openpsa.contactwidget'))
                         {
-                            $_MIDCOM->componentloader->load_graceful('org.openpsa.contactwidget');
                             $user_card = new org_openpsa_contactwidget($person);
                             $person_label = $user_card->show_inline();
                         }

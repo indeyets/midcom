@@ -157,19 +157,15 @@ class no_bergfald_rcs_handler extends midcom_baseclasses_components_handler
      */
     function _on_initialize()
     {
-        // It is better to load this libraries here as the component isn't always loaded.
-        $_MIDCOM->load_library('midcom.helper.datamanager');
-        $_MIDCOM->load_library('midcom.helper.xml');
-
-        $_MIDCOM->add_link_head(array
+        $_MIDCOM->add_link_head
+        (
+            array
             (
                 'rel' => 'stylesheet',
                 'type' => 'text/css',
                 'href' => MIDCOM_STATIC_URL."/no.bergfald.rcs/rcs.css",
             )
         );
-
-        //$this->_view_toolbar =& $_MIDCOM->toolbars->get_view_toolbar();
     }
 
     /**
