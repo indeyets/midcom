@@ -11,10 +11,6 @@
         <property name="end" type="integer"/>
         <property name="title" type="string"/>
         <property name="description" type="text"/>
-        <!-- required metadata -->
-        <property name="created" type="datetime"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
         <!-- /Copied from NewMidgardevent -->
         <!-- in general we rely on ACL but until it's in core level we might need this -->
         <property name="owner" link="midgard_group:id" reverse="no" type="integer"/>
@@ -23,10 +19,6 @@
         <property name="plannedHours" type="float"/>
         <property name="projectCode" type="string" />
 
-        <!-- moved to separate table
-        <property name="started" type="integer"/>
-        <property name="finished" type="integer"/>
-        -->
         <!-- cache of last status -->
         <property name="status" type="integer"/>
         <property name="acceptanceType" type="integer" />
@@ -105,11 +97,6 @@
         <property name="type" type="integer" />
         <property name="timestamp" type="integer" />
         <property name="comment" type="text" />
-
-        <!-- required metadata -->
-        <property name="created" type="datetime"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
     </type>
 
     <type name="org_openpsa_hour_report" table="org_openpsa_hour_report" parent="org_openpsa_task" parentfield="task">
@@ -173,11 +160,6 @@
         <property name="orgOpenpsaObtype" type="integer"/>
 
         <!-- /Common OpenPSA properties -->
-
-        <!-- required metadata -->
-        <property name="created" type="datetime"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
     </type>
 
     <!-- /org.openpsa.projects objects -->

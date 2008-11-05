@@ -9,14 +9,6 @@
         
     <!-- Cached vote count -->
     <property name="votes" type="integer" />
-    
-    <!-- 1.7 required metadata -->        
-    <property name="revised" type="string"/>
-    <property name="revision" type="integer"/>
-    <property name="created" type="string"/>
-    <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-    <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-    <!-- /required metadata -->     
   </type>
   
   <type name="net_nemein_quickpoll_vote" table="net_nemein_quickpoll_vote" parent="net_nemein_quickpoll_option" parentfield="selectedoption">
@@ -31,16 +23,7 @@
         
     <!-- Voter information: user and IP -->
     <property name="user" link="midgard_person:id" reverse="no" type="integer"/>
-    <property name="ip" type="string"/>
-    
-        
-    <!-- 1.7 required metadata -->        
-    <property name="revised" type="string"/>
-    <property name="revision" type="integer"/>
-    <property name="created" type="string"/>
-    <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-    <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-    <!-- /required metadata -->     
+    <property name="ip" type="string"/>  
   </type>
 
 </Schema>

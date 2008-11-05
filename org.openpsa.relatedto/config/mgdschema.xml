@@ -12,13 +12,5 @@
         <property name="toClass" type="text"/>
         <property name="toExtra" type="text"/>
         <property name="status" type="integer"/>
-
-        <!-- required metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
     </type>
 </Schema>

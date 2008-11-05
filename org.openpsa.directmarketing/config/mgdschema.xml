@@ -34,13 +34,6 @@
         <!-- Used to a) distinguish OpenPSA objects in QB b) store object "subtype" (project vs task etc) -->
         <property name="orgOpenpsaObtype" type="integer"/>
         <!-- /Common OpenPSA properties -->
-        <!--  required metadata, NOT ANYMORE
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        -->
     </type>
 
     <type name="org_openpsa_campaign_message" table="org_openpsa_campaign_message" parent="org_openpsa_campaign" parentfield="campaign">
@@ -48,14 +41,6 @@
         <property name="campaign" link="org_openpsa_campaign:id" type="integer" parentfield="campaign"/>
         <property name="title" type="string"/>
         <property name="description" type="text"/>
-
-        <!--  required metadata, NOT ANYMORE
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        -->
 
         <!-- Used for backgrounding the actual sending -->
         <property name="sendStarted" type="integer" />
@@ -81,13 +66,6 @@
         <property name="bounced" type="integer"/>
         <property name="timestamp" type="integer"/>
         <property name="orgOpenpsaObtype" type="integer"/>
-        <!--  required metadata, NOT ANYMORE
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        -->
     </type>
 
     <type name="org_openpsa_link_log" table="org_openpsa_link_log" parent="org_openpsa_campaign_message" parentfield="message">
@@ -99,13 +77,6 @@
         <property name="token" type="string"/>
         <property name="timestamp" type="integer"/>
         <property name="orgOpenpsaObtype" type="integer"/>
-        <!--  required metadata, NOT ANYMORE
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        -->
     </type>
     <!-- /org.openpsa.spammer objects  -->
 </Schema>

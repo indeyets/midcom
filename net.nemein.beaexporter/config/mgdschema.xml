@@ -6,14 +6,6 @@
         <property name="objectguid" type="string" />
         <property name="objectaction" type="string" />
         <property name="targeturl" type="string" />
-        <property name="timestamp" type="integer"/>
-                
-        <!-- required metadata -->        
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->        
+        <property name="timestamp" type="integer"/>      
     </type>
 </Schema>

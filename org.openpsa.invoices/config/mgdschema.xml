@@ -21,27 +21,10 @@
         <!-- Sender of the invoice -->
         <property name="owner" link="midgard_person:id" reverse="no" type="integer"/>
 
-        <!-- required metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
-
     </type>
     <type name="org_openpsa_invoice_hour" table="org_openpsa_invoice_hour" parent="org_openpsa_invoice" parentfield="invoice">
         <property name="id" type="integer" primaryfield="id"/>
         <property name="invoice" link="org_openpsa_invoice:id" reverse="no" type="integer" parentfield="invoice"/>
         <property name="hourReport" link="org_openpsa_hour_report:id" reverse="no" type="integer"/>
-
-        <!-- required metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
-
     </type>
 </Schema>

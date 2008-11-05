@@ -12,15 +12,7 @@
         <property name="latestpost" link="net_nemein_discussion_post:id" reverse="no" type="integer"/>
         <property name="firstpost" link="net_nemein_discussion_post:id" reverse="no" type="integer"/>
         <property name="latestposttime" type="integer"/>
-        <!-- /cached data -->
-        
-        <!-- required metadata -->        
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->        
+        <!-- /cached data -->       
     </type>
     
     <type name="net_nemein_discussion_post" table="net_nemein_discussion_post" parent="net_nemein_discussion_thread" parentfield="thread">
@@ -38,13 +30,5 @@
         <property name="senderemail" type="string"/>
         <property name="sender" link="midgard_person:id" reverse="no" type="integer"/>
         <!-- /poster metadata -->
-        
-        <!-- required metadata -->        
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->        
     </type>
 </Schema>

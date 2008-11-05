@@ -4,14 +4,6 @@
         <property name="id" type="integer" primaryfield="id"/>
         <property name="frompage" link="midgard_article:id" reverse="no" type="integer" parentfield="frompage"/>
         <property name="topage" type="string"/>
-        <property name="topageid" link="midgard_article:id" reverse="no" type="integer"/>
-        
-        <!-- required 1.7 metadata -->        
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->        
+        <property name="topageid" link="midgard_article:id" reverse="no" type="integer"/>     
     </type>
 </Schema>

@@ -29,15 +29,5 @@
 
         <property name="tentative" type="boolean" />
         <property name="externalGuid" type="string" />
-        
-        <!-- Legacy 1.7 properties -->
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="locker" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="locked" type="string"/>
-        <!-- /Legacy 1.7 properties -->
     </type>
 </Schema>

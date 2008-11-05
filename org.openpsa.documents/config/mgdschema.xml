@@ -6,13 +6,6 @@
         <property name="id" type="integer" primaryfield="id"/>
         <property name="score" type="integer"/>
         <property name="approved" type="string"/>
-        <!-- required metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
         <property name="author" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="approver" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="topic" link="midgard_topic:id" type="integer" parentfield="topic"/>

@@ -10,14 +10,6 @@
         <property name="type" type="integer"/>
         <property name="extra" type="text"/>
         <property name="busy" type="boolean"/>
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="locked" type="string"/>
-        <property name="owner" link="midgard_group:id" reverse="no" type="integer"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="locker" link="midgard_person:id" reverse="no" type="integer"/>
         <property name="up" upfield="up" type="integer" link="org_openpsa_event:id"/>
         <!-- /Copied from NewMidgardevent -->
 
@@ -61,14 +53,6 @@
         <property name="orgOpenpsaObtype" type="integer"/>
 
         <!-- /Common OpenPSA properties -->
-
-        <!-- required metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
     </type>
 
     <type name="org_openpsa_calendar_resource" table="org_openpsa_calendar_resource" parent="midgard_person" parentfield="owner">
@@ -81,14 +65,6 @@
         <property name="type" type="string"/>
         <property name="period" type="string" dbtype="varchar(1)" />
         <property name="owner" link="midgard_person:id" reverse="no" type="integer" parentfield="owner"/>
-
-        <!-- required 1.7 metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required 1.7 metadata -->
     </type>
 
     <type name="org_openpsa_calendar_event_resource" table="org_openpsa_calendar_event_resource" parent="org_openpsa_event" parentfield="event">
@@ -98,14 +74,6 @@
         <property name="event" link="org_openpsa_event:id" reverse="no" type="integer" parentfield="event"/>
 
         <property name="description" type="text"/>
-
-        <!-- required 1.7 metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required 1.7 metadata -->
     </type>
     <!-- /org.openpsa.calendar objects -->
 </Schema>

@@ -33,15 +33,6 @@
         <property name="orgOpenpsaObtype" type="integer"/>
 
         <!-- /Common OpenPSA properties -->
-
-        <!-- required metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
-
     </type>
 
     <type name="org_openpsa_products_product_group" table="org_openpsa_products_product_group" upfield="up">
@@ -62,14 +53,6 @@
         <property name="orgOpenpsaObtype" type="integer"/>
 
         <!-- /Common OpenPSA properties -->
-
-        <!-- required metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
     </type>
 
     <type name="org_openpsa_products_product_member" table="org_openpsa_products_product_member" parent="org_openpsa_products_product" parentfield="product">
@@ -89,13 +72,5 @@
         <property name="orgOpenpsaObtype" type="integer"/>
 
         <!-- /Common OpenPSA properties -->
-
-        <!-- required metadata -->
-        <property name="revised" type="string"/>
-        <property name="revision" type="integer"/>
-        <property name="created" type="string"/>
-        <property name="creator" link="midgard_person:id" reverse="no" type="integer"/>
-        <property name="revisor" link="midgard_person:id" reverse="no" type="integer"/>
-        <!-- /required metadata -->
     </type>
 </Schema>
