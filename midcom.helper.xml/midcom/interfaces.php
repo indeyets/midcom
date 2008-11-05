@@ -22,11 +22,7 @@ class midcom_helper_xml_interface extends midcom_baseclasses_components_interfac
         parent::__construct();
         
         $this->_component = 'midcom.helper.xml';
-        $this->_autoload_files = Array
-        (
-            'toarray.php',
-            'objectmapper.php'
-        );      
+        $this->_autoload_files = array();
     }
 }
 
