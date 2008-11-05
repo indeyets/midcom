@@ -21,8 +21,7 @@
     $comments = $data['qb_comments']->execute();
     foreach ($comments as $comment)
     {
-        $metadata = $comment->get_metadata();
-        if (!$metadata->is_approved())
+        if (!$comment->metadata->is_approved())
         {
             // Skip
             continue;

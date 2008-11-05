@@ -307,11 +307,8 @@ class net_nemein_discussion_email_importer extends midcom_baseclasses_components
 
         if ($this->_config->get('autoapprove'))
         {
-            $meta = $post->get_metadata();
-            $meta->approve();
-
-            $meta = $thread->get_metadata();
-            $meta->approve();
+            $post->metadata->approve();
+            $thread->metadata->approve();
         }
 
         $this->_imported = $post;

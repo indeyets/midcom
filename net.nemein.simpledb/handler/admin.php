@@ -243,8 +243,7 @@ class net_nemein_simpledb_handler_admin extends midcom_baseclasses_components_ha
                 
                 if ($this->_config->get('autoapprove_created'))
                 {
-                    $metadata = $data['entry']->get_metadata();
-                    $metadata->approve();
+                    $data['entry']->metadata->approve();
                 }
 
                 $_MIDCOM->relocate("view/{$this->_request_data['entry']->guid}/");

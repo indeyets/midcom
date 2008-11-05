@@ -214,7 +214,7 @@ class default_create_website extends midcom_baseclasses_components_handler
             $results = $qb->execute();
             foreach ($results as $result)
             {
-                $metadata = $result->get_metadata();
+                $metadata = $result->metadata;
                 $approve = false;
                 if ($metadata->is_approved())
                 {

@@ -437,7 +437,7 @@ class midcom_helper__basicnav
             return null;
         }
         // Now complete the node data structure, we need a metadata object for this:
-        $metadata =& $topic->get_metadata();
+        $metadata =& $topic->metadata;
 
         $nodedata[MIDCOM_NAV_URL] = $topic->name . '/';
         $nodedata[MIDCOM_NAV_NAME] = trim($nodedata[MIDCOM_NAV_NAME]) == '' ? $topic->name : $nodedata[MIDCOM_NAV_NAME];
@@ -736,7 +736,7 @@ class midcom_helper__basicnav
             if (   $leaf[MIDCOM_NAV_NOENTRY] == false
                 && is_object($leaf))
             {
-                $metadata =& $leaf->get_metadata();
+                $metadata =& $leaf->metadata;
                 if ($metadata)
                 {
                     $leaf[MIDCOM_NAV_NOENTRY] = (bool) $metadata->get('navnoentry');
@@ -819,7 +819,7 @@ class midcom_helper__basicnav
                 || $GLOBALS['midcom_config']['show_unapproved_objects'] == false))
         {
             // Check Hiding, Scheduling and Approval
-            $metadata =& $napdata[MIDCOM_NAV_OBJECT]->get_metadata();
+            $metadata =& $napdata[MIDCOM_NAV_OBJECT]->metadata;
 
             if (! $metadata)
             {

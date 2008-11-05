@@ -1040,7 +1040,7 @@ class midcom_helper_datamanager2_formmanager extends midcom_baseclasses_componen
                         // This will exit
                     }
                     
-                    $metadata = $object->get_metadata();
+                    $metadata = $object->metadata;
                     
                     // Remove the lock, if permission is granted
                     if ($metadata->can_unlock())

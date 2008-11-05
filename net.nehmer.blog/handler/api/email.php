@@ -256,7 +256,7 @@ class net_nehmer_blog_handler_api_email extends midcom_baseclasses_components_ha
 
         if ($this->_config->get('api_email_autoapprove'))
         {
-            $metadata = $this->_article->get_metadata();
+            $metadata = $this->_article->metadata;
             $metadata->approve();
         }
 

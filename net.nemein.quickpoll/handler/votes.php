@@ -93,7 +93,7 @@ class net_nemein_quickpoll_handler_votes extends midcom_baseclasses_components_h
     function _vote_toolbar($vote)
     {
         // Load toolbar
-        $metadata = $vote->get_metadata();
+        $metadata = $vote->metadata;
         $this->_request_data['votes_toolbars'][$vote->guid] = new midcom_helper_toolbar();
         
         if ($metadata->is_approved())

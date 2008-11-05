@@ -357,11 +357,8 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 {
                     $_MIDCOM->auth->request_sudo('net.nemein.discussion');
 
-                    $meta = $this->_post->get_metadata();
-                    $meta->approve();
-
-                    $meta = $this->_thread->get_metadata();
-                    $meta->approve();
+                    $this->_post->metadata->approve();
+                    $this->_thread->metadata->approve();
 
                     $_MIDCOM->auth->drop_sudo();
                 }
@@ -601,11 +598,8 @@ class net_nemein_discussion_handler_post extends midcom_baseclasses_components_h
                 {
                     $_MIDCOM->auth->request_sudo('net.nemein.discussion');
 
-                    $meta = $this->_post->get_metadata();
-                    $meta->approve();
-
-                    $meta = $this->_thread->get_metadata();
-                    $meta->approve();
+                    $this->_post->metadata->approve();
+                    $this->_thread->metadata->approve();
 
                     $_MIDCOM->auth->drop_sudo();
                 }

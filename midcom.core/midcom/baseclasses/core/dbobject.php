@@ -2126,7 +2126,7 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
      */
     function is_object_visible_onsite($object)
     {
-        $metadata =& $object->get_metadata();
+        $metadata =& $object->metadata;
         if (! $metadata)
         {
             debug_push_class($object, __FUNCTION__);

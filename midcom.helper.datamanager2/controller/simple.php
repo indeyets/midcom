@@ -86,7 +86,7 @@ class midcom_helper_datamanager2_controller_simple extends midcom_helper_dataman
         }
 
         $result = $this->formmanager->process_form();
-        $metadata = $this->datamanager->storage->object->get_metadata();
+        $metadata = $this->datamanager->storage->object->metadata;
         
         // Remove the lock
         if (   $this->lock_timeout

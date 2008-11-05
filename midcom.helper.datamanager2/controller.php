@@ -268,7 +268,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
             && isset($this->datamanager->storage->object->guid))
         {
             // Get the metadata object
-            $metadata =& $this->datamanager->storage->object->get_metadata();
+            $metadata =& $this->datamanager->storage->object->metadata;
             
             if ($metadata->is_locked())
             {
@@ -296,7 +296,7 @@ class midcom_helper_datamanager2_controller extends midcom_baseclasses_component
         }
         else
         {
-            $metadata =& $this->datamanager->storage->object->get_metadata();
+            $metadata =& $this->datamanager->storage->object->metadata;
             $person = new midcom_db_person($this->datamanager->storage->object->metadata->locker);
             ?>
                 <div class="midcom_helper_datamanager2_unlock">

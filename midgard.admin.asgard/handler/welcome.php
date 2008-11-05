@@ -304,7 +304,7 @@ class midgard_admin_asgard_handler_welcome extends midcom_baseclasses_components
             {
                 //$label = $object->get_label();
                 $label = $object->guid;
-                $metadata = $object->get_metadata();
+                $metadata = $object->metadata;
                 $metadata->approve();
                 $_MIDCOM->uimessages->add($this->_l10n->get('midgard.admin.asgard'), sprintf($this->_l10n->get('object %s approved'), $label));
             }

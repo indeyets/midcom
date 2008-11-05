@@ -104,10 +104,6 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
                 break;
 
             case 'metadata':
-                if (!property_exists($this->object->__object->metadata, $name)) 
-                {
-                    throw new Exception("Missing {$name} field in object: " . get_class($this->object->metadata));
-                }
                 $this->object->metadata->$name = $data;
                 break;
 
@@ -191,7 +187,7 @@ class midcom_helper_datamanager2_storage_midgard extends midcom_helper_datamanag
                 );
 
             case 'metadata':
-                return $this->object->get_metadata()->get($name);
+                return $this->object->metadata->$name;
                 break;
 
             default:
