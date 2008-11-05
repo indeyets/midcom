@@ -82,9 +82,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             return false;
         }
 
-        // Now, if possible, set revised and revisor.
-        midcom_baseclasses_core_dbobject::_set_revisor($object);
-
         if (! $object->__exec_update())
         {
             debug_push_class($object, __FUNCTION__);
@@ -140,100 +137,6 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
         $_MIDCOM->componentloader->trigger_watches(MIDCOM_OPERATION_DBA_UPDATE, $object);       
 
         debug_pop();
-    }
-
-
-    /**
-     * This is an internal helper which updates the revised/revisor timestamp on a
-     * record if the corresponding fields exists.
-     *
-     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @access private
-     */
-    function _set_revisor(&$object)
-    {
-        if (array_key_exists('revisor', $object))
-        {
-            if (is_null($_MIDCOM->auth->user))
-            {
-                $object->revisor = 0;
-            }
-            else
-            {
-                // Bypass MidCOM ACL here, at least for now.
-                $object->revisor = $_MIDCOM->auth->user->_storage->id;
-            }
-        }
-        if (array_key_exists('revised', $object))
-        {
-            $object->revised = gmstrftime('%Y-%m-%d %T');
-        }
-    }
-
-    /**
-     * This is an internal helper which updates the created and metadata.published timestamps 
-     * and the creator and metadata.authors links on a record if the corresponding fields exists.
-     *
-     * @param MidgardObject $object A class inherited from one of the MgdSchema driven Midgard classes supporting the above callbacks.
-     * @access private
-     */
-    function _set_creator(&$object)
-    {
-        if (array_key_exists('creator', $object))
-        {
-            // Bypass MidCOM ACL here, at least for now.
-            if (is_null($_MIDCOM->auth->user))
-            {        
-                $object->creator = 0;
-            }
-            else
-            {
-                $object->creator = $_MIDCOM->auth->user->_storage->id;
-            }
-        }
-
-        if (array_key_exists('created', $object))
-        {
-            $object->created = time();
-        }
-
-        /*
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r('$object->metadata before magick', $object->metadata);
-        debug_pop();
-        */
-
-        if (!is_null($_MIDCOM->auth->user))
-        {
-            // Default the authors to current user
-            if (empty($object->metadata->authors))
-            {
-                $creator = $_MIDCOM->auth->user->_storage->id;
-                $object->metadata->authors = "|{$_MIDCOM->auth->user->_storage->guid}|";
-            }
-        
-            // Default the owner to first group of current user
-            if (empty($object->metadata->owner))
-            {
-                $groups = $_MIDCOM->auth->user->list_all_memberships();
-                if (count($groups) > 0)
-                {
-                    $first_group = array_shift($groups);
-                    $object->metadata->owner = str_replace('group:', '', $first_group->id);
-                }
-            }      
-        }
-
-        // Default the publication time to current date/time
-        if (empty($object->metadata->published))
-        {
-            $object->metadata->published = time();
-        }
-        /*
-        debug_push_class(__CLASS__, __FUNCTION__);
-        debug_print_r('$object->metadata after magick', $object->metadata);
-        debug_pop();
-        */
     }
 
     /**
@@ -345,10 +248,33 @@ class midcom_baseclasses_core_dbobject extends midcom_baseclasses_core_object
             return false;
         }
         
-        // Legacy Midgard Metadata emulation
-        // Now, if possible, set created and creator.
-        midcom_baseclasses_core_dbobject::_set_creator($object);
-        midcom_baseclasses_core_dbobject::_set_revisor($object);
+        if (!is_null($_MIDCOM->auth->user))
+        {
+            // Default the authors to current user
+            if (empty($object->metadata->authors))
+            {
+                $creator = $_MIDCOM->auth->user->_storage->id;
+                $object->metadata->authors = "|{$_MIDCOM->auth->user->_storage->guid}|";
+            }
+        
+            // Default the owner to first group of current user
+            if (empty($object->metadata->owner))
+            {
+                $groups = $_MIDCOM->auth->user->list_all_memberships();
+                if (count($groups) > 0)
+                {
+                    $first_group = array_shift($groups);
+                    $object->metadata->owner = str_replace('group:', '', $first_group->id);
+                }
+            }      
+        }
+
+        // Default the publication time to current date/time
+        // FIXME: Check with Piotras if this is necessary
+        if (empty($object->metadata->published))
+        {
+            $object->metadata->published = time();
+        }
 
         if (! $object->__exec_create() && $object->id == 0)
         {
