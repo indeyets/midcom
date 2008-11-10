@@ -1,6 +1,0 @@
-$_MIDCOM->componentloader->load('com.magnettechnologies.contactgrabber');
-$crabber = new com_magnettechnologies_contactgrabber();
-$crabber_contacts = $crabber->_crab_contacts();
-
-Doing the above will render and process the form
-

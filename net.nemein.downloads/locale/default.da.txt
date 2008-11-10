@@ -1,9 +1,0 @@
----# MidCOM String Database
----VERSION 2.1.0
----CVS $Id$
----LANGUAGE da
-
----STRING download management
-Administration af download
----STRINGEND
-

@@ -1,1 +1,0 @@
-<div class="main_items hfeed">

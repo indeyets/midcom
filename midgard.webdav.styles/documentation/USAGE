@@ -1,3 +1,0 @@
-To use this component, you'll need MidCOM SVN or one patch to baseclasses/components/request.phps
-
-To enable authentication, create a new dedicated host for webdav and enable basic auth there. 

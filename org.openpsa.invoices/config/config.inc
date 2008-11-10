@@ -1,6 +1,0 @@
-'schemadb'             => 'file:/org/openpsa/invoices/config/schemadb_default.inc',
-'schemadb_config'      => 'file:/org/openpsa/invoices/config/schemadb_config.inc',
-'default_hourly_price' => 0,
-'default_due_days'     => 14,
-'vat_percentages'      => '0,17,22',
-'invoice_sender'       => '',

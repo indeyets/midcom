@@ -1,3 +1,0 @@
-    </tfoot>
-</table>
-    
