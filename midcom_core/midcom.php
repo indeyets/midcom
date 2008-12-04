@@ -194,8 +194,9 @@ class midcom_core_midcom
             
             // Then call the action
             $action_method = "action_{$route_configuration['action']}";
-            $data =& $this->get_context();
+            $data = array();
             $controller->$action_method($route_id, &$data);
+            $this->set_context_item($page_data['component'], $data);
             
             // Set other context data from route
             if (isset($route_configuration['template_entry_point']))
