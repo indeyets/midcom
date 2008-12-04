@@ -17,11 +17,12 @@ class midcom_core_exceptionhandler
     {
         // TODO: Different HTTP error codes for different Exceptions
         $http_code = 500;
+        $message_type = get_class($exception);
         $message = $exception->getMessage();
     
         if (headers_sent())
         {
-            die("Unexpected Error, this should display an HTTP {$http_code} - {$message}");
+            die("Unexpected Error, this should display an HTTP {$http_code} - {$message_type}: {$message}");
         }
         
         switch ($http_code)
@@ -39,7 +40,7 @@ class midcom_core_exceptionhandler
         header('Content-Type: text/html');
 
         // TODO: Templating
-        echo "<html><h1>{$header}</h1><p>{$message}</p>";
+        echo "<html><h1>{$header}</h1><p>{$message_type}: {$message}</p>";
     }
 }
 
