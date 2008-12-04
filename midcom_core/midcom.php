@@ -38,11 +38,6 @@ function __autoload($class_name)
 // Load the exception handler
 require(MIDCOM_ROOT . '/midcom_core/exception_handler.php');
 
-// Load the configuration loader and load core config
-require(MIDCOM_ROOT . '/midcom_core/services/configuration.php');
-require(MIDCOM_ROOT . '/midcom_core/services/configuration/yaml.php');
-$config = new midcom_core_services_configuration_yaml('midcom_core');
-
-$services_authorization_implementation = $config->get('services_authorization');
-$authorization = new $services_authorization_implementation();
+// Load the Midgard dispatcher
+$_MIDCOM = new midcom_core_services_dispatcher_midgard();
 ?>

@@ -34,6 +34,6 @@ interface midcom_core_services_configuration
      * @param array $configuration Configuration array     
      * @return string Configuration in string format
      */
-    public function serialize($configuration);
+    public function serialize(array $configuration);
 }
 ?>
