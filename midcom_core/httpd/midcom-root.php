@@ -7,7 +7,6 @@
  *
  * MidgardRootFile for running MidCOM 3 under Apache
  */
-
 // If code-compat is defined we use that, otherwise we load MidCOM 3
 if (mgd_is_element_loaded('code-compat'))
 {
