@@ -38,6 +38,6 @@ function __autoload($class_name)
 // Load the exception handler
 require(MIDCOM_ROOT . '/midcom_core/exceptionhandler.php');
 
-// Load the Midgard version of MidCOM request router
-$_MIDCOM = new midcom_core_services_router_midgard();
+// Load the Midgard version of MidCOM request dispatcher
+$_MIDCOM = new midcom_core_services_dispatcher_midgard();
 ?>
