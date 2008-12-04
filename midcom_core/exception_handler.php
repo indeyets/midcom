@@ -12,7 +12,7 @@
  *
  * @package midcom_core
  */
-class midcom_core_exception_handler()
+class midcom_core_exception_handler
 {
     function handle($exception)
     {
@@ -44,5 +44,5 @@ class midcom_core_exception_handler()
     }
 }
 
-set_exception_handler(array('midcom_core_exception_handler', 'handle'));
+//set_exception_handler(array('midcom_core_exception_handler', 'handle'));
 ?>
