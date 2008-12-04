@@ -109,7 +109,7 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
      */
     public function exists($key)
     {
-        return isset($this->merged[$key]);
+        return array_key_exists($key, $this->merged);
     }
 
     /**

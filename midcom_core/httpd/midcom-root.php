@@ -21,9 +21,16 @@ else
 // code- elements used for things run before output
 ?>
 <(code-global)>
-<(code-init)>
 <?php
-// TODO: Call controller here
+if (mgd_is_element_loaded('code-init'))
+{
+    ?><(code-init)><?php
+}
+else
+{
+    // Call the controller if available
+    $_MIDCOM->process();
+}
 
 // Start output buffer so we can do templating
 ob_start();

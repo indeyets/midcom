@@ -13,7 +13,7 @@
  */
 class midcom_core_componentloader
 {
-    private $manifests = array();
+    public $manifests = array();
     private $tried_to_load = array();
     private $interfaces = array();
 
@@ -43,7 +43,7 @@ class midcom_core_componentloader
         return true;
     }
     
-    public function load($component)
+    public function load($component, $object = null)
     {
         if (!$this->can_load($component))
         {
@@ -56,7 +56,8 @@ class midcom_core_componentloader
         {        
             // No component directory
             $this->tried_to_load[$component] = false;
-            return false;
+
+            throw new Exception("Component {$component} directory not found.");
         }
         
         $component_interface_file = "{$component_directory}/interface.php";
@@ -65,14 +66,22 @@ class midcom_core_componentloader
             // No interface class
             // TODO: Should we default to some baseclass?
             $this->tried_to_load[$component] = false;
-            return false;
+            
+            throw new Exception("Component {$component} interface class file not found.");
         }
         require($component_interface_file);
-        
-        $this->interfaces[$component] = new $component();
+
+        // Load configuration for the component
+        $configuration = new midcom_core_services_configuration_yaml($component, $object);
+
+        // Load the interface class
+        $this->interfaces[$component] = new $component($configuration);
+
         $this->tried_to_load[$component] = true;
-        return true;
+        return $this->interfaces[$component];
     }
+    
+    
 
     /**
      * Helper, converting a component name (net_nehmer_blog)
