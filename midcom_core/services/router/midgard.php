@@ -7,13 +7,13 @@
  */
 
 /**
- * Midgard dispatcher for MidCOM 3
+ * Midgard router for MidCOM 3
  *
  * Dispatches Midgard HTTP requests to components.
  *
  * @package midcom_core
  */
-class midcom_core_services_dispatcher_midgard implements midcom_core_services_dispatcher
+class midcom_core_services_router_midgard implements midcom_core_services_router
 {
     public $authorization;
     public $configuration;
