@@ -43,5 +43,5 @@ class midcom_core_exception_handler
     }
 }
 
-//set_exception_handler(array('midcom_core_exception_handler', 'handle'));
+set_exception_handler(array('midcom_core_exception_handler', 'handle'));
 ?>
