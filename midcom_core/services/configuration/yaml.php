@@ -29,7 +29,7 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
     
     private function load_globals()
     {
-        $filename = MIDCOM_ROOT . "/{$this->component}/config/defaults.yml";
+        $filename = MIDCOM_ROOT . "/{$this->component}/configuration/defaults.yml";
         if (!file_exists($filename))
         {
             return;
@@ -41,7 +41,7 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
     
     private function load_locals()
     {
-        $snippetname = "/sitegroup-config/{$this->component}/configuration";
+        $snippetname = "/local-configuration/{$this->component}/configuration";
         try
         {
             $snippet = new midgard_snippet();
