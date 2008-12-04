@@ -15,18 +15,8 @@
  */
 class midcom_core_services_dispatcher_midgard implements midcom_core_services_dispatcher
 {
-    public $authorization;
-    public $configuration;
-
     public function __construct()
     {
-        // Load the configuration loader and load core config
-        $this->configuration = new midcom_core_services_configuration_yaml('midcom_core');
-        
-        $services_authorization_implementation = $this->configuration->get('services_authorization');
-        $this->authorization = new $services_authorization_implementation();
-        
-        $this->componentloader = new midcom_core_componentloader();
     }
 }
 ?>

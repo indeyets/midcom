@@ -15,7 +15,7 @@ if (mgd_is_element_loaded('code-compat'))
 else
 {
     // Note: your MidCOM base directory has to be in PHP include_path
-    require('midcom_core/midcom.php');
+    require('midcom_core/framework.php');
 }
 
 // code- elements used for things run before output
