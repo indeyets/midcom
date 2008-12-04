@@ -15,8 +15,19 @@
  */
 class midcom_core_services_dispatcher_midgard implements midcom_core_services_dispatcher
 {
+    public $argv = array();
+    public $get = array();
+    protected $matched_handler = false;
+    protected $parsed_arguments = array();
+
     public function __construct()
     {
+        if (isset($_GET))
+        {
+            $this->get =& $_GET;
+        }
     }
+
+    public function 
 }
 ?>
