@@ -10,7 +10,7 @@
 /**
  * Authorization interface for MidCOM 3
  *
- * @package midcom
+ * @package midcom_core
  */
 interface midcom_core_services_authorization
 {

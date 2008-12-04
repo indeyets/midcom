@@ -11,7 +11,7 @@
  * Simple authorization interface for MidCOM 3. Unauthenticated users are given read access,
  * and authenticated users write access.
  *
- * @package midcom
+ * @package midcom_core
  */
 class midcom_core_services_authorization_simple implements midcom_core_services_authorization
 {
