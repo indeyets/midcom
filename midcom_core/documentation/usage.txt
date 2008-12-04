@@ -1,0 +1,8 @@
+Quick MidCOM 3 setup HOWTO
+==========================
+
+1. Install Midgard 1.9 (Midgard 1.8 may work too)
+2. Create a new Midgard host with no MidCOM and a minimal style
+3. Ensure the MidCOM 3 checkout is in php.ini `include_path`
+4. Point the `MidgardRootFile` of the Midgard Apache VirtualHost setup to MidCOM's `httpd/midcom-root.php`
+5. Start playing around
