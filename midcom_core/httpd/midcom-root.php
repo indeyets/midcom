@@ -27,13 +27,14 @@ else
 
 // Start output buffer so we can do templating
 ob_start();
-?>
-<(ROOT)>
-<?php
 
-// Read contents from the output buffer
-ob_end_flush();
-// TODO: Call TAL here
+$template_entry_point = $_MIDCOM->get_context_item('template_entry_point');
+eval('?>' . mgd_preparse(mgd_template($template_entry_point) . '<?php'));
+
+// Read contents from the output buffer and pass to MidCOM rendering
+$template_content = ob_get_contents();
+ob_end_clean();
+$_MIDCOM->display($template_content);
 
 // code-finish can be used for custom caching etc
 ?>
