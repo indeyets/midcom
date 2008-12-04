@@ -1,0 +1,6 @@
+news_topic: 
+index_show_articles: 6
+routes:
+    index:
+        controller: net_nemein_news_controllers_index
+        action: latest
