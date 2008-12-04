@@ -18,9 +18,13 @@ class midcom_core_midcom
     public $componentloader;
     public $dispatcher;
 
-    public function __construct()
+    public function __construct($dispatcher = 'midgard')
     {   
         spl_autoload_register(array($this, 'autoload'));
+
+        // Load the request dispatcher
+        $dispatcher_implementation = "midcom_core_services_dispatcher_{$dispatcher}";
+        $this->dispatcher = new $dispatcher_implementation();
         
         $this->load_base_services();
     }
@@ -34,11 +38,8 @@ class midcom_core_midcom
         $services_authorization_implementation = $this->configuration->get('services_authorization');
         $this->authorization = new $services_authorization_implementation();
         
-        // Load the componentloader
+        // Load the component loader
         $this->componentloader = new midcom_core_componentloader();
-        
-        // Load the Midgard request dispatcher
-        $this->dispatcher = new midcom_core_services_dispatcher_midgard();
     }
 
     /**
