@@ -16,15 +16,21 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
     private $component = '';
     private $globals = array();
     private $locals = array();
+    private $objects = array();
     private $merged = array();
     
-    public function __construct($component)
+    public function __construct($component, $object = null)
     {
         $this->component = $component;
         $this->load_globals();
         $this->load_locals();
-        
         $this->merged = array_merge($this->globals, $this->locals);
+        
+        if ($object)
+        {
+            $this->load_objects($object);
+            $this->merged = array_merge($this->merged, $this->objects);
+        }
     }
     
     private function load_globals()
@@ -52,6 +58,27 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
             return;
         }
         $this->locals = $this->unserialize($snippet->code);
+    }
+    
+    private function load_objects($object)
+    {
+        $mc = midgard_parameter::new_collector('parentguid', $object->guid);
+        $mc->add_constraint('domain', '=', $this->component);
+        $mc->set_key_property('guid');
+        $mc->add_value_property('name');
+        $mc->add_value_property('value');
+        $mc->execute();
+        $guids = $mc->list_keys();
+        foreach ($guids as $guid => $array)
+        {
+            $key = $mc->get_subkey($guid, 'name');
+            if (!$this->exists($key))
+            {
+                continue;
+            }
+            
+            $this->objects[$key] = $mc->get_subkey($guid, 'value');
+        }
     }
 
     /**
