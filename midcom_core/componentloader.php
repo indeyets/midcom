@@ -81,7 +81,18 @@ class midcom_core_componentloader
         return $this->interfaces[$component];
     }
     
-    
+    public function load_template($component, $template)
+    {
+        $component_directory = $this->component_to_filepath($component);
+        $template_file = "{$component_directory}/templates/{$template}.php";
+        if (!file_exists($template_file))
+        {
+            // TODO: Should we just ignore this silently instead?
+            throw new Exception("Component {$component} template file {$template} not found.");
+        }
+        
+        return file_get_contents($template_file);
+    }
 
     /**
      * Helper, converting a component name (net_nehmer_blog)
@@ -95,6 +106,12 @@ class midcom_core_componentloader
         return MIDCOM_ROOT . '/' . $component;// . strtr($component, '_', '/');
     }
 
+    /**
+     * Load a component manifest file
+     *
+     * @param string $manifest_file Path of the manifest file
+     * @return boolean
+     */
     private function load_manifest($manifest_file)
     {
         $manifest_yaml = file_get_contents($manifest_file);

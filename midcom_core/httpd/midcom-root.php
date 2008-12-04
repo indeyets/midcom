@@ -35,8 +35,7 @@ else
 // Start output buffer so we can do templating
 ob_start();
 
-$template_entry_point = $_MIDCOM->get_context_item('template_entry_point');
-eval('?>' . mgd_preparse(mgd_template($template_entry_point) . '<?php'));
+$_MIDCOM->template();
 
 // Read contents from the output buffer and pass to MidCOM rendering
 $template_content = ob_get_contents();
