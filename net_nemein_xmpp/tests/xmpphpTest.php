@@ -12,8 +12,7 @@ require_once('tests/testcase.php');
  * Test that tests XMPPHP features
  */
 class net_nemein_xmpp_tests_xmpphp extends midcom_tests_testcase
-{
-    
+{    
     public function testSend()
     {
         if (MIDCOM_TESTS_ENABLE_OUTPUT)
@@ -22,6 +21,54 @@ class net_nemein_xmpp_tests_xmpphp extends midcom_tests_testcase
             echo "Message sending test\n\n";
         }
         
+        $conn = $this->create_connection();
+    
+        if (MIDCOM_TESTS_ENABLE_OUTPUT)
+        {
+            echo "Send message 'Hello from midcom3!' to {$_MIDCOM->context->component_instance->configuration->defaults['to']}\n";
+            echo "using host {$_MIDCOM->context->component_instance->configuration->host}:{$_MIDCOM->context->component_instance->configuration->port}\n";
+            echo "with user {$_MIDCOM->context->component_instance->configuration->defaults['username']}\n\n";
+        }
+        
+        $conn->connect();
+        $conn->processUntil('session_start');
+        $conn->message(
+            $_MIDCOM->context->component_instance->configuration->defaults['to'],
+            'Hello from midcom3!'
+        );
+        $conn->disconnect();
+        
+        // Delete the context
+        $_MIDCOM->context->delete();
+     
+        $this->assertTrue(true);
+    }
+    
+    public function testPresenceUpdate()
+    {
+        if (MIDCOM_TESTS_ENABLE_OUTPUT)
+        {
+            echo __FUNCTION__ . "\n";
+            echo "Presence updating test\n\n";
+        }
+        
+        $conn = $this->create_connection();
+        
+        $conn->connect();
+        $conn->processUntil('session_start');
+		$conn->presence(
+            'midcom3 presence update test'
+        );        
+        $conn->disconnect();
+        
+        // Delete the context
+        $_MIDCOM->context->delete();
+        
+        $this->assertTrue(true);
+    }
+    
+    private function create_connection()
+    {
         $this->create_context('net_nemein_xmpp');
         
         if (! $_MIDCOM->context->component_instance->configuration->exists('host'))
@@ -42,14 +89,7 @@ class net_nemein_xmpp_tests_xmpphp extends midcom_tests_testcase
             $_MIDCOM->context->delete();
             $this->fail("no default receiver defined");
         }
-        
-        if (MIDCOM_TESTS_ENABLE_OUTPUT)
-        {
-            echo "Send message 'Hello from midcom3!' to {$_MIDCOM->context->component_instance->configuration->defaults['to']}\n";
-            echo "using host {$_MIDCOM->context->component_instance->configuration->host}:{$_MIDCOM->context->component_instance->configuration->port}\n";
-            echo "with user {$_MIDCOM->context->component_instance->configuration->defaults['username']}\n\n";
-        }
-        
+                
         try
         {
             $conn = new net_nemein_xmpp_xmpphp(
@@ -62,25 +102,14 @@ class net_nemein_xmpp_tests_xmpphp extends midcom_tests_testcase
                 (MIDCOM_TESTS_ENABLE_OUTPUT ? true : false),
                 LOGGING_VERBOSE
             );
+            
+            return $conn;
         }
         catch(Exception $e)
         {
             $_MIDCOM->context->delete();
             $this->fail("Couldn't create new net_nemein_xmpp_xmpphp instance");
         }
-        
-        $conn->connect();
-        $conn->processUntil('session_start');
-        $conn->message(
-            $_MIDCOM->context->component_instance->configuration->defaults['to'],
-            'Hello from midcom3!'
-        );
-        $conn->disconnect();
-        
-        // Delete the context
-        $_MIDCOM->context->delete();
- 
-        $this->assertTrue(true);
     }
 }
 
