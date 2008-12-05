@@ -37,7 +37,7 @@
         
         this.enable_toolbar();
         
-        $.midcom.events.signals.trigger('midcom.services.toolbars::float-ready');
+        $.midcom.events.signals.trigger('midcom.services.toolbars::float-inited');
     };
     $.extend($.midcom.services.toolbars.float.prototype, {
         enable_toolbar: function() {
