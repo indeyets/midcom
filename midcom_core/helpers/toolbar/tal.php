@@ -46,12 +46,13 @@ class midcom_core_helpers_toolbar_tal extends midcom_core_helpers_toolbar
 
         </div>
 
-        <div tal:comment="toolbar section macro"
+        <div class="\${section/css_class} {$this->css_class}_section"
+             tal:comment="toolbar section macro"
              metal:define-macro="midcom_helper_toolbar_section" >
         
-            <span class="\${section/css_class}_title"
+            <span class="\${section/css_class}_title {$this->css_class}_section_title"
                   tal:content="section/title">Section title here</span>
-            <ul class="\${section/css_class}_items">
+            <ul class="\${section/css_class}_items {$this->css_class}_section_items">
                 <span tal:repeat="item section/items"
                       tal:define="section section"
                       metal:use-macro="midcom_helper_toolbar_section_item" />
