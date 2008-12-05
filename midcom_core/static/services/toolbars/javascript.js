@@ -29,13 +29,13 @@
                 $.midcom.services.toolbars.config,
                 config
             );
-            
+            holder.show();
         }
     });
     
     jQuery.fn.extend({
     	midcom_services_toolbars: function(options) {
-    	    return new jQuery.midcom.services.toolbars.javascript(this, options);
+    	    return new jQuery.midcom.services.toolbars.javascript(jQuery(this), options);
     	}
     });
     
