@@ -315,7 +315,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 if (!class_exists('PHPTAL'))
                 {
                     require('PHPTAL.php');
-                    include('TAL/modifiers.php');
+                    include_once('TAL/modifiers.php');
                 }
                 
                 if ($_MIDCOM->timer)
@@ -324,11 +324,17 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 }
                 
                 $tal = new PHPTAL();
-                $tal->setSource($content);
 
+                $tal->show_toolbar = false;
+                if (   isset($_MIDCOM->toolbar)
+                    && $_MIDCOM->toolbar->can_view())
+                {
+                    $tal->show_toolbar = true;
+                }
+                
                 if ($_MIDCOM->timer)
                 {
-                    $_MIDCOM->timer->setMarker('post-source');
+                    $_MIDCOM->timer->setMarker('post-set-show_toolbar');
                 }
                 
                 //TODO: Do something else here :)
@@ -348,18 +354,6 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                     $_MIDCOM->timer->setMarker('post-set-MIDCOM');
                 }
 
-                $tal->show_toolbar = false;
-                if (   isset($_MIDCOM->toolbar)
-                    && $_MIDCOM->toolbar->can_view())
-                {
-                    $tal->show_toolbar = true;
-                }
-                
-                if ($_MIDCOM->timer)
-                {
-                    $_MIDCOM->timer->setMarker('post-set-show_toolbar');
-                }
-
                 foreach ($data as $key => $value)
                 {
                     $tal->$key = $value;
@@ -368,6 +362,13 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                     {
                         $_MIDCOM->timer->setMarker("post-set-{$key}");
                     }
+                }
+                
+                $tal->setSource($content);
+                
+                if ($_MIDCOM->timer)
+                {
+                    $_MIDCOM->timer->setMarker('post-source');
                 }
                 
                 $content = $tal->execute();
