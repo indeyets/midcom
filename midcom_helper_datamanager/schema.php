@@ -99,20 +99,20 @@ class midcom_helper_datamanager_schema extends midcom_core_component_baseclass
      */
     private function load_schemadb($schemadb)
     {
-        if (file_exists($schemadb))
+        if (is_string($schemadb))
         {
-            //TODO parse yaml in helper to provide better overriding
-            $this->raw_schemadb = syck_load(file_get_contents($filename));
-
-            if ($this->raw_schemadb === false)
+            try
+            {
+                $this->raw_schemadb = midcom_core_helpers_snippet::get($schemadb);
+            }
+            catch (OutOfBoundsException $e)
             {
                 throw new midcom_helper_datamanager_exception_schema("Failed to parse the schema definition in '{$schemadb}'.");
             }
         }
-        else if (is_string($schemadb))
+        else if (is_array($schemadb))
         {
-            //TODO parse yaml in helper to provide better overriding
-            $this->raw_schemadb = syck_load($schemadb);
+            $this->raw_schemadb = $schemadb;
         }
         else
         {
@@ -343,14 +343,13 @@ class midcom_helper_datamanager_schema extends midcom_core_component_baseclass
         $path = null;
         if (is_string($raw_db))
         {
-            $path = $raw_db;
-            $data = midcom_get_snippet_content($raw_db);
-            //TODO parse yaml in helper to provide better overriding
-            $result = syck_load($raw_db);
-            if ($result === false)
+            try
+            {
+                $raw_db = midcom_core_helpers_snippet::get($raw_db);
+            }
+            catch (OutOfBoundsException $e)
             {
                 throw new midcom_helper_datamanager_exception_type("Failed to parse the schema database loaded from '{$raw_db}', see above for PHP errors.");
-                // This will exit.
             }
         }
 
@@ -362,6 +361,15 @@ class midcom_helper_datamanager_schema extends midcom_core_component_baseclass
         }
         
         return $schemadb;
+    }
+    
+    /**
+     * Check if given field name exists in this schema
+     * @param string $name name of the schema field
+     */
+    public function field_exists($name)
+    {
+        return isset($this->fields[$name]);
     }
 }
 
