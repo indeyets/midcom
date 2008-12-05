@@ -150,7 +150,7 @@ class midcom_core_helpers_toolbar
         }
         else if($item[MIDCOM_TOOLBAR_ICON])
         {
-            $item[MIDCOM_TOOLBAR_ICONURL] = MIDCOM_STATIC_URL . $item[MIDCOM_TOOLBAR_ICON];
+            $item[MIDCOM_TOOLBAR_ICONURL] = MIDCOM_STATIC_URL . "/{$item[MIDCOM_TOOLBAR_ICON]}";
         }
         if (! array_key_exists(MIDCOM_TOOLBAR_ENABLED, $item))
         {
