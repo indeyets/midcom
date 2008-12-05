@@ -25,6 +25,8 @@ $midgard->open($conffile);
 require('midcom_core/framework.php');
 $_MIDCOM = new midcom_core_midcom('manual');
 
+echo "Loading all components and their routes\n\n";
+
 // Go through the installed components
 foreach ($_MIDCOM->componentloader->manifests as $component_name => $manifest)
 {
@@ -33,6 +35,7 @@ foreach ($_MIDCOM->componentloader->manifests as $component_name => $manifest)
     if (!$_MIDCOM->dispatcher->component_instance->configuration->exists('routes'))
     {
         // No routes in this component, skip
+        echo "Skipping {$component_name}: no routes\n\n";
         continue;
     }
     
@@ -46,14 +49,16 @@ foreach ($_MIDCOM->componentloader->manifests as $component_name => $manifest)
     
         // Generate fake arguments
         preg_match_all('/\{\$(.+?)\}/', $route_configuration['route'], $route_path_matches);
+        $route_string = $route_configuration['route'];
         $args = array();
         foreach ($route_path_matches[1] as $match)
         {
             $args[$match] = 'test';
+            $route_string = str_replace("{\${$match}}", "[{$match}: {$args[$match]}]", $route_string);
         }
         
         $_MIDCOM->dispatcher->set_route($route_id, $args);
-        echo "    {$route_id}\n";
+        echo "    {$route_id}: {$route_string}\n";
         
         try
         {
@@ -77,6 +82,7 @@ foreach ($_MIDCOM->componentloader->manifests as $component_name => $manifest)
         // Delete the context
         $_MIDCOM->context->delete();
     }
+    echo "\n";
 }
 
 if ($_MIDCOM->timer)
