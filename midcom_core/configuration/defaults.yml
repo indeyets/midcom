@@ -1,5 +1,6 @@
 services_authorization: midcom_core_services_authorization_simple
 services_templating: midcom_core_services_templating_midgard
+services_sessioning: midcom_core_services_sessioning_midgard
 enable_benchmark: false
 enable_included_list: false
 enable_jquery_framework: false
