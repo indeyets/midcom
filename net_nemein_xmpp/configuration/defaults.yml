@@ -1,0 +1,16 @@
+api: xmpphp
+host: jabber.org
+port: 5222
+resource: midcom3
+server: 
+defaults:
+    username: 
+    password: 
+    to: 
+
+routes:
+    index:
+        controller: net_nemein_xmpp_controllers_index
+        action: index
+        route: /
+        content_entry_point: nnx-show-index
