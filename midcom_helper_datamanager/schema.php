@@ -92,32 +92,31 @@ class midcom_helper_datamanager_schema extends midcom_core_component_baseclass
     }
     
     /**
-     * This function loads the schema database into the class, either from a copy
-     * already in memory, or from a URL resolvable by midcom_get_snippet_content.
+     * This function loads the schema database into the class
      *
      * @param mixed $schemadb Either the path or the already loaded schema database
      *     to use.
-     * @see midcom_get_snippet_content()
      */
     private function load_schemadb($schemadb)
     {
-        if (is_string($schemadb))
+        if (file_exists($schemadb))
         {
-            $this->raw_schemadb = midcom_get_snippet_content($schemadb);
+            //TODO parse yaml in helper to provide better overriding
+            $this->raw_schemadb = syck_load(file_get_contents($filename));
+
             if ($this->raw_schemadb === false)
             {
-                throw new Exception("Failed to parse the schema definition in '{$schemadb}', see above for PHP errors.");
-                // This will exit.
+                throw new midcom_helper_datamanager_exception_schema("Failed to parse the schema definition in '{$schemadb}'.");
             }
         }
-        else if (is_array($schemadb))
+        else if (is_string($schemadb))
         {
-            $this->raw_schemadb = $schemadb;
+            //TODO parse yaml in helper to provide better overriding
+            $this->raw_schemadb = syck_load($schemadb);
         }
         else
         {
-            throw new Exception('Failed to access the schema database: Invalid variable type while constructing.');
-            // This will exit.
+            throw new midcom_helper_datamanager_exception_schema('Failed to access the schema database: Invalid variable type while constructing.');
         }
     }
     
@@ -130,7 +129,7 @@ class midcom_helper_datamanager_schema extends midcom_core_component_baseclass
     private function load_schema($name)
     {
         // Setup the raw schema reference
-        if (! array_key_exists($name, $this->raw_schemadb))
+        if (! isset($this->raw_schemadb[$name]))
         {
             throw new Exception("The schema {$name} was not found in the schema database.");
             // This will exit.
@@ -216,7 +215,7 @@ class midcom_helper_datamanager_schema extends midcom_core_component_baseclass
     {
         if (array_key_exists($name, $this->fields))
         {
-            throw new Exception("Duplicate field {$name} encountered, schema operation is invalid. Aborting.");
+            throw new midcom_helper_datamanager_exception_schema("Duplicate field {$name} encountered, schema operation is invalid. Aborting.");
             // This will exit.
         }
 
@@ -346,10 +345,11 @@ class midcom_helper_datamanager_schema extends midcom_core_component_baseclass
         {
             $path = $raw_db;
             $data = midcom_get_snippet_content($raw_db);
-            $result = eval ("\$raw_db = Array ( {$data}\n );");
+            //TODO parse yaml in helper to provide better overriding
+            $result = syck_load($raw_db);
             if ($result === false)
             {
-                throw new Exception("Failed to parse the schema database loaded from '{$raw_db}', see above for PHP errors.");
+                throw new midcom_helper_datamanager_exception_type("Failed to parse the schema database loaded from '{$raw_db}', see above for PHP errors.");
                 // This will exit.
             }
         }
