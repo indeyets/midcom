@@ -206,11 +206,19 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
         }
         
         $path = str_replace('_', '/', $class_name) . '.php';
-        
+                
         // FIXME: Do not check against component names (ie make phing build script to build correct file tree from source)
         $path = MIDCOM_ROOT . '/' . str_replace('midcom/core', 'midcom_core', $path);
-        $path = str_replace('net/nemein/news', 'net_nemein_news', $path);
-        $path = str_replace('org/openpsa/qbpager', 'org_openpsa_qbpager', $path);
+        if (   isset($_MIDCOM)
+            && isset($_MIDCOM->componentloader))
+        {
+            $components = array_keys($_MIDCOM->componentloader->manifests);
+            foreach ($components as $component)
+            {
+                $component_path = str_replace('_', '/', $component);
+                $path = str_replace($component_path, $component, $path);
+            }
+        }
 
         if (!file_exists($path))
         {
