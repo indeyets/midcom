@@ -10,7 +10,7 @@
     $.midcom = {
         _inited: false,
         config: {
-            MIDCOM_STATIC_URL: 'midcom-static',
+            MIDCOM_STATIC_URL: '/midcom-static',
             MIDCOM_PAGE_PREFIX: '/',
             enable_watchers: false,            
             debug: false
@@ -299,7 +299,42 @@
         var random_key2 = Math.floor(Math.random()*3104);
 
         return prefix + (Math.floor(((date.getTime()/1000)+random_key2) + (10016486 + (random_key * 22423)) * random_key / random_key2).toString()).toString().substr(0,8);
-    }
+    };
+    
+    $.midcom.helpers.clone = function(obj) {
+        if (   obj == null
+            || typeof(obj) != 'object')
+        {
+            if (obj == null) {
+                return null;
+            } else if (typeof obj == 'string') {
+                return '' + obj;
+            }
+            
+            return obj;
+        }
+        
+        var temp = {};
+        for (var key in obj) {
+            if (typeof obj[key] == 'object') {
+                temp[key] = $.midcom.helpers.clone(obj[key]);
+            } else {
+                temp[key] = obj[key];
+            }            
+        }
+
+        return temp;        
+    };
+    
+    $.midcom.helpers.is_a = function(source, constructor) {
+        while (source != null) {
+            if (source == constructor.prototype) {
+                return true;
+            }
+            source = source.__proto__;
+        }
+        return false;
+    };
     
     /**
      * uses xmlObjectifier from http://www.terracoder.com/
@@ -329,8 +364,7 @@
     $.extend($.midcom.helpers.xml, {
         to_JSON: function(data) {
             if (! $.midcom.helpers.xml.is_utils_loaded()) {
-                var callback = "$.midcom.helpers.xml.to_JSON";
-                var args = [data];
+                var callback = "jQuery.midcom.helpers.xml.to_JSON";
                 
                 $.midcom.helpers.xml.load_xml_utils(callback, [data]);
                 
@@ -341,7 +375,7 @@
         },
         from_text: function(text) {
             if (! $.midcom.helpers.xml.is_utils_loaded()) {
-                var callback = "$.midcom.helpers.xml.from_text";
+                var callback = "jQuery.midcom.helpers.xml.from_text";
                 
                 $.midcom.helpers.xml.load_xml_utils(callback, [text]);
                 
@@ -452,7 +486,7 @@
             conv = function (x) {
                 switch(typeof x) {
                     case "object":
-                        if (is_a(x, Array)) {
+                        if ($.midcom.helpers.is_a(x, Array)) {
                             return s.arr(x);
                         } else {
                             return s.obj(x);
@@ -476,7 +510,7 @@
             var itemtype = item_type || typeof item;
             switch (itemtype) {
                 case "object":
-                    if (is_a(item, Array)) {
+                    if ($.midcom.helpers.is_a(item, Array)) {
                         return s.arr(item);
                     } else {
                         return s.obj(item);
@@ -653,7 +687,7 @@
         
         var expdate = new Date();
         if (!is_null(this.config.expires)) {
-            if (is_a(this.config.expires, Date)) {
+            if ($.midcom.helpers.is_a(this.config.expires, Date)) {
                 expdate = this.config.expires;
             } else {
                 exp_seconds = this.config.expires;
@@ -1003,16 +1037,6 @@
      * Javascript extensions
     **/
     
-    function is_a(source, constructor) {
-        while (source != null) {
-            if (source == constructor.prototype) {
-                return true;
-            }
-            source = source.__proto__;
-        }
-        return false;
-    }
-    
     function is_null(item) {        
         if (   typeof item != 'undefined'
             && item == null)
@@ -1038,5 +1062,19 @@
             }
         );
     };
+    
+    /**
+     * Does variable substitution on the string with given parameters
+     *
+     * Example:
+     * var arg1 = 'http://', arg2 = 'midgard-project.com', arg3: 'www';
+     * var url = "{0}{1}.{2}/index.html".format(arg1, arg2, arg3);
+    **/
+    String.prototype.format = function(){
+		var values = arguments;
+		return this.replace(/\{(\d)\}/g, function() {
+			return values[arguments[1]];
+		});
+	};
     
 })(jQuery);
