@@ -20,15 +20,15 @@ class net_nemein_news_controllers_index
     
     public function action_latest($route_id, &$data, $args)
     {
-        $topic = new midgard_topic($this->configuration->get('news_topic'));
+        $data['topic'] = new midgard_topic($this->configuration->get('news_topic'));
 
         $qb = midgard_article::new_query_builder();
-        $qb->add_constraint('topic', '=', $topic->id);
+        $qb->add_constraint('topic', '=', $data['topic']->id);
         $qb->add_order('metadata.published', 'DESC');
-        
+
         if ($route_id == 'latest')
         {
-            $qb->set_limit((int) $args['latest']);
+            $qb->set_limit((int) $args['number']);
         }
         else
         {
