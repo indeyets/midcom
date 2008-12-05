@@ -228,7 +228,7 @@ class midcom_core_midcom
             // Then call the action
             $action_method = "action_{$route_configuration['action']}";
             $data = array();
-            $controller->$action_method($route_id, &$data);
+            $controller->$action_method($route_id, &$data, array());
             $this->set_context_item($page_data['component'], $data);
             
             // Set other context data from route

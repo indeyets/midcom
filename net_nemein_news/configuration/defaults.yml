@@ -4,3 +4,9 @@ routes:
     index:
         controller: net_nemein_news_controllers_index
         action: latest
+        route: /
+    latest:
+        controller: net_nemein_news_controllers_index
+        action: latest
+        route: /latest/{$number}
+
