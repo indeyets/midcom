@@ -398,6 +398,8 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         ob_start();
         include($cache_file);
         $content = ob_get_clean();
+        // FIXME: Remove this once we can actually invalidate cache
+        unlink($cache_file);
 
         switch ($data['template_engine'])
         {
