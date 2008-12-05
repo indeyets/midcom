@@ -43,57 +43,37 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
         switch ($this->_schema->fields[$name]['storage']['location'])
         {
             case 'parameter':
-                if (   array_key_exists('multilang', $this->_schema->fields[$name]['storage'])
-                    && $this->_schema->fields[$name]['storage']['multilang']
-                    && $_MIDCOM->localization->get_midgard_language() != 0)
-                {
-                    $this->object->set_parameter
-                    (
-                        $this->_schema->fields[$name]['storage']['domain'],
-                        $name . '_' . $_MIDCOM->localization->get_content_language(),
-                        $data
-                    );
-                }
-                else
-                {
-                    $this->object->set_parameter
-                    (
-                        $this->_schema->fields[$name]['storage']['domain'],
-                        $name,
-                        $data
-                    );
-                }
+                $this->object->parameter
+                (
+                    $this->_schema->fields[$name]['storage']['domain'],
+                    $name,
+                    $data
+                );
                 break;
 
             case 'configuration':
-                if (   array_key_exists('multilang', $this->_schema->fields[$name]['storage'])
-                    && $this->_schema->fields[$name]['storage']['multilang']
-                    && $_MIDCOM->localization->get_midgard_language() != 0)
-                {
-                    $this->object->set_parameter
-                    (
-                        $this->_schema->fields[$name]['storage']['domain'],
-                        $this->_schema->fields[$name]['storage']['name'],
-                        $data
-                    );
-                }
-                else
-                {
-                    $this->object->set_parameter
-                    (
-                        $this->_schema->fields[$name]['storage']['domain'],
-                        $this->_schema->fields[$name]['storage']['name'] . '_' . $_MIDCOM->localization->get_content_language(),
-                        $data
-                    );
-                }
+                $this->object->parameter
+                (
+                    $this->_schema->fields[$name]['storage']['domain'],
+                    $this->_schema->fields[$name]['storage']['name'],
+                    $data
+                );
                 break;
 
             case 'metadata':
                 if (!property_exists($this->object->metadata, $name)) 
                 {
-                    throw new Exception("Missing $fieldname field in object: " . get_class($this->object->metadata));
+                    $this->object->parameter
+                    (
+                        'midcom_helper_metadata', 
+                        $name,
+                        $data
+                    );
                 }
-                $this->object->metadata->$name = $data;
+                else
+                {
+                    $this->object->metadata->$name = $data;
+                }
                 break;
 
             default:
@@ -113,54 +93,32 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
         switch ($this->_schema->fields[$name]['storage']['location'])
         {
             case 'parameter':
-                if (   array_key_exists('multilang', $this->_schema->fields[$name]['storage'])
-                    && $this->_schema->fields[$name]['storage']['multilang']
-                    && $_MIDCOM->localization->get_midgard_language() != 0)
-                {
-                    // Try to get a translated parameter
-                    $translated_value = $this->object->get_parameter
-                    (
-                        $this->_schema->fields[$name]['storage']['domain'],
-                        $name . '_' . $_MIDCOM->localization->get_content_language()
-                    );
-                    if ($translated_value)
-                    {
-                        return $translated_value;
-                    }
-                    // Otherwise fall back to the lang0 version
-                }
-                return $this->object->get_parameter
+                return $this->object->parameter
                 (
                     $this->_schema->fields[$name]['storage']['domain'],
                     $name
                 );
 
             case 'configuration':
-                if (   array_key_exists('multilang', $this->_schema->fields[$name]['storage'])
-                    && $this->_schema->fields[$name]['storage']['multilang']
-                    && $_MIDCOM->localization->get_midgard_language() != 0)
-                {
-                    // Try to get a translated parameter
-                    $translated_value = $this->object->get_parameter
-                    (
-                        $this->_schema->fields[$name]['storage']['domain'],
-                        $this->_schema->fields[$name]['storage']['name'] . '_' . $_MIDCOM->localization->get_content_language()
-                    );
-                    if ($translated_value)
-                    {
-                        return $translated_value;
-                    }
-                    // Otherwise fall back to the lang0 version
-                }
-                return $this->object->get_parameter
+                return $this->object->parameter
                 (
                     $this->_schema->fields[$name]['storage']['domain'],
                     $this->_schema->fields[$name]['storage']['name']
                 );
 
             case 'metadata':
-                return $this->object->get_metadata()->get($name);
-                break;
+                if (!property_exists($this->object->metadata, $name))
+                {
+                    return $this->object->parameter
+                    (
+                        'midcom_helper_metadata', 
+                        $name
+                    );
+                }
+                else
+                {
+                    return $this->object->metadata->$name;
+                }
 
             default:
                 $fieldname = $this->_schema->fields[$name]['storage']['location'];
