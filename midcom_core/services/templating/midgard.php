@@ -18,7 +18,11 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     /**
      * Call a route of a component with given arguments and return the data it generated
      *
-     * @param string $component_name Component name or page GUID
+     * Dynamic calls may be called for either a specific page that has a component assigned to it
+     * by specifying a page GUID or path as the first argument, or to a static instance of a component
+     * by specifying component name as the first argument.
+     *
+     * @param string $component_name Component name, page GUID or page path
      * @param string $route_id     Route identifier
      * @param array $arguments  Arguments to give to the route
      * @param boolean $switch_context Whether to run the route in a new context
@@ -44,7 +48,6 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         }
         elseif (strpos($component_name, '/') !== false)
         {
-        mgd_debug_start();
             $page = new midgard_page();
             $page->get_by_path($component_name);
         }
@@ -90,6 +93,16 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     
     /**
      * Call a route of a component with given arguments and display its content entry point
+     *
+     * Dynamic loads may be called for either a specific page that has a component assigned to it
+     * by specifying a page GUID or path as the first argument, or to a static instance of a component
+     * by specifying component name as the first argument.
+     *
+     * In a TAL template dynamic load can be used in the following way:
+     *
+     * <code>
+     * <div class="news" tal:content="structure php:MIDCOM.templating.dynamic_load('/newsfolder', 'latest', array('number' => 4))"></div>
+     * </code>
      *
      * @param string $component_name Component name or page GUID
      * @param string $route_id     Route identifier
