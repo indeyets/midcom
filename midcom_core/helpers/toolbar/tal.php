@@ -13,20 +13,17 @@
  */
 class midcom_core_helpers_toolbar_tal extends midcom_core_helpers_toolbar
 {
+    protected $template_name = 'midcom_helpers_toolbar_tal';
     protected $template = '';
     
     protected function initialize()
-    {
-        $html = "<a href=\"#\">\n";
-        $html .= "    <img src=\"".MIDCOM_STATIC_URL."/midcom_core/services/toolbars/midgard-logo.png\" width=\"16\" height=\"16\"/ alt=\"Midgard\">\n";
-        $html .= "</a>\n";
-        
+    {        
         $data = array(
             'css_class' => $this->css_class,
             'holder_attributes' => $this->holder_attributes,
         );
         
-        $this->template = $_MIDCOM->templating->get_template_content('midcom_core', 'midcom_helpers_toolbar_tal', &$data);
+        $this->template = $_MIDCOM->templating->get_template_content('midcom_core', $this->template_name, &$data);
     }
     
     public function render(&$toolbar)
@@ -36,9 +33,7 @@ class midcom_core_helpers_toolbar_tal extends midcom_core_helpers_toolbar
             require('PHPTAL.php');
         }
         
-        $tal = new PHPTAL();        
-
-        // $tal->MIDCOM = $_MIDCOM;
+        $tal = new PHPTAL();
         $tal->toolbar = $toolbar;
         
         $tal->setSource($this->template);
