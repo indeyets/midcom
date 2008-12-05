@@ -1,5 +1,6 @@
 news_topic: 
 index_show_articles: 6
+link_articles_to_external_url: false
 routes:
     index:
         controller: net_nemein_news_controllers_index
@@ -15,4 +16,9 @@ routes:
         route: /rss.xml
         mimetype: text/xml
         template_entry_point: nnn-show-rss
+    show:
+        controller: net_nemein_news_controllers_show
+        action: article
+        route: /{$name}
+        content_entry_point: nnn-show-article
 

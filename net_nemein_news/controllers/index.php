@@ -35,7 +35,16 @@ class net_nemein_news_controllers_index
             $qb->set_limit((int) $this->configuration->get('index_show_articles'));
         }
         
-        $data['news'] = $qb->execute();
+        $articles = $qb->execute();
+        foreach ($articles as $article)
+        {
+            if (   !$article->url
+                || !$this->configuration->get('link_articles_to_external_url'))
+            {
+                $article->url = "{$_MIDGARD['self']}{$article->name}/";
+            }
+            $data['news'][] = $article;
+        }
     }
 }
 ?>
