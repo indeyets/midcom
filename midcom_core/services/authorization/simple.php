@@ -38,7 +38,7 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
         midgard_object_class::connect_default($class, 'action-loaded-hook', array($this, 'on_loaded'), array($class));
         midgard_object_class::connect_default($class, 'action-create-hook', array($this, 'on_creating'), array($class));
         midgard_object_class::connect_default($class, 'action-update-hook', array($this, 'on_updating'), array($class));
-        midgard_object_class::connect_default($class, 'action-delete-hook', array($this, 'on_deleting'), array($class));        
+        midgard_object_class::connect_default($class, 'action-delete-hook', array($this, 'on_deleting'), array($class));
     }
 
     public function on_loaded($object, $params)
@@ -52,7 +52,7 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
    
     public function on_creating($object, $params)
     {
-        if (!$_MIDCOM->can_do('midgard:create', $object))
+        if (!$_MIDCOM->authorization->can_do('midgard:create', $object))
         {
             throw new midcom_exception_unauthorized("Not authorized to create " . get_class($object) . " {$object->guid}");
         }
@@ -68,7 +68,7 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
     
     public function on_deleting($object, $params)
     {
-        if (!$_MIDCOM->can_do('midgard:delete', $object))
+        if (!$_MIDCOM->authorization->can_do('midgard:delete', $object))
         {
             throw new midcom_exception_unauthorized("Not authorized to delete " . get_class($object) . " {$object->guid}");
         }
