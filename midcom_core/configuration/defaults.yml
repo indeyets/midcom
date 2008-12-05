@@ -4,3 +4,4 @@ enable_benchmark: false
 date_formats:
     short: '%d/%m/%Y'
     long: '%x %X'
+default_timezone: UTC
