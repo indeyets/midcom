@@ -92,7 +92,7 @@ class midcom_core_services_toolbars_float implements midcom_core_services_toolba
                 {
                     $jsconfig .= ", ";
                 }                
-                $curr_key_i += 1;      
+                $curr_key_i += 1;
             }
             
             $jsconfig .= '}';
