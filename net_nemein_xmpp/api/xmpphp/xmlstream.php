@@ -286,7 +286,7 @@ class net_nemein_xmpp_api_xmpphp_xmlstream
 			$name = $name[1];
 		}
 		
-		$obj = new net_nemein_xmpp_api_xmpphp2_xmlobject($name, $ns, $attr);
+		$obj = new net_nemein_xmpp_api_xmpphp_xmlobject($name, $ns, $attr);
 		
 		if ($this->xml_depth > 1)
 		{
