@@ -31,11 +31,23 @@ class midcom_helper_datamanager_datamanager
      */
     public $storage = null;
     
-    protected $types = array();
-    protected $widgets = array();
-    
-    public function initialize(&$schemadb)
+    protected $types = null;
+    protected $widgets = null;
+
+    public function __construct(&$schemadb)
     {
+        if (! is_a('midcom_helper_datamanager_schema', $schemadb))
+        {
+            try
+            {
+                $this->schemadb = midcom_helper_datamanager_schema::load_database($schemadb);
+            }
+            catch (Exception $e)
+            {
+                throw new midcom_helper_datamanager_exception_schema("given schema {$schemadb} is not instance of datamanager schema or a valid schema path");
+            }            
+        }
+        
         $this->schemadb =& $schemadb;
     }
 
@@ -75,11 +87,11 @@ class midcom_helper_datamanager_datamanager
         
         if (! is_a('midcom_helper_datamanager_schema', $schema))
         {
-            throw new Exception('given schema is not instance of datamanager schema');
+            throw new midcom_helper_datamanager_exception_schema('given schema is not instance of datamanager schema');
         }
-        
-        $this->load_widgets();
+
         $this->load_types();
+        $this->load_widgets();
 
         return true;
     }
@@ -143,7 +155,11 @@ class midcom_helper_datamanager_datamanager
     {
         if ($config == null)
         {
-            $config = $this->schema->fields[$name];            
+            $config = $this->schema->fields[$name];
+        }
+        if (! is_a($types, 'midcom_helper_datamanager_typeproxy'))
+        {
+            throw new midcom_helper_datamanager_exception_datamanager('$this->types is not instance of midcom_helper_datamanager_typeproxy');
         }
 
         if (! isset($config['type']) )
@@ -165,6 +181,10 @@ class midcom_helper_datamanager_datamanager
         }
         
         return true;        
+=======
+        unset($this->widgets);
+        $this->widgets = new midcom_helper_datamanager_widgetproxy($this->schema, $this->storage, $this->types);
+>>>>>>> Better instance creation:midcom_helper_datamanager/datamanager.php
     }
 
     /**
@@ -216,7 +236,58 @@ class midcom_helper_datamanager_datamanager
 
         return true;
     }
-    
+
+    /**
+     * This function is a shortcut that combines set_schema and set_storage together.
+     * The schema name is looked up in the parameter 'midcom_helper_datamanager/schema_name',
+     * if it is not found, the first schema from the schema database is used implicitly.
+     *
+     * @see set_schema()
+     * @see set_storage()
+     * @param mixed &$object A reference to either a MidCOM DBA class or a subclass of
+     *     midcom_helper_datamanager2_storage.
+     * @param boolean $strict Whether we should strictly use only the schema given by object params
+     * @return boolean Indicating success.
+     */
+    public function autoset_storage(&$object, $strict = false)
+    {
+        if (is_a($object, 'midcom_helper_datamanager2_storage'))
+        {
+            $schema = $object->object->get_parameter('midcom_helper_datamanager', 'schema_name');
+        }
+        else
+        {
+            $schema = $object->get_parameter('midcom_helper_datamanager', 'schema_name');
+        }
+
+        if (! $schema)
+        {
+            $schema = null;
+        }
+
+        if (!$this->set_schema($schema))
+        {
+            if (   $strict
+                || $schema == null)
+            {
+                return false;
+            }
+            else
+            {
+                // debug_push_class(__CLASS__, __FUNCTION__);
+                // debug_add("Given schema name {$schema} was not found, reverting to default.", MIDCOM_LOG_INFO);
+                // debug_pop();
+                // Schema database has probably changed so we should be graceful here
+                if (!$this->set_schema(null))
+                {
+                    return false;
+                }
+            }
+
+        }
+        return $this->set_storage($object);
+    }
+
     /**
      * This function will save the current state of all types to disk. A full
      * validation cycle is done beforehand, if any validation fails, the function
@@ -240,22 +311,19 @@ class midcom_helper_datamanager_datamanager
      *
      * @return boolean Indicating validation success.
      */
-    function validate()
+    public function validate()
     {
-        $this->validation_errors = array();
-        $validated = true;
-        // foreach ($this->schema->fields as $name => $config)
-        // {
-        //     if (! $this->types[$name]->validate())
-        //     {
-        //         $this->validation_errors[$name] = $this->types[$name]->validation_error;
-        //         $validated = false;
-        //     }
-        // }
-        
-        return $validated;
+        $this->validation_errors = $this->types->validate();
+        return empty($this->validation_errors);
     }
-    
+
+    /** 
+     * Note to self: we probably need to clear lots of things
+     *
+     public function __destructor()
+     {
+     }
+     */   
 }
 
 ?>
