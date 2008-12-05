@@ -50,10 +50,13 @@ class midcom_core_controllers_page
         {
             throw new midcom_exception_notfound("No Midgard page found");
         }
+        $data['parent'] = new midgard_page();
+        $data['parent']->get_by_id($_MIDGARD['page']);
+        
         $data['page'] = new midgard_page();
-        $data['page']->up = $_MIDGARD['page'];
+        $data['page']->up = $data['parent']->id;
 
-        $_MIDCOM->authorization->require_do('midgard:create', $data['page']);
+        $_MIDCOM->authorization->require_do('midgard:create', $data['parent']);
 
         if (isset($_POST['save']))
         {
