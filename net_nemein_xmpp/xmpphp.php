@@ -44,7 +44,7 @@ class net_nemein_xmpp_xmpphp implements net_nemein_xmpp_api_interface
     
     public function processUntil($event, $timeout=-1)
     {
-        $this->api->processUntil($event, $timeout);
+        return $this->api->processUntil($event, $timeout);
     }
 
 }
