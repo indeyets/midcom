@@ -48,7 +48,7 @@ class symlinkStatics extends Task
      */
     public function main()
     {        
-        $folders = $this->getFolders();
+        $folders = $this->get_folders();
         
         foreach ($folders as $component => $folder)
         {
@@ -63,11 +63,11 @@ class symlinkStatics extends Task
     }
     
 	/**
-	 * Iterate over all filesets and return the filename of all files.
+	 * Iterate over all filesets and return the details of all separate component and their static folder.
 	 *
-	 * @return array an array of (basedir, filenames) pairs
+	 * @return array an array of (component, static folder) pairs
 	 */
-	private function getFolders()
+	private function get_folders()
 	{
 		$folders = array();
 
@@ -76,12 +76,10 @@ class symlinkStatics extends Task
 			$ds = $fileset->getDirectoryScanner($this->project);
 			$ds->scan();
 
-            // $includedFiles = $ds->getIncludedFiles();
             $includedFolders = $ds->getIncludedDirectories();
             
 			foreach ($includedFolders as $folder)
 			{
-                // $fs = new PhingFile(realpath($ds->getBaseDir()), $file);
 				$folderparts = explode('/', $folder);
 				
 				if (! array_key_exists($folderparts[0], $folders))
@@ -96,7 +94,9 @@ class symlinkStatics extends Task
 	
     /**
      * Creates a symlink to the file or directory
-     * @param string  paramname
+     * @param string  from the folder to link
+     * @param string  link name of the link to be created
+     * @param string  debug enable output
      */
     private function make_symlink($from , $link, $debug = false)
     {
@@ -114,7 +114,7 @@ class symlinkStatics extends Task
      * @return none
      * @throws exception
      * @param string $command the command to be executed
-     * @param boolean $debug set to true if you want to just se the
+     * @param boolean $debug set to true if you want to just see the
      * command to be executed.
      */
     private function exec_command($command, $debug = false) {
