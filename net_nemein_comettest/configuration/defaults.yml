@@ -9,3 +9,13 @@ routes:
         action: unixtime
         route: /unixtime
         template_entry_point: nnc-show-unixtime
+    saver:
+        controller: net_nemein_comettest_controllers_index
+        action: saver
+        route: /saver
+        template_entry_point: nnc-show-echoer
+    echoer:
+        controller: net_nemein_comettest_controllers_index
+        action: echoer
+        route: /echoer
+        template_entry_point: nnc-show-echoer
