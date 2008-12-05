@@ -49,7 +49,7 @@ class midcom_core_midcom
         $this->authorization = new $services_authorization_implementation();
         
         // Load the component loader
-        $this->componentloader = new midcom_core_componentloader();
+        $this->componentloader = new midcom_core_component_loader();
         
         // Load the navigation helper
         $this->navigation = new midcom_core_helpers_navigation();

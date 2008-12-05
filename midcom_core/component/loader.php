@@ -11,7 +11,7 @@
  *
  * @package midcom_core
  */
-class midcom_core_componentloader
+class midcom_core_component_loader
 {
     public $manifests = array();
     private $tried_to_load = array();

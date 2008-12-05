@@ -11,11 +11,7 @@
  *
  * @package net_nemein_news
  */
-class net_nemein_news
+class net_nemein_news extends midcom_core_component_baseclass
 {
-    public function __construct($configuration)
-    {
-        $this->configuration = $configuration;
-    }
 }
 ?>
