@@ -108,7 +108,7 @@ class midcom_core_helpers_navigation_item
         $this->component = $component;
     }
     
-    public function add_children($childs)
+    public function add_children(array $childs)
     {
         if (! empty($childs))
         {
