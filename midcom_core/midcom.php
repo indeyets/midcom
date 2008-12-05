@@ -156,7 +156,7 @@ class midcom_core_midcom
         
         $path = str_replace('_', '/', $class_name) . '.php';
         
-        // TODO: Check against component names
+        // FIXME: Do not check against component names (ie make phing build script to build correct file tree from source)
         $path = MIDCOM_ROOT . '/' . str_replace('midcom/core', 'midcom_core', $path);
         $path = str_replace('net/nemein/news', 'net_nemein_news', $path);
 
@@ -179,6 +179,11 @@ class midcom_core_midcom
             $component = $this->get_context_item('component');
         }
         catch (Exception $e)
+        {
+            return;
+        }
+        
+        if (!$component)
         {
             return;
         }
