@@ -36,16 +36,16 @@
             setTimeout("jQuery.midcom.logger.warning('this is warning message')", 2000);
             setTimeout("jQuery.midcom.logger.error('this is error message')", 3000);
             
-            $.midcom.events.signals.trigger('jsmidcom::init-ready');
+            $.midcom.events.signals.trigger('midcom::init-ready');
         },
         update_config: function(config) {            
             $.midcom.config = $.extend({}, $.midcom.config, config || {});
-            $.midcom.logger.log('jsmidcom config updated to ' + $.midcom.helpers.pretty_print($.midcom.config));
+            $.midcom.logger.log('midcom config updated to ' + $.midcom.helpers.pretty_print($.midcom.config));
         },
         register_component: function(name, handler) {
             if (typeof $.midcom.registered_components[name] == 'undefined') {
                 if (! $.midcom._inited) {
-                    $.midcom.events.signals.listen('jsmidcom::init-ready', $.midcom._register_component, [name, handler], false);
+                    $.midcom.events.signals.listen('midcom::init-ready', $.midcom._register_component, [name, handler], false);
                 } else {
                     $.midcom._register_component(name, handler);
                 }
@@ -62,6 +62,8 @@
     $.midcom.events.signals = {
         _listeners: null,
         trigger: function(signal, data) {
+            $.midcom.logger.debug('midcom.events.signals::trigger "'+signal+'" data: ' + $.midcom.helpers.pretty_print(data));
+            
             if (   $.midcom.events.signals._listeners === null
                 || typeof $.midcom.events.signals._listeners[signal] == 'undefined')
             {
@@ -124,12 +126,16 @@
                 var type = 'log';
             }
             
-            msg = $.midcom.logger.row_num + ": " + msg;
-            $.midcom.logger.row_num += 1;
-            
             if (   typeof window['console'] == 'undefined'
                 || $.midcom.logger.force_static)
             {
+                if (typeof msg != 'string') {
+                    msg = $.midcom.helpers.pretty_print(msg);
+                }
+
+                msg = $.midcom.logger.row_num + ": " + msg;
+                $.midcom.logger.row_num += 1;
+                
                 $.midcom.logger._static(msg, type);
             }
             else
@@ -494,9 +500,10 @@
      * @returns Pretty printed value
      * @type String
      */
-    $.midcom.helpers.pretty_print = function(val, indent, linesep, depth) {
-        var indent = typeof indent != 'undefined' ? indent : 4;
-        var linesep = typeof linesep != 'undefined' ? linesep : "\n";
+    $.midcom.helpers.pretty_print = function(val, indent, indent_char, linesep, depth) {
+        var indent = typeof indent != 'undefined' ? indent : 6;
+        var indent_char = typeof indent_char != 'undefined' ? indent_char : '&nbsp;';
+        var linesep = typeof linesep != 'undefined' ? linesep : "<br/>";
         var depth = typeof depth != 'undefined' ? depth : 1;
         
         var propsep = linesep.length ? "," + linesep : ", ";
@@ -504,9 +511,9 @@
         var tab = [];
 
         for (var i = 0; i < indent * depth; i++) {
-            tab.push("")
+            tab.push("");
         };
-        tab = tab.join(" ");
+        tab = tab.join(indent_char);
 
         switch (typeof val) {
             case "boolean":
@@ -527,7 +534,7 @@
                     for (var index = 0; index < val.length; index++) {
                         buf.push(index > 0 ? propsep : linesep);
                         buf.push(
-                            tab, $.midcom.helpers.pretty_print(val[index], indent, linesep, depth + 1)
+                            tab, $.midcom.helpers.pretty_print(val[index], indent, indent_char, linesep, depth + 1)
                         );
                     }
                     
@@ -547,7 +554,7 @@
                         buf.push(index > 0 ? propsep : linesep);
                         buf.push(
                             tab, $.midcom.helpers.json.convert(key), ": ",
-                            $.midcom.helpers.pretty_print(val[key], indent, linesep, depth + 1)
+                            $.midcom.helpers.pretty_print(val[key], indent, indent_char, linesep, depth + 1)
                         );
                         index++;
                     }
@@ -613,5 +620,21 @@
         }
         return false;
     }
+    
+    /**
+     * Does variable substitution on the string with given parameters
+     *
+     * Example:
+     * var params = {proto: 'http://', domain: 'midgard-project.com', sub: 'www'};
+     * var url = "{proto}{sub}.{domain}/index.html".supplant(params);
+    **/
+    String.prototype.supplant = function (o) {
+        return this.replace(/{([^{}]*)}/g,
+            function (a, b) {
+                var r = o[b];
+                return typeof r === 'string' || typeof r === 'number' ? r : a;
+            }
+        );
+    };
     
 })(jQuery);
