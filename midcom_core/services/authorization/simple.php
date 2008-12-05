@@ -15,6 +15,65 @@
 class midcom_core_services_authorization_simple implements midcom_core_services_authorization
 {
     /**
+     * Starts up the authorization service and connects to various signals
+     */
+    public function __construct()
+    {
+        // Note: Signals implementation is not reliable in earlier builds so we won't use it
+        if (version_compare(mgd_version(), '1.9.0alpha0+svn2008022807', '>='))
+        {
+            //foreach ($_MIDGARD['schema']['types'] as $classname => $null)
+            //{
+            //    $this->connect_to_signals($classname);
+            //}
+        }
+    }
+    
+    private function connect_to_signals($class)
+    {
+        if (!isset($_MIDGARD['schema']['types'][$class]))
+        {
+            throw new Exception("{$class} is not an MgdSchema class");
+        }        
+        midgard_object_class::connect_default($class, 'action_loaded_hook', array($this, 'on_loaded'), array());
+        midgard_object_class::connect_default($class, 'action_create_hook', array($this, 'on_creating'), array());
+        midgard_object_class::connect_default($class, 'action_update_hook', array($this, 'on_updating'), array());
+        midgard_object_class::connect_default($class, 'action_delete_hook', array($this, 'on_deleting'), array());        
+    }
+
+    public function on_loaded($object, $args)
+    {
+        if (!$this->can_do('midgard:read', $object))
+        {
+            throw new midcom_exception_unauthorized("Not authorized to read {$object->guid}");
+        }
+    }
+   
+    public function on_creating($object, $args)
+    {
+        if (!$this->can_do('midgard:create', $object))
+        {
+            throw new midcom_exception_unauthorized("Not authorized to create {$object->guid}");
+        }
+    }
+    
+    public function on_updating($object, $args)
+    {
+        if (!$this->can_do('midgard:update', $object))
+        {
+            throw new midcom_exception_unauthorized("Not authorized to update {$object->guid}");
+        }
+    }
+    
+    public function on_deleting($object, $args)
+    {
+        if (!$this->can_do('midgard:delete', $object))
+        {
+            throw new midcom_exception_unauthorized("Not authorized to delete {$object->guid}");
+        }
+    }
+    
+    /**
      * Checks whether a user has a certain privilege on the given content object.
      * Works on the currently authenticated user by default, but can take another
      * user as an optional argument.
@@ -87,7 +146,7 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
      */
     function can_user_do($privilege, $user = null, $class = null, $component = null)
     {
-        return $this->can_do();
+        return $this->can_do($privilege, $class, $user);
     }
 }
 ?>
