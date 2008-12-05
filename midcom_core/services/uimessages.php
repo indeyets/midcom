@@ -29,6 +29,10 @@ interface midcom_core_services_uimessage
     public function has_messages();
     
     public function render($key=null);
+    
+    public function render_as($type='comet', $key=null);
+
+    public function supports($type='comet');
 }
 
 /**
@@ -94,6 +98,26 @@ class midcom_core_services_uimessages
     public function render($key=null)
     {
         return $this->implementation->render($key);
+    }
+    
+    public function render_as($type='comet', $key=null)
+    {
+        if ($this->supports($type))
+        {
+            return $this->implementation->render_as($type, $key);
+        }
+        
+        return false;
+    }
+    
+    public function supports($type='comet')
+    {
+        if ($this->implementation->supports($type))
+        {
+            return true;
+        }
+        
+        return false;
     }
 }
 

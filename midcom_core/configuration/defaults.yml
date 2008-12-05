@@ -22,6 +22,8 @@ toolbar_configuration:
             url: 'http://midgard-project.com'
             image: '/midcom_core/services/toolbars/midgard-logo.png'
 uimessages_configuration:
+    js:
+        enable_comet: 'false'
 routes:
     page_show:
         controller: midcom_core_controllers_page
@@ -32,3 +34,8 @@ routes:
         action: edit
         route: /__midcom/edit
         content_entry_point: midcom-edit-page
+    comet_messages:
+        controller: midcom_core_controllers_comet
+        action: messages
+        route: /__midcom/comet/messages
+        content_entry_point: midcom-comet-messages

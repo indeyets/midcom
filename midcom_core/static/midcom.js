@@ -629,6 +629,189 @@
             break;
         }
     };
+
+    $.midcom.helpers.comet = {
+        backend: 'midcom',
+        backends: {},
+        _backend_loaded: false,
+        _callbacks: {},
+        _cb_set: false,
+        is_backend_loaded: function() {
+            if ($.midcom.helpers.comet._backend_loaded) {
+                return true;
+            }
+            
+            if (typeof $.midcom.helpers.comet.backends[$.midcom.helpers.comet.backend] == 'undefined') {
+                return false;
+            }
+            
+            return $.midcom.helpers.comet.backends[$.midcom.helpers.comet.backend].available();
+            
+            return false;
+        },
+        load_backend: function(callback, callback_args) {            
+            if ($.midcom.helpers.comet.is_backend_loaded()) {
+                if (typeof callback == 'string') {
+                    if (   typeof callback_args == 'undefined'
+                        || typeof callback_args != 'object')
+                    {
+                        var callback_args = [];
+                    }
+
+                    setTimeout('eval("var fn = eval('+callback+'); fn.apply(fn, [\''+callback_args.join("','")+'\']);")', 200);
+                }
+            }
+            
+            $.midcom.helpers.comet._backend_loaded = $.midcom.helpers.comet.backends[$.midcom.helpers.comet.backend]._load(callback, callback_args);
+        }
+    };
+    $.extend($.midcom.helpers.comet.backends, {
+        pi: {
+            available: function() {
+                if (typeof pi != 'undefined') {
+                    return true;
+                }
+                return false;
+            },
+            launch: function(type, url, callback, send_type, data) {
+            	switch (type) {
+            	    case 'send':
+            			var tunnel = new pi.xhr;
+            			tunnel.environment.setType(send_type.toString().toUpperCase());
+            			tunnel.environment.setUrl(url);
+
+            			if (typeof data == 'object') {
+            			    $.each(data, function(i,n){
+            			        tunnel.environment.addData(i, n);
+            			    });
+            			}
+
+            			tunnel.send();
+
+            			return tunnel;
+            	    break;
+            	    case 'listen':
+            	    default:
+            	        req = new pi.comet();
+                    	req.environment.setUrl(url);
+                    	if (! $.midcom.helpers.comet._cb_set)
+                    	{
+                        	req.event.push = callback(resp);
+                        	$.midcom.helpers.comet._cb_set = true;
+                    	}
+                    	req.send();
+
+                    	return req;
+            	    break;
+            	}
+            },
+            _load: function(callback, callback_args) {
+                var url = $.midcom.config.MIDCOM_STATIC_URL + '/midcom_core/pi.js';
+                $.midcom.utils.load_script(url, callback, callback_args);
+                
+                return true;
+            }
+        },
+        midcom: {
+            available: function() {
+                if (typeof $.midcom.helpers.cometclass != 'undefined') {
+                    return true;
+                }
+                return false;
+            },
+            launch: function(type, url, callback, send_type, data) {
+                
+                if (typeof $.midcom.helpers.cometclass[type] == 'undefined') {
+                    return false;
+                }
+                
+                var tunnel = new $.midcom.helpers.cometclass[type]();
+                tunnel.env.setUrl(url);
+                
+                switch (type) {
+                    case 'send':
+                        tunnel.env.setType(send_type.toString().toUpperCase());                        
+            			if (typeof data == 'object') {
+            			    $.each(data, function(i,n){
+            			        tunnel.env.addData(i, n);
+            			    });
+            			}
+                    break;
+                    case 'listen':
+                    	tunnel.events.push = function(resp) {
+                    	    callback(resp);
+                    	};
+                    break;
+                }
+
+    			tunnel.send();
+    			
+    			return tunnel;
+            },
+            _load: function(callback, callback_args) {
+                var url = $.midcom.config.MIDCOM_STATIC_URL + '/midcom_core/helpers/comet.js';
+                $.midcom.utils.load_script(url, callback, callback_args);
+            }
+        }
+    });
+    $.extend($.midcom.helpers.comet, {
+        start: function() {            
+            if (typeof $.midcom.helpers.comet.backends[$.midcom.helpers.comet.backend] == 'undefined') {
+                return false;
+            }
+            
+            if (arguments.length < 2) {
+                return false;
+            }
+            
+            var type = 'listen';
+
+            var url = arguments[0];
+            
+            var cb = false;
+            var send_type = null;
+            var data = null;
+            
+            if (arguments.length == 3) {
+                type = 'send';
+                
+                send_type = arguments[1];
+                data = arguments[2];
+            } else {
+                cb = arguments[1];
+            }
+            
+            var callback_id = false;
+            if (cb) {
+                callback_id = $.midcom.helpers.comet._register_callback(cb);
+            }
+            
+            if (! $.midcom.helpers.comet.is_backend_loaded()) {
+                var callback = "jQuery.midcom.helpers.comet._launch_comet";
+                var args = [type, url, callback_id, send_type, data];
+                $.midcom.helpers.comet.load_backend(callback, args);
+            } else {
+                return $.midcom.helpers.comet._launch_comet(type, url, callback_id, send_type, data);
+            }
+        },
+        _register_callback: function(callback) {            
+            var id = $.midcom.helpers.generate_id();
+            
+            $.midcom.helpers.comet._callbacks[id] = callback;
+            
+            return id;
+        },
+        _launch_comet: function(type, url, callback_id, send_type, data) {
+            var callback = function(r){};
+            if (typeof $.midcom.helpers.comet._callbacks[callback_id] != 'undefined') {
+                callback = $.midcom.helpers.comet._callbacks[callback_id];
+            }
+            
+            $.midcom.helpers.comet.backends[$.midcom.helpers.comet.backend].launch(type, url, callback, send_type, data);
+        	
+        	return false;
+        }
+    });
     
     $.midcom.services = {};
     

@@ -258,7 +258,7 @@ class midcom_core_services_uimessages_midgard implements midcom_core_services_ui
             if (   !is_null($key)
                 && array_key_exists($key, $this->message_stack))
             {
-                $html .= $this->render_message($this->message_stack[$key]);
+                $html .= $this->render_message_html($this->message_stack[$key]);
 
                 // Remove the message from stack
                 unset($this->message_stack[$key]);
@@ -267,7 +267,7 @@ class midcom_core_services_uimessages_midgard implements midcom_core_services_ui
             {
                 foreach ($this->message_stack as $id => $message)
                 {
-                    $html .= $this->render_message($message);
+                    $html .= $this->render_message_html($message);
 
                     // Remove the message from stack
                     unset($this->message_stack[$id]);
@@ -285,11 +285,66 @@ class midcom_core_services_uimessages_midgard implements midcom_core_services_ui
         
         return $html;
     }
+    
+    public function render_as($type='comet', $key=null)
+    {
+        switch ($type)
+        {
+            case 'comet':
+                return $this->render_as_js($key);
+            break;
+        }
+        
+        return false;
+    }
+    
+    public function supports($type='comet')
+    {
+        if ($type == 'comet')
+        {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private function render_as_js($key=null)
+    {
+        $js = '';
+        
+        if (count($this->message_stack) > 0)
+        {
+            $js .= '[';
+            
+            if (   !is_null($key)
+                && array_key_exists($key, $this->message_stack))
+            {
+                $js .= $this->render_message_js($this->message_stack[$key]);
 
+                // Remove the message from stack
+                unset($this->message_stack[$key]);
+            }
+            else
+            {
+                foreach ($this->message_stack as $id => $message)
+                {
+                    $js .= $this->render_message_js($message);
+
+                    // Remove the message from stack
+                    unset($this->message_stack[$id]);
+                }                
+            }
+
+            $js .= "]\n";
+        }
+        
+        return $js;
+    }
+    
     /**
      * Render single message to HTML
      */
-    private function render_message($message)
+    private function render_message_html($message)
     {
         $html = "<div class=\"{$this->configuration['className']}_message msu_{$message['type']}\">";
 
@@ -300,6 +355,17 @@ class midcom_core_services_uimessages_midgard implements midcom_core_services_ui
         $html .= "</div>\n";
         
         return $html;
+    }
+    
+    /**
+     * Render single message to Javascript
+     */
+    private function render_message_js($message)
+    {        
+        $data = "{type: '{$message['type']}', title: '{$message['title']}', message: '" . rawurlencode($message['message']) . "'}";
+        return $data;
+        
+        // return "jQuery('.{$this->configuration['className']}').midcom_services_uimessages_midgard_add({$data});\n";
     }
     
 }
