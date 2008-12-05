@@ -1,5 +1,5 @@
-MidCOM 3 at a glace
-===================
+MidCOM 3 at a glance
+====================
 
 This document has been written as a quick [Midgardized][4] version of the nice "[Django at a glance][2]" tutorial, in order to explain how the new and [upcoming MidCOM 3 framework][3] works. In addition publishing this as [a blog post][19], this document will be maintained in the [MidCOM 3 version control tree][20].
 
