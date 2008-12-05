@@ -17,6 +17,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
 {
     public $argv = array();
     public $get = array();
+    public $component_name = '';
     public $component_instance = false;
     protected $route_id = false;
     protected $action_arguments = array();
@@ -60,16 +61,21 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $_MIDCOM->context->set_item('page', $page_data);   
     }
 
-    /**
-     * Load a component and dispatch the request to it
-     */
-    public function dispatch($component)
+    public function initialize($component)
     {
         // In main Midgard request we dispatch the component in connection to a page
         $page = new midgard_page();
         $page->get_by_id($_MIDGARD['page']);
         
-        $this->component_instance = $_MIDCOM->componentloader->load($component, $page);
+        $this->component_name = $component;
+        $this->component_instance = $_MIDCOM->componentloader->load($this->component_name, $page);
+    }
+
+    /**
+     * Load a component and dispatch the request to it
+     */
+    public function dispatch()
+    {
         $route_definitions = $this->component_instance->configuration->get('routes');
 
         $route_id_map = array();
@@ -96,7 +102,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         // TODO: store this array somewhere where it can be accessed via get_context_item
         $data = array();
         $controller->$action_method($this->route_id, $data, $this->action_arguments);
-        $_MIDCOM->context->set_item($component, $data);
+        $_MIDCOM->context->set_item($this->component_name, $data);
         
         // Set other context data from route
         if (isset($selected_route_configuration['mimetype']))
@@ -112,7 +118,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             $_MIDCOM->context->set_item('content_entry_point', $selected_route_configuration['content_entry_point']);
         }
     }
-    
+
     /**
      * Generates an URL for given route_id with given arguments
      *

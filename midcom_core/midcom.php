@@ -244,7 +244,8 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
             return;
         }
 
-        $this->dispatcher->dispatch($component);
+        $this->dispatcher->initialize($component);
+        $this->dispatcher->dispatch();
         
         //header('Content-Type: ' . $this->context->get_item('mimetype'));
     }

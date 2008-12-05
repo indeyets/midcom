@@ -20,7 +20,9 @@ interface midcom_core_services_dispatcher
     
     public function populate_environment_data();
     
-    public function dispatch($component);
+    public function initialize($component);
+    
+    public function dispatch();    
     
     public function generate_url($route_id, array $args);
 }
