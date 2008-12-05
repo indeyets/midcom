@@ -15,6 +15,7 @@
 class midcom_core_helpers_head
 {
     private $link_head = array();
+    private $link_head_urls = array();
     private $meta_head = array();
 
     private $js_head = array();
@@ -22,9 +23,8 @@ class midcom_core_helpers_head
     private $prepend_script_head = array();
     private $script_head = array();
     
-    private $prepend_css_head = array();
-    private $css_head = array();
-    private $append_css_head = array();
+    // private $prepend_link_head = array();
+    // private $link_head = array();
     
     private $enable_jquery_noconflict = false;
     private $jquery_inits = "";
@@ -120,6 +120,73 @@ class midcom_core_helpers_head
             $this->script_head[] = $js_call;
         }
     }
+
+    /**
+     * Register a linkelement to be placed in the html head.
+     * Example to use this to include a css link:
+     * <code>
+     * $attributes = array(
+     *     'rel' => 'stylesheet',
+     *     'type' => 'text/css',
+     *     'href' => '/style.css'
+     * );
+     * $midcom->add_link_head($attributes);
+     * </code>
+     *
+     * @param array $attributes Array of attribute => value pairs to be placed in the tag.
+     */
+    public function add_link_head($attributes = null, $prepend = false)
+    {
+        if (   is_null($attributes)
+            || !is_array($attributes))
+        {
+            return false;
+        }
+
+        if (! array_key_exists('href', $attributes))
+        {
+            return false;
+        }
+
+        // Register each URL only once
+        if (in_array($attributes['href'], $this->link_head_urls))
+        {
+            return false;
+        }
+        $this->link_head_urls[] = $attributes['href'];
+
+        $output = '';
+
+        if (array_key_exists('condition', $attributes))
+        {
+            $output .= "<!--[if {$attributes['condition']}]>\n";
+        }
+
+        foreach ($attributes as $key => $val)
+        {
+            if ($key != 'conditions')
+            {
+                $output .= " {$key}=\"{$val}\" ";
+            }
+        }
+        $output .= "    <link{$output}/>\n";
+
+        if (array_key_exists('condition', $attributes))
+        {
+            $output .= "<![endif]-->\n";
+        }
+        
+        if ($prepend)
+        {
+            array_unshift($this->link_head, $output);
+        }
+        else
+        {
+            $this->link_head[] = $output;            
+        }
+        
+        return true;
+    }
     
     /**
      * Echo the head elements added.
@@ -161,6 +228,11 @@ class midcom_core_helpers_head
             {
                 echo $js_call;
             }
+        }
+        
+        foreach ($this->link_head as $link)
+        {
+            echo $link;
         }
     }
 }
