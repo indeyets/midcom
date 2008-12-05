@@ -89,6 +89,8 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 {
                     $_MIDCOM->timer->setMarker('post-set-navigation');
                 }
+                
+                $tal->MIDCOM = $_MIDCOM;
 
                 foreach ($data as $key => $value)
                 {
