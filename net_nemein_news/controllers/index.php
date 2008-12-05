@@ -20,7 +20,12 @@ class net_nemein_news_controllers_index
     
     public function action_latest($route_id, &$data, $args)
     {
-        $data['topic'] = new midgard_topic($this->configuration->get('news_topic'));
+        $topic_guid = $this->configuration->get('news_topic');
+        if (!$topic_guid)
+        {
+            throw new midcom_exception_notfound("No news topic defined");
+        }
+        $data['topic'] = new midgard_topic($topic_guid);
         
         $_MIDCOM->componentloader->load('org_openpsa_qbpager');
 
