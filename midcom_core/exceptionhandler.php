@@ -33,7 +33,7 @@ class midcom_core_exceptionhandler
 
         if (headers_sent())
         {
-            die("Unexpected Error, this should display an HTTP {$http_code}: {$message_type}: {$message}\n");
+            die("<h1>Unexpected Error</h1>\n\n<p>Headers were sent so we don't have correct HTTP code ({$http_code}).</p>\n\n<p>{$message_type}: {$message}</p>\n");
         }
 
         $header = self::header_by_code($http_code);
