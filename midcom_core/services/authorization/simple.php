@@ -92,7 +92,7 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
             return true;
         }
 
-        if ($_MIDGARD['user'])
+        if ($_MIDCOM->authentication->is_user())
         {
             return true;
         }

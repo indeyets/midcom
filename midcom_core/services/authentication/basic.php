@@ -15,9 +15,27 @@ class midcom_core_services_authentication_basic implements midcom_core_services_
 {
     private $user = null;
     
-    public function get_person()
+    public function __construct()
+    {
+        if (isset($_SERVER['PHP_AUTH_USER']))
+        {
+            $this->login($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+        }
+    }
+    
+    public function is_user()
     {
         if (!$this->user)
+        {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public function get_person()
+    {
+        if (!$this->is_user())
         {
             return null;
         }

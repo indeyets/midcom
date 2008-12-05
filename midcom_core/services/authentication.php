@@ -15,6 +15,8 @@ interface midcom_core_services_authentication
 {
     public function get_person();
     
+    public function is_user();
+    
     public function login($username, $password);
     
     public function logout();
