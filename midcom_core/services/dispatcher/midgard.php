@@ -176,7 +176,8 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
                 continue;
             }
             // "complex" route (with variable arguments)
-            $route_path_regex = '%^' . str_replace('%', '\%', preg_replace('%\{\$(.+?)\}%', '(.+?)', $route_path)) . '$%';
+            $route_path_regex = '%^' . str_replace('%', '\%', preg_replace('%\{\$(.+?)\}%', '([^/]+?)', $route_path)) . '$%';
+            //echo "DEBUG: route_path_regex:{$route_path_regex} argv_str:{$argv_str}\n";
             if (!preg_match($route_path_regex, $argv_str, $route_path_regex_matches))
             {
                 // Does not match, NEXT!
