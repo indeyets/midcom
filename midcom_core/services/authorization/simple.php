@@ -20,7 +20,7 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
     public function __construct()
     {
         // Note: Signals implementation is not reliable in earlier builds so we won't use it
-        if (version_compare(mgd_version(), '1.9.0alpha0+svn2008022807', '>='))
+        if (version_compare(mgd_version(), '1.9.0alpha0+svn2008022811', '>='))
         {
             //foreach ($_MIDGARD['schema']['types'] as $classname => $null)
             //{

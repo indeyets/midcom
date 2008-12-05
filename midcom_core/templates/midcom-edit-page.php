@@ -1,3 +1,8 @@
+<?php
+/**
+ * @package midcom_core
+ */
+?>
 <form method="post">
     <label>
         <span>Title</span>

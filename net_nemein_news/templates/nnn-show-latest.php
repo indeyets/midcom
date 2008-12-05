@@ -1,3 +1,8 @@
+<?php
+/**
+ * @package net_nemein_news
+ */
+?>
 <ul class="hfeed">
     <li class="hentry" tal:repeat="article net_nemein_news/news">
         <abbr title="2007-08-01" tal:attributes="title midcomDateRfc: article/metadata/published" tal:content="midcomDateShort: article/metadata/published" class="published">2007-08-01</abbr>

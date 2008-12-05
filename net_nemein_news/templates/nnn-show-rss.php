@@ -1,3 +1,8 @@
+<?php
+/**
+ * @package net_nemein_news
+ */
+?>
 <?xml version="1.0"?>
 <rss version="2.0">
    <channel>

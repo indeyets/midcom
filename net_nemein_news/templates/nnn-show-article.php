@@ -1,3 +1,8 @@
+<?php
+/**
+ * @package net_nemein_news
+ */
+?>
 <div class="hentry">
     <h1 tal:content="net_nemein_news/article/title" class="entry-title">Headline</h1>
 
