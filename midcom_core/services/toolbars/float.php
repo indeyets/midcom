@@ -36,6 +36,7 @@ class midcom_core_services_toolbars_float implements midcom_core_services_toolba
 
         $this->create_toolbar($_MIDCOM->context->get_current_context());
         
+        $_MIDCOM->head->enable_jsmidcom();
         $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/services/toolbars/javascript.js");
         $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/services/toolbars/float.js");
         $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/jQuery/jquery.dimensions-1.1.2.js");
