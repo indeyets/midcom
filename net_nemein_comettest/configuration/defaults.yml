@@ -1,0 +1,11 @@
+routes:
+    index:
+        controller: net_nemein_comettest_controllers_index
+        action: index
+        route: /
+        content_entry_point: nnc-show-index
+    unixtime:
+        controller: net_nemein_comettest_controllers_index
+        action: unixtime
+        route: /unixtime
+        template_entry_point: nnc-show-unixtime
