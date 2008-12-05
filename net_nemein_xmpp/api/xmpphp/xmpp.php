@@ -218,7 +218,7 @@ class net_nemein_xmpp_api_xmpphp_xmpp extends net_nemein_xmpp_api_xmpphp_xmlstre
  *
  * @package net_nemein_xmpp
  */
-class net_nemein_xmpp_exception_connection_failed extends Exception
+class net_nemein_xmpp_exception_connectionfailed extends Exception
 {
 }
 

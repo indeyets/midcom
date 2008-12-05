@@ -74,7 +74,7 @@ class net_nemein_xmpp_api_xmpphp_xmlstream
 		}
 		catch(Exception $e)
 		{
-		    throw new net_nemein_xmpp_exception_connection_failed();
+		    throw new net_nemein_xmpp_exception_connectionfailed();
 		}
 		
 		stream_set_blocking($this->socket, 1);
