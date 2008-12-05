@@ -1,2 +1,4 @@
 
 PHPTAL: http://phptal.motion-twin.com/
+
+YAML library: http://pear.horde.org/index.php?package=yaml (uses syck if available, or fallbacks to "fixed" spyc)
