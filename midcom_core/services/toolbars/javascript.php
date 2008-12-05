@@ -39,14 +39,15 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
             $jsconfig = '{';
             
             $config_length = count($this->configuration['js']);
-            $curr_key_i = 0;
+            $curr_key_i = 1;
             foreach ($this->configuration['js'] as $key => $value)
             {
-                $jsconfig .= "'{$key}': '{$value}'";
+                $jsconfig .= "{$key}: {$value}";
                 if ($curr_key_i < $config_length)
                 {
                     $jsconfig .= ", ";
-                }
+                }                
+                $curr_key_i += 1;      
             }
             
             $jsconfig .= '}';
