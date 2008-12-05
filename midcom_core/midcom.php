@@ -18,6 +18,8 @@ class midcom_core_midcom
     public $componentloader;
     public $dispatcher;
     
+    public $navigation;
+    
     private $contexts = array();
     private $current_context = 0;
 
@@ -48,8 +50,47 @@ class midcom_core_midcom
         
         // Load the component loader
         $this->componentloader = new midcom_core_componentloader();
+        
+        // Load the navigation helper
+        $this->navigation = new midcom_core_helpers_navigation();
     }
     
+    /**
+     * Pull data from currently loaded page into the context.
+     *
+     * @param int $page ID of the page to load data for
+     */
+    private function load_page_data($page_id = null)
+    {
+        $page_data = array();
+        
+        if (is_null($page_id))
+        {
+            $page_id = $_MIDGARD['page'];
+        }
+        
+        if (!$page_id)
+        {
+            return $page_data;
+        }
+        
+        $mc = midgard_page::new_collector('id', $page_id);
+        $mc->set_key_property('guid');
+        $mc->add_value_property('title');
+        $mc->add_value_property('component');
+        
+        $mc->execute();
+        $guids = $mc->list_keys();
+        foreach ($guids as $guid => $array)
+        {
+            $page_data['title']     = $mc->get_subkey($guid, 'title');
+            $page_data['component'] = $mc->get_subkey($guid, 'component');
+        }
+
+        return $page_data;     
+    }
+>>>>>>> Added navigation point to TAL.
+Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_core/midcom.php
     
     /**
      * Create and prepare a new component context.
@@ -82,7 +123,7 @@ class midcom_core_midcom
         {
             $context_id = $this->current_context;
         }
-        
+
         if (!isset($this->contexts[$context_id]))
         {
             throw new Exception("MidCOM context {$context_id} not found.");
@@ -221,6 +262,8 @@ class midcom_core_midcom
         $content_entry_point = $_MIDCOM->get_context_item('content_entry_point');
 
         $component = $this->get_context_item('component');
+        $page_data = $this->get_context_item('page');
+
         if (   !mgd_is_element_loaded($content_entry_point)
             && $component)
         {        
@@ -240,24 +283,42 @@ class midcom_core_midcom
      */
     public function display($content)
     {
+        require_once 'Benchmark/Timer.php';
+        $timer =& new Benchmark_Timer(true);
+        
         $data = $this->get_context();
         switch ($data['template_engine'])
         {
             case 'tal':
                 require('PHPTAL.php');
+                $timer->setMarker('post-require');
+                
                 $tal = new PHPTAL();
                 $tal->setSource($content);
+                $timer->setMarker('post-source');
+                
+                $tal->navigation = $this->navigation;
+                $timer->setMarker('post-set-navigation');
+                
                 foreach ($data as $key => $value)
                 {
                     $tal->$key = $value;
+                    $timer->setMarker("post-set-{$key}");
                 }
+                
                 $content = $tal->execute();
+                $timer->setMarker('post-execute');                
                 break;
             default:
                 break;
         }
 
         echo $content;
+        
+        if ($this->configuration->get('show_benchmark'))
+        {
+            $timer->display();
+        }
     }
 
 }
