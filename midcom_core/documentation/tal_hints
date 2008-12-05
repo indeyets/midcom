@@ -1,0 +1,14 @@
+## Echo plain html:
+
+insert "structure" keyword before the normal content path
+
+    <span tal:content="structure article/body" />
+
+-----
+
+## Links:
+
+<a href="#" title="Link title here" tal:attributes="href item/href; title item/title" tal:content="item/title">Link title</a>
+
+
+-----
