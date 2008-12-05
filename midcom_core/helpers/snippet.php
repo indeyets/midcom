@@ -21,11 +21,11 @@ class midcom_core_helpers_snippet
         // TODO: Implement using http://spyc.sourceforge.net/ if syck is not available
         if ($graceful)
         {
-            $content = $this->get_contents_graceful($path);
+            $content = midcom_core_helpers_snippet::get_contents_graceful($path);
         }
         else
         {
-            $content = $this->get_contents($path);
+            $content = midcom_core_helpers_snippet::get_contents($path);
         }
         
         return syck_load($content);
@@ -45,10 +45,11 @@ class midcom_core_helpers_snippet
      * @return string        The content of the snippet/file.
      */
     static function get_contents($path)
-    {
+    {        
         if (substr($path, 0, 5) == 'file:')
         {
             $filename = MIDCOM_ROOT . substr($path, 5);
+
             if (! file_exists($filename))
             {
                 throw new OutOfBoundsException("Could not load the contents of the file {$filename}: File not found.");
