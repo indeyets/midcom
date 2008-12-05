@@ -27,7 +27,7 @@ class midcom_helper_datamanager_tests_schema extends midcom_tests_testcase
             echo "\n";
         }
         
-        $schemas = midcom_helper_datamanager_schema::load_database('file:/net_nemein_news/configuration/schema.yml');        
+        $schemas = midcom_helper_datamanager_schema::load_database('file:/net_nemein_news/configuration/schema.yml');
         
         $this->assertTrue(is_array($schemas));
     }
