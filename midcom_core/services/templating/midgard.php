@@ -334,6 +334,23 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 
                 $tal->MIDCOM = $_MIDCOM;
 
+                if ($_MIDCOM->timer)
+                {
+                    $_MIDCOM->timer->setMarker('post-set-MIDCOM');
+                }
+
+                $tal->show_toolbar = false;
+                if (   isset($_MIDCOM->toolbar)
+                    && $_MIDCOM->toolbar->can_view())
+                {
+                    $tal->show_toolbar = true;
+                }
+                
+                if ($_MIDCOM->timer)
+                {
+                    $_MIDCOM->timer->setMarker('post-set-show_toolbar');
+                }
+
                 foreach ($data as $key => $value)
                 {
                     $tal->$key = $value;
