@@ -22,7 +22,7 @@
     font-weight: bold;
     background-image: none;
     font-size: 11px;
-    line-height: 18px;    
+    line-height: 20px;    
 }
 .midcom_services_toolbars_javascript,
 .midcom_services_toolbars_javascript a
@@ -33,9 +33,9 @@
 .midcom_services_toolbars_javascript a:hover
 {
 }
-.midcom_services_toolbars_javascript div.dragbar
+.midcom_services_toolbars_javascript_dragbar
 {
-    background: url('images/drag-grid.gif') repeat top left;
+    background: url('drag-grid.gif') repeat top left;
     width: 1.5em;
     height: 20px;
     min-width: 25px;
@@ -45,6 +45,7 @@
 
 .midcom_services_toolbars_javascript_logos
 {
+    height: 20px;
     margin-left: 2px;
     margin-right: 2px;
     padding-top: 0.1em;
