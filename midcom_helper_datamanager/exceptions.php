@@ -8,7 +8,7 @@
 
 
 /**
- * Constants ?
+ * Constants for codes ?
  */
 
 /**
@@ -16,7 +16,7 @@
  *
  * @package midcom_helper_datamanager
  */
-class midcom_helper_datamanager_exception_type extends Exception
+class midcom_helper_datamanager_exception_datamanager extends Exception
 {
     // Redefine the exception so message isn't optional
     public function __construct($message, $code=0)
@@ -26,17 +26,39 @@ class midcom_helper_datamanager_exception_type extends Exception
 }
 
 /**
+ * Datamanager storage exception
+ *
+ * @package midcom_helper_datamanager
+ */
+class midcom_helper_datamanager_exception_storage extends midcom_helper_datamanager_exception_datamanager
+{
+}
+
+/**
+ * Datamanager type exception
+ *
+ * @package midcom_helper_datamanager
+ */
+class midcom_helper_datamanager_exception_type extends midcom_helper_datamanager_exception_datamanager
+{
+}
+
+/**
  * Datamanager schema exception
  *
  * @package midcom_helper_datamanager
  */
-class midcom_helper_datamanager_exception_schema extends Exception
+class midcom_helper_datamanager_exception_schema extends midcom_helper_datamanager_exception_datamanager
 {
-    // Redefine the exception so message isn't optional
-    public function __construct($message, $code=0) 
-    {
-        parent::__construct($message, $code);
-    }
+}
+
+/**
+ * Datamanager widget exception
+ *
+ * @package midcom_helper_datamanager
+ */
+class midcom_helper_datamanager_exception_widget extends midcom_helper_datamanager_exception_datamanager
+{
 }
 
 ?>
