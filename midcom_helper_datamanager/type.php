@@ -19,7 +19,7 @@ interface midcom_helper_datamanager_type
      *
      * @see midcom_helper_datamanager_type_baseclass::__construct
      */
-    function __construct($name, $config, &$storage);
+    function initialize($name, $config, &$storage);
     
     /**
      * Small helper which sets the current storage object to a new one. The
@@ -149,7 +149,7 @@ class midcom_helper_datamanager_type_baseclass implements midcom_helper_datamana
      * @param midcom_helper_datamanager_storage $storage A reference to the storage object to use.
      * @return boolean Indicating success. If this is false, the type will be unusable.
      */
-    public function __construct($name, $config, &$storage)
+    public function initialize($name, $config, &$storage)
     {
         $this->name = $name;
         $this->set_storage($storage);

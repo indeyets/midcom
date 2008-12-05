@@ -108,6 +108,8 @@ class midcom_helper_datamanager_typeproxy
             return false;
         }
 
+        $this->storage->load_type_data($this->types[$name], $name);
+
         return true;
     }
 

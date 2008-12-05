@@ -77,7 +77,7 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
             $this->object = $_MIDCOM->tmp->create_object();
         }
     }
-    
+
     /**
      * Stores a set of types to the configured storage object. This is done
      * by subclass implementations, where this function serves as a request
@@ -94,7 +94,7 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
     {
         foreach ($this->_schema->fields as $name => $type_definition)
         {
-            if (!isset($types->$name))
+            if (!isset($type))
             {
                 if ($type_definition['required'] == true)
                 {
@@ -112,10 +112,10 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
 
             // Convert_to_storage is called always, the event handler can be used to manage
             // non-storage-backend driven storage operations as well (mainly for the blob type)
-            $data = $types->$name->convert_to_storage();
+            $data = $type->convert_to_storage();
             if ($type_definition['storage']['location'] !== null)
             {
-                if ($types->$name->serialized_storage)
+                if ($type->serialized_storage)
                 {
                     $data = serialize($data);
                 }
@@ -145,6 +145,43 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
         die ('The function ' . __CLASS__ . '::' . __FUNCTION__ . ' must be implemented in subclasses.');
     }
 
+    public function load_type_data(&$type, $name)
+    {
+        $type_definition = $this->_schema->fields[$name];
+        if (!isset($type))
+        {
+            if ($type_definition['required'] == true)
+            {
+                throw new midcom_helper_datamanager_exception_storage(
+                    "Failed to process the type array for the schema {$this->_schema->name}: " . 
+                    "The type for the required field {$name} was not found."
+                );
+                // This will exit.
+            }
+            else
+            {
+                continue;
+            }
+        }
+        if ($type_definition['storage']['location'] !== null)
+        {
+            $data = $this->on_load_data($name);
+            if ($type->serialized_storage)
+            {
+                // Hide unserialization errors, but log them.
+                $data = @unserialize($data);
+            }
+        }
+        else
+        {
+            $data = null;
+        }
+
+        // Convert_from_storage is called always, the event handler can be used to manage
+        // non-storage-backend driven storage operations as well (mainly for the blob type)
+        $type->convert_from_storage($data);
+    }
+
     /**
      * Loads a set of types to the configured storage object. This is done
      * by subclass implementations, where this function serves as a request
@@ -156,43 +193,12 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
      *
      * @param Array &$types A reference to an array of types matching the schema definition.
      */
-    public function load(&$types)
+    public function load_all(&$types)
     {
         //TODO: This approachs needs to be rethinked otherwise our getter/setter proxy system will be moot
         foreach ($this->_schema->fields as $name => $type_definition)
         {
-            if (!isset($types->$name))
-            {
-                if ($type_definition['required'] == true)
-                {
-                    throw new Exception(
-                        "Failed to process the type array for the schema {$this->_schema->name}: " . 
-                        "The type for the required field {$name} was not found."
-                    );
-                    // This will exit.
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            if ($type_definition['storage']['location'] !== null)
-            {
-                $data = $this->on_load_data($name);
-                if ($types->$name->serialized_storage)
-                {
-                    // Hide unserialization errors, but log them.
-                    $data = @unserialize($data);
-                }
-            }
-            else
-            {
-                $data = null;
-            }
-
-            // Convert_from_storage is called always, the event handler can be used to manage
-            // non-storage-backend driven storage operations as well (mainly for the blob type)
-            $types->$name->convert_from_storage($data);
+            $this->load_type_data($types->$name, $name);
         }
     }
 
