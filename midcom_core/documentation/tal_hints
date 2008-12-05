@@ -1,3 +1,9 @@
+## Install
+
+pear install http://phptal.motion-twin.com/latest.tar.gz
+
+-----
+
 ## Echo plain html:
 
 insert "structure" keyword before the normal content path
