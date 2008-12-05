@@ -5,7 +5,15 @@ This document has been written as a quick [Midgardized][4] version of the nice "
 
 MidCOM 3 has been designed to be an extensible and highly configurable CMS development environment. It provides several basic building blocks like toolbars, access controls and management of static content pages out-of-the-box.
 
+## Create your component
+
 MidCOM applications are built as "components" with [Java-like namespacing][6]. This means that a "news" component designed by company named Nemein could be called `net_nemein_news`. Components are run on a Midgard site by setting a folder of the site to use that component.
+
+A fresh component can be generated using the [Phing][21] build tool. For example, to create the news component, run:
+
+    $ phing scaffold -Dcomponent=net_nemein_news
+
+This will create the directory and file structure needed for the component to work.
 
 ## Design your model
 
@@ -187,3 +195,4 @@ Everybody interested in MidCOM 3 is welcome to install a [Midgard 1.9 nightly][1
 [18]: http://bergie.iki.fi/blog/building_a_new_admin_interface_for_midgard.html
 [19]: http://bergie.iki.fi/blog/
 [20]: http://repo.or.cz/w/midcom.git?a=tree;f=midcom_core/documentation;h=ed16da4a61d1b2bb775690a6fd198b61d27f673b;hb=HEAD
+[21]: http://phing.info/trac/
