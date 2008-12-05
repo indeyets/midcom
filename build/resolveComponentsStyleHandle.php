@@ -21,7 +21,7 @@ class resolveComponentsStyleHandle extends Task
     /**
      * The setter for the attribute "component"
      */
-    public function setModule($str)
+    public function setComponent($str)
     {
         $this->component = $str;
     }
