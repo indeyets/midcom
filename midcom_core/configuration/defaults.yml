@@ -12,6 +12,11 @@ toolbar_configuration:
     type: javascript
     js:
         debug: 'false'
+    logos:
+        midgard:
+            title: 'Midgard CMS'
+            url: 'http://midgard-project.com'
+            image: '/midcom_core/services/toolbars/midgard-logo.png'
 routes:
     page_show:
         controller: midcom_core_controllers_page
