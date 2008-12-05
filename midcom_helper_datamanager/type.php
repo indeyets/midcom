@@ -28,22 +28,6 @@ interface midcom_helper_datamanager_type
      * @see midcom_helper_datamanager_type_baseclass::set_storage
      */
     public function set_storage(&$storage);
-
-    /**
-     * This function, is called  before the configuration keys are merged into the types
-     * configuration.
-     *
-     * @see midcom_helper_datamanager_type_baseclass::on_configuring
-     */
-    // protected function on_configuring($config);
-    
-    /**
-     * This event handler is called after construction, so passing references to $this to the
-     * outside is safe at this point.
-     *
-     * @see midcom_helper_datamanager_type_baseclass::on_initalize
-     */
-    // protected function on_initialize();
     
     /**
      * Converts from storage format to "operational" format, which might include
@@ -73,17 +57,6 @@ interface midcom_helper_datamanager_type
      * @see midcom_helper_datamanager_type_baseclass::validate
      */
     function validate();
-
-    /**
-     * Type-specific validation callback, this is executed before any custom validation
-     * rules which apply through the customization interface.
-     *
-     * In case validation fails, you should assign an (already translated) error message
-     * to the validation_error public member.
-     *
-     * @see midcom_helper_datamanager_type_baseclass::on_validate
-     */
-     // protected function on_validate();
 
     /**
      * Checks whether the current user has the given privilege on the storage backend.
