@@ -45,5 +45,4 @@ require(MIDCOM_ROOT . '/midcom_core/exceptionhandler.php');
 
 // Start up MidCOM
 require(MIDCOM_ROOT . '/midcom_core/midcom.php');
-
 ?>

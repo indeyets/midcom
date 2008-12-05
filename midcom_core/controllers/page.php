@@ -20,7 +20,7 @@ class midcom_core_controllers_page
     
     public function action_show($route_id, &$data, $args)
     {
-    }  
+    }
     
     public function action_edit($route_id, &$data, $args)
     {
@@ -30,9 +30,9 @@ class midcom_core_controllers_page
         }
         $data['page'] = new midgard_page();
         $data['page']->get_by_id($_MIDGARD['page']);
-
+        
         $_MIDCOM->authorization->require_do('midgard:update', $data['page']);
-
+        
         if (isset($_POST['save']))
         {
             $data['page']->title = $_POST['title'];
@@ -55,9 +55,9 @@ class midcom_core_controllers_page
         
         $data['page'] = new midgard_page();
         $data['page']->up = $data['parent']->id;
-
+        
         $_MIDCOM->authorization->require_do('midgard:create', $data['parent']);
-
+        
         if (isset($_POST['save']))
         {
             $data['page']->name = $_POST['name'];
@@ -69,6 +69,28 @@ class midcom_core_controllers_page
             header("Location: {$_MIDCOM->context->prefix}{$data['page']->name}/");
             exit();
         }
+    }
+    
+    public function action_delete($route_id, &$data, $args)
+    {
+        if (!isset($_MIDGARD['page']))
+        {
+            throw new midcom_exception_notfound("No Midgard page found");
+        }
+        $data['page'] = new midgard_page();
+        $data['page']->get_by_id($_MIDGARD['page']);
+        
+        $data['parent'] = new midgard_page();
+        $data['parent']->get_by_id($data['page']->up);
+        
+        $_MIDCOM->authorization->require_do('midgard:delete', $data['page']);
+        if(isset($_POST['delete']))
+        {
+            $data['page']->delete();
+            header("Location: /"); // TODO: This needs a better redirect
+            exit();     
+        }
+    
     }
 }
 ?>
