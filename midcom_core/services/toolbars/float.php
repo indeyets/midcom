@@ -78,7 +78,8 @@ class midcom_core_services_toolbars_float implements midcom_core_services_toolba
             $this->configuration['className'] = 'midcom_services_toolbars_float';
         }
         
-        if (array_key_exists('js', $this->configuration))
+        if (   array_key_exists('js', $this->configuration)
+            && is_array($this->configuration['js']))
         {
             $jsconfig = '{';
             
