@@ -17,6 +17,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
 {
     public $argv = array();
     public $get = array();
+    public $component_instance = false;
     protected $route_id = false;
     protected $action_arguments = array();
 
@@ -53,10 +54,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             $page_data['guid'] = $guid;
             $page_data['title'] = $mc->get_subkey($guid, 'title');
-            $_MIDCOM->set_context_item('component', $mc->get_subkey($guid, 'component'));
+            $_MIDCOM->context->set_item('component', $mc->get_subkey($guid, 'component'));
         }
         
-        $_MIDCOM->set_context_item('page', $page_data);   
+        $_MIDCOM->context->set_item('page', $page_data);   
     }
 
     /**
@@ -68,8 +69,8 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $page = new midgard_page();
         $page->get_by_id($_MIDGARD['page']);
         
-        $component_instance = $_MIDCOM->componentloader->load($component, $page);
-        $route_definitions = $component_instance->configuration->get('routes');
+        $this->component_instance = $_MIDCOM->componentloader->load($component, $page);
+        $route_definitions = $this->component_instance->configuration->get('routes');
 
         $route_id_map = array();
         foreach ($route_definitions as $route_id => $route_configuration)
@@ -88,28 +89,106 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $selected_route_configuration = $route_definitions[$this->route_id];
 
         $controller_class = $selected_route_configuration['controller'];
-        $controller = new $controller_class($component_instance);
+        $controller = new $controller_class($this->component_instance);
         
         // Then call the route_id
         $action_method = "action_{$selected_route_configuration['action']}";
         // TODO: store this array somewhere where it can be accessed via get_context_item
         $data = array();
         $controller->$action_method($this->route_id, $data, $this->action_arguments);
-        $_MIDCOM->set_context_item($component, $data);
+        $_MIDCOM->context->set_item($component, $data);
         
         // Set other context data from route
         if (isset($selected_route_configuration['mimetype']))
         {
-            $_MIDCOM->set_context_item('mimetype', $selected_route_configuration['mimetype']);
+            $_MIDCOM->context->set_item('mimetype', $selected_route_configuration['mimetype']);
         }
         if (isset($selected_route_configuration['template_entry_point']))
         {
-            $_MIDCOM->set_context_item('template_entry_point', $selected_route_configuration['template_entry_point']);
+            $_MIDCOM->context->set_item('template_entry_point', $selected_route_configuration['template_entry_point']);
         }
         if (isset($selected_route_configuration['content_entry_point']))
         {
-            $_MIDCOM->set_context_item('content_entry_point', $selected_route_configuration['content_entry_point']);
+            $_MIDCOM->context->set_item('content_entry_point', $selected_route_configuration['content_entry_point']);
         }
+    }
+    
+    /**
+     * Generates an URL for given route_id with given arguments
+     *
+     * @param string $route_id the id of the route to generate a link for
+     * @param array $args associative arguments array
+     * @return string url
+     *
+     * FIXME: reminder remove later
+     *     '/view/{$article_id}/' => 'view',
+     *     '/?articleid={$article_id}' => 'view',
+     *     '/foo/bar' => 'someroute_id',
+     *     '/latest/{$category}/{$number}' => 'categorylatest',
+     */
+    public function generate_url($route_id, array $args)
+    {
+        // TODO: determine prefix from component
+        $prefix = $_MIDGARD['self'];
+        $route_definitions = $this->component_instance->configuration->get('routes');
+        if (!isset($route_definitions[$route_id]))
+        {
+            throw new Exception("route_id '{$route_id}' not found in routes configuratio");
+        }
+        $route = $route_definitions[$route_id]['route'];
+        $link = $route;
+
+        foreach ($args as $key => $value)
+        {
+            $link = str_replace("{\${$key}}", $value, $link);
+        }
+
+        if (preg_match_all('%\{\$(.+?)\}%', $link, $link_matches))
+        {
+            $link_remaining_args = $link_matches[1];
+            throw new Exception('Missing arguments: ' . implode(', ', $link_remaining_args));
+        }
+
+        return preg_replace('%/{2,}%', '/', $prefix . $link);
+    }
+
+    /**
+     * Normalizes given route definition ready for parsing
+     *
+     * @param string $route route definition
+     * @return string normalized route
+     */
+    public function normalize_route($route)
+    {
+        // Normalize route
+        if (   strpos($route, '?') === false
+            && substr($route, -1, 1) !== '/')
+        {
+            $route .= '/';
+        }
+        return preg_replace('%/{2,}%', '/', $route);
+    }
+
+    /**
+     * Splits a given route (after normalizing it) to it's path and get parts
+     *
+     * @param string $route reference to a route definition
+     * @return array first item is path part, second is get part, both default to boolean false
+     */
+    public function split_route(&$route)
+    {
+        $route_path = false;
+        $route_get = false;
+        $route = $this->normalize_route($route);
+        // Get route parts
+        $route_parts = explode('?', $route, 2);
+        $route_path = $route_parts[0];
+        if (isset($route_parts[1]))
+        {
+            $route_get = $route_parts[1];
+        }
+        unset($route_parts);
+        return array($route_path, $route_get);
     }
 
     /**
@@ -137,28 +216,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         foreach ($routes as $route => $route_id)
         {
             // Reset variables
-            $route_path = false;
-            $route_get = false;
             $this->action_arguments = array();
-
-            // Normalize route
-            if (   strpos($route, '?') === false
-                && substr($route, -1, 1) !== '/')
-            {
-                $route .= '/';
-            }
-            $route = preg_replace('%/{2,}%', '/', $route);
+            list ($route_path, $route_get) = $this->split_route($route);
 
             //echo "DEBUG: route_id: {$route_id} route:{$route} argv_str:{$argv_str}\n";
-
-            // Get route parts
-            $route_parts = explode('?', $route, 2);
-            $route_path = $route_parts[0];
-            if (isset($route_parts[1]))
-            {
-                $route_get = $route_parts[1];
-            }
-            unset($route_parts);
 
             if (!preg_match_all('%\{\$(.+?)\}%', $route_path, $route_path_matches))
             {

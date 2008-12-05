@@ -10,7 +10,7 @@ routes:
     latest:
         controller: net_nemein_news_controllers_index
         action: latest
-        route: /latest/{$number}
+        route: /latest/{$number}/
         content_entry_point: nnn-show-latest
     rss:
         controller: net_nemein_news_controllers_index
@@ -21,6 +21,6 @@ routes:
     show:
         controller: net_nemein_news_controllers_show
         action: article
-        route: /{$name}
+        route: /{$name}/
         content_entry_point: nnn-show-article
 

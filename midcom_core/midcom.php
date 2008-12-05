@@ -236,6 +236,11 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
         
         if (!$component)
         {
+            if (!empty($this->dispatcher->argv))
+            {
+                // FIXME: Process these also in the dispatcher as we will have some "core" routes
+                throw new midcom_exception_notfound("Page not found.");
+            }
             return;
         }
 

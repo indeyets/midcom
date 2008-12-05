@@ -41,7 +41,7 @@ class net_nemein_news_controllers_index
             if (   !$article->url
                 || !$this->configuration->get('link_articles_to_external_url'))
             {
-                $article->url = "{$_MIDGARD['self']}{$article->name}/";
+                $article->url = $_MIDCOM->dispatcher->generate_url('show', array('name' => $article->name));
             }
             $data['news'][] = $article;
         }
