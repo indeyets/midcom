@@ -1,0 +1,8 @@
+default_renderer: tal
+default_renderer_src: 
+
+include_metadata_required: false
+
+tinymce_default_theme: simple
+tinymce_default_config_snippet: file://midcom/helper/datamanager2/config/tinymce_default.yml
+tinymce_use_compressor: false
