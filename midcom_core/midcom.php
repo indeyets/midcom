@@ -37,22 +37,9 @@ class midcom_core_midcom
         
         $this->load_base_services();
         $this->context->create();
-        //$this->connect_signals();
         
         date_default_timezone_set($this->configuration->get('default_timezone'));
     }
-    
-    /*
-    private function connect_signals()
-    {
-        midgard_object_class::connect_default('midgard_article', 'action_loaded', 'signal_test', $this);
-    }
-    
-    public function signal_test()
-    {
-        echo "Loaded article<br />\n" . var_dump($object);
-    }
-    */
     
     /**
      * Load all basic services needed for MidCOM usage. This includes configuration, authorization and the component loader.
