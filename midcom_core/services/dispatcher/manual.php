@@ -17,6 +17,7 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
 {
     public $component_name = '';
     public $component_instance = false;
+    private $page = null;
     protected $route_id = false;
     protected $action_arguments = array();
 
@@ -28,7 +29,17 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
      * Pull data from environment into the context.
      */
     public function populate_environment_data()
-    {  
+    {
+        if (!$this->page)
+        {
+            return;
+        }
+        
+        $page_data = array();
+        $page_data['guid'] = $this->page->guid;
+        $page_data['title'] = $this->page->title;
+        $_MIDCOM->context->component = $this->page->component;
+        $_MIDCOM->context->page = $page_data;
     }
 
     public function initialize($component)
@@ -38,7 +49,20 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
             $_MIDCOM->timer->setMarker("MidCOM dispatcher::initialize::{$component}");
         }
         $this->component_name = $component;
-        $this->component_instance = $_MIDCOM->componentloader->load($this->component_name);
+        
+        if ($this->page)
+        {
+            $this->component_instance = $_MIDCOM->componentloader->load($this->component_name, $this->page);
+        }
+        else
+        {
+            $this->component_instance = $_MIDCOM->componentloader->load($this->component_name);
+        }
+    }
+    
+    public function set_page(midgard_page $page)
+    {
+        $this->page = $page;
     }
     
     public function set_route($route_id, array $arguments)

@@ -54,6 +54,11 @@ class midcom_core_helpers_context
         unset($this->contexts[$old_context]);
     }
     
+    public function get_current_context()
+    {
+        return $this->current_context;
+    }
+    
     /**
      * Get a reference of the context data array
      *

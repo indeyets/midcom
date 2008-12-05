@@ -58,10 +58,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             $page_data['guid'] = $guid;
             $page_data['title'] = $mc->get_subkey($guid, 'title');
-            $_MIDCOM->context->set_item('component', $mc->get_subkey($guid, 'component'));
+            $_MIDCOM->context->component = $mc->get_subkey($guid, 'component');
         }
         
-        $_MIDCOM->context->set_item('page', $page_data);   
+        $_MIDCOM->context->page = $page_data;
     }
 
     public function initialize($component)
@@ -107,6 +107,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
 
         $controller_class = $selected_route_configuration['controller'];
         $controller = new $controller_class($this->component_instance);
+        $controller->dispatcher = $this;
         
         // Then call the route_id
         $action_method = "action_{$selected_route_configuration['action']}";
