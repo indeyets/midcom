@@ -188,16 +188,15 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
 
         foreach ($args as $key => $value)
         {
-            $link = str_replace("{{$key}}", $value, $link);
+            $link = str_replace("{\${$key}}", $value, $link);
         }
 
-        if (preg_match_all('%\{(.+?)\}%', $link, $link_matches))
+        if (preg_match_all('%\{$(.+?)\}%', $link, $link_matches))
         {
-            $link_remaining_args = $link_matches[1];
-            throw new UnexpectedValueException('Missing arguments: ' . implode(', ', $link_remaining_args));
+            throw new UnexpectedValueException("Missing arguments matching route '{$route_id}' of {$this->component_name}: " . implode(', ', $link_remaining_args));
         }
 
-        return preg_replace('%/{2,}%', '/', $_MIDCOM->context->prefix . $link);
+        return preg_replace('%/\${2,}%', '/', $_MIDCOM->context->prefix . $link);
     }
 
     /**
@@ -269,7 +268,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
 
             //echo "DEBUG: route_id: {$route_id} route:{$route} argv_str:{$argv_str}\n";
 
-            if (!preg_match_all('%\{(.+?)\}%', $route_path, $route_path_matches))
+            if (!preg_match_all('%\{\$(.+?)\}%', $route_path, $route_path_matches))
             {
                 // Simple route (only static arguments)
                 if (   $route_path === $argv_str
