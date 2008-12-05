@@ -45,7 +45,7 @@ class net_nemein_xmpp_tests_xmpphp extends midcom_tests_testcase
         
         if (MIDCOM_TESTS_ENABLE_OUTPUT)
         {
-            echo "Send message 'Hello World!' to {$_MIDCOM->context->component_instance->configuration->defaults['to']}\n";
+            echo "Send message 'Hello from midcom3!' to {$_MIDCOM->context->component_instance->configuration->defaults['to']}\n";
             echo "using host {$_MIDCOM->context->component_instance->configuration->host}:{$_MIDCOM->context->component_instance->configuration->port}\n";
             echo "with user {$_MIDCOM->context->component_instance->configuration->defaults['username']}\n\n";
         }
@@ -59,7 +59,7 @@ class net_nemein_xmpp_tests_xmpphp extends midcom_tests_testcase
                 $_MIDCOM->context->component_instance->configuration->defaults['password'],
                 $_MIDCOM->context->component_instance->configuration->resource,
                 $_MIDCOM->context->component_instance->configuration->server,
-                true,
+                (MIDCOM_TESTS_ENABLE_OUTPUT ? true : false),
                 LOGGING_VERBOSE
             );
         }
@@ -73,7 +73,7 @@ class net_nemein_xmpp_tests_xmpphp extends midcom_tests_testcase
         $conn->processUntil('session_start');
         $conn->message(
             $_MIDCOM->context->component_instance->configuration->defaults['to'],
-            'Hello World!'
+            'Hello from midcom3!'
         );
         $conn->disconnect();
         
