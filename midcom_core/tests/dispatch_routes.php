@@ -38,7 +38,16 @@ foreach ($_MIDCOM->componentloader->manifests as $component_name => $manifest)
 {
     // Enter new context
     $_MIDCOM->context->create();
-    $_MIDCOM->dispatcher->initialize($component_name);
+    try
+    {
+        $_MIDCOM->dispatcher->initialize($component_name);
+    }
+    catch (Exception $e)
+    {
+        echo "Skipping {$component_name}: component failed to load\n\n";
+        $_MIDCOM->context->delete();
+        continue;
+    }
     
     if (!$_MIDCOM->context->component_instance)
     {
@@ -80,7 +89,7 @@ foreach ($_MIDCOM->componentloader->manifests as $component_name => $manifest)
         catch (Exception $e)
         {
             echo "        " . get_class($e) . ': ' . $e->getMessage() . "\n";
-
+            continue;
         }
         
         try
