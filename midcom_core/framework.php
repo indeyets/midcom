@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 
 if (!defined('MIDCOM_ROOT'))
 {
-    define('MIDCOM_ROOT', dirname(dirname(__FILE__) . '../'));
+    define('MIDCOM_ROOT', realpath(dirname(__FILE__) . '/../'));
 }
 
 /**
@@ -23,6 +23,8 @@ if (   !preg_match('%\?|/$|midcom-.+-|/.+\..+$%', $_SERVER['REQUEST_URI'])
 {
     header('HTTP/1.0 301 Moved Permanently');
     header("Location: {$_SERVER['REQUEST_URI']}/");
+
+    header('Content-type: text/html; charset=utf-8'); // just to be sure, that the browser interprets fallback right
     echo "301: new location <a href='{$_SERVER['REQUEST_URI']}/'>{$_SERVER['REQUEST_URI']}/</a>";
     exit();
 }
