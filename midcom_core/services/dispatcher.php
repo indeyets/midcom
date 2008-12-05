@@ -17,5 +17,7 @@
 interface midcom_core_services_dispatcher
 {
     public function __construct();
+    
+    public function populate_environment_data();
 }
 ?>
