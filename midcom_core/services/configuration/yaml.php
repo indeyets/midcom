@@ -91,11 +91,21 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
      * @return mixed Its value
      * @see midcom_helper_configuration::exists()
      */
-    public function get($key)
+    public function get($key, $subkey=false)
     {
         if (!$this->exists($key))
         {
             throw new Exception("Configuration key {$key} does not exist.");
+        }
+        
+        if ($subkey !== false)
+        {                      
+            if (! isset($this->merged[$key][$subkey]))
+            {
+                throw new Exception("Configuration subkey {$subkey} does not exist within key {$key}.");
+            }
+            
+            return $this->merged[$key][$subkey];
         }
 
         return $this->merged[$key];
