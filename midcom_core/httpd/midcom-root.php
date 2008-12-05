@@ -38,9 +38,7 @@ ob_start();
 $_MIDCOM->templating->template();
 
 // Read contents from the output buffer and pass to MidCOM rendering
-$template_content = ob_get_contents();
-ob_end_clean();
-$_MIDCOM->templating->display($template_content);
+$_MIDCOM->templating->display(ob_get_clean());
 
 // code-finish can be used for custom caching etc
 ?>
