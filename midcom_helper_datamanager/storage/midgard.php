@@ -45,7 +45,7 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
      * @param mixed $data data to store
      * @see on_load_data()
      */
-    private function on_store_data($name, $data)
+    public function on_store_data($name, $data)
     {
         // TODO: rethink
         switch ($this->schema->fields[$name]['storage']['location'])

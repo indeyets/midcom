@@ -126,7 +126,7 @@ class midcom_helper_datamanager_typeproxy
         foreach ($this->schema->fields as $name => $config)
         {
             $this->prepare_type($name);
-            if (! $this->$types['name']->validate())
+            if (! $this->types['name']->validate())
             {
                 $this->validation_errors[$name] = $this->types[$name]->validation_error;
             }

@@ -231,6 +231,11 @@ class midcom_helper_datamanager_type_baseclass implements midcom_helper_datamana
     {
         die ('The function ' . __CLASS__ . '::' . __FUNCTION__ . ' must be implemented in subclasses.');
     }
+    
+    public function convert_to_raw()
+    {
+        return $this->convert_to_storage();
+    }
 
     /**
      * Main validation interface, currently only calls the main type callback, but this

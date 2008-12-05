@@ -36,18 +36,19 @@ class net_nemein_news_controllers_article
             throw new midcom_exception_notfound("Article {$args['name']} not found.");
         }
         $data['article'] = $articles[0];
-    }
-    
-    public function action_show($route_id, &$data, $args)
-    {
-        $_MIDCOM->componentloader->load('midcom_helper_datamanager');
         
-        $this->load_article($data, $args);
+        // Load the article via Datamanager for configurability
+        $_MIDCOM->componentloader->load('midcom_helper_datamanager');
         
         $dm = new midcom_helper_datamanager_datamanager($this->configuration->get('schemadb_default'));
         $dm->autoset_storage($data['article']);
         
-        $data['article_dm'] = $dm;
+        $data['article_dm'] =& $dm;
+    }
+    
+    public function action_show($route_id, &$data, $args)
+    {
+        $this->load_article($data, $args);
     }
     
     public function action_edit($route_id, &$data, $args)
@@ -58,9 +59,9 @@ class net_nemein_news_controllers_article
 
         if (isset($_POST['save']))
         {
-            $data['article']->title = $_POST['title'];
-            $data['article']->content = $_POST['content'];
-            $data['article']->update();
+            $data['article_dm']->types->title->value = $_POST['title'];
+            $data['article_dm']->types->content->value = $_POST['content'];
+            $data['article_dm']->save();
             
             header('Location: ' . $_MIDCOM->dispatcher->generate_url('show', array('name' => $data['article']->name)));
             exit();

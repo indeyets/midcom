@@ -94,11 +94,12 @@ class midcom_helper_datamanager_storage
     {
         foreach ($this->schema->fields as $name => $type_definition)
         {
-            if (!isset($type))
+            if (!isset($types->$name))
             {
                 if ($type_definition['required'] == true)
                 {
-                    throw new midcom_helper_datamanager_exception_storage(
+                    throw new midcom_helper_datamanager_exception_storage
+                    (
                         "Failed to process the type array for the schema {$this->schema->name}: " . 
                         "The type for the required field {$name} was not found."
                     );
@@ -109,6 +110,7 @@ class midcom_helper_datamanager_storage
                     continue;
                 }
             }
+            $type =& $types->$name;
 
             // Convert_to_storage is called always, the event handler can be used to manage
             // non-storage-backend driven storage operations as well (mainly for the blob type)
@@ -140,7 +142,7 @@ class midcom_helper_datamanager_storage
      * @param string $name The name of the field to save to.
      * @param mixed $data The data to save to.
      */
-    private function on_store_data($name, $data)
+    public function on_store_data($name, $data)
     {
         die ('The function ' . __CLASS__ . '::' . __FUNCTION__ . ' must be implemented in subclasses.');
     }
