@@ -5,9 +5,7 @@
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
-// FIXME: Enable STRICT at some point 
-// error_reporting(E_STRICT);
-error_reporting(E_ALL);
+error_reporting(E_STRICT);
 
 if (!defined('MIDCOM_ROOT'))
 {

@@ -65,6 +65,8 @@ class midcom_core_midcom
         $use_timer = $this->configuration->get('enable_benchmark');
         if ($use_timer)
         {
+            // Note: PEAR is not E_STRICT compatible
+            error_reporting(E_ALL);
             require_once 'Benchmark/Timer.php';
             $this->timer = new Benchmark_Timer(true);
         }
