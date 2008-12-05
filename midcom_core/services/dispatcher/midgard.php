@@ -304,7 +304,9 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             // Map variable arguments
             foreach ($route_path_matches[1] as $index => $varname)
             {
-                $this->action_arguments[$varname] = $route_path_regex_matches[$index+1];
+                // Strip type hints from variable names
+                $varname = preg_replace('/^.+:/', '', $varname);
+                $this->action_arguments[$varname] =$route_path_regex_matches[$index+1];
             }
             return true;
         }
@@ -353,7 +355,8 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
                 $this->action_arguments = array();
                 return false;
             }
-            $varname = $route_get_matches[2][$index];
+            // Strip type hints from variable names
+            $varname = preg_replace('/^.+:/', '', $route_get_matches[2][$index]);
             $this->action_arguments[$varname] = $this->get[$get_key];
         }
 
