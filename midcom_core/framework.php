@@ -12,6 +12,11 @@ if (!defined('MIDCOM_ROOT'))
     define('MIDCOM_ROOT', realpath(dirname(__FILE__) . '/../'));
 }
 
+if (!defined('MIDCOM_STATIC_URL'))
+{
+    define('MIDCOM_STATIC_URL', '/midcom-static');
+}
+
 /**
  * Make sure the URLs not having query string (or midcom-xxx- -method signature)
  * have trailing slash or some extension in the "filename".
@@ -35,4 +40,5 @@ require(MIDCOM_ROOT . '/midcom_core/exceptionhandler.php');
 
 // Start up MidCOM
 require(MIDCOM_ROOT . '/midcom_core/midcom.php');
+
 ?>

@@ -6,3 +6,5 @@ date_formats:
     short: '%d/%m/%Y'
     long: '%x %X'
 default_timezone: UTC
+enable_jquery_framework: false
+enable_js_midcom: false
