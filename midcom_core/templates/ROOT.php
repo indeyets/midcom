@@ -95,7 +95,7 @@
 
             <div id="content">
                 <div class="main">
-                    <?php $_MIDCOM->templating->content(); ?>
+                    <(content)>
                 </div>
             </div>
             

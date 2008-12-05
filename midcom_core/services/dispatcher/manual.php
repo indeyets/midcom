@@ -130,6 +130,7 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
     public function set_route($route_id, array $arguments)
     {
         $this->route_id = $route_id;
+        $_MIDCOM->context->route_id = $this->route_id;
         $this->action_arguments = $arguments;
     }
 

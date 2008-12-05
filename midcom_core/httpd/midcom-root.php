@@ -35,13 +35,10 @@ elseif (isset($_MIDCOM))
 
 if (isset($_MIDCOM))
 {
-    // Start output buffer so we can do templating
-    ob_start();
-
     $_MIDCOM->templating->template();
 
     // Read contents from the output buffer and pass to MidCOM rendering
-    $_MIDCOM->templating->display(ob_get_clean());
+    $_MIDCOM->templating->display();
 }
 else
 {

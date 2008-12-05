@@ -296,6 +296,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
                 {
                     //echo "DEBUG: simple match route_id:{$route_id}\n";
                     $this->route_id = $route_id;
+                    $_MIDCOM->context->route_id = $this->route_id;
                     return true;
                 }
                 // Did not match, try next route
@@ -318,6 +319,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
 
             // We have a complete match, setup route_id arguments and return
             $this->route_id = $route_id;
+            $_MIDCOM->context->route_id = $this->route_id;
             // Map variable arguments
             foreach ($route_path_matches[1] as $index => $varname)
             {

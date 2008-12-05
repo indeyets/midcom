@@ -16,12 +16,44 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     private $dispatcher = null;
     private $stacks = array();
     private $stack_elements = array();
+    private $cache_directory = '';
 
     private $elements_shown = array();
 
     public function __construct()
     {
         $this->stacks[0] = array();
+    }
+    
+    private function get_cache_identifier()
+    {
+        return "{$_MIDGARD['host']}-{$_MIDGARD['page']}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . "-{$_MIDCOM->context->route_id}";
+    }
+    
+    private function get_cache_directory()
+    {
+        switch ($_MIDGARD['config']['prefix'])
+        {
+            case '/usr':
+            case '/usr/local':
+                return '/var/cache/midgard';
+            default:
+                return "{$_MIDGARD['config']['prefix']}/var/cache/midgard";
+        }
+    }
+    
+    private function prepare_cache()
+    {
+        $this->cache_directory = str_replace('__MIDGARDCACHE__', $this->get_cache_directory(), $_MIDCOM->configuration->get('cache_directory'));
+        if (!file_exists($this->cache_directory))
+        {
+            mkdir($this->cache_directory, 0777, true);
+        }
+        
+        if (!is_writable($this->cache_directory))
+        {
+            throw new Exception("Cache directory {$cache_directory} is not writable");
+        }
     }
     
     public function append_directory($directory)
@@ -174,9 +206,10 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     {
         if (is_array($element))
         {
+            // Element is array in the preg_replace_callback case (evaluating element includes)
             $element = $element[1];
         }
-
+        
         $stack = $_MIDCOM->context->get_current_context();
         if (!isset($this->stacks[$stack]))
         {
@@ -186,6 +219,11 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         if (!isset($this->stack_elements[$stack]))
         {
             $this->stack_elements[$stack] = array();
+        }
+        
+        if ($element == 'content')
+        {
+            $element = $_MIDCOM->context->content_entry_point;
         }
         
         if (isset($this->stack_elements[$stack][$element]))
@@ -219,7 +257,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 
                 $this->stack_elements[$stack][$element] = $element_content;
                 
-                eval('?>' . preg_replace_callback("/<\\(([a-zA-Z0-9 _-]+)\\)>/", array($this, 'get_element'), $this->stack_elements[$stack][$element]));
+                return preg_replace_callback("/<\\(([a-zA-Z0-9 _-]+)\\)>/", array($this, 'get_element'), $this->stack_elements[$stack][$element]);
             }
         }
         
@@ -325,10 +363,8 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         $_MIDCOM->context->create();
         $data = $this->dynamic_call($component_name, $route_id, $arguments, false);
         
-        ob_start();
-        $this->content();
-
-        $this->display(ob_get_clean());
+        $this->template('content_entry_point');
+        $this->display();
         
         $_MIDCOM->context->delete();
     }
@@ -336,17 +372,17 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     /**
      * Include the template based on either global or controller-specific template entry point.
      */    
-    public function template()
+    public function template($element_identifier = 'template_entry_point')
     {
-        $this->get_element($_MIDCOM->context->template_entry_point);
-    }
-    
-    /**
-     * Include the content template based on either global or controller-specific template entry point.
-     */
-    public function content()
-    {
-        $this->get_element($_MIDCOM->context->content_entry_point);
+        $this->prepare_cache();
+        $cache_file = $this->cache_directory . '/' . $this->get_cache_identifier() . '.php';
+        
+        if (file_exists($cache_file))
+        {
+            return;
+        }
+        
+        file_put_contents($cache_file, $this->get_element($_MIDCOM->context->$element_identifier));
     }
     
     /**
@@ -354,9 +390,14 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
      *
      * @param string $content Content to display
      */
-    public function display($content)
+    public function display()
     {
         $data = $_MIDCOM->context->get();
+
+        $cache_file = $this->cache_directory . '/' . $this->get_cache_identifier() . '.php';
+        ob_start();
+        include($cache_file);
+        $content = ob_get_clean();
 
         switch ($data['template_engine'])
         {
@@ -372,7 +413,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                     $_MIDCOM->timer->setMarker('post-require');
                 }
                 
-                $tal = new PHPTAL();
+                $tal = new PHPTAL($this->get_cache_identifier());
 
                 $tal->show_toolbar = false;
                 if (   isset($_MIDCOM->toolbar)

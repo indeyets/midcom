@@ -20,14 +20,13 @@ interface midcom_core_services_templating
     
     /**
      * Include the content template based on either global or controller-specific template entry point.
-     */
-    public function content();
+    public function content();*/
     
     /**
      * Show the loaded contents using the template engine
      *
      * @param string $content Content to display
      */
-    public function display($content);
+    public function display();
 }
 ?>
