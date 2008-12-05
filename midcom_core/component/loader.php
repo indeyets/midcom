@@ -51,6 +51,12 @@ class midcom_core_component_loader
             return false;
         }
         
+        if (isset($this->tried_to_load[$component]))
+        {
+            // We have already loaded (or tried and failed to load) the component
+            return $this->interfaces[$component];
+        }
+        
         $component_directory = $this->component_to_filepath($component);
         if (!is_dir($component_directory))
         {        
