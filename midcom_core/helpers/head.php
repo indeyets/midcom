@@ -98,6 +98,11 @@ class midcom_core_helpers_head
             return;
         }
         
+        if (! $this->jquery_enabled)
+        {
+            $this->enable_jquery();
+        }
+        
         $this->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/midcom.js", true);
         
         $this->add_link_head(
