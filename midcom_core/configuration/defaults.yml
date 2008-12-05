@@ -1,1 +1,2 @@
 services_authorization: midcom_core_services_authorization_simple
+show_benchmark: false
