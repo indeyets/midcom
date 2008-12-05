@@ -53,6 +53,7 @@ class midcom_core_exceptionhandler
         $headers = array(
             200 => 'HTTP/1.0 200 OK',
             304 => 'HTTP/1.0 304 Not Modified',
+            401 => 'HTTP/1.0 401 Unauthorized',
             404 => 'HTTP/1.0 404 Not Found',
             500 => 'HTTP/1.0 500 Server Error',
         );

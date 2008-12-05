@@ -45,7 +45,8 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
     {
         if (!$_MIDCOM->authorization->can_do('midgard:read', $object))
         {
-            throw new midcom_exception_unauthorized("Not authorized to read " . get_class($object) . " {$object->guid}");
+            // Note: this is a *hook* so the object is still empty
+            throw new midcom_exception_unauthorized("Not authorized to read " . get_class($object));
         }
     }
    
@@ -90,7 +91,7 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
         {
             return true;
         }
-        
+
         if ($_MIDGARD['user'])
         {
             return true;
