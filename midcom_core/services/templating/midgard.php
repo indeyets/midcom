@@ -58,6 +58,53 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         $this->stacks[$stack][$page_id] = 'page';
     }
     
+    public function get_template_content($component, $template, &$data = array())
+    {
+        $content = '';
+        $style_id = $_MIDGARD['style'];
+
+        $component_directory = MIDCOM_ROOT . '/' . $component;
+        $template_file = "{$component_directory}/templates/{$template}.php";
+
+        $mc = midgard_page::new_collector('id', $_MIDGARD['page']);
+        $mc->set_key_property('guid');
+        $mc->add_value_property('style');        
+        $mc->execute();
+        $guids = $mc->list_keys();
+        foreach ($guids as $guid => $array)
+        {
+            $page_style = $mc->get_subkey($guid, 'style');
+            if ($page_style)
+            {
+                $style_id = $page_style;
+            }
+        }
+
+        $mc = midgard_element::new_collector('style', $style_id);
+        $mc->add_constraint('name', '=', $template);
+        $mc->set_key_property('value');
+        $mc->execute();
+        $keys = $mc->list_keys();
+        if (count($keys) == 0)
+        {
+            if (file_exists($template_file))
+            {
+                $content = file_get_contents($template_file);
+            }
+        }
+        else
+        {
+            foreach ($keys as $value => $array)
+            {
+                $content = $value;
+            }            
+        }
+        
+        ob_start();
+        eval('?>' . preg_replace_callback("/<\\(([a-zA-Z0-9 _-]+)\\)>/", array($this, 'get_element'), $content));
+        return ob_get_clean();
+    }
+    
     private function get_element_style($style_id, $element)
     {
         $mc = midgard_element::new_collector('style', $style_id);
@@ -74,7 +121,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         {
             return $value;
         }
-    }
+    }    
     
     private function get_element_page($page_id, $element)
     {
@@ -129,6 +176,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         {
             $element = $element[1];
         }
+
         $stack = $_MIDCOM->context->get_current_context();
         if (!isset($this->stacks[$stack]))
         {
@@ -144,7 +192,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         {
             return $this->stack_elements[$stack][$element];
         }
-        
+
         // Reverse the stack in order to look for elements
         $reverse_stack = array_reverse($this->stacks[$stack], true);
         foreach ($reverse_stack as $identifier => $type)
@@ -170,6 +218,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 $this->elements_shown[] = $element;
                 
                 $this->stack_elements[$stack][$element] = $element_content;
+                
                 eval('?>' . preg_replace_callback("/<\\(([a-zA-Z0-9 _-]+)\\)>/", array($this, 'get_element'), $this->stack_elements[$stack][$element]));
             }
         }
