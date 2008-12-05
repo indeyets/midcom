@@ -40,6 +40,7 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         $page_data['title'] = $this->page->title;
         $_MIDCOM->context->component = $this->page->component;
         $_MIDCOM->context->page = $page_data;
+        $_MIDCOM->context->prefix = $this->get_page_prefix();
     }
 
     public function initialize($component)
@@ -52,17 +53,67 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         
         if ($this->page)
         {
-            $this->component_instance = $_MIDCOM->componentloader->load($this->component_name, $this->page);
+            $_MIDCOM->context->component_instance = $_MIDCOM->componentloader->load($this->component_name, $this->page);
         }
         else
         {
-            $this->component_instance = $_MIDCOM->componentloader->load($this->component_name);
+            $_MIDCOM->context->component_instance = $_MIDCOM->componentloader->load($this->component_name);
         }
     }
     
     public function set_page(midgard_page $page)
     {
         $this->page = $page;
+    }
+    
+    private function get_page_prefix()
+    {
+        if (!$this->page)
+        {
+            throw new Exception("No page set for the manual dispatcher");
+        }
+    
+        $prefix = "{$_MIDGARD['prefix']}/";
+        $host_mc = midgard_host::new_collector('id', $_MIDGARD['host']);
+        $host_mc->set_key_property('root');
+        $host_mc->execute();
+        $roots = $host_mc->list_keys();
+        if (!$roots)
+        {
+            throw new Exception("Failed to load root page data for host {$_MIDGARD['host']}");
+        }
+        $root_id = null;
+        foreach ($roots as $root => $array)
+        {
+            $root_id = $root;
+            break;
+        }
+        
+        if ($this->page->id == $root_id)
+        {
+            return $prefix;
+        }
+        
+        $page_path = '';
+        $page_id = $this->page->id;
+        while (   $page_id
+               && $page_id != $root_id)
+        {
+            echo "{$page_id}: {$page_path}<br />\n";
+            $parent_mc = midgard_page::new_collector('id', $page_id);
+            $parent_mc->set_key_property('up');
+            $parent_mc->add_value_property('name');
+            $parent_mc->execute();
+            $parents = $parent_mc->list_keys();
+            foreach ($parents as $parent => $array)
+            {
+                $page_id = $parent;
+                echo $parent;
+                $page_path = $parent_mc->get_subkey($parent, 'name') . "/{$page_path}";
+            }
+        }
+        
+        return $prefix . $page_path;
     }
     
     public function set_route($route_id, array $arguments)
@@ -80,12 +131,12 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         {
             $_MIDCOM->timer->setMarker("MidCOM dispatcher::dispatch::{$this->component_name}");
         }
-        $route_definitions = $this->component_instance->configuration->get('routes');
+        $route_definitions = $_MIDCOM->context->component_instance->configuration->get('routes');
 
         $selected_route_configuration = $route_definitions[$this->route_id];
 
         $controller_class = $selected_route_configuration['controller'];
-        $controller = new $controller_class($this->component_instance);
+        $controller = new $controller_class($_MIDCOM->context->component_instance);
         
         // Then call the route_id
         $action_method = "action_{$selected_route_configuration['action']}";

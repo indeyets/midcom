@@ -52,12 +52,12 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         $this->dispatcher->populate_environment_data();
         $this->dispatcher->initialize($component_name);
         
-        if (!$this->dispatcher->component_instance->configuration->exists('routes'))
+        if (!$_MIDCOM->context->component_instance->configuration->exists('routes'))
         {
             throw new Exception("Component {$component_name} has no routes defined");
         }
         
-        $routes = $this->dispatcher->component_instance->configuration->get('routes');
+        $routes = $_MIDCOM->context->component_instance->configuration->get('routes');
         if (!isset($routes[$route_id]))
         {
             throw new Exception("Component {$component_name} has no route {$route_id}");
