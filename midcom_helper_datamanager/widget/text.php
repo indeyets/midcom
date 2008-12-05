@@ -39,21 +39,21 @@ class midcom_helper_datamanager_widget_text extends midcom_helper_datamanager_wi
      *
      * @var int
      */
-    public var $maxlength = -1;
+    public $maxlength = -1;
 
     /**
      * The size of the input box.
      *
      * @var int
      */
-    public var $size = 40;
+    public $size = 40;
 
     /**
      * whether the input should be shown in the widget, or not.
      *
      * @var boolean
      */
-    public var $hideinput = false;
+    public $hideinput = false;
     
     /**
      * The initialization event handler post-processes the maxlength setting.

@@ -14,13 +14,14 @@
  * together.
  *
  * @package midcom_helper_datamanager
+ *  extends midcom_core_component_baseclass
  */
-class midcom_helper_datamanager_datamanager extends midcom_core_component_baseclass
+class midcom_helper_datamanager_datamanager
 {
     
-    private var $schemadb = null;
-    protected var $schema = null;
-    protected var $schema_name = null;
+    private $schemadb = null;
+    protected $schema = null;
+    protected $schema_name = null;
 
     /**
      * This is the storage implementation which is used for operation on the types. It encapsulates
@@ -28,10 +29,10 @@ class midcom_helper_datamanager_datamanager extends midcom_core_component_basecl
      *
      * @var midcom_helper_datamanager_storage
      */
-    public var $storage = null;
+    public $storage = null;
     
-    protected var $types = array();
-    protected var $widgets = array();
+    protected $types = array();
+    protected $widgets = array();
     
     public function initialize(&$schemadb)
     {

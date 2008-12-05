@@ -20,7 +20,7 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
      * "callback" has been called.
      * @var object
      */
-    private var $callback = null;
+    private $callback = null;
 
     /**
      * Start up the storage manager and bind it to a given MidgardObject.

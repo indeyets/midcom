@@ -20,21 +20,21 @@ class midcom_helper_datamanager_schema extends midcom_core_component_baseclass
      *
      * @var Array
      */
-    public var $fields = Array();
+    public $fields = Array();
     
     /**
      * The title of this schema, used to display schemas when
      *
      * @var string
      */
-    public var $description = '';
+    public $description = '';
 
     /**
      * The name of the schema
      *
      * @var string
      */
-    public var $name = '';
+    public $name = '';
     
     /**
      * The raw schema array as read by the system. This is a reference
@@ -42,21 +42,21 @@ class midcom_helper_datamanager_schema extends midcom_core_component_baseclass
      *
      * @var Array
      */
-    private var $raw_schema = null;
+    private $raw_schema = null;
 
     /**
      * The raw schema database as read by the system.
      *
      * @var Array
      */
-    private var $raw_schemadb = null;
+    private $raw_schemadb = null;
 
     /**
      * The schema database path as read by the system.
      *
      * @var Array
      */
-    private var $schemadb_path = null;
+    private $schemadb_path = null;
 
     /**
      * A simple array holding the fields in the order they should be rendered identified
@@ -64,7 +64,7 @@ class midcom_helper_datamanager_schema extends midcom_core_component_baseclass
      *
      * @var Array
      */
-    public var $field_order = array();
+    public $field_order = array();
 
     /**
      * The operations to add to the form. 
@@ -74,7 +74,7 @@ class midcom_helper_datamanager_schema extends midcom_core_component_baseclass
      *
      * @var Array
      */
-    public var $operations = array('save' => '', 'cancel' => '');
+    public $operations = array('save' => '', 'cancel' => '');
     
     public function initialize($schemadb, $name = null, $schemadb_path = null)
     {

@@ -27,7 +27,7 @@ class midcom_helper_datamanager_formmanager
      *
      * @var Array
      */
-    protected var $schema = null;
+    protected $schema = null;
 
     /**
      * The list of types which should be used for rendering. They must match the schemadb passed
@@ -37,7 +37,7 @@ class midcom_helper_datamanager_formmanager
      *
      * @var Array
      */
-    protected var $types = null;
+    protected $types = null;
 
     /**
      * A list of widgets, indexed by the field names from the schema, thus matching the type
@@ -45,7 +45,7 @@ class midcom_helper_datamanager_formmanager
      *
      * @var Array
      */
-    public var $widgets = array();
+    public $widgets = array();
     
     /**
      * The namespace of the form. This value is to be considered read only.
@@ -58,7 +58,7 @@ class midcom_helper_datamanager_formmanager
      *
      * @var const string
      */
-    public var $namespace = '';
+    public $namespace = '';
     
     /**
      * Initializes the Form manager with a list of types for a given schema.

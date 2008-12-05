@@ -25,7 +25,7 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
      * @var midcom_helper_datamanager_schema
      * @access protected
      */
-    private var $_schema = null;
+    private $_schema = null;
 
     /**
      * This is a reference the storage object used by the subclass implementation.
@@ -43,7 +43,7 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
      *
      * @var MidCOMDBAObject
      */
-    public var $object = null;
+    public $object = null;
 
     /**
      * Creates the storage interface class, and initializes it to a given data schema.
