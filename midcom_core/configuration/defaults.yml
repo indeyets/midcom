@@ -2,6 +2,9 @@ services_authorization: midcom_core_services_authorization_simple
 services_templating: midcom_core_services_templating_midgard
 enable_benchmark: false
 enable_included_list: false
+enable_jquery_framework: false
+enable_js_midcom: false
+js_midcom_config: 'enable_watchers: true, debug: true'
 date_formats:
     short: '%d/%m/%Y'
     long: '%x %X'
