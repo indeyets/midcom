@@ -48,7 +48,7 @@ interface midcom_core_services_toolbar
  */
 class midcom_core_services_toolbars
 {
-    public $type = 'javascript';
+    public $type = 'float';
     public $implementation = null;
     
     public function __construct(&$configuration)
