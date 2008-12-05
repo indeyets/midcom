@@ -15,13 +15,20 @@ class midcom_core_services_loader
         
     }
     
-    public function &load($name)
+    public function &load($name, &$configuration=null)
     {        
         $services_implementation = $_MIDCOM->configuration->get("services_{$name}");
         if (   $services_implementation
             && !array_key_exists($name, $this->services))
         {
-            $this->services[$name] = new $services_implementation();
+            if (! is_null($configuration))
+            {
+                $this->services[$name] = new $services_implementation(&$configuration);
+            }
+            else
+            {
+                $this->services[$name] = new $services_implementation();
+            }
         }
         
         if (array_key_exists($name, $this->services))
