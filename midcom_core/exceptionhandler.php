@@ -50,8 +50,10 @@ class midcom_core_exceptionhandler
 
     private static function header_by_code($code)
     {
-        $headers = array(
+        $headers = array
+        (
             200 => 'HTTP/1.0 200 OK',
+            303 => 'HTTP/1.0 303 See Other',
             304 => 'HTTP/1.0 304 Not Modified',
             401 => 'HTTP/1.0 401 Unauthorized',
             404 => 'HTTP/1.0 404 Not Found',
