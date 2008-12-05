@@ -63,55 +63,47 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
      */
     public function display($content)
     {
-        $use_timer = $_MIDCOM->configuration->get('show_benchmark');
-        $timer = null;
-        if ($use_timer)
-        {
-            require_once 'Benchmark/Timer.php';
-            $timer =& new Benchmark_Timer(true);            
-        }
-        
         $data = $_MIDCOM->context->get();
         switch ($data['template_engine'])
         {
             case 'tal':
                 require('PHPTAL.php');
                 
-                if ($use_timer)
+                if ($_MIDCOM->timer)
                 {
-                    $timer->setMarker('post-require');
+                    $_MIDCOM->timer->setMarker('post-require');
                 }
                 
                 $tal = new PHPTAL();
                 $tal->setSource($content);
 
-                if ($use_timer)
+                if ($_MIDCOM->timer)
                 {
-                    $timer->setMarker('post-source');
+                    $_MIDCOM->timer->setMarker('post-source');
                 }
                 
                 $tal->navigation = $_MIDCOM->navigation;
                 
-                if ($use_timer)
+                if ($_MIDCOM->timer)
                 {
-                    $timer->setMarker('post-set-navigation');
+                    $_MIDCOM->timer->setMarker('post-set-navigation');
                 }
-                
+
                 foreach ($data as $key => $value)
                 {
                     $tal->$key = $value;
                     
-                    if ($use_timer)
+                    if ($_MIDCOM->timer)
                     {
-                        $timer->setMarker("post-set-{$key}");
+                        $_MIDCOM->timer->setMarker("post-set-{$key}");
                     }
                 }
                 
                 $content = $tal->execute();
                 
-                if ($use_timer)
+                if ($_MIDCOM->timer)
                 {
-                    $timer->setMarker('post-execute');
+                    $_MIDCOM->timer->setMarker('post-execute');
                 }
                 break;
             default:
@@ -120,9 +112,9 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
 
         echo $content;
         
-        if ($use_timer)
+        if ($_MIDCOM->timer)
         {
-            $timer->display();
+            $_MIDCOM->timer->display();
         }
     }
 }

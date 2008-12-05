@@ -23,6 +23,8 @@ class midcom_core_midcom
     // Helpers
     public $navigation;
     public $context;
+    public $timer = false;
+    
     
     public function __construct($dispatcher = 'midgard')
     {
@@ -44,6 +46,13 @@ class midcom_core_midcom
     {   
         // Load the configuration loader and load core config
         $this->configuration = new midcom_core_services_configuration_yaml('midcom_core');
+        
+        $use_timer = $this->configuration->get('show_benchmark');
+        if ($use_timer)
+        {
+            require_once 'Benchmark/Timer.php';
+            $this->timer =& new Benchmark_Timer(true);
+        }
         
         // Load the preferred authorization implementation
         $services_authorization_implementation = $this->configuration->get('services_authorization');

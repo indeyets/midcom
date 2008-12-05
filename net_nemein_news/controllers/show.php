@@ -25,7 +25,7 @@ class net_nemein_news_controllers_show
         $qb = midgard_article::new_query_builder();
         $qb->add_constraint('topic', '=', $data['topic']->id);
         $qb->add_constraint('name', '=', $args['name']);        
-        $articles = $qb->execute();
+        $articles = $qb->execute();        
         if (count($articles) == 0)
         {
             throw new midcom_exception_notfound("Article {$args['name']} not found.");
