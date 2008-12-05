@@ -34,25 +34,7 @@ class midcom_core_helpers_navigation
         // echo "this->_root: {$this->_root}\n";
         // echo "this->_active: {$this->_active}\n";
         
-        $mc = midgard_page::new_collector('up', 0); //('id', $this->_root);
-        $mc->set_key_property('id');
-        $mc->add_value_property('id');
-        $mc->add_value_property('name');
-        $mc->add_value_property('title');
-        $mc->add_value_property('component');
-        $mc->execute();
-        
-        $top_ids = $mc->list_keys();
-
-        $children = array();
-        foreach ($top_ids as $tid => $data)
-        {
-            $children[] = $this->_prepare_page_data($mc->get_subkey($tid, 'id'), $mc->get_subkey($tid, 'name'), $mc->get_subkey($tid, 'title'), $mc->get_subkey($tid, 'component'));
-        }
-        
-        // print_r($children);
-        
-        $this->tree = $children;
+        $this->tree = $this->_get_children(0);
     }
     
     protected function _get_children($parent_id)
