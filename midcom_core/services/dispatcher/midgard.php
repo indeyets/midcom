@@ -122,15 +122,15 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         // Set other context data from route
         if (isset($selected_route_configuration['mimetype']))
         {
-            $_MIDCOM->context->set_item('mimetype', $selected_route_configuration['mimetype']);
+            $_MIDCOM->context->mimetype = $selected_route_configuration['mimetype'];
         }
         if (isset($selected_route_configuration['template_entry_point']))
         {
-            $_MIDCOM->context->set_item('template_entry_point', $selected_route_configuration['template_entry_point']);
+            $_MIDCOM->context->template_entry_point = $selected_route_configuration['template_entry_point'];
         }
         if (isset($selected_route_configuration['content_entry_point']))
         {
-            $_MIDCOM->context->set_item('content_entry_point', $selected_route_configuration['content_entry_point']);
+            $_MIDCOM->context->content_entry_point = $selected_route_configuration['content_entry_point'];
         }
     }
 
@@ -148,7 +148,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $route_definitions = $this->component_instance->configuration->get('routes');
         if (!isset($route_definitions[$route_id]))
         {
-            throw new OutOfBoundsException("route_id '{$route_id}' not found in routes configuratio");
+            throw new OutOfBoundsException("route_id '{$route_id}' not found in routes configuration");
         }
         $route = $route_definitions[$route_id]['route'];
         $link = $route;
