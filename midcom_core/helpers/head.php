@@ -28,14 +28,13 @@ class midcom_core_helpers_head
     
     private $enable_jquery_noconflict = false;
     private $jquery_inits = "";
-    private $jquery_statuses_prepend = array();
     private $jquery_statuses = array();
     private $jquery_statuses_append = array();
 
     public $jquery_enabled = false;    
     public $jsmidcom_enabled = false;
     
-    public function __construct($enable_jquery=false, $enable_jsmidcom=false)
+    public function __construct($enable_jquery=false, $enable_jsmidcom=false, $jsmidcom_config=null)
     {
         if ($enable_jquery)
         {
@@ -44,7 +43,7 @@ class midcom_core_helpers_head
         
         if ($enable_jsmidcom)
         {
-            $this->enable_jsmidcom();
+            $this->enable_jsmidcom($jsmidcom_config);
         }
     }
     
@@ -67,7 +66,32 @@ class midcom_core_helpers_head
         $this->jquery_enabled = true;
     }
     
-    public function enable_jsmidcom()
+    /**
+     * Register JavaScript snippets to jQuery states.
+     *
+     * This allows MidCOM components to register JavaScript code
+     * to the jQuery states.
+     * Possible ready states: document.ready
+     *
+     * @param string $script    The code to be included in the state.
+     * @param string $state    The state where to include the code to. Defaults to document.ready
+     * @see print_jquery_statuses()
+     */
+    public function add_jquery_state_script($script, $state = 'document.ready')
+    {
+        $js_call = "\n" . trim($script) . "\n";
+
+        if (! isset($this->jquery_states[$state]))
+        {
+            $this->jquery_states[$state] = $js_call;
+        }
+        else
+        {
+            $this->jquery_states[$state] .= $js_call;
+        }
+    }
+    
+    public function enable_jsmidcom($config=null)
     {
         if ($this->jsmidcom_enabled)
         {
@@ -76,12 +100,30 @@ class midcom_core_helpers_head
         
         $this->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/midcom.js", true);
         
+        $this->add_link_head(
+            array
+            (
+                'rel'   => 'stylesheet',
+                'type'  => 'text/css',
+                'media' => 'screen',
+                'href'  => MIDCOM_STATIC_URL . '/midcom_core/midcom.css',
+            )
+        );
+        
         $script = "jQuery.midcom.init({\n";
         $script .= "    MIDCOM_STATIC_URL: '" . MIDCOM_STATIC_URL . "',\n";
         $script .= "    MIDCOM_PAGE_PREFIX: '/'\n"; //$_MIDCOM->get_page_prefix()
         $script .= "});\n";
         
-        $this->add_script($script, true);
+        if (! is_null($config))
+        {
+            $config_str = $config;
+            $script .= "jQuery.midcom.update_config({\n";
+            $script .= "{$config_str}\n";
+            $script .= "});\n";            
+        }
+        
+        $this->add_jquery_state_script($script);
         
         $this->jsmidcom_enabled = true;
     }
@@ -211,16 +253,11 @@ class midcom_core_helpers_head
      * @see add_jsfile()
      * @see add_script()
      */
-    function print_elements()
+    public function print_elements()
     {
         if ($this->jquery_enabled)
         {
             echo $this->jquery_inits;
-        }
-        
-        foreach ($this->js_head as $js_call)
-        {
-            echo $js_call;
         }
         
         if (!empty($this->prepend_script_head))
@@ -231,10 +268,50 @@ class midcom_core_helpers_head
             }
         }
         
+        foreach ($this->js_head as $js_call)
+        {
+            echo $js_call;
+        }
+        
+        $this->print_jquery_statuses();
+        
         foreach ($this->link_head as $link)
         {
             echo $link;
         }
+    }
+    
+    /**
+     * Echo the jquery statuses
+     *
+     * This function echos the scripts added by the add_jquery_state_script
+     * method.
+     *
+     * This method is called from print_elements method.
+     *
+     * @see add_jquery_state_script
+     * @see print_elements
+     */
+    public function print_jquery_statuses()
+    {
+        if (empty($this->jquery_states))
+        {
+            return;
+        }
+
+        echo "<script type=\"text/javascript\">\n";
+
+        foreach ($this->jquery_states as $status => $scripts)
+        {
+            $status_parts = explode('.',$status);
+            $status_target = $status_parts[0];
+            $status_method = $status_parts[1];
+            echo "\n" . '$j(' . $status_target . ').' . $status_method . '(function() {'."\n";
+            echo $scripts;
+            echo "\n" . '});' . "\n";
+        }
+
+        echo "</script>\n";
     }
 }
 
