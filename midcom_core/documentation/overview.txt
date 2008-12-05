@@ -86,6 +86,65 @@ These steps are all you need to do to have new Midgard objects at your disposal.
     /// etc
     ?>
 
+### And the same in Python
+
+Since Midgard is a multilingual framework, same content can be accessed between PHP, Python and C APIs. Here is the Python version of the PHP example above:
+
+    # -*- coding: utf-8 -*-
+    import os, sys
+    import _midgard as midgard
+    
+    # new config instance
+    config = midgard.config()
+    
+    # read default configuration
+    opened = config.read_file('midgard', True)
+    
+    if opened == False:
+        raise SystemError("Failed to open default configuration file")
+    
+    # try to connect
+    cnc = midgard.connection()
+    connected = cnc.open_config(config)
+    
+    # Create a new person
+    reporter = midgard.mgdschema.midgard_person()
+    reporter.set_property("firstname", "John")
+    reporter.set_property("lastname", "Smith")
+    
+    # Save it to the database
+    reporter.create()
+    
+    # Now it has an UUID
+    reporter_guid = reporter.get_property("guid")
+    print(reporter_guid)
+    
+    # And it can be fetched from the database
+    qb = midgard.query_builder("midgard_person")
+    
+    # We have multiple ways to query objects
+    qb.add_constraint("lastname", "LIKE", "Smi%")
+    list = qb.execute()
+    print(list)
+    
+    #Create a new article
+    article = midgard.mgdschema.midgard_article()
+    article.set_property("title", "MidCOM is cool")
+    metadata = article.get_property("metadata")
+    metadata.set_property("authors", reporter_guid)
+    article.create()
+    
+    # Extend the article with new properties
+    article.set_parameter("namespace", "key", "value")
+    
+    # Localize the article to Finnish
+    cnc.set_lang("fi")
+    article.set_property("title", "MidCOM on Šltsin magee")
+    article.update()
+    
+    # Delete the Finnish translation
+    article.delete()
+
 ## A dynamic admin interface
 
 Midgard comes with [Asgard][18], an automated administrative interface which provides a full editing tool to all our installed MgdSchemas. If your define a tree model for your storage, it will even provide a nice navigation tree for them. For example:
