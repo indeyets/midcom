@@ -12,9 +12,9 @@ default_timezone: UTC
 enable_jquery_framework: false
 enable_js_midcom: false
 toolbar_configuration:
-    type: javascript
-    js:
-        debug: 'false'
+    type: float
+    # js:
+    #     enable_memory: 'true'
     logos:
         midgard:
             title: 'Midgard CMS'
