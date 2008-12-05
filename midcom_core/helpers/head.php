@@ -306,7 +306,7 @@ class midcom_core_helpers_head
             $status_parts = explode('.',$status);
             $status_target = $status_parts[0];
             $status_method = $status_parts[1];
-            echo "\n" . '$j(' . $status_target . ').' . $status_method . '(function() {'."\n";
+            echo "\n" . 'jQuery(' . $status_target . ').' . $status_method . '(function() {'."\n";
             echo $scripts;
             echo "\n" . '});' . "\n";
         }
