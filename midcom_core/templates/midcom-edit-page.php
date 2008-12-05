@@ -1,11 +1,11 @@
 <form method="post">
     <label>
-        Title
+        <span>Title</span>
         <input type="text" name="title" value="" tal:attributes="value page/title" />
     </label>
     
     <label>
-        Content
+        <span>Content</span>
         <textarea name="content" rows="20" cols="40" wrap="off"><span tal:replace="page/content" /></textarea>
     </label>
     
