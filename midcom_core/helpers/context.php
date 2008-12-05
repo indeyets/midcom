@@ -23,8 +23,6 @@ class midcom_core_helpers_context
     
     /**
      * Create and prepare a new component context.
-     *
-     * @access private
      */
     public function create()
     {
@@ -37,6 +35,23 @@ class midcom_core_helpers_context
             'content_entry_point'  => 'content',
         );
         $this->current_context = $context_id;
+    }
+    
+    /**
+     * Remove a context and return to previous.
+     */
+    public function delete()
+    {
+        if ($this->current_context == 0)
+        {
+            $this->contexts = array();
+            return;
+        }
+        
+        $old_context = $this->current_context;
+        $this->current_context--;
+        
+        unset($this->contexts[$old_context]);
     }
     
     /**
