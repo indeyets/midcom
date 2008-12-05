@@ -21,7 +21,7 @@ class midcom_core_helpers_comet
         $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/helpers/comet.js");
     }
     
-    static function pushdata($data, $type, $name)
+    static function pushdata($data, $type=1, $name='')
     {
 		switch ($type)
 		{
