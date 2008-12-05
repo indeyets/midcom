@@ -17,6 +17,11 @@ if (count($argv) != 2)
 }
 $conffile = $argv[1];
 
+if (!extension_loaded('midgard2'))
+{
+    die("Midgard 2 extension is not available\n");
+}
+
 // Start up a Midgard connection
 $midgard = new midgard_connection();
 $midgard->open($conffile);
