@@ -31,7 +31,7 @@ class net_nemein_xmpp_tests_xmpphp extends midcom_tests_testcase
         }
         
         $conn->connect();
-        $conn->processUntil('session_start');
+        $conn->process_until('session_start');
         $conn->message(
             $_MIDCOM->context->component_instance->configuration->defaults['to'],
             'Hello from midcom3!'
@@ -55,7 +55,7 @@ class net_nemein_xmpp_tests_xmpphp extends midcom_tests_testcase
         $conn = $this->create_connection();
         
         $conn->connect();
-        $conn->processUntil('session_start');
+        $conn->process_until('session_start');
 		$conn->presence(
             'midcom3 presence update test'
         );        
@@ -100,7 +100,7 @@ class net_nemein_xmpp_tests_xmpphp extends midcom_tests_testcase
                 $_MIDCOM->context->component_instance->configuration->resource,
                 $_MIDCOM->context->component_instance->configuration->server,
                 (MIDCOM_TESTS_ENABLE_OUTPUT ? true : false),
-                LOGGING_VERBOSE
+                4
             );
             
             return $conn;
@@ -108,7 +108,7 @@ class net_nemein_xmpp_tests_xmpphp extends midcom_tests_testcase
         catch(Exception $e)
         {
             $_MIDCOM->context->delete();
-            $this->fail("Couldn't create new net_nemein_xmpp_xmpphp instance");
+            $this->fail("Couldn't create new net_nemein_xmpp_xmpphp instance. Reason: {$e}");
         }
     }
 }

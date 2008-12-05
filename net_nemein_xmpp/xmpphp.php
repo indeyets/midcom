@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-include ('api/xmpphp/xmpp.php');
+//include ('api/xmpphp/xmpp.php');
 
 /**
  * XMPPHP wrapper
@@ -19,7 +19,7 @@ class net_nemein_xmpp_xmpphp implements net_nemein_xmpp_api_interface
     
     public function __construct($host, $port, $user, $password, $resource, $server=null, $printlog=false, $loglevel=null)
     {
-        $this->api = new XMPP($host, $port, $user, $password, $resource, $server, $printlog, $loglevel);
+        $this->api = new net_nemein_xmpp_api_xmpphp_xmpp($host, $port, $user, $password, $resource, $server, $printlog, $loglevel);
     }
     
     public function connect($persistent=false, $sendinit=true)
@@ -42,9 +42,9 @@ class net_nemein_xmpp_xmpphp implements net_nemein_xmpp_api_interface
         $this->api->presence($status, $show, $to);
     }
     
-    public function processUntil($event, $timeout=-1)
+    public function process_until($event, $timeout=-1)
     {
-        return $this->api->processUntil($event, $timeout);
+        return $this->api->process_until($event, $timeout);
     }
 
 }

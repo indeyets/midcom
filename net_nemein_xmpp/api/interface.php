@@ -20,6 +20,6 @@ interface net_nemein_xmpp_api_interface
     public function message($to, $body, $type='chat', $subject=null);
     public function presence($status=null, $show='available', $to=null);
     
-    public function processUntil($event, $timeout=-1);
+    public function process_until($event, $timeout=-1);
 }
 ?>
