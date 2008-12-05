@@ -1,6 +1,6 @@
 <?php
 /**
- * @package ${module}
+ * @package ${component}
  */
 ?>
-<h1 tal:content="${module}/name">Module name comes here</h1>
+<h1 tal:content="${component}/name">Component name comes here</h1>

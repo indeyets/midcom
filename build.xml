@@ -21,8 +21,8 @@
         <echo>
 Usage:
 
-To create a new module:
-    phing scaffold -Dmodule=com_example_mymodule
+To create a new component:
+    phing scaffold -Dcomponent=com_example_mycomponent
 
 Current settings:
 install_dir = ${install_dir} // this is the dir that is linked to this checkout.
@@ -31,63 +31,63 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
         </echo>
     </target>
 
-	<target name="scaffold" depends="resolve_module_to_dir">
+	<target name="scaffold" depends="resolve_component_to_dir">
 		<property name="template_dir" value="scaffold" />
-		<phingcall target="create_module" />
+		<phingcall target="create_component" />
     </target>
 
-    <target name="resolve_module_to_dir" >
-			<php function="str_replace" returnProperty="module">
+    <target name="resolve_component_to_dir" >
+			<php function="str_replace" returnProperty="component">
 				<param value="."/>
 				<param value="_"/>
-	  		    <param value="${module}"/>
+	  		    <param value="${component}"/>
 			</php>			
-            <property name="module_dir" value="${module}"/>
+            <property name="component_dir" value="${component}"/>
             
 			<resolveComponentsStyleHandle
-                module="${module}"
-                returnProperty="module_style_handle"
+                component="${component}"
+                returnProperty="component_style_handle"
             />
             
 			<resolveComponentNamePart
-                module="${module}"
+                component="${component}"
                 part="name"
-                returnProperty="module_parts_name"
+                returnProperty="component_parts_name"
             />
 			<resolveComponentNamePart
-                module="${module}"
+                component="${component}"
                 part="host"
-                returnProperty="module_parts_host"
+                returnProperty="component_parts_host"
             />
 			<resolveComponentNamePart
-                module="${module}"
+                component="${component}"
                 part="domain"
-                returnProperty="module_parts_domain"
+                returnProperty="component_parts_domain"
             />
             
             <available
-                file="${basedir}/${module_dir}"
-                property="module_dir_exists"
+                file="${basedir}/${component_dir}"
+                property="component_dir_exists"
                 value="yes"
                 type="dir"
             />
             <property name="midcom_root" value="${project.basedir}" />
         </target>
 
-        <target name="create_module" if="module_dir" unless="module_dir_exists">
-            <mkdir dir="${module_dir}"/>
-            <mkdir dir="${module_dir}/configuration"/>
-            <mkdir dir="${module_dir}/controllers"/>
-            <mkdir dir="${module_dir}/templates" />
-            <mkdir dir="${module_dir}/static" />
+        <target name="create_component" if="component_dir" unless="component_dir_exists">
+            <mkdir dir="${component_dir}"/>
+            <mkdir dir="${component_dir}/configuration"/>
+            <mkdir dir="${component_dir}/controllers"/>
+            <mkdir dir="${component_dir}/templates" />
+            <mkdir dir="${component_dir}/static" />
 
-            <input propertyname="module_description"
-                defaultValue="MidCOM module ${module}"
+            <input propertyname="component_description"
+                defaultValue="MidCOM component ${component}"
                 >
-                Enter module description: 
+                Enter component description: 
             </input>
 
-            <copy todir="${module_dir}">
+            <copy todir="${component_dir}">
                  <filterchain>
                     <expandproperties/>
                  </filterchain>
@@ -97,7 +97,7 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
                 </fileset>
             </copy>
 
-            <copy todir="${module_dir}/configuration">
+            <copy todir="${component_dir}/configuration">
                  <filterchain>
                     <expandproperties/>
                  </filterchain>
@@ -106,7 +106,7 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
                 </fileset>
             </copy>
 
-            <copy todir="${module_dir}/controllers">
+            <copy todir="${component_dir}/controllers">
                  <filterchain>
                     <expandproperties/>
                  </filterchain>
@@ -115,7 +115,7 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
                 </fileset>
             </copy>
             
-            <copy todir="${module_dir}/templates">
+            <copy todir="${component_dir}/templates">
                 <filterchain>
                     <expandproperties/>
                 </filterchain>
@@ -123,11 +123,11 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
                     <include name="xxx-show-index.php" />
                 </fileset>
             </copy>
-            <exec command="mv templates/xxx-show-index.php templates/${module_style_handle}-show-index.php"
-                  dir="${module_dir}"
+            <exec command="mv templates/xxx-show-index.php templates/${component_style_handle}-show-index.php"
+                  dir="${component_dir}"
             />
             
-            <copy todir="${module_dir}/static">
+            <copy todir="${component_dir}/static">
                 <filterchain>
                     <expandproperties/>
                 </filterchain>

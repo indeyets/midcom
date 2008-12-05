@@ -14,16 +14,16 @@ class resolveComponentsStyleHandle extends Task
 {
     protected $returnProperty; // name of property to set to return value
     
-    private $module = null; // name of the module to mangle with
+    private $component = null; // name of the component to mangle with
     
     function __construct() {}
     
     /**
-     * The setter for the attribute "module"
+     * The setter for the attribute "component"
      */
     public function setModule($str)
     {
-        $this->module = $str;
+        $this->component = $str;
     }
     
     /**
@@ -47,7 +47,7 @@ class resolveComponentsStyleHandle extends Task
      */
     public function main()
     {        
-        $name_parts = explode("_", $this->module);
+        $name_parts = explode("_", $this->component);
         
         $style_handle = "{$name_parts[0][0]}{$name_parts[1][0]}{$name_parts[2][0]}";
         

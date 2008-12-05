@@ -14,17 +14,17 @@ class resolveComponentNamePart extends Task
 {
     protected $returnProperty; // name of property to set to return value
     
-    private $module = null; // name of the module to mangle with
+    private $component = null; // name of the component to mangle with
     private $part = 'name'; // name of the part to return
     
     function __construct() {}
     
     /**
-     * The setter for the attribute "module"
+     * The setter for the attribute "component"
      */
     public function setModule($str)
     {
-        $this->module = $str;
+        $this->component = $str;
     }
     
     /**
@@ -56,7 +56,7 @@ class resolveComponentNamePart extends Task
      */
     public function main()
     {        
-        $name_parts = explode("_", $this->module);
+        $name_parts = explode("_", $this->component);
                 
         switch ($this->part)
         {
