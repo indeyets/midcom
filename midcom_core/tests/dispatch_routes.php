@@ -61,13 +61,13 @@ foreach ($_MIDCOM->componentloader->manifests as $component_name => $manifest)
     foreach ($routes as $route_id => $route_configuration)
     {
         // Generate fake arguments
-        preg_match_all('/\{\$(.+?)\}/', $route_configuration['route'], $route_path_matches);
+        preg_match_all('/\{(.+?)\}/', $route_configuration['route'], $route_path_matches);
         $route_string = $route_configuration['route'];
         $args = array();
         foreach ($route_path_matches[1] as $match)
         {
             $args[$match] = 'test';
-            $route_string = str_replace("{\${$match}}", "[{$match}: {$args[$match]}]", $route_string);
+            $route_string = str_replace("{{$match}}", "[{$match}: {$args[$match]}]", $route_string);
         }
         
         $_MIDCOM->dispatcher->set_route($route_id, $args);

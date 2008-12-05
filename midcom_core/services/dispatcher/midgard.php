@@ -188,10 +188,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
 
         foreach ($args as $key => $value)
         {
-            $link = str_replace("{\${$key}}", $value, $link);
+            $link = str_replace("{{$key}}", $value, $link);
         }
 
-        if (preg_match_all('%\{\$(.+?)\}%', $link, $link_matches))
+        if (preg_match_all('%\{(.+?)\}%', $link, $link_matches))
         {
             $link_remaining_args = $link_matches[1];
             throw new UnexpectedValueException('Missing arguments: ' . implode(', ', $link_remaining_args));
@@ -246,10 +246,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
      * The array should look something like this:
      * array
      * (
-     *     '/view/{$article_id}/' => 'view',
-     *     '/?articleid={$article_id}' => 'view',
+     *     '/view/{guid:article_id}/' => 'view',
+     *     '/?articleid={int:article_id}' => 'view',
      *     '/foo/bar' => 'someroute_id',
-     *     '/latest/{$category}/{$number}' => 'categorylatest',
+     *     '/latest/{string:category}/{int:number}' => 'categorylatest',
      * )
      * The route parts are automatically normalized to end with trailing slash
      * if they don't contain GET arguments
@@ -269,7 +269,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
 
             //echo "DEBUG: route_id: {$route_id} route:{$route} argv_str:{$argv_str}\n";
 
-            if (!preg_match_all('%\{\$(.+?)\}%', $route_path, $route_path_matches))
+            if (!preg_match_all('%\{(.+?)\}%', $route_path, $route_path_matches))
             {
                 // Simple route (only static arguments)
                 if (   $route_path === $argv_str
@@ -285,7 +285,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
                 continue;
             }
             // "complex" route (with variable arguments)
-            $route_path_regex = '%^' . str_replace('%', '\%', preg_replace('%\{\$(.+?)\}%', '([^/]+?)', $route_path)) . '$%';
+            $route_path_regex = '%^' . str_replace('%', '\%', preg_replace('%\{(.+?)\}%', '([^/]+?)', $route_path)) . '$%';
             //echo "DEBUG: route_path_regex:{$route_path_regex} argv_str:{$argv_str}\n";
             if (!preg_match($route_path_regex, $argv_str, $route_path_regex_matches))
             {
@@ -333,7 +333,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             return true;
         }
 
-        if (!preg_match_all('%\&?(.+?)=\{\$(.+?)\}%', $route_get, $route_get_matches))
+        if (!preg_match_all('%\&?(.+?)=\{(.+?)\}%', $route_get, $route_get_matches))
         {
             // Can't parse arguments from route_get
             throw new UnexpectedValueException("GET part of route '{$route}' ('{$route_get}') cannot be parsed");
@@ -347,7 +347,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
 
         foreach ($route_get_matches[1] as $index => $get_key)
         {
-            //echo "\$this->get[{$get_key}]:{$this->get[$get_key]}\n";
+            //echo "this->get[{$get_key}]:{$this->get[$get_key]}\n";
             if (   !isset($this->get[$get_key])
                 || empty($this->get[$get_key]))
             {
