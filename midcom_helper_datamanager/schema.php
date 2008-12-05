@@ -12,7 +12,7 @@
  * @package midcom_helper_datamanager
  */
 
-class midcom_helper_datamanager_schema extends midcom_core_component_baseclass
+class midcom_helper_datamanager_schema
 {
     /**
      * The general field listing, indexed by their name. It contains the full field record
@@ -76,7 +76,7 @@ class midcom_helper_datamanager_schema extends midcom_core_component_baseclass
      */
     public $operations = array('save' => '', 'cancel' => '');
     
-    public function initialize($schemadb, $name = null, $schemadb_path = null)
+    public function __construct($schemadb, $name = null, $schemadb_path = null)
     {
         $this->schemadb_path = $schemadb_path;
         
