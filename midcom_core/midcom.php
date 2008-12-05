@@ -14,6 +14,7 @@
 class midcom_core_midcom
 {
     // Services
+    public $authentication;
     public $authorization;
     public $configuration;
     public $componentloader;
@@ -57,7 +58,11 @@ class midcom_core_midcom
             require_once 'Benchmark/Timer.php';
             $this->timer = new Benchmark_Timer(true);
         }
-        
+
+        // Load the preferred authentication implementation
+        $services_authentication_implementation = $this->configuration->get('services_authentication');
+        $this->authentication = new $services_authentication_implementation();
+      
         // Load the preferred authorization implementation
         $services_authorization_implementation = $this->configuration->get('services_authorization');
         $this->authorization = new $services_authorization_implementation();
@@ -286,7 +291,16 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
         }
         
         $this->dispatcher->initialize($component);
-        $this->dispatcher->dispatch();
+        
+        try
+        {
+            $this->dispatcher->dispatch();
+        }
+        catch (midcom_exception_unauthorized $exception)
+        {
+            // Pass the exception to authentication handler
+            $_MIDCOM->authentication->handle_exception($exception);
+        }
 
         header('Content-Type: ' . $this->context->get_item('mimetype'));
         if ($this->timer)

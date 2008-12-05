@@ -138,21 +138,6 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         unset($route_id_map);
 
         $selected_route_configuration = $route_definitions[$this->route_id];
-
-        $controller_class = $selected_route_configuration['controller'];
-        $controller = new $controller_class($_MIDCOM->context->component_instance);
-        $controller->dispatcher = $this;
-        
-        // Then call the route_id
-        $action_method = "action_{$selected_route_configuration['action']}";
-        // TODO: store this array somewhere where it can be accessed via get_context_item
-        $data = array();
-        if ($_MIDCOM->timer)
-        {
-            $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch::call action');
-        }
-        $controller->$action_method($this->route_id, $data, $this->action_arguments);
-        $_MIDCOM->context->set_item($this->component_name, $data);
         
         // Set other context data from route
         if (isset($selected_route_configuration['mimetype']))
@@ -167,6 +152,24 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             $_MIDCOM->context->content_entry_point = $selected_route_configuration['content_entry_point'];
         }
+
+        // Initialize controller
+        $controller_class = $selected_route_configuration['controller'];
+        $controller = new $controller_class($_MIDCOM->context->component_instance);
+        $controller->dispatcher = $this;
+        
+        // Then call the route_id
+        $action_method = "action_{$selected_route_configuration['action']}";
+        // TODO: store this array somewhere where it can be accessed via get_context_item
+        $data = array();
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch::call action');
+        }
+        
+        // Run the route and set appropriate data
+        $controller->$action_method($this->route_id, $data, $this->action_arguments);
+        $_MIDCOM->context->set_item($this->component_name, $data);
     }
 
     /**

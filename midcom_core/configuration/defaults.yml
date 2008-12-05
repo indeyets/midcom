@@ -1,3 +1,4 @@
+services_authentication: midcom_core_services_authentication_basic
 services_authorization: midcom_core_services_authorization_simple
 services_templating: midcom_core_services_templating_midgard
 services_sessioning: midcom_core_services_sessioning_midgard
