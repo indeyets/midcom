@@ -153,9 +153,12 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
 
         $component = $_MIDCOM->context->get_item('component');
 
-        if (   !mgd_is_element_loaded($content_entry_point)
-            && $component)
-        {        
+        if (!mgd_is_element_loaded($content_entry_point))
+        {   
+            if (!$component)
+            {
+                $component = 'midcom_core';
+            }     
             // Load element from component templates
             echo $_MIDCOM->componentloader->load_template($component, $content_entry_point);
         }

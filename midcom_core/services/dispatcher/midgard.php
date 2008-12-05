@@ -49,6 +49,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $mc = midgard_page::new_collector('id', $_MIDGARD['page']);
         $mc->set_key_property('guid');
         $mc->add_value_property('title');
+        $mc->add_value_property('content');
         $mc->add_value_property('component');
         
         $mc->execute();
@@ -57,6 +58,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             $page_data['guid'] = $guid;
             $page_data['title'] = $mc->get_subkey($guid, 'title');
+            $page_data['content'] = $mc->get_subkey($guid, 'content');            
             $_MIDCOM->context->component = $mc->get_subkey($guid, 'component');
         }
         
@@ -70,6 +72,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             $_MIDCOM->timer->setMarker('MidCOM dispatcher::initialize');
         }
+        
         // In main Midgard request we dispatch the component in connection to a page
         $page = new midgard_page();
         $page->get_by_id($_MIDGARD['page']);
@@ -81,6 +84,12 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
     public function get_routes()
     {
         $core_routes = $_MIDCOM->configuration->get('routes');
+        
+        if (!$_MIDCOM->context->component_instance)
+        {
+            return $core_routes;
+        }
+        
         $component_routes = $_MIDCOM->context->component_instance->configuration->get('routes');
         
         return array_merge($core_routes, $component_routes);

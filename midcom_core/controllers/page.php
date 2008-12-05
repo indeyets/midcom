@@ -15,8 +15,12 @@ class midcom_core_controllers_page
 {
     public function __construct($instance)
     {
-        $this->configuration = $instance->configuration;
+        $this->configuration = $_MIDCOM->configuration;
     }
+    
+    public function action_show($route_id, &$data, $args)
+    {
+    }  
     
     public function action_edit($route_id, &$data, $args)
     {
@@ -26,7 +30,16 @@ class midcom_core_controllers_page
         }
         $data['page'] = new midgard_page();
         $data['page']->get_by_id($_MIDGARD['page']);
-        // TODO: Datamanagerize
+
+        if (isset($_POST['save']))
+        {
+            $data['page']->title = $_POST['title'];
+            $data['page']->content = $_POST['content'];
+            $data['page']->update();
+            
+            header("Location: {$_MIDCOM->context->prefix}");
+            exit();
+        }
     }
 }
 ?>

@@ -89,7 +89,8 @@ class midcom_core_midcom
         //$this->navigation = new midcom_core_helpers_navigation();
         
         // Load the head helper
-        $this->head = new midcom_core_helpers_head(
+        $this->head = new midcom_core_helpers_head
+        (
             $this->configuration->get('enable_jquery_framework'),
             $this->configuration->get('enable_js_midcom')
         );
@@ -280,12 +281,13 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
         
         if (!$component)
         {
-            if (!empty($this->dispatcher->argv))
-            {
+            $component = 'midcom_core';
+            //if (!empty($this->dispatcher->argv))
+            //{
                 // FIXME: Process these also in the dispatcher as we will have some "core" routes
-                throw new midcom_exception_notfound("Page not found.");
-            }
-            return;
+            //    throw new midcom_exception_notfound("Page not found.");
+            //}
+            //return;
         }
 
         $this->dispatcher->initialize($component);

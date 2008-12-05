@@ -9,6 +9,10 @@ default_timezone: UTC
 enable_jquery_framework: false
 enable_js_midcom: false
 routes:
+    page_show:
+        controller: midcom_core_controllers_page
+        action: show
+        route: /
     page_edit:
         controller: midcom_core_controllers_page
         action: edit
