@@ -37,6 +37,26 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
         $this->create_toolbar($_MIDCOM->context->get_current_context());
         
         $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/services/toolbars/javascript.js");
+        
+        $_MIDCOM->head->add_link_head(
+            array
+            (
+                'rel'   => 'stylesheet',
+                'type'  => 'text/css',
+                'media' => 'screen',
+                'href'  => MIDCOM_STATIC_URL . '/midcom_core/services/toolbars/javascript.css',
+            )
+        );
+        $_MIDCOM->head->add_link_head(
+            array
+            (
+                'condition' => 'eq IE',
+                'rel'   => 'stylesheet',
+                'type'  => 'text/css',
+                'media' => 'screen',
+                'href'  => MIDCOM_STATIC_URL . '/midcom_core/services/toolbars/javascript-ie.css',
+            )
+        );
     }
     
     public function set_configuration($configuration)
