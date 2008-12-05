@@ -35,10 +35,10 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
         {
             throw new Exception("{$class} is not an MgdSchema class");
         }
-        //midgard_object_class::connect_default($class, 'action_loaded_hook', array($this, 'on_loaded'), array($class));
-        //midgard_object_class::connect_default($class, 'action_create_hook', array($this, 'on_creating'), array($class));
+        midgard_object_class::connect_default($class, 'action_loaded_hook', array($this, 'on_loaded'), array($class));
+        midgard_object_class::connect_default($class, 'action_create_hook', array($this, 'on_creating'), array($class));
         midgard_object_class::connect_default($class, 'action_update_hook', array($this, 'on_updating'), array($class));
-        //midgard_object_class::connect_default($class, 'action_delete_hook', array($this, 'on_deleting'), array($class));        
+        midgard_object_class::connect_default($class, 'action_delete_hook', array($this, 'on_deleting'), array($class));        
     }
 
     public function on_loaded($object, $params)
