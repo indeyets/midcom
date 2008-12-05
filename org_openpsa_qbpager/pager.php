@@ -580,14 +580,14 @@ class org_openpsa_qbpager_pager
         {
             return false;
         }
-        if (!$acl_checks)
+        
+        $this->count = $this->count();
+        
+        if (!$this->results_per_page)
         {
-            $this->count();
+            $this->results_per_page = 4;
         }
-        else
-        {
-            $this->count();
-        }
+        
         return ceil($this->count / $this->results_per_page);
     }
     
