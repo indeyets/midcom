@@ -99,7 +99,6 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         while (   $page_id
                && $page_id != $root_id)
         {
-            echo "{$page_id}: {$page_path}<br />\n";
             $parent_mc = midgard_page::new_collector('id', $page_id);
             $parent_mc->set_key_property('up');
             $parent_mc->add_value_property('name');
@@ -108,7 +107,6 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
             foreach ($parents as $parent => $array)
             {
                 $page_id = $parent;
-                echo $parent;
                 $page_path = $parent_mc->get_subkey($parent, 'name') . "/{$page_path}";
             }
         }
