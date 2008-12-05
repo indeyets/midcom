@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<project name="MidCOM 3" default="help" basedir=".">
+    <property file="build.properties"  />
+    <property name="absolute_basedir" value="" />
+    <property name="phpdocdir" value="documentation/api" />
+    <property name="coreVersion" value="0.1beta" />
+    <property name="version" value="" />
+    <property name="state" value="" />
+    <resolvepath propertyName="absolute_basedir" file="${project.basedir}"/>
+
+    <taskdef classname="build.resolveComponentsStyleHandle"
+             name="resolveComponentsStyleHandle"
+             classpath="/${project.basedir}"
+    />
+    <taskdef classname="build.resolveComponentNamePart"
+             name="resolveComponentNamePart"
+             classpath="/${project.basedir}"
+    />
+
+    <target name="help">
+        <echo>
+Usage:
+
+To create a new module:
+    phing scaffold -Dmodule=com_example_mymodule
+
+Current settings:
+install_dir = ${install_dir} // this is the dir that is linked to this checkout.
+target_dir  = ${target_dir} // this is where pear packages are saved.
+
+        </echo>
+    </target>
+
+	<target name="scaffold" depends="resolve_module_to_dir">
+		<property name="template_dir" value="scaffold" />
+		<phingcall target="create_module" />
+    </target>
+
+    <target name="resolve_module_to_dir" >
+			<php function="str_replace" returnProperty="module">
+				<param value="."/>
+				<param value="_"/>
+	  		    <param value="${module}"/>
+			</php>			
+            <property name="module_dir" value="${module}"/>
+            
+			<resolveComponentsStyleHandle
+                module="${module}"
+                returnProperty="module_style_handle"
+            />
+            
+			<resolveComponentNamePart
+                module="${module}"
+                part="name"
+                returnProperty="module_parts_name"
+            />
+			<resolveComponentNamePart
+                module="${module}"
+                part="host"
+                returnProperty="module_parts_host"
+            />
+			<resolveComponentNamePart
+                module="${module}"
+                part="domain"
+                returnProperty="module_parts_domain"
+            />
+            
+            <available
+                file="${basedir}/${module_dir}"
+                property="module_dir_exists"
+                value="yes"
+                type="dir"
+            />
+            <property name="midcom_root" value="${project.basedir}" />
+        </target>
+
+        <target name="create_module" if="module_dir" unless="module_dir_exists">
+            <mkdir dir="${module_dir}"/>
+            <mkdir dir="${module_dir}/configuration"/>
+            <mkdir dir="${module_dir}/controllers"/>
+            <mkdir dir="${module_dir}/templates" />
+            <mkdir dir="${module_dir}/static" />
+
+            <input propertyname="module_description"
+                defaultValue="MidCOM module ${module}"
+                >
+                Enter module description: 
+            </input>
+
+            <copy todir="${module_dir}">
+                 <filterchain>
+                    <expandproperties/>
+                 </filterchain>
+                <fileset dir="${template_dir}/" >
+                    <include name="*.php" />
+                    <include name="*.yml" />
+                </fileset>
+            </copy>
+
+            <copy todir="${module_dir}/configuration">
+                 <filterchain>
+                    <expandproperties/>
+                 </filterchain>
+                <fileset dir="${template_dir}/configuration/">
+                    <include name="*.yml" />
+                </fileset>
+            </copy>
+
+            <copy todir="${module_dir}/controllers">
+                 <filterchain>
+                    <expandproperties/>
+                 </filterchain>
+                <fileset dir="${template_dir}/controllers">
+                    <include name="*.php" />
+                </fileset>
+            </copy>
+            
+            <copy todir="${module_dir}/templates">
+                <filterchain>
+                    <expandproperties/>
+                </filterchain>
+                <fileset dir="${template_dir}/templates">
+                    <include name="xxx-show-index.php" />
+                </fileset>
+            </copy>
+            <exec command="mv templates/xxx-show-index.php templates/${module_style_handle}-show-index.php"
+                  dir="${module_dir}"
+            />
+            
+            <copy todir="${module_dir}/static">
+                <filterchain>
+                    <expandproperties/>
+                </filterchain>
+                <fileset dir="${template_dir}/static">
+                    <include name="component.js" />
+                </fileset>
+            </copy>
+        </target>
+
+</project>
+

@@ -1,0 +1,6 @@
+routes:
+    index:
+        controller: ${module}_controllers_index
+        action: index
+        route: /
+        content_entry_point: ${module_style_handle}-show-index

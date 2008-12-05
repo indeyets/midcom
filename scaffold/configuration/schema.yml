@@ -1,0 +1,19 @@
+default:
+    description: article
+    fields:
+        name:
+            title: url name
+            type: text
+            widget: text
+            write_privilege:
+                privilege: "midcom:urlname"
+        title:
+            type: text
+            widget: text
+            required: true
+        content:
+            title: content
+            type: text
+            type_config:
+                output_mode: html
+            widget: tinymce
