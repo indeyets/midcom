@@ -434,7 +434,8 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         echo $content;
         
         if (   $_MIDCOM->timer
-            && $_MIDCOM->context->get_current_context() == 0)
+            && $_MIDCOM->context->get_current_context() == 0
+            && $_MIDCOM->context->mimetype == 'text/html')
         {
             $_MIDCOM->timer->display();
         }
