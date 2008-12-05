@@ -47,7 +47,8 @@ class midcom_helper_datamanager_widgetproxy
 
     public function __isset($name)
     {
-        return $this->field_exists($name);
+        // TODO: check that we have corresponding datatype as well
+        return $this->schema->field_exists($name);
     }
 
     /**
@@ -62,17 +63,12 @@ class midcom_helper_datamanager_widgetproxy
         if (!$this->load_widget($name))
         {
             //TODO: use dm exception
-            throw new midcom_helper_datamanager_exception_widget("The datawidget for field {$name} could not be loaded");
+            throw new midcom_helper_datamanager_exception_widget("The widget for field {$name} could not be loaded");
         }
     }
 
-    private function field_exists($name)
-    {
-        return isset($this->schema->fields[$name]);
-    }
-
     /**
-     * Loads and initialized datawidget for the given schema field, if config is not given schema is used
+     * Loads and initialized widget for the given schema field, if config is not given schema is used
      *
      * @param string $name name of the schema field
      * @param array $config widget configuration, if left as default the valu is read from schema
@@ -80,7 +76,7 @@ class midcom_helper_datamanager_widgetproxy
      */
     public function load_widget($name, $config = null)
     {
-        if (! $this->field_exists($name))
+        if (! $this->schema->field_exists($name))
         {
             throw new midcom_helper_datamanager_exception_widget("The field {$name} is not defined in schema");
         }
@@ -90,12 +86,6 @@ class midcom_helper_datamanager_widgetproxy
             $config = $this->schema->fields[$name];
         }
 
-        // TODO: Move to schema class internal sanity checks
-        if (! isset($config['widget']) )
-        {
-            throw new midcom_helper_datamanager_exception_widget("The field {$name} is missing widget");
-        }
-
         $widget_class = $config['widget'];
         
         if (strpos($widget_class, '_') === false)
@@ -103,6 +93,7 @@ class midcom_helper_datamanager_widgetproxy
             $widget_class = "midcom_helper_datamanager_widget_{$widget_class}";
         }
 
+        // TODO: check that we have corresponding datatype as well
         $this->widgets[$name] = new $widget_class();
         if (! $this->widgets[$name]->initialize($name, $config['widget_config'], $this->storage))
         {

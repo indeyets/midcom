@@ -47,11 +47,12 @@ class midcom_helper_datamanager_typeproxy
 
     public function __isset($name)
     {
-        return $this->field_exists($name);
+        return $this->schema->field_exists($name);
     }
 
     /**
-     * Tries to load type and throws exception if cannot
+     * Tries to load type for field name and throws exception if cannot
+     * @param string $name name of the schema field
      */
     private function prepare_type($name)
     {
@@ -66,11 +67,6 @@ class midcom_helper_datamanager_typeproxy
         }
     }
 
-    private function field_exists($name)
-    {
-        return isset($this->schema->fields[$name]);
-    }
-
     /**
      * Loads and initialized datatype for the given schema field, if config is not given schema is used
      *
@@ -80,7 +76,7 @@ class midcom_helper_datamanager_typeproxy
      */
     public function load_type($name, $config = null)
     {
-        if (! $this->field_exists($name))
+        if (! $this->schema->field_exists($name))
         {
             throw new midcom_helper_datamanager_exception_type("The field {$name} is not defined in schema");
         }
@@ -88,12 +84,6 @@ class midcom_helper_datamanager_typeproxy
         if (is_null($config))
         {
             $config = $this->schema->fields[$name];
-        }
-
-        // TODO: Move to schema class internal sanity checks
-        if (! isset($config['type']) )
-        {
-            throw new midcom_helper_datamanager_exception_type("The field {$name} is missing type");
         }
 
         $type_class = $config['type'];
