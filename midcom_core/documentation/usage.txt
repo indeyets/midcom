@@ -5,4 +5,5 @@ Quick MidCOM 3 setup HOWTO
 2. Create a new Midgard host with no MidCOM and a minimal style
 3. Ensure the MidCOM 3 checkout is in php.ini `include_path`
 4. Point the `MidgardRootFile` of the Midgard Apache VirtualHost setup to MidCOM's `httpd/midcom-root.php`
-5. Start playing around
+5. Patch your MgdObjects.xml (in `/usr/share/midgard`) to include a `component` property for `midgard_page` objects
+6. Start playing around
