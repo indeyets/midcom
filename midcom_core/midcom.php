@@ -210,6 +210,7 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
         // FIXME: Do not check against component names (ie make phing build script to build correct file tree from source)
         $path = MIDCOM_ROOT . '/' . str_replace('midcom/core', 'midcom_core', $path);
         $path = str_replace('net/nemein/news', 'net_nemein_news', $path);
+        $path = str_replace('org/openpsa/qbpager', 'org_openpsa_qbpager', $path);
 
         if (!file_exists($path))
         {

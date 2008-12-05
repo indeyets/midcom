@@ -4,3 +4,5 @@
       <a href="#" tal:attributes="href article/url" tal:content="article/title">Headline</a>
   </li>
 </ul>
+
+<p tal:content="structure net_nemein_news/previousnext">More</p>

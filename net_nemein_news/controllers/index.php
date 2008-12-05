@@ -21,18 +21,20 @@ class net_nemein_news_controllers_index
     public function action_latest($route_id, &$data, $args)
     {
         $data['topic'] = new midgard_topic($this->configuration->get('news_topic'));
+        
+        $_MIDCOM->componentloader->load('org_openpsa_qbpager');
 
-        $qb = midgard_article::new_query_builder();
+        $qb = new org_openpsa_qbpager_pager('midgard_article');
         $qb->add_constraint('topic', '=', $data['topic']->id);
         $qb->add_order('metadata.published', 'DESC');
 
         if ($route_id == 'latest')
         {
-            $qb->set_limit((int) $args['number']);
+            $qb->results_per_page = (int) $args['number'];
         }
         else
         {
-            $qb->set_limit((int) $this->configuration->get('index_show_articles'));
+            $qb->results_per_page = (int) $this->configuration->get('index_show_articles');
         }
         
         $articles = $qb->execute();
@@ -45,6 +47,8 @@ class net_nemein_news_controllers_index
             }
             $data['news'][] = $article;
         }
+        
+        $data['previousnext'] = $qb->get_previousnext();
     }
 }
 ?>
