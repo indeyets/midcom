@@ -19,8 +19,13 @@ routes:
         mimetype: text/xml
         template_entry_point: nnn-show-rss
     show:
-        controller: net_nemein_news_controllers_show
-        action: article
+        controller: net_nemein_news_controllers_article
+        action: show
         route: /{$name}/
         content_entry_point: nnn-show-article
+    edit:
+        controller: net_nemein_news_controllers_article
+        action: edit
+        route: /{$name}/edit
+        content_entry_point: nnn-edit-article
 

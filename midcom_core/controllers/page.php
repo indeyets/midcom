@@ -30,6 +30,8 @@ class midcom_core_controllers_page
         }
         $data['page'] = new midgard_page();
         $data['page']->get_by_id($_MIDGARD['page']);
+        
+        $_MIDCOM->authorization->require_do('midgard:update', $data['page']);
 
         if (isset($_POST['save']))
         {

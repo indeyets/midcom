@@ -1,24 +1,24 @@
 <?php
 /**
- * @package net_nemein_news
+ * @package midcom_core
  * @author The Midgard Project, http://www.midgard-project.org
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
 /**
- * News item display controller
+ * Page management controller
  *
- * @package net_nemein_news
+ * @package midcom_core
  */
-class net_nemein_news_controllers_show
+class net_nemein_news_controllers_article
 {
     public function __construct($instance)
     {
         $this->configuration = $instance->configuration;
     }
     
-    public function action_article($route_id, &$data, $args)
+    private function load_article(&$data, $args)
     {
         $topic_guid = $this->configuration->get('news_topic');
         if (!$topic_guid)
@@ -36,6 +36,28 @@ class net_nemein_news_controllers_show
             throw new midcom_exception_notfound("Article {$args['name']} not found.");
         }
         $data['article'] = $articles[0];
+    }
+    
+    public function action_show($route_id, &$data, $args)
+    {
+        $this->load_article($data, $args);
+    }
+    
+    public function action_edit($route_id, &$data, $args)
+    {
+        $this->load_article($data, $args);
+
+        $_MIDCOM->authorization->require_do('midgard:update', $data['article']);
+
+        if (isset($_POST['save']))
+        {
+            $data['article']->title = $_POST['title'];
+            $data['article']->content = $_POST['content'];
+            $data['article']->update();
+            
+            header('Location: ' . $_MIDCOM->dispatcher->generate_url('show', array('name' => $data['article']->name)));
+            exit();
+        }
     }
 }
 ?>
