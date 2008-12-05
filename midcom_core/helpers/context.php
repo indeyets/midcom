@@ -154,8 +154,8 @@ class midcom_core_helpers_context
      **/
     public function __isset($key)
     {
-        if (    array_key_exists($this->current_context, $this->contexts)
-            and array_key_exists($key, $this->contexts[$this->current_context]))
+        if (   isset($this->contexts[$this->current_context])
+            && isset($this->contexts[$this->current_context][$key]))
         {
             return true;
         }
