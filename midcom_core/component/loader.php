@@ -95,14 +95,24 @@ class midcom_core_component_loader
         return $this->interfaces[$component];
     }
     
-    public function load_template($component, $template)
+    public function load_template($component, $template, $fallback = true)
     {
         $component_directory = $this->component_to_filepath($component);
         $template_file = "{$component_directory}/templates/{$template}.php";
         if (!file_exists($template_file))
         {
-            // TODO: Should we just ignore this silently instead?
-            throw new OutOfRangeException("Component {$component} template file {$template} not found.");
+            if (!$fallback)
+            {
+                // TODO: Should we just ignore this silently instead?
+                throw new OutOfRangeException("Component {$component} template file {$template} not found.");
+            }
+            $component_directory = $this->component_to_filepath('midcom_core');
+            $template_file = "{$component_directory}/templates/{$template}.php";
+            if (!file_exists($template_file))
+            {
+                // TODO: Should we just ignore this silently instead?
+                throw new OutOfRangeException("midcom_core template file {$template} not found.");
+            }
         }
         
         return file_get_contents($template_file);
