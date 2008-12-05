@@ -90,7 +90,16 @@ class midcom_core_component_loader
             $_MIDCOM->timer->setMarker("MidCOM component loaded::load::instantiate");
         }
         $this->interfaces[$component] = new $component($configuration);
-
+        
+        if ($_MIDCOM->head->jsmidcom_enabled)
+        {
+            $js_component_file = "{$component_directory}/static/component.js";
+            if (file_exists($js_component_file))
+            {
+                $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/{$component}/component.js");
+            }
+        }
+        
         $this->tried_to_load[$component] = true;
         return $this->interfaces[$component];
     }
