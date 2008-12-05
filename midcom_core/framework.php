@@ -18,10 +18,7 @@ if (!defined('MIDCOM_ROOT'))
  *
  * This makes life much, much better when making static copies for whatever reason
  */
-if (   !preg_match('%\?|/$|midcom-.+-|/.+\..+$%', $_SERVER['REQUEST_URI'])
-    && (   !isset($_POST)
-        || empty($_POST))
-    )
+if (!preg_match('%\?|/$|midcom-.+-|/.+\..+$%', $_SERVER['REQUEST_URI']) && empty($_POST))
 {
     header('HTTP/1.0 301 Moved Permanently');
     header("Location: {$_SERVER['REQUEST_URI']}/");
