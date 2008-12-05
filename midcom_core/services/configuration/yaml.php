@@ -95,20 +95,25 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
     {
         if (!$this->exists($key))
         {
-            throw new Exception("Configuration key {$key} does not exist.");
+            throw new OutOfBoundsException("Configuration key {$key} does not exist.");
         }
-        
+
         if ($subkey !== false)
         {                      
             if (! isset($this->merged[$key][$subkey]))
             {
-                throw new Exception("Configuration subkey {$subkey} does not exist within key {$key}.");
+                throw new OutOfBoundsException("Configuration subkey {$subkey} does not exist within key {$key}.");
             }
-            
+
             return $this->merged[$key][$subkey];
         }
 
         return $this->merged[$key];
+    }
+
+    public function __get($key)
+    {
+        return $this->get($key);
     }
 
     /**
@@ -120,6 +125,11 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
     public function exists($key)
     {
         return array_key_exists($key, $this->merged);
+    }
+
+    public function __isset($key)
+    {
+        return $this->exists($key);
     }
 
     /**
