@@ -35,6 +35,10 @@ class net_nemein_news_controllers_index
 
         if ($route_id == 'latest')
         {
+            if (!is_numeric($args['number']))
+            {
+                throw new midcom_exception_notfound("Number expected as argument"); 
+            }
             $qb->results_per_page = (int) $args['number'];
         }
         else
