@@ -2,8 +2,8 @@
 /**
  * @package net_nemein_news
  */
+echo "<?xml version=\"1.0\"?>\n";
 ?>
-<?xml version="1.0"?>
 <rss version="2.0">
    <channel>
         <title tal:replace="page/title">News area</title>
