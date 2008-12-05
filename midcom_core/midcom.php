@@ -242,6 +242,11 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
      */
     public function process()
     {
+        if ($this->timer)
+        {
+            $this->timer->setMarker('MidCOM::process');
+        }
+        
         $this->dispatcher->populate_environment_data();
         try
         {
@@ -264,8 +269,12 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
 
         $this->dispatcher->initialize($component);
         $this->dispatcher->dispatch();
-        
+
         header('Content-Type: ' . $this->context->get_item('mimetype'));
+        if ($this->timer)
+        {
+            $this->timer->setMarker('MidCOM::process ended');
+        }
     }
 
     /**

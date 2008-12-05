@@ -66,6 +66,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
 
     public function initialize($component)
     {
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM dispatcher::initialize');
+        }
         // In main Midgard request we dispatch the component in connection to a page
         $page = new midgard_page();
         $page->get_by_id($_MIDGARD['page']);
@@ -79,6 +83,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
      */
     public function dispatch()
     {
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch');
+        }
         $route_definitions = $this->component_instance->configuration->get('routes');
 
         $route_id_map = array();
@@ -104,6 +112,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $action_method = "action_{$selected_route_configuration['action']}";
         // TODO: store this array somewhere where it can be accessed via get_context_item
         $data = array();
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch::call action');
+        }
         $controller->$action_method($this->route_id, $data, $this->action_arguments);
         $_MIDCOM->context->set_item($this->component_name, $data);
         
