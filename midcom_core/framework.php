@@ -17,6 +17,11 @@ if (!defined('MIDCOM_STATIC_URL'))
     define('MIDCOM_STATIC_URL', '/midcom-static');
 }
 
+if (!defined('MIDCOM_TEST_RUN'))
+{
+    define('MIDCOM_TEST_RUN', false);
+}
+
 /**
  * Make sure the URLs not having query string (or midcom-xxx- -method signature)
  * have trailing slash or some extension in the "filename".

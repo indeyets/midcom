@@ -24,6 +24,9 @@ Usage:
 To create a new component:
     phing scaffold -Dcomponent=com_example_mycomponent
 
+To run all tests: (this must be done as root or by sudo)
+    phing runtests
+
 Current settings:
 install_dir = ${install_dir} // this is the dir that is linked to this checkout.
 target_dir  = ${target_dir} // this is where pear packages are saved.
@@ -31,6 +34,95 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
         </echo>
     </target>
 
+    <fileset dir="." id="alltests">
+        <include name="tests/*Test.php" />
+        <include name="**/tests/*Test.php" />
+        <exclude name="scaffold/tests/*Test.php" />
+    </fileset>
+    
+    <fileset dir="." id="midcom">
+        <include name="*.php" />
+        <include name="**/*.php" />
+        <exclude name="build/*.php" />
+        <exclude name="build/**/*.php" />
+        <exclude name="scaffold/*.php" />
+        <exclude name="scaffold/**/*.php" />
+        <exclude name="static/*.php" />
+        <exclude name="static/**/*.php" />
+        <exclude name="**/static/*.php" />
+        <exclude name="**/static/**/*.php" />
+        <exclude name="midcom_core/httpd/midcom-root.php" />
+                        
+        <exclude name="midcom_helper_datamanager/*.php" />
+        <exclude name="midcom_helper_datamanager/**/*.php" />
+        <exclude name="net_nemein_notifications/*.php" />
+        <exclude name="net_nemein_notifications/**/*.php" />
+        
+        <exclude name="templates/*.php" />
+        <exclude name="**/templates/*.php" />
+        
+        <exclude name="tests/*.php" />
+        <exclude name="**/tests/*.php" />
+        <exclude name="*Test.php" />
+        <exclude name="**/*Test.php" />
+    </fileset>
+
+    <target name="runtests" depends="prepare_tests">
+        <phpunit haltonfailure="false" printsummary="true" codecoverage="false">
+            <batchtest>
+                <!--<fileset dir="tests">
+                    <include name="all.php" />
+                </fileset>-->
+                <fileset refid="alltests" />
+            </batchtest>
+          
+            <formatter type="xml" todir="test_reports" outfile="alltests.xml" />
+        </phpunit>
+
+        <phpunitreport  infile="test_reports/alltests.xml"
+                        styledir="/opt/local/lib/php/data/phing/etc"
+                        format="frames"
+                        todir="test_reports"
+        />
+        
+        <phingcall target="code_coverage" />
+    </target>
+    
+    <target name="code_coverage" depends="prepare_coverage">
+
+        <coverage-setup database="test_reports/coverage/coverage.db">
+            <fileset refid="midcom"/>
+        </coverage-setup>
+
+        <phpunit codecoverage="true">
+            <batchtest>
+                <fileset refid="alltests"/>
+            </batchtest>
+        </phpunit>
+
+        <coverage-report outfile="test_reports/coverage/coverage.xml">
+            <report todir="test_reports/coverage"/>
+        </coverage-report>
+
+    </target>
+
+    <target name="prepare_tests" depends="clean_tests">
+        <mkdir dir="test_reports" />
+    </target>
+    
+    <target name="clean_tests">
+        <delete dir="test_reports" />
+    </target>
+    
+    <target name="prepare_coverage" depends="clean_coverage">
+        <mkdir dir="test_reports" />
+        <mkdir dir="test_reports/coverage"/>
+    </target>
+    
+    <target name="clean_coverage">
+        <delete dir="test_reports/coverage" />
+    </target>
+    
 	<target name="scaffold" depends="resolve_component_to_dir">
 		<property name="template_dir" value="scaffold" />
 		<phingcall target="create_component" />
@@ -80,6 +172,7 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
             <mkdir dir="${component_dir}/controllers"/>
             <mkdir dir="${component_dir}/templates" />
             <mkdir dir="${component_dir}/static" />
+            <mkdir dir="${component_dir}/tests" />
 
             <input propertyname="component_description"
                 defaultValue="MidCOM component ${component}"
@@ -133,6 +226,15 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
                 </filterchain>
                 <fileset dir="${template_dir}/static">
                     <include name="component.js" />
+                </fileset>
+            </copy>
+            
+            <copy todir="${component_dir}/tests">
+                <filterchain>
+                    <expandproperties/>
+                </filterchain>
+                <fileset dir="${template_dir}/tests">
+                    <include name="*.php" />
                 </fileset>
             </copy>
         </target>
