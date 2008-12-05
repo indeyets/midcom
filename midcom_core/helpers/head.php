@@ -162,14 +162,15 @@ class midcom_core_helpers_head
             $output .= "<!--[if {$attributes['condition']}]>\n";
         }
 
+        $output .= '<link';
         foreach ($attributes as $key => $val)
         {
-            if ($key != 'conditions')
+            if ($key != 'condition')
             {
                 $output .= " {$key}=\"{$val}\" ";
             }
         }
-        $output .= "    <link{$output}/>\n";
+        $output .= "/>\n";
 
         if (array_key_exists('condition', $attributes))
         {
