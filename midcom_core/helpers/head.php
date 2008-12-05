@@ -76,7 +76,7 @@ class midcom_core_helpers_head
         
         $this->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/midcom.js", true);
         
-        $script = '$j' . ".midcom.init({\n";
+        $script = "jQuery.midcom.init({\n";
         $script .= "    MIDCOM_STATIC_URL: '" . MIDCOM_STATIC_URL . "',\n";
         $script .= "    MIDCOM_PAGE_PREFIX: '/'\n"; //$_MIDCOM->get_page_prefix()
         $script .= "});\n";
