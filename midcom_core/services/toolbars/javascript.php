@@ -139,7 +139,9 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
         $html = $this->helper->render(&$this);
         
         $html .= "<script type=\"text/javascript\">\n";
-        $html .= "    jQuery('.{$this->configuration['className']}').midcom_services_toolbars({$this->jsconfiguration});\n";
+        $html .= "    jQuery(document).ready(function() {\n";
+        $html .= "        jQuery('.{$this->configuration['className']}').midcom_services_toolbars({$this->jsconfiguration});\n";
+        $html .= "    });\n";
         $html .= "</script>\n";
         
         echo $html;
