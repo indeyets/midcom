@@ -13,19 +13,19 @@
  */
 class midcom_core_exceptionhandler
 {
-    function handle($exception)
+    public static function handle(Exception $exception)
     {
-        $http_code = 500;
-        
         // Different HTTP error codes for different Exceptions
-        $message_type = get_class($exception);        
+        $message_type = get_class($exception);
         switch ($message_type)
         {
             case 'midcom_exception_notfound':
-                $http_code = $exception->getCode();
-                break;
             case 'midcom_exception_unauthorized':
                 $http_code = $exception->getCode();
+                break;
+
+            default:
+                $http_code = 500;
                 break;
         }
 
@@ -36,31 +36,33 @@ class midcom_core_exceptionhandler
             die("Unexpected Error, this should display an HTTP {$http_code} - {$message_type}: {$message}");
         }
 
-        switch ($http_code)
-        {
-            case 200:
-                $header = 'HTTP/1.0 200 OK';
-                break;
-            case 304:
-                $header = 'HTTP/1.0 304 Not Modified';
-                break;
-            case 404:
-                $header = 'HTTP/1.0 404 Not Found';
-                break;
-            case 500:
-            default:
-                $header = 'HTTP/1.0 500 Server Error';
-                break;
-        }
+        $header = self::header_by_code($http_code);
 
         header($header);
         if ($http_code != 304)
         {
-            header('Content-Type: text/html');
+            header('Content-Type: text/html; charset=utf-8');
 
             // TODO: Templating
             echo "<html><h1>{$header}</h1><p>{$message_type}: {$message}</p>";
         }
+    }
+
+    private static function header_by_code($code)
+    {
+        $headers = array(
+            200 => 'HTTP/1.0 200 OK',
+            304 => 'HTTP/1.0 304 Not Modified',
+            404 => 'HTTP/1.0 404 Not Found',
+            500 => 'HTTP/1.0 500 Server Error',
+        );
+
+        if (!isset($headers[$code]))
+        {
+            $code = 500;
+        }
+
+        return $headers[$code];
     }
 }
 
