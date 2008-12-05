@@ -26,20 +26,26 @@ if (mgd_is_element_loaded('code-init'))
 {
     ?><(code-init)><?php
 }
-else
+elseif (isset($_MIDCOM))
 {
     // Call the controller if available
     $_MIDCOM->process();
 }
 
-// Start output buffer so we can do templating
-ob_start();
+if (isset($_MIDCOM))
+{
+    // Start output buffer so we can do templating
+    ob_start();
 
-$_MIDCOM->templating->template();
+    $_MIDCOM->templating->template();
 
-// Read contents from the output buffer and pass to MidCOM rendering
-$_MIDCOM->templating->display(ob_get_clean());
-
+    // Read contents from the output buffer and pass to MidCOM rendering
+    $_MIDCOM->templating->display(ob_get_clean());
+}
+else
+{
+    ?><(ROOT)><?php
+}
 // code-finish can be used for custom caching etc
 ?>
 <(code-finish)>
