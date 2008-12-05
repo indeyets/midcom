@@ -6,12 +6,13 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+include_once 'exceptions.php';
+
 /**
  * Datamanager Schema class
  *
  * @package midcom_helper_datamanager
  */
-
 class midcom_helper_datamanager_schema
 {
     /**
@@ -76,9 +77,13 @@ class midcom_helper_datamanager_schema
      */
     public $operations = array('save' => '', 'cancel' => '');
     
+    private $configuration;
+    
     public function __construct($schemadb, $name = null, $schemadb_path = null)
     {
         $this->schemadb_path = $schemadb_path;
+        
+        $this->configuration = new midcom_core_services_configuration_yaml('midcom_helper_datamanager');
         
         $this->load_schemadb($schemadb);
 
@@ -343,13 +348,14 @@ class midcom_helper_datamanager_schema
         $path = null;
         if (is_string($raw_db))
         {
+            $path = $raw_db;
             try
             {
                 $raw_db = midcom_core_helpers_snippet::get($raw_db);
             }
             catch (OutOfBoundsException $e)
             {
-                throw new midcom_helper_datamanager_exception_type("Failed to parse the schema database loaded from '{$raw_db}', see above for PHP errors.");
+                throw new midcom_helper_datamanager_exception_type("Failed to parse the schema database loaded from '{$raw_db}'");
             }
         }
 
