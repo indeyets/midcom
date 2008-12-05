@@ -3,7 +3,7 @@ services_authorization: midcom_core_services_authorization_simple
 services_templating: midcom_core_services_templating_midgard
 services_sessioning: midcom_core_services_sessioning_midgard
 services_uimessages: midcom_core_services_uimessages_midgard
-cache_directory: __MIDGARDCACHE__/bergietest
+cache_directory: __MIDGARDCACHE__/midgard
 enable_benchmark: false
 enable_included_list: false
 enable_jquery_framework: false
