@@ -17,7 +17,7 @@ class midcom_core_component_loader
     private $tried_to_load = array();
     private $interfaces = array();
 
-    function __construct()
+    public function __construct()
     {
         $this->load_all_manifests();
     }
@@ -131,7 +131,7 @@ class midcom_core_component_loader
     private function load_all_manifests()
     {
         // TODO: Cache
-        exec('find ' . MIDCOM_ROOT . ' -follow -type f -name "manifest.yml"', $manifests);
+        exec('find ' . escapeshellarg(MIDCOM_ROOT) . ' -follow -type f -name ' . escapeshellarg('manifest.yml'), $manifests);
         foreach ($manifests as $manifest)
         {
             $this->load_manifest($manifest);
