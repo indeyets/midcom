@@ -17,6 +17,9 @@ if (! defined('COMPONENT_DIR')) {
 require_once('Testing/Selenium.php');
 require_once('PHPUnit/Framework.php');
 
+/**
+ * @package midcom_tests
+ */
 class midcom_tests_seleniumcase extends PHPUnit_Framework_TestCase
 {
     protected $selenium;

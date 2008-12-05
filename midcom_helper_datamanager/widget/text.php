@@ -31,7 +31,7 @@
  *
  * @package midcom_helper_datamanager
  */
-class midcom_helper_datamanager_widget_text extends midcom_helper_datamanager_widget_baseclass
+class midcom_helper_datamanager_widget_text extends midcom_helper_datamanager_widget
 {
     /**
      * Maximum length of the string encapsulated by this type. 0 means no limit.
@@ -48,13 +48,7 @@ class midcom_helper_datamanager_widget_text extends midcom_helper_datamanager_wi
      */
     public $size = 40;
 
-    /**
-     * whether the input should be shown in the widget, or not.
-     *
-     * @var boolean
-     */
-    public $hideinput = false;
-    
+
     /**
      * The initialization event handler post-processes the maxlength setting.
      *
@@ -66,10 +60,12 @@ class midcom_helper_datamanager_widget_text extends midcom_helper_datamanager_wi
             || is_array($this->type->value)
             || is_object($this->type->value))
         {
+            /*
             debug_push_class(__CLASS__, __FUNCTION__);
             debug_add("Warning, the field {$this->name} does not have a value member or it is an array or object, you cannot use the text widget with it.",
                 MIDCOM_LOG_WARN);
             debug_pop();
+            */
             return false;
         }
 
@@ -86,50 +82,32 @@ class midcom_helper_datamanager_widget_text extends midcom_helper_datamanager_wi
         }
         return true;
     }
-    
+
+    public function sync_widget2type($result)
+    {
+        $this->type->value = $result;
+    }
+
     /**
-     * Adds a simple single-line text form element at this time.
+     * Renders the form controls (if not frozen) or read-only view (if frozen)
+     * of the widget as html
      */
-    function add_elements_to_form()
+    public function render_html()
     {
-        $attributes = Array
-        (
-            'size' => $this->size,
-            'class' => 'shorttext',
-            'id'    => "{$this->_namespace}{$this->name}",
-        );
-        if ($this->maxlength > 0)
+        $output =  "<label class=\"text\" for=\"{$this->namespace}_{$this->main_input_name}\"><span>{$this->field['title']}</span>\n";
+        $output .= "    <input id=\"{$this->namespace}_{$this->main_input_name}\" name=\"{$this->namespace}_{$this->main_input_name}\" size=\"{$this->size}\"";
+        if ($this->maxlenght > 0)
         {
-            $attributes['maxlength'] = $this->maxlength;
+            $output .= " maxlenght=\"{$maxlenght}\"";
         }
-
-        if ($this->hideinput)
+        if ($this->frozen)
         {
-            $this->form->addElement('password', $this->name, $this->translate($this->field['title']), $attributes);
+            $output .= ' disabled="disabled"';
         }
-        else
-        {
-            $this->form->addElement('text', $this->name, $this->translate($this->field['title']), $attributes);
-        }
-        // $this->form->applyFilter($this->name, 'trim');
-
-        if ($this->maxlength > 0)
-        {
-            // $errormsg = sprintf('type text: value is longer then %d characters', $this->maxlength);
-            // $this->form->addRule($this->name, $errormsg, 'maxlength', $this->maxlength);
-        }
+        $output .= ' value=' . midcom_helper_xsspreventer_helper::escape_attribute($this->type->value) . " />\n";
+        $output .= "</label>\n";
+        return $output;
     }
-
-    public function get_default()
-    {
-        return $this->type->value;
-    }
-
-    public function sync_type_with_widget($results)
-    {
-        $this->type->value = $results[$this->name];
-    }
-    
 }
 
 ?>

@@ -17,9 +17,10 @@ if (MIDCOM_TEST_RUN)
  *
  * @package midcom_core
  */
-class midcom_core_services_toolbars_float implements midcom_core_services_toolbar
+include MIDCOM_ROOT . "/midcom_core/services/toolbars.php";
+class midcom_core_services_toolbars_float extends midcom_core_services_toolbars_baseclass implements midcom_core_services_toolbars 
 {
-    private $configuration = array();
+    protected $configuration = array();
     private $jsconfiguration = '{}';
     
     private $toolbars = array();
@@ -31,11 +32,12 @@ class midcom_core_services_toolbars_float implements midcom_core_services_toolba
     public $logos = array();
     public $sections = array();
     
-    public function __construct(&$configuration=array())
+    public function __construct(&$configuration = array())
     {
         $this->set_configuration($configuration);
         
-        $this->helper = new midcom_core_helpers_toolbar_tal(
+        $this->helper = new midcom_core_helpers_toolbar_tal
+        (
             $this->configuration['className'],
             'style="display: none;"'
         );
@@ -48,7 +50,8 @@ class midcom_core_services_toolbars_float implements midcom_core_services_toolba
         $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/jQuery/jquery.dimensions-1.1.2.js");
         $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/jQuery/jquery.easydrag-1.4.js");
         
-        $_MIDCOM->head->add_link_head(
+        $_MIDCOM->head->add_link_head
+        (
             array
             (
                 'rel'   => 'stylesheet',
@@ -57,7 +60,8 @@ class midcom_core_services_toolbars_float implements midcom_core_services_toolba
                 'href'  => MIDCOM_STATIC_URL . '/midcom_core/services/toolbars/float.css',
             )
         );
-        $_MIDCOM->head->add_link_head(
+        $_MIDCOM->head->add_link_head
+        (
             array
             (
                 'condition' => 'eq IE',
@@ -101,46 +105,7 @@ class midcom_core_services_toolbars_float implements midcom_core_services_toolba
         }
     }
     
-    public function add_item($data)
-    {
-        return true;
-    }
-    
-    public function remove_item($key)
-    {
-        return false;
-    }
-    
-    public function get_item($key, $section_id=MIDCOM_TOOLBAR_NODE)
-    {
-        return;
-    }
-    
-    /**
-     * Returns a reference to the wanted toolbar section of the specified context. The toolbars
-     * will be created if this is the first request.
-     *
-     * @param int $section_id The toolbar block to retrieve, this
-     *     defaults to node.
-     * @param int $context_id The context to retrieve the toolbar block for, this
-     *     defaults to the current context.
-     */
-    public function get_section($section_id=MIDCOM_TOOLBAR_NODE, $context_id = null)
-    {
-        if ($context_id === null)
-        {
-            $context_id = $_MIDCOM->context->get_current_context();
-        }
-
-        if (! array_key_exists($context_id, $this->toolbars))
-        {
-            $this->create_toolbar($context_id);
-        }
-
-        return $this->toolbars[$context_id][$block_id];
-    }
-    
-    public function can_view($user=null)
+    public function can_view($user = null)
     {
         if ($_MIDCOM->context->mimetype == 'text/html')
         {
@@ -165,7 +130,8 @@ class midcom_core_services_toolbars_float implements midcom_core_services_toolba
     
     private function generate_logo($title, $link, $image_path)
     {        
-        $logo = array(
+        $logo = array
+        (
             'title' => $title,
             'url' => $link,
             'path' => MIDCOM_STATIC_URL . $image_path,
@@ -195,80 +161,7 @@ class midcom_core_services_toolbars_float implements midcom_core_services_toolba
                 $this->logos[] = $this->generate_logo($logo['title'], $logo['url'], $logo['image']);
             }
         }
-        
-        $this->sections[MIDCOM_TOOLBAR_NODE] = array(
-            'name' => 'section_' . MIDCOM_TOOLBAR_NODE,
-            'title' => 'Node',
-            'css_class' => "{$this->configuration['className']}_section_" . MIDCOM_TOOLBAR_NODE,
-            'items' => array(),
-        );
-        $this->sections[MIDCOM_TOOLBAR_VIEW] = array(
-            'name' => 'section_' . MIDCOM_TOOLBAR_VIEW,
-            'title' => 'View',
-            'css_class' => "{$this->configuration['className']}_section_" . MIDCOM_TOOLBAR_VIEW,
-            'items' => array(),
-        );
-        $this->sections[MIDCOM_TOOLBAR_HOST] = array(
-            'name' => 'section_' . MIDCOM_TOOLBAR_HOST,
-            'title' => 'Host',
-            'css_class' => "{$this->configuration['className']}_section_" . MIDCOM_TOOLBAR_HOST,
-            'items' => array(),
-        );
-        $this->sections[MIDCOM_TOOLBAR_HELP] = array(
-            'name' => 'section_' . MIDCOM_TOOLBAR_HELP,
-            'title' => 'Help',
-            'css_class' => "{$this->configuration['className']}_section_" . MIDCOM_TOOLBAR_HELP,
-            'items' => array(),
-        );
-        
-        $this->add_node_management_commands(&$this->sections[MIDCOM_TOOLBAR_NODE]['items'], $context_id);
-        // $this->add_host_management_commands(&$this->sections[MIDCOM_TOOLBAR_HOST]['items'], $context_id);
-        // $this->add_help_management_commands(&$this->sections[MIDCOM_TOOLBAR_HELP]['items'], $context_id);
-
         $this->toolbars[$context_id] = $this->sections;
     }
-    
-    /**
-     * Adds the node management commands to the specified section.
-     *
-     * @param array $items A reference to the sections items to be filled.
-     * @param int $context_id The context to use (the topic is drawn from there). This defaults
-     *     to the currently active context.
-     */
-    function add_node_management_commands(&$items, $context_id = null)
-    {
-        // if ($context_id === null)
-        // {
-        //     $topic = $_MIDCOM->context->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
-        // }
-        // else
-        // {
-        //     $topic = $_MIDCOM->context->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC, $context_id);
-        // }
-        // 
-        // if (! $topic)
-        // {
-        //     return false;
-        // }
-        // 
-        // if (! is_a($topic, 'midcom_baseclasses_database_topic'))
-        // {
-        //     // Force-Cast to DBA object
-        //     $topic = new midcom_db_topic($topic->id);
-        // }
-                
-        $this->helper->add_item(MIDCOM_TOOLBAR_NODE,
-            array
-            (
-                MIDCOM_TOOLBAR_URL => "/__midcom/edit/",
-                MIDCOM_TOOLBAR_LABEL => 'edit node',
-                MIDCOM_TOOLBAR_ICON => 'midcom_core/stock-icons/16x16/edit.png',
-                MIDCOM_TOOLBAR_ACCESSKEY => 'e',
-            )
-        );
-        
-        $items =& $this->helper->get_section_items(MIDCOM_TOOLBAR_NODE);
-    }
 }
-
 ?>

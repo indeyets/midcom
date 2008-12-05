@@ -21,6 +21,12 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
      * @var object
      */
     private $callback = null;
+    
+    /**
+     * Midgard reflector for finding out things about the storage object
+     * @var midgard_reflection_property
+     */
+    private $reflector = null;
 
     /**
      * Start up the storage manager and bind it to a given MidgardObject.
@@ -36,6 +42,23 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
         parent::__construct($schema);
 
         $this->object =& $object;
+        
+        $this->reflector = new midgard_reflection_property(get_class($object));
+    }
+    
+    public function get_identifier()
+    {
+        if (!$this->object)
+        {
+            return '';
+        }
+        
+        if (!$this->object->guid)
+        {
+            return 'create';
+        }
+        
+        return $this->object->guid;
     }
 
     /**
@@ -87,9 +110,9 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
 
             default:
                 $fieldname = $this->schema->fields[$name]['storage']['location'];
-                if (!property_exists($this->object, $fieldname)) 
+                if ($this->reflector->get_midgard_type($fieldname) == MGD_TYPE_NONE)
                 {
-                    throw new midcom_helper_datamanager_exception_storage("Missing $fieldname field in object: " . get_class($this->object));
+                    throw new midcom_helper_datamanager_exception_storage("Missing {$fieldname} field in object: " . get_class($this->object));
                 }
                 $this->object->$fieldname = $data;
                 break;
@@ -139,12 +162,20 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
 
             default:
                 $fieldname = $this->schema->fields[$name]['storage']['location'];
+                if ($this->reflector->get_midgard_type($fieldname) == MGD_TYPE_NONE)
+                {
+                    return null;
+                }
                 return $this->object->$fieldname;
         }
     }
 
     protected function on_update_object()
     {
+        if (!$this->object->guid)
+        {
+            return $this->object->create();
+        }
         return $this->object->update();
     }
 }

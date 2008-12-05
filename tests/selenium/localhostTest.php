@@ -8,6 +8,9 @@
 
 require_once('tests/seleniumcase.php');
 
+/**
+ * @package midcom_tests
+ */
 class midcom_tests_selenium_localhost extends midcom_tests_seleniumcase
 {
     public function setUp()

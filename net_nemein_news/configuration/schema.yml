@@ -20,4 +20,4 @@ default:
             type: text
             type_config:
                 output_mode: html
-            widget: tinymce
+            widget: fckeditor

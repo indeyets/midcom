@@ -13,13 +13,15 @@
  *
  * @package midcom_core
  */
-class midcom_core_component_baseclass implements midcom_core_component_interface
+abstract class midcom_core_component_baseclass implements midcom_core_component_interface
 {
     public $configuration = false;
     
     public function __construct($configuration)
-    {
+    {        
         $this->configuration = $configuration;
+        $component = $configuration->get_component();
+        $_MIDCOM->i18n->set_translation_domain($component);
     }
 
     public function initialize()
@@ -27,6 +29,8 @@ class midcom_core_component_baseclass implements midcom_core_component_interface
         $this->on_initialize();
     }
 
-    function on_initialize() {}
+    public function on_initialize()
+    {
+    }
 }
 ?>

@@ -18,7 +18,8 @@ class midcom_core_helpers_toolbar_tal extends midcom_core_helpers_toolbar
     
     protected function initialize()
     {        
-        $data = array(
+        $data = array
+        (
             'css_class' => $this->css_class,
             'holder_attributes' => $this->holder_attributes,
         );

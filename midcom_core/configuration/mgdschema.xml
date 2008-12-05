@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+
+  <type name="midcom_core_login_session_db" table="midcom_core_login_session">
+    <property name="id" type="integer" primaryfield="id" />
+    <property name="userid" type="string" />
+    <property name="username" type="string" />
+    <property name="password" type="string" />
+    <property name="clientip" type="string" />
+    <property name="timestamp" type="integer" />
+  </type>
+
+</Schema>

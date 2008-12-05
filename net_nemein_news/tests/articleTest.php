@@ -11,7 +11,7 @@ require_once('tests/testcase.php');
 /**
  * Test that
  */
-class net_nemein_news_tests_article extends midcom_tests_testcase
+class net_nemein_news_tests_article extends net_nemein_news_tests_base
 {
     public function testAction_show()
     {
@@ -21,10 +21,18 @@ class net_nemein_news_tests_article extends midcom_tests_testcase
         }
         
         $this->create_context('net_nemein_news');
+        $_MIDCOM->context->component_instance->configuration->set_value('news_topic', net_nemein_news_tests_base::$populated['topic']->id);
+        
+        if (empty(net_nemein_news_tests_base::$populated['articles'][0]))
+        {
+            $this->markTestSkipped('No test articles found!');
+        }
+        
+        $first_article =& net_nemein_news_tests_base::$populated['articles'][0];
         
         $data = array();
         $args = array(
-            'name' => 'ajatus_lightning_talk-_fosdem'
+            'name' => $first_article->name
         );
         
         $routes = $_MIDCOM->dispatcher->get_routes();
@@ -32,10 +40,11 @@ class net_nemein_news_tests_article extends midcom_tests_testcase
         $controller = new $controller_class($_MIDCOM->context->component_instance);
         
         $action_method = "action_show";
-        $controller->$action_method('test', &$data, $args);
+        $controller->$action_method('test', $data, $args);
         $_MIDCOM->context->set_item('net_nemein_news', $data);
-
-        $this->assertTrue(array_key_exists('article', $data));
+        
+        $this->assertTrue(array_key_exists('object', $data));
+        $this->assertTrue($data['object']->title == $first_article->title);
         
         $_MIDCOM->context->delete();
     }

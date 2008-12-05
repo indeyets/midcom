@@ -22,6 +22,7 @@ class midcom_helper_datamanager_datamanager
     private $schemadb = null;
     public $schema = null;
     public $schema_name = null;
+    protected $form = null;
 
     /**
      * This is the storage implementation which is used for operation on the types. It encapsulates
@@ -32,7 +33,6 @@ class midcom_helper_datamanager_datamanager
     public $storage = null;
     
     public $types = null;
-    public $widgets = null;
 
     public function __construct(&$schemadb)
     {
@@ -49,8 +49,19 @@ class midcom_helper_datamanager_datamanager
             
             return;
         }
-        
+
         $this->schemadb =& $schemadb;
+
+    }
+
+    public function &get_form($form_class = 'simple')
+    {
+        if (strpos($form_class, '_') === false)
+        {
+            $form_class = "midcom_helper_datamanager_form_{$form_class}";
+        }
+        $this->form = new $form_class($this->schema, $this->types, $this->storage, $this);
+        return $this->form;
     }
 
     /**
@@ -92,8 +103,11 @@ class midcom_helper_datamanager_datamanager
             throw new midcom_helper_datamanager_exception_schema('given schema is not instance of datamanager schema');
         }
 
-        // $this->load_types();
-        // $this->load_widgets();
+        $this->load_types();
+        if ($this->form instanceof midcom_helper_datamanager_form)
+        {
+            $this->form->load_widgets();
+        }
 
         return true;
     }
@@ -104,42 +118,12 @@ class midcom_helper_datamanager_datamanager
     private function load_types()
     {
         unset($this->types);
+        if (! $this->storage instanceof midcom_helper_datamanager_storage)
+        {
+            $this->storage = new midcom_helper_datamanager_storage_null($this->schema);
+        }
+
         $this->types = new midcom_helper_datamanager_typeproxy($this->schema, $this->storage);
-    }
-    
-    /**
-     * Clears possible dangling references and instance new widget proxy object
-     */
-    private function load_widgets()
-    {
-        if (! $this->types instanceof midcom_helper_datamanager_typeproxy)
-        {
-            throw new midcom_helper_datamanager_exception_datamanager('$this->types is not instance of midcom_helper_datamanager_typeproxy');
-        }
-
-        if (! isset($config['type']) )
-        {
-            throw new Exception("The field {$name} is missing type");
-        }
-
-        $type_class = $config['type'];
-        
-        if (strpos($type_class, '_') === false)
-        {
-            $type_class = "midcom_helper_datamanager_type_{$type_class}";
-        }
-
-        $this->types[$name] = new $type_class();
-        if (! $this->types[$name]->initialize($name, $config['type_config'], $this->storage))
-        {
-            return false;
-        }
-        
-        return true;        
-=======
->>>>>>> syntx fixes, refactoring etc:midcom_helper_datamanager/datamanager.php
-        unset($this->widgets);
-        $this->widgets = new midcom_helper_datamanager_widgetproxy($this->schema, $this->storage, $this->types);
     }
 
     /**
@@ -176,7 +160,10 @@ class midcom_helper_datamanager_datamanager
         }
 
         $this->load_types();
-        $this->load_widgets();
+        if ($this->form instanceof midcom_helper_datamanager_form)
+        {
+            $this->form->load_widgets();
+        }
 
         // For reasons I do not completely comprehend, PHP drops the storage references into the types
         // in the lines above. Right now the only solution (except debugging this 5 hours long line
@@ -215,10 +202,10 @@ class midcom_helper_datamanager_datamanager
         }
         else
         {
-            $schema = $object->get_parameter('midcom_helper_datamanager', 'schema_name');
+         //   $schema = $object->get_parameter('midcom_helper_datamanager', 'schema_name');
         }
 
-        if (! $schema)
+        if (@! $schema)
         {
             $schema = null;
         }
@@ -281,7 +268,7 @@ class midcom_helper_datamanager_datamanager
      public function __destructor()
      {
      }
-     */   
+     */
 
 }
 

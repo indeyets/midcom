@@ -6,7 +6,8 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
+if (!defined('PHPUnit_MAIN_METHOD')) 
+{
     define('PHPUnit_MAIN_METHOD', '${component}_tests_all::main');
 }
 
@@ -15,6 +16,11 @@ require_once('PHPUnit/TextUI/TestRunner.php');
 
 require_once('tests/helpers.php');
 
+/**
+ * Runner for all tests in the component
+ *
+ * @package ${component}
+ */
 class ${component}_tests_all
 {   
     public static function main()
@@ -36,7 +42,8 @@ class ${component}_tests_all
     }
 }
  
-if (PHPUnit_MAIN_METHOD == '${component}_tests_all::main') {
+if (PHPUnit_MAIN_METHOD == '${component}_tests_all::main') 
+{
     ${component}_tests_all::main();
 }
 ?>

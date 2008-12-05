@@ -53,6 +53,7 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
             $_MIDCOM->timer->setMarker("MidCOM dispatcher::initialize::{$component}");
         }
         $this->component_name = $component;
+        $_MIDCOM->context->component_name = $component;
         
         if ($this->page)
         {

@@ -11,12 +11,12 @@
   *
   * @package midcom_core
   */
-interface midcom_core_services_uimessage
+interface midcom_core_services_uimessages
 {
     /**
      * @param &$configuration Configuration for the current uimessage type
      */
-    public function __construct(&$configuration=array());
+    public function __construct(&$configuration = array());
     
     public function add($data);
     
@@ -28,11 +28,11 @@ interface midcom_core_services_uimessage
     
     public function has_messages();
     
-    public function render($key=null);
+    public function render($key = null);
     
-    public function render_as($type='comet', $key=null);
+    public function render_as($type = 'comet', $key = null);
 
-    public function supports($type='comet');
+    public function supports($type = 'comet');
 }
 
 /**
@@ -40,7 +40,7 @@ interface midcom_core_services_uimessage
  *
  * @package midcom_core
  */
-class midcom_core_services_uimessages
+class midcom_core_services_uimessages_baseclass
 {
     public $implementation = null;
     private $configuration = array();
@@ -50,15 +50,7 @@ class midcom_core_services_uimessages
         $this->load_configuration();
         
         $classname = null;
-        if (array_key_exists('type', $this->configuration))
-        {
-            $classname = "midcom_core_services_uimessages_{$this->configuration['type']}"; 
-            $this->implementation = new $classname($this->configuration);
-        }
-        else
-        {
-            $this->implementation =& $_MIDCOM->serviceloader->load('uimessages', &$this->configuration);
-        }
+        $this->implementation =& $_MIDCOM->uimessages;
     }
     
     private function load_configuration()
@@ -87,7 +79,7 @@ class midcom_core_services_uimessages
 
     public function can_view($user=null)
     {
-        if ($_MIDCOM->context->mimetype == 'text/html')
+        if ($_MIDCOM->context->mimetype === 'text/html')
         {
             return true;            
         }
@@ -95,12 +87,12 @@ class midcom_core_services_uimessages
         return false;
     }
 
-    public function render($key=null)
+    public function render($key = null)
     {
         return $this->implementation->render($key);
     }
     
-    public function render_as($type='comet', $key=null)
+    public function render_as($type = 'comet', $key = null)
     {
         if ($this->supports($type))
         {
@@ -110,7 +102,7 @@ class midcom_core_services_uimessages
         return false;
     }
     
-    public function supports($type='comet')
+    public function supports($type = 'comet')
     {
         if ($this->implementation->supports($type))
         {

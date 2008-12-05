@@ -34,7 +34,7 @@ class midcom_core_helpers_head
     public $jquery_enabled = false;    
     public $jsmidcom_enabled = false;
     
-    public function __construct($enable_jquery=false, $enable_jsmidcom=false, $jsmidcom_config=null)
+    public function __construct($enable_jquery = false, $enable_jsmidcom = false, $jsmidcom_config = null)
     {
         if ($enable_jquery)
         {
@@ -47,7 +47,7 @@ class midcom_core_helpers_head
         }
     }
     
-    public function enable_jquery($version="1.2.3")
+    public function enable_jquery($version = '1.2.6')
     {
         if ($this->jquery_enabled)
         {
@@ -91,7 +91,7 @@ class midcom_core_helpers_head
         }
     }
     
-    public function enable_jsmidcom($config=null)
+    public function enable_jsmidcom($config = null)
     {
         if ($this->jsmidcom_enabled)
         {
@@ -119,7 +119,7 @@ class midcom_core_helpers_head
         $script .= "    MIDCOM_STATIC_URL: '" . MIDCOM_STATIC_URL . "',\n";
         $script .= "    MIDCOM_PAGE_PREFIX: '/'\n"; //$_MIDCOM->get_page_prefix()
         $script .= "});\n";
-        
+
         if (! is_null($config))
         {
             $config_str = $config;
@@ -169,10 +169,48 @@ class midcom_core_helpers_head
     }
 
     /**
-     * Register a linkelement to be placed in the html head.
+     * Register a meta to be placed in the html head.
+     * Example to use this to include keywords:
+     * <code>
+     * $attributes = array
+     * (
+     *     'name' => 'keywords',
+     *     'content' => 'midgard cms php open source',
+     * );
+     * $midcom->add_meta_head($attributes);
+     * </code>
+     *
+     * @param array $attributes Array of attribute => value pairs to be placed in the tag.
+     */
+    public function add_meta($attributes = null)
+    {
+        if (   is_null($attributes)
+            || !is_array($attributes))
+        {
+            return false;
+        }
+
+        if (!isset($attributes['name']))
+        {
+            return false;
+        }
+
+        $output = '<meta';
+        foreach ($attributes as $key => $val)
+        {
+            $output .= " {$key}=\"{$val}\" ";
+        }
+        $output .= "/>\n";
+        
+        $this->meta_head[] = $output;
+    }
+
+    /**
+     * Register a link element to be placed in the html head.
      * Example to use this to include a css link:
      * <code>
-     * $attributes = array(
+     * $attributes = array
+     * (
      *     'rel' => 'stylesheet',
      *     'type' => 'text/css',
      *     'href' => '/style.css'
@@ -212,10 +250,11 @@ class midcom_core_helpers_head
         $output .= '<link';
         foreach ($attributes as $key => $val)
         {
-            if ($key != 'condition')
+            if ($key == 'condition')
             {
-                $output .= " {$key}=\"{$val}\" ";
+                continue;
             }
+            $output .= " {$key}=\"{$val}\" ";
         }
         $output .= "/>\n";
 
@@ -283,6 +322,11 @@ class midcom_core_helpers_head
         foreach ($this->link_head as $link)
         {
             echo $link;
+        }
+        
+        foreach ($this->meta_head as $meta)
+        {
+            echo $meta;
         }
     }
     

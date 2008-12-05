@@ -264,6 +264,22 @@ class midcom_helper_datamanager_type_baseclass implements midcom_helper_datamana
                 return $this->convert_to_raw();
         }
     }
+    
+    /**
+     * Magic isset for the contents of the field in a given format
+     */
+    public function __isset($key)
+    {
+        switch ($key)
+        {
+            case 'as_html':
+            case 'as_csv':
+            case 'as_raw':
+                return true;
+            default:
+                return false;
+        }
+    }
 }
 
 ?>

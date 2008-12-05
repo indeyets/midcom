@@ -1,2 +1,19 @@
 component: midcom_helper_datamanager
 version: 0.0.1
+authors:
+    bergie:
+        name: Henri Bergius
+        email: henri.bergius@iki.fi
+        url: http://bergie.iki.fi
+    rambo:
+        name: Eero af Heurlin
+        email: eero.afheurlin@iki.fi
+    w_i:
+        name: Jerry Jalava
+        email: jerry.jalava@gmail.com
+        url: http://protoblogr.net
+    tepheikk:
+        name: Tero Heikkinen
+        email: tero.heikkinen@iki.fi
+        url: http://teroheikkinen.iki.fi
+

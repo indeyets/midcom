@@ -11,86 +11,76 @@
  *
  * @package midcom_core
  */
-class midcom_core_controllers_page
+class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_manage
 {
     public function __construct($instance)
     {
         $this->configuration = $_MIDCOM->configuration;
     }
     
+    public function load_object($args)
+    {
+        if (!isset($_MIDCOM->context->page->id))
+        {
+            throw new midcom_exception_notfound("No Midgard page found");
+        }
+        
+        $this->object = $_MIDCOM->context->page;
+    }
+    
+    public function prepare_new_object($args)
+    {
+        $this->object = new midgard_page();
+        $this->object->up = $_MIDCOM->context->page->id;
+        $this->object->info = 'active';
+    }
+    
+    public function get_url_show()
+    {
+        return $_MIDGARD['self'];
+    }
+    
+    public function get_url_edit()
+    {
+        return $_MIDCOM->dispatcher->generate_url('page_edit', array());
+    }
+
+    public function populate_toolbar()
+    {
+    }
+
+    public function get_object_show($route_id, &$data, $args)
+    {
+        $this->load_object($args);
+        return $this->object;
+    }
+
     public function action_show($route_id, &$data, $args)
     {
-    }
-    
-    public function action_edit($route_id, &$data, $args)
-    {
-        if (!isset($_MIDGARD['page']))
+        parent::action_show($route_id, $data, $args);
+        
+        if ($route_id == 'page_variants')
         {
-            throw new midcom_exception_notfound("No Midgard page found");
+            switch ($this->dispatcher->request_method)
+            {
+                case 'GET':
+                    // Get variant of the page
+                    $variant = new midcom_core_helpers_variants();
+                    $variant->datamanager = $data['datamanager'];
+                    $variant->object = $data['object'];
+                    echo $variant->handle($args['variant'], $this->dispatcher->request_method);
+                    die();
+                case 'MKCOL':
+                    // Create subpage
+                    $_MIDCOM->authorization->require_do('midgard:create', $data['object']);
+                    $this->prepare_new_object($args);
+                    $this->object->name = $args['name']['identifier'];    
+                    $this->object->create();
+                    break;
+                default:
+                    throw new midcom_exception_httperror("{$this->dispatcher->request_method} not allowed", 405);
+            }
         }
-        $data['page'] = new midgard_page();
-        $data['page']->get_by_id($_MIDGARD['page']);
-        
-        $_MIDCOM->authorization->require_do('midgard:update', $data['page']);
-        
-        if (isset($_POST['save']))
-        {
-            $data['page']->title = $_POST['title'];
-            $data['page']->content = $_POST['content'];
-            $data['page']->update();
-            
-            header("Location: {$_MIDCOM->context->prefix}");
-            exit();
-        }
-    }
-    
-    public function action_create($route_id, &$data, $args)
-    {
-        if (!isset($_MIDGARD['page']))
-        {
-            throw new midcom_exception_notfound("No Midgard page found");
-        }
-        $data['parent'] = new midgard_page();
-        $data['parent']->get_by_id($_MIDGARD['page']);
-        
-        $data['page'] = new midgard_page();
-        $data['page']->up = $data['parent']->id;
-        
-        $_MIDCOM->authorization->require_do('midgard:create', $data['parent']);
-        
-        if (isset($_POST['save']))
-        {
-            $data['page']->name = $_POST['name'];
-            $data['page']->title = $_POST['title'];
-            $data['page']->content = $_POST['content'];
-            $data['page']->info = 'active';
-            $data['page']->create();
-            
-            header("Location: {$_MIDCOM->context->prefix}{$data['page']->name}/");
-            exit();
-        }
-    }
-    
-    public function action_delete($route_id, &$data, $args)
-    {
-        if (!isset($_MIDGARD['page']))
-        {
-            throw new midcom_exception_notfound("No Midgard page found");
-        }
-        $data['page'] = new midgard_page();
-        $data['page']->get_by_id($_MIDGARD['page']);
-        
-        $data['parent'] = new midgard_page();
-        $data['parent']->get_by_id($data['page']->up);
-        
-        $_MIDCOM->authorization->require_do('midgard:delete', $data['page']);
-        if(isset($_POST['delete']))
-        {
-            $data['page']->delete();
-            header("Location: /"); // TODO: This needs a better redirect
-            exit();     
-        }
-    
     }
 }
 ?>

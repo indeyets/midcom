@@ -18,8 +18,15 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
     public $argv = array();
     public $get = array();
     public $component_name = '';
+    public $request_method = 'GET';
+    protected $route_array = array();
     protected $route_id = false;
     protected $action_arguments = array();
+    protected $route_arguments = array();
+    protected $core_routes = array();
+    protected $component_routes = array();
+    protected $route_definitions = null;
+    protected $exceptions_stack = array();
 
     public function __construct()
     {
@@ -27,6 +34,14 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             $this->get = $_GET;
         }
+        
+        $this->request_method = $_SERVER['REQUEST_METHOD'];
+        
+        if (!extension_loaded('midgard'))
+        {
+            throw new Exception('Midgard 1.x is required for this MidCOM setup.');
+        }
+        
         /*
         FIXME: For some reason $_MIDGARD['argv'] is broken in 1.9
         if (isset($_MIDGARD['argv']))
@@ -36,7 +51,15 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $arg_string = substr($_MIDGARD['uri'], strlen($_MIDGARD['self']));
         if ($arg_string)
         {
-            $this->argv = explode('/', $arg_string);
+            $argv = explode('/', $arg_string);
+            foreach ($argv as $arg)
+            {
+                if (empty($arg))
+                {
+                    continue;
+                }
+                $this->argv[] = $arg;
+            }
         }
     }
 
@@ -45,40 +68,69 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
      */
     public function populate_environment_data()
     {
-        $page_data = array();
-        $mc = midgard_page::new_collector('id', $_MIDGARD['page']);
-        $mc->set_key_property('guid');
-        $mc->add_value_property('title');
-        $mc->add_value_property('content');
-        $mc->add_value_property('component');
+        $page = new midgard_page();
+        $page->get_by_id($_MIDGARD['page']);
         
         // Style handling
-        $style_id = $_MIDGARD['style'];
-        $mc->add_value_property('style');
-        
-        $mc->execute();
-        $guids = $mc->list_keys();
-        foreach ($guids as $guid => $array)
+        if (!$page->style)
         {
-            $page_data['guid'] = $guid;
-            $page_data['title'] = $mc->get_subkey($guid, 'title');
-            $page_data['content'] = $mc->get_subkey($guid, 'content');
-
-            $page_style = $mc->get_subkey($guid, 'style');
-            if ($page_style)
-            {
-                $style_id = $page_style;
-            }
-            
-            $_MIDCOM->context->component = $mc->get_subkey($guid, 'component');
+            $style_id = $_MIDGARD['style'];
         }
         
-        $_MIDCOM->context->page = $page_data;
+        $_MIDCOM->context->page = $page;
         $_MIDCOM->context->prefix = $_MIDGARD['self'];
+        $_MIDCOM->context->uri = $_MIDGARD['uri'];
+        $_MIDCOM->context->component = $page->component;
+        
+        $host = new midgard_host();
+        $host->get_by_id($_MIDGARD['host']);
+        $_MIDCOM->context->host = $host;
         
         // Append styles from context
         $_MIDCOM->templating->append_style($style_id);
         $_MIDCOM->templating->append_page($_MIDGARD['page']);
+        
+        // Populate page to toolbar
+        $this->populate_node_toolbar();
+    }
+    
+    protected function populate_node_toolbar()
+    {
+        $_MIDCOM->toolbar->add_item
+        (
+            'node', 
+            'edit', 
+            array
+            (
+                'label' => 'edit page',            
+                'route_id' => 'page_edit',
+                'icon' => 'edit',
+            )
+        );
+        
+        $_MIDCOM->toolbar->add_item
+        (
+            'node', 
+            'create', 
+            array
+            (
+                'label' => 'create subpage',
+                'route_id' => 'page_create',
+                'icon' => 'new-html',
+            )
+        );
+        
+        $_MIDCOM->toolbar->add_item
+        (
+            'node', 
+            'delete', 
+            array
+            (
+                'label' => 'delete page',
+                'route_id' => 'page_delete',
+                'icon' => 'trash',
+            )
+        );
     }
 
     public function initialize($component)
@@ -89,28 +141,31 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         }
         
         // In main Midgard request we dispatch the component in connection to a page
-        $page = new midgard_page();
-        $page->get_by_id($_MIDGARD['page']);
-        
         $this->component_name = $component;
-        $_MIDCOM->context->component_instance = $_MIDCOM->componentloader->load($this->component_name, $page);
-        
-        $_MIDCOM->templating->append_directory($_MIDCOM->componentloader->component_to_filepath($this->component_name) . '/templates');
+        $_MIDCOM->context->component_name = $component;
+        $_MIDCOM->context->component_instance = $_MIDCOM->componentloader->load($this->component_name, $_MIDCOM->context->page);
+        $_MIDCOM->templating->append_directory($_MIDCOM->componentloader->component_to_filepath($_MIDCOM->context->component_name) . '/templates');
     }
     
+    /**
+     * Get route definitions
+     */
     public function get_routes()
     {
-        $core_routes = $_MIDCOM->configuration->get('routes');
-        
-        if (!$_MIDCOM->context->component_instance)
+        $_MIDCOM->context->core_routes = $_MIDCOM->configuration->normalize_routes($_MIDCOM->configuration->get('routes'));
+        $_MIDCOM->context->component_routes = array();
+
+        if (   !isset($_MIDCOM->context->component_instance)
+            || !$_MIDCOM->context->component_instance)
         {
-            return $core_routes;
+            return $_MIDCOM->context->core_routes;
         }
         
-        $component_routes = $_MIDCOM->context->component_instance->configuration->get('routes');
+        $_MIDCOM->context->component_routes = $_MIDCOM->configuration->normalize_routes($_MIDCOM->context->component_instance->configuration->get('routes'));
         
-        return array_merge($core_routes, $component_routes);
+        return array_merge($_MIDCOM->context->component_routes, $_MIDCOM->context->core_routes);
     }
+
 
     /**
      * Load a component and dispatch the request to it
@@ -121,42 +176,120 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch');
         }
-        $route_definitions = $this->get_routes();
-
+        $this->route_definitions = $this->get_routes();
+        
         $route_id_map = array();
-        foreach ($route_definitions as $route_id => $route_configuration)
+        foreach ($this->route_definitions as $route_id => $route_configuration)
         {
-            $route_id_map[$route_configuration['route']] = $route_id;
+            if (   isset($route_configuration['root_only'])
+                && $route_configuration['root_only'])
+            {
+                // This route is to be run only with the root page
+                if ($_MIDCOM->context->page->id != $_MIDCOM->context->host->root)
+                {
+                    // We're not in root page, skip
+                    continue;
+                }
+            }
+            $route_id_map[] = array('route' => $route_configuration['route'],
+                                    'route_id' => $route_id);
         }
         unset($route_configuration, $route_id);
-
         if (!$this->route_matches($route_id_map))
         {
             // TODO: Check message
-            throw new midcom_exception_notfound('No route matches');
+            throw new midcom_exception_notfound('No route matches current URL');
         }
         unset($route_id_map);
-
-        $selected_route_configuration = $route_definitions[$this->route_id];
-
+        
+        $success_flag = true; // Flag to tell if route ran successfully
+        
+        foreach ($this->route_array as $route)
+        {
+            try
+            {   
+                $success_flag = true; // before trying route it's marked success
+                $this->dispatch_route($route);
+            }
+            catch (Exception $e)
+            {
+                $this->exceptions_stack[] = $e; // Adding exception to exceptions stack
+                $success_flag = false; // route failed
+                throw $e;
+            }
+            if ($success_flag) // Checking for success
+            {
+                break; // if we get here, controller run succesfully so bailing out from the loop
+            }
+        } // ending foreach
+        
+        if (!$success_flag) 
+        {
+            // if foreach is over and success flag is false throwing exeption
+            $messages = '';
+            foreach ($this->exceptions_stack as $exception)
+            {
+                switch (get_class($exception))
+                {
+                    case 'midcom_exception_unauthorized':
+                        throw $exception;
+                        // This will exit
+                    case 'midcom_exception_httperror':
+                        throw $exception;
+                        // This will exit
+                    default:
+                        $messages .= $exception->getMessage() . "\n";
+                        break;
+                }
+            }
+            throw new midcom_exception_notfound($messages);
+        }
+    }
+    
+    private function dispatch_route($route)
+    {
+        $this->route_id = $route;
+        $_MIDCOM->context->route_id = $this->route_id;
+        $selected_route_configuration = $this->route_definitions[$this->route_id];
+        // Handle allowed HTTP methods
+        header('Allow: ' . implode(', ', $selected_route_configuration['allowed_methods']));
+        if (!in_array($this->request_method, $selected_route_configuration['allowed_methods']))
+        {
+            throw new midcom_exception_httperror("{$this->request_method} not allowed", 405);
+        }
+        
         // Initialize controller
         $controller_class = $selected_route_configuration['controller'];
         $controller = new $controller_class($_MIDCOM->context->component_instance);
         $controller->dispatcher = $this;
-        
-        // Then call the route_id
+    
+        // Define the action method for the route_id
         $action_method = "action_{$selected_route_configuration['action']}";
+    
+        // Handle HTTP request
+        if (   $_MIDCOM->configuration->get('enable_webdav')
+            && $selected_route_configuration['webdav_only']
+            || (   $this->request_method != 'GET'
+                && $this->request_method != 'POST')
+            )
+        {
+            // Start the full WebDAV server instance
+            $webdav_server = new midcom_core_helpers_webdav($controller);
+            $webdav_server->serve($this->route_id, $action_method, $this->action_arguments[$this->route_id]);
+            // This will exit
+        }
+
         // TODO: store this array somewhere where it can be accessed via get_context_item
         $data = array();
         if ($_MIDCOM->timer)
         {
             $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch::call action');
         }
-        
+
         // Run the route and set appropriate data
         try
         {
-            $controller->$action_method($this->route_id, $data, $this->action_arguments);
+            $controller->$action_method($this->route_id, $data, $this->action_arguments[$this->route_id]);
         }
         catch (Exception $e)
         {
@@ -167,10 +300,27 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         
         $this->data_to_context($selected_route_configuration, $data);
     }
+    
+    private function is_core_route($route_id)
+    {
+        if (isset($_MIDCOM->context->component_routes[$route_id]))
+        {
+            return false;
+        }
+        
+        return true;
+    }
 
     private function data_to_context($route_configuration, $data)
     {
-        $_MIDCOM->context->set_item($this->component_name, $data);
+        if ($this->is_core_route($this->route_id))
+        {
+            $_MIDCOM->context->set_item('midcom_core', $data);
+        }
+        else
+        {
+            $_MIDCOM->context->set_item($_MIDCOM->context->component_name, $data);
+        }
         
         // Set other context data from route
         if (isset($route_configuration['mimetype']))
@@ -194,9 +344,15 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
      * @param array $args associative arguments array
      * @return string url
      */
-    public function generate_url($route_id, array $args)
+    public function generate_url($route_id, array $args, midgard_page $page = null)
     {
-        $route_definitions = $_MIDCOM->context->component_instance->configuration->get('routes');
+        if ( !is_null($page))
+        {
+            $_MIDCOM->context->create();
+            $this->set_page($page);
+            $this->initialize($_MIDCOM->context->page->component);
+        }
+        $route_definitions = $this->get_routes();
         if (!isset($route_definitions[$route_id]))
         {
             throw new OutOfBoundsException("route_id '{$route_id}' not found in routes configuration");
@@ -214,47 +370,17 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             throw new UnexpectedValueException("Missing arguments matching route '{$route_id}' of {$this->component_name}: " . implode(', ', $link_remaining_args));
         }
         
+        if ( !is_null($page))
+        {
+            $url = preg_replace('%/{2,}%', '/', $this->get_page_prefix() . $link);
+            $_MIDCOM->context->delete();
+            return $url;
+        }
+
+        
         return preg_replace('%/{2,}%', '/', $_MIDCOM->context->prefix . $link);
     }
 
-    /**
-     * Normalizes given route definition ready for parsing
-     *
-     * @param string $route route definition
-     * @return string normalized route
-     */
-    public function normalize_route($route)
-    {
-        // Normalize route
-        if (   strpos($route, '?') === false
-            && substr($route, -1, 1) !== '/')
-        {
-            $route .= '/';
-        }
-        return preg_replace('%/{2,}%', '/', $route);
-    }
-
-    /**
-     * Splits a given route (after normalizing it) to it's path and get parts
-     *
-     * @param string $route reference to a route definition
-     * @return array first item is path part, second is get part, both default to boolean false
-     */
-    public function split_route(&$route)
-    {
-        $route_path = false;
-        $route_get = false;
-        $route = $this->normalize_route($route);
-        // Get route parts
-        $route_parts = explode('?', $route, 2);
-        $route_path = $route_parts[0];
-        if (isset($route_parts[1]))
-        {
-            $route_get = $route_parts[1];
-        }
-        unset($route_parts);
-        return array($route_path, $route_get);
-    }
 
     /**
      * Tries to match one route from an array of route definitions
@@ -278,14 +404,20 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
     {
         // make a normalized string of $argv
         $argv_str = preg_replace('%/{2,}%', '/', '/' . implode('/', $this->argv) . '/');
-        foreach ($routes as $route => $route_id)
+
+        $this->action_arguments = array();
+        
+//        foreach ($routes as $route => $route_id)
+        foreach ($routes as $r)
         {
+            $route = $r['route'];
+            $route_id = $r['route_id'];
+            
+            $this->action_arguments[$route_id] = array();
+            
             // Reset variables
-            $this->action_arguments = array();
-            list ($route_path, $route_get) = $this->split_route($route);
-
-            //echo "DEBUG: route_id: {$route_id} route:{$route} argv_str:{$argv_str}\n";
-
+            list ($route_path, $route_get, $route_args) = $_MIDCOM->configuration->split_route($route);
+            
             if (!preg_match_all('%\{\$(.+?)\}%', $route_path, $route_path_matches))
             {
                 // Simple route (only static arguments)
@@ -294,17 +426,31 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
                         || $this->get_matches($route_get, $route))
                     )
                 {
-                    //echo "DEBUG: simple match route_id:{$route_id}\n";
-                    $this->route_id = $route_id;
-                    $_MIDCOM->context->route_id = $this->route_id;
-                    return true;
+                    // echo "DEBUG: simple match route_id:{$route_id}\n";
+                    $this->route_array[] = $route_id;
+                }
+                if ($route_args) // Route @ set
+                {
+                    $path = explode('@', $route_path);
+                    if (preg_match('%' . str_replace('/', '\/', $path[0]) . '/(.*)\/%', $argv_str, $matches))
+                    {
+                        $this->route_array[] = $route_id;
+                        $this->action_arguments[$route_id]['variable_arguments'] = explode('/', $matches[1]);
+                    }
                 }
                 // Did not match, try next route
                 continue;
             }
             // "complex" route (with variable arguments)
-            $route_path_regex = '%^' . str_replace('%', '\%', preg_replace('%\{(.+?)\}%', '([^/]+?)', $route_path)) . '$%';
-            //echo "DEBUG: route_path_regex:{$route_path_regex} argv_str:{$argv_str}\n";
+            if(preg_match('%@%', $route, $match))
+            {   
+                $route_path_regex = '%^' . str_replace('%', '\%', preg_replace('%\{(.+?)\}\@%', '([^/]+?)', $route_path)) . '(.*)%';
+            }
+            else 
+            {
+                $route_path_regex = '%^' . str_replace('%', '\%', preg_replace('%\{(.+?)\}%', '([^/]+?)', $route_path)) . '$%';
+            }
+//            echo "DEBUG: route_path_regex:{$route_path_regex} argv_str:{$argv_str}\n";
             if (!preg_match($route_path_regex, $argv_str, $route_path_regex_matches))
             {
                 // Does not match, NEXT!
@@ -318,19 +464,89 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             }
 
             // We have a complete match, setup route_id arguments and return
-            $this->route_id = $route_id;
-            $_MIDCOM->context->route_id = $this->route_id;
+            $this->route_array[] = $route_id;
             // Map variable arguments
+            
             foreach ($route_path_matches[1] as $index => $varname)
             {
+                $variable_parts = explode(':', $varname);
+                if(count($variable_parts) == 1)
+                {
+                    $type_hint = '';
+                }
+                else
+                {
+                    $type_hint = $variable_parts[0];
+                }
+                                
                 // Strip type hints from variable names
                 $varname = preg_replace('/^.+:/', '', $varname);
-                $this->action_arguments[$varname] =$route_path_regex_matches[$index+1];
+
+                if ($type_hint == 'token')
+                {
+                    // Tokenize the argument to handle resource typing
+                    $this->action_arguments[$route_id][$varname] = $this->tokenize_argument($route_path_regex_matches[$index + 1]);
+                }
+                else
+                {
+                    $this->action_arguments[$route_id][$varname] = $route_path_regex_matches[$index + 1];
+                }
+                
+                if (preg_match('%@%', $route, $match)) // Route @ set
+                {
+                    $path = explode('@', $route_path);
+                    if (preg_match('%' . str_replace('/', '\/', preg_replace('%\{(.+?)\}%', '([^/]+?)', $path[0])) . '/(.*)\/%', $argv_str, $matches))
+                    {
+                        $this->route_array[] = $route_id;
+                        $this->action_arguments[$route_id] = explode('/', $matches[1]);
+                    }
+                }
+                
             }
-            return true;
+            //return true;
         }
         // No match
-        return false;
+        if(count($this->route_array) == 0)
+        {
+            return false;
+        }
+        return true;
+    }
+    
+    private function tokenize_argument($argument)
+    {
+        $tokens = array
+        (
+            'identifier' => '',
+            'variant'    => '',
+            'language'   => '',
+            'type'       => 'html',
+        );
+        $argument_parts = explode('.', $argument);
+
+        // First part is always identifier
+        $tokens['identifier'] = $argument_parts[0];
+        
+        if (count($argument_parts) >= 2)
+        {
+            // If there are two or more parts, then second is variant
+            $tokens['variant'] = $argument_parts[1];
+        }
+        
+        if (count($argument_parts) >= 3)
+        {
+            // If there are three parts, then third is type
+            $tokens['type'] = $argument_parts[2];
+        }
+
+        if (count($argument_parts) >= 4)
+        {
+            // If there are four or more parts, then third is language and fourth is type
+            $tokens['language'] = $argument_parts[2];
+            $tokens['type'] = $argument_parts[3];
+        }
+        
+        return $tokens;
     }
 
     /**
@@ -340,6 +556,8 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
      * @param string $route_get GET part of a route definition
      * @param string $route full route definition (used only for error reporting)
      * @return boolean indicating match/no match
+     *
+     * @fixme Move action arguments to subarray
      */
     private function get_matches(&$route_get, &$route)
     {
@@ -374,13 +592,89 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
                 $this->action_arguments = array();
                 return false;
             }
+            
+            preg_match('%/{\$([a-zA-Z]+):([a-zA-Z]+)}/%', $route_get_matches[2][$index], $matches);
+            
+            if(count($matches) == 0)
+            {
+                $type_hint = '';
+            }
+            else
+            {
+                $type_hint = $matches[1];
+            }
+                
             // Strip type hints from variable names
             $varname = preg_replace('/^.+:/', '', $route_get_matches[2][$index]);
-            $this->action_arguments[$varname] = $this->get[$get_key];
+                            
+            if ($type_hint == 'token')
+            {
+                 // Tokenize the argument to handle resource typing
+                $this->action_arguments[$varname] = $this->tokenize_argument($this->get[$get_key]);
+            }
+            else
+            {
+                $this->action_arguments[$varname] = $this->get[$get_key];
+            }
         }
 
         // Unlike in route_matches falling through means match
         return true;
     }
+    
+    public function set_page(midgard_page $page)
+    {
+        $_MIDCOM->context->page = $page;
+    }
+    
+    private function get_page_prefix()
+    {
+        if (!$_MIDCOM->context->page)
+        {
+            throw new Exception("No page set for the manual dispatcher");
+        }
+    
+        $prefix = "{$_MIDGARD['prefix']}/";
+        $host_mc = midgard_host::new_collector('id', $_MIDGARD['host']);
+        $host_mc->set_key_property('root');
+        $host_mc->execute();
+        $roots = $host_mc->list_keys();
+        if (!$roots)
+        {
+            throw new Exception("Failed to load root page data for host {$_MIDGARD['host']}");
+        }
+        $root_id = null;
+        foreach ($roots as $root => $array)
+        {
+            $root_id = $root;
+            break;
+        }
+        
+        if ($_MIDCOM->context->page->id == $root_id)
+        {
+            return $prefix;
+        }
+        
+        $page_path = '';
+        $page_id = $_MIDCOM->context->page->id;
+        while (   $page_id
+               && $page_id != $root_id)
+        {
+            $parent_mc = midgard_page::new_collector('id', $page_id);
+            $parent_mc->set_key_property('up');
+            $parent_mc->add_value_property('name');
+            $parent_mc->execute();
+            $parents = $parent_mc->list_keys();
+            foreach ($parents as $parent => $array)
+            {
+                $page_id = $parent;
+                $page_path = $parent_mc->get_subkey($parent, 'name') . "/{$page_path}";
+            }
+        }
+        
+        return $prefix . $page_path;
+    }
+
+
 }
 ?>

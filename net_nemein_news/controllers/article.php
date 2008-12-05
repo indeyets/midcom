@@ -1,24 +1,24 @@
 <?php
 /**
- * @package midcom_core
+ * @package net_nemein_news
  * @author The Midgard Project, http://www.midgard-project.org
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
 /**
- * Page management controller
+ * Article management controller
  *
- * @package midcom_core
+ * @package net_nemein_news
  */
-class net_nemein_news_controllers_article
+class net_nemein_news_controllers_article extends midcom_core_controllers_baseclasses_manage
 {
     public function __construct($instance)
     {
         $this->configuration = $instance->configuration;
     }
     
-    private function load_article(&$data, $args)
+    public function load_object($args)
     {
         $topic_guid = $this->configuration->get('news_topic');
         if (!$topic_guid)
@@ -27,7 +27,7 @@ class net_nemein_news_controllers_article
         }
         $data['topic'] = new midgard_topic($topic_guid);
         
-        $qb = midgard_article::new_query_builder();
+        $qb = new midgard_query_builder('midgard_article');
         $qb->add_constraint('topic', '=', $data['topic']->id);
         $qb->add_constraint('name', '=', $args['name']);        
         $articles = $qb->execute();        
@@ -35,37 +35,55 @@ class net_nemein_news_controllers_article
         {
             throw new midcom_exception_notfound("Article {$args['name']} not found.");
         }
-        $data['article'] = $articles[0];
-        
-        // Load the article via Datamanager for configurability
-        $_MIDCOM->componentloader->load('midcom_helper_datamanager');
-        
-        $dm = new midcom_helper_datamanager_datamanager($this->configuration->get('schemadb_default'));
-        $dm->autoset_storage($data['article']);
-        
-        $data['article_dm'] =& $dm;
+        $this->object = $articles[0];
     }
     
-    public function action_show($route_id, &$data, $args)
+    public function prepare_new_object($args)
     {
-        $this->load_article($data, $args);
-    }
-    
-    public function action_edit($route_id, &$data, $args)
-    {
-        $this->load_article($data, $args);
-
-        $_MIDCOM->authorization->require_do('midgard:update', $data['article']);
-
-        if (isset($_POST['save']))
+        $topic_guid = $this->configuration->get('news_topic');
+        if (!$topic_guid)
         {
-            $data['article_dm']->types->title->value = $_POST['title'];
-            $data['article_dm']->types->content->value = $_POST['content'];
-            $data['article_dm']->save();
-            
-            header('Location: ' . $_MIDCOM->dispatcher->generate_url('show', array('name' => $data['article']->name)));
-            exit();
+            throw new midcom_exception_notfound("No news topic defined");
         }
+        $data['topic'] = new midgard_topic($topic_guid);
+        
+        $this->object = new midgard_article();
+        $this->object->topic = $data['topic']->id;
+    }
+    
+    public function get_url_show()
+    {
+        return $_MIDCOM->dispatcher->generate_url('show', array('name' => $this->object->name));
+    }
+
+    public function get_url_edit()
+    {
+        return $_MIDCOM->dispatcher->generate_url('edit', array('name' => $this->object->name));
+    }
+    
+    public function populate_toolbar()
+    {
+        if (is_null($_MIDCOM->toolbar))
+        {
+            return;
+        }
+        
+        $_MIDCOM->toolbar->add_item
+        (
+            'article', 
+            'edit', 
+            array
+            (
+                'label' => 'edit article',            
+                'route_id' => 'edit',
+                'route_arguments' => array
+                (
+                    'name' => $this->object->name,
+                ),
+                'icon' => 'edit',
+                'enabled' => $_MIDCOM->authorization->can_do('midgard:update', $this->object),
+            )
+        );
     }
 }
 ?>

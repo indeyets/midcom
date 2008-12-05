@@ -11,18 +11,18 @@
   *
   * @package midcom_core
   */
-interface midcom_core_services_toolbar
+interface midcom_core_services_toolbars
 {
     /**
      * @param &$configuration Configuration for the current toolbar type
      */
-    public function __construct(&$configuration=array());
+    public function __construct(&$configuration = array());
     
-    public function add_item($data);
+    public function add_item($section, $key, $item);
     
-    public function remove_item($key);
+    public function remove_item($section, $key);
     
-    public function get_item($key, $section_id=MIDCOM_TOOLBAR_NODE);
+    public function get_item($section, $key);
     
     /**
      * Returns a reference to the wanted toolbar section of the specified context. The toolbars
@@ -30,12 +30,10 @@ interface midcom_core_services_toolbar
      *
      * @param int $section_id The toolbar block to retrieve, this
      *     defaults to node.
-     * @param int $context_id The context to retrieve the toolbar block for, this
-     *     defaults to the current context.
      */
-    public function get_section($section_id=MIDCOM_TOOLBAR_NODE, $context_id = null);
+    public function get_section($section);
     
-    public function can_view($user=null);
+    public function can_view($user = null);
     
     public function render();
 }
@@ -44,134 +42,120 @@ interface midcom_core_services_toolbar
  * Toolbars core class
  *
  * @package midcom_core
- * extends midcom_core_component_baseclass
  */
-class midcom_core_services_toolbars
+abstract class midcom_core_services_toolbars_baseclass implements midcom_core_services_toolbars
 {
-    public $type = 'float';
-    public $implementation = null;
+    protected $configuration = array();
+    protected $sections = array();
+    protected $icon_pack = '/midcom_core/stock-icons/16x16/';
     
-    public function __construct(&$configuration)
-    {
-        $this->set_definitions();
-        
-        if (array_key_exists('type', $configuration))
-        {
-            $this->type = $configuration['type'];
-        }
-        
-        $classname = "midcom_core_services_toolbars_{$this->type}";
-        $this->implementation = new $classname($configuration);
+    public function __construct(&$configuration = array())
+    {   
+        $this->configuration = $configuration;
     }
     
-    private function set_definitions()
+    private function normalize_item($key, $item)
     {
-        /**
-         * Element URL
-         */
-        define ('MIDCOM_TOOLBAR_URL', 'url');
-
-        /**
-         * Element Label
-         */
-        define ('MIDCOM_TOOLBAR_LABEL', 'label');
-
-        /**
-         * Element html label
-         */
-        define ('MIDCOM_TOOLBAR_HTMLLABEL', 'htmllabel');
-
-        /**
-         * Element Helptext
-         */
-        define ('MIDCOM_TOOLBAR_HELPTEXT', 2);
-
-        /**
-         * Element Icon (Relative URL to MIDCOM_STATIC_URL root),
-         * e.g. '/stock-icons/16x16/attach.png'.
-         */
-        define ('MIDCOM_TOOLBAR_ICON', 'icon');
-
-        /**
-         * Element Icon (Including MIDCOM_STATIC_URL),
-         * e.g. '/midcom-static/stock-icons/16x16/attach.png'.
-         */
-        define ('MIDCOM_TOOLBAR_ICONURL', 'iconurl');
-
-        /**
-         * Element Enabled state
-         */
-        define ('MIDCOM_TOOLBAR_ENABLED', 'enabled');
-
-        /**
-         * Original element URL as defined by the callee.
-         */
-        define ('MIDCOM_TOOLBAR__ORIGINAL_URL', 'originalurl');
-
-        /**
-         * Options array.
-         */
-        define ('MIDCOM_TOOLBAR_OPTIONS', 'options');
-
-        /**
-         * Set this to true if you just want to hide this element
-         * from the output.
-         */
-        define ('MIDCOM_TOOLBAR_HIDDEN', 'hidden');
-        
-        /**
-         * Use an HTTP POST form request if this is true. The default is not to do so.
-         */
-        define ('MIDCOM_TOOLBAR_POST', 'is_post');
-        
-        /**
-         * Optional arguments for a POST request.
-         */
-        define ('MIDCOM_TOOLBAR_POST_HIDDENARGS', 'hiddenargs');
-
-        /**
-         * Item css class name
-         */
-        define ('MIDCOM_TOOLBAR_CLASSNAME', 'css_class');
-
-        /**
-         * The accesskey for section item
-         */
-        define ('MIDCOM_TOOLBAR_ACCESSKEY', 'accesskey');
-        
-        /**
-         * Identifier for a node toolbar for a request context.
-         *
-         */
-        define ('MIDCOM_TOOLBAR_NODE', 'node');
-
-        /**
-         * Identifier for a view toolbar for a request context.
-         *
-         */
-        define ('MIDCOM_TOOLBAR_VIEW', 'view');
-
-        /**
-         * Identifier for a host toolbar for a request context.
-         *
-         */
-        define ('MIDCOM_TOOLBAR_HOST', 'host');
-
-        /**
-         * Identifier for a help toolbar for a request context.
-         *
-         */
-        define ('MIDCOM_TOOLBAR_HELP', 'help');
-    }
-    
-    public function get_implementation()
-    {
-        if ($this->implementation == null)
+        if (!isset($item['route_id']))
         {
-            return false;
+            throw new Exception("Route ID not defined in toolbar item {$key}");
         }
         
-        return $this->implementation;
+        if (!isset($item['route_arguments']))
+        {
+            $item['route_arguments'] = array();
+        }
+        
+        $item['url'] = $_MIDCOM->dispatcher->generate_url($item['route_id'], $item['route_arguments']);
+        
+        if (!isset($item['icon']))
+        {
+            $item['icon'] = 'properties';
+        }
+        
+        if (!isset($item['is_post']))
+        {
+            $item['is_post'] = false;
+        }
+        
+        if (!isset($item['enabled']))
+        {
+            $item['enabled'] = true;
+        }
+        
+        $item['icon_url'] = MIDCOM_STATIC_URL . "{$this->icon_pack}{$item['icon']}.png";
+
+        return $item;
+    }
+
+    public function add_item($section, $key, $item)
+    {
+        if (!isset($this->sections[$section]))
+        {
+            $this->sections[$section] = array
+            (
+                'title' => $section,
+                'items' => array(),
+            );
+        }
+        
+        $this->sections[$section]['items'][$key] = $this->normalize_item($key, $item);
+    }
+    
+    public function remove_item($section, $key)
+    {
+        if (!isset($this->sections[$section]))
+        {
+            throw new OutOfBoundsException("Toolbar section {$section} not found.");
+        }
+        
+        if (!isset($this->sections[$section]['items'][$key]))
+        {
+            throw new OutOfBoundsException("Toolbar item {$key} in section {$section} not found.");
+        }
+        
+        unset($this->sections[$section][$key]);
+    }
+    
+    public function get_item($section, $key)
+    {
+        if (!isset($this->sections['section']))
+        {
+            throw new OutOfBoundsException("Toolbar section {$section} not found.");
+        }
+
+        if (!isset($this->sections[$section]['items'][$key]))
+        {
+            throw new OutOfBoundsException("Toolbar item {$key} in section {$section} not found.");
+        }
+        
+        return $this->sections[$section]['items'][$key];
+    }
+
+    /**
+     * Returns a reference to the wanted toolbar section. The toolbars
+     * will be created if this is the first request.
+     *
+     * @param int $section_id The toolbar block to retrieve, this
+     *     defaults to node.
+     */    
+    public function get_section($section)
+    {
+        if (!isset($this->sections[$section]))
+        {
+            throw new OutOfBoundsException("Toolbar section {$section} not found.");
+        }
+
+        return $this->sections[$section];
+    }
+    
+    public function can_view($user = null)
+    {
+        return true;
+    }
+    
+    public function render()
+    {
     }
 }
 

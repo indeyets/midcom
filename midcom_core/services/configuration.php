@@ -21,6 +21,36 @@ interface midcom_core_services_configuration
     public function __construct($component);
 
     /**
+     * Retrieve a configuration key
+     *
+     * If $key exists in the configuration data, its value is returned to the caller.
+     * If the value does not exist, an exception will be raised.
+     *
+     * @param string $key The configuration key to query.
+     * @return mixed Its value
+     * @see midcom_helper_configuration::exists()
+     */
+    public function get($key, $subkey=false);
+
+    /**
+     * @see midcom_helper_configuration::get()
+     */
+    public function __get($key);
+
+    /**
+     * Checks for the existence of a configuration key.
+     *
+     * @param string $key The configuration key to check for.
+     * @return boolean True, if the key is available, false otherwise.
+     */
+    public function exists($key);
+
+    /**
+     * @see midcom_helper_configuration::exists()
+     */
+    public function __isset($key);
+
+    /**
      * Parses configuration string and returns it in configuration array format
      *
      * @param string $configuration Configuration string

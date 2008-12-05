@@ -14,7 +14,7 @@
     
         $.midcom.services.toolbars.config.type_config[$.midcom.services.toolbars.TYPE_FLOAT] = {
             height: 20,
-            width: 300,
+            width: 0,
             draggable: true,
             class_name: 'midcom_services_toolbars_float'
         };
@@ -105,8 +105,9 @@
             
             if (this.sections[section_name].items.length > 0) {
                 var _self = this;
+                
                 $(element).bind('mouseover',function(e){
-                    $('.' + _self.type_config.class_name + '_section_title', _self.holder).removeClass("hover").index(handle);
+                    $('.' + _self.type_config.class_name + '_section_title', _self.holder).removeClass('hover').index(handle);
                     
                     $.each(_self.sections, function(sect, data){
                         if (sect != section_name) {
@@ -114,7 +115,7 @@
                         }
                     });
                     
-                    handle.addClass("hover");
+                    handle.addClass('hover');
                     item_holder.show();
                     _self.sections[section_name]._is_hiding = false;
                 });
@@ -124,14 +125,56 @@
                     
                     var hide = function() {
                         if (_self.sections[section_name]._is_hiding) {
-                            handle.removeClass("hover");
+                            handle.removeClass('hover');
                             item_holder.hide();
                         }
                         clearTimeout(tid);
                     }
                     
                     tid = setTimeout(hide, 800);
-                });                
+                });
+                
+                $(element).bind('click', function(e)
+                {
+                    $('.' + _self.type_config.class_name + '_section_title', _self.holder).removeClass('hover').index(handle);
+                    
+                    $.each(_self.sections, function(sect, data){
+                        if (sect != section_name) {
+                            data.item_holder.hide();
+                        }
+                    });
+                    
+                    if (handle.hasClass('clicked'))
+                    {
+                        $(this).bind('mouseout',function(e){
+                            _self.sections[section_name]._is_hiding = true;
+                            var tid = null;
+                            
+                            var hide = function() {
+                                if (_self.sections[section_name]._is_hiding) {
+                                    handle.removeClass('hover');
+                                    item_holder.hide();
+                                }
+                                clearTimeout(tid);
+                            }
+                            
+                            tid = setTimeout(hide, 0);
+                        });
+                        
+                        handle.removeClass('clicked');
+                        return;
+                    }
+                    
+                    handle.addClass('hover');
+                    handle.addClass('clicked');
+                    item_holder.show();
+                    _self.sections[section_name]._is_hiding = false;
+                    
+                    $(this).bind('mouseout', function(e)
+                    {
+                        _self.sections[section_name]._is_hiding = false;
+                    });
+                });
             }
         },
         _collect_section_items: function(section_name, holder) {
@@ -163,7 +206,7 @@
             var x = y = 20;
             
             if (this.memory.enabled) {
-                var pos = this.memory.read("position");
+                var pos = this.memory.read('position');
                 if (   pos != null
                     && typeof pos.x != 'undefined'
                     && typeof pos.y != 'undefined')
@@ -202,7 +245,7 @@
             };
             
             if (this.memory.enabled) {
-                this.memory.save("position", this.position);
+                this.memory.save('position', this.position);
             }
         }
     });

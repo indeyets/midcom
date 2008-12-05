@@ -11,7 +11,7 @@ require_once('tests/testcase.php');
 /**
  * Test that dispatches all routes of the component
  */
-class net_nemein_news_tests_routes extends midcom_tests_testcase
+class net_nemein_news_tests_routes extends net_nemein_news_tests_base
 {
     
     public function testDispatch()

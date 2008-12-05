@@ -1,22 +1,31 @@
-services_authentication: midcom_core_services_authentication_basic
+services_authentication: midcom_core_services_authentication_sessionauth
 services_authorization: midcom_core_services_authorization_simple
 services_templating: midcom_core_services_templating_midgard
 services_sessioning: midcom_core_services_sessioning_midgard
 services_uimessages: midcom_core_services_uimessages_midgard
+services_toolbars: midcom_core_services_toolbars_null
+services_authentication_cookie_cookiepath: /
+services_i18n: midcom_core_services_i18n_gettext
 cache_directory: __MIDGARDCACHE__/midgard
+templating_cache: false
+log_file: __MIDGARDLOG__/__SERVERNAME__.__LOGNAME__.log
+enable_webdav: true
 enable_benchmark: false
 enable_included_list: false
-enable_jquery_framework: false
-enable_js_midcom: false
-js_midcom_config: 'enable_watchers: true, debug: true'
+enable_jquery_framework: true
+enable_js_midcom: true
+enable_uimessages: false
+enable_xsendfile: false
+enable_attachment_cache: false
+js_midcom_config: 'enable_watchers: true, debug: false'
 date_formats:
     short: '%d/%m/%Y'
     long: '%x %X'
+metadata_lock_timeout: 30
+schemadb: file:/midcom_core/configuration/schema.yml
 default_timezone: UTC
-enable_jquery_framework: false
-enable_js_midcom: false
-toolbar_configuration:
-    type: float
+default_language: en_US
+services_toolbars_configuration:
     js:
     logos:
         midgard:
@@ -31,6 +40,70 @@ routes:
         controller: midcom_core_controllers_page
         action: show
         route: /
+        allowed_methods:
+            - OPTIONS
+            - GET
+            - PROPFIND
+    page_variants:
+        controller: midcom_core_controllers_page
+        action: show
+        route: /{$token:variant}
+        allowed_methods:
+            - OPTIONS
+            - GET
+            - PROPFIND
+    snippets_root:
+        controller: midcom_core_controllers_snippets
+        action: webdav
+        route: /__snippets
+        allowed_methods:
+            - PROPFIND
+            - OPTIONS
+        webdav_only: true
+        root_only: true
+    snippets:
+        controller: midcom_core_controllers_snippets
+        action: webdav
+        route: /__snippets@
+        allowed_methods:
+            - MKCOL
+            - PROPFIND
+            - OPTIONS
+            - GET
+            - PUT
+            - MOVE
+            - COPY
+            - DELETE
+            - LOCK
+            - UNLOCK
+        webdav_only: true
+        root_only: true
+    styles_root:
+        controller: midcom_core_controllers_styles
+        action: webdav
+        route: /__styles
+        allowed_methods:
+            - PROPFIND
+            - OPTIONS
+        webdav_only: true
+        root_only: true
+    styles:
+        controller: midcom_core_controllers_styles
+        action: webdav
+        route: /__styles@
+        allowed_methods:
+            - MKCOL
+            - PROPFIND
+            - OPTIONS
+            - GET
+            - PUT
+            - MOVE
+            - COPY
+            - DELETE
+            - LOCK
+            - UNLOCK
+        webdav_only: true
+        root_only: true
     page_edit:
         controller: midcom_core_controllers_page
         action: edit
@@ -46,8 +119,40 @@ routes:
         action: delete
         route: /__midcom/delete
         content_entry_point: midcom-delete-page
+#    page_configure:
+#        controller: midcom_core_controllers_configuration
+#        action: configure
+#        route: /__midcom/configure
+#        content_entry_point: midcom-configure-page
+#    component_configure:
+#        controller: midcom_core_controllers_configuration
+#        action: configure
+#        route: /__midcom/configure/{$component}/
+#        content_entry_point: midcom-configure-component
+    midcom_about:
+        controller: midcom_core_controllers_about
+        action: about
+        route: /__midcom/@
+        root_only: true
+        content_entry_point: midcom-show-about
     comet_messages:
         controller: midcom_core_controllers_comet
         action: messages
         route: /__midcom/comet/messages
         content_entry_point: midcom-comet-messages
+    serveattachment:
+        controller: midcom_core_controllers_attachment
+        action: serve
+        route: /__midcom/serveattachment/{$guid}/
+        root_only: true
+    login:
+        controller: midcom_core_controllers_authentication
+        action: login
+        route: /__midcom/login
+        root_only: true
+        content_entry_point: midcom-authentication-form
+    logout:
+        controller: midcom_core_controllers_authentication
+        action: logout
+        route: /__midcom/logout
+        root_only: true

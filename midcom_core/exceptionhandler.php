@@ -21,15 +21,16 @@ class midcom_core_exceptionhandler
         {
             case 'midcom_exception_notfound':
             case 'midcom_exception_unauthorized':
+            case 'midcom_exception_httperror':
                 $http_code = $exception->getCode();
                 break;
-
             default:
                 $http_code = 500;
                 break;
         }
 
         $message = $exception->getMessage();
+        header("X-MidCOM-Error: {$message}");
 
         if (headers_sent())
         {
@@ -42,9 +43,38 @@ class midcom_core_exceptionhandler
         if ($http_code != 304)
         {
             header('Content-Type: text/html; charset=utf-8');
-
-            // TODO: Templating
-            echo "<html><h1>{$header}</h1><p>{$message_type}: {$message}</p>";
+            
+            $data['header'] = $header;
+            $data['message_type'] = $message_type;
+            $data['message'] = $message;
+            $data['exception'] = $exception;
+            
+            try
+            {
+                if (!isset($_MIDCOM))
+                {
+                    throw new Exception("MidCOM not loaded");
+                }
+                $_MIDCOM->context->set_item('midcom_core_exceptionhandler', $data);
+                $_MIDCOM->context->set_item('template_entry_point', 'midcom-show-error');
+                
+                $_MIDCOM->templating->template();
+                $_MIDCOM->templating->display();
+            }
+            catch (Exception $e)
+            {
+                // Templating isn't working
+                echo "<!DOCTYPE html>\n";
+                echo "<html>\n";
+                echo "    <head>\n";
+                echo "        <title>{$header}</title>\n";
+                echo "    </head>\n";
+                echo "    <body class=\"{$message_type}\">\n";
+                echo "        <h1>{$header}</h1>\n";
+                echo "        <p>{$message}</p>\n";
+                echo "    </body>\n";
+                echo "</html>";
+            }
         }
     }
 
@@ -57,7 +87,9 @@ class midcom_core_exceptionhandler
             304 => 'HTTP/1.0 304 Not Modified',
             401 => 'HTTP/1.0 401 Unauthorized',
             404 => 'HTTP/1.0 404 Not Found',
+            405 => 'HTTP/1.0 405 Method not allowed',
             500 => 'HTTP/1.0 500 Server Error',
+            503 => 'HTTP/1.0 503 Service Unavailable',
         );
 
         if (!isset($headers[$code]))
@@ -92,6 +124,20 @@ class midcom_exception_unauthorized extends Exception
 {
     // Redefine the exception so message isn't optional
     public function __construct($message, $code = 401) 
+    {
+        parent::__construct($message, $code);
+    }
+}
+
+/**
+ * MidCOM 3 generic HTTP error exception
+ *
+ * @package midcom_core
+ */
+class midcom_exception_httperror extends Exception
+{
+    // Redefine the exception so message isn't optional
+    public function __construct($message, $code = 500) 
     {
         parent::__construct($message, $code);
     }

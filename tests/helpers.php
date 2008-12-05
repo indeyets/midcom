@@ -10,6 +10,9 @@ if (! defined('MIDCOM_TESTS_ENABLE_OUTPUT')) {
     define('MIDCOM_TESTS_ENABLE_OUTPUT', true);
 }
 
+/**
+ * @package midcom_tests
+ */
 class midcom_core_tests_helpers
 {
     public static function get_tests($root_file, $root_class, $add_skip = null)
@@ -35,7 +38,8 @@ class midcom_core_tests_helpers
 
         while(($testfile = $tests_dir->read()) !== false)
         {
-            if (array_key_exists($testfile, $skip)) 
+            if (   array_key_exists($testfile, $skip)
+                || substr($testfile, 0, 1) == '.') 
             {
                 continue;
             }

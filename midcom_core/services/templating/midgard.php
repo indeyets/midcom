@@ -20,6 +20,8 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
 
     private $elements_shown = array();
 
+    private $gettext_translator = array();
+
     public function __construct()
     {
         $this->stacks[0] = array();
@@ -27,7 +29,13 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     
     private function get_cache_identifier()
     {
-        return "{$_MIDGARD['host']}-{$_MIDGARD['page']}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . "-{$_MIDCOM->context->route_id}";
+        if (isset($_MIDCOM->context->route_id))
+        {
+            return "{$_MIDGARD['host']}-{$_MIDGARD['page']}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . 
+                   "-{$_MIDCOM->context->route_id}-{$_MIDCOM->context->template_entry_point}-{$_MIDCOM->context->content_entry_point}";
+        }
+        return "{$_MIDGARD['host']}-{$_MIDGARD['page']}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . 
+               "-{$_MIDCOM->context->template_entry_point}-{$_MIDCOM->context->content_entry_point}";
     }
     
     private function get_cache_directory()
@@ -52,7 +60,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         
         if (!is_writable($this->cache_directory))
         {
-            throw new Exception("Cache directory {$cache_directory} is not writable");
+            throw new Exception("Cache directory {$this->cache_directory} is not writable");
         }
     }
     
@@ -362,11 +370,16 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     {
         $_MIDCOM->context->create();
         $data = $this->dynamic_call($component_name, $route_id, $arguments, false);
-        
+
         $this->template('content_entry_point');
         $this->display();
-        
+
+        /* 
+         * Gettext is not context safe. Here we return the "original" textdomain
+         * because in dynamic call the new component may change it
+         */
         $_MIDCOM->context->delete();
+        $_MIDCOM->i18n->set_translation_domain($_MIDCOM->context->component_name);
     }
 
     /**
@@ -374,9 +387,12 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
      */    
     public function template($element_identifier = 'template_entry_point')
     {
+        // Let injectors do their work
+        $_MIDCOM->componentloader->inject_template();
+
         $this->prepare_cache();
         $cache_file = $this->cache_directory . '/' . $this->get_cache_identifier() . '.php';
-        
+
         if (file_exists($cache_file))
         {
             return;
@@ -398,18 +414,23 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         ob_start();
         include($cache_file);
         $content = ob_get_clean();
-        // FIXME: Remove this once we can actually invalidate cache
-        unlink($cache_file);
-
+        
+        if (!$_MIDCOM->configuration->templating_cache)
+        {
+            // FIXME: Remove this once we can actually invalidate cache
+            unlink($cache_file);
+        }
         switch ($data['template_engine'])
         {
             case 'tal':
                 if (!class_exists('PHPTAL'))
                 {
                     require('PHPTAL.php');
-                    include_once('TAL/modifiers.php');
                 }
-                
+
+                // FIXME: Rethink whole tal modifiers concept 
+                include_once('TAL/modifiers.php');
+
                 if ($_MIDCOM->timer)
                 {
                     $_MIDCOM->timer->setMarker('post-require');
@@ -427,14 +448,15 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 if ($_MIDCOM->timer)
                 {
                     $_MIDCOM->timer->setMarker('post-set-show_toolbar');
-                }
-                
+                }              
                 $tal->uimessages = false;
-                $uimessages = new midcom_core_services_uimessages();
-                if (   $uimessages->has_messages()
-                    && $uimessages->can_view())
+                if ($_MIDCOM->configuration->enable_uimessages)
                 {
-                    $tal->uimessages = $uimessages->render();
+                    if (   $_MIDCOM->uimessages->has_messages()
+                        && $_MIDCOM->uimessages->can_view())
+                    {
+                        $tal->uimessages = $_MIDCOM->uimessages->render();
+                    }
                 }
 
                 if ($_MIDCOM->timer)
@@ -468,7 +490,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                         $_MIDCOM->timer->setMarker("post-set-{$key}");
                     }
                 }
-                
+
                 $tal->setSource($content);
                 
                 if ($_MIDCOM->timer)
@@ -476,7 +498,11 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                     $_MIDCOM->timer->setMarker('post-source');
                 }
                 
+                $translator =& $_MIDCOM->i18n->set_translation_domain($_MIDCOM->context->component);
+                $tal->setTranslator($translator);  
+                          
                 $content = $tal->execute();
+                unset($tal);
                 
                 if ($_MIDCOM->timer)
                 {
@@ -507,10 +533,13 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             }
             echo "</ul>\n";
         }
-        
-        ///TODO: Connect this to some signal that tells the MidCOM execution has ended.
-        $uimessages = new midcom_core_services_uimessages();
-        $uimessages->store();
+
+        if ($_MIDCOM->configuration->enable_uimessages)
+        {
+            ///TODO: Connect this to some signal that tells the MidCOM execution has ended.
+            $_MIDCOM->uimessages->store();
+        }
     }
+     
 }
 ?>

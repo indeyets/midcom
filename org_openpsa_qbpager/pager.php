@@ -59,6 +59,11 @@ class org_openpsa_qbpager_pager
             $pager_id = $classname;
         }
         
+        if (!class_exists($classname))
+        {
+            throw new Exception("MgdSchema class {$classname} not loaded.");
+        }
+
         $this->pager_id = $pager_id;
         $this->qb = new midgard_query_builder($classname);
         // Make another QB for counting, we need to do this to avoid trouble with core internal references system
@@ -102,7 +107,7 @@ class org_openpsa_qbpager_pager
 
         foreach ($this->http_get_parameters as $key => $value)
         {
-            if (isset($_GET[$key]))
+            if (isset($_MIDCOM->dispatcher->get[$key]))
             {
                 if ($value)
                 {
@@ -110,22 +115,22 @@ class org_openpsa_qbpager_pager
                     {
                         foreach ($value as $val)
                         {
-                            if ($_GET[$key] == $val)
+                            if ($_MIDCOM->dispatcher->get[$key] == $val)
                             {
                                 $this->_parameter_cache .= "{$_prefix}{$key}={$val}";
                             }
                         }
                     }
-                    elseif ($_GET[$key] == $value)
+                    elseif ($_MIDCOM->dispatcher->get[$key] == $value)
                     {
                         $this->_parameter_cache .= "{$_prefix}{$key}={$value}";
                     }
                     elseif ($value == "*")
                     {
-                        $this->_parameter_cache .= "{$_prefix}{$key}={$_GET[$key]}";
+                        $this->_parameter_cache .= "{$_prefix}{$key}={$_MIDCOM->dispatcher->get[$key]}";
                     }
                 }
-                elseif (! $_GET[$key])
+                elseif (! $_MIDCOM->dispatcher->get[$key])
                 {
                     $this->_parameter_cache .= "{$_prefix}{$key}";
                 }
@@ -520,7 +525,7 @@ class org_openpsa_qbpager_pager
     }
     
     /**
-     * Fetch all $_GET variables, but leave out the page number
+     * Fetch all $_MIDCOM->dispatcher->get variables, but leave out the page number
      *
      */
     private function get_query_string()

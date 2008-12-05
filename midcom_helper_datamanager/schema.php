@@ -57,7 +57,7 @@ class midcom_helper_datamanager_schema
      *
      * @var Array
      */
-    private $schemadb_path = null;
+    public $schemadb_path = null;
 
     /**
      * A simple array holding the fields in the order they should be rendered identified
@@ -112,8 +112,7 @@ class midcom_helper_datamanager_schema
             }
             catch (OutOfBoundsException $e)
             {
-                throw new midcom_helper_datamanager_exception_schema("Failed to parse the schema definition in '{$schemadb}', see above for PHP errors.");
-                // This will exit.
+                throw new midcom_helper_datamanager_exception_schema("Failed to parse the schema definition in '{$schemadb}'.");
             }
         }
         else if (is_array($schemadb))
@@ -123,7 +122,6 @@ class midcom_helper_datamanager_schema
         else
         {
             throw new midcom_helper_datamanager_exception_schema('Failed to access the schema database: Invalid variable type while constructing.');
-            // This will exit.
         }
     }
     
@@ -253,6 +251,12 @@ class midcom_helper_datamanager_schema
             // this will exit
         }
         
+        if (   !isset($config['title'])
+            || empty($config['title']))
+        {
+            $config['title'] = $config['name'];
+        }
+        
         /* Rest of the defaults */
         
         // Simple ones
@@ -361,12 +365,11 @@ class midcom_helper_datamanager_schema
             $path = $raw_db;
             try
             {
-                $raw_db = midcom_core_helpers_snippet::get($raw_db);
+                $raw_db = midcom_core_helpers_snippet::get($path);
             }
             catch (OutOfBoundsException $e)
             {
-                throw new midcom_helper_datamanager_exception_schema("Failed to parse the schema database loaded from '{$raw_db}', see above for PHP errors.");
-                // This will exit.
+                throw new midcom_helper_datamanager_exception_schema("Failed to parse the schema database loaded from '{$path}'");
             }
         }
 
@@ -382,7 +385,7 @@ class midcom_helper_datamanager_schema
 
     /**
      * Check if given field name exists in this schema
-     * @param string $name name of the schema field
+     * @paramÂ string $name name of the schema field
      */
     public function field_exists($name)
     {

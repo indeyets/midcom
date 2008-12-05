@@ -96,7 +96,7 @@ class midcom_core_services_sessioning
         }
         
         // Load the preferred sessioning implementation
-        $this->sessioning =& $_MIDCOM->serviceloader->load('sessioning');
+        $this->sessioning =& $_MIDCOM->sessioning;
     }
     
     /**

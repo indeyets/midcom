@@ -2,19 +2,11 @@
 $holder_attrs = $data['holder_attributes'];
 $css_class = $data['css_class'];
 ?>
-<div class="<?php echo $css_class; ?>" <?php echo $holder_attrs; ?>>
-    <span tal:condition="toolbar/has_logos" tal:omit-tag="">
-
-    <div class="<?php echo $css_class; ?>_logos">
-        <span tal:repeat="logo toolbar/logos" metal:use-macro="midcom_helper_toolbar_logo" />
-    </div>
-    </span>
-    
-    <div class="<?php echo $css_class; ?>_sections">
+<ul class="midcom_services_toolbars <?php echo $css_class; ?>" <?php echo $holder_attrs; ?>>
+    <li class="<?php echo $css_class; ?>_sections">
         <span tal:repeat="section toolbar/sections" metal:use-macro="midcom_helper_toolbar_section" />        
-    </div>
-    <div class="<?php echo $css_class; ?>_dragbar"></div>
-</div>
+    </li>
+</ul>
 
 <div tal:comment="toolbar logo macro"
      tal:omit-tag=""
@@ -29,7 +21,7 @@ $css_class = $data['css_class'];
 
 </div>
 
-<div tal:comment="toolbar section macro"
+<ul tal:comment="toolbar section macro"
      tal:omit-tag=""
      metal:define-macro="midcom_helper_toolbar_section" >
      
@@ -44,7 +36,7 @@ $css_class = $data['css_class'];
 
             </ul>
         </div>
-</div>
+</ul>
 
 <div tal:comment="toolbar section item macro"
      tal:omit-tag=""
@@ -53,22 +45,21 @@ $css_class = $data['css_class'];
                 <li class="${item/css_class}"
                     tal:condition="item/enabled">
 
-                <span tal:condition="not: item/is_post" tal:omit-tag="">
-                    <a href="${item/url}" title="${item/label}" class="${section/css_class}_item_link" accesskey="${item/accesskey}" >
-                        <span tal:condition="item/icon" tal:omit-tag="">
+                    <span tal:condition="not: item/is_post" tal:omit-tag="">
+                        <a href="${item/url}" title="${item/label}" class="${section/css_class}_item_link" accesskey="${item/accesskey}" >
+                            <span tal:condition="item/icon" tal:omit-tag="">
 
-                        <img src="${item/iconurl}" alt="${item/label}" />
-                        </span>
+                            <img src="${item/icon_url}" alt="${item/label}" />
+                            </span>
 
-                        &nbsp;<span tal:content="item/htmllabel" class="${section/css_class}_item_label"></span>
-                    </a>
-                </span>
-                <span tal:condition="item/is_post" tal:omit-tag="">
-                    <form>
-                    Form item
-                    </form>
-                </span>
-
+                            &nbsp;<span tal:content="item/label" class="${section/css_class}_item_label"></span>
+                        </a>
+                    </span>
+                    <span tal:condition="item/is_post" tal:omit-tag="">
+                        <form>
+                        Form item
+                        </form>
+                    </span>
                 </li>
     
 </div>

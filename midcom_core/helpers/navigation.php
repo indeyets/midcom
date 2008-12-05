@@ -72,6 +72,9 @@ class midcom_core_helpers_navigation
     }
 }
 
+/**
+ * @package midcom_core
+ */
 class midcom_core_helpers_navigation_item
 {
     public $id;

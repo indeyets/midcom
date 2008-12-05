@@ -5,13 +5,14 @@
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
+include MIDCOM_ROOT . "/midcom_core/services/uimessages.php";
 
 /**
  * Basic UI Message class
  *
  * @package midcom_core
  */
-class midcom_core_services_uimessages_midgard implements midcom_core_services_uimessage
+class midcom_core_services_uimessages_midgard extends midcom_core_services_uimessages_baseclass implements midcom_core_services_uimessages
 {
     private $configuration = array();
     private $jsconfiguration = '{}';

@@ -1,6 +1,7 @@
 <?php
 /**
  * @package midcom_core
- *<span tal:replace="messages" />
+ *
+ * <span tal:replace="messages" />
  */
 ?>

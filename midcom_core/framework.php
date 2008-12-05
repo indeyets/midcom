@@ -30,7 +30,7 @@ if (!defined('MIDCOM_TEST_RUN'))
  */
 if (   isset($_SERVER['REQUEST_URI'])
     && !preg_match('%\?|/$|midcom-.+-|/.+\..+$%', $_SERVER['REQUEST_URI']) 
-    && empty($_POST))
+    && $_SERVER['REQUEST_METHOD'] == 'GET')
 {
     header('HTTP/1.0 301 Moved Permanently');
     header("Location: {$_SERVER['REQUEST_URI']}/");
@@ -39,6 +39,9 @@ if (   isset($_SERVER['REQUEST_URI'])
     echo "301: new location <a href='{$_SERVER['REQUEST_URI']}/'>{$_SERVER['REQUEST_URI']}/</a>";
     exit();
 }
+
+// Advertise the fact that this is a Midgard server
+header('X-Powered-By: Midgard/' . mgd_version());
 
 // Load the exception handler
 require(MIDCOM_ROOT . '/midcom_core/exceptionhandler.php');

@@ -12,7 +12,7 @@
         config: {
             MIDCOM_STATIC_URL: '/midcom-static',
             MIDCOM_PAGE_PREFIX: '/',
-            enable_watchers: false,            
+            enable_watchers: false,
             debug: false
         },
         registered_components: {}
@@ -169,7 +169,7 @@
             $.midcom.logger._static_holder = $('<div id="jsmidcom_logger" />').hide();
             $.midcom.logger._static_holder.appendTo('body');
             
-            if (! $.midcom.config.debug) {
+            if ($.midcom.config.debug) {
                 $.midcom.logger._static_holder.show();
             }
             

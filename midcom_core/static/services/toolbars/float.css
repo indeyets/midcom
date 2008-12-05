@@ -1,159 +1,154 @@
 @media print
 {
-    .midcom_services_toolbars_float
+    ul.midcom_services_toolbars.midcom_services_toolbars_float
     {
         display: none !important;
         height: 0 !important;
+        overflow: none;
     }
 }
 
-.midcom_services_toolbars_float
+
+/* remove me! */
+ul.midcom_services_toolbars.midcom_services_toolbars_float
 {
-    display: block;
-    position: fixed;
-    cursor: default;
-    background-color: #eae8e3;
-    border-width: 1px 2px 2px 1px;
-    -moz-border-radius: 0.6em 0.6em 0.6em 0.6em;
-    border-style: solid;
+    top: 40px;
+    left: 10%;
+}
+/* */
+ul.midcom_services_toolbars,
+ul.midcom_services_toolbars ul
+{
+    list-style: none;
     margin: 0;
-    padding: 0;    
-    font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif !important;
-    font-weight: bold;
-    background-image: none;
-    font-size: 11px;
-    line-height: 20px;    
-}
-.midcom_services_toolbars_float,
-.midcom_services_toolbars_float a
-{
-    color: #000000 !important;
-    text-decoration: none;
-}
-.midcom_services_toolbars_float a:hover
-{
-}
-.midcom_services_toolbars_float_dragbar
-{
-    background: url('drag-grid.gif') repeat top left;
-    width: 1.5em;
-    height: 20px;
-    min-width: 25px;
-    cursor: move;
-    float: right;
-}
-
-.midcom_services_toolbars_float_logos
-{
-    height: 20px;
-    margin-left: 2px;
-    margin-right: 2px;
-    padding-top: 0.1em;
-    float: left;
-    clear: right;
-}
-.midcom_services_toolbars_float_logos img
-{
-    border: none;
-}
-
-.midcom_services_toolbars_float_sections
-{
-    margin-top: 2px;
-    margin-left: 5px;
-    margin-right: 0px;
-    margin-bottom: 0px;
-    float: left;
-    clear: right;
-    cursor: pointer;
-}
-.midcom_services_toolbars_float_section
-{
-    width: auto;
-    margin-left: auto;
-    margin-right: 8px;
-    margin-top: auto;
-    margin-bottom: auto;
-    padding: 0px 0px 0px 0px;
-    float: left;
-    clear: right;
-}
-.midcom_services_toolbars_float_section_title
-{
-}
-.midcom_services_toolbars_float_section_title:hover
-{
-    color: #c3c3c3;
-}
-
-.midcom_services_toolbars_float_section_items
-{
-    margin-top: 0px;
-    margin-left: -5px;
+    padding: 0.2em 0;
     text-align: left;
-    padding: 0px 0px 0px 0px;
-    background-color: #eae8e3;
-    border-left: #000000 solid 1px;
-    border-right: #000000 solid 1px;
-    border-bottom: #000000 solid 1px;
-    color: #000000;
+}
+
+ul.midcom_services_toolbars li
+{
+    line-height: 1.6em;
+    vertical-align: middle;
+}
+
+ul.midcom_services_toolbars a img
+{
+    border-style: none;
+    vertical-align: middle;
+}
+
+ul.midcom_services_toolbars_items li
+{
+    display: inline;
+    padding-right: 0.8em;
+    vertical-align: middle;
+    padding-bottom: 2px;
+    padding-top: 4px;
+}
+
+ul.midcom_services_toolbars_items li a
+{
+  white-space: nowrap;
+}
+
+ul.midcom_services_toolbars span.accesskey
+{
+    text-decoration: underline;
+}
+
+/**
+ * Floating toolbar
+ */
+html body ul.midcom_services_toolbars.midcom_services_toolbars_float
+{
+    position: fixed;
+    background-color: #000000;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+
+* html ul.midcom_services_toolbars.midcom_services_toolbars_float
+{
     position: absolute;
-    display: none;
-}
-.midcom_services_toolbars_float_section_items li
-{
-    display: block !important;
-    height: 16px;
-    line-height: 16px;
-    text-align: left;
-    list-style-type: none;
-    white-space: nowrap !important;
-    white-space: normal;
-    z-index: 7010 !important;
-    padding-top: 1px;
-    padding-left: 4px;
-    padding-right: 5px;
-    padding-bottom: 1px;
-    margin: 0px;
-    width: 100%;
-    min-width: 7em;
 }
 
-.midcom_services_toolbars_float_section_items li.enabled
+ul.midcom_services_toolbars.midcom_services_toolbars_float ul.midcom_services_toolbars_items
 {
-}
-.midcom_services_toolbars_float_section_items li.disabled img
-{
-    -moz-opacity: 0.3;
+    border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px 6px;
+    -webkit-border-radius: 0 6px 6px 6px;
 }
 
-.midcom_services_toolbars_float_section_items li.disabled abbr,
-.midcom_services_toolbars_float_section_items li.disabled span
+ul.midcom_services_toolbars.midcom_services_toolbars_float ul.midcom_services_toolbars_items,
+ul.midcom_services_toolbars.midcom_services_toolbars_float ul.midcom_services_toolbars_items li
 {
-    color: #b0b0b0;
-    cursor: default;
-    font-weight: bold;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
 }
-.midcom_services_toolbars_float_section_items li.first_item
-{
-    padding-top: 3px;
-}
-.midcom_services_toolbars_float_section_items li.last_item
-{
-    padding-bottom: 6px;
-}
-.midcom_services_toolbars_float_section_items li a
+
+ul.midcom_services_toolbars.midcom_services_toolbars_float li:hover ul.midcom_services_toolbars_items,
+ul.midcom_services_toolbars.midcom_services_toolbars_float li:hover ul.midcom_services_toolbars_items li
 {
     display: block;
-    font-weight: 700;
-    line-height: 16px;
-    color: #3F3F3F;
-    text-decoration: none;
-    vertical-align: middle;
+    height: auto;
 }
-.midcom_services_toolbars_float_section_items li a img
+
+ul.midcom_services_toolbars.midcom_services_toolbars_float,
+ul.midcom_services_toolbars.midcom_services_toolbars_float a
 {
-    padding: 0;
-    border: 0;
-    vertical-align: middle;
+    color: #ffffff;
+    font-weight: normal;
+    font-size: 100%;
+}
+
+ul.midcom_services_toolbars.midcom_services_toolbars_float li,
+ul.midcom_services_toolbars.midcom_services_toolbars_float ul.midcom_services_toolbars_items li
+{
+    padding: 0 0.4em;
+    display: block;
+}
+
+ul.midcom_services_toolbars.midcom_services_toolbars_float ul
+{
+  padding: 0;
+}
+
+/**
+ * Grouped, floating toolbar. Mostly inherited from basic floating toolbar
+ */
+ul.midcom_services_toolbars.midcom_services_toolbars_float li div
+{
+    float: left;
+    padding-right: 1em;
+}
+
+ul.midcom_services_toolbars.midcom_services_toolbars_float ul.midcom_services_toolbars_float_section_items li
+{
+    float: none;
+    display: block;
+}
+
+ul.midcom_services_toolbars.midcom_services_toolbars_float div ul
+{
+    position: absolute;
+    margin-left: -0.4em;
+    width: 20em;
+    background-color: #000000;
+}
+
+ul.midcom_services_toolbars.midcom_services_toolbars_float ul.midcom_services_toolbars_float_section_items li a
+{
+    text-decoration: none;
+}
+
+ul.midcom_services_toolbars.midcom_services_toolbars_float ul.midcom_services_toolbars_float_section_items li a:hover,
+ul.midcom_services_toolbars.midcom_services_toolbars_float ul.midcom_services_toolbars_float_section_items li a:visited:hover
+{
+    text-decoration: none;
 }

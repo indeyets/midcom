@@ -51,6 +51,8 @@
  */
 class midcom_core_services_sessioning_midgard
 {
+    private $enabled = true;
+    
     /**
      * The constructor will initialize the sessioning, set the output nocacheable
      * and initialize the session data. This might involve creating an empty
@@ -66,16 +68,26 @@ class midcom_core_services_sessioning_midgard
         }
         
         $started = true;
-        @session_start();
+        
+        try
+        {
+            session_start();
+        }
+        catch (Exception $e)
+        {
+            $this->enabled = false;
+            return;
+        }
+
 
         /* Cache disabling made conditional based on domain/key existence */
 
         // Check for session data and load or initialize it, if necessary
-        if (! array_key_exists("midcom_session_data", $_SESSION))
+        if (! isset($_SESSION['midcom_session_data']))
         {
-            $_SESSION["midcom_session_data"] = array();
-            $_SESSION["midcom_session_data"]["midcom_core_services_sessioning"] = array();
-            $_SESSION["midcom_session_data"]["midcom_core_services_sessioning"]["startup"] = serialize(time());
+            $_SESSION['midcom_session_data'] = array();
+            $_SESSION['midcom_session_data']['midcom_core_services_sessioning'] = array();
+            $_SESSION['midcom_session_data']['midcom_core_services_sessioning']['startup'] = serialize(time());
         }
     }
 
@@ -90,6 +102,11 @@ class midcom_core_services_sessioning_midgard
      */
     public function exists($domain, $key)
     {
+        if (!$this->enabled)
+        {
+            return false;
+        }
+        
         if (! array_key_exists($domain, $_SESSION["midcom_session_data"]))
         {
             // debug_push_class(__CLASS__, __FUNCTION__);
@@ -119,7 +136,12 @@ class midcom_core_services_sessioning_midgard
      */
     private function get_helper($domain, $key)
     {
-        return unserialize($_SESSION["midcom_session_data"][$domain][$key]);
+        if (!$this->enabled)
+        {
+            return null;
+        }
+        
+        return unserialize($_SESSION['midcom_session_data'][$domain][$key]);
     }
 
     /**
@@ -137,20 +159,24 @@ class midcom_core_services_sessioning_midgard
      */
     public function get($domain, $key)
     {
-        static $no_cache = false;
-        if ($this->exists($domain, $key))
-        {
-            if (! $no_cache)
-            {
-                // $_MIDCOM->cache->content->no_cache();
-                $no_cache = true;
-            }
-            return $this->get_helper($domain, $key);
-        }
-        else
+        if (!$this->enabled)
         {
             return null;
         }
+    
+        static $no_cache = false;
+        if (!$this->exists($domain, $key))
+        {
+            return null;
+        }
+        
+        if (! $no_cache)
+        {
+            // $_MIDCOM->cache->content->no_cache();
+            $no_cache = true;
+        }
+        
+        return $this->get_helper($domain, $key);
     }
 
     /**
@@ -166,10 +192,15 @@ class midcom_core_services_sessioning_midgard
      */
     public function remove($domain, $key)
     {
+        if (!$this->enabled)
+        {
+            return null;
+        }
+        
         if ($this->exists($domain, $key))
         {
             $data = $this->get_helper($domain, $key);
-            unset($_SESSION["midcom_session_data"][$domain][$key]);
+            unset($_SESSION['midcom_session_data'][$domain][$key]);
             return $data;
         }
         else
@@ -191,6 +222,11 @@ class midcom_core_services_sessioning_midgard
      */
     public function set($domain, $key, $value)
     {
+        if (!$this->enabled)
+        {
+            return;
+        }
+        
         static $no_cache = false;
         if (! $no_cache)
         {
@@ -198,7 +234,7 @@ class midcom_core_services_sessioning_midgard
             $no_cache = true;
         }
         
-        $_SESSION["midcom_session_data"][$domain][$key] = serialize($value);
+        $_SESSION['midcom_session_data'][$domain][$key] = serialize($value);
     }
 }
 
