@@ -16,6 +16,10 @@
              name="resolveComponentNamePart"
              classpath="/${project.basedir}"
     />
+    <taskdef classname="build.symlinkStatics"
+             name="symlinkStatics"
+             classpath="/{$project.basedir}"
+    />
 
     <target name="help">
         <echo>
@@ -33,6 +37,12 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
 
         </echo>
     </target>
+
+    <fileset dir="." id="statics">
+        <include name="**/static/" />
+        <exclude name="static/" />
+        <exclude name="scaffold/static/" />
+    </fileset>
 
     <fileset dir="." id="alltests">
         <include name="tests/*Test.php" />
@@ -66,13 +76,17 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
         <exclude name="*Test.php" />
         <exclude name="**/*Test.php" />
     </fileset>
+    
+    <target name="linkstatics">
+        <mkdir dir="static" />
+		<symlinkStatics static_dir="${static_dir}">
+            <fileset refid="statics" />
+        </symlinkStatics>
+    </target>
 
     <target name="runtests" depends="prepare_tests">
         <phpunit haltonfailure="false" printsummary="true" codecoverage="false">
             <batchtest>
-                <!--<fileset dir="tests">
-                    <include name="all.php" />
-                </fileset>-->
                 <fileset refid="alltests" />
             </batchtest>
           
