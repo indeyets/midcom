@@ -164,12 +164,11 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             if ($element_content)
             {
                 $this->stack_elements[$stack][$element] = $element_content;
-                return $this->stack_elements[$stack][$element];
+                eval('?>' . preg_replace_callback("/<\\(([a-zA-Z0-9 _-]+)\\)>/", array($this, 'get_element'), $this->stack_elements[$stack][$element]));
             }
         }
         
         // TODO: Exception or silent fail?
-        return '';
     }
 
     /**
@@ -284,7 +283,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
      */    
     public function template()
     {
-        eval('?>' . preg_replace_callback("/<\\(([a-zA-Z0-9 _-]+)\\)>/", array($this, 'get_element'), $this->get_element($_MIDCOM->context->template_entry_point)));
+        $this->get_element($_MIDCOM->context->template_entry_point);
     }
     
     /**
@@ -292,7 +291,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
      */
     public function content()
     {
-        eval('?>' . preg_replace_callback("/<\\(([a-zA-Z0-9 _-]+)\\)>/", array($this, 'get_element'), $this->get_element($_MIDCOM->context->content_entry_point)));
+        $this->get_element($_MIDCOM->context->content_entry_point);
     }
     
     /**
