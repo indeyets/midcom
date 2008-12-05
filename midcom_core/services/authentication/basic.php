@@ -70,14 +70,12 @@ class midcom_core_services_authentication_basic implements midcom_core_services_
             echo "<h1>Authorization required</h1>\n";
             exit();
         }
-        else
+        
+        if (!$this->login($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
         {
-            if (!$this->login($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
-            {
-                // Wrong password: Recurse until auth ok or user gives up
-                unset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
-                $this->handle_exception($exception);
-            }
+            // Wrong password: Recurse until auth ok or user gives up
+            unset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+            $this->handle_exception($exception);
         }
     }
 }
