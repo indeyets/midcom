@@ -92,7 +92,8 @@ class midcom_core_midcom
         $this->head = new midcom_core_helpers_head
         (
             $this->configuration->get('enable_jquery_framework'),
-            $this->configuration->get('enable_js_midcom')
+            $this->configuration->get('enable_js_midcom'),
+            $this->configuration->get('js_midcom_config')
         );
     }
     
