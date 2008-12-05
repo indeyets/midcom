@@ -36,9 +36,21 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             $_MIDCOM->context->create();
         }
         
+        $page = null;
+
         if (mgd_is_guid($component_name))
         {
             $page = new midgard_page($component_name);
+        }
+        elseif (strpos($component_name, '/') !== false)
+        {
+        mgd_debug_start();
+            $page = new midgard_page();
+            $page->get_by_path($component_name);
+        }
+        
+        if ($page)
+        {
             $component_name = $page->component;
             
             if (!$component_name)
@@ -202,7 +214,8 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
 
         echo $content;
         
-        if ($_MIDCOM->timer)
+        if (   $_MIDCOM->timer
+            && $_MIDCOM->context->get_current_context() == 0)
         {
             $_MIDCOM->timer->display();
         }
