@@ -25,11 +25,28 @@
     
     $.extend($.midcom.services.toolbars, {
         javascript: function(holder, config) {
+            $.midcom.services.toolbars.config.type_config[$.midcom.services.toolbars.TYPE_PALETTE] = {
+                height: 20,
+                width: 300,
+                draggable: true
+            };
+            $.midcom.services.toolbars.config.type_config[$.midcom.services.toolbars.TYPE_MENU] = {
+                height: 25,
+                width: 0,
+                draggable: false
+            };
+            
             $.midcom.services.toolbars.config = $.midcom.services.configuration.merge(
                 $.midcom.services.toolbars.config,
                 config
             );
+            
+            $.midcom.logger.log('midcom.services.toolbars.javascript inited');
+            $.midcom.logger.debug($.midcom.services.toolbars.config.type_config);
+            
             holder.show();
+            
+            $.midcom.events.signals.trigger('midcom.services.toolbars::javascript-ready');
         }
     });
     
