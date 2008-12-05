@@ -41,15 +41,15 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
         midgard_object_class::connect_default($class, 'action_delete_hook', array($this, 'on_deleting'), array());        
     }
 
-    public function on_loaded($object, $args)
+    public function on_loaded($object)
     {
-        if (!$this->can_do('midgard:read', $object))
+        if (!$_MIDCOM->authorization->can_do('midgard:read', $object))
         {
             throw new midcom_exception_unauthorized("Not authorized to read {$object->guid}");
         }
     }
    
-    public function on_creating($object, $args)
+    public function on_creating($object)
     {
         if (!$this->can_do('midgard:create', $object))
         {
@@ -57,7 +57,7 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
         }
     }
     
-    public function on_updating($object, $args)
+    public function on_updating($object)
     {
         if (!$this->can_do('midgard:update', $object))
         {
@@ -65,7 +65,7 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
         }
     }
     
-    public function on_deleting($object, $args)
+    public function on_deleting($object)
     {
         if (!$this->can_do('midgard:delete', $object))
         {
