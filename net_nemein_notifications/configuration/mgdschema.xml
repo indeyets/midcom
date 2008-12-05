@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="net_nemein_notifications_notification" table="net_nemein_notifications_notification" parent="midgard_person" parentfield="recipient">
+        <property name="id" type="integer" primaryfield="id"/>
+
+        <!-- What is the notification about -->
+        <property name="component" type="text"/>
+        <property name="action" type="text"/>
+
+        <!-- The persons involved -->
+        <property name="recipient" link="midgard_person:id" reverse="no" type="integer" parentfield="recipient"/>
+        <property name="sender" link="midgard_person:id" reverse="no" type="integer"/>
+
+        <!-- Actual notification -->
+        <property name="title" type="text"/>
+        <property name="abstract" type="text"/>
+        <property name="content" type="text"/>
+        
+    </type>
+</Schema>

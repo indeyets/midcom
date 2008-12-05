@@ -1,0 +1,8 @@
+auto_save: true
+fallback_mail_from: '"MidCOM Notifier" <noreply@midgard-project.org>'
+routes:
+    index:
+        controller: net_nemein_notifications_controllers_index
+        action: index
+        route: /
+        content_entry_point: nnn-show-index

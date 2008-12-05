@@ -1,0 +1,4 @@
+notifications:
+    description: notifications
+    fields:
+        #This is dynamically filled later

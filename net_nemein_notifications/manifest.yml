@@ -1,0 +1,7 @@
+component: net_nemein_notifications
+version: 0.0.1
+maintainers:
+    w_i:
+        name: Jerry Jalava
+        email: jerry.jalava@gmail.com
+        role: lead
