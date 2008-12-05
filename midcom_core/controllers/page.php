@@ -43,5 +43,29 @@ class midcom_core_controllers_page
             exit();
         }
     }
+    
+    public function action_create($route_id, &$data, $args)
+    {
+        if (!isset($_MIDGARD['page']))
+        {
+            throw new midcom_exception_notfound("No Midgard page found");
+        }
+        $data['page'] = new midgard_page();
+        $data['page']->up = $_MIDGARD['page'];
+
+        $_MIDCOM->authorization->require_do('midgard:create', $data['page']);
+
+        if (isset($_POST['save']))
+        {
+            $data['page']->name = $_POST['name'];
+            $data['page']->title = $_POST['title'];
+            $data['page']->content = $_POST['content'];
+            $data['page']->info = 'active';
+            $data['page']->create();
+            
+            header("Location: {$_MIDCOM->context->prefix}{$data['page']->name}/");
+            exit();
+        }
+    }
 }
 ?>

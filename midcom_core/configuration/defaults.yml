@@ -36,6 +36,11 @@ routes:
         action: edit
         route: /__midcom/edit
         content_entry_point: midcom-edit-page
+    page_create:
+        controller: midcom_core_controllers_page
+        action: create
+        route: /__midcom/create
+        content_entry_point: midcom-edit-page
     comet_messages:
         controller: midcom_core_controllers_comet
         action: messages
