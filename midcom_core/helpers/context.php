@@ -109,5 +109,43 @@ class midcom_core_helpers_context
         $this->contexts[$context_id][$key] = $value;
     }
 
+    /**
+     * Get value of current context data array item
+     *
+     * @param string $key Key to get data of
+     * @return mixed Value
+     **/
+    public function __get($key)
+    {
+        return $this->get_item($key);
+    }
+
+    /**
+     * Set value of a particular context data array item
+     *
+     * @param string $key Key to set data to
+     * @param mixed $value Value to set
+     */
+    public function __set($key, $value)
+    {
+        $this->set_item($key, $value);
+    }
+
+    /**
+     * Check if data array item exists in current context 
+     *
+     * @param string $key Key to check for
+     * @return bool
+     **/
+    public function __isset($key)
+    {
+        if (    array_key_exists($this->current_context, $this->contexts)
+            and array_key_exists($key, $this->contexts[$this->current_context]))
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
 ?>
