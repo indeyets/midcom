@@ -340,6 +340,16 @@
         return false;
     };
     
+    $.midcom.helpers.is_null = function(item) {        
+        if (   typeof item != 'undefined'
+            && item == null)
+        {
+            return true;
+        }
+        
+        return typeof item == 'object' && !item;
+    };
+    
     /**
      * uses xmlObjectifier from http://www.terracoder.com/
      */
@@ -637,7 +647,7 @@
 
             for (var ak in a) {                
                 if (   typeof a[ak] != 'object'
-                    || is_null(a[ak]))
+                    || $.midcom.helpers.is_null(a[ak]))
                 {
                     c[ak] = a[ak];
                     if (   typeof b[ak] != 'undefined'
@@ -690,7 +700,7 @@
         );
         
         var expdate = new Date();
-        if (!is_null(this.config.expires)) {
+        if (!$.midcom.helpers.is_null(this.config.expires)) {
             if ($.midcom.helpers.is_a(this.config.expires, Date)) {
                 expdate = this.config.expires;
             } else {
@@ -979,8 +989,8 @@
             
             var cookie_str = name + "=" + this._serialize(value) +
             ( ";expires=" + expires.toGMTString() ) +
-            ( (!is_null(path)) ? ";path=" + path : "" ) +
-            ( (!is_null(domain)) ? ";domain=" + domain : "") +
+            ( (!$.midcom.helpers.is_null(path)) ? ";path=" + path : "" ) +
+            ( (!$.midcom.helpers.is_null(domain)) ? ";domain=" + domain : "") +
             ( (secure == true) ? ";secure" : "");
 
             $.midcom.logger.debug("_writeCookie cookie_str: "+cookie_str);
@@ -1005,8 +1015,8 @@
 
             document.cookie = name + "=" +
             ";expires=-1" + //"Thu, 01-Jan-70 00:00:01 GMT" +
-            ( (!is_null(path)) ? ";path=" + path : "") +
-            ( (!is_null(domain)) ? ";domain=" + domain : "");
+            ( (!$.midcom.helpers.is_null(path)) ? ";path=" + path : "") +
+            ( (!$.midcom.helpers.is_null(domain)) ? ";domain=" + domain : "");
         },
         _checkSupport: function() {
             var cookieEnabled = false;
@@ -1040,16 +1050,6 @@
     /**
      * Javascript extensions
     **/
-    
-    function is_null(item) {        
-        if (   typeof item != 'undefined'
-            && item == null)
-        {
-            return true;
-        }
-        
-        return typeof item == 'object' && !item;
-    }
     
     /**
      * Does variable substitution on the string with given parameters
