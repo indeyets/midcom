@@ -52,7 +52,8 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
      */
     public function route_matches($routes)
     {
-        $argv_str = '/' . implode('/', $this->argv) . '/';
+        // make a normalized string of $argv
+        $argv_str = preg_replace('%/{2,}%', '/', '/' . implode('/', $this->argv) . '/');
         foreach ($routes as $route => $controller)
         {
             // Reset variables
@@ -66,7 +67,9 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             {
                 $route .= '/';
             }
-            //echo "DEBUG: route:{$route}\n";
+            $route = preg_replace('%/{2,}%', '/', $route);
+
+            //echo "DEBUG: route:{$route} argv_str:{$argv_str}\n";
 
             // Get route parts
             $route_parts = explode('?', $route, 2);
