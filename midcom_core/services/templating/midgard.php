@@ -16,7 +16,9 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     private $dispatcher = null;
     private $stacks = array();
     private $stack_elements = array();
-    
+
+    private $elements_shown = array();
+
     public function __construct()
     {
         $this->stacks[0] = array();
@@ -148,6 +150,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         foreach ($reverse_stack as $identifier => $type)
         {
             $element_content = null;
+            
             switch ($type)
             {
                 case 'style':
@@ -161,8 +164,11 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                     break;
             }
             
-            if ($element_content)
+            if (   $element_content
+                && !in_array($element, $this->elements_shown))
             {
+                $this->elements_shown[] = $element;
+                
                 $this->stack_elements[$stack][$element] = $element_content;
                 eval('?>' . preg_replace_callback("/<\\(([a-zA-Z0-9 _-]+)\\)>/", array($this, 'get_element'), $this->stack_elements[$stack][$element]));
             }
@@ -325,6 +331,9 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                     $_MIDCOM->timer->setMarker('post-source');
                 }
                 
+                //TODO: Do something else here :)
+                $tal->navigation = false;
+
                 /*$tal->navigation = $_MIDCOM->navigation;
                 
                 if ($_MIDCOM->timer)
