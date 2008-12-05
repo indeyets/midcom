@@ -119,16 +119,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
      * @param string $route_id the id of the route to generate a link for
      * @param array $args associative arguments array
      * @return string url
-     *
-     * FIXME: reminder remove later
-     *     '/view/{$article_id}/' => 'view',
-     *     '/?articleid={$article_id}' => 'view',
-     *     '/foo/bar' => 'someroute_id',
-     *     '/latest/{$category}/{$number}' => 'categorylatest',
      */
     public function generate_url($route_id, array $args)
     {
-        // TODO: determine prefix from component
+        // FIXME: determine prefix from component instance
         $prefix = $_MIDGARD['self'];
         $route_definitions = $this->component_instance->configuration->get('routes');
         if (!isset($route_definitions[$route_id]))
