@@ -20,7 +20,7 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
     public function __construct()
     {
         // Note: Signals implementation is not reliable in earlier builds so we won't use it
-        if (version_compare(mgd_version(), '1.9.0alpha0+svn2008031306', '>='))
+        if (version_compare(mgd_version(), '1.9.0alpha0+svn2008031408', '>='))
         {
             foreach ($_MIDGARD['schema']['types'] as $classname => $null)
             {
@@ -35,10 +35,10 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
         {
             throw new Exception("{$class} is not an MgdSchema class");
         }
-        //midgard_object_class::connect_default($class, 'action-loaded-hook', array($this, 'on_loaded'), array($class));
-        //midgard_object_class::connect_default($class, 'action-create-hook', array($this, 'on_creating'), array($class));
+        midgard_object_class::connect_default($class, 'action-loaded-hook', array($this, 'on_loaded'), array($class));
+        midgard_object_class::connect_default($class, 'action-create-hook', array($this, 'on_creating'), array($class));
         midgard_object_class::connect_default($class, 'action-update-hook', array($this, 'on_updating'), array($class));
-        //midgard_object_class::connect_default($class, 'action-delete-hook', array($this, 'on_deleting'), array($class));        
+        midgard_object_class::connect_default($class, 'action-delete-hook', array($this, 'on_deleting'), array($class));        
     }
 
     public function on_loaded($object, $params)
