@@ -163,7 +163,10 @@ class midcom_core_component_loader
         exec('find ' . escapeshellarg(MIDCOM_ROOT) . ' -follow -type f -name ' . escapeshellarg('manifest.yml'), $manifests);
         foreach ($manifests as $manifest)
         {
-            $this->load_manifest($manifest);
+            if (strpos($manifest, 'scaffold') === false)
+            {
+                $this->load_manifest($manifest);                
+            }
         }
     }
 }
