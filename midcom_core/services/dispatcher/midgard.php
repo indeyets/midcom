@@ -138,20 +138,6 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         unset($route_id_map);
 
         $selected_route_configuration = $route_definitions[$this->route_id];
-        
-        // Set other context data from route
-        if (isset($selected_route_configuration['mimetype']))
-        {
-            $_MIDCOM->context->mimetype = $selected_route_configuration['mimetype'];
-        }
-        if (isset($selected_route_configuration['template_entry_point']))
-        {
-            $_MIDCOM->context->template_entry_point = $selected_route_configuration['template_entry_point'];
-        }
-        if (isset($selected_route_configuration['content_entry_point']))
-        {
-            $_MIDCOM->context->content_entry_point = $selected_route_configuration['content_entry_point'];
-        }
 
         // Initialize controller
         $controller_class = $selected_route_configuration['controller'];
@@ -168,8 +154,37 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         }
         
         // Run the route and set appropriate data
-        $controller->$action_method($this->route_id, $data, $this->action_arguments);
+        try
+        {
+            $controller->$action_method($this->route_id, $data, $this->action_arguments);
+        }
+        catch (Exception $e)
+        {
+            // Read controller's returned data to context before carrying on with exception handling
+            $this->data_to_context($selected_route_configuration, $data);
+            throw $e;
+        }
+        
+        $this->data_to_context($selected_route_configuration, $data);
+    }
+
+    private function data_to_context($route_configuration, $data)
+    {
         $_MIDCOM->context->set_item($this->component_name, $data);
+        
+        // Set other context data from route
+        if (isset($route_configuration['mimetype']))
+        {
+            $_MIDCOM->context->mimetype = $route_configuration['mimetype'];
+        }
+        if (isset($route_configuration['template_entry_point']))
+        {
+            $_MIDCOM->context->template_entry_point = $route_configuration['template_entry_point'];
+        }
+        if (isset($route_configuration['content_entry_point']))
+        {
+            $_MIDCOM->context->content_entry_point = $route_configuration['content_entry_point'];
+        }
     }
 
     /**
