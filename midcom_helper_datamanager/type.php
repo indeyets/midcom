@@ -271,9 +271,20 @@ class midcom_helper_datamanager_type_baseclass implements midcom_helper_datamana
         return $this->storage->can_do($privilege);
     }
     
-    public function __toString()
+    /**
+     * Magic getters for the contents of the field in a given format
+     */
+    public function __get($key)
     {
-        return $this->convert_to_html();
+        switch ($key)
+        {
+            case 'as_html':
+                return $this->convert_to_html();
+            case 'as_csv':
+                return $this->convert_to_csv();
+            case 'as_raw':
+                return $this->convert_to_raw();
+        }
     }
 }
 

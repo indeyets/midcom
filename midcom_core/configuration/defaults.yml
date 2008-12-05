@@ -5,7 +5,7 @@ services_sessioning: midcom_core_services_sessioning_midgard
 services_uimessages: midcom_core_services_uimessages_midgard
 cache_directory: __MIDGARDCACHE__/midgard
 enable_benchmark: false
-enable_included_list: true
+enable_included_list: false
 enable_jquery_framework: false
 enable_js_midcom: false
 js_midcom_config: 'enable_watchers: true, debug: true'
