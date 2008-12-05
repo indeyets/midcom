@@ -18,9 +18,23 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
     
     private $toolbars = array();
     
+    private $helper;
+    
+    public $has_logos = false;
+
+    public $logos = array();
+    public $sections = array();
+    
     public function __construct(&$configuration=array())
     {
         $this->set_configuration($configuration);
+        
+        $this->helper = new midcom_core_helpers_toolbar_tal(
+            $this->configuration['className'],
+            'style="display: none;"'
+        );
+
+        $this->create_toolbar($_MIDCOM->context->get_current_context());
         
         $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/services/toolbars/javascript.js");
     }
@@ -66,30 +80,30 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
         return false;
     }
     
-    public function get_item($key)
+    public function get_item($key, $section_id=MIDCOM_TOOLBAR_NODE)
     {
         return;
     }
     
     /**
-     * Returns a reference to the wanted toolbar of the specified context. The toolbars
+     * Returns a reference to the wanted toolbar section of the specified context. The toolbars
      * will be created if this is the first request.
      *
-     * @param int $block_id The toolbar block to retrieve, this
+     * @param int $section_id The toolbar block to retrieve, this
      *     defaults to node.
      * @param int $context_id The context to retrieve the toolbar block for, this
      *     defaults to the current context.
      */
-    public function get_item_block($block_id=MIDCOM_TOOLBAR_NODE, $context_id = null)
+    public function get_section($section_id=MIDCOM_TOOLBAR_NODE, $context_id = null)
     {
         if ($context_id === null)
         {
             $context_id = $_MIDCOM->context->get_current_context();
         }
 
-        if (! array_key_exists($context_id, $this->_toolbars))
+        if (! array_key_exists($context_id, $this->toolbars))
         {
-            $this->create_toolbars($context_id);
+            $this->create_toolbar($context_id);
         }
 
         return $this->toolbars[$context_id][$block_id];
@@ -102,17 +116,7 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
     
     public function render()
     {
-        $html = "<div class=\"{$this->configuration['className']}\" style=\"display: none;\">\n";
-        $html .= "    <div class=\"logos\">\n";
-        
-        $html .= $this->generate_logos();
-        
-        $html .= "    </div>\n";
-        $html .= "    <div class=\"items\">\n";
-        $html .= $this->generate_items();
-        $html .= "    </div>\n";
-        $html .= "    <div class=\"dragbar\"></div>\n";
-        $html .= "</div>\n";
+        $html = $this->helper->render(&$this);
         
         $html .= "<script type=\"text/javascript\">\n";
         $html .= "    jQuery('.{$this->configuration['className']}').midcom_services_toolbars({$this->jsconfiguration});\n";
@@ -121,51 +125,111 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
         echo $html;
     }
     
-    private function generate_logos()
-    {
-        $html = "<a href=\"#\">\n";
-        $html .= "    <img src=\"".MIDCOM_STATIC_URL."/midcom_core/services/toolbars/midgard-logo.png\" width=\"16\" height=\"16\"/ alt=\"Midgard\">\n";
-        $html .= "</a>\n";
+    private function generate_logo($title, $link, $image_path)
+    {        
+        $logo = array(
+            'title' => $title,
+            'url' => $link,
+            'path' => MIDCOM_STATIC_URL . $image_path,
+        );
         
-        return $html;
+        if (! $this->has_logos)
+        {
+            $this->has_logos = true;
+        }
+        
+        return $logo;
     }
     
-    private function generate_items()
+    /**
+     * Creates the default toolbar sections for a given context ID.
+     * Creates logos defined in configuration.
+     *
+     * @param int $context_id The context ID for which the toolbars should be created.
+     */
+    private function create_toolbar($context_id)
     {
-        $html = '';
-        return $html;
+        if (   array_key_exists('logos', $this->configuration)
+            && !empty($this->configuration['logos']))
+        {
+            foreach ($this->configuration['logos'] as $key => $logo)
+            {
+                $this->logos[] = $this->generate_logo($logo['title'], $logo['url'], $logo['image']);
+            }
+        }
+        
+        $this->sections[MIDCOM_TOOLBAR_NODE] = array(
+            'name' => 'section_' . MIDCOM_TOOLBAR_NODE,
+            'title' => 'Node',
+            'css_class' => "{$this->configuration['className']}_section_" . MIDCOM_TOOLBAR_NODE,
+            'items' => array(),
+        );
+        $this->sections[MIDCOM_TOOLBAR_VIEW] = array(
+            'name' => 'section_' . MIDCOM_TOOLBAR_VIEW,
+            'title' => 'View',
+            'css_class' => "{$this->configuration['className']}_section_" . MIDCOM_TOOLBAR_VIEW,
+            'items' => array(),
+        );
+        $this->sections[MIDCOM_TOOLBAR_HOST] = array(
+            'name' => 'section_' . MIDCOM_TOOLBAR_HOST,
+            'title' => 'Host',
+            'css_class' => "{$this->configuration['className']}_section_" . MIDCOM_TOOLBAR_HOST,
+            'items' => array(),
+        );
+        $this->sections[MIDCOM_TOOLBAR_HELP] = array(
+            'name' => 'section_' . MIDCOM_TOOLBAR_HELP,
+            'title' => 'Help',
+            'css_class' => "{$this->configuration['className']}_section_" . MIDCOM_TOOLBAR_HELP,
+            'items' => array(),
+        );
+        
+        $this->add_node_management_commands(&$this->sections[MIDCOM_TOOLBAR_NODE]['items'], $context_id);
+        // $this->add_host_management_commands(&$this->sections[MIDCOM_TOOLBAR_HOST]['items'], $context_id);
+        // $this->add_help_management_commands(&$this->sections[MIDCOM_TOOLBAR_HELP]['items'], $context_id);
+
+        $this->toolbars[$context_id] = $this->sections;
     }
     
-    private function generate_block($name)
+    /**
+     * Adds the node management commands to the specified section.
+     *
+     * @param array $items A reference to the sections items to be filled.
+     * @param int $context_id The context to use (the topic is drawn from there). This defaults
+     *     to the currently active context.
+     */
+    function add_node_management_commands(&$items, $context_id = null)
     {
+        // if ($context_id === null)
+        // {
+        //     $topic = $_MIDCOM->context->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC);
+        // }
+        // else
+        // {
+        //     $topic = $_MIDCOM->context->get_context_data(MIDCOM_CONTEXT_CONTENTTOPIC, $context_id);
+        // }
+        // 
+        // if (! $topic)
+        // {
+        //     return false;
+        // }
+        // 
+        // if (! is_a($topic, 'midcom_baseclasses_database_topic'))
+        // {
+        //     // Force-Cast to DBA object
+        //     $topic = new midcom_db_topic($topic->id);
+        // }
+                
+        $this->helper->add_item(MIDCOM_TOOLBAR_NODE,
+            array
+            (
+                MIDCOM_TOOLBAR_URL => "/__midcom/edit/",
+                MIDCOM_TOOLBAR_LABEL => 'edit node',
+                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                MIDCOM_TOOLBAR_ACCESSKEY => 'e',
+            )
+        );
         
-        //         <div id="midcom_services_toolbars_topic-host" class="item">
-        //             <span class="midcom_services_toolbars_topic_title host">Website</span>
-        // <ul class='midcom_toolbar host_toolbar'>
-        // 
-        //   <li class='enabled'>
-        //     <a href='/midcom-logout-' title='Ctrl-L' class="accesskey " accesskey='l' >
-        //       <img src='/midcom-static/stock-icons/16x16/exit.png' alt='' />&nbsp;<span class="toolbar_label"><span style="text-decoration: underline;">L</span>ogout</span>
-        //     </a>
-        //   </li>
-        //   <li class='enabled'>
-        //     <a href='/__mfa/asgard/' title='Ctrl-A' class="accesskey " accesskey='a' >
-        //       <img src='/midcom-static/midgard.admin.asgard/asgard2-16.png' alt='' />&nbsp;<span class="toolbar_label">Midgard&nbsp;<span style="text-decoration: underline;">A</span>dministration&nbsp;UI</span>
-        // 
-        //     </a>
-        //   </li>
-        //   <li class='enabled'>
-        //     <a href='/midcom-cache-invalidate' title=''>
-        //       <img src='/midcom-static/stock-icons/16x16/stock_refresh.png' alt='' />&nbsp;<span class="toolbar_label">Invalidate MidCOM's cache</span>
-        //     </a>
-        //   </li>
-        //   <li class='last_item enabled'>
-        // 
-        //     <a href='/midcom-exec-midcom/config-test.php' title=''>
-        //       <img src='/midcom-static/stock-icons/16x16/start-here.png' alt='' />&nbsp;<span class="toolbar_label">Test settings</span>
-        //     </a>
-        //   </li>
-        // </ul>        </div>
+        $items =& $this->helper->get_section_items(MIDCOM_TOOLBAR_NODE);
     }
 }
 
