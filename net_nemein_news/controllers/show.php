@@ -20,8 +20,13 @@ class net_nemein_news_controllers_show
     
     public function action_article($route_id, &$data, $args)
     {
-        $data['topic'] = new midgard_topic($this->configuration->get('news_topic'));
-
+        $topic_guid = $this->configuration->get('news_topic');
+        if (!$topic_guid)
+        {
+            throw new midcom_exception_notfound("No news topic defined");
+        }
+        $data['topic'] = new midgard_topic($topic_guid);
+        
         $qb = midgard_article::new_query_builder();
         $qb->add_constraint('topic', '=', $data['topic']->id);
         $qb->add_constraint('name', '=', $args['name']);        
