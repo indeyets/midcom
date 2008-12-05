@@ -1,20 +1,25 @@
 <?php
 /**
- * @package net_nemein_comettest
+ * @package midcom_core
  * @author The Midgard Project, http://www.midgard-project.org
  * @copyright The Midgard Project, http://www.midgard-project.org
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
 /**
- * Comet pusher class
- * based on PI library (http://pi-js.googlecode.com)
+ * Comet helper class
  *
- * @package net_nemein_comettest
+ * @package midcom_core
  */
-class net_nemein_comettest_pusher
+class midcom_core_helpers_comet
 {
     public function __construct() {}
+    
+    static function set_html_headers()
+    {
+        $_MIDCOM->head->enable_jsmidcom();
+        $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/helpers/comet.js");
+    }
     
     static function pushdata($data, $type, $name)
     {

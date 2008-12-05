@@ -20,8 +20,7 @@ class net_nemein_comettest_controllers_index
     
     public function action_index($route_id, &$data, $args)
     {
-        $_MIDCOM->head->enable_jsmidcom();
-        $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/helpers/comet.js");
+        midcom_core_helpers_comet::set_html_headers();
     }
     
     public function action_unixtime($route_id, &$data, $args)
@@ -46,7 +45,7 @@ class net_nemein_comettest_controllers_index
     	
     	while (true)
     	{
-    		net_nemein_comettest_pusher::pushdata(time(), $type, $name);
+    		midcom_core_helpers_comet::pushdata(time(), $type, $name);
     		ob_flush();
     		flush();
     		sleep(1);
@@ -99,16 +98,16 @@ class net_nemein_comettest_controllers_index
             {                    
                 $last_push = $session->get("string");
                 $session->remove("string");
-                net_nemein_comettest_pusher::pushdata($last_push, $type, $name);
+                midcom_core_helpers_comet::pushdata($last_push, $type, $name);
             }
             else
             {
-                net_nemein_comettest_pusher::pushdata('', $type, $name);
+                midcom_core_helpers_comet::pushdata('', $type, $name);
             }
             //net_nemein_comettest_pusher::pushdata(time(), $type, $name);
             ob_flush();
             flush();
-            sleep(1);
+            sleep(5);
         }
     }
     
