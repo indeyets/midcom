@@ -14,6 +14,163 @@
 class midcom_core_services_templating_midgard implements midcom_core_services_templating
 {
     private $dispatcher = null;
+    private $stacks = array();
+    private $stack_elements = array();
+    
+    public function __construct()
+    {
+        $this->stacks[0] = array();
+    }
+    
+    public function append_directory($directory)
+    {
+        if (!file_exists($directory))
+        {
+            throw new Exception("Template directory {$directory} not found.");
+        }
+        $stack = $_MIDCOM->context->get_current_context();
+        if (!isset($this->stacks[$stack]))
+        {
+            $this->stacks[$stack] = array();
+        }
+        $this->stacks[$stack][$directory] = 'directory';
+    }
+    
+    public function append_style($style_id)
+    {
+        $stack = $_MIDCOM->context->get_current_context();
+        if (!isset($this->stacks[$stack]))
+        {
+            $this->stacks[$stack] = array();
+        }
+        $this->stacks[$stack][$style_id] = 'style'; 
+    }
+    
+    public function append_page($page_id)
+    {
+        $stack = $_MIDCOM->context->get_current_context();
+        if (!isset($this->stacks[$stack]))
+        {
+            $this->stacks[$stack] = array();
+        }
+        $this->stacks[$stack][$page_id] = 'page';
+    }
+    
+    private function get_element_style($style_id, $element)
+    {
+        $mc = midgard_element::new_collector('style', $style_id);
+        $mc->add_constraint('name', '=', $element);
+        $mc->set_key_property('value');
+        $mc->execute();
+        $keys = $mc->list_keys();
+        if (count($keys) == 0)
+        {
+            return null;
+        }
+        
+        foreach ($keys as $value => $array)
+        {
+            return $value;
+        }
+    }
+    
+    private function get_element_page($page_id, $element)
+    {
+        switch ($element)
+        {
+            case 'title':
+            case 'content':
+                $mc = midgard_page::new_collector('id', $page_id);
+                $mc->set_key_property($element);
+                $mc->execute();
+                $keys = $mc->list_keys();
+                if (count($keys) == 0)
+                {
+                    return null;
+                }
+                
+                foreach ($keys as $value => $array)
+                {
+                    return $value;
+                }
+            default:
+                $mc = midgard_pageelement::new_collector('page', $page_id);
+                $mc->add_constraint('name', '=', $element);
+                $mc->set_key_property('value');
+                $mc->execute();
+                $keys = $mc->list_keys();
+                if (count($keys) == 0)
+                {
+                    return null;
+                }
+                
+                foreach ($keys as $value => $array)
+                {
+                    return $value;
+                }
+        }
+    }
+    
+    private function get_element_directory($directory, $element)
+    {
+        $path = "{$directory}/{$element}.php";
+        if (!file_exists($path))
+        {
+            return null;
+        }
+        return file_get_contents($path);
+    }
+    
+    private function get_element($element)
+    {
+        if (is_array($element))
+        {
+            $element = $element[1];
+        }
+        $stack = $_MIDCOM->context->get_current_context();
+        if (!isset($this->stacks[$stack]))
+        {
+            throw new OutOfBoundsException("MidCOM style stack {$stack} not found.");
+        }
+        
+        if (!isset($this->stack_elements[$stack]))
+        {
+            $this->stack_elements[$stack] = array();
+        }
+        
+        if (isset($this->stack_elements[$stack][$element]))
+        {
+            return $this->stack_elements[$stack][$element];
+        }
+        
+        // Reverse the stack in order to look for elements
+        $reverse_stack = array_reverse($this->stacks[$stack], true);
+        foreach ($reverse_stack as $identifier => $type)
+        {
+            $element_content = null;
+            switch ($type)
+            {
+                case 'style':
+                    $element_content = $this->get_element_style($identifier, $element);
+                    break;
+                case 'page':
+                    $element_content = $this->get_element_page($identifier, $element);
+                    break;
+                case 'directory':
+                    $element_content = $this->get_element_directory($identifier, $element);
+                    break;
+            }
+            
+            if ($element_content)
+            {
+                $this->stack_elements[$stack][$element] = $element_content;
+                return $this->stack_elements[$stack][$element];
+            }
+        }
+        
+        // TODO: Exception or silent fail?
+        return '';
+    }
 
     /**
      * Call a route of a component with given arguments and return the data it generated
@@ -127,19 +284,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
      */    
     public function template()
     {
-        $template_entry_point = $_MIDCOM->context->get_item('template_entry_point');
-
-        $component = $_MIDCOM->context->get_item('component');
-        if (   !mgd_is_element_loaded($template_entry_point)
-            && $component)
-        {        
-            // Load element from component templates
-            echo $_MIDCOM->componentloader->load_template($component, $template_entry_point);
-        }
-        else
-        {
-            eval('?>' . mgd_preparse(mgd_template($template_entry_point)));
-        }
+        eval('?>' . preg_replace_callback("/<\\(([a-zA-Z0-9 _-]+)\\)>/", array($this, 'get_element'), $this->get_element($_MIDCOM->context->template_entry_point)));
     }
     
     /**
@@ -147,25 +292,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
      */
     public function content()
     {
-        $content_entry_point = $_MIDCOM->context->get_item('content_entry_point');
-        
-        $page_data = $_MIDCOM->context->get_item('page');
-
-        $component = $_MIDCOM->context->get_item('component');
-
-        if (!mgd_is_element_loaded($content_entry_point))
-        {   
-            if (!$component)
-            {
-                $component = 'midcom_core';
-            }     
-            // Load element from component templates
-            echo $_MIDCOM->componentloader->load_template($component, $content_entry_point);
-        }
-        else
-        {
-            eval('?>' . mgd_preparse(mgd_template($content_entry_point)));
-        }
+        eval('?>' . preg_replace_callback("/<\\(([a-zA-Z0-9 _-]+)\\)>/", array($this, 'get_element'), $this->get_element($_MIDCOM->context->content_entry_point)));
     }
     
     /**
@@ -176,6 +303,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     public function display($content)
     {
         $data = $_MIDCOM->context->get();
+
         switch ($data['template_engine'])
         {
             case 'tal':
@@ -198,12 +326,12 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                     $_MIDCOM->timer->setMarker('post-source');
                 }
                 
-                $tal->navigation = $_MIDCOM->navigation;
+                /*$tal->navigation = $_MIDCOM->navigation;
                 
                 if ($_MIDCOM->timer)
                 {
                     $_MIDCOM->timer->setMarker('post-set-navigation');
-                }
+                }*/
                 
                 $tal->MIDCOM = $_MIDCOM;
 

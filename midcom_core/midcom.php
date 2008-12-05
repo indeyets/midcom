@@ -268,7 +268,8 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
         {
             $this->timer->setMarker('MidCOM::process');
         }
-        
+
+        $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/templates');        
         $this->dispatcher->populate_environment_data();
         try
         {

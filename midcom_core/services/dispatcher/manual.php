@@ -42,6 +42,8 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         $_MIDCOM->context->component = $this->page->component;
         $_MIDCOM->context->page = $page_data;
         $_MIDCOM->context->prefix = $this->get_page_prefix();
+        
+        $_MIDCOM->templating->append_page($this->page->id);
     }
 
     public function initialize($component)
@@ -60,6 +62,8 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         {
             $_MIDCOM->context->component_instance = $_MIDCOM->componentloader->load($this->component_name);
         }
+        
+        $_MIDCOM->templating->append_directory($_MIDCOM->componentloader->component_to_filepath($this->component_name) . '/templates');
     }
     
     public function get_routes()

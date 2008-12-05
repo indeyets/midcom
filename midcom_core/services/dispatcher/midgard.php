@@ -52,18 +52,33 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $mc->add_value_property('content');
         $mc->add_value_property('component');
         
+        // Style handling
+        $style_id = $_MIDGARD['style'];
+        $mc->add_value_property('style');
+        
         $mc->execute();
         $guids = $mc->list_keys();
         foreach ($guids as $guid => $array)
         {
             $page_data['guid'] = $guid;
             $page_data['title'] = $mc->get_subkey($guid, 'title');
-            $page_data['content'] = $mc->get_subkey($guid, 'content');            
+            $page_data['content'] = $mc->get_subkey($guid, 'content');
+
+            $page_style = $mc->get_subkey($guid, 'style');
+            if ($page_style)
+            {
+                $style_id = $page_style;
+            }
+            
             $_MIDCOM->context->component = $mc->get_subkey($guid, 'component');
         }
         
         $_MIDCOM->context->page = $page_data;
         $_MIDCOM->context->prefix = $_MIDGARD['self'];
+        
+        // Append styles from context
+        $_MIDCOM->templating->append_style($style_id);
+        $_MIDCOM->templating->append_page($_MIDGARD['page']);
     }
 
     public function initialize($component)
@@ -79,6 +94,8 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         
         $this->component_name = $component;
         $_MIDCOM->context->component_instance = $_MIDCOM->componentloader->load($this->component_name, $page);
+        
+        $_MIDCOM->templating->append_directory($_MIDCOM->componentloader->component_to_filepath($this->component_name) . '/templates');
     }
     
     public function get_routes()
