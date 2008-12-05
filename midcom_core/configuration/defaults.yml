@@ -1,3 +1,6 @@
 services_authorization: midcom_core_services_authorization_simple
 services_templating: midcom_core_services_templating_midgard
-show_benchmark: false
+enable_benchmark: false
+date_formats:
+    short: '%m/%d/%Y'
+    long: '%x %X'
