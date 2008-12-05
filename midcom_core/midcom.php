@@ -13,16 +13,17 @@
  */
 class midcom_core_midcom
 {
+    // Services
     public $authorization;
     public $configuration;
     public $componentloader;
     public $dispatcher;
-    
-    public $navigation;
-    
-    private $contexts = array();
-    private $current_context = 0;
+    public $templating;
 
+    // Helpers
+    public $navigation;
+    public $context;
+    
     public function __construct($dispatcher = 'midgard')
     {
         // Register autoloader so we get all MidCOM classes loaded automatically
@@ -33,7 +34,7 @@ class midcom_core_midcom
         $this->dispatcher = new $dispatcher_implementation();
         
         $this->load_base_services();
-        $this->create_context();
+        $this->context->create();
     }
     
     /**
@@ -48,8 +49,15 @@ class midcom_core_midcom
         $services_authorization_implementation = $this->configuration->get('services_authorization');
         $this->authorization = new $services_authorization_implementation();
         
+        // Load the preferred templating implementation
+        $services_templating_implementation = $this->configuration->get('services_templating');
+        $this->templating = new $services_templating_implementation();
+        
         // Load the component loader
         $this->componentloader = new midcom_core_component_loader();
+        
+        // Load the context helper
+        $this->context = new midcom_core_helpers_context();
         
         // Load the navigation helper
         $this->navigation = new midcom_core_helpers_navigation();
@@ -184,6 +192,8 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
     }
 
     /**
+=======
+>>>>>>> Moved templating and context handling to its own functions to prevent cluttering midcom_core_midcom:midcom_core/midcom.php
      * Automatically load missing class files
      *
      * @param string $class_name Name of a missing PHP class
@@ -217,7 +227,7 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
         $this->dispatcher->populate_environment_data();
         try
         {
-            $component = $this->get_context_item('component');
+            $component = $this->context->get_item('component');
         }
         catch (Exception $e)
         {
@@ -231,7 +241,7 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
 
         $this->dispatcher->dispatch($component);
         
-        //header('Content-Type: ' . $this->get_context_item('mimetype'));
+        //header('Content-Type: ' . $this->context->get_item('mimetype'));
     }
 
     /**
@@ -346,5 +356,7 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
         }
     }
 
+=======
+>>>>>>> Moved templating and context handling to its own functions to prevent cluttering midcom_core_midcom:midcom_core/midcom.php
 }
 ?>

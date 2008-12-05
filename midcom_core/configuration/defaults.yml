@@ -1,2 +1,3 @@
 services_authorization: midcom_core_services_authorization_simple
+services_templating: midcom_core_services_templating_midgard
 show_benchmark: false
