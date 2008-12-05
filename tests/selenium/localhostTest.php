@@ -12,9 +12,17 @@ class midcom_tests_selenium_localhost extends midcom_tests_seleniumcase
 {
     public function setUp()
     {
-        //$this->selenium = new Testing_Selenium("*firefox", "http://www.google.com");
-        $this->selenium = new Testing_Selenium("*safari", "http://midcom3");
-        $this->selenium->start();
+        try
+        {
+            //$this->selenium = new Testing_Selenium("*firefox", "http://www.google.com");
+            $this->selenium = new Testing_Selenium("*safari", "http://midcom3");
+            $this->selenium->start();
+        }
+        catch(Testing_Selenium_Exception $e)
+        {
+            $this->selenium->stop();
+            $this->fail("Unexcepted exception thrown!\n{$e}\n");
+        }
     }
 
     public function testFrontpage()

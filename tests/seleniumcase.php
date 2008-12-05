@@ -35,8 +35,13 @@ class midcom_tests_seleniumcase extends PHPUnit_Framework_TestCase
         {
             echo "\n\ntearDown\n\n";
         }
-        
-        $this->selenium->stop();
+
+        try
+        {
+           $this->selenium->stop();
+        } catch (Testing_Selenium_Exception $e) {
+            $this->fail("Unexcepted exception thrown!\n{$e}\n");
+        }
     }
 
 }
