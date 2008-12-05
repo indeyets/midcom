@@ -32,9 +32,9 @@
 
             $.midcom.logger.log('jsmidcom inited with config ' + $.midcom.helpers.pretty_print($.midcom.config));
             
-            setTimeout("jQuery.midcom.logger.debug('this is debug message')", 1000);
-            setTimeout("jQuery.midcom.logger.warning('this is warning message')", 2000);
-            setTimeout("jQuery.midcom.logger.error('this is error message')", 3000);
+            // setTimeout("jQuery.midcom.logger.debug('this is debug message')", 1000);
+            // setTimeout("jQuery.midcom.logger.warning('this is warning message')", 2000);
+            // setTimeout("jQuery.midcom.logger.error('this is error message')", 3000);
             
             $.midcom.events.signals.trigger('midcom::init-ready');
         },
@@ -234,8 +234,7 @@
         }
     });
     
-    $.midcom.dispatcher = {};
-    
+    $.midcom.dispatcher = {};    
     $.extend($.midcom.dispatcher, {
         get: function(url, on_success, on_error) {
             var return_data = null;
@@ -289,6 +288,18 @@
     };
     
     $.midcom.helpers = {};
+    
+    $.midcom.helpers.generate_id = function(prefix) {
+        if (typeof prefix == 'undefined') {
+            var prefix = '';
+        }
+        
+        var date = new Date();
+        var random_key = Math.floor(Math.random()*4013);
+        var random_key2 = Math.floor(Math.random()*3104);
+
+        return prefix + (Math.floor(((date.getTime()/1000)+random_key2) + (10016486 + (random_key * 22423)) * random_key / random_key2).toString()).toString().substr(0,8);
+    }
     
     /**
      * uses xmlObjectifier from http://www.terracoder.com/
@@ -576,7 +587,7 @@
     $.midcom.services.configuration = {        
         merge: function(a,b) {
             var c = {};
-
+            
             if (typeof a == 'undefined') {
                 return c;
             }        
@@ -586,8 +597,10 @@
                 var b = {};
             }
 
-            for (var ak in a) {
-                if (typeof a[ak] != 'object') {
+            for (var ak in a) {                
+                if (   typeof a[ak] != 'object'
+                    || is_null(a[ak]))
+                {
                     c[ak] = a[ak];
                     if (   typeof b[ak] != 'undefined'
                         && typeof b[ak] != 'object')
@@ -607,6 +620,385 @@
         }
     };
     
+    $.midcom.storage = {};
+    
+    $.midcom.storage.cookies = function() {        
+        var config = {};
+        this.namespace = null;
+        
+        if (typeof arguments[0] == 'string') {
+            config['name'] = arguments[0];
+        }
+        if (typeof arguments[0] == 'object') {
+            config = arguments[0];
+        }
+        if (   arguments.length == 2
+            && typeof arguments[0] == 'string'
+            && typeof arguments[1] == 'object')
+        {
+            config['name'] = arguments[0];
+            config = arguments[1];
+        }
+
+        this.enabled = false;
+        this.config = $.midcom.services.configuration.merge({
+                name: 'midcom.storage.cookie',
+                expires: null,
+                domain: null,
+                path: null,
+                secure: false
+            },
+            config
+        );
+        
+        var expdate = new Date();
+        if (!is_null(this.config.expires)) {
+            if (is_a(this.config.expires, Date)) {
+                expdate = this.config.expires;
+            } else {
+                exp_seconds = this.config.expires;
+                expdate.setTime(expdate.getTime() + (exp_seconds * 1000));
+            }
+            this.expires = expdate;
+        } else {
+            expdate.setTime(expdate.getTime() + ((24 * 60 * 60) * 1000));
+            this.expires = expdate;
+        }
+        
+        if (this.config.domain == '__auto__') {
+            this.config.domain = document.domain;
+        }
+
+        this._checkSupport();
+        
+        if (this.enabled) {
+            if (   document.cookie == ""
+                || !this.exists(this.config.name))
+            {
+                this.save("initialized", 1, "parameters");
+            }
+        }
+    };
+    $.extend($.midcom.storage.cookies.prototype, {
+        exists: function(key) {
+            if (   typeof key == 'undefined'
+                || key == ''
+                || key == null)
+            {
+                key = this.config.name;
+            }
+            key = key.replace(/\./g, '_');
+            
+            if (   !document.cookie
+                || document.cookie == '')
+            {
+                return false;
+            }
+
+            var start = document.cookie.indexOf(key+"=");
+
+            if (start == -1) {
+                return false;
+            }
+
+            if (   !start
+                && (key != document.cookie.substring(0,key.length)))
+            {
+                return false;
+            }
+            
+            return true;
+        },
+        save: function(key, value, section) {
+            $.midcom.logger.debug("cookie save key:"+key+", value: "+$.midcom.helpers.pretty_print(value)+", section: "+section);
+            
+            if (   typeof key == 'undefined'
+                || typeof value == 'undefined')
+            {
+                return null;
+            }
+            key = key.replace(/\./g, '_');
+            
+            if (   typeof section == 'undefined'
+                || section == ''
+                || section == null)
+            {
+                var section = "data";
+            }
+
+            this._updateSection(section, key, $.midcom.helpers.json.convert(value));
+        },
+        read: function(key, section) {
+            $.midcom.logger.debug("cookie read key:"+key+" section: "+section);
+            
+            if (typeof key == 'undefined')
+            {
+                return null;
+            }
+            key = key.replace(/\./g, '_');
+            
+            if (   typeof section == 'undefined'
+                || section == ''
+                || section == null)
+            {
+                var section = "data";
+            }
+            
+            var rawdata = this._readSection(section);
+            if (! rawdata) {
+                return null;
+            }
+
+            var splitted_raw = rawdata.split("|");
+
+            for (var i=0; i<splitted_raw.length; i++) {
+                var datarow = splitted_raw[i];
+                if (key == datarow.split("#")[0]) {
+                    return $.midcom.helpers.json.parse(datarow.split("#")[1]);
+                }
+            }
+            
+            return null;
+        },
+        remove: function() {
+            this._removeCookie();
+        },
+        
+        _sectionExists: function(section) {
+            var memdata = this._readCookie();
+            if (! memdata) {
+                return false;
+            }
+            
+            var parsed = memdata.split("!");
+            
+            if (   typeof section == 'undefined'
+                || section == ''
+                || section == null)
+            {                
+                return false;
+            }
+            
+            for (var i=0; i<parsed.length; i++) {
+                if (section == parsed[i].split("=")[0]) {
+                    console.log("section "+section+" exists");
+                    return true;
+                }
+            }
+            
+            return false;
+        },
+        _readSection: function(section, others_only) {            
+            if (typeof others_only == 'undefined') {
+                var others_only = false;
+            }
+            
+            if (   typeof section == 'undefined'
+                || section == ''
+                || section == null)
+            {                
+                return "";
+            }
+
+            var memdata = this._readCookie();
+            if (! memdata) {
+                return "";
+            }
+
+            var parsed = memdata.split(":!:");
+
+            if (others_only) {
+                var section_str = "";
+                for (var i=0; i<parsed.length; i++) {
+                    if (section != parsed[i].split("=")[0]) {
+                        if (i != parsed.length-1) {
+                            section_str = section_str + parsed[i] + ":!:";
+                        } else {
+                            section_str = section_str + parsed[i];
+                        }
+                    }
+                }
+                return section_str;
+            } else {
+                for (var i=0; i<parsed.length; i++) {
+                    if (section == parsed[i].split("=")[0]) {
+                        var value_str = parsed[i].split("=")[1];
+                        return value_str;
+                    }
+                }
+            }
+        },
+        _updateSection: function(section, key, value) {
+            $.midcom.logger.debug("_updateSection key:"+key+" value: "+value+" section: "+section);
+            
+            if (   typeof key == 'undefined'
+                || typeof value == 'undefined'
+                || typeof section == 'undefined')
+            {
+                return null;
+            }
+            key = key.replace(/\./g, '_');
+
+            var section_data = this._readSection( section );
+
+            if (section_data) {
+                var splitted_sd = section_data.split("|");
+
+                var ssdlen = splitted_sd.length;
+                
+                var key_updated = false;
+                var new_sd = new Array();
+                
+                for (var i=0; i<splitted_sd.length; i++) {
+                    var tmpkey = splitted_sd[i].split("#")[0];
+                    var tmpval = splitted_sd[i].split("#")[1];
+                    if (key == tmpkey) {
+                        var tmparr = [ tmpkey, value ];
+                        new_sd[i] = tmparr.join("#");
+                        key_updated = true;
+                    } else {
+                        var tmparr = [ tmpkey, tmpval ];
+                        new_sd[i] = tmparr.join("#");
+                    }
+                }
+
+                if (! key_updated) {
+                    var newdata = key + "#" + value;
+                    new_sd[sdlen] = newdata;
+                }
+
+                var new_sd_str = new_sd.join("|");
+                
+                var other_sections = this._readSection( section, true );
+                if (other_sections) {
+                    this._writeCookie(section + "=" + new_sd_str+":!:"+other_sections);
+                } else {
+                    this._writeCookie(section + "=" + new_sd_str);
+                }
+            } else {
+                var new_data = new Array();
+                new_data[0] = key + "#" + value;
+
+                var section_str = section + "=" + new_data.join("|");
+
+                var other_sections = this._readSection( section, true );
+                if (other_sections) {
+                    this._writeCookie(section_str + ":!:" + other_sections);
+                } else {
+                    this._writeCookie(section_str);
+                }
+            }
+        },
+        
+        _readCookie: function( name ) {
+            if (   typeof name == 'undefined'
+                || name == ''
+                || name == null)
+            {
+                name = this.config.name;
+            }
+            name = name.replace(/\./g, '_');
+            
+            $.midcom.logger.debug("_readcookie cookie: "+document.cookie);
+            
+            var start = document.cookie.indexOf(name+"=");
+            var len = start + name.length + 1;
+
+            if (start == -1) {
+                return null;
+            }
+
+            if (   !start
+                && (name != document.cookie.substring(0,name.length)))
+            {
+                return null;
+            }
+
+            var end = document.cookie.indexOf(";",len);
+            end = (end == -1 ? document.cookie.length : end);
+
+            return this._normalize(document.cookie.substring(len,end));
+        },
+        _writeCookie: function(value, name, path, domain, secure, expires) {            
+            if (   typeof expires == 'undefined'
+                || expires == ''
+                || expires == null)
+            {
+                var expires = this.expires;
+            }
+            
+            if (   typeof name == 'undefined'
+                || name == ''
+                || name == null)
+            {
+                name = this.config.name;
+            }
+            name = name.replace(/\./g, '_');
+
+            var path = (typeof path != 'undefined') ? path : this.config.path;
+            var domain = (typeof domain != 'undefined') ? domain: this.config.domain;
+            var secure = (typeof secure != 'undefined') ? secure: this.config.secure;
+            
+            var cookie_str = name + "=" + this._serialize(value) +
+            ( ";expires=" + expires.toGMTString() ) +
+            ( (!is_null(path)) ? ";path=" + path : "" ) +
+            ( (!is_null(domain)) ? ";domain=" + domain : "") +
+            ( (secure == true) ? ";secure" : "");
+
+            $.midcom.logger.debug("_writeCookie cookie_str: "+cookie_str);
+            
+            if (! this.exists(name)) {
+                document.cookie = cookie_str;
+            } else {
+                document.cookie = cookie_str;
+            }
+        },
+        _removeCookie: function(name, path, domain) {
+            if (   typeof name == 'undefined'
+                || name == ''
+                || name == null)
+            {
+                name = this.config.name;
+            }
+            name = name.replace(/\./g, '_');
+                        
+            var path = (typeof path != 'undefined') ? path : this.config.path;
+            var domain = (typeof domain != 'undefined') ? domain: this.config.domain;
+
+            document.cookie = name + "=" +
+            ";expires=-1" + //"Thu, 01-Jan-70 00:00:01 GMT" +
+            ( (!is_null(path)) ? ";path=" + path : "") +
+            ( (!is_null(domain)) ? ";domain=" + domain : "");
+        },
+        _checkSupport: function() {
+            var cookieEnabled = false;
+
+            if (typeof navigator.cookieEnabled == 'undefined') {
+                if (this.exists("midcom.storage.cookie.test")) {
+                    cookieEnabled = true;
+                } else {
+                    this._writeCookie("1", "midcom.storage.cookie.test", null, null);
+
+                    cookieEnabled = this.exists("midcom.storage.cookie.test");
+
+                    this._removeCookie( "midcom.storage.cookie.test", null, null );                    
+                }
+            } else {
+                cookieEnabled = (navigator.cookieEnabled) ? true : false;
+            }
+
+            if (cookieEnabled) {
+                this.enabled = true;
+            }
+        },        
+        _normalize: function(string) {
+            return decodeURIComponent(string);
+        },
+        _serialize: function(string) {
+            return encodeURIComponent(string);
+        }
+    });
+    
     /**
      * Javascript extensions
     **/
@@ -619,6 +1011,16 @@
             source = source.__proto__;
         }
         return false;
+    }
+    
+    function is_null(item) {        
+        if (   typeof item != 'undefined'
+            && item == null)
+        {
+            return true;
+        }
+        
+        return typeof item == 'object' && !item;
     }
     
     /**
