@@ -11,7 +11,7 @@ enable_js_midcom: false
 toolbar_configuration:
     type: javascript
     js:
-        debug: false
+        debug: 'false'
 routes:
     page_show:
         controller: midcom_core_controllers_page
