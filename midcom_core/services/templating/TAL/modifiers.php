@@ -13,7 +13,7 @@
  *
  * Formarts date with config var ['date_formats']['short']
  */
-function phptal_tales_midcomshortdate($src, $nothrow)
+function phptal_tales_midcomDateShort($src, $nothrow)
 {
     $src = trim($src);
     return 'strftime("' . $_MIDCOM->configuration->get('date_formats', 'short') . '", strtotime(' . PHPTAL_TalesInternal::path($src, $nothrow) . '))';
@@ -26,10 +26,23 @@ function phptal_tales_midcomshortdate($src, $nothrow)
  *
  * Formarts date with config var ['date_formats']['long']
  */
-function phptal_tales_midcomlongdate($src, $nothrow)
+function phptal_tales_midcomDateLong($src, $nothrow)
 {
     $src = trim($src);
     return 'strftime("' . $_MIDCOM->configuration->get('date_formats', 'long') . '", strtotime(' . PHPTAL_TalesInternal::path($src, $nothrow) . '))';
+}
+
+/**
+ * This modifier will return a formatted date string
+ * usage:
+ *      midcomdate_short: path/to/my/timestamp
+ *
+ * Formarts date with config var ['date_formats']['long']
+ */
+function phptal_tales_midcomDateRfc($src, $nothrow)
+{
+    $src = trim($src);
+    return 'date(DATE_RFC3339, strtotime(' . PHPTAL_TalesInternal::path($src, $nothrow) . '))';
 }
 
 ?>
