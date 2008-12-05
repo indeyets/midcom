@@ -7,7 +7,7 @@
  */
 
 /**
- * Context data managemenret helper for MidCOM 3
+ * Context data management helper for MidCOM 3
  *
  *
  * @package midcom_core
