@@ -7,11 +7,11 @@
  */
 
 /**
- * Javascript toolbar
+ * float toolbar
  *
  * @package midcom_core
  */
-class midcom_core_services_toolbars_javascript implements midcom_core_services_toolbar
+class midcom_core_services_toolbars_float implements midcom_core_services_toolbar
 {
     private $configuration = array();
     private $jsconfiguration = '{}';
@@ -37,6 +37,9 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
         $this->create_toolbar($_MIDCOM->context->get_current_context());
         
         $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/services/toolbars/javascript.js");
+        $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/services/toolbars/float.js");
+        $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/jQuery/jquery.dimensions-1.1.2.js");
+        $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . "/midcom_core/jQuery/jquery.easydrag-1.4.js");
         
         $_MIDCOM->head->add_link_head(
             array
@@ -44,7 +47,7 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
                 'rel'   => 'stylesheet',
                 'type'  => 'text/css',
                 'media' => 'screen',
-                'href'  => MIDCOM_STATIC_URL . '/midcom_core/services/toolbars/javascript.css',
+                'href'  => MIDCOM_STATIC_URL . '/midcom_core/services/toolbars/float.css',
             )
         );
         $_MIDCOM->head->add_link_head(
@@ -54,7 +57,7 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
                 'rel'   => 'stylesheet',
                 'type'  => 'text/css',
                 'media' => 'screen',
-                'href'  => MIDCOM_STATIC_URL . '/midcom_core/services/toolbars/javascript-ie.css',
+                'href'  => MIDCOM_STATIC_URL . '/midcom_core/services/toolbars/float-ie.css',
             )
         );
     }
@@ -65,7 +68,7 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
         
         if (! array_key_exists('className', $this->configuration))
         {
-            $this->configuration['className'] = 'midcom_services_toolbars_javascript';
+            $this->configuration['className'] = 'midcom_services_toolbars_float';
         }
         
         if (array_key_exists('js', $this->configuration))
@@ -131,7 +134,12 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
     
     public function can_view($user=null)
     {
-        return true;
+        if ($_MIDCOM->context->mimetype == 'text/html')
+        {
+            return true;            
+        }
+        
+        return false;
     }
     
     public function render()
@@ -140,7 +148,7 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
         
         $html .= "<script type=\"text/javascript\">\n";
         $html .= "    jQuery(document).ready(function() {\n";
-        $html .= "        jQuery('.{$this->configuration['className']}').midcom_services_toolbars({$this->jsconfiguration});\n";
+        $html .= "        jQuery('.{$this->configuration['className']}').midcom_services_toolbars('float', {$this->jsconfiguration});\n";
         $html .= "    });\n";
         $html .= "</script>\n";
         
@@ -246,7 +254,7 @@ class midcom_core_services_toolbars_javascript implements midcom_core_services_t
             (
                 MIDCOM_TOOLBAR_URL => "/__midcom/edit/",
                 MIDCOM_TOOLBAR_LABEL => 'edit node',
-                MIDCOM_TOOLBAR_ICON => 'stock-icons/16x16/edit.png',
+                MIDCOM_TOOLBAR_ICON => 'midcom_core/stock-icons/16x16/edit.png',
                 MIDCOM_TOOLBAR_ACCESSKEY => 'e',
             )
         );

@@ -10,7 +10,7 @@ $css_class = $data['css_class'];
     </div>
     </span>
     
-    <div class="<?php echo $css_class; ?>_items">
+    <div class="<?php echo $css_class; ?>_sections">
         <span tal:repeat="section toolbar/sections" metal:use-macro="midcom_helper_toolbar_section" />        
     </div>
     <div class="<?php echo $css_class; ?>_dragbar"></div>

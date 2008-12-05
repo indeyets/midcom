@@ -1,13 +1,13 @@
 @media print
 {
-    .midcom_services_toolbars_javascript
+    .midcom_services_toolbars_float
     {
         display: none !important;
         height: 0 !important;
     }
 }
 
-.midcom_services_toolbars_javascript
+.midcom_services_toolbars_float
 {
     display: block;
     position: fixed;
@@ -24,16 +24,16 @@
     font-size: 11px;
     line-height: 20px;    
 }
-.midcom_services_toolbars_javascript,
-.midcom_services_toolbars_javascript a
+.midcom_services_toolbars_float,
+.midcom_services_toolbars_float a
 {
     color: #000000 !important;
     text-decoration: none;
 }
-.midcom_services_toolbars_javascript a:hover
+.midcom_services_toolbars_float a:hover
 {
 }
-.midcom_services_toolbars_javascript_dragbar
+.midcom_services_toolbars_float_dragbar
 {
     background: url('drag-grid.gif') repeat top left;
     width: 1.5em;
@@ -43,7 +43,7 @@
     float: right;
 }
 
-.midcom_services_toolbars_javascript_logos
+.midcom_services_toolbars_float_logos
 {
     height: 20px;
     margin-left: 2px;
@@ -52,12 +52,12 @@
     float: left;
     clear: right;
 }
-.midcom_services_toolbars_javascript_logos img
+.midcom_services_toolbars_float_logos img
 {
     border: none;
 }
 
-.midcom_services_toolbars_javascript_items
+.midcom_services_toolbars_float_sections
 {
     margin-top: 2px;
     margin-left: 5px;
@@ -67,7 +67,7 @@
     clear: right;
     cursor: pointer;
 }
-.midcom_services_toolbars_javascript_section
+.midcom_services_toolbars_float_section
 {
     width: auto;
     margin-left: auto;
@@ -78,15 +78,15 @@
     float: left;
     clear: right;
 }
-.midcom_services_toolbars_javascript_section_title
+.midcom_services_toolbars_float_section_title
 {
 }
-.midcom_services_toolbars_javascript_section_title.hover
+.midcom_services_toolbars_float_section_title:hover
 {
     color: #c3c3c3;
 }
 
-.midcom_services_toolbars_javascript_section_items
+.midcom_services_toolbars_float_section_items
 {
     margin-top: 0px;
     margin-left: -5px;
@@ -100,7 +100,7 @@
     position: absolute;
     display: none;
 }
-.midcom_services_toolbars_javascript_section_items li
+.midcom_services_toolbars_float_section_items li
 {
     display: block !important;
     height: 16px;
@@ -119,26 +119,30 @@
     min-width: 7em;
 }
 
-.midcom_services_toolbars_javascript_section_items li.enabled
+.midcom_services_toolbars_float_section_items li.enabled
 {
 }
-.midcom_services_toolbars_javascript_section_items li.disabled img
+.midcom_services_toolbars_float_section_items li.disabled img
 {
     -moz-opacity: 0.3;
 }
 
-.midcom_services_toolbars_javascript_section_items li.disabled abbr,
-.midcom_services_toolbars_javascript_section_items li.disabled span
+.midcom_services_toolbars_float_section_items li.disabled abbr,
+.midcom_services_toolbars_float_section_items li.disabled span
 {
     color: #b0b0b0;
     cursor: default;
     font-weight: bold;
 }
-.midcom_services_toolbars_javascript_section_items li.last_item
+.midcom_services_toolbars_float_section_items li.first_item
+{
+    padding-top: 3px;
+}
+.midcom_services_toolbars_float_section_items li.last_item
 {
     padding-bottom: 6px;
 }
-.midcom_services_toolbars_javascript_section_items li a
+.midcom_services_toolbars_float_section_items li a
 {
     display: block;
     font-weight: 700;
@@ -147,7 +151,7 @@
     text-decoration: none;
     vertical-align: middle;
 }
-.midcom_services_toolbars_javascript_section_items li a img
+.midcom_services_toolbars_float_section_items li a img
 {
     padding: 0;
     border: 0;

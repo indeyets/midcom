@@ -28,7 +28,7 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
         
         if ($object)
         {
-            $this->load_objects($object);
+            $this->load_objects($object);            
             $this->merged = array_merge($this->merged, $this->objects);
         }
     }

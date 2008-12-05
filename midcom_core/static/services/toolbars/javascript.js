@@ -9,50 +9,43 @@
 
     $.midcom.services.toolbars = {
         TYPE_MENU: 'menu',
-        TYPE_PALETTE: 'palette',
+        TYPE_FLOAT: 'float',
+        TYPE_BLOCK: 'block',
+        instances: {}
     };
     $.midcom.services.toolbars.config = {
-        type: $.midcom.services.toolbars.TYPE_PALETTE,
+        type: $.midcom.services.toolbars.TYPE_FLOAT,
         type_config: {},
         visible: true,
         create_root: false,
         allow_auto_create: false,
         enable_memory: false,
-        class_name: 'midcom_services_toolbars_javascript',
-        show_logos: true,
-        debug: false
-    };
-    
+        show_logos: true
+    };    
     $.extend($.midcom.services.toolbars, {
-        javascript: function(holder, config) {
-            $.midcom.services.toolbars.config.type_config[$.midcom.services.toolbars.TYPE_PALETTE] = {
-                height: 20,
-                width: 300,
-                draggable: true
-            };
-            $.midcom.services.toolbars.config.type_config[$.midcom.services.toolbars.TYPE_MENU] = {
-                height: 25,
-                width: 0,
-                draggable: false
-            };
+        generate: function(type, holder, options) {
+    	    if (typeof jQuery.midcom.services.toolbars[type] == 'undefined') {
+    	        return false;
+    	    }
             
-            $.midcom.services.toolbars.config = $.midcom.services.configuration.merge(
-                $.midcom.services.toolbars.config,
-                config
-            );
+            var id = $.midcom.services.toolbars._gen_id();
+            var instance = new jQuery.midcom.services.toolbars[type](id, holder, options);
+            $.midcom.services.toolbars.instances[id] = instance;
             
-            $.midcom.logger.log('midcom.services.toolbars.javascript inited');
-            $.midcom.logger.debug($.midcom.services.toolbars.config.type_config);
-            
-            holder.show();
-            
-            $.midcom.events.signals.trigger('midcom.services.toolbars::javascript-ready');
+    	    return instance;
+        },
+        _gen_id: function(type) {            
+            var prefix = 'mst';
+            if (typeof type != 'undefined') {
+                prefix += '_' + type;
+            }
+            return $.midcom.helpers.generate_id(prefix);
         }
     });
     
     jQuery.fn.extend({
-    	midcom_services_toolbars: function(options) {
-    	    return new jQuery.midcom.services.toolbars.javascript(jQuery(this), options);
+    	midcom_services_toolbars: function(type, options) {
+    	    return new jQuery.midcom.services.toolbars.generate(type, jQuery(this), options);
     	}
     });
     
