@@ -229,12 +229,10 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
             }
         }
 
-        if (!file_exists($path))
+        if (file_exists($path))
         {
-            throw new Exception("File {$path} not found, aborting.");
+            require($path);
         }
-        
-        require($path);
     }
     
     /**
