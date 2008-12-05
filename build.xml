@@ -31,6 +31,9 @@ To create a new component:
 To run all tests: (this must be done as root or by sudo)
     phing runtests
 
+To create symlinks for all static folders:
+    phing linkstatics
+
 Current settings:
 install_dir = ${install_dir} // this is the dir that is linked to this checkout.
 target_dir  = ${target_dir} // this is where pear packages are saved.
