@@ -38,6 +38,12 @@ class net_nemein_comettest_controllers_index
             $name = $_GET["cometName"];
         }
 
+        if (   $type == null
+            && $name == null)
+        {
+            throw new midcom_exception_notfound("No comet name or type defined");
+        }
+
     	if (ob_get_level() == 0)
     	{
     	    ob_start();
@@ -77,7 +83,13 @@ class net_nemein_comettest_controllers_index
         {
             $name = $_GET["cometName"];
         }
-
+        
+        if (   $type == null
+            && $name == null)
+        {
+            throw new midcom_exception_notfound("No comet name or type defined");
+        }
+        
         // if (! $session->exists("string"))
         // {
         //     $session->set("string", false);

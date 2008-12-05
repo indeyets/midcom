@@ -38,6 +38,8 @@
 
 <script type="text/javascript">
     var time_action_method = function(resp) {
+        console.log("time_action_method");
+        console.log("-");
         jQuery('#time').html(resp);
     };
     
@@ -67,7 +69,7 @@
         }
     };
     
-    var plreq = jQuery.midcom.helpers.comet.start('echoer/', send_action_method);
+    //var plreq = jQuery.midcom.helpers.comet.start('echoer/', send_action_method);
     
     //var preq = jQuery.midcom.helpers.comet.start('saver/', 'post', {string: 'hello world'});
     
