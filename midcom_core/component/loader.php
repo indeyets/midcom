@@ -35,7 +35,7 @@ class midcom_core_component_loader
             return false;
         }
         
-        if (!ereg("^[a-z][a-z0-9\_]*[a-z0-9]$", $component))
+        if (preg_match('/^[a-z][a-z0-9\_]*[a-z0-9]$/', $component) !== 1)
         {        
             return false;
         }
