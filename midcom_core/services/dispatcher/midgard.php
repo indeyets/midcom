@@ -195,8 +195,8 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             throw new UnexpectedValueException("Missing arguments matching route '{$route_id}' of {$this->component_name}: " . implode(', ', $link_remaining_args));
         }
-
-        return preg_replace('%/\${2,}%', '/', $_MIDCOM->context->prefix . $link);
+        
+        return preg_replace('%/{2,}%', '/', $_MIDCOM->context->prefix . $link);
     }
 
     /**
