@@ -7,3 +7,23 @@ Quick MidCOM 3 setup HOWTO
 4. Point the `MidgardRootFile` of the Midgard Apache VirtualHost setup to MidCOM's `httpd/midcom-root.php`
 5. Patch your MgdObjects.xml (in `/usr/share/midgard`) to include a `component` property for `midgard_page` objects
 6. Start playing around
+
+Troubleshooting
+---------------
+
+### Installing Syck
+
+Syck depends on PHP 5.2, but works also on PHP 5.1 with a bit of hacking
+
+    # apt-get install 
+    
+Alternatively add `deb http://packages.dotdeb.org etch all` and `deb-src http://packages.dotdeb.org etch all` to `/etc/apt/sources.list` and run
+
+    # apt-get update
+    # apt-get upgrade
+
+### Installing GIT
+
+1. Install GIT with `# apt-get install git-core`
+2. Get the GIT repository `# git-pull git://repo.or.cz/midcom.git`
+3. Point the `MidgardRootFile` of the Midgard Apache VirtualHost setup to MidCOM's `httpd/midcom-root.php`
