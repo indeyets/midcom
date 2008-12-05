@@ -11,12 +11,19 @@
         config: {
             MIDCOM_STATIC_URL: 'midcom-static',
             MIDCOM_PAGE_PREFIX: '/'            
-        }
+        },
+        registered_components: {}
     };
     $.extend($.midcom, {
         init: function(config) {
             $.midcom.config = $.extend({}, $.midcom.config, config || {});
+            $.midcom.registered_components = {};
         },
+        register_component: function(name, handler) {            
+            if (typeof $.midcom.registered_components[name] == 'undefined') {
+                $.midcom.registered_components[name] = handler;
+            }
+        }
     });
     
     $.midcom.dispatcher = {};
@@ -95,7 +102,7 @@
             }
             
             var url = $.midcom.config.MIDCOM_STATIC_URL + '/midcom_core/jQuery/jqXMLUtils.js';
-            $.midcom.utils.load_script(url callback, callback_args);
+            $.midcom.utils.load_script(url, callback, callback_args);
             
             $.midcom.helpers.xml.utils_loaded = true;
         }
