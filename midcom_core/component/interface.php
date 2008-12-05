@@ -15,11 +15,10 @@
  */
 interface midcom_core_component_interface
 {
-    protected $configuration = false;
-
     public function __construct($configuration);
     
     public function initialize();
-    private function on_initialize()
+    
+    function on_initialize();
 }
 ?>

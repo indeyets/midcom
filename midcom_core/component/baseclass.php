@@ -15,6 +15,8 @@
  */
 class midcom_core_component_baseclass implements midcom_core_component_interface
 {
+    public $configuration = false;
+    
     public function __construct($configuration)
     {
         $this->configuration = $configuration;
@@ -25,6 +27,6 @@ class midcom_core_component_baseclass implements midcom_core_component_interface
         $this->on_initialize();
     }
 
-    private function on_initialize() {}
+    function on_initialize() {}
 }
 ?>
