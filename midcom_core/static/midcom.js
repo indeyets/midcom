@@ -83,8 +83,12 @@
                 
                 if (typeof listener.func == 'function') {
                     var args = data;
-                    if (typeof listener.args != 'undefined') {
-                        args = listener.args;
+                    if (   typeof listener.args != 'undefined'
+                        && listener.args != null)
+                    {
+                        $.each(listener.args, function(i,a){
+                            args.push(a);
+                        });
                     }
                     
                     listener.func.apply(listener.func, args);
