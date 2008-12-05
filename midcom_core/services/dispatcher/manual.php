@@ -61,6 +61,14 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         }
     }
     
+    public function get_routes()
+    {
+        $core_routes = $_MIDCOM->configuration->get('routes');
+        $component_routes = $_MIDCOM->context->component_instance->configuration->get('routes');
+        
+        return array_merge($core_routes, $component_routes);
+    }
+    
     public function set_page(midgard_page $page)
     {
         $this->page = $page;
@@ -129,7 +137,7 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         {
             $_MIDCOM->timer->setMarker("MidCOM dispatcher::dispatch::{$this->component_name}");
         }
-        $route_definitions = $_MIDCOM->context->component_instance->configuration->get('routes');
+        $route_definitions = $this->get_routes();
 
         $selected_route_configuration = $route_definitions[$this->route_id];
 

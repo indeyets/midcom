@@ -20,6 +20,8 @@ interface midcom_core_services_dispatcher
     
     public function populate_environment_data();
     
+    public function get_routes();
+    
     public function initialize($component);
     
     public function dispatch();    

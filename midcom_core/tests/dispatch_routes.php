@@ -17,9 +17,10 @@ if (count($argv) != 2)
 }
 $conffile = $argv[1];
 
-if (!extension_loaded('midgard2'))
+if (   !extension_loaded('midgard')
+    && !extension_loaded('midgard2'))
 {
-    die("Midgard 2 extension is not available\n");
+    die("Midgard extension is not available\n");
 }
 
 // Start up a Midgard connection
@@ -35,23 +36,30 @@ echo "Loading all components and their routes\n\n";
 // Go through the installed components
 foreach ($_MIDCOM->componentloader->manifests as $component_name => $manifest)
 {
+    // Enter new context
+    $_MIDCOM->context->create();
     $_MIDCOM->dispatcher->initialize($component_name);
+    
+    if (!$_MIDCOM->context->component_instance)
+    {
+        echo "Skipping {$component_name}: component failed to load\n\n";
+        $_MIDCOM->context->delete();
+        continue;
+    }
 
-    if (!$_MIDCOM->dispatcher->component_instance->configuration->exists('routes'))
+    if (!$_MIDCOM->context->component_instance->configuration->exists('routes'))
     {
         // No routes in this component, skip
         echo "Skipping {$component_name}: no routes\n\n";
+        $_MIDCOM->context->delete();
         continue;
     }
     
     echo "Running {$component_name}...\n";
     
-    $routes = $_MIDCOM->dispatcher->component_instance->configuration->get('routes');
+    $routes = $_MIDCOM->dispatcher->get_routes();
     foreach ($routes as $route_id => $route_configuration)
     {
-        // Enter new context
-        $_MIDCOM->context->create();
-    
         // Generate fake arguments
         preg_match_all('/\{\$(.+?)\}/', $route_configuration['route'], $route_path_matches);
         $route_string = $route_configuration['route'];
@@ -83,10 +91,9 @@ foreach ($_MIDCOM->componentloader->manifests as $component_name => $manifest)
         {
             echo "        returned no data\n";
         }
-        
-        // Delete the context
-        $_MIDCOM->context->delete();
     }
+    // Delete the context
+    $_MIDCOM->context->delete();
     echo "\n";
 }
 

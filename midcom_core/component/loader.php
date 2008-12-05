@@ -62,7 +62,7 @@ class midcom_core_component_loader
         {        
             // No component directory
             $this->tried_to_load[$component] = false;
-
+            
             throw new OutOfRangeException("Component {$component} directory not found.");
         }
         

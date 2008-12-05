@@ -77,6 +77,14 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $this->component_name = $component;
         $_MIDCOM->context->component_instance = $_MIDCOM->componentloader->load($this->component_name, $page);
     }
+    
+    public function get_routes()
+    {
+        $core_routes = $_MIDCOM->configuration->get('routes');
+        $component_routes = $_MIDCOM->context->component_instance->configuration->get('routes');
+        
+        return array_merge($core_routes, $component_routes);
+    }
 
     /**
      * Load a component and dispatch the request to it
@@ -87,7 +95,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch');
         }
-        $route_definitions = $_MIDCOM->context->component_instance->configuration->get('routes');
+        $route_definitions = $this->get_routes();
 
         $route_id_map = array();
         foreach ($route_definitions as $route_id => $route_configuration)
