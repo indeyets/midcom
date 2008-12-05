@@ -15,9 +15,20 @@ class midcom_core_exceptionhandler
 {
     function handle($exception)
     {
-        // TODO: Different HTTP error codes for different Exceptions
         $http_code = 500;
-        $message_type = get_class($exception);
+        
+        // Different HTTP error codes for different Exceptions
+        $message_type = get_class($exception);        
+        switch ($message_type)
+        {
+            case 'midcom_exception_notfound':
+                $http_code = $exception->getCode();
+                break;
+            case 'midcom_exception_unauthorized':
+                $http_code = $exception->getCode();
+                break;
+        }
+
         $message = $exception->getMessage();
 
         if (headers_sent())
@@ -50,6 +61,34 @@ class midcom_core_exceptionhandler
             // TODO: Templating
             echo "<html><h1>{$header}</h1><p>{$message_type}: {$message}</p>";
         }
+    }
+}
+
+/**
+ * MidCOM 3 "not found" exception
+ *
+ * @package midcom_core
+ */
+class midcom_exception_notfound extends Exception
+{
+    // Redefine the exception so message isn't optional
+    public function __construct($message, $code = 404) 
+    {
+        parent::__construct($message, $code);
+    }
+}
+
+/**
+ * MidCOM 3 "unauthorized" exception
+ *
+ * @package midcom_core
+ */
+class midcom_exception_unauthorized extends Exception
+{
+    // Redefine the exception so message isn't optional
+    public function __construct($message, $code = 401) 
+    {
+        parent::__construct($message, $code);
     }
 }
 

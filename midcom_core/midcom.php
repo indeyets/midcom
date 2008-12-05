@@ -275,7 +275,7 @@ Added simple benchmarking of page load. Requires PEARs Benchmark package:midcom_
             eval('?>' . mgd_preparse(mgd_template($content_entry_point)));
         }
     }
-    
+
     /**
      * Show the loaded contents using the template engine
      *

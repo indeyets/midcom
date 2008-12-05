@@ -69,8 +69,6 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $page->get_by_id($_MIDGARD['page']);
         
         $component_instance = $_MIDCOM->componentloader->load($component, $page);
-        
-        // TODO: Everything below here should be done in dispatcher
         $route_definitions = $component_instance->configuration->get('routes');
 
         $route_id_map = array();
@@ -82,9 +80,8 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
 
         if (!$this->route_matches($route_id_map))
         {
-            // TODO: Check exception name and message
-            //throw new midcom_404_exception('No route matches');
-            throw new Exception('No route matches');
+            // TODO: Check message
+            throw new midcom_exception_notfound('No route matches');
         }
         unset($route_id_map);
 
