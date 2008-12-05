@@ -24,7 +24,6 @@ class midcom_core_helpers_context
     /**
      * Create and prepare a new component context.
      *
-     * @return int The ID of the newly created component.
      * @access private
      */
     public function create()
@@ -94,7 +93,6 @@ class midcom_core_helpers_context
      * @param string $key Key to set data of
      * @param mixed $value Value to set to the context data array
      * @param int $context_id ID of the current context
-     * @return array Context data
      */
     public function set_item($key, $value, $context_id = null)
     {
@@ -109,7 +107,6 @@ class midcom_core_helpers_context
         }
         
         $this->contexts[$context_id][$key] = $value;
-        return true;
     }
 
 }
