@@ -26,14 +26,14 @@ class midcom_core_helpers_head
     private $css_head = array();
     private $append_css_head = array();
     
-    private $jquery_enabled = false;
     private $enable_jquery_noconflict = false;
     private $jquery_inits = "";
     private $jquery_statuses_prepend = array();
     private $jquery_statuses = array();
     private $jquery_statuses_append = array();
-    
-    private $jsmidcom_enabled = false;
+
+    public $jquery_enabled = false;    
+    public $jsmidcom_enabled = false;
     
     public function __construct($enable_jquery=false, $enable_jsmidcom=false)
     {
