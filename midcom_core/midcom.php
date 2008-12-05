@@ -47,7 +47,7 @@ class midcom_core_midcom
         // Load the configuration loader and load core config
         $this->configuration = new midcom_core_services_configuration_yaml('midcom_core');
         
-        $use_timer = $this->configuration->get('show_benchmark');
+        $use_timer = $this->configuration->get('enable_benchmark');
         if ($use_timer)
         {
             require_once 'Benchmark/Timer.php';
