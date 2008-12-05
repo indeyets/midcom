@@ -19,7 +19,7 @@ interface midcom_helper_datamanager_type
      *
      * @see midcom_helper_datamanager_type_baseclass::__construct
      */
-    function initialize($name, $config, &$storage);
+    public function initialize($name, $config, &$storage);
     
     /**
      * Small helper which sets the current storage object to a new one. The
@@ -27,7 +27,7 @@ interface midcom_helper_datamanager_type
      *
      * @see midcom_helper_datamanager_type_baseclass::set_storage
      */
-    function set_storage(&$storage);
+    public function set_storage(&$storage);
 
     /**
      * This function, is called  before the configuration keys are merged into the types
@@ -35,7 +35,7 @@ interface midcom_helper_datamanager_type
      *
      * @see midcom_helper_datamanager_type_baseclass::on_configuring
      */
-    function on_configuring($config);
+    // protected function on_configuring($config);
     
     /**
      * This event handler is called after construction, so passing references to $this to the
@@ -43,7 +43,7 @@ interface midcom_helper_datamanager_type
      *
      * @see midcom_helper_datamanager_type_baseclass::on_initalize
      */
-    function on_initialize();
+    // protected function on_initialize();
     
     /**
      * Converts from storage format to "operational" format, which might include
@@ -83,7 +83,7 @@ interface midcom_helper_datamanager_type
      *
      * @see midcom_helper_datamanager_type_baseclass::on_validate
      */
-     function on_validate();
+     // protected function on_validate();
 
     /**
      * Checks whether the current user has the given privilege on the storage backend.
@@ -140,6 +140,8 @@ class midcom_helper_datamanager_type_baseclass implements midcom_helper_datamana
      * @var string
      */
     public $validation_error = '';
+    
+    public $serialized_storage;
 
     /**
      * Initializes and configures the type.

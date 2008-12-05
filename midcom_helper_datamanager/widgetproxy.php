@@ -6,6 +6,8 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+include_once 'widget.php';
+
 /**
  * Datamanager widget proxy, loaded as $dm->widgets
  *
@@ -21,17 +23,17 @@ class midcom_helper_datamanager_widgetproxy
 
     public function __construct(&$schema, &$storage, &$types)
     {
-        if (! is_a($schema, 'midcom_helper_datamanager_schema'))
+        if (! $schema instanceof midcom_helper_datamanager_schema)
         {
             throw new midcom_helper_datamanager_exception_widget('given schema is not instance of midcom_helper_datamanager_schema');
         }
         $this->schema =& $schema;
-        if (! is_a($storage, 'midcom_helper_datamanager_storage'))
+        if (! $storage instanceof midcom_helper_datamanager_storage)
         {
             throw new midcom_helper_datamanager_exception_widget('given storage is not instance of midcom_helper_datamanager_storage');
         }
         $this->storage =& $storage;
-        if (! is_a($types, 'midcom_helper_datamanager_typeproxy'))
+        if (! $types instanceof midcom_helper_datamanager_typeproxy)
         {
             throw new midcom_helper_datamanager_exception_widget('given types is not instance of midcom_helper_datamanager_typeproxy');
         }
@@ -58,7 +60,7 @@ class midcom_helper_datamanager_widgetproxy
      */
     public function __isset($name)
     {
-        if (!$this->schema->field_exists($name))
+        if (! $this->schema->field_exists($name))
         {
             return false;
         }
@@ -80,7 +82,7 @@ class midcom_helper_datamanager_widgetproxy
         {
             return;
         }
-        if (!$this->load_widget($name))
+        if (! $this->load_widget($name))
         {
             //TODO: use dm exception
             throw new midcom_helper_datamanager_exception_widget("The widget for field {$name} could not be loaded");

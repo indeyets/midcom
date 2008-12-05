@@ -6,6 +6,8 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+include_once 'type.php';
+
 /**
  * Datamanager type proxy, loaded as $dm->types
  *
@@ -19,12 +21,12 @@ class midcom_helper_datamanager_typeproxy
 
     public function __construct(&$schema, &$storage)
     {
-        if (! is_a($schema, 'midcom_helper_datamanager_schema'))
+        if (! $schema instanceof midcom_helper_datamanager_schema)
         {
             throw new midcom_helper_datamanager_exception_type('given schema is not instance of midcom_helper_datamanager_schema');
         }
         $this->schema = $schema;
-        if (! is_a($storage, 'midcom_helper_datamanager_storage'))
+        if (! $storage instanceof midcom_helper_datamanager_storage)
         {
             throw new midcom_helper_datamanager_exception_type('given storage is not instance of midcom_helper_datamanager_storage');
         }

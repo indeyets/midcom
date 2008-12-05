@@ -21,7 +21,7 @@ class midcom_helper_datamanager_schema
      *
      * @var Array
      */
-    public $fields = Array();
+    public $fields = array();
     
     /**
      * The title of this schema, used to display schemas when
@@ -275,6 +275,14 @@ class midcom_helper_datamanager_schema
             }
         }
         unset($property, $value);
+
+        if (! array_key_exists('storage', $config))
+        {
+            $config['storage'] = array
+            (
+                'location' => $config['name']
+            );
+        }
 
         if (! array_key_exists('index_method', $config))
         {

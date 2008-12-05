@@ -34,7 +34,7 @@ interface midcom_helper_datamanager_widget
      *
      * @see midcom_helper_datamanager_widget_baseclass::on_configuring
      */
-    function on_configuring($config);
+    // function on_configuring($config);
     
     /**
      * This event handler is called during construction, so passing references to $this to the
@@ -42,7 +42,7 @@ interface midcom_helper_datamanager_widget
      *
      * @see midcom_helper_datamanager_widget_baseclass::on_initalize
      */
-    function on_initialize();
+    // function on_initialize();
 
     /**
      * This event handler is called if and only if the Formmanager detects an actual
@@ -85,7 +85,7 @@ interface midcom_helper_datamanager_widget
      * @return string The translated string.
      * @see midcom_helper_datamanager_widget_baseclass::translate
      */
-    function translate($string);
+    // function translate($string);
 
     /**
      * This call, which must be overridden by subclasses, adds the necessary form elements

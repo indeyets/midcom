@@ -17,15 +17,15 @@
  *
  * @package midcom_helper_datamanager
  */
-class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
+class midcom_helper_datamanager_storage
 {
     /**
      * A reference to the data schema used for processing.
      *
-     * @var midcom_helper_datamanager_schema
+     * @var midcom_helper_datamanagerschema
      * @access protected
      */
-    private $_schema = null;
+    protected $schema = null;
 
     /**
      * This is a reference the storage object used by the subclass implementation.
@@ -50,11 +50,11 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
      * Specific storage implementation subclasses will need to expand this constructor
      * to take care of linking to the right storage object, where applicable.
      *
-     * @param midcom_helper_datamanager_schema &$schema The data schema to use for processing.
+     * @param midcom_helper_datamanagerschema &$schema The data schema to use for processing.
      */
     public function __construct(&$schema)
     {
-        $this->_schema =& $schema;
+        $this->schema =& $schema;
     }
 
     /**
@@ -92,14 +92,14 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
      */
     public function store(&$types)
     {
-        foreach ($this->_schema->fields as $name => $type_definition)
+        foreach ($this->schema->fields as $name => $type_definition)
         {
             if (!isset($type))
             {
                 if ($type_definition['required'] == true)
                 {
                     throw new midcom_helper_datamanager_exception_storage(
-                        "Failed to process the type array for the schema {$this->_schema->name}: " . 
+                        "Failed to process the type array for the schema {$this->schema->name}: " . 
                         "The type for the required field {$name} was not found."
                     );
                     // This will exit.
@@ -147,13 +147,13 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
 
     public function load_type_data(&$type, $name)
     {
-        $type_definition = $this->_schema->fields[$name];
+        $type_definition = $this->schema->fields[$name];
         if (!isset($type))
         {
             if ($type_definition['required'] == true)
             {
                 throw new midcom_helper_datamanager_exception_storage(
-                    "Failed to process the type array for the schema {$this->_schema->name}: " . 
+                    "Failed to process the type array for the schema {$this->schema->name}: " . 
                     "The type for the required field {$name} was not found."
                 );
                 // This will exit.
@@ -196,7 +196,7 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
     public function load_all(&$types)
     {
         //TODO: This approachs needs to be rethinked otherwise our getter/setter proxy system will be moot
-        foreach ($this->_schema->fields as $name => $type_definition)
+        foreach ($this->schema->fields as $name => $type_definition)
         {
             $this->load_type_data($types->$name, $name);
         }
@@ -210,7 +210,7 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
      * @param string $name The name of the field to load from.
      * @return mixed $data The data which has been loaded.
      */
-    private function on_load_data($name)
+    protected function on_load_data($name)
     {
         die ('The function ' . __CLASS__ . '::' . __FUNCTION__ . ' must be implemented in subclasses.');
     }
@@ -221,7 +221,7 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
      *
      * @return boolean Indicating success.
      */
-    private function on_update_object()
+    protected function on_update_object()
     {
         die ('The function ' . __CLASS__ . '::' . __FUNCTION__ . ' must be implemented in subclasses.');
     }

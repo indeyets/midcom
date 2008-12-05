@@ -28,7 +28,7 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
      * generate_error. In this case, no automatic conversion is done, as this would
      * destroy the reference.
      *
-     * @param midcom_helper_datamanager_schema &$schema The data schema to use for processing.
+     * @param midcom_helper_datamanagerschema &$schema The data schema to use for processing.
      * @param MidCOMDBAObject &$object A reference to the DBA object to user for Data I/O.
      */
     public function __construct(&$schema, &$object)
@@ -48,12 +48,12 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
     private function on_store_data($name, $data)
     {
         // TODO: rethink
-        switch ($this->_schema->fields[$name]['storage']['location'])
+        switch ($this->schema->fields[$name]['storage']['location'])
         {
             case 'parameter':
                 $this->object->parameter
                 (
-                    $this->_schema->fields[$name]['storage']['domain'],
+                    $this->schema->fields[$name]['storage']['domain'],
                     $name,
                     $data
                 );
@@ -62,8 +62,8 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
             case 'configuration':
                 $this->object->parameter
                 (
-                    $this->_schema->fields[$name]['storage']['domain'],
-                    $this->_schema->fields[$name]['storage']['name'],
+                    $this->schema->fields[$name]['storage']['domain'],
+                    $this->schema->fields[$name]['storage']['name'],
                     $data
                 );
                 break;
@@ -86,7 +86,7 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
                 break;
 
             default:
-                $fieldname = $this->_schema->fields[$name]['storage']['location'];
+                $fieldname = $this->schema->fields[$name]['storage']['location'];
                 if (!property_exists($this->object, $fieldname)) 
                 {
                     throw new midcom_helper_datamanager_exception_storage("Missing $fieldname field in object: " . get_class($this->object));
@@ -104,23 +104,23 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
      * @see on_store_data()
      * @return mixed data
      */
-    private function on_load_data($name)
+    protected function on_load_data($name)
     {
         // TODO: rethink
-        switch ($this->_schema->fields[$name]['storage']['location'])
+        switch ($this->schema->fields[$name]['storage']['location'])
         {
             case 'parameter':
                 return $this->object->parameter
                 (
-                    $this->_schema->fields[$name]['storage']['domain'],
+                    $this->schema->fields[$name]['storage']['domain'],
                     $name
                 );
 
             case 'configuration':
                 return $this->object->parameter
                 (
-                    $this->_schema->fields[$name]['storage']['domain'],
-                    $this->_schema->fields[$name]['storage']['name']
+                    $this->schema->fields[$name]['storage']['domain'],
+                    $this->schema->fields[$name]['storage']['name']
                 );
 
             case 'metadata':
@@ -138,12 +138,12 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
                 }
 
             default:
-                $fieldname = $this->_schema->fields[$name]['storage']['location'];
+                $fieldname = $this->schema->fields[$name]['storage']['location'];
                 return $this->object->$fieldname;
         }
     }
 
-    private function on_update_object()
+    protected function on_update_object()
     {
         return $this->object->update();
     }
