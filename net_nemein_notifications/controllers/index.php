@@ -22,7 +22,7 @@ class net_nemein_notifications_controllers_index
     {        
         // $notifier = new net_nemein_notifications_notifier('e857294ea89a11dbb67e7f95d175e24ee24e');
         // $notifier->send_mail(array(
-        //     'title' => 'Testing....'
+        //     'title' => 'Testing 2....'
         // ));
         
         $qb = new org_openpsa_qbpager_pager('net_nemein_notifications_notification');
