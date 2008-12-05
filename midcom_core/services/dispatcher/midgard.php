@@ -148,7 +148,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $route_definitions = $this->component_instance->configuration->get('routes');
         if (!isset($route_definitions[$route_id]))
         {
-            throw new Exception("route_id '{$route_id}' not found in routes configuratio");
+            throw new OutOfBoundsException("route_id '{$route_id}' not found in routes configuratio");
         }
         $route = $route_definitions[$route_id]['route'];
         $link = $route;
@@ -161,7 +161,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         if (preg_match_all('%\{\$(.+?)\}%', $link, $link_matches))
         {
             $link_remaining_args = $link_matches[1];
-            throw new Exception('Missing arguments: ' . implode(', ', $link_remaining_args));
+            throw new UnexpectedValueException('Missing arguments: ' . implode(', ', $link_remaining_args));
         }
 
         return preg_replace('%/{2,}%', '/', $prefix . $link);
@@ -301,7 +301,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         if (!preg_match_all('%\&?(.+?)=\{\$(.+?)\}%', $route_get, $route_get_matches))
         {
             // Can't parse arguments from route_get
-            throw new Exception("GET part of route '{$route}' ('{$route_get}') cannot be parsed");
+            throw new UnexpectedValueException("GET part of route '{$route}' ('{$route_get}') cannot be parsed");
         }
 
         /*

@@ -54,7 +54,7 @@ class midcom_core_helpers_context
 
         if (!isset($this->contexts[$context_id]))
         {
-            throw new Exception("MidCOM context {$context_id} not found.");
+            throw new OutOfBoundsException("MidCOM context {$context_id} not found.");
         }
         
         return $this->contexts[$context_id];
@@ -76,12 +76,12 @@ class midcom_core_helpers_context
         
         if (!isset($this->contexts[$context_id]))
         {
-            throw new Exception("MidCOM context {$context_id} not found.");
+            throw new OutOfBoundsException("MidCOM context {$context_id} not found.");
         }
         
         if (!isset($this->contexts[$context_id][$key]))
         {
-            throw new Exception("MidCOM context key '{$key}' in context {$context_id} not found.");
+            throw new OutOfBoundsException("MidCOM context key '{$key}' in context {$context_id} not found.");
         }
         
         return $this->contexts[$context_id][$key];
@@ -103,7 +103,7 @@ class midcom_core_helpers_context
         
         if (!isset($this->contexts[$context_id]))
         {
-            throw new Exception("MidCOM context {$context_id} not found.");
+            throw new OutOfBoundsException("MidCOM context {$context_id} not found.");
         }
         
         $this->contexts[$context_id][$key] = $value;

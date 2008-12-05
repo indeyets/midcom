@@ -57,7 +57,7 @@ class midcom_core_component_loader
             // No component directory
             $this->tried_to_load[$component] = false;
 
-            throw new Exception("Component {$component} directory not found.");
+            throw new OutOfRangeException("Component {$component} directory not found.");
         }
         
         $component_interface_file = "{$component_directory}/interface.php";
@@ -67,7 +67,7 @@ class midcom_core_component_loader
             // TODO: Should we default to some baseclass?
             $this->tried_to_load[$component] = false;
             
-            throw new Exception("Component {$component} interface class file not found.");
+            throw new OutOfRangeException("Component {$component} interface class file not found.");
         }
         require($component_interface_file);
 
@@ -88,7 +88,7 @@ class midcom_core_component_loader
         if (!file_exists($template_file))
         {
             // TODO: Should we just ignore this silently instead?
-            throw new Exception("Component {$component} template file {$template} not found.");
+            throw new OutOfRangeException("Component {$component} template file {$template} not found.");
         }
         
         return file_get_contents($template_file);
