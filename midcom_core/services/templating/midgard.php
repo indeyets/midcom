@@ -68,6 +68,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         {
             case 'tal':
                 require('PHPTAL.php');
+                include('TAL/modifiers.php');
                 
                 if ($_MIDCOM->timer)
                 {
