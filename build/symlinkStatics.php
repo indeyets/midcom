@@ -5,12 +5,10 @@
  */
 
 require_once "phing/Task.php";
-// require_once 'phing/system/io/PhingFile.php';
-// require_once 'phing/system/io/Writer.php';
 require_once 'phing/types/FileSet.php';
 
 /**
- * task to find out asked component name part for Phing
+ * task to link all static folders
  */
 class symlinkStatics extends Task
 {    
