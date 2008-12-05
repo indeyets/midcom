@@ -269,7 +269,12 @@ class midcom_helper_datamanager_type_baseclass implements midcom_helper_datamana
     public function can_do($privilege)
     {
         return $this->storage->can_do($privilege);
-    }    
+    }
+    
+    public function __toString()
+    {
+        return $this->convert_to_html();
+    }
 }
 
 ?>

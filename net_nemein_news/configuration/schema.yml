@@ -21,33 +21,3 @@ default:
             type_config:
                 output_mode: html
             widget: tinymce
-        categories:
-            title: categories
-            type: select
-            type_config:
-                allow_other: true
-                allow_multiple: true
-                multiple_storagemode: imploded_wrapped
-            widget: select
-            widget_config:
-                height: 3
-        related:
-            title: related stories
-            type: select
-            type_config:
-                require_corresponding_option: false
-                allow_multiple: true
-                multiple_storagemode: imploded_wrapped
-            widget: chooser
-            widget_config:
-                clever_class: article
-        image:
-            title: image
-            type: image
-            type_config:
-                filter_chain: "resize(800,600)"
-                auto_thumbnail:
-                    height: 200
-                    width: 200
-            widget: image
-            hidden: true

@@ -40,7 +40,14 @@ class net_nemein_news_controllers_article
     
     public function action_show($route_id, &$data, $args)
     {
+        $_MIDCOM->componentloader->load('midcom_helper_datamanager');
+        
         $this->load_article($data, $args);
+        
+        $dm = new midcom_helper_datamanager_datamanager($this->configuration->get('schemadb_default'));
+        $dm->autoset_storage($data['article']);
+        
+        $data['article_dm'] = $dm;
     }
     
     public function action_edit($route_id, &$data, $args)
