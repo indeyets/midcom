@@ -1,6 +1,7 @@
 services_authorization: midcom_core_services_authorization_simple
 services_templating: midcom_core_services_templating_midgard
 services_sessioning: midcom_core_services_sessioning_midgard
+services_uimessages: midcom_core_services_uimessages_midgard
 enable_benchmark: false
 enable_included_list: false
 enable_jquery_framework: false
@@ -14,13 +15,13 @@ enable_jquery_framework: false
 enable_js_midcom: false
 toolbar_configuration:
     type: float
-    # js:
-    #     enable_memory: 'true'
+    js:
     logos:
         midgard:
             title: 'Midgard CMS'
             url: 'http://midgard-project.com'
             image: '/midcom_core/services/toolbars/midgard-logo.png'
+uimessages_configuration:
 routes:
     page_show:
         controller: midcom_core_controllers_page

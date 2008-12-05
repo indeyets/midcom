@@ -386,6 +386,19 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                     $_MIDCOM->timer->setMarker('post-set-show_toolbar');
                 }
                 
+                $tal->uimessages = false;
+                $uimessages = new midcom_core_services_uimessages();
+                if (   $uimessages->has_messages()
+                    && $uimessages->can_view())
+                {
+                    $tal->uimessages = $uimessages->render();
+                }
+
+                if ($_MIDCOM->timer)
+                {
+                    $_MIDCOM->timer->setMarker('post-set-show_uimessages');
+                }
+                
                 //TODO: Do something else here :)
                 $tal->navigation = false;
 
@@ -451,6 +464,10 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             }
             echo "</ul>\n";
         }
+        
+        ///TODO: Connect this to some signal that tells the MidCOM execution has ended.
+        $uimessages = new midcom_core_services_uimessages();
+        $uimessages->store();
     }
 }
 ?>
