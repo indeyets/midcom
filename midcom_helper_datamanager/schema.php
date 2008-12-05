@@ -112,7 +112,8 @@ class midcom_helper_datamanager_schema
             }
             catch (OutOfBoundsException $e)
             {
-                throw new midcom_helper_datamanager_exception_schema("Failed to parse the schema definition in '{$schemadb}'.");
+                throw new midcom_helper_datamanager_exception_schema("Failed to parse the schema definition in '{$schemadb}', see above for PHP errors.");
+                // This will exit.
             }
         }
         else if (is_array($schemadb))
@@ -122,6 +123,7 @@ class midcom_helper_datamanager_schema
         else
         {
             throw new midcom_helper_datamanager_exception_schema('Failed to access the schema database: Invalid variable type while constructing.');
+            // This will exit.
         }
     }
     
@@ -136,7 +138,7 @@ class midcom_helper_datamanager_schema
         // Setup the raw schema reference
         if (! isset($this->raw_schemadb[$name]))
         {
-            throw new Exception("The schema {$name} was not found in the schema database.");
+            throw new midcom_helper_datamanager_exception_schema("The schema {$name} was not found in the schema database.");
             // This will exit.
         }
         $this->raw_schema =& $this->raw_schemadb[$name];
@@ -355,7 +357,8 @@ class midcom_helper_datamanager_schema
             }
             catch (OutOfBoundsException $e)
             {
-                throw new midcom_helper_datamanager_exception_type("Failed to parse the schema database loaded from '{$raw_db}'");
+                throw new midcom_helper_datamanager_exception_schema("Failed to parse the schema database loaded from '{$raw_db}', see above for PHP errors.");
+                // This will exit.
             }
         }
 

@@ -16,19 +16,26 @@ class midcom_helper_datamanager_widgetproxy
     private $schema = false;
     private $storage = false;
     private $widgets = array();
+    private $types = false;
+    protected $namespace = '';
 
-    public function __construct(&$schema, &$storage)
+    public function __construct(&$schema, &$storage, &$types)
     {
         if (! is_a($schema, 'midcom_helper_datamanager_schema'))
         {
             throw new midcom_helper_datamanager_exception_widget('given schema is not instance of midcom_helper_datamanager_schema');
         }
-        $this->schema = $schema
+        $this->schema =& $schema;
         if (! is_a($storage, 'midcom_helper_datamanager_storage'))
         {
             throw new midcom_helper_datamanager_exception_widget('given storage is not instance of midcom_helper_datamanager_storage');
         }
-        $this->storage = $storage;
+        $this->storage =& $storage;
+        if (! is_a($types, 'midcom_helper_datamanager_typeproxy'))
+        {
+            throw new midcom_helper_datamanager_exception_widget('given types is not instance of midcom_helper_datamanager_typeproxy');
+        }
+        $this->types =& $types;
     }
 
     public function __get($name)
@@ -45,10 +52,23 @@ class midcom_helper_datamanager_widgetproxy
         $this->widgets[$name] = $value;
     }
 
+    /**
+     * Checks if we have the field corresponding to the property name
+     * in schema and corresponding datatype available
+     */
     public function __isset($name)
     {
-        // TODO: check that we have corresponding datatype as well
-        return $this->schema->field_exists($name);
+        if (!$this->schema->field_exists($name))
+        {
+            return false;
+        }
+        return isset($this->types->$name);
+    }
+
+    public function __unset($name)
+    {
+        // PONDER: Do we need to clear other references, if so do it here
+        unset($this->widgets[$name]);
     }
 
     /**
@@ -76,9 +96,9 @@ class midcom_helper_datamanager_widgetproxy
      */
     public function load_widget($name, $config = null)
     {
-        if (! $this->schema->field_exists($name))
+        if (! $this->__isset($name))
         {
-            throw new midcom_helper_datamanager_exception_widget("The field {$name} is not defined in schema");
+            throw new midcom_helper_datamanager_exception_widget("The field {$name} is not available");
         }
 
         if (is_null($config))
@@ -93,15 +113,23 @@ class midcom_helper_datamanager_widgetproxy
             $widget_class = "midcom_helper_datamanager_widget_{$widget_class}";
         }
 
-        // TODO: check that we have corresponding datatype as well
-        $this->widgets[$name] = new $widget_class();
-        if (! $this->widgets[$name]->initialize($name, $config['widget_config'], $this->storage))
+        $this->widgets[$name] = new $classname();
+        if (! $this->widgets[$name]->initialize($name, $config['widget_config'], $this->schema, $this->types->$name, $this->namespace))
         {
             return false;
         }
 
         return true;
     }
+
+     public function __destructor()
+     {
+        // Specifically unset each datatype instance from here
+        foreach ($this->widgets as $name => $widget)
+        {
+            $this->__unset($name);
+        }
+     }
 }
 
 ?>

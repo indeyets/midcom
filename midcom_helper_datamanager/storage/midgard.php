@@ -38,8 +38,16 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
         $this->object =& $object;
     }
 
+    /**
+     * Stores given value to field based on schema
+     *
+     * @param string $name name of field
+     * @param mixed $data data to store
+     * @see on_load_data()
+     */
     private function on_store_data($name, $data)
-    {        
+    {
+        // TODO: rethink
         switch ($this->_schema->fields[$name]['storage']['location'])
         {
             case 'parameter':
@@ -60,6 +68,7 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
                 );
                 break;
 
+            // TODO: allow the have different field name than metadata property name
             case 'metadata':
                 if (!property_exists($this->object->metadata, $name)) 
                 {
@@ -80,7 +89,7 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
                 $fieldname = $this->_schema->fields[$name]['storage']['location'];
                 if (!property_exists($this->object, $fieldname)) 
                 {
-                    throw new Exception("Missing $fieldname field in object: " . get_class($this->object));
+                    throw new midcom_helper_datamanager_exception_storage("Missing $fieldname field in object: " . get_class($this->object));
                 }
                 $this->object->$fieldname = $data;
                 break;
@@ -88,8 +97,16 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
     }
 
 
+    /**
+     * Loads database value of given field based on schema
+     *
+     * @param string $name name of field
+     * @see on_store_data()
+     * @return mixed data
+     */
     private function on_load_data($name)
     {
+        // TODO: rethink
         switch ($this->_schema->fields[$name]['storage']['location'])
         {
             case 'parameter':

@@ -94,11 +94,11 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
     {
         foreach ($this->_schema->fields as $name => $type_definition)
         {
-            if (! array_key_exists($name, $types))
+            if (!isset($types->$name))
             {
                 if ($type_definition['required'] == true)
                 {
-                    throw new Exception(
+                    throw new midcom_helper_datamanager_exception_storage(
                         "Failed to process the type array for the schema {$this->_schema->name}: " . 
                         "The type for the required field {$name} was not found."
                     );
@@ -112,10 +112,10 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
 
             // Convert_to_storage is called always, the event handler can be used to manage
             // non-storage-backend driven storage operations as well (mainly for the blob type)
-            $data = $types[$name]->convert_to_storage();
+            $data = $types->$name->convert_to_storage();
             if ($type_definition['storage']['location'] !== null)
             {
-                if ($types[$name]->serialized_storage)
+                if ($types->$name->serialized_storage)
                 {
                     $data = serialize($data);
                 }
@@ -158,9 +158,10 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
      */
     public function load(&$types)
     {
+        //TODO: This approachs needs to be rethinked otherwise our getter/setter proxy system will be moot
         foreach ($this->_schema->fields as $name => $type_definition)
         {
-            if (! array_key_exists($name, $types))
+            if (!isset($types->$name))
             {
                 if ($type_definition['required'] == true)
                 {
@@ -178,7 +179,7 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
             if ($type_definition['storage']['location'] !== null)
             {
                 $data = $this->on_load_data($name);
-                if ($types[$name]->serialized_storage)
+                if ($types->$name->serialized_storage)
                 {
                     // Hide unserialization errors, but log them.
                     $data = @unserialize($data);
@@ -191,7 +192,7 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
 
             // Convert_from_storage is called always, the event handler can be used to manage
             // non-storage-backend driven storage operations as well (mainly for the blob type)
-            $types[$name]->convert_from_storage($data);
+            $types->$name->convert_from_storage($data);
         }
     }
 
@@ -229,14 +230,7 @@ class midcom_helper_datamanager_storage extends midcom_core_component_baseclass
      */
     public function can_do($privilege)
     {
-        if ($this->object === null)
-        {
-            return $_MIDCOM->auth->can_user_do($privilege);
-        }
-        else
-        {
-            return $_MIDCOM->auth->can_do($privilege, $this->object);
-        }
+        return $_MIDCOM->authorization->can_do($privilege, $this->object);
     }
 
 }

@@ -23,7 +23,7 @@ class midcom_helper_datamanager_typeproxy
         {
             throw new midcom_helper_datamanager_exception_type('given schema is not instance of midcom_helper_datamanager_schema');
         }
-        $this->schema = $schema
+        $this->schema = $schema;
         if (! is_a($storage, 'midcom_helper_datamanager_storage'))
         {
             throw new midcom_helper_datamanager_exception_type('given storage is not instance of midcom_helper_datamanager_storage');
@@ -45,9 +45,18 @@ class midcom_helper_datamanager_typeproxy
         $this->types[$name] = $value;
     }
 
+    /**
+     * Checks if we have the field corresponding to the property name in schema
+     */
     public function __isset($name)
     {
         return $this->schema->field_exists($name);
+    }
+
+    public function __unset($name)
+    {
+        // PONDER: Do we need to clear other references, if so do it here
+        unset($this->types[$name]);
     }
 
     /**
@@ -76,9 +85,9 @@ class midcom_helper_datamanager_typeproxy
      */
     public function load_type($name, $config = null)
     {
-        if (! $this->schema->field_exists($name))
+        if (! $this->__isset($name))
         {
-            throw new midcom_helper_datamanager_exception_type("The field {$name} is not defined in schema");
+            throw new midcom_helper_datamanager_exception_widget("The field {$name} is not available");
         }
 
         if (is_null($config))
@@ -101,6 +110,35 @@ class midcom_helper_datamanager_typeproxy
 
         return true;
     }
+
+    /**
+     * Validate the current types state. 
+     *
+     * @return array of validation errors (empty array means no errors)
+     */
+    public function validate()
+    {
+        $validation_errors = array();
+        foreach ($this->schema->fields as $name => $config)
+        {
+            $this->prepare_type($name);
+            if (! $this->$types['name']->validate())
+            {
+                $this->validation_errors[$name] = $this->types[$name]->validation_error;
+            }
+        }
+
+        return $validation_errors;
+    }
+
+     public function __destructor()
+     {
+        // Specifically unset each datatype instance from here
+        foreach ($this->types as $name => $type)
+        {
+            $this->__unset($name);
+        }
+     }
 }
 
 ?>

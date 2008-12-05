@@ -34,7 +34,7 @@ class midcom_helper_datamanager_datamanager
     protected $types = null;
     protected $widgets = null;
 
-    public function initialize(&$schemadb)
+    public function __construct(&$schemadb)
     {
         if (! is_a('midcom_helper_datamanager_schema', $schemadb))
         {
@@ -114,6 +114,7 @@ class midcom_helper_datamanager_datamanager
         {
             $config = $this->schema->fields[$name];
         }
+
         if (! is_a($types, 'midcom_helper_datamanager_typeproxy'))
         {
             throw new midcom_helper_datamanager_exception_datamanager('$this->types is not instance of midcom_helper_datamanager_typeproxy');
@@ -138,6 +139,8 @@ class midcom_helper_datamanager_datamanager
         }
         
         return true;        
+=======
+>>>>>>> syntx fixes, refactoring etc:midcom_helper_datamanager/datamanager.php
         unset($this->widgets);
         $this->widgets = new midcom_helper_datamanager_widgetproxy($this->schema, $this->storage, $this->types);
     }

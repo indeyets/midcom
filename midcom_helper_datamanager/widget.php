@@ -19,7 +19,7 @@ interface midcom_helper_datamanager_widget
      *
      * @see midcom_helper_datamanager_widget_baseclass::__construct
      */
-    public function __construct($name, $config, &$schema, &$type, $namespace);
+    function __construct($name, $config, &$schema, &$type, $namespace);
 
     /**
      * Set the form reference.
@@ -34,7 +34,7 @@ interface midcom_helper_datamanager_widget
      *
      * @see midcom_helper_datamanager_widget_baseclass::on_configuring
      */
-    private function on_configuring($config);
+    function on_configuring($config);
     
     /**
      * This event handler is called during construction, so passing references to $this to the
@@ -42,7 +42,7 @@ interface midcom_helper_datamanager_widget
      *
      * @see midcom_helper_datamanager_widget_baseclass::on_initalize
      */
-    protected function on_initialize();
+    function on_initialize();
 
     /**
      * This event handler is called if and only if the Formmanager detects an actual
@@ -62,7 +62,7 @@ interface midcom_helper_datamanager_widget
      *
      * @see midcom_helper_datamanager_widget_baseclass::on_submit
      */
-    public function on_submit($results) {}
+    function on_submit($results);
 
     /**
      * This function is invoked if the widget should extract the corresponding data
@@ -76,7 +76,7 @@ interface midcom_helper_datamanager_widget
      *
      * @see midcom_helper_datamanager_widget_baseclass::sync_type_with_widget
      */
-    public function sync_type_with_widget($results);
+    function sync_type_with_widget($results);
 
     /**
      * This is a shortcut to the translate_schema_string function.
@@ -85,7 +85,7 @@ interface midcom_helper_datamanager_widget
      * @return string The translated string.
      * @see midcom_helper_datamanager_widget_baseclass::translate
      */
-    private function translate($string);
+    function translate($string);
 
     /**
      * This call, which must be overridden by subclasses, adds the necessary form elements
@@ -95,7 +95,7 @@ interface midcom_helper_datamanager_widget
      *
      * @see midcom_helper_datamanager_widget_baseclass::add_elements_to_form
      */
-    public function add_elements_to_form();
+    function add_elements_to_form();
 
     /**
      * Returns the default value for this field as required by HTML_Quickform. 
@@ -108,7 +108,7 @@ interface midcom_helper_datamanager_widget
      *
      * @see midcom_helper_datamanager_widget_baseclass::get_default
      */
-    public function get_default();
+    function get_default();
 
     /**
      * When called, this method should display the current data without any
@@ -118,7 +118,7 @@ interface midcom_helper_datamanager_widget
      *
      * @see midcom_helper_datamanager_widget_baseclass::render_content
      */
-    public function render_content();
+    function render_content();
     
     /**
      * Freezes all form elements associated with the widget. 
@@ -128,7 +128,7 @@ interface midcom_helper_datamanager_widget
      *
      * @see midcom_helper_datamanager_widget_baseclass::freeze
      */
-    public function freeze();
+    function freeze();
 
     /**
      * Unfreezes all form elements associated with the widget. 
@@ -138,7 +138,7 @@ interface midcom_helper_datamanager_widget
      *
      * @see midcom_helper_datamanager_widget_baseclass::unfreeze
      */
-    public function unfreeze();
+    function unfreeze();
 
     /**
      * Checks if the widget is frozen. 
@@ -148,7 +148,7 @@ interface midcom_helper_datamanager_widget
      *
      * @see midcom_helper_datamanager_widget_baseclass::is_frozen
      */
-    public function is_frozen();
+    function is_frozen();
 }
 
 /**
@@ -183,7 +183,7 @@ class midcom_helper_datamanager_widget_baseclass implements midcom_helper_datama
      *
      * @var string
      */
-    public var $name = '';
+    public $name = '';
 
     /**
      * The schema (not the schema <i>database!</i>) to use for operation. 
@@ -195,7 +195,7 @@ class midcom_helper_datamanager_widget_baseclass implements midcom_helper_datama
      *
      * @var Array
      */
-    protected var $schema = null;
+    protected $schema = null;
 
     /**
      * A reference to the schema field we should draw. 
@@ -204,7 +204,7 @@ class midcom_helper_datamanager_widget_baseclass implements midcom_helper_datama
      *
      * @var Array
      */
-    protected var $field = null;
+    protected $field = null;
     
 
     /**
@@ -218,12 +218,12 @@ class midcom_helper_datamanager_widget_baseclass implements midcom_helper_datama
      *
      * @var string
      */
-    private var $namespace = null;
+    private $namespace = null;
 
     /**
      * The form we are using.
      */
-    protected var $form = null;
+    protected $form = null;
     
     /**
      * Initializes and configures the widget.
