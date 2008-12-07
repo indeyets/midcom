@@ -115,7 +115,7 @@ class midcom_core_helpers_metadata
             }
         }
 
-        $approved = midcom_core_helpers_metadata::is_approved(&$object);
+        $approved = midcom_core_helpers_metadata::is_approved($object);
 
         $object->update();
         
@@ -131,7 +131,7 @@ class midcom_core_helpers_metadata
         if ($approved)
         {
             $_MIDCOM->authorization->enter_sudo('midcom_core');
-            midcom_core_helpers_metadata::approve(&$object);
+            midcom_core_helpers_metadata::approve($object);
             $_MIDCOM->authorization->leave_sudo();
         }
     }
@@ -166,14 +166,14 @@ class midcom_core_helpers_metadata
         
         $object->set_parameter('midcom_core_helper_metadata', 'lock_token', '');
 
-        $approved = midcom_core_helpers_metadata::is_approved(&$object);
+        $approved = midcom_core_helpers_metadata::is_approved($object);
         
         $object->update();
         
         if ($approved)
         {
             $_MIDCOM->authorization->enter_sudo('midcom_core');
-            midcom_core_helpers_metadata::approve(&$object);
+            midcom_core_helpers_metadata::approve($object);
             $_MIDCOM->authorization->leave_sudo();
         }
     }
