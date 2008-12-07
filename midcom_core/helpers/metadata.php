@@ -26,27 +26,16 @@ class midcom_core_helpers_metadata
     
     public static function approve(&$object)
     {
-        $_MIDCOM->authorization->require_do('midcom:approve', $object);        
-        
-        $object->metadata->approved = gmstrftime('%Y-%m-%d %T', time());
+        $_MIDCOM->authorization->require_do('midcom:approve', $object);
 
-        if ($_MIDCOM->authentication->is_user())
-        {
-            $person = $_MIDCOM->authentication->get_person();
-            $object->metadata->approver = $person->guid;
-        }
-        
-        $object->update();
+        $object->approve();
     }
     
     public static function unapprove(&$object)
     {
-        $_MIDCOM->authorization->require_do('midcom:approve', $object);        
-        
-        $object->metadata->approved = '';
-        $object->metadata->approver = '';
-        
-        $object->update();
+        $_MIDCOM->authorization->require_do('midcom:approve', $object);
+
+        $object->unapprove();
     }
     
     public static function is_locked(&$object, $check_locker = true)
@@ -93,89 +82,15 @@ class midcom_core_helpers_metadata
     public static function lock(&$object, $shared = false, $token = null)
     {
         $_MIDCOM->authorization->require_do('midgard:update', $object);
-        
-        // Re-fetch the object to be safe
-        $class = get_class($object);
-        $object = new $class($object->guid);
-        
-        $object->metadata->locked = gmstrftime('%Y-%m-%d %T', time());
 
-        if ($shared)
-        {
-            $object->metadata->locker = '';
-        }
-        elseif ($_MIDCOM->authentication->is_user())
-        {
-            $person = $_MIDCOM->authentication->get_person();
-            $object->metadata->locker = $person->guid;
-            
-            if (is_null($token))
-            {
-                $token = $person->guid;
-            }
-        }
-
-        $approved = midcom_core_helpers_metadata::is_approved($object);
-
-        $object->update();
-        
-        if (is_null($token))
-        {
-            $object->set_parameter('midcom_core_helper_metadata', 'lock_token', '');
-        }
-        else
-        {
-            $object->set_parameter('midcom_core_helper_metadata', 'lock_token', $token);
-        }
-
-        if ($approved)
-        {
-            $_MIDCOM->authorization->enter_sudo('midcom_core');
-            midcom_core_helpers_metadata::approve($object);
-            $_MIDCOM->authorization->leave_sudo();
-        }
+        $object->lock();
     }
     
     public static function unlock(&$object)
     {
         $_MIDCOM->authorization->require_do('midgard:update', $object);
-        
-        // Re-fetch the object to be safe
-        $class = get_class($object);
-        $object = new $class($object->guid);
-        
-        $allowed = false;
-        if ($_MIDCOM->authentication->is_user())
-        {
-            $person = $_MIDCOM->authentication->get_person();
-            if ($object->metadata->locker == $person->guid)
-            {
-                // The person who locked an object can always unlock it
-                $allowed = true;
-            }
-        }
-        
-        if (!$allowed)
-        {
-            // If user didn't lock it herself require the unlock privilege
-            $_MIDCOM->authorization->require_do('midcom:unlock', $object);
-        }
-        
-        $object->metadata->locked = '';
-        $object->metadata->locker = '';
-        
-        $object->set_parameter('midcom_core_helper_metadata', 'lock_token', '');
 
-        $approved = midcom_core_helpers_metadata::is_approved($object);
-        
-        $object->update();
-        
-        if ($approved)
-        {
-            $_MIDCOM->authorization->enter_sudo('midcom_core');
-            midcom_core_helpers_metadata::approve($object);
-            $_MIDCOM->authorization->leave_sudo();
-        }
+        $object->unlock();
     }
 }
 ?>
