@@ -282,7 +282,7 @@ class midcom_core_component_loader
         if (!$manifests = $memcache->get($prefix . 'manifests'))
         {
             exec('find ' . escapeshellarg(MIDCOM_ROOT) . ' -follow -type f -name ' . escapeshellarg('manifest.yml'), $manifests);
-            $memcache->set('manifests', $manifests, false, 600);
+            $memcache->set($prefix . 'manifests', $manifests, false, 600);
         }
         foreach ($manifests as $manifest)
         {
