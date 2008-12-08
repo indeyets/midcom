@@ -39,12 +39,27 @@ class midcom_core_helpers_navigation
     
     protected function _get_children($parent_id)
     {
+        $prefix = "{$_MIDGARD['sitegroup']}-{$_MIDGARD['host']}-{$_MIDGARD['page']}"; // FIXME: Take account midgard configuration as it's possible
+        if (class_exists('Memcache'))
+        {   
+            $memcache = new Memcache;
+            $memcache->connect('localhost');
+            if (!$childs = $memcache->get($prefix . 'childs-' . $parent_id))
+            {
+            
+            }
+            else
+            {
+                return $childs;
+            }
+        }
         $mc = midgard_page::new_collector('up', $parent_id);
         $mc->set_key_property('id');
         $mc->add_value_property('id');
         $mc->add_value_property('name');
         $mc->add_value_property('title');
         $mc->add_value_property('component');
+        $mc->add_order('metadata.score');
         $mc->execute();
 
         $child_ids = $mc->list_keys();
@@ -54,7 +69,10 @@ class midcom_core_helpers_navigation
         {
             $children[] = $this->_prepare_page_data($mc->get_subkey($cid, 'id'), $mc->get_subkey($cid, 'name'), $mc->get_subkey($cid, 'title'), $mc->get_subkey($cid, 'component'));
         }
-        
+        if (class_exists('Memcache'))
+        {
+            $memcache->set($prefix . 'childs-' . $parent_id, $children, false, 36000);
+        }
         return $children;
     }
     
@@ -98,9 +116,9 @@ class midcom_core_helpers_navigation_item
         if (! empty($childs))
         {
             $this->has_children = true;
-        }
-        
+        }        
         $this->children = $childs;
     }
+
 }
 ?>
