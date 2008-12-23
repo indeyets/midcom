@@ -20,6 +20,8 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
     private $objects = array();
     private $merged = array();
     
+    private $use_syck = true;
+    
     public function __construct($component, $object = null)
     {
         // The original component we're working with
@@ -58,6 +60,12 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
             $this->merged = array();
         }
 
+        $this->use_syck = extension_loaded('syck');
+        if (!$this->use_syck)
+        {
+            // Syck PHP extension is not loaded, include the pure-PHP implementation
+            require_once('midcom_core/helpers/spyc.php');
+        }
     }
 
     /**
@@ -224,7 +232,11 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
      */
     public function unserialize($configuration)
     {
-        // TODO: Implement using http://spyc.sourceforge.net/ if syck is not available
+        if (!$this->use_syck)
+        {
+            return Spyc::YAMLLoad($configuration);
+        }
+
         return syck_load($configuration);
     }
     
@@ -236,7 +248,11 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
      */
     public function serialize(array $configuration)
     {
-        // TODO: Implement using http://spyc.sourceforge.net/ if syck is not available
+        if (!$this->use_syck)
+        {
+            return Spyc::YAMLDump($configuration);
+        }
+
         return syck_dump($configuration);
     }
     

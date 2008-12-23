@@ -195,8 +195,16 @@ class midcom_core_component_loader
         
         $manifest_yaml = file_get_contents($manifest_file);
         
-        // TODO: Implement using http://spyc.sourceforge.net/ if syck is not available
-        $manifest = syck_load($manifest_yaml);
+        if (!extension_loaded('syck'))
+        {
+            // Syck PHP extension is not loaded, include the pure-PHP implementation
+            require_once('midcom_core/helpers/spyc.php');
+            $manifest = Spyc::YAMLLoad($manifest_yaml);
+        }
+        else
+        {
+            $manifest = syck_load($manifest_yaml);
+        }
         
         // Normalize manifest
         if (!isset($manifest['version']))

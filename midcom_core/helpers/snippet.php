@@ -17,8 +17,7 @@ class midcom_core_helpers_snippet
     public function __construct() {}
     
     static function get($path, $graceful=false)
-    {        
-        // TODO: Implement using http://spyc.sourceforge.net/ if syck is not available
+    {
         if ($graceful)
         {
             $content = midcom_core_helpers_snippet::get_contents_graceful($path);
@@ -27,8 +26,17 @@ class midcom_core_helpers_snippet
         {
             $content = midcom_core_helpers_snippet::get_contents($path);
         }
-        
-        return syck_load($content);
+
+        if (!extension_loaded('syck'))
+        {
+            // Syck PHP extension is not loaded, include the pure-PHP implementation
+            require_once('midcom_core/helpers/spyc.php');
+            return Spyc::YAMLLoad($content);
+        }
+        else
+        {
+            return syck_load($content);
+        }
     }
     
     /**
