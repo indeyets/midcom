@@ -27,7 +27,15 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
         // The original component we're working with
         $this->component = $component;
         $this->components[] = $this->component;
-      
+
+        // Check for syck extension
+        $this->use_syck = extension_loaded('syck');
+        if (!$this->use_syck)
+        {
+            // Syck PHP extension is not loaded, include the pure-PHP implementation
+            require_once('midcom_core/helpers/spyc.php');
+        }
+
         if (isset($_MIDCOM))
         {
             // MidCOM framework is running, check for inheritance
@@ -58,13 +66,6 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
         {
             // Safety
             $this->merged = array();
-        }
-
-        $this->use_syck = extension_loaded('syck');
-        if (!$this->use_syck)
-        {
-            // Syck PHP extension is not loaded, include the pure-PHP implementation
-            require_once('midcom_core/helpers/spyc.php');
         }
     }
 
