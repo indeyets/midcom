@@ -572,7 +572,7 @@
           $value = trim(implode(': ',$array));
           $value = $this->_toType($value);
           $value = array($key => $value);
-      } elseif (preg_match("/{(.+)}$/",$value,$matches)) {
+      /*} elseif (preg_match("/{(.+)}$/",$value,$matches)) {
         // Inline Mapping
 
         // Take out strings sequences and mappings
@@ -583,7 +583,7 @@
         foreach ($explode as $v) {
           $array = $array + $this->_toType($v);
         }
-        $value = $array;
+        $value = $array;*/
       } elseif (strtolower($value) == 'null' or $value == '' or $value == '~') {
         $value = NULL;
       } elseif (preg_match ('/^[0-9]+$/', $value)) {
