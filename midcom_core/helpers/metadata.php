@@ -82,6 +82,11 @@ class midcom_core_helpers_metadata
     public static function lock(&$object, $shared = false, $token = null)
     {
         $_MIDCOM->authorization->require_do('midgard:update', $object);
+        
+        if ($object->is_locked())
+        {
+            return;
+        }
 
         $object->lock();
     }
@@ -89,6 +94,11 @@ class midcom_core_helpers_metadata
     public static function unlock(&$object)
     {
         $_MIDCOM->authorization->require_do('midgard:update', $object);
+
+        if (!$object->is_locked())
+        {
+            return;
+        }
 
         $object->unlock();
     }
