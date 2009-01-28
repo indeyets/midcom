@@ -189,7 +189,7 @@ abstract class midcom_core_controllers_baseclasses_manage
         $data['datamanager_form']->freeze();
         
         $_MIDCOM->authorization->require_do('midgard:delete', $this->object);
-        if(isset($_POST['delete']))
+        if (isset($_POST['delete']))
         {
             $this->object->delete();
             header("Location: {$_MIDGARD['prefix']}/"); // TODO: This needs a better redirect
