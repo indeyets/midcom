@@ -242,6 +242,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
                         break;
                 }
             }
+            // 404 MultiFail
             throw new midcom_exception_notfound($messages);
         }
     }
