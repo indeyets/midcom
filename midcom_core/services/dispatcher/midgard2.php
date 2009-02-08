@@ -72,7 +72,10 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
         $_MIDCOM->context->host = $_MIDGARD_CONNECTION->request_config->host;
         
         // Append styles from context
-        $_MIDCOM->templating->append_style($_MIDGARD_CONNECTION->request_config->style->id);
+        if ($_MIDGARD_CONNECTION->request_config->style)
+        {
+            $_MIDCOM->templating->append_style($_MIDGARD_CONNECTION->request_config->style->id);
+        }
         $_MIDCOM->templating->append_page($current_page->id);
         
         // Populate page to toolbar
