@@ -191,9 +191,13 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
                     continue;
                 }
             }
-            $route_id_map[] = array('route' => $route_configuration['route'],
-                                    'route_id' => $route_id);
+            $route_id_map[] = array
+            (
+                'route' => $route_configuration['route'],
+                'route_id' => $route_id
+            );
         }
+
         unset($route_configuration, $route_id);
         if (!$this->route_matches($route_id_map))
         {
@@ -201,9 +205,8 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             throw new midcom_exception_notfound('No route matches current URL');
         }
         unset($route_id_map);
-        
+
         $success_flag = true; // Flag to tell if route ran successfully
-        
         foreach ($this->route_array as $route)
         {
             try
@@ -215,7 +218,6 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             {
                 $this->exceptions_stack[] = $e; // Adding exception to exceptions stack
                 $success_flag = false; // route failed
-                throw $e;
             }
             if ($success_flag) // Checking for success
             {
@@ -467,7 +469,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             // We have a complete match, setup route_id arguments and return
             $this->route_array[] = $route_id;
             // Map variable arguments
-            
+
             foreach ($route_path_matches[1] as $index => $varname)
             {
                 $variable_parts = explode(':', $varname);
@@ -506,6 +508,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             }
             //return true;
         }
+
         // No match
         if(count($this->route_array) == 0)
         {
