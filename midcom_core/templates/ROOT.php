@@ -7,7 +7,7 @@
  */
 ?>
 <!DOCTYPE html>
-<html>
+<html version="XHTML+RDFa 1.0">
     <head>
         <title tal:content="page/title">Midgard CMS</title>
         <span tal:replace="php: MIDCOM.head.print_elements()" />
