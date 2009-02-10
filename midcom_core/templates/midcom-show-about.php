@@ -34,37 +34,41 @@
     </table>
 </aside>
 
-<p>
-    MidCOM is an <a href="http://en.wikipedia.org/wiki/Model-view-controller">MVC</a> framework for
-    the PHP programming language. It runs on top of Midgard, a Free Software 
-    <a href="http://en.wikipedia.org/wiki/Persistent_storage">persistent storage</a> plaftorm for 
-    interactive web application development.
-</p>
+<div xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/" about="http://www.midgard-project.org/" typeof="foaf:Group">
 
-<p>
-    The first version of the Midgard platform was released in 1999, and it has been developed and maintained 
-    by an international community since then. First usable versions of 3rd generation MidCOM framework
-    surfaced in 2008.
-</p>
+    <p property="dc:description">
+        MidCOM is an <a href="http://en.wikipedia.org/wiki/Model-view-controller">MVC</a> framework for
+        the PHP programming language. It runs on top of Midgard, a Free Software 
+        <a href="http://en.wikipedia.org/wiki/Persistent_storage">persistent storage</a> plaftorm for 
+        interactive web application development.
+    </p>
+    
+    <p>
+        The first version of the Midgard platform was released in 1999, and it has been developed and maintained 
+        by an international community since then. First usable versions of 3rd generation MidCOM framework
+        surfaced in 2008.
+    </p>
+    
+    <p>
+        <a href="http://www.midgard-project.org/" rel="foaf:homepage">www.midgard-project.org</a>
+    </p>
+    
+    <h2>Credits</h2>
+    
+    <ul class="developers" rel="foaf:member" tal:repeat="author midcom_core/authors">
+        <li class="vcard" typeof="foaf:Person">
+            <span class="fn">
+                <a href="http://example.net" rel="foaf:homepage" property="foaf:name" class="url" tal:attributes="href author/url" tal:content="author/name">
+                    Alice
+                </a>
+            </span>
+        </li>
+    </ul>
+    
+    <div class="logos">
+        <a href="http://www.gnu.org/licenses/lgpl.html" rel="license">
+            <img src="/midcom-static/midcom_core/midgard/lgplv3.png" alt="LGPLv3" />
+        </a>
+    </div>
 
-<p>
-    <a href="http://www.midgard-project.org/" rel="group">www.midgard-project.org</a>
-</p>
-
-<h2>Credits</h2>
-
-<ul class="developers" tal:repeat="author midcom_core/authors">
-    <li class="vcard">
-        <span class="fn">
-            <a href="http://example.net" rel="member" class="url" tal:attributes="href author/url" tal:content="author/name">
-                Alice
-            </a>
-        </span>
-    </li>
-</ul>
-
-<div class="logos">
-    <a href="http://www.gnu.org/licenses/lgpl.html" rel="license">
-        <img src="/midcom-static/midcom_core/midgard/lgplv3.png" alt="LGPLv3" />
-    </a>
 </div>
