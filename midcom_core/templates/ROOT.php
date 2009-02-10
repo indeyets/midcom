@@ -32,7 +32,7 @@
         </div>
         <footer>
              <a href="http://www.midgard-project.org/" rel="powered">Midgard CMS</a> power since 1999. 
-             <a href="http://www.gnu.org/licenses/lgpl.html" rel="license">Free software</a>.
+             <a href="http://www.gnu.org/licenses/lgpl.html" rel="license" about="http://www.midgard-project.org/">Free software</a>.
         </footer>
     </body>
 </html>
