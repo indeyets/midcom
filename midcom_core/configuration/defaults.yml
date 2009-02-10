@@ -145,6 +145,16 @@ routes:
         action: serve
         route: /__midcom/serveattachment/{$guid}/
         root_only: true
+    fckeditor_connector:
+        controller: midcom_helper_datamanager_controllers_fckeditor
+        action: connector
+        route: /__midcom/fckeditor/
+        allowed_methods:
+            - GET
+            - POST
+        root_only: true
+        template_entry_point: midcom-fckeditor
+        mimetype: text/xml
     login:
         controller: midcom_core_controllers_authentication
         action: login
