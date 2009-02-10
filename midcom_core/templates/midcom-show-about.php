@@ -55,9 +55,10 @@
     
     <h2>Credits</h2>
     
-    <ul class="developers" rel="foaf:member" tal:repeat="author midcom_core/authors">
-        <li class="vcard" typeof="foaf:Person">
-            <span class="fn">
+    <ul class="developers" tal:repeat="author midcom_core/authors">
+        <li class="vcard" typeof="foaf:Person" about="http://example.net" tal:attributes="about author/url">
+            <link rel="foaf:member" href="http://www.midgard-project.org/" />
+            <span class="fn" rel="foaf:member">
                 <a href="http://example.net" rel="foaf:homepage" property="foaf:name" class="url" tal:attributes="href author/url" tal:content="author/name">
                     Alice
                 </a>
