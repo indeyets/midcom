@@ -8,21 +8,21 @@
 
 <(midcom-show-vendor)>
 
-<aside>
+<aside xmlns:doap="http://usefulinc.com/ns/doap#">
     <h2>Installed software</h2>
     <table>
         <thead>
-            <tr>
-                <th>MidCOM</th>
-                <td tal:content="midcom_core/versions/midcom">3</td>
+            <tr typeof="doap:Project" about="http://www.midgard-project.org/documentation/midcom/">
+                <th property="doap:name">MidCOM</th>
+                <td tal:content="midcom_core/versions/midcom" property="doap:revision">9</td>
             </tr>
-            <tr>
-                <th>Midgard</th>
-                <td tal:content="midcom_core/versions/midgard">2</td>
+            <tr typeof="doap:Project" about="http://www.midgard-project.org/">
+                <th property="doap:name">Midgard</th>
+                <td tal:content="midcom_core/versions/midgard" property="doap:revision">9</td>
             </tr>
-            <tr>
-                <th>PHP</th>
-                <td tal:content="midcom_core/versions/php">5</td>
+            <tr typeof="doap:Project" about="http://www.php.net/">
+                <th property="doap:name">PHP</th>
+                <td tal:content="midcom_core/versions/php" property="doap:revision">5</td>
             </tr>
         </thead>
         <tbody tal:repeat="component midcom_core/components">
