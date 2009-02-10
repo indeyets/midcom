@@ -259,6 +259,10 @@ class midcom_helper_datamanager_type_baseclass implements midcom_helper_datamana
             case 'as_html':
                 return $this->convert_to_html();
             case 'as_csv':
+                if (!method_exists($this, 'convert_to_csv'))
+                {
+                    throw new midcom_helper_datamanager_exception_type('csv conversion not supported');
+                }
                 return $this->convert_to_csv();
             case 'as_raw':
                 return $this->convert_to_raw();
