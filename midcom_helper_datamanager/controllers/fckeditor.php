@@ -83,7 +83,7 @@ class midcom_helper_datamanager_controllers_fckeditor
         $qb->add_constraint('up', '=', $page->id);
         $qb->add_constraint('name', '<>', '');
         $data['folders'] = $qb->execute();
-        
+                
         if ($data['command'] != 'GetFoldersAndFiles')
         {
             // That's all, folks
@@ -95,7 +95,7 @@ class midcom_helper_datamanager_controllers_fckeditor
         $data['files'][] = array
         (
             'name' => '',
-            'size' => $page->metadata->size,
+            'size' => round($page->metadata->size / 1024, 1),
         );
         // TODO: Query NAP for more
     }
