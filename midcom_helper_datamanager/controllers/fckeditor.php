@@ -97,6 +97,17 @@ class midcom_helper_datamanager_controllers_fckeditor
             'name' => '',
             'size' => round($page->metadata->size / 1024, 1),
         );
+        
+        $attachments = $page->list_attachments();
+        foreach ($attachments as $attachment)
+        {
+            $data['files'][] = array
+            (
+                'name' => $attachment->name,
+                'size' => round($attachment->metadata->size / 1024, 1),
+            );
+        }
+
         // TODO: Query NAP for more
     }
 }
