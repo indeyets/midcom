@@ -13,7 +13,7 @@ enable_webdav: true
 enable_benchmark: false
 enable_included_list: false
 enable_jquery_framework: true
-enable_js_midcom: true
+enable_js_midcom: false
 enable_uimessages: false
 enable_xsendfile: false
 enable_attachment_cache: false
