@@ -30,12 +30,13 @@ class midcom_core_exceptionhandler
         }
 
         $message = $exception->getMessage();
-        header("X-MidCOM-Error: {$message}");
 
         if (headers_sent())
         {
             die("<h1>Unexpected Error</h1>\n\n<p>Headers were sent so we don't have correct HTTP code ({$http_code}).</p>\n\n<p>{$message_type}: {$message}</p>\n");
         }
+
+        header("X-MidCOM-Error: {$message}");
 
         $header = self::header_by_code($http_code);
 
