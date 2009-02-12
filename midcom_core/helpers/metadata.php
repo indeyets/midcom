@@ -45,7 +45,16 @@ class midcom_core_helpers_metadata
             return false;
         }
         
-        $lock_time = strtotime($object->metadata->locked . ' GMT');
+        if (is_string($object->metadata->locked))
+        {
+            // Midgard1 ISO date string
+            $lock_time = strtotime($object->metadata->locked . ' GMT');
+        }
+        else
+        {
+            // Midgard2 DateTime
+            $lock_time = $object->metadata->locked->format('U');
+        }
         $lock_timeout = $lock_time + ($_MIDCOM->configuration->get('metadata_lock_timeout') * 60);
         
         if (time() > $lock_timeout)
