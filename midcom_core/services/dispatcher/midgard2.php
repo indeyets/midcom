@@ -15,6 +15,14 @@
  */
 class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_dispatcher_midgard implements midcom_core_services_dispatcher
 {
+    /**
+     * Midgard's request configuration object
+     */
+    private $request_config = null;
+
+    /**
+     * Read the request configuration and parse the URL
+     */
     public function __construct()
     {
         if (!extension_loaded('midgard2'))
@@ -22,13 +30,15 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
             throw new Exception('Midgard 2.x is required for this MidCOM setup.');
         }
         
-        if (   empty($_MIDGARD_CONNECTION->request_config)
-            || empty($_MIDGARD_CONNECTION->request_config->argv))
+        $this->request_config = $_MIDGARD_CONNECTION->get_request_config();
+        
+        if (   !$this->request_config
+            || empty($this->request_config->argv))
         {
             throw new midcom_exception_httperror('Midgard database connection not found.', 503);
         }
 
-        foreach ($_MIDGARD_CONNECTION->request_config->argv as $argument)
+        foreach ($this->request_config->argv as $argument)
         {
             if (substr($argument, 0, 1) == '?')
             {
@@ -56,10 +66,10 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
      */
     public function populate_environment_data()
     {
-        $prefix = "{$_MIDGARD_CONNECTION->request_config->host->prefix}/";
-        foreach ($_MIDGARD_CONNECTION->request_config->pages as $page)
+        $prefix = "{$this->request_config->host->prefix}/";
+        foreach ($this->request_config->pages as $page)
         {
-            if ($page->id != $_MIDGARD_CONNECTION->request_config->host->root)
+            if ($page->id != $this->request_config->host->root)
             {
                 $prefix = "{$prefix}{$page->name}/";
             }
@@ -70,12 +80,12 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
         
         $_MIDCOM->context->page = $current_page;
         $_MIDCOM->context->prefix = $prefix;
-        $_MIDCOM->context->host = $_MIDGARD_CONNECTION->request_config->host;
+        $_MIDCOM->context->host = $this->request_config->host;
         
         // Append styles from context
-        if ($_MIDGARD_CONNECTION->request_config->style)
+        if ($this->request_config->style)
         {
-            $_MIDCOM->templating->append_style($_MIDGARD_CONNECTION->request_config->style->id);
+            $_MIDCOM->templating->append_style($this->request_config->style->id);
         }
         $_MIDCOM->templating->append_page($current_page->id);
         
