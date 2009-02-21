@@ -282,7 +282,6 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             // This will exit
         }
 
-        // TODO: store this array somewhere where it can be accessed via get_context_item
         $data = array();
         if ($_MIDCOM->timer)
         {

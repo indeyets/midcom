@@ -95,7 +95,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         foreach ($keys as $value => $array)
         {
             // Register element to template cache
-            $_MIDCOM->cache->register('template', $this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
+            $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
 
             return $value;
         }
@@ -135,7 +135,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 foreach ($keys as $value => $array)
                 {
                     // Register element to template cache
-                    $_MIDCOM->cache->register('template', $this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
+                    $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
 
                     return $value;
                 }
