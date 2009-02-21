@@ -6,8 +6,12 @@ services_uimessages: midcom_core_services_uimessages_midgard
 services_toolbars: midcom_core_services_toolbars_null
 services_authentication_cookie_cookiepath: /
 services_i18n: midcom_core_services_i18n_gettext
-cache_directory: __MIDGARDCACHE__/midgard
-templating_cache: false
+services_cache: midcom_core_services_cache_sqlite
+services_cache_configuration:
+    expiry: 86400
+    strategy: private
+    module_template:
+        directory: __MIDGARDCACHE__/midgard
 log_file: __MIDGARDLOG__/__SERVERNAME__.__LOGNAME__.log
 enable_webdav: true
 enable_benchmark: false

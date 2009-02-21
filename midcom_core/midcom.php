@@ -98,14 +98,6 @@ class midcom_core_midcom
             throw new Exception("Service {$service} not installed");
         }
         
-        /*
-        if (!class_exists("midcom_core_services_{$service}"))
-        {
-            echo "midcom_core_services_{$name}\n<br />";
-            include($interface_file);
-        }
-        */
-        
         $service_implementation = $_MIDCOM->configuration->get("services_{$service}");
         if (!$service_implementation)
         {

@@ -6,12 +6,14 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
 
+include MIDCOM_ROOT . "/midcom_core/services/cache.php";
+
 /**
  * SQLite cache backend.
  *
  * @package midcom_core
  */
-class midcom_core_services_cache_sqlite implements midcom_core_services_cache
+class midcom_core_services_cache_sqlite extends midcom_core_services_cache_base implements midcom_core_services_cache
 {
     private $_db;
     private $_table;
@@ -88,7 +90,8 @@ class midcom_core_services_cache_sqlite implements midcom_core_services_cache
         return $results;
     }
     
-    public function put($key, $data, $timeout = false, $tags = null)
+    /** DEPRECATED
+    public function put($key, $data, $timeout = false, array $tags = null)
     {
         $key = sqlite_escape_string($key);
         $data = sqlite_escape_string($data);
@@ -111,6 +114,24 @@ class midcom_core_services_cache_sqlite implements midcom_core_services_cache
                 $this->_db->query("REPLACE INTO {$this->_table}_tags (tag, key) VALUES ('{$tag}', '{$key}')");
             }
         }
+    }*/
+    
+    public function register($key, array $tags)
+    {
+        $key = sqlite_escape_string($key);
+        $data = sqlite_escape_string($data);
+        foreach ($tags as $tag)
+        {
+            $tag = sqlite_escape_string($tag);
+            $tag_id = $this->checktag($tag);
+            $this->_db->query("REPLACE INTO {$this->_table}_tags (tag, key) VALUES ('{$tag}', '{$key}')");
+        }
+    }
+    
+    public function invalidate_all()
+    {
+        $this->_db->query("DELETE FROM {$this->_table} WHERE 1");
+        $this->_db->query("DELETE FROM {$this->_table}_tags WHERE 1");
     }
     
     public function remove($key)
@@ -120,26 +141,12 @@ class midcom_core_services_cache_sqlite implements midcom_core_services_cache
         $this->_db->query("DELETE FROM {$this->_table}_tags WHERE key='{$key}'");
     }
     
-    public function remove_by_tags($tags)
+    public function invalidate(array $tags)
     {
-        if (is_array($tags))
+        foreach ($tags as $tag)
         {
-            foreach ($tags as $tag)
-            {
-                $tag = sqlite_escape_string($tag);
-                $results = $this->_db->query("SELECT key FROM {$this->_table}_tags WHERE tag='{$tag}'");
-                $results = $results->fetchAll();
-                foreach ($results as $r)
-                {
-                    $this->_db->query("DELETE FROM {$this->_table} WHERE key='{$r['key']}");
-                    $this->_db->query("DELETE FROM {$this->_table}_tags WHERE key='{$r['key']}'");
-                }
-            }
-        }
-        else
-        {
-            $tags = sqlite_escape_string($tags);
-            $results = $this->_db->query("SELECT key FROM {$this->_table}_tags WHERE tag='{$tags}'");
+            $tag = sqlite_escape_string($tag);
+            $results = $this->_db->query("SELECT key FROM {$this->_table}_tags WHERE tag='{$tag}'");
             $results = $results->fetchAll();
             foreach ($results as $r)
             {

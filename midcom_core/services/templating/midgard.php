@@ -16,7 +16,6 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     private $dispatcher = null;
     private $stacks = array();
     private $stack_elements = array();
-    private $cache_directory = '';
 
     private $elements_shown = array();
 
@@ -26,44 +25,24 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     {
         $this->stacks[0] = array();
     }
-    
+
     private function get_cache_identifier()
     {
-        if (isset($_MIDCOM->context->route_id))
+        static $cache_identifiers = array();
+        $context = $_MIDCOM->context->get_current_context();
+        if (!isset($cache_identifiers[$context]))
         {
-            return "{$_MIDGARD['host']}-{$_MIDGARD['page']}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . 
-                   "-{$_MIDCOM->context->route_id}-{$_MIDCOM->context->template_entry_point}-{$_MIDCOM->context->content_entry_point}";
+            if (isset($_MIDCOM->context->route_id))
+            {
+                $cache_identifiers[$context] = "{$_MIDCOM->context->host->id}-{$_MIDCOM->context->page->id}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . 
+                       "-{$_MIDCOM->context->route_id}-{$_MIDCOM->context->template_entry_point}-{$_MIDCOM->context->content_entry_point}";
+            }
+            $cache_identifiers[$context] = "{$_MIDCOM->context->host->id}-{$_MIDCOM->context->page->id}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . 
+                   "-{$_MIDCOM->context->template_entry_point}-{$_MIDCOM->context->content_entry_point}";
         }
-        return "{$_MIDGARD['host']}-{$_MIDGARD['page']}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . 
-               "-{$_MIDCOM->context->template_entry_point}-{$_MIDCOM->context->content_entry_point}";
+        return $cache_identifiers[$context];
     }
-    
-    private function get_cache_directory()
-    {
-        switch ($_MIDGARD['config']['prefix'])
-        {
-            case '/usr':
-            case '/usr/local':
-                return '/var/cache/midgard';
-            default:
-                return "{$_MIDGARD['config']['prefix']}/var/cache/midgard";
-        }
-    }
-    
-    private function prepare_cache()
-    {
-        $this->cache_directory = str_replace('__MIDGARDCACHE__', $this->get_cache_directory(), $_MIDCOM->configuration->get('cache_directory'));
-        if (!file_exists($this->cache_directory))
-        {
-            mkdir($this->cache_directory, 0777, true);
-        }
-        
-        if (!is_writable($this->cache_directory))
-        {
-            throw new Exception("Cache directory {$this->cache_directory} is not writable");
-        }
-    }
-    
+
     public function append_directory($directory)
     {
         if (!file_exists($directory))
@@ -80,6 +59,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     
     public function append_style($style_id)
     {
+        // FIXME: Register style to cache
         $stack = $_MIDCOM->context->get_current_context();
         if (!isset($this->stacks[$stack]))
         {
@@ -90,6 +70,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     
     public function append_page($page_id)
     {
+        // FIXME: Register page to cache
         $stack = $_MIDCOM->context->get_current_context();
         if (!isset($this->stacks[$stack]))
         {
@@ -98,58 +79,12 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         $this->stacks[$stack][$page_id] = 'page';
     }
     
-    public function get_template_content($component, $template, &$data = array())
-    {
-        $content = '';
-        $style_id = $_MIDGARD['style'];
-
-        $component_directory = MIDCOM_ROOT . '/' . $component;
-        $template_file = "{$component_directory}/templates/{$template}.php";
-
-        $mc = midgard_page::new_collector('id', $_MIDGARD['page']);
-        $mc->set_key_property('guid');
-        $mc->add_value_property('style');        
-        $mc->execute();
-        $guids = $mc->list_keys();
-        foreach ($guids as $guid => $array)
-        {
-            $page_style = $mc->get_subkey($guid, 'style');
-            if ($page_style)
-            {
-                $style_id = $page_style;
-            }
-        }
-
-        $mc = midgard_element::new_collector('style', $style_id);
-        $mc->add_constraint('name', '=', $template);
-        $mc->set_key_property('value');
-        $mc->execute();
-        $keys = $mc->list_keys();
-        if (count($keys) == 0)
-        {
-            if (file_exists($template_file))
-            {
-                $content = file_get_contents($template_file);
-            }
-        }
-        else
-        {
-            foreach ($keys as $value => $array)
-            {
-                $content = $value;
-            }            
-        }
-        
-        ob_start();
-        eval('?>' . preg_replace_callback("/<\\(([a-zA-Z0-9 _-]+)\\)>/", array($this, 'get_element'), $content));
-        return ob_get_clean();
-    }
-    
     private function get_element_style($style_id, $element)
     {
         $mc = midgard_element::new_collector('style', $style_id);
         $mc->add_constraint('name', '=', $element);
         $mc->set_key_property('value');
+        $mc->add_value_property('guid');
         $mc->execute();
         $keys = $mc->list_keys();
         if (count($keys) == 0)
@@ -159,6 +94,9 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         
         foreach ($keys as $value => $array)
         {
+            // Register element to template cache
+            $_MIDCOM->cache->register('template', $this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
+
             return $value;
         }
     }    
@@ -186,6 +124,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 $mc = midgard_pageelement::new_collector('page', $page_id);
                 $mc->add_constraint('name', '=', $element);
                 $mc->set_key_property('value');
+                $mc->add_value_property('guid');
                 $mc->execute();
                 $keys = $mc->list_keys();
                 if (count($keys) == 0)
@@ -195,6 +134,9 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 
                 foreach ($keys as $value => $array)
                 {
+                    // Register element to template cache
+                    $_MIDCOM->cache->register('template', $this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
+
                     return $value;
                 }
         }
@@ -389,16 +331,14 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     {
         // Let injectors do their work
         $_MIDCOM->componentloader->inject_template();
-
-        $this->prepare_cache();
-        $cache_file = $this->cache_directory . '/' . $this->get_cache_identifier() . '.php';
-
-        if (file_exists($cache_file))
+        
+        if ($_MIDCOM->cache->template->check($this->get_cache_identifier()))
         {
             return;
         }
         
-        file_put_contents($cache_file, $this->get_element($_MIDCOM->context->$element_identifier));
+        // Template cache didn't have this template, collect it
+        $_MIDCOM->cache->template->put($this->get_cache_identifier(), $this->get_element($_MIDCOM->context->$element_identifier));
     }
     
     /**
@@ -410,16 +350,10 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     {
         $data = $_MIDCOM->context->get();
 
-        $cache_file = $this->cache_directory . '/' . $this->get_cache_identifier() . '.php';
         ob_start();
-        include($cache_file);
+        include($_MIDCOM->cache->template->get($this->get_cache_identifier()));
         $content = ob_get_clean();
-        
-        if (!$_MIDCOM->configuration->templating_cache)
-        {
-            // FIXME: Remove this once we can actually invalidate cache
-            unlink($cache_file);
-        }
+
         switch ($data['template_engine'])
         {
             case 'tal':

@@ -14,54 +14,147 @@
 interface midcom_core_services_cache
 {
     /**
-     * Function gets a record from cache by key
+     * Register an array of tags to all caches
      *
-     * @param cache_id $key
+     * @param string $cache_id
+     * @param array $tags
      */
-    public function get($key);
+    public function register($identifier, array $tags);
     
     /**
-     * Function gets records from cache that have been tagged 
+     * Invalidate an array of tags from all caches
      *
-     * @param string or Array $tags
+     * @param array $tags
      */
-    public function get_by_tag($tags);
+    public function invalidate(array $tags);
     
     /**
-     * Function puts a record to cache
-     *
-     * @param string $key
-     * @param Serializable $data
-     * @param int $timeout
-     * @param String / Array $tag
+     * Invalidate everything from all caches
      */
-    public function put($key, $data, $timeout = false, $tags=null);
+    public function invalidate_all();
     
     /**
-     * Removes an entry from cache
+     * Put data into a module's cache
      *
-     * @param string $key
+     * This method is to be utilized by the cache modules.
+     *
+     * @param string $module Module name
+     * @param string $identifier Cache identifier to store to
+     * @param mixed $data Data to store (may be serialized by storage backend)
      */
-    public function remove($key);
+    public function put($module, $identifier, $data);
     
     /**
-     * Removes entries from cache by tag
+     * Get data from module's cache
      *
-     * @param string / Array $tag
+     * This method is to be utilized by the cache modules.
+     *
+     * @param string $module Module name
+     * @param string $identifier Cache identifier to store to
+     * @return mixed Stored data
      */
-    public function remove_by_tag($tags);
-    
+    public function get($module, $indentifier);
+
     /**
-     * Removes all entries from cache
+     * Remove data from module's cache
      *
+     * This method is to be utilized by the cache modules.
+     *
+     * @param string $module Module name
+     * @param string $identifier Cache identifier to store to
      */
-    public function remove_all();
-    
+    public function delete($module, $identifier);
+
     /**
-     * Checks if a record exists in cache
+     * Check if module's cache has data for a given identifier
      *
-     * @param string $key
+     * This method is to be utilized by the cache modules.
+     *
+     * @param string $module Module name
+     * @param string $identifier Cache identifier to store to
+     * @return boolean
      */
-    public function exists($key);
+    public function exists($module, $identifier);
+}
+
+abstract class midcom_core_services_cache_base
+{
+    private $modules = array();
+    private $configuration = array();
+
+    public function __construct()
+    {
+        $this->configuration = $_MIDCOM->configuration->get('services_cache_configuration');
+
+        // Move these values to context so modules and components can manipulate them as needed
+        $_MIDCOM->context->cache_expiry = $this->configuration['expiry'];
+        $_MIDCOM->context->cache_strategy = $this->configuration['strategy'];
+    }
+
+    /**
+     * Helper for module initialization. Usually called via getters
+     *
+     * @param string $module Name of module to load
+     */
+    private function load_module($module)
+    {
+        if (isset($this->modules[$module]))
+        {
+            return;
+        }
+        
+        $interface_file = MIDCOM_ROOT . "/midcom_core/services/cache/module/{$module}.php";
+        if (!file_exists($interface_file))
+        {
+            throw new Exception("Cache module {$module} not installed");
+        }
+        
+        $module_implementation = $_MIDCOM->configuration->get("services_{$module}");
+        if (!$module_implementation)
+        {
+            throw new Exception("No implementation defined for cache module {$module}");
+        }
+        
+        $module_config = array();
+        if (isset($this->configuration["module_{$module}"]))
+        {
+            $module_config = $this->configuration["module_{$module}"];
+        }
+        
+        $this->modules[$module] = new $module_implementation($module_config);
+    }
+
+    /**
+     * Magic getter for module loading
+     */
+    public function __get($module)
+    {
+        $this->load_module($module);
+        return $this->modules[$module];
+    }
+
+    public function register($identifier, array $tags)
+    {
+        foreach ($this->modules as $module)
+        {
+            $module->register($identifier, $tags);
+        }
+    }
+
+    public function invalidate(array $tags)
+    {
+        foreach ($this->modules as $module)
+        {
+            $module->invalidate($tags);
+        }
+    }
+
+    public function invalidate_all()
+    {
+        foreach ($this->modules as $module)
+        {
+            $module->invalidate_all();
+        }
+    }
 }
 ?>
