@@ -306,6 +306,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
     
     private function is_core_route($route_id)
     {
+        if (!isset($_MIDCOM->context->component_routes))
+        {
+            return false;
+        }
         if (isset($_MIDCOM->context->component_routes[$route_id]))
         {
             return false;
