@@ -38,7 +38,8 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         $page_data = array();
         $page_data['guid'] = $this->page->guid;
         $page_data['title'] = $this->page->title;
-        $page_data['content'] = $this->page->content;        
+        $page_data['content'] = $this->page->content;
+        $_MIDCOM->context->uri = $this->get_page_prefix();        
         $_MIDCOM->context->component = $this->page->component;
         $_MIDCOM->context->page = $page_data;
         $_MIDCOM->context->prefix = $this->get_page_prefix();
