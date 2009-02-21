@@ -81,6 +81,7 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
         $_MIDCOM->context->page = $current_page;
         $_MIDCOM->context->prefix = $prefix;
         $_MIDCOM->context->host = $this->request_config->host;
+        $_MIDCOM->context->request_method = $this->request_method;
         
         // Append styles from context
         if ($this->request_config->style)

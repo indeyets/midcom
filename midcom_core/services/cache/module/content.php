@@ -26,6 +26,11 @@ class midcom_core_services_cache_module_content
 
     public function check($identifier)
     {
+        if ($_MIDCOM->context->request_method != 'GET')
+        {
+            return false;
+        }
+
         if (!$_MIDCOM->cache->exists('content_metadata', $identifier))
         {
             // Nothing in meta cache about the identifier

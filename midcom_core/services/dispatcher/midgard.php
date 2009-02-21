@@ -81,6 +81,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $_MIDCOM->context->prefix = $_MIDGARD['self'];
         $_MIDCOM->context->uri = $_MIDGARD['uri'];
         $_MIDCOM->context->component = $page->component;
+        $_MIDCOM->context->request_method = $this->request_method;
         
         $host = new midgard_host();
         $host->get_by_id($_MIDGARD['host']);
@@ -102,7 +103,8 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             return;
         }
 
-        $identifier_source = "URI={$_MIDCOM->context->uri}";
+        $identifier_source  = "URI={$_MIDCOM->context->uri}";
+        $identifier_source .= ";COMP={$_MIDCOM->context->component}";
         
         // TODO: Check language settings
         $identifier_source .= ';LANG=ALL';

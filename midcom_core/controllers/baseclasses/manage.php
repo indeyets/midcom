@@ -159,6 +159,9 @@ abstract class midcom_core_controllers_baseclasses_manage
         }
         catch (midcom_helper_datamanager_exception_datamanager $e)
         {
+            // FIXME: We can remove this once signals work again
+            $_MIDCOM->cache->invalidate(array($this->object->guid));
+
             // TODO: add uimessage of $e->getMessage();
             header('Location: ' . $this->get_url_show());
             exit();
@@ -192,6 +195,8 @@ abstract class midcom_core_controllers_baseclasses_manage
         if (isset($_POST['delete']))
         {
             $this->object->delete();
+            // FIXME: We can remove this once signals work again
+            $_MIDCOM->cache->invalidate($this->object->guid);
             header("Location: {$_MIDGARD['prefix']}/"); // TODO: This needs a better redirect
             exit();     
         }
