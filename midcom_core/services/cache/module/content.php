@@ -109,7 +109,28 @@ class midcom_core_services_cache_module_content
      */
     public function invalidate(array $tags)
     {
-        // TODO
+        $invalidate = array();
+        foreach ($tags as $tag)
+        {
+            $identifiers = $_MIDCOM->cache->get('content_tags', $tag);
+            if ($identifiers)
+            {
+                foreach ($identifiers as $identifier)
+                {
+                    if (!in_array($identifier, $invalidate))
+                    {
+                        $invalidate[] = $identifier;
+                    }
+                }
+            }
+        }
+
+        foreach ($invalidate as $identifier)
+        {
+            $_MIDCOM->cache->delete('content', $identifier);
+            $_MIDCOM->cache->delete('content_metadata', $identifier);
+            $_MIDCOM->cache->delete('content_tags', $identifier);
+        }
     }
 
     /**
