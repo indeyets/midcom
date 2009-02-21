@@ -6,7 +6,7 @@ services_uimessages: midcom_core_services_uimessages_midgard
 services_toolbars: midcom_core_services_toolbars_null
 services_authentication_cookie_cookiepath: /
 services_i18n: midcom_core_services_i18n_gettext
-services_cache: midcom_core_services_cache_sqlite
+services_cache: midcom_core_services_cache_midgard
 services_cache_configuration:
     expiry: 86400
     strategy: private

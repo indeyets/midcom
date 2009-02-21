@@ -23,7 +23,9 @@ class midcom_core_services_cache_midgard extends midcom_core_services_cache_base
     
     public function __construct()
     {
+        parent::__construct();
     }
+
     public function put($module, $identifier, $data)
     {
         $_MIDCOM->context->host->set_parameter("midcom_core_services_cache_midgard:{$module}", $identifier, $data);
@@ -49,7 +51,7 @@ class midcom_core_services_cache_midgard extends midcom_core_services_cache_base
     public function delete_all($module)
     {
         $args = array('domain' => "midcom_core_services_cache_midgard:{$module}");
-        $_MIDCOM->context->host->delete_parameters($args)
+        $_MIDCOM->context->host->delete_parameters($args);
     }    
 }
 ?>

@@ -21,6 +21,11 @@ class midcom_core_services_cache_module_template
     public function __construct(array $configuration)
     {
         $this->configuration = $configuration;
+        
+        if (!isset($configuration['directory']))
+        {
+            throw new Exception("Cache directory not configured");
+        }
 
         $this->cache_directory = str_replace('__MIDGARDCACHE__', $this->get_cache_directory(), $configuration['directory']);
         if (!file_exists($this->cache_directory))

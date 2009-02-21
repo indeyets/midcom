@@ -103,25 +103,20 @@ abstract class midcom_core_services_cache_base
             return;
         }
         
-        $interface_file = MIDCOM_ROOT . "/midcom_core/services/cache/module/{$module}.php";
-        if (!file_exists($interface_file))
+        $module_file = MIDCOM_ROOT . "/midcom_core/services/cache/module/{$module}.php";
+        if (!file_exists($module_file))
         {
             throw new Exception("Cache module {$module} not installed");
         }
-        
-        $module_implementation = $_MIDCOM->configuration->get("services_{$module}");
-        if (!$module_implementation)
-        {
-            throw new Exception("No implementation defined for cache module {$module}");
-        }
-        
+
+        $module_class = "midcom_core_services_cache_module_{$module}";
         $module_config = array();
         if (isset($this->configuration["module_{$module}"]))
         {
             $module_config = $this->configuration["module_{$module}"];
         }
-        
-        $this->modules[$module] = new $module_implementation($module_config);
+
+        $this->modules[$module] = new $module_class($module_config);
     }
 
     /**
