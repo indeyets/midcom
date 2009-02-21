@@ -9,7 +9,10 @@
 include MIDCOM_ROOT . "/midcom_core/services/cache.php";
 
 /**
- * SQLite cache backend.
+ * Midgard cache backend.
+ *
+ * This cache backend stores cached data to host's parameter
+ * Primary use for the backend is for testing and developing purposes
  *
  * @package midcom_core
  */
@@ -31,17 +34,22 @@ class midcom_core_services_cache_midgard extends midcom_core_services_cache_base
     }
     public function delete($module, $identifier)
     {
-        $args = array(  'domain' => "midcom_core_services_cache_midgard:{$module}"
+        $args = array(  'domain' => "midcom_core_services_cache_midgard:{$module}",
                         'name' => $identifier);
         $_MIDCOM->context->host->delete_parameters($args);        
     }
     public function exists($module, $identifier)
     {
-        if (is_null ($this->get($module, $identifies)))
+        if (is_null ($this->get($module, $identifier)))
         {
             return false;
         }
         return true;
+    }
+    public function delete_all($module)
+    {
+        $args = array('domain' => "midcom_core_services_cache_midgard:{$module}");
+        $_MIDCOM->context->host->delete_parameters($args)
     }    
 }
 ?>
