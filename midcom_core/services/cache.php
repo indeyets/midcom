@@ -100,9 +100,12 @@ abstract class midcom_core_services_cache_base
         $_MIDCOM->context->cache_strategy = $this->configuration['strategy'];
         $_MIDCOM->context->cache_enabled = $this->configuration['enabled'];
 
-        foreach ($_MIDGARD['schema']['types'] as $classname => $null)
+        if ($_MIDCOM->context->cache_enabled)
         {
-            $this->connect_to_signals($classname);
+            foreach ($_MIDGARD['schema']['types'] as $classname => $null)
+            {
+                $this->connect_to_signals($classname);
+            }
         }
     }
 

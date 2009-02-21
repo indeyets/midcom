@@ -20,6 +20,7 @@ class midcom_core_controllers_cache
     
     public function action_invalidate($route_id, &$data, $args)
     {
+        $_MIDCOM->authorization->require_user();
         $_MIDCOM->cache->invalidate_all();
         header('Location: ' . $_MIDCOM->dispatcher->generate_url('page_show', array()));
         exit();

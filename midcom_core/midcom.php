@@ -176,9 +176,12 @@ class midcom_core_midcom
 
         // Load the cache service and check for content cache
         $this->load_service('cache');
-        $this->dispatcher->generate_request_identifier();
-        $this->cache->register_object($this->context->page);
-        $this->cache->content->check($this->context->cache_request_identifier);
+        if ($_MIDCOM->context->cache_enabled)
+        {
+            $this->dispatcher->generate_request_identifier();
+            $this->cache->register_object($this->context->page);
+            $this->cache->content->check($this->context->cache_request_identifier);
+        }
 
         // Load component
         try
