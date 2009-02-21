@@ -470,8 +470,12 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             echo "</ul>\n";
         }
         
-        // Store the contents to content cache and display them
-        $_MIDCOM->cache->content->put($_MIDCOM->context->cache_request_identifier, ob_get_contents());
+        if ($_MIDCOM->context->cache_enabled)
+        {
+            // Store the contents to content cache and display them
+            $_MIDCOM->cache->content->put($_MIDCOM->context->cache_request_identifier, ob_get_contents());
+        }
+
         ob_end_flush();
 
         if ($_MIDCOM->configuration->enable_uimessages)

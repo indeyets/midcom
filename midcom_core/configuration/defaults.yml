@@ -10,6 +10,7 @@ services_cache: midcom_core_services_cache_midgard
 services_cache_configuration:
     expiry: 86400
     strategy: private
+    enabled: true
     module_template:
         directory: __MIDGARDCACHE__/midgard
 log_file: __MIDGARDLOG__/__SERVERNAME__.__LOGNAME__.log
@@ -133,6 +134,12 @@ routes:
 #        action: configure
 #        route: /__midcom/configure/{$component}/
 #        content_entry_point: midcom-configure-component
+    cache_invalidate:
+        controller: midcom_core_controllers_cache
+        action: invalidate
+        route: /__midcom/cache/invalidate
+        root_only: true
+        content_entry_point: midcom-invalidate-cache
     midcom_about:
         controller: midcom_core_controllers_about
         action: about

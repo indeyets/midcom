@@ -98,6 +98,7 @@ abstract class midcom_core_services_cache_base
         // Move these values to context so modules and components can manipulate them as needed
         $_MIDCOM->context->cache_expiry = $this->configuration['expiry'];
         $_MIDCOM->context->cache_strategy = $this->configuration['strategy'];
+        $_MIDCOM->context->cache_enabled = $this->configuration['enabled'];
 
         foreach ($_MIDGARD['schema']['types'] as $classname => $null)
         {
@@ -119,6 +120,11 @@ abstract class midcom_core_services_cache_base
 
     public function register_object($object, $params = null)
     {
+        if (!isset($_MIDCOM->context->cache_request_identifier))
+        {
+            return;
+        }
+
         // Register loaded objects to content cache
         $_MIDCOM->cache->content->register($_MIDCOM->context->cache_request_identifier, array($object->guid));
     }

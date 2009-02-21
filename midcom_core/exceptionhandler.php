@@ -58,6 +58,7 @@ class midcom_core_exceptionhandler
                 }
                 $_MIDCOM->context->set_item('midcom_core_exceptionhandler', $data);
                 $_MIDCOM->context->set_item('template_entry_point', 'midcom-show-error');
+                $_MIDCOM->context->set_item('cache_enabled', false);
                 
                 $_MIDCOM->templating->template();
                 $_MIDCOM->templating->display();

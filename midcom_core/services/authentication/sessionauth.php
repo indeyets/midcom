@@ -246,7 +246,8 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
     
     public function handle_exception(Exception $exception)
     {
-        if (isset($_POST['username']) && isset($_POST['password']))
+        if (   isset($_POST['username']) 
+            && isset($_POST['password']))
         {
             if ($this->login($_POST['username'], $_POST['password']))
             {
@@ -254,9 +255,11 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
             }
         }
         
-        if (is_null($this->user) || ! $this->user)
+        if (   is_null($this->user) 
+            || !$this->user)
         {
             $_MIDCOM->context->set_item('template_entry_point', 'midcom-login-form');
+            $_MIDCOM->context->set_item('cache_enabled', false);
             $_MIDCOM->templating->template();
             $_MIDCOM->templating->display();
             exit();
