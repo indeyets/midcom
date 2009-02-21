@@ -10,6 +10,8 @@ include MIDCOM_ROOT . "/midcom_core/services/cache.php";
 
 /**
  * SQLite cache backend.
+ * 
+ * Backend requires SQLite3 PECL package for PHP
  *
  * @package midcom_core
  */
@@ -20,151 +22,97 @@ class midcom_core_services_cache_sqlite extends midcom_core_services_cache_base 
     
     public function __construct()
     {
-        $this->_db = new SQLiteDatabase("{$_MIDCOM->configuration->cache_directory}/{$_MIDCOM->configuration->cache_name}.sqlite");
+        $this->_db = new SQLite3("{$_MIDCOM->configuration->cache_directory}/{$_MIDCOM->configuration->cache_name}.sqlite");
+        
         $this->_table = str_replace(array(
             '.', '-'
-        ), '_', $this->_name);
+        ), '_', $_MIDCOM->configuration->cache_name);
         
         // Check if we have a DB table corresponding to current cache name 
         $result = $this->_db->query("SELECT name FROM sqlite_master WHERE type='table' AND name='{$this->_table}'");
-        $tables = $result->fetchAll();
-        if (count($tables) == 0)
+        $tables = $result->fetchArray();
+        if (count($tables) == 0 || $tables == false)
         {
             /**
              * Creating table for data
              */
-            $this->_db->query("CREATE TABLE {$this->_table} (key VARCHAR(255), value TEXT);");
-            $this->_db->query("CREATE INDEX {$this->_table}_key ON {$this->_table} (key);");
+            $this->_db->query("CREATE TABLE {$this->_table} (module VARCHAR(255), identifier VARCHAR(255), value TEXT);");
+            $this->_db->query("CREATE INDEX {$this->_table}_identifier ON {$this->_table} (identifier);");
+            $this->_db->query("CREATE INDEX {$this->_table}_module ON {$this->_table} (module);");
             
             /**
              * Creating table for tags
              */
-            $this->_db->query("CREATE TABLE {$this->_table}_tags (key VARCHAR(255), tag VARCHAR(255));");
-            $this->_db->query("CREATE INDEX {$this->_table}_tags ON {$this->_table}_tags (key, tag);");
+            $this->_db->query("CREATE TABLE {$this->_table}_tags (identifier VARCHAR(255), tag VARCHAR(255));");
+            $this->_db->query("CREATE INDEX {$this->_table}_tags_i ON {$this->_table}_tags (identifier, tag);");
         }
     }
-    
-    public function get($key)
+
+    public function register($identifier, array $tags)
     {
-        $key = sqlite_escape_string($key);
-        $results = $this->_db->query("SELECT value FROM {$this->_table} WHERE key='{$key}'");
-        $results = $results->fetchAll();
-        if (count($results) == 0)
-        {
-            return false; // no hit
-        }
-        
-        return $results[0]['value'];
-    }
-    
-    public function get_by_tag($tags)
-    {
-        $constraint = '';
-        if (is_array($tags))
-        {
-            foreach ($tags as $tag)
-            {
-                $tag = sqlite_escape_string($tag);
-                $constraint .= "{$this->_table}_tags.tag='{$tag}' OR ";
-            }
-            $constraint = substr($constraint, 0, strlen($constraint) - 3);
-        }
-        else
-        {
-            $tags = sqlite_escape_string($tags);
-            $constraint = "{$this->_table}_tags.tag='{$tag}'";
-        }
-        // Making a query
-        $query = ("SELECT {$this->_table}.key AS key, {$this->_table}.value AS value FROM {$this->_table}
-        LEFT JOIN {$this->_table}_tags ON {$this->_table}_tags.key={$this->_table}.key
-        WHERE $constraint
-        ");
-        
-        $results = $this->_db->query($query);
-        $results = $results->fetchAll();
-        if (count($results) == 0)
-        {
-            return false; // no hit
-        }
-        
-        return $results;
-    }
-    
-    /** DEPRECATED
-    public function put($key, $data, $timeout = false, array $tags = null)
-    {
-        $key = sqlite_escape_string($key);
-        $data = sqlite_escape_string($data);
-        $this->_db->query("REPLACE INTO {$this->_table} (key, value) VALUES ('{$key}', '{$data}')");
-        if (! is_null($tags))
-        {
-            if (is_array($tags))
-            {
-                foreach ($tags as $tag)
-                {
-                    $tag = sqlite_escape_string($tag);
-                    $tag_id = $this->checktag($tag);
-                    $this->_db->query("REPLACE INTO {$this->_table}_tags (tag, key) VALUES ('{$tag}', '{$key}')");
-                }
-            }
-            else
-            {
-                $tags = sqlite_escape_string($tags);
-                $tag_id = $this->checktag($tags);
-                $this->_db->query("REPLACE INTO {$this->_table}_tags (tag, key) VALUES ('{$tag}', '{$key}')");
-            }
-        }
-    }*/
-    
-    public function register($key, array $tags)
-    {
-        $key = sqlite_escape_string($key);
-        $data = sqlite_escape_string($data);
+        $identifier = SQLite3::escapeString($identifier);
         foreach ($tags as $tag)
         {
-            $tag = sqlite_escape_string($tag);
-            $tag_id = $this->checktag($tag);
-            $this->_db->query("REPLACE INTO {$this->_table}_tags (tag, key) VALUES ('{$tag}', '{$key}')");
+            $tag = SQLite3::escapeString($tag);
+            $this->_db->query("REPLACE INTO {$this->_table}_tags (tag, identifier) VALUES ('{$tag}', '{$identifier}')");
         }
-    }
-    
-    public function invalidate_all()
-    {
-        $this->_db->query("DELETE FROM {$this->_table} WHERE 1");
-        $this->_db->query("DELETE FROM {$this->_table}_tags WHERE 1");
-    }
-    
-    public function remove($key)
-    {
-        $key = sqlite_escape_string($key);
-        $this->_db->query("DELETE FROM {$this->_table} WHERE key='{$key}'");
-        $this->_db->query("DELETE FROM {$this->_table}_tags WHERE key='{$key}'");
     }
     
     public function invalidate(array $tags)
     {
         foreach ($tags as $tag)
         {
-            $tag = sqlite_escape_string($tag);
-            $results = $this->_db->query("SELECT key FROM {$this->_table}_tags WHERE tag='{$tag}'");
-            $results = $results->fetchAll();
-            foreach ($results as $r)
+            $tag = SQLite3::escapeString($tag);
+            $results = $this->_db->query("SELECT identifier FROM {$this->_table}_tags WHERE tag='{$tag}'");
+            while ($row = $results->fetchArray())
             {
-                $this->_db->query("DELETE FROM {$this->_table} WHERE key='{$r['key']}");
-                $this->_db->query("DELETE FROM {$this->_table}_tags WHERE key='{$r['key']}'");
+                $this->_db->query("DELETE FROM {$this->_table} WHERE identifier='{$row[0]}'");
+                $this->_db->query("DELETE FROM {$this->_table}_tags WHERE identifier='{$row[0]}'");
+
             }
         }
     }
 
-    public function remove_all()
+    public function invalidate_all()
     {
         $this->_db->query("DELETE FROM {$this->_table} WHERE 1");
         $this->_db->query("DELETE FROM {$this->_table}_tags WHERE 1");
     }
     
-    public function exists($key)
+    public function put($module, $identifier, $data)
     {
-        if($this->get($key) == false)
+        $module = SQLite3::escapeString($module);
+        $identifier = SQLite3::escapeString($identifier);
+        $data = SQLite3::escapeString(serialize($data));
+        return $this->_db->query("REPLACE INTO {$this->_table} (module, identifier, value) VALUES ('{$module}', '{$identifier}', '{$data}')");
+    }
+    
+    public function get($module, $identifier)
+    {
+        $module = SQLite3::escapeString($module);
+        $identifier = SQLite3::escapeString($identifier);
+        $results = $this->_db->query("SELECT value FROM {$this->_table} WHERE module='{$module}' AND identifier='{$identifier}'");
+        $results = $results->fetchArray();
+        
+        if (count($results) == 0)
+        {
+            return false; // no hit
+        }
+        
+        return unserialize($results[0]);
+    }       
+    
+    public function delete($module, $identifier)
+    {
+        $key = SQLite3::escapeString($identifier);
+        $module = SQLite3::escapeString($module);
+        $this->_db->query("DELETE FROM {$this->_table} WHERE module='{$module}' AND identifier='{$identifier}'");
+        $this->_db->query("DELETE FROM {$this->_table}_tags WHERE identifier='{$identifier}'");
+    }
+    
+    public function exists($module, $identifier)
+    {
+        if( $this->get($module, $identifier) == false)
         {
             return false;
         }
