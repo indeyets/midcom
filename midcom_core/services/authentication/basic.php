@@ -45,6 +45,7 @@ class midcom_core_services_authentication_basic implements midcom_core_services_
         if (is_null($this->person))
         {
             $this->person = new midgard_person($this->user->guid);
+            $_MIDCOM->cache->register_object($this->person->guid);
         }
         
         return $this->person;

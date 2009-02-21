@@ -101,7 +101,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             // An injector has generated this already, let it be
             return;
         }
-        
+
         $identifier_source = "URI={$_MIDCOM->context->uri}";
         
         // TODO: Check language settings
