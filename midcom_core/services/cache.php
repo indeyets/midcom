@@ -98,6 +98,39 @@ abstract class midcom_core_services_cache_base
         // Move these values to context so modules and components can manipulate them as needed
         $_MIDCOM->context->cache_expiry = $this->configuration['expiry'];
         $_MIDCOM->context->cache_strategy = $this->configuration['strategy'];
+
+        foreach ($_MIDGARD['schema']['types'] as $classname => $null)
+        {
+            $this->connect_to_signals($classname);
+        }
+    }
+
+    private function connect_to_signals($class)
+    {
+        if (!isset($_MIDGARD['schema']['types'][$class]))
+        {
+            throw new Exception("{$class} is not an MgdSchema class");
+        }
+        // Subscribe to the "after the fact" signals
+        midgard_object_class::connect_default($class, 'action-loaded', array($this, 'register_object'), array($class));
+        midgard_object_class::connect_default($class, 'action-update', array($this, 'invalidate_object'), array($class));
+        midgard_object_class::connect_default($class, 'action-delete', array($this, 'invalidate_object'), array($class));
+    }
+
+    public function register_object($object, $params = null)
+    {
+        // Register loaded objects to content cache
+        $_MIDCOM->cache->content->register($_MIDCOM->context->cache_request_identifier, array($object->guid));
+    }
+
+    /**
+     * Invalidate a given object GUID from all caches
+     *
+     * This should be called when object has been updated or deleted for instance.
+     */
+    public function invalidate_object($object, $params = null)
+    {
+        $_MIDCOM->cache->invalidate(array($object->guid));
     }
 
     /**
