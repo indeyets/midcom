@@ -75,6 +75,15 @@ interface midcom_core_services_cache
      * @return boolean
      */
     public function exists($module, $identifier);
+
+    /**
+     * Remove all data from a module's cache
+     *
+     * This method is to be utilized by the cache modules.
+     *
+     * @param string $module Module name
+     */
+    public function delete_all($module);
 }
 
 abstract class midcom_core_services_cache_base

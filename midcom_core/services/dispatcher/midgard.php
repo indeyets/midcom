@@ -89,48 +89,45 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         // Append styles from context
         $_MIDCOM->templating->append_style($style_id);
         $_MIDCOM->templating->append_page($_MIDGARD['page']);
-        
-        // Populate page to toolbar
-        $this->populate_node_toolbar();
     }
-    
-    protected function populate_node_toolbar()
+
+    /**
+     * Generate a valid cache identifier for a context of the current request
+     */
+    public function generate_request_identifier()
     {
-        $_MIDCOM->toolbar->add_item
-        (
-            'node', 
-            'edit', 
-            array
-            (
-                'label' => 'edit page',            
-                'route_id' => 'page_edit',
-                'icon' => 'edit',
-            )
-        );
+        if (isset($_MIDCOM->context->cache_request_identifier))
+        {
+            // An injector has generated this already, let it be
+            return;
+        }
         
-        $_MIDCOM->toolbar->add_item
-        (
-            'node', 
-            'create', 
-            array
-            (
-                'label' => 'create subpage',
-                'route_id' => 'page_create',
-                'icon' => 'new-html',
-            )
-        );
+        $identifier_source = "URI={$_MIDCOM->context->uri}";
         
-        $_MIDCOM->toolbar->add_item
-        (
-            'node', 
-            'delete', 
-            array
-            (
-                'label' => 'delete page',
-                'route_id' => 'page_delete',
-                'icon' => 'trash',
-            )
-        );
+        // TODO: Check language settings
+        $identifier_source .= ';LANG=ALL';
+        
+        switch ($_MIDCOM->context->cache_strategy)
+        {
+            case 'public':
+                // Shared cache for everybody
+                $identifier_source .= ';USER=EVERYONE';
+                break;
+            default:
+                // Per-user cache
+                if ($_MIDCOM->authentication->is_user())
+                {
+                    $user = $_MIDCOM->authentication->get_person();
+                    $identifier_source .= ";USER={$user->username}";
+                }
+                else
+                {
+                    $identifier_source .= ';USER=ANONYMOUS';
+                }
+                break;
+        }
+
+        $_MIDCOM->context->cache_request_identifier = md5($identifier_source);
     }
 
     public function initialize($component)

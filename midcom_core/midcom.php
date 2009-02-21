@@ -98,7 +98,7 @@ class midcom_core_midcom
             throw new Exception("Service {$service} not installed");
         }
         
-        $service_implementation = $_MIDCOM->configuration->get("services_{$service}");
+        $service_implementation = $this->configuration->get("services_{$service}");
         if (!$service_implementation)
         {
             throw new Exception("No implementation defined for service {$service}");
@@ -157,7 +157,7 @@ class midcom_core_midcom
      * Process the current request, loading the page's component and dispatching the request to it
      */
     public function process()
-    {
+    {    
         if ($this->timer)
         {
             $this->timer->setMarker('MidCOM::process');
@@ -170,9 +170,14 @@ class midcom_core_midcom
         // Set up templating and environment        
         $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/templates');
         $this->dispatcher->populate_environment_data();
-        
+
         // Let injectors do their work
         $this->componentloader->inject_process();
+
+        // Load the cache service and check for content cache
+        $this->load_service('cache');
+        $this->dispatcher->generate_request_identifier();
+        $_MIDCOM->cache->content->check($_MIDCOM->context->cache_request_identifier);
 
         // Load component
         try
