@@ -77,7 +77,7 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
         }
 
         $_MIDCOM->context->component = $current_page->component;
-        $_MIDCOM->context->uri = '/' . implode($this->argv);
+        $_MIDCOM->context->uri = '/' . implode('/', $this->argv);
         $_MIDCOM->context->page = $current_page;
         $_MIDCOM->context->prefix = $prefix;
         $_MIDCOM->context->host = $this->request_config->host;

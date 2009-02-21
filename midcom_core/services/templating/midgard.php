@@ -40,6 +40,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             $cache_identifiers[$context] = "{$_MIDCOM->context->host->id}-{$_MIDCOM->context->page->id}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . 
                    "-{$_MIDCOM->context->template_entry_point}-{$_MIDCOM->context->content_entry_point}";
         }
+
         return $cache_identifiers[$context];
     }
 
@@ -59,7 +60,6 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     
     public function append_style($style_id)
     {
-        // FIXME: Register style to cache
         $stack = $_MIDCOM->context->get_current_context();
         if (!isset($this->stacks[$stack]))
         {
@@ -70,7 +70,13 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     
     public function append_page($page_id)
     {
-        // FIXME: Register page to cache
+        if ($page_id != $_MIDCOM->context->page->id)
+        {
+            // Register page to template cache        
+            $page = new midgard_page($page_id);
+            $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($page->guid));
+        }
+
         $stack = $_MIDCOM->context->get_current_context();
         if (!isset($this->stacks[$stack]))
         {
@@ -94,8 +100,11 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         
         foreach ($keys as $value => $array)
         {
-            // Register element to template cache
-            $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
+            if ($_MIDCOM->context->cache_enabled)
+            {
+                // Register element to template cache
+                $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
+            }
 
             return $value;
         }
@@ -134,8 +143,11 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 
                 foreach ($keys as $value => $array)
                 {
-                    // Register element to template cache
-                    $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
+                    if ($_MIDCOM->context->cache_enabled)
+                    {
+                        // Register element to template cache
+                        $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
+                    }
 
                     return $value;
                 }
@@ -331,7 +343,10 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     {
         // Let injectors do their work
         $_MIDCOM->componentloader->inject_template();
-        
+
+        // Register current page to cache
+        $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($_MIDCOM->context->page->guid));
+
         if ($_MIDCOM->cache->template->check($this->get_cache_identifier()))
         {
             return;

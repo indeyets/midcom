@@ -135,14 +135,14 @@ class midcom_core_services_cache_module_template
                 continue;
             }
 
-            if (is_dir("{$path}/{$entry}"))
+            if (is_dir("{$this->cache_directory}/{$entry}"))
             {
                 // Ignore subdirectories
                 continue;
             }
             
             // Just remove the template
-            unlink("{$path}/{$entry}");
+            unlink("{$this->cache_directory}/{$entry}");
         }
         $directory->close();
         
