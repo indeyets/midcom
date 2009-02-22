@@ -28,6 +28,11 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
 
     private function get_cache_identifier()
     {
+        if (!isset($_MIDCOM->context->page))
+        {
+            return "{$_MIDCOM->context->host->id}-{$_MIDCOM->context->component_name}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . 
+                "-{$_MIDCOM->context->route_id}-{$_MIDCOM->context->template_entry_point}-{$_MIDCOM->context->content_entry_point}";
+        }
         if (isset($_MIDCOM->context->route_id))
         {
             return "{$_MIDCOM->context->host->id}-{$_MIDCOM->context->page->id}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . 
@@ -338,8 +343,14 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         $_MIDCOM->componentloader->inject_template();
 
         // Register current page to cache
-        $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($_MIDCOM->context->page->guid));
-
+        if ( isset($_MIDCOM->context->page))
+        {
+            $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($_MIDCOM->context->page->guid));
+        }
+        else
+        {
+            $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($_MIDCOM->context->component_name));
+        }
         if ($_MIDCOM->cache->template->check($this->get_cache_identifier()))
         {
             return;
