@@ -57,7 +57,7 @@ class midcom_core_services_cache_module_content
         }
         
         // TODO: Send the headers the original page sent
-        
+
         // Serve the contents and exit
         echo $_MIDCOM->cache->get('content', $identifier);
         exit();

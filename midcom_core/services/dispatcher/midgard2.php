@@ -84,11 +84,11 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
         $_MIDCOM->context->request_method = $this->request_method;
         
         // Append styles from context
+        $_MIDCOM->context->style_id = 0;
         if ($this->request_config->style)
         {
-            $_MIDCOM->templating->append_style($this->request_config->style->id);
+            $_MIDCOM->context->style_id = $this->request_config->style->id;
         }
-        $_MIDCOM->templating->append_page($current_page->id);
     }
 }
 ?>

@@ -163,12 +163,6 @@ class midcom_core_midcom
             $this->timer->setMarker('MidCOM::process');
         }
         
-        // Load the preferred toolbar implementation
-        $services_toolbars_implementation = $this->configuration->get('services_toolbars');
-        $this->toolbar = new $services_toolbars_implementation($this->configuration->get('services_toolbars_configuration'));
-
-        // Set up templating and environment        
-        $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/templates');
         $this->dispatcher->populate_environment_data();
 
         // Let injectors do their work
@@ -182,6 +176,11 @@ class midcom_core_midcom
             $this->cache->register_object($this->context->page);
             $this->cache->content->check($this->context->cache_request_identifier);
         }
+
+        // Set up templating stack        
+        $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/templates');
+        $_MIDCOM->templating->append_style($this->context->style_id);
+        $_MIDCOM->templating->append_page($this->context->page->id);
 
         // Load component
         try
