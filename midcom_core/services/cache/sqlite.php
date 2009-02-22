@@ -22,16 +22,27 @@ class midcom_core_services_cache_sqlite extends midcom_core_services_cache_base 
     
     public function __construct()
     {
-        $this->_db = new SQLite3("{$_MIDCOM->configuration->cache_directory}/{$_MIDCOM->configuration->cache_name}.sqlite");
+        if (!extension_loaded('sqlite3'))
+        {
+            throw new Exception('SQLite cache configured but "sqlite3" PHP extension not installed.');
+        }
+
+        $this->_db = new SQLite3($this->get_cache_directory() . '/' . $this->get_cache_name() . '.sqlite');
         
-        $this->_table = str_replace(array(
-            '.', '-'
-        ), '_', $_MIDCOM->configuration->cache_name);
+        $this->_table = str_replace
+        (
+            array
+            (
+                '.', '-'
+            ), 
+            '_', $this->get_cache_name()
+        );
         
         // Check if we have a DB table corresponding to current cache name 
         $result = $this->_db->query("SELECT name FROM sqlite_master WHERE type='table' AND name='{$this->_table}'");
         $tables = $result->fetchArray();
-        if (count($tables) == 0 || $tables == false)
+        if (   count($tables) == 0 
+            || $tables == false)
         {
             /**
              * Creating table for data
@@ -46,51 +57,39 @@ class midcom_core_services_cache_sqlite extends midcom_core_services_cache_base 
             $this->_db->query("CREATE TABLE {$this->_table}_tags (identifier VARCHAR(255), tag VARCHAR(255));");
             $this->_db->query("CREATE INDEX {$this->_table}_tags_i ON {$this->_table}_tags (identifier, tag);");
         }
+        
+        parent::__construct();
     }
 
-    public function register($identifier, array $tags)
+    private function get_cache_directory()
     {
-        $identifier = SQLite3::escapeString($identifier);
-        foreach ($tags as $tag)
+        switch ($_MIDGARD['config']['prefix'])
         {
-            $tag = SQLite3::escapeString($tag);
-            $this->_db->query("REPLACE INTO {$this->_table}_tags (tag, identifier) VALUES ('{$tag}', '{$identifier}')");
-        }
-    }
-    
-    public function invalidate(array $tags)
-    {
-        foreach ($tags as $tag)
-        {
-            $tag = SQLite3::escapeString($tag);
-            $results = $this->_db->query("SELECT identifier FROM {$this->_table}_tags WHERE tag='{$tag}'");
-            while ($row = $results->fetchArray())
-            {
-                $this->_db->query("DELETE FROM {$this->_table} WHERE identifier='{$row[0]}'");
-                $this->_db->query("DELETE FROM {$this->_table}_tags WHERE identifier='{$row[0]}'");
-
-            }
+            case '/usr':
+            case '/usr/local':
+                return '/var/cache/midgard';
+            default:
+                return "{$_MIDGARD['config']['prefix']}/var/cache/midgard";
         }
     }
 
-    public function invalidate_all()
+    private function get_cache_name()
     {
-        $this->_db->query("DELETE FROM {$this->_table} WHERE 1");
-        $this->_db->query("DELETE FROM {$this->_table}_tags WHERE 1");
+        return $_MIDCOM->context->host->name;
     }
-    
+
     public function put($module, $identifier, $data)
     {
-        $module = SQLite3::escapeString($module);
-        $identifier = SQLite3::escapeString($identifier);
-        $data = SQLite3::escapeString(serialize($data));
+        $module = $this->_db->escapeString($module);
+        $identifier = $this->_db->escapeString($identifier);
+        $data = $this->_db->escapeString(serialize($data));
         return $this->_db->query("REPLACE INTO {$this->_table} (module, identifier, value) VALUES ('{$module}', '{$identifier}', '{$data}')");
     }
     
     public function get($module, $identifier)
     {
-        $module = SQLite3::escapeString($module);
-        $identifier = SQLite3::escapeString($identifier);
+        $module = $this->_db->escapeString($module);
+        $identifier = $this->_db->escapeString($identifier);
         $results = $this->_db->query("SELECT value FROM {$this->_table} WHERE module='{$module}' AND identifier='{$identifier}'");
         $results = $results->fetchArray();
         
@@ -104,8 +103,8 @@ class midcom_core_services_cache_sqlite extends midcom_core_services_cache_base 
     
     public function delete($module, $identifier)
     {
-        $key = SQLite3::escapeString($identifier);
-        $module = SQLite3::escapeString($module);
+        $key = $this->_db->escapeString($identifier);
+        $module = $this->_db->escapeString($module);
         $this->_db->query("DELETE FROM {$this->_table} WHERE module='{$module}' AND identifier='{$identifier}'");
         $this->_db->query("DELETE FROM {$this->_table}_tags WHERE identifier='{$identifier}'");
     }
@@ -119,6 +118,10 @@ class midcom_core_services_cache_sqlite extends midcom_core_services_cache_base 
         return true;
     }
     
-    
+    public function delete_all($module)
+    {
+        $this->_db->query("DELETE FROM {$this->_table} WHERE module='{$module}'");
+        $this->_db->query("DELETE FROM {$this->_table}_tags WHERE module='{$module}'");
+    }
 }
 ?>
