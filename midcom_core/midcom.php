@@ -34,16 +34,6 @@ class midcom_core_midcom
         
         $this->load_base_services();
         
-        // Show the world this is Midgard
-        $this->head->add_meta
-        (
-            array
-            (
-                'name' => 'generator',
-                'content' => "Midgard/" . mgd_version() . " MidCOM/{$this->componentloader->manifests['midcom_core']['version']} PHP/" . phpversion()
-            )
-        );
-        
         $this->context->create();
         
         date_default_timezone_set($this->configuration->get('default_timezone'));
@@ -64,10 +54,7 @@ class midcom_core_midcom
             require_once 'Benchmark/Timer.php';
             $this->timer = new Benchmark_Timer(true);
         }
-        
-        // Load the component loader
-        $this->componentloader = new midcom_core_component_loader();
-        
+
         // Load the context helper
         $this->context = new midcom_core_helpers_context();
 
@@ -162,10 +149,12 @@ class midcom_core_midcom
         {
             $this->timer->setMarker('MidCOM::process');
         }
-        
+
         $this->dispatcher->populate_environment_data();
 
+
         // Let injectors do their work
+        $this->componentloader = new midcom_core_component_loader();
         $this->componentloader->inject_process();
 
         // Load the cache service and check for content cache
@@ -176,6 +165,16 @@ class midcom_core_midcom
             $this->cache->register_object($this->context->page);
             $this->cache->content->check($this->context->cache_request_identifier);
         }
+
+        // Show the world this is Midgard
+        $this->head->add_meta
+        (
+            array
+            (
+                'name' => 'generator',
+                'content' => "Midgard/" . mgd_version() . " MidCOM/{$this->componentloader->manifests['midcom_core']['version']} PHP/" . phpversion()
+            )
+        );
 
         // Set up templating stack        
         $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/templates');

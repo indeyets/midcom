@@ -186,7 +186,7 @@ class midcom_core_component_loader
      *
      * @param string $manifest_file Path of the manifest file
      */
-    private function load_manifest($manifest_file)
+    private function load_manifest_file($manifest_file)
     {
         if (! file_exists($manifest_file))
         {
@@ -194,7 +194,7 @@ class midcom_core_component_loader
         }
         
         $manifest_yaml = file_get_contents($manifest_file);
-        
+
         if (!extension_loaded('syck'))
         {
             // Syck PHP extension is not loaded, include the pure-PHP implementation
@@ -205,7 +205,7 @@ class midcom_core_component_loader
         {
             $manifest = syck_load($manifest_yaml);
         }
-        
+
         // Normalize manifest
         if (!isset($manifest['version']))
         {
@@ -230,7 +230,20 @@ class midcom_core_component_loader
             {
                 $manifest['authors'][$username]['url'] = 'http://www.midgard-project.org';
             }
-            
+        }
+
+        $this->load_manifest($manifest);
+    }
+
+    /**
+     * Load component manifest data
+     *
+     * @param array $manifest Component manifest
+     */
+    private function load_manifest(array $manifest)
+    {
+        foreach ($manifest['authors'] as $username => $author)
+        {
             if (!isset($this->authors[$username]))
             {
                 $this->authors[$username] = $manifest['authors'][$username];
@@ -261,45 +274,40 @@ class midcom_core_component_loader
         exec('find ' . escapeshellarg(MIDCOM_ROOT) . ' -follow -type f -name ' . escapeshellarg('manifest.yml'), $manifests);
         foreach ($manifests as $manifest)
         {
-            if (strpos($manifest, 'scaffold') === false)
+            if (strpos($manifest, 'scaffold') === true)
             {
-                $this->load_manifest($manifest);                
+                continue;
             }
+            $this->load_manifest_file($manifest);                
         }
     }
 
     private function load_all_manifests()
     {
-        if (!extension_loaded('memcache'))
+        $cache_identifier= "{$_MIDGARD['sitegroup']}-{$_MIDGARD['host']}";
+        $manifests = $_MIDCOM->cache->get('manifest', $cache_identifier); // FIXME: Take account midgard configuration as it's possible
+        if (   !$manifests
+            || !is_array($manifests))
         {
-            $this->load_all_manifests_uncached();
+            // Load manifests and cache them
+            $manifest_files = array();
+            exec('find ' . escapeshellarg(MIDCOM_ROOT) . ' -follow -type f -name ' . escapeshellarg('manifest.yml'), $manifest_files);
+            foreach ($manifest_files as $manifest)
+            {
+                if (strpos($manifest, 'scaffold') === true)
+                {
+                    continue;
+                }
+                $this->load_manifest_file($manifest);
+            }
+            $_MIDCOM->cache->put('manifest', $cache_identifier, $this->manifests);
             return;
         }
 
-        // TODO: Refactor to utilize cache service infrastructure
-        $memcache = new Memcache();
-        if (!@$memcache->connect('localhost'))
-        {
-            // Couldn't connect
-            $this->load_all_manifests_uncached();
-            return;
-        }
-        
-        $prefix = "{$_MIDGARD['sitegroup']}-{$_MIDGARD['host']}"; // FIXME: Take account midgard configuration as it's possible
-
-        if (!$manifests = $memcache->get($prefix . 'manifests'))
-        {
-            exec('find ' . escapeshellarg(MIDCOM_ROOT) . ' -follow -type f -name ' . escapeshellarg('manifest.yml'), $manifests);
-            $memcache->set($prefix . 'manifests', $manifests, false, 600);
-        }
         foreach ($manifests as $manifest)
         {
-            if (strpos($manifest, 'scaffold') === false)
-            {
-                $this->load_manifest($manifest);                
-            }
+            $this->load_manifest($manifest);
         }
-        $memcache->close();
     }
 
     /**
