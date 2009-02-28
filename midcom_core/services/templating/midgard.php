@@ -154,10 +154,15 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
     
     private function get_element_directory($directory, $element)
     {
-        $path = "{$directory}/{$element}.php";
+        $path = "{$directory}/{$element}.xhtml";
         if (!file_exists($path))
         {
-            return null;
+            // Fallback, support .php files too
+            $path = "{$directory}/{$element}.php";
+            if (!file_exists($path))
+            {
+                return null;
+            }
         }
         return file_get_contents($path);
     }
