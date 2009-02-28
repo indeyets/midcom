@@ -470,23 +470,27 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
 
         echo $content;
         
-        if (   $_MIDCOM->timer
-            && $_MIDCOM->context->get_current_context() == 0
+        if (   $_MIDCOM->context->get_current_context() == 0
             && $_MIDCOM->context->mimetype == 'text/html')
         {
-            $_MIDCOM->timer->display();
-        }
-        
-        if ($_MIDCOM->configuration->get('enable_included_list'))
-        {
-            $included = get_included_files();
-            echo "<p>" . count($included) . " included files:</p>\n";
-            echo "<ul>\n";
-            foreach ($included as $filename)
+            // We're in main request, and output is HTML, so it is OK to inject some HTML to it
+
+            if ($_MIDCOM->timer)
             {
-                echo "<li>{$filename}</li>\n";
+                $_MIDCOM->timer->display();
             }
-            echo "</ul>\n";
+        
+            if ($_MIDCOM->configuration->get('enable_included_list'))
+            {
+                $included = get_included_files();
+                echo "<p>" . count($included) . " included files:</p>\n";
+                echo "<ul>\n";
+                foreach ($included as $filename)
+                {
+                    echo "<li>{$filename}</li>\n";
+                }
+                echo "</ul>\n";
+            }
         }
         
         if ($_MIDCOM->context->cache_enabled)
