@@ -71,8 +71,8 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
         <exclude name="net_nemein_notifications/*.php" />
         <exclude name="net_nemein_notifications/**/*.php" />
         
-        <exclude name="templates/*.php" />
-        <exclude name="**/templates/*.php" />
+        <exclude name="templates/*.xhtml" />
+        <exclude name="**/templates/*.xhtml" />
         
         <exclude name="tests/*.php" />
         <exclude name="**/tests/*.php" />
@@ -177,10 +177,10 @@ target_dir  = ${target_dir} // this is where pear packages are saved.
                     <expandproperties/>
                 </filterchain>
                 <fileset dir="${template_dir}/templates">
-                    <include name="xxx-show-index.php" />
+                    <include name="xxx-show-index.xhtml" />
                 </fileset>
             </copy>
-            <exec command="mv templates/xxx-show-index.php templates/${component_style_handle}-show-index.php"
+            <exec command="mv templates/xxx-show-index.xhtml templates/${component_style_handle}-show-index.xhtml"
                   dir="${component_dir}"
             />
             
