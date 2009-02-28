@@ -1,13 +1,5 @@
-<?php
-/**
- * The default HTML5 layout template for Midgard
- *
- * @todo convert to XHTML5 as soon as MidCOM 3 javascripts are compatible with it
- * @package midcom_core
- */
-?>
 <!DOCTYPE html>
-<html version="XHTML+RDFa 1.0">
+<html version="XHTML+RDFa 1.0" xmlns:tal="http://xml.zope.org/namespaces/tal">
     <head>
         <title tal:content="page/title">Midgard CMS</title>
         <span tal:replace="php: MIDCOM.head.print_elements()" />

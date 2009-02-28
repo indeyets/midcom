@@ -1,13 +1,5 @@
-<?php
-/**
- * HTML5 error page for MidCOM
- *
- * @todo convert to XHTML5 as soon as MidCOM 3 javascripts are compatible with it
- * @package midcom_core
- */
-?>
 <!DOCTYPE html>
-<html>
+<html version="XHTML+RDFa 1.0" xmlns:tal="http://xml.zope.org/namespaces/tal">
     <head>
         <title></title>
         <span tal:replace="php: MIDCOM.head.print_elements()" />
@@ -51,7 +43,7 @@
         </div>
         <footer>
              <a href="http://www.midgard-project.org/" rel="powered">Midgard CMS</a> power since 1999. 
-             <a href="http://blogs.nemein.com/people/piotras/view/what-really-happens-with-midgard.html" rel="humor">Perfect software</a>.
+             <a href="http://blogs.nemein.com/people/piotras/view/what-really-happens-with-midgard.html" rel="humor" about="http://www.midgard-project.org/">Perfect software</a>.
         </footer>
     </body>
 </html>
