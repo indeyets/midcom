@@ -59,12 +59,7 @@ class midcom_core_midcom
         $this->context = new midcom_core_helpers_context();
 
         // Load the head helper
-        $this->head = new midcom_core_helpers_head
-        (
-            $this->configuration->enable_jquery_framework,
-            $this->configuration->enable_js_midcom,
-            $this->configuration->js_midcom_config
-        );
+        $this->head = new midcom_core_helpers_head($this->configuration);
     }
     
     /**

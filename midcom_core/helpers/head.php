@@ -17,6 +17,7 @@ class midcom_core_helpers_head
     private $link_head = array();
     private $link_head_urls = array();
     private $meta_head = array();
+    private $configuration = null;
 
     private $js_head = array();
     
@@ -34,16 +35,17 @@ class midcom_core_helpers_head
     public $jquery_enabled = false;    
     public $jsmidcom_enabled = false;
     
-    public function __construct($enable_jquery = false, $enable_jsmidcom = false, $jsmidcom_config = null)
+    public function __construct(&$configuration)
     {
-        if ($enable_jquery)
+        $this->configuration = $configuration;
+        if ($this->configuration->enable_jquery_framework)
         {
             $this->enable_jquery();
         }
         
-        if ($enable_jsmidcom)
+        if ($this->configuration->enable_js_midcom)
         {
-            $this->enable_jsmidcom($jsmidcom_config);
+            $this->enable_jsmidcom($this->configuration->js_midcom_config);
         }
     }
     
@@ -54,8 +56,20 @@ class midcom_core_helpers_head
             return;
         }
         
-        $url = MIDCOM_STATIC_URL . "/midcom_core/jQuery/jquery-{$version}.js";
-        $this->jquery_inits = "<script type=\"text/javascript\" src=\"{$url}\"></script>\n";        
+        if ($this->configuration->jquery_load_from_google)
+        {
+            // Let Google host jQuery for us
+            $this->jquery_inits  = "<script src=\"http://www.google.com/jsapi\"></script>\n";
+            $this->jquery_inits .= "<script>\n";
+            $this->jquery_inits .= "    google.load('jquery', '{$version}');\n"; 
+            $this->jquery_inits .= "</script>\n";
+        }
+        else
+        {
+            // Load from a locally installed PEAR package
+            $url = MIDCOM_STATIC_URL . "/midcom_core/jQuery/jquery-{$version}.js";
+            $this->jquery_inits = "<script type=\"text/javascript\" src=\"{$url}\"></script>\n";
+        }
         
         $script = 'var $j = jQuery.noConflict();'."\n";
 
