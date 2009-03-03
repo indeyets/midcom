@@ -140,6 +140,11 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $this->component_name = $component;
         $_MIDCOM->context->component_name = $component;
         $_MIDCOM->context->component_instance = $_MIDCOM->componentloader->load($this->component_name, $_MIDCOM->context->page);
+        if ($component == 'midcom_core')
+        {
+            // MidCOM core templates are already appended
+            return;
+        }
         $_MIDCOM->templating->append_directory($_MIDCOM->componentloader->component_to_filepath($_MIDCOM->context->component_name) . '/templates');
     }
     
@@ -168,12 +173,8 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
      */
     public function dispatch()
     {
-        if ($_MIDCOM->timer)
-        {
-            $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch');
-        }
         $this->route_definitions = $this->get_routes();
-        
+   
         $route_id_map = array();
         foreach ($this->route_definitions as $route_id => $route_configuration)
         {
@@ -193,6 +194,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
                 'route_id' => $route_id
             );
         }
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch::routes_fetched');
+        }
 
         unset($route_configuration, $route_id);
         if (!$this->route_matches($route_id_map))
@@ -201,6 +206,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             throw new midcom_exception_notfound('No route matches current URL');
         }
         unset($route_id_map);
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch::routes_matched');
+        }
 
         $success_flag = true; // Flag to tell if route ran successfully
         foreach ($this->route_array as $route)
@@ -209,6 +218,11 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             {   
                 $success_flag = true; // before trying route it's marked success
                 $this->dispatch_route($route);
+
+                if ($_MIDCOM->timer)
+                {
+                    $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch::dispatched::' . $route);
+                }
             }
             catch (Exception $e)
             {
@@ -220,7 +234,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
                 break; // if we get here, controller run succesfully so bailing out from the loop
             }
         } // ending foreach
-        
+
         if (!$success_flag) 
         {
             // if foreach is over and success flag is false throwing exeption
@@ -277,12 +291,12 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             $webdav_server->serve($this->route_id, $action_method, $this->action_arguments[$this->route_id]);
             // This will exit
         }
-
-        $data = array();
         if ($_MIDCOM->timer)
         {
-            $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch::call action');
+            $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch_route::webdav_checked');
         }
+
+        $data = array();
 
         // Run the route and set appropriate data
         try
@@ -294,6 +308,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             // Read controller's returned data to context before carrying on with exception handling
             $this->data_to_context($selected_route_configuration, $data);
             throw $e;
+        }
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch_route::action_called');
         }
         
         $this->data_to_context($selected_route_configuration, $data);

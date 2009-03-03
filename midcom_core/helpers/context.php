@@ -67,7 +67,7 @@ class midcom_core_helpers_context
      * @param int $context_id ID of the current context
      * @return array Context data
      */
-    public function &get($context_id = null)
+    public function get($context_id = null)
     {
         if (is_null($context_id))
         {

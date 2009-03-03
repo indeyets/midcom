@@ -37,6 +37,11 @@ class midcom_core_midcom
         $this->context->create();
         
         date_default_timezone_set($this->configuration->get('default_timezone'));
+
+        if ($this->timer)
+        {
+            $this->timer->setMarker('MidCOM::initialized');
+        }
     }
     
     /**
@@ -140,17 +145,19 @@ class midcom_core_midcom
      */
     public function process()
     {    
+        $this->dispatcher->populate_environment_data();
         if ($this->timer)
         {
-            $this->timer->setMarker('MidCOM::process');
+            $this->timer->setMarker('MidCOM::process::env_populated');
         }
-
-        $this->dispatcher->populate_environment_data();
-
 
         // Let injectors do their work
         $this->componentloader = new midcom_core_component_loader();
         $this->componentloader->inject_process();
+        if ($this->timer)
+        {
+            $this->timer->setMarker('MidCOM::process::injected');
+        }
 
         // Load the cache service and check for content cache
         $this->load_service('cache');
@@ -159,6 +166,10 @@ class midcom_core_midcom
             $this->dispatcher->generate_request_identifier();
             $this->cache->register_object($this->context->page);
             $this->cache->content->check($this->context->cache_request_identifier);
+            if ($this->timer)
+            {
+                $this->timer->setMarker('MidCOM::process::cache_checked');
+            }
         }
 
         // Show the world this is Midgard
@@ -175,6 +186,10 @@ class midcom_core_midcom
         $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/templates');
         $_MIDCOM->templating->append_style($this->context->style_id);
         $_MIDCOM->templating->append_page($this->context->page->id);
+        if ($this->timer)
+        {
+            $this->timer->setMarker('MidCOM::process::template_stack_prepared');
+        }
 
         // Load component
         try
@@ -185,20 +200,27 @@ class midcom_core_midcom
         {
             return;
         }
-        
+        if (!$component)
+        {
+            $component = 'midcom_core';
+        }
+
         if ($this->configuration->enable_attachment_cache)
         {
             $classname = $this->configuration->attachment_handler;
             $handler = new $classname();
             $handler->connect_to_signals();
+            if ($this->timer)
+            {
+                $this->timer->setMarker('MidCOM::process::attachment_cache_enabled');
+            }
         }
-        
-        if (!$component)
-        {
-            $component = 'midcom_core';
-        }
-        
+
         $this->dispatcher->initialize($component);
+        if ($this->timer)
+        {
+            $this->timer->setMarker('MidCOM::process::dispatcher_initialized');
+        }
         
         try
         {
@@ -209,13 +231,12 @@ class midcom_core_midcom
             // Pass the exception to authentication handler
             $_MIDCOM->authentication->handle_exception($exception);
         }
-
-        header('Content-Type: ' . $this->context->mimetype);
-
         if ($this->timer)
         {
-            $this->timer->setMarker('MidCOM::process ended');
+            $this->timer->setMarker('MidCOM::process::dispatched');
         }
+
+        header('Content-Type: ' . $this->context->mimetype);
     }        
 }
 ?>

@@ -53,6 +53,11 @@ class midcom_core_component_loader
     
     public function load($component, $object = null)
     {
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM component loader::load::' . $component);
+        }
+
         if (! $this->can_load($component))
         {
             $this->tried_to_load[$component] = false;
@@ -91,18 +96,18 @@ class midcom_core_component_loader
         }
 
         // Load configuration for the component
+        $configuration = new midcom_core_services_configuration_yaml($component, $object);
         if ($_MIDCOM->timer)
         {
-            $_MIDCOM->timer->setMarker("MidCOM component loaded::load::configuration");
+            $_MIDCOM->timer->setMarker('MidCOM component loader::load::' . $component . '::configured');
         }
-        $configuration = new midcom_core_services_configuration_yaml($component, $object);
 
         // Load the interface class
+        $this->interfaces[$component] = new $component($configuration);
         if ($_MIDCOM->timer)
         {
-            $_MIDCOM->timer->setMarker("MidCOM component loaded::load::instantiate");
+            $_MIDCOM->timer->setMarker('MidCOM component loader::load::' . $component . '::instantiated');
         }
-        $this->interfaces[$component] = new $component($configuration);
         
         if ($_MIDCOM->head->jsmidcom_enabled)
         {
@@ -304,9 +309,19 @@ class midcom_core_component_loader
             return;
         }
 
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM component loader::load_all_manifests::prepared');
+        }
+
         foreach ($manifests as $manifest)
         {
             $this->load_manifest($manifest);
+        }
+
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM component loader::load_all_manifests::loaded');
         }
     }
 

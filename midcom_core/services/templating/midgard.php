@@ -98,11 +98,8 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         
         foreach ($keys as $value => $array)
         {
-            if ($_MIDCOM->context->cache_enabled)
-            {
-                // Register element to template cache
-                $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
-            }
+            // Register element to template cache
+            $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
 
             return $value;
         }
@@ -141,11 +138,8 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 
                 foreach ($keys as $value => $array)
                 {
-                    if ($_MIDCOM->context->cache_enabled)
-                    {
-                        // Register element to template cache
-                        $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
-                    }
+                    // Register element to template cache
+                    $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($mc->get_subkey($value, 'guid')));
 
                     return $value;
                 }
@@ -344,8 +338,17 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
      */    
     public function template($element_identifier = 'template_entry_point')
     {
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier);
+        }
+
         // Let injectors do their work
         $_MIDCOM->componentloader->inject_template();
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier . '::injected');
+        }
 
         // Register current page to cache
         if ( isset($_MIDCOM->context->page))
@@ -356,13 +359,32 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         {
             $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($_MIDCOM->context->component_name));
         }
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier . '::registered');
+        }
+
         if ($_MIDCOM->cache->template->check($this->get_cache_identifier()))
         {
             return;
         }
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier . '::cache_checked');
+        }
+        
+        $element = $this->get_element($_MIDCOM->context->$element_identifier);
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier . '::fetched');
+        }
         
         // Template cache didn't have this template, collect it
-        $_MIDCOM->cache->template->put($this->get_cache_identifier(), $this->get_element($_MIDCOM->context->$element_identifier));
+        $_MIDCOM->cache->template->put($this->get_cache_identifier(), $element);
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier . '::cached');
+        }
     }
     
     /**
@@ -372,11 +394,20 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
      */
     public function display()
     {
-        $data = $_MIDCOM->context->get();
+        $data =& $_MIDCOM->context->get();
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM::templating::display::context_fetched');
+        }
 
         ob_start();
-        include($_MIDCOM->cache->template->get($this->get_cache_identifier()));
+        $template_file = $_MIDCOM->cache->template->get($this->get_cache_identifier());
+        include($template_file);
         $content = ob_get_clean();
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM::templating::display::included');
+        }
 
         switch ($data['template_engine'])
         {
@@ -388,25 +419,17 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
 
                 // FIXME: Rethink whole tal modifiers concept 
                 include_once('TAL/modifiers.php');
-
                 if ($_MIDCOM->timer)
                 {
-                    $_MIDCOM->timer->setMarker('post-require');
+                    $_MIDCOM->timer->setMarker('MidCOM::templating::display::tal_included');
                 }
                 
                 $tal = new PHPTAL($this->get_cache_identifier());
-
-                $tal->show_toolbar = false;
-                if (   isset($_MIDCOM->toolbar)
-                    && $_MIDCOM->toolbar->can_view())
-                {
-                    $tal->show_toolbar = true;
-                }
-                
                 if ($_MIDCOM->timer)
                 {
-                    $_MIDCOM->timer->setMarker('post-set-show_toolbar');
-                }              
+                    $_MIDCOM->timer->setMarker('MidCOM::templating::display::tal_started');
+                }
+                
                 $tal->uimessages = false;
                 if ($_MIDCOM->configuration->enable_uimessages)
                 {
@@ -415,57 +438,38 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                     {
                         $tal->uimessages = $_MIDCOM->uimessages->render();
                     }
-                }
-
-                if ($_MIDCOM->timer)
-                {
-                    $_MIDCOM->timer->setMarker('post-set-show_uimessages');
-                }
-                
-                //TODO: Do something else here :)
-                $tal->navigation = false;
-
-                /*$tal->navigation = $_MIDCOM->navigation;
-                
-                if ($_MIDCOM->timer)
-                {
-                    $_MIDCOM->timer->setMarker('post-set-navigation');
-                }*/
-                
-                $tal->MIDCOM = $_MIDCOM;
-
-                if ($_MIDCOM->timer)
-                {
-                    $_MIDCOM->timer->setMarker('post-set-MIDCOM');
-                }
-
-                foreach ($data as $key => $value)
-                {
-                    $tal->$key = $value;
-                    
                     if ($_MIDCOM->timer)
                     {
-                        $_MIDCOM->timer->setMarker("post-set-{$key}");
+                        $_MIDCOM->timer->setMarker('MidCOM::templating::display::uimessages_shown');
                     }
                 }
 
+                $tal->MIDCOM = $_MIDCOM;
+                foreach ($data as $key => $value)
+                {
+                    $tal->$key = $value;
+                }
+
                 $tal->setSource($content);
-                
                 if ($_MIDCOM->timer)
                 {
-                    $_MIDCOM->timer->setMarker('post-source');
+                    $_MIDCOM->timer->setMarker('MidCOM::templating::display::source_set');
                 }
-                
+
                 $translator =& $_MIDCOM->i18n->set_translation_domain($_MIDCOM->context->component);
                 $tal->setTranslator($translator);  
-                          
-                $content = $tal->execute();
-                unset($tal);
-                
                 if ($_MIDCOM->timer)
                 {
-                    $_MIDCOM->timer->setMarker('post-execute');
+                    $_MIDCOM->timer->setMarker('MidCOM::templating::display::i18n');
                 }
+          
+                $content = $tal->execute();
+                unset($tal);
+                if ($_MIDCOM->timer)
+                {
+                    $_MIDCOM->timer->setMarker('MidCOM::templating::display::tal_executed');
+                }
+                
                 break;
             default:
                 break;
