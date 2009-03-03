@@ -273,20 +273,6 @@ class midcom_core_component_loader
         }
     }
 
-    private function load_all_manifests_uncached()
-    {
-        // Uncached manifest loading is very slow
-        exec('find ' . escapeshellarg(MIDCOM_ROOT) . ' -follow -type f -name ' . escapeshellarg('manifest.yml'), $manifests);
-        foreach ($manifests as $manifest)
-        {
-            if (strpos($manifest, 'scaffold') === true)
-            {
-                continue;
-            }
-            $this->load_manifest_file($manifest);                
-        }
-    }
-
     private function load_all_manifests()
     {
         $cache_identifier= "{$_MIDGARD['sitegroup']}-{$_MIDGARD['host']}";
@@ -306,6 +292,10 @@ class midcom_core_component_loader
                 $this->load_manifest_file($manifest);
             }
             $_MIDCOM->cache->put('manifest', $cache_identifier, $this->manifests);
+            if ($_MIDCOM->timer)
+            {
+                $_MIDCOM->timer->setMarker('MidCOM component loader::load_all_manifests::loaded_uncached');
+            }
             return;
         }
 
