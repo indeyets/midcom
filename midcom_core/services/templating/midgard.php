@@ -351,7 +351,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         }
 
         // Register current page to cache
-        if ( isset($_MIDCOM->context->page))
+        if (isset($_MIDCOM->context->page))
         {
             $_MIDCOM->cache->template->register($this->get_cache_identifier(), array($_MIDCOM->context->page->guid));
         }

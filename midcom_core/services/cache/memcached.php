@@ -19,6 +19,7 @@ class midcom_core_services_cache_memcached extends midcom_core_services_cache_ba
 {
     private $memcache;
     private $name;
+    private $memcache_operational = false;
     
     public function __construct()
     {
@@ -28,7 +29,7 @@ class midcom_core_services_cache_memcached extends midcom_core_services_cache_ba
         }
 
         $this->memcache = new Memcache();
-        $this->memcache->pconnect('localhost', 11211);
+        $this->memcache_operational = @$this->memcache->pconnect('localhost', 11211);
         
         $this->name = $_MIDCOM->context->host->name;
 
@@ -37,26 +38,46 @@ class midcom_core_services_cache_memcached extends midcom_core_services_cache_ba
 
     public function put($module, $identifier, $data)
     {
+        if (!$this->memcache_operational)
+        {
+            return;
+        }
         $this->memcache->set("{$this->name}-{$module}-{$identifier}", $data);
     }
     
     public function get($module, $identifier)
     {
+        if (!$this->memcache_operational)
+        {
+            return;
+        }
         return $this->memcache->get("{$this->name}-{$module}-{$identifier}");
     }       
     
     public function delete($module, $identifier)
     {
+        if (!$this->memcache_operational)
+        {
+            return;
+        }
         return $this->memcache->get("{$this->name}-{$module}-{$identifier}");
     }
     
     public function exists($module, $identifier)
     {
+        if (!$this->memcache_operational)
+        {
+            return;
+        }
         return ($this->get($module, $identifier) !== false);
     }
     
     public function delete_all($module)
     {
+        if (!$this->memcache_operational)
+        {
+            return;
+        }
         $this->memcache->flush();
     }
 }
