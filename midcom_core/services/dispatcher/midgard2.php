@@ -44,6 +44,8 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
             if (substr($argument, 0, 1) == '?')
             {
                 // FIXME: For some reason we get GET parameters into the argv string too, move them to get instead
+                // URI (and argv) is built using $_SERVER['REQUEST_URI'].
+                // Open a ticket for php-midgard if uri should be taken from other global variable
                 $gets = explode('&', substr($argument, 1));
                 foreach ($gets as $get_string)
                 {
@@ -69,8 +71,6 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
     {
         $_host = $this->request_config->get_host();
         $prefix = "{$_host->prefix}/";
-        //var_dump($this->request_config);
-        //var_dump($this->request_config->get_pages()); exit;
         foreach ($this->request_config->get_pages() as $page)
         {
             if ($page->id != $_host->root)
