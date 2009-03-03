@@ -24,10 +24,10 @@ Here is a simple example MdgSchema:
     <?xml version="1.0" encoding="UTF-8"?>
     <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
       <type name="net_nemein_news_article" table="net_nemein_news_article">
-        <property name="id" type="integer" primaryfield="id" />
-        <property name="name" type="string"/> 
+        <property name="id" type="unsigned integer" primaryfield="id" />
+        <property name="name" type="string" index="yes"/> 
         <property name="title" type="string" multilang="yes" table="net_nemein_news_article_i" />
-        <property name="content" type="longtext" multilang="yes" table="net_nemein_news_article_i" />
+        <property name="content" type="text" multilang="yes" table="net_nemein_news_article_i" />
       </type>    
     </Schema>
 
@@ -55,10 +55,10 @@ These steps are all you need to do to have new Midgard objects at your disposal.
     $reporter->create();
     
     // Now it has an UUID
-    echoÊ$reporter->guid;
+    echo $reporter->guid;
     
     // And it can be fetched from the database
-    $qb = midgard_person::new_query_builder();
+    $qb = new midgard_query_builder('midgard_person')
     print_r($qb->execute());
     // This would print an array of midgard_person objects containing "John Smith"
     
@@ -76,7 +76,7 @@ These steps are all you need to do to have new Midgard objects at your disposal.
     $article->parameter('namespace', 'key', 'value');
     
     // Localize the article to Finnish
-    mgd_set_lang('fi');
+    midgard_connection::set_lang('fi');
     $article->title = 'MidCOM on Šltsin magee';
     $article->update();
     
@@ -152,11 +152,11 @@ Midgard comes with [Asgard][18], an automated administrative interface which pro
     <?xml version="1.0" encoding="UTF-8"?>
     <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
       <type name="net_nemein_news_article" table="net_nemein_news_article" parent="midgard_topic">
-        <property name="id" type="integer" primaryfield="id" />    
-        <property name="name" type="string"/>
+        <property name="id" type="unsigned integer" primaryfield="id" />    
+        <property name="name" type="string" index="yes"/>
         <property name="title" type="string" multilang="yes" table="net_nemein_news_article_i" />
-        <property name="content" type="longtext" multilang="yes" table="net_nemein_news_article_i" />
-        <property name="topic" type="integer" link="midgard_topic:id" parentfield="topic"/>
+        <property name="content" type="text" multilang="yes" table="net_nemein_news_article_i" />
+        <property name="topic" type="unsigned integer" link="midgard_topic:id" parentfield="topic"/>
       </type>    
     </Schema>
 
