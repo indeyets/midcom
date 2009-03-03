@@ -31,14 +31,15 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
         }
         
         $this->request_config = $_MIDGARD_CONNECTION->get_request_config();
-        
-        if (   !$this->request_config
-            || empty($this->request_config->argv))
+       
+        $_argv = $this->request_config->get_argv();
+
+        if (!$this->request_config)
         {
             throw new midcom_exception_httperror('Midgard database connection not found.', 503);
         }
 
-        foreach ($this->request_config->argv as $argument)
+        foreach ($_argv as $argument)
         {
             if (substr($argument, 0, 1) == '?')
             {
@@ -66,10 +67,13 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
      */
     public function populate_environment_data()
     {
-        $prefix = "{$this->request_config->host->prefix}/";
-        foreach ($this->request_config->pages as $page)
+        $_host = $this->request_config->get_host();
+        $prefix = "{$_host->prefix}/";
+        //var_dump($this->request_config);
+        //var_dump($this->request_config->get_pages()); exit;
+        foreach ($this->request_config->get_pages() as $page)
         {
-            if ($page->id != $this->request_config->host->root)
+            if ($page->id != $_host->root)
             {
                 $prefix = "{$prefix}{$page->name}/";
             }
@@ -80,14 +84,15 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
         $_MIDCOM->context->uri = '/' . implode('/', $this->argv);
         $_MIDCOM->context->page = $current_page;
         $_MIDCOM->context->prefix = $prefix;
-        $_MIDCOM->context->host = $this->request_config->host;
+        $_MIDCOM->context->host = $_host;
         $_MIDCOM->context->request_method = $this->request_method;
         
         // Append styles from context
         $_MIDCOM->context->style_id = 0;
-        if ($this->request_config->style)
+        $_style = $this->request_config->get_style();
+        if ($_style)
         {
-            $_MIDCOM->context->style_id = $this->request_config->style->id;
+            $_MIDCOM->context->style_id = $_style->id;
         }
     }
 }
