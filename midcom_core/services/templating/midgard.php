@@ -38,7 +38,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             return "{$_MIDCOM->context->host->id}-{$_MIDCOM->context->page->id}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . 
                 "-{$_MIDCOM->context->route_id}-{$_MIDCOM->context->template_entry_point}-{$_MIDCOM->context->content_entry_point}";
         }
-        return $cache_identifiers[$context] = "{$_MIDCOM->context->host->id}-{$_MIDCOM->context->page->id}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . 
+        return "{$_MIDCOM->context->host->id}-{$_MIDCOM->context->page->id}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . 
             "-{$_MIDCOM->context->template_entry_point}-{$_MIDCOM->context->content_entry_point}";
     }
 
