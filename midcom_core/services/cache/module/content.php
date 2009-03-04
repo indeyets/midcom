@@ -103,6 +103,10 @@ class midcom_core_services_cache_module_content
             {
                 $identifiers = array();
             }
+            elseif (in_array($identifier, $identifiers))
+            {
+                continue;
+            }
             $identifiers[] = $identifier;
 
             $_MIDCOM->cache->put('content_tags', $tag, $identifiers);

@@ -79,13 +79,25 @@ class midcom_core_services_cache_module_template
         foreach ($tags as $tag)
         {
             $identifiers = $_MIDCOM->cache->get('template', $tag);
+            if ($_MIDCOM->timer)
+            {
+                $_MIDCOM->timer->setMarker('MidCOM::cache::template::get::' . $tag);
+            }
             if (!is_array($identifiers))
             {
                 $identifiers = array();
             }
+            elseif (in_array($identifier, $identifiers))
+            {
+                continue;
+            }
             $identifiers[] = $identifier;
 
             $_MIDCOM->cache->put('template', $tag, $identifiers);
+            if ($_MIDCOM->timer)
+            {
+                $_MIDCOM->timer->setMarker('MidCOM::cache::template::put::' . $tag);
+            }
         }
     }
 
