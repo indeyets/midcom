@@ -53,11 +53,6 @@ class midcom_core_component_loader
     
     public function load($component, $object = null)
     {
-        if ($_MIDCOM->timer)
-        {
-            $_MIDCOM->timer->setMarker('MidCOM component loader::load::' . $component);
-        }
-
         if (! $this->can_load($component))
         {
             $this->tried_to_load[$component] = false;
@@ -93,6 +88,10 @@ class midcom_core_component_loader
         if (! class_exists($component))
         {
             require($component_interface_file);
+        }
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM component loader::load::' . $component . '::paths_resolved');
         }
 
         // Load configuration for the component
