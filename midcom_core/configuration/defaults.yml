@@ -3,7 +3,6 @@ services_authorization: midcom_core_services_authorization_simple
 services_templating: midcom_core_services_templating_midgard
 services_sessioning: midcom_core_services_sessioning_midgard
 services_uimessages: midcom_core_services_uimessages_midgard
-services_toolbars: midcom_core_services_toolbars_null
 services_authentication_cookie_cookiepath: /
 services_i18n: midcom_core_services_i18n_gettext
 services_cache: midcom_core_services_cache_midgard
@@ -31,13 +30,6 @@ metadata_lock_timeout: 30
 schemadb: file:/midcom_core/configuration/schema.yml
 default_timezone: UTC
 default_language: en_US
-services_toolbars_configuration:
-    js:
-    logos:
-        midgard:
-            title: 'Midgard CMS'
-            url: 'http://midgard-project.com'
-            image: '/midcom_core/services/toolbars/midgard-logo.png'
 uimessages_configuration:
     js:
         enable_comet: 'false'

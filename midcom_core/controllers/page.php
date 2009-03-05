@@ -45,10 +45,6 @@ class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_m
         return $_MIDCOM->dispatcher->generate_url('page_edit', array());
     }
 
-    public function populate_toolbar()
-    {
-    }
-
     public function get_object_show($route_id, &$data, $args)
     {
         $this->load_object($args);

@@ -47,8 +47,6 @@ abstract class midcom_core_controllers_baseclasses_manage
      */    
     abstract public function get_url_edit();
     
-    abstract public function populate_toolbar();
-    
     public function load_datamanager(&$data, $schemadb)
     {
         // Load the object via Datamanager for configurability
@@ -93,9 +91,8 @@ abstract class midcom_core_controllers_baseclasses_manage
                 )
             );
         }
-     
-        $this->populate_toolbar();
     }
+
     // TODO: Refactor. There is code duplication with edit
     public function action_create($route_id, &$data, $args)
     { 
@@ -138,9 +135,6 @@ abstract class midcom_core_controllers_baseclasses_manage
                 'href'  => MIDCOM_STATIC_URL . '/midcom_helper_datamanager/simple.css',
             )
         );
-        
-        $this->populate_toolbar();
-        
     }
 
         
@@ -177,8 +171,6 @@ abstract class midcom_core_controllers_baseclasses_manage
                 'href'  => MIDCOM_STATIC_URL . '/midcom_helper_datamanager/simple.css',
             )
         );
-        
-        $this->populate_toolbar();
     }
         
     public function action_delete($route_id, &$data, $args)
@@ -211,8 +203,6 @@ abstract class midcom_core_controllers_baseclasses_manage
                 'href'  => MIDCOM_STATIC_URL . '/midcom_helper_datamanager/simple.css',
             )
         );
-        
-        $this->populate_toolbar();
     }
 }
 ?>

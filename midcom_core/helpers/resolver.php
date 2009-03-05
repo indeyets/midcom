@@ -149,45 +149,6 @@ class midcom_core_helpers_resolver
              
     }
     
-    protected function populate_node_toolbar()
-    {
-        $_MIDCOM->toolbar->add_item
-        (
-            'node', 
-            'edit', 
-            array
-            (
-                'label' => 'edit page',            
-                'route_id' => 'page_edit',
-                'icon' => 'edit',
-            )
-        );
-        
-        $_MIDCOM->toolbar->add_item
-        (
-            'node', 
-            'create', 
-            array
-            (
-                'label' => 'create subpage',
-                'route_id' => 'page_create',
-                'icon' => 'new-html',
-            )
-        );
-        
-        $_MIDCOM->toolbar->add_item
-        (
-            'node', 
-            'delete', 
-            array
-            (
-                'label' => 'delete page',
-                'route_id' => 'page_delete',
-                'icon' => 'trash',
-            )
-        );
-    }
-
     public function initialize($component)
     {
         $page_obj = new midgard_page();
