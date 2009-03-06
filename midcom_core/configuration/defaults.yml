@@ -17,6 +17,7 @@ log_level: warn
 enable_webdav: true
 enable_benchmark: false
 enable_included_list: false
+enable_template_php: false
 enable_jquery_framework: true
 jquery_load_from_google: true
 enable_js_midcom: false
