@@ -20,7 +20,6 @@ $_SERVER['SCRIPT_NAME'] = $_MIDCOM->context->prefix;
  */
 class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
 {
-    private $logger = null;
     private $controller = null;
     private $route_id = '';
     private $action_method = '';
@@ -29,7 +28,6 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
     
     public function __construct($controller)
     {
-        $this->logger = new midcom_core_helpers_log('webdav');
         $this->controller = $controller;
         parent::HTTP_WebDAV_Server();
     }
@@ -57,15 +55,15 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
             }
         }
 
-        $this->logger->log("\n\n=================================================", false);
-        $this->logger->log("Serving {$_SERVER['REQUEST_METHOD']} request for {$_SERVER['REQUEST_URI']}");
-        $this->logger->log("Controller: " . get_class($this->controller) . ", action: {$this->action_method}");
+        $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "\n\n=================================================");
+        $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Serving {$_SERVER['REQUEST_METHOD']} request for {$_SERVER['REQUEST_URI']}");
+        $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Controller: " . get_class($this->controller) . ", action: {$this->action_method}");
         
         header("X-Dav-Method: {$_SERVER['REQUEST_METHOD']}");
         
         // let the base class do all the work
         parent::ServeRequest();
-        $this->logger->log("Path was: {$this->path}");
+        $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Path was: {$this->path}");
         die();
     }
 
@@ -227,7 +225,7 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
         if (   $filename == '.DS_Store'
             || substr($filename, 0, 2) == '._')
         {
-            $this->logger->log("Raising 404 for {$filename} because of filename sanity rules");
+            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Raising 404 for {$filename} because of filename sanity rules");
             throw new midcom_exception_notfound("OS X DotFiles not allowed");
         }
     }
@@ -382,7 +380,7 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
         
         if (midcom_core_helpers_metadata::is_locked($object))
         {
-            $this->logger->log("Object is locked by another user");
+            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Object is locked by another user");
             return "423 Locked";
         }
 
@@ -417,11 +415,11 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
         
         if (midcom_core_helpers_metadata::is_locked($object ))
         {
-            $this->logger->log("Object is locked by another user {$object->metadata->locker}");
+            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Object is locked by another user {$object->metadata->locker}");
             return "423 Locked";
         }
 
-        $this->logger->log("Unlocking");
+        $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Unlocking");
         midcom_core_helpers_metadata::unlock($object);
 
         return "200 OK";
@@ -435,7 +433,7 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
      */
     function checkLock($path) 
     {
-        $this->logger->log("CHECKLOCK: {$path}");
+        $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "CHECKLOCK: {$path}");
         if (isset($this->locks[$path]))
         {
             return $this->locks[$path];
@@ -452,7 +450,7 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
             return $this->locks[$path];
         }
 
-        $this->logger->log("Resolving {$path} for locks");
+        $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Resolving {$path} for locks");
         $resolv = new midcom_core_helpers_resolver($path);
         try
         {
@@ -460,7 +458,7 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
         }
         catch (midgard_error_exception $e)
         {
-            $this->logger->log('Resolver got "' . $e->getMessage() . '"');
+            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, 'Resolver got "' . $e->getMessage() . '"');
         }
 
         if (!in_array('PROPFIND', $resolution['route']['allowed_methods']))
@@ -475,7 +473,7 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
 
         if (!method_exists($controller_class, $action_method))
         {
-            $this->logger->log("{$controller_class} doesn't support {$action_method}");
+            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "{$controller_class} doesn't support {$action_method}");
             $this->locks[$path] = false;
             return $this->locks[$path];
         }
@@ -488,7 +486,7 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
 
         if (!$object)
         {
-            $this->logger->log("No object from {$controller_class} {$action_method}");
+            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "No object from {$controller_class} {$action_method}");
             $this->locks[$path] = false;
             return $this->locks[$path];
         }
@@ -496,7 +494,7 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
 
         if (!midcom_core_helpers_metadata::is_locked($object, false))
         {
-            $this->logger->log("Not locked, locked = {$object->metadata->locked}, locker = {$object->metadata->locker}");
+            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Not locked, locked = {$object->metadata->locked}, locker = {$object->metadata->locker}");
             $this->locks[$path] = false;
             return $this->locks[$path];
         }
@@ -524,7 +522,7 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
             $lock['token'] = $lock_token;
         }
         
-        $this->logger->log(serialize($lock));
+        $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, serialize($lock));
 
         $this->locks[$path] = $lock;
         return $this->locks[$path];

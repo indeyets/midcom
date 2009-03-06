@@ -489,19 +489,24 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
 
             if ($_MIDCOM->timer)
             {
-                $_MIDCOM->timer->display();
+                $profiling = $_MIDCOM->timer->getProfiling();
+                $total_time = $_MIDCOM->timer->timeElapsed('Start', 'Stop');
+                foreach ($profiling as $marker)
+                {
+                    $percentage = number_format(($marker['diff'] * 100) / $total_time, 2, '.', '');
+                    $_MIDCOM->log('midcom::timer', "{$marker['name']}: {$marker['diff']}s ({$percentage} percent)", 'debug');
+                }
+                $_MIDCOM->log('MidCOM', "Execution time {$total_time}s", 'info');
             }
         
             if ($_MIDCOM->configuration->get('enable_included_list'))
             {
                 $included = get_included_files();
-                echo "<p>" . count($included) . " included files:</p>\n";
-                echo "<ul>\n";
+                $_MIDCOM->log('midcom_services_templating::display', count($included) . " included files", 'info');
                 foreach ($included as $filename)
                 {
-                    echo "<li>{$filename}</li>\n";
+                    $_MIDCOM->log('midcom_services_templating::display::included', $filename, 'debug');
                 }
-                echo "</ul>\n";
             }
         }
         

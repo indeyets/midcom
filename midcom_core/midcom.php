@@ -36,6 +36,8 @@ class midcom_core_midcom
         $this->context->create();
         
         date_default_timezone_set($this->configuration->get('default_timezone'));
+        
+        midgard_connection::set_loglevel($this->configuration->get('log_level'));
 
         if ($this->timer)
         {
@@ -94,6 +96,43 @@ class midcom_core_midcom
     }
     
     /**
+     * Logging interface
+     *
+     * @param string $prefix Prefix to file the log under
+     * @param string $message Message to be logged
+     * @param string $loglevel Logging level, may be one of debug, info, message and warning
+     */
+    public function log($prefix, $message, $loglevel = 'debug')
+    {
+        if (!extension_loaded('midgard2'))
+        {
+            // Temporary non-Midgard logger until midgard_error is backported to Ragnaroek
+            static $logger = null;
+            if (!$logger)
+            {
+                $logger = new midcom_core_helpers_log();
+            }
+            static $log_levels = array
+            (
+                'debug' => 4,
+                'info' => 3,
+                'message' => 2,
+                'warning' => 1,
+            );
+            
+            if ($log_levels[$loglevel] > $log_levels[$this->configuration->get('log_level')])
+            {
+                // Skip logging, too low level
+                return;
+            }
+            $logger->log("{$prefix}: {$message}");
+            return;
+        }
+        
+        midgard_error::$loglevel("{$prefix}: {$message}");
+    }
+    
+    /**
      * Magic getter for service loading
      */
     public function __get($key)
@@ -149,6 +188,7 @@ class midcom_core_midcom
         {
             $this->timer->setMarker('MidCOM::process::env_populated');
         }
+        $this->log('MidCOM', "Serving {$_MIDCOM->context->uri} at " . gmdate('r'), 'info');
 
         // Let injectors do their work
         $this->componentloader = new midcom_core_component_loader();

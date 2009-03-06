@@ -9,6 +9,7 @@
 /**
  * Log file writing helper for MidCOM 3
  *
+ * NOTE: This will be deprecated as soon as the midgard_error methods are backported to Ragnaroek.
  *
  * @package midcom_core
  */
