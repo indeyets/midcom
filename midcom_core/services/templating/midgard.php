@@ -350,6 +350,20 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier . '::injected');
         }
 
+        // Check if we have the element in cache already
+        if ($_MIDCOM->cache->template->check($this->get_cache_identifier()))
+        {
+            if ($_MIDCOM->timer)
+            {
+                $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier . '::cache_checked');
+            }
+            return;
+        }
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier . '::cache_checked');
+        }
+
         // Register current page to cache
         if (isset($_MIDCOM->context->page))
         {
@@ -362,15 +376,6 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         if ($_MIDCOM->timer)
         {
             $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier . '::registered');
-        }
-
-        if ($_MIDCOM->cache->template->check($this->get_cache_identifier()))
-        {
-            return;
-        }
-        if ($_MIDCOM->timer)
-        {
-            $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier . '::cache_checked');
         }
         
         $element = $this->get_element($_MIDCOM->context->$element_identifier);
