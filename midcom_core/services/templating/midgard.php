@@ -493,8 +493,12 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 $total_time = $_MIDCOM->timer->timeElapsed('Start', 'Stop');
                 foreach ($profiling as $marker)
                 {
+                    if ($marker['name'] == 'Start')
+                    {
+                        continue;
+                    }
                     $percentage = number_format(($marker['diff'] * 100) / $total_time, 2, '.', '');
-                    $_MIDCOM->log('midcom::timer', "{$marker['name']}: {$marker['diff']}s ({$percentage} percent)", 'debug');
+                    $_MIDCOM->log('midcom::timer', "{$percentage} percent ({$marker['diff']}s): {$marker['name']}", 'debug');
                 }
                 $_MIDCOM->log('MidCOM', "Execution time {$total_time}s", 'info');
             }
