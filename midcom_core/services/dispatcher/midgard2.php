@@ -31,14 +31,12 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
         }
         
         $this->request_config = $_MIDGARD_CONNECTION->get_request_config();
-       
-        $_argv = $this->request_config->get_argv();
-
         if (!$this->request_config)
         {
             throw new midcom_exception_httperror('Midgard database connection not found.', 503);
         }
 
+        $_argv = $this->request_config->get_argv();
         foreach ($_argv as $argument)
         {
             if (substr($argument, 0, 1) == '?')
