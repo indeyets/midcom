@@ -475,7 +475,10 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 break;
         }
 
-        ob_start();
+        if ($_MIDCOM->context->cache_enabled)
+        {
+            ob_start();
+        }
 
         echo $content;
         
@@ -506,9 +509,8 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         {
             // Store the contents to content cache and display them
             $_MIDCOM->cache->content->put($_MIDCOM->context->cache_request_identifier, ob_get_contents());
+            ob_end_flush();
         }
-
-        ob_end_flush();
 
         if ($_MIDCOM->configuration->enable_uimessages)
         {
