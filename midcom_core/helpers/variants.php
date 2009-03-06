@@ -27,6 +27,10 @@ class midcom_core_helpers_variants
             default:
                 throw new midcom_exception_httperror("{$request_method} not allowed", 405);
         }
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM variants::handled');
+        }
     }
     
     private function handle_get($variant)

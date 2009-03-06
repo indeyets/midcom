@@ -389,7 +389,12 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             throw new UnexpectedValueException("Missing arguments matching route '{$route_id}' of {$this->component_name}: " . implode(', ', $link_remaining_args));
         }
-        
+
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM dispatcher::URL generated::' . $route_id);
+        }
+    
         if ( !is_null($page))
         {
             $url = preg_replace('%/{2,}%', '/', $this->get_page_prefix() . $link);

@@ -77,7 +77,7 @@ abstract class midcom_core_controllers_baseclasses_manage
         $this->load_object($args);
         $this->load_datamanager($data, $this->configuration->get('schemadb'));
         $data['object'] =& $this->object;
-        
+
         if ($_MIDCOM->authorization->can_do('midgard:update', $data['object']))
         {
             $_MIDCOM->head->add_link_head

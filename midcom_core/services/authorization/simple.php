@@ -22,13 +22,9 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
      */
     public function __construct()
     {
-        // Note: Signals implementation is not reliable in earlier builds so we won't use it
-        if (version_compare(mgd_version(), '1.9.0alpha0+svn2008031408', '>='))
+        foreach ($_MIDGARD['schema']['types'] as $classname => $null)
         {
-            foreach ($_MIDGARD['schema']['types'] as $classname => $null)
-            {
-                $this->connect_to_signals($classname);
-            }
+            $this->connect_to_signals($classname);
         }
     }
     
@@ -42,6 +38,10 @@ class midcom_core_services_authorization_simple implements midcom_core_services_
         midgard_object_class::connect_default($class, 'action-create-hook', array($this, 'on_creating'), array($class));
         midgard_object_class::connect_default($class, 'action-update-hook', array($this, 'on_updating'), array($class));
         midgard_object_class::connect_default($class, 'action-delete-hook', array($this, 'on_deleting'), array($class));
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM authorization::signals_connected');
+        }
     }
 
     public function on_loading($object, $params)

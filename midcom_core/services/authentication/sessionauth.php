@@ -34,7 +34,11 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
             $sessionid = $this->session_cookie->get_session_id();
             $this->authenticate_session($sessionid);
         }
-    
+
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM authentication::session_read_and_authenticated');
+        }
     }
     
     public function login($username, $password)
@@ -91,9 +95,17 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         {
             // In Midgard2 we need current SG name for authentication
             $this->sitegroup = $_MIDGARD_CONNECTION->get_sitegroup();
+            if ($_MIDCOM->timer)
+            {
+                $_MIDCOM->timer->setMarker('MidCOM authentication::do_midgard_login::sitegroup_fetched');
+            }
         }
         
         $this->user = midgard_user::auth($username, $password, $this->sitegroup);
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM authentication::do_midgard_login::midgard_auth_called');
+        }
         
         if (! $this->user)
         {
@@ -185,26 +197,37 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         $qb = new midgard_query_builder('midcom_core_login_session_db');
         $qb->add_constraint('guid', '=', $sessionid);
         $res = $qb->execute();
-        if (! $res)
+        if (!$res)
         {
             return false;
         }
-        
         $session = $res[0];
-        
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM authentication::authenticate_session::session_queried');
+        }
+
         $username = $session->username;
         $password = $this->_unobfuscate_password($session->password);
-        
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM authentication::authenticate_session::password_obfuscated');
+        }
+   
         if (! $this->do_midgard_login($username, $password))
         {
             if (! $session->delete())
             {
                 // TODO: Throw exception
-            // TODO: Sessions must be purged time to time
+                // TODO: Sessions must be purged time to time
             }
             return false;
         }
-        
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM authentication::authenticate_session::session_authenticated');
+        }
+
         $this->current_session_id = $session->guid;
         return true;
     }

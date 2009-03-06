@@ -53,7 +53,12 @@ class midcom_core_services_authentication_cookie
         {
             $this->set_cookie();
         }
-        
+
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM authentication cookie::login_session_read');
+        }
+  
         return true;
     }
     
