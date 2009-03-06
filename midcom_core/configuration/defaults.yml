@@ -14,7 +14,7 @@ services_cache_configuration:
         directory: __MIDGARDCACHE__/midgard
 log_file: __MIDGARDLOG__/__SERVERNAME__.__LOGNAME__.log
 enable_webdav: true
-enable_benchmark: true
+enable_benchmark: false
 enable_included_list: false
 enable_jquery_framework: true
 jquery_load_from_google: true
