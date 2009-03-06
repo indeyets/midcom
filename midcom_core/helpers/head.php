@@ -59,23 +59,23 @@ class midcom_core_helpers_head
         if ($this->configuration->jquery_load_from_google)
         {
             // Let Google host jQuery for us
-            $this->jquery_inits  = "<script src=\"http://www.google.com/jsapi\"></script>\n";
-            $this->jquery_inits .= "<script>\n";
-            $this->jquery_inits .= "    google.load('jquery', '{$version}');\n"; 
-            $this->jquery_inits .= "</script>\n";
+            $this->jquery_inits  = "        <script src=\"http://www.google.com/jsapi\"></script>\n";
+            $this->jquery_inits .= "        <script>\n";
+            $this->jquery_inits .= "            google.load('jquery', '{$version}');\n"; 
+            $this->jquery_inits .= "        </script>\n";
         }
         else
         {
             // Load from a locally installed PEAR package
             $url = MIDCOM_STATIC_URL . "/midcom_core/jQuery/jquery-{$version}.js";
-            $this->jquery_inits = "<script type=\"text/javascript\" src=\"{$url}\"></script>\n";
+            $this->jquery_inits = "        <script type=\"text/javascript\" src=\"{$url}\"></script>\n";
         }
         
         $script = 'var $j = jQuery.noConflict();'."\n";
 
-        $this->jquery_inits .= "<script type=\"text/javascript\">\n";
-        $this->jquery_inits .= trim($script) . "\n";
-        $this->jquery_inits .= "</script>\n";
+        $this->jquery_inits .= "        <script type=\"text/javascript\">\n";
+        $this->jquery_inits .= "            " . trim($script) . "\n";
+        $this->jquery_inits .= "        </script>\n";
         
         $this->jquery_enabled = true;
     }
@@ -153,7 +153,7 @@ class midcom_core_helpers_head
         // like call. $url is inserted into src. Duplicates are omitted.
         if (! in_array($url, $this->js_head))
         {
-            $js_call = "<script type=\"text/javascript\" src=\"{$url}\"></script>\n";
+            $js_call = "        <script type=\"text/javascript\" src=\"{$url}\"></script>\n";
             if ($prepend)
             {
                 // Add the javascript include to the beginning, not the end of array
@@ -168,9 +168,9 @@ class midcom_core_helpers_head
     
     function add_script($script, $prepend = false, $type = 'text/javascript', $defer = '')
     {
-        $js_call = "<script type=\"{$type}\"{$defer}>\n";
-        $js_call .= trim($script) . "\n";
-        $js_call .= "</script>\n";
+        $js_call = "        <script type=\"{$type}\"{$defer}>\n";
+        $js_call .= "        " . trim($script) . "\n";
+        $js_call .= "        </script>\n";
         
         if ($prepend)
         {
@@ -209,7 +209,7 @@ class midcom_core_helpers_head
             return false;
         }
 
-        $output = '<meta';
+        $output = '        <meta';
         foreach ($attributes as $key => $val)
         {
             $output .= " {$key}=\"{$val}\" ";
@@ -258,10 +258,10 @@ class midcom_core_helpers_head
 
         if (array_key_exists('condition', $attributes))
         {
-            $output .= "<!--[if {$attributes['condition']}]>\n";
+            $output .= "        <!--[if {$attributes['condition']}]>\n";
         }
 
-        $output .= '<link';
+        $output .= '        <link';
         foreach ($attributes as $key => $val)
         {
             if ($key == 'condition')
@@ -274,7 +274,7 @@ class midcom_core_helpers_head
 
         if (array_key_exists('condition', $attributes))
         {
-            $output .= "<![endif]-->\n";
+            $output .= "        <![endif]-->\n";
         }
         
         if ($prepend)
