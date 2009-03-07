@@ -493,6 +493,20 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         {
             ob_start();
         }
+        
+        $filters = $_MIDCOM->configuration->get('output_filters');
+        if ($filters)
+        {
+            foreach ($filters as $component => $filter)
+            {
+                $instance = $_MIDCOM->componentloader->load($component);
+                if (!$instance)
+                {
+                    continue;
+                }
+                $content = $instance->$filter($content);
+            }
+        }
 
         echo $content;
         

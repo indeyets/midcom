@@ -1,0 +1,10 @@
+component: net_protoblogr_filters
+version: 0.0.1
+maintainers:
+    w_i:
+        name: Jerry Jalava
+        email: jerry.jalava@gmail.com
+        role: lead
+output_filters:
+    net_nemein_protoblogr:
+        tidy

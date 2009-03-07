@@ -35,6 +35,9 @@ default_language: en_US
 uimessages_configuration:
     js:
         enable_comet: 'false'
+output_filters:
+#    net_protoblogr_filters: 
+#        tidy
 routes:
     page_show:
         controller: midcom_core_controllers_page
