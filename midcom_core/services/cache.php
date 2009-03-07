@@ -181,6 +181,7 @@ abstract class midcom_core_services_cache_base
 
     public function register($identifier, array $tags)
     {
+        $this->prepare_modules();
         foreach ($this->modules as $module)
         {
             $module->register($identifier, $tags);
@@ -189,6 +190,7 @@ abstract class midcom_core_services_cache_base
 
     public function invalidate(array $tags)
     {
+        $this->prepare_modules();
         foreach ($this->modules as $module)
         {
             $module->invalidate($tags);
@@ -197,10 +199,20 @@ abstract class midcom_core_services_cache_base
 
     public function invalidate_all()
     {
+        $this->prepare_modules();
         foreach ($this->modules as $module)
         {
             $module->invalidate_all();
         }
+        // Manifest caching doesn't have a module of its own
+        $_MIDCOM->cache->delete_all('manifest');
+    }
+    
+    private function prepare_modules()
+    {
+        // Ensure all modules are loaded
+        $this->load_module('content');
+        $this->load_module('template');        
     }
 }
 ?>

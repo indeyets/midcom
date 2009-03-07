@@ -43,9 +43,7 @@ class midcom_core_services_cache_midgard extends midcom_core_services_cache_base
 
     public function delete($module, $identifier)
     {
-        $args = array(  'domain' => "midcom_core_services_cache_midgard:{$module}",
-                        'name' => $identifier);
-        $_MIDCOM->context->host->delete_parameters($args);        
+        $_MIDCOM->context->host->set_parameter("midcom_core_services_cache_midgard:{$module}", $identifier, '');
     }
 
     public function exists($module, $identifier)
