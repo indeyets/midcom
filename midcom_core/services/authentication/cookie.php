@@ -29,23 +29,23 @@ class midcom_core_services_authentication_cookie
     {
         $reset_cookie = false;
         if (   array_key_exists($this->_cookie_id, $_GET)
-             && !array_key_exists($this->_cookie_id, $_COOKIE))
+            && !array_key_exists($this->_cookie_id, $_COOKIE))
         {
             $reset_cookie = true;
         }
-        
-        if (! array_key_exists($this->_cookie_id, $_COOKIE))
+
+        if (!array_key_exists($this->_cookie_id, $_COOKIE))
         {
             return false;
         }
-        
+
         $data = explode('-', $_COOKIE[$this->_cookie_id]);
         if (count($data) != 2)
         {
             $this->delete_cookie();
             return false;
         }
-        
+    
         $this->session_id = $data[0];
         $this->user_id = $data[1];
         

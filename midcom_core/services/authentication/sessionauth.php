@@ -197,15 +197,16 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         $qb = new midgard_query_builder('midcom_core_login_session_db');
         $qb->add_constraint('guid', '=', $sessionid);
         $res = $qb->execute();
-        if (!$res)
-        {
-            return false;
-        }
-        $session = $res[0];
         if ($_MIDCOM->timer)
         {
             $_MIDCOM->timer->setMarker('MidCOM authentication::authenticate_session::session_queried');
         }
+        if (!$res)
+        {
+            $this->session_cookie->delete_login_session_cookie();
+            return false;
+        }
+        $session = $res[0];
 
         $username = $session->username;
         $password = $this->_unobfuscate_password($session->password);
@@ -221,6 +222,7 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
                 // TODO: Throw exception
                 // TODO: Sessions must be purged time to time
             }
+            $this->session_cookie->delete_login_session_cookie();
             return false;
         }
         if ($_MIDCOM->timer)
