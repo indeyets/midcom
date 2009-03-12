@@ -28,11 +28,6 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
 
     private function get_cache_identifier()
     {
-        if (!isset($_MIDCOM->context))
-        {
-            // MidCOM isn't running, generate simple identifier
-            return md5("{$_SERVER['HTTP_HOST']}-{$_SERVER['REQUEST_URI']}");
-        }
         if (!isset($_MIDCOM->context->page))
         {
             return "{$_MIDCOM->context->host->id}-{$_MIDCOM->context->component_name}-{$_MIDGARD['style']}-" . $_MIDCOM->context->get_current_context() . 
