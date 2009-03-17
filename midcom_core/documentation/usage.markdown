@@ -39,6 +39,12 @@ Usage with Midgard2
 Troubleshooting
 ---------------
 
+### Installing PHPTAL
+
+MidCOM3 requires TAL to be installed. To get it, run:
+
+    # pear install http://phptal.motion-twin.com/latest.tar.gz
+
 ### Installing Syck
 
 Syck depends on PHP 5.2, but works also on PHP 5.1 with a bit of hacking
@@ -55,3 +61,9 @@ Alternatively add `deb http://packages.dotdeb.org etch all` and `deb-src http://
 1. Install GIT with `# apt-get install git-core`
 2. Get the GIT repository `# git clone git://repo.or.cz/midcom.git`
 3. Point the `MidgardRootFile` of the Midgard Apache VirtualHost setup to MidCOM's `httpd/midcom-root.php`
+
+### Installing Phing and MidCOM statics
+
+    # pear channel-discover pear.phing.info
+    # pear install phing/phing
+    # phing linkstatics -Dstatic_dir=/usr/share/php/midcom/static
