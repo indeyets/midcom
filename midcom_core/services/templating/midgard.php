@@ -343,11 +343,14 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier);
         }
 
-        // Let injectors do their work
-        $_MIDCOM->componentloader->inject_template();
-        if ($_MIDCOM->timer)
+        if ($_MIDCOM->componentloader)
         {
-            $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier . '::injected');
+            // Let injectors do their work
+            $_MIDCOM->componentloader->inject_template();
+            if ($_MIDCOM->timer)
+            {
+                $_MIDCOM->timer->setMarker('MidCOM::templating::' . $element_identifier . '::injected');
+            }
         }
 
         // Check if we have the element in cache already
