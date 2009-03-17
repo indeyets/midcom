@@ -117,7 +117,7 @@ class midcom_core_midcom
                 'debug' => 4,
                 'info' => 3,
                 'message' => 2,
-                'warning' => 1,
+                'warn' => 1,
             );
             
             if ($log_levels[$loglevel] > $log_levels[$this->configuration->get('log_level')])
