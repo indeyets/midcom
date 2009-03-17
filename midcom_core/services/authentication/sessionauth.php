@@ -91,16 +91,12 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
      */
     private function do_midgard_login($username, $password)
     {
-        if (extension_loaded('midgard2'))
+        if (!$this->sitegroup)
         {
             // In Midgard2 we need current SG name for authentication
             $this->sitegroup = $_MIDGARD_CONNECTION->get_sitegroup();
-            if ($_MIDCOM->timer)
-            {
-                $_MIDCOM->timer->setMarker('MidCOM authentication::do_midgard_login::sitegroup_fetched');
-            }
         }
-        
+
         $this->user = midgard_user::auth($username, $password, $this->sitegroup);
         if ($_MIDCOM->timer)
         {
