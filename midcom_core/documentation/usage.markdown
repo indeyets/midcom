@@ -1,7 +1,7 @@
 Quick MidCOM 3 setup HOWTO
 ==========================
 
-1. Install Midgard 1.9 (Midgard 1.8 may work too)
+1. Install Midgard 8.09 Ragnaroek
 2. Create a new Midgard host with no MidCOM and a minimal style
 3. Ensure the MidCOM 3 checkout is in php.ini `include_path`
 4. Point the `MidgardRootFile` of the Midgard Apache VirtualHost setup to MidCOM's `httpd/midcom-root-midgard.php`
@@ -10,8 +10,8 @@ Quick MidCOM 3 setup HOWTO
 7. Then symlink that as `midcom-static` under your DocumentRoot 
 8. Start playing around
 
-Usage with Midgard 2
---------------------
+Usage with Midgard2
+-------------------
 
 * Install lighttpd
 * Install your PHP with cgi enabled
@@ -43,7 +43,7 @@ Troubleshooting
 
 Syck depends on PHP 5.2, but works also on PHP 5.1 with a bit of hacking
 
-    # apt-get install 
+    # apt-get install php5-syck
     
 Alternatively add `deb http://packages.dotdeb.org etch all` and `deb-src http://packages.dotdeb.org etch all` to `/etc/apt/sources.list` and run
 
@@ -55,5 +55,3 @@ Alternatively add `deb http://packages.dotdeb.org etch all` and `deb-src http://
 1. Install GIT with `# apt-get install git-core`
 2. Get the GIT repository `# git clone git://repo.or.cz/midcom.git`
 3. Point the `MidgardRootFile` of the Midgard Apache VirtualHost setup to MidCOM's `httpd/midcom-root.php`
-
-test
