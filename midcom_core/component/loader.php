@@ -284,7 +284,7 @@ class midcom_core_component_loader
             exec('find ' . escapeshellarg(MIDCOM_ROOT) . ' -follow -type f -name ' . escapeshellarg('manifest.yml'), $manifest_files);
             foreach ($manifest_files as $manifest)
             {
-                if (strpos($manifest, 'scaffold') === true)
+                if (strpos($manifest, 'scaffold') !== false)
                 {
                     continue;
                 }

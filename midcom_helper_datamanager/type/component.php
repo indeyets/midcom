@@ -91,12 +91,13 @@ class midcom_helper_datamanager_type_component extends midcom_helper_datamanager
             throw new midcom_helper_datamanager_exception_type('options is not an array');
         }
 
-        foreach( $_MIDCOM->componentloader->manifests as $key => $val)
+        foreach ($_MIDCOM->componentloader->manifests as $key => $val)
         {
-            if( !isset($val['library']))
+            if (!isset($val['library']))
             {
                 $this->options[$key] = "{$val['component']} {$val['version']}";
             }
+            ksort($this->options);
         }
 
         return true;
