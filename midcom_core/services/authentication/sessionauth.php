@@ -25,6 +25,8 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
     
     private $current_session_id = null;
     
+    private $trusted_auth = false;
+        
     public function __construct()
     {
         $this->session_cookie = new midcom_core_services_authentication_cookie();
@@ -51,6 +53,17 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         return $this->create_login_session($username, $password);
     }
     
+    public function trusted_login($username)
+    {
+        if ($this->session_cookie->read_login_session())
+        {
+            $sessionid = $this->session_cookie->get_session_id();
+            return $this->authenticate_session($sessionid);
+        }
+        $this->trusted_auth = true;
+        return $this->create_login_session($username, $password = '');
+    }    
+    
     public function is_user()
     {
         if (! $this->user)
@@ -73,7 +86,6 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
             $this->person = new midgard_person($this->user->guid);
             $_MIDCOM->cache->register_object($this->person->guid);
         }
-        
         return $this->person;
     }
     
@@ -91,13 +103,25 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
      */
     private function do_midgard_login($username, $password)
     {
-        if (!$this->sitegroup)
+        if (extension_loaded('midgard2'))
         {
             // In Midgard2 we need current SG name for authentication
             $this->sitegroup = $_MIDGARD_CONNECTION->get_sitegroup();
+            if ($_MIDCOM->timer)
+            {
+                $_MIDCOM->timer->setMarker('MidCOM authentication::do_midgard_login::sitegroup_fetched');
+            }
+        }
+        
+        $this->user = midgard_user::auth($username, $password, $this->sitegroup);
+
+        // Don't allow trusted auth for admin users 
+        if ($this->trusted_auth && !empty($this->user) && $this->user->is_admin())
+        {
+            // Re-check using password for admin users
+            $this->user = midgard_user::auth($username, $password, $this->sitegroup, false);
         }
 
-        $this->user = midgard_user::auth($username, $password, $this->sitegroup);
         if ($_MIDCOM->timer)
         {
             $_MIDCOM->timer->setMarker('MidCOM authentication::do_midgard_login::midgard_auth_called');
@@ -105,6 +129,7 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         
         if (! $this->user)
         {
+            $this->session_cookie->delete_login_session_cookie();          
             return false;
         }
         
@@ -121,6 +146,8 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
      */
     private function create_login_session($username, $password, $clientip = null)
     {
+        $_MIDCOM->authorization->enter_sudo('midcom_core');    
+    
         if (is_null($clientip))
         {
             $clientip = $_SERVER['REMOTE_ADDR'];
@@ -137,6 +164,7 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         $session->password = $this->_obfuscate_password($password);
         $session->clientip = $clientip;
         $session->timestamp = time();
+        $session->trusted = $this->trusted_auth; // for trusted authentication
         
         if (! $session->create())
         {
@@ -149,9 +177,11 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         );
         
         $this->current_session_id = $session->guid;
-        
+                
         $this->session_cookie->create_login_session_cookie($session->guid, $this->user->guid);
-        
+
+        $_MIDCOM->authorization->leave_sudo();         
+
         return $result;
     
     }
@@ -173,6 +203,7 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         }        
         $res[0]->delete();
         $res[0]->purge();
+        $this->session_cookie = new midcom_core_services_authentication_cookie();        
         return true;
     }
     
@@ -229,6 +260,14 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         $this->current_session_id = $session->guid;
         return true;
     }
+    
+    public function update_login_session($new_password)
+    {
+        $pw = $this->_obfuscate_password($new_password);
+        $session = new midcom_core_login_session_db($this->session_cookie->get_session_id());
+        $session->password = $pw;
+        $session->update();
+    }    
     
     /**
      * This function obfuscates a password in some way so that accidential
