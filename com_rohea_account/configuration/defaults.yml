@@ -1,0 +1,82 @@
+require_email_activation: false
+recapthca_is_enabled: true
+recaptcha_publickey: "6Le1WwUAAAAAABELq1MBFxhMR62N0g4O8CpuTeZ-"
+recaptcha_privatekey: "6Le1WwUAAAAAAObmJgqE-RdOt8SNkYezs8B9GsH4"
+schemadb_registration: file:/com_rohea_account/configuration/schema_registration.yml
+schemadb_settings: file:/com_rohea_account/configuration/schema_settings.yml
+schemadb_settings_email: file:/com_rohea_account/configuration/schema_email.yml
+facebook_enabled: false
+message_from: user@host.com
+routes:
+    index:
+        controller: com_rohea_account_controllers_index
+        action: index
+        route: /index/
+        content_entry_point: cra-index
+    index_login:
+        controller: com_rohea_account_controllers_index
+        action: login
+        route: /index/login/
+        content_entry_point: cra-index-login
+    index_info:
+        controller: com_rohea_account_controllers_index
+        action: info
+        route: /index/info/
+        content_entry_point: cra-index-info
+    admin:
+        controller: com_rohea_account_controllers_admin
+        action: admin
+        route: /admin/
+        content_entry_point: cra-admin
+    settings:
+        controller: com_rohea_account_controllers_settings
+        action: settings
+        route: /
+        content_entry_point: cra-settings
+    settings_password:
+        controller: com_rohea_account_controllers_settings
+        action: password
+        route: /password/
+        content_entry_point: cra-settings-password
+    settings_email:
+        controller: com_rohea_account_controllers_settings
+        action: email
+        route: /email/
+        content_entry_point: cra-settings-email
+    settings_information:
+        controller: com_rohea_account_controllers_settings
+        action: information
+        route: /information/
+        content_entry_point: cra-settings-information   
+    settings_userinformation:
+        controller: com_rohea_account_controllers_userinformation
+        action: userinfo
+        route: /userinfo/
+        content_entry_point: cra-settings-userinfo  
+    forgot_password:
+        controller: com_rohea_account_controllers_password
+        action: newpassword
+        route: /forgotpassword/
+        content_entry_point: cra-forgot-password
+    check_username:
+        controller: com_rohea_account_controllers_registration
+        action: checkusername
+        route: /registration/checkusername/
+    registration:
+        controller: com_rohea_account_controllers_registration
+        action: registration
+        route: /registration/
+        content_entry_point: cra-registration
+        allowed_methods:
+            - GET
+            - POST
+    registration_with_guid:
+        controller: com_rohea_account_controllers_registration
+        action: registration
+        route: /registration/{$guid}/
+        content_entry_point: cra-registration    
+    settings_overview:
+        controller: com_rohea_account_controllers_settings
+        action: overview
+        route: /overview/
+        content_entry_point: cra-settings-overview

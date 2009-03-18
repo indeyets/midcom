@@ -1,0 +1,25 @@
+  <tal:block tal:define="global fields com_rohea_account/form/widgets" />
+  <div class='settings_box'>
+    <span tal:replace="structure com_rohea_account/form/start_as_html" />
+      <h2 i18n:translate="">key: User info</h2>
+      <input type='hidden' name='account_action' value='information' />
+      <table>
+        <tr>
+          <td>
+            <p i18n:translate="">key: User description</p>
+          </td>
+          <td>
+            <p>
+            <textarea type='pass' name='description' cols='40' rows='5' value='' ></textarea>
+            </p>
+          </td>
+        </tr>
+      </table>
+      <p>
+        <button type='submit' 
+          class='button button_blue'>
+          <span i18n:translate="">key: Change</span>
+        </button> 
+      </p>
+    <span tal:replace="structure com_rohea_account/form/end_as_html" />
+  </div>

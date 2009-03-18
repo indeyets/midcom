@@ -1,0 +1,25 @@
+account_registration:
+    description: account_registration
+    fields:
+        username:
+            title: username
+            type: com_rohea_account_datamanager_type_username
+            widget: text
+            required: false
+        firstname:
+            title: firstname
+            widget: text
+            type: text
+        lastname:
+            title: lastname
+            widget: text
+            type: text
+        email:
+            title: email
+            type: text
+            widget: text
+            required: false
+        uilanguage:
+            type: text
+            widget: text
+            required: true

@@ -1,0 +1,181 @@
+<h1 i18n:translate="">key: Register your account</h1>
+
+
+<span tal:define="global fields com_rohea_account/registration_form/widgets" />
+
+<div id='com_rohea_account_registration'>
+    <form method="post" class="midcom_helper_datamanager" id='formSubmit'>
+      <table style='width: 400px;'>
+        <tr>
+          <td>
+            <p i18n:translate="">key: Username</p>            
+          </td>
+          <td>
+            <p><input id='reg_username' type='text' size='20' tal:attributes="name fields/username/get_input_name" value="${fields/username/raw}" /></p>
+            <p class='reg_status'> ${com_rohea_account/errors/username}</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p i18n:translate="">key: Firstname</p>            
+          </td>
+          <td>
+            <p><input id='reg_firstname' type='text' size='20' tal:attributes="name fields/firstname/get_input_name" value="${fields/firstname/raw}" /></p>
+            <p class='reg_status'></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p i18n:translate="">key: Surname</p>            
+          </td>
+          <td>
+            <p><input id='reg_lastname' type='text' size='20' tal:attributes="name fields/lastname/get_input_name" value="${fields/lastname/raw}" /></p>
+            <p class='reg_status'></p>
+          </td>
+        </tr>
+        <tr>
+          <td><p i18n:translate="">key: email_address</p></td>
+          <td>
+            <p><input id='email' type='text' size='30' tal:attributes="name fields/email/get_input_name" value="${fields/email/raw}" /></p>
+            <p class='reg_status'></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td><p i18n:translate="">key: User interface language</p></td>
+          <td>
+            <p>
+              <select id='dropdown_language' type='dropdown' tal:attributes="name fields/uilanguage/get_input_name">
+              <tal:block tal:define="global current_ui_language com_rohea_account/current_ui_language" />
+                <tal:block tal:repeat="lang com_rohea_account/translated_languages">
+                  <tal:block tal:condition="php:current_ui_language==lang.code">
+                   <option value="${lang/code}" selected="selected">
+                ${lang/native}
+                </option>
+                  </tal:block>
+                  <tal:block tal:condition="php:current_ui_language!=lang.code">
+                   <option value="${lang/code}">
+                ${lang/native}
+                </option>
+                  </tal:block>
+                </tal:block>
+              </select>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td><p i18n:translate="">key: Password</p></td>
+          <td>
+            <p>
+              <input id='pw' type='password' name='pw' size='20' />
+            </p>
+	    <p class='reg_status'></p>
+          </td>
+        </tr>
+        <tr>
+          <td><p i18n:translate="">key: Retype password</p></td>
+          <td>
+            <p>
+              <input id='pw2' type='password' name='pw2' size='20' />
+            </p>
+	    <p class='reg_status'></p>
+          </td>
+        </tr>       
+        <tr>
+          <td colspan='2'>
+            <button name="${com_rohea_account/registration_form/namespace}_save" type='submit' class='button button_blue'>
+              <span i18n:translate="">key: Register</span>
+            </button>          
+          </td>
+        </tr>
+      </table>
+	</form>
+
+
+<script type="text/javascript" src="/js/jquery.validate.pack.js"></script>
+  <script type='text/javascript'>
+  $(document).ready(function()
+  {
+
+ jQuery.validator.addMethod("alphanumeric", function(value, element) {
+	return this.optional(element) || /^[a-zA-Z0-9-]{3,12}$/i.test(value);
+}, "Letters, numbers or hyphens only please"); 
+
+  $("#formSubmit").validate({
+        rules: {
+            ${fields/username/get_input_name}: {            
+                required: true,
+                minlength: 3,
+                maxlength: 12,
+		alphanumeric: true,
+		remote: "/settings/registration/checkusername/"
+            },
+            pw: {
+                required: true,
+                minlength: 6
+            },
+            pw2: {
+                required: true,
+                minlength: 6,
+                equalTo: "#pw"
+            },
+	    ${fields/firstname/get_input_name}: {
+		required: true
+	    },
+	    ${fields/lastname/get_input_name}: {
+		required: true
+	    },
+//          ${fields/country/get_input_name}: "required",
+            ${fields/email/get_input_name}: {
+                required: true, 
+                email: true
+            }
+        },
+        messages: {
+           ${fields/username/get_input_name}: {
+                required: "<tal:block i18n:translate=''>key: username needed</tal:block>",
+                minlength: jQuery.format("<tal:block i18n:translate=''>key: at least</tal:block> {0} <tal:block i18n:translate=''>key: characters</tal:block>"),
+                maxlength: jQuery.format("<tal:block i18n:translate=''>key: max</tal:block> {0} <tal:block i18n:translate=''>key: characters</tal:block>"),
+		alphanumeric: "<tal:block i18n:translate=''>key: Username can contain</tal:block>",
+		remote: jQuery.format("{0} <tal:block i18n:translate=''>key: is already in use</tal:block>") 
+            },
+            pw: {
+                required: "<tal:block i18n:translate=''>key: Password</tal:block>",
+                minlength: jQuery.format("<tal:block i18n:translate=''>key: at least</tal:block> {0} <tal:block i18n:translate=''>key: characters</tal:block>")
+            },
+            pw2: {
+                required: "<tal:block i18n:translate=''>key: Retype new password</tal:block>",
+                minlength: jQuery.format("<tal:block i18n:translate=''>key: at least</tal:block> {0} <tal:block i18n:translate=''>key: characters</tal:block>"),
+                equalTo: "<tal:block i18n:translate=''>key: password fields are equal</tal:block>"
+            },
+            ${fields/firstname/get_input_name}: {
+                required: "<tal:block i18n:translate=''>key: Surname needed</tal:block>"
+            }, 
+            ${fields/lastname/get_input_name}: {
+                required: "<tal:block i18n:translate=''>key: Lastname needed</tal:block>"
+            }, 
+//          ${fields/country/get_input_name}: {
+//                required: "<tal:block i18n:translate=''>key: choose one</tal:block>"
+//          },
+            ${fields/email/get_input_name}: {
+		required: "<tal:block i18n:translate=''>key: email needed</tal:block>",
+                email: "<tal:block i18n:translate=''>key: incorrect email</tal:block>"
+            }
+        },
+        // Error message is appended to next element
+        errorPlacement: function(error, element) {
+                error.appendTo(element.parent().next());
+        },
+        // set this class to error-labels to indicate valid fields
+        success: function(label) {
+            // set   as text for IE
+            label.html(" ").addClass("checked");
+        }
+    });
+
+  });
+
+</script>
+
+
+</div>

@@ -1,0 +1,36 @@
+<div class='com_rohea_account'>
+  <h1 class='qaiku_page_title' i18n:translate=''>key: Login</h1>
+
+
+  <form method='post' name='midcom_services_auth_frontend_form' action='/__midcom/login'>
+	<div>
+      <span i18n:translate='' style='display:block; width:130px; float:left;'>key: Username</span> 
+	  <input type='text' name='username' style='width:140px;'/>
+ 	</div>
+
+	<div id='password'>
+      <span i18n:translate='' style='display:block; width:130px; float:left;'>key: Password</span> 
+	  <input type='password' name='password' style='width:140px;'/>
+	</div>	
+	<div>
+      <span i18n:translate='' style='display:block; width:130px; float:left;'>key: Remember login</span> 	  
+	  <input type='checkbox' name='remember_login' value='1' />
+	</div>
+	<div>
+       <button type='submit'
+               name='midcom_services_auth_frontend_form_submit'
+               id='midcom_services_auth_frontend_form_submit'
+               class='button button_small button_navi_green'>
+         <span i18n:translate=''>key: Sign in</span>
+       </button>
+	</div>
+  </form>
+</div>
+
+
+<tal:block tal:condition="com_rohea_account/facebook_enabled">
+  <tal:block tal:define="global fb_guid com_rohea_account/fb_page_instance_guid" />
+  <tal:block tal:replace="structure php:MIDCOM.templating.dynamic_load(fb_guid, 'login_instance', array())" />
+</tal:block>
+
+

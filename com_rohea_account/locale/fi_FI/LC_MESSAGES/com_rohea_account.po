@@ -1,0 +1,252 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+msgid "key: Close"
+msgstr "Sulje"
+
+msgid "key: Remember login"
+msgstr "Muista kirjautuminen"
+
+msgid "key: Settings of ${username}"
+msgstr "${username} tunnuksen asetukset"
+
+msgid "key: Logged in as ${username}"
+msgstr "Kirjautunut tunnuksella ${username}"
+
+msgid "key: Here you can modify your user settings" 
+msgstr "Voit muokata täällä käyttösetuksiasi."
+
+msgid "key: Username"
+msgstr "Tunnus"
+
+msgid "key: username_info"
+msgstr "Valitettavasti käyttäjätunnuksen vaihtaminen ei ole mahdollista."
+
+msgid "key: Delete"
+msgstr "Poista"
+
+msgid "key: Add"
+msgstr "Lisää"
+
+msgid "key: - Select -"
+msgstr "- Valitse -"
+
+msgid "key: User interface language"
+msgstr "Käyttöliittymän kieli"
+
+msgid "key: ui_language_info" 
+msgstr "Valitse käyttöliittymän kieli"
+
+msgid "key: Default writing language"
+msgstr "Pääasiallinen kirjoituskieli"
+
+msgid "key: Location"
+msgstr "Sijainti"
+
+msgid "key: Save"
+msgstr "Tallenna"
+
+msgid "key: location_info"
+msgstr "Valitse maa jossa asut"
+
+msgid "key: Password"
+msgstr "Salasana"
+
+msgid "key: Native language"
+msgstr "Kieli"
+
+msgid "key: New password"
+msgstr "Uusi salasana"
+
+msgid "key: Retype new password"
+msgstr "Kirjoita salasana uudelleen"
+
+msgid "key: Change"
+msgstr "Vaihda"
+
+msgid "key: email_address"
+msgstr "Sähköpostiosoite"
+
+msgid "key: Create account"
+msgstr "Luo tunnus"
+
+msgid "key: captcha info"
+msgstr "Viimeiseksi meidän täytyy varmistua että olet ihminen etkä ilkeä tietokonebotti. Kirjoitathan allaolevat kaksi sanaa annettuun tilaan."
+
+msgid "key: Register your account"
+msgstr "Rekisteröi tunnuksesi"
+
+msgid "key: Your location"
+msgstr "Sijaintisi"
+
+msgid "key: Username can contain"
+msgstr "Käyttäjätunnus voi sisältää vain kirjaimia (A-Z ja a-z), numeroita (0-9) ja tavuviivan (-). Huom! Valitettavasti skandinaaviset kirjaimet eivät kelpaa."
+
+msgid "key: Email lost password"
+msgstr "Sähköpostin avulla voimme lähettää sinulle tunnuksen ja salasanan, jos ne pääsevät unohtumaan."
+
+msgid "key: At least 6 characters"
+msgstr "Vähintään 6 merkkiä"
+
+msgid "key: Retype password"
+msgstr "Salasana uudelleen"
+
+msgid "key: Receive beta ending notification"
+msgstr "Vastaanota ilmoitus beta-testauksen päättymisestä"
+
+msgid "key: registration beta notification"
+msgstr "Palvelu beta-testausvaiheessa. Ymmärrämme, etteivät kaikki välitä käyttää palvelua, josta saattaa parhaista pyrkimyksistä huolimatta esiintyä pieniä hikotteluja aina silloin tällöin. Jos ruksit viereisen laatikon, lähetämme sinulle yhden sähköpostin kun palvelu poistuu testausvaiheesta"
+
+msgid "key: Register"
+msgstr "Rekisteröidy"
+
+msgid "key: incorrect email"
+msgstr "Kirjoita sähköpostiosoite oikein. Sähköpostin avulla voimme lähettää sinulle tunnuksen ja salasanan, jos ne pääsevät unohtumaan."
+
+msgid "key: choose one"
+msgstr "Valitse yksi"
+
+msgid "key: email needed"
+msgstr "Tarvitaan"
+
+msgid "key: username needed"
+msgstr "Valitse käyttäjätunnus"
+
+msgid "key: at least"
+msgstr "Vähintään"
+
+msgid "key: max"
+msgstr "Enintään"
+
+msgid "key: characters"
+msgstr "merkkiä"
+
+msgid "key: password fields are equal"
+msgstr "Salasanakenttien sisällön pitää olla sama"
+
+msgid "key: is already in use"
+msgstr "on jo käytössä"
+
+msgid "key: Order new password"
+msgstr "Tilaa uusi salasana"
+
+msgid "key: Order"
+msgstr "Tilaa"
+
+msgid "key: Error"
+msgstr "Virhe!"
+
+msgid "key: A user with given username and e-mail was not found."
+msgstr "Kyseisellä käyttäjätunnuksella ja sähköpostilla ei löydy yhtään käyttäjää."
+
+msgid "key: Success"
+msgstr "Onnistui!"
+
+msgid "key: User interface language changed"
+msgstr "Käyttöliittymän kieli vaihdettu."
+
+msgid "key: Primary language changed"
+msgstr "Oletuskieli vaihdettu."
+
+msgid "key: A new password has been sent to you."
+msgstr "Uusi salasana on lähetetty sähköpostilla."
+
+msgid "key: forgot password email subject"
+msgstr "Uusi salasana"
+
+msgid "key: new password mail"
+msgstr "Hei! Alta löydät uuden väliaikaisen salasanasi. Muista vaihtaa se sisään kirjautumisen jälkeen."
+
+msgid "key: new password mail regards"
+msgstr "Ystävällisin terveisin, ylläpito"
+
+msgid "key: Remember me"
+msgstr "Muista minut"
+
+msgid "key: Your password has been changed"
+msgstr "Salasanasi on vaihdettu"
+
+msgid "key: Login"
+msgstr "Tervetuloa, kirjaudu palveluun!"
+
+msgid "key: Sign in"
+msgstr "Kirjaudu"
+
+msgid "key: settings"
+msgstr "Yhteenveto"
+
+msgid "key: settings_email"
+msgstr "Vaihda sähköpostisoite"
+
+msgid "key: settings_avatar"
+msgstr "Vaihda käyttäjäkuva"
+ 
+msgid "key: settings_languages"
+msgstr "Kieliasetukset"
+
+msgid "key: settings_password"
+msgstr "Vaihda salasana"
+
+msgid "key: Old password"
+msgstr "Vanha salasana"
+
+msgid "key: Send"
+msgstr "Lähetä"
+
+msgid "key: Modify"
+msgstr "Muokkaa"
+
+msgid "key: Cancel"
+msgstr "Obs, peru"
+
+msgid "key: Choose"
+msgstr "Valitse"
+
+msgid "key: settings_overview"
+msgstr "Näkymävalinnat"
+
+msgid "key: Forgot password?"
+msgstr "Unohtuiko salasanasi?"
+
+msgid "key: Send feedback"
+msgstr "Lähetä meille palautetta!"
+
+msgid "key: Register now"
+msgstr "Rekisteröidy nyt!"
+
+msgid "key: login failed"
+msgstr "Kirjautuminen epäonnistui."
+
+msgid "key: login failed message"
+msgstr "Tarkista käyttäjätunnus ja salasanasi."
+
+msgid "key: Firstname"
+msgstr "Etunimi"
+
+msgid "key: Surname"
+msgstr "Sukunimi"
+
+msgid "key: E-mail address changed"
+msgstr "Sähköpostiosoite vaihdettu"
+
+msgid "key: Password has been changed"
+msgstr "Salasana vaihdettu"
+
+msgid "key: edit successfull"
+msgstr "Onnistui!"
+
+msgid "key: Failure"
+msgstr "Epäonnistui!" 
+ 
+msgid "key: Password change failed"
+msgstr "Salasanaa ei vaihdettu. Tarkista että kirjoitit vanhan salasanasi ja uuden salasanan kaksi kertaa oikein."
+
+msgid "key: Surname needed"
+msgstr "Kirjoita etunimesi"
+
+msgid "key: Lastname needed"
+msgstr "Kirjoita sukunimesi"
+

@@ -1,0 +1,24 @@
+<h1>Account Admin</h1>
+
+<h3>All users</h3>
+
+<style>
+p {
+margin: 0;
+}
+</style>
+
+<table>
+  <tr>
+    <td><p><strong>ID</strong></p></td>
+    <td><p><strong>Username</strong></p></td>
+    <td><p><strong>guid</strong></p></td>
+    <td><p><strong>del</strong></p></td>
+  </tr>
+  <tr tal:repeat="person com_rohea_account/registered_persons">
+    <td><p>${person/id}</p></td>
+    <td><p>${person/username}</p></td>
+    <td><p>${person/guid}</p></td>
+    <td><p>${person/metadata/deleted}</p></td>
+  </tr>
+</table>

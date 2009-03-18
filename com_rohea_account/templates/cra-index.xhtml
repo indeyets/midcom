@@ -1,0 +1,6 @@
+<tal:block tal:condition="not:com_rohea_account/logged_in">
+  <tal:block tal:replace="structure php:MIDCOM.templating.dynamic_load('com_rohea_account', 'index_login', array())" />
+</tal:block>
+<tal:block tal:condition="com_rohea_account/logged_in">
+  <tal:block tal:replace="structure php:MIDCOM.templating.dynamic_load('com_rohea_account', 'index_info', array())" />
+</tal:block>

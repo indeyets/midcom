@@ -1,0 +1,8 @@
+account_settings_email:
+    description: account_settings_email
+    fields:
+        email:
+            title: email
+            type: text
+            widget: text
+            required: false

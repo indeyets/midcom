@@ -1,0 +1,18 @@
+account_settings:
+    description: account_settings
+    fields:
+        username:
+            title: username
+            type: com_rohea_account_datamanager_type_username
+            widget: text
+            required: false
+        email:
+            title: email
+            type: text
+            widget: text
+            required: false
+        uilanguage:
+            title: uilanguage
+            type: text
+            widget: text
+            required: true
