@@ -29,6 +29,8 @@ class com_rohea_facebook_controllers_facebook
         }
         
         $data['api_key'] = trim($this->configuration->get("facebook_api_key"));
+        $data['facebook_receiver'] = trim($this->configuration->get("fb_receiver_file"));
+        
     }
 }
 ?>

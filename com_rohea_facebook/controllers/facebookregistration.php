@@ -79,7 +79,8 @@ class com_rohea_facebook_controllers_facebookregistration extends midcom_core_co
         $api_key = trim($this->configuration->get("facebook_api_key"));
         $secret_key = trim($this->configuration->get("facebook_secret_key"));
         
-        $data['api_key'] = $api_key; 
+        $data['api_key'] = $api_key;
+        $data['facebook_receiver'] = trim($this->configuration->get("fb_receiver_file"));        
         
         $fb = new com_rohea_facebook_accounts($api_key, $secret_key);
         $fbid = $fb->getfacebookuser();
