@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+  <type name="com_rohea_facebook_link" table="com_rohea_facebook_link">
+    <property name="id" type="int" primaryfield="id" />
+    <property name="facebookid" type="string" />
+    <property name="personguid" type="string" />
+  </type>
+</Schema>
+

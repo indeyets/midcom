@@ -1,0 +1,20 @@
+.com_rohea_facebook_hidden {
+  display: none;
+}
+.com_rohea_facebook_menuselected{
+    background-color: #2687D5;
+    border: solid 1px #7CAED3;
+    padding: 4px;
+}
+.com_rohea_facebook_menunotselected{
+    background-color: #fff;
+    border: solid 1px #7CAED3;
+    padding: 4px;
+}
+.com_rohea_facebook_padding {
+    width: 10px;
+}
+.com_rohea_facebook_regtop
+{
+    text-align: center;
+}

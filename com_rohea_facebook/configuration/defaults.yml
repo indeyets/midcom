@@ -1,0 +1,31 @@
+schemadb_simpleregistration: file:/com_rohea_facebook/configuration/schema_generic.yml
+facebook_api_key: abc
+facebook_secret_key: def
+redirect_url:
+    component: 
+    route_id:
+routes:
+    registration: 
+        controller: com_rohea_facebook_controllers_facebookregistration
+        action: registration
+        route: /
+        content_entry_point: crf-facebook-registration-newuser
+        template_entry_point: crf-facebook-registration-newuser
+    connect_to_existing_user: 
+        controller: com_rohea_facebook_controllers_facebookregistration
+        action: registration
+        route: /existinguser
+        content_entry_point: crf-facebook-registration-olduser
+        template_entry_point: crf-facebook-registration-olduser
+    login:
+        controller: com_rohea_facebook_controllers_facebook
+        action: login
+        route: /login/
+        content_entry_point: crf-show-login
+        template_entry_point: crf-show-login
+    login_instance:
+        controller: com_rohea_facebook_controllers_facebook
+        action: login
+        route: /fblogin/
+        content_entry_point: crf-show-logininstance
+        template_entry_point: crf-show-logininstance

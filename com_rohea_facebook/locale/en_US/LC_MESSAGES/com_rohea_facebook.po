@@ -1,0 +1,97 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "key: Do you use Facebook?"
+msgstr "Do you use Facebook?"
+
+msgid "key: Use Facebook to login for service:"
+msgstr "Use your Facebook account to login"
+
+msgid "key: We just need a little more info of you. This will be asked one time only."
+msgstr "We just need a little more info of you. This will be asked one time only."
+
+msgid "key: Login with your existing account to connect it to Facebook"
+msgstr "Login with your existing account to connect it to Facebook."
+
+msgid "key: Username"
+msgstr "Username"
+
+msgid "key: User interface language"
+msgstr "User interface language"
+
+msgid "key: Default writing language"
+msgstr "Default writing language"
+
+msgid "key: Password"
+msgstr "Password"
+
+msgid "key: Retype password"
+msgstr "Retype password"
+
+msgid "key: New user to service"
+msgstr "New user to the service"
+
+msgid "key: I've used this service before"
+msgstr "I've used this service before"
+
+msgid "key: Register your account"
+msgstr "Register your account"
+
+msgid "key: Welcome"
+msgstr "Welcome"
+
+msgid "key: Register now"
+msgstr "Register now"
+
+msgid "key: Forgot password?"
+msgstr "Forgot password?"
+
+msgid "key: What is Qaiku?"
+msgstr "What is Qaiku?"
+
+msgid "key: Invite Friends!"
+msgstr "Invite Friends!"
+
+msgid "key: Contiune registration"
+msgstr "Contiune registration"
+
+msgid "key: Contiune Registration"
+msgstr "Contiune registration"
+
+msgid "key: Logged in to Facebook"
+msgstr "Logged in to Facebook"
+
+msgid "key: Your location"
+msgstr "Your location"
+
+msgid "key: At least 6 characters"
+msgstr "At least 6 characters"
+
+msgid "key: username needed"
+msgstr "username needed"
+
+msgid "key: Username can contain"
+msgstr "Username can contain"
+
+msgid "key: characters"
+msgstr "characters"
+
+msgid "key: is already in use"
+msgstr "is already in use"
+
+msgid "key: at least"
+msgstr "at least"
+
+msgid "key: password fields are equal"
+msgstr "password fields have to be equal"
+
+msgid "key: choose one"
+msgstr "choose one"
+
+msgid "key: email needed"
+msgstr "email needed"
+
+msgid "key: incorrect email"
+msgstr "incorrect email address"

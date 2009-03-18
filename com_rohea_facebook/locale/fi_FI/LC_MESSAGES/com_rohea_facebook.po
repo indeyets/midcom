@@ -1,0 +1,98 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "key: Do you use Facebook?"
+msgstr "Käytätkö Facebookkia?"
+
+msgid "key: Use Facebook to login for service:"
+msgstr "Kirjaudu palveluun Facebook-tunnustesi avulla."
+
+msgid "key: We just need a little more info of you. This will be asked one time only."
+msgstr "Tarvitsemme hieman lisätietoa sinusta. Nämä tiedot kysytään vain kerran!"
+
+msgid "key: Login with your existing account to connect it to Facebook"
+msgstr "Kirjaudu sisään olemassa olevalla tunnuksellasi liittääksesi sen Facebookkiin"
+
+msgid "key: Username"
+msgstr "Käyttäjätunnus"
+
+msgid "key: User interface language"
+msgstr "Käyttöliittymäkieli"
+
+msgid "key: Default writing language"
+msgstr "Pääasiallinen kirjoituskieli"
+
+msgid "key: Password"
+msgstr "Salasana"
+
+msgid "key: Retype password"
+msgstr "Kirjoita salasana uudelleen"
+
+msgid "key: New user to service"
+msgstr "Uusi käyttäjä"
+
+msgid "key: I've used this service before"
+msgstr "Olen käyttänyt tätä palvelua aiemminkin"
+
+msgid "key: Register your account"
+msgstr "Rekisteröi tunnuksesi"
+
+msgid "key: Welcome"
+msgstr "Tervetuloa"
+
+msgid "key: Register now"
+msgstr "Rekisteröidy nyt!"
+
+msgid "key: Forgot password?"
+msgstr "Unohtuiko salasanasi?"
+
+msgid "key: What is Qaiku?"
+msgstr "Mikä on Qaiku?"
+
+msgid "key: Invite Friends!"
+msgstr "Kutsu kavereita!"
+
+msgid "key: Contiune registration"
+msgstr "Jatka rekisteröitymistä"
+
+msgid "key: Contiune Registration"
+msgstr "Jatka rekisteröitymistä"
+
+msgid "key: Logged in to Facebook"
+msgstr "Kirjaudu Facebookiin"
+
+msgid "key: Your location"
+msgstr "Sijaintisi"
+
+msgid "key: At least 6 characters"
+msgstr "Vähintään 6 merkkiä"
+
+msgid "key: username needed"
+msgstr "Valitse käyttäjätunnus"
+
+msgid "key: Username can contain"
+msgstr "Käyttäjätunnus voi sisältää:"
+
+msgid "key: characters"
+msgstr "merkkejä"
+
+msgid "key: is already in use"
+msgstr "on jo käytössä"
+
+msgid "key: at least"
+msgstr "vähintään"
+
+msgid "key: password fields are equal"
+msgstr "Salasanakenttien sisällön pitää olla sama"
+
+msgid "key: choose one"
+msgstr "Valitse yksi"
+
+msgid "key: email needed"
+msgstr "sähköpostiosoite tarvitaan"
+
+msgid "key: incorrect email"
+msgstr "Vääränmuotoinen sähköposti"
+
