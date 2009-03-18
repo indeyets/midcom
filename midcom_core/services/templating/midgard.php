@@ -195,17 +195,16 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         foreach ($reverse_stack as $identifier => $type)
         {
             $element_content = null;
-            
             switch ($type)
             {
                 case 'style':
-                    $element_content = $this->get_element_style($identifier, $element);
+                    $element_content = $this->get_element_style((int) substr($identifier, 3), $element);
                     break;
                 case 'page':
-                    $element_content = $this->get_element_page(substr($identifier, 3), $element);
+                    $element_content = $this->get_element_page((int) substr($identifier, 3), $element);
                     break;
                 case 'directory':
-                    $element_content = $this->get_element_directory(substr($identifier, 3), $element);
+                    $element_content = $this->get_element_directory($identifier, $element);
                     break;
             }
             
