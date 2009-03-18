@@ -72,9 +72,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $page->get_by_id($_MIDGARD['page']);
         
         // Style handling
-        if (!$page->style)
+        $style_id = $_MIDGARD['style'];        
+        if ($page->style)
         {
-            $style_id = $_MIDGARD['style'];
+            $style_id = $page->style;
         }
         
         $_MIDCOM->context->page = $page;
