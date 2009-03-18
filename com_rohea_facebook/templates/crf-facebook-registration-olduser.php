@@ -32,7 +32,7 @@
 </div>
 
 <script type="text/javascript">
-FB.init("${com_rohea_facebook/api_key}", "/static/com_rohea_facebook/xd_receiver.htm");   
+FB.init("${com_rohea_facebook/api_key}", "${com_rohea_facebook/facebook_receiver}");   
 
 </script>
 
