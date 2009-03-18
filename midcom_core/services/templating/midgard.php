@@ -63,7 +63,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         {
             $this->stacks[$stack] = array();
         }
-        $this->stacks[$stack][$style_id] = 'style'; 
+        $this->stacks[$stack]["st:{$style_id}"] = 'style'; 
     }
     
     public function append_page($page_id)
@@ -80,7 +80,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         {
             $this->stacks[$stack] = array();
         }
-        $this->stacks[$stack][$page_id] = 'page';
+        $this->stacks[$stack]["pg:{$page_id}"] = 'page';
     }
     
     private function get_element_style($style_id, $element)
@@ -202,10 +202,10 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                     $element_content = $this->get_element_style($identifier, $element);
                     break;
                 case 'page':
-                    $element_content = $this->get_element_page($identifier, $element);
+                    $element_content = $this->get_element_page(substr($identifier, 3), $element);
                     break;
                 case 'directory':
-                    $element_content = $this->get_element_directory($identifier, $element);
+                    $element_content = $this->get_element_directory(substr($identifier, 3), $element);
                     break;
             }
             
