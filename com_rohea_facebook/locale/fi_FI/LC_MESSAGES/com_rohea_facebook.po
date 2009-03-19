@@ -54,10 +54,7 @@ msgstr "Mikä on Qaiku?"
 msgid "key: Invite Friends!"
 msgstr "Kutsu kavereita!"
 
-msgid "key: Contiune registration"
-msgstr "Jatka rekisteröitymistä"
-
-msgid "key: Contiune Registration"
+msgid "key: Continue registration"
 msgstr "Jatka rekisteröitymistä"
 
 msgid "key: Logged in to Facebook"
