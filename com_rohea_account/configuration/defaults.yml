@@ -13,52 +13,52 @@ routes:
         controller: com_rohea_account_controllers_index
         action: index
         route: /index/
-        content_entry_point: cra-index
+        content_entry_point: cra-show-index
     index_login:
         controller: com_rohea_account_controllers_index
         action: login
         route: /index/login/
-        content_entry_point: cra-index-login
+        content_entry_point: cra-show-index-login
     index_info:
         controller: com_rohea_account_controllers_index
         action: info
         route: /index/info/
-        content_entry_point: cra-index-info
+        content_entry_point: cra-show-index-info
     admin:
         controller: com_rohea_account_controllers_admin
         action: admin
         route: /admin/
-        content_entry_point: cra-admin
+        content_entry_point: cra-show-admin
     settings:
         controller: com_rohea_account_controllers_settings
         action: settings
         route: /
-        content_entry_point: cra-settings
+        content_entry_point: cra-show-settings
     settings_password:
         controller: com_rohea_account_controllers_settings
         action: password
         route: /password/
-        content_entry_point: cra-settings-password
+        content_entry_point: cra-show-settings-password
     settings_email:
         controller: com_rohea_account_controllers_settings
         action: email
         route: /email/
-        content_entry_point: cra-settings-email
+        content_entry_point: cra-show-settings-email
     settings_information:
         controller: com_rohea_account_controllers_settings
         action: information
         route: /information/
-        content_entry_point: cra-settings-information   
+        content_entry_point: cra-show-settings-information   
     settings_userinformation:
         controller: com_rohea_account_controllers_settings
         action: userinfo
         route: /userinfo/
-        content_entry_point: cra-settings-userinfo  
+        content_entry_point: cra-show-settings-userinfo  
     forgot_password:
         controller: com_rohea_account_controllers_password
         action: newpassword
         route: /forgotpassword/
-        content_entry_point: cra-forgot-password
+        content_entry_point: cra-show-forgot-password
     check_username:
         controller: com_rohea_account_controllers_registration
         action: checkusername
@@ -67,7 +67,7 @@ routes:
         controller: com_rohea_account_controllers_registration
         action: registration
         route: /registration/
-        content_entry_point: cra-registration
+        content_entry_point: cra-show-registration
         allowed_methods:
             - GET
             - POST
@@ -75,9 +75,9 @@ routes:
         controller: com_rohea_account_controllers_registration
         action: registration
         route: /registration/{$guid}/
-        content_entry_point: cra-registration    
+        content_entry_point: cra-show-registration    
     settings_overview:
         controller: com_rohea_account_controllers_settings
         action: overview
         route: /overview/
-        content_entry_point: cra-settings-overview
+        content_entry_point: cra-show-settings-overview
