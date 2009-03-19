@@ -88,7 +88,7 @@ class com_rohea_facebook_controllers_facebookregistration extends midcom_core_co
         /*  If cannot find facebook login information, redirect to login page */
         if (empty($fbid))
         {
-            $redirect_url = $_MIDCOM->dispatcher->generate_url('login_instance', array());
+            $redirect_url = $_MIDCOM->dispatcher->generate_url('login_content', array());
             header("Location: " . $redirect_url);
             exit();
         }
@@ -164,34 +164,19 @@ class com_rohea_facebook_controllers_facebookregistration extends midcom_core_co
             }
             catch(midcom_helper_datamanager_exception_save $e)
             {
-               
-                // napataan selkokielinen salasana ja tunnus
+                // We'll have to catch the password this way. There's some issues with datamanager
                 $password = $_POST['pw'];
-               
-                // Tallennetaan salasana selkokielisenä, kirjaudutaan sillä
-                // ja kutsutaan sitten 1.9:n coren cryptausta
-                //var_dump($this->object);    
-                $this->object->password = '**'.$password;
-                //print_r($this->object);
-                if (is_null($this->object->guid))
-                {
-                    $this->object->create();
-                }
-                else
-                {
-                    $this->object->update();
-                }
+
+                // Doing trusted login with newly created user (we do not have password yet)                        
+                $_MIDCOM->authentication->trusted_login($this->object->username);
                 
-                $_MIDCOM->authentication->login($this->object->username, $password);
+                // After login setting password for the newly generated user via API
                 $user = $_MIDCOM->authentication->get_user();
-                           
                 $user->password($this->object->username, $password);
+                
+                // Password is now set, logging in with it
                 $_MIDCOM->authentication->login($this->object->username, $password);
-                
                 $username = $this->object->username;
-                $_MIDCOM->authorization->enter_sudo('com_rohea_facebook');
-                
-                $_MIDCOM->authorization->leave_sudo();
                 
                 /*  Link facebook id and midgard userid    */
                 $fb->addfacebooklink($fbid, $user->guid);        
