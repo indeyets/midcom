@@ -1,7 +1,7 @@
 schemadb_simpleregistration: file:/com_rohea_facebook/configuration/schema_generic.yml
-fb_receiver_file: /midcom-static/com_rohea_facebook/xd_receiver.htm
-facebook_api_key: abc
-facebook_secret_key: def
+facebook_api_key: 197ce8ed7cce5a6e1fcae530bcb59b58
+facebook_secret_key: 51197256ae9cbec74802782560f1b07b
+fb_receiver_file: /static/com_rohea_facebook/xd_receiver.htm
 redirect_url:
     component: 
     route_id:
@@ -21,7 +21,7 @@ routes:
     login:
         controller: com_rohea_facebook_controllers_facebook
         action: login
-        route: /login/
+        route: /login_dynamicload/
         content_entry_point: crf-show-login
         template_entry_point: crf-show-login
     login_instance:
@@ -30,3 +30,8 @@ routes:
         route: /fblogin/
         content_entry_point: crf-show-logininstance
         template_entry_point: crf-show-logininstance
+    login_content:
+        controller: com_rohea_facebook_controllers_facebook
+        action: login
+        route: /login/
+        content_entry_point: crf-show-logininstance

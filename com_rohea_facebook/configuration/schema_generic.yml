@@ -13,4 +13,9 @@ account_registration:
             storage:
                 location: null
             type_config:
-                validate_password: com_rohea_account_passwordhelper     
+                validate_password: com_rohea_account_passwordhelper
+        email:
+            title: email
+            type: text
+            widget: text
+            required: false
