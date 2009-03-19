@@ -262,3 +262,5 @@ msgstr "Postinumero"
 msgid "key: City"
 msgstr "Kaupunki"
 
+msgid: "key: Additional information"
+msgstr "Lisätietoa"
