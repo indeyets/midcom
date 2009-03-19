@@ -179,8 +179,14 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         );
         
         $this->current_session_id = $session->guid;
-                
-        $this->session_cookie->create_login_session_cookie($session->guid, $this->user->guid);
+        if (isset($_POST['remember_login']))
+        {
+            $this->session_cookie->create_login_session_cookie($session->guid, $this->user->guid, time()+24*3600*365);
+        }
+        else
+        {
+            $this->session_cookie->create_login_session_cookie($session->guid, $this->user->guid);
+        }
 
         $_MIDCOM->authorization->leave_sudo();         
 
