@@ -1,1 +1,4 @@
-<p i18n:translate=''>key: Logged in as <tal:block i18n:name='username' tal:replace='com_rohea_account/current_person/username' /></p>
+<p>
+  <tal:block i18n:translate=''>key: Logged in as <tal:block i18n:name='username' tal:replace='com_rohea_account/current_person/username' /></tal:block>
+  <a href='/__midcom/logout' i18n:translate=''>key: Logout</a>
+</p>

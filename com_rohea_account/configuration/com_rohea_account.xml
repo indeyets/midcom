@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+  <type name="com_rohea_account_db" table="person">
+    <property name="id"       type="unsigned integer" primaryfield="id"/>
+    <property name="username" type="string" index="yes" />
+    <property name="password" type="password" dbtype="varchar(13) binary"/>
+    <property name="firstname" type="string"/>
+    <property name="lastname" type="string"/>
+    <property name="birthdate" type="datetime"/>
+    <property name="street"   type="string"/>
+    <property name="postcode" type="string"/>
+    <property name="city"     type="string"/>
+    <property name="homephone" type="string"/>
+    <property name="handphone" type="string"/>
+    <property name="workphone" type="string"/>
+    <property name="homepage" type="string"/>
+    <property name="email"    type="string"/>
+    <property name="extra"    type="longtext"/>
+    <!-- <property name="img" link="image"/> -->
+    <property name="info"     type="string" dbtype="set('admin','address','phone','homepage','email','extra')"/>
+    <property name="created"  type="datetime"/>
+    <!-- language code for user interface (e.g. fi, en, de) -->
+    <property name="uilanguage" type="string" dbtype="varchar(2)" />
+    <!-- users location country code (e.g. FI, US, GB, DE) -->
+    <property name="country" type="string" dbtype="varchar(2)" />
+  </type>
+</Schema>
+

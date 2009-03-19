@@ -1,27 +1,10 @@
-<h1 i18n:translate='' class='qaiku_page_title'>key: Settings of <tal:block i18n:name="username" tal:replace="com_rohea_account/person/username" /></h1>
+<h1 i18n:translate=''>key: Settings of <tal:block i18n:name="username" tal:replace="com_rohea_account/person/username" /></h1>
 
-<div id='qaiku_wide'>
-
-
-  <div id='qaiku_wide_left'>
-
-    <p i18n:translate=''>key: Here you can modify your user settings</p>
+<p i18n:translate=''>key: Here you can modify your user settings</p>
     
-    <div class='settings_summary_box'>
-      <h2 i18n:translate=''>key: Language settings</h2>
-      <p><tal:block i18n:translate=''>key: Primary language</tal:block>: ${com_rohea_account/uilanguage/native}</p>
-      <h4><tal:block i18n:translate=''>key: All languages</tal:block></h4>
-      <a href='${com_rohea_account/settings_languages_link}' i18n:translate=''>key: Change language settings</a>
-    </div>
-
-    <div class='clear'></div>
-
 <span tal:replace="structure php:MIDCOM.templating.dynamic_load(com_rohea_account['page_guid'], 'settings_password', array())" />
 
 <span tal:replace="structure php:MIDCOM.templating.dynamic_load(com_rohea_account['page_guid'], 'settings_email', array())" />
 
-  
-    </div>
+<span tal:replace="structure php:MIDCOM.templating.dynamic_load(com_rohea_account['page_guid'], 'settings_userinformation', array())" />
 
-
-</div>

@@ -5,7 +5,8 @@ recaptcha_privatekey: "6Le1WwUAAAAAAObmJgqE-RdOt8SNkYezs8B9GsH4"
 schemadb_registration: file:/com_rohea_account/configuration/schema_registration.yml
 schemadb_settings: file:/com_rohea_account/configuration/schema_settings.yml
 schemadb_settings_email: file:/com_rohea_account/configuration/schema_email.yml
-facebook_enabled: false
+schemadb_settings_userinfo: file:/com_rohea_account/configuration/schema_userinfo.yml
+facebook_enabled: true
 message_from: user@host.com
 routes:
     index:
@@ -49,7 +50,7 @@ routes:
         route: /information/
         content_entry_point: cra-settings-information   
     settings_userinformation:
-        controller: com_rohea_account_controllers_userinformation
+        controller: com_rohea_account_controllers_settings
         action: userinfo
         route: /userinfo/
         content_entry_point: cra-settings-userinfo  

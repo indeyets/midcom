@@ -5,4 +5,4 @@ account_settings_email:
             title: email
             type: text
             widget: text
-            required: false
+            required: true

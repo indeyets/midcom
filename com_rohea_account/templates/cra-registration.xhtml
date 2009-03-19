@@ -7,6 +7,11 @@
     <form method="post" class="midcom_helper_datamanager" id='formSubmit'>
       <table style='width: 400px;'>
         <tr>
+          <td colspan='2'>
+            <h3 i18n:translate="">key: Mandatory fields</h3>            
+          </td>        
+        </tr>
+        <tr>
           <td>
             <p i18n:translate="">key: Username</p>            
           </td>
@@ -16,53 +21,12 @@
           </td>
         </tr>
         <tr>
-          <td>
-            <p i18n:translate="">key: Firstname</p>            
-          </td>
-          <td>
-            <p><input id='reg_firstname' type='text' size='20' tal:attributes="name fields/firstname/get_input_name" value="${fields/firstname/raw}" /></p>
-            <p class='reg_status'></p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <p i18n:translate="">key: Surname</p>            
-          </td>
-          <td>
-            <p><input id='reg_lastname' type='text' size='20' tal:attributes="name fields/lastname/get_input_name" value="${fields/lastname/raw}" /></p>
-            <p class='reg_status'></p>
-          </td>
-        </tr>
-        <tr>
           <td><p i18n:translate="">key: email_address</p></td>
           <td>
             <p><input id='email' type='text' size='30' tal:attributes="name fields/email/get_input_name" value="${fields/email/raw}" /></p>
             <p class='reg_status'></p>
           </td>
-        </tr>
-
-        <tr>
-          <td><p i18n:translate="">key: User interface language</p></td>
-          <td>
-            <p>
-              <select id='dropdown_language' type='dropdown' tal:attributes="name fields/uilanguage/get_input_name">
-              <tal:block tal:define="global current_ui_language com_rohea_account/current_ui_language" />
-                <tal:block tal:repeat="lang com_rohea_account/translated_languages">
-                  <tal:block tal:condition="php:current_ui_language==lang.code">
-                   <option value="${lang/code}" selected="selected">
-                ${lang/native}
-                </option>
-                  </tal:block>
-                  <tal:block tal:condition="php:current_ui_language!=lang.code">
-                   <option value="${lang/code}">
-                ${lang/native}
-                </option>
-                  </tal:block>
-                </tal:block>
-              </select>
-            </p>
-          </td>
-        </tr>
+        </tr>        
         <tr>
           <td><p i18n:translate="">key: Password</p></td>
           <td>
@@ -80,7 +44,61 @@
             </p>
 	    <p class='reg_status'></p>
           </td>
-        </tr>       
+        </tr> 
+                
+        <tr>
+          <td colspan='2'>
+            <h3 i18n:translate="">key: Additional fields</h3>            
+          </td>        
+        </tr>
+        
+        <tr>
+          <td>
+            <p i18n:translate="">key: Firstname</p>            
+          </td>
+          <td>
+            <p><input id='reg_firstname' type='text' size='15' tal:attributes="name fields/firstname/get_input_name" value="${fields/firstname/raw}" /></p>
+            <p class='reg_status'></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p i18n:translate="">key: Surname</p>            
+          </td>
+          <td>
+            <p><input id='reg_lastname' type='text' size='25' tal:attributes="name fields/lastname/get_input_name" value="${fields/lastname/raw}" /></p>
+            <p class='reg_status'></p>
+          </td>
+        </tr>
+        <tr>
+          <td><p i18n:translate="">key: Homephone</p></td>
+          <td>
+            <p><input id='reg_homephone' type='text' size='20' tal:attributes="name fields/homephone/get_input_name" value="${fields/homephone/raw}" /></p>
+            <p class='reg_status'></p>
+          </td>
+        </tr>
+        <tr>
+          <td><p i18n:translate="">key: Streetaddress</p></td>
+          <td>
+            <p><input id='reg_street' type='text' size='30' tal:attributes="name fields/street/get_input_name" value="${fields/street/raw}" /></p>
+            <p class='reg_status'></p>
+          </td>
+        </tr>
+        <tr>
+          <td><p i18n:translate="">key: Postalcode</p></td>
+          <td>
+            <p><input id='reg_postcode' type='text' size='10' tal:attributes="name fields/postcode/get_input_name" value="${fields/postcode/raw}" /></p>
+            <p class='reg_status'></p>
+          </td>
+        </tr>
+        <tr>
+          <td><p i18n:translate="">key: City</p></td>
+          <td>
+            <p><input id='reg_city' type='text' size='20' tal:attributes="name fields/city/get_input_name" value="${fields/city/raw}" /></p>
+            <p class='reg_status'></p>
+          </td>
+        </tr>
+    
         <tr>
           <td colspan='2'>
             <button name="${com_rohea_account/registration_form/namespace}_save" type='submit' class='button button_blue'>

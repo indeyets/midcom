@@ -1,16 +1,6 @@
-account_registration:
-    description: account_registration
+account_settings_userinfo:
+    description: account_settings_userinfo
     fields:
-        username:
-            title: username
-            type: com_rohea_account_datamanager_type_username
-            widget: text
-            required: true
-        email:
-            title: email
-            type: text
-            widget: text
-            required: true
         firstname:
             title: firstname
             widget: text
@@ -38,4 +28,4 @@ account_registration:
             title: city
             type: text
             widget: text
-            required: false                         
+            required: false   

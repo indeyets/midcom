@@ -207,6 +207,53 @@ class com_rohea_account_controllers_settings extends midcom_core_controllers_bas
     }
 
     /**
+      * Route is used for changing users's additional information
+      */
+    public function action_userinfo($route_id, &$data, $args)
+    {
+        // Loading datamanager for the current user
+        $this->load_object($args); 
+        $schemadb = $this->configuration->get('schemadb_settings_userinfo');
+        $this->load_datamanager($data, $schemadb, 'account_settings_userinfo');
+        $form = $this->datamanager->get_form();
+        $data['form'] = $this->datamanager->get_form();        
+        $data['person'] = $this->current_user;    
+        $data['current_route_id'] = $route_id;
+        
+        // Entering sudo if logged person is same as we are editing
+        // Done because ACL's are not finished
+        if($_MIDCOM->authentication->get_person()->guid == $this->object->guid)
+        {
+            $_MIDCOM->authorization->enter_sudo('com_rohea_account');
+        }     
+        
+        // Checking if modify form has been posted                    
+        try
+        {   
+            $form->process();
+        }
+        catch(midcom_helper_datamanager_exception_save $e)
+        {
+            /*
+             * Handling successfull datamanager post by assigning feedback
+             * and redirecting
+             */
+            $title_text = $_MIDCOM->i18n->get('key: Success', 'com_rohea_account');
+            $message_text = $_MIDCOM->i18n->get('key: E-mail address changed', 'com_rohea_account');
+            $message = array('title' => $title_text, 'message' => $message_text, 'type' => 'ok');
+            $_MIDCOM->uimessages->add($message);    
+            $_MIDCOM->uimessages->store();    
+            
+            $url = $_MIDCOM->dispatcher->generate_url('settings', array());
+            $_MIDCOM->authorization->leave_sudo();
+            header('Location: '.$url);
+            exit();
+        }
+        
+        $_MIDCOM->authorization->leave_sudo();
+    }
+
+    /**
       * Route action is used for changing user's password
       * NOTE: Datamanager is not used for passwords
       */
