@@ -84,7 +84,16 @@ FB.init("${com_rohea_facebook/api_key}", "${com_rohea_facebook/facebook_receiver
 	    <p class='reg_status'></p>
           </td>
         </tr>
-       
+        
+        <tr>
+          <td><p i18n:translate="">key: Email address</p></td>
+          <td>
+            <p><input id='email' type='text' size='30' tal:attributes="name fields/email/get_input_name" value="${fields/email/raw}" /></p>
+            <p class='reg_status'></p>
+            <div i18n:translate="">key: Reason why do we ask the email address</div>
+          </td>
+        </tr>
+        
         <tr>
           <td colspan='2'>
             <button name="${com_rohea_facebook/registration_form/namespace}_save"type='submit' class='button button_blue'>
