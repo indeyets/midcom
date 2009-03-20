@@ -219,7 +219,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             }
         }
         
-        // TODO: Exception or silent fail?
+        throw new OutOfBoundsException("Element {$element} not found in MidCOM style stack.");
     }
 
     /**
@@ -428,6 +428,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         switch ($data['template_engine'])
         {
             case 'tal':
+                // We use the PHPTAL class
                 if (!class_exists('PHPTAL'))
                 {
                     require('PHPTAL.php');
