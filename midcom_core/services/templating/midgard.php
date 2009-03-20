@@ -216,7 +216,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 $this->stack_elements[$stack][$element] = $element_content;
                 
                 // Replace instances of <mgd:include>elementname</mgd:include> with contents of the element
-                return preg_replace_callback("%<mgd:include>([a-zA-Z0-9_-]+)</mgd:include>%", array($this, 'get_element'), $this->stack_elements[$stack][$element]);
+                return preg_replace_callback("%<mgd:include[^>]*>([a-zA-Z0-9_-]+)</mgd:include>%", array($this, 'get_element'), $this->stack_elements[$stack][$element]);
             }
         }
         
