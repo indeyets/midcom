@@ -6,5 +6,5 @@ maintainers:
         email: jerry.jalava@gmail.com
         role: lead
 output_filters:
-    net_nemein_protoblogr:
+    net_protoblogr_filters:
         tidy
