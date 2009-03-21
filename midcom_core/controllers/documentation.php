@@ -53,7 +53,9 @@ class midcom_core_controllers_documentation
                 continue;
             }
             
-            if (pathinfo("{$path}/{$entry}", PATHINFO_EXTENSION) != 'markdown')
+            $pathinfo = pathinfo("{$path}/{$entry}");
+            
+            if ($pathinfo['extension'] != 'markdown')
             {
                 // We're only interested in Markdown files
                 continue;
@@ -61,8 +63,8 @@ class midcom_core_controllers_documentation
             
             $files['files'][] = array
             (
-                'label' => pathinfo("{$path}/{$entry}", PATHINFO_FILENAME),
-                'path' => "{$prefix}" . pathinfo("{$path}/{$entry}", PATHINFO_FILENAME) . '/',
+                'label' => $pathinfo['filename'],
+                'path' => "{$prefix}{$pathinfo['filename']}/",
             );
         }
         $directory->close();
@@ -75,12 +77,16 @@ class midcom_core_controllers_documentation
 
         $data['files'] = $this->list_directory(MIDCOM_ROOT . "/{$data['component']}/documentation");
 
-        /*
         $configuration = new midcom_core_services_configuration_yaml($data['component']);
         $data['routes'] = $configuration->get('routes');
-        if (!$data['routes'])
+        if ($data['routes'])
         {
-        }*/
+            $data['files']['files'][] = array
+            (
+                'label' => 'Routes',
+                'path' => 'routes/',
+            );
+        }
     }
 
     public function action_show($route_id, &$data, $args)
