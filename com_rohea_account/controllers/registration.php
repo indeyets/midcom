@@ -45,7 +45,7 @@ class com_rohea_account_controllers_registration extends midcom_core_controllers
         $this->object = $_MIDCOM->authentication->get_person();
     }
     
-    public function prepare_new_object($args)
+    public function prepare_new_object(&$data, $args)
     {
         $this->object = new com_rohea_account_db();
     }

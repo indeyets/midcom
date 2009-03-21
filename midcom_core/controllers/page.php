@@ -28,7 +28,7 @@ class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_m
         $this->object = $_MIDCOM->context->page;
     }
     
-    public function prepare_new_object($args)
+    public function prepare_new_object(&$data, $args)
     {
         $this->object = new midgard_page();
         $this->object->up = $_MIDCOM->context->page->id;

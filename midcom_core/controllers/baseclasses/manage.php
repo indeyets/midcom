@@ -31,7 +31,7 @@ abstract class midcom_core_controllers_baseclasses_manage
     /**
      * Method for preparing a new object to be created. To be overridden in the actual controller.
      */
-    abstract public function prepare_new_object($args);
+    abstract public function prepare_new_object(&$data, $args);
     
     /**
      * Method for generating route to the object
@@ -104,10 +104,10 @@ abstract class midcom_core_controllers_baseclasses_manage
         $data['object'] =& $this->object;
         $data['parent'] = $_MIDCOM->context->page;
         
-        $_MIDCOM->authorization->require_do('midgard:create', $data['parent']);
-
         // Prepare the new object that datamanager will eventually create
-        $this->prepare_new_object($args);
+        $this->prepare_new_object($data, $args);
+
+        $_MIDCOM->authorization->require_do('midgard:create', $data['parent']);
         
         // Load datamanager in creation mode
         $this->load_creation_datamanager($data, $this->configuration->get('schemadb'), 'default');

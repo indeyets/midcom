@@ -39,7 +39,7 @@ class com_rohea_account_controllers_settings extends midcom_core_controllers_bas
         $this->object = $_MIDCOM->authentication->get_person();
     }
     
-    public function prepare_new_object($args)
+    public function prepare_new_object(&$data, $args)
     {
         $this->object = new midgard_person();
     }    

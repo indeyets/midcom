@@ -38,7 +38,7 @@ class net_nemein_news_controllers_article extends midcom_core_controllers_basecl
         $this->object = $articles[0];
     }
     
-    public function prepare_new_object($args)
+    public function prepare_new_object(&$data, $args)
     {
         $topic_guid = $this->configuration->get('news_topic');
         if (!$topic_guid)
@@ -46,6 +46,7 @@ class net_nemein_news_controllers_article extends midcom_core_controllers_basecl
             throw new midcom_exception_notfound("No news topic defined");
         }
         $data['topic'] = new midgard_topic($topic_guid);
+        $data['parent'] =& $data['topic'];
         
         $this->object = new midgard_article();
         $this->object->topic = $data['topic']->id;
