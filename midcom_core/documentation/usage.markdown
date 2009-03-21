@@ -19,19 +19,19 @@ Usage with Midgard2
 * Symlink `httpd/midcom-root-midgard2.php` under your documentroot
 * Set up a virtualhost:
 
-    $HTTP["host"] == "example.net" {
-        server.port = 81
-        server.document-root = "/opt/local/var/lib/midgard/vhosts/example.net/81/"
-        url.rewrite-once = ( 
-            "^/midcom-static/.*" => "$0",
-            "^(.*)\.*" => "midcom-root-midgard2.php" 
-        )
+        $HTTP["host"] == "example.net" {
+            server.port = 81
+            server.document-root = "/opt/local/var/lib/midgard/vhosts/example.net/81/"
+            url.rewrite-once = ( 
+                "^/midcom-static/.*" => "$0",
+                "^(.*)\.*" => "midcom-root-midgard2.php" 
+            )
 
 * Configure PHP accordingly:
 
-    extension=midgard2.so
-    midgard.configuration="myconfigfile"
-    midgard.http="on"
+        extension=midgard2.so
+        midgard.configuration="myconfigfile"
+        midgard.http="on"
     
 * Play around
 * More info in <http://blogs.nemein.com/people/piotras/view/1208851555.html>
