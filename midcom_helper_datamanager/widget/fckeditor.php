@@ -109,7 +109,7 @@ class midcom_helper_datamanager_widget_fckeditor extends midcom_helper_datamanag
         $output .= "       oFCKeditor{$this->namespace}_{$this->main_input_name}.Height = {$this->height};\n";
         $output .= "       oFCKeditor{$this->namespace}_{$this->main_input_name}.Width = \"{$this->width}\";\n";
         $output .= "       oFCKeditor{$this->namespace}_{$this->main_input_name}.ToolbarSet = \"{$this->toolbarset}\";\n";
-        $output .= "       oFCKeditor{$this->namespace}_{$this->main_input_name}.Config.LinkBrowserURL = oFCKeditor{$this->namespace}_{$this->main_input_name}.BasePath + 'editor/filemanager/browser/default/browser.html?Connector={$_MIDCOM->context->prefix}__midcom/fckeditor/';\n";
+        $output .= "       oFCKeditor{$this->namespace}_{$this->main_input_name}.Config.LinkBrowserURL = oFCKeditor{$this->namespace}_{$this->main_input_name}.BasePath + 'editor/filemanager/browser/default/browser.html?Connector={$_MIDCOM->context->prefix}mgd:fckeditor/';\n";
         
         // Start the editor
         $output .= "       oFCKeditor{$this->namespace}_{$this->main_input_name}.ReplaceTextarea();\n";

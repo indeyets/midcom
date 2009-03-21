@@ -110,54 +110,54 @@ routes:
     page_edit:
         controller: midcom_core_controllers_page
         action: edit
-        route: /__midcom/edit
+        route: /mgd:edit
         content_entry_point: midcom-edit-page
     page_create:
         controller: midcom_core_controllers_page
         action: create
-        route: /__midcom/create
+        route: /mgd:create
         content_entry_point: midcom-edit-page
     page_delete:
         controller: midcom_core_controllers_page
         action: delete
-        route: /__midcom/delete
+        route: /mgd:delete
         content_entry_point: midcom-delete-page
 #    page_configure:
 #        controller: midcom_core_controllers_configuration
 #        action: configure
-#        route: /__midcom/configure
+#        route: /mgd:configure
 #        content_entry_point: midcom-configure-page
 #    component_configure:
 #        controller: midcom_core_controllers_configuration
 #        action: configure
-#        route: /__midcom/configure/{$component}/
+#        route: /mgd:configure/{$component}/
 #        content_entry_point: midcom-configure-component
     cache_invalidate:
         controller: midcom_core_controllers_cache
         action: invalidate
-        route: /__midcom/cache/invalidate
+        route: /mgd:cache/invalidate
         root_only: true
         content_entry_point: midcom-invalidate-cache
     midcom_about:
         controller: midcom_core_controllers_about
         action: about
-        route: /__midcom/
+        route: /mgd:about/
         root_only: true
         content_entry_point: midcom-show-about
     comet_messages:
         controller: midcom_core_controllers_comet
         action: messages
-        route: /__midcom/comet/messages
+        route: /mgd:comet/messages
         content_entry_point: midcom-comet-messages
     serveattachment:
         controller: midcom_core_controllers_attachment
         action: serve
-        route: /__midcom/serveattachment/{$guid}/
+        route: /mgd:serveattachment/{$guid}/
         root_only: true
     fckeditor_connector:
         controller: midcom_helper_datamanager_controllers_fckeditor
         action: connector
-        route: /__midcom/fckeditor/
+        route: /mgd:fckeditor/
         allowed_methods:
             - GET
             - POST
@@ -167,11 +167,11 @@ routes:
     login:
         controller: midcom_core_controllers_authentication
         action: login
-        route: /__midcom/login
+        route: /mgd:login
         root_only: true
         content_entry_point: midcom-authentication-form
     logout:
         controller: midcom_core_controllers_authentication
         action: logout
-        route: /__midcom/logout
+        route: /mgd:logout
         root_only: true

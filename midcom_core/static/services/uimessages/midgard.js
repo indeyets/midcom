@@ -44,7 +44,7 @@
                 }
             };
 
-            var req = jQuery.midcom.helpers.comet.start('/__midcom/comet/messages/', response_method);
+            var req = jQuery.midcom.helpers.comet.start('/mgd:comet/messages/', response_method);
         },
         create_message: function(data) {
             console.log("create_message");

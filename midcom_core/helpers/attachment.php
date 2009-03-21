@@ -97,7 +97,7 @@ class midcom_core_helpers_attachment implements midcom_core_attachment
         }
         else // if cache is not enabled or anonymous read is not allowed serving attachment through MidCOM
         {
-            return '/__midcom/serveattachment/' . $attachment->guid . '/';
+            return '/mgd:serveattachment/' . $attachment->guid . '/';
         }
     }
     
