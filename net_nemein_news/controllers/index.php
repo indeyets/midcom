@@ -46,6 +46,8 @@ class net_nemein_news_controllers_index
             $qb->results_per_page = (int) $this->configuration->get('index_show_articles');
         }
         
+        $data['news'] = array();
+        
         $articles = $qb->execute();
         foreach ($articles as $article)
         {
