@@ -51,20 +51,29 @@ class midcom_core_controllers_documentation
         if (file_exists($path))
         {
             // Image or other non-Markdown doc file, pass directly
-            // TODO: MIME type
+            $extension = pathinfo($path, PATHINFO_EXTENSION);
+            $mimetype = 'application/octet-stream';
+            switch ($extension)
+            {
+                case 'png':
+                    $mimetype = 'image/png';
+                    break;
+            }
+            header("Content-type: {$mimetype}");
             readfile($path);
             die();
         }
 
+        require_once 'markdown.php';
+
         $path .= '.markdown';
         if (!file_exists($path))
         {
-            die($path);
             throw new midcom_exception_notfound("File not found");
         }
         
         $data['markdown'] = file_get_contents($path);
-        $data['markdown_formatted'] = nl2br($data['markdown']);
+        $data['markdown_formatted'] = Markdown($data['markdown']);
     }
     
     public function action_routes($route_id, &$data, $args)
