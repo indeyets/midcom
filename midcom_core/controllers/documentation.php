@@ -18,16 +18,59 @@ class midcom_core_controllers_documentation
         $this->configuration = $_MIDCOM->configuration;
     }
     
-    public function action_routes($route_id, &$data, $args)
+    private function prepare_component($component, &$data)
     {
-        $data['component'] = $args['component'];
+        $data['component'] = $component;
         
         if (   $data['component'] != 'midcom_core'
             && !$_MIDCOM->componentloader->load($data['component']))
         {
             throw new midcom_exception_notfound("Component {$data['component']} not found");
         }
+    }
+
+    public function action_show($route_id, &$data, $args)
+    {
+        $this->prepare_component($args['variable_arguments'][0], $data);
+        $path = MIDCOM_ROOT . "/{$data['component']}/documentation";
+        foreach ($args['variable_arguments'] as $key => $argument)
+        {
+            if ($key == 0)
+            {
+                continue;
+            }
+            
+            if ($argument == '..')
+            {
+                continue;
+            }
+            
+            $path .= "/{$argument}";
+        }
+
+        if (file_exists($path))
+        {
+            // Image or other non-Markdown doc file, pass directly
+            // TODO: MIME type
+            readfile($path);
+            die();
+        }
+
+        $path .= '.markdown';
+        if (!file_exists($path))
+        {
+            die($path);
+            throw new midcom_exception_notfound("File not found");
+        }
+        
+        $data['markdown'] = file_get_contents($path);
+        $data['markdown_formatted'] = nl2br($data['markdown']);
+    }
     
+    public function action_routes($route_id, &$data, $args)
+    {
+        $this->prepare_component($args['component'], $data);
+
         $configuration = new midcom_core_services_configuration_yaml($data['component']);
         $data['routes'] = $configuration->get('routes');
         
@@ -60,14 +103,8 @@ class midcom_core_controllers_documentation
     
     public function action_class($route_id, &$data, $args)
     {
-        $data['component'] = $args['component'];
+        $this->prepare_component($args['component'], $data);
         $data['class'] = $args['class'];
-        
-        if (   $data['component'] != 'midcom_core'
-            && !$_MIDCOM->componentloader->load($data['component']))
-        {
-            throw new midcom_exception_notfound("Component {$data['component']} not found");
-        }
 
         if (substr($data['class'], 0, strlen($data['component'])) != $data['component'])
         {
