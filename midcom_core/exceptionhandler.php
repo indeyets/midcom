@@ -50,6 +50,13 @@ class midcom_core_exceptionhandler
             $data['message'] = $message;
             $data['exception'] = $exception;
             
+            $data['trace'] = false;
+            
+            if ($_MIDCOM->configuration->enable_exception_trace)
+            {
+                $data['trace'] = $exception->getTrace();
+            }
+            
             try
             {
                 if (!isset($_MIDCOM))

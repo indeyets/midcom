@@ -14,6 +14,7 @@ services_cache_configuration:
         directory: __MIDGARDCACHE__/midgard
 log_file: __MIDGARDLOG__/__SERVERNAME__.__LOGNAME__.log
 log_level: warn
+enable_exception_trace: false
 enable_webdav: true
 enable_benchmark: false
 enable_included_list: false

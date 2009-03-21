@@ -25,6 +25,12 @@
                     </aside>
                     
                     <p tal:content="midcom_core_exceptionhandler/message">Lorem ipsum</p>
+
+                    <ul tal:condition="midcom_core_exceptionhandler/trace">
+                        <li tal:repeat="trace midcom_core_exceptionhandler/trace">
+                            ${trace/class}${trace/type}${trace/function} in ${trace/file} on line ${trace/line}                                
+                        </li>
+                    </ul>
                 </div>
             </section>
         </div>
