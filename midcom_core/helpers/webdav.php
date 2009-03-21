@@ -124,7 +124,7 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
         }
         
         // Convert children to PROPFIND elements
-        $this->children_to_files($data['children'], &$files);
+        $this->children_to_files($data['children'], $files);
         
         return true;
     }
@@ -191,14 +191,14 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
             // Additional "special" URLs
             $children[] = array
             (
-                'uri'      => "{$_MIDCOM->context->prefix}__snippets/", // FIXME: dispatcher::generate_url
+                'uri'      => "{$_MIDCOM->context->prefix}mgd:snippets/", // FIXME: dispatcher::generate_url
                 'title'    => 'Code Snippets',
                 'mimetype' => 'httpd/unix-directory',
                 'resource' => 'collection',
             );
             $children[] = array
             (
-                'uri'      => "{$_MIDCOM->context->prefix}__styles/", // FIXME: dispatcher::generate_url
+                'uri'      => "{$_MIDCOM->context->prefix}mgd:styles/", // FIXME: dispatcher::generate_url
                 'title'    => 'Style Templates',
                 'mimetype' => 'httpd/unix-directory',
                 'resource' => 'collection',

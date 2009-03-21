@@ -58,7 +58,7 @@ routes:
     snippets_root:
         controller: midcom_core_controllers_snippets
         action: webdav
-        route: /__snippets
+        route: /mgd:snippets
         allowed_methods:
             - PROPFIND
             - OPTIONS
@@ -67,7 +67,7 @@ routes:
     snippets:
         controller: midcom_core_controllers_snippets
         action: webdav
-        route: /__snippets@
+        route: /mgd:snippets@
         allowed_methods:
             - MKCOL
             - PROPFIND
@@ -84,7 +84,7 @@ routes:
     styles_root:
         controller: midcom_core_controllers_styles
         action: webdav
-        route: /__styles
+        route: /mgd:styles
         allowed_methods:
             - PROPFIND
             - OPTIONS
@@ -93,7 +93,7 @@ routes:
     styles:
         controller: midcom_core_controllers_styles
         action: webdav
-        route: /__styles@
+        route: /mgd:styles@
         allowed_methods:
             - MKCOL
             - PROPFIND

@@ -62,7 +62,7 @@ class midcom_core_controllers_snippets
         }
         
         // Snippets
-        $qb = midgard_snippet::new_query_builder();
+        $qb = new midgard_query_builder('midgard_snippet');
         $qb->add_constraint('up', '=', $snippetdir_id);
         $qb->add_constraint('sitegroup', '=', $_MIDGARD['sitegroup']);
         $qb->add_constraint('name', '<>', '');
@@ -312,7 +312,7 @@ class midcom_core_controllers_snippets
         switch ($this->dispatcher->request_method)
         {
             case 'PROPFIND':
-                $this->handle_propfind($route_id, &$data);
+                $this->handle_propfind($route_id, $data);
                 return;
 
             case 'GET':
@@ -334,19 +334,19 @@ class midcom_core_controllers_snippets
                 throw new midcom_exception_notfound("Snippetdir {$this->object_path} not found");
 
             case 'PUT':
-                $this->handle_put($route_id, &$data);
+                $this->handle_put($route_id, $data);
                 return;
 
             case 'MKCOL':
-                $this->handle_mkcol($route_id, &$data);
+                $this->handle_mkcol($route_id, $data);
                 return;
 
             case 'MOVE':
-                $this->handle_move($route_id, &$data);
+                $this->handle_move($route_id, $data);
                 return;
 
             case 'COPY':
-                $this->handle_copy($route_id, &$data);
+                $this->handle_copy($route_id, $data);
                 return;
 
             case 'DELETE':
