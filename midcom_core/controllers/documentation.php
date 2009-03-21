@@ -127,7 +127,7 @@ class midcom_core_controllers_documentation
 
         $data['methods'] = array();
         $reflectionclass = new ReflectionClass($data['class']);
-        $data['class_documentation'] = $reflectionclass->getDocComment();
+        $data['class_documentation'] = midcom_core_controllers_documentation::render_docblock($reflectionclass->getDocComment());
         $reflectionmethods = $reflectionclass->getMethods();
         foreach ($reflectionmethods as $method)
         {
@@ -204,7 +204,7 @@ class midcom_core_controllers_documentation
                 (
                     array
                     (
-                        " ",
+                        ' ',
                         "\t",
                     ),
                     array
