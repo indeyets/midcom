@@ -37,6 +37,12 @@ class midcom_core_controllers_documentation
             'folders' => array(),
             'files'   => array(),
         );
+
+        if (!file_exists($path))
+        {
+            return $files;
+        }
+
         $directory = dir($path);
         while (false !== ($entry = $directory->read()))
         {
@@ -73,6 +79,7 @@ class midcom_core_controllers_documentation
 
     public function action_index($route_id, &$data, $args)
     {
+        $_MIDCOM->authorization->require_user();
         $this->prepare_component($args['component'], $data);
 
         $data['files'] = $this->list_directory(MIDCOM_ROOT . "/{$data['component']}/documentation");
@@ -91,6 +98,7 @@ class midcom_core_controllers_documentation
 
     public function action_show($route_id, &$data, $args)
     {
+        $_MIDCOM->authorization->require_user();
         $this->prepare_component($args['variable_arguments'][0], $data);
         $path = MIDCOM_ROOT . "/{$data['component']}/documentation";
         foreach ($args['variable_arguments'] as $key => $argument)
@@ -139,6 +147,7 @@ class midcom_core_controllers_documentation
     
     public function action_routes($route_id, &$data, $args)
     {
+        $_MIDCOM->authorization->require_user();
         $this->prepare_component($args['component'], $data);
 
         $configuration = new midcom_core_services_configuration_yaml($data['component']);
@@ -173,6 +182,7 @@ class midcom_core_controllers_documentation
     
     public function action_class($route_id, &$data, $args)
     {
+        $_MIDCOM->authorization->require_user();
         $this->prepare_component($args['component'], $data);
         $data['class'] = $args['class'];
 

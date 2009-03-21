@@ -20,7 +20,8 @@ class midcom_core_controllers_about
     
     public function action_about($route_id, &$data, $args)
     {
-        
+        $_MIDCOM->authorization->require_user();
+
         $data['versions'] = array
         (
             'midcom'  => $_MIDCOM->componentloader->manifests['midcom_core']['version'],
