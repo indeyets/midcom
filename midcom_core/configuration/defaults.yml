@@ -50,7 +50,7 @@ routes:
     page_variants:
         controller: midcom_core_controllers_page
         action: show
-        route: /{$token:variant}
+        route: '/{$token:variant}'
         allowed_methods:
             - OPTIONS
             - GET
@@ -130,7 +130,7 @@ routes:
 #    component_configure:
 #        controller: midcom_core_controllers_configuration
 #        action: configure
-#        route: /mgd:configure/{$component}/
+#        route: '/mgd:configure/{$component}/'
 #        content_entry_point: midcom-configure-component
     cache_invalidate:
         controller: midcom_core_controllers_cache
@@ -152,7 +152,7 @@ routes:
     serveattachment:
         controller: midcom_core_controllers_attachment
         action: serve
-        route: /mgd:serveattachment/{$guid}/
+        route: '/mgd:serveattachment/{$guid}/'
         root_only: true
     fckeditor_connector:
         controller: midcom_helper_datamanager_controllers_fckeditor
