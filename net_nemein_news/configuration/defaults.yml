@@ -35,6 +35,6 @@ routes:
         content_entry_point: nnn-edit-article
     create:
         controller: net_nemein_news_controllers_article
-        action: edit
+        action: create
         route: /mgd:create/article
         content_entry_point: nnn-edit-article
