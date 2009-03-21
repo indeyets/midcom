@@ -29,7 +29,7 @@ class midcom_core_controllers_snippets
         (
             array
             (
-                'uri'      => "{$_MIDCOM->context->prefix}__snippets{$this->object_path}/", // FIXME: dispatcher::generate_url
+                'uri'      => "{$_MIDCOM->context->prefix}mgd:snippets{$this->object_path}/", // FIXME: dispatcher::generate_url
                 'title'    => $this->object_path,
                 'mimetype' => 'httpd/unix-directory',
                 'resource' => 'collection',
@@ -53,7 +53,7 @@ class midcom_core_controllers_snippets
                 }
                 $children[] = array
                 (
-                    'uri'      => "{$_MIDCOM->context->prefix}__snippets{$this->object_path}/{$name}/", // FIXME: dispatcher::generate_url
+                    'uri'      => "{$_MIDCOM->context->prefix}mgd:snippets{$this->object_path}/{$name}/", // FIXME: dispatcher::generate_url
                     'title'    => $name,
                     'mimetype' => 'httpd/unix-directory',
                     'resource' => 'collection',
@@ -73,7 +73,7 @@ class midcom_core_controllers_snippets
             {
                 $children[] = array
                 (
-                    'uri'      => "{$_MIDCOM->context->prefix}__snippets{$this->object_path}/{$snippet->name}.php", // FIXME: dispatcher::generate_url
+                    'uri'      => "{$_MIDCOM->context->prefix}mgd:snippets{$this->object_path}/{$snippet->name}.php", // FIXME: dispatcher::generate_url
                     'title'    => $snippet->name,
                     'mimetype' => 'text/plain',
                     'size'     => $snippet->metadata->size,
@@ -136,7 +136,7 @@ class midcom_core_controllers_snippets
             (
                 array
                 (
-                    'uri'      => "{$_MIDCOM->context->prefix}__snippets{$this->object_path}", // FIXME: dispatcher::generate_url
+                    'uri'      => "{$_MIDCOM->context->prefix}mgd:snippets{$this->object_path}", // FIXME: dispatcher::generate_url
                     'title'    => $this->snippet->name,
                     'mimetype' => 'text/plain',
                     'size'     => $this->snippet->metadata->size,
@@ -214,7 +214,7 @@ class midcom_core_controllers_snippets
             throw new Exception("No destination defined");
         }
 
-        $snippets_prefix = '__snippets';
+        $snippets_prefix = 'mgd:snippets';
         if (substr($dest, 0, strlen($snippets_prefix)) != $snippets_prefix)
         {
             throw new Exception("Invalid destination {$dest}");

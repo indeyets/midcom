@@ -29,7 +29,7 @@ class midcom_core_controllers_styles
         (
             array
             (
-                'uri'      => "{$_MIDCOM->context->prefix}__styles{$this->object_path}/", // FIXME: dispatcher::generate_url
+                'uri'      => "{$_MIDCOM->context->prefix}mgd:styles{$this->object_path}/", // FIXME: dispatcher::generate_url
                 'title'    => $this->object_path,
                 'mimetype' => 'httpd/unix-directory',
                 'resource' => 'collection',
@@ -52,7 +52,7 @@ class midcom_core_controllers_styles
                 }
                 $children[] = array
                 (
-                    'uri'      => "{$_MIDCOM->context->prefix}__styles{$this->object_path}/{$name}/", // FIXME: dispatcher::generate_url
+                    'uri'      => "{$_MIDCOM->context->prefix}mgd:styles{$this->object_path}/{$name}/", // FIXME: dispatcher::generate_url
                     'title'    => $name,
                     'mimetype' => 'httpd/unix-directory',
                     'resource' => 'collection',
@@ -72,7 +72,7 @@ class midcom_core_controllers_styles
             {
                 $children[] = array
                 (
-                    'uri'      => "{$_MIDCOM->context->prefix}__styles{$this->object_path}/{$element->name}.php", // FIXME: dispatcher::generate_url
+                    'uri'      => "{$_MIDCOM->context->prefix}mgd:styles{$this->object_path}/{$element->name}.php", // FIXME: dispatcher::generate_url
                     'title'    => $element->name,
                     'mimetype' => 'text/plain',
                     'size'     => $element->metadata->size,
@@ -135,7 +135,7 @@ class midcom_core_controllers_styles
             (
                 array
                 (
-                    'uri'      => "{$_MIDCOM->context->prefix}__styles{$this->object_path}", // FIXME: dispatcher::generate_url
+                    'uri'      => "{$_MIDCOM->context->prefix}mgd:styles{$this->object_path}", // FIXME: dispatcher::generate_url
                     'title'    => $this->element->name,
                     'mimetype' => 'text/plain',
                     'size'     => $this->element->metadata->size,
@@ -213,7 +213,7 @@ class midcom_core_controllers_styles
             throw new Exception("No destination defined");
         }
 
-        $elements_prefix = '__styles';
+        $elements_prefix = 'mgd:styles';
         if (substr($dest, 0, strlen($elements_prefix)) != $elements_prefix)
         {
             throw new Exception("Invalid destination {$dest}");
