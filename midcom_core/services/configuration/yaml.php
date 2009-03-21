@@ -33,7 +33,7 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
         if (!$this->use_syck)
         {
             // Syck PHP extension is not loaded, include the pure-PHP implementation
-            require_once('midcom_core/helpers/spyc.php');
+            require_once 'midcom_core/helpers/spyc.php';
         }
 
         if (isset($_MIDCOM))
@@ -54,12 +54,12 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
         
         $this->load_globals();
         $this->load_locals();
-        $this->merged = array_merge($this->globals, $this->locals);
+        $this->merged = self::merge_configs($this->globals, $this->locals);
         
         if ($object)
         {
             $this->objects = $this->load_objects($object->guid);            
-            $this->merged = array_merge($this->merged, $this->objects);
+            $this->merged = self::merge_configs($this->merged, $this->objects);
         }
         
         if (!is_array($this->merged))
@@ -67,6 +67,27 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
             // Safety
             $this->merged = array();
         }
+    }
+    
+    public static function merge_configs($base, $extension)
+    {
+        $merged = $base;
+        
+        foreach ($extension as $key => $value)
+        {
+            if (is_array($value)) {
+                if (! isset($merged[$key])) {
+                    $merged[$key] = array();
+                }
+                
+                $merged[$key] = midcom_core_services_configuration_yaml::merge_configs($merged[$key], $value);
+                continue;
+            }
+
+            $merged[$key] = $value;
+        }
+        
+        return $merged;
     }
 
     /**
@@ -122,7 +143,7 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
         foreach ($this->components as $component)
         {
             $filename = MIDCOM_ROOT . "/{$component}/configuration/defaults.yml";
-            $this->globals = array_merge($this->globals, $this->load_file($filename));
+            $this->globals = self::merge_configs($this->globals, $this->load_file($filename));
         }
     }
 
@@ -140,7 +161,7 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
         foreach ($this->components as $component)
         {
             $snippet_path = "/local-configuration/{$component}/configuration";
-            $this->locals = array_merge($this->locals, $this->load_snippet($snippet_path));
+            $this->locals = self::merge_configs($this->locals, $this->load_snippet($snippet_path));
         }
     }
     
@@ -379,8 +400,5 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
         unset($route_parts);
         return array($route_path, $route_get, $route_args);
     }
-
-
-
 }
 ?>
