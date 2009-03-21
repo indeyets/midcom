@@ -31,5 +31,10 @@ routes:
     edit:
         controller: net_nemein_news_controllers_article
         action: edit
-        route: /{$name}/edit
+        route: /{$name}/mgd:edit
+        content_entry_point: nnn-edit-article
+    create:
+        controller: net_nemein_news_controllers_article
+        action: edit
+        route: /mgd:create/article
         content_entry_point: nnn-edit-article
