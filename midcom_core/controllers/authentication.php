@@ -21,6 +21,8 @@ class midcom_core_controllers_authentication
     public function action_logout($route_id, &$data, $args)
     {
         $_MIDCOM->authentication->logout();
+        header('location: /');
+        exit();
     }
     
     public function action_login($route_id, &$data, $args)
