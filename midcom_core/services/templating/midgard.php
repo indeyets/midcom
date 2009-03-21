@@ -220,7 +220,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             }
         }
         
-        throw new OutOfBoundsException("Element {$element} not found in MidCOM style stack.");
+        //throw new OutOfBoundsException("Element {$element} not found in MidCOM style stack.");
     }
 
     /**
