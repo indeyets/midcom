@@ -166,9 +166,76 @@ class midcom_core_controllers_documentation
                 'modifiers' => $modifiers,
                 'arguments' => $arguments,
                 'signature' => "{$modifiers} {$method->name}{$arguments}",
-                'documentation' => $method->getDocComment(),
+                'documentation' => midcom_core_controllers_documentation::render_docblock($method->getDocComment()),
             );
         }
+    }
+
+    /**
+     * Simple way to render PHPDoc-blocks to HTML
+     *
+     * @param string $docblock the PHPDoc definition as written in the code
+     * @return string HTML presentation
+     */
+    static public function render_docblock($docblock)
+    {
+        if (empty($docblock))
+        {
+            return $docblock;
+        }
+        // Just to be sure normalize newlines
+        $docblock = preg_replace("/\n\r|\r\n|\r/","\n", $docblock);
+        // Strip start and end of comment
+        $tmp1 = preg_replace('%/\*\*\s*\n(.*?)\s*\*/%ms', '\\1', $docblock);
+        // Strip *s from start of line
+        $tmp1 = preg_replace('%^\s*\*\s?%m', '', $tmp1);
+        // convert lines of only whitespace to simple newlines
+        /**
+         * did not work
+        $tmp1 = preg_replace('%\s+\n%m', "\n", $tmp1);
+         */
+        // Entitize significant whitespace
+        $ws_matches =  array();
+        if (preg_match('%^ {2,}|\t+%m', $tmp1, $ws_matches))
+        {
+            foreach ($ws_matches as $ws_string)
+            {
+                $replace = str_replace
+                (
+                    array
+                    (
+                        " ",
+                        "\t",
+                    ),
+                    array
+                    (
+                        '&nbsp;',
+                        "&nbsp;&nbsp;&nbsp;&nbsp;",
+                    ),
+                    $ws_string
+                );
+                $tmp1 = str_replace($ws_string, $replace, $tmp1);
+            }
+        }
+        // Separate first line and rest of it
+        $parts = explode("\n", $tmp1, 2);
+        if (count($parts) === 2)
+        {
+            $summary = $parts[0];
+            $comment = $parts[1];
+            $ret = "<div class='summary'>{$summary}</div>\n<div class='comments'>" . nl2br($comment) . "</div>\n";
+        }
+        else
+        {
+            $summary = $parts[0];
+            $ret = "<div class='summary'>{$summary}</div>\n";
+        }
+        /*
+        echo "DEBUG: ret<pre>\n";
+        echo htmlentities($ret);
+        echo "</pre>\n";
+        */
+        return $ret;
     }
 }
 ?>
