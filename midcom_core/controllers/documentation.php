@@ -29,6 +29,60 @@ class midcom_core_controllers_documentation
         }
     }
 
+    private function list_directory($path, $prefix = '')
+    {
+        $files = array
+        (
+            'name'    => basename($path),
+            'folders' => array(),
+            'files'   => array(),
+        );
+        $directory = dir($path);
+        while (false !== ($entry = $directory->read()))
+        {
+            if (substr($entry, 0, 1) == '.')
+            {
+                // Ignore dotfiles
+                continue;
+            }
+
+            if (is_dir("{$path}/{$entry}"))
+            {
+                // List subdirectory
+                $files['folders'][$entry] = $this->list_directory("{$path}/{$entry}", "{$prefix}{$entry}/");
+                continue;
+            }
+            
+            if (pathinfo("{$path}/{$entry}", PATHINFO_EXTENSION) != 'markdown')
+            {
+                // We're only interested in Markdown files
+                continue;
+            }
+            
+            $files['files'][] = array
+            (
+                'label' => pathinfo("{$path}/{$entry}", PATHINFO_FILENAME),
+                'path' => "{$prefix}" . pathinfo("{$path}/{$entry}", PATHINFO_FILENAME) . '/',
+            );
+        }
+        $directory->close();
+        return $files;
+    }
+
+    public function action_index($route_id, &$data, $args)
+    {
+        $this->prepare_component($args['component'], $data);
+
+        $data['files'] = $this->list_directory(MIDCOM_ROOT . "/{$data['component']}/documentation");
+
+        /*
+        $configuration = new midcom_core_services_configuration_yaml($data['component']);
+        $data['routes'] = $configuration->get('routes');
+        if (!$data['routes'])
+        {
+        }*/
+    }
+
     public function action_show($route_id, &$data, $args)
     {
         $this->prepare_component($args['variable_arguments'][0], $data);
@@ -48,7 +102,8 @@ class midcom_core_controllers_documentation
             $path .= "/{$argument}";
         }
 
-        if (file_exists($path))
+        if (   file_exists($path)
+            && !is_dir($path))
         {
             // Image or other non-Markdown doc file, pass directly
             $extension = pathinfo($path, PATHINFO_EXTENSION);

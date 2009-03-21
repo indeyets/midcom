@@ -150,6 +150,12 @@ routes:
         route: '/mgd:documentation@'
         root_only: true
         content_entry_point: midcom-show-documentation_file
+    midcom_documentation_index:
+        controller: midcom_core_controllers_documentation
+        action: index
+        route: '/mgd:documentation/{$component}'
+        root_only: true
+        content_entry_point: midcom-show-documentation_index
     midcom_documentation_routes:
         controller: midcom_core_controllers_documentation
         action: routes
