@@ -75,8 +75,10 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
         
         foreach ($extension as $key => $value)
         {
-            if (is_array($value)) {
-                if (! isset($merged[$key])) {
+            if (is_array($value)) 
+            {
+                if (!isset($merged[$key])) 
+                {
                     $merged[$key] = array();
                 }
                 
