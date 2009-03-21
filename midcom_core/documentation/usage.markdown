@@ -67,3 +67,8 @@ Alternatively add `deb http://packages.dotdeb.org etch all` and `deb-src http://
     # pear channel-discover pear.phing.info
     # pear install phing/phing
     # phing linkstatics -Dstatic_dir=/usr/share/php/midcom/static
+
+### Installing Markdown
+
+    # pear channel-discover pear.michelf.com
+    # pear install pear.michelf.com/markdown
