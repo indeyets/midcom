@@ -1,0 +1,13 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "key:Username"
+msgstr "Käyttäjätunnus"
+
+msgid "key:Password"
+msgstr "Salasana"
+
+msgid "key:Login"
+msgstr "Kirjaudu"
