@@ -1,0 +1,18 @@
+<h1 tal:content="midcom_core/class">Class name</h1>
+
+<p tal:content="structure midcom_core/class_documentation">
+Documentation about the class
+</p>
+
+<div class="methods" tal:condition="midcom_core/methods">
+    <h2>Methods</h2>
+    
+    <dl>
+        <dt tal:repeat="method midcom_core/methods">
+            <div class="signature" id="" tal:content="method/signature" tal:attributes="id method/name">void mgd_get_social_life()</div>
+            <dd tal:content="structure method/documentation">
+                Documentation
+            </dd>
+        </dt>
+    </dl>
+</div>

@@ -18,6 +18,9 @@ class net_nemein_news_controllers_index
         $this->configuration = $instance->configuration;
     }
     
+    /**
+     * List latest news items and pass them on to the template
+     */
     public function action_latest($route_id, &$data, $args)
     {
         $topic_guid = $this->configuration->get('news_topic');
