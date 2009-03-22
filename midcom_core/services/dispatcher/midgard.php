@@ -404,11 +404,11 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             $url = preg_replace('%/{2,}%', '/', $this->get_page_prefix() . $link);
             $_MIDCOM->context->delete();
-            return $url . '/';
+            return $url;
         }
 
         
-        return preg_replace('%/{2,}%', '/', $_MIDCOM->context->prefix . $link) . '/';
+        return preg_replace('%/{2,}%', '/', $_MIDCOM->context->prefix . $link);
     }
 
 
