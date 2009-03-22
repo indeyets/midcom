@@ -221,15 +221,6 @@ class midcom_core_midcom
             )
         );
 
-        // Set up templating stack        
-        $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/templates');
-        $_MIDCOM->templating->append_style($this->context->style_id);
-        $_MIDCOM->templating->append_page($this->context->page->id);
-        if ($this->timer)
-        {
-            $this->timer->setMarker('MidCOM::process::template_stack_prepared');
-        }
-
         // Load component
         try
         {
@@ -255,11 +246,24 @@ class midcom_core_midcom
             }
         }
 
+        // Set up templating stack: midcom_core goes first 
+        $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/templates');
+        
+        // Then initialize the component, so it also goes to template stack
         $this->dispatcher->initialize($component);
         if ($this->timer)
         {
             $this->timer->setMarker('MidCOM::process::dispatcher_initialized');
         }
+        
+        // And finally append style and page to template stack
+        $_MIDCOM->templating->append_style($this->context->style_id);
+        $_MIDCOM->templating->append_page($this->context->page->id);
+        if ($this->timer)
+        {
+            $this->timer->setMarker('MidCOM::process::template_stack_prepared');
+        }
+
         
         try
         {

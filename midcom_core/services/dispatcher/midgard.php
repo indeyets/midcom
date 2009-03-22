@@ -28,6 +28,10 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
     protected $route_definitions = null;
     protected $exceptions_stack = array();
 
+    /**
+     * Constructor will read arguments and GET parameters from the request URL and store
+     * them to the context.
+     */
     public function __construct()
     {
         if (isset($_GET))
