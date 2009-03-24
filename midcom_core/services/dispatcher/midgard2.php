@@ -29,7 +29,9 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
         {
             throw new Exception('Midgard 2.x is required for this MidCOM setup.');
         }
-        
+
+        $this->request_method = $_SERVER['REQUEST_METHOD'];
+
         $this->request_config = $_MIDGARD_CONNECTION->get_request_config();
         if (!$this->request_config)
         {

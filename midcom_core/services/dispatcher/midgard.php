@@ -275,7 +275,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             throw new midcom_exception_httperror("{$this->request_method} not allowed", 405);
         }
-        
+
         // Initialize controller
         $controller_class = $selected_route_configuration['controller'];
         $controller = new $controller_class($_MIDCOM->context->component_instance);
@@ -292,6 +292,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             )
         {
             // Start the full WebDAV server instance
+            // FIXME: Figure out how to prevent this with Variants
             $webdav_server = new midcom_core_helpers_webdav($controller);
             $webdav_server->serve($this->route_id, $action_method, $this->action_arguments[$this->route_id]);
             // This will exit
@@ -371,7 +372,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
      */
     public function generate_url($route_id, array $args, midgard_page $page = null)
     {
-        if ( !is_null($page))
+        if (!is_null($page))
         {
             $_MIDCOM->context->create();
             $this->set_page($page);
@@ -387,6 +388,24 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
 
         foreach ($args as $key => $value)
         {
+            if (is_array($value))
+            {
+                $value_array = array();
+                foreach ($value as $part)
+                {
+                    if (empty($part))
+                    {
+                        continue;
+                    }
+                    $value_array[] = $part;
+                }
+                
+                $value = implode('.', $value_array);
+
+                // This is a token replacement, add the type hint
+                $key = "token:{$key}";
+            }
+
             $link = str_replace("{\${$key}}", $value, $link);
         }
 
@@ -557,16 +576,17 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
 
         // First part is always identifier
         $tokens['identifier'] = $argument_parts[0];
-        
-        if (count($argument_parts) >= 2)
+
+        if (count($argument_parts) == 2)
         {
-            // If there are two or more parts, then second is variant
-            $tokens['variant'] = $argument_parts[1];
+            // If there are two parts, the second is type
+            $tokens['type'] = $argument_parts[1];
         }
         
         if (count($argument_parts) >= 3)
         {
-            // If there are three parts, then third is type
+            // If there are three parts, then second is variant and third is type
+            $tokens['variant'] = $argument_parts[1];
             $tokens['type'] = $argument_parts[2];
         }
 
