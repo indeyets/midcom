@@ -32,13 +32,13 @@ class midcom_core_helpers_variants
             $_MIDCOM->timer->setMarker('MidCOM variants::handled');
         }
     }
-    
-    private function handle_get($variant)
+
+    private prepare_variant($variant)
     {
         if (!isset($this->datamanager))
         {
             // TODO: non-DM variants
-            return;
+            throw new midcom_exception_notfound("Datamanager not available");
         }
         
         $variant_field = $variant['variant'];
@@ -46,6 +46,31 @@ class midcom_core_helpers_variants
         {
             throw new midcom_exception_notfound("{$variant_field} not available");
         }
+    }
+
+    private function handle_put($variant)
+    {
+        $this->prepare_variant($variant);
+        
+        // TODO: Format conversions
+        
+        $variant_field = $variant['variant'];
+        
+        // TODO: Pass via widget
+        $this->datamanager->types->$variant_field->value = file_get_contents('php://input');
+        
+        if (!$this->datamanager->save())
+        {
+            throw new midcom_exception_httperror("Saving {$variant_field} failed");
+        }
+        
+        // Return original content
+        return $this->handle_get($variant);
+    }
+
+    private function handle_get($variant)
+    {
+        $this->prepare_variant($variant);
 
         $type_field = "as_{$variant['type']}";
         if (!isset($this->datamanager->types->$variant_field->$type_field))

@@ -60,6 +60,7 @@ class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_m
             switch ($this->dispatcher->request_method)
             {
                 case 'GET':
+                case 'PUT':
                     // Get variant of the page
                     $variant = new midcom_core_helpers_variants();
                     $variant->datamanager = $data['datamanager'];

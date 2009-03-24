@@ -54,6 +54,7 @@ routes:
         allowed_methods:
             - OPTIONS
             - GET
+            - PUT
             - PROPFIND
     snippets_root:
         controller: midcom_core_controllers_snippets
