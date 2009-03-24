@@ -188,7 +188,7 @@ class midcom_core_midcom
         {
             $this->timer->setMarker('MidCOM::process::env_populated');
         }
-        $this->log('MidCOM', "Serving {$_MIDCOM->context->uri} at " . gmdate('r'), 'info');
+        $this->log('MidCOM', "Serving {$this->dispatcher->request_method} {$_MIDCOM->context->uri} at " . gmdate('r'), 'info');
 
         // Let injectors do their work
         $this->componentloader = new midcom_core_component_loader();
@@ -248,14 +248,14 @@ class midcom_core_midcom
 
         // Set up templating stack: midcom_core goes first 
         $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/templates');
-        
+
         // Then initialize the component, so it also goes to template stack
         $this->dispatcher->initialize($component);
         if ($this->timer)
         {
             $this->timer->setMarker('MidCOM::process::dispatcher_initialized');
         }
-        
+
         // And finally append style and page to template stack
         $_MIDCOM->templating->append_style($this->context->style_id);
         $_MIDCOM->templating->append_page($this->context->page->id);
@@ -264,7 +264,6 @@ class midcom_core_midcom
             $this->timer->setMarker('MidCOM::process::template_stack_prepared');
         }
 
-        
         try
         {
             $this->dispatcher->dispatch();

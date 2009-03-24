@@ -55,12 +55,36 @@ class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_m
     {
         parent::action_show($route_id, $data, $args);
         
+        // Neutron introspection file
+        $_MIDCOM->head->add_link_head
+        (
+            array
+            (
+                'rel' => 'neutron-introspection',
+                'type' => 'application/neutron+xml',
+                'href' => $_MIDCOM->dispatcher->generate_url
+                (
+                    'page_variants', array
+                    (
+                        'variant' => array
+                        (
+                            'identifier' => 'page',
+                            'variant' => 'neutron-introspection',
+                            'type' => 'xml',
+                        )
+                    )
+                )
+            )
+        );
+
         if ($route_id == 'page_variants')
         {
             switch ($this->dispatcher->request_method)
             {
-                case 'GET':
                 case 'PUT':
+                    $_MIDCOM->authorization->require_do('midgard:update', $data['object']);
+                    // Intentional fall-through
+                case 'GET':
                     // Get variant of the page
                     $variant = new midcom_core_helpers_variants();
                     $variant->datamanager = $data['datamanager'];
