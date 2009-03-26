@@ -34,6 +34,7 @@ class midcom_core_controllers_documentation
         $files = array
         (
             'name'    => basename($path),
+            'label'   => ucfirst(str_replace('_', ' ', basename($path))),
             'folders' => array(),
             'files'   => array(),
         );
@@ -69,7 +70,7 @@ class midcom_core_controllers_documentation
             
             $files['files'][] = array
             (
-                'label' => $pathinfo['filename'],
+                'label' => ucfirst(str_replace('_', ' ', $pathinfo['filename'])),
                 'path' => "{$prefix}{$pathinfo['filename']}/",
             );
         }

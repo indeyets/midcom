@@ -6,7 +6,7 @@
     </li>
     <tal:block tal:repeat="folder files/folders">
         <li tal:condition="folder/files">
-            <tal:block tal:content="folder/name">Foldername</tal:block>
+            <tal:block tal:content="folder/label">Foldername</tal:block>
             <tal:block tal:define="files folder" metal:use-macro="midcom-show-documentation_index" />
         </li>
     </tal:block>
