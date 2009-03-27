@@ -2,9 +2,10 @@ schemadb_simpleregistration: file:/com_rohea_facebook/configuration/schema_gener
 facebook_api_key: abc
 facebook_secret_key: def
 fb_receiver_file: /midcom-static/com_rohea_facebook/xd_receiver.htm
+automatic_account_creation: false
 redirect_url:
-    component: 
-    route_id:
+    url: http://path/to/some/static/url
+    url_variables:
 routes:
     registration: 
         controller: com_rohea_facebook_controllers_facebookregistration

@@ -42,7 +42,7 @@ class com_rohea_facebook_controllers_facebookregistration extends midcom_core_co
         $this->object = $_MIDCOM->authentication->get_person();
     }
     
-    public function prepare_new_object(&$data, $args)
+    public function prepare_new_object($args)
     {
         $this->object = new com_rohea_account_db();
     }
@@ -61,7 +61,6 @@ class com_rohea_facebook_controllers_facebookregistration extends midcom_core_co
     
     public function action_registration($route_id, &$data, $args)
     {
-        
         if($_MIDCOM->authentication->is_user())
         {
             $this->load_object($args);
@@ -74,6 +73,9 @@ class com_rohea_facebook_controllers_facebookregistration extends midcom_core_co
             $schemadb = $this->configuration->get('schemadb_simpleregistration');
             $this->load_creation_datamanager($data, $schemadb, 'account_registration');
         }
+        
+        $automatic_account_creaton = $this->configuration->get('automatic_account_creation');
+        $config_redirect_url = $this->configuration->get('redirect_url');
         
         // load facebook class
         $api_key = trim($this->configuration->get("facebook_api_key"));
@@ -103,14 +105,14 @@ class com_rohea_facebook_controllers_facebookregistration extends midcom_core_co
             {
                 
                 $redirect_url = '/';
-                
                 header("Location: " . $redirect_url);
                 exit();               
                 
             }
             
-            $fb->login_midgard_person($midgardperson);
-
+            $fb->login_midgard_person($midgardperson);                
+                // After login setting password for the newly generated user via API
+   
             $redirect_url = '/';
   
             header("Location: " . $redirect_url);
@@ -132,6 +134,50 @@ class com_rohea_facebook_controllers_facebookregistration extends midcom_core_co
         $data['current_primary_language'] = 'fi'; 
                 
         $data['show_newuser_dialog'] = true;
+        
+        /*  Do automatic account creation if option is set*/
+        
+        if ($automatic_account_creaton == true)
+        {
+            if (!empty($fbid) && !empty($facebook_details))
+            {
+                $username = $facebook_details['first_name'];
+                if (empty($username) || strlen($username) < 3)
+                {
+                    $username = substr(md5(time()), 0, 8);
+                }
+                $password = substr(md5(time() . 'asdfsd' .  rand() ), 0, 8);
+                $username = $this->generate_unique_username($username);
+                $config_redirect_url['url'];
+                
+                $this->object->username = $username;
+                $this->object->firstname = $facebook_details['first_name'];
+                $this->object->lastname = $facebook_details['last_name'];               
+                $this->object->create();
+                
+                $this->object->set_parameter('com_rohea_facebook', 'avatar', $facebook_details['pic_square']);
+                // Doing trusted login with newly created user (we do not have password yet)                        
+                $_MIDCOM->authentication->trusted_login($this->object->username);
+                
+                // After login setting password for the newly generated user via API
+                $user = $_MIDCOM->authentication->get_user();
+                $user->password($this->object->username, $password);
+                
+                // Password is now set, logging in with it
+                $_MIDCOM->authentication->login($this->object->username, $password);
+                
+                $fb->addfacebooklink($fbid, $user->guid);
+                
+                header('Location: ' . $config_redirect_url['url']);
+                exit();
+            }
+            else
+            {
+                echo 'Connection error to Facebook';
+                exit();
+            }
+            
+        }
         
         /*   If form is posted and existing midgard userid is being joined to a facebook id   */
         
@@ -180,7 +226,8 @@ class com_rohea_facebook_controllers_facebookregistration extends midcom_core_co
                 
                 /*  Link facebook id and midgard userid    */
                 $fb->addfacebooklink($fbid, $user->guid);        
-
+                $this->object->set_parameter('com_rohea_facebook', 'avatar', $facebook_details['pic_square']);
+                
                 $redirect_url = '/';
                 
                 header("Location: " . $redirect_url);
@@ -196,6 +243,29 @@ class com_rohea_facebook_controllers_facebookregistration extends midcom_core_co
         }
     }
 
+    // FIXME: tepheikk will refactor this as soon as there's time
+    private function generate_unique_username($starting_value)
+    {
+        $start_int = 1;
+        $current_int = 1;
+        
+        $starting_value = strtolower($starting_value . $start_int);
+        $qb = new midgard_query_builder('midgard_person');
+        $qb->add_constraint('username', '=' , $starting_value);
+        $res = $qb->execute();
+        while (count($res) > 0 )
+        {
+            $start_int++;
+            $starting_value = substr($starting_value, 0, strlen($starting_value) - strlen($current_int)) . $start_int;
+            $qb = new midgard_query_builder('midgard_person');
+            $qb->add_constraint('username', '=' , $starting_value);
+            $res = $qb->execute();
+            $current_int++;
+        }
+        
+        return $starting_value;
+    }
+    
     public function action_checkusername($route_id, &$data, $args)
     {
         $username = '';
