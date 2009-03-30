@@ -42,7 +42,7 @@ class com_rohea_facebook_controllers_facebookregistration extends midcom_core_co
         $this->object = $_MIDCOM->authentication->get_person();
     }
     
-    public function prepare_new_object($args)
+    public function prepare_new_object(&$data, $args)
     {
         $this->object = new com_rohea_account_db();
     }
