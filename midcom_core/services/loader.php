@@ -23,7 +23,7 @@ class midcom_core_services_loader
         {
             if (! is_null($configuration))
             {
-                $this->services[$name] = new $services_implementation(&$configuration);
+                $this->services[$name] = new $services_implementation($configuration);
             }
             else
             {

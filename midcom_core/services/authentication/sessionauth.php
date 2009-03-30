@@ -175,7 +175,7 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         }
         
         $result = Array(
-            'session_id' => $session->guid, 'user' => &$user
+            'session_id' => $session->guid, 'user' => &$user // <-- FIXME: is this supposed to be $this->user instead?
         );
         
         $this->current_session_id = $session->guid;

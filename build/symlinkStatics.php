@@ -125,7 +125,7 @@ class symlinkStatics extends Task
         }
         
         $ret = "";
-        exec($command, & $output, $ret);
+        exec($command, $output, $ret);
         if ($ret !== 0)
         {
             throw new Exception("Exec of $command returned non zero code $ret");

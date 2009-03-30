@@ -31,7 +31,7 @@ class midcom_core_controllers_attachment
                 
         if ($_MIDCOM->configuration->enable_attachment_cache)
         {
-            header('Location: ' . midcom_core_helpers_attachment::get_url(&$att));
+            header('Location: ' . midcom_core_helpers_attachment::get_url($att));
             exit();
         }
 

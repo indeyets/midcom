@@ -69,7 +69,7 @@ class midcom_core_helpers_attachment implements midcom_core_attachment
     
     private function on_creating(midgard_attachment $attachment, $params)
     {
-        if ($_MIDCOM->authorization->can_do('midgard:read', &$attachment, null))
+        if ($_MIDCOM->authorization->can_do('midgard:read', $attachment, null))
         {
             midcom_core_helpers_attachment::add_to_cache($attachment);
         }
@@ -91,7 +91,7 @@ class midcom_core_helpers_attachment implements midcom_core_attachment
     {
         // Cheking if cache is enabled and attachment is readable for anonymous users
         if ($_MIDCOM->configuration->enable_attachment_cache
-            && $_MIDCOM->authorization->can_do('midgard:read', &$attachment, null))
+            && $_MIDCOM->authorization->can_do('midgard:read', $attachment, null))
         {
             return $_MIDCOM->configuration->attachment_cache_url . $attachment->location;
         }

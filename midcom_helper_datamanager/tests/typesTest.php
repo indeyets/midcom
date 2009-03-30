@@ -65,7 +65,7 @@ class midcom_helper_datamanager_tests_types extends midcom_tests_testcase
         $controller = new $controller_class($_MIDCOM->context->component_instance);
         
         $action_method = "action_show";
-        $controller->$action_method('test', &$data, $args);
+        $controller->$action_method('test', $data, $args);
         $_MIDCOM->context->set_item('net_nemein_news', $data);
         
         $_MIDCOM->context->delete();
