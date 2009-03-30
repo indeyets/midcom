@@ -205,6 +205,24 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
             $_MIDCOM->timer->setMarker("MidCOM dispatcher::dispatch::{$this->component_name}::{$controller_class}::{$action_method}");
         }
         $controller->$action_method($this->route_id, $data, $this->action_arguments);
+
+        if ($_MIDCOM->authentication->is_user())
+        {
+            // If we have user we should expose that to templating via context
+            if ($this->component_name == 'midcom_core')
+            {
+                $data['user'] = $_MIDCOM->authentication->get_person();
+            }
+            else
+            {
+                $core_data = array
+                (
+                    'user' => $_MIDCOM->authentication->get_person(),
+                );
+                $_MIDCOM->context->set_item('midcom_core', $core_data);
+            }
+        }
+
         $_MIDCOM->context->set_item($this->component_name, $data);
         
         // Set other context data from route
