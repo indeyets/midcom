@@ -2,7 +2,12 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Henri Bergius <henri.bergius@iki.fi>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
 
 msgid "key: Close"
 msgstr "Sulje"
@@ -16,8 +21,8 @@ msgstr "${username} tunnuksen asetukset"
 msgid "key: Logged in as ${username}"
 msgstr "Kirjautunut tunnuksella ${username}"
 
-msgid "key: Here you can modify your user settings" 
-msgstr "Voit muokata täällä käyttösetuksiasi."
+msgid "key: Here you can modify your user settings"
+msgstr "Voit muokata täällä käyttöasetuksiasi."
 
 msgid "key: Username"
 msgstr "Tunnus"
@@ -37,7 +42,7 @@ msgstr "- Valitse -"
 msgid "key: User interface language"
 msgstr "Käyttöliittymän kieli"
 
-msgid "key: ui_language_info" 
+msgid "key: ui_language_info"
 msgstr "Valitse käyttöliittymän kieli"
 
 msgid "key: Default writing language"
@@ -183,7 +188,7 @@ msgstr "Vaihda sähköpostisoite"
 
 msgid "key: settings_avatar"
 msgstr "Vaihda käyttäjäkuva"
- 
+
 msgid "key: settings_languages"
 msgstr "Kieliasetukset"
 
@@ -239,8 +244,8 @@ msgid "key: edit successfull"
 msgstr "Onnistui!"
 
 msgid "key: Failure"
-msgstr "Epäonnistui!" 
- 
+msgstr "Epäonnistui!"
+
 msgid "key: Password change failed"
 msgstr "Salasanaa ei vaihdettu. Tarkista että kirjoitit vanhan salasanasi ja uuden salasanan kaksi kertaa oikein."
 
@@ -264,3 +269,4 @@ msgstr "Kaupunki"
 
 msgid "key: Additional information"
 msgstr "Lisätietoa"
+
