@@ -33,6 +33,7 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         $host = new midgard_host();
         $host->get_by_id($_MIDGARD['host']);
         $_MIDCOM->context->host = $host;
+        $_MIDCOM->context->style_id = $_MIDCOM->context->host->style;
         $_MIDCOM->context->cache_enabled = $_MIDCOM->configuration->services_cache_configuration['enabled'];
 
         if (!$this->page)
@@ -48,10 +49,6 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         if ($this->page->style)
         {
             $_MIDCOM->context->style_id = $this->page->style;
-        }
-        else
-        {
-            $_MIDCOM->context->style_id = $_MIDCOM->context->host->style;
         }
         
         $_MIDCOM->context->prefix = $this->get_page_prefix();

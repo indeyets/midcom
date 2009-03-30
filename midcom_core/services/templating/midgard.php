@@ -281,8 +281,12 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         $this->dispatcher->initialize($component_name);
 
         // And finally append style and page to template stack
-        $_MIDCOM->templating->append_style($this->context->style_id);
-        $_MIDCOM->templating->append_page($this->context->page->id);
+        $_MIDCOM->templating->append_style($_MIDCOM->context->style_id);
+        
+        if ($page)
+        {
+            $_MIDCOM->templating->append_page($_MIDCOM->context->page->id);
+        }
         
         if (!$_MIDCOM->context->component_instance->configuration->exists('routes'))
         {
