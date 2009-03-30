@@ -481,17 +481,6 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 {
                     $tal->$key = $value;
                 }
-                
-                if ($_MIDCOM->authentication->is_user())
-                {
-                    if (!isset($tal->midcom_core))
-                    {
-                        $tal->midcom_core = array();
-                    }
-
-                    // If we have user we should expose that to templating
-                    $tal->midcom_core['user'] = $_MIDCOM->authentication->get_person();
-                }
 
                 $tal->setSource($content);
                 if ($_MIDCOM->timer)

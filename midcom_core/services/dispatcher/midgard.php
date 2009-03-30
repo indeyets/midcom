@@ -361,6 +361,17 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             $_MIDCOM->context->content_entry_point = $route_configuration['content_entry_point'];
         }
+
+        if ($_MIDCOM->authentication->is_user())
+        {
+            if (!isset($_MIDCOM->context->midcom_core))
+            {
+                $_MIDCOM->context->midcom_core = array();
+            }
+
+            // If we have user we should expose that to templating
+            $_MIDCOM->context->midcom_core['user'] = $_MIDCOM->authentication->get_person();
+        }
     }
 
     /**
