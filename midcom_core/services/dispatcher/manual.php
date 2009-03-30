@@ -30,7 +30,6 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
      */
     public function populate_environment_data()
     {
- 
         $host = new midgard_host();
         $host->get_by_id($_MIDGARD['host']);
         $_MIDCOM->context->host = $host;
@@ -45,6 +44,16 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         $_MIDCOM->context->uri = $this->get_page_prefix();        
         $_MIDCOM->context->component = $this->page->component;
         $_MIDCOM->context->page = $this->page;
+        
+        if ($this->page->style)
+        {
+            $_MIDCOM->context->style_id = $this->page->style;
+        }
+        else
+        {
+            $_MIDCOM->context->style_id = $_MIDCOM->context->host->style;
+        }
+        
         $_MIDCOM->context->prefix = $this->get_page_prefix();
         $_MIDCOM->templating->append_page($this->page->id);
     }
