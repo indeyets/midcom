@@ -30,7 +30,10 @@ class midcom_core_services_cache_module_template
         $this->cache_directory = str_replace('__MIDGARDCACHE__', $this->get_cache_directory(), $configuration['directory']);
         if (!file_exists($this->cache_directory))
         {
-            mkdir($this->cache_directory, 0777, true);
+            $res = mkdir($this->cache_directory, 0777, true);
+            if (false === $res) {
+                throw new RuntimeException("Couldn't create '{$this->cache_directory}' cache directory");
+            }
         }
         
         if (!is_writable($this->cache_directory))
