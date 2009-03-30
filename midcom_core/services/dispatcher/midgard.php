@@ -341,12 +341,31 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
     {
         if ($this->is_core_route($this->route_id))
         {
-            $_MIDCOM->context->set_item('midcom_core', $data);
+            $component_name = 'midcom_core';
         }
         else
         {
-            $_MIDCOM->context->set_item($_MIDCOM->context->component_name, $data);
+            $component_name = $_MIDCOM->context->component_name;
         }
+
+        if ($_MIDCOM->authentication->is_user())
+        {
+            // If we have user we should expose that to templating via context
+            if ($component_name == 'midcom_core')
+            {
+                $data['user'] = $_MIDCOM->authentication->get_person();
+            }
+            else
+            {
+                $core_data = array
+                (
+                    'user' => $_MIDCOM->authentication->get_person(),
+                );
+                $_MIDCOM->context->set_item('midcom_core', $core_data);
+            }
+        }
+        
+        $_MIDCOM->context->set_item($component_name, $data);
         
         // Set other context data from route
         if (isset($route_configuration['mimetype']))
@@ -360,17 +379,6 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         if (isset($route_configuration['content_entry_point']))
         {
             $_MIDCOM->context->content_entry_point = $route_configuration['content_entry_point'];
-        }
-
-        if ($_MIDCOM->authentication->is_user())
-        {
-            if (!isset($_MIDCOM->context->midcom_core))
-            {
-                $_MIDCOM->context->midcom_core = array();
-            }
-
-            // If we have user we should expose that to templating
-            $_MIDCOM->context->midcom_core['user'] = $_MIDCOM->authentication->get_person();
         }
     }
 
