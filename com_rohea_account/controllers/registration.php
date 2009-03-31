@@ -69,7 +69,7 @@ class com_rohea_account_controllers_registration extends midcom_core_controllers
         
         
         // Preparing new objects for registration
-        $this->prepare_new_object($args);        
+        $this->prepare_new_object($data, $args);        
         $schemadb = $this->configuration->get('schemadb_registration');
         $this->load_creation_datamanager($data, $schemadb, 'account_registration');
         

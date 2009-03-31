@@ -270,3 +270,8 @@ msgstr "Kaupunki"
 msgid "key: Additional information"
 msgstr "Lisätietoa"
 
+msgid "key: Mandatory fields"
+msgstr "Pakolliset tiedot"
+
+msgid "key: Additional fields"
+msgstr "Lisätiedot"
