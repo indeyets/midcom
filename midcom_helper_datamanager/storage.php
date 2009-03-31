@@ -123,12 +123,6 @@ abstract class midcom_helper_datamanager_storage
             // non-storage-backend driven storage operations as well (mainly for the blob type)
             $data = $type->convert_to_storage();
             
-            if (   $type_definition['required'] == true
-                && !$data)
-            {
-                throw new midcom_helper_datamanager_exception_validation("Field {$name} is required");
-            }
-            
             if ($type_definition['storage']['location'] !== null)
             {
                 if ($type->serialized_storage)
