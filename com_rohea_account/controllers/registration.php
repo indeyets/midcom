@@ -111,6 +111,7 @@ class com_rohea_account_controllers_registration extends midcom_core_controllers
             exit();
         }
 
+        $data['validation_errors'] = false;
         if (isset($this->datamanager->validation_errors))
         {
             $data['validation_errors'] = $this->datamanager->validation_errors;
