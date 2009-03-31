@@ -28,7 +28,8 @@ class midcom_core_controllers_authentication
     public function action_login($route_id, &$data, $args)
     {
         // TODO: Fix some more intelligent way to determine login method
-        if (isset($_POST['username']) && isset($_POST['password']))
+        if (   isset($_POST['username']) 
+            && isset($_POST['password']))
         {
             if ($_MIDCOM->authentication->login($_POST['username'], $_POST['password']))
             {
@@ -36,11 +37,6 @@ class midcom_core_controllers_authentication
                 exit();
             }
         }
-        
-        $_MIDCOM->context->set_item('template_entry_point', 'midcom-login-form');
-        $_MIDCOM->templating->template();
-        $_MIDCOM->templating->display();
     }
-
 }
 ?>

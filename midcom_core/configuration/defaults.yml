@@ -194,7 +194,7 @@ routes:
         action: login
         route: /mgd:login
         root_only: true
-        content_entry_point: midcom-authentication-form
+        template_entry_point: midcom-login-form
     logout:
         controller: midcom_core_controllers_authentication
         action: logout

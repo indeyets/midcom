@@ -319,7 +319,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch_route::action_called');
         }
-        
+
         $this->data_to_context($selected_route_configuration, $data);
     }
     
