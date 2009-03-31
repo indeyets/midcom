@@ -251,6 +251,8 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
 
         $username = $session->username;
         $password = $this->_unobfuscate_password($session->password);
+        $this->trusted_auth = $session->trusted;        
+
         if ($_MIDCOM->timer)
         {
             $_MIDCOM->timer->setMarker('MidCOM authentication::authenticate_session::password_obfuscated');
