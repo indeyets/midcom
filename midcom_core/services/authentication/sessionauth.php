@@ -109,13 +109,19 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
             $this->sitegroup = $_MIDGARD_CONNECTION->get_sitegroup();
         }
             
-        $this->user = midgard_user::auth($username, $password, $this->sitegroup);
+        if ($this->trusted_auth)
+        {
+            $this->user = midgard_user::auth($username, '', $this->sitegroup, true);
+        }
+        else
+        {
+            $this->user = midgard_user::auth($username, $password, $this->sitegroup);
+        }
 
         if ($_MIDCOM->timer)
         {
             $_MIDCOM->timer->setMarker('MidCOM authentication::do_midgard_login::midgard_auth_called');
         }
-
 
         // Don't allow trusted auth for admin users 
         if ($this->trusted_auth && !empty($this->user) && $this->user->is_admin())
