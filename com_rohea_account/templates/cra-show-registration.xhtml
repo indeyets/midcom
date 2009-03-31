@@ -1,5 +1,8 @@
 <h1 i18n:translate="">key: Register your account</h1>
 
+<div tal:condition="com_rohea_account/validation_errors" class="errors">
+    <div tal:repeat="error com_rohea_account/validation_errors" tal:content="error">Validation error</div>
+</div>
 
 <span tal:define="global fields com_rohea_account/registration_form/widgets" />
 
