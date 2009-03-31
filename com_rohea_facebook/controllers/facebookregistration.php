@@ -69,7 +69,7 @@ class com_rohea_facebook_controllers_facebookregistration extends midcom_core_co
         }
         else
         {  
-            $this->prepare_new_object($args);        
+            $this->prepare_new_object($data, $args);        
             $schemadb = $this->configuration->get('schemadb_simpleregistration');
             $this->load_creation_datamanager($data, $schemadb, 'account_registration');
         }
