@@ -494,8 +494,15 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
                 {
                     $_MIDCOM->timer->setMarker('MidCOM::templating::display::i18n');
                 }
-          
-                $content = $tal->execute();
+            
+                try
+                {
+                    $content = $tal->execute();
+                }
+                catch (PHPTAL_TemplateException $e)
+                {
+                    throw new Exception("PHPTAL: {$e->srcFile} line {$e->srcLine}: " . $e->getMessage());
+                }
                 unset($tal);
                 if ($_MIDCOM->timer)
                 {
