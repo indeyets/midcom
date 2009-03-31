@@ -74,6 +74,10 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
         switch ($this->schema->fields[$name]['storage']['location'])
         {
             case 'parameter':
+                if (!$this->object->guid)
+                {
+                    break;
+                }
                 $this->object->parameter
                 (
                     $this->schema->fields[$name]['storage']['domain'],
@@ -133,6 +137,10 @@ class midcom_helper_datamanager_storage_midgard extends midcom_helper_datamanage
         switch ($this->schema->fields[$name]['storage']['location'])
         {
             case 'parameter':
+                if (!$this->object->guid)
+                {
+                    break;
+                }
                 return $this->object->parameter
                 (
                     $this->schema->fields[$name]['storage']['domain'],
