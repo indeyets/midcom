@@ -230,6 +230,18 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
      * by specifying a page GUID or path as the first argument, or to a static instance of a component
      * by specifying component name as the first argument.
      *
+     * Here is an example of using dynamic calls inside a TAL template, in this case loading three latest news:
+     * 
+     * <code>
+     * <tal:block tal:define="latest_news php:MIDCOM.templating.dynamic_call('net_nemein_news', 'latest', array('number' => 3))">
+     *     <ul tal:condition="latest_news/news">
+     *         <li tal:repeat="article latest_news/news">
+     *             <a href="#" tal:attributes="href article/url" tal:content="article/title">Headline</a>
+     *         </li>
+     *     </ul>
+     * </tal:block>
+     * </code>
+     *
      * @param string $component_name Component name, page GUID or page path
      * @param string $route_id     Route identifier
      * @param array $arguments  Arguments to give to the route
