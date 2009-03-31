@@ -18,7 +18,6 @@
  */
 class midcom_helper_datamanager_datamanager
 {
-    
     private $schemadb = null;
     public $schema = null;
     public $schema_name = null;

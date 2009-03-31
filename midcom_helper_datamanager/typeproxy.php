@@ -128,7 +128,7 @@ class midcom_helper_datamanager_typeproxy
             $this->prepare_type($name);
             if (! $this->types[$name]->validate())
             {
-                $this->validation_errors[$name] = $this->types[$name]->validation_error;
+                $validation_errors[$name] = $this->types[$name]->validation_error;
             }
         }
 
