@@ -70,9 +70,11 @@ class midcom_helper_datamanager_form_simple extends midcom_helper_datamanager_fo
                 $this->pass_results_to_method('on_submit', $results, true);
                 $this->pass_results_to_method('sync_widget2type', $results, false);
                 
-                $this->datamanager->save();
-                
-                throw new midcom_helper_datamanager_exception_save();
+                if ($this->datamanager->save())
+                {
+                    // Saved successfully
+                    throw new midcom_helper_datamanager_exception_save();
+                }
                 // and then what ?
                 break;
 
