@@ -58,7 +58,7 @@ class midcom_core_services_authentication_basic implements midcom_core_services_
 
     public function login($username, $password)
     {
-        if (extension_loaded('midgard2'))
+        if (!$this->sitegroup)
         {
             // In Midgard2 we need current SG name for authentication
             $this->sitegroup = $_MIDGARD_CONNECTION->get_sitegroup();
@@ -90,7 +90,7 @@ class midcom_core_services_authentication_basic implements midcom_core_services_
             echo "<h1>Authorization required</h1>\n";
             exit();
         }
-        
+
         if (!$this->login($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
         {
             // Wrong password: Recurse until auth ok or user gives up

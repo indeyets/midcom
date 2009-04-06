@@ -33,7 +33,7 @@ class midcom_core_component_loader
             return $this->tried_to_load[$component];
         }
             
-        if (! isset($this->manifests[$component]))
+        if (!isset($this->manifests[$component]))
         {
             return false;
         }
@@ -67,7 +67,7 @@ class midcom_core_component_loader
         }
         
         $component_directory = $this->component_to_filepath($component);
-        if (! is_dir($component_directory))
+        if (!is_dir($component_directory))
         {        
             // No component directory
             $this->tried_to_load[$component] = false;
