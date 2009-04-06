@@ -30,6 +30,8 @@ class midcom_core_exceptionhandler
         }
 
         $message = $exception->getMessage();
+        
+        $_MIDCOM->log($message_type, $message, 'warn');
 
         if (headers_sent())
         {
