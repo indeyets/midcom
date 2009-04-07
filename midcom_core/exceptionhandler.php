@@ -35,7 +35,8 @@ class midcom_core_exceptionhandler
         {
             if (isset($_MIDCOM->context->uri))
             {
-                $message .= " ($_MIDCOM->context->uri)";
+                $uri = $_MIDCOM->context->uri;
+                $message .= " ($uri)";
             }
             $_MIDCOM->log($message_type, $message, 'warn');
         }
