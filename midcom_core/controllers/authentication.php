@@ -37,6 +37,10 @@ class midcom_core_controllers_authentication
                 exit();
             }
         }
+        
+        $exception_data = array();
+        $exception_data['message'] = "please enter your username and password";
+        $_MIDCOM->context->set_item('midcom_core_exceptionhandler', $exception_data);
     }
 }
 ?>
