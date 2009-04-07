@@ -24,7 +24,7 @@
                         <img src="/midcom-static/midcom_core/midgard/error-200.png" />
                     </aside>
                     
-                    <p tal:content="midcom_core_exceptionhandler/message">Lorem ipsum</p>
+                    <div class="errors" tal:content="midcom_core_exceptionhandler/message">Lorem ipsum</div>
 
                     <ul tal:condition="midcom_core_exceptionhandler/trace">
                         <li tal:repeat="trace midcom_core_exceptionhandler/trace">

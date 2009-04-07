@@ -331,16 +331,20 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
             }
         }
         
-        if (   is_null($this->user) 
-            || !$this->user)
-        {
-            $_MIDCOM->context->set_item('template_entry_point', 'midcom-login-form');
-            $_MIDCOM->context->set_item('cache_enabled', false);
-            $_MIDCOM->templating->template();
-            $_MIDCOM->templating->display();
-            exit();
-        }
-    
+        // Pass some data to the handler
+        $data = array();
+        $data['message'] = $exception->getMessage();
+        $data['exception'] = $exception;
+        $_MIDCOM->context->set_item('midcom_core_exceptionhandler', $data);
+        
+        // Set entry point and disable cache
+        $_MIDCOM->context->set_item('template_entry_point', 'midcom-login-form');
+        $_MIDCOM->context->set_item('cache_enabled', false);
+        
+        // Do normal templating
+        $_MIDCOM->templating->template();
+        $_MIDCOM->templating->display();
+        exit();
     }
 
 }
