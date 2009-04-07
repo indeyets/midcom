@@ -33,7 +33,7 @@ class midcom_core_exceptionhandler
 
         if (isset($_MIDCOM))
         {
-            $log_message = $message;
+            $log_message = str_replace("\n", ' ', $message);
             if (isset($_MIDCOM->context->uri))
             {
                 $uri = $_MIDCOM->context->uri;
