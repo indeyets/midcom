@@ -36,7 +36,12 @@ interface midcom_core_services_authorization
      * An user must be logged in to this request
      */
     public function require_user();
-    
+
+    /**
+     * Administrator must be logged in to this request
+     */
+    public function require_admin();
+
     /**
      * Enter into SUDO mode. Component is required here for access control purposes as SUDO might be disabled for some parts
      */

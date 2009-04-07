@@ -159,7 +159,17 @@ class midcom_core_services_authorization_owner implements midcom_core_services_a
             throw new midcom_exception_unauthorized("Authentication required");
         }
     }
-    
+
+    public function require_admin()
+    {
+        $this->require_user();
+        
+        if (!$_MIDGARD['admin'])
+        {
+            throw new midcom_exception_unauthorized("Administrative privileges required");   
+        }
+    }
+
     /**
      * Enter into SUDO mode. Component is required here for access control purposes as SUDO might be disabled for some parts
      */
