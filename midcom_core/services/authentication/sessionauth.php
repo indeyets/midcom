@@ -37,15 +37,22 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
             $this->authenticate_session($sessionid);
         }
 
+        if (   isset($_POST['username'])
+            && isset($_POST['password']))
+        {
+            $this->login($_POST['username'], $_POST['password'], false);
+        }
+
         if ($_MIDCOM->timer)
         {
             $_MIDCOM->timer->setMarker('MidCOM authentication::session_read_and_authenticated');
         }
     }
     
-    public function login($username, $password)
+    public function login($username, $password, $read_session = true)
     {
-        if ($this->session_cookie->read_login_session())
+        if (   $read_session
+            && $this->session_cookie->read_login_session())
         {
             $sessionid = $this->session_cookie->get_session_id();
             return $this->authenticate_session($sessionid);
@@ -173,21 +180,23 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         $session->clientip = $clientip;
         $session->timestamp = time();
         $session->trusted = $this->trusted_auth; // for trusted authentication
-        
+
         if (! $session->create())
         {
             // TODO: Add some exception?
             return false;
         }
         
-        $result = Array(
-            'session_id' => $session->guid, 'user' => &$user // <-- FIXME: is this supposed to be $this->user instead?
+        $result = array
+        (
+            'session_id' => $session->guid, 
+            'user' => &$user // <-- FIXME: is this supposed to be $this->user instead?
         );
         
         $this->current_session_id = $session->guid;
         if (isset($_POST['remember_login']))
         {
-            $this->session_cookie->create_login_session_cookie($session->guid, $this->user->guid, time()+24*3600*365);
+            $this->session_cookie->create_login_session_cookie($session->guid, $this->user->guid, time() + 24 * 3600 * 365);
         }
         else
         {
