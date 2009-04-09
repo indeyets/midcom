@@ -24,14 +24,6 @@ class com_rohea_account_controllers_settings extends midcom_core_controllers_bas
     {
         $this->configuration = $instance->configuration;
         $this->password_helper = new com_rohea_account_passwordhelper();
-        // Tsekataan onko käyttäjä kirjautunut.
-        if (! $_MIDCOM->authentication->is_user())
-        {
-            //throw new Exception("com_rohea_account_controllers_settings: User must be logged in."); //Kivempi heittää errori joka tulee näkyviin
-            throw new midcom_exception_unauthorized("Requires logged user");
-        }
-
-        $this->current_user = $_MIDCOM->authentication->get_person();        
     }
     
     public function load_object($args)
@@ -53,6 +45,9 @@ class com_rohea_account_controllers_settings extends midcom_core_controllers_bas
 
     public function action_settings($route_id, &$data, $args)
     {
+        $_MIDCOM->authorization->require_user();
+        $this->current_user = $_MIDCOM->authentication->get_person();        
+
         $data['name'] = "com_rohea_account";
         $this->load_object($args); // Ollaan muokkaamassa olemassaolevaa
         $schemadb = $this->configuration->get('schemadb_settings');
@@ -98,6 +93,9 @@ class com_rohea_account_controllers_settings extends midcom_core_controllers_bas
         
     public function action_uilanguage($route_id, &$data, $args)
     {
+        $_MIDCOM->authorization->require_user();
+        $this->current_user = $_MIDCOM->authentication->get_person();        
+
         $data['name'] = "com_rohea_account";
         $this->load_object($args); // Ollaan muokkaamassa olemassaolevaa
         $schemadb = $this->configuration->get('schemadb_settings');
@@ -164,6 +162,9 @@ class com_rohea_account_controllers_settings extends midcom_core_controllers_bas
       */
     public function action_email($route_id, &$data, $args)
     {
+        $_MIDCOM->authorization->require_user();
+        $this->current_user = $_MIDCOM->authentication->get_person();        
+
         // Loading datamanager for the current user
         $this->load_object($args); 
         $schemadb = $this->configuration->get('schemadb_settings_email');
@@ -211,6 +212,9 @@ class com_rohea_account_controllers_settings extends midcom_core_controllers_bas
       */
     public function action_userinfo($route_id, &$data, $args)
     {
+        $_MIDCOM->authorization->require_user();
+        $this->current_user = $_MIDCOM->authentication->get_person();        
+
         // Loading datamanager for the current user
         $this->load_object($args); 
         $schemadb = $this->configuration->get('schemadb_settings_userinfo');
@@ -259,6 +263,9 @@ class com_rohea_account_controllers_settings extends midcom_core_controllers_bas
       */
     public function action_password($route_id, &$data, $args)
     {
+        $_MIDCOM->authorization->require_user();
+        $this->current_user = $_MIDCOM->authentication->get_person();        
+
         // Loading Datamanager
         $this->load_object($args); 
         $schemadb = $this->configuration->get('schemadb_settings');
@@ -342,6 +349,9 @@ class com_rohea_account_controllers_settings extends midcom_core_controllers_bas
     
     public function action_information($route_id, &$data, $args)
     {
+        $_MIDCOM->authorization->require_user();
+        $this->current_user = $_MIDCOM->authentication->get_person();        
+
         $this->load_object($args); // Ollaan muokkaamassa olemassaolevaa
         $schemadb = $this->configuration->get('schemadb_settings');
         $this->load_datamanager($data, $schemadb, 'account_settings');
@@ -352,6 +362,9 @@ class com_rohea_account_controllers_settings extends midcom_core_controllers_bas
 
     public function action_overview($route_id, &$data, $args)
     {
+        $_MIDCOM->authorization->require_user();
+        $this->current_user = $_MIDCOM->authentication->get_person();        
+
         $data['name'] = "com_rohea_account";
         $this->load_object($args); // Ollaan muokkaamassa olemassaolevaa
         $schemadb = $this->configuration->get('schemadb_settings');
