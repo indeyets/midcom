@@ -1,0 +1,33 @@
+<h1>Remove <tal:block tal:content="com_rohea_account/person/username">user</tal:block>?</h1>
+
+<h2>The following data depends on the user</h2>
+
+<form method="post">
+    <table>
+        <thead>
+            <tr>
+                <th>Class</th>
+                <th>Count</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr tal:repeat="dependency com_rohea_account/dependency_counts">
+                <th><tal:block tal:content="dependency/class">Class name</tal:block>::<tal:block tal:content="dependency/property">property</tal:block></th>
+                <td tal:content="dependency/dependencies">XX</td>
+                <td>
+                    <select name="action[]" tal:attributes="name dependency/actionname">
+                        <option value="assign">Assign</option>
+                        <option value="delete">Delete</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <label>
+        Assign objects to user <input type="text" name="assign_to_username" value="" tal:attributes="value midcom_core/user/username" />
+    </label>
+    
+    <input type="submit" value="Handle" />
+</form>

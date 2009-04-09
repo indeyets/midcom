@@ -29,6 +29,15 @@ routes:
         action: admin
         route: /admin/
         content_entry_point: cra-show-admin
+    admin_remove:
+        controller: com_rohea_account_controllers_admin
+        action: remove
+        route: '/admin/{$username}'
+        content_entry_point: cra-show-remove
+        allowed_methods:
+            - OPTIONS
+            - GET
+            - POST
     settings:
         controller: com_rohea_account_controllers_settings
         action: settings

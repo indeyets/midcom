@@ -16,7 +16,7 @@ margin: 0;
     <td><p><strong>del</strong></p></td>
   </tr>
   <tr tal:repeat="person com_rohea_account/registered_persons">
-    <td><p>${person/id}</p></td>
+    <td><p><a href="#" tal:attributes="href person/remove_url">${person/id}</a></p></td>
     <td><p>${person/username}</p></td>
     <td><p>${person/guid}</p></td>
     <td><p>${person/metadata/deleted}</p></td>
