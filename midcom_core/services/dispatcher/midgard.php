@@ -231,6 +231,11 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
             }
             catch (Exception $e)
             {
+                if (get_class($e) == 'midcom_exception_unauthorized')
+                {
+                    // ACL exceptions override anything else
+                    throw $e;
+                }
                 $this->exceptions_stack[] = $e; // Adding exception to exceptions stack
                 $success_flag = false; // route failed
             }
