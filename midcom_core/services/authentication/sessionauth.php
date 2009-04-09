@@ -36,9 +36,8 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
             $sessionid = $this->session_cookie->get_session_id();
             $this->authenticate_session($sessionid);
         }
-
-        if (   isset($_POST['username'])
-            && isset($_POST['password']))
+        elseif (   isset($_POST['username'])
+                && isset($_POST['password']))
         {
             $this->login($_POST['username'], $_POST['password'], false);
         }
