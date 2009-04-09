@@ -130,7 +130,9 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         }
 
         // Don't allow trusted auth for admin users 
-        if ($this->trusted_auth && !empty($this->user) && $this->user->is_admin())
+        if (   $this->trusted_auth 
+            && !empty($this->user)
+            && $this->user->is_admin())
         {
             // Re-check using password for admin users
             $this->user = midgard_user::auth($username, $password, $this->sitegroup, false);
