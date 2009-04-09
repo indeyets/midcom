@@ -36,11 +36,6 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
             $sessionid = $this->session_cookie->get_session_id();
             $this->authenticate_session($sessionid);
         }
-        elseif (   isset($_POST['username'])
-                && isset($_POST['password']))
-        {
-            $this->login($_POST['username'], $_POST['password'], false);
-        }
 
         if ($_MIDCOM->timer)
         {
@@ -111,7 +106,6 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
     {
         if (!$this->sitegroup)
         {
-            // In Midgard2 we need current SG name for authentication
             $this->sitegroup = $_MIDGARD_CONNECTION->get_sitegroup();
         }
             
@@ -143,8 +137,9 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
             $_MIDCOM->timer->setMarker('MidCOM authentication::do_midgard_login::midgard_auth_called');
         }
         
-        if (! $this->user)
+        if (!$this->user)
         {
+            $_MIDCOM->log('midcom_core_services_authentication_sessionauth', "Authentication failed: " . midgard_connection::get_error_string(), 'warn');
             $this->session_cookie->delete_login_session_cookie();          
             return false;
         }
@@ -340,6 +335,14 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
                 $_MIDCOM->dispatcher->dispatch(); // TODO: is this dangerous? Removing it means error 500
             }
         }
+
+        $log_message = str_replace("\n", ' ', $exception->getMessage());
+        if (isset($_MIDCOM->context->uri))
+        {
+            $uri = $_MIDCOM->context->uri;
+            $log_message .= " ($uri)";
+        }
+        $_MIDCOM->log('midcom_core_services_authentication_sessionauth', $log_message, 'warn');
         
         // Pass some data to the handler
         $data = array();
