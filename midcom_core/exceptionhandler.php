@@ -29,7 +29,7 @@ class midcom_core_exceptionhandler
                 break;
         }
 
-        $message = $exception->getMessage();
+        $message = htmlentities($exception->getMessage());
 
         if (isset($_MIDCOM))
         {
