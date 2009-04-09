@@ -252,8 +252,13 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
                         throw $exception;
                         // This will exit
                     case 'midcom_exception_httperror':
-                        throw $exception;
-                        // This will exit
+                        if (   $exception->getCode() != 405
+                            || count($this->exceptions_stack) == 1)
+                        {
+                            // Throw the HTTP error as-is, except if it is a "Method not allowed" that isn't the only error
+                            throw $exception;
+                            // This will exit
+                        }
                     default:
                         $messages .= $exception->getMessage() . "\n";
                         break;
