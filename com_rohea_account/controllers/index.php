@@ -28,8 +28,6 @@ class com_rohea_account_controllers_index
             $current_person = $_MIDCOM->authentication->get_person();
             $data['logged_in'] = true;            
         }
-        return true;
-
     }
          
     public function action_login($route_id, &$data, $args)
@@ -71,26 +69,17 @@ class com_rohea_account_controllers_index
         {
             throw new Exception("com_rohea_account_login_index: Too many instances of com_rohea_account component found");
         }
-
-
-        return true;
-
-    }       
+    }
     
     public function action_info($route_id, &$data, $args)
     {
-        $current_person = null;
+        $data['current_person'] = null;
         $data['logged_in'] = false;
         if ($_MIDCOM->authentication->is_user())
         {
-            $current_person = $_MIDCOM->authentication->get_person();
-            $data['logged_in'] = true;            
-            $data['current_person'] = $current_person;
-        }        
-        
-        return true;
-
-    }      
-         
+            $data['current_person'] = $_MIDCOM->authentication->get_person();
+            $data['logged_in'] = true;
+        }
+    }
 }
 ?>

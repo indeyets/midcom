@@ -6,7 +6,7 @@ schemadb_registration: file:/com_rohea_account/configuration/schema_registration
 schemadb_settings: file:/com_rohea_account/configuration/schema_settings.yml
 schemadb_settings_email: file:/com_rohea_account/configuration/schema_email.yml
 schemadb_settings_userinfo: file:/com_rohea_account/configuration/schema_userinfo.yml
-facebook_enabled: true
+facebook_enabled: false
 message_from: user@host.com
 routes:
     index:
