@@ -1,0 +1,34 @@
+routes:
+    api_user:
+        controller: org_gnome_tomboy_controllers_api
+        action: user
+        route: '/api/1.0/{$user}'
+        content_entry_point: ogt-show-user_json
+        mimetype: application/json
+        allowed_methods:
+            - GET
+    api_usernotes:
+        controller: org_gnome_tomboy_controllers_api
+        action: usernotes
+        route: '/api/1.0/{$user}/notes'
+        content_entry_point: ogt-show-usernotes_json
+        mimetype: application/json
+        allowed_methods:
+            - GET
+            - PUT
+    api_usernote:
+        controller: org_gnome_tomboy_controllers_api
+        action: usernote
+        route: '/api/1.0/{$user}/notes/{$id}'
+        content_entry_point: ogt-show-usernote_json
+        mimetype: application/json
+        allowed_methods:
+            - GET
+    api_userfriends:
+        controller: org_gnome_tomboy_controllers_api
+        action: userfriends
+        route: '/api/1.0/{$user}/friends'
+        content_entry_point: ogt-show-userfriends_json
+        mimetype: application/json
+        allowed_methods:
+            - GET

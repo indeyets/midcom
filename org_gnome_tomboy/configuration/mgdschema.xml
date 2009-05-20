@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+
+  <type name="org_gnome_tomboy_sync" table="org_gnome_tomboy_sync">
+    <property name="id"       type="unsigned integer" primaryfield="id"/>
+    <property name="person"   type="unsigned integer" link="midgard_person:id" parentfield="person"/>
+  </type>
+
+  <type name="org_gnome_tomboy_note" table="org_gnome_tomboy_note">
+    <property name="id"       type="unsigned integer" primaryfield="id"/>
+    <property name="title"    type="string" index="yes"/>
+    <property name="text"     type="longtext"/>
+    <property name="latestsync"   type="unsigned integer" link="org_gnome_tomboy_sync:id"/>
+    <!-- Cursor position might be possible to map to web application also -->
+    <property name="cursorposition" type="integer"/>
+    <!-- The data below mostly maps only to desktop usage -->
+    <property name="width"    type="integer"/>
+    <property name="height"   type="integer"/>
+    <property name="x"        type="integer"/>
+    <property name="y"        type="integer"/>
+    <property name="openonstartup" type="boolean"/>
+  </type>
+</Schema>
