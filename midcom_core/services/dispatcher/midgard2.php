@@ -86,6 +86,16 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
         $_MIDCOM->context->prefix = $prefix;
         $_MIDCOM->context->host = $_host;
         $_MIDCOM->context->request_method = $this->request_method;
+
+        $_MIDCOM->context->webdav_request = false;
+        if (   $_MIDCOM->configuration->get('enable_webdav')
+            && (   $this->request_method != 'GET'
+                && $this->request_method != 'POST')
+            )
+        {
+            // Serve this request with the full HTTP_WebDAV_Server
+            $_MIDCOM->context->webdav_request = true;
+        }
         
         // Append styles from context
         $_MIDCOM->context->style_id = 0;

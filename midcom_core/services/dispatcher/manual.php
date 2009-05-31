@@ -126,7 +126,7 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         $this->page = $page;
     }
 
-    private function resolve_page($path)
+    public function resolve_page($path)
     {
         $temp = trim($path);
         $parent_id = $_MIDCOM->context->host->root;
