@@ -279,12 +279,9 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $this->route_id = $route;
         $_MIDCOM->context->route_id = $this->route_id;
         $selected_route_configuration = $this->route_definitions[$this->route_id];
-        // Handle allowed HTTP methods
+
+        // Inform client of allowed HTTP methods
         header('Allow: ' . implode(', ', $selected_route_configuration['allowed_methods']));
-        if (!in_array($this->request_method, $selected_route_configuration['allowed_methods']))
-        {
-            throw new midcom_exception_httperror("{$this->request_method} not allowed", 405);
-        }
 
         // Initialize controller
         $controller_class = $selected_route_configuration['controller'];
@@ -292,31 +289,31 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $controller->dispatcher = $this;
     
         // Define the action method for the route_id
-        $action_method = "action_{$selected_route_configuration['action']}";
-    
-        // Handle HTTP request
-        if (   $_MIDCOM->configuration->get('enable_webdav')
-            && $selected_route_configuration['webdav_only']
-            || (   $this->request_method != 'GET'
-                && $this->request_method != 'POST')
-            )
-        {
-            // Start the full WebDAV server instance
-            // FIXME: Figure out how to prevent this with Variants
-            $webdav_server = new midcom_core_helpers_webdav($controller);
-            $webdav_server->serve($this->route_id, $action_method, $this->action_arguments[$this->route_id]);
-            // This will exit
-        }
-        if ($_MIDCOM->timer)
-        {
-            $_MIDCOM->timer->setMarker('MidCOM dispatcher::dispatch_route::webdav_checked');
-        }
-
-        $data = array();
+        $action_method = "{$this->request_method}_{$selected_route_configuration['action']}";
 
         // Run the route and set appropriate data
+        $data = array();
         try
         {
+            if (!method_exists($controller, $action_method))
+            {
+                if (   $this->request_method == 'GET'
+                    || $this->request_method == 'POST')
+                {
+                    // Fallback for the legacy "action_XX" method names
+                    // TODO: Remove when components are ready for it
+                    $action_method = "action_{$selected_route_configuration['action']}";
+                    if (!method_exists($controller, $action_method))
+                    {
+                        throw new midcom_exception_notfound("Action {$selected_route_configuration['action']} not found");
+                    }
+                }
+                else
+
+                {
+                    throw new midcom_exception_httperror("{$this->request_method} not allowed", 405);
+                }
+            }
             $controller->$action_method($this->route_id, $data, $this->action_arguments[$this->route_id]);
         }
         catch (Exception $e)

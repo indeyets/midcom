@@ -125,7 +125,40 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
     {
         $this->page = $page;
     }
-    
+
+    private function resolve_page($path)
+    {
+        $temp = trim($path);
+        $parent_id = $_MIDCOM->context->host->root;
+        $this->page_id = $parent_id;
+        $path = explode('/', trim($path));
+        foreach ($path as $p)
+        {
+            if (strlen(trim($p)) == 0)
+            {                
+                continue;
+            }
+            $qb = new midgard_query_builder('midgard_page');
+            $qb->add_constraint('up', '=', $parent_id);
+            $qb->add_constraint('name', '=', $p);
+            $res = $qb->execute();
+            if(count($res) != 1)
+            {
+                break;            
+            }
+            $parent_id = $res[0]->id;
+            $temp = substr($temp, 1 + strlen($p));
+            $page = $res[0];
+        }
+
+        if (strlen($temp) < 2)
+        {
+            $this->path = '/';
+        }
+        
+        return $page;
+    }
+
     private function get_page_prefix()
     {
         if (!$this->page)

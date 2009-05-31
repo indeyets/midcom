@@ -20,15 +20,13 @@ $_SERVER['SCRIPT_NAME'] = $_MIDCOM->context->prefix;
  */
 class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
 {
-    private $controller = null;
-    private $route_id = '';
-    private $action_method = '';
-    private $action_arguments = array();
     private $locks = array();
+    private $data = array();
+    private $dispatcher = null;
     
-    public function __construct($controller)
+    public function __construct()
     {
-        $this->controller = $controller;
+        $this->data =& $_MIDCOM->context->get();
         parent::HTTP_WebDAV_Server();
     }
 
@@ -37,12 +35,8 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
      *
      * @access public
      */
-    public function serve($route_id, $action_method, $action_arguments) 
+    public function serve() 
     {
-        $this->route_id = $route_id;
-        $this->action_method = $action_method;
-        $this->action_arguments = $action_arguments;
-    
         // special treatment for litmus compliance test
         // reply on its identifier header
         // not needed for the test itself but eases debugging
@@ -57,7 +51,6 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
 
         $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "\n\n=================================================");
         $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Serving {$_SERVER['REQUEST_METHOD']} request for {$_SERVER['REQUEST_URI']}");
-        $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Controller: " . get_class($this->controller) . ", action: {$this->action_method}");
         
         header("X-Dav-Method: {$_SERVER['REQUEST_METHOD']}");
         
@@ -71,7 +64,7 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
      * OPTIONS method handler
      *
      * The OPTIONS method handler creates a valid OPTIONS reply
-     * including Dav: and Allowed: heaers
+     * including Dav: and Allowed: headers
      * based on the route configuration
      *
      * @param  void
@@ -105,26 +98,20 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
         $this->filename_check();
 
         $_MIDCOM->authorization->require_user();
-
-        // Run the controller
-        $controller = $this->controller;
-        $action_method = $this->action_method;
-        $data = array();
-        $controller->$action_method($this->route_id, $data, $this->action_arguments);
         
-        if (!isset($data['children']))
+        if (!isset($this->data['children']))
         {
             // Controller did not return children
-            $data['children'] = $this->get_node_children($_MIDCOM->context->page);
+            $this->data['children'] = $this->get_node_children($_MIDCOM->context->page);
         }
         
-        if (empty($data['children']))
+        if (empty($this->data['children']))
         {
             return false;
         }
         
         // Convert children to PROPFIND elements
-        $this->children_to_files($data['children'], $files);
+        $this->children_to_files($this->data['children'], $files);
         
         return true;
     }
@@ -213,15 +200,6 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
      */
     private function filename_check($filename = null)
     {
-        if (is_null($filename))
-        {
-            if (!isset($this->action_arguments['variable_arguments']))
-            {
-                return;
-            }
-            
-            $filename = $this->action_arguments['variable_arguments'][count($this->action_arguments['variable_arguments']) - 1];
-        }
         if (   $filename == '.DS_Store'
             || substr($filename, 0, 2) == '._')
         {
@@ -241,12 +219,6 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
         $this->filename_check();
 
         $_MIDCOM->authorization->require_user();
-
-        // Run the controller
-        $controller = $this->controller;
-        $action_method = $this->action_method;
-        $data =& $options;
-        $controller->$action_method($this->route_id, $data, $this->action_arguments);
         
         return true;
     }
@@ -262,12 +234,6 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
         $this->filename_check();
 
         $_MIDCOM->authorization->require_user();
-
-        // Run the controller
-        $controller = $this->controller;
-        $action_method = $this->action_method;
-        $data =& $options;
-        $controller->$action_method($this->route_id, $data, $this->action_arguments);
         
         return true;
     }
@@ -280,12 +246,6 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
      */
     public function MKCOL($options)
     {
-        // Run the controller
-        $controller = $this->controller;
-        $action_method = $this->action_method;
-        $data = array();
-        $controller->$action_method($this->route_id, $data, $this->action_arguments);
-        
         return '201 Created';
     }
 
@@ -297,12 +257,6 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
      */
     function MOVE($options) 
     {
-        // Run the controller
-        $controller = $this->controller;
-        $action_method = $this->action_method;
-        $data =& $options;
-        $controller->$action_method($this->route_id, $data, $this->action_arguments);
-        
         return true;
     }
 
@@ -314,12 +268,6 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
      */
     function COPY($options) 
     {
-        // Run the controller
-        $controller = $this->controller;
-        $action_method = $this->action_method;
-        $data =& $options;
-        $controller->$action_method($this->route_id, $data, $this->action_arguments);
-        
         return true;
     }
 
@@ -331,12 +279,6 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
      */
     function DELETE($options) 
     {
-        // Run the controller
-        $controller = $this->controller;
-        $action_method = $this->action_method;
-        $data =& $options;
-        $controller->$action_method($this->route_id, $data, $this->action_arguments);
-
         return "204 No Content";
     }
 
@@ -351,18 +293,9 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
     {
         $options['timeout'] = time() + $_MIDCOM->configuration->get('metadata_lock_timeout');
 
-        // Run the controller
-        $controller = $this->controller;
-        $action_method = str_replace('action_', 'get_object_', $this->action_method);
-        
-        if (!method_exists($controller, $action_method))
-        {
-            throw new midcom_exception_httperror("Locking not allowed", 405);
-        }
-        
-        $data =& $options;
-        $object = $controller->$action_method($this->route_id, $data, $this->action_arguments);
-        if (!$object)
+        if (   !isset($this->data['object'])
+            || !is_object($this->data['object'])
+            || !$this->data['object']->guid)
         {
             throw new midcom_exception_notfound("No lockable objects");
         }
@@ -373,18 +306,18 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
             $shared = true;
         }
         
-        if (is_null($object))
+        if (is_null($this->data['object']))
         {
             throw new midcom_exception_notfound("Not found");
         }
         
-        if (midcom_core_helpers_metadata::is_locked($object))
+        if (midcom_core_helpers_metadata::is_locked($this->data['object']))
         {
-            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Object is locked by another user");
+            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Object is locked by another user {$this->data['object']->metadata->locker}");
             return "423 Locked";
         }
 
-        midcom_core_helpers_metadata::lock($object, $shared, $options['locktoken']);
+        midcom_core_helpers_metadata::lock($this->data['object'], $shared, $options['locktoken']);
         
         return "200 OK";
     }
@@ -397,30 +330,21 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
      */
     function UNLOCK(&$options) 
     {
-        // Run the controller
-        $controller = $this->controller;
-        $action_method = str_replace('action_', 'get_object_', $this->action_method);
-        
-        if (!method_exists($controller, $action_method))
-        {
-            throw new midcom_exception_httperror("Locking not allowed", 405);
-        }
-        
-        $data =& $options;
-        $object = $controller->$action_method($this->route_id, $data, $this->action_arguments);
-        if (!$object)
+        if (   !isset($this->data['object'])
+            || !is_object($this->data['object'])
+            || !$this->data['object']->guid)
         {
             throw new midcom_exception_notfound("No lockable objects");
         }
         
-        if (midcom_core_helpers_metadata::is_locked($object ))
+        if (midcom_core_helpers_metadata::is_locked($this->data['object']))
         {
-            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Object is locked by another user {$object->metadata->locker}");
+            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Object is locked by another user {$this->data['object']->metadata->locker}");
             return "423 Locked";
         }
 
         $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Unlocking");
-        midcom_core_helpers_metadata::unlock($object);
+        midcom_core_helpers_metadata::unlock($this->data['object']);
 
         return "200 OK";
     }
@@ -450,51 +374,40 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
             return $this->locks[$path];
         }
 
-        $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Resolving {$path} for locks");
-        $resolv = new midcom_core_helpers_resolver($path);
-        try
+        $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Resolving {$path} for locks using manual dispatcher");
+        if (is_null($this->dispatcher))
         {
-            $resolution = $resolv->resolve();
+            $this->dispatcher = new midcom_core_services_dispatcher_manual();
         }
-        catch (midgard_error_exception $e)
+        
+        $_MIDCOM->context->create();
+        $page = $this->dispatcher->resolve_page($path);
+        if (!$page)
         {
-            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, 'Resolver got "' . $e->getMessage() . '"');
-        }
-
-        if (!in_array('PROPFIND', $resolution['route']['allowed_methods']))
-        {
-            // No PROPFIND supported, so don't supply lock information either
+            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Path {$path} not found");
             $this->locks[$path] = false;
             return $this->locks[$path];
+
         }
+        $this->dispatcher->set_page($page);
+        $this->dispatcher->populate_environment_data();
+        $this->dispatcher->initialize($component_name);
+        // FIXME: Before this we need to figure out the correct route
+        $this->dispatcher->dispatch();
 
-        $controller_class = $resolution['route']['controller'];
-        $action_method = "get_object_{$resolution['route']['action']}";
-
-        if (!method_exists($controller_class, $action_method))
+        if (   !isset($this->data['object'])
+            || !is_object($this->data['object'])
+            || !$this->data['object']->guid)
         {
-            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "{$controller_class} doesn't support {$action_method}");
-            $this->locks[$path] = false;
-            return $this->locks[$path];
-        }
-
-        $controller = new $controller_class($_MIDCOM->context->component_instance);
-        $controller->dispatcher = $_MIDCOM->dispatcher;
-
-        $data = array();
-        $object = $controller->$action_method($resolution['route_id'], $data, $resolution['action_arguments']);
-
-        if (!$object)
-        {
-            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "No object from {$controller_class} {$action_method}");
+            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Controller for {$path} did not return lockable objects");
             $this->locks[$path] = false;
             return $this->locks[$path];
         }
         
 
-        if (!midcom_core_helpers_metadata::is_locked($object, false))
+        if (!midcom_core_helpers_metadata::is_locked($this->data['object'], false))
         {
-            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Not locked, locked = {$object->metadata->locked}, locker = {$object->metadata->locker}");
+            $_MIDCOM->log(__CLASS__ . '::' . __FUNCTION__, "Not locked, locked = {$this->data['object']->metadata->locked}, locker = {$this->data['object']->metadata->locker}");
             $this->locks[$path] = false;
             return $this->locks[$path];
         }
@@ -505,18 +418,18 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
             'type' => 'write',
             'scope' => 'shared',
             'depth' => 0,
-            'owner' => $object->metadata->locker,
-            'created' => strtotime($object->metadata->locked  . ' GMT'),
-            'modified' => strtotime($object->metadata->locked . ' GMT'),
-            'expires' => strtotime($object->metadata->locked . ' GMT') + $_MIDCOM->configuration->get('metadata_lock_timeout') * 60,
+            'owner' => $this->data['object']->metadata->locker,
+            'created' => strtotime($this->data['object']->metadata->locked  . ' GMT'),
+            'modified' => strtotime($this->data['object']->metadata->locked . ' GMT'),
+            'expires' => strtotime($this->data['object']->metadata->locked . ' GMT') + $_MIDCOM->configuration->get('metadata_lock_timeout') * 60,
         );
         
-        if ($object->metadata->locker)
+        if ($this->data['object']->metadata->locker)
         {
             $lock['scope'] = 'exclusive';
         }
         
-        $lock_token = $object->parameter('midcom_core_helper_metadata', 'lock_token');
+        $lock_token = $this->data['object']->parameter('midcom_core_helper_metadata', 'lock_token');
         if ($lock_token)
         {
             $lock['token'] = $lock_token;

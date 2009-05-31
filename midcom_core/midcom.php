@@ -283,6 +283,23 @@ class midcom_core_midcom
     
     public function serve()
     {
+        // Handle HTTP request
+        if (   $this->configuration->get('enable_webdav')
+            && (   $this->dispatcher->request_method != 'GET'
+                && $this->dispatcher->request_method != 'POST')
+            )
+        {
+            // Start the full WebDAV server instance
+            // FIXME: Figure out how to prevent this with Variants
+            $webdav_server = new midcom_core_helpers_webdav();
+            $webdav_server->serve();
+            // This will exit
+        }
+        if ($this->timer)
+        {
+            $this->timer->setMarker('MidCOM dispatcher::dispatch_route::webdav_checked');
+        }
+
         // Prepate the templates
         $this->templating->template();
 
