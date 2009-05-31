@@ -18,7 +18,7 @@ enable_exception_trace: false
 enable_webdav: true
 enable_benchmark: false
 enable_included_list: false
-enable_jquery_framework: true
+enable_jquery_framework: false
 jquery_load_from_google: true
 enable_js_midcom: false
 enable_uimessages: false

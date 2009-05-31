@@ -45,13 +45,7 @@ class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_m
         return $_MIDCOM->dispatcher->generate_url('page_edit', array());
     }
 
-    public function get_object_show($route_id, &$data, $args)
-    {
-        $this->load_object($args);
-        return $this->object;
-    }
-
-    public function action_show($route_id, &$data, $args)
+    public function get_show($route_id, &$data, $args)
     {
         parent::action_show($route_id, $data, $args);
         
@@ -79,29 +73,38 @@ class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_m
 
         if ($route_id == 'page_variants')
         {
-            switch ($this->dispatcher->request_method)
-            {
-                case 'PUT':
-                    $_MIDCOM->authorization->require_do('midgard:update', $data['object']);
-                    // Intentional fall-through
-                case 'GET':
-                    // Get variant of the page
-                    $variant = new midcom_core_helpers_variants();
-                    $variant->datamanager = $data['datamanager'];
-                    $variant->object = $data['object'];
-                    echo $variant->handle($args['variant'], $this->dispatcher->request_method);
-                    die();
-                case 'MKCOL':
-                    // Create subpage
-                    $_MIDCOM->authorization->require_do('midgard:create', $data['object']);
-                    $this->prepare_new_object($args);
-                    $this->object->name = $args['name']['identifier'];    
-                    $this->object->create();
-                    break;
-                default:
-                    throw new midcom_exception_httperror("{$this->dispatcher->request_method} not allowed", 405);
-            }
+            // Get variant of the page
+            $variant = new midcom_core_helpers_variants();
+            $variant->datamanager = $data['datamanager'];
+            $variant->object = $data['object'];
+            echo $variant->handle($args['variant'], $this->dispatcher->request_method);
+            die();
         }
+    }
+
+    public function put_show($route_id, &$data, $args)
+    {
+        parent::action_show($route_id, $data, $args);
+        
+        $_MIDCOM->authorization->require_do('midgard:update', $data['object']);
+
+        // Get variant of the page
+        $variant = new midcom_core_helpers_variants();
+        $variant->datamanager = $data['datamanager'];
+        $variant->object = $data['object'];
+        echo $variant->handle($args['variant'], $this->dispatcher->request_method);
+        die();
+    }
+
+    public function mkcol_show($route_id, &$data, $args)
+    {
+        parent::action_show($route_id, $data, $args);
+
+        // Create subpage
+        $_MIDCOM->authorization->require_do('midgard:create', $data['object']);
+        $this->prepare_new_object($args);
+        $this->object->name = $args['name']['identifier'];    
+        $this->object->create();
     }
 }
 ?>
