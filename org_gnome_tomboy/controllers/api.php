@@ -247,17 +247,13 @@ class org_gnome_tomboy_controllers_api
             throw new midcom_exception_httperror("Note changes not given", 400);
         }
         
-        //ob_start();
-        //var_dump($json_data);
-        //$_MIDCOM->log('tmp', ob_get_clean(), 'warn');
-        
         // Start the sync transaction
         $this->sync->update();
 
         foreach ($json_data->notechanges as $note_import)
         {
             $note = null;
-            $_MIDCOM->log('tmp', "Importing {$note_import->title}", 'warn');
+
             if (isset($note_import->guid))
             {
                 // Try to instantiate with GUID
