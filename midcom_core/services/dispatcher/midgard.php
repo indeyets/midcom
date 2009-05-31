@@ -89,6 +89,16 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $_MIDCOM->context->component = $page->component;
         $_MIDCOM->context->request_method = $this->request_method;
         
+        $_MIDCOM->context->webdav_request = false;
+        if (   $_MIDCOM->configuration->get('enable_webdav')
+            && (   $this->request_method != 'GET'
+                && $this->request_method != 'POST')
+            )
+        {
+            // Serve this request with the full HTTP_WebDAV_Server
+            $_MIDCOM->context->webdav_request = true;
+        }
+        
         $host = new midgard_host();
         $host->get_by_id($_MIDGARD['host']);
         $_MIDCOM->context->host = $host;        
@@ -289,7 +299,7 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         $controller->dispatcher = $this;
     
         // Define the action method for the route_id
-        $action_method = "{$this->request_method}_{$selected_route_configuration['action']}";
+        $action_method = strtolower($this->request_method) . "_{$selected_route_configuration['action']}";
 
         // Run the route and set appropriate data
         $data = array();

@@ -26,7 +26,7 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
     
     public function __construct()
     {
-        $this->data =& $_MIDCOM->context->get();
+        $this->data = $_MIDCOM->context->get();
         parent::HTTP_WebDAV_Server();
     }
 
@@ -394,6 +394,7 @@ class midcom_core_helpers_webdav extends HTTP_WebDAV_Server
         $this->dispatcher->initialize($component_name);
         // FIXME: Before this we need to figure out the correct route
         $this->dispatcher->dispatch();
+        $_MIDCOM->context->delete();
 
         if (   !isset($this->data['object'])
             || !is_object($this->data['object'])

@@ -284,10 +284,7 @@ class midcom_core_midcom
     public function serve()
     {
         // Handle HTTP request
-        if (   $this->configuration->get('enable_webdav')
-            && (   $this->dispatcher->request_method != 'GET'
-                && $this->dispatcher->request_method != 'POST')
-            )
+        if ($_MIDCOM->context->webdav_request)
         {
             // Start the full WebDAV server instance
             // FIXME: Figure out how to prevent this with Variants
