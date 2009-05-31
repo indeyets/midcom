@@ -40,14 +40,9 @@ class org_gnome_tomboy_controllers_api
             $this->user = $basic_auth->get_person();
         }
     }
-
-    /**
-     * Get user information
-     */
-    public function action_user($route_id, &$data, $args)
+    
+    private function request_user(&$data, $args)
     {
-        $this->authenticate();
-        
         if ($args['user'] == $this->user->username)
         {
             $data['user'] = $this->user;
@@ -65,19 +60,7 @@ class org_gnome_tomboy_controllers_api
             
             $data['user'] = $users[0];
         }
-        
-        // Populate the user information array
-        $data['userinfo'] = array();
-        $data['userinfo']['first-name'] = $data['user']->firstname;
-        $data['userinfo']['last-name'] = $data['user']->lastname;
-        
-        $data['userinfo']['notes-ref'] = array();
-        $data['userinfo']['notes-ref']['api-ref'] = "http://{$_MIDCOM->context->host->name}" . $_MIDCOM->dispatcher->generate_url('api_usernotes', array('user' => $args['user']), $_MIDCOM->context->page);
-        // TODO: Web display URL when we have one
 
-        $data['userinfo']['friends-ref'] = array();
-        $data['userinfo']['friends-ref']['api-ref'] = "http://{$_MIDCOM->context->host->name}" . $_MIDCOM->dispatcher->generate_url('api_userfriends', array('user' => $args['user']), $_MIDCOM->context->page);
-        
         if ($data['user']->id == $this->user->id)
         {
             $qb = new midgard_query_builder('org_gnome_tomboy_sync');
@@ -87,9 +70,58 @@ class org_gnome_tomboy_controllers_api
             $syncs = $qb->execute();
             if (count($syncs) > 0)
             {
-                $data['userinfo']['latest-sync-revision'] = $syncs[0]->id;
-                $data['userinfo']['current-sync-guid'] = $syncs[0]->guid;
+                $sync = $syncs[0];
+                if ($sync->metadata->revision == 0)
+                {
+                    $sync->update();
+                }
             }
+            else
+            {
+                $sync = new org_gnome_tomboy_sync();
+                $sync->person = $data['user']->id;
+                $sync->create();
+                $sync->update();
+            }
+            $data['latest-sync-revision'] = $sync->metadata->revision;
+            $data['latest-sync-guid'] = $sync->guid;
+        }
+
+    }
+
+    private function note2data(org_gnome_tomboy_note $note, $full_note = false)
+    {
+        $noteinfo = array();
+        $noteinfo['guid'] = $note->guid;
+        $noteinfo['title'] = $note->title;
+        
+        return $noteinfo;
+    }
+
+    /**
+     * Get user information
+     */
+    public function action_user($route_id, &$data, $args)
+    {
+        $this->authenticate();
+        $this->request_user($data, $args);
+        
+        // Populate the user information array
+        $data['userinfo'] = array();
+        $data['userinfo']['first-name'] = $data['user']->firstname;
+        $data['userinfo']['last-name'] = $data['user']->lastname;
+        
+        $data['userinfo']['notes-ref'] = array();
+        $data['userinfo']['notes-ref']['api-ref'] = "{$args['user']}/notes/"; // "http://{$_MIDCOM->context->host->name}" . $_MIDCOM->dispatcher->generate_url('api_usernotes', array('user' => $args['user']), $_MIDCOM->context->page);
+        // TODO: Web display URL when we have one
+
+        //$data['userinfo']['friends-ref'] = array();
+        //$data['userinfo']['friends-ref']['api-ref'] = "{$args['user']}/friends/"; // "http:////{$_MIDCOM->context->host->name}" . $_MIDCOM->dispatcher->generate_url('api_userfriends', array('user' => $args['user']), $_MIDCOM->context->page);
+        
+        if ($data['user']->id == $this->user->id)
+        {
+            $data['userinfo']['latest-sync-revision'] = $data['latest-sync-revision'];
+            $data['userinfo']['current-sync-guid'] = $data['latest-sync-guid'];
         }
 
         // TODO: Do via variants instead
@@ -97,5 +129,76 @@ class org_gnome_tomboy_controllers_api
         echo json_encode($data['userinfo']);
         die();
     }
+
+    /**
+     * Get notes by a given user
+     */
+    public function action_usernotes($route_id, &$data, $args)
+    {
+        $this->authenticate();
+        $this->request_user($data, $args);
+        
+        $data['notesinfo'] = array();
+        
+        $qb = new midgard_query_builder('org_gnome_tomboy_note');
+        $qb->add_constraint('metadata.creator', '=', $data['user']->guid);
+        // TODO: Access control
+        
+        if (isset($_MIDCOM->dispatcher->get['since']))
+        {
+            // Filter: return only notes revised since given sync number
+            $qb->add_constraint('latestsync', '>', (int) $_MIDCOM->dispatcher->get['since']);
+        }
+        
+        if ($_MIDCOM->dispatcher->request_method == 'PUT')
+        {
+            $json = '';
+            $putdata = fopen('php://input', 'r');
+            while ($data = fread($putdata, 1024))
+            {
+                $json .= $data;
+            }
+            fclose($putdata);
+            
+            $_MIDCOM->log('PUT data', $json, 'error');
+            die();
+        }
+        
+        $notes = $qb->execute();
+        $data['notesinfo']['notes'] = array();
+        foreach ($notes as $note)
+        {
+            $data['notesinfo']['notes'][] = $this->note2data($note);
+        }
+
+        if ($data['user']->id == $this->user->id)
+        {
+            $data['notesinfo']['latest-sync-revision'] = $data['latest-sync-revision'];
+        }
+
+        // TODO: Do via variants instead
+        header('Content-type: application/json');
+        echo json_encode($data['notesinfo']);
+        die();
+    }
+
+    /**
+     * Get friends of a given user
+      TODO: Implement
+    public function action_userfriends($route_id, &$data, $args)
+    {
+        $this->authenticate();
+        $this->request_user($data, $args);
+        
+        $data['friendsinfo'] = array();
+        $data['friendsinfo']['friends'] = array();
+        //
+
+        // TODO: Do via variants instead
+        header('Content-type: application/json');
+        echo json_encode($data['friendsinfo']);
+        die();
+    }
+    */
 }
 ?>

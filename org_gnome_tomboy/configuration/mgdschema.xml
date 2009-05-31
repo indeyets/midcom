@@ -10,7 +10,7 @@
     <property name="id"       type="unsigned integer" primaryfield="id"/>
     <property name="title"    type="string" index="yes"/>
     <property name="text"     type="longtext"/>
-    <property name="latestsync"   type="unsigned integer" link="org_gnome_tomboy_sync:id"/>
+    <property name="latestsync"   type="integer"/>
     <!-- Cursor position might be possible to map to web application also -->
     <property name="cursorposition" type="integer"/>
     <!-- The data below mostly maps only to desktop usage -->

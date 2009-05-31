@@ -204,7 +204,7 @@ class midcom_core_helpers_resolver
         if (!$this->route_matches($route_id_map))
         {
             // TODO: Check message
-            throw new midcom_exception_notfound('No route matches current URL');
+            throw new midcom_exception_notfound('Resolver: No route matches current URL');
         }
         unset($route_id_map);
 
