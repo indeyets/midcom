@@ -112,6 +112,10 @@ class midcom_helper_datamanager_type_component extends midcom_helper_datamanager
     function get_name_for_key($key)
     {
         $key = (string) $key;
+        if (!isset($this->options[$key]))
+        {
+            return $key;
+        }
         return $this->options[$key];
         /* Reminder 
         if ($this->option_callback === null)
