@@ -434,18 +434,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         }
 
         $template_file = $_MIDCOM->cache->template->get($this->get_cache_identifier());
-        if ($_MIDCOM->configuration->get('enable_template_php'))
-        {
-            // Include the file inside output buffer to get PHP executed
-            ob_start();
-            include($template_file);
-            $content = ob_get_clean();
-        }
-        else
-        {
-            // No PHP support, just read the TAL template
-            $content = file_get_contents($template_file);
-        }
+        $content = file_get_contents($template_file);
         if ($_MIDCOM->timer)
         {
             $_MIDCOM->timer->setMarker('MidCOM::templating::display::included');
