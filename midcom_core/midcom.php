@@ -129,6 +129,8 @@ class midcom_core_midcom
             return;
         }
         
+        $loglevel = str_replace('warn', 'warning', $loglevel);
+        
         midgard_error::$loglevel("{$prefix}: {$message}");
     }
     
