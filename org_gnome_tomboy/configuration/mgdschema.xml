@@ -3,12 +3,14 @@
 
   <type name="org_gnome_tomboy_sync" table="org_gnome_tomboy_sync">
     <property name="id"       type="unsigned integer" primaryfield="id"/>
+    <property name="tomboyuuid"     type="string" index="yes"/>
     <property name="person"   type="unsigned integer" link="midgard_person:id" parentfield="person"/>
   </type>
 
   <type name="org_gnome_tomboy_note" table="org_gnome_tomboy_note">
     <property name="id"       type="unsigned integer" primaryfield="id"/>
     <property name="title"    type="string" index="yes"/>
+    <property name="tomboyuuid"     type="string" index="yes"/>
     <property name="text"     type="longtext"/>
     <property name="latestsync"   type="integer"/>
     <!-- Cursor position might be possible to map to web application also -->
