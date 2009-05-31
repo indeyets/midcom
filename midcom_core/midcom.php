@@ -279,6 +279,15 @@ class midcom_core_midcom
         }
 
         header('Content-Type: ' . $this->context->mimetype);
-    }        
+    }
+    
+    public function serve()
+    {
+        // Prepate the templates
+        $this->templating->template();
+
+        // Read contents from the output buffer and pass to MidCOM rendering
+        $this->templating->display();
+    }
 }
 ?>

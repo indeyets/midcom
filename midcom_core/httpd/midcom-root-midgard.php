@@ -12,12 +12,12 @@
 require('midcom_core/framework.php');
 $_MIDCOM = new midcom_core_midcom('midgard');
 
-// Call the controller if available
+// Process the request in order to populate needed data
 $_MIDCOM->process();
 
-$_MIDCOM->templating->template();
+// Serve the request
+$_MIDCOM->serve();
 
-// Read contents from the output buffer and pass to MidCOM rendering
-$_MIDCOM->templating->display();
+// End
 unset($_MIDCOM);
 ?>

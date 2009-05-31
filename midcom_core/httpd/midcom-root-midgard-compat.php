@@ -35,10 +35,8 @@ elseif (isset($_MIDCOM))
 
 if (isset($_MIDCOM))
 {
-    $_MIDCOM->templating->template();
-
-    // Read contents from the output buffer and pass to MidCOM rendering
-    $_MIDCOM->templating->display();
+    // Serve the request
+    $_MIDCOM->serve();
 }
 else
 {

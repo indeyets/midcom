@@ -16,9 +16,9 @@ $_MIDCOM = new midcom_core_midcom('midgard2');
 // Process the request
 $_MIDCOM->process();
 
-// Prepare the template
-$_MIDCOM->templating->template();
+// Serve the request
+$_MIDCOM->serve();
 
-// Render the template
-$_MIDCOM->templating->display();
+// End
+unset($_MIDCOM);
 ?>
