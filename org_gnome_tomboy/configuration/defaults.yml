@@ -3,7 +3,7 @@ routes:
         controller: org_gnome_tomboy_controllers_api
         action: user
         route: '/api/1.0/{$user}'
-        content_entry_point: ogt-show-user_json
+        template_entry_point: midcom-show-json
         mimetype: application/json
         allowed_methods:
             - GET
@@ -11,7 +11,7 @@ routes:
         controller: org_gnome_tomboy_controllers_api
         action: usernotes
         route: '/api/1.0/{$user}/notes'
-        content_entry_point: ogt-show-usernotes_json
+        template_entry_point: midcom-show-json
         mimetype: application/json
         allowed_methods:
             - GET
@@ -20,7 +20,7 @@ routes:
         controller: org_gnome_tomboy_controllers_api
         action: usernote
         route: '/api/1.0/{$user}/notes/{$id}'
-        content_entry_point: ogt-show-usernote_json
+        template_entry_point: midcom-show-json
         mimetype: application/json
         allowed_methods:
             - GET
@@ -28,7 +28,7 @@ routes:
         controller: org_gnome_tomboy_controllers_api
         action: userfriends
         route: '/api/1.0/{$user}/friends'
-        content_entry_point: ogt-show-userfriends_json
+        template_entry_point: midcom-show-json
         mimetype: application/json
         allowed_methods:
             - GET
