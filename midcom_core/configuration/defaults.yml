@@ -145,6 +145,12 @@ routes:
         route: /mgd:about/
         root_only: true
         content_entry_point: midcom-show-about
+    midcom_about_database:
+        controller: midcom_core_controllers_about
+        action: database
+        route: /mgd:about/database
+        root_only: true
+        content_entry_point: midcom-show-database
     midcom_documentation_show:
         controller: midcom_core_controllers_documentation
         action: show

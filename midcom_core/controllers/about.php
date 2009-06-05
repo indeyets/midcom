@@ -48,5 +48,44 @@ class midcom_core_controllers_about
         ksort($data['authors']);
     }
 
+    public function action_database($route_id, &$data, $args)
+    {
+        $_MIDCOM->authorization->require_admin();
+
+        if (isset($_POST['update']))
+        {
+            // Generate tables
+            if (!midgard_config::create_midgard_tables())
+            {
+                throw new Exception("Could not create Midgard class tables");
+            }
+            // And update as necessary
+            foreach ($_MIDGARD['schema']['types'] as $type => $val)
+            {
+                if (substr($type, 0, 2) == '__')
+                {
+                    continue;
+                }
+                if (midgard_config::class_table_exists($type))
+                {
+                    if (!midgard_config::update_class_table($type))
+                    {
+                        throw new Exception('Could not update ' . $type . ' tables in test database');
+                    }
+                    continue;
+                }
+    
+                if (!midgard_config::create_class_table($type))
+                {
+                    throw new Exception('Could not create ' . $type . ' tables in test database');
+                }
+            }
+        }
+        $data['installed_types'] = array();
+        foreach ($_MIDGARD['schema']['types'] as $classname => $null)
+        {
+            $data['installed_types'][] = $classname;
+        }
+    }
 }
 ?>
