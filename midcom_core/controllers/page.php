@@ -82,6 +82,11 @@ class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_m
         }
     }
 
+    public function post_show($route_id, &$data, $args)
+    {
+        $this->get_show($route_id, $data, $args);
+    }
+
     public function put_show($route_id, &$data, $args)
     {
         parent::action_show($route_id, $data, $args);
