@@ -30,10 +30,10 @@ class midcom_core_exceptionhandler
         }
 
         $message = htmlentities($exception->getMessage());
+        $message = str_replace("\n", ' ', $message);
 
         if (isset($_MIDCOM))
         {
-            $log_message = str_replace("\n", ' ', $message);
             if (isset($_MIDCOM->context->uri))
             {
                 $uri = $_MIDCOM->context->uri;
@@ -44,9 +44,9 @@ class midcom_core_exceptionhandler
                     $uri = "{$_MIDCOM->dispatcher->request_method} {$uri}";
                 }
                 
-                $log_message .= " ($uri)";
+                $message .= " ($uri)";
             }
-            $_MIDCOM->log($message_type, $log_message, 'warn');
+            $_MIDCOM->log($message_type, $message, 'warn');
         }
 
         if (headers_sent())
