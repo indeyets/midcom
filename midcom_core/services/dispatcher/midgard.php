@@ -310,13 +310,14 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
                 if (   $this->request_method == 'GET'
                     || $this->request_method == 'POST')
                 {
-                    // Fallback for the legacy "action_XX" method names
+                    // Fallback for the legacy "action_XX" method names that had the action_x($route_id, &$data, $args) signature
                     // TODO: Remove when components are ready for it
                     $action_method = "action_{$selected_route_configuration['action']}";
                     if (!method_exists($controller, $action_method))
                     {
                         throw new midcom_exception_notfound("Action {$selected_route_configuration['action']} not found");
                     }
+                    $controller->$action_method($this->route_id, $data, $this->action_arguments[$this->route_id]);
                 }
                 else
 
@@ -324,7 +325,11 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
                     throw new midcom_exception_httperror("{$this->request_method} not allowed", 405);
                 }
             }
-            $controller->$action_method($this->route_id, $data, $this->action_arguments[$this->route_id]);
+            else
+            {
+                $controller->data =& $data;
+                $controller->$action_method($this->action_arguments[$this->route_id]);
+            }
         }
         catch (Exception $e)
         {

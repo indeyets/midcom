@@ -18,7 +18,7 @@ class midcom_core_controllers_cache
         $this->configuration = $_MIDCOM->configuration;
     }
     
-    public function action_invalidate($route_id, &$data, $args)
+    public function get_invalidate($args)
     {
         $_MIDCOM->authorization->require_user();
         $_MIDCOM->cache->invalidate_all();

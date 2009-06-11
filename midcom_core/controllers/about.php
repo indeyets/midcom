@@ -18,18 +18,18 @@ class midcom_core_controllers_about
         $this->configuration = $_MIDCOM->configuration;
     }
     
-    public function action_about($route_id, &$data, $args)
+    public function get_about($args)
     {
         $_MIDCOM->authorization->require_user();
 
-        $data['versions'] = array
+        $this->data['versions'] = array
         (
             'midcom'  => $_MIDCOM->componentloader->manifests['midcom_core']['version'],
             'midgard' => mgd_version(),
             'php'     => phpversion(),
         );
         
-        $data['components'] = array();
+        $this->data['components'] = array();
         foreach ($_MIDCOM->componentloader->manifests as $component => $manifest)
         {
             if ($component == 'midcom_core')
@@ -37,18 +37,29 @@ class midcom_core_controllers_about
                 continue;
             }
             
-            $data['components'][$component] = array
+            $this->data['components'][$component] = array
             (
                 'name'    => $manifest['component'],
                 'version' => $manifest['version'],
             );
         }
         
-        $data['authors'] = $_MIDCOM->componentloader->authors;
-        ksort($data['authors']);
+        $this->data['authors'] = $_MIDCOM->componentloader->authors;
+        ksort($this->data['authors']);
     }
 
-    public function action_database($route_id, &$data, $args)
+    public function get_database($args)
+    {
+        $_MIDCOM->authorization->require_admin();
+
+        $this->data['installed_types'] = array();
+        foreach ($_MIDGARD['schema']['types'] as $classname => $null)
+        {
+            $this->data['installed_types'][] = $classname;
+        }
+    }
+    
+    public function post_database($args)
     {
         $_MIDCOM->authorization->require_admin();
 
@@ -81,11 +92,8 @@ class midcom_core_controllers_about
                 }
             }
         }
-        $data['installed_types'] = array();
-        foreach ($_MIDGARD['schema']['types'] as $classname => $null)
-        {
-            $data['installed_types'][] = $classname;
-        }
+        
+        $this->get_database($args);
     }
 }
 ?>

@@ -18,14 +18,21 @@ class midcom_core_controllers_authentication
         $this->configuration = $_MIDCOM->configuration;
     }
     
-    public function action_logout($route_id, &$data, $args)
+    public function get_logout($args)
     {
         $_MIDCOM->authentication->logout();
         header('location: /');
         exit();
     }
     
-    public function action_login($route_id, &$data, $args)
+    public function get_login($args)
+    {   
+        $exception_data = array();
+        $exception_data['message'] = "please enter your username and password";
+        $_MIDCOM->context->set_item('midcom_core_exceptionhandler', $exception_data);
+    }
+
+    public function post_login($args)
     {
         // TODO: Fix some more intelligent way to determine login method
         if (   isset($_POST['username']) 
@@ -37,10 +44,7 @@ class midcom_core_controllers_authentication
                 exit();
             }
         }
-        
-        $exception_data = array();
-        $exception_data['message'] = "please enter your username and password";
-        $_MIDCOM->context->set_item('midcom_core_exceptionhandler', $exception_data);
+        $this->get_login($args);
     }
 }
 ?>

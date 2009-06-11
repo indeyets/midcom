@@ -31,7 +31,7 @@ abstract class midcom_core_controllers_baseclasses_manage
     /**
      * Method for preparing a new object to be created. To be overridden in the actual controller.
      */
-    abstract public function prepare_new_object(&$data, $args);
+    abstract public function prepare_new_object($args);
     
     /**
      * Method for generating route to the object
@@ -47,7 +47,7 @@ abstract class midcom_core_controllers_baseclasses_manage
      */    
     abstract public function get_url_edit();
     
-    public function load_datamanager(&$data, $schemadb)
+    public function load_datamanager($schemadb)
     {
         // Load the object via Datamanager for configurability
         $_MIDCOM->componentloader->load('midcom_helper_datamanager');
@@ -55,10 +55,10 @@ abstract class midcom_core_controllers_baseclasses_manage
         $this->datamanager = new midcom_helper_datamanager_datamanager($schemadb);
         $this->datamanager->autoset_storage($this->object);
         
-        $data['datamanager'] =& $this->datamanager;
+        $this->data['datamanager'] =& $this->datamanager;
     }
     
-    public function load_creation_datamanager(&$data, $schemadb, $schema_name)
+    public function load_creation_datamanager($schemadb, $schema_name)
     {
         // Load the Datamanager in creation mode for configurability
         $_MIDCOM->componentloader->load('midcom_helper_datamanager');
@@ -69,16 +69,16 @@ abstract class midcom_core_controllers_baseclasses_manage
         $this->datamanager->set_schema($schema_name);
         $this->datamanager->set_storage($this->object);
         
-        $data['datamanager'] =& $this->datamanager;
+        $this->data['datamanager'] =& $this->datamanager;
     }
 
-    public function action_show($route_id, &$data, $args)
+    public function get_show($args)
     {
         $this->load_object($args);
-        $this->load_datamanager($data, $this->configuration->get('schemadb'));
-        $data['object'] =& $this->object;
+        $this->load_datamanager($this->configuration->get('schemadb'));
+        $this->data['object'] =& $this->object;
 
-        if ($_MIDCOM->authorization->can_do('midgard:update', $data['object']))
+        if ($_MIDCOM->authorization->can_do('midgard:update', $this->data['object']))
         {
             $_MIDCOM->head->add_link_head
             (
@@ -94,36 +94,26 @@ abstract class midcom_core_controllers_baseclasses_manage
     }
 
     // TODO: Refactor. There is code duplication with edit
-    public function action_create($route_id, &$data, $args)
+    public function get_create($args)
     { 
         if (!isset($_MIDGARD['page']))
         {
-            throw new midcom_exception_notfound("No Midgard page found");
+            throw new midcom_exception_notfound('No Midgard page found');
         }
         
-        $data['object'] =& $this->object;
-        $data['parent'] = $_MIDCOM->context->page;
+        $this->data['object'] =& $this->object;
+        $this->data['parent'] = $_MIDCOM->context->page;
         
         // Prepare the new object that datamanager will eventually create
-        $this->prepare_new_object($data, $args);
+        $this->prepare_new_object($args);
 
-        $_MIDCOM->authorization->require_do('midgard:create', $data['parent']);
+        $_MIDCOM->authorization->require_do('midgard:create', $this->data['parent']);
         
         // Load datamanager in creation mode
-        $this->load_creation_datamanager($data, $this->configuration->get('schemadb'), 'default');
+        $this->load_creation_datamanager($this->configuration->get('schemadb'), 'default');
      
           // Handle saves through the datamanager
-        $data['datamanager_form'] =& $this->datamanager->get_form('simple');
-        try
-        {   
-            $data['datamanager_form']->process();
-        }
-        catch (midcom_helper_datamanager_exception_save $e)
-        {
-            // TODO: add uimessage of $e->getMessage();
-            header('Location: ' . $this->get_url_show());
-            exit();
-        }
+        $this->data['datamanager_form'] =& $this->datamanager->get_form('simple');
 
         $_MIDCOM->head->add_link_head
         (
@@ -137,19 +127,51 @@ abstract class midcom_core_controllers_baseclasses_manage
         );
     }
 
+    public function post_create($args)
+    {
+        $this->get_create($args);
+
+        try
+        {   
+            $this->data['datamanager_form']->process();
+        }
+        catch (midcom_helper_datamanager_exception_save $e)
+        {
+            // TODO: add uimessage of $e->getMessage();
+            header('Location: ' . $this->get_url_show());
+            exit();
+        }
+    }
         
-    public function action_edit($route_id, &$data, $args)
+    public function get_edit($args)
     {
         $this->load_object($args);
-        $this->load_datamanager($data, $this->configuration->get('schemadb'));
-        $data['object'] =& $this->object;
+        $this->load_datamanager($this->configuration->get('schemadb'));
+        $this->data['object'] =& $this->object;
         $_MIDCOM->authorization->require_do('midgard:update', $this->object);
         
         // Handle saves through the datamanager
-        $data['datamanager_form'] =& $this->datamanager->get_form('simple');
+        $this->data['datamanager_form'] =& $this->datamanager->get_form('simple');
+        
+        $_MIDCOM->head->add_link_head
+        (
+            array
+            (
+                'rel'   => 'stylesheet',
+                'type'  => 'text/css',
+                'media' => 'screen',
+                'href'  => MIDCOM_STATIC_URL . '/midcom_helper_datamanager/simple.css',
+            )
+        );
+    }
+
+    public function post_edit($args)
+    {
+        $this->get_edit($args);
+
         try
         {
-            $data['datamanager_form']->process();
+            $this->data['datamanager_form']->process();
         }
         catch (midcom_helper_datamanager_exception_datamanager $e)
         {
@@ -160,6 +182,19 @@ abstract class midcom_core_controllers_baseclasses_manage
             header('Location: ' . $this->get_url_show());
             exit();
         }
+    }
+        
+    public function get_delete($args)
+    {
+        $this->load_object($args);
+        $this->load_datamanager($this->configuration->get('schemadb'));
+        $this->data['object'] =& $this->object;
+        
+        // Make a frozen form for display purposes
+        $this->data['datamanager_form'] =& $this->datamanager->get_form('simple');
+        $this->data['datamanager_form']->freeze();
+        
+        $_MIDCOM->authorization->require_do('midgard:delete', $this->object);
         
         $_MIDCOM->head->add_link_head
         (
@@ -172,18 +207,11 @@ abstract class midcom_core_controllers_baseclasses_manage
             )
         );
     }
-        
-    public function action_delete($route_id, &$data, $args)
+    
+    public function post_delete($args)
     {
-        $this->load_object($args);
-        $this->load_datamanager($data, $this->configuration->get('schemadb'));
-        $data['object'] =& $this->object;
-        
-        // Make a frozen form for display purposes
-        $data['datamanager_form'] =& $this->datamanager->get_form('simple');
-        $data['datamanager_form']->freeze();
-        
-        $_MIDCOM->authorization->require_do('midgard:delete', $this->object);
+        $this->get_delete($args);
+
         if (isset($_POST['delete']))
         {
             $this->object->delete();
@@ -192,17 +220,6 @@ abstract class midcom_core_controllers_baseclasses_manage
             header("Location: {$_MIDGARD['prefix']}/"); // TODO: This needs a better redirect
             exit();     
         }
-        
-        $_MIDCOM->head->add_link_head
-        (
-            array
-            (
-                'rel'   => 'stylesheet',
-                'type'  => 'text/css',
-                'media' => 'screen',
-                'href'  => MIDCOM_STATIC_URL . '/midcom_helper_datamanager/simple.css',
-            )
-        );
     }
 }
 ?>

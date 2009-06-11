@@ -18,14 +18,14 @@ class midcom_core_controllers_documentation
         $this->configuration = $_MIDCOM->configuration;
     }
     
-    private function prepare_component($component, &$data)
+    private function prepare_component($component)
     {
-        $data['component'] = $component;
+        $this->data['component'] = $component;
         
-        if (   $data['component'] != 'midcom_core'
-            && !$_MIDCOM->componentloader->load($data['component']))
+        if (   $this->data['component'] != 'midcom_core'
+            && !$_MIDCOM->componentloader->load($this->data['component']))
         {
-            throw new midcom_exception_notfound("Component {$data['component']} not found");
+            throw new midcom_exception_notfound("Component {$this->data['component']} not found");
         }
     }
 
@@ -78,18 +78,18 @@ class midcom_core_controllers_documentation
         return $files;
     }
 
-    public function action_index($route_id, &$data, $args)
+    public function get_index($args)
     {
         $_MIDCOM->authorization->require_user();
-        $this->prepare_component($args['component'], $data);
+        $this->prepare_component($args['component'], $this->data);
 
-        $data['files'] = $this->list_directory(MIDCOM_ROOT . "/{$data['component']}/documentation");
+        $this->data['files'] = $this->list_directory(MIDCOM_ROOT . "/{$this->data['component']}/documentation");
 
-        $configuration = new midcom_core_services_configuration_yaml($data['component']);
-        $data['routes'] = $configuration->get('routes');
-        if ($data['routes'])
+        $configuration = new midcom_core_services_configuration_yaml($this->data['component']);
+        $this->data['routes'] = $configuration->get('routes');
+        if ($this->data['routes'])
         {
-            $data['files']['files'][] = array
+            $this->data['files']['files'][] = array
             (
                 'label' => 'Routes',
                 'path' => 'routes/',
@@ -97,11 +97,11 @@ class midcom_core_controllers_documentation
         }
     }
 
-    public function action_show($route_id, &$data, $args)
+    public function get_show($args)
     {
         $_MIDCOM->authorization->require_user();
-        $this->prepare_component($args['variable_arguments'][0], $data);
-        $path = MIDCOM_ROOT . "/{$data['component']}/documentation";
+        $this->prepare_component($args['variable_arguments'][0], $this->data);
+        $path = MIDCOM_ROOT . "/{$this->data['component']}/documentation";
         foreach ($args['variable_arguments'] as $key => $argument)
         {
             if ($key == 0)
@@ -142,64 +142,64 @@ class midcom_core_controllers_documentation
             throw new midcom_exception_notfound("File not found");
         }
         
-        $data['markdown'] = file_get_contents($path);
-        $data['markdown_formatted'] = Markdown($data['markdown']);
+        $this->data['markdown'] = file_get_contents($path);
+        $this->data['markdown_formatted'] = Markdown($this->data['markdown']);
     }
     
-    public function action_routes($route_id, &$data, $args)
+    public function get_routes($args)
     {
         $_MIDCOM->authorization->require_user();
-        $this->prepare_component($args['component'], $data);
+        $this->prepare_component($args['component'], $this->data);
 
-        $configuration = new midcom_core_services_configuration_yaml($data['component']);
-        $data['routes'] = $configuration->get('routes');
+        $configuration = new midcom_core_services_configuration_yaml($this->data['component']);
+        $this->data['routes'] = $configuration->get('routes');
         
-        if (!$data['routes'])
+        if (!$this->data['routes'])
         {
-            throw new midcom_exception_notfound("Component {$data['component']} has no routes");
+            throw new midcom_exception_notfound("Component {$this->data['component']} has no routes");
         }
         
-        foreach ($data['routes'] as $route_id => $route_def)
+        foreach ($this->data['routes'] as $route_id => $route_def)
         {
             // Some normalization
-            $data['routes'][$route_id]['id'] = $route_id;
+            $this->data['routes'][$route_id]['id'] = $route_id;
             
             if (!isset($route_def['template_entry_point']))
             {
-                $data['routes'][$route_id]['template_entry_point'] = 'ROOT';
+                $this->data['routes'][$route_id]['template_entry_point'] = 'ROOT';
             }
 
             if (!isset($route_def['content_entry_point']))
             {
-                $data['routes'][$route_id]['content_entry_point'] = 'content';
+                $this->data['routes'][$route_id]['content_entry_point'] = 'content';
             }
             
-            $data['routes'][$route_id]['controller_action'] = "{$route_def['controller']}:{$route_def['action']}";
+            $this->data['routes'][$route_id]['controller_action'] = "{$route_def['controller']}:{$route_def['action']}";
             
-            $data['routes'][$route_id]['controller_url'] = $_MIDCOM->dispatcher->generate_url('midcom_documentation_class', array('component' => $data['component'], 'class' => $route_def['controller']));
-            $data['routes'][$route_id]['controller_url'] .= "#action_{$route_def['action']}";
+            $this->data['routes'][$route_id]['controller_url'] = $_MIDCOM->dispatcher->generate_url('midcom_documentation_class', array('component' => $this->data['component'], 'class' => $route_def['controller']));
+            $this->data['routes'][$route_id]['controller_url'] .= "#action_{$route_def['action']}";
         }
     }
     
-    public function action_class($route_id, &$data, $args)
+    public function get_class($args)
     {
         $_MIDCOM->authorization->require_user();
-        $this->prepare_component($args['component'], $data);
-        $data['class'] = $args['class'];
+        $this->prepare_component($args['component'], $this->data);
+        $this->data['class'] = $args['class'];
 
-        if (substr($data['class'], 0, strlen($data['component'])) != $data['component'])
+        if (substr($this->data['class'], 0, strlen($this->data['component'])) != $this->data['component'])
         {
-            throw new midcom_exception_notfound("Class {$data['class']} is not in component {$data['component']}");
+            throw new midcom_exception_notfound("Class {$this->data['class']} is not in component {$this->data['component']}");
         }
         
-        if (!class_exists($data['class']))
+        if (!class_exists($this->data['class']))
         {
-            throw new midcom_exception_notfound("Class {$data['class']} not defined in component {$data['component']}");
+            throw new midcom_exception_notfound("Class {$this->data['class']} not defined in component {$this->data['component']}");
         }
 
-        $data['methods'] = array();
-        $reflectionclass = new ReflectionClass($data['class']);
-        $data['class_documentation'] = midcom_core_controllers_documentation::render_docblock($reflectionclass->getDocComment());
+        $this->data['methods'] = array();
+        $reflectionclass = new ReflectionClass($this->data['class']);
+        $this->data['class_documentation'] = midcom_core_controllers_documentation::render_docblock($reflectionclass->getDocComment());
         $reflectionmethods = $reflectionclass->getMethods();
         foreach ($reflectionmethods as $method)
         {
@@ -232,7 +232,7 @@ class midcom_core_controllers_documentation
             $arguments .= '(' . implode(', ', $parametersdata) . ')';
             $modifiers = implode(' ' , Reflection::getModifierNames($method->getModifiers()));
 
-            $data['methods'][] = array
+            $this->data['methods'][] = array
             (
                 'name' => $method->name,
                 'modifiers' => $modifiers,
