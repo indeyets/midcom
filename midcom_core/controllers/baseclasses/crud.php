@@ -7,11 +7,11 @@
  */
 
 /**
- * Base class for object management controller. Extend this to easily implement the regular view/edit/delete cycle
+ * Base class for object management controller. Extend this to easily implement the regular Create, Read, Update and Delete cycle
  *
  * @package midcom_core
  */
-abstract class midcom_core_controllers_baseclasses_manage
+abstract class midcom_core_controllers_baseclasses_crud
 {
     /**
      * The actual MgdSchema object to be managed by the controller.
@@ -38,14 +38,14 @@ abstract class midcom_core_controllers_baseclasses_manage
      *
      * @return string Object URL
      */
-    abstract public function get_url_show();
+    abstract public function get_url_read();
 
     /**
      * Method for generating route to editing the object
      *
      * @return string Object URL
      */    
-    abstract public function get_url_edit();
+    abstract public function get_url_update();
     
     public function load_datamanager($schemadb)
     {
@@ -70,27 +70,6 @@ abstract class midcom_core_controllers_baseclasses_manage
         $this->datamanager->set_storage($this->object);
         
         $this->data['datamanager'] =& $this->datamanager;
-    }
-
-    public function get_show($args)
-    {
-        $this->load_object($args);
-        $this->load_datamanager($this->configuration->get('schemadb'));
-        $this->data['object'] =& $this->object;
-
-        if ($_MIDCOM->authorization->can_do('midgard:update', $this->data['object']))
-        {
-            $_MIDCOM->head->add_link_head
-            (
-                array
-                (
-                    'rel' => 'alternate',
-                    'type' => 'application/x-wiki',
-                    'title' => 'Edit this page!', // TODO: l10n and object type
-                    'href' => $this->get_url_edit(),
-                )
-            );
-        }
     }
 
     // TODO: Refactor. There is code duplication with edit
@@ -138,12 +117,33 @@ abstract class midcom_core_controllers_baseclasses_manage
         catch (midcom_helper_datamanager_exception_save $e)
         {
             // TODO: add uimessage of $e->getMessage();
-            header('Location: ' . $this->get_url_show());
+            header('Location: ' . $this->get_url_read());
             exit();
         }
     }
-        
-    public function get_edit($args)
+
+    public function get_read($args)
+    {
+        $this->load_object($args);
+        $this->load_datamanager($this->configuration->get('schemadb'));
+        $this->data['object'] =& $this->object;
+
+        if ($_MIDCOM->authorization->can_do('midgard:update', $this->data['object']))
+        {
+            $_MIDCOM->head->add_link_head
+            (
+                array
+                (
+                    'rel' => 'alternate',
+                    'type' => 'application/x-wiki',
+                    'title' => 'Edit this page!', // TODO: l10n and object type
+                    'href' => $this->get_url_update(),
+                )
+            );
+        }
+    }
+
+    public function get_update($args)
     {
         $this->load_object($args);
         $this->load_datamanager($this->configuration->get('schemadb'));
@@ -165,9 +165,9 @@ abstract class midcom_core_controllers_baseclasses_manage
         );
     }
 
-    public function post_edit($args)
+    public function post_update($args)
     {
-        $this->get_edit($args);
+        $this->get_update($args);
 
         try
         {
@@ -179,7 +179,7 @@ abstract class midcom_core_controllers_baseclasses_manage
             $_MIDCOM->cache->invalidate(array($this->object->guid));
 
             // TODO: add uimessage of $e->getMessage();
-            header('Location: ' . $this->get_url_show());
+            header('Location: ' . $this->get_url_read());
             exit();
         }
     }

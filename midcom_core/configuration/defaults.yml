@@ -38,9 +38,9 @@ uimessages_configuration:
 output_filters:
 #    - net_protoblogr_filters: tidy
 routes:
-    page_show:
+    page_read:
         controller: midcom_core_controllers_page
-        action: show
+        action: read
         route: /
         allowed_methods:
             - OPTIONS
@@ -49,69 +49,17 @@ routes:
             - PROPFIND
     page_variants:
         controller: midcom_core_controllers_page
-        action: show
+        action: read
         route: '/{$token:variant}'
         allowed_methods:
             - OPTIONS
             - GET
             - PUT
             - PROPFIND
-    snippets_root:
-        controller: midcom_core_controllers_snippets
-        action: webdav
-        route: /mgd:snippets
-        allowed_methods:
-            - PROPFIND
-            - OPTIONS
-        webdav_only: true
-        root_only: true
-    snippets:
-        controller: midcom_core_controllers_snippets
-        action: webdav
-        route: /mgd:snippets@
-        allowed_methods:
-            - MKCOL
-            - PROPFIND
-            - OPTIONS
-            - GET
-            - PUT
-            - MOVE
-            - COPY
-            - DELETE
-            - LOCK
-            - UNLOCK
-        webdav_only: true
-        root_only: true
-    styles_root:
-        controller: midcom_core_controllers_styles
-        action: webdav
-        route: /mgd:styles
-        allowed_methods:
-            - PROPFIND
-            - OPTIONS
-        webdav_only: true
-        root_only: true
-    styles:
-        controller: midcom_core_controllers_styles
-        action: webdav
-        route: /mgd:styles@
-        allowed_methods:
-            - MKCOL
-            - PROPFIND
-            - OPTIONS
-            - GET
-            - PUT
-            - MOVE
-            - COPY
-            - DELETE
-            - LOCK
-            - UNLOCK
-        webdav_only: true
-        root_only: true
-    page_edit:
+    page_update:
         controller: midcom_core_controllers_page
-        action: edit
-        route: /mgd:edit
+        action: update
+        route: /mgd:update
         content_entry_point: midcom-edit-page
     page_create:
         controller: midcom_core_controllers_page

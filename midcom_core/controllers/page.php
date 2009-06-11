@@ -11,7 +11,7 @@
  *
  * @package midcom_core
  */
-class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_manage
+class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_crud
 {
     public function __construct($instance)
     {
@@ -35,19 +35,19 @@ class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_m
         $this->object->info = 'active';
     }
     
-    public function get_url_show()
+    public function get_url_read()
     {
         return $_MIDGARD['self'];
     }
     
-    public function get_url_edit()
+    public function get_url_update()
     {
-        return $_MIDCOM->dispatcher->generate_url('page_edit', array());
+        return $_MIDCOM->dispatcher->generate_url('page_update', array());
     }
 
-    public function get_show($args)
+    public function get_read($args)
     {
-        parent::get_show($args);
+        parent::get_read($args);
         
         // Neutron introspection file
         $_MIDCOM->head->add_link_head
@@ -82,14 +82,14 @@ class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_m
         }
     }
 
-    public function post_show($args)
+    public function post_read($args)
     {
-        $this->get_show($args);
+        $this->get_read($args);
     }
 
-    public function put_show($args)
+    public function put_read($args)
     {
-        parent::get_show($args);
+        parent::get_read($args);
         
         $_MIDCOM->authorization->require_do('midgard:update', $this->data['object']);
 
@@ -101,9 +101,9 @@ class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_m
         die();
     }
 
-    public function mkcol_show($args)
+    public function mkcol_read($args)
     {
-        parent::get_show($args);
+        parent::get_read($args);
 
         // Create subpage
         $_MIDCOM->authorization->require_do('midgard:create', $this->data['object']);
