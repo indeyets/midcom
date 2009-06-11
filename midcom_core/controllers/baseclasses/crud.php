@@ -23,6 +23,11 @@ abstract class midcom_core_controllers_baseclasses_crud
      */
     protected $datamanager = null;
 
+    public function __construct($instance)
+    {
+        $this->configuration = $instance->configuration;
+    }
+
     /**
      * Method for loading the object to be managed. To be overridden in the actual controller.
      */

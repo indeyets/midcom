@@ -13,11 +13,6 @@
  */
 class net_nemein_news_controllers_article extends midcom_core_controllers_baseclasses_crud
 {
-    public function __construct($instance)
-    {
-        $this->configuration = $instance->configuration;
-    }
-    
     public function load_object($args)
     {
         $topic_guid = $this->configuration->get('news_topic');
