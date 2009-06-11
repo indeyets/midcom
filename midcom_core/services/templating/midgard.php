@@ -287,7 +287,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         $this->dispatcher->populate_environment_data();
 
         // Set up templating stack: midcom_core goes first 
-        $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/templates');
+        $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/' . $_MIDCOM->context->get_item('template_folder'));
 
         // Then initialize the component, so it also goes to template stack
         $this->dispatcher->initialize($component_name);

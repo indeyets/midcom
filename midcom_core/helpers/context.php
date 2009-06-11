@@ -31,6 +31,7 @@ class midcom_core_helpers_context
         (
             // TODO: Convert to 'application/xhtml+xml' as soon as MidCOM 3 javascripts are compatible with it
             'mimetype'             => 'text/html', 
+            'template_folder'      => 'templates',
             'template_engine'      => 'tal',
             'template_entry_point' => 'ROOT',
             'content_entry_point'  => 'content',

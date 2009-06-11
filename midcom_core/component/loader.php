@@ -146,7 +146,7 @@ class midcom_core_component_loader
         foreach ($component_tree[$main_component] as $component)
         {
             $component_directory = $this->component_to_filepath($component);
-            $template_file = "{$component_directory}/templates/{$template}.php";
+            $template_file = "{$component_directory}" . $_MIDCOM->context->get_item('template_folder') . "{$template}.php";
             if (!file_exists($template_file))
             {
                 if (!$fallback)
