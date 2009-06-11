@@ -21,19 +21,19 @@ class net_nemein_news_controllers_index
     /**
      * List latest news items and pass them on to the template
      */
-    public function action_latest($route_id, &$data, $args)
+    public function get_latest($args)
     {
         $topic_guid = $this->configuration->get('news_topic');
         if (!$topic_guid)
         {
             throw new midcom_exception_notfound("No news topic defined");
         }
-        $data['topic'] = new midgard_topic($topic_guid);
+        $this->data['topic'] = new midgard_topic($topic_guid);
         
         $_MIDCOM->componentloader->load('org_openpsa_qbpager');
 
         $qb = new org_openpsa_qbpager_pager('midgard_article');
-        $qb->add_constraint('topic', '=', $data['topic']->id);
+        $qb->add_constraint('topic', '=', $this->data['topic']->id);
         $qb->add_order('metadata.published', 'DESC');
 
         if ($route_id == 'latest')
@@ -49,7 +49,7 @@ class net_nemein_news_controllers_index
             $qb->results_per_page = (int) $this->configuration->get('index_show_articles');
         }
         
-        $data['news'] = array();
+        $this->data['news'] = array();
         
         $articles = $qb->execute();
         foreach ($articles as $article)
@@ -57,12 +57,12 @@ class net_nemein_news_controllers_index
             if (   !$article->url
                 || !$this->configuration->get('link_articles_to_external_url'))
             {
-                $article->url = $_MIDCOM->dispatcher->generate_url('show', array('name' => $article->name));
+                $article->url = $_MIDCOM->dispatcher->generate_url('read', array('name' => $article->name));
             }
-            $data['news'][] = $article;
+            $this->data['news'][] = $article;
         }
         
-        $data['previousnext'] = $qb->get_previousnext();
+        $this->data['previousnext'] = $qb->get_previousnext();
     }
 }
 ?>
