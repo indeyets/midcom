@@ -23,16 +23,21 @@ routes:
         route: /rss.xml
         mimetype: text/xml
         template_entry_point: nnn-show-rss
-    show:
+    read:
         controller: net_nemein_news_controllers_article
         action: read
         route: '/{$name}/'
         content_entry_point: nnn-show-article
-    edit:
+    update:
         controller: net_nemein_news_controllers_article
         action: update
         route: '/{$name}/mgd:update'
         content_entry_point: nnn-edit-article
+    delete:
+        controller: net_nemein_news_controllers_article
+        action: delete
+        route: '/{$name}/mgd:delete'
+        content_entry_point: nnn-delete-article
     create:
         controller: net_nemein_news_controllers_article
         action: create

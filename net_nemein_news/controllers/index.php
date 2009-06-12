@@ -36,7 +36,7 @@ class net_nemein_news_controllers_index
         $qb->add_constraint('topic', '=', $this->data['topic']->id);
         $qb->add_order('metadata.published', 'DESC');
 
-        if ($route_id == 'latest')
+        if ($_MIDCOM->context->route_id == 'latest')
         {
             if (!is_numeric($args['number']))
             {
@@ -48,7 +48,7 @@ class net_nemein_news_controllers_index
         {
             $qb->results_per_page = (int) $this->configuration->get('index_show_articles');
         }
-        
+
         $this->data['news'] = array();
         
         $articles = $qb->execute();
@@ -61,7 +61,6 @@ class net_nemein_news_controllers_index
             }
             $this->data['news'][] = $article;
         }
-        
         $this->data['previousnext'] = $qb->get_previousnext();
     }
 }
