@@ -14,7 +14,9 @@ jQuery(function($) {
             // Include related files
             $('<link />').attr({rel: 'stylesheet', type: 'text/css', href: opts.static_url+'/css/toolbar.css'}).appendTo('head');
             $('<link />').attr({rel: 'stylesheet', type: 'text/css', href: opts.static_url+'/css/toolbar.modal.css'}).appendTo('head');
-//            $('<script />').attr({src: './style/js/toolbar.modal.js', type: 'text/javascript' }).appendTo('head');
+            $.getScript(opts.static_url+'/js/toolbar.modal.js', function(){
+                $modal = $.midcom_toolbar_modal;
+            });
             
             $root = $('<div />').attr('id', 'toolbar').append("<div id='toolbar:toggle'></div><ul id='toolbar:tabs'><li><a href='#toolbar:editing'>Editing</a></li></ul><div id='toolbar:actions'><div id='toolbar:editing'></div></div>").hide();
             $('body').append($root);
@@ -28,20 +30,13 @@ jQuery(function($) {
             $editing = $actions.filter('#toolbar\\:editing');
             
             $elements = $('[mgd\\:guid]');
-            // editables = '';
-            // console.time('concat');
-            // for (var i = $elements.length - 1; i >= 0; i--){
-            //     editables += '<a class='+$elements[i].getAttribute('mgd:type')+' href='+$elements[i].getAttribute('mgd:guid')+'>'+$elements[i].getAttribute('mgd:label')+'</a>';
-            // };
-            // $editing.append(editables);
-            // console.timeEnd('concat');
 
-            console.time('test');
             var editables = [];
             var a = 0;
             var elcount = $elements.length;
             for (var i = 0; i < elcount; i++){
-                editables[a++] = '<a class="'+$elements[i].getAttribute('mgd:type');
+                editables[a++] = '<a class="';
+                editables[a++] = $elements[i].getAttribute('mgd:type');
                 editables[a++] = '" href="';
                 editables[a++] = $elements[i].getAttribute('mgd:guid');
                 editables[a++] = '">';
@@ -49,7 +44,6 @@ jQuery(function($) {
                 editables[a++] = '</a>';
             };
             $editing.append(editables.join(''));
-            console.timeEnd('test');
             
             $editables = $('a', $editing);
 
@@ -57,9 +51,7 @@ jQuery(function($) {
             
             $editables.click(function() {
                 objguid = this.getAttribute('href');
-                $.getScript(opts.static_url+'/js/toolbar.modal.js', function(){
-                    $.midcom_toolbar_modal({ guid: objguid });
-                });
+                $modal({ guid: objguid });
                 return false;
             });
 
