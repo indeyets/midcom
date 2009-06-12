@@ -2,6 +2,7 @@ jQuery(function($) {
     $.midcom_toolbar = function(options) {
         var defaults = {
             static_url: '/midcom-static/net_nemein_dasboard',
+            toggle_active_class: 'active',
         };
         
         var opts = $.extend({}, defaults, options);
@@ -66,12 +67,12 @@ jQuery(function($) {
             $toggler.toggle(
                 function() {
                     $tab_container.show();
-                    $toggler.data('active', true);
+                    $toggler.data('active', true).addClass(opts.toggle_class);
                 },
                 function() {
                     $tab_container.hide();
                     $actions.hide();
-                    $toggler.data('active', false);
+                    $toggler.data('active', false).removeClass(opts.toggle_class);
                 }
             ).hover(
                 function() {
@@ -109,5 +110,5 @@ jQuery(function($) {
         }
     };
         
-    $.midcom_toolbar();
+    $.midcom_toolbar({});
 });
