@@ -39,7 +39,7 @@ Place the MgdSchema XML file to `/usr/share/midgard/schema`, and then create the
 
     $ midgard-schema midgard
 
-Where `midgard` is the name of your [Midgard conf.d file][11] that defines the database access parameters like database type and password.
+Where `midgard` is the name of your [Midgard conf.d file][11] that defines the database access parameters like database type and password. You can also do the database update via the `/mgd:about/database` URL.
 
 ## Enjoy the free API
 
@@ -77,7 +77,7 @@ These steps are all you need to do to have new Midgard objects at your disposal.
     
     // Localize the article to Finnish
     midgard_connection::set_lang('fi');
-    $article->title = 'MidCOM on Šltsin magee';
+    $article->title = 'MidCOM on Ã¤ltsin magee';
     $article->update();
     
     // Delete the Finnish translation
@@ -109,37 +109,36 @@ Since Midgard is a multilingual framework, same content can be accessed between 
     
     # Create a new person
     reporter = midgard.mgdschema.midgard_person()
-    reporter.set_property("firstname", "John")
-    reporter.set_property("lastname", "Smith")
+    reporter.firstname = 'John'
+    reporter.lastname = 'Smith'
     
     # Save it to the database
     reporter.create()
     
     # Now it has an UUID
-    reporter_guid = reporter.get_property("guid")
-    print(reporter_guid)
+    print(reporter.guid)
     
     # And it can be fetched from the database
-    qb = midgard.query_builder("midgard_person")
+    qb = midgard.query_builder('midgard_person')
     
     # We have multiple ways to query objects
-    qb.add_constraint("lastname", "LIKE", "Smi%")
+    qb.add_constraint('lastname', 'LIKE', 'Smi%')
     list = qb.execute()
     print(list)
     
     #Create a new article
     article = midgard.mgdschema.midgard_article()
-    article.set_property("title", "MidCOM is cool")
-    metadata = article.get_property("metadata")
-    metadata.set_property("authors", reporter_guid)
+    article.title = 'MidCOM is cool'
+    metadata = article.metadata
+    metadata.authors = reporter.guid
     article.create()
     
     # Extend the article with new properties
-    article.set_parameter("namespace", "key", "value")
+    article.set_parameter('namespace', 'key', 'value')
     
     # Localize the article to Finnish
-    cnc.set_lang("fi")
-    article.set_property("title", "MidCOM on Šltsin magee")
+    cnc.set_lang('fi')
+    article.title = 'MidCOM on Ã¤ltsin magee'
     article.update()
     
     # Delete the Finnish translation
@@ -177,7 +176,7 @@ For example, a route for displaying a particular article could be defined as:
     show:
         controller: net_nemein_news_controllers_article
         action: show
-        route: /{$name}/
+        route: '/{$name}/'
         content_entry_point: nnn-show-article
 
 In this case, the URL to a news article would be `/foldername/articlename`.
@@ -190,19 +189,30 @@ Routes are stored in configuration file so that they can be easily overridden on
 
 Each controller is responsible for doing one of two things: Populating a `data` array with content of the requested page, or raising an exception like `midcom_exception_notfound`.
 
-The controller class in this case would be stored to `net_nemein_news/controllers/article.php` and could look like the following:
+The controller class in this case would be stored to `net_nemein_news/controllers/article.php`. 
 
-    public function action_show($route_id, &$data, $args)
+    class net_nemein_news_controllers_article
     {
-        $qb = net_nemein_news_article::new_query_builder();
-        $qb->add_constraint('name', '=', $args['name']);        
-        $articles = $qb->execute();        
-        if (count($articles) == 0)
+        public function __construct($instance)
         {
-            throw new midcom_exception_notfound("Article {$args['name']} not found.");
+            // Make configuration of this component instance easily available
+            $this->configuration = $instance->configuration;
         }
-        $data['article'] = $articles[0];
-    }
+
+        /**
+         * Handle HTTP GET requests for the "show" route
+         */
+        public function get_show($args)
+        {
+            $qb = net_nemein_news_article::new_query_builder();
+            $qb->add_constraint('name', '=', $args['name']);        
+            $articles = $qb->execute();        
+            if (count($articles) == 0)
+            {
+                throw new midcom_exception_notfound("Article {$args['name']} not found.");
+            }
+            $this->data['article'] = $articles[0];
+        }
 
 After the controller has produced the data it will then be passed to the MidCOM templating system according to the entry points defined for the route.
 
@@ -210,7 +220,7 @@ After the controller has produced the data it will then be passed to the MidCOM 
 
 MidCOM uses the [Template Abstraction Language][13] (TAL) for its templating purposes. TAL is a very powerful templating system in the sense that it allows designers to build the site XML or XHTML templates and fill them with example data that will then be replaced with the real data when TAL is run.
 
-In this case our template would be placed in `net_nemein_news/templates/nnn-show-article.php`. It could contain something like:
+In this case our template would be placed in `net_nemein_news/templates/nnn-show-article.xhtml`. It could contain something like:
 
     <div class="hentry">
         <h1 tal:content="net_nemein_news/article/title" class="entry-title">Headline</h1>
@@ -232,7 +242,7 @@ This has been a very quick overview of the MidCOM framework. The third version f
 
 However, in near future MidCOM 3 will feature rich signal-based I/O event handling, Access Control Lists, caching and many other things useful to web developers.
 
-Everybody interested in MidCOM 3 is welcome to install a [Midgard 1.9 nightly][15], [get a git checkout][16] of MidCOM 3 and [start playing][17].
+Everybody interested in MidCOM 3 is welcome to install a [Midgard 8.09][15] or newer, [get a SVN checkout][16] of MidCOM 3 and [start playing][17].
 
 [1]: http://www.ietf.org/internet-drafts/draft-gregorio-uritemplate-02.txt
 [2]: http://www.djangoproject.com/documentation/overview/
@@ -248,10 +258,10 @@ Everybody interested in MidCOM 3 is welcome to install a [Midgard 1.9 nightly][1
 [12]: http://www.midgard-project.org/documentation/concepts-page_and_style/
 [13]: http://phptal.motion-twin.com/manual/en/
 [14]: http://phptal.motion-twin.com/manual/en/#tal-namespace
-[15]: http://www.midgard-project.org/nightly/
-[16]: http://repo.or.cz/w/midcom.git
-[17]: http://repo.or.cz/w/midcom.git?a=blob_plain;f=midcom_core/documentation/usage.txt;hb=HEAD
+[15]: http://www.midgard-project.org/download/
+[16]: http://trac.midgard-project.org/browser/trunk/midcom
+[17]: http://github.com/bergie/midcom/blob/67224f92c1520d94a3f50b1c25661a0504023610/midcom_core/documentation/usage.markdown
 [18]: http://bergie.iki.fi/blog/building_a_new_admin_interface_for_midgard.html
 [19]: http://bergie.iki.fi/blog/
-[20]: http://repo.or.cz/w/midcom.git?a=tree;f=midcom_core/documentation;h=ed16da4a61d1b2bb775690a6fd198b61d27f673b;hb=HEAD
+[20]: http://trac.midgard-project.org/browser/trunk/midcom/midcom_core/documentation
 [21]: http://phing.info/trac/
