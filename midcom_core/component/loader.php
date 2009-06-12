@@ -97,7 +97,7 @@ class midcom_core_component_loader
         }
 
         // Load the interface class
-        $this->interfaces[$component] = new $component($configuration);
+        $this->interfaces[$component] = new $component($configuration, $object);
         if ($_MIDCOM->timer)
         {
             $_MIDCOM->timer->setMarker('MidCOM component loader::load::' . $component . '::instantiated');
@@ -361,15 +361,22 @@ class midcom_core_component_loader
             return $actions;
         }
         $type = get_class($object);
+        
+        $components_to_check = array();
+        $libraries_to_check = array();
 
         if (isset($this->type_action_providers[$type]))
         {
             // Type-specific actions
             foreach ($this->type_action_providers[$type] as $component)
             {
-                $interface = $_MIDCOM->componentloader->load($component);
-                $component_actions = $interface->get_object_actions($object);
-                $actions = array_merge($actions, $component_actions);
+                if (   isset($this->manifests[$component]['library'])
+                    && $this->manifests[$component]['library'])
+                {
+                    $libraries_to_check[] = $component;
+                    continue;
+                }
+                $components_to_check[] = $component;
             }
         }
 
@@ -378,12 +385,36 @@ class midcom_core_component_loader
             // Generic actions for any type
             foreach ($this->type_action_providers['*'] as $component)
             {
-                $interface = $_MIDCOM->componentloader->load($component);
+                if (   isset($this->manifests[$component]['library'])
+                    && $this->manifests[$component]['library'])
+                {
+                    $libraries_to_check[] = $component;
+                    continue;
+                }
+                $components_to_check[] = $component;
+            }
+        }
+
+        foreach ($libraries_to_check as $component)
+        {
+            $interface = $_MIDCOM->componentloader->load($component);
+            $component_actions = $interface->get_object_actions($object);
+            $actions = array_merge($actions, $component_actions);
+        }
+
+        if (!empty($components_to_check))
+        {
+            $qb = new midgard_query_builder('midgard_page');
+            $qb->add_constraint('component', 'IN', $components_to_check);
+            $folders = $qb->execute();
+            foreach ($folders as $folder)
+            {
+                $interface = $_MIDCOM->componentloader->load($folder->component, $folder);
                 $component_actions = $interface->get_object_actions($object);
                 $actions = array_merge($actions, $component_actions);
             }
         }
-        
+
         return $actions;
     }
 }

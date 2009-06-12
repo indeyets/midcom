@@ -16,10 +16,12 @@
 abstract class midcom_core_component_baseclass implements midcom_core_component_interface
 {
     public $configuration = false;
+    public $folder = null;
     
-    public function __construct($configuration)
+    public function __construct($configuration, $folder = null)
     {        
         $this->configuration = $configuration;
+        $this->folder = $folder;
         $component = $configuration->get_component();
         $_MIDCOM->i18n->set_translation_domain($component);
     }

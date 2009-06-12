@@ -26,14 +26,14 @@ class net_nemein_news extends midcom_core_component_baseclass
         // This is the general action available for a page: forms-based editing
         $actions['edit'] = array
         (
-            'url' => $_MIDCOM->dispatcher->generate_url('update', array('name' => $object->name)),
+            'url' => $_MIDCOM->dispatcher->generate_url('update', array('name' => $object->name), $this->folder),
             'method' => 'GET',
             'label' => $_MIDCOM->i18n->get('key: edit', 'midcom_core'),
             'icon' => 'midcom_core/stock_icons/16x16/edit.png',
         );
         $actions['delete'] = array
         (
-            'url' => $_MIDCOM->dispatcher->generate_url('delete', array('name' => $object->name)),
+            'url' => $_MIDCOM->dispatcher->generate_url('delete', array('name' => $object->name), $this->folder),
             'method' => 'GET',
             'label' => $_MIDCOM->i18n->get('key: edit', 'midcom_core'),
             'icon' => 'midcom_core/stock_icons/16x16/trash.png',

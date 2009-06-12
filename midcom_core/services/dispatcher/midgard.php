@@ -369,23 +369,6 @@ class midcom_core_services_dispatcher_midgard implements midcom_core_services_di
         {
             $component_name = $_MIDCOM->context->component_name;
         }
-
-        if ($_MIDCOM->authentication->is_user())
-        {
-            // If we have user we should expose that to templating via context
-            if ($component_name == 'midcom_core')
-            {
-                $data['user'] = $_MIDCOM->authentication->get_person();
-            }
-            else
-            {
-                $core_data = array
-                (
-                    'user' => $_MIDCOM->authentication->get_person(),
-                );
-                $_MIDCOM->context->set_item('midcom_core', $core_data);
-            }
-        }
         
         $_MIDCOM->context->set_item($component_name, $data);
         
