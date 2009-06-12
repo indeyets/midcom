@@ -56,3 +56,8 @@ body #toolbar\:actions a
     display: inline-block;
     overflow: hidden;
 }
+
+body #toolbar\:actions a.midgard_page
+{
+    background-image: url('/midcom-static/stock-icons/16x16/folder.png');
+}
