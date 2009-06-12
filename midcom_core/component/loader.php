@@ -20,6 +20,7 @@ class midcom_core_component_loader
     private $process_injectors = array();
     private $template_injectors = array();
     private $type_action_providers = array();
+    private $category_action_providers = array();
 
     public function __construct()
     {
@@ -278,6 +279,19 @@ class midcom_core_component_loader
                 $this->type_action_providers[$type][] = $manifest['component'];
             }
         }
+
+        if (isset($manifest['action_categories']))
+        {
+            // This component provides actions for some toolbar categories
+            foreach ($manifest['action_categories'] as $category)
+            {
+                if (!isset($this->category_action_providers[$category]))
+                {
+                    $this->category_action_providers[$category] = array();
+                }
+                $this->category_action_providers[$category][] = $manifest['component'];
+            }
+        }
     }
 
     private function load_all_manifests()
@@ -351,7 +365,12 @@ class midcom_core_component_loader
     {
         $this->inject('template');
     }
-    
+
+    public function get_action_categories()
+    {
+        return array_keys($this->category_action_providers);
+    }
+
     public function get_object_actions($object)
     {
         $actions = array();
@@ -415,6 +434,26 @@ class midcom_core_component_loader
             }
         }
 
+        return $actions;
+    }
+
+    public function get_category_actions($category, midgard_page $folder)
+    {
+        $actions = array();
+        
+        if (!isset($this->category_action_providers[$category]))
+        {
+            return $actions;
+        }
+        
+        foreach ($this->category_action_providers[$category] as $component)
+        {
+            $interface = $_MIDCOM->componentloader->load($component, $folder);
+            $method = "get_{$category}_actions";
+            $component_actions = $interface->$method($category, $folder);
+            $actions = array_merge($actions, $component_actions);
+        }
+        
         return $actions;
     }
 }

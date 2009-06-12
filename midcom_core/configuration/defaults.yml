@@ -132,6 +132,24 @@ routes:
         mimetype: application/json
         allowed_methods:
             - GET
+    midcom_category_actions_json:
+        controller: midcom_core_controllers_actions
+        action: category
+        route: '/mgd:actions/{$guid}/{$category}.json'
+        root_only: true
+        template_entry_point: midcom-show-json
+        mimetype: application/json
+        allowed_methods:
+            - GET
+    midcom_action_categories_json:
+        controller: midcom_core_controllers_actions
+        action: categories
+        route: '/mgd:actions/categories.json'
+        root_only: true
+        template_entry_point: midcom-show-json
+        mimetype: application/json
+        allowed_methods:
+            - GET
     comet_messages:
         controller: midcom_core_controllers_comet
         action: messages

@@ -30,5 +30,31 @@ class midcom_core_controllers_actions
         
         $this->data['actions'] = $_MIDCOM->componentloader->get_object_actions($object);
     }
+
+    public function get_categories($args)
+    {
+        $_MIDCOM->authorization->require_user();
+        
+        $this->data['categories'] = $_MIDCOM->componentloader->get_action_categories();
+    }
+
+    public function get_category($args)
+    {
+        $_MIDCOM->authorization->require_user();
+        
+        $categories = $_MIDCOM->componentloader->get_action_categories();
+        if (!in_array($args['category'], $categories))
+        {
+            throw new midcom_exception_notfound("Category {$args['category']} not found");
+        }
+
+        $page = new midgard_page($args['guid']);
+        if (!$page->guid)
+        {
+            throw new midcom_exception_notfound("Folder {$args['guid']} not found");
+        }
+        
+        $this->data['actions'] = $_MIDCOM->componentloader->get_category_actions($args['category'], $page);
+    }
 }
 ?>

@@ -23,3 +23,5 @@ authors:
         url: http://www.kaktus.cc/
 action_types:
         - midgard_page
+action_categories:
+        - system

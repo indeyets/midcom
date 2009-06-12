@@ -30,6 +30,34 @@ class midcom_core extends midcom_core_component_baseclass
             'label' => $_MIDCOM->i18n->get('key: edit', 'midcom_core'),
             'icon' => 'midcom_core/stock_icons/16x16/edit.png',
         );
+        $actions['delete'] = array
+        (
+            'url' => $_MIDCOM->dispatcher->generate_url('page_delete', array(), $object),
+            'method' => 'GET',
+            'label' => $_MIDCOM->i18n->get('key: delete', 'midcom_core'),
+            'icon' => 'midcom_core/stock_icons/16x16/trash.png',
+        );
+        
+        return $actions;
+    }
+
+    public function get_system_actions(&$object, $folder)
+    {
+        $actions = array();
+        
+        static $root_page = null;
+        if (is_null($root_page))
+        {
+            $root_page = new midgard_page($_MIDCOM->context->host->root);
+        }
+        
+        $actions['logout'] = array
+        (
+            'url' => $_MIDCOM->dispatcher->generate_url('logout', array(), $root_page),
+            'method' => 'GET',
+            'label' => $_MIDCOM->i18n->get('key: logout', 'midcom_core'),
+            'icon' => 'midcom_core/stock_icons/16x16/exit.png',
+        );
         
         return $actions;
     }
