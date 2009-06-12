@@ -35,7 +35,7 @@ class net_nemein_news extends midcom_core_component_baseclass
         (
             'url' => $_MIDCOM->dispatcher->generate_url('delete', array('name' => $object->name), $this->folder),
             'method' => 'GET',
-            'label' => $_MIDCOM->i18n->get('key: edit', 'midcom_core'),
+            'label' => $_MIDCOM->i18n->get('key: delete', 'midcom_core'),
             'icon' => 'midcom_core/stock_icons/16x16/trash.png',
         );
         
