@@ -1,0 +1,57 @@
+body #toolbar
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    width: 80%;
+}
+
+body #toolbar #toolbar\:actions,
+body #toolbar #toolbar\:tabs
+{
+    background-color: #000;
+    width: 95%;
+}
+
+body #toolbar\:toggle
+{
+    background: #000 url('../img/MidgardToolbar.png') no-repeat top left;
+    width: 32px;
+    height: 32px;
+    display: block;
+    float: left;
+}
+
+body #toolbar\:tabs
+{
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+body #toolbar\:tabs li
+{
+    float: left;
+    height: 32px;
+}
+
+body #toolbar\:tabs li
+{
+    display: inline;
+}
+
+body #toolbar\:actions
+{
+    padding-left: 32px;
+}
+
+body #toolbar\:actions a
+{
+    background: url('/midcom-static/stock-icons/16x16/properties.png') no-repeat top left;
+    padding-left: 18px;
+    height: 16px;
+    width: 200px;
+    display: inline-block;
+    overflow: hidden;
+}
