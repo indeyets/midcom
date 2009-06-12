@@ -23,7 +23,7 @@ class midcom_core_controllers_cache
         $_MIDCOM->authorization->require_user();
         $_MIDCOM->cache->invalidate_all();
         $_MIDCOM->context->cache_enabled = false;
-        header('Location: ' . $_MIDCOM->dispatcher->generate_url('page_show', array()));
+        header('Location: ' . $_MIDCOM->dispatcher->generate_url('page_read', array()));
         exit();
     }
 }
