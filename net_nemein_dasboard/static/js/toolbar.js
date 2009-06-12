@@ -18,7 +18,7 @@ jQuery(function($) {
                 $modal = $.midcom_toolbar_modal;
             });
             
-            $root = $('<div />').attr('id', 'toolbar').append("<div id='toolbar:toggle'></div><ul id='toolbar:tabs'><li><a href='#toolbar:editing'>Editing</a></li></ul><div id='toolbar:actions'><div id='toolbar:editing'></div></div>").hide();
+            $root = $('<div />').attr('id', 'toolbar').append("<div id='toolbar:toggle'></div><ul id='toolbar:tabs'><li><a href='#toolbar:items'>items</a></li></ul><div id='toolbar:actions'><div id='toolbar:items'></div></div>").hide();
             $('body').append($root);
             
             $toolbar = $('#toolbar');
@@ -27,7 +27,7 @@ jQuery(function($) {
             $tabs = $('#toolbar\\:tabs a');
             $action_container = $("#toolbar\\:actions");
             $actions = $("#toolbar\\:actions > div").hide();
-            $editing = $actions.filter('#toolbar\\:editing');
+            $editing = $actions.filter('#toolbar\\:items');
             
             $elements = $('[mgd\\:guid]');
 
