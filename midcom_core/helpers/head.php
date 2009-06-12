@@ -49,7 +49,7 @@ class midcom_core_helpers_head
         }
     }
     
-    public function enable_jquery($version = '1.2.6')
+    public function enable_jquery($version = '1.3.2')
     {
         if ($this->jquery_enabled)
         {
