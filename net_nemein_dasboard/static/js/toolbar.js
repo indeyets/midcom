@@ -12,6 +12,7 @@ jQuery(function($) {
         {
             // Include related files
             $('<link />').attr({rel: 'stylesheet', type: 'text/css', href: opts.static_url+'/css/toolbar.css'}).appendTo('head');
+            $('<link />').attr({rel: 'stylesheet', type: 'text/css', href: opts.static_url+'/css/toolbar.modal.css'}).appendTo('head');
 //            $('<script />').attr({src: './style/js/toolbar.modal.js', type: 'text/javascript' }).appendTo('head');
             
             $root = $('<div />').attr('id', 'toolbar').append("<div id='toolbar:toggle'></div><ul id='toolbar:tabs'><li><a href='#toolbar:editing'>Editing</a></li></ul><div id='toolbar:actions'><div id='toolbar:editing'></div></div>").hide();
