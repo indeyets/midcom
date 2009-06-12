@@ -71,12 +71,6 @@ class midcom_core_helpers_head
             $this->jquery_inits = "        <script type=\"text/javascript\" src=\"{$url}\"></script>\n";
         }
         
-        $script = 'var $j = jQuery.noConflict();'."\n";
-
-        $this->jquery_inits .= "        <script type=\"text/javascript\">\n";
-        $this->jquery_inits .= "            " . trim($script) . "\n";
-        $this->jquery_inits .= "        </script>\n";
-        
         $this->jquery_enabled = true;
     }
     
