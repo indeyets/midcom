@@ -19,6 +19,7 @@ class midcom_core_component_loader
     private $interfaces = array();
     private $process_injectors = array();
     private $template_injectors = array();
+    private $type_action_providers = array();
 
     public function __construct()
     {
@@ -34,11 +35,6 @@ class midcom_core_component_loader
         }
             
         if (!isset($this->manifests[$component]))
-        {
-            return false;
-        }
-        
-        if ($component == 'midcom_core')
         {
             return false;
         }
@@ -71,10 +67,9 @@ class midcom_core_component_loader
         {        
             // No component directory
             $this->tried_to_load[$component] = false;
-            
+
             throw new OutOfRangeException("Component {$component} directory not found.");
-        }
-        
+        }  
         $component_interface_file = "{$component_directory}/interface.php";
         if (! file_exists($component_interface_file))
         {
@@ -270,6 +265,19 @@ class midcom_core_component_loader
             // This component has an injector for the template() phase
             $this->template_injectors[$manifest['component']] = $manifest['template_injector'];
         }
+
+        if (isset($manifest['action_types']))
+        {
+            // This component provides actions for some Midgard types
+            foreach ($manifest['action_types'] as $type)
+            {
+                if (!isset($this->type_action_providers[$type]))
+                {
+                    $this->type_action_providers[$type] = array();
+                }
+                $this->type_action_providers[$type][] = $manifest['component'];
+            }
+        }
     }
 
     private function load_all_manifests()
@@ -342,6 +350,41 @@ class midcom_core_component_loader
     public function inject_template()
     {
         $this->inject('template');
+    }
+    
+    public function get_object_actions($object)
+    {
+        $actions = array();
+
+        if (!is_object($object))
+        {
+            return $actions;
+        }
+        $type = get_class($object);
+
+        if (isset($this->type_action_providers[$type]))
+        {
+            // Type-specific actions
+            foreach ($this->type_action_providers[$type] as $component)
+            {
+                $interface = $_MIDCOM->componentloader->load($component);
+                $component_actions = $interface->get_object_actions($object);
+                $actions = array_merge($actions, $component_actions);
+            }
+        }
+
+        if (isset($this->type_action_providers['*']))
+        {
+            // Generic actions for any type
+            foreach ($this->type_action_providers['*'] as $component)
+            {
+                $interface = $_MIDCOM->componentloader->load($component);
+                $component_actions = $interface->get_object_actions($object);
+                $actions = array_merge($actions, $component_actions);
+            }
+        }
+        
+        return $actions;
     }
 }
 ?>

@@ -123,6 +123,15 @@ routes:
         route: '/mgd:documentation/{$component}/class/{$class}'
         root_only: true
         content_entry_point: midcom-show-documentation_class
+    midcom_object_actions_json:
+        controller: midcom_core_controllers_actions
+        action: object
+        route: '/mgd:actions/{$guid}.json'
+        root_only: true
+        template_entry_point: midcom-show-json
+        mimetype: application/json
+        allowed_methods:
+            - GET
     comet_messages:
         controller: midcom_core_controllers_comet
         action: messages
