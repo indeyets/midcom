@@ -61,9 +61,39 @@ In general, URLs for actions should contain the `mgd:` prefix (`objectname/mgd:e
 
 Actions available for an object can be for instance visualized in a toolbar. In addition, a Neutron-compatible XML file is available for all objects if Neutron Protocol is enabled. The Neutron XML file can be used for constructing UIs by external editing tools and for instance AJAX-based inspectors.
 
-TODO: Example of Neutron document
+The editable objects inside a page can be identified by some attributes, so that external tools know which introspection files to load. The attributes to use are:
 
-TODO: JSON in addition to Neutron?
+* `mgd:guid`: GUID of an object inside a given part of page
+* `mgd:type`: MgdSchema type of the object inside a given part of page
+* `mgd:label`: Display label (usually title) of the object inside a given part of page
+
+Example:
+
+    <li class="hentry" mgd:type="midgard_article" mgd:guid="18ea02405abe11dcb575adc2804439153915" mgd:label="Amer Sports 2007 financial calendar">
+        <abbr title="2006-11-02T06:33:21+00:00" class="published">02/11/2006</abbr>
+        <a href="/news/8ececd75e921702fa33460ab794cca94/" class="entry-title" rel="bookmark">Amer Sports 2007 financial calendar</a>
+    </li>
+
+A JSON introspection file showing actions for a given GUID can be fetched from `/mgd:actions/GUID.json`, in this case `/mgd:actions/18ea02405abe11dcb575adc2804439153915.json`. The actions JSON listing looks like the following:
+
+    {
+        "actions": {
+            "edit": {
+                "url": "\/news\/8ececd75e921702fa33460ab794cca94\/mgd:update",
+                "method": "GET",
+                "label": "key: edit",
+                "icon": "midcom_core\/stock_icons\/16x16\/edit.png"
+            },
+            "delete": {
+                "url": "\/news\/8ececd75e921702fa33460ab794cca94\/mgd:delete",
+                "method": "GET",
+                "label": "key: edit",
+                "icon": "midcom_core\/stock_icons\/16x16\/trash.png"
+            }
+        }
+    }
+
+TODO: Example of Neutron document
 
 ## Navigation and object listings
 
