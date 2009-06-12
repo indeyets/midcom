@@ -41,7 +41,7 @@ class midcom_core extends midcom_core_component_baseclass
         return $actions;
     }
 
-    public function get_system_actions(&$object, $folder)
+    public function get_system_actions(midgard_page $folder)
     {
         $actions = array();
         
@@ -57,6 +57,27 @@ class midcom_core extends midcom_core_component_baseclass
             'method' => 'GET',
             'label' => $_MIDCOM->i18n->get('key: logout', 'midcom_core'),
             'icon' => 'midcom_core/stock_icons/16x16/exit.png',
+        );
+        
+        return $actions;
+    }
+
+    public function get_create_actions(midgard_page $folder)
+    {
+        $actions = array();
+
+        if (!$_MIDCOM->authorization->can_do('midgard:create', $folder))
+        {
+            // User is not allowed to create subfolders so we have no actions available
+            return $actions;
+        }
+        
+        $actions['page_create'] = array
+        (
+            'url' => $_MIDCOM->dispatcher->generate_url('page_create', array()),
+            'method' => 'GET',
+            'label' => $_MIDCOM->i18n->get('key: create folder', 'midcom_core'),
+            'icon' => 'midcom_core/stock_icons/16x16/folder.png',
         );
         
         return $actions;

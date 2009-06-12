@@ -2,3 +2,5 @@ component: net_nemein_news
 version: 0.0.1
 action_types:
         - midgard_article
+action_categories:
+        - create

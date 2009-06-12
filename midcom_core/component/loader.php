@@ -450,7 +450,7 @@ class midcom_core_component_loader
         {
             $interface = $_MIDCOM->componentloader->load($component, $folder);
             $method = "get_{$category}_actions";
-            $component_actions = $interface->$method($category, $folder);
+            $component_actions = $interface->$method($folder);
             $actions = array_merge($actions, $component_actions);
         }
         

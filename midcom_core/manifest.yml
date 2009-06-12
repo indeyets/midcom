@@ -24,4 +24,5 @@ authors:
 action_types:
         - midgard_page
 action_categories:
+        - create
         - system
