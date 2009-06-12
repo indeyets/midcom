@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html version="XHTML+RDFa 1.0" xmlns:tal="http://xml.zope.org/namespaces/tal">
+<html version="XHTML+RDFa 1.0" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:mgd="http://www.midgard-project.org/midgard2/9.03">
     <head>
         <title tal:content="page/title">Midgard CMS</title>
         <span tal:replace="php: MIDCOM.head.print_elements()" />
@@ -8,7 +8,7 @@
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
         <link rel="shortcut icon" href="/midcom-static/midcom_core/midgard/midgard.ico" type="image/vnd.microsoft.icon" />
     </head>
-    <body>
+    <body tal:attributes="mgd:guid page/guid; mgd:label page/title" mgd:type="midgard_page">
         <div id="container">
             <header>
                 <div class="grouplogo">
@@ -18,7 +18,7 @@
             <section id="content">
                 <!-- beginning of content-text -->
                 <div id="content-text">
-                    <mgd:include xmlns:mgd="http://www.midgard-project.org/midgard2/9.03">content</mgd:include>
+                    <mgd:include>content</mgd:include>
                 </div>
             </section>
         </div>
