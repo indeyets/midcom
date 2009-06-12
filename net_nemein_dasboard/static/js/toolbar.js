@@ -58,7 +58,9 @@ jQuery(function($) {
             
             $toggler.toggle(
                 function() {
+                    // TODO: Convert this in to a filter that opens the first tab with a click.
                     $tab_container.show();
+                    $actions.filter(':first').show();
                     $toggler.data('active', true).addClass(opts.toggle_class);
                 },
                 function() {
@@ -83,6 +85,7 @@ jQuery(function($) {
             );
             
             $tabs.click(function() {
+                // TODO: Save the last clicked tab in to a cookie, possibly on window unload or on every click?
                 hash = this.hash.replace(/:/, "\\:");
                 $actions.hide().filter(hash).show();
                 $tabs.removeClass('selected');
