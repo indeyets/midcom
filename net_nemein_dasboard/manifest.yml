@@ -1,0 +1,8 @@
+component: net_nemein_dasboard
+library: true
+version: 0.0.1
+authors:
+    jbergius:
+        name: Joonas Bergius
+        email: joonas.bergius@gmail.com
+        url: http://joonas.bergi.us
