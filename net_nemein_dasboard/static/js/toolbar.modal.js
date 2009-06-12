@@ -10,7 +10,7 @@ jQuery(function($) {
         var opts = $.extend({}, defaults, options);
         
         var $content = $('<div />').attr('class', 'modal:content');
-        var $close = $('<a />').attr({href: '#close', class: 'close' }).text('Close');
+        var $close = $('<a />').addClass('close').attr({href: '#close'}).text('Close');
         var $overlay = $('<div />').attr('id', 'modal:overlay').hide();
         var $container = $('<div />').attr('id', 'modal:container').hide();
         
