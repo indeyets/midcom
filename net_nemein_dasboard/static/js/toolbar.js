@@ -1,7 +1,7 @@
 jQuery(function($) {
     $.midcom_toolbar = function(options) {
         var defaults = {
-            
+            static_url: '/midcom-static/net_nemein_dasboard',
         };
         
         var opts = $.extend({}, defaults, options);
@@ -10,6 +10,10 @@ jQuery(function($) {
         
         function init(opts)
         {
+            // Include related files
+            $('<link />').attr({rel: 'stylesheet', type: 'text/css', href: opts.static_url+'/css/toolbar.css'}).appendTo('head');
+//            $('<script />').attr({src: './style/js/toolbar.modal.js', type: 'text/javascript' }).appendTo('head');
+            
             $root = $('<div />').attr('id', 'toolbar').append("<div id='toolbar:toggle'></div><ul id='toolbar:tabs'><li><a href='#toolbar:editing'>Editing</a></li></ul><div id='toolbar:actions'><div id='toolbar:editing'></div></div>").hide();
             $('body').append($root);
             
@@ -20,7 +24,7 @@ jQuery(function($) {
             $action_container = $("#toolbar\\:actions");
             $actions = $("#toolbar\\:actions > div").hide();
             $editing = $actions.filter('#toolbar\\:editing');
-
+            
             $elements = $('[mgd\\:guid]');
             // editables = '';
             // console.time('concat');
@@ -30,9 +34,11 @@ jQuery(function($) {
             // $editing.append(editables);
             // console.timeEnd('concat');
 
+            console.time('test');
             var editables = [];
             var a = 0;
-            for (var i = $elements.length - 1; i >= 0; i--){
+            var elcount = $elements.length;
+            for (var i = 0; i < elcount; i++){
                 editables[a++] = '<a class="'+$elements[i].getAttribute('mgd:type');
                 editables[a++] = '" href="';
                 editables[a++] = $elements[i].getAttribute('mgd:guid');
@@ -41,15 +47,18 @@ jQuery(function($) {
                 editables[a++] = '</a>';
             };
             $editing.append(editables.join(''));
+            console.timeEnd('test');
             
             $editables = $('a', $editing);
+
+            debug('foo');
             
             $editables.click(function() {
-                return false;
-                $.getJSON('/mgd:actions/'+this.getAttribute('href')+'.json',{},
-                 function(json){
-                    
+                objguid = this.getAttribute('href');
+                $.getScript(opts.static_url+'/js/toolbar.modal.js', function(){
+                    $.midcom_toolbar_modal({ guid: objguid });
                 });
+                return false;
             });
 
             
@@ -87,6 +96,7 @@ jQuery(function($) {
                 return false;
             });
             
+            debug('Go!');
             // Ready!
             $root.show();
         }

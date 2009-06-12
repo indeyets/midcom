@@ -1,0 +1,47 @@
+body #modal\:overlay
+{
+    position: fixed; 
+    _position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8); 
+    *background: #000; 
+    *filter: alpha(opacity=80);
+    display:none;
+    z-index:9999;
+}
+
+body #modal\:container
+{
+    position: fixed;
+    _position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 10px;
+    background: #fff;
+    width: 600px;
+    height: 400px;
+    margin: -200px 0 0 -300px;
+    display: none;
+    z-index:10000;
+}
+
+/*#modal\:container.loading { background: #fff url('/images/loading-modal\:container-demo.gif') no-repeat 50% 50%; }*/
+#modal\:container a.close
+{
+    color: #111;
+    background: #fff;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: block;
+    font-size: 10px;
+    z-index: 5;
+}
+/*
+#modal\:container a.prev, #modal\:container a.next { position: absolute; top: 50%; left: 0; padding: 5px; background: #fff; margin-top: -0.5em; width: 6em; text-align: center; opacity: 0.5; }
+#modal\:container a.next { left: auto; right: 0; }
+#modal\:container a:hover.prev, #modal\:container a:hover.next { opacity: 1; }
+*/
