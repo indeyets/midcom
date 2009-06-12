@@ -21,3 +21,5 @@ authors:
         name: Arttu Manninen
         email: arttu@kaktus.cc
         url: http://www.kaktus.cc/
+action_types:
+        - midgard_page

@@ -283,6 +283,9 @@ class midcom_core_midcom
         header('Content-Type: ' . $this->context->mimetype);
     }
     
+    /**
+     * Serve a request either through templating or the WebDAV server
+     */
     public function serve()
     {
         // Handle HTTP request

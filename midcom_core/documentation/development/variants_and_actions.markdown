@@ -53,6 +53,8 @@ Example of a `get_object_actions` method for a component interface class:
             'label' => $_MIDCOM->i18n->get('key: edit', 'midcom_core'),
             'icon' => 'midcom_core/stock_icons/16x16/edit.png',
         );
+
+        return $actions;
     }
 
 In general, URLs for actions should contain the `mgd:` prefix (`objectname/mgd:edit/` for example).
