@@ -45,18 +45,24 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
             {
                 // FIXME: For some reason we get GET parameters into the argv string too, move them to get instead
                 // URI (and argv) is built using $_SERVER['REQUEST_URI'].
-                // Open a ticket for php-midgard if uri should be taken from other global variable
-                $gets = explode('&', substr($argument, 1));
-                foreach ($gets as $get_string)
+                // See http://trac.midgard-project.org/ticket/1209
+                $url_components = parse_url("http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
+                if (empty($url_components['query']))
                 {
-                    $get_pair = explode('=', $get_string);
-                    if (count($get_pair) != 2)
+                    break;
+                }
+                
+                $query_items = explode('&', $url_components['query']);
+                foreach ($query_items as $query_item)
+                {
+                    $query_pair = explode('=', $query_item);
+                    if (count($query_pair) != 2)
                     {
                         break;
                     }
-                    $this->get[$get_pair[0]] = urldecode($get_pair[1]);
+                    $this->get[$query_pair[0]] = urldecode($query_pair[1]);
                 }
-
+                
                 break;
             }
             
