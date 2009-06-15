@@ -54,7 +54,7 @@ class midcom_core_services_dispatcher_midgard2 extends midcom_core_services_disp
                     {
                         break;
                     }
-                    $this->get[$get_pair[0]] = $get_pair[1];
+                    $this->get[$get_pair[0]] = urldecode($get_pair[1]);
                 }
 
                 break;
