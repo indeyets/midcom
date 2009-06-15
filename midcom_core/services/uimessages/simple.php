@@ -195,7 +195,7 @@ class midcom_core_services_uimessages_simple extends midcom_core_services_uimess
 
         if (count($this->message_stack) > 0)
         {
-            $html .= "<div class=\"midcom_services_uimessages\">\n";
+            $html .= "<ul class=\"midcom_services_uimessages\">\n";
             
             if (   !is_null($key)
                 && array_key_exists($key, $this->message_stack))
@@ -216,22 +216,10 @@ class midcom_core_services_uimessages_simple extends midcom_core_services_uimess
                 }                
             }
 
-            $html .= "</div>\n";
+            $html .= "</ul>\n";
         }
         
         return $html;
-    }
-    
-    public function render_as($type='comet', $key=null)
-    {
-        switch ($type)
-        {
-            case 'comet':
-                return $this->render_as_js($key);
-            break;
-        }
-        
-        return false;
     }
     
     /**
@@ -239,13 +227,10 @@ class midcom_core_services_uimessages_simple extends midcom_core_services_uimess
      */
     private function render_message_html($message)
     {
-        $html = "<div class=\"midcom_services_uimessages_message msu_{$message['type']}\">";
-
-        $html .= "    <div class=\"midcom_services_uimessages_message _message_type\">{$message['type']}</div>";
-        $html .= "    <div class=\"midcom_services_uimessages_message _message_title\">{$message['title']}</div>";
-        $html .= "    <div class=\"midcom_services_uimessages_message _message_msg\">{$message['message']}</div>";
-
-        $html .= "</div>\n";
+        $html  = "<li class=\"midcom_services_uimessages_message msu_{$message['type']}\">\n";
+        $html .= "    <div class=\"midcom_services_uimessages_message_title\">{$message['title']}</div>\n";
+        $html .= "    <div class=\"midcom_services_uimessages_message_msg\">{$message['message']}</div>\n";
+        $html .= "</li>\n";
         
         return $html;
     }

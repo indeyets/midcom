@@ -29,7 +29,7 @@ class midcom_core_exceptionhandler
                 break;
         }
 
-        $message = htmlentities($exception->getMessage());
+        $message = strip_tags($exception->getMessage());
         $message = str_replace("\n", ' ', $message);
 
         if (isset($_MIDCOM))
