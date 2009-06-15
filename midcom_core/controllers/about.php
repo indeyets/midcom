@@ -77,13 +77,18 @@ class midcom_core_controllers_about
                 {
                     continue;
                 }
-                if (midgard_config::class_table_exists($type))
+        
+                if (extension_loaded('midgard'))
                 {
-                    if (!midgard_config::update_class_table($type))
+                    // FIXME: This method is not implemented yet in midgard2
+                    if (midgard_config::class_table_exists($type))
                     {
-                        throw new Exception('Could not update ' . $type . ' tables in test database');
+                        if (!midgard_config::update_class_table($type))
+                        {
+                            throw new Exception('Could not update ' . $type . ' tables in test database');
+                        }
+                        continue;
                     }
-                    continue;
                 }
     
                 if (!midgard_config::create_class_table($type))
