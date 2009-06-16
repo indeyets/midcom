@@ -29,12 +29,13 @@ body #toolbar\:tabs
     float: left;
     margin: 0;
     padding: 0;
+    border-bottom: 1px solid #333;
 }
 
 body #toolbar\:tabs li
 {
     float: left;
-    height: 32px;
+    height: 31px;
 }
 
 body #toolbar\:tabs li
@@ -42,9 +43,39 @@ body #toolbar\:tabs li
     display: inline;
 }
 
+body #toolbar\:tabs li a
+{
+    background-color: #222;
+    display: inline-block;
+    padding: 0.2em 0.5em 0.25em;
+    margin-top: 0.4em;
+    color: #fff;
+    text-decoration: none;
+}
+
+body #toolbar\:tabs li a:first
+{
+    border-left: 1px solid #333;
+}
+
+body #toolbar\:tabs li a:hover,
+body #toolbar\:tabs li a.selected
+{
+    background-color: #000;
+    border-right: 1px solid #333;
+    border-left: 1px solid #333;
+    border-top: 1px solid #333;
+}
+
 body #toolbar\:actions
 {
     padding-left: 32px;
+}
+
+body #toolbar\:actions div
+{
+    clear: left;
+    padding: 5px;
 }
 
 body #toolbar\:actions a
