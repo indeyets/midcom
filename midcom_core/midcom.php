@@ -248,8 +248,15 @@ class midcom_core_midcom
             }
         }
 
-        // Set up templating stack: midcom_core goes first 
-        $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/templates');
+        // Set up initial templating stack
+        if (   $this->configuration->services_templating_components
+            && is_array($this->configuration->services_templating_components))
+        {
+            foreach ($this->configuration->services_templating_components as $templating_component)
+            {
+                $_MIDCOM->templating->append_directory(MIDCOM_ROOT . "/{$templating_component}/templates");
+            }
+        }
 
         // Then initialize the component, so it also goes to template stack
         $this->dispatcher->initialize($component);
