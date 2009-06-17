@@ -452,72 +452,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         switch ($data['template_engine'])
         {
             case 'tal':
-                // We use the PHPTAL class
-                if (!class_exists('PHPTAL'))
-                {
-                    require('PHPTAL.php');
-                }
-
-                // FIXME: Rethink whole tal modifiers concept 
-                include_once('TAL/modifiers.php');
-                if ($_MIDCOM->timer)
-                {
-                    $_MIDCOM->timer->setMarker('MidCOM::templating::display::tal_included');
-                }
-                
-                $tal = new PHPTAL($this->get_cache_identifier());
-                if ($_MIDCOM->timer)
-                {
-                    $_MIDCOM->timer->setMarker('MidCOM::templating::display::tal_started');
-                }
-                
-                $tal->uimessages = false;
-                if ($_MIDCOM->configuration->enable_uimessages)
-                {
-                    if (   $_MIDCOM->uimessages->has_messages()
-                        && $_MIDCOM->uimessages->can_view())
-                    {
-                        $tal->uimessages = $_MIDCOM->uimessages->render();
-                    }
-                    if ($_MIDCOM->timer)
-                    {
-                        $_MIDCOM->timer->setMarker('MidCOM::templating::display::uimessages_shown');
-                    }
-                }
-
-                $tal->MIDCOM = $_MIDCOM;
-                
-                foreach ($data as $key => $value)
-                {
-                    $tal->$key = $value;
-                }
-
-                $tal->setSource($content);
-                if ($_MIDCOM->timer)
-                {
-                    $_MIDCOM->timer->setMarker('MidCOM::templating::display::source_set');
-                }
-
-                $translator =& $_MIDCOM->i18n->set_translation_domain($_MIDCOM->context->component);
-                $tal->setTranslator($translator);  
-                if ($_MIDCOM->timer)
-                {
-                    $_MIDCOM->timer->setMarker('MidCOM::templating::display::i18n');
-                }
-            
-                try
-                {
-                    $content = $tal->execute();
-                }
-                catch (PHPTAL_TemplateException $e)
-                {
-                    throw new Exception("PHPTAL: {$e->srcFile} line {$e->srcLine}: " . $e->getMessage());
-                }
-                unset($tal);
-                if ($_MIDCOM->timer)
-                {
-                    $_MIDCOM->timer->setMarker('MidCOM::templating::display::tal_executed');
-                }
+                $content = $this->display_tal($content, $data);
                 
                 break;
             default:
@@ -593,6 +528,72 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             $_MIDCOM->uimessages->store();
         }
     }
-     
+
+    private function display_tal($content, $data)
+    {
+        // We use the PHPTAL class
+        if (!class_exists('PHPTAL'))
+        {
+            require('PHPTAL.php');
+        }
+
+        // FIXME: Rethink whole tal modifiers concept 
+        include_once('TAL/modifiers.php');
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM::templating::display::tal_included');
+        }
+        
+        $tal = new PHPTAL($this->get_cache_identifier());
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM::templating::display::tal_started');
+        }
+        
+        $tal->uimessages = false;
+        if ($_MIDCOM->configuration->enable_uimessages)
+        {
+            if (   $_MIDCOM->uimessages->has_messages()
+                && $_MIDCOM->uimessages->can_view())
+            {
+                $tal->uimessages = $_MIDCOM->uimessages->render();
+            }
+            if ($_MIDCOM->timer)
+            {
+                $_MIDCOM->timer->setMarker('MidCOM::templating::display_tal::uimessages_shown');
+            }
+        }
+
+        $tal->MIDCOM = $_MIDCOM;
+        
+        foreach ($data as $key => $value)
+        {
+            $tal->$key = $value;
+        }
+
+        $tal->setSource($content);
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM::templating::display_tal::source_set');
+        }
+
+        $translator =& $_MIDCOM->i18n->set_translation_domain($_MIDCOM->context->component);
+        $tal->setTranslator($translator);  
+        if ($_MIDCOM->timer)
+        {
+            $_MIDCOM->timer->setMarker('MidCOM::templating::display_tal::i18n');
+        }
+    
+        try
+        {
+            $content = $tal->execute();
+        }
+        catch (PHPTAL_TemplateException $e)
+        {
+            throw new Exception("PHPTAL: {$e->srcFile} line {$e->srcLine}: " . $e->getMessage());
+        }
+        
+        return $content;
+    }
 }
 ?>
