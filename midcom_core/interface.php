@@ -27,14 +27,14 @@ class midcom_core extends midcom_core_component_baseclass
         (
             'url' => $_MIDCOM->dispatcher->generate_url('page_update', array(), $object),
             'method' => 'GET',
-            'label' => $_MIDCOM->i18n->get('key:update', 'midcom_core'),
+            'label' => $_MIDCOM->i18n->get('update', 'midcom_core'),
             'icon' => 'midcom_core/stock_icons/16x16/update.png',
         );
         $actions['delete'] = array
         (
             'url' => $_MIDCOM->dispatcher->generate_url('page_delete', array(), $object),
             'method' => 'GET',
-            'label' => $_MIDCOM->i18n->get('key:delete', 'midcom_core'),
+            'label' => $_MIDCOM->i18n->get('delete', 'midcom_core'),
             'icon' => 'midcom_core/stock_icons/16x16/delete.png',
         );
         
@@ -55,7 +55,7 @@ class midcom_core extends midcom_core_component_baseclass
         (
             'url' => $_MIDCOM->dispatcher->generate_url('logout', array(), $root_page),
             'method' => 'GET',
-            'label' => $_MIDCOM->i18n->get('key: logout', 'midcom_core'),
+            'label' => $_MIDCOM->i18n->get('logout', 'midcom_core'),
             'icon' => 'midcom_core/stock_icons/16x16/exit.png',
         );
         
@@ -76,7 +76,7 @@ class midcom_core extends midcom_core_component_baseclass
         (
             'url' => $_MIDCOM->dispatcher->generate_url('page_create', array()),
             'method' => 'GET',
-            'label' => $_MIDCOM->i18n->get('key: create folder', 'midcom_core'),
+            'label' => $_MIDCOM->i18n->get('create folder', 'midcom_core'),
             'icon' => 'midcom_core/stock_icons/16x16/folder.png',
         );
         

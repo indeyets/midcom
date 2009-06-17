@@ -28,7 +28,7 @@ class midcom_core_controllers_authentication
     public function get_login($args)
     {   
         $exception_data = array();
-        $exception_data['message'] = "please enter your username and password";
+        $exception_data['message'] = $_MIDCOM->i18n->get('please enter your username and password', 'midcom_core');
         $_MIDCOM->context->set_item('midcom_core_exceptionhandler', $exception_data);
     }
 
