@@ -160,12 +160,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         $path = "{$directory}/{$element}.xhtml";
         if (!file_exists($path))
         {
-            // Fallback, support .php files too
-            $path = "{$directory}/{$element}.php";
-            if (!file_exists($path))
-            {
-                return null;
-            }
+            return null;
         }
         return file_get_contents($path);
     }
