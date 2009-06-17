@@ -62,7 +62,8 @@ class midcom_core_controllers_documentation
             
             $pathinfo = pathinfo("{$path}/{$entry}");
             
-            if ($pathinfo['extension'] != 'markdown')
+            if (   !isset($pathinfo['extension'])
+                || $pathinfo['extension'] != 'markdown')
             {
                 // We're only interested in Markdown files
                 continue;
