@@ -116,50 +116,6 @@ class midcom_core_component_loader
         $this->tried_to_load[$component] = true;
         return $this->interfaces[$component];
     }
-    
-    public function load_template($component, $template, $fallback = true)
-    {
-        static $component_tree = array();
-        $main_component = $component;
-        if (!isset($component_tree[$main_component]))
-        {
-            // Load component's inheritance tree
-            $component_tree[$main_component] = $component;
-            while (true)
-            {
-                $component = $this->get_parent($component);
-                if ($component === null)
-                {
-                    break;
-                }
-                
-                $component_tree[$main_component] = $component;
-            }
-            $component_tree[$main_component] = 'midcom_core';
-            $component_tree[$main_component] = array_reverse($component_tree[$main_component]);
-        }
-        
-        foreach ($component_tree[$main_component] as $component)
-        {
-            $component_directory = $this->component_to_filepath($component);
-            $template_file = "{$component_directory}" . $_MIDCOM->context->get_item('template_folder') . "{$template}.php";
-            if (!file_exists($template_file))
-            {
-                if (!$fallback)
-                {
-                    // TODO: Should we just ignore this silently instead?
-                    throw new OutOfRangeException("Component {$main_component} template file {$template} not found.");
-                }
-                // Go to next one in tree
-                continue;
-            }
-            
-            return file_get_contents($template_file);
-        }
-
-        // TODO: Should we just ignore this silently instead?
-        throw new OutOfRangeException("{$main_component} or {$component} template file {$template} not found.");
-    }
 
     /**
      * Get the component that is parent of current component

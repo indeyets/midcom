@@ -54,6 +54,13 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             $this->stacks[$stack] = array();
         }
         $this->stacks[$stack][$directory] = 'directory';
+        
+        if (   isset($_MIDCOM->context->subtemplate)
+            && $_MIDCOM->context->subtemplate
+            && file_exists("{$directory}/{$_MIDCOM->context->subtemplate}"))
+        {
+            $this->stacks[$stack]["{$directory}/{$_MIDCOM->context->subtemplate}"] = 'directory';
+        }
     }
     
     public function append_style($style_id)
@@ -64,6 +71,8 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
             $this->stacks[$stack] = array();
         }
         $this->stacks[$stack]["st:{$style_id}"] = 'style'; 
+        
+        // TODO: $_MIDCOM->context->subtemplate support (look up child style)
     }
     
     public function append_page($page_id)
@@ -287,7 +296,7 @@ class midcom_core_services_templating_midgard implements midcom_core_services_te
         $this->dispatcher->populate_environment_data();
 
         // Set up templating stack: midcom_core goes first 
-        $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/' . $_MIDCOM->context->get_item('template_folder'));
+        $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/templates');
 
         // Then initialize the component, so it also goes to template stack
         $this->dispatcher->initialize($component_name);

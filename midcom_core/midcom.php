@@ -249,7 +249,7 @@ class midcom_core_midcom
         }
 
         // Set up templating stack: midcom_core goes first 
-        $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/' . $_MIDCOM->context->get_item('template_folder'));
+        $_MIDCOM->templating->append_directory(MIDCOM_ROOT . '/midcom_core/templates');
 
         // Then initialize the component, so it also goes to template stack
         $this->dispatcher->initialize($component);
