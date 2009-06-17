@@ -16,9 +16,7 @@ jQuery(function($) {
             $('<link />').attr({rel: 'stylesheet', type: 'text/css', href: opts.static_url+'/css/toolbar.css'}).appendTo('head');
             $('<link />').attr({rel: 'stylesheet', type: 'text/css', href: opts.static_url+'/css/toolbar.modal.css'}).appendTo('head');
             $('<link />').attr({rel: 'stylesheet', type: 'text/css', href: opts.static_url+'/css/toolbar.highlight.css'}).appendTo('head');
-            $.getScript(opts.static_url+'/js/toolbar.modal.js', function(){
-                $modal = $.midcom_toolbar_modal;
-            });
+            $.getScript(opts.static_url+'/js/toolbar.modal.js');
             $.getScript(opts.static_url+'/js/toolbar.highlight.js');
             
             
@@ -52,7 +50,7 @@ jQuery(function($) {
 
             $editables.click(function() {
                 objguid = this.getAttribute('href');
-                $modal({ guid: objguid });
+                $.midcom_toolbar_modal({ guid: objguid });
                 return false;
             }).hover(function() {
                 $(this).highlight({state: "on" });
