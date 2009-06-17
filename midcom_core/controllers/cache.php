@@ -26,5 +26,10 @@ class midcom_core_controllers_cache
         header('Location: ' . $_MIDCOM->dispatcher->generate_url('page_read', array()));
         exit();
     }
+
+    public function post_invalidate($args)
+    {
+        $this->get_invalidate($args);
+    }
 }
 ?>
