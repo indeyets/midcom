@@ -15,9 +15,12 @@ jQuery(function($) {
             // Include related files
             $('<link />').attr({rel: 'stylesheet', type: 'text/css', href: opts.static_url+'/css/toolbar.css'}).appendTo('head');
             $('<link />').attr({rel: 'stylesheet', type: 'text/css', href: opts.static_url+'/css/toolbar.modal.css'}).appendTo('head');
+            $('<link />').attr({rel: 'stylesheet', type: 'text/css', href: opts.static_url+'/css/toolbar.highlight.css'}).appendTo('head');
             $.getScript(opts.static_url+'/js/toolbar.modal.js', function(){
                 $modal = $.midcom_toolbar_modal;
             });
+            $.getScript(opts.static_url+'/js/toolbar.highlight.js');
+            
             
             $root = $('<div />').attr('id', 'toolbar').append("<div id='toolbar:toggle'></div><ul id='toolbar:tabs'><li><a href='#toolbar_items'>items</a></li></ul><div id='toolbar:actions'><div id='toolbar_items'></div></div>").hide();
             $('body').append($root);
@@ -51,6 +54,10 @@ jQuery(function($) {
                 objguid = this.getAttribute('href');
                 $modal({ guid: objguid });
                 return false;
+            }).hover(function() {
+                $(this).highlight({state: "on" });
+            }, function() {
+                $(this).highlight({state: "off" });
             });
 
             // At this point, we are interested in all the midgard pages since they can add actions to the toolbar
@@ -132,7 +139,7 @@ jQuery(function($) {
                 $(this).addClass('selected');
                 return false;
             });
-            
+
             // Ready!
             $root.show();
         }
