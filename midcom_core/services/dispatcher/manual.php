@@ -20,6 +20,7 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
     private $page = null;
     protected $route_id = false;
     protected $action_arguments = array();
+    public $request_method = 'GET';
 
     public function __construct()
     {
@@ -230,33 +231,48 @@ class midcom_core_services_dispatcher_manual implements midcom_core_services_dis
         $controller_class = $selected_route_configuration['controller'];
         $controller = new $controller_class($_MIDCOM->context->component_instance);
         
-        // Then call the route_id
-        $action_method = "action_{$selected_route_configuration['action']}";
+        // Define the action method for the route_id
+        $action_method = strtolower($this->request_method) . "_{$selected_route_configuration['action']}";
+
         $data = array();
         if ($_MIDCOM->timer)
         {
             $_MIDCOM->timer->setMarker("MidCOM dispatcher::dispatch::{$this->component_name}::{$controller_class}::{$action_method}");
         }
-        $controller->$action_method($this->route_id, $data, $this->action_arguments);
-
-        if ($_MIDCOM->authentication->is_user())
+        if (!method_exists($controller, $action_method))
         {
-            // If we have user we should expose that to templating via context
-            if ($this->component_name == 'midcom_core')
+            if (   $this->request_method == 'GET'
+                || $this->request_method == 'POST')
             {
-                $data['user'] = $_MIDCOM->authentication->get_person();
+                // Fallback for the legacy "action_XX" method names that had the action_x($route_id, &$data, $args) signature
+                // TODO: Remove when components are ready for it
+                $action_method = "action_{$selected_route_configuration['action']}";
+                if (!method_exists($controller, $action_method))
+                {
+                    throw new midcom_exception_notfound("Action {$selected_route_configuration['action']} not found");
+                }
+                $controller->$action_method($this->route_id, $data, $this->action_arguments);
             }
             else
             {
-                $core_data = array
-                (
-                    'user' => $_MIDCOM->authentication->get_person(),
-                );
-                $_MIDCOM->context->set_item('midcom_core', $core_data);
+                throw new midcom_exception_httperror("{$this->request_method} not allowed", 405);
             }
         }
+        else
+        {
+            $controller->data =& $data;
+            $controller->$action_method($this->action_arguments);
+        }
 
-        $_MIDCOM->context->set_item($this->component_name, $data);
+        if ($this->is_core_route($this->route_id))
+        {
+            $component_name = 'midcom_core';
+        }
+        else
+        {
+            $component_name = $this->component_name;
+        }
+        $_MIDCOM->context->set_item($component_name, $data);
         
         // Set other context data from route
         if (isset($selected_route_configuration['mimetype']))
