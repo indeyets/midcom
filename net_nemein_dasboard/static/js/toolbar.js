@@ -20,13 +20,13 @@ jQuery(function($) {
             $.getScript(opts.static_url+'/js/toolbar.highlight.js');
             
             
-            $root = $('<div />').attr('id', 'toolbar').append("<div id='toolbar:toggle'></div><ul id='toolbar:tabs'><li><a href='#toolbar_items'>items</a></li></ul><div id='toolbar:actions'><div id='toolbar_items'></div></div>").hide();
+            $root = $('<div />').attr('id', 'toolbar').append("<div id='toolbar:toggle'></div><ul id='toolbar:tabs'><li><a href='#toolbar_items' id='toolbar_items_link'>items</a></li></ul><div id='toolbar:actions'><div id='toolbar_items'></div></div>").hide();
             $('body').append($root);
             
             $toolbar = $('#toolbar');
             var $toggler = $('#toolbar\\:toggle').fadeTo(0, 0.25);
             $tab_container = $('#toolbar\\:tabs').hide();
-            $action_container = $("#toolbar\\:actions");
+            $action_container = $("#toolbar\\:actions").hide();
             $actions = $("#toolbar\\:actions > div").hide();
             $editing = $actions.filter('#toolbar_items');
             $tabs = $('#toolbar\\:tabs li a');
@@ -66,7 +66,7 @@ jQuery(function($) {
                 for (key in json.categories)
                 {
                     $('<li></li>').append( 
-                        $tab = $('<a />').attr("href", "#toolbar_"+json.categories[key]).text(json.categories[key])
+                        $tab = $('<a />').attr({href: "#toolbar_"+json.categories[key], id: 'toolbar_'+json.categories[key]+'_link' }).text(json.categories[key])
                     ).appendTo($tab_container);
                     $tabs = $tabs.add($tab);
                     
@@ -106,10 +106,11 @@ jQuery(function($) {
                         $tab_container.show().find(':first a').click();
                     }                    
                     $toggler.data('active', true).addClass(opts.toggle_active_class);
+                    $action_container.show();
                 },
                 function() {
                     $tab_container.hide();
-                    $actions.hide();
+                    $action_container.hide();
                     $toggler.data('active', false).removeClass(opts.toggle_active_class);
                 }
             ).hover(

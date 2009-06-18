@@ -4,38 +4,49 @@ body #toolbar
     top: 0;
     left: 0;
     color: #fff;
-    width: 80%;
+    width: 110%;
     z-index: 100;
+    font: 16px "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
 }
 
-body #toolbar #toolbar\:actions,
 body #toolbar #toolbar\:tabs
 {
-    background-color: #000;
+    background-color: #222;
     width: 95%;
 }
 
 body #toolbar\:toggle
 {
-    background: #000 url('../img/MidgardToolbar.png') no-repeat top left;
+    background: #222 url('../img/MidgardToolbar.png') no-repeat center center;
     width: 32px;
     height: 32px;
     display: block;
     float: left;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    position: absolute;
+    padding: 0.5em 0.5em 0em;
+}
+
+body #toolbar\:toggle.active
+{
+    border-bottom: 1px solid #111;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
 }
 
 body #toolbar\:tabs
 {
     float: left;
-    margin: 0;
+    margin: 0 0 0 40px;
     padding: 0;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #111;
 }
 
 body #toolbar\:tabs li
 {
     float: left;
-    height: 31px;
+    height: 40px;
 }
 
 body #toolbar\:tabs li
@@ -45,37 +56,71 @@ body #toolbar\:tabs li
 
 body #toolbar\:tabs li a
 {
-    background-color: #222;
     display: inline-block;
-    padding: 0.2em 0.5em 0.25em;
-    margin-top: 0.4em;
-    color: #fff;
+    padding: 0.6em 0.75em 0.55em 2.35em;
+    margin-top: 0.5em;
+    color: #777;
+    background-color: #222;
     text-decoration: none;
+    font-size: 0.875em;
+    text-transform: capitalize;
+    margin-left: 0.5em;
+    background-position: 8px 5px;
+    background-repeat: no-repeat;
 }
 
-body #toolbar\:tabs li a:first
+/* Icons */
+body #toolbar\:tabs a#toolbar_items_link
 {
-    border-left: 1px solid #333;
+    background-image: url('../img/preferences-system-windows22x22.png');
 }
 
-body #toolbar\:tabs li a:hover,
+body #toolbar\:tabs a#toolbar_create_link
+{
+    background-image: url('../img/list-add22x22.png');
+}
+
+body #toolbar\:tabs a#toolbar_system_link
+{
+    background-image: url('../img/preferences-system22x22.png');
+}
+
+body #toolbar\:tabs li a:hover
+{
+    color: #fff;
+}
+
+body #toolbar\:tabs li a:focus
+{
+    border: none;
+    outline: none;
+}
+
 body #toolbar\:tabs li a.selected
 {
-    background-color: #000;
-    border-right: 1px solid #333;
-    border-left: 1px solid #333;
-    border-top: 1px solid #333;
+    color: #fff;
+    background-color: #333 !important;
+    -moz-border-radius-topright: 5px;    
+    -moz-border-radius-topleft: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-bottom: 1px solid #333;
+    -moz-border-bottom-colors: #111;
 }
 
 body #toolbar\:actions
 {
-    padding-left: 32px;
+    width: 95%;
+    padding-left: 40px;
+    background-color: #333;
+    border-top: 1px solid #444;
+    clear: left;
 }
 
 body #toolbar\:actions div
 {
-    clear: left;
-    padding: 5px;
+    padding: 1em;
+    background-color: #333;
 }
 
 body #toolbar\:actions a
@@ -86,6 +131,8 @@ body #toolbar\:actions a
     width: 200px;
     display: inline-block;
     overflow: hidden;
+    color: #fff;
+    font-size: 0.75em;
 }
 
 body #toolbar\:actions a.midgard_page
