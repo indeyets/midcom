@@ -27,7 +27,16 @@ class midcom_core_services_cache_module_template
             throw new Exception("Cache directory not configured");
         }
 
-        $this->cache_directory = str_replace('__MIDGARDCACHE__', $this->get_cache_directory(), $configuration['directory']);
+        if (isset($_ENV['MIDGARD_ENV_GLOBAL_CACHEDIR']))
+        {
+            // Fluid instance has a dynamic cache directory location
+            // FIXME: We need to make configuration more dynamic to support this properly
+            $this->cache_directory = $_ENV['MIDGARD_ENV_GLOBAL_CACHEDIR'];
+        }
+        else
+        {
+            $this->cache_directory = str_replace('__MIDGARDCACHE__', $this->get_cache_directory(), $configuration['directory']);
+        }
         if (!file_exists($this->cache_directory))
         {
             $res = mkdir($this->cache_directory, 0777, true);
