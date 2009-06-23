@@ -65,6 +65,12 @@ class midcom_core_controllers_about
 
         if (isset($_POST['update']))
         {
+            //Disable limits
+            // TODO: Could this be done more safely somehow
+            @ini_set('memory_limit', -1);
+            @ini_set('max_execution_time', 0);
+
+            midgard_connection::set_loglevel('debug');
             // Generate tables
             if (!midgard_config::create_midgard_tables())
             {
@@ -78,24 +84,22 @@ class midcom_core_controllers_about
                     continue;
                 }
         
-                if (extension_loaded('midgard'))
+                if (midgard_config::class_table_exists($type))
                 {
-                    // FIXME: This method is not implemented yet in midgard2
-                    if (midgard_config::class_table_exists($type))
+                    $_MIDCOM->log('midcom_core_controllers_about::post_database', "Updating database table for type {$type}", 'debug');
+                    if (!midgard_config::update_class_table($type))
                     {
-                        if (!midgard_config::update_class_table($type))
-                        {
-                            throw new Exception('Could not update ' . $type . ' tables in test database');
-                        }
-                        continue;
+                        throw new Exception('Could not update ' . $type . ' tables in test database');
                     }
+                    continue;
                 }
-    
+                $_MIDCOM->log('midcom_core_controllers_about::post_database', "Creating database table for type {$type}", 'debug');
                 if (!midgard_config::create_class_table($type))
                 {
                     throw new Exception('Could not create ' . $type . ' tables in test database');
                 }
             }
+            midgard_connection::set_loglevel($_MIDCOM->configuration->get('log_level'));
         }
         
         $this->get_database($args);
