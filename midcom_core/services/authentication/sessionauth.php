@@ -332,7 +332,9 @@ class midcom_core_services_authentication_sessionauth implements midcom_core_ser
         {
             if ($this->login($_POST['username'], $_POST['password']))
             {
-                $_MIDCOM->dispatcher->dispatch(); // TODO: is this dangerous? Removing it means error 500
+                // Dispatch again since now we have a user
+                $_MIDCOM->dispatcher->dispatch();
+                return;
             }
         }
 
