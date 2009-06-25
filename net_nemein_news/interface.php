@@ -13,7 +13,7 @@
  */
 class net_nemein_news extends midcom_core_component_baseclass
 {
-    public function get_object_actions(&$object, $variant = null)
+    public function get_object_actions(midgard_article &$object, $variant = null)
     {
         $actions = array();
         

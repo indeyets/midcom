@@ -13,7 +13,7 @@
  */
 class midcom_core extends midcom_core_component_baseclass
 {
-    public function get_object_actions(&$object, $variant = null)
+    public function get_object_actions(midgard_page &$object, $variant = null)
     {
         $actions = array();
         if (!$_MIDCOM->authorization->can_do('midgard:update', $object))
