@@ -15,7 +15,7 @@
  */
 interface midcom_core_component_interface
 {
-    public function __construct($configuration, $folder = null);
+    public function __construct(midcom_core_services_configuration $configuration, midgard_page $folder = null);
     
     public function initialize();
     

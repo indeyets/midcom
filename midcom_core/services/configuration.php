@@ -18,7 +18,7 @@ interface midcom_core_services_configuration
      *
      * @param string $component Component to load configuration for
      */
-    public function __construct($component);
+    public function __construct($component, midgard_page $folder = null);
 
     /**
      * Retrieve a configuration key
@@ -30,7 +30,7 @@ interface midcom_core_services_configuration
      * @return mixed Its value
      * @see midcom_helper_configuration::exists()
      */
-    public function get($key, $subkey=false);
+    public function get($key, $subkey = false);
 
     /**
      * @see midcom_helper_configuration::get()

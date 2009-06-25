@@ -18,7 +18,7 @@ abstract class midcom_core_component_baseclass implements midcom_core_component_
     public $configuration = false;
     public $folder = null;
     
-    public function __construct($configuration, $folder = null)
+    public function __construct(midcom_core_services_configuration $configuration, midgard_page $folder = null)
     {        
         $this->configuration = $configuration;
         $this->folder = $folder;

@@ -22,7 +22,7 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
     
     private $use_syck = true;
     
-    public function __construct($component, $object = null)
+    public function __construct($component, midgard_page $folder = null)
     {
         // The original component we're working with
         $this->component = $component;
@@ -56,9 +56,9 @@ class midcom_core_services_configuration_yaml implements midcom_core_services_co
         $this->load_locals();
         $this->merged = self::merge_configs($this->globals, $this->locals);
         
-        if ($object)
+        if ($folder)
         {
-            $this->objects = $this->load_objects($object->guid);            
+            $this->objects = $this->load_objects($folder->guid);            
             $this->merged = self::merge_configs($this->merged, $this->objects);
         }
         

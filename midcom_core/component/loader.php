@@ -48,7 +48,7 @@ class midcom_core_component_loader
         return true;
     }
     
-    public function load($component, $object = null)
+    public function load($component, midgard_page $folder = null)
     {
         if (! $this->can_load($component))
         {
@@ -91,14 +91,14 @@ class midcom_core_component_loader
         }
 
         // Load configuration for the component
-        $configuration = new midcom_core_services_configuration_yaml($component, $object);
+        $configuration = new midcom_core_services_configuration_yaml($component, $folder);
         if ($_MIDCOM->timer)
         {
             $_MIDCOM->timer->setMarker('MidCOM component loader::load::' . $component . '::configured');
         }
 
         // Load the interface class
-        $this->interfaces[$component] = new $component($configuration, $object);
+        $this->interfaces[$component] = new $component($configuration, $folder);
         if ($_MIDCOM->timer)
         {
             $_MIDCOM->timer->setMarker('MidCOM component loader::load::' . $component . '::instantiated');
