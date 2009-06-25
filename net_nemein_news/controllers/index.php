@@ -13,7 +13,7 @@
  */
 class net_nemein_news_controllers_index
 {
-    public function __construct($instance)
+    public function __construct(midcom_core_component_interface $instance)
     {
         $this->configuration = $instance->configuration;
     }
@@ -21,7 +21,7 @@ class net_nemein_news_controllers_index
     /**
      * List latest news items and pass them on to the template
      */
-    public function get_latest($args)
+    public function get_latest(array $args)
     {
         $topic_guid = $this->configuration->get('news_topic');
         if (!$topic_guid)

@@ -13,26 +13,26 @@
  */
 class midcom_core_controllers_authentication
 {
-    public function __construct($instance)
+    public function __construct(midcom_core_component_interface $instance)
     {
         $this->configuration = $_MIDCOM->configuration;
     }
     
-    public function get_logout($args)
+    public function get_logout(array $args)
     {
         $_MIDCOM->authentication->logout();
         header('location: /');
         exit();
     }
     
-    public function get_login($args)
+    public function get_login(array $args)
     {   
         $exception_data = array();
         $exception_data['message'] = $_MIDCOM->i18n->get('please enter your username and password', 'midcom_core');
         $_MIDCOM->context->set_item('midcom_core_exceptionhandler', $exception_data);
     }
 
-    public function post_login($args)
+    public function post_login(array $args)
     {
         // TODO: Fix some more intelligent way to determine login method
         if (   isset($_POST['username']) 

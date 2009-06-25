@@ -13,12 +13,12 @@
  */
 class midcom_core_controllers_actions
 {
-    public function __construct($instance)
+    public function __construct(midcom_core_component_interface $instance)
     {
         $this->configuration = $_MIDCOM->configuration;
     }
     
-    public function get_object($args)
+    public function get_object(array $args)
     {
         $_MIDCOM->authorization->require_user();
 
@@ -31,14 +31,14 @@ class midcom_core_controllers_actions
         $this->data['actions'] = $_MIDCOM->componentloader->get_object_actions($object);
     }
 
-    public function get_categories($args)
+    public function get_categories(array $args)
     {
         $_MIDCOM->authorization->require_user();
         
         $this->data['categories'] = $_MIDCOM->componentloader->get_action_categories();
     }
 
-    public function get_category($args)
+    public function get_category(array $args)
     {
         $_MIDCOM->authorization->require_user();
         

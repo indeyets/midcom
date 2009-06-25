@@ -13,22 +13,22 @@
  */
 class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_crud
 {
-    public function __construct($instance)
+    public function __construct(midcom_core_component_interface $instance)
     {
         $this->configuration =& $_MIDCOM->configuration;
     }
 
-    public function load_object($args)
+    public function load_object(array $args)
     {
         if (!isset($_MIDCOM->context->page->id))
         {
-            throw new midcom_exception_notfound("No Midgard page found");
+            throw new midcom_exception_notfound('No Midgard page found');
         }
         
         $this->object = $_MIDCOM->context->page;
     }
     
-    public function prepare_new_object($args)
+    public function prepare_new_object(array $args)
     {
         $this->object = new midgard_page();
         $this->object->up = $_MIDCOM->context->page->id;
@@ -45,7 +45,7 @@ class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_c
         return $_MIDCOM->dispatcher->generate_url('page_update', array());
     }
 
-    public function get_read($args)
+    public function get_read(array $args)
     {
         parent::get_read($args);
         
@@ -82,12 +82,12 @@ class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_c
         }
     }
 
-    public function post_read($args)
+    public function post_read(array $args)
     {
         $this->get_read($args);
     }
 
-    public function put_read($args)
+    public function put_read(array $args)
     {
         parent::get_read($args);
         
@@ -101,7 +101,7 @@ class midcom_core_controllers_page extends midcom_core_controllers_baseclasses_c
         die();
     }
 
-    public function mkcol_read($args)
+    public function mkcol_read(array $args)
     {
         parent::get_read($args);
 

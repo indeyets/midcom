@@ -13,12 +13,12 @@
  */
 class midcom_core_controllers_cache
 {
-    public function __construct($instance)
+    public function __construct(midcom_core_component_interface $instance)
     {
         $this->configuration = $_MIDCOM->configuration;
     }
     
-    public function get_invalidate($args)
+    public function get_invalidate(array $args)
     {
         $_MIDCOM->authorization->require_user();
         $_MIDCOM->cache->invalidate_all();
@@ -27,7 +27,7 @@ class midcom_core_controllers_cache
         exit();
     }
 
-    public function post_invalidate($args)
+    public function post_invalidate(array $args)
     {
         $this->get_invalidate($args);
     }

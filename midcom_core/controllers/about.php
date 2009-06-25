@@ -13,12 +13,12 @@
  */
 class midcom_core_controllers_about
 {
-    public function __construct($instance)
+    public function __construct(midcom_core_component_interface $instance)
     {
         $this->configuration = $_MIDCOM->configuration;
     }
     
-    public function get_about($args)
+    public function get_about(array $args)
     {
         $_MIDCOM->authorization->require_user();
 
@@ -48,7 +48,7 @@ class midcom_core_controllers_about
         ksort($this->data['authors']);
     }
 
-    public function get_database($args)
+    public function get_database(array $args)
     {
         $_MIDCOM->authorization->require_admin();
 
@@ -59,7 +59,7 @@ class midcom_core_controllers_about
         }
     }
     
-    public function post_database($args)
+    public function post_database(array $args)
     {
         $_MIDCOM->authorization->require_admin();
 

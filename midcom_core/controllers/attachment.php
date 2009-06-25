@@ -14,7 +14,7 @@
 class midcom_core_controllers_attachment
 {
 
-    public function __construct($instance)
+    public function __construct(midcom_core_component_interface $instance)
     {
       $this->configuration = $instance->configuration;
     }
@@ -25,7 +25,7 @@ class midcom_core_controllers_attachment
      * @todo: Direct filesystem serving
      * @todo: Configuration options
      */
-    public function get_serve($args)
+    public function get_serve(array $args)
     {
         $att = new midgard_attachment($args['guid']);
                 

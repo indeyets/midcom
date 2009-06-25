@@ -13,7 +13,7 @@
  */
 class midcom_core_controllers_comet
 {
-    public function __construct($instance)
+    public function __construct(midcom_core_component_interface $instance)
     {
         $this->configuration = $_MIDCOM->configuration;
     }

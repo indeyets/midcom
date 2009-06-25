@@ -23,7 +23,7 @@ abstract class midcom_core_controllers_baseclasses_crud
      */
     protected $datamanager = null;
 
-    public function __construct($instance)
+    public function __construct(midcom_core_component_interface $instance)
     {
         $this->configuration = $instance->configuration;
     }
@@ -31,12 +31,12 @@ abstract class midcom_core_controllers_baseclasses_crud
     /**
      * Method for loading the object to be managed. To be overridden in the actual controller.
      */
-    abstract public function load_object($args);
+    abstract public function load_object(array $args);
     
     /**
      * Method for preparing a new object to be created. To be overridden in the actual controller.
      */
-    abstract public function prepare_new_object($args);
+    abstract public function prepare_new_object(array $args);
     
     /**
      * Method for generating route to the object
@@ -78,7 +78,7 @@ abstract class midcom_core_controllers_baseclasses_crud
     }
 
     // TODO: Refactor. There is code duplication with edit
-    public function get_create($args)
+    public function get_create(array $args)
     { 
         if (!isset($_MIDGARD['page']))
         {
@@ -111,7 +111,7 @@ abstract class midcom_core_controllers_baseclasses_crud
         );
     }
 
-    public function post_create($args)
+    public function post_create(array $args)
     {
         $this->get_create($args);
 
@@ -127,7 +127,7 @@ abstract class midcom_core_controllers_baseclasses_crud
         }
     }
 
-    public function get_read($args)
+    public function get_read(array $args)
     {
         $this->load_object($args);
         $this->load_datamanager($this->configuration->get('schemadb'));
@@ -148,7 +148,7 @@ abstract class midcom_core_controllers_baseclasses_crud
         }
     }
 
-    public function get_update($args)
+    public function get_update(array $args)
     {
         $this->load_object($args);
         $this->load_datamanager($this->configuration->get('schemadb'));
@@ -170,7 +170,7 @@ abstract class midcom_core_controllers_baseclasses_crud
         );
     }
 
-    public function post_update($args)
+    public function post_update(array $args)
     {
         $this->get_update($args);
 
@@ -189,7 +189,7 @@ abstract class midcom_core_controllers_baseclasses_crud
         }
     }
         
-    public function get_delete($args)
+    public function get_delete(array $args)
     {
         $this->load_object($args);
         $this->load_datamanager($this->configuration->get('schemadb'));
@@ -213,7 +213,7 @@ abstract class midcom_core_controllers_baseclasses_crud
         );
     }
     
-    public function post_delete($args)
+    public function post_delete(array $args)
     {
         $this->get_delete($args);
 

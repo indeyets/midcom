@@ -13,7 +13,7 @@
  */
 class midcom_core_controllers_documentation
 {
-    public function __construct($instance)
+    public function __construct(midcom_core_component_interface $instance)
     {
         $this->configuration = $_MIDCOM->configuration;
     }
@@ -79,7 +79,7 @@ class midcom_core_controllers_documentation
         return $files;
     }
 
-    public function get_index($args)
+    public function get_index(array $args)
     {
         $_MIDCOM->authorization->require_user();
         $this->prepare_component($args['component'], $this->data);
@@ -98,7 +98,7 @@ class midcom_core_controllers_documentation
         }
     }
 
-    public function get_show($args)
+    public function get_show(array $args)
     {
         $_MIDCOM->authorization->require_user();
         $this->prepare_component($args['variable_arguments'][0], $this->data);
@@ -147,7 +147,7 @@ class midcom_core_controllers_documentation
         $this->data['markdown_formatted'] = Markdown($this->data['markdown']);
     }
     
-    public function get_routes($args)
+    public function get_routes(array $args)
     {
         $_MIDCOM->authorization->require_user();
         $this->prepare_component($args['component'], $this->data);
@@ -182,7 +182,7 @@ class midcom_core_controllers_documentation
         }
     }
     
-    public function get_class($args)
+    public function get_class(array $args)
     {
         $_MIDCOM->authorization->require_user();
         $this->prepare_component($args['component'], $this->data);

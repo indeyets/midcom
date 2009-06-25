@@ -13,7 +13,7 @@
  */
 class net_nemein_news_controllers_article extends midcom_core_controllers_baseclasses_crud
 {
-    public function load_object($args)
+    public function load_object(array $args)
     {
         $topic_guid = $this->configuration->get('news_topic');
         if (!$topic_guid)
@@ -33,7 +33,7 @@ class net_nemein_news_controllers_article extends midcom_core_controllers_basecl
         $this->object = $articles[0];
     }
     
-    public function prepare_new_object($args)
+    public function prepare_new_object(array $args)
     {
         $topic_guid = $this->configuration->get('news_topic');
         if (!$topic_guid)
